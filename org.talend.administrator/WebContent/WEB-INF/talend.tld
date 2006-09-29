@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" 
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>Talend</short-name>
+    <uri>http://displaytag.sf.net/el</uri>
+    <tag>
+        <name>messages</name>
+        <tag-class>org.talend.administrator.common.view.taglibs.MessagesTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>errors</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>titleKey</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>filterKey</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>actionsBar</name>
+        <tag-class>org.talend.administrator.common.view.taglibs.ActionsBarTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+        </attribute>
+        <attribute>
+            <name>dispatchParam</name>
+            <required>false</required>
+        </attribute>
+        <attribute>
+            <name>existingDispatchParam</name>
+            <required>false</required>
+        </attribute>
+        <attribute>
+            <name>dispatchValue</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>link</name>
+        <tag-class>org.talend.administrator.common.view.taglibs.LinkTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>path</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	http path for submission.
+            	If beggining by '/', path is considered relative to webapp context (which is added).
+            	At least one : path, form, javascript.
+            	At most one : path, form.
+            </description>
+        </attribute>
+        <attribute>
+            <name>form</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	Form name to submit.
+            	At least one : form, javascript, path.
+            	At most one : form, path.
+            </description>
+        </attribute>
+        <attribute>
+            <name>title</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	The plain title of the link.
+            	At most one : title, titleKey.
+            </description>
+        </attribute>
+        <attribute>
+            <name>titleKey</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	The title of the link.
+            	Will be i18n'ed with MessageBundleSetHandler.
+            	At most one : titleKey, title.
+            </description>
+        </attribute>
+        <attribute>
+            <name>altKey</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	The alternative text of the link.
+            	If none is displayed, titleKey + "desc" will be used
+            </description>
+        </attribute>
+        <attribute>
+            <name>javascript</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	Javascript call before submitting.
+            	Rendered as onclick if path is specified, as href in other cases.
+            	If form is specified, you can represent this form by '$form' in the javascript.
+            	At least one : javascript, path, form.
+            </description>
+        </attribute>
+        <attribute>
+            <name>titleStyling</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.Boolean</type>
+            <description>
+            	If true, the last word of titleKey is used as CSS class.
+            	Defaults to false.
+            	Depends on : titleKey.
+            	At most one : titlestyling, styleClass.
+            </description>
+        </attribute>
+        <attribute>
+            <name>titleDispatching</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <type>java.lang.Boolean</type>
+            <description>
+            	If true, the last word of titleKey is used as dispatchValue.
+            	Defaults to false.
+            	Depends on : titleKey.
+            	At most one : titleDispatching, dispatchvalue.
+            </description>
+        </attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+            <description>
+            	CSS style for the current tag.
+            	At most one : styleClass, titleStyling.
+            </description>
+        </attribute>
+        <attribute>
+            <name>dispatchParam</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	The dispatch parameter. Overrides dispatchParam defined in enclosing bar (if any).
+            </description>
+        </attribute>
+        <attribute>
+            <name>dispatchValue</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	The dispatch parameter value.
+            	At most one : dispatchValue, titleDispatching.
+            </description>
+        </attribute>
+   		<attribute>
+            <name>role</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <description>
+            	User Access level necessary to see the link.
+            	If role is not specified, everybody can see the link.
+            </description>            
+        </attribute>
+    </tag>
+</taglib>

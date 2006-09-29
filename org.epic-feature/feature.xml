@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.epic_feature"
+      label="Epic_feature Feature"
+      version="0.3.12.qualifier"
+      provider-name=".EPIC Project.">
+
+   <description url="http://e-p-i-c.sourceforge.net/">
+      EPIC is an opensource Perl IDE for the Eclipse platform.
+Features supported are syntax highlighting, on the fly syntax
+check, content assist, perldoc support, source formatter, templating
+support and a Perl debugger.
+A regular expression plugin and support for the eSpell spellchecker
+are also available.
+   </description>
+
+   <copyright>
+      luelljoc@users.sourceforge.net
+   </copyright>
+
+   <license url="http://www.opensource.org/licenses/cpl1.0.php">
+      This software is under Common Public License Version 1.0.
+   </license>
+
+   <url>
+      <update label="Talend update site (EPIC)" url="http://www.talend.com/beta/updatesite/"/>
+      <discovery label="Sourceforge Epic Home Page" url="http://sourceforge.net/projects/e-p-i-c"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.variables"/>
+      <import plugin="org.eclipse.debug.core"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.help"/>
+      <import plugin="org.eclipse.help.base"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.core.resources" version="3.2.0" match="compatible"/>
+      <import plugin="org.eclipse.core.runtime" version="3.1.0" match="compatible"/>
+      <import plugin="org.eclipse.core.filesystem" version="1.0.0" match="compatible"/>
+   </requires>
+
+   <plugin
+         id="org.epic.debug"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.epic.perleditor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.epic.regexp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.team.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,59 @@
+Ce plugin est un essai de réutilisation de l'éditeur Perl d'EPIC dans une vue Eclipse.
+
+Problématique :
+- L'ajout d'une vue nécessite de créer une classe implémentant l'interface IViewPart (généralement on choisit d'hériter de la classe ViewPart)
+- Les éditeurs héritent de EditorPart et les vues de ViewPart, ces deux classes ont une super-classe commune WorkbenchPart.
+
+Solution possible :
+- Créer une sous-classe de l'éditeur EPIC qui implémente IViewPart.
+- Généralement les vues héritent de ViewPart. Notre vue implémentant l'interface IViewPart le code de ViewPart doit être recopié.
+- ViewPart et EditorPart redéfinissent des méthodes de WorkbenchPart, un travail de fusion est nécessaire (pb surtout avec la gestion de la notion de Site).
+
+
+Résultat :
+- l'éditeur est fonctionnel (coloration, complétion et gestion des marqueurs).
+- pour tester la vue :
+	- un projet Perl nommé TestPerl doit exister et il doit contenir un fichier nommé test.pl
+	- ouvrir la vue à partir de Window->Show View->Other, TALEND, Perl Editor Wrapper
+
+- Un pb se pose avec la gestion des actions propres à l'éditeur PERL accessibles via le menu contextuel (format notamment).
+	Pour corriger le pb des modifications dans le code d'EPIC semblent nécessaires.
+- la gestion des marqueurs (erreur et warning dans la marge) nécessite que le fichier édité se trouve dans un projet Perl existant dans le workspace :
+	la vérification des erreurs se fait en utilisant le mécanisme de Builder qui est associé à un projet (le builder est appelé automatiquement quand un fichier du projet est modifié)
+
+
+Problème important :
+- La classe WorkbenchPage d'Eclipse présuppose qu'une classe ne peut implémenter IEditorPart et IViewPart : 
+	pour contourner le pb il faut modifier WorkbenchPage
+
+	Méthodes à modifier dans WorkbenchPage :
+		- certifyPart
+		- setActivePart
+
+	Les modifications sont légères mais devraient être réappliquées en cas de mise à jour d'Eclipse.
+	
+Pour faire les modifications, à partir de la vue 'Plug-ins', importer le plugin 'org.eclipse.ui.workbench' (menu contextuel, import->As source project)
+Editer la classe org.eclipse.ui.internal.WorkbenchPage :
+
+dans la méthode setActivePart, vers la fin, remplacer :
+            if (newPart instanceof IEditorPart)
+				makeActiveEditor((IEditorReference)realPartRef);
+			}
+par
+            if ((newPart instanceof IEditorPart) && !(newPart instanceof IViewPart)) {
+				makeActiveEditor((IEditorReference)realPartRef);
+			}
+
+dans la méthode certifyPart, remplacer :
+        	if (part instanceof IEditorPart)
+                IEditorReference ref = (IEditorReference) getReference(part);
+                return ref != null && getEditorManager().containsEditor(ref);
+            }
+par
+        	if ((part instanceof IEditorPart) && !(part instanceof IViewPart)) {
+                IEditorReference ref = (IEditorReference) getReference(part);
+                return ref != null && getEditorManager().containsEditor(ref);
+            }
+            
+            
+            

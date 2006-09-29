@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="RegExp"
+            icon="icons/rx.gif"
+            category="org.epic.views"
+            class="org.epic.regexp.views.RegExpView"
+            id="org.epic.regexp.views.RegExpView">
+      </view>
+   </extension>
+
+</plugin>

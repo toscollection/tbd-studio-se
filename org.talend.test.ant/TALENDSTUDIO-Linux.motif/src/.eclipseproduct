@@ -1,0 +1,5 @@
+#Eclipse Product File
+#Mon Jun 19 14:15:15 CEST 2006
+version=0.0.1
+name=Talend
+id=org.talend.rcp.product

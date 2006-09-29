@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Debug Plug-in
+Bundle-SymbolicName: org.epic.debug;singleton:=true
+Bundle-Version: 0.3.2.qualifier
+Bundle-Activator: org.epic.debug.PerlDebugPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.core.variables,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.jface.text,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.help,
+ org.eclipse.help.base,
+ org.epic.perleditor,
+ org.epic.regexp
+Eclipse-LazyStart: true
+Bundle-ClassPath: antlr.jar,
+ brazil_mini.jar,
+ gnu-regexp-1.1.4.jar,
+ .
+Bundle-Vendor: Epic Project
+Plugin-Class: org.epic.debug.PerlDebugPlugin

@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!--
+   Copyright 2001-2004 The Apache Software Foundation
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+
+<document>
+
+ <properties>
+  <title>Commons</title>
+  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+ </properties>
+
+ <body>
+
+<section name="Commons BeanUtils">
+
+<p>
+Most Java developers are used to creating Java classes that conform to the
+JavaBeans naming patterns for property getters and setters.  It is natural to
+then access these methods directly, using calls to the corresponding
+<code>getXxx</code> and <code>setXxx</code> methods.  However, there are some
+occasions where dynamic access to Java object properties (without compiled-in
+knowledge of the property getter and setter methods to be called) is needed.
+Example use cases include:</p>
+<ul>
+<li>Building scripting languages that interact with the Java object model
+    (such as the Bean Scripting Framework).</li>
+<li>Building template language processors for web presentation and similar
+    uses (such as JSP or Velocity).</li>
+<li>Building custom tag libraries for JSP and XSP environments (such as Jakarta
+    Taglibs, Struts, Cocoon).</li>
+<li>Consuming XML-based configuration resources (such as Ant build scripts, web
+    application deployment descriptors, Tomcat's <code>server.xml</code>
+    file).</li>
+</ul>
+
+<p>
+The Java language provides <em>Reflection</em> and <em>Introspection</em>
+APIs (see the <code>java.lang.reflect</code> and <code>java.beans</code>
+packages in the JDK Javadocs).  However, these APIs can be quite complex to
+understand and utilize.  The  <em>BeanUtils</em> component provides
+easy-to-use wrappers around these capabilities.
+</p>
+    <subsection name='BeanUtils Core And Modules'>
+        <p>
+The next release will see a departure from the usual packaging strategy. 
+Rather than just a single jar, BeanUtils will distribute a 
+<code>commons-beanutils-core.jar</code> containing the essential parts of BeanUtils
+with minimal dependencies (for this release just 
+<a href='http://jakarta.apache.org/commons/logging'>Commons Logging</a>).
+Other parts of BeanUtils (typically specialized modules) will be distributed as separate,
+modular jars with additional dependencies. Hopefully this will allow library and framework 
+creators more finely grained control over their dependencies. It should also help with
+compatibility issues.
+        </p>
+        <p>
+For everyone else, don't worry :) There will be a single commons-beanutils-all.jar 
+containing everything. Drop it in and add any dependencies your application needs.
+        </p>
+    </subsection>
+    <subsection name='Bean Collections'>
+        <p>
+Bean collections is a library combining BeanUtils with 
+<a href='http://jakarta.apache.org/commons/collections'>Commons Collections</a>
+to provide services for collections of beans. Once class (<code>BeanComparator</code>)
+was previously released, the rest are new. This new distribution strategy should allow
+this sub-component to evolve naturally without the concerns about size and scope
+that might otherwise happen.
+        </p>
+        <p>
+Bean Collections has an additional dependency on 
+<a href='http://jakarta.apache.org/commons/collections'>Commons Collections</a>.
+        </p>
+    </subsection>
+</section>
+
+
+<section name="Documentation">
+
+<p>The <a href="http://jakarta.apache.org/commons/beanutils/RELEASE-NOTES.txt">
+Release Notes</a> document the new features and bug fixes that have been
+included in this release.</p>
+
+<p>The <a href="http://jakarta.apache.org/commons/beanutils/api/index.html">
+JavaDoc API documents</a> are available online.  In particular, you should
+note the property reference syntax options described in the
+<code>PropertyUtils</code> class description.</p>
+
+</section>
+
+
+<section name="Releases">
+    <subsection name='Mirrored Releases'>
+<p>
+Releases after 1.5 should be downloaded from a mirror. Please remember to verify the 
+sigature of the release from the 
+<a href='http://www.apache.org/dist/jakarta/commons/beanutils/'>main apache site</a>
+when downloading from a mirror.
+</p>
+<p>
+    Binary releases are available 
+       <a href="http://jakarta.apache.org/site/binindex.cgi">here</a>.
+    Source releases are available
+       <a href="http://jakarta.apache.org/site/sourceindex.cgi">here</a>
+</p>
+</subsection>
+<subsection name='1.7.x Releases (Mirrored)'>
+    <p>
+<strong>BeanUtils 1.7.0</strong> is a service release which removes the dependency
+upon a specific commons-collection library version. It may be safely used together
+with either the 2.x or 3.x series of commons-collections releases.
+It also introduces a number of important enhancements. It is backward compatible
+with the 1.6 release.
+    </p>
+</subsection>
+<subsection name='1.6.x Releases (Mirrored)'>
+<ul>
+       <li>Version 1.6.1 (latest) - 18 Feb 2003</li>
+       <li>Version 1.6 - 21 Jan 2003</li>
+</ul>
+    </subsection>
+    <subsection name='Older Releases (Not Mirrored)'>
+    <p>
+    <ul>
+    <li><a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-beanutils/v1.5/">Version 1.5 </a> - 23 Oct 2002</li>
+    <li><a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-beanutils/v1.4.1/">Version 1.4.1</a> - 28 Aug 2002</li>
+    <li><a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-beanutils/v1.4/">Version 1.4</a> - 13 Aug 2002
+</li>
+    <li><a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-beanutils/v1.3/">Version 1.3</a> - 29 Apr 2002</li>
+    <li><a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-beanutils/v1.2/">Version 1.2</a> - 24 Dec 2001</li>
+    <li><a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-beanutils/v1.1/">Version 1.1</a> - 22 Sep 2001</li>
+    <li><a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-beanutils/v1.0/">Version 1.0</a> - 14 July 2001</li>
+    </ul>
+    </p>
+    </subsection>
+</section>
+
+
+
+</body>
+</document>

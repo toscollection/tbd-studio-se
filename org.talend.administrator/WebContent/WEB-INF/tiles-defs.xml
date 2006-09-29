@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<tiles-definitions>
+	<!-- Base Tiles Definition -->
+	<definition name="base.definition" path="/tiles/layout.jsp">
+		<put name="header" value="/tiles/header.jsp" />
+		<put name="navigation" value="/tiles/navigation.jsp" />
+		<put name="menu" value="/tiles/menu.jsp" />
+		<put name="footer" value="/tiles/footer.jsp" />
+	</definition>
+	<!--  Common Elements -->
+	<definition name="talend.common.deleteElement" extends="base.definition">
+		<put name="title" value="Confirm Delete Page" />
+		<put name="body" value="/pages/common/confirmDelete.jsp" />
+	</definition>
+	<definition name="talend.common.error" extends="base.definition">
+		<put name="title" value="Error page" />
+		<put name="body" value="/pages/common/error.jsp" />
+	</definition>
+	<!-- Tiles Definition of Login page -->
+	<definition name="talend.login.editLogin" extends="base.definition">
+		<put name="title" value="Authentification page" />
+		<put name="body" value="/pages/login/login.jsp" />
+	</definition>
+	<definition name="talend.login.listLogin" extends="base.definition">
+		<put name="title" value="Welcome page" />
+		<put name="body" value="/pages/login/welcome.jsp" />
+	</definition>
+	<!-- Tiles Definition of User page -->
+	<definition name="talend.user.listUser" extends="base.definition">
+		<put name="title" value="List User" />
+		<put name="body" value="/pages/user/list.jsp" />
+	</definition>
+	<definition name="talend.user.editUser" extends="base.definition">
+		<put name="title" value="Edit User" />
+		<put name="body" value="/pages/user/edit.jsp" />
+	</definition>
+</tiles-definitions>

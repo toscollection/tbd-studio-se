@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="TALEND"
+            id="com.talend.perl.editorwrapper">
+      </category>
+      <view
+            name="Perl Editor Wrapper"
+            icon="icons/sample.gif"
+            category="com.talend.perl.editorwrapper"
+            class="com.talend.perl.editorwrapper.views.PerlEditorViewWrapper"
+            id="com.talend.perl.editorwrapper.views.PerlEditorWrapper">
+      </view>
+   </extension>
+
+</plugin>

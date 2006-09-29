@@ -1,0 +1,28 @@
+<!DOCTYPE form-validation SYSTEM "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+	<formset>
+		<form name="LoginForm">
+			<field property="login" depends="required">
+				<arg0 key="talend.login"/>
+			</field>
+			<field property="password" depends="required">
+				<arg0 key="talend.password"/>
+			</field>
+		</form>
+		<form name="UserForm">
+			<field property="login" depends="required">
+				<arg0 key="user.login"/>
+			</field>
+			<field property="password" depends="required">
+				<arg0 key="user.password"/>
+			</field>
+			<field property="lastName" depends="required">
+				<arg0 key="user.lastname"/>
+			</field>
+			<field property="firstName" depends="required">
+				<arg0 key="user.firstname"/>
+			</field>
+		</form>
+	</formset>
+</form-validation>

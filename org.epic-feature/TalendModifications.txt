@@ -1,0 +1,12 @@
+$Id$
+Modifications apportées pour rendre EPIC compatible avec Eclipse 3.2
+
+Projet org.epic.debug
+---------------------
+- Modification de la classe PerlDebugPlugin
+	* Plugin aux normes 3.2 : suppression du constructeur deprecated et ajout des méthodes start et stop.
+	* La méthode getPlugInDir s'appuie sur la localisation du Bundle et non sur un PluginDescriptor deprecated.
+	
+Projets org.epic.debug, org.epic.perleditor, org.epic.regexp
+------------------------------------------------------------
+- Génération des fichiers manifest.mf, plugin.xml et build.properties au format Eclipse 3.2.

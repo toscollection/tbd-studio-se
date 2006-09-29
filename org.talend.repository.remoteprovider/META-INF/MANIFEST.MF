@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Remote repository Plug-in
+Bundle-SymbolicName: org.talend.repository.remoteprovider;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-Activator: org.talend.repository.remoteprovider.Activator
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.talend.core,
+ org.talend.commons,
+ org.talend.libraries,
+ org.talend.repository,
+ org.apache.axis
+Eclipse-LazyStart: true
+Bundle-Vendor: .Talend SA.

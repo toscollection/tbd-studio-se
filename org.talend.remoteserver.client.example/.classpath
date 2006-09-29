@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="C:/Java/eclipse-talend/plugins/org.apache.axis_1.3.0.v200606181221/lib/axis.jar"/>
+	<classpathentry kind="lib" path="C:/Java/eclipse-talend/plugins/org.apache.axis_1.3.0.v200606181221/lib/commons-discovery-0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Java/eclipse-talend/plugins/org.apache.axis_1.3.0.v200606181221/lib/jaxrpc.jar"/>
+	<classpathentry kind="lib" path="C:/Java/eclipse-talend/plugins/org.apache.axis_1.3.0.v200606181221/lib/saaj.jar"/>
+	<classpathentry kind="lib" path="C:/Java/eclipse-talend/plugins/org.apache.axis_1.3.0.v200606181221/lib/wsdl4j-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Java/eclipse-talend/plugins/org.apache.commons_logging_1.0.4.v200606131651/lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/activation.jar"/>
+	<classpathentry kind="lib" path="lib/mail.jar"/>
+	<classpathentry kind="output" path="class/main/java"/>
+</classpath>
