@@ -20,3 +20,5 @@ foreach my $module_name (sort @module_names) {
     }
     print "\n";
 }
+
+exit 0;
