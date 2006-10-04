@@ -5,6 +5,7 @@
 	<!-- set global properties for this build -->
 	<property name="author" value="Talend" />
 	<property name="project" value="Application RCP" />
+	<property name="bupdatesite" value="false" />
 	
 	<!-- Directory Structure properties -->
 	<property name="releasedir" location="${basedir}/Talend/" />
@@ -66,7 +67,7 @@
 	<property name="versionFile" location="${basedir}/version" />
 	<property name="dstampFile" location="${basedir}/dstamp.txt" />
 	<property name="about.mappings.file" location="${srcplugins}/org.talend.rcp/about.mappings" />
-	<property name="version.mappings" value="1=Beta (september 2006)" />
+	<property name="version.mappings" value="1=V1.0.0" />
 	
 	
 	<!-- Initialisation of TimeStamp / DateStamp -->
@@ -76,9 +77,9 @@
 		<echo message="Loading version file" />
 		<loadfile property="version" srcFile="${versionFile}" />
 		<echo message="Initialisation : TimeStamp / DateStamp" />
-		<echo file="${dstampFile}" message="${DSTAMP}-${TSTAMP}-beta" />
+		<echo file="${dstampFile}" message="${DSTAMP}-${TSTAMP}-V1" />
 		<touch file="${about.mappings.file}"/>
-<echo file="${about.mappings.file}">0=${DSTAMP}-${TSTAMP}-beta
+<echo file="${about.mappings.file}">0=${DSTAMP}-${TSTAMP}-V1
 ${version.mappings}
 		</echo>
 		</target>
@@ -549,14 +550,14 @@ ${version.mappings}
 	<target name="gen.ffeatures" description="Generate build.xml for features in local src directory">
 		<echo message="Generate features' build.xml in local src" />
 		<loadfile property="qualifier" srcFile="${dstampFile}" failonerror="true"/>
-		<eclipse.buildScript elements="feature@org.epic_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" /> 
-		<eclipse.buildScript elements="feature@org.talend.commons_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" /> 	
-		<eclipse.buildScript elements="feature@org.talend.rcp_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" product="/org.talend.rcp/org.talend.rcp/talend.product" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" />
-		<eclipse.buildScript elements="feature@org.talend.core_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" /> 
-		<eclipse.buildScript elements="feature@org.talend.help_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" />
-		<eclipse.buildScript elements="feature@org.talend.designer_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" /> 
-		<eclipse.buildScript elements="feature@org.talend.designer.business_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" /> 
-		<eclipse.buildScript elements="feature@org.talend.repository_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" /> 
+		<eclipse.buildScript elements="feature@org.epic_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}" /> 
+		<eclipse.buildScript elements="feature@org.talend.commons_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}"/> 	
+		<eclipse.buildScript elements="feature@org.talend.rcp_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" product="/org.talend.rcp/org.talend.rcp/talend.product" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}" />
+		<eclipse.buildScript elements="feature@org.talend.core_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}"/> 
+		<eclipse.buildScript elements="feature@org.talend.help_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="feature@org.talend.designer_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}"/> 
+		<eclipse.buildScript elements="feature@org.talend.designer.business_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}"/> 
+		<eclipse.buildScript elements="feature@org.talend.repository_feature" buildDirectory="${src}" baseLocation="${eclipsehome}" children="true" forcecontextqualifier="${qualifier}" generatefeatureversionsuffix="no" configInfo="${confinfo}" outputUpdateJars="${bupdatesite}"/> 
 		<move todir="${basedir}">
 			<fileset dir="${src}" includes="*org.*.xml" />
 		</move> 
@@ -566,24 +567,24 @@ ${version.mappings}
 	<target name="gen.fplugins" description="Generate build.xml / javaCompiler...args for plugins in local src directory">
 		<echo message="Generate plugins' build.xml/javaCompiler...args in local src" />
 		<loadfile property="qualifier" srcFile="${dstampFile}" failonerror="true"/>
-		<eclipse.buildScript elements="plugin@org.talend.commons" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  /> 
-		<eclipse.buildScript elements="plugin@org.talend.core" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.designer.core" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  /> 
-		<eclipse.buildScript elements="plugin@org.talend.designer.mapper" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.designer.codegen" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  /> 
-		<eclipse.buildScript elements="plugin@org.talend.designer.codegen.perlmodule" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  /> 
-		<eclipse.buildScript elements="plugin@org.talend.designer.runprocess" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.resources" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.designer.components.localprovider" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.help" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.model" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.designer.business.diagram" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.model.edit" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.libraries" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.talend.rcp" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.epic.debug" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.epic.perleditor" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
-		<eclipse.buildScript elements="plugin@org.epic.regexp" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  />
+		<eclipse.buildScript elements="plugin@org.talend.commons" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true" outputUpdateJars="${bupdatesite}" /> 
+		<eclipse.buildScript elements="plugin@org.talend.core" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.designer.core" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/> 
+		<eclipse.buildScript elements="plugin@org.talend.designer.mapper" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.designer.codegen" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/> 
+		<eclipse.buildScript elements="plugin@org.talend.designer.codegen.perlmodule" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/> 
+		<eclipse.buildScript elements="plugin@org.talend.designer.runprocess" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.resources" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.designer.components.localprovider" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.help" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.model" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.designer.business.diagram" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.model.edit" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.libraries" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.talend.rcp" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.epic.debug" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.epic.perleditor" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
+		<eclipse.buildScript elements="plugin@org.epic.regexp" buildDirectory="${src}" forcecontextqualifier="${qualifier}" baseLocation="${eclipsehome}" children="true"  outputUpdateJars="${bupdatesite}"/>
 	</target>
 	
 	<!-- Delete generated build.xml / javaCompiler...args for features and plugins in local src directory -->
