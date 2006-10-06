@@ -41,7 +41,7 @@
 	
 	<property name="wget.binary" value="wget.exe" />
 	<property name="wget.link" value="http://www.talend.com/downloads/download.php?version=b2igw"/>
-	<property name="installguide.name" value="install-TOS-for-Windows.pdf"/>
+	<property name="installguide.name" value="install-TOSv100-for-Windows.pdf"/>
 	<property name="installguide.finalname" value="InstallationGuide-TOS.pdf"/>
 	<property name="installguide.dlrep" value="${releasedir}" />
 	<property name="installguide.finalrep" value="${releasedir}" />
