@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
 <project basedir="." default="main" name="TALEND">
 	<description>Application RCP Building</description>
 
@@ -40,7 +41,7 @@
 	<!-- Installation Guide Properties -->
 	
 	<property name="wget.binary" value="wget" />
-	<property name="wget.link" value="http://www.talend.com/downloads/download.php?version=b2igl"/>
+	<property name="wget.link" value="http://www.talend.com/tos/release/V1.0.0/install-TOSv100-for-Linux-Unix.pdf"/>
 	<property name="installguide.name" value="install-TOSv100-for-Linux-Unix.pdf"/>
 	<property name="installguide.finalname" value="InstallationGuide-TOS.pdf"/>
 	<property name="installguide.dlrep" value="${releasedir}" />
