@@ -493,6 +493,26 @@ public class RepositoryFactory implements IRepositoryFactory {
     /*
      * (non-Javadoc)
      * 
+     * @see org.talend.repository.model.IMetadataFactory#getMetadataFileXml(int)
+     */
+    public RegexpFileConnection getMetadataFileXml(int id) throws PersistenceException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.model.IMetadataFactory#getMetadataFileXml()
+     */
+    public RootContainer<String, IRepositoryObject> getMetadataFileXml() throws PersistenceException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.repository.model.IMetadataFactory#getMetadataFileRegexp(int)
      */
     public RegexpFileConnection getMetadataFileRegexp(int id) throws PersistenceException {
@@ -500,6 +520,7 @@ public class RepositoryFactory implements IRepositoryFactory {
         return null;
     }
 
+    
     public void create(Item item, IPath path) throws PersistenceException {
     }
 
@@ -585,7 +606,26 @@ public class RepositoryFactory implements IRepositoryFactory {
      * 
      * @see org.talend.repository.model.IRepositoryFactory#createUser(org.talend.core.model.general.User)
      */
-    public void findUser(Project project, RepositoryContext repositoryContext) throws PersistenceException {
+    public boolean findUser(Project project, RepositoryContext repositoryContext) throws PersistenceException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.model.IRepositoryFactory#createUser(org.talend.core.model.general.User)
+     */
+    public void createUser(Project project, RepositoryContext repositoryContext) throws PersistenceException {
+        // TODO Auto-generated method stub
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.model.IRepositoryFactory#initialize()
+     */
+    public void initialize(){
         // TODO Auto-generated method stub
     }
 
