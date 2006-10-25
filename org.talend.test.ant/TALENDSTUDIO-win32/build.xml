@@ -1,35 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <project basedir="." default="main" name="TALEND">
 	<description>Application RCP Building</description>
 
+	
 	<!-- set global properties for this build -->
 	<property name="author" value="Talend" />
-	<property name="project" value="Application RCP" />
+	<property name="project" value="Talend Open Studio" />
+	
+	<!-- Update Site properties -->
 	<property name="bupdatesite" value="false" />
 	
-	<!-- Directory Structure properties -->
+	<!-- Sources Export Properties -->
+	<property name="bksources" value="false"/>
+	<property name="srcstamp" location="${basedir}/srcstamp.txt" />
+	<condition property="sources-is-true">
+		<and>
+			<not>
+				<istrue value="${bksources}"/>
+			</not>
+		</and>
+	</condition>
+			
+	<!-- Directories Structure / files names properties -->
 	<property name="releasedir" location="${basedir}/Talend/" />
+	<property name="srcfeatures" location="${src}/features" />
+	<property name="srcplugins" location="${src}/plugins" />
 	<property name="storage" location="${basedir}/Storage/" />
+    <property name="storage.os" value="Win32" />
 	<property name="storage.sources" location="${storage}/Sources" />
 	<property name="storage.sources.dirname" value="Sources" />
 	<property name="storage.sources.filename" value="Sources" />
 	<property name="storage.builds" location="${storage}/Builds" />
 	<property name="storage.builds.dirname" value="TOS" />
 	<property name="storage.builds.filename" value="TOS" />
-	<property name="storage.builds.os" value="Win32" />
+	<property name="storage.updatesite.dirname" value="UpdateSite" />
+	<property name="storage.updatesite.filename" value="UpdateSite" />
 	<property name="backup" location="${basedir}/Backup/" />
 	<property name="backup.sources" location="${backup}/Sources" />
 	<property name="backup.builds" location="${backup}/Builds" />
+	<property name="backup.updatesite" location="${backup}/UpdateSite" />
 	<property name="src" location="${basedir}/src/" />
 	<property name="doc" location="${basedir}/doc/" />
-	<property name="srcfeatures" location="${src}/features" />
-	<property name="srcplugins" location="${src}/plugins" />
 	<property name="cfgdir" location="${releasedir}/configuration" />
 	<property name="temp" location="${basedir}/temp" />
 	
+	<!-- SVN properties -->
+	
+	
+	
 	<!-- Specific Arch Configuration -->
 	<property name="talend.binary" value="TalendOpenStudio.exe" />
-	<property name="eclipseBaseURL" value="c:/Java/eclipse-rcp" />
 	<property name="eclipsebinary" value="eclipse.exe" />
 	<property name="los" value="win32" />
 	<property name="wm" value="win32" />
@@ -40,14 +61,14 @@
 	<!-- Installation Guide Properties -->
 	
 	<property name="wget.binary" value="wget.exe" />
-	<property name="wget.link" value="http://www.talend.com/downloads/download.php?version=b2igw"/>
+	<property name="wget.link" value="http://www.talend.com/tos/release/V1.0.0/install-TOSv100-for-Windows.pdf"/>
 	<property name="installguide.name" value="install-TOSv100-for-Windows.pdf"/>
 	<property name="installguide.finalname" value="InstallationGuide-TOS.pdf"/>
 	<property name="installguide.dlrep" value="${releasedir}" />
 	<property name="installguide.finalrep" value="${releasedir}" />
 	
 	<!-- Set your EclipseHome  here-->
-	<property name="eclipsehome" location="${eclipseBaseURL}" />
+	<property name="eclipsehome" location="c:/Java/eclipse-rcp" />
  	<property name="eclipsehome.feature" location="${eclipsehome}/features" />
 	<property name="eclipsehome.plugins" location="${eclipsehome}/plugins" />
 		
@@ -63,7 +84,7 @@
 	<property name="MailLogger.failure.subject" value="[BUILD WIN32 FAILURE]"/>
 	<property name="MailLogger.success.subject" value="[BUILD WIN32 SUCCESS]"/>
 	
-	<!-- Version property -->
+	<!-- Version properties -->
 	<property name="versionFile" location="${basedir}/version" />
 	<property name="dstampFile" location="${basedir}/dstamp.txt" />
 	<property name="about.mappings.file" location="${srcplugins}/org.talend.rcp/about.mappings" />
@@ -75,11 +96,11 @@
 		<echo message="Init task..." />
 		<tstamp />
 		<echo message="Loading version file" />
-		<loadfile property="version" srcFile="${versionFile}" />
 		<echo message="Initialisation : TimeStamp / DateStamp" />
 		<echo file="${dstampFile}" message="${DSTAMP}-${TSTAMP}-V1" />
+		<loadfile property="buildID" srcFile="${dstampFile}" failonerror="true"/>
 		<touch file="${about.mappings.file}"/>
-<echo file="${about.mappings.file}">0=${DSTAMP}-${TSTAMP}-V1
+<echo file="${about.mappings.file}">0=${buildID}
 ${version.mappings}
 		</echo>
 		</target>
@@ -109,7 +130,8 @@ ${version.mappings}
 		<antcall target="clean.src" />
 		<delete dir="${releasedir}" />
 		<delete dir="${basedir}/workspace" /> 
-		<delete file="${dstampFile}" />
+		<delete file="${dstampFile}" failonerror="false"/>
+		<delete file="${srcstamp}" failonerror="false"/>
 		<antcall target="del.genfiles" />
 	</target>
 			
@@ -126,6 +148,20 @@ ${version.mappings}
 		<antcall target="main" />
 		<antcall target="sources" />
 		<antcall target="backup" />
+		<delete dir="${releasedir}" />
+	</target>
+	
+	<target name="Updatesite" description="delete sources, checkout sources, build update site jars">
+		<antcall target="clean.all" />
+		<antcall target="del.src"/>
+		<antcall target="checkout"/>
+		<antcall target="init"/>
+		<antcall target="gen.files" />
+		<antcall target="exsd" />
+		<antcall target="build.features"/>
+		<antcall target="deploy.app" />
+		<antcall target="sources" />
+		<antcall target="backupUpdateSite" />
 		<delete dir="${releasedir}" />
 	</target>
 	
@@ -178,13 +214,12 @@ ${version.mappings}
 		<pde.convertSchemaToHTML  manifest="${srcplugins}/org.talend.help/plugin.xml" destination="${srcplugins}/org.talend.help/reference/extension-points/repository/" />
 		<pde.convertSchemaToHTML  manifest="${srcplugins}/org.talend.repository.localprovider/plugin.xml" destination="${srcplugins}/org.talend.help/reference/extension-points/repository/" />
 		<pde.convertSchemaToHTML  manifest="${srcplugins}/org.talend.repository/plugin.xml" destination="${srcplugins}/org.talend.help/reference/extension-points/repository/" />
-
-		
 	</target>
 	
 	<!-- Building features from src -->
 	<target name="build.features" description="build features">
 		<echo message="Building features from src" />
+		<loadfile property="version" srcFile="${versionFile}" />
 		<ant antfile="${srcfeatures}/org.epic-feature/build.xml" dir="${srcfeatures}/org.epic-feature/" target="build.jars">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
@@ -195,17 +230,18 @@ ${version.mappings}
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.epic-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />
 		</ant>
 		<ant antfile="${basedir}/package.org.epic_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.epic-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.epic-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
@@ -217,17 +253,18 @@ ${version.mappings}
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.commons-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.commons-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />
 		</ant>
 		<ant antfile="${basedir}/package.org.talend.commons_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.commons-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.commons-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="collectingFolder" value="Talend" />
@@ -239,17 +276,18 @@ ${version.mappings}
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.core-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.core-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />
 		</ant>
 		<ant antfile="${basedir}/package.org.talend.core_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.core-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.core-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="collectingFolder" value="Talend" />
@@ -261,17 +299,18 @@ ${version.mappings}
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.repository-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.repository-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />
 		</ant>
 		<ant antfile="${basedir}/package.org.talend.repository_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.repository-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.repository-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="collectingFolder" value="Talend" />
@@ -283,17 +322,18 @@ ${version.mappings}
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.designer-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.designer-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />
 		</ant>
 		<ant antfile="${basedir}/package.org.talend.designer_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.designer-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.designer-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="collectingFolder" value="Talend" />
@@ -305,17 +345,18 @@ ${version.mappings}
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.designer.business-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.designer.business-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />
 		</ant>
 		<ant antfile="${basedir}/package.org.talend.designer.business_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.designer.business-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.designer.business-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="collectingFolder" value="Talend" />
@@ -327,17 +368,18 @@ ${version.mappings}
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.rcp-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.rcp-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />
 		</ant>
 		<ant antfile="${basedir}/package.org.talend.rcp_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.rcp-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.rcp-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
@@ -349,17 +391,18 @@ ${version.mappings}
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.help-feature" />
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.help-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
+			<property name="collectingFolder" value="Talend" />	
 		</ant>
 		<ant antfile="${basedir}/package.org.talend.help_feature.${archi}.xml" dir="${src}/" target="main">
 			<property name="arch" value="${cpuf}"/>
 			<property name="os" value="${los}"/>
 			<property name="ws" value="${wm}"/>
 			<property name="buildDirectory" value="${srcfeatures}/org.talend.help-feature"/>
-			<property name="buildId" value="0.0.1"/>
+			<property name="buildId" value="${version}"/>
 			<property name="buildLabel" value="org.talend.help-feature" />
 			<property name="archivePrefix" value="Talend"/>
 			<property name="baseLocation" value="${eclipsehome}"/>
@@ -370,36 +413,31 @@ ${version.mappings}
 	<!-- Deploy Builded features -->
 	<target name="deploy.app" description="unjar features">
 		<echo message="Deploying features" />
-		<move file="${src}/org.talend.commons-feature/org.talend.commons_feature-0.0.1-${archi}.zip" todir="${basedir}" />
-		<move file="${src}/org.talend.core-feature/org.talend.core_feature-0.0.1-${archi}.zip" todir="${basedir}" />
-		<move file="${src}/org.talend.designer-feature/org.talend.designer_feature-0.0.1-${archi}.zip" todir="${basedir}" />
-		<move file="${src}/org.talend.rcp-feature/org.talend.rcp_feature-0.0.1-${archi}.zip" todir="${basedir}" />
-		<move file="${src}/org.talend.help-feature/org.talend.help_feature-0.0.1-${archi}.zip" todir="${basedir}" />
-		<move file="${src}/org.talend.designer.business-feature/org.talend.designer.business_feature-0.0.1-${archi}.zip" todir="${basedir}" />
-		<move file="${src}/org.talend.repository-feature/org.talend.repository_feature-0.0.1-${archi}.zip" todir="${basedir}" />
-		<move file="${src}/org.epic-feature/org.epic_feature-0.0.1-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.talend.commons-feature/org.talend.commons_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.talend.core-feature/org.talend.core_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.talend.designer-feature/org.talend.designer_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.talend.rcp-feature/org.talend.rcp_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.talend.help-feature/org.talend.help_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.talend.designer.business-feature/org.talend.designer.business_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.talend.repository-feature/org.talend.repository_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
+		<move file="${src}/org.epic-feature/org.epic_feature-${version.mappings}-${archi}.zip" todir="${basedir}" />
 
-		<unzip src="${basedir}/org.talend.commons_feature-0.0.1-${archi}.zip" dest="${basedir}" />
-		<unzip src="${basedir}/org.talend.core_feature-0.0.1-${archi}.zip" dest="${basedir}" />
-		<unzip src="${basedir}/org.talend.designer_feature-0.0.1-${archi}.zip" dest="${basedir}" />
-		<unzip src="${basedir}/org.talend.rcp_feature-0.0.1-${archi}.zip" dest="${basedir}" />
-		<unzip src="${basedir}/org.talend.help_feature-0.0.1-${archi}.zip" dest="${basedir}" />
-		<unzip src="${basedir}/org.talend.designer.business_feature-0.0.1-${archi}.zip" dest="${basedir}" />
-		<unzip src="${basedir}/org.talend.repository_feature-0.0.1-${archi}.zip" dest="${basedir}" />
-		<unzip src="${basedir}/org.epic_feature-0.0.1-${archi}.zip" dest="${basedir}" />	
+		<unzip src="${basedir}/org.talend.commons_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />
+		<unzip src="${basedir}/org.talend.core_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />
+		<unzip src="${basedir}/org.talend.designer_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />
+		<unzip src="${basedir}/org.talend.rcp_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />
+		<unzip src="${basedir}/org.talend.help_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />
+		<unzip src="${basedir}/org.talend.designer.business_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />
+		<unzip src="${basedir}/org.talend.repository_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />
+		<unzip src="${basedir}/org.epic_feature-${version.mappings}-${archi}.zip" dest="${basedir}" />	
 		
-		<delete dir="${src}/org.talend.commons-feature" />
-		<delete dir="${src}/org.talend.core-feature" />
-		<delete dir="${src}/org.talend.designer-feature" />
-		<delete dir="${src}/org.talend.rcp-feature" />
-		<delete dir="${src}/org.talend.help-feature" />
-		<delete dir="${src}/org.talend.designer.business-feature" />
-		<delete dir="${src}/org.talend.repository-feature" />
-		<delete dir="${src}/org.epic-feature" />
+		<delete includeemptydirs="true">
+			<fileset dir="${src}" includes="org.*"/>
+		</delete>
 	</target>
 	
 	<!-- Cleaning features from src -->
-	<target name="clean.features" description="clean builded features temporary files">
+	<target name="clean.features" description="clean builded features temporary files" >
 		<echo message="Cleaning features" />
 		<ant antfile="${srcfeatures}/org.epic-feature/build.xml" dir="${srcfeatures}/org.epic-feature/" target="clean" />
 		<ant antfile="${srcfeatures}/org.talend.commons-feature/build.xml" dir="${srcfeatures}/org.talend.commons-feature/" target="clean"/>
@@ -409,15 +447,10 @@ ${version.mappings}
 		<ant antfile="${srcfeatures}/org.talend.help-feature/build.xml" dir="${srcfeatures}/org.talend.help-feature/" target="clean"/>
 		<ant antfile="${srcfeatures}/org.talend.designer.business-feature/build.xml" dir="${srcfeatures}/org.talend.designer.business-feature/" target="clean"/>
 		<ant antfile="${srcfeatures}/org.talend.repository-feature/build.xml" dir="${srcfeatures}/org.talend.repository-feature/" target="clean"/>
-				
-		<delete file="${basedir}/org.talend.commons_feature-0.0.1-${archi}.zip" />
-		<delete file="${basedir}/org.talend.core_feature-0.0.1-${archi}.zip" />
-		<delete file="${basedir}/org.talend.designer_feature-0.0.1-${archi}.zip" />
-		<delete file="${basedir}/org.talend.rcp_feature-0.0.1-${archi}.zip" />
-		<delete file="${basedir}/org.talend.help_feature-0.0.1-${archi}.zip" />
-		<delete file="${basedir}/org.talend.designer.business_feature-0.0.1-${archi}.zip" />
-		<delete file="${basedir}/org.talend.repository_feature-0.0.1-${archi}.zip" />
-		<delete file="${basedir}/org.epic_feature-0.0.1-${archi}.zip" />
+		
+		<delete>
+			<fileset dir="${basedir}" includes="org.*.zip" />
+		</delete>
 	</target>
 	
 	<!-- Cleaning plugins from src -->
@@ -459,6 +492,7 @@ ${version.mappings}
 	<!--Checkout features from CVS (using .cvspass in user's home directory) -->
 	<target name="checkoutfeature" description="checkout features from cvs">
 		<echo message="Acquiering features' sources from CVS" />
+		<mkdir dir="${srcfeatures}"/>
 		<cvs command="export" dest="${srcfeatures}" passfile="C:/Documents and Settings/jclevenot.TALEND/.cvspass" tag="HEAD" package="org.talend.commons-feature" />
 		<cvs command="export" dest="${srcfeatures}" passfile="C:/Documents and Settings/jclevenot.TALEND/.cvspass" tag="HEAD" package="org.talend.core-feature" />
 		<cvs command="export" dest="${srcfeatures}" passfile="C:/Documents and Settings/jclevenot.TALEND/.cvspass" tag="HEAD" package="org.talend.designer-feature" />
@@ -472,6 +506,7 @@ ${version.mappings}
 	<!--Checkout plugins from CVS (using .cvspass in user's home directory) -->
 	<target name="checkoutplugins" description="checkout plugins from cvs">
 		<echo message="Acquiering plugins' sources from CVS" />
+		<mkdir dir="${srcplugins}"/>
 		<cvs command="export" dest="${srcplugins}" passfile="C:/Documents and Settings/jclevenot.TALEND/.cvspass" tag="HEAD" package="org.talend.commons" />
 		<cvs command="export" dest="${srcplugins}" passfile="C:/Documents and Settings/jclevenot.TALEND/.cvspass" tag="HEAD" package="org.talend.core" />
 		<cvs command="export" dest="${srcplugins}" passfile="C:/Documents and Settings/jclevenot.TALEND/.cvspass" tag="HEAD" package="org.talend.designer.components.localprovider" />
@@ -503,39 +538,13 @@ ${version.mappings}
 	<!-- Deleting local features' sources checkouted from cvs -->
 	<target name="del.srcfeatures" description="delete checkouted features" >
 		<echo message="Deleting features' sources from src" />
-		<delete dir="${srcfeatures}/org.talend.commons-feature" />
-		<delete dir="${srcfeatures}/org.talend.rcp-feature" />
-		<delete dir="${srcfeatures}/org.talend.core-feature" />
-		<delete dir="${srcfeatures}/org.talend.help-feature" />
-		<delete dir="${srcfeatures}/org.talend.designer-feature" />
-		<delete dir="${srcfeatures}/org.talend.designer.business-feature" />
-		<delete dir="${srcfeatures}/org.talend.repository-feature" />
-		<delete dir="${srcfeatures}/org.epic-feature" />
+		<delete dir="${srcfeatures}/" includeemptydirs="true"/>
 	</target>
 	
 	<!-- Deleting local plugins' sources checkouted from cvs -->
 	<target name="del.srcplugins" description="delete checkouted plugins">
 		<echo message="Deleting plugins' sources from src" />
-	    <delete dir="${srcplugins}/org.talend.commons" /> 
-		<delete dir="${srcplugins}/org.talend.core" />
-	    <delete dir="${srcplugins}/org.talend.designer.components.localprovider" />
-	    <delete dir="${srcplugins}/org.talend.designer.core" />
-		<delete dir="${srcplugins}/org.talend.designer.mapper" />
-		<delete dir="${srcplugins}/org.talend.libraries" />
-		<delete dir="${srcplugins}/org.talend.rcp" />
-		<delete dir="${srcplugins}/org.talend.resources" />
-		<delete dir="${srcplugins}/org.talend.help" />
-		<delete dir="${srcplugins}/org.talend.designer.codegen" />
-		<delete dir="${srcplugins}/org.talend.designer.runprocess" />
-		<delete dir="${srcplugins}/org.talend.model" />
-		<delete dir="${srcplugins}/org.talend.designer.business.diagram" />
-		<delete dir="${srcplugins}/org.talend.model.edit" />
-		<delete dir="${srcplugins}/org.talend.designer.codegen.perlmodule" />
-		<delete dir="${srcplugins}/org.talend.repository.localprovider" />
-		<delete dir="${srcplugins}/org.talend.repository" />
-		<delete dir="${srcplugins}/org.epic.debug" />
-		<delete dir="${srcplugins}/org.epic.perleditor" />
-		<delete dir="${srcplugins}/org.epic.regexp" />	
+	    <delete dir="${srcplugins}/" includeemptydirs="true" /> 
 	</target>
 
 	
@@ -597,103 +606,29 @@ ${version.mappings}
 	<!-- Delete generated build.xml for features in local src directory -->
 	<target name="del.fgenbuild" description="delete generated build.xml for features in local src directory">
 		<echo message="Deleting features' build.xml from local src" />
-		<delete file="${srcfeatures}/org.talend.commons-feature/build.xml" />
-		<delete file="${srcfeatures}/org.talend.core-feature/build.xml" />
-		<delete file="${srcfeatures}/org.talend.designer-feature/build.xml" />
-		<delete file="${srcfeatures}/org.talend.rcp-feature/build.xml" />
-		<delete file="${srcfeatures}/org.talend.help-feature/build.xml" />
-		<delete file="${srcfeatures}/org.talend.designer.business-feature/build.xml" />
-		<delete file="${srcfeatures}/org.talend.repository-feature/build.xml" />
-		<delete file="${srcfeatures}/org.epic-feature/build.xml" />
-		
-		<delete file="${basedir}/assemble.org.talend.commons_feature.all.xml"/>
-		<delete file="${basedir}/assemble.org.talend.commons_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.talend.core_feature.all.xml" />
-		<delete file="${basedir}/assemble.org.talend.core_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.talend.designer_feature.all.xml" />
-		<delete file="${basedir}/assemble.org.talend.designer_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.talend.rcp_feature.all.xml" />
-		<delete file="${basedir}/assemble.org.talend.rcp_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.talend.help_feature.all.xml" />
-		<delete file="${basedir}/assemble.org.talend.help_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.talend.designer.business_feature.all.xml" />
-		<delete file="${basedir}/assemble.org.talend.designer.business_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.talend.repository_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.talend.repository_feature.all.xml" />
-		<delete file="${basedir}/assemble.org.epic_feature.${archi}.xml" />
-		<delete file="${basedir}/assemble.org.epic_feature.all.xml" />
-			
-		<delete file="${basedir}/package.org.talend.commons_feature.all.xml" />
-		<delete file="${basedir}/package.org.talend.commons_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.talend.core_feature.all.xml" />
-		<delete file="${basedir}/package.org.talend.core_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.talend.designer_feature.all.xml" />
-		<delete file="${basedir}/package.org.talend.designer_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.talend.rcp_feature.all.xml" />
-		<delete file="${basedir}/package.org.talend.rcp_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.talend.help_feature.all.xml" />
-		<delete file="${basedir}/package.org.talend.help_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.talend.designer.business_feature.all.xml" />
-		<delete file="${basedir}/package.org.talend.designer.business_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.talend.repository_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.talend.repository_feature.all.xml" />
-		<delete file="${basedir}/package.org.epic_feature.${archi}.xml" />
-		<delete file="${basedir}/package.org.epic_feature.all.xml" />
+		<delete>
+			<fileset dir="${basedir}" includes="assemble.*.xml"/>
+			<fileset dir="${basedir}" includes="package.*.xml"/>
+			<fileset dir="${srcfeatures}" includes="**/build.xml"/>
+		</delete>
 	</target>
 	
 	<!-- Delete generated build.xml and javaCompiler...args for plugins in local src directory -->
 	<target name="del.pgenbuild" description="delete generated build.xml and javaCompiler...args for plugins in local src directory">
 		<echo message="Deleting plugins' build.xml/javaCompiler...args from local src" />
-		<delete file="${srcplugins}/org.talend.libraries/build.xml" />
-		<delete file="${srcplugins}/org.talend.commons/build.xml" />
-		<delete file="${srcplugins}/org.talend.core/build.xml" />
-		<delete file="${srcplugins}/org.talend.designer.components.localprovider/build.xml" />
-		<delete file="${srcplugins}/org.talend.designer.core/build.xml" />
-		<delete file="${srcplugins}/org.talend.designer.mapper/build.xml" />
-		<delete file="${srcplugins}/org.talend.rcp/build.xml" />
-		<delete file="${srcplugins}/org.talend.resources/build.xml" />
-		<delete file="${srcplugins}/org.talend.designer.codegen/build.xml" />
-		<delete file="${srcplugins}/org.talend.help/build.xml" />
-		<delete file="${srcplugins}/org.talend.designer.runprocess/build.xml" />
-		<delete file="${srcplugins}/org.talend.designer.codegen.perlmodule/build.xml" />
-		<delete file="${srcplugins}/org.talend.model/build.xml" />
-		<delete file="${srcplugins}/org.talend.designer.business.diagram/build.xml" />
-		<delete file="${srcplugins}/org.talend.model.edit/build.xml" />
-		<delete file="${srcplugins}/org.talend.repository.localprovider/build.xml" />
-		<delete file="${srcplugins}/org.talend.repository/build.xml" />
-		<delete file="${srcplugins}/org.epic.debug/build.xml" />
-		<delete file="${srcplugins}/org.epic.perleditor/build.xml" />
-		<delete file="${srcplugins}/org.epic.regexp/build.xml" />
-			
-		<delete file="${srcplugins}/org.talend.libraries/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.commons/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.core/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.designer.components.localprovider/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.designer.core/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.designer.mapper/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.rcp/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.resources/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.designer.codegen/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.help/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.designer.runprocess/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.designer.codegen.perlmodule/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.model/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.designer.business.diagram/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.model.edit/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.repository/javaCompiler...args" />
-		<delete file="${srcplugins}/org.talend.repository.localprovider/javaCompiler...args" />
-		<delete file="${srcplugins}/org.epic.debug/javaCompiler...args" />
-		<delete file="${srcplugins}/org.epic.perleditor/javaCompiler...args" />
-		<delete file="${srcplugins}/org.epic.regexp/javaCompiler...args" />
+		<delete>
+		    <fileset dir="${srcplugins}" includes="**/build.xml"/>
+			<fileset dir="${srcplugins}" includes="**/javaCompiler...args"/>
+		</delete>
 	</target>
 	
 	
-	<target name="sources" description="Save All sources used to build in a zip">
- 		<antcall target="clean.src"  />
-		<delete dir="${basedir}/workspace" /> 
+	<target name="sources" description="Save All sources used to build in a zip" unless="sources-is-true" >
+ 		<antcall target="clean.src" />
+		<delete dir="${basedir}/workspace" includeemptydirs="true"/> 
 		<antcall target="del.genfiles" />
 	    <loadfile property="buildID" srcFile="${dstampFile}" failonerror="true"/>
-		<echo message="${buildID}"/>
+		<echo file="${srcstamp}" message="${buildID}"/>
 		<mkdir dir="${storage}"/>
 		<mkdir dir="${storage.sources}"/>
 		<mkdir dir="${storage.sources}/${storage.sources.dirname}-${buildID}" />
@@ -707,36 +642,46 @@ ${version.mappings}
 		<mkdir dir="${temp}" />
 		<mkdir dir="${storage}"/>
 		<mkdir dir="${storage.builds}"/>
-		<mkdir dir="${storage.builds}/${storage.builds.dirname}-${storage.builds.os}-${buildID}"/>
-		<mkdir dir="${temp}/${storage.builds.dirname}-${storage.builds.os}-${buildID}"/>
-		<move todir="${temp}/${storage.builds.dirname}-${storage.builds.os}-${buildID}">
+		<mkdir dir="${storage.builds}/${storage.builds.dirname}-${storage.os}-${buildID}"/>
+		<mkdir dir="${temp}/${storage.builds.dirname}-${storage.os}-${buildID}"/>
+		<move todir="${temp}/${storage.builds.dirname}-${storage.os}-${buildID}">
 		   <fileset dir="${releasedir}" />
 		  </move>
-		<zip destfile="${storage.builds}/${storage.builds.dirname}-${storage.builds.os}-${buildID}/${storage.builds.filename}-${storage.builds.os}-${buildID}.zip" basedir="${temp}/"/>
+		<zip destfile="${storage.builds}/${storage.builds.dirname}-${storage.os}-${buildID}/${storage.builds.filename}-${storage.os}-${buildID}.zip" basedir="${temp}/"/>
 		<move todir="${releasedir}">
-			<fileset dir="${temp}/${storage.builds.dirname}-${storage.builds.os}-${buildID}" />
+			<fileset dir="${temp}/${storage.builds.dirname}-${storage.os}-${buildID}" />
 		</move>
 	</target>
 
-<target name="clean.storage">
+	<target name="clean.storage">
+			<antcall target="clean.storage.build" />
+			<antcall target="clean.storage.sources" />
+	</target>
 	
-	<echo message="Deleting old builds and backup the last one" />
-	<loadfile property="buildID" srcFile="${dstampFile}" failonerror="true"/>
-	<echo message="${buildID}"/>
-	<move todir="${backup.builds}/${storage.builds.dirname}-${storage.builds.os}-${buildID}" includeEmptyDirs="yes" failonerror="true" >
-		<fileset dir="${storage.builds}/${storage.builds.dirname}-${storage.builds.os}-${buildID}" />
-	</move>
-	<move todir="${backup.sources}/${storage.sources.dirname}-${buildID}" includeEmptyDirs="yes" failonerror="true">
-		<fileset dir="${storage.sources}/${storage.sources.dirname}-${buildID}" />
-	</move>
-	<delete dir="${storage.builds}" includeemptydirs="true"/>
-	<delete dir="${storage.sources}" includeemptydirs="true" />
-	<mkdir dir="${storage.builds}" />
-	<mkdir dir="${storage.sources}" />
-</target>
+	<target name="clean.storage.build" >
+		<echo message="Deleting old builds and backup the last one" />
+		<loadfile property="buildID" srcFile="${dstampFile}" failonerror="true"/>
+		<echo message="${buildID}"/>
+		<move todir="${backup.builds}/${storage.builds.dirname}-${storage.os}-${buildID}" includeEmptyDirs="yes" failonerror="true" >
+			<fileset dir="${storage.builds}/${storage.builds.dirname}-${storage.os}-${buildID}" />
+		</move>
+		<delete dir="${storage.builds}" includeemptydirs="true"/>
+		<mkdir dir="${storage.builds}" />
+		<delete file="${dstampFile}" failonerror="true"/>
+	</target>
 	
+	<target name="clean.storage.sources" unless="sources-is-true">
+		<echo message="Deleting old sources and backup the last one" />
+		<loadfile property="SrcID" srcFile="${srcstamp}" failonerror="true"/>
+		<move todir="${backup.sources}/${storage.sources.dirname}-${SrcID}" includeEmptyDirs="yes" failonerror="false">
+			<fileset dir="${storage.sources}/${storage.sources.dirname}-${SrcID}" />
+		</move>
+		<delete dir="${storage.sources}" includeemptydirs="true" />
+		<mkdir dir="${storage.sources}" />
+		<delete file="${srcstamp}" failonerror="true"/>
+	</target>
+		
 	<target name="javadoc">
 		<!-- adding ant call to javadoc.xml generated with eclipse -->
 	</target>
-
 </project>
