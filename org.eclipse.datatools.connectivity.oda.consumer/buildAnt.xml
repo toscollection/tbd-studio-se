@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *************************************************************************
+ * Copyright (c) 2006 Actuate Corporation.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *  Actuate Corporation - initial API and implementation
+ *  
+ *************************************************************************
+ *
+ *  buildAnt.xml
+ *
+ *  Build script for project org.eclipse.datatools.connectivity.oda.design.ui
+ *
+ *  Usage:
+ *    ant [any one or more of the public targets] 
+ *        -Declipse.home=<your eclipse home> 
+ *		  -Ddtp.home=<your DTP plugins source home>  [optional]
+ *
+ *  Default target is "build.jars".
+ *
+ *  Notes:
+ *  1. classpath need to be set for junit.jar
+ *  2. The build script requires Ant 1.6
+ *
+-->
+
+<project name="org.eclipse.datatools.connectivity.oda.consumer" default="build.jars" basedir=".">
+	<property file="build.properties"/>
+	<property name="module.name" value="org.eclipse.datatools.connectivity.oda.consumer"/>
+	<property file="META-INF/MANIFEST.MF" />
+	<property name="plugin.version" value="${Bundle-Version}" />
+	<property name="plugin.package" value="${module.name}_${plugin.version}" />
+
+	<property name="plugin.bin.jar.name" value="odaconsumer-helper.jar" />
+	<property name="plugin.srczip.name" value="odaconsumersrc.zip" />
+
+	<property name="eclipse.home" location="."/>
+	<property name="dtp.home" location=".."/>
+	<property name="dtp.oda.plugin" value="org.eclipse.datatools.connectivity.oda" />
+	<property name="dtp.oda.dir" location="${dtp.home}/${dtp.oda.plugin}"/>
+
+	<property name="src.dir" value="${source..}"/>
+	<property name="bin.dir" value="${output..}"/>
+
+	<!-- Class Path -->
+	<path id="class.path">
+		<pathelement path="${bin.dir}"/>
+		<fileset dir="${dtp.oda.dir}">
+			<include name="oda.jar"/>			
+			<include name="download/${dtp.oda.plugin}_*.jar"/>			
+		</fileset>
+		<!-- Dependencies on Eclipse installation -->
+		<fileset dir="${eclipse.home}/plugins">
+			<include name="org.eclipse.core.runtime_*.jar"/>
+			<include name="org.eclipse.equinox.*.jar"/>
+			<include name="org.eclipse.core.jobs_*.jar"/>
+			<include name="org.eclipse.osgi_*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="odaconsumer-helper.jar" depends="buildDependency" description="Create jar: ${plugin.bin.jar.name}">
+		<mkdir dir="${bin.dir}"/>
+		<!-- compile the source code -->
+		<javac srcdir="${src.dir}"
+			   destdir="${bin.dir}" 
+			   debug="${javac.debug}" 
+			   includeAntRuntime="no" 
+			   source="${javac.source}" 
+			   target="${javac.target}" 
+			   encoding="utf-8">
+			<classpath refid="class.path" />
+		</javac>
+		<!-- copy necessary resources -->
+		<copy todir="${bin.dir}/${package.odaconsumer.dir}" failonerror="true">
+			<fileset dir="${src.dir}/${package.odaconsumer.dir}" includes="${jar.includes}" />
+		</copy>
+		<mkdir dir="${build.result.dir}"/>
+		<jar destfile="${build.result.dir}/${plugin.bin.jar.name}">
+			<fileset dir="${bin.dir}">
+				<exclude name="**/package.html"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="buildDependency">
+		<echo message="Begin call ODA jars task in ${dtp.oda.dir}"/>
+		<ant dir="${dtp.oda.dir}" antfile="buildAnt.xml" target="build.jars" inheritAll="false">
+			<property name="eclipse.home" value="${eclipse.home}"/>
+			<property name="dtp.home" value="${dtp.home}"/>
+		</ant>
+		<echo message="End call ODA jars task in ${dtp.oda.dir}"/>		
+	</target>
+		
+	<target name="odaconsumersrc.zip" >
+		<mkdir dir="${build.result.dir}"/>
+		<zip zipfile="${build.result.dir}/${plugin.srczip.name}" filesonly="false" whenempty="skip" update="false">
+			<fileset dir="${src.dir}" excludes="**/*.class"/>
+		</zip>
+	</target>
+		
+	<target name="build.jars" description="Build all the jars for the plug-in.">
+		<available property="${plugin.bin.jar.name}" file="${build.result.dir}/${plugin.bin.jar.name}"/>
+		<antcall target="odaconsumer-helper.jar"/>
+	</target>
+	
+	<target name="build.source.zips" description="Create zip files containing the source for the plug-in.">
+		<available property="${plugin.srczip.name}" file="${build.result.dir}/${plugin.srczip.name}"/>
+		<antcall target="odaconsumersrc.zip"/>
+	</target>
+	
+	<target name="clean" description="Clean the plug-in of all the zips, jars and logs created.">
+		<!-- Delete the binary and unit tests directories -->
+		<delete dir="${bin.dir}"/>
+		<delete dir="${temp.dir}"/>
+		<delete dir="${build.result.dir}/${javadoc.dir}"/>
+		<antcall target="clean.download.dir"/>
+		<!-- Delete the target jar and zip files -->
+		<delete file="${build.result.dir}/${plugin.bin.jar.name}"/>
+		<delete file="${build.result.dir}/${plugin.srczip.name}"/>
+		<delete>
+			<fileset dir="${plugin.destination}" includes="${module.name}_*.zip"/>
+		</delete>
+	</target>
+
+	<target name="clean.download.dir" unless="dtp.build">
+		<delete dir="${download.dir}"/>
+	</target>
+
+	<target name="create.download.dir" unless="dtp.build">
+		<mkdir dir="${download.dir}"/>
+	</target>
+
+	<target name="gather.bin.parts" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/${plugin.package}"/>
+		<copy todir="${destination.temp.folder}/${plugin.package}" failonerror="true">
+			<fileset dir="${basedir}" includes="${bin.includes}"/>
+		</copy>
+	</target>
+
+	<target name="gather.src.parts" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/${plugin.package}"/>
+		<copy todir="${destination.temp.folder}/${plugin.package}" failonerror="false" overwrite="false">
+			<fileset dir="${build.result.dir}" includes="${plugin.srczip.name}"/>
+		</copy>
+	</target>
+	
+	<target name="zip.plugin" description="Create a zip containing the plug-in.">
+		<delete dir="${temp.dir}"/>
+		<mkdir dir="${temp.dir}"/>
+		<antcall target="build.jars"/>
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${temp.dir}/"/>
+		</antcall>
+		<delete>
+			<fileset dir="${temp.dir}" includes="**/*.bin.log"/>
+		</delete>
+		<zip zipfile="${plugin.destination}/${plugin.package}.zip" 
+			 basedir="${temp.dir}" 
+			 filesonly="true" 
+			 whenempty="skip" 
+			 update="false"/>
+		<delete dir="${temp.dir}"/>
+	</target>
+			
+	<!-- Generate the JavaDoc.
+			 Parameters:
+			 		- ${javadoc.dir} target directory to put the java document
+	 -->
+	<target name="javadoc" description="Create Javadoc API documentation for this plug-in.">
+		<delete dir="${build.result.dir}/${javadoc.dir}"/>
+		<mkdir dir="${build.result.dir}/${javadoc.dir}"/>
+		<javadoc destdir="${build.result.dir}/${javadoc.dir}" 
+				 author="true" 
+				 version="true" 
+				 use="true" 
+				 windowtitle="DTP Open Data Access 3.0 Consumer Helper Component" 
+				 doctitle="DTP Open Data Access (ODA) Consumer Helper Component" 
+				 source="1.4" 
+			 	 access="public" 
+				 packagenames="org.eclipse.datatools.connectivity.oda.consumer.*">
+				 <packageset dir="${src.dir}" 
+						defaultexcludes="yes" 
+						excludes="org/eclipse/datatools/connectivity/oda/consumer/nls/**"/>
+			<classpath refid="class.path" />
+			<bottom><![CDATA[<i>Copyright &#169;  2006 Actuate Corporation. All rights reserved. </i>]]></bottom>
+		</javadoc>
+	</target>
+	
+	<target name="gather.doc.parts" if="destination.temp.folder">
+	</target>
+	
+	<target name="download.plugin" description="Create a download folder that contains all the files to include in DTP download build.">
+		<antcall target="clean"/>
+		<antcall target="create.download.dir"/>
+
+		<antcall target="build.jars"/>
+		<antcall target="jar.plugin"/>
+<!--
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${download.dir}/"/>
+		</antcall>
+		<delete>
+			<fileset dir="${download.dir}" includes="**/*.bin.log"/>
+		</delete>
+
+		<antcall target="build.source.zips"/>
+		<antcall target="gather.src.parts">
+			<param name="destination.temp.folder" value="${download.dir}/"/>
+		</antcall>
+
+		<antcall target="javadoc"/>
+		<antcall target="gather.doc.parts">
+			<param name="destination.temp.folder" value="${download.dir}/"/>
+		</antcall>
+-->
+	</target>
+
+	<target name="jar.plugin" >
+		<property file="META-INF/MANIFEST.MF" />
+		<property name="jar.name" value="${plugin.package}.jar" />
+		<jar destfile="${download.dir}/${jar.name}" manifest="./META-INF/MANIFEST.MF">
+			<fileset dir="${bin.dir}">
+				<include name="**/*.class"/>
+				<include name="**/*.txt"/>
+				<include name="**/*.xml"/>
+				<include name="**/*.def"/>
+				<include name="**/*.properties"/>
+			</fileset>
+			<fileset dir="." includes="${bin.includes}"/>
+	    </jar>
+	</target>
+
+</project>
