@@ -23,7 +23,15 @@ Bundle-ClassPath: .,
  nanoxml.jar,
  rowset.jar,
  sqlexplorer.jar,
- squirrel.jar
+ squirrel.jar,
+ saxon8.jar,
+ saxon8-dom.jar,
+ saxon8-dom4j.jar,
+ saxon8-jdom.jar,
+ saxon8-sql.jar,
+ saxon8-xom.jar,
+ saxon8-xpath.jar,
+ saxon8-xqj.jar
 Bundle-Localization: plugin
 Export-Package: com.ibm.db2.jcc,
  com.mysql.jdbc,
