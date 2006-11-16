@@ -1,19 +1,11 @@
 package org.epic.core.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
-import org.eclipse.core.runtime.ILog;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
-import org.epic.core.parser.CurlyToken;
-import org.epic.core.parser.PerlToken;
-import org.epic.core.parser.PerlTokenTypes;
+import org.epic.core.parser.*;
 import org.epic.perleditor.PerlEditorPlugin;
 import org.epic.perleditor.editors.PerlPartitioner;
 
@@ -82,6 +74,15 @@ public class SourceFile
     public Iterator getSubs()
     {
         return new SubIterator();
+    }
+    
+    /**
+     * @return an iterator over {@link ModuleUse} instances representing
+     *         'use module' statements found in the source, in their original order  
+     */
+    public Iterator getUses()
+    {
+        return new ModuleUseIterator();
     }
     
     public synchronized void parse()
@@ -336,6 +337,41 @@ public class SourceFile
         public Object next()
         {
             return subIterator.next();
+        }
+    }
+    
+    private class ModuleUseIterator implements Iterator
+    {
+        private Iterator pkgIterator;
+        private Iterator useIterator;
+        
+        public ModuleUseIterator()
+        {
+            pkgIterator = packages.iterator();
+        }
+        
+        public void remove()
+        {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean hasNext()
+        {
+            while (useIterator == null || !useIterator.hasNext())
+            {
+                if (pkgIterator.hasNext())
+                {
+                    Package pkg = (Package) pkgIterator.next();
+                    useIterator = pkg.getUses().iterator();
+                }
+                else return false;
+            }
+            return true;
+        }
+
+        public Object next()
+        {
+            return useIterator.next();
         }
     }
 }

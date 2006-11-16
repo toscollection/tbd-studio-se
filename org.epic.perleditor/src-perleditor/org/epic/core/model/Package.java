@@ -1,11 +1,8 @@
 package org.epic.core.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.epic.core.parser.CurlyToken;
 import org.epic.core.parser.PerlToken;
 
