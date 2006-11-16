@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Perleditor Plug-in
 Bundle-SymbolicName: org.epic.perleditor;singleton:=true
-Bundle-Version: 0.2.4.qualifier
+Bundle-Version: 0.4.17.qualifier
 Bundle-Activator: org.epic.perleditor.PerlEditorPlugin
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
@@ -49,7 +49,6 @@ Export-Package: antlr,
  org.epic.perleditor.editors.perl,
  org.epic.perleditor.editors.util,
  org.epic.perleditor.popupmenus,
- org.epic.perleditor.popupmenus.refactor,
  org.epic.perleditor.preferences,
  org.epic.perleditor.templates,
  org.epic.perleditor.templates.perl,
