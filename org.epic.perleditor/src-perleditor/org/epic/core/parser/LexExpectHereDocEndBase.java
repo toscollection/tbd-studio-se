@@ -1,7 +1,6 @@
 package org.epic.core.parser;
 
-import antlr.InputBuffer;
-import antlr.LexerSharedInputState;
+import antlr.*;
 
 /**
  * Base class for expectHereDocEnd lexer.

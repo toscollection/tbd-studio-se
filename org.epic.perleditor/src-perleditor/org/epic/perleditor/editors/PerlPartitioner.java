@@ -1,32 +1,14 @@
 package org.epic.perleditor.editors;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.eclipse.core.runtime.ILog;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.text.DocumentEvent;
-import org.eclipse.jface.text.DocumentRewriteSession;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentPartitioner;
-import org.eclipse.jface.text.IDocumentPartitionerExtension;
-import org.eclipse.jface.text.IDocumentPartitionerExtension2;
-import org.eclipse.jface.text.IDocumentPartitionerExtension3;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.ITypedRegion;
-import org.eclipse.jface.text.Region;
-import org.eclipse.jface.text.TypedRegion;
-import org.epic.core.parser.CurlyToken;
-import org.epic.core.parser.OperatorToken;
-import org.epic.core.parser.PerlMultiLexer;
-import org.epic.core.parser.PerlToken;
-import org.epic.core.parser.PerlTokenTypes;
-import org.epic.perleditor.PerlEditorPlugin;
+import java.util.*;
 
 import antlr.Token;
 import antlr.TokenStreamException;
+
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.text.*;
+import org.epic.core.parser.*;
+import org.epic.perleditor.PerlEditorPlugin;
 
 /**
  * Computes the partitioning of Perl source files by parsing them with
@@ -411,15 +393,29 @@ public class PerlPartitioner implements
         }
         catch (TokenStreamException e)
         {
-            log.log(new Status(
-                IStatus.ERROR,
-                PerlEditorPlugin.getPluginId(),
-                IStatus.OK,
-                "Could not parse source file. Report this exception as " +
-                "a bug, including the text fragment which triggers it, " +
-                "if possible.",
-                e
-                ));
+            if (e.getMessage().indexOf("unrecognized character at document offset") != -1)
+            {
+                log.log(new Status(
+                    IStatus.ERROR,
+                    PerlEditorPlugin.getPluginId(),
+                    IStatus.OK,
+                    "Could not parse source file due to an unrecognized character. " +
+                    "Check if the text file encoding is set correctly in Preferences/Editors.",
+                    e
+                    ));
+            }
+            else
+            {
+                log.log(new Status(
+                    IStatus.ERROR,
+                    PerlEditorPlugin.getPluginId(),
+                    IStatus.OK,
+                    "Could not parse source file. Report this exception as " +
+                    "a bug, including the text fragment which triggers it, " +
+                    "if possible.",
+                    e
+                    ));
+            }
         }
         
         initialized = true;

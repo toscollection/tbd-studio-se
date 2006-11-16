@@ -18,6 +18,9 @@ import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.progress.UIJob;
 import org.eclipse.debug.core.DebugEvent;
 import org.eclipse.debug.core.DebugException;
@@ -27,32 +30,28 @@ import org.eclipse.debug.core.model.IDebugElement;
 import org.eclipse.debug.core.model.IDebugTarget;
 import org.eclipse.debug.core.model.ITerminate;
 import org.eclipse.debug.core.model.IThread;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PartInitException;
 import org.epic.debug.ui.action.ShowLocalVariableActionDelegate;
-import org.epic.debug.util.DebuggerProxy;
 import org.epic.debug.util.DebuggerProxy2;
 import org.epic.debug.varparser.PerlDebugValue;
 import org.epic.debug.varparser.PerlDebugVar;
 import org.epic.debug.varparser.TokenVarParser;
+import org.epic.perleditor.PerlEditorPlugin;
 import org.epic.regexp.views.RegExpView;
 
 /**
  * @author ruehl
- * 
+ *
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class PerlDB implements IDebugElement, ITerminate
 {
-    private static final String mDBinitFlush = "{$| = 1; my $old = select STDERR; $|=1;select $old;}\n";
     private static final String mDBinitPerl_5_8 = "o frame=2";
     private static final String mDBinitPerl_5_6 = "O frame=2";
     private static final String mPadwalkerError = "PadWalker module not found - please install";
     private static final String mLovalVarCommand = ";{eval { require PadWalker; PadWalker->VERSION(0.08) }or print $DB::OUT (\""
         + mPadwalkerError
-        + "\\n\");do 'dumpvar_epic.pm' unless defined &dumpvar_epic::dumpvar_epic;defined &dumpvar_epic::dumpvar_epic or print $DB::OUT \"dumpvar_epic.pl not available.\\n\";my $h = eval { PadWalker::peek_my(2) };my @vars = split (' ','');$@ and $@ =~ s/ at .*//, print $DB::OUT ($@);my $savout = select($DB::OUT);dumpvar_epic::dumplex($_,$h->{$_},defined $option{dumpDepth} ? $option{dumpDepth} : -1,@vars) for sort keys %$h;print \"E\";select($savout);};\n";
+        + "\\n\");do 'dumpvar_epic.pm' unless defined &dumpvar_epic::dumpvar_epic;defined &dumpvar_epic::dumpvar_epic or print $DB::OUT \"dumpvar_epic.pm not available.\\n\";my $h = eval { PadWalker::peek_my(2) };my @vars = split (' ','');$@ and $@ =~ s/ at .*//, print $DB::OUT ($@);my $savout = select($DB::OUT);dumpvar_epic::dumplex($_,$h->{$_},defined $option{dumpDepth} ? $option{dumpDepth} : -1,@vars) for sort keys %$h;print \"E\";select($savout);};\n";
     private static final String mGlobalVarCommand = ";{do 'dumpvar_epic.pm' unless defined &dumpvar_epic::dumpvar_epic;defined &dumpvar_epic::dumpvar_epic or print $DB::OUT \"dumpvar_epic.pm not available.\\n\";my $savout = select($DB::OUT);dumpvar_epic::dumpvar_epic();select($savout);};\n";
 
     // Command codes
@@ -77,17 +76,18 @@ public class PerlDB implements IDebugElement, ITerminate
     // Result codes after executing a command
     private static final int COMMAND_FINISHED = 1;
     private static final int SESSION_TERMINATED = 2;
-    
+
     private static boolean mLocalVarsAvailable = true;
 
     private final PerlDebugThread[] mThreads;
-    
+
     // Regular expressions used for parsing "perl -d" output
     private final RE mReCommandFinished1;
     private final RE mReCommandFinished2;
     private final RE mReSessionFinished1, mReSessionFinished2;
     private final RE mRe_IP_Pos;
     private final RE mRe_IP_Pos_Eval;
+    private final RE mRe_IP_Pos_CODE;
     private final RE mReSwitchFileFail;
     private final RE mReSetLineBreakpoint;
     private final RE mReStackTrace;
@@ -103,15 +103,14 @@ public class PerlDB implements IDebugElement, ITerminate
 
     private final BreakpointMap mPendingBreakpoints;
     private final BreakpointMap mActiveBreakpoints;
-    
+
     private final org.epic.debug.util.PathMapper mPathMapper;
-    
+
     private final String mPerlVersion;
-    
+
     private String mDebugOutput;
     private String mDebugSubCommandOutput;
-    private IPPosition mStartIP;    
-    private boolean mIsCommandFinished;
+    private IPPosition mStartIP;
     private boolean mIsCommandRunning;
     private boolean mIsSessionTerminated;
     private DebugTarget mTarget;
@@ -132,7 +131,7 @@ public class PerlDB implements IDebugElement, ITerminate
         mTarget = fTarget;
         mWorkingDir = mTarget.getLocalWorkingDir();
         mCurrentCommand = mCommandNone;
-        mCurrentSubCommand = mCommandNone;        
+        mCurrentSubCommand = mCommandNone;
 
         mPendingBreakpoints = new BreakpointMap();
         mActiveBreakpoints = new BreakpointMap();
@@ -146,17 +145,26 @@ public class PerlDB implements IDebugElement, ITerminate
         mReSessionFinished1 = newRE("Use `q' to quit or `R' to restart", false);
         mReSessionFinished2 = newRE("Debugged program terminated.", false);
         mRe_IP_Pos = newRE("^[^\\(]*\\((.*):(\\d+)\\):[\\n\\t]", false);
-        mRe_IP_Pos_Eval = newRE("^[^\\(]*\\(eval\\s+\\d+\\)\\[(.*):(\\d+)\\]$", false);        
+        mRe_IP_Pos_Eval = newRE("^[^\\(]*\\(eval\\s+\\d+\\)\\[(.*):(\\d+)\\]$", false);
+        mRe_IP_Pos_CODE = newRE("^.*CODE\\(0x[0-9a-fA-F]+\\)\\(([^:]*):(\\d+)\\):[\\n\\t]", false);
         mReSwitchFileFail = newRE("^No file", false);
         mReSetLineBreakpoint = newRE("^\\s+DB<\\d+>", false);
         mReEnterFrame = newRE("^\\s*entering", false);
         mReExitFrame = newRE("^\\s*exited", false);
         mReStackTrace = newRE(
             "^(.)\\s+=\\s+(.*)called from .* \\`([^\\']+)\\'\\s*line (\\d+)\\s*$",
-            true);       
+            true);
 
         mDebugIn = mTarget.getDebugWriteStream();
         mDebugOut = mTarget.getDebugReadStream();
+
+        if (PerlEditorPlugin.getDefault().getDebugConsolePreference())
+        {
+            DebuggerProxy2 p = new DebuggerProxy2(mDebugIn, mDebugOut, getLaunch());
+            getLaunch().addProcess(p);
+            mDebugIn = p.getDebugIn();
+            mDebugOut = p.getDebugOut();
+        }
 
         mPathMapper = mTarget.getPathMapper();
 
@@ -176,21 +184,7 @@ public class PerlDB implements IDebugElement, ITerminate
                 command = mDBinitPerl_5_8;
             }
             startCommand(mCommandExecuteCode, command, false, this);
-            startCommand(mCommandExecuteCode, mDBinitFlush, false, this);
 
-            // /****************test only*****/
-            // getLaunch().setAttribute(PerlLaunchConfigurationConstants.ATTR_DEBUG_IO_PORT,"4041");
-            // getLaunch().setAttribute(PerlLaunchConfigurationConstants.ATTR_DEBUG_ERROR_PORT,"4042");
-            // DebuggerProxy p = new DebuggerProxy(this, "Proxy");
-            // getLaunch().addProcess(p);
-            // mTarget.setProcess(p);
-/* uncomment for a debugger debug console
-            DebuggerProxy2 p = new DebuggerProxy2(mDebugIn, mDebugOut, getLaunch());
-            getLaunch().addProcess(p);
-            mDebugIn = p.getDebugIn();
-            mDebugOut = p.getDebugOut();
-*/
-            /** ******************************** */
             PerlDebugPlugin.getPerlBreakPointmanager().addDebugger(this);
             mTarget.perlDBstarted(this);
             updateStackFramesInit(null);
@@ -208,36 +202,20 @@ public class PerlDB implements IDebugElement, ITerminate
         else
         {
             mPerlVersion = "5.8";
-            // if (mTarget == null || ! (mTarget instanceof CGITarget))
             generateDebugTermEvent();
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.core.model.IDebugElement#getModelIdentifier()
-     */
     public String getModelIdentifier()
     {
         return mTarget.getModelIdentifier();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.core.model.IDebugElement#getDebugTarget()
-     */
     public IDebugTarget getDebugTarget()
     {
         return mTarget;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.core.model.IDebugElement#getLaunch()
-     */
     public ILaunch getLaunch()
     {
         return mTarget.getLaunch();
@@ -328,11 +306,6 @@ public class PerlDB implements IDebugElement, ITerminate
         abortSession();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.core.runtime.IAdaptable#getAdapter(java.lang.Class)
-     */
     public Object getAdapter(Class adapter)
     {
         if (adapter == this.getClass()) return this;
@@ -365,14 +338,9 @@ public class PerlDB implements IDebugElement, ITerminate
 
         if (!fUpdateVars) command = mCommandExecuteCode;
 
-        // if (mIsCommandRunning) {
-        // startSubCommand(command, fText, false);
-        // res = mDebugSubCommandOutput;
-        // } else {
         boolean erg = startCommand(command, fText, false, fThread);
         if (!erg) return (null);
         res = mDebugOutput;
-        // }
 
         if (res == null) return (null);
         int index_n = res.lastIndexOf("\n");
@@ -399,19 +367,16 @@ public class PerlDB implements IDebugElement, ITerminate
         Object fThread)
     {
         if (mIsCommandRunning) return false;
-        
+
         mCurrentCommandDest = fThread;
         mDebugOutput = null;
         mDebugSubCommandOutput = null;
         mCurrentCommand = fCommand;
         mCurrentSubCommand = mCommandNone;
         mIsCommandRunning = true;
-        mIsCommandFinished = false;
-
         if (isStepCommand(fCommand))
         {
             mStopVarUpdate = true;
-            System.err.println("!!!!Stop");
         }
         return startPerlDebugCommand(fCode, fSpawn);
     }
@@ -608,9 +573,6 @@ public class PerlDB implements IDebugElement, ITerminate
 
         if (isTerminated(mCurrentCommandDest)) return (false);
 
-        System.out.println("---Waiting for Command (" + mCurrentCommand + "--"
-            + mCurrentSubCommand + ") to finish----------------------------");
-
         while (true)
         {
             count = -1;
@@ -622,12 +584,21 @@ public class PerlDB implements IDebugElement, ITerminate
             {
                 abortSession();
                 return (false);
-            }
+            }            
 
             if (count > 0) debugOutput.append(buf, 0, count);
-            currentOutput = debugOutput.toString();
+            
+            try { if (mDebugOut.ready()) continue; } catch (IOException e) { }
+            
+            // Note that we apply the regular expressions used to find out
+            // whether the command/session has terminated only to the last few
+            // characters of the output; applying them to the whole output
+            // (which can become *very* long) causes major performance problems
+            int inspectLen = Math.min(debugOutput.length(), 350);
+            currentOutput = debugOutput.substring(
+                debugOutput.length() - inspectLen,
+                debugOutput.length());
 
-            //System.out.println("\nCurrent DEBUGOUTPUT:\n" + currentOutput + "\n");
             if (count == -1 || hasSessionTerminated(currentOutput))
             {
                 finished = SESSION_TERMINATED;
@@ -643,20 +614,14 @@ public class PerlDB implements IDebugElement, ITerminate
                 finished = SESSION_TERMINATED;
                 break;
             }
-
         }
+        currentOutput = debugOutput.toString();
 
-        // System.out.println(currentOutput);
-        // System.out.println("\nCurrent DEBUGOUTPUT:\n" + currentOutput
-        // + "\n");
         if (finished == SESSION_TERMINATED)
         {
             abortSession();
             return (false);
         }
-        System.out.println("!!!!!!!!!!!!!!!!!!Command (" + mCurrentCommand
-            + "--" + mCurrentSubCommand
-            + ") finished!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if (isStepCommand(mCurrentCommand) && !isSubCommand())
         {
             IPPosition endIP = getCurrent_IP_Position();
@@ -723,8 +688,6 @@ public class PerlDB implements IDebugElement, ITerminate
 
     private void finishCommand(String fOutput)
     {
-        System.out.println("############Cleanup Command (" + mCurrentCommand
-            + "--" + mCurrentSubCommand + ")");
         if (mCurrentSubCommand == mCommandNone)
         {
 
@@ -741,7 +704,6 @@ public class PerlDB implements IDebugElement, ITerminate
                 break;
             default:
                 mIsCommandRunning = false;
-                mIsCommandFinished = true;
                 break;
             }
             generateDebugEvent(PerlDB.this.mCurrentCommand, false,
@@ -749,8 +711,6 @@ public class PerlDB implements IDebugElement, ITerminate
             mDebugOutput = fOutput;
         }
         else mDebugSubCommandOutput = fOutput;
-        System.out.println("############State isrunning " + mIsCommandRunning
-            + " isfinished " + mIsCommandFinished + "\n");
     }
 
     private void abortCommandThread()
@@ -768,8 +728,6 @@ public class PerlDB implements IDebugElement, ITerminate
         mCurrentSubCommand = mCommandNone;
         mCurrentCommand = mCommandNone;
         mIsCommandRunning = false;
-        mIsCommandFinished = false;
-
         boolean skip = false;
 
         if (!isSuspended(null) && !(mTarget instanceof CGITarget)) mTarget
@@ -790,7 +748,6 @@ public class PerlDB implements IDebugElement, ITerminate
             }
 
             int count = 0;
-            // StringBuffer debugOutput=new StringBuffer();
             char buf[] = new char[1000];
 
             if (!skip) do
@@ -798,43 +755,18 @@ public class PerlDB implements IDebugElement, ITerminate
                 try
                 {
                     count = mDebugOut.read(buf);
-                    // System.out.println("Count: "+count+"\n");
                 }
                 catch (IOException e)
                 {
                     skip = true;
                     break;
-                    // PerlDebugPlugin.getDefault().logError(
-                    // "Test: Could not terminate Perl Process",
-                    // e);
                 }
-
-                // if (count > 0)
-                // debugOutput.append(buf, 0, count);
-
             }
             while (count != -1);
-            // System.out.println("\n***************EXIT
-            // DB-****************\n"+debugOutput.toString());
-            // try
-            // {
-            // this.mDebugOut.read();
-            // } catch (IOException e1)
-            // {
-            // finished = true
-            // }
-            // }
-
-            // }
-            // startCommand(mCommandClearOutput, null, false, this);
-            // startCommand(mCommandExecuteCode, "q\n", false, this);
         }
         mCurrentSubCommand = mCommandNone;
         mCurrentCommand = mCommandNone;
         mIsCommandRunning = false;
-        mIsCommandFinished = false;
-
-        // generateDebugTermEvent();
         PerlDebugPlugin.getPerlBreakPointmanager().removeDebugger(this);
         mTarget.debugSessionTerminated();
     }
@@ -1086,7 +1018,6 @@ public class PerlDB implements IDebugElement, ITerminate
         }
         mThreads[0].setStackFrames(frames);
 
-        mIsCommandFinished = true;
         if (mVarUpdateJob != null) try
         {
             mVarUpdateJob.join();
@@ -1099,8 +1030,6 @@ public class PerlDB implements IDebugElement, ITerminate
 
         mStopVarUpdate = false;
         mIsCommandRunning = false;
-        mIsCommandFinished = true;
-
         mVarUpdateJob = new VarUpdateJob("Retrieving Variables", fOutputString);
         mVarUpdateJob.setPriority(Job.SHORT);
         mVarUpdateJob.schedule();
@@ -1117,10 +1046,21 @@ public class PerlDB implements IDebugElement, ITerminate
         startSubCommand(mCommandExecuteCode, ".", false);
         REMatch temp;
 
-        REMatch result = mRe_IP_Pos.getMatch(mDebugSubCommandOutput);
-        file_name = result.toString(1);
-        temp = mRe_IP_Pos_Eval.getMatch(file_name);
-        if (temp != null) result = temp;
+        // mRe_IP_Pos_CODE handles locations like
+        //     main::CODE(0x814f960)(/some/path/trycatch.pl:7):
+        // mRe_IP_Pos handles locations like
+        //     main::(/some/path/foobar.pl:7):
+        // mRe_IP_Pos_Eval handles locations like
+        //
+        
+        REMatch result = mRe_IP_Pos_CODE.getMatch(mDebugSubCommandOutput);
+        if (result == null)
+        {
+            result = mRe_IP_Pos.getMatch(mDebugSubCommandOutput);
+            file_name = result.toString(1);
+            temp = mRe_IP_Pos_Eval.getMatch(file_name);
+            if (temp != null) result = temp;
+        }
         line = Integer.parseInt(result.toString(2));
         file = getPathFor(result.toString(1));
 
@@ -1201,9 +1141,6 @@ public class PerlDB implements IDebugElement, ITerminate
         if (mPerlVersion.startsWith("5.6")) command = "O frame=2\n";
 
         mVarGlobalString = result;
-
-        // System.out.println(mVarGlobalString);
-
     }
 
     private void setVarList(StackFrame fFrame)
@@ -1220,7 +1157,6 @@ public class PerlDB implements IDebugElement, ITerminate
 
         if (mStopVarUpdate == true)
         {
-            System.err.println("Exit Local+++++++++++++++++");
             return;
         }
 
@@ -1231,7 +1167,6 @@ public class PerlDB implements IDebugElement, ITerminate
 
         if (mStopVarUpdate == true) if (mStopVarUpdate == true)
         {
-            System.err.println("Exit Global+++++++++++++++++");
             return;
         }
 
@@ -1538,16 +1473,13 @@ public class PerlDB implements IDebugElement, ITerminate
             mString = fString;
         }
 
-        //public IStatus run(IProgressMonitor fMon)
         public IStatus runInUIThread(IProgressMonitor fMon)
         {
-
-            // long start = System.currentTimeMillis();
             this.getThread().setPriority(Thread.MIN_PRIORITY);
             fMon.beginTask("Vars", 100);
             Thread.yield();
             StackFrame frame = null;
-            System.err.println("Start+++++++++++++++++" + mIsCommandFinished);
+
             try
             {
                 for (int x = 0; (x < 2) && !mStopVarUpdate; x++)
@@ -1560,22 +1492,13 @@ public class PerlDB implements IDebugElement, ITerminate
                 fMon.worked(10);
                 Thread.yield();
             }
-            // System.err.println("Time needed for waiting:
-            // "+(start-System.currentTimeMillis())+"\n");
-            // start = System.currentTimeMillis();
-            System.err.println("Start 0+++++++++++++++++" + mIsCommandFinished);
 
             if (mStopVarUpdate == true)
             {
-                System.err.println("Exit 0+++++++++++++++++"
-                    + mIsCommandFinished);
                 return (Status.OK_STATUS );
             }
 
             setVarStrings(fMon);
-            // System.err.println("Time needed for reading vars:
-            // "+(start-System.currentTimeMillis())+"\n");
-            // start = System.currentTimeMillis();
             try
             {
                 if (mThreads[0].getStackFrames() == null)
@@ -1588,43 +1511,29 @@ public class PerlDB implements IDebugElement, ITerminate
                 e1.printStackTrace();
             }
 
-            System.err.println("Start 1+++++++++++++++++" + mIsCommandFinished);
-
             if (mStopVarUpdate == true)
             {
-                System.err.println("Exit 1+++++++++++++++++"
-                    + mIsCommandFinished);
                 return (Status.OK_STATUS );
             }
             setVarList(frame);
-            // System.err.println("Time needed for parsing vars:
-            // "+(start-System.currentTimeMillis())+"\n");
-            // start = System.currentTimeMillis();
             fMon.worked(80);
             Thread.yield();
-            System.err.println("Start 2+++++++++++++++++" + mIsCommandFinished);
+
             if (mStopVarUpdate == true)
             {
-                System.err.println("Exit 2+++++++++++++++++"
-                    + mIsCommandFinished);
                 return (Status.OK_STATUS );
             }
             updateStackFramesFinish(mString);
-            // System.err.println("Time needed for flagging vars:
-            // "+(start-System.currentTimeMillis())+"\n");
-            // start = System.currentTimeMillis();
             fMon.worked(90);
             Thread.yield();
-            System.err.println("Start 3+++++++++++++++++" + mIsCommandFinished);
+
             if (mStopVarUpdate == true) return (Status.OK_STATUS );
             generateDebugEvalEvent();
             fMon.done();
             return (Status.OK_STATUS );
-
         }
-
     }
-    
+
     private RE newRE(String re, boolean multiline)
     {
         try
@@ -1653,7 +1562,7 @@ public class PerlDB implements IDebugElement, ITerminate
             waitForCommandToFinish();
         }
     }
-    
+
     /**
      * Stores position of the instruction pointer.
      */
@@ -1664,7 +1573,7 @@ public class PerlDB implements IDebugElement, ITerminate
 
         public boolean equals(IPPosition fPos)
         {
-            return 
+            return
                 path.equals(fPos.getPath()) &&
                 line == fPos.getLine();
         }
@@ -1678,7 +1587,7 @@ public class PerlDB implements IDebugElement, ITerminate
         {
             return path;
         }
-        
+
         public int hashCode()
         {
             return path.hashCode() * 37 + line;
@@ -1692,6 +1601,11 @@ public class PerlDB implements IDebugElement, ITerminate
         public void setPath(IPath path)
         {
             this.path = path;
+        }
+        
+        public String toString()
+        {
+            return path + ":" + line;
         }
     }
 }

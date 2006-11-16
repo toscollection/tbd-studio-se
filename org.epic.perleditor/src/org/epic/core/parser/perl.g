@@ -8,7 +8,7 @@ class PerlLexer extends Lexer("org.epic.core.parser.PerlLexerBase");
 options
 {
 	k = 4;
-	charVocabulary = '\0'..'\377' | '\u0080'..'\u00FF' | '\u0100'..'\u017F' | '\u0180'..'\u024F';
+	charVocabulary = '\0'..'\uFFFF';
 	importVocab = shared;
 	exportVocab = Perl;
 }
@@ -154,9 +154,11 @@ OPEN_QMARK
 	};
 
 SUBST_OR_MATCH_OR_WORD // this disambiguation rule disfavours EXPRs too much :-(
-	: (("tr" | 's' | 'y') ~('a'..'z' | '0'..'9' | '_' | '}' | '\r' | '\n'))
+	: { !afterArrow }? ((SUBST_OR_MATCH_OPER | 'x') (WORD_CHAR | ((WS_CHAR)* "=>")))
+	=> { notOper = true; } t1:WORD { $setToken(t1); }
+	| { !afterArrow }? ("tr" | 's' | 'y')
 	=> SUBST_EXPR { $setType(PerlTokenTypes.SUBST_EXPR); }
-	| (("qq" | "qx" | "qw" | "qr" | 'm' | 'q') ~('a'..'z' | '0'..'9' | '_' | '}' | '\r' | '\n' | ' '))
+	| { !afterArrow }? (("qq" | "qx" | "qw" | "qr" | 'm' | 'q') ~('a'..'z' | '0'..'9' | '_' | '}' | '\r' | '\n' | ' '))
 	=> MATCH_EXPR { $setType(PerlTokenTypes.MATCH_EXPR); }
 	| (NUMBER)
 	=> n:NUMBER { $setToken(n); }
@@ -166,7 +168,7 @@ SUBST_OR_MATCH_OR_WORD // this disambiguation rule disfavours EXPRs too much :-(
 		glob = false;
 		$setToken(createOperatorToken(PerlTokenTypes.OPER_COLON, ":"));
 	}
-	| t:WORD { $setToken(t); }
+	| t3:WORD { $setToken(t3); }
 	;
 
 protected SUBST_EXPR
@@ -206,7 +208,7 @@ OPER_NOTEQ
 
 OPER_EQMATCH
 	: "=~"
-	{ $setToken(createOperatorToken(PerlTokenTypes.OPER_EQMATCH, "=~")); };
+	{ afterArrow = false; $setToken(createOperatorToken(PerlTokenTypes.OPER_EQMATCH, "=~")); };
 
 OPER_EQNOTMATCH
 	: "!~"
@@ -269,7 +271,7 @@ OPER_DOTDOT
 
 OPER_DOT
 	: '.'
-	{ $setToken(createOperatorToken(PerlTokenTypes.OPER_DOT, ".")); };
+	{ afterArrow = false; $setToken(createOperatorToken(PerlTokenTypes.OPER_DOT, ".")); };
 
 OPER_BSLASH
 	: '\\'
@@ -305,10 +307,12 @@ CLOSE_BRACKET
 		glob = qmarkRegexp = slashRegexp = false;
 	};
 
-// see Pod/Functions.pm:148
 FORMAT_STMT
-	: { format }? "=" ~('>') (~(';'))* SEMI
-	;
+	: { format }? "="
+	{
+		format = false;
+		getParent().expectFormatEnd();
+	};
 
 protected VAR_WITH_CURLY
 	: (VAR (WS)? '{')
@@ -335,11 +339,11 @@ protected OPEN_HEREDOC
 	:
 	(
 		("<<" (WS)? '"')
-		=> "<<" (WS!)? '"'! ("\\\"" | ~('"'))*
+		=> "<<" (WS!)? '"'! ("\\\"" | ~('"' | '\n' | '\r' | '\uFFFF'))*
 		| ("<<" (WS)? "'")
-		=> "<<" (WS!)? "'"! ("\\'"  | ~('\''))*
+		=> "<<" (WS!)? "'"! ("\\'"  | ~('\'' | '\n' | '\r' | '\uFFFF'))*
 		| ("<<" (WS)? '`')
-		=> "<<" (WS!)? '`'! ("\\`"  | ~('`'))*
+		=> "<<" (WS!)? '`'! ("\\`"  | ~('`' | '\n' | '\r' | '\uFFFF'))*
 		| ("<<" (WS)? WORD_CHAR)
 		=> "<<" (WORD_CHAR)+
 	)
@@ -352,7 +356,7 @@ protected OPEN_HEREDOC
 
 GLOB
 	: { glob }?
-	'<' (~('<' | '>' | '\n' | '\r'))* '>'
+	'<' (~('<' | '>' | '\n' | '\r' | '\uFFFF'))* ('>' | '\uFFFF'!)
 	;
 
 OPER_RSHIFT
@@ -382,7 +386,7 @@ OPER_LT
 
 OPEN_POD
 	: { getColumn() == 1 }?
-	'=' (NOT_NEWLINE)+ NEWLINE!
+	'=' (NOT_NEWLINE)+ (NEWLINE! | '\uFFFF'!)
 	{ getParent().expectPODEnd(); }
 	;
 
@@ -401,7 +405,7 @@ protected WORD
 		if ("use".equals(str)) $setType(PerlTokenTypes.KEYWORD_USE);
 		else if ("sub".equals(str)) { afterSub = proto = true; $setType(PerlTokenTypes.KEYWORD_SUB); }
 		else if ("package".equals(str)) { $setType(PerlTokenTypes.KEYWORD_PACKAGE); }
-		else if ("format".equals(str)) { format = true; $setType(PerlTokenTypes.KEYWORD_FORMAT); }
+		else if ("format".equals(str) && !afterSub) { format = true; $setType(PerlTokenTypes.KEYWORD_FORMAT); }
 		else if ("__END__".equals(str)) { $setType(Token.EOF_TYPE); }
 		else if ("__DATA__".equals(str)) { $setType(Token.EOF_TYPE); }
 		else if (!afterSub)
@@ -416,7 +420,7 @@ protected WORD
     			glob = str.equals("unlink");
     			$setType(PerlTokenTypes.KEYWORD2);
     		}
-    		else if (OPERATORS.contains(str))
+    		else if (OPERATORS.contains(str) && !afterArrow && !notOper)
     		{
     			glob = false;
     			$setToken(createOperatorToken(PerlTokenTypes.OPER_OTHER, str));
@@ -425,7 +429,7 @@ protected WORD
 		else glob = false;
 		
 		slashRegexp = !afterArrow;
-		qmarkRegexp = afterArrow = false;
+		qmarkRegexp = afterArrow = notOper = false;
 	}
 	;
 
@@ -446,6 +450,14 @@ protected ID
 
 protected WORD_CHAR
 	: ('A'..'Z' | 'a'..'z' | '0'..'9' | '_' | ':')
+	;
+
+protected WS_CHAR
+	: (' ' | '\t' | '\n' | '\r')
+	;
+
+protected SUBST_OR_MATCH_OPER
+	: ("tr" | "qq" | "qx" | "qw" | "qr" | 's' | 'y' | 'm' | 'q')
 	;
 
 OTHER: ~('\uFFFF');

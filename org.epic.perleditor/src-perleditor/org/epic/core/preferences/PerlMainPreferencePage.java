@@ -2,22 +2,16 @@ package org.epic.core.preferences;
 
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Scale;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+
 import org.epic.perleditor.PerlEditorPlugin;
 
 public class PerlMainPreferencePage
@@ -28,8 +22,9 @@ public class PerlMainPreferencePage
 	private Text browserLabelText;
 	private Button warningsCheckBox;
 	private Button taintCheckBox;
+    private Button debugConsoleCheckBox;
 
-	private Button validateCheckBox;
+	private Button validateCheckBox;
 	private Scale syntaxCheckInterval;
 	private Combo interpreterTypeCombo;
 	private Label syntaxIntervalSecondsLabel;
@@ -131,6 +126,15 @@ public class PerlMainPreferencePage
 			PerlEditorPlugin.getDefault().getTaintPreference());
 		taintCheckBox.setLayoutData(data);
 
+        // Debugger console (experimental)
+        data = new GridData(GridData.FILL_HORIZONTAL);
+        data.grabExcessHorizontalSpace = true;
+        debugConsoleCheckBox = new Button(top, SWT.CHECK);
+        debugConsoleCheckBox.setText("Enable debugger console (experimental)");
+        debugConsoleCheckBox.setSelection(
+            PerlEditorPlugin.getDefault().getDebugConsolePreference());
+        debugConsoleCheckBox.setLayoutData(data);        
+        
 		//WebBrowser preferences
 		Composite browserComposite = new Composite(top, SWT.NULL);
 		GridLayout browserLayout = new GridLayout();
@@ -161,11 +165,11 @@ public class PerlMainPreferencePage
 
 
 
-		validateCheckBox = new Button(syntaxIntervalComposite, SWT.CHECK);
-		validateCheckBox.setText("Validate source when idle for ");
-		validateCheckBox.setSelection(
-				PerlEditorPlugin.getDefault().getSyntaxValidationPreference());
-	
+		validateCheckBox = new Button(syntaxIntervalComposite, SWT.CHECK);
+		validateCheckBox.setText("Validate source when idle for ");
+		validateCheckBox.setSelection(
+				PerlEditorPlugin.getDefault().getSyntaxValidationPreference());
+	
 		syntaxCheckInterval = new Scale(syntaxIntervalComposite, SWT.HORIZONTAL);
 		syntaxCheckInterval.setMinimum(1);
 		syntaxCheckInterval.setMaximum(10000);
@@ -217,11 +221,11 @@ public class PerlMainPreferencePage
 		browserLabelText.setText(
 			PerlEditorPlugin.getDefault().getDefaultWebBrowserPreference());
 			
-		
-		validateCheckBox.setSelection(
-				PerlEditorPlugin.getDefault().getDefaultSyntaxValidationPreference());
-		float intervalDisplay = Math.round(PerlEditorPlugin.SYNTAX_VALIDATION_INTERVAL_DEFAULT/10f)/100f;
-		syntaxIntervalSecondsLabel.setText(intervalDisplay + " seconds ");
+		
+		validateCheckBox.setSelection(
+				PerlEditorPlugin.getDefault().getDefaultSyntaxValidationPreference());
+		float intervalDisplay = Math.round(PerlEditorPlugin.SYNTAX_VALIDATION_INTERVAL_DEFAULT/10f)/100f;
+		syntaxIntervalSecondsLabel.setText(intervalDisplay + " seconds ");
 		syntaxCheckInterval.setSelection(PerlEditorPlugin.SYNTAX_VALIDATION_INTERVAL_DEFAULT);
 	    
 		//colorEditor.loadDefault();
@@ -236,10 +240,11 @@ public class PerlMainPreferencePage
 		PerlEditorPlugin.getDefault().setWarningsPreference(
 			warningsCheckBox.getSelection());
 		PerlEditorPlugin.getDefault().setTaintPreference(
-					taintCheckBox.getSelection());
-
+			taintCheckBox.getSelection());
+        PerlEditorPlugin.getDefault().setDebugConsolePreference(
+            debugConsoleCheckBox.getSelection());
 		PerlEditorPlugin.getDefault().setSyntaxValidationPreference(
-				validateCheckBox.getSelection());
+            validateCheckBox.getSelection());
 		PerlEditorPlugin.getDefault().getPreferenceStore().setValue(PerlEditorPlugin.INTERPRETER_TYPE_PREFERENCE, interpreterTypeCombo.getText());
 		PerlEditorPlugin.getDefault().getPreferenceStore().setValue(PerlEditorPlugin.SYNTAX_VALIDATION_INTERVAL_PREFERENCE, syntaxCheckInterval.getSelection());
 		PerlEditorPlugin.getDefault().setWebBrowserPreference(

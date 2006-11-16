@@ -11,6 +11,13 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+//import net.sourceforge.phpdt.internal.corext.util.IOCloser;
+import org.epic.perleditor.templates.util.IOCloser;
+//import net.sourceforge.phpdt.internal.ui.PHPStatusConstants;
+import org.epic.perleditor.templates.ui.EPICStatusConstants;
+//import net.sourceforge.phpeclipse.PHPeclipsePlugin;
+import org.epic.perleditor.PerlEditorPlugin;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -24,9 +31,6 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.epic.perleditor.PerlEditorPlugin;
-import org.epic.perleditor.templates.ui.EPICStatusConstants;
-import org.epic.perleditor.templates.util.IOCloser;
 
 /* package */ class TextBufferFactory {
 

@@ -5,14 +5,9 @@ import java.util.Map;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.TextAttribute;
+import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.presentation.PresentationReconciler;
-import org.eclipse.jface.text.rules.DefaultDamagerRepairer;
-import org.eclipse.jface.text.rules.IToken;
-import org.eclipse.jface.text.rules.ITokenScanner;
-import org.eclipse.jface.text.rules.Token;
+import org.eclipse.jface.text.rules.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.epic.perleditor.PerlEditorPlugin;
@@ -74,8 +69,8 @@ public class PerlPresentationReconciler extends PresentationReconciler
             PreferenceConstants.EDITOR_COMMENT2_COLOR,
             PreferenceConstants.EDITOR_COMMENT2_COLOR_BOLD,
             PartitionTypes.VARIABLE,
-            PreferenceConstants.EDITOR_KEYWORD2_COLOR,
-            PreferenceConstants.EDITOR_KEYWORD2_COLOR_BOLD,
+            PreferenceConstants.EDITOR_VARIABLE_COLOR,
+            PreferenceConstants.EDITOR_VARIABLE_COLOR_BOLD,
             PartitionTypes.NUMBER,
             PreferenceConstants.EDITOR_NUMBER_COLOR,
             PreferenceConstants.EDITOR_NUMBER_COLOR_BOLD,

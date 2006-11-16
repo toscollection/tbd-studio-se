@@ -2,10 +2,8 @@ package  org.epic.perleditor.views;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.epic.core.model.ISourceElement;
-import org.epic.core.model.ModuleUse;
+import org.epic.core.model.*;
 import org.epic.core.model.Package;
-import org.epic.core.model.Subroutine;
 import org.epic.perleditor.editors.PerlImages;
 
 public class PerlOutlineLabelProvider extends LabelProvider

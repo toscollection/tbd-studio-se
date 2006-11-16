@@ -7,10 +7,12 @@ package org.epic.perleditor.templates;
 import java.io.File;
 import java.io.InputStream;
 
+//import net.sourceforge.phpeclipse.PHPeclipsePlugin;
+import org.epic.perleditor.PerlEditorPlugin;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.epic.perleditor.PerlEditorPlugin;
 
 /**
  * <code>Templates</code> gives access to the available templates.

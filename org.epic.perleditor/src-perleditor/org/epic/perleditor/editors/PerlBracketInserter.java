@@ -1,11 +1,7 @@
 package org.epic.perleditor.editors;
 
-import org.eclipse.core.runtime.ILog;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.VerifyEvent;
@@ -147,7 +143,7 @@ class PerlBracketInserter implements VerifyKeyListener
      */
     private boolean isClosingChar(IDocument doc, int offset, char c)
     {
-        if (c == '}' || c == ']' || c == '>') return true; // easy
+        if (c == '}' || c == ']' || c == '>' || c == ')') return true; // easy
         else if (offset == 0) return false; // easy
         else
         {
@@ -196,10 +192,18 @@ class PerlBracketInserter implements VerifyKeyListener
         char closingChar)
     {
         final int offset = selection.x;
-        final int length = selection.y;
+        final int length = selection.y;        
         
         try
         {
+            // Duplication of apostrophes in a comment/POD is undesirable:
+            if (keystrokeChar == '\'' && offset > 0)
+            {
+                String partitionType = doc.getPartition(offset-1).getType();
+                if (PartitionTypes.POD.equals(partitionType) ||
+                    PartitionTypes.COMMENT.equals(partitionType)) return;
+            }
+            
             if (isClosingChar(doc, offset, keystrokeChar))
             {
                 // The user has just typed a closing char

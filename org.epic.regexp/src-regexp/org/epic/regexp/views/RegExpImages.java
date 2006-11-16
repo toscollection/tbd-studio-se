@@ -1,10 +1,11 @@
 package org.epic.regexp.views;
 
+import org.eclipse.jface.resource.ImageDescriptor;
+
+import org.epic.regexp.RegExpPlugin;
+
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.epic.regexp.RegExpPlugin;
 
 
 /**

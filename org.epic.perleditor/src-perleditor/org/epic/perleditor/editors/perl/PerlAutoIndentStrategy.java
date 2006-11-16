@@ -9,8 +9,8 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultAutoIndentStrategy;
 import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.IDocument;
-import org.epic.perleditor.editors.PerlEditorMessages;
 import org.epic.perleditor.editors.util.PreferenceUtil;
+import org.epic.perleditor.editors.PerlEditorMessages;
 
 
 /**

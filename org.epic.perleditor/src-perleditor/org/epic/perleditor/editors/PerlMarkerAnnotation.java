@@ -11,16 +11,22 @@
 
 package org.epic.perleditor.editors;
 
+import org.eclipse.ui.texteditor.MarkerAnnotation;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
+
 import org.eclipse.debug.core.model.IBreakpoint;
-import org.eclipse.debug.ui.DebugUITools;
-import org.eclipse.debug.ui.IDebugModelPresentation;
-import org.eclipse.jface.resource.ImageRegistry;
+
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.texteditor.MarkerAnnotation;
+
+import org.eclipse.jface.resource.ImageRegistry;
+
 import org.eclipse.ui.texteditor.MarkerUtilities;
+
+import org.eclipse.debug.ui.DebugUITools;
+import org.eclipse.debug.ui.IDebugModelPresentation;
+import org.epic.core.Constants;
 
 
 
@@ -84,7 +90,7 @@ public class PerlMarkerAnnotation extends MarkerAnnotation {
 			if (marker.exists()) {
 				try {
 
-					if (marker.isSubtypeOf(IMarker.PROBLEM)) {
+					if (marker.isSubtypeOf(Constants.PROBLEM_MARKER)) {
 						int severity= marker.getAttribute(IMarker.SEVERITY, -1);
 						switch (severity) {
 							case IMarker.SEVERITY_ERROR:

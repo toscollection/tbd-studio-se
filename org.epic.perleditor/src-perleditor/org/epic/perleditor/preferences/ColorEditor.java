@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.epic.perleditor.preferences;
 
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -27,6 +26,8 @@ import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+
+import org.eclipse.jface.resource.JFaceResources;
 
 /**
  * A "button" of a certain color determined by the color picker.

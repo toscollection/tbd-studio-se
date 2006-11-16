@@ -6,10 +6,7 @@ import java.io.StringReader;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 
-import antlr.CharStreamException;
-import antlr.LexerSharedInputState;
-import antlr.TokenStreamException;
-import antlr.TokenStreamSelector;
+import antlr.*;
 
 /**
  * Combines the various sublexers representing lexical states to provide a
@@ -121,6 +118,14 @@ public class PerlMultiLexer extends TokenStreamSelector
         select(mainLexer);
     }
 
+    void expectFormatEnd()
+    {
+        // For the time being, we treat formats the same way as heredocs:
+        lexExpectHereDocEnd.setTerminator(".");
+        lexExpectHereDocEnd.setStartLine(mainLexer.getLine());
+        push(lexExpectHereDocEnd);
+    }
+    
     void expectHereDocEnd(String terminator)
     {
         lexExpectHereDocEnd.setTerminator(terminator.substring(2));

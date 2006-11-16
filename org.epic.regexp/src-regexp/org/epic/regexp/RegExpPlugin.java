@@ -1,14 +1,12 @@
 package org.epic.regexp;
 
+import org.eclipse.ui.plugin.*;
+import org.eclipse.core.runtime.*;
+import org.eclipse.core.resources.*;
+
 import java.io.IOException;
 import java.net.URL;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import java.util.*;
 
 /**
  * The main plugin class to be used in the desktop.

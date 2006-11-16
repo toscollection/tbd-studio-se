@@ -1,19 +1,17 @@
 package org.epic.perleditor.views;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import java.util.*;
+
+import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
-import org.epic.core.model.SourceFile;
-import org.epic.core.model.Subroutine;
+import org.epic.core.model.*;
+
 public class PerlOutlinePage extends ContentOutlinePage
 {
     private SourceFile source;
-    private List prevContent;
+    private List prevSubsContent;
+    private List prevUsesContent;
     
     /**
      * Subroutine in which the caret was during last call to updateSelection
@@ -25,11 +23,14 @@ public class PerlOutlinePage extends ContentOutlinePage
     public PerlOutlinePage(SourceFile source)
     {
         this.source = source;
-        this.prevContent = new ArrayList();
+        this.prevSubsContent = new ArrayList();
+        this.prevUsesContent = new ArrayList();
     }
+
     public void createControl(Composite parent)
     {
         super.createControl(parent);
+
         TreeViewer viewer = getTreeViewer();
         viewer.setContentProvider(new PerlOutlineContentProvider());
         viewer.setLabelProvider(new PerlOutlineLabelProvider());
@@ -38,6 +39,7 @@ public class PerlOutlinePage extends ContentOutlinePage
         getTreeViewer().expandAll();
         rememberContent(source);
     }
+
     public void updateContent(SourceFile source)
     {
         lastCaretSub = null;
@@ -85,22 +87,32 @@ public class PerlOutlinePage extends ContentOutlinePage
      */
     private boolean contentChanged(SourceFile source)
     {
-        Iterator j = prevContent.iterator();
-        
-        for (Iterator i = source.getSubs(); i.hasNext();)
+        return
+            packageContentChanged(source.getSubs(), prevSubsContent.iterator()) ||
+            packageContentChanged(source.getUses(), prevUsesContent.iterator());
+    }
+    
+    private boolean packageContentChanged(Iterator curContent, Iterator prevContent)
+    {
+        while(curContent.hasNext() && prevContent.hasNext())
         {
-            if (!j.hasNext()) return true;
+            IPackageElement curElem = (IPackageElement) curContent.next();
+            IPackageElement prevElem = (IPackageElement) prevContent.next();
             
-            Subroutine subI = (Subroutine) i.next();
-            Subroutine subJ = (Subroutine) j.next();
-            
-            if (!subI.getName().equals(subJ.getName()) ||
-                !subI.getParent().getName().equals(subJ.getParent().getName()))
+            if (packageElementsDiffer(curElem, prevElem))                
             {
                 return true;
             }
         }
-        return false;
+        return curContent.hasNext() != prevContent.hasNext();
+    }
+    
+    private boolean packageElementsDiffer(IPackageElement curElem, IPackageElement prevElem)
+    {
+        return
+            !curElem.getName().equals(prevElem.getName()) ||
+            curElem.getOffset() != prevElem.getOffset() ||
+            !curElem.getParent().getName().equals(prevElem.getParent().getName());
     }
     
     /**
@@ -112,9 +124,13 @@ public class PerlOutlinePage extends ContentOutlinePage
      */
     private void rememberContent(SourceFile source)
     {
-        prevContent.clear();
+        prevSubsContent.clear();
         for (Iterator i = source.getSubs(); i.hasNext();)
-            prevContent.add(i.next());
+            prevSubsContent.add(i.next());
+        
+        prevUsesContent.clear();
+        for (Iterator i = source.getUses(); i.hasNext();)
+            prevUsesContent.add(i.next());
     }
     
     /**
@@ -124,10 +140,15 @@ public class PerlOutlinePage extends ContentOutlinePage
      */
     private void updateViewer()
     {
-        getTreeViewer().getControl().getDisplay().asyncExec(new Runnable() {
+        TreeViewer viewer = getTreeViewer();
+        if (viewer == null) return;
+
+        viewer.getControl().getDisplay().asyncExec(new Runnable() {
             public void run() {
-                getTreeViewer().refresh();
-                getTreeViewer().expandToLevel(3);
+                TreeViewer viewer = getTreeViewer();
+                if (viewer == null) return;
+                viewer.refresh();
+                viewer.expandToLevel(3);
             } });
     }
 }

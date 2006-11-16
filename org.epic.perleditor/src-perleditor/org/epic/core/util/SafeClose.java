@@ -6,8 +6,7 @@
  */
 package org.epic.core.util;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * @author skoehler

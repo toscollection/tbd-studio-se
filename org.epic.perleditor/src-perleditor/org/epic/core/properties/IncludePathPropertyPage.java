@@ -1,22 +1,18 @@
 package org.epic.core.properties;
 
-import java.io.File;
-
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.dialogs.PropertyPage;
+import org.eclipse.swt.widgets.*;
+
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+
+import java.io.File;
+
 import org.epic.core.util.XMLUtilities;
 
 public class IncludePathPropertyPage extends PropertyPage {

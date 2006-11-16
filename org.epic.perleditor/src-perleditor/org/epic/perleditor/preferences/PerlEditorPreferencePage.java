@@ -12,51 +12,27 @@
 package org.epic.perleditor.preferences;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.preference.PreferenceConverter;
-import org.eclipse.jface.preference.PreferencePage;
+import org.eclipse.jface.preference.*;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.text.Document;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentPartitioner;
+import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.SourceViewer;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.epic.perleditor.PerlEditorPlugin;
@@ -96,6 +72,8 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.AUTO_COMPLETION_BRACKET2),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.AUTO_COMPLETION_BRACKET3),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.AUTO_COMPLETION_BRACKET4),
+        new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_SMART_HOME_END),
+        new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_SUB_WORD_NAVIGATION),
 		//-------------------------------------
 		
         //-------------------------------------
@@ -112,8 +90,8 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_KEYWORD1_COLOR_BOLD),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_KEYWORD2_COLOR),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_KEYWORD2_COLOR_BOLD),
-		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_KEYWORD3_COLOR),
-	    new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_KEYWORD3_COLOR_BOLD),
+		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_VARIABLE_COLOR),
+	    new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_VARIABLE_COLOR_BOLD),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_COMMENT1_COLOR),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_COMMENT1_COLOR_BOLD),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_COMMENT2_COLOR),
@@ -175,9 +153,9 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.nullColor"), PreferenceConstants.EDITOR_FOREGROUND_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.keyword1Color"), PreferenceConstants.EDITOR_KEYWORD1_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.keyword2Color"), PreferenceConstants.EDITOR_KEYWORD2_COLOR},
-		{ PreferencesMessages.getString("PerlEditorPreferencePage.keyword3Color"), PreferenceConstants.EDITOR_KEYWORD3_COLOR},
+		{ PreferencesMessages.getString("PerlEditorPreferencePage.variableColor"), PreferenceConstants.EDITOR_VARIABLE_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.comment1Color"), PreferenceConstants.EDITOR_COMMENT1_COLOR},
-		{ PreferencesMessages.getString("PerlEditorPreferencePage.omment2Color"), PreferenceConstants.EDITOR_COMMENT2_COLOR},
+		{ PreferencesMessages.getString("PerlEditorPreferencePage.comment2Color"), PreferenceConstants.EDITOR_COMMENT2_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.literal1Color"), PreferenceConstants.EDITOR_LITERAL1_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.literal2Color"), PreferenceConstants.EDITOR_LITERAL2_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.labelColor"), PreferenceConstants.EDITOR_LABEL_COLOR},
@@ -767,6 +745,14 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 
 		label= PreferencesMessages.getString("PerlEditorPreferencePage.typing.autoCompletionBracket4"); //$NON-NLS-1$
 		addCheckBox(typingComposite, label, PreferenceConstants.AUTO_COMPLETION_BRACKET4, 0);
+        
+        addFiller(typingComposite);
+        
+        label= PreferencesMessages.getString("PerlEditorPreferencePage.typing.smartHomeEnd"); //$NON-NLS-1$ 
+        addCheckBox(typingComposite, label, PreferenceConstants.EDITOR_SMART_HOME_END, 0);
+
+        label= PreferencesMessages.getString("PerlEditorPreferencePage.typing.subWordNavigation"); //$NON-NLS-1$ 
+        addCheckBox(typingComposite, label, PreferenceConstants.EDITOR_SUB_WORD_NAVIGATION, 0);
 
 		return typingComposite;
 	}

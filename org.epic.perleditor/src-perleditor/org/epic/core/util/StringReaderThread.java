@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: StringReaderThread.java,v 1.6 2005/08/27 12:10:49 jploski Exp $ */
 package org.epic.core.util;
 
 import java.io.IOException;

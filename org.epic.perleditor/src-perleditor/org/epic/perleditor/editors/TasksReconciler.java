@@ -1,9 +1,6 @@
 package org.epic.perleditor.editors;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -105,7 +102,9 @@ public class TasksReconciler
             StringBuffer buffy = new StringBuffer();
             buffy.append("#");
             if (allowWhiteSpace) buffy.append("\\s*");
+            buffy.append("\\Q");
             buffy.append(TODO_STRINGS[i]);
+            buffy.append("\\E");
             TODO_PATTERNS[i] = Pattern.compile(buffy.toString(), flags);
         }   
     }

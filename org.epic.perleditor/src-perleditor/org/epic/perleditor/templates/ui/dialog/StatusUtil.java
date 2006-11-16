@@ -5,6 +5,7 @@
 package org.epic.perleditor.templates.ui.dialog;
 
 import org.eclipse.core.runtime.IStatus;
+
 import org.eclipse.jface.dialogs.DialogPage;
 
 /**

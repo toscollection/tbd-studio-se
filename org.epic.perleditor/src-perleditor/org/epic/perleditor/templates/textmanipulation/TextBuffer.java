@@ -7,6 +7,13 @@ package org.epic.perleditor.templates.textmanipulation;
 import java.util.ArrayList;
 import java.util.List;
 
+//import net.sourceforge.phpdt.internal.corext.util.Strings;
+import org.epic.perleditor.templates.util.Strings;
+//import net.sourceforge.phpdt.internal.ui.PHPStatusConstants;
+import org.epic.perleditor.templates.ui.EPICStatusConstants;
+//import net.sourceforge.phpeclipse.PHPeclipsePlugin;
+import org.epic.perleditor.PerlEditorPlugin;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -19,9 +26,6 @@ import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.ILineTracker;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.util.Assert;
-import org.epic.perleditor.PerlEditorPlugin;
-import org.epic.perleditor.templates.ui.EPICStatusConstants;
-import org.epic.perleditor.templates.util.Strings;
 
 //import org.eclipse.jdt.internal.ui.JavaPlugin;
 //import org.eclipse.jdt.internal.ui.JavaStatusConstants;

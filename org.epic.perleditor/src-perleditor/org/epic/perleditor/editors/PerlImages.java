@@ -1,10 +1,10 @@
 package org.epic.perleditor.editors;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.epic.perleditor.PerlEditorPlugin;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 

@@ -1,14 +1,12 @@
 package org.epic.perleditor.editors;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.jface.text.IDocument;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.text.*;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.epic.core.util.StringReaderThread;
 import org.epic.perleditor.PerlEditorPlugin;
-import org.epic.perleditor.editors.util.PerlValidator;
+import org.epic.perleditor.editors.util.*;
 
 /**
  * @author Igor Alexeiuk <aie at mailru.com>

@@ -8,7 +8,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+//import net.sourceforge.phpdt.internal.corext.template.php.HTMLContextType;
 import org.epic.perleditor.templates.perl.PerlContextType;
+//import net.sourceforge.phpdt.internal.corext.template.php.PHPDocContextType;
 
 
 

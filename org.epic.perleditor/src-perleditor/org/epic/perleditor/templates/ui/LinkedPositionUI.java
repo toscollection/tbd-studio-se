@@ -5,6 +5,10 @@
 package org.epic.perleditor.templates.ui;
 
 //import net.sourceforge.phpdt.internal.ui.util.ExceptionHandler;
+import org.epic.perleditor.preferences.PreferenceConstants;
+import org.epic.perleditor.PerlEditorPlugin;
+
+//import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
@@ -43,8 +47,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.epic.perleditor.PerlEditorPlugin;
-import org.epic.perleditor.preferences.PreferenceConstants;
 
 /**
  * A user interface for <code>LinkedPositionManager</code>, using <code>ITextViewer</code>.

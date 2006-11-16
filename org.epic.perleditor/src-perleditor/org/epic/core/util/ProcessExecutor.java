@@ -1,13 +1,6 @@
 package org.epic.core.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -164,7 +157,6 @@ public class ProcessExecutor
                 try 
                 {
                     inputWriter.write(input.substring(1));
-                    inputWriter.write(0x1a); //this should avoid problem with Win98
                     inputWriter.flush();
                 }
                 catch (IOException e)

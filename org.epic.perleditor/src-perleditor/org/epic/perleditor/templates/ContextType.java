@@ -9,13 +9,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
 
-import org.eclipse.core.runtime.CoreException;
 import org.epic.perleditor.templates.textmanipulation.MultiTextEdit;
 import org.epic.perleditor.templates.textmanipulation.NopTextEdit;
 import org.epic.perleditor.templates.textmanipulation.SimpleTextEdit;
 import org.epic.perleditor.templates.textmanipulation.TextBuffer;
 import org.epic.perleditor.templates.textmanipulation.TextBufferEditor;
 import org.epic.perleditor.templates.textmanipulation.TextEdit;
+
+import org.eclipse.core.runtime.CoreException;
 
  
 

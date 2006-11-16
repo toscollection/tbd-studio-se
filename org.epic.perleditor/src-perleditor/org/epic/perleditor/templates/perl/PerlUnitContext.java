@@ -4,14 +4,15 @@
  */
 package org.epic.perleditor.templates.perl;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
 import org.epic.perleditor.templates.ContextType;
 import org.epic.perleditor.templates.DocumentTemplateContext;
 import org.epic.perleditor.templates.Template;
 import org.epic.perleditor.templates.TemplateBuffer;
 import org.epic.perleditor.templates.TemplateTranslator;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
 
 /**
  * A compilation unit context.

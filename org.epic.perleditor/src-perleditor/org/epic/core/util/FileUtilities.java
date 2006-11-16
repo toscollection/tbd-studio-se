@@ -1,15 +1,7 @@
 package org.epic.core.util;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.ui.part.FileEditorInput;
 import org.epic.perleditor.PerlEditorPlugin;
 
@@ -23,12 +15,11 @@ public class FileUtilities
 {
 	public static FileEditorInput getFileEditorInput(IPath fPath)
     {
+        IWorkspaceRoot root = PerlEditorPlugin.getWorkspace().getRoot();
+
         try
         {
-            IFile[] files;
-            IWorkspaceRoot root = PerlEditorPlugin.getWorkspace().getRoot();
-
-            files = root.findFilesForLocation(fPath);
+            IFile[] files = root.findFilesForLocation(fPath);
     		if (files.length > 0) return new FileEditorInput(files[0]); // found
 
             // not found, let's create a link to its parent folder
@@ -48,8 +39,38 @@ public class FileUtilities
         }
         catch (CoreException e)
         {
+            IStatus[] status;
+            IPath folderPath = fPath.removeLastSegments(1);
+            
+            if (root.getLocation().isPrefixOf(folderPath) ||
+                folderPath.isPrefixOf(root.getLocation()))    
+            {
+                status = new IStatus[] {
+                    e.getStatus(),
+                    new Status(
+                        IStatus.ERROR,
+                        PerlEditorPlugin.getPluginId(),
+                        IStatus.OK,
+                        "EPIC cannot access files located in folders on the path " +
+                        "to the workspace folder, nor within the workspace folder itself.",
+                        null)
+                    };
+            }
+            else
+            {
+                status = new IStatus[] { e.getStatus() };   
+            }
+            
+            PerlEditorPlugin.getDefault().getLog().log(
+                new MultiStatus(
+                    PerlEditorPlugin.getPluginId(),
+                    IStatus.OK,
+                    status,
+                    "An unexpected exception occurred while creating a link to " +
+                    fPath.toString(),
+                    e));
+            
             // TODO: propagate this exception and/or update client code
-            PerlEditorPlugin.getDefault().getLog().log(e.getStatus());
             return null; 
         }
 	}

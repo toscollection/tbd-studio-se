@@ -7,6 +7,7 @@
 package org.epic.perleditor.editors.util;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,14 @@ import org.eclipse.core.internal.resources.Marker;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.texteditor.MarkerAnnotation;
 import org.epic.perleditor.editors.AddEditorMarker;
 
 /**
@@ -87,6 +96,33 @@ public class MarkerUtil {
 	public void removeUnusedMarkers(String markerType) {
 		removeUnusedMarkers(markerType, null);
 	}
+
+    public void removeObsoleteProblemMarkers()
+    {
+        // Note: on 2006-10-21 bug #1563114 was fixed: EPIC now uses its own
+        // marker type in order not to interfere with other plug-ins.
+        // The code below is here only to remove the problem markers persisted
+        // by EPIC *before* this fix. It should be removed some day in the
+        // future, as it also (incorrectly) removes old problem markers set
+        // by other plug-ins.
+        
+        try
+        {
+            IMarker[] markers = fResource.findMarkers(
+                IMarker.PROBLEM, true, IResource.DEPTH_ONE);
+            
+            for(int i = 0; i < markers.length; i++)
+            {
+                if (markers[i].getCreationTime() < 1161441375673L)
+                    markers[i].delete();
+            }
+        }
+        catch (CoreException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 	
 	/**
 	 * Deletes all unused markers of given type

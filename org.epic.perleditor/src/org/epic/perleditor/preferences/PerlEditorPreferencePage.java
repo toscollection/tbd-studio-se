@@ -72,6 +72,8 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.AUTO_COMPLETION_BRACKET2),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.AUTO_COMPLETION_BRACKET3),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.AUTO_COMPLETION_BRACKET4),
+        new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_SMART_HOME_END),
+        new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_SUB_WORD_NAVIGATION),
 		//-------------------------------------
 		
         //-------------------------------------
@@ -88,8 +90,8 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_KEYWORD1_COLOR_BOLD),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_KEYWORD2_COLOR),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_KEYWORD2_COLOR_BOLD),
-		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_KEYWORD3_COLOR),
-	    new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_KEYWORD3_COLOR_BOLD),
+		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_VARIABLE_COLOR),
+	    new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_VARIABLE_COLOR_BOLD),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_COMMENT1_COLOR),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.BOOLEAN, PreferenceConstants.EDITOR_COMMENT1_COLOR_BOLD),
 		new OverlayPreferenceStore.OverlayKey(OverlayPreferenceStore.STRING, PreferenceConstants.EDITOR_COMMENT2_COLOR),
@@ -151,9 +153,9 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.nullColor"), PreferenceConstants.EDITOR_FOREGROUND_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.keyword1Color"), PreferenceConstants.EDITOR_KEYWORD1_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.keyword2Color"), PreferenceConstants.EDITOR_KEYWORD2_COLOR},
-		{ PreferencesMessages.getString("PerlEditorPreferencePage.keyword3Color"), PreferenceConstants.EDITOR_KEYWORD3_COLOR},
+		{ PreferencesMessages.getString("PerlEditorPreferencePage.variableColor"), PreferenceConstants.EDITOR_VARIABLE_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.comment1Color"), PreferenceConstants.EDITOR_COMMENT1_COLOR},
-		{ PreferencesMessages.getString("PerlEditorPreferencePage.omment2Color"), PreferenceConstants.EDITOR_COMMENT2_COLOR},
+		{ PreferencesMessages.getString("PerlEditorPreferencePage.comment2Color"), PreferenceConstants.EDITOR_COMMENT2_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.literal1Color"), PreferenceConstants.EDITOR_LITERAL1_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.literal2Color"), PreferenceConstants.EDITOR_LITERAL2_COLOR},
 		{ PreferencesMessages.getString("PerlEditorPreferencePage.labelColor"), PreferenceConstants.EDITOR_LABEL_COLOR},
@@ -743,6 +745,14 @@ public class PerlEditorPreferencePage extends PreferencePage implements IWorkben
 
 		label= PreferencesMessages.getString("PerlEditorPreferencePage.typing.autoCompletionBracket4"); //$NON-NLS-1$
 		addCheckBox(typingComposite, label, PreferenceConstants.AUTO_COMPLETION_BRACKET4, 0);
+        
+        addFiller(typingComposite);
+        
+        label= PreferencesMessages.getString("PerlEditorPreferencePage.typing.smartHomeEnd"); //$NON-NLS-1$ 
+        addCheckBox(typingComposite, label, PreferenceConstants.EDITOR_SMART_HOME_END, 0);
+
+        label= PreferencesMessages.getString("PerlEditorPreferencePage.typing.subWordNavigation"); //$NON-NLS-1$ 
+        addCheckBox(typingComposite, label, PreferenceConstants.EDITOR_SUB_WORD_NAVIGATION, 0);
 
 		return typingComposite;
 	}

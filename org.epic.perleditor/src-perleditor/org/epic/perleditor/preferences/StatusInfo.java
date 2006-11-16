@@ -11,6 +11,7 @@
 package org.epic.perleditor.preferences;
 
 import org.eclipse.core.runtime.IStatus;
+
 import org.eclipse.jface.util.Assert;
 
 //import org.eclipse.jdt.ui.JavaUI;

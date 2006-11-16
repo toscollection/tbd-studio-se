@@ -1,15 +1,10 @@
 package org.epic.core.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.*;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.epic.core.PerlCore;
@@ -109,7 +104,7 @@ public class PerlExecutor
     
     /**
      * Executes a Perl script contained in the given resource.
-     * This resource is asusmed to be contained in a Perl project.
+     * This resource is assumed to be contained in a Perl project.
      * Project settings control the execution.
      * 
      * @param resource    script resource

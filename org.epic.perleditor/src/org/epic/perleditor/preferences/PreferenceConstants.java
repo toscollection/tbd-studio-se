@@ -71,6 +71,24 @@ public class PreferenceConstants {
      */
     public final static String EDITOR_SYNC_OUTLINE_ON_CURSOR_MOVE= "syncOutlineOnCursorMove"; //$NON-NLS-1$
     
+    /**
+     * A named preference that controls whether the 'smart home-end' feature is
+     * enabled.
+     * <p>
+     * Value is of type <code>Boolean</code>.
+     * </p>
+     */
+    public final static String EDITOR_SMART_HOME_END= AbstractTextEditor.PREFERENCE_NAVIGATION_SMART_HOME_END;
+
+    /**
+     * A named preference that controls whether the 'sub-word navigation' feature is
+     * enabled.
+     * <p>
+     * Value is of type <code>Boolean</code>.
+     * </p>
+     */
+    public final static String EDITOR_SUB_WORD_NAVIGATION= "subWordNavigation"; //$NON-NLS-1$
+
 	/**
 	 * A named preference that controls whether source folding is turned on or off.
 	 * <p>
@@ -420,7 +438,7 @@ public class PreferenceConstants {
 	public static final String  EDITOR_STRING_COLOR = IPerlColorConstants.STRING_COLOR;
 	public static final String  EDITOR_KEYWORD1_COLOR = IPerlColorConstants.KEYWORD1_COLOR;
 	public static final String  EDITOR_KEYWORD2_COLOR = IPerlColorConstants.KEYWORD2_COLOR;
-	public static final String  EDITOR_KEYWORD3_COLOR =IPerlColorConstants.KEYWORD3_COLOR;
+	public static final String  EDITOR_VARIABLE_COLOR = IPerlColorConstants.VARIABLE_COLOR;
 	public static final String  EDITOR_COMMENT1_COLOR = IPerlColorConstants.COMMENT1_COLOR;
 	public static final String  EDITOR_COMMENT2_COLOR = IPerlColorConstants.COMMENT2_COLOR;
 	public static final String  EDITOR_LITERAL1_COLOR = IPerlColorConstants.LITERAL1_COLOR;
@@ -433,9 +451,9 @@ public class PreferenceConstants {
 	public static final String  EDITOR_INVALID_COLOR = IPerlColorConstants.INVALID_COLOR;
 	
 	public static final String  EDITOR_STRING_COLOR_BOLD = IPerlColorConstants.STRING_COLOR + EDITOR_BOLD_SUFFIX;
-	public static final  String  EDITOR_KEYWORD1_COLOR_BOLD = IPerlColorConstants.KEYWORD1_COLOR + EDITOR_BOLD_SUFFIX;
+	public static final String  EDITOR_KEYWORD1_COLOR_BOLD = IPerlColorConstants.KEYWORD1_COLOR + EDITOR_BOLD_SUFFIX;
 	public static final String  EDITOR_KEYWORD2_COLOR_BOLD = IPerlColorConstants.KEYWORD2_COLOR + EDITOR_BOLD_SUFFIX;
-	public static final String  EDITOR_KEYWORD3_COLOR_BOLD =IPerlColorConstants.KEYWORD3_COLOR + EDITOR_BOLD_SUFFIX;
+	public static final String  EDITOR_VARIABLE_COLOR_BOLD = IPerlColorConstants.VARIABLE_COLOR + EDITOR_BOLD_SUFFIX;
 	public static final String  EDITOR_COMMENT1_COLOR_BOLD = IPerlColorConstants.COMMENT1_COLOR + EDITOR_BOLD_SUFFIX;
 	public static final String  EDITOR_COMMENT2_COLOR_BOLD = IPerlColorConstants.COMMENT2_COLOR + EDITOR_BOLD_SUFFIX;
 	public static final String  EDITOR_LITERAL1_COLOR_BOLD = IPerlColorConstants.LITERAL1_COLOR + EDITOR_BOLD_SUFFIX;
@@ -530,7 +548,10 @@ public class PreferenceConstants {
 			store.setDefault(PreferenceConstants.EDITOR_BACKGROUND_DEFAULT_COLOR, true);
 
 			store.setDefault(PreferenceConstants.EDITOR_TAB_WIDTH, 4);
-			
+            
+            store.setDefault(PreferenceConstants.EDITOR_SMART_HOME_END, true);
+            store.setDefault(PreferenceConstants.EDITOR_SUB_WORD_NAVIGATION, true);
+
 			store.setDefault(PreferenceConstants.INSERT_TABS_ON_INDENT, 1);
 			
 			store.setDefault(PreferenceConstants.SPACES_INSTEAD_OF_TABS, false);
@@ -557,8 +578,8 @@ public class PreferenceConstants {
 			PreferenceConverter.setDefault(store, PreferenceConstants.EDITOR_KEYWORD2_COLOR, new RGB(160, 0, 240));
 			store.setDefault(PreferenceConstants.EDITOR_KEYWORD2_COLOR_BOLD, false);
 			
-			PreferenceConverter.setDefault(store, PreferenceConstants.EDITOR_KEYWORD3_COLOR, new RGB(160, 32, 0));
-			store.setDefault(PreferenceConstants.EDITOR_KEYWORD3_COLOR_BOLD, false);
+			PreferenceConverter.setDefault(store, PreferenceConstants.EDITOR_VARIABLE_COLOR, new RGB(160, 0, 240));
+			store.setDefault(PreferenceConstants.EDITOR_VARIABLE_COLOR_BOLD, false);
 			
 			PreferenceConverter.setDefault(store, PreferenceConstants.EDITOR_COMMENT1_COLOR, new RGB(178, 0, 34));
 			store.setDefault(PreferenceConstants.EDITOR_COMMENT1_COLOR_BOLD, false);

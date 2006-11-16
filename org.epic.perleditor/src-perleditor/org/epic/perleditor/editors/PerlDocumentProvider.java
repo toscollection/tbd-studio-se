@@ -1,59 +1,43 @@
 package org.epic.perleditor.editors;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentPartitioner;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IStorageEditorInput;
-import org.eclipse.ui.editors.text.FileDocumentProvider;
+import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.epic.perleditor.PerlEditorPlugin;
 
-public class PerlDocumentProvider extends FileDocumentProvider
+/**
+ * Responsible for providing an IDocument instance to the editor.
+ * The actual document creation is handled by the TextFileBufferManager,
+ * while the required post-initialization is performed by this class.  
+ */
+public class PerlDocumentProvider extends TextFileDocumentProvider
 {
-    protected IDocument createDocument(Object element)
-        throws CoreException
+    public void connect(Object element) throws CoreException
     {
-        IDocument doc = super.createDocument(element);
-        String filename = null;
-        if (element instanceof IStorageEditorInput)
-        {
-            filename = ((IStorageEditorInput) element).getStorage().getName();
-        }
-        initializeDocument(doc, filename);
-        return doc;
-    }
+        super.connect(element);
 
-    private void initializeDocument(IDocument document, String filename)
-    {
-        if (document != null)
-        {
-            IDocumentPartitioner partitioner = createPartitioner();
-            document.setDocumentPartitioner(partitioner);
-            partitioner.connect(document);
-        }
+        connectPerlPartitioner((IFileEditorInput) element);         
     }
-
-    private IDocumentPartitioner createPartitioner()
+    
+    protected IAnnotationModel createAnnotationModel(IFile file)
     {
-        /*
-        PerlPartitionScanner scanner = new PerlPartitionScanner();
-        return new FastPartitioner(scanner, scanner.getContentTypes());
-        */
-        return new PerlPartitioner(PerlEditorPlugin.getDefault().getLog());
+        return new PerlSourceAnnotationModel(file);
     }
-
-    protected IAnnotationModel createAnnotationModel(Object element)
-        throws CoreException
+    
+    private void connectPerlPartitioner(IFileEditorInput input)
     {
-        if (element instanceof IFileEditorInput)
+        IDocument doc = getFileInfo(input).fTextFileBuffer.getDocument();
+
+        if (doc.getDocumentPartitioner() == null)
         {
-            IFileEditorInput input = (IFileEditorInput) element;
-            return new PerlSourceAnnotationModel(input);
-        }
-        else
-        {
-            return super.createAnnotationModel(element);
+            IDocumentPartitioner partitioner =
+                new PerlPartitioner(PerlEditorPlugin.getDefault().getLog());
+            doc.setDocumentPartitioner(partitioner);
+            partitioner.connect(doc);
         }
     }
 }

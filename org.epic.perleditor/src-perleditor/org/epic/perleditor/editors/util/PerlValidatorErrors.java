@@ -1,10 +1,6 @@
 package org.epic.perleditor.editors.util;
 
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IMarker;

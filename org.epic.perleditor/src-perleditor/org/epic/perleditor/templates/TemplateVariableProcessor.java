@@ -6,6 +6,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+//import net.sourceforge.phpdt.internal.corext.template.ContextType;
+//import net.sourceforge.phpdt.internal.corext.template.TemplateVariable;
+
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.IContentAssistProcessor;

@@ -1,19 +1,14 @@
 package org.epic.perleditor.editors;
 
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.jface.text.*;
+
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.ITextHover;
-import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.jface.text.ITypedRegion;
-import org.eclipse.jface.text.Region;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.ui.editors.text.TextEditor;
 
 /**
  * Provides text hovers for known Perl keywords and marker annotations.

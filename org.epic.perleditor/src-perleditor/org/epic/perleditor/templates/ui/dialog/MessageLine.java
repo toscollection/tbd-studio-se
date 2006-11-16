@@ -1,5 +1,7 @@
 package org.epic.perleditor.templates.ui.dialog;
 
+import org.epic.perleditor.editors.PerlImages;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -7,7 +9,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
-import org.epic.perleditor.editors.PerlImages;
 
 /**
  * A message line displaying a status.

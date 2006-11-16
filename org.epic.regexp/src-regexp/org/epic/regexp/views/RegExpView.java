@@ -1,43 +1,35 @@
 package org.epic.regexp.views;
 
-import gnu.regexp.RE;
-import gnu.regexp.REException;
-import gnu.regexp.REMatch;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.actions.ActionFactory;
+import org.eclipse.ui.part.*;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.action.*;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.*;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.custom.*;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.FocusEvent;
+import org.epic.regexp.RegExpPlugin;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.part.ViewPart;
-import org.epic.regexp.RegExpPlugin;
+import gnu.regexp.RE;
+import gnu.regexp.REMatch;
+import gnu.regexp.REException;
 
 public class RegExpView extends ViewPart {
 

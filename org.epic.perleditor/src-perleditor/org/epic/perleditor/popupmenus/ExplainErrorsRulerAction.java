@@ -6,9 +6,7 @@
  */
 package org.epic.perleditor.popupmenus;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
@@ -17,11 +15,8 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.text.source.IVerticalRulerInfo;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.eclipse.ui.texteditor.ITextEditor;
-import org.eclipse.ui.texteditor.IUpdate;
-import org.eclipse.ui.texteditor.MarkerAnnotation;
-import org.eclipse.ui.texteditor.ResourceAction;
+import org.eclipse.ui.texteditor.*;
+import org.epic.core.Constants;
 import org.epic.perleditor.PerlEditorPlugin;
 import org.epic.perleditor.views.ExplainErrorsView;
 
@@ -89,7 +84,7 @@ public class ExplainErrorsRulerAction extends ResourceAction implements IUpdate 
 					try {
 						IMarker marker = a.getMarker();
 						int markerLineNumber = ((Integer) marker.getAttribute(IMarker.LINE_NUMBER)).intValue();
-						if (marker.getType().equals(IMarker.PROBLEM) && markerLineNumber == aLine) {
+						if (marker.getType().equals(Constants.PROBLEM_MARKER) && markerLineNumber == aLine) {
 							markers.add(marker);
 							//System.out.println("Marker: " + marker.getAttribute(IMarker.MESSAGE));
 						}

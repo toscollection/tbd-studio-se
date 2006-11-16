@@ -1,37 +1,19 @@
 package org.epic.perleditor.editors.perl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.jface.text.TextPresentation;
-import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.contentassist.IContentAssistProcessor;
-import org.eclipse.jface.text.contentassist.IContextInformation;
-import org.eclipse.jface.text.contentassist.IContextInformationPresenter;
-import org.eclipse.jface.text.contentassist.IContextInformationValidator;
+import org.eclipse.jface.text.*;
+import org.eclipse.jface.text.contentassist.*;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.epic.core.model.ISourceElement;
 import org.epic.core.util.PerlExecutor;
 import org.epic.perleditor.PerlEditorPlugin;
 import org.epic.perleditor.preferences.CodeAssistPreferences;
-import org.epic.perleditor.templates.ContextType;
-import org.epic.perleditor.templates.ContextTypeRegistry;
-import org.epic.perleditor.templates.TemplateEngine;
-import org.epic.perleditor.templates.perl.IPerlCompletionProposal;
-import org.epic.perleditor.templates.perl.ModuleCompletionHelper;
-import org.epic.perleditor.templates.perl.PerlCompletionProposalComparator;
-import org.epic.perleditor.templates.perl.SubroutineEngine;
-import org.epic.perleditor.templates.perl.VariableEngine;
+import org.epic.perleditor.templates.*;
+import org.epic.perleditor.templates.perl.*;
 
 /**
  * Perl completion processor.
@@ -194,27 +176,30 @@ public class PerlCompletionProcessor implements IContentAssistProcessor
                 documentOffset,
                 variableChars + filehandleChars);
 
-			String key = viewer.getDocument().get(documentOffset, 1);
-			if (variableChars.indexOf(key) != -1)
+            if (documentOffset < viewer.getDocument().getLength())
             {
-				variablesModel =
-					SourceParser.getElements(
-						viewer.getDocument(),
-                        "([$@%][a-z0-9A-Z_]+)\\s*[=;]",
-						"",
-						"",
-						true);
-			}
-            else if (filehandleChars.indexOf(key) != -1)
-            {
-				variablesModel =
-					SourceParser.getElements(
-						viewer.getDocument(),
-                        "open[a-z]*\\s*?\\s*?[(]\\s*?([A-Z_0-9]+)\\s*?[,]",
-						"<",
-						">",
-						true);
-			}
+    			String key = viewer.getDocument().get(documentOffset, 1);
+    			if (variableChars.indexOf(key) != -1)
+                {
+    				variablesModel =
+    					SourceParser.getElements(
+    						viewer.getDocument(),
+                            "([$@%][a-z0-9A-Z_]+)\\s*[,)=;]",
+    						"",
+    						"",
+    						true);
+    			}
+                else if (filehandleChars.indexOf(key) != -1)
+                {
+    				variablesModel =
+    					SourceParser.getElements(
+    						viewer.getDocument(),
+                            "open[a-z]*\\s*?\\s*?[(]\\s*?([A-Z_0-9]+)\\s*?[,]",
+    						"<",
+    						">",
+    						true);
+    			}
+            }
 
 			for (Iterator i = variablesModel.iterator(); i.hasNext();)
             {

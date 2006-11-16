@@ -4,8 +4,9 @@
  */
 package org.epic.perleditor.templates.perl;
 
-import org.eclipse.jface.text.IDocument;
 import org.epic.perleditor.templates.ContextType;
+
+import org.eclipse.jface.text.IDocument;
 
 /**
  * Compilation unit context type.

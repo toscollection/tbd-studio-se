@@ -1,9 +1,7 @@
 package org.epic.core.util;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -109,6 +107,19 @@ public class PerlExecutableUtilities
                 PerlEditorPlugin.INTERPRETER_TYPE_PREFERENCE);
         
         return type.equals(PerlEditorPlugin.INTERPRETER_TYPE_CYGWIN);
+    }
+    
+    /**
+     * @param absolute path to some directory,
+     *        as returned by File.getAbsolutePath 
+     * @return the same path normalized to / as separators and
+     *         translated for Cygwin, if necessary
+     */
+    public static String resolveIncPath(String path)
+    {
+        path = path.replace('\\', '/');
+        if (isCygwinInterpreter()) path = translatePathForCygwin(path);
+        return path;
     }
     
     // package-scope visibility to enable testing

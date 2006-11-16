@@ -1,11 +1,6 @@
 package org.epic.core.parser;
 
-import antlr.CharScanner;
-import antlr.CharStreamException;
-import antlr.InputBuffer;
-import antlr.LexerSharedInputState;
-import antlr.Token;
-import antlr.TokenStreamException;
+import antlr.*;
 
 /**
  * Base class for component lexers of the PerlMultiLexer.
@@ -48,6 +43,18 @@ public abstract class LexerBase extends CharScanner
     {
         super.setInputState(state);
         endLine = 0;
+    }
+    
+    public void setTokenObjectClass(String className)
+    {
+        try
+        {
+            tokenObjectClass = Class.forName(className);
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new RuntimeException(e); // can't do anything
+        }
     }
     
     /**

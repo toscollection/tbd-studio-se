@@ -1,11 +1,12 @@
 package org.epic.perleditor.editors;
 
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.DocumentCommand;
 import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.IVerticalRuler;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.DocumentCommand;
+
 import org.epic.perleditor.editors.util.PreferenceUtil;
 
 public class PerlSourceViewer extends ProjectionViewer {

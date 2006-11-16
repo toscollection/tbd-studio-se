@@ -2,10 +2,8 @@ package org.epic.perleditor.views;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.epic.core.model.ModuleUse;
+import org.epic.core.model.*;
 import org.epic.core.model.Package;
-import org.epic.core.model.SourceFile;
-import org.epic.core.model.Subroutine;
 
 public class PerlOutlineContentProvider implements ITreeContentProvider
 {

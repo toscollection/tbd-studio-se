@@ -4,6 +4,18 @@
  */
 package org.epic.perleditor.templates;
 
+import org.epic.perleditor.templates.Template;
+import org.epic.perleditor.templates.TemplateBuffer;
+import org.epic.perleditor.templates.TemplateContext;
+import org.epic.perleditor.templates.TemplateMessages;
+import org.epic.perleditor.templates.TemplatePosition;
+import org.epic.perleditor.templates.perl.PerlTemplateMessages;
+import org.epic.perleditor.templates.perl.PerlUnitContext;
+import org.epic.perleditor.templates.perl.IPerlCompletionProposal;
+import org.epic.perleditor.templates.ui.LinkedPositionManager;
+import org.epic.perleditor.templates.ui.LinkedPositionUI;
+//import net.sourceforge.phpeclipse.PHPeclipsePlugin;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.BadLocationException;
@@ -14,11 +26,9 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
-import org.epic.perleditor.templates.perl.IPerlCompletionProposal;
-import org.epic.perleditor.templates.perl.PerlTemplateMessages;
-import org.epic.perleditor.templates.perl.PerlUnitContext;
-import org.epic.perleditor.templates.ui.LinkedPositionManager;
-import org.epic.perleditor.templates.ui.LinkedPositionUI;
+//import org.eclipse.jdt.internal.ui.text.link.LinkedPositionManager;
+//import org.eclipse.jdt.internal.ui.text.link.LinkedPositionUI;
+//import org.eclipse.jdt.internal.ui.util.ExceptionHandler;
 
 /**
  * A template proposal.

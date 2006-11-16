@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.team.core.IFileTypeInfo;
 import org.eclipse.team.core.Team;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.editors.text.TextFileDocumentProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.epic.core.util.PerlExecutor;
@@ -32,7 +33,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 
 	//Resource bundle.
 	private ResourceBundle resourceBundle;
-    
+
     private PerlColorProvider colorProvider = new PerlColorProvider();
 
 	public static final String PERL_EXECUTABLE_PREFERENCE = "PERL_EXECUTABLE";
@@ -46,6 +47,8 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 	public static final String WARNINGS_PREFERENCE = "SHOW_WARNINGS";
 
 	public static final String TAINT_MODE_PREFERENCE = "USE_TAINT_MODE";
+    
+    public static final String DEBUG_CONSOLE_PREFERENCE = "ENABLE_DEBUG_CONSOLE";
 
 	private static final boolean WARNINGS_DEFAULT = true;
 
@@ -59,7 +62,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 
 	public static final String SYNTAX_VALIDATION_PREFERENCE = "SYNTAX_VALIDATION_PREFERENCE";
 	public static final boolean SYNTAX_VALIDATION_PREFERENCE_DEFAULT = true;
-	
+
 	public static final String SYNTAX_VALIDATION_INTERVAL_PREFERENCE = "SYNTAX_VALIDATION_IDLE_INTERVAL";
 
 	public static final int SYNTAX_VALIDATION_INTERVAL_DEFAULT = 400;
@@ -105,7 +108,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 
 		Team.setAllTypes(extensions, types);
 	}
-    
+
     /**
      * Returns a color with the requested RGB value.
      */
@@ -121,7 +124,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
     {
         return getColor(
             PreferenceConverter.getColor(getPreferenceStore(), preferenceKey)
-            ); 
+            );
     }
 
 	/**
@@ -170,7 +173,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 	/**
 	 * Initializes a preference store with default preference values for this
 	 * plug-in.
-	 * 
+	 *
 	 * @param store
 	 *            the preference store to fill
 	 */
@@ -187,6 +190,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 		SourceFormatterPreferences.initializeDefaultValues(store);
 		CodeAssistPreferences.initializeDefaultValues(store);
 		TaskTagPreferences.initializeDefaults(store);
+		MarkOccurrencesPreferences.initializeDefaultValues(store);
 	}
 
 	public String getExecutablePreference() {
@@ -230,14 +234,25 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 	public void setTaintPreference(boolean value) {
 		getPreferenceStore().setValue(TAINT_MODE_PREFERENCE,
 				value == true ? "1" : "0");
-	}
+	}    
 
 	public boolean getTaintPreference() {
 		String value = getPreferenceStore().getString(TAINT_MODE_PREFERENCE);
 
 		return value.equals("1") ? true : false;
 	}
+    
+    public boolean getDebugConsolePreference() {
+        String value = getPreferenceStore().getString(DEBUG_CONSOLE_PREFERENCE);
 
+        return value.equals("1") ? true : false;
+    }
+
+    public void setDebugConsolePreference(boolean value) {
+        getPreferenceStore().setValue(DEBUG_CONSOLE_PREFERENCE,
+                value == true ? "1" : "0");
+    }
+    
 	public boolean getDefaultTaintPreference() {
 		return TAINT_MODE_DEFAULT;
 	}
@@ -246,7 +261,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 		getPreferenceStore().setValue(WARNINGS_PREFERENCE,
 				value == true ? "1" : "0");
 	}
-	
+
 	public boolean getSyntaxValidationPreference() {
 		String value = getPreferenceStore().getString(SYNTAX_VALIDATION_PREFERENCE);
 
@@ -256,7 +271,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 	public boolean getDefaultSyntaxValidationPreference() {
 		return SYNTAX_VALIDATION_PREFERENCE_DEFAULT;
 	}
-	
+
 	public void setSyntaxValidationPreference(boolean value) {
 		getPreferenceStore().setValue(SYNTAX_VALIDATION_PREFERENCE,
 				value == true ? "1" : "0");
@@ -275,6 +290,12 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 		return fDocumentProvider;
 	}
     
+    public static String getUniqueIdentifier()
+    {
+        PerlEditorPlugin plugin = getDefault();
+        return plugin != null ? plugin.getBundle().getSymbolicName() : "org.epic.perleditor";
+    }
+
     /**
      * @return false if no valid Perl interpreter has been available in
      *         Preferences since the plug-in's activation;
@@ -284,11 +305,11 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
     {
         return requirePerlCheckPassed;
     }
-    
+
     /**
      * Same as {@link #hasPerlInterpreter}, but displays an error dialog
      * if false is returned.
-     * 
+     *
      * @param interactive
      *        true, if the check is performed in context of a user-requested
      *        action, false if the check is performed in context of a background
@@ -299,7 +320,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
         if (!requirePerlCheckPassed) checkForPerlInterpreter(interactive);
         return requirePerlCheckPassed;
     }
-    
+
     /**
      * Checks that a valid Perl interpreter is specified in Preferences
      * and updates the requirePerlCheckPassed flag. Displays an error dialog
@@ -307,12 +328,12 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
      * until Preferences are updated).
      */
     private void checkForPerlInterpreter(boolean interactive)
-    {   
+    {
         final String ERROR_TITLE = "Missing Perl interpreter";
         final String ERROR_MSG =
             "To operate correctly, EPIC requires a Perl interpreter. " +
             "Check your configuration settings (\"Window/Preferences/Perl EPIC\").";
-        
+
         PerlExecutor executor = new PerlExecutor();
         try
         {
@@ -332,7 +353,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
                     "The executable specified in EPIC Preferences " +
                     "does not appear to be a valid Perl interpreter.",
                     null);
-                    
+
                 getLog().log(status);
                 if (!requirePerlErrorDisplayed || interactive)
                 {
@@ -354,7 +375,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
         }
         finally { executor.dispose(); }
     }
-    
+
     private void showErrorDialog(
         final String title,
         final String msg,
@@ -365,7 +386,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
                 ErrorDialog.openError(null, title, msg, status);
             } });
     }
-    
+
     public void stop(BundleContext context)
         throws Exception
     {

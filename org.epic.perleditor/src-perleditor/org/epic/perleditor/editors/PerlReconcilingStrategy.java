@@ -3,9 +3,7 @@ package org.epic.perleditor.editors;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.reconciler.DirtyRegion;
-import org.eclipse.jface.text.reconciler.IReconcilingStrategy;
-import org.eclipse.jface.text.reconciler.IReconcilingStrategyExtension;
+import org.eclipse.jface.text.reconciler.*;
 import org.eclipse.jface.text.source.ISourceViewer;
 
 class PerlReconcilingStrategy

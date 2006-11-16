@@ -17,6 +17,7 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
+//import org.eclipse.jdt.internal.ui.JavaPlugin;
 
 /**
  * A proposal for insertion of template variables.

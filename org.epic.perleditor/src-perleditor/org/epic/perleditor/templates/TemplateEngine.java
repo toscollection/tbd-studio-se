@@ -6,15 +6,21 @@ package org.epic.perleditor.templates;
 
 import java.util.ArrayList;
 
+import org.epic.perleditor.templates.ContextType;
+import org.epic.perleditor.templates.DocumentTemplateContext;
+import org.epic.perleditor.templates.Template;
+import org.epic.perleditor.templates.Templates;
+import org.epic.perleditor.templates.perl.CompilationUnitContextType;
+import org.epic.perleditor.editors.PerlImages;
+import org.epic.perleditor.templates.perl.IPerlCompletionProposal;
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Region;
 import org.eclipse.swt.graphics.Point;
-import org.epic.perleditor.editors.PerlImages;
-import org.epic.perleditor.templates.perl.CompilationUnitContextType;
-import org.epic.perleditor.templates.perl.IPerlCompletionProposal;
+//import org.eclipse.jdt.internal.ui.text.link.LinkedPositionManager;
 
 public class TemplateEngine {
 

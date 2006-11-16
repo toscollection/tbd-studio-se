@@ -8,10 +8,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//import net.sourceforge.phpdt.internal.corext.textmanipulation.TextEditNode.RootNode;
+import org.epic.perleditor.templates.textmanipulation.TextEditNode.RootNode;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.epic.perleditor.templates.textmanipulation.TextEditNode.RootNode;
 
 //import org.eclipse.jdt.core.IJavaModelStatusConstants;
 //import org.eclipse.jdt.core.JavaModelException;
