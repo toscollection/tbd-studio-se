@@ -1,8 +1,6 @@
 package org.epic.debug.ui;
 
-import org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup;
-import org.eclipse.debug.ui.ILaunchConfigurationDialog;
-import org.eclipse.debug.ui.ILaunchConfigurationTab;
+import org.eclipse.debug.ui.*;
 
 /**
  * @author ruehl

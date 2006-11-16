@@ -16,19 +16,12 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.StringVariableSelectionDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.*;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.*;
 import org.epic.debug.PerlDebugPlugin;
-import org.epic.debug.PerlLaunchConfigurationConstants;
 
 /**
  * Editor for Perl arguments of a Perl launch configuration.
@@ -37,10 +30,18 @@ import org.epic.debug.PerlLaunchConfigurationConstants;
  * 
  * @author jploski
  */
-public class PerlArgumentsBlock extends AbstractLaunchConfigurationTab
+public class ArgumentsBlock extends AbstractLaunchConfigurationTab
 {
+    private final String fTitle;
+    private final String fLaunchConfigAttr;
     private Text fPerlArgumentsText;
     private Button fPerlArgVariableButton;
+    
+    public ArgumentsBlock(String title, String launchConfigAttr)
+    {
+        fTitle = title;
+        fLaunchConfigAttr = launchConfigAttr;
+    }
 
     public void createControl(Composite parent)
     {
@@ -53,7 +54,7 @@ public class PerlArgumentsBlock extends AbstractLaunchConfigurationTab
         GridData gd = new GridData(GridData.FILL_BOTH);
         group.setLayoutData(gd);
         group.setFont(font);
-        group.setText("Perl ar&guments:");
+        group.setText(fTitle);
 
         fPerlArgumentsText = new Text(
             group, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
@@ -97,9 +98,7 @@ public class PerlArgumentsBlock extends AbstractLaunchConfigurationTab
 
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration)
     {
-        configuration.setAttribute(
-            PerlLaunchConfigurationConstants.ATTR_PERL_PARAMETERS,
-            (String) null);
+        configuration.setAttribute(fLaunchConfigAttr, (String) null);
     }
 
     public void initializeFrom(ILaunchConfiguration configuration)
@@ -107,7 +106,7 @@ public class PerlArgumentsBlock extends AbstractLaunchConfigurationTab
         try
         {
             fPerlArgumentsText.setText(configuration.getAttribute(
-                PerlLaunchConfigurationConstants.ATTR_PERL_PARAMETERS, "")); //$NON-NLS-1$
+                fLaunchConfigAttr, "")); //$NON-NLS-1$
         }
         catch (CoreException e)
         {
@@ -121,7 +120,7 @@ public class PerlArgumentsBlock extends AbstractLaunchConfigurationTab
     public void performApply(ILaunchConfigurationWorkingCopy configuration)
     {
         configuration.setAttribute(
-            PerlLaunchConfigurationConstants.ATTR_PERL_PARAMETERS,
+            fLaunchConfigAttr,
             getAttributeValueFrom(fPerlArgumentsText));
     }
 
