@@ -1,14 +1,11 @@
 package org.epic.core;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.runtime.*;
 import org.epic.core.util.PerlExecutor;
 import org.epic.core.util.XMLUtilities;
 
@@ -40,8 +37,7 @@ public class PerlProject extends PlatformObject
      * @return a list of File objects representing directories in
      *         the project's effective include path. These are the entries
      *         seen by the Perl interpreter when executing scripts from
-     *         this project, a superset of those returned by {@link #getIncPath};
-     *         (however, only existing directories are returned)
+     *         this project, a superset of those returned by {@link #getIncPath}
      */
     public List getEffectiveIncPath() throws CoreException
     {
@@ -67,8 +63,7 @@ public class PerlProject extends PlatformObject
     /**
      * @return an unmodifiable list of File objects representing directories
      *         in the project's include path. These are the entries explicitly
-     *         configured in the project's properties (however, only existing
-     *         directories are returned).
+     *         configured in the project's properties.
      * @see {@link #getEffectiveIncPath}
      */
     public List getIncPath()
@@ -104,7 +99,7 @@ public class PerlProject extends PlatformObject
         {
             File f = new File(relIncPath[i]);
             if (!f.isAbsolute()) f = new File(projectDir, relIncPath[i]);
-            if (f.exists() && f.isDirectory()) dirs.add(f); 
+            dirs.add(f); 
         }        
         return Collections.unmodifiableList(dirs);
     }

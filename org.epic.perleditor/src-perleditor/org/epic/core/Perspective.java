@@ -12,13 +12,7 @@ package org.epic.core;
 
 import org.eclipse.debug.ui.IDebugUIConstants;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IFolderLayout;
-import org.eclipse.ui.IPageLayout;
-import org.eclipse.ui.IPerspectiveFactory;
-import org.eclipse.ui.IPerspectiveRegistry;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.*;
 import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.internal.registry.PerspectiveDescriptor;
 import org.epic.perleditor.PerlEditorPlugin;
