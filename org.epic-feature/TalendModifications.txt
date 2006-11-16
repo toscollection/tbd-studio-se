@@ -1,12 +1,46 @@
 $Id$
-Modifications apportées pour rendre EPIC compatible avec Eclipse 3.2
 
-Projet org.epic.debug
+
+
+================Modifications done to make EPIC Ver 0.3 compatible with Eclipse 3.2==============
+
+Project org.epic.debug
 ---------------------
-- Modification de la classe PerlDebugPlugin
-	* Plugin aux normes 3.2 : suppression du constructeur deprecated et ajout des méthodes start et stop.
-	* La méthode getPlugInDir s'appuie sur la localisation du Bundle et non sur un PluginDescriptor deprecated.
-	
-Projets org.epic.debug, org.epic.perleditor, org.epic.regexp
+- Modification of the class PerlDebugPlugin
+ * Plugin compatible with 3.2 : constructor deprecated has been deleted, and the 
+   methods start et stop have been added.
+ * The method getPlugInDir has been modified to use the localisation of the bundle 
+   and not PluginDescriptor (deprecated).
+ 
+Projects org.epic.debug, org.epic.perleditor, org.epic.regexp
 ------------------------------------------------------------
-- Génération des fichiers manifest.mf, plugin.xml et build.properties au format Eclipse 3.2.
+- Generation of the files manifest.mf, plugin.xml and build.properties to the new 
+  format Eclipse 3.2.
+
+==Modifications done to upgrade EPIC from version from version 0.3 to version 0.4=================
+
+Project org.epic.debug
+-----------------------
+ * Another new file named 'autoflush_epic.pm' need to be added under this project.
+ 
+
+Project org.epci.perleditor
+---------------------------
+ *The package 'org.epic.perleditor.popupmenus.refactor' is removed, so the manifest.mf file
+  need to be changed( just remove the line: 'org.epic.perleditor.popupmenus.refactor,' in 
+  Export-Package ).
+  
+     
+Perl environment requirement
+-----------------------------
+ *PadWalker need to be installed 
+  The the source code from http://search.cpan.org/~robin/PadWalker-0.10/PadWalker.pm, 
+  as a .tar.gz file. Unpack it in some directory, and run
+      
+   perl Makefile.PL
+   make
+   make install
+  
+
+
+
