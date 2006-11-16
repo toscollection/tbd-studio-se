@@ -24,7 +24,7 @@ Project org.epic.debug
  * Another new file named 'autoflush_epic.pm' need to be added under this project.
  
 
-Project org.epci.perleditor
+Project org.epic.perleditor
 ---------------------------
  *The package 'org.epic.perleditor.popupmenus.refactor' is removed, so the manifest.mf file
   need to be changed( just remove the line: 'org.epic.perleditor.popupmenus.refactor,' in 
