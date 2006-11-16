@@ -34,10 +34,10 @@ import org.eclipse.ui.texteditor.AbstractMarkerAnnotationModel;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.IUpdate;
-import org.epic.debug.PerlDebugPlugin;
-import org.epic.debug.PerlLineBreakpoint;
-import org.epic.debug.PerlRegExpBreakpoint;
+import org.epic.debug.*;
 import org.epic.debug.ui.RegExpBPSettingsDialog;
+//import org.epic.debug.test.DiffDalog;
+//import org.epic.debug.test.Refactoring;
 
 public class ManageRegExpBreakpointRulerPropertyAction extends Action
 		implements

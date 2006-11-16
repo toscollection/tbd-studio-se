@@ -27,28 +27,12 @@
 
 package org.epic.debug.cgi;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
-import sunlabs.brazil.server.Handler;
-import sunlabs.brazil.server.Request;
-import sunlabs.brazil.server.Server;
+import sunlabs.brazil.server.*;
 
 /**
  * Handler for implementing cgi/1.1 interface. This implementation allows either

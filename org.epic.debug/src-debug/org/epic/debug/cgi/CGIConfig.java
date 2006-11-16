@@ -1,11 +1,6 @@
 package org.epic.debug.cgi;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import sunlabs.brazil.server.Request;
 import sunlabs.brazil.server.Server;

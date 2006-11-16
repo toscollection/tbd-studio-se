@@ -1,25 +1,12 @@
 package org.epic.debug.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
 import org.eclipse.core.runtime.PlatformObject;
-import org.eclipse.debug.core.DebugEvent;
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunch;
-import org.eclipse.debug.core.IStreamListener;
-import org.eclipse.debug.core.model.IDebugTarget;
-import org.eclipse.debug.core.model.IProcess;
-import org.eclipse.debug.core.model.IStreamMonitor;
-import org.eclipse.debug.core.model.IStreamsProxy;
-import org.eclipse.debug.core.model.ITerminate;
+import org.eclipse.debug.core.*;
+import org.eclipse.debug.core.model.*;
+import org.eclipse.swt.widgets.Display;
 
 public class DebuggerProxy2 extends PlatformObject
     implements IProcess, ITerminate, IStreamsProxy

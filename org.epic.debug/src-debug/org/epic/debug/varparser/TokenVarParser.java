@@ -3,7 +3,6 @@ package org.epic.debug.varparser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.eclipse.debug.core.DebugException;
 import org.epic.debug.PerlDB;
 import org.epic.debug.PerlDebugPlugin;

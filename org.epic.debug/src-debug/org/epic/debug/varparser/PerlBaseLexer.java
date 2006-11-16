@@ -1,23 +1,28 @@
 // $ANTLR : "add.g" -> "PerlBaseLexer.java"$
  package org.epic.debug.varparser; 
 import java.io.InputStream;
-import java.io.Reader;
-import java.util.Hashtable;
-
-import antlr.ByteBuffer;
-import antlr.CharBuffer;
-import antlr.CharStreamException;
-import antlr.CharStreamIOException;
-import antlr.InputBuffer;
-import antlr.LexerSharedInputState;
-import antlr.NoViableAltForCharException;
-import antlr.RecognitionException;
-import antlr.Token;
-import antlr.TokenStream;
 import antlr.TokenStreamException;
 import antlr.TokenStreamIOException;
 import antlr.TokenStreamRecognitionException;
+import antlr.CharStreamException;
+import antlr.CharStreamIOException;
+import antlr.ANTLRException;
+import java.io.Reader;
+import java.util.Hashtable;
+import antlr.CharScanner;
+import antlr.InputBuffer;
+import antlr.ByteBuffer;
+import antlr.CharBuffer;
+import antlr.Token;
+import antlr.CommonToken;
+import antlr.RecognitionException;
+import antlr.NoViableAltForCharException;
+import antlr.MismatchedCharException;
+import antlr.TokenStream;
+import antlr.ANTLRHashString;
+import antlr.LexerSharedInputState;
 import antlr.collections.impl.BitSet;
+import antlr.SemanticException;
 
 public class PerlBaseLexer extends antlr.CharScanner implements AddTokenTypes, TokenStream
  {
@@ -264,7 +269,7 @@ tryAgain:
 				synPredMatched92 = false;
 			}
 			rewind(_m92);
-			inputState.guessing--;
+inputState.guessing--;
 		}
 		if ( synPredMatched92 ) {
 			match("ARRAY");
@@ -287,7 +292,7 @@ tryAgain:
 					synPredMatched94 = false;
 				}
 				rewind(_m94);
-				inputState.guessing--;
+inputState.guessing--;
 			}
 			if ( synPredMatched94 ) {
 				match("SCALAR");
@@ -310,7 +315,7 @@ tryAgain:
 						synPredMatched96 = false;
 					}
 					rewind(_m96);
-					inputState.guessing--;
+inputState.guessing--;
 				}
 				if ( synPredMatched96 ) {
 					match("HASH");
@@ -333,7 +338,7 @@ tryAgain:
 							synPredMatched98 = false;
 						}
 						rewind(_m98);
-						inputState.guessing--;
+inputState.guessing--;
 					}
 					if ( synPredMatched98 ) {
 						match("CODE");
@@ -356,7 +361,7 @@ tryAgain:
 								synPredMatched102 = false;
 							}
 							rewind(_m102);
-							inputState.guessing--;
+inputState.guessing--;
 						}
 						if ( synPredMatched102 ) {
 							match("GLOB");
@@ -379,7 +384,7 @@ tryAgain:
 									synPredMatched104 = false;
 								}
 								rewind(_m104);
-								inputState.guessing--;
+inputState.guessing--;
 							}
 							if ( synPredMatched104 ) {
 								match("FileHandle");
@@ -402,7 +407,7 @@ tryAgain:
 										synPredMatched106 = false;
 									}
 									rewind(_m106);
-									inputState.guessing--;
+inputState.guessing--;
 								}
 								if ( synPredMatched106 ) {
 									{
@@ -442,7 +447,7 @@ tryAgain:
 											synPredMatched100 = false;
 										}
 										rewind(_m100);
-										inputState.guessing--;
+inputState.guessing--;
 									}
 									if ( synPredMatched100 ) {
 										match("REF");

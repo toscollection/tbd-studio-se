@@ -1,8 +1,6 @@
 package org.epic.debug.cgi;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * A thread which forwards all bytes read from a source InputStream
