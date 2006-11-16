@@ -1,29 +1,19 @@
 package org.epic.debug;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Iterator;
-import java.util.List;
+import java.io.*;
+import java.net.URI;
+import java.net.URL;
+import java.util.*;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.debug.core.DebugEvent;
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.IDebugEventSetListener;
-import org.eclipse.debug.core.ILaunch;
-import org.eclipse.debug.core.ILaunchManager;
+import org.eclipse.core.runtime.*;
+import org.eclipse.debug.core.*;
 import org.eclipse.debug.core.model.IProcess;
 import org.epic.core.PerlCore;
 import org.epic.core.PerlProject;
 import org.epic.core.util.PerlExecutableUtilities;
 import org.epic.debug.util.CGIProxy;
 import org.epic.debug.util.RemotePort;
+import org.osgi.framework.Bundle;
 
 /**
  * @author ruehl
@@ -204,7 +194,7 @@ public class CGITarget extends DebugTarget implements IDebugEventSetListener
         props.add("cgi.root", cgiRootDir);
         props.add("cgi.executable", perlPath);
         props.add("cgi.suffix", cgiFileExtension);
-        props.add("cgi.DebugInclude", " -I" + PerlDebugPlugin.getPlugInDir());
+        props.add("cgi.DebugInclude", " -I" + PerlDebugPlugin.getDefault().getInternalDebugInc());
         props.add("cgi.RunInclude", PerlExecutableUtilities.getPerlIncArgs(project));
 
         if (mDebug) props.add("cgi.ENV_" + PerlDebugPlugin.getPerlDebugEnv(this));
@@ -223,6 +213,76 @@ public class CGITarget extends DebugTarget implements IDebugEventSetListener
     private void fireCreationEvent(Object fSource)
     {
         fireEvent(new DebugEvent(fSource, DebugEvent.CREATE));
+    }
+    
+    /**
+     * @return a List of Files representing entries of the classpath
+     *         passed to the Brazil (web server) JVM
+     */
+    private List getBrazilJVMClasspath() throws CoreException
+    {
+        try
+        {
+            List cp = new ArrayList();
+            
+            URL brazilUrl = Platform.resolve(Platform.getBundle("org.epic.lib")
+                .getEntry("/lib/brazil_mini.jar"));
+            
+            assert "file".equalsIgnoreCase(brazilUrl.getProtocol()) :
+                "brazil_mini.jar must reside in the file system";
+            
+            cp.add(urlToFile(brazilUrl));
+            
+            Bundle bundle = PerlDebugPlugin.getDefault().getBundle();
+            URL binUrl = bundle.getEntry("/bin");
+            
+            if (binUrl != null)
+            {
+                binUrl = Platform.resolve(binUrl);
+                assert binUrl.getProtocol().equalsIgnoreCase("file");
+    
+                // 'bin' folder exists = we're running inside of
+                // a hosted workbench 
+    
+                cp.add(urlToFile(binUrl));
+            }
+            else
+            {
+                URL dirUrl = Platform.resolve(bundle.getEntry("/"));
+                
+                if (dirUrl.getProtocol().equalsIgnoreCase("jar"))
+                {
+                    // org.epic.debug was deployed as a jar; add this jar
+                    // to the classpath
+                    
+                    String path = dirUrl.getPath();
+                    assert path.startsWith("file:");
+                    assert path.endsWith(".jar!/");
+                    
+                    URL jarUrl = new URL(path.substring(0, path.length()-2));
+                    cp.add(urlToFile(jarUrl));                
+                }
+                else
+                {   
+                    assert dirUrl.getProtocol().equalsIgnoreCase("file");
+                    
+                    // org.epic.debug was deployed as a directory:
+                    // add this directory to the classpath
+                    
+                    cp.add(urlToFile(dirUrl));
+                }
+            }
+            return cp;
+        }
+        catch (Exception e)
+        {
+            throw new CoreException(new Status(
+                IStatus.ERROR,
+                PerlDebugPlugin.getUniqueIdentifier(),
+                IStatus.OK,
+                "getBrazilJVMClasspath failed",
+                e));
+        }
     }
     
     private String getLaunchAttribute(String attrName, boolean isPath)
@@ -250,7 +310,24 @@ public class CGITarget extends DebugTarget implements IDebugEventSetListener
                 .toString();
     }
     
-    private void startBrazil() throws IOException
+    /**
+     * @param path a list of File objects representing paths
+     * @return a string with absolute paths separated by
+     *         the platform-specific path separator
+     */
+    private static String makePathString(List path)
+    {
+        StringBuffer buf = new StringBuffer();
+        for (Iterator i = path.iterator(); i.hasNext();)
+        {
+            File entry = (File) i.next();
+            if (buf.length() > 0) buf.append(File.pathSeparator);
+            buf.append(entry.getAbsolutePath());
+        }
+        return buf.toString();
+    }
+    
+    private void startBrazil() throws CoreException
     {
         String javaExec =
             getJavaHome() + File.separator + "bin" + File.separator + "java";
@@ -260,20 +337,25 @@ public class CGITarget extends DebugTarget implements IDebugEventSetListener
         String[] cmdParams = {
             javaExec,
             "-classpath",
-            PerlDebugPlugin.getPlugInDir()
-                + "brazil_mini.jar"
-                + File.pathSeparator
-                + PerlDebugPlugin.getPlugInDir()
-                + "debug.jar"
-                + File.pathSeparator
-                + PerlDebugPlugin.getPlugInDir()
-                + "bin",
+            makePathString(getBrazilJVMClasspath()),
             "sunlabs.brazil.server.Main",
             "-c",
             "brazil.cfg" };
         
-        mBrazilProcess =
-            Runtime.getRuntime().exec(cmdParams, null, workingDir);
+        try
+        {
+        	mBrazilProcess =
+            	Runtime.getRuntime().exec(cmdParams, null, workingDir);
+    	}
+        catch (IOException e)
+        {
+            throw new CoreException(new Status(
+                IStatus.ERROR,
+                PerlDebugPlugin.getUniqueIdentifier(),
+                IStatus.OK,
+                "Could not start embedded web server: Runtime.exec failed",
+                e));
+        }
     }
 
     private boolean startSession()
@@ -311,7 +393,7 @@ public class CGITarget extends DebugTarget implements IDebugEventSetListener
         }
         
         try { startBrazil(); }
-        catch (IOException e)
+        catch (CoreException e)
         {
             PerlDebugPlugin.getDefault().logError(
                 "Could not start web server",
@@ -345,6 +427,23 @@ public class CGITarget extends DebugTarget implements IDebugEventSetListener
             return false;
         }
         return true;
+    }
+    
+    private File urlToFile(URL url)
+    {
+        String urlString = url.toExternalForm();
+        
+        if (urlString.matches("^file:/[A-Za-z]:/.*$"))
+        {
+            // Windows URL with volume letter: file:/C:/foo/bar/blah.txt
+            return new File(urlString.substring(6));
+        }
+        else
+        {
+            // Unix URLs look like this: file:/foo/bar/blah.txt
+            assert urlString.matches("^file:/[^/].*$");
+            return new File(urlString.substring(5));
+        }
     }
     
     private static class BrazilProps
@@ -389,31 +488,22 @@ public class CGITarget extends DebugTarget implements IDebugEventSetListener
         
         public void save() throws IOException
         {
-            File templ = new File(
-                PerlDebugPlugin.getPlugInDir(),
-                "brazil_cgi_templ.cfg");
-            File dest = new File(
-                PerlDebugPlugin.getDefault().getStateLocation().toString(),
+            File propsFile = PerlDebugPlugin.getDefault().extractTempFile(
+                "brazil_cgi_templ.cfg",
                 "brazil.cfg");
             
-            InputStream in = null;
+            // Append custom properties:
+
             OutputStream out = null;
 
             try
             {
-                in = new FileInputStream(templ);
-                out = new FileOutputStream(dest);
-                
-                // Transfer bytes from in to out
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
+                out = new FileOutputStream(propsFile, true);                
                 byte[] propsBytes = props.toString().getBytes();
                 out.write(propsBytes, 0, propsBytes.length);
             }
             finally
             {
-                if (in != null) try { in.close(); } catch (Exception e) { }
                 if (out != null) try { out.close(); } catch (Exception e) { }
             }
         }

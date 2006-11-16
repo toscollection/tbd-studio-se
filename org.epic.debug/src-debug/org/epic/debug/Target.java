@@ -4,25 +4,12 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
 
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.resources.*;
+import org.eclipse.core.runtime.*;
 import org.eclipse.core.variables.VariablesPlugin;
-import org.eclipse.debug.core.DebugEvent;
-import org.eclipse.debug.core.DebugException;
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunch;
-import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.core.model.DebugElement;
-import org.eclipse.debug.core.model.IDebugTarget;
-import org.eclipse.debug.core.model.IProcess;
+import org.eclipse.debug.core.*;
+import org.eclipse.debug.core.model.*;
+import org.eclipse.debug.ui.IDebugUIConstants;
 import org.epic.core.PerlCore;
 import org.epic.core.util.PerlExecutableUtilities;
 import org.epic.debug.util.ExecutionArguments;
@@ -153,6 +140,7 @@ public abstract class Target extends DebugElement implements IDebugTarget
 		String prjName = null;
         String perlParams = null;
 		String progParams = null;
+        boolean consoleOutput = false;
 		mProcessName = "Perl-Interpreter";
 		try
 		{
@@ -164,15 +152,20 @@ public abstract class Target extends DebugElement implements IDebugTarget
                 mLaunch.getLaunchConfiguration().getAttribute(
                     PerlLaunchConfigurationConstants.ATTR_PERL_PARAMETERS,
                     EMPTY_STRING);
+            perlParams = VariablesPlugin.getDefault().getStringVariableManager()
+                .performStringSubstitution(perlParams);
 			progParams =
 				mLaunch.getLaunchConfiguration().getAttribute(
 					PerlLaunchConfigurationConstants.ATTR_PROGRAM_PARAMETERS,
 					EMPTY_STRING);
-
+            progParams = VariablesPlugin.getDefault().getStringVariableManager()
+                .performStringSubstitution(progParams);
+            consoleOutput = mLaunch.getLaunchConfiguration().getAttribute(
+                IDebugUIConstants.ATTR_CAPTURE_IN_CONSOLE, true);
 		} catch (Exception ce)
 		{
 			PerlDebugPlugin.log(ce);
-		}
+		}       
 
 		IProject prj =
 			PerlDebugPlugin.getWorkspace().getRoot().getProject(prjName);
@@ -203,7 +196,17 @@ public abstract class Target extends DebugElement implements IDebugTarget
 				"Could not start Perl interpreter: error assambling command line",
 				e);
 		}
-		fCmdList.add("-I"+PerlDebugPlugin.getPlugInDir());
+        try
+        {
+            fCmdList.add("-I" + PerlDebugPlugin.getDefault().getInternalDebugInc());
+        }
+        catch (CoreException e)        
+        {
+            PerlDebugPlugin.getDefault().logError(
+                "Could not start Perl interpreter: getInternalDebugInc failed",
+                e);
+            return null;
+        }
 		if (mLaunch.getLaunchMode().equals(ILaunchManager.DEBUG_MODE))
 		{
 			fCmdList.add("-d");
@@ -216,7 +219,11 @@ public abstract class Target extends DebugElement implements IDebugTarget
 		if (PerlEditorPlugin.getDefault().getTaintPreference())
 		{
 			fCmdList.add("-T");
-		}        
+		}
+        if (consoleOutput)
+        {
+            fCmdList.add("-Mautoflush_epic");
+        }
         if (perlParams != null && perlParams.length() > 0)
         {
             ExecutionArguments exArgs = new ExecutionArguments(perlParams);
@@ -230,15 +237,44 @@ public abstract class Target extends DebugElement implements IDebugTarget
 			ExecutionArguments exArgs = new ExecutionArguments(progParams);
 			fCmdList.addAll(exArgs.getProgramArgumentsL());
 		}
+        
 		String[] cmdParams =
 			(String[]) fCmdList.toArray(new String[fCmdList.size()]);
 
 		try
 		{
+            String[] env = PerlDebugPlugin.getDebugEnv(this);
+            
+            if (PerlEditorPlugin.getDefault().getDebugConsolePreference())
+            {
+                StringBuffer buf = new StringBuffer("Starting Perl debugger:\n");
+                buf.append("Command line:\n");
+                for (int i = 0; i < cmdParams.length; i++)
+                {
+                    buf.append(cmdParams[i]);
+                    buf.append('\n');
+                }
+                buf.append("Working directory: ");
+                buf.append(workingDir.toFile().getAbsolutePath());
+                buf.append("\nEnvironment:\n");
+                for (int i = 0; i < env.length; i++)
+                {
+                    buf.append(env[i]);
+                    buf.append('\n');
+                }
+                ILog log = PerlDebugPlugin.getDefault().getLog();
+                log.log(new Status(
+                    IStatus.INFO,
+                    PerlDebugPlugin.getUniqueIdentifier(),
+                    IStatus.OK,
+                    buf.toString(),
+                    null));
+            }
+            
 			mJavaProcess =
 				Runtime.getRuntime().exec(
 					cmdParams,
-					PerlDebugPlugin.getDebugEnv(this),
+					env,
 					workingDir.toFile());
 		}
         catch (Exception e1)
