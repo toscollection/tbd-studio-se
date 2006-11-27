@@ -1,2 +1,0 @@
-java -cp c:\Java\eclipse-rcp\plugins\org.eclipse.releng.basebuilder\startup.jar org.eclipse.core.launcher.Main  -application org.eclipse.ant.core.antRunner -buildfile build.xml main  -Dcomponent=pde -Dconfigs="win32,win32,x86" -Dbaseos=win32 -Dbasews=win32 -Dbasearch=x86  -Dpde.build.scripts=C:\Java\eclipse-rcp\plugins\org.eclipse.pde.build_3.2.0.v20060601\scripts -DbaseLocation=c:\Java\eclipse-rcp\  -DjavacTarget=1.5 -DjavacSource=1.5 -DjavacFailOnError=True -logger org.apache.tools.ant.listener.MailLogger
-pause

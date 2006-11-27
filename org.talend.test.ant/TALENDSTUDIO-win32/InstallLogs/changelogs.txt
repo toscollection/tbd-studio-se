@@ -1,1 +1,0 @@
-60918 - Changement dans le jar de swt.win32 : org.eclipse.swt.program.Program
