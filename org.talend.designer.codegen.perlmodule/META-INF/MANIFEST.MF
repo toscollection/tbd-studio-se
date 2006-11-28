@@ -2,6 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Codegen Perl Module Plug-in
 Bundle-SymbolicName: org.talend.designer.codegen.perlmodule
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Vendor: .Talend SA.
 Bundle-Localization: plugin
