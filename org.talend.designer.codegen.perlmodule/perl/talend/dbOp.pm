@@ -190,18 +190,31 @@ sub getTableCreationQuery {
                 $query.= ', ';
             }
 
-            $query.= ''.$column_href->{name}.'';
+            $query.= $column_href->{name};
             $query.= ' '.$column_href->{dbtype};
 
-            if (defined $column_href->{len} and $column_href->{len} != -1) {
-                $query.= ' ('.$column_href->{len}.')';
+            if (grep /^$column_href->{type}$/, qw/String char float double/
+                and defined $column_href->{len}
+                and $column_href->{len} != -1
+            ) {
+                $query.= '(';
+                $query.= $column_href->{len};
+
+                if (grep /^$column_href->{type}$/, qw/float double/
+                    and defined $column_href->{precision}
+                    and $column_href->{precision} != -1
+                ) {
+                    $query.= ','.$column_href->{precision};
+                }
+
+                $query.= ')';
             }
 
             if (not $column_href->{null}) {
                 $query.= ' NOT NULL';
             }
 
-            if ($column_href->{default} != '') {
+            if ($column_href->{default} ne '') {
                 $query.= " default '".$column_href->{default}."'";
             }
 
