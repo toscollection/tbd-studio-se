@@ -5,16 +5,16 @@
 	<classpathentry exported="true" kind="lib" path="db2jcc.jar"/>
 	<classpathentry exported="true" kind="lib" path="jtds-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="postgresql-8.1-405.jdbc3.jar"/>
-	<classpathentry exported="true" sourcepath="libs_src/jakarta-oro-2.0.8" kind="lib" path="jakarta-oro-2.0.8.jar"/>
-	<classpathentry exported="true" sourcepath="libs_src/commons-beanutils-1.7.0-src" kind="lib" path="commons-beanutils.jar"/>
-	<classpathentry exported="true" sourcepath="libs_src/commons-collections-3.2-src" kind="lib" path="commons-collections-3.2.jar"/>
-	<classpathentry exported="true" sourcepath="libs_src/commons-lang-2.1" kind="lib" path="commons-lang-2.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="jakarta-oro-2.0.8.jar" sourcepath="libs_src/jakarta-oro-2.0.8"/>
+	<classpathentry exported="true" kind="lib" path="commons-beanutils.jar" sourcepath="libs_src/commons-beanutils-1.7.0-src"/>
+	<classpathentry exported="true" kind="lib" path="commons-collections-3.2.jar" sourcepath="libs_src/commons-collections-3.2-src"/>
+	<classpathentry exported="true" kind="lib" path="commons-lang-2.1.jar" sourcepath="libs_src/commons-lang-2.1"/>
 	<classpathentry exported="true" kind="lib" path="commons-logging-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="log4j-1.2.13.jar"/>
 	<classpathentry exported="true" kind="lib" path="mysql-connector-java-3.1.13-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="ojdbc14.jar"/>
 	<classpathentry exported="true" kind="lib" path="dom4j-1.6.1.jar"/>
-	<classpathentry exported="true" sourcepath="libs_src/castor-1.0.3" kind="lib" path="castor-1.0.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="castor-1.0.3.jar" sourcepath="libs_src/castor-1.0.3"/>
 	<classpathentry exported="true" kind="lib" path="xerces-J_1.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="nanoxml.jar"/>
 	<classpathentry exported="true" kind="lib" path="rowset.jar"/>
