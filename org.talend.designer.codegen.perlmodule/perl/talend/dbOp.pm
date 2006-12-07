@@ -69,7 +69,15 @@ sub getTableCreationQuery {
             $query.= ' '.$column_href->{dbtype};
 
             if (defined $column_href->{len} and $column_href->{len} != -1) {
-                $query.= ' ('.$column_href->{len}.')';
+                $query.= ' (';
+                $query.= $column_href->{len};
+
+                if (grep /^$column_href->{type}$/, qw/float double/) {
+                    # REAL, DOUBLE, FLOAT, DECIMAL, NUMERIC
+                    $query.= ','.$column_href->{precision};
+                }
+
+                $query.= ')';
             }
 
             if (not $column_href->{null}) {
