@@ -1,1 +1,0 @@
-c:\talendStudio\tUser\routines.pm syntax OK
