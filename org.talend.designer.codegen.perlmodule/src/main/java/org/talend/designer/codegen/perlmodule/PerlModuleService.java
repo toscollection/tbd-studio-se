@@ -42,7 +42,7 @@ public class PerlModuleService implements IPerlModuleService {
 
         List<URL> toReturn = new ArrayList<URL>();
 
-        Enumeration entryPaths = bundle.getEntryPaths("perl/routines/builtin/");
+        Enumeration entryPaths = bundle.getEntryPaths("perl/routines/system/");
         for (Enumeration enumer = entryPaths; enumer.hasMoreElements();) {
             String routine = (String) enumer.nextElement();
             if (routine.endsWith(".pm")) {
