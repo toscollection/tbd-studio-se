@@ -28,6 +28,9 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
+import org.talend.commons.exception.BusinessException;
+import org.talend.designer.codegen.perlmodule.ModuleNeeded.ModuleStatus;
+import org.talend.designer.codegen.perlmodule.model.ModulesNeededProvider;
 
 /**
  * DOC smallet class global comment. Detailled comment <br/>
@@ -37,16 +40,18 @@ import org.osgi.framework.Bundle;
  */
 public class PerlModuleService implements IPerlModuleService {
 
-    public List<URL> getBuiltInRoutines() {
-        Bundle bundle = Platform.getBundle("org.talend.designer.codegen.perlmodule");
+    public static final String PERLMODULE_PLUGIN_ID = "org.talend.designer.codegen.perlmodule";
 
+    public static final Bundle PERL_MODULE_PLUGIN = Platform.getBundle(PERLMODULE_PLUGIN_ID);
+
+    public List<URL> getBuiltInRoutines() {
         List<URL> toReturn = new ArrayList<URL>();
 
-        Enumeration entryPaths = bundle.getEntryPaths("perl/routines/system/");
+        Enumeration entryPaths = PERL_MODULE_PLUGIN.getEntryPaths("perl/routines/system/");
         for (Enumeration enumer = entryPaths; enumer.hasMoreElements();) {
             String routine = (String) enumer.nextElement();
             if (routine.endsWith(".pm")) {
-                URL url = bundle.getEntry(routine);
+                URL url = PERL_MODULE_PLUGIN.getEntry(routine);
                 toReturn.add(url);
             }
         }
@@ -54,6 +59,19 @@ public class PerlModuleService implements IPerlModuleService {
     }
 
     public URL getRoutineTemplate() {
-        return Platform.getBundle("org.talend.designer.codegen.perlmodule").getEntry("perl/routines/Template.pm");
+        return PERL_MODULE_PLUGIN.getEntry("perl/routines/Template.pm");
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.designer.codegen.perlmodule.IPerlModuleService#getModulesNeeded(java.lang.String)
+     */
+    public List<ModuleNeeded> getModulesNeeded(String componentName) {
+        return ModulesNeededProvider.getModulesNeeded(componentName);
+    }
+
+    public ModuleStatus getModuleStatus(String moduleName) throws BusinessException {
+        return ModulesNeededProvider.getModuleStatus(moduleName);
     }
 }
