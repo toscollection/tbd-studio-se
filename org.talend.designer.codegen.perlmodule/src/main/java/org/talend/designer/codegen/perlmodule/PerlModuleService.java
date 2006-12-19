@@ -2,7 +2,7 @@
 //
 // Talend Community Edition
 //
-// Copyright (C) 2006 Talend – www.talend.com
+// Copyright (C) 2006 Talend ï¿½ www.talend.com
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -21,11 +21,14 @@
 // ============================================================================
 package org.talend.designer.codegen.perlmodule;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 import org.talend.commons.exception.BusinessException;
@@ -60,6 +63,18 @@ public class PerlModuleService implements IPerlModuleService {
 
     public URL getRoutineTemplate() {
         return PERL_MODULE_PLUGIN.getEntry("perl/routines/Template.pm");
+    }
+
+    
+    /* (non-Javadoc)
+     * @see org.talend.designer.codegen.perlmodule.IPerlModuleService#getPerlModule()
+     */
+    public List<URL> getPerlModule() throws IOException {
+        List<URL> list = new ArrayList<URL>();
+        URL url = PERL_MODULE_PLUGIN.getEntry("perl/talend");
+        url = FileLocator.toFileURL(url);
+        list.add(url);
+        return list;
     }
 
     /*
