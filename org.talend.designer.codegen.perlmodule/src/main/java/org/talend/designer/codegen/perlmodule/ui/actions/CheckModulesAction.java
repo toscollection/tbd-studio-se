@@ -22,8 +22,8 @@
 package org.talend.designer.codegen.perlmodule.ui.actions;
 
 import org.eclipse.jface.action.Action;
-import org.talend.core.ui.images.EImage;
-import org.talend.core.ui.images.ImageProvider;
+import org.talend.commons.ui.image.EImage;
+import org.talend.commons.ui.image.ImageProvider;
 import org.talend.designer.codegen.perlmodule.ui.views.ModulesView;
 
 /**

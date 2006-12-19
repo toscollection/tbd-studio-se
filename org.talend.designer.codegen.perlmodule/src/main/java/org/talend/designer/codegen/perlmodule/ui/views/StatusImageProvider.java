@@ -22,9 +22,9 @@
 package org.talend.designer.codegen.perlmodule.ui.views;
 
 import org.eclipse.swt.graphics.Image;
+import org.talend.commons.ui.image.ImageProvider;
 import org.talend.commons.ui.swt.tableviewer.behavior.IColumnImageProvider;
-import org.talend.core.ui.images.EImage;
-import org.talend.core.ui.images.ImageProvider;
+import org.talend.core.ui.images.ECoreImage;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
 
 /**
@@ -39,15 +39,15 @@ public class StatusImageProvider implements IColumnImageProvider {
         ModuleNeeded componentImportNeeds = (ModuleNeeded) bean;
         switch (componentImportNeeds.getStatus()) {
         case INSTALLED:
-            return ImageProvider.getImage(EImage.MODULE_INSTALLED_ICON);
+            return ImageProvider.getImage(ECoreImage.MODULE_INSTALLED_ICON);
         case NOT_INSTALLED:
             if (componentImportNeeds.isRequired()) {
-                return ImageProvider.getImage(EImage.MODULE_ERROR_ICON);
+                return ImageProvider.getImage(ECoreImage.MODULE_ERROR_ICON);
             } else {
-                return ImageProvider.getImage(EImage.MODULE_WARNING_ICON);
+                return ImageProvider.getImage(ECoreImage.MODULE_WARNING_ICON);
             }
         default:
-            return ImageProvider.getImage(EImage.MODULE_UNKNOWN_ICON);
+            return ImageProvider.getImage(ECoreImage.MODULE_UNKNOWN_ICON);
         }
     }
 

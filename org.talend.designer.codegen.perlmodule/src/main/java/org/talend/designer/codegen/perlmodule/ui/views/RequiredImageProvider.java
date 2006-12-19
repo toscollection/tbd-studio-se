@@ -22,9 +22,9 @@
 package org.talend.designer.codegen.perlmodule.ui.views;
 
 import org.eclipse.swt.graphics.Image;
+import org.talend.commons.ui.image.ImageProvider;
 import org.talend.commons.ui.swt.tableviewer.behavior.IColumnImageProvider;
-import org.talend.core.ui.images.EImage;
-import org.talend.core.ui.images.ImageProvider;
+import org.talend.core.ui.images.ECoreImage;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
 
 /**
@@ -39,9 +39,9 @@ public class RequiredImageProvider implements IColumnImageProvider {
         ModuleNeeded componentImportNeeds = (ModuleNeeded) bean;
 
         if (componentImportNeeds.isRequired()) {
-            return ImageProvider.getImage(EImage.MODULE_REQUIRED_ICON);
+            return ImageProvider.getImage(ECoreImage.MODULE_REQUIRED_ICON);
         } else {
-            return ImageProvider.getImage(EImage.MODULE_NOTREQUIRED_ICON);
+            return ImageProvider.getImage(ECoreImage.MODULE_NOTREQUIRED_ICON);
         }
 
     }
