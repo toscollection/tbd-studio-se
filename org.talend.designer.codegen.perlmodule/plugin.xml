@@ -3,7 +3,9 @@
 <plugin>
    <extension
          point="org.talend.core.service">
-      <Service class="org.talend.designer.codegen.perlmodule.PerlModuleService"/>
+      <Service
+      		serviceId="IPerlModuleService" 
+      		class="org.talend.designer.codegen.perlmodule.PerlModuleService"/>
    </extension>
    <extension
          point="org.eclipse.ui.views">
