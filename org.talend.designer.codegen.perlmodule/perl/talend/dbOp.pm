@@ -137,7 +137,7 @@ sub getTableCreationQuery {
             $query.= ''.$column_href->{name}.'';
             $query.= ' '.$column_href->{dbtype};
 
-            if (lc $column_href->{dbtype} eq 'char'
+            if (lc $column_href->{type} eq 'string'
                 or lc $column_href->{dbtype} eq 'decimal') {
                 $query.= ' (';
                 $query.= $column_href->{len};
@@ -312,7 +312,7 @@ sub getTableCreationQuery {
 
 #     use Data::Dumper;
 #     print Dumper($schema);
-#    print $query; exit();
+#     print $query; exit();
 
     return $query;
 }
