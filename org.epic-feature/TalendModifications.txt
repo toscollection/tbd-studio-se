@@ -26,9 +26,16 @@ Project org.epic.debug
 
 Project org.epic.perleditor
 ---------------------------
- *The package 'org.epic.perleditor.popupmenus.refactor' is removed, so the manifest.mf file
+ * The package 'org.epic.perleditor.popupmenus.refactor' is removed, so the manifest.mf file
   need to be changed( just remove the line: 'org.epic.perleditor.popupmenus.refactor,' in 
   Export-Package ).
+  
+  * File plugin.xml modified from original version, 
+  the xml was took from the last version of the CVS (2007/01/08)
+  
+  * Updated classes PerlCriticPreferencePage, PreferenceConstants,
+  WidgetUtils, PreferencesMessages (and .properties), FoldingPreferencePage,
+  PerlEditorPreferencePage (2007/01/08)
   
      
 Perl environment requirement
