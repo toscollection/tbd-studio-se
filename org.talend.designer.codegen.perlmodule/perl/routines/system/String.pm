@@ -7,6 +7,7 @@ use vars qw(@EXPORT @ISA);
     getAsciiRandomString
     getRandomString
     getHexRandomString
+    firstName
 );
 
 # formatString return the input string formatted as requested. This function
@@ -131,6 +132,38 @@ sub getHexRandomString {
         $length,
         ['a'..'f', 0..9]
     );
+}
+
+##
+# return a random english firstname
+#
+# {talendTypes} String
+# {param} list(undef, 'uppercase', 'lowercase', 'uppercase first') transformation : processing
+#
+# {example} firstName(undef) # Hugh, Andrew, John
+# {example} firstName('uppercase') # MIKE, ANDREW, HUGH
+sub firstName {
+    my ($transformation) = @_;
+
+    my @firstnames = qw/
+        Jimmy Bruce Mike Hugh John Andrew Mark
+    /;
+
+    my $firstname = $firstnames[int rand scalar @firstnames];
+
+    if (defined $transformation) {
+        if ($transformation eq 'uppercase') {
+            $firstname = uc $firstname;
+        }
+        elsif ($transformation eq 'lowercase') {
+            $firstname = lc $firstname;
+        }
+        elsif ($transformation eq 'uppercase first') {
+            $firstname = ucfirst lc $firstname;
+        }
+    }
+
+    return $firstname;
 }
 
 1;

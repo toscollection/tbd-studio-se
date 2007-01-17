@@ -51,8 +51,19 @@ sub getDate {
     return $format;
 }
 
+##
+# return an ISO formatted random date
+#
+# {talendtypes} Day
+#
+# {param} string('2007-01-01') min : minimum date
+# {param} string('2008-12-31') max : maximum date (superior to min)
+#
+# {example} getRandomDate('1981-01-18', '2005-07-24')
+# {example} getRandomDate('1980-12-08', '2007-02-26')
 sub getRandomDate {
-    my %params = @_;
+    my %params;
+    @params{min, max} = @_;
 
     my ($year, $month, $day);
 
