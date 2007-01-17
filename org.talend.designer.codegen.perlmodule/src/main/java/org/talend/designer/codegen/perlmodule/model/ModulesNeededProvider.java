@@ -113,6 +113,10 @@ public class ModulesNeededProvider {
     }
 
     public static void check() {
+        if (getModulesNeeded().isEmpty()) {
+            return;
+        }
+
         // This map contains perl module name as keys and list of object using it as values :
         Map<String, List<ModuleNeeded>> componentsByModules = new HashMap<String, List<ModuleNeeded>>();
 
