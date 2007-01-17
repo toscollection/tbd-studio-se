@@ -8,7 +8,11 @@ use Getopt::Long;
 my %opt = ();
 GetOptions(\%opt, 'module=s@');
 
-my @module_names = @{ $opt{module} };
+my @module_names = ();
+
+if (defined $opt{module}) {
+    @module_names = @{ $opt{module} };
+}
 
 foreach my $module_name (sort @module_names) {
     print $module_name, ' => ';
