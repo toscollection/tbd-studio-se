@@ -54,7 +54,7 @@ sub getDate {
 ##
 # return an ISO formatted random date
 #
-# {talendtypes} Day
+# {talendTypes} Day
 #
 # {param} string('2007-01-01') min : minimum date
 # {param} string('2008-12-31') max : maximum date (superior to min)
