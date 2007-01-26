@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Talend Branding Repository Fragment
+Bundle-SymbolicName: org.talend.repository.talendbranding
+Bundle-Version: 1.0.0
+Bundle-Vendor: .Talend SA.
+Fragment-Host: org.talend.repository;bundle-version="0.0.0"
+Bundle-Localization: plugin
