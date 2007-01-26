@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jasper Branding Fragment
+Bundle-SymbolicName: org.talend.rcp.jasperbranding
+Bundle-Version: 1.0.0
+Bundle-Vendor: .Talend SA.
+Fragment-Host: org.talend.rcp;bundle-version="0.0.0"
+Bundle-Localization: plugin
