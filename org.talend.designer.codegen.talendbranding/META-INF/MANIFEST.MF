@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Talend Branding Codegen Fragment
+Bundle-SymbolicName: org.talend.designer.codegen.talendbranding
+Bundle-Version: 1.0.0
+Fragment-Host: org.talend.designer.codegen;bundle-version="0.0.0"
+Bundle-Localization: plugin
