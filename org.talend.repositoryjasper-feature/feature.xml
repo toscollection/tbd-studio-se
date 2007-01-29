@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.talend.repositoryjasper_feature"
+      label="Repository Jasper Feature"
+      version="1.2.0.qualifier"
+      provider-name=".Talend SA.">
+
+   <description url="http://www.talend.com/beta/">
+      Open Studio feature
+   </description>
+
+   <copyright url="http://www.talend.com/beta/rcp/copyright.txt">
+      Copyright Talend 2006
+   </copyright>
+
+   <license url="http://www.talend.com/beta/rcp/licence.txt">
+      Please see our web site at http://www.talend.com/beta/rcp/licence.txt
+   </license>
+
+   <url>
+      <update label="Talend update site" url="http://www.talend.com/tos/updatesite/testing/"/>
+      <discovery label="Talend web site" url="http://www.talend.com"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui.views.properties.tabbed"/>
+      <import plugin="org.talend.commons"/>
+      <import plugin="org.talend.core"/>
+      <import plugin="org.talend.libraries"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.apache.axis"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.apache.jakarta_log4j" version="1.2.8" match="equivalent"/>
+   </requires>
+
+   <plugin
+         id="org.talend.repository"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.repository.localprovider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.ant"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.commons_logging"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.jakarta_log4j"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.apache.axis"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.repository.jasperbranding"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+</feature>
