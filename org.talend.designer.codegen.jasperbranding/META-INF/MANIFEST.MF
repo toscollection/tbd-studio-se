@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Jasper Branding Codegen Fragment
-Bundle-SymbolicName: org.talend.designer.codegen.jasperbranding
-Bundle-Version: 1.2.0
-Fragment-Host: org.talend.designer.codegen;bundle-version="1.2.0"
-Bundle-Localization: plugin
