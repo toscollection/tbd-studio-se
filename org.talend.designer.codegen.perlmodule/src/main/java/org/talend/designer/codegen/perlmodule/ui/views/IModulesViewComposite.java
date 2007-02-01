@@ -19,7 +19,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
-package org.talend.designer.codegen.javamodule.ui.views;
+package org.talend.designer.codegen.perlmodule.ui.views;
 
 /**
  * The composite within the modules view should implemented this interface.

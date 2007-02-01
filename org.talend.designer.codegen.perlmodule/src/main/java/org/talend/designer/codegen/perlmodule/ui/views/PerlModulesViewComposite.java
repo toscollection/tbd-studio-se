@@ -19,9 +19,10 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
-package org.talend.designer.codegen.javamodule.ui.views;
+package org.talend.designer.codegen.perlmodule.ui.views;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.jmx.LayoutDynamicMBean;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
@@ -29,6 +30,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.contexts.IContextActivation;
@@ -38,8 +40,8 @@ import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
 import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
-import org.talend.designer.codegen.javamodule.model.ModulesNeededProvider;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
+import org.talend.designer.codegen.perlmodule.model.ModulesNeededProvider;
 
 /**
  * This is the composite filled in the ModulesView. So it implemented the inferface IModulesViewComposite. Know more see
@@ -47,11 +49,11 @@ import org.talend.designer.codegen.perlmodule.ModuleNeeded;
  * 
  * yzhang class global comment. Detailled comment <br/>
  * 
- * $Id: JavaModulesViewComposite.java JavaModulesViewComposite 2007-1-26 下午02:53:04 +0000 (下午02:53:04, 2007-1-26 2007)
+ * $Id: PerlModulesViewComposite.java PerlModulesViewComposite 2007-1-26 下午02:53:04 +0000 (下午02:53:04, 2007-1-26 2007)
  * yzhang $
  * 
  */
-public class JavaModulesViewComposite extends Composite implements IModulesViewComposite {
+public class PerlModulesViewComposite extends Composite implements IModulesViewComposite {
 
     protected static final String ID_STATUS = "status";
 
@@ -62,14 +64,14 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
     private IContextActivation ca;
 
     /**
-     * Construct a new Java modules view composite.
+     * Construct a new Perl modules view composite.
      * 
-     * yzhang JavaModulesViewComposite constructor comment.
+     * yzhang PerlModulesViewComposite constructor comment.
      * 
      * @param parent
      * @param style
      */
-    public JavaModulesViewComposite(Composite parent) {
+    public PerlModulesViewComposite(Composite parent) {
         super(parent, SWT.NONE);
 
         this.setLayout(new FormLayout());
@@ -192,16 +194,15 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
 
             public void focusGained(FocusEvent e) {
                 log.trace("Modules gain focus");
-                IContextService contextService = (IContextService) PlatformUI.getWorkbench().getAdapter(
-                        IContextService.class);
+                IContextService contextService = (IContextService) PlatformUI.getWorkbench().getAdapter(IContextService.class);
                 ca = contextService.activateContext("talend.modules");
             }
 
             public void focusLost(FocusEvent e) {
                 log.trace("Modules lost focus");
                 if (ca != null) {
-                    IContextService contextService = (IContextService) PlatformUI.getWorkbench().getAdapter(
-                            IContextService.class);
+                    IContextService contextService = (IContextService) PlatformUI.getWorkbench()
+                            .getAdapter(IContextService.class);
                     contextService.deactivateContext(ca);
                 }
             }
@@ -224,7 +225,7 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
     /*
      * Be called when the refresh of modules view was called.
      * 
-     * @see org.talend.designer.codegen.javamodule.ui.views.IModulesViewComposite#refresh()
+     * @see org.talend.designer.codegen.perlmodule.ui.views.IModulesViewComposite#refresh()
      */
     public void refresh() {
         ModulesNeededProvider.check();

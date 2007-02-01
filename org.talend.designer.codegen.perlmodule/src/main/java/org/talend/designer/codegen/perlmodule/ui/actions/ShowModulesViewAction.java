@@ -19,7 +19,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
-package org.talend.designer.codegen.javamodule.ui.actions;
+package org.talend.designer.codegen.perlmodule.ui.actions;
 
 import org.talend.commons.ui.swt.actions.AbstractShowViewAction;
 
@@ -38,7 +38,7 @@ public class ShowModulesViewAction extends AbstractShowViewAction {
 
     @Override
     public String getViewId() {
-        return "org.talend.designer.codegen.javamodule.ModulesView";
+        return "org.talend.designer.codegen.perlmodule.ModulesView";
     }
 
 }

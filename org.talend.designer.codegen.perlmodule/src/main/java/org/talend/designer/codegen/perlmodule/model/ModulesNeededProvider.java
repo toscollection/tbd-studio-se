@@ -19,7 +19,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
-package org.talend.designer.codegen.javamodule.model;
+package org.talend.designer.codegen.perlmodule.model;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,8 +37,8 @@ import org.talend.commons.exception.MessageBoxExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsFactory;
-import org.talend.designer.codegen.javamodule.JavaModuleService;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
+import org.talend.designer.codegen.perlmodule.PerlModuleService;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded.ModuleStatus;
 import org.talend.designer.runprocess.IRunProcessService;
 import org.talend.designer.runprocess.ProcessorException;
@@ -54,7 +54,7 @@ public class ModulesNeededProvider {
 
     private static List<ModuleNeeded> componentImportNeedsList;
 
-    private static final String CHECK_JAVA_MODULE_RELATIVE_PATH = "java/check_modules.java";
+    private static final String CHECK_PERL_MODULE_RELATIVE_PATH = "perl/check_modules.pl";
 
     private static final String MODULE_PARAM_KEY = "--module=";
 
@@ -117,7 +117,7 @@ public class ModulesNeededProvider {
             return;
         }
 
-        // This map contains java module name as keys and list of object using it as values :
+        // This map contains perl module name as keys and list of object using it as values :
         Map<String, List<ModuleNeeded>> componentsByModules = new HashMap<String, List<ModuleNeeded>>();
 
         String[] params = new String[] {};
@@ -125,31 +125,30 @@ public class ModulesNeededProvider {
             String moduleName = current.getModuleName();
             List<ModuleNeeded> listForThisModule = componentsByModules.get(moduleName);
             if (listForThisModule == null) {
-                // We have a new java module to check :
+                // We have a new perl module to check :
                 listForThisModule = new ArrayList<ModuleNeeded>();
                 // Add it in the map :
                 componentsByModules.put(moduleName, listForThisModule);
-                // And in the params java command line :
+                // And in the params perl command line :
                 params = (String[]) ArrayUtils.add(params, MODULE_PARAM_KEY + moduleName);
             }
-            // Add this import in the java module list :
+            // Add this import in the perl module list :
             listForThisModule.add(current);
 
-            // Set the status to unknow as after treatment, modules not in java response are unknown
+            // Set the status to unknow as after treatment, modules not in perl response are unknown
             current.setStatus(ModuleStatus.UNKNOWN);
         }
 
         try {
-            String checkJavaModuleAbsolutePath = FileLocator.toFileURL(
-                    JavaModuleService.PERL_MODULE_PLUGIN.getEntry(CHECK_JAVA_MODULE_RELATIVE_PATH)).getPath();
+            String checkPerlModuleAbsolutePath = FileLocator.toFileURL(
+                    PerlModuleService.PERL_MODULE_PLUGIN.getEntry(CHECK_PERL_MODULE_RELATIVE_PATH)).getPath();
 
             StringBuffer out = new StringBuffer();
             StringBuffer err = new StringBuffer();
 
             IRunProcessService service = (IRunProcessService) GlobalServiceRegister.getDefault().getService(
                     IRunProcessService.class);
-            service.perlExec(out, err, new Path(checkJavaModuleAbsolutePath), null, Level.DEBUG, "", "", "", -1, -1,
-                    params);
+            service.perlExec(out, err, new Path(checkPerlModuleAbsolutePath), null, Level.DEBUG, "", "", "", -1, -1, params);
 
             analyzeResponse(out, componentsByModules);
 

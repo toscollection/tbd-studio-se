@@ -19,7 +19,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
-package org.talend.designer.codegen.javamodule.ui.views;
+package org.talend.designer.codegen.perlmodule.ui.views;
 
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.action.IToolBarManager;
@@ -29,7 +29,7 @@ import org.eclipse.ui.commands.ActionHandler;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 import org.talend.commons.exception.RuntimeExceptionHandler;
-import org.talend.designer.codegen.javamodule.ui.actions.CheckModulesAction;
+import org.talend.designer.codegen.perlmodule.ui.actions.CheckModulesAction;
 
 /**
  * DOC nrousseau class global comment. Detailled comment <br/>
@@ -50,8 +50,8 @@ public class ModulesView extends ViewPart {
      */
     public void refresh() {
         if (this.modulesViewComposite instanceof IModulesViewComposite) {
-            IModulesViewComposite javaModulesViewComposite = (IModulesViewComposite) this.modulesViewComposite;
-            javaModulesViewComposite.refresh();
+            IModulesViewComposite perlModulesViewComposite = (IModulesViewComposite) this.modulesViewComposite;
+            perlModulesViewComposite.refresh();
         } else {
             RuntimeExceptionHandler.process(new RuntimeException(
                     "Compoiste in moudles view should be an instance of IModulesViewComposite"));
@@ -67,9 +67,9 @@ public class ModulesView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
         // If the content of this view need to display libries of Java, a new composite for it should be developed. And
-        // replace the JavaModulesViewComposite here.
+        // replace the PerlModulesViewComposite here.
 
-        modulesViewComposite = new JavaModulesViewComposite(parent);
+        modulesViewComposite = new PerlModulesViewComposite(parent);
         makeActions();
         contributeToActionBars();
     }
