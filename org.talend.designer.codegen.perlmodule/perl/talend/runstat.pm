@@ -58,7 +58,7 @@ sub StopThreadStat {
 sub ConnectStat {
     $| = 1;
 
-    print "Connecting to talendStudio on port $__RunStatPort...";
+    print "Connecting to statistics socket on port $__RunStatPort ...";
 
     $__InternalStatSocket = IO::Socket::INET->new(
         PeerAddr => '127.0.0.1',
@@ -67,7 +67,7 @@ sub ConnectStat {
     );
 
     while (!$__InternalStatSocket) {
-        print "\nconnection to port $__RunStatPort failed - try again...";
+        print '.';
         $__InternalStatSocket = IO::Socket::INET->new(
             PeerAddr => '127.0.0.1',
             PeerPort => $__RunStatPort,
@@ -75,7 +75,7 @@ sub ConnectStat {
     );
   }
 
-  print "connected.\n\n";
+  print " connected.\n\n";
 }
 
 
@@ -92,8 +92,6 @@ sub SendStat {
 
 
 sub ThreadStat {
-  print "ThreadStat started...\n";
-
   ConnectStat;
 
   while (1)

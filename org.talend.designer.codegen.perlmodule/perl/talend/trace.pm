@@ -20,7 +20,7 @@ sub StartTrace {
 
     $| = 1;
 
-    print "Connecting to talendStudio on port ", $port, " ...";
+    print "Connecting to trace socket on port ", $port, " ...";
 
     while (not $__InternalTraceSocket) {
         $__InternalTraceSocket = IO::Socket::INET->new(
@@ -30,10 +30,11 @@ sub StartTrace {
         )
             or print "\nconnection to port ", $port, "  failed - try again...";
 
+	print '.';
         sleep 1;
     }
 
-    print "connected.\n\n";
+    print " connected.\n\n";
 }
 
 
