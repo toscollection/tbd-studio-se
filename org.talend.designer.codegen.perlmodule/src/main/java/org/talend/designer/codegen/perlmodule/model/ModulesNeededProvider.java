@@ -40,6 +40,7 @@ import org.talend.core.model.components.IComponentsFactory;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
 import org.talend.designer.codegen.perlmodule.PerlModuleService;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded.ModuleStatus;
+import org.talend.designer.codegen.perlmodule.i18n.Messages;
 import org.talend.designer.runprocess.IRunProcessService;
 import org.talend.designer.runprocess.ProcessorException;
 import org.talend.repository.model.ComponentsFactoryProvider;
@@ -109,7 +110,7 @@ public class ModulesNeededProvider {
                 return current.getStatus();
             }
         }
-        throw new BusinessException("Module " + moduleName + " not found");
+        throw new BusinessException(Messages.getString("ModulesNeededProvider.Module.Exception", moduleName)); //$NON-NLS-1$
     }
 
     public static void check() {

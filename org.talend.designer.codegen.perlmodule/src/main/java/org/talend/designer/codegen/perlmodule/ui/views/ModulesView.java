@@ -29,6 +29,7 @@ import org.eclipse.ui.commands.ActionHandler;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.ViewPart;
 import org.talend.commons.exception.RuntimeExceptionHandler;
+import org.talend.designer.codegen.perlmodule.i18n.Messages;
 import org.talend.designer.codegen.perlmodule.ui.actions.CheckModulesAction;
 
 /**
@@ -54,7 +55,7 @@ public class ModulesView extends ViewPart {
             perlModulesViewComposite.refresh();
         } else {
             RuntimeExceptionHandler.process(new RuntimeException(
-                    "Compoiste in moudles view should be an instance of IModulesViewComposite"));
+                    Messages.getString("ModulesView.CompositeException"))); //$NON-NLS-1$
         }
 
     }

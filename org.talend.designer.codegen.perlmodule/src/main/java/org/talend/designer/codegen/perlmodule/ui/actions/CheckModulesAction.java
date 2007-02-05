@@ -24,6 +24,7 @@ package org.talend.designer.codegen.perlmodule.ui.actions;
 import org.eclipse.jface.action.Action;
 import org.talend.commons.ui.image.EImage;
 import org.talend.commons.ui.image.ImageProvider;
+import org.talend.designer.codegen.perlmodule.i18n.Messages;
 import org.talend.designer.codegen.perlmodule.ui.views.ModulesView;
 
 /**
@@ -38,8 +39,8 @@ public class CheckModulesAction extends Action {
 
     public CheckModulesAction(ModulesView view) {
         super();
-        setText("Refresh");
-        setToolTipText("Refresh");
+        setText(Messages.getString("CheckModulesAction.CheckRefrshBtn.Text")); //$NON-NLS-1$
+        setToolTipText(Messages.getString("CheckModulesAction.CheckRefrshBtn.Text")); //$NON-NLS-1$
         setImageDescriptor(ImageProvider.getImageDesc(EImage.REFRESH_ICON));
         this.view = view;
         this.setActionDefinitionId("refreshModules");

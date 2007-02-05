@@ -41,6 +41,7 @@ import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
 import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
+import org.talend.designer.codegen.perlmodule.i18n.Messages;
 import org.talend.designer.codegen.perlmodule.model.ModulesNeededProvider;
 
 /**
@@ -93,7 +94,7 @@ public class PerlModulesViewComposite extends Composite implements IModulesViewC
         tableViewerCreator.createTable();
 
         TableViewerCreatorColumn column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Status");
+        column.setTitle(Messages.getString("PerlModulesViewComposite.Status.TitleText")); //$NON-NLS-1$
         column.setId(ID_STATUS);
         column.setSortable(true);
         column.setImageProvider(new StatusImageProvider());
@@ -122,7 +123,7 @@ public class PerlModulesViewComposite extends Composite implements IModulesViewC
         column.setModifiable(false);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Component");
+        column.setTitle(Messages.getString("PerlModulesViewComposite.Component.TitleText")); //$NON-NLS-1$
         column.setSortable(true);
         column.setBeanPropertyAccessors(new IBeanPropertyAccessors<ModuleNeeded, String>() {
 
@@ -138,7 +139,7 @@ public class PerlModulesViewComposite extends Composite implements IModulesViewC
         column.setWeight(3);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Module");
+        column.setTitle(Messages.getString("PerlModulesViewComposite.Module.TitleText")); //$NON-NLS-1$
         column.setSortable(true);
         tableViewerCreator.setDefaultSort(column, SORT.ASC);
         column.setBeanPropertyAccessors(new IBeanPropertyAccessors<ModuleNeeded, String>() {
@@ -155,7 +156,7 @@ public class PerlModulesViewComposite extends Composite implements IModulesViewC
         column.setWeight(3);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Required for");
+        column.setTitle(Messages.getString("PerlModulesViewComposite.Required.TitleText")); //$NON-NLS-1$
 
         column.setBeanPropertyAccessors(new IBeanPropertyAccessors<ModuleNeeded, String>() {
 
@@ -171,7 +172,7 @@ public class PerlModulesViewComposite extends Composite implements IModulesViewC
         column.setWeight(12);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Required");
+        column.setTitle(Messages.getString("PerlModulesViewComposite.Required.Title")); //$NON-NLS-1$
         column.setImageProvider(new RequiredImageProvider());
         column.setSortable(true);
         column.setDisplayedValue("");
