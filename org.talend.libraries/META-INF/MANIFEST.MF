@@ -31,11 +31,13 @@ Bundle-ClassPath: .,
  saxon8-sql.jar,
  saxon8-xom.jar,
  saxon8-xpath.jar,
- saxon8-xqj.jar
+ saxon8-xqj.jar,
+ jconn3.jar
 Bundle-Localization: plugin
 Export-Package: com.ibm.db2.jcc,
  com.mysql.jdbc,
  com.mysql.jdbc.integration.c3p0,
+ com.sybase.jdbc3.jdbc,
  junit.extensions,
  junit.framework,
  junit.runner,
