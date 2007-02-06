@@ -75,7 +75,7 @@ public class PerlEditorViewWrapper extends PerlEditor implements IViewPart {
 
     private IFile getSamplePerlFile() {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IFile perlFile = workspace.getRoot().getProject("TestPerl").getFile("test.pl");
+        IFile perlFile = workspace.getRoot().getProject("TestPerl").getFile("test.pl"); //$NON-NLS-1$ //$NON-NLS-2$
         return perlFile;
     }
 
