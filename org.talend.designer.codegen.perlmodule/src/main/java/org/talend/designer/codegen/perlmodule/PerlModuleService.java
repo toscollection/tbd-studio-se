@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 import org.talend.commons.exception.BusinessException;
+import org.talend.designer.codegen.IModuleService;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded.ModuleStatus;
 import org.talend.designer.codegen.perlmodule.model.ModulesNeededProvider;
 
@@ -68,7 +69,7 @@ public class PerlModuleService implements IPerlModuleService {
     /* (non-Javadoc)
      * @see org.talend.designer.codegen.perlmodule.IPerlModuleService#getPerlModule()
      */
-    public List<URL> getPerlModule() throws IOException {
+    public List<URL> getModule() throws IOException {
         List<URL> list = new ArrayList<URL>();
         URL url = PERL_MODULE_PLUGIN.getEntry("perl/talend");
         url = FileLocator.toFileURL(url);
