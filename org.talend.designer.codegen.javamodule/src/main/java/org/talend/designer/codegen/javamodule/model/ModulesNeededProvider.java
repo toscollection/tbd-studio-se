@@ -38,6 +38,7 @@ import org.talend.core.GlobalServiceRegister;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsFactory;
 import org.talend.designer.codegen.javamodule.JavaModuleService;
+import org.talend.designer.codegen.javamodule.i18n.Messages;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded.ModuleStatus;
 import org.talend.designer.runprocess.IRunProcessService;
@@ -54,15 +55,15 @@ public class ModulesNeededProvider {
 
     private static List<ModuleNeeded> componentImportNeedsList;
 
-    private static final String CHECK_PERL_MODULE_RELATIVE_PATH = "java/check_modules.pl";
+    private static final String CHECK_PERL_MODULE_RELATIVE_PATH = "java/check_modules.pl"; //$NON-NLS-1$
 
-    private static final String MODULE_PARAM_KEY = "--module=";
+    private static final String MODULE_PARAM_KEY = "--module="; //$NON-NLS-1$
 
-    private static final String RESULT_SEPARATOR = " => ";
+    private static final String RESULT_SEPARATOR = " => "; //$NON-NLS-1$
 
-    private static final String RESULT_KEY_KO = "KO";
+    private static final String RESULT_KEY_KO = Messages.getString("ModulesNeededProvider.4"); //$NON-NLS-1$
 
-    private static final String RESULT_KEY_OK = "OK";
+    private static final String RESULT_KEY_OK = Messages.getString("ModulesNeededProvider.3"); //$NON-NLS-1$
 
     private static List<ModuleNeeded> getModulesNeededForComponents() {
         List<ModuleNeeded> importNeedsList = new ArrayList<ModuleNeeded>();
@@ -109,7 +110,7 @@ public class ModulesNeededProvider {
                 return current.getStatus();
             }
         }
-        throw new BusinessException("Module " + moduleName + " not found");
+        throw new BusinessException(Messages.getString("ModulesNeededProvider.ModuleNotFound", moduleName)); //$NON-NLS-1$
     }
 
     public static void check() {
@@ -148,7 +149,7 @@ public class ModulesNeededProvider {
 
             IRunProcessService service = (IRunProcessService) GlobalServiceRegister.getDefault().getService(
                     IRunProcessService.class);
-            service.perlExec(out, err, new Path(checkJavaModuleAbsolutePath), null, Level.DEBUG, "", "", "", -1, -1,
+            service.perlExec(out, err, new Path(checkJavaModuleAbsolutePath), null, Level.DEBUG, "", "", "", -1, -1, //$NON-NLS-1$
                     params);
 
             analyzeResponse(out, componentsByModules);
@@ -172,7 +173,7 @@ public class ModulesNeededProvider {
      */
     private static void analyzeResponse(StringBuffer buff, Map<String, List<ModuleNeeded>> componentsByModules) {
 
-        String[] lines = buff.toString().split("\n");
+        String[] lines = buff.toString().split("\n"); //$NON-NLS-1$
         for (String line : lines) {
             if (line != null && line.length() > 0) {
                 // Treat a java response line :

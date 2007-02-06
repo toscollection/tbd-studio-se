@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 import org.talend.commons.exception.BusinessException;
 import org.talend.commons.utils.generation.JavaUtils;
+import org.talend.designer.codegen.javamodule.i18n.Messages;
 import org.talend.designer.codegen.javamodule.model.ModulesNeededProvider;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded.ModuleStatus;
@@ -49,7 +50,7 @@ public class JavaModuleService implements IJavaModuleService {
     public List<URL> getBuiltInRoutines() {
         List<URL> toReturn = new ArrayList<URL>();
 
-        Enumeration entryPaths = JAVA_MODULE_PLUGIN.getEntryPaths(JavaUtils.JAVA_DIRECTORY+"/"+JavaUtils.JAVA_ROUTINES_DIRECTORY+"/system/");
+        Enumeration entryPaths = JAVA_MODULE_PLUGIN.getEntryPaths(JavaUtils.JAVA_DIRECTORY+"/"+JavaUtils.JAVA_ROUTINES_DIRECTORY+"/system/"); //$NON-NLS-1$ //$NON-NLS-2$
         for (Enumeration enumer = entryPaths; enumer.hasMoreElements();) {
             String routine = (String) enumer.nextElement();
             if (routine.endsWith(JavaUtils.JAVA_EXTENSION)) {
@@ -61,7 +62,7 @@ public class JavaModuleService implements IJavaModuleService {
     }
 
     public URL getRoutineTemplate() {
-        return JAVA_MODULE_PLUGIN.getEntry(JavaUtils.JAVA_DIRECTORY+"/"+JavaUtils.JAVA_ROUTINES_DIRECTORY+"/Template.java");
+        return JAVA_MODULE_PLUGIN.getEntry(JavaUtils.JAVA_DIRECTORY+"/"+JavaUtils.JAVA_ROUTINES_DIRECTORY+"/Template.java"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /*
@@ -71,7 +72,7 @@ public class JavaModuleService implements IJavaModuleService {
      */
     public List<URL> getModule() throws IOException {
         List<URL> list = new ArrayList<URL>();
-        URL url = JAVA_MODULE_PLUGIN.getEntry(JavaUtils.JAVA_DIRECTORY+"/talend");
+        URL url = JAVA_MODULE_PLUGIN.getEntry(JavaUtils.JAVA_DIRECTORY+"/talend"); //$NON-NLS-1$
         url = FileLocator.toFileURL(url);
         list.add(url);
         return list;

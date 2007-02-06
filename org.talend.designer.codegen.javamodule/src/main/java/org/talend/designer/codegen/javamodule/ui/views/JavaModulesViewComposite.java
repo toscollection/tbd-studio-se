@@ -41,6 +41,7 @@ import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
 import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
+import org.talend.designer.codegen.javamodule.i18n.Messages;
 import org.talend.designer.codegen.javamodule.model.ModulesNeededProvider;
 
 /**
@@ -55,7 +56,7 @@ import org.talend.designer.codegen.javamodule.model.ModulesNeededProvider;
  */
 public class JavaModulesViewComposite extends Composite implements IModulesViewComposite {
 
-    protected static final String ID_STATUS = "status";
+    protected static final String ID_STATUS = Messages.getString("JavaModulesViewComposite.status"); //$NON-NLS-1$
 
     private static TableViewerCreator tableViewerCreator;
 
@@ -93,7 +94,7 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
         tableViewerCreator.createTable();
 
         TableViewerCreatorColumn column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Status");
+        column.setTitle(Messages.getString("JavaModulesViewComposite.Status")); //$NON-NLS-1$
         column.setId(ID_STATUS);
         column.setSortable(true);
         column.setImageProvider(new StatusImageProvider());
@@ -103,13 +104,13 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
                 String str = null;
                 switch (bean.getStatus()) {
                 case INSTALLED:
-                    str = "Installed";
+                    str = Messages.getString("JavaModulesViewComposite.Installed"); //$NON-NLS-1$
                     break;
                 case NOT_INSTALLED:
-                    str = "Not installed";
+                    str = Messages.getString("JavaModulesViewComposite.NotInstalled"); //$NON-NLS-1$
                     break;
                 default:
-                    str = "Unknown";
+                    str = Messages.getString("JavaModulesViewComposite.Unknown"); //$NON-NLS-1$
                 }
                 return str;
             }
@@ -122,7 +123,7 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
         column.setModifiable(false);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Component");
+        column.setTitle(Messages.getString("JavaModulesViewComposite.Component")); //$NON-NLS-1$
         column.setSortable(true);
         column.setBeanPropertyAccessors(new IBeanPropertyAccessors<ModuleNeeded, String>() {
 
@@ -138,7 +139,7 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
         column.setWeight(3);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Module");
+        column.setTitle(Messages.getString("JavaModulesViewComposite.Module")); //$NON-NLS-1$
         column.setSortable(true);
         tableViewerCreator.setDefaultSort(column, SORT.ASC);
         column.setBeanPropertyAccessors(new IBeanPropertyAccessors<ModuleNeeded, String>() {
@@ -155,7 +156,7 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
         column.setWeight(3);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Required for");
+        column.setTitle(Messages.getString("JavaModulesViewComposite.RequiredFor")); //$NON-NLS-1$
 
         column.setBeanPropertyAccessors(new IBeanPropertyAccessors<ModuleNeeded, String>() {
 
@@ -171,10 +172,10 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
         column.setWeight(12);
 
         column = new TableViewerCreatorColumn(tableViewerCreator);
-        column.setTitle("Required");
+        column.setTitle(Messages.getString("JavaModulesViewComposite.Required")); //$NON-NLS-1$
         column.setImageProvider(new RequiredImageProvider());
         column.setSortable(true);
-        column.setDisplayedValue("");
+        column.setDisplayedValue(""); //$NON-NLS-1$
         column.setBeanPropertyAccessors(new IBeanPropertyAccessors<ModuleNeeded, String>() {
 
             public String get(ModuleNeeded bean) {
@@ -193,13 +194,13 @@ public class JavaModulesViewComposite extends Composite implements IModulesViewC
         FocusListener fl = new FocusListener() {
 
             public void focusGained(FocusEvent e) {
-                log.trace("Modules gain focus");
+                log.trace(Messages.getString("JavaModulesViewComposite.ModulesGainFocus")); //$NON-NLS-1$
                 IContextService contextService = (IContextService) PlatformUI.getWorkbench().getAdapter(IContextService.class);
-                ca = contextService.activateContext("talend.modules");
+                ca = contextService.activateContext("talend.modules"); //$NON-NLS-1$
             }
 
             public void focusLost(FocusEvent e) {
-                log.trace("Modules lost focus");
+                log.trace(Messages.getString("JavaModulesViewComposite.ModulesLostFocus")); //$NON-NLS-1$
                 if (ca != null) {
                     IContextService contextService = (IContextService) PlatformUI.getWorkbench()
                             .getAdapter(IContextService.class);

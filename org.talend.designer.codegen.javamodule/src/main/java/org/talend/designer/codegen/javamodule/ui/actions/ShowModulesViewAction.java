@@ -22,6 +22,7 @@
 package org.talend.designer.codegen.javamodule.ui.actions;
 
 import org.talend.commons.ui.swt.actions.AbstractShowViewAction;
+import org.talend.designer.codegen.javamodule.i18n.Messages;
 
 /**
  * DOC smallet class global comment. Detailled comment <br/>
@@ -33,12 +34,12 @@ public class ShowModulesViewAction extends AbstractShowViewAction {
 
     @Override
     public String getDefinitionId() {
-        return "showModulesView";
+        return "showModulesView"; //$NON-NLS-1$
     }
 
     @Override
     public String getViewId() {
-        return "org.talend.designer.codegen.perlmodule.ModulesView";
+        return "org.talend.designer.codegen.perlmodule.ModulesView"; //$NON-NLS-1$
     }
 
 }
