@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.talend.core.service">
+      <Service
+      		serviceId="IJavaModuleService" 
+      		class="org.talend.designer.codegen.javamodule.JavaModuleService"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+     <view
+           category="org.talend.core.root"
+           class="org.talend.designer.codegen.javamodule.ui.views.ModulesView"
+           icon="icons/modules_view.gif"
+           id="org.talend.designer.codegen.javamodule.ModulesView"
+           name="Modules"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.contexts">
+      <context
+            id="talend.modules"
+            name="Modules view"
+            parentId="org.eclipse.ui.contexts.window"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+   <command
+            categoryId="talend"
+            id="refreshModules"
+            name="Refresh modules"/>
+   <command
+         categoryId="talend"
+         id="showModulesView"
+         name="Show modules view"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="refreshModules"
+            contextId="talend.modules"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="F5"/>
+      <key
+         commandId="showModulesView"
+         contextId="talend.global"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="CTRL+F2"/>
+   </extension>
+   <extension
+         point="org.talend.core.global_actions">
+      <GlobalAction class="org.talend.designer.codegen.javamodule.ui.actions.ShowModulesViewAction"/>
+   </extension>
+</plugin>
