@@ -149,7 +149,7 @@ public class ModulesNeededProvider {
 
             IRunProcessService service = (IRunProcessService) GlobalServiceRegister.getDefault().getService(
                     IRunProcessService.class);
-            service.perlExec(out, err, new Path(checkJavaModuleAbsolutePath), null, Level.DEBUG, "", "", "", -1, -1, //$NON-NLS-1$
+            service.perlExec(out, err, new Path(checkJavaModuleAbsolutePath), null, Level.DEBUG, "", "", -1, -1, //$NON-NLS-1$
                     params);
 
             analyzeResponse(out, componentsByModules);
