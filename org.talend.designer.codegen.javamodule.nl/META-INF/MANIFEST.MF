@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Nl Fragment
+Bundle-SymbolicName: org.talend.designer.codegen.javamodule.nl
+Bundle-Version: 1.0.0
+Bundle-Vendor: Talend
+Fragment-Host: org.talend.designer.codegen.javamodule;bundle-version="1.2.0"
+Bundle-Localization: plugin
