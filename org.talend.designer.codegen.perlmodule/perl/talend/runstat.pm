@@ -40,6 +40,9 @@ my $__RefreshTime = 1; # en seconde
 our $thread_stat;
 
 sub StartThreadStat {
+    my ($port) = @_;
+    $__RunStatPort = $port if defined $port;
+
     $| = 1;
     $thread_stat = threads->create("ThreadStat","argument")
         or die "can't create thread dedicated to statistics";
@@ -72,7 +75,8 @@ sub ConnectStat {
             PeerAddr => '127.0.0.1',
             PeerPort => $__RunStatPort,
             Proto => 'tcp',
-    );
+        );
+        sleep 1;
   }
 
   print " connected.\n\n";
