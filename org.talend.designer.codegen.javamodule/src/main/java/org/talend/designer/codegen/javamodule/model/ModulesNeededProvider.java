@@ -86,9 +86,10 @@ public class ModulesNeededProvider {
     public static List<ModuleNeeded> getModulesNeeded() {
         if (componentImportNeedsList == null) {
             componentImportNeedsList = new ArrayList<ModuleNeeded>();
-            componentImportNeedsList.addAll(getModulesNeededForApplication());
-            componentImportNeedsList.addAll(getModulesNeededForComponents());
-            check();
+            // PTODO MHIRT Implements Module Needed for Java
+//            componentImportNeedsList.addAll(getModulesNeededForApplication());
+//            componentImportNeedsList.addAll(getModulesNeededForComponents());
+//            check();
         }
         return componentImportNeedsList;
     }
