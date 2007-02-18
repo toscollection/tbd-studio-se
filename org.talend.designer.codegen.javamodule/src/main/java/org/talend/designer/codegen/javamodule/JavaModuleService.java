@@ -27,15 +27,21 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 import org.talend.commons.exception.BusinessException;
 import org.talend.commons.utils.generation.JavaUtils;
+import org.talend.commons.utils.workbench.resources.ResourceUtils;
 import org.talend.designer.codegen.javamodule.i18n.Messages;
 import org.talend.designer.codegen.javamodule.model.ModulesNeededProvider;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded;
 import org.talend.designer.codegen.perlmodule.ModuleNeeded.ModuleStatus;
+import org.talend.repository.model.RepositoryConstants;
+import org.talend.repository.model.ResourceModelUtils;
 
 /**
  * DOC smallet class global comment. Detailled comment <br/>
@@ -73,7 +79,8 @@ public class JavaModuleService implements IJavaModuleService {
     public List<URL> getModule() throws IOException {
         List<URL> list = new ArrayList<URL>();
         URL url = JAVA_MODULE_PLUGIN.getEntry(JavaUtils.JAVA_DIRECTORY+"/talend"); //$NON-NLS-1$
-        url = FileLocator.toFileURL(url);
+        //url = FileLocator.toFileURL(url);
+        url = FileLocator.resolve(url);
         list.add(url);
         return list;
     }

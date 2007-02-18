@@ -1,4 +1,4 @@
-
+package routines;
 
 //$max = 4000;
 
@@ -70,3 +70,5 @@
 //    return $pattern;
 //}
 
+public class Misc {
+}

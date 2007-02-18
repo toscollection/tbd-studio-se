@@ -1,3 +1,4 @@
+package routines;
 
 //# getDate : return the current datetime with the given display format
 //#
@@ -26,3 +27,6 @@
 //# {example} getRandomDate('1981-01-18', '2005-07-24')
 //# {example} getRandomDate('1980-12-08', '2007-02-26')
 
+public class TalendDate {
+}
+}

@@ -1,4 +1,4 @@
-
+package routines;
 
 //##
 //# return an incremented numeric id
@@ -10,3 +10,7 @@
 //#
 //# {example} sequence('s1', 1, 1) # 1, 2, 3, ...
 //# {example} sequence('s2', 100, -2) # 100, 98, 96, ...
+
+public class Numeric {
+    
+}

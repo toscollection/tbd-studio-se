@@ -1,3 +1,4 @@
+package routines;
 
 //# formatString return the input string formatted as requested. This function
 //# takes a hash as input. We have 4 different cases:
@@ -58,3 +59,8 @@
 //#
 //# {example} firstName(undef) # Hugh, Andrew, John
 //# {example} firstName('uppercase') # MIKE, ANDREW, HUGH
+
+public class TalendString {
+    
+}
+}
