@@ -61,9 +61,9 @@ public class ModulesNeededProvider {
 
     private static final String RESULT_SEPARATOR = " => "; //$NON-NLS-1$
 
-    private static final String RESULT_KEY_KO = Messages.getString("ModulesNeededProvider.4"); //$NON-NLS-1$
+    private static final String RESULT_KEY_KO = Messages.getString("ModulesNeededProvider.KO"); //$NON-NLS-1$
 
-    private static final String RESULT_KEY_OK = Messages.getString("ModulesNeededProvider.3"); //$NON-NLS-1$
+    private static final String RESULT_KEY_OK = Messages.getString("ModulesNeededProvider.OK"); //$NON-NLS-1$
 
     private static List<ModuleNeeded> getModulesNeededForComponents() {
         List<ModuleNeeded> importNeedsList = new ArrayList<ModuleNeeded>();
