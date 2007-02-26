@@ -11,20 +11,16 @@ use vars qw(@EXPORT @ISA);
 );
 
 
-# getDate : return the current datetime with the given display format
+##
+# return the current datetime with the given display format
 #
-# format : (optional) string representing the wished format of the
-#          date. This string contains fixed strings and variables related
-#          to the date. By default, the format string is DD/MM/CCYY. Here
-#          is the list of date variables:
+# {talendTypes} Day
 #
-#    + CC for century
-#    + YY for year
-#    + MM for month
-#    + DD for day
-#    + hh for hour
-#    + mm for minute
-#    + ss for second
+# {param} string('CCYY-MM-DD') format : string representing the wished format of the date
+#
+# {example} getCurrentDate('CCYY-MM-DD')
+# {example} getCurrentDate('DD/MM/CCYY')
+# {example} getCurrentDate(undef)
 sub getDate {
     my ($format) = @_;
     $format = 'DD/MM/CCYY' if not defined $format;
