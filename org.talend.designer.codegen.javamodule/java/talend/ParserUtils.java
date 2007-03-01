@@ -29,7 +29,15 @@ public class ParserUtils {
     public static char parseTo_char(String s) {
         return (s != null) ? s.charAt(0) : null;
     }
+    
+    public static byte parseTo_Byte(String s) {
+        return Byte.decode(s).byteValue();
+    }
 
+    public static byte parseTo_byte(String s) {
+        return Byte.decode(s).byteValue();
+    }
+    
     public static Double parseTo_Double(String s) {
         return Double.parseDouble(s);
     }
@@ -68,6 +76,14 @@ public class ParserUtils {
 
     public static Long parseTo_Long(String s) {
         return Long.parseLong(s);
+    }
+    
+    public static Boolean parseTo_Boolean(String s) {
+        return Boolean.parseBoolean(s);
+    }
+    
+    public static boolean parseTo_boolean(String s) {
+        return Boolean.parseBoolean(s);
     }
 
     public static String parseTo_String(String s) {
