@@ -79,10 +79,16 @@ public class ParserUtils {
     }
     
     public static Boolean parseTo_Boolean(String s) {
+        if(s.equals("1")){
+            return Boolean.parseBoolean("true");
+        }
         return Boolean.parseBoolean(s);
     }
     
     public static boolean parseTo_boolean(String s) {
+        if(s.equals("1")){
+            return Boolean.parseBoolean("true");
+        }
         return Boolean.parseBoolean(s);
     }
 
