@@ -84,6 +84,49 @@ public class TabFolderEditors extends CTabFolder {
         // TableEditorCompositeBase metaDatasDescriptorView3 = new TableEditorCompositeBase(tabFolder1);
         // item.setControl(metaDatasDescriptorView3);
 
+        createMetadataEditorTab();
+
+        createExpressionEditorTab();
+
+        createSqlViewerTab();
+        
+        tabFolderEditors.addListener(SWT.Selection, new Listener() {
+
+            public void handleEvent(Event event) {
+                lastSelectedTab = tabFolderEditors.getSelectionIndex();
+            }
+        });
+        tabFolderEditors.setSelection(0);
+    }
+
+    /**
+     * DOC amaumont Comment method "createSqlViewerTab".
+     */
+    private void createSqlViewerTab() {
+        CTabItem item;
+        item = new CTabItem(tabFolderEditors, SWT.BORDER);
+        item.setText(Messages.getString("TabFolderEditors.SqlSelectQuery")); //$NON-NLS-1$
+        styledSqlText = createStyledText(item);
+        styledSqlText.setWordWrap(true);
+        styledSqlText.setEditable(false);
+        styledSqlText.setEnabled(true);
+    }
+
+    /**
+     * DOC amaumont Comment method "createExpressionEditorTab".
+     */
+    private void createExpressionEditorTab() {
+        CTabItem item;
+        item = new CTabItem(tabFolderEditors, SWT.BORDER);
+        item.setText(Messages.getString("TabFolderEditors.expressionEditor")); //$NON-NLS-1$
+        StyledText styledText = createStyledText(item);
+        this.styledTextHandler = new StyledTextHandler(styledText, mapperManager);
+    }
+
+    /**
+     * DOC amaumont Comment method "createMetadataEditor".
+     */
+    private void createMetadataEditorTab() {
         CTabItem item = new CTabItem(tabFolderEditors, SWT.BORDER);
         item.setText(Messages.getString("TabFolderEditors.schemaEditor")); //$NON-NLS-1$
 
@@ -100,26 +143,6 @@ public class TabFolderEditors extends CTabFolder {
         outputMetaEditor = new MetadataTableEditorView(inOutMetaEditorContainer, SWT.BORDER);
         outputMetaEditor.initGraphicComponents();
         outputMetaEditor.getExtendedTableViewer().setCommandStack(commandStack);
-
-        item = new CTabItem(tabFolderEditors, SWT.BORDER);
-        item.setText(Messages.getString("TabFolderEditors.expressionEditor")); //$NON-NLS-1$
-        StyledText styledText = createStyledText(item);
-        this.styledTextHandler = new StyledTextHandler(styledText, mapperManager);
-
-        item = new CTabItem(tabFolderEditors, SWT.BORDER);
-        item.setText(Messages.getString("TabFolderEditors.SqlSelectQuery")); //$NON-NLS-1$
-        styledSqlText = createStyledText(item);
-        styledSqlText.setWordWrap(true);
-        styledSqlText.setEditable(false);
-        styledSqlText.setEnabled(true);
-        
-        tabFolderEditors.addListener(SWT.Selection, new Listener() {
-
-            public void handleEvent(Event event) {
-                lastSelectedTab = tabFolderEditors.getSelectionIndex();
-            }
-        });
-        tabFolderEditors.setSelection(0);
     }
 
     private StyledText createStyledText(CTabItem item) {

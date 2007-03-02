@@ -314,12 +314,14 @@ public abstract class AbstractDbMapComponent extends AbstractExternalNode {
         if (externalData != null) {
             List<ExternalDbMapTable> inputTables = externalData.getInputTables();
             for (ExternalDbMapTable table : inputTables) {
-                if (table.getName().equals(oldConnectionName)) {
-                    table.setName(newConnectionName);
+                if (table.getTableName().equals(oldConnectionName) || table.getName().equals(oldConnectionName)) {
+                    if (table.getTableName() != null) {
+                        table.setName(newConnectionName);
+                        table.setTableName(newConnectionName);
+                    }
                     TableEntryLocation oldLocation = new TableEntryLocation(oldConnectionName, null);
                     TableEntryLocation newLocation = new TableEntryLocation(newConnectionName, null);
                     replaceLocationsInAllExpressions(oldLocation, newLocation, true);
-                    break;
                 }
             }
         }
@@ -449,5 +451,5 @@ public abstract class AbstractDbMapComponent extends AbstractExternalNode {
     }
 
     public abstract DbGenerationManager getGenerationManager();
-    
+
 }

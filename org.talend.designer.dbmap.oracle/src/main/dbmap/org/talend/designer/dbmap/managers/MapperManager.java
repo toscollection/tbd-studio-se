@@ -531,7 +531,7 @@ public class MapperManager {
             }
         }
     }
-    
+
     /**
      * DOC amaumont Comment method "isTableOfInputMetadataEditor".
      * 
@@ -634,12 +634,12 @@ public class MapperManager {
             }
         } else if (entrySource instanceof InputColumnTableEntry && entryTarget instanceof InputColumnTableEntry
                 && entrySource.getParent() != entryTarget.getParent()) {
-//            List<InputTable> inputTables = getInputTables();
-//            int indexTableSource = inputTables.indexOf(entrySource.getParent());
-//            int indexTableTarget = inputTables.indexOf(entryTarget.getParent());
-//            if (indexTableSource < indexTableTarget) {
-                return true;
-//            }
+            // List<InputTable> inputTables = getInputTables();
+            // int indexTableSource = inputTables.indexOf(entrySource.getParent());
+            // int indexTableTarget = inputTables.indexOf(entryTarget.getParent());
+            // if (indexTableSource < indexTableTarget) {
+            return true;
+            // }
         } else if (entryTarget instanceof VarTableEntry || entryTarget instanceof OutputColumnTableEntry
                 || entryTarget instanceof FilterTableEntry) {
             if (entrySource instanceof InputColumnTableEntry || entrySource instanceof VarTableEntry) {
@@ -686,6 +686,17 @@ public class MapperManager {
                 }
             }
         }
+    }
+
+    public Object getElementParameterValue(String parameterName) {
+
+        List<? extends IElementParameter> elementParameters = mapperComponent.getElementParameters();
+        for (IElementParameter parameter : elementParameters) {
+            if (parameter.getName().equals(parameterName)) {
+                return parameter.getValue();
+            }
+        }
+        return null;
     }
 
     /**

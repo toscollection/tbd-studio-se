@@ -132,11 +132,17 @@ public class OracleGenerationManager extends DbGenerationManager {
         DataMapExpressionParser parser = new DataMapExpressionParser(language);
 
         // load input table in hash
+        boolean explicitJoin = false;
         int lstSizeInputTables = inputTables.size();
         Map<String, ExternalDbMapTable> nameToInputTable = new HashMap<String, ExternalDbMapTable>();
         for (int i = 0; i < lstSizeInputTables; i++) {
             ExternalDbMapTable inputTable = inputTables.get(i);
             nameToInputTable.put(inputTable.getName(), inputTable);
+            IJoinType joinType = language.getJoin(inputTable.getJoinType());
+            if (joinType != AbstractDbLanguage.JOIN.NO_JOIN) {
+                explicitJoin = true;
+            }
+
         }
 
         HashMap<String, ExternalDbMapTable> joinLeftToJoinRightTables = new HashMap<String, ExternalDbMapTable>();
@@ -176,28 +182,25 @@ public class OracleGenerationManager extends DbGenerationManager {
 
         sb.append("\n");
 
-        Boolean explicitJoin = null;
+        IJoinType previousJoinType = null;
 
         for (int i = 0; i < lstSizeInputTables; i++) {
             ExternalDbMapTable inputTable = inputTables.get(i);
             IJoinType joinType = language.getJoin(inputTable.getJoinType());
-            boolean commaCouldBeAdded = i > 0;
-            boolean crCouldBeAdded = i > 0;
-            if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && (explicitJoin == null || explicitJoin == Boolean.FALSE)) {
+            boolean commaCouldBeAdded = !explicitJoin && i > 0;
+            boolean crCouldBeAdded = false;
+            if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && !explicitJoin) {
                 buildTableDeclaration(sb, inputTable, commaCouldBeAdded, crCouldBeAdded, false);
-                if (i == 0) {
-                    explicitJoin = Boolean.FALSE;
-                }
 
-            } else if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && (explicitJoin == null || explicitJoin == Boolean.TRUE)) {
-                if (i == 0) {
-                    explicitJoin = Boolean.TRUE;
-                }
-                if (i == 0) {
-                    buildTableDeclaration(sb, inputTable, commaCouldBeAdded, crCouldBeAdded, true);
+            } else if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
+                if (i > 0) {
+                    if (previousJoinType == null) {
+                        buildTableDeclaration(sb, inputTables.get(i - 1), commaCouldBeAdded, crCouldBeAdded, true);
+                        previousJoinType = joinType;
+                    } else {
+                        sb.append("\n");
+                    }
                     sb.append(" ");
-                } else {
-                    sb.append("\n");
                 }
                 String labelJoinType = joinType.getLabel();
                 sb.append(labelJoinType).append(" ");
@@ -210,12 +213,12 @@ public class OracleGenerationManager extends DbGenerationManager {
 
                 } else {
 
-                    ExternalDbMapTable rightTable = joinLeftToJoinRightTables.get(inputTable.getName());
-                    if (rightTable != null) {
-                        buildTableDeclaration(sb, rightTable, false, false, true);
-                    } else {
-                        sb.append(" <!! NO JOIN CLAUSES FOR '" + inputTable.getName() + "' !!> ");
-                    }
+                    // ExternalDbMapTable rightTable = joinLeftToJoinRightTables.get(inputTable.getName());
+                    buildTableDeclaration(sb, inputTable, false, false, true);
+                    // if (rightTable != null) {
+                    // } else {
+                    // sb.append(" <!! NO JOIN CLAUSES FOR '" + inputTable.getName() + "' !!> ");
+                    // }
                     sb.append(" ");
                     sb.append("ON( ");
                     List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
@@ -250,17 +253,19 @@ public class OracleGenerationManager extends DbGenerationManager {
         StringBuilder sbAddClauses = new StringBuilder();
         if (outputTable != null) {
             List<ExternalDbMapEntry> customConditionsEntries = outputTable.getCustomConditionsEntries();
-            lstSizeInputTables = customConditionsEntries.size();
-            boolean isFirstClause = true;
-            sbAddClauses.append("\n");
-            for (int i = 0; i < lstSizeInputTables; i++) {
-                ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
-                if (dbMapEntry.getExpression() != null && dbMapEntry.getExpression().trim().length() > 0) {
-                    if (!isFirstClause) {
-                        sbAddClauses.append(" AND ");
+            if (customConditionsEntries != null) {
+                lstSizeInputTables = customConditionsEntries.size();
+                boolean isFirstClause = true;
+                sbAddClauses.append("\n");
+                for (int i = 0; i < lstSizeInputTables; i++) {
+                    ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
+                    if (dbMapEntry.getExpression() != null && dbMapEntry.getExpression().trim().length() > 0) {
+                        if (!isFirstClause) {
+                            sbAddClauses.append(" AND ");
+                        }
+                        sbAddClauses.append(dbMapEntry.getExpression());
+                        isFirstClause = false;
                     }
-                    sbAddClauses.append(dbMapEntry.getExpression());
-                    isFirstClause = false;
                 }
             }
         }
@@ -271,6 +276,10 @@ public class OracleGenerationManager extends DbGenerationManager {
         if (whereClauses.trim().length() > 0 || addClauses.trim().length() > 0) {
             sb.append("\nWHERE");
             sb.append(whereClauses);
+            if (whereClauses.trim().length() > 0) {
+                sbAddClauses.append(" AND ");
+            }
+
             sb.append(addClauses);
         }
 
