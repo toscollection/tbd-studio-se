@@ -1,7 +1,9 @@
 package routines;
 
+import java.text.FieldPosition;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.SimpleDateFormat;
+import java.util.Date;
 
 public class TalendDate {
     
@@ -34,7 +36,7 @@ public class TalendDate {
          // pattern.replace("ss", "ss");
          
          SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-         sdf.format(new Calendar.getInstance().getTime(), result, 0);
+         sdf.format(Calendar.getInstance().getTime(), result, new FieldPosition(0));
          return result.toString();
      }
      
@@ -49,7 +51,7 @@ public class TalendDate {
      *  {example} getRandomDate('1981-01-18', '2005-07-24')
      *  {example} getRandomDate('1980-12-08', '2007-02-26')
      */
-     public static void getRandomDate(String minDate, String maxDate) {
+     public static Date getRandomDate(String minDate, String maxDate) {
          // PTODO MHIRT
          return Calendar.getInstance().getTime();
          
