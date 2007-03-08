@@ -1001,13 +1001,7 @@ public class UIManager {
         for (int i = 0; i < tableEntriesLocationsSources.length; i++) {
             TableEntryLocation location = tableEntriesLocationsSources[i];
 
-            // tests to know if link must be removed if key is unchecked
-            boolean dontRemoveLink = (!isInputEntry || isInputEntry
-                    && (inputExpressionAppliedOrCanceled || !inputExpressionAppliedOrCanceled
-                            && !mapperManager.checkEntryHasInvalidUncheckedKey((InputColumnTableEntry) currentModifiedITableEntry)));
-
-            if (!alreadyProcessed.contains(location) && mapperManager.checkSourceLocationIsValid(location, currentModifiedITableEntry)
-                    && dontRemoveLink) {
+            if (!alreadyProcessed.contains(location) && mapperManager.checkSourceLocationIsValid(location, currentModifiedITableEntry)) {
                 ITableEntry sourceTableEntry = mapperManager.retrieveTableEntry(location);
                 sourcesForTargetToDelete.remove(sourceTableEntry);
                 if (sourceTableEntry != null && !sourcesForTarget.contains(sourceTableEntry)
@@ -1034,75 +1028,7 @@ public class UIManager {
         }
         mapperManager.orderLinks();
 
-        if (dataMapTableView.getZone() == Zone.INPUTS) {
-            if (linkHasBeenAdded || linkHasBeenRemoved) {
-                checkTargetInputKey(currentModifiedITableEntry, checkInputKeyAutomatically, inputExpressionAppliedOrCanceled);
-            }
-            if (inputExpressionAppliedOrCanceled) {
-                openChangeKeysDialog((InputDataMapTableView) dataMapTableView);
-            }
-        }
-
         return new ParseExpressionResult(linkHasBeenAdded, linkHasBeenRemoved);
-    }
-
-    /**
-     * DOC amaumont Comment method "removeInvalidKeys".
-     * 
-     * @param newSelectedDataMapTableView
-     */
-    private void removeInvalidInputKeys(InputDataMapTableView inputDataMapTableView) {
-        List<IColumnEntry> targetTableEntries = inputDataMapTableView.getDataMapTable().getColumnEntries();
-        for (IColumnEntry entry : targetTableEntries) {
-            InputColumnTableEntry inputEntry = (InputColumnTableEntry) entry;
-            if (mapperManager.checkEntryHasInvalidCheckedKey(inputEntry)) {
-                inputEntry.getMetadataColumn().setKey(false);
-            }
-        }
-    }
-
-    /**
-     * 
-     * DOC amaumont Comment method "hasInvalidInputKeys".
-     * 
-     * @param newSelectedDataMapTableView
-     * @return
-     */
-    private boolean hasInvalidInputExpressionKeys(InputDataMapTableView inputDataMapTableView) {
-
-        if (inputDataMapTableView.getTableViewerCreatorForColumns() == null) {
-            return false;
-        }
-
-        List<IColumnEntry> targetTableEntries = inputDataMapTableView.getDataMapTable().getColumnEntries();
-        for (IColumnEntry entry : targetTableEntries) {
-            InputColumnTableEntry inputEntry = (InputColumnTableEntry) entry;
-            if (mapperManager.checkEntryHasInvalidCheckedKey(inputEntry)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 
-     * DOC amaumont Comment method "checkTargetInputKey".
-     * 
-     * @param currentModifiedTableEntry
-     * @param inputDataMapTableView
-     * @param checkInputKeyAutomatically
-     * @param appliedOrCanceled TODO
-     */
-    private void checkTargetInputKey(ITableEntry currentModifiedTableEntry, boolean checkInputKeyAutomatically, boolean appliedOrCanceled) {
-        // check key
-        if (checkInputKeyAutomatically && currentModifiedTableEntry instanceof InputColumnTableEntry) {
-
-            IMetadataColumn metadataColumn = ((InputColumnTableEntry) currentModifiedTableEntry).getMetadataColumn();
-            if (!metadataColumn.isKey()) {
-                metadataColumn.setKey(true);
-                refreshInOutTableAndMetaTable((AbstractInOutTableEntry) currentModifiedTableEntry);
-            }
-        }
     }
 
     /**
@@ -1320,31 +1246,6 @@ public class UIManager {
             return id.getValue();
         }
         return null;
-    }
-
-    /**
-     * DOC amaumont Comment method "openAddNewOutputDialog".
-     * 
-     * @param inputDataMapTableView
-     */
-    private void openChangeKeysDialog(final InputDataMapTableView inputDataMapTableView) {
-
-        new AsynchronousThreading(50, false, inputDataMapTableView.getDisplay(), new Runnable() {
-
-            public void run() {
-
-                if (hasInvalidInputExpressionKeys(inputDataMapTableView)) {
-                    if (MessageDialog.openConfirm(inputDataMapTableView.getShell(), Messages.getString("UIManager.removeInvalidKeys"), //$NON-NLS-1$
-                            Messages.getString("UIManager.comfirmToRemoveTableKeys") + inputDataMapTableView.getDataMapTable().getName() //$NON-NLS-1$
-                                    + "'")) { //$NON-NLS-1$
-                        removeInvalidInputKeys(inputDataMapTableView);
-                    }
-                    refreshInOutTableAndMetaTable(inputDataMapTableView);
-                }
-
-            }
-        }).start();
-
     }
 
     /**

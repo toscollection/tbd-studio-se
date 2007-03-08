@@ -78,4 +78,6 @@ public interface IDbLanguage {
     public abstract IJoinType[] getAvailableJoins();
     public abstract IJoinType getJoin(String joinType);
 
+    public abstract IDbOperatorManager getOperatorsManager();
+    
 }

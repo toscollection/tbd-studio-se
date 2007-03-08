@@ -31,6 +31,7 @@ import org.talend.designer.dbmap.AbstractDbMapComponent;
 import org.talend.designer.dbmap.external.data.ExternalDbMapEntry;
 import org.talend.designer.dbmap.external.data.ExternalDbMapTable;
 import org.talend.designer.dbmap.language.IDbLanguage;
+import org.talend.designer.dbmap.language.IDbOperatorManager;
 import org.talend.designer.dbmap.model.tableentry.TableEntryLocation;
 
 /**
@@ -150,6 +151,10 @@ public abstract class DbGenerationManager {
         return this.language;
     }
 
+    public IDbOperatorManager getOperatorsManager() {
+        return this.language.getOperatorsManager();
+    }
+    
     public abstract String buildSqlSelect(AbstractDbMapComponent component, String tableName);
 
     

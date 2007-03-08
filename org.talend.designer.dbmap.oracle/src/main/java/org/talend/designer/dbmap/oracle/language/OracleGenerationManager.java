@@ -32,12 +32,14 @@ import org.talend.designer.dbmap.external.data.ExternalDbMapData;
 import org.talend.designer.dbmap.external.data.ExternalDbMapEntry;
 import org.talend.designer.dbmap.external.data.ExternalDbMapTable;
 import org.talend.designer.dbmap.language.AbstractDbLanguage;
+import org.talend.designer.dbmap.language.IDbOperator;
 import org.talend.designer.dbmap.language.IJoinType;
 import org.talend.designer.dbmap.language.generation.DbGenerationManager;
 import org.talend.designer.dbmap.model.table.InputTable;
 import org.talend.designer.dbmap.model.table.OutputTable;
 import org.talend.designer.dbmap.model.tableentry.TableEntryLocation;
-import org.talend.designer.dbmap.oracle.OracleMapperComponent;
+import org.talend.designer.dbmap.mysql.MysqlMapperComponent;
+import org.talend.designer.dbmap.mysql.language.MysqlLanguage;
 import org.talend.designer.dbmap.utils.DataMapExpressionParser;
 
 /**
@@ -51,7 +53,7 @@ public class OracleGenerationManager extends DbGenerationManager {
     private Set<String> aliasAlreadyDeclared = new HashSet<String>();
 
     public OracleGenerationManager() {
-        super(new OracleLanguage());
+        super(new MysqlLanguage());
     }
 
     /**
@@ -120,10 +122,15 @@ public class OracleGenerationManager extends DbGenerationManager {
         int lstSizeOutTableEntries = metadataTableEntries.size();
         for (int i = 0; i < lstSizeOutTableEntries; i++) {
             ExternalDbMapEntry dbMapEntry = metadataTableEntries.get(i);
+            String expression = dbMapEntry.getExpression();
             if (i > 0) {
                 sb.append(", ");
             }
-            sb.append(dbMapEntry.getExpression());
+            if (expression != null && expression.trim().length() > 0) {
+                sb.append(dbMapEntry.getExpression());
+            } else {
+                sb.append("/* Expression of output entry '" + outputTable.getName() + "." + dbMapEntry.getName() + "' is not set */");
+            }
         }
 
         List<ExternalDbMapTable> inputTables = data.getInputTables();
@@ -145,38 +152,12 @@ public class OracleGenerationManager extends DbGenerationManager {
 
         }
 
-        HashMap<String, ExternalDbMapTable> joinLeftToJoinRightTables = new HashMap<String, ExternalDbMapTable>();
         StringBuilder sbWhere = new StringBuilder();
+        boolean isFirstClause = true;
         for (int i = 0; i < lstSizeInputTables; i++) {
             ExternalDbMapTable inputTable = inputTables.get(i);
-            List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
-            int lstSizeEntries = inputEntries.size();
-            boolean isFirstClause = true;
-            for (int j = 0; j < lstSizeEntries; j++) {
-                ExternalDbMapEntry dbMapEntry = inputEntries.get(j);
-                boolean expressionIsValid = dbMapEntry.getExpression() != null && dbMapEntry.getExpression().trim().length() > 0
-                        || dbMapEntry.getOperator() != null && dbMapEntry.getOperator().trim().length() > 0;
-                if (expressionIsValid && !dbMapEntry.isJoin()) {
-                    if (!isFirstClause) {
-                        sbWhere.append(" AND ");
-                    } else {
-                        sbWhere.append("\n ");
-                    }
-                    String locationInputEntry = language.getLocation(inputTable.getName(), dbMapEntry.getName());
-                    sbWhere.append(locationInputEntry);
-                    sbWhere.append(" ");
-                    if (dbMapEntry.getOperator() != null) {
-                        sbWhere.append(dbMapEntry.getOperator()).append(" ");
-                    }
-                    sbWhere.append(dbMapEntry.getExpression());
-                    isFirstClause = false;
-                } else if (expressionIsValid && dbMapEntry.isJoin()) {
-                    TableEntryLocation[] locations = parser.parseTableEntryLocations(dbMapEntry.getExpression());
-                    for (int k = 0; k < 1; k++) {
-                        TableEntryLocation location = locations[k];
-                        joinLeftToJoinRightTables.put(inputTable.getName(), nameToInputTable.get(location.tableName));
-                    }
-                }
+            if (buildConditions(sbWhere, inputTable, false, isFirstClause)) {
+                isFirstClause = false;
             }
         }
 
@@ -206,8 +187,8 @@ public class OracleGenerationManager extends DbGenerationManager {
                 sb.append(labelJoinType).append(" ");
                 if (joinType == AbstractDbLanguage.JOIN.CROSS_JOIN) {
                     ExternalDbMapTable nextTable = null;
-                    if (i < lstSizeInputTables - 1) {
-                        nextTable = inputTables.get(i + 1);
+                    if (i < lstSizeInputTables) {
+                        nextTable = inputTables.get(i);
                         buildTableDeclaration(sb, nextTable, false, false, true);
                     }
 
@@ -221,28 +202,8 @@ public class OracleGenerationManager extends DbGenerationManager {
                     // }
                     sb.append(" ");
                     sb.append("ON( ");
-                    List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
-                    int lstSizeEntries = inputEntries.size();
-                    boolean isFirstClause = true;
-                    for (int j = 0; j < lstSizeEntries; j++) {
-                        ExternalDbMapEntry dbMapEntry = inputEntries.get(j);
-                        boolean expressionIsValid = dbMapEntry.getExpression() != null && dbMapEntry.getExpression().trim().length() > 0
-                                || dbMapEntry.getOperator() != null && dbMapEntry.getOperator().trim().length() > 0;
-                        if (expressionIsValid && dbMapEntry.isJoin()) {
-                            if (!isFirstClause) {
-                                sb.append(" AND ");
-                            }
-
-                            String locationInputEntry = language.getLocation(inputTable.getName(), dbMapEntry.getName());
-                            sb.append(locationInputEntry);
-                            sb.append(" ");
-                            if (dbMapEntry.getOperator() != null) {
-                                sb.append(dbMapEntry.getOperator()).append(" ");
-                            }
-                            sb.append(dbMapEntry.getExpression());
-                            isFirstClause = false;
-
-                        }
+                    if (!buildConditions(sb, inputTable, true, true)) {
+                        sb.append("/* Conditions of joint are not set */");
                     }
                     sb.append(" )");
                 }
@@ -255,17 +216,14 @@ public class OracleGenerationManager extends DbGenerationManager {
             List<ExternalDbMapEntry> customConditionsEntries = outputTable.getCustomConditionsEntries();
             if (customConditionsEntries != null) {
                 lstSizeInputTables = customConditionsEntries.size();
-                boolean isFirstClause = true;
-                sbAddClauses.append("\n");
+                isFirstClause = true;
                 for (int i = 0; i < lstSizeInputTables; i++) {
                     ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
-                    if (dbMapEntry.getExpression() != null && dbMapEntry.getExpression().trim().length() > 0) {
-                        if (!isFirstClause) {
-                            sbAddClauses.append(" AND ");
-                        }
-                        sbAddClauses.append(dbMapEntry.getExpression());
-                        isFirstClause = false;
+                    if (!isFirstClause) {
+                        sbAddClauses.append("\n AND ");
                     }
+                    sbAddClauses.append(dbMapEntry.getExpression());
+                    isFirstClause = false;
                 }
             }
         }
@@ -276,14 +234,88 @@ public class OracleGenerationManager extends DbGenerationManager {
         if (whereClauses.trim().length() > 0 || addClauses.trim().length() > 0) {
             sb.append("\nWHERE");
             sb.append(whereClauses);
-            if (whereClauses.trim().length() > 0) {
-                sbAddClauses.append(" AND ");
+            if (whereClauses.trim().length() > 0 && addClauses.trim().length() > 0) {
+                sb.append("\n AND ");
             }
 
             sb.append(addClauses);
         }
 
         return sb.toString();
+    }
+
+    /**
+     * DOC amaumont Comment method "buildConditions".
+     * 
+     * @param sb
+     * @param inputTable
+     * @param writeForJoin TODO
+     * @param isFirstClause TODO
+     */
+    private boolean buildConditions(StringBuilder sb, ExternalDbMapTable inputTable, boolean writeForJoin, boolean isFirstClause) {
+        List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
+        int lstSizeEntries = inputEntries.size();
+        boolean atLeastOneConditionWritten = false;
+        for (int j = 0; j < lstSizeEntries; j++) {
+            ExternalDbMapEntry dbMapEntry = inputEntries.get(j);
+            if (writeForJoin == dbMapEntry.isJoin()) {
+                boolean conditionWritten = buildCondition(sb, inputTable, isFirstClause, dbMapEntry, !writeForJoin);
+                if (conditionWritten) {
+                    atLeastOneConditionWritten = true;
+                }
+                if (isFirstClause && conditionWritten) {
+                    isFirstClause = false;
+                }
+            }
+        }
+        return atLeastOneConditionWritten;
+    }
+
+    /**
+     * DOC amaumont Comment method "buildCondition".
+     * 
+     * @param sbWhere
+     * @param table
+     * @param isFirstClause
+     * @param dbMapEntry
+     * @param writeCr TODO
+     */
+    private boolean buildCondition(StringBuilder sbWhere, ExternalDbMapTable table, boolean isFirstClause, ExternalDbMapEntry dbMapEntry,
+            boolean writeCr) {
+        String expression = dbMapEntry.getExpression();
+        IDbOperator dbOperator = getOperatorsManager().getOperatorFromValue(dbMapEntry.getOperator());
+        boolean operatorIsSet = dbOperator != null;
+        boolean expressionIsSet = expression != null && expression.trim().length() > 0;
+
+        boolean conditionWritten = false;
+
+        if (operatorIsSet) {
+
+            if (writeCr) {
+                sbWhere.append("\n ");
+            }
+            if (!isFirstClause) {
+                sbWhere.append(" AND ");
+            }
+            String locationInputEntry = language.getLocation(table.getName(), dbMapEntry.getName());
+            sbWhere.append(" ");
+            sbWhere.append(locationInputEntry);
+            sbWhere.append(" ");
+            if (operatorIsSet) {
+                sbWhere.append(dbOperator.getOperator()).append(" ");
+            } else if (!operatorIsSet && expressionIsSet) {
+                sbWhere.append("/* Operator of input entry '" + dbMapEntry.getName() + "' is not set */ ");
+            }
+            if (operatorIsSet && !expressionIsSet && !dbOperator.isMonoOperand()) {
+                sbWhere.append("/* Expression of input entry '" + table.getName() + "." + dbMapEntry.getName() + "' is not set */");
+            } else if (expressionIsSet) {
+                sbWhere.append(dbMapEntry.getExpression());
+            }
+            conditionWritten = true;
+
+        }
+
+        return conditionWritten;
     }
 
     /**
@@ -331,18 +363,6 @@ public class OracleGenerationManager extends DbGenerationManager {
 
         // OracleGenerationManager manager = new OracleGenerationManager(SqlLanguageProvider.getJavaLanguage());
         // System.out.println(manager.insertFieldKey("table:column", "\nligne1\nligne2\nligne3"));
-    }
-
-    /**
-     * 
-     * DOC amaumont MapperManager class global comment. Detailled comment <br/>
-     * 
-     * $Id$
-     * 
-     */
-    public enum PROBLEM_KEY_FIELD {
-        METADATA_COLUMN,
-        FILTER,
     }
 
 }

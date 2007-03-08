@@ -314,11 +314,10 @@ public abstract class AbstractDbMapComponent extends AbstractExternalNode {
         if (externalData != null) {
             List<ExternalDbMapTable> inputTables = externalData.getInputTables();
             for (ExternalDbMapTable table : inputTables) {
-                if (table.getTableName().equals(oldConnectionName) || table.getName().equals(oldConnectionName)) {
-                    if (table.getTableName() != null) {
-                        table.setName(newConnectionName);
-                        table.setTableName(newConnectionName);
-                    }
+                if (table.getTableName() != null
+                        && (table.getTableName().equals(oldConnectionName) || table.getName().equals(oldConnectionName))) {
+                    table.setTableName(newConnectionName);
+                    table.setName(newConnectionName);
                     TableEntryLocation oldLocation = new TableEntryLocation(oldConnectionName, null);
                     TableEntryLocation newLocation = new TableEntryLocation(newConnectionName, null);
                     replaceLocationsInAllExpressions(oldLocation, newLocation, true);

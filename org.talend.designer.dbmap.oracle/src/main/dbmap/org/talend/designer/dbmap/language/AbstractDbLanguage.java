@@ -125,5 +125,5 @@ public abstract class AbstractDbLanguage implements IDbLanguage {
     public IJoinType getJoin(String joinType) {
         return JOIN.getJoin(joinType);
     }
-
+    
 }

@@ -27,6 +27,7 @@ import org.talend.designer.dbmap.AbstractDbMapComponent;
 import org.talend.designer.dbmap.MapperMain;
 import org.talend.designer.dbmap.external.converter.ExternalNodeUtils;
 import org.talend.designer.dbmap.language.generation.DbGenerationManager;
+import org.talend.designer.dbmap.mysql.language.MysqlGenerationManager;
 import org.talend.designer.dbmap.oracle.language.OracleGenerationManager;
 import org.talend.designer.mapper.oracle.model.metadata.OracleDbMapTestGenerator;
 

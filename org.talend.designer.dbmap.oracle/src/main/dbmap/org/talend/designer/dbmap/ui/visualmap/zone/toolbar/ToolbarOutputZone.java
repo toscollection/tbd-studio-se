@@ -43,7 +43,7 @@ public class ToolbarOutputZone extends ToolbarZone {
 
     private ToolItem removeOutputItem;
 
-//    private ToolItem guessItem;
+    private ToolItem guessItem;
 
     public static final String MINIMIZE_TOOLTIP = Messages.getString("ToolbarOutputZone.minimizeTooltip"); //$NON-NLS-1$
 
@@ -85,11 +85,11 @@ public class ToolbarOutputZone extends ToolbarZone {
 
         addCommonsComponents();
         
-//        new ToolItem(getToolBarActions(), SWT.SEPARATOR);
-//        
-//        guessItem = new ToolItem(getToolBarActions(), SWT.PUSH);
-//        guessItem.setToolTipText(Messages.getString("ToolbarOutputZone.widgetTooltip.mapInputAndOutput")); //$NON-NLS-1$
-//        guessItem.setText(Messages.getString("ToolbarOutputZone.widgetText.autoMap")); //$NON-NLS-1$
+        new ToolItem(getToolBarActions(), SWT.SEPARATOR);
+        
+        guessItem = new ToolItem(getToolBarActions(), SWT.PUSH);
+        guessItem.setToolTipText(Messages.getString("ToolbarOutputZone.widgetTooltip.mapInputAndOutput")); //$NON-NLS-1$
+        guessItem.setText(Messages.getString("ToolbarOutputZone.widgetText.autoMap")); //$NON-NLS-1$
         
     }
 
@@ -114,13 +114,13 @@ public class ToolbarOutputZone extends ToolbarZone {
 
         });
 
-//        guessItem.addListener(SWT.Selection, new Listener() {
-//            
-//            public void handleEvent(Event event) {
-//                getMapperManager().mapAutomaticallly();
-//            }
-//            
-//        });
+        guessItem.addListener(SWT.Selection, new Listener() {
+            
+            public void handleEvent(Event event) {
+                getMapperManager().mapAutomaticallly();
+            }
+            
+        });
         
     }
 

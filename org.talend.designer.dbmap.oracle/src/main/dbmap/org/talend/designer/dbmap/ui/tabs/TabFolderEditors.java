@@ -33,10 +33,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.talend.commons.ui.swt.colorstyledtext.ColorManager;
+import org.talend.commons.ui.swt.colorstyledtext.MapperColorStyledText;
 import org.talend.core.CorePlugin;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
-import org.talend.core.language.ECodeLanguage;
 import org.talend.core.ui.metadata.editor.MetadataTableEditorView;
 import org.talend.designer.dbmap.MapperMain;
 import org.talend.designer.dbmap.i18n.Messages;
@@ -150,14 +150,9 @@ public class TabFolderEditors extends CTabFolder {
         if (MapperMain.isStandAloneMode()) {
             styledText = new StyledText(tabFolderEditors, SWT.V_SCROLL | SWT.H_SCROLL);
         } else {
-            RepositoryContext repositoryContext = (RepositoryContext) CorePlugin.getContext().getProperty(Context.REPOSITORY_CONTEXT_KEY);
-            ECodeLanguage language = repositoryContext.getProject().getLanguage();
             IPreferenceStore preferenceStore = CorePlugin.getDefault().getPreferenceStore();
             ColorManager colorManager = new ColorManager(preferenceStore);
-            // styledText = new ColorStyledText(tabFolderEditors, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL,
-            // colorManager, language.getName());
-            styledText = new MapperColorStyledText(tabFolderEditors, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL, colorManager, language
-                    .getName());
+            styledText = new MapperColorStyledText(tabFolderEditors, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL, colorManager, "tsql");
         }
         styledText.setEnabled(false);
         item.setControl(styledText);

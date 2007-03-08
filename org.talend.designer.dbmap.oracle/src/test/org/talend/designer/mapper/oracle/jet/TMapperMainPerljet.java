@@ -30,8 +30,8 @@ import org.talend.designer.dbmap.MapperMain;
 import org.talend.designer.dbmap.external.data.ExternalDbMapData;
 import org.talend.designer.dbmap.external.data.ExternalDbMapTable;
 import org.talend.designer.dbmap.language.IDbLanguage;
-import org.talend.designer.dbmap.oracle.OracleMapperComponent;
-import org.talend.designer.dbmap.oracle.language.OracleGenerationManager;
+import org.talend.designer.dbmap.mysql.MysqlMapperComponent;
+import org.talend.designer.dbmap.mysql.language.MysqlGenerationManager;
 import org.talend.designer.mapper.oracle.model.metadata.OracleDbMapTestGenerator;
 
 /**
@@ -51,7 +51,7 @@ public class TMapperMainPerljet {
         // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // start of code to copy in template
 
-        OracleGenerationManager gm = new OracleGenerationManager();
+        MysqlGenerationManager gm = new MysqlGenerationManager();
         String uniqueNameComponent = null;
         IDbLanguage currentLanguage = gm.getLanguage();
         List<IConnection> connections;
@@ -76,7 +76,7 @@ public class TMapperMainPerljet {
         if (outputTables.size() > 0) {
             ExternalDbMapTable outputTable = outputTables.get(0);
 
-            String sqlQuery = gm.buildSqlSelect((OracleMapperComponent) node, outputTable.getName());
+            String sqlQuery = gm.buildSqlSelect((MysqlMapperComponent) node, outputTable.getName());
             insertQuery = "$select_query_" + outputTable.getName() + " = \"" + sqlQuery + "\"";
 
         }

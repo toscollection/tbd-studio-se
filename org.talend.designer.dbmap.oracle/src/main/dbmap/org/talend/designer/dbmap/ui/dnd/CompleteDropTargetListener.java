@@ -373,12 +373,8 @@ public class CompleteDropTargetListener extends DefaultDropTargetListener {
 
             } else if (currentEntryTarget != null && !insertionEntryMode) {
 
-                boolean overwrite = (lastEntryTarget != currentEntryTarget && analyzer.isOverwriteExpression());
-                modifyExistingExpression(currentLanguage, currentEntryTarget, tableEntrySource, overwrite, zoneSourceEntry);
-                uiManager.parseExpression(currentEntryTarget.getExpression(), currentEntryTarget, false, true, true);
-
-                int indexOfEntry = tableViewerCreatorTarget.getInputList().indexOf(currentEntryTarget);
-                columnIndicesToSelect.add(indexOfEntry);
+                modifyExistingEntry(uiManager, analyzer, currentLanguage, currentEntryTarget, columnIndicesToSelect,
+                        tableViewerCreatorTarget, lastEntryTarget, tableEntrySource, zoneSourceEntry);
 
             } else {
                 String columnName = transferableEntry.getTableEntrySource().getName();
@@ -461,13 +457,41 @@ public class CompleteDropTargetListener extends DefaultDropTargetListener {
 
         uiManager.parseAllExpressionsForAllTables();
         mapperManager.getProblemsManager().checkProblemsForAllEntriesOfAllTables(true);
-        
+
         mapperManager.getUiManager().refreshSqlExpression();
 
         uiManager.selectLinks(dataMapTableViewTarget, selectedEntries, targetTableIsFiltersTable, true);
         tableViewerCreatorTarget.getTable().setFocus();
 
         uiManager.setDragging(false);
+    }
+
+    /**
+     * DOC amaumont Comment method "modifyExistingEntry".
+     * 
+     * @param uiManager
+     * @param analyzer
+     * @param currentLanguage
+     * @param currentEntryTarget
+     * @param columnIndicesToSelect
+     * @param tableViewerCreatorTarget
+     * @param lastEntryTarget
+     * @param tableEntrySource
+     * @param zoneSourceEntry
+     */
+    private void modifyExistingEntry(UIManager uiManager, DropContextAnalyzer analyzer, IDbLanguage currentLanguage,
+            ITableEntry currentEntryTarget, ArrayList<Integer> columnIndicesToSelect, TableViewerCreator tableViewerCreatorTarget,
+            ITableEntry lastEntryTarget, ITableEntry tableEntrySource, Zone zoneSourceEntry) {
+        boolean overwrite = (lastEntryTarget != currentEntryTarget && analyzer.isOverwriteExpression());
+        modifyExistingExpression(currentLanguage, currentEntryTarget, tableEntrySource, overwrite, zoneSourceEntry);
+        uiManager.parseExpression(currentEntryTarget.getExpression(), currentEntryTarget, false, true, true);
+
+        if (currentEntryTarget instanceof InputColumnTableEntry) {
+            setDefaultOperator((InputColumnTableEntry) currentEntryTarget);
+        }
+
+        int indexOfEntry = tableViewerCreatorTarget.getInputList().indexOf(currentEntryTarget);
+        columnIndicesToSelect.add(indexOfEntry);
     }
 
     /**
@@ -506,7 +530,7 @@ public class CompleteDropTargetListener extends DefaultDropTargetListener {
                 ITableEntry tableEntrySource = sourceEntriesOfEntriesBeingAdded.get(i);
                 ITableEntry dataMapTableEntry = lastCreatedTableEntries.get(i);
                 if (zoneTarget == Zone.INPUTS) {
-                    ((InputColumnTableEntry) dataMapTableEntry).getMetadataColumn().setKey(true);
+                    setDefaultOperator((InputColumnTableEntry) dataMapTableEntry);
                 }
                 DataMapTableView dataMapTableView = mapperManager.retrieveAbstractDataMapTableView(tableEntrySource.getParent());
                 Zone zoneSource = dataMapTableView.getZone();
@@ -530,6 +554,17 @@ public class CompleteDropTargetListener extends DefaultDropTargetListener {
             uiManager.parseExpression(tableEntry.getExpression(), tableEntry, false, true, false);
         }
 
+    }
+
+    /**
+     * DOC amaumont Comment method "setDefaultOperator".
+     * 
+     * @param dataMapTableEntry
+     */
+    private void setDefaultOperator(InputColumnTableEntry inputEntry) {
+        if (inputEntry.getOperator() == null || inputEntry.getOperator().equals("")) {
+            inputEntry.setOperator("=");
+        }
     }
 
     @SuppressWarnings("unchecked")//$NON-NLS-1$

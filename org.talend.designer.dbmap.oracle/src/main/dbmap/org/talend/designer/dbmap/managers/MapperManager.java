@@ -23,7 +23,6 @@ package org.talend.designer.dbmap.managers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +45,6 @@ import org.talend.core.model.process.IProcess;
 import org.talend.core.ui.metadata.editor.MetadataTableEditorView;
 import org.talend.designer.core.model.components.EParameterName;
 import org.talend.designer.dbmap.AbstractDbMapComponent;
-import org.talend.designer.dbmap.ActivatorForDbMap;
 import org.talend.designer.dbmap.i18n.Messages;
 import org.talend.designer.dbmap.language.IDbLanguage;
 import org.talend.designer.dbmap.model.table.AbstractDataMapTable;
@@ -506,12 +504,13 @@ public class MapperManager {
         if (currentSelectedDataMapTableView != null) {
             String tableName = currentSelectedDataMapTableView.getDataMapTable().getName();
             if (MessageDialog.openConfirm(currentSelectedDataMapTableView.getShell(), Messages
-                    .getString("MapperManager.removeOutputTableTitle"), //$NON-NLS-1$
-                    Messages.getString("MapperManager.removeOutputTableTitleMessage") + tableName + "' ?")) { //$NON-NLS-1$ //$NON-NLS-2$
+                    .getString("MapperManager.removeInputTableTitle"), //$NON-NLS-1$
+                    Messages.getString("MapperManager.removeInputTableTitleMessage", new Object[] { tableName }))) { //$NON-NLS-1$
                 IProcess process = mapperComponent.getProcess();
                 uiManager.removeInputTableView(currentSelectedDataMapTableView);
                 uiManager.updateToolbarButtonsStates(Zone.OUTPUTS);
                 process.removeUniqueConnectionName(currentSelectedDataMapTableView.getDataMapTable().getName());
+                uiManager.refreshSqlExpression();
             }
         }
     }
@@ -528,6 +527,7 @@ public class MapperManager {
                 uiManager.removeOutputTableView(currentSelectedDataMapTableView);
                 uiManager.updateToolbarButtonsStates(Zone.OUTPUTS);
                 process.removeUniqueConnectionName(currentSelectedDataMapTableView.getDataMapTable().getName());
+                uiManager.refreshSqlExpression();
             }
         }
     }
@@ -633,7 +633,8 @@ public class MapperManager {
                 return true;
             }
         } else if (entrySource instanceof InputColumnTableEntry && entryTarget instanceof InputColumnTableEntry
-                && entrySource.getParent() != entryTarget.getParent()) {
+//                && entrySource.getParent() != entryTarget.getParent()
+                ) {
             // List<InputTable> inputTables = getInputTables();
             // int indexTableSource = inputTables.indexOf(entrySource.getParent());
             // int indexTableTarget = inputTables.indexOf(entryTarget.getParent());
@@ -802,25 +803,6 @@ public class MapperManager {
         } else {
             command.execute();
         }
-    }
-
-    /**
-     * DOC amaumont Comment method "checkEntryHasValidKey".
-     * 
-     * @param inputEntry
-     */
-    public boolean checkEntryHasInvalidCheckedKey(InputColumnTableEntry inputEntry) {
-        return inputEntry.getMetadataColumn().isKey() && checkEntryHasEmptyExpression(inputEntry);
-    }
-
-    /**
-     * DOC amaumont Comment method "checkEntryHasValidKey".
-     * 
-     * @param inputEntry
-     */
-    public boolean checkEntryHasInvalidUncheckedKey(InputColumnTableEntry inputEntry) {
-        return !inputEntry.getMetadataColumn().isKey() && inputEntry.getExpression() != null
-                && inputEntry.getExpression().trim().length() > 0;
     }
 
     public boolean checkEntryHasEmptyExpression(ITableEntry entry) {

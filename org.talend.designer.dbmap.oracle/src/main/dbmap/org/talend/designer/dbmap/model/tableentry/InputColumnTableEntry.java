@@ -36,6 +36,8 @@ public class InputColumnTableEntry extends AbstractInOutTableEntry {
     
     private boolean join;
     
+    private String originalExpression;
+    
     public InputColumnTableEntry(AbstractDataMapTable abstractDataMapTable, IMetadataColumn metadataColumn, String expression) {
         super(abstractDataMapTable, metadataColumn, expression);
     }
@@ -77,6 +79,25 @@ public class InputColumnTableEntry extends AbstractInOutTableEntry {
      */
     public void setJoin(boolean join) {
         this.join = join;
+    }
+
+    
+    /**
+     * Getter for originalExpression.
+     * @return the originalExpression
+     */
+    public String getOriginalExpression() {
+        return this.originalExpression;
+    }
+
+    
+    /**
+     * Sets the originalExpression.
+     * Used to save the original expression while operator is not accepted, so expression will be restored if operator has not changed.
+     * @param expressionBackup the originalExpression to set
+     */
+    public void setOriginalExpression(String originalExpression) {
+        this.originalExpression = originalExpression;
     }
 
     

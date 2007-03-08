@@ -22,6 +22,7 @@
 package org.talend.designer.dbmap.managers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +34,7 @@ import org.talend.core.model.components.IODataComponent;
 import org.talend.core.model.components.IODataComponentContainer;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.process.AbstractConnection;
+import org.talend.core.model.process.Element;
 import org.talend.core.model.process.IConnection;
 import org.talend.core.model.process.IExternalNode;
 import org.talend.core.model.process.INode;
@@ -40,9 +42,13 @@ import org.talend.core.model.process.Problem;
 import org.talend.core.model.process.Problem.ProblemStatus;
 import org.talend.designer.codegen.IAloneProcessNodeConfigurer;
 import org.talend.designer.dbmap.language.IDbLanguage;
+import org.talend.designer.dbmap.language.IDbOperator;
+import org.talend.designer.dbmap.language.IDbOperatorManager;
 import org.talend.designer.dbmap.model.tableentry.FilterTableEntry;
 import org.talend.designer.dbmap.model.tableentry.IColumnEntry;
 import org.talend.designer.dbmap.model.tableentry.ITableEntry;
+import org.talend.designer.dbmap.model.tableentry.InputColumnTableEntry;
+import org.talend.designer.dbmap.model.tableentry.OutputColumnTableEntry;
 import org.talend.designer.dbmap.ui.visualmap.table.DataMapTableView;
 import org.talend.designer.dbmap.ui.visualmap.zone.Zone;
 
@@ -123,7 +129,7 @@ public class ProblemsManager {
                     processExternalNode.setMetadataList(metadataListOut);
 
                 } else {
-                    throw new IllegalArgumentException("Should be same instance..."); //$NON-NLS-1$
+                    throw new IllegalArgumentException("Should be the same node..."); //$NON-NLS-1$
                 }
 
             }
@@ -157,17 +163,16 @@ public class ProblemsManager {
      * @param forceRefreshData TODO
      */
     public void checkProblemsForAllEntriesOfAllTables(boolean forceRefreshData) {
-        return;
-//        List<DataMapTableView> tablesView = mapperManager.getInputsTablesView();
-//        tablesView.addAll(mapperManager.getVarsTablesView());
-//        tablesView.addAll(mapperManager.getOutputsTablesView());
-//        if (forceRefreshData) {
-//            mapperManager.getComponent().refreshMapperConnectorData();
-//            checkProblems();
-//        }
-//        for (DataMapTableView view : tablesView) {
-//            checkProblemsForAllEntries(view, false);
-//        }
+        List<DataMapTableView> tablesView = mapperManager.getUiManager().getInputsTablesView();
+        tablesView.addAll(mapperManager.getUiManager().getVarsTablesView());
+        tablesView.addAll(mapperManager.getUiManager().getOutputsTablesView());
+        if (forceRefreshData) {
+            mapperManager.getComponent().refreshMapperConnectorData();
+            checkProblems();
+        }
+        for (DataMapTableView view : tablesView) {
+            checkProblemsForAllEntries(view, false);
+        }
     }
 
     /**
@@ -175,7 +180,7 @@ public class ProblemsManager {
      * 
      * @param forceRefreshData TODO
      */
-    @SuppressWarnings("unchecked") //$NON-NLS-1$
+    @SuppressWarnings("unchecked")//$NON-NLS-1$
     public void checkProblemsForAllEntries(DataMapTableView dataMapTableView, boolean forceRefreshData) {
         if (forceRefreshData) {
             mapperManager.getComponent().refreshMapperConnectorData();
@@ -208,45 +213,47 @@ public class ProblemsManager {
 
     public void checkProblemsForTableEntry(ITableEntry tableEntry, boolean forceRefreshData) {
 
-//        if (forceRefreshData) {
-//            mapperManager.getComponent().refreshMapperConnectorData();
-//            checkProblems();
-//        }
-//
-//        String expression = tableEntry.getExpression();
-//        List<Problem> problems = null;
-//        if (expression == null || EMPTY_STRING.equals(expression.trim())) {
-//            problems = null;
-//        } else {
-//            // System.out.println("check=" + expression);
-//            if (codeLanguage == ECodeLanguage.PERL) {
-//                problems = codeChecker.checkProblemsForExpression(expression);
-//            } else if (codeLanguage == ECodeLanguage.JAVA) {
-////                PROBLEM_KEY_FIELD problemKeyField = JavaGenerationManager.PROBLEM_KEY_FIELD.METADATA_COLUMN;
-////                String entryName = tableEntry.getName();
-////                if (tableEntry instanceof FilterTableEntry) {
-////                    problemKeyField = JavaGenerationManager.PROBLEM_KEY_FIELD.FILTER;
-////                    entryName = null;
-////                }
-////                problems = checkJavaProblemsForEntry(problemKeyField, tableEntry.getParent().getName(), entryName, forceRefreshData);
-//            }
-//            if (problems != null) {
-//                for (Iterator iter = problems.iterator(); iter.hasNext();) {
-//                    Problem problem = (Problem) iter.next();
-//                    ProblemStatus status = problem.getStatus();
-//                    if (status != ProblemStatus.ERROR) {
-//                        iter.remove();
-//                    }
-//
-//                }
-//
-//            } else {
-//                problems = null;
-//            }
-//
-//            tableEntry.setProblems(problems);
-//        }
-//
-    }
+        // if (forceRefreshData) {
+        // mapperManager.getComponent().refreshMapperConnectorData();
+        // checkProblems();
+        // }
 
+        List<Problem> problems = null;
+        String expression = tableEntry.getExpression();
+        if (tableEntry instanceof InputColumnTableEntry) {
+            InputColumnTableEntry inputEntry = (InputColumnTableEntry) tableEntry;
+            IDbOperatorManager operatorsManager = mapperManager.getCurrentLanguage().getOperatorsManager();
+            IDbOperator dbOperator = operatorsManager.getOperatorFromValue(inputEntry.getOperator());
+
+            boolean operatorIsSet = dbOperator != null;
+            boolean expressionIsSet = expression != null && expression.trim().length() > 0;
+
+            Problem problem = null;
+
+            String errorMessage = null;
+            if (!operatorIsSet && expressionIsSet) {
+                errorMessage = "Operator of input entry '" + inputEntry.getName() + "' is not set";
+            }
+            if (operatorIsSet && !expressionIsSet && !dbOperator.isMonoOperand()) {
+                errorMessage = "Expression of input entry '" + inputEntry.getParentName() + "." + inputEntry.getName() + "' is not set";
+            }
+            if (errorMessage != null) {
+                problem = new Problem(null, errorMessage, ProblemStatus.ERROR);
+                problems = Arrays.asList(problem);
+            }
+        } else if (tableEntry instanceof OutputColumnTableEntry) {
+            String errorMessage = null;
+            Problem problem = null;
+            if (expression == null || EMPTY_STRING.equals(expression.trim())) {
+                errorMessage = "Expression of output entry '" + tableEntry.getParentName() + "." + tableEntry.getName() + "' is not set";
+            }
+            if (errorMessage != null) {
+                problem = new Problem(null, errorMessage, ProblemStatus.ERROR);
+                problems = Arrays.asList(problem);
+            }
+
+        }
+        tableEntry.setProblems(problems);
+
+    }
 }

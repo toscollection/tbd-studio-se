@@ -148,16 +148,7 @@ public class ProblemsAnalyser {
             for (IColumnEntry entry : columnEntries) {
                 InputColumnTableEntry inputEntry = (InputColumnTableEntry) entry;
                 String columnName = entry.getName();
-                if (mapperManager.checkEntryHasInvalidUncheckedKey(inputEntry)) {
-                    String description = "Key of " + currentLanguage.getLocation(tableName, columnName) //$NON-NLS-1$
-                            + " input entry should be checked or expression should be removed. "; //$NON-NLS-1$
-                    addProblem(new Problem(null, description, ProblemStatus.WARNING));
-                }
-                if (mapperManager.checkEntryHasInvalidCheckedKey(inputEntry)) {
-                    String description = "Key of " + currentLanguage.getLocation(tableName, columnName) //$NON-NLS-1$
-                            + " input entry should be unchecked or expression should be filled. "; //$NON-NLS-1$
-                    addProblem(new Problem(null, description, ProblemStatus.WARNING));
-                }
+//                addProblem(new Problem(null, description, ProblemStatus.WARNING));
             }
         }
 

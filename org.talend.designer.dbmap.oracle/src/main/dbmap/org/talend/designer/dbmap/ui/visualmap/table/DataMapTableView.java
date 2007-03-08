@@ -23,7 +23,6 @@ package org.talend.designer.dbmap.ui.visualmap.table;
 
 import java.util.List;
 
-import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ICellEditorListener;
@@ -33,8 +32,6 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
@@ -57,7 +54,6 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -74,6 +70,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.talend.commons.ui.image.EImage;
+import org.talend.commons.ui.swt.colorstyledtext.MapperColorStyledText;
 import org.talend.commons.ui.swt.extended.table.AbstractExtendedTableViewer;
 import org.talend.commons.ui.swt.proposal.ContentProposalAdapterExtended;
 import org.talend.commons.ui.swt.proposal.TextCellEditorWithProposal;
@@ -108,6 +105,7 @@ import org.talend.designer.dbmap.model.tableentry.AbstractInOutTableEntry;
 import org.talend.designer.dbmap.model.tableentry.FilterTableEntry;
 import org.talend.designer.dbmap.model.tableentry.IColumnEntry;
 import org.talend.designer.dbmap.model.tableentry.ITableEntry;
+import org.talend.designer.dbmap.model.tableentry.InputColumnTableEntry;
 import org.talend.designer.dbmap.ui.color.ColorInfo;
 import org.talend.designer.dbmap.ui.color.ColorProviderMapper;
 import org.talend.designer.dbmap.ui.dnd.DragNDrop;
@@ -119,7 +117,6 @@ import org.talend.designer.dbmap.ui.font.FontProviderMapper;
 import org.talend.designer.dbmap.ui.image.ImageInfo;
 import org.talend.designer.dbmap.ui.image.ImageProviderMapper;
 import org.talend.designer.dbmap.ui.proposal.expression.ExpressionProposalProvider;
-import org.talend.designer.dbmap.ui.tabs.MapperColorStyledText;
 import org.talend.designer.dbmap.ui.tabs.StyledTextHandler;
 import org.talend.designer.dbmap.ui.visualmap.zone.Zone;
 
@@ -317,11 +314,12 @@ public abstract class DataMapTableView extends Composite {
         footerComposite.setLayoutData(footerGridData);
 
         headerComposite.moveAbove(nameLabel);
-        
+
     }
 
     /**
      * DOC amaumont Comment method "getTitle".
+     * 
      * @return
      */
     protected String getTitle() {
@@ -355,6 +353,31 @@ public abstract class DataMapTableView extends Composite {
             /*
              * (non-Javadoc)
              * 
+             * @see org.talend.commons.ui.swt.extended.table.AbstractExtendedTableViewer#initTableListeners()
+             */
+            @Override
+            protected void initTableListeners() {
+                super.initTableListeners();
+                getTableViewerCreator().addCellValueModifiedListener(new ITableCellValueModifiedListener() {
+
+                    public void cellValueModified(TableCellValueModifiedEvent e) {
+//                        System.out.println();
+//                        System.out.println(getTable().hashCode());
+//                        System.out.println(e.tableItem.getParent().hashCode());
+                        
+//                        if (e.tableItem.getParent().isFocusControl()) {
+                            // only if table of item is actually the focus control
+                            getTableViewerCreator().getSelectionHelper().deselectAll();
+                            getTable().forceFocus();
+//                        }
+                    }
+
+                });
+            }
+
+            /*
+             * (non-Javadoc)
+             * 
              * @see org.talend.commons.ui.swt.extended.macrotable.AbstractExtendedTableViewer#setTableViewerCreatorOptions(org.talend.commons.ui.swt.tableviewer.TableViewerCreator)
              */
             @Override
@@ -380,11 +403,19 @@ public abstract class DataMapTableView extends Composite {
 
                     @Override
                     public Color getBackground(Object element, int columnIndex) {
-                        return getBackgroundCellColor(newTableViewerCreator, element, columnIndex);
+                        Color backgroundCellColor = getBackgroundCellColor(newTableViewerCreator, element, columnIndex);
+                        if (backgroundCellColor != null) {
+                            return backgroundCellColor;
+                        }
+                        return super.getBackground(element, columnIndex);
                     }
 
                     @Override
                     public Color getForeground(Object element, int columnIndex) {
+                        Color foregroundCellColor = getForegroundCellColor(newTableViewerCreator, element, columnIndex);
+                        if (foregroundCellColor != null) {
+                            return foregroundCellColor;
+                        }
                         return getForegroundCellColor(newTableViewerCreator, element, columnIndex);
                     }
 
@@ -1657,7 +1688,8 @@ public abstract class DataMapTableView extends Composite {
                 element = tableViewerCreator.getModifiedObjectInfo().getPreviousModifiedBean();
             }
             if (element != null) {
-                tableViewerCreator.getTableViewer().editElement(element, 1);
+                int indexColumn = tableViewerCreator.getColumn(ID_EXPRESSION_COLUMN).getIndex();
+                tableViewerCreator.getTableViewer().editElement(element, indexColumn);
             }
         }
     }
@@ -1677,6 +1709,16 @@ public abstract class DataMapTableView extends Composite {
         if (ID_EXPRESSION_COLUMN.equals(event.column.getId())) {
             mapperManager.getUiManager().parseExpression(tableEntry.getExpression(), tableEntry, false, false, false);
             mapperManager.getUiManager().refreshBackground(false, false);
+            if (tableEntry instanceof InputColumnTableEntry) {
+                InputColumnTableEntry inputEntry = (InputColumnTableEntry) tableEntry;
+                if (inputEntry.getExpression() == null || inputEntry.getExpression().trim().length() == 0) {
+                    inputEntry.setOperator("");
+                } else if (inputEntry.getOperator() == null || inputEntry.getOperator().trim().length() == 0) {
+                    inputEntry.setOperator("=");
+                }
+                mapperManager.getProblemsManager().checkProblemsForTableEntry(tableEntry, true);
+                tableViewerCreator.getTableViewer().refresh(tableEntry);
+            }
         }
     }
 
