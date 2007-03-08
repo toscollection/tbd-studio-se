@@ -23,8 +23,6 @@ package org.talend.designer.dbmap.oracle.language;
 
 import org.talend.designer.dbmap.language.AbstractDbLanguage;
 import org.talend.designer.dbmap.language.IDbOperatorManager;
-import org.talend.designer.dbmap.language.IJoinType;
-import org.talend.designer.dbmap.mysql.language.MysqlOperatorsManager;
 
 /**
  * DOC amaumont class global comment. Detailled comment <br/>
@@ -92,7 +90,7 @@ public class OracleLanguage extends AbstractDbLanguage {
      */
     private static final String TEMPLATE_VARS_COLUMN_VARIABLE = PREFIX_VARIABLE_NAME + "{0}"; //$NON-NLS-1$
 
-    private MysqlOperatorsManager operatorsManager;
+    private OracleOperatorsManager operatorsManager;
 
 
     /**
@@ -100,7 +98,7 @@ public class OracleLanguage extends AbstractDbLanguage {
      */
     public OracleLanguage() {
         super();
-        this.operatorsManager = new MysqlOperatorsManager();
+        this.operatorsManager = new OracleOperatorsManager();
     }
 
     /*

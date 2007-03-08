@@ -12,14 +12,6 @@ Require-Bundle: org.eclipse.ui,
  org.talend.core,
  org.talend.designer.core,
  org.eclipse.core.resources,
- org.talend.designer.codegen
+ org.talend.designer.codegen,
+ org.talend.designer.dbmap
 Eclipse-LazyStart: true
-Export-Package: org.talend.designer.dbmap,
- org.talend.designer.dbmap.external.converter,
- org.talend.designer.dbmap.external.data,
- org.talend.designer.dbmap.language,
- org.talend.designer.dbmap.language.generation,
- org.talend.designer.dbmap.model,
- org.talend.designer.dbmap.model.table,
- org.talend.designer.dbmap.model.tableentry,
- org.talend.designer.dbmap.utils

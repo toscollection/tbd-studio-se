@@ -35,11 +35,6 @@ import org.talend.designer.dbmap.language.AbstractDbLanguage;
 import org.talend.designer.dbmap.language.IDbOperator;
 import org.talend.designer.dbmap.language.IJoinType;
 import org.talend.designer.dbmap.language.generation.DbGenerationManager;
-import org.talend.designer.dbmap.model.table.InputTable;
-import org.talend.designer.dbmap.model.table.OutputTable;
-import org.talend.designer.dbmap.model.tableentry.TableEntryLocation;
-import org.talend.designer.dbmap.mysql.MysqlMapperComponent;
-import org.talend.designer.dbmap.mysql.language.MysqlLanguage;
 import org.talend.designer.dbmap.utils.DataMapExpressionParser;
 
 /**
@@ -53,7 +48,7 @@ public class OracleGenerationManager extends DbGenerationManager {
     private Set<String> aliasAlreadyDeclared = new HashSet<String>();
 
     public OracleGenerationManager() {
-        super(new MysqlLanguage());
+        super(new OracleLanguage());
     }
 
     /**
