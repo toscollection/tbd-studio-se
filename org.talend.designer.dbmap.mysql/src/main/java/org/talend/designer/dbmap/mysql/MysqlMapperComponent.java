@@ -21,14 +21,9 @@
 // ============================================================================
 package org.talend.designer.dbmap.mysql;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
 import org.talend.designer.dbmap.AbstractDbMapComponent;
-import org.talend.designer.dbmap.MapperMain;
-import org.talend.designer.dbmap.external.converter.ExternalNodeUtils;
 import org.talend.designer.dbmap.language.generation.DbGenerationManager;
 import org.talend.designer.dbmap.mysql.language.MysqlGenerationManager;
-import org.talend.designer.mapper.oracle.model.metadata.MysqlDbMapTestGenerator;
 
 /**
  * DOC amaumont class global comment. Detailled comment <br/>
@@ -39,7 +34,7 @@ import org.talend.designer.mapper.oracle.model.metadata.MysqlDbMapTestGenerator;
 public class MysqlMapperComponent extends AbstractDbMapComponent {
 
     DbGenerationManager generationManager = new MysqlGenerationManager();
-    
+
     /**
      * DOC amaumont OracleMapperComponent constructor comment.
      */
@@ -48,39 +43,38 @@ public class MysqlMapperComponent extends AbstractDbMapComponent {
     }
 
     public static void main(String[] args) {
-//        AbstractDbMapComponent dbMapComponent = new MysqlMapperComponent();
-//        MapperMain.setStandAloneMode(true);
-//        MysqlDbMapTestGenerator testGenerator = new MysqlDbMapTestGenerator(dbMapComponent.getGenerationManager(), true);
-//        dbMapComponent.setExternalData(testGenerator.getExternalData());
-//        dbMapComponent.setIncomingConnections(testGenerator.getConnectionList());
-//        dbMapComponent.setMetadataList(testGenerator.getMetadataListOut());
-//
-//        ExternalNodeUtils.prepareExternalNodeReadyToOpen(dbMapComponent);
-//
-//        int response = dbMapComponent.open(new Display());
-//        if (response == SWT.OK) {
-//            // System.out.println("Response = OK");
-//
-//            // System.out.println("mapperConnector.getMetadataList()=");
-//            // System.out.println(mapperConnector.getMetadataList());
-//            // System.out.println("mapperConnector.getPersistentData()=");
-//            // System.out.println(mapperConnector.getExternalData(false));
-//
-//        } else {
-//            // System.out.println("Response = CANCEL");
-//        }
+        // AbstractDbMapComponent dbMapComponent = new MysqlMapperComponent();
+        // MapperMain.setStandAloneMode(true);
+        // MysqlDbMapTestGenerator testGenerator = new MysqlDbMapTestGenerator(dbMapComponent.getGenerationManager(),
+        // true);
+        // dbMapComponent.setExternalData(testGenerator.getExternalData());
+        // dbMapComponent.setIncomingConnections(testGenerator.getConnectionList());
+        // dbMapComponent.setMetadataList(testGenerator.getMetadataListOut());
+        //
+        // ExternalNodeUtils.prepareExternalNodeReadyToOpen(dbMapComponent);
+        //
+        // int response = dbMapComponent.open(new Display());
+        // if (response == SWT.OK) {
+        // // System.out.println("Response = OK");
+        //
+        // // System.out.println("mapperConnector.getMetadataList()=");
+        // // System.out.println(mapperConnector.getMetadataList());
+        // // System.out.println("mapperConnector.getPersistentData()=");
+        // // System.out.println(mapperConnector.getExternalData(false));
+        //
+        // } else {
+        // // System.out.println("Response = CANCEL");
+        // }
 
     }
 
-    
     /**
      * Getter for generationManager.
+     * 
      * @return the generationManager
      */
     public DbGenerationManager getGenerationManager() {
         return this.generationManager;
     }
 
-    
-    
 }

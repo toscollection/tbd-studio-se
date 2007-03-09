@@ -21,14 +21,9 @@
 // ============================================================================
 package org.talend.designer.dbmap.oracle;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
 import org.talend.designer.dbmap.AbstractDbMapComponent;
-import org.talend.designer.dbmap.MapperMain;
-import org.talend.designer.dbmap.external.converter.ExternalNodeUtils;
 import org.talend.designer.dbmap.language.generation.DbGenerationManager;
 import org.talend.designer.dbmap.oracle.language.OracleGenerationManager;
-import org.talend.designer.mapper.oracle.model.metadata.OracleDbMapTestGenerator;
 
 /**
  * DOC amaumont class global comment. Detailled comment <br/>

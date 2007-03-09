@@ -60,7 +60,8 @@ public class MysqlGenerationManager extends DbGenerationManager {
      * @param expressionParser
      * @return
      */
-    public String buildConditions(List<ExternalDbMapEntry> constraintTableEntries, DataMapExpressionParser expressionParser) {
+    public String buildConditions(List<ExternalDbMapEntry> constraintTableEntries,
+            DataMapExpressionParser expressionParser) {
         int lstSize = constraintTableEntries.size();
         StringBuilder stringBuilder = new StringBuilder();
         String and = null;
@@ -124,7 +125,8 @@ public class MysqlGenerationManager extends DbGenerationManager {
             if (expression != null && expression.trim().length() > 0) {
                 sb.append(dbMapEntry.getExpression());
             } else {
-                sb.append("/* Expression of output entry '" + outputTable.getName() + "." + dbMapEntry.getName() + "' is not set */");
+                sb.append("/* Expression of output entry '" + outputTable.getName() + "." + dbMapEntry.getName()
+                        + "' is not set */");
             }
         }
 
@@ -247,7 +249,8 @@ public class MysqlGenerationManager extends DbGenerationManager {
      * @param writeForJoin TODO
      * @param isFirstClause TODO
      */
-    private boolean buildConditions(StringBuilder sb, ExternalDbMapTable inputTable, boolean writeForJoin, boolean isFirstClause) {
+    private boolean buildConditions(StringBuilder sb, ExternalDbMapTable inputTable, boolean writeForJoin,
+            boolean isFirstClause) {
         List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
         int lstSizeEntries = inputEntries.size();
         boolean atLeastOneConditionWritten = false;
@@ -275,8 +278,8 @@ public class MysqlGenerationManager extends DbGenerationManager {
      * @param dbMapEntry
      * @param writeCr TODO
      */
-    private boolean buildCondition(StringBuilder sbWhere, ExternalDbMapTable table, boolean isFirstClause, ExternalDbMapEntry dbMapEntry,
-            boolean writeCr) {
+    private boolean buildCondition(StringBuilder sbWhere, ExternalDbMapTable table, boolean isFirstClause,
+            ExternalDbMapEntry dbMapEntry, boolean writeCr) {
         String expression = dbMapEntry.getExpression();
         IDbOperator dbOperator = getOperatorsManager().getOperatorFromValue(dbMapEntry.getOperator());
         boolean operatorIsSet = dbOperator != null;
@@ -302,7 +305,8 @@ public class MysqlGenerationManager extends DbGenerationManager {
                 sbWhere.append("/* Operator of input entry '" + dbMapEntry.getName() + "' is not set */ ");
             }
             if (operatorIsSet && !expressionIsSet && !dbOperator.isMonoOperand()) {
-                sbWhere.append("/* Expression of input entry '" + table.getName() + "." + dbMapEntry.getName() + "' is not set */");
+                sbWhere.append("/* Expression of input entry '" + table.getName() + "." + dbMapEntry.getName()
+                        + "' is not set */");
             } else if (expressionIsSet) {
                 sbWhere.append(dbMapEntry.getExpression());
             }
@@ -322,8 +326,8 @@ public class MysqlGenerationManager extends DbGenerationManager {
      * @param crCouldBeAdded TODO
      * @param writingInJoin TODO
      */
-    private void buildTableDeclaration(StringBuilder sb, ExternalDbMapTable inputTable, boolean commaCouldBeAdded, boolean crCouldBeAdded,
-            boolean writingInJoin) {
+    private void buildTableDeclaration(StringBuilder sb, ExternalDbMapTable inputTable, boolean commaCouldBeAdded,
+            boolean crCouldBeAdded, boolean writingInJoin) {
         sb.append(" ");
         String alias = inputTable.getAlias();
         if (alias != null) {
