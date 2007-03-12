@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="mysql-connector-java-5.0.4-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="db2jcc_license_cu.jar"/>
 	<classpathentry exported="true" kind="lib" path="db2jcc.jar"/>
 	<classpathentry exported="true" kind="lib" path="jtds-1.2.jar"/>
@@ -11,7 +12,6 @@
 	<classpathentry exported="true" kind="lib" path="commons-lang-2.1.jar" sourcepath="libs_src/commons-lang-2.1"/>
 	<classpathentry exported="true" kind="lib" path="commons-logging-1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="log4j-1.2.13.jar"/>
-	<classpathentry exported="true" kind="lib" path="mysql-connector-java-3.1.13-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="ojdbc14.jar"/>
 	<classpathentry exported="true" kind="lib" path="dom4j-1.6.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="castor-1.0.3.jar" sourcepath="libs_src/castor-1.0.3"/>

@@ -10,7 +10,6 @@ Bundle-ClassPath: .,
  commons-logging-1.1.jar,
  junit-4.0.jar,
  log4j-1.2.13.jar,
- mysql-connector-java-3.1.13-bin.jar,
  ojdbc14.jar,
  postgresql-8.1-405.jdbc3.jar,
  jakarta-oro-2.0.8.jar,
@@ -32,7 +31,8 @@ Bundle-ClassPath: .,
  saxon8-xom.jar,
  saxon8-xpath.jar,
  saxon8-xqj.jar,
- jconn3.jar
+ jconn3.jar,
+ mysql-connector-java-5.0.4-bin.jar
 Bundle-Localization: plugin
 Export-Package: com.ibm.db2.jcc,
  com.mysql.jdbc,
