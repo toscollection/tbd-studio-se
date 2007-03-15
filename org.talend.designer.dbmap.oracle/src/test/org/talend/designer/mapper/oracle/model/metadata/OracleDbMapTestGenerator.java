@@ -1235,6 +1235,10 @@ public class OracleDbMapTestGenerator {
 
         }
 
+        public String getUniqueName() {
+            return name;
+        }
+
     };
 
     /**

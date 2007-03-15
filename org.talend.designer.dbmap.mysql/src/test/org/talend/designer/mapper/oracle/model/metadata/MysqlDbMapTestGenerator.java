@@ -1235,6 +1235,10 @@ public class MysqlDbMapTestGenerator {
 
         }
 
+        public String getUniqueName() {
+            return name;
+        }
+
     };
 
     /**
