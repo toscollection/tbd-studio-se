@@ -23,7 +23,7 @@ are also available.
    </license>
 
    <url>
-      <update label="Talend update site (EPIC)" url="http://www.talend.com/tos/updatesite/testing/"/>
+      <update label="Talend update site (EPIC)" url="http://talendforge.org/tos/updatesite/testing/"/>
       <discovery label="Sourceforge Epic Home Page" url="http://sourceforge.net/projects/e-p-i-c"/>
    </url>
 
