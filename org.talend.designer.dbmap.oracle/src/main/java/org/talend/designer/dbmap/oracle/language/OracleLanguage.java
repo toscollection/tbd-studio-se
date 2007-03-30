@@ -54,7 +54,8 @@ public class OracleLanguage extends AbstractDbLanguage {
 
     private static final String SUFFIX_FIELD_NAME_REGEXP = SUFFIX_FIELD_NAME;
 
-    private static final String LOCATION_PATTERN = PREFIX_TABLE_NAME_REGEXP + "\\s*(\\w+)\\s*" + PREFIX_FIELD_NAME_REGEXP //$NON-NLS-1$
+    private static final String LOCATION_PATTERN = PREFIX_TABLE_NAME_REGEXP
+            + "\\s*(\\w+)\\s*" + PREFIX_FIELD_NAME_REGEXP //$NON-NLS-1$
             + "\\s*(\\w+)\\s*" + SUFFIX_FIELD_NAME_REGEXP; //$NON-NLS-1$
 
     /**
@@ -66,8 +67,10 @@ public class OracleLanguage extends AbstractDbLanguage {
     /**
      * {0} and {1} must be replaced respectively by the table name and the column name.
      */
-    private static final String SUBST_PATTERN_FOR_REPLACE_LOCATION = PREFIX_TABLE_NAME_REGEXP + "(\\s*){0}(\\s*)" //$NON-NLS-1$
-            + SUFFIX_TABLE_NAME_REGEXP + "(\\s*)" + PREFIX_FIELD_NAME_REGEXP + "(\\s*){1}(\\s*)" + SUFFIX_FIELD_NAME_REGEXP; //$NON-NLS-1$ //$NON-NLS-2$
+    private static final String SUBST_PATTERN_FOR_REPLACE_LOCATION = PREFIX_TABLE_NAME_REGEXP
+            + "(\\s*){0}(\\s*)" //$NON-NLS-1$
+            + SUFFIX_TABLE_NAME_REGEXP
+            + "(\\s*)" + PREFIX_FIELD_NAME_REGEXP + "(\\s*){1}(\\s*)" + SUFFIX_FIELD_NAME_REGEXP; //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * {0} and {1} must be replaced respectively by the table name and the column name.
@@ -77,12 +80,14 @@ public class OracleLanguage extends AbstractDbLanguage {
     /**
      * {0} and {1} must be replaced respectively by the table name and the column name.
      */
-    private static final String TEMPLATE_TABLE_COLUMN_VARIABLE = TEMPLATE_TABLE_VARIABLE + PREFIX_FIELD_NAME + "{1}" + SUFFIX_FIELD_NAME; //$NON-NLS-1$
+    private static final String TEMPLATE_TABLE_COLUMN_VARIABLE = TEMPLATE_TABLE_VARIABLE + PREFIX_FIELD_NAME
+            + "{1}" + SUFFIX_FIELD_NAME; //$NON-NLS-1$
 
     /**
      * {0} and {1} must be replaced respectively by the table name and the column name.
      */
-    private static final String TEMPLATE_GENERATED_CODE_TABLE_COLUMN_VARIABLE = PREFIX_TABLE_NAME + "{0}" + PREFIX_FIELD_NAME + "{1}" //$NON-NLS-1$ //$NON-NLS-2$
+    private static final String TEMPLATE_GENERATED_CODE_TABLE_COLUMN_VARIABLE = PREFIX_TABLE_NAME
+            + "{0}" + PREFIX_FIELD_NAME + "{1}" //$NON-NLS-1$ //$NON-NLS-2$
             + SUFFIX_FIELD_NAME;
 
     /**
@@ -91,7 +96,6 @@ public class OracleLanguage extends AbstractDbLanguage {
     private static final String TEMPLATE_VARS_COLUMN_VARIABLE = PREFIX_VARIABLE_NAME + "{0}"; //$NON-NLS-1$
 
     private OracleOperatorsManager operatorsManager;
-
 
     /**
      * DOC amaumont PerlLanguage constructor comment.
@@ -246,12 +250,13 @@ public class OracleLanguage extends AbstractDbLanguage {
         return TEMPLATE_TABLE_VARIABLE;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.dbmap.language.IDbLanguage#getOperatorsManager()
      */
     public IDbOperatorManager getOperatorsManager() {
         return operatorsManager;
     }
-    
-    
+
 }

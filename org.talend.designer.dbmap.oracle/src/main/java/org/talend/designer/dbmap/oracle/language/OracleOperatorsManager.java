@@ -19,6 +19,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
+
 package org.talend.designer.dbmap.oracle.language;
 
 import org.talend.designer.dbmap.language.IDbOperator;
@@ -55,7 +56,7 @@ public class OracleOperatorsManager implements IDbOperatorManager {
         NOT_IN("NOT IN", "( , )", false),
         LIKE("LIKE", "'%'", false),
         NOT_LIKE("NOT LIKE", "'%'", false),
-        EXISTS("EXISTS", "(SELECT * FROM MyTable)", false), 
+        EXISTS("EXISTS", "(SELECT * FROM MyTable)", false),
 
         EQUAL_ANY("=", "( , )", false),
         DIFFERENT_ANY("<> ANY", "( , )", false),
@@ -63,22 +64,23 @@ public class OracleOperatorsManager implements IDbOperatorManager {
         INFERIOR_OR_EQUAL_ANY("<= ANY", "( , )", false),
         SUPERIOR_ANY("> ANY", "( , )", false),
         SUPERIOR_OR_EQUAL_ANY(">= ANY", "( , )", false),
-        
+
         EQUAL_SOME("= SOME", "( , )", false),
         DIFFERENT_SOME("<> SOME", "( , )", false),
         STRICTLY_INFERIOR_SOME("< SOME", "( , )", false),
         INFERIOR_OR_EQUAL_SOME("<= SOME", "( , )", false),
         SUPERIOR_SOME("> SOME", "( , )", false),
         SUPERIOR_OR_EQUAL_SOME(">= SOME", "( , )", false),
-        
+
         EQUAL_ALL("= ALL", "( , )", false),
         DIFFERENT_ALL("<> ALL", "( , )", false),
         STRICTLY_INFERIOR_ALL("< ALL", "( , )", false),
         INFERIOR_OR_EQUAL_ALL("<= ALL", "( , )", false),
         SUPERIOR_ALL("> ALL", "( , )", false),
         SUPERIOR_OR_EQUAL_ALL(">= ALL", "( , )", false),
-        
+
         ;
+
         private String operator;
 
         private String associatedExpression;

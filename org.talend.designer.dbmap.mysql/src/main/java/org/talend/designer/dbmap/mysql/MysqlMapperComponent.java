@@ -19,6 +19,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
+
 package org.talend.designer.dbmap.mysql;
 
 import org.talend.designer.dbmap.AbstractDbMapComponent;

@@ -19,6 +19,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 // ============================================================================
+
 package org.talend.designer.dbmap.oracle;
 
 import org.talend.designer.dbmap.AbstractDbMapComponent;
@@ -34,7 +35,7 @@ import org.talend.designer.dbmap.oracle.language.OracleGenerationManager;
 public class OracleMapperComponent extends AbstractDbMapComponent {
 
     DbGenerationManager generationManager = new OracleGenerationManager();
-    
+
     /**
      * DOC amaumont OracleMapperComponent constructor comment.
      */
@@ -43,39 +44,38 @@ public class OracleMapperComponent extends AbstractDbMapComponent {
     }
 
     public static void main(String[] args) {
-//        AbstractDbMapComponent dbMapComponent = new OracleMapperComponent();
-//        MapperMain.setStandAloneMode(true);
-//        OracleDbMapTestGenerator testGenerator = new OracleDbMapTestGenerator(dbMapComponent.getGenerationManager(), true);
-//        dbMapComponent.setExternalData(testGenerator.getExternalData());
-//        dbMapComponent.setIncomingConnections(testGenerator.getConnectionList());
-//        dbMapComponent.setMetadataList(testGenerator.getMetadataListOut());
-//
-//        ExternalNodeUtils.prepareExternalNodeReadyToOpen(dbMapComponent);
-//
-//        int response = dbMapComponent.open(new Display());
-//        if (response == SWT.OK) {
-//            // System.out.println("Response = OK");
-//
-//            // System.out.println("mapperConnector.getMetadataList()=");
-//            // System.out.println(mapperConnector.getMetadataList());
-//            // System.out.println("mapperConnector.getPersistentData()=");
-//            // System.out.println(mapperConnector.getExternalData(false));
-//
-//        } else {
-//            // System.out.println("Response = CANCEL");
-//        }
+        // AbstractDbMapComponent dbMapComponent = new OracleMapperComponent();
+        // MapperMain.setStandAloneMode(true);
+        // OracleDbMapTestGenerator testGenerator = new OracleDbMapTestGenerator(dbMapComponent.getGenerationManager(),
+        // true);
+        // dbMapComponent.setExternalData(testGenerator.getExternalData());
+        // dbMapComponent.setIncomingConnections(testGenerator.getConnectionList());
+        // dbMapComponent.setMetadataList(testGenerator.getMetadataListOut());
+        //
+        // ExternalNodeUtils.prepareExternalNodeReadyToOpen(dbMapComponent);
+        //
+        // int response = dbMapComponent.open(new Display());
+        // if (response == SWT.OK) {
+        // // System.out.println("Response = OK");
+        //
+        // // System.out.println("mapperConnector.getMetadataList()=");
+        // // System.out.println(mapperConnector.getMetadataList());
+        // // System.out.println("mapperConnector.getPersistentData()=");
+        // // System.out.println(mapperConnector.getExternalData(false));
+        //
+        // } else {
+        // // System.out.println("Response = CANCEL");
+        // }
 
     }
 
-    
     /**
      * Getter for generationManager.
+     * 
      * @return the generationManager
      */
     public DbGenerationManager getGenerationManager() {
         return this.generationManager;
     }
 
-    
-    
 }

@@ -143,7 +143,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
             ExternalDbMapTable inputTable = inputTables.get(i);
             nameToInputTable.put(inputTable.getName(), inputTable);
             IJoinType joinType = language.getJoin(inputTable.getJoinType());
-            if (joinType != AbstractDbLanguage.JOIN.NO_JOIN) {
+            if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && i > 0) {
                 explicitJoin = true;
             }
 
@@ -164,7 +164,12 @@ public class MysqlGenerationManager extends DbGenerationManager {
 
         for (int i = 0; i < lstSizeInputTables; i++) {
             ExternalDbMapTable inputTable = inputTables.get(i);
-            IJoinType joinType = language.getJoin(inputTable.getJoinType());
+            IJoinType joinType = null;
+            if (i == 0) {
+                joinType = AbstractDbLanguage.JOIN.NO_JOIN;
+            } else {
+                joinType = language.getJoin(inputTable.getJoinType());
+            }
             boolean commaCouldBeAdded = !explicitJoin && i > 0;
             boolean crCouldBeAdded = false;
             if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && !explicitJoin) {
@@ -229,7 +234,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
         String addClauses = sbAddClauses.toString();
 
         if (whereClauses.trim().length() > 0 || addClauses.trim().length() > 0) {
-            sb.append("\nWHERE");
+            sb.append("\nWHERE ");
             sb.append(whereClauses);
             if (whereClauses.trim().length() > 0 && addClauses.trim().length() > 0) {
                 sb.append("\n AND ");

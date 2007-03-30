@@ -157,13 +157,13 @@ public class MysqlDbMapTestGenerator {
         MetadataColumn metadataColumn = new MetadataColumn();
         metadataColumn.setLabel("id");
         metadataColumn.setKey(true);
-//        metadataColumn.setType(EMetadataType.INTEGER.toString());
+        // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumn();
         metadataColumn.setLabel("name");
         metadataColumn.setKey(false);
-//        metadataColumn.setType(EMetadataType.STRING.toString());
+        // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
 
         metadataTable.setListColumns(metadatColumns);
@@ -184,7 +184,7 @@ public class MysqlDbMapTestGenerator {
         MetadataColumn metadataColumn = new MetadataColumn();
         metadataColumn.setLabel("id");
         metadataColumn.setKey(true);
-//        metadataColumn.setType(EMetadataType.INTEGER.toString());
+        // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumn();
@@ -228,7 +228,7 @@ public class MysqlDbMapTestGenerator {
         MetadataColumn metadataColumn = new MetadataColumn();
         metadataColumn.setLabel("newId");
         metadataColumn.setKey(true);
-//        metadataColumn.setType(EMetadataType.INTEGER.toString());
+        // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumn();
@@ -270,17 +270,19 @@ public class MysqlDbMapTestGenerator {
 
         externalData.setInputTables(generateExternalTables(TableType.INPUT, new TableType[] { TableType.INPUT }, 5, 5));
         externalData.setVarsTables(generateExternalTables(TableType.VARS, new TableType[] { TableType.INPUT }, 20));
-        externalData.setOutputTables(generateExternalTables(TableType.OUTPUT, new TableType[] { TableType.INPUT, TableType.VARS }, 20));
+        externalData.setOutputTables(generateExternalTables(TableType.OUTPUT, new TableType[] { TableType.INPUT,
+                TableType.VARS }, 20));
 
         return externalData;
     }
 
-    private List<ExternalDbMapTable> generateExternalTables(TableType tableType, TableType[] tableTypes, int nExpressionsMax) {
+    private List<ExternalDbMapTable> generateExternalTables(TableType tableType, TableType[] tableTypes,
+            int nExpressionsMax) {
         return generateExternalTables(tableType, tableTypes, nExpressionsMax, null);
     }
 
-    private List<ExternalDbMapTable> generateExternalTables(TableType tableType, TableType[] tableTypes, int nFieldsMaxInExpression,
-            Integer nExpressionsMax) {
+    private List<ExternalDbMapTable> generateExternalTables(TableType tableType, TableType[] tableTypes,
+            int nFieldsMaxInExpression, Integer nExpressionsMax) {
         List<ExternalDbMapTable> tables = new ArrayList<ExternalDbMapTable>();
         if (this.useConnectionsToGenerateExternalTables && tableType == TableType.INPUT) {
 
@@ -300,8 +302,8 @@ public class MysqlDbMapTestGenerator {
                     mapperTableEntry.setName(column.getLabel());
                     if (!fixedData && rand.nextBoolean()) {
                         if (nExpressionsMax == null || nExpressions <= nExpressionsMax) {
-                            mapperTableEntry.setExpression(generateExpression(tableTypes, N_FIELDS, rand.nextInt(nFieldsMaxInExpression),
-                                    nExpressions));
+                            mapperTableEntry.setExpression(generateExpression(tableTypes, N_FIELDS, rand
+                                    .nextInt(nFieldsMaxInExpression), nExpressions));
                             nExpressions++;
                         }
                     }
@@ -334,7 +336,8 @@ public class MysqlDbMapTestGenerator {
                         baseColumnName = COLUMN_NAME;
                     }
                     mapperTableEntry.setName(baseColumnName + j);
-                    mapperTableEntry.setExpression(generateExpression(tableTypes, N_FIELDS, rand.nextInt(nFieldsMaxInExpression), j));
+                    mapperTableEntry.setExpression(generateExpression(tableTypes, N_FIELDS, rand
+                            .nextInt(nFieldsMaxInExpression), j));
                     tableEntries.add(mapperTableEntry);
                 }
 
@@ -363,7 +366,8 @@ public class MysqlDbMapTestGenerator {
                 // for (int iField = 0; iField < tables2.length; iField++) {
                 for (int i = 0; i < tables2.length; i++) {
                     TableType tableType = tables2[i];
-                    expression += gen.getTableColumnVariable(tableType.getBaseTableName() + (iTable + 1), COLUMN_NAME + (currentIndex));
+                    expression += gen.getTableColumnVariable(tableType.getBaseTableName() + (iTable + 1), COLUMN_NAME
+                            + (currentIndex));
                 }
                 // }
             }
@@ -373,12 +377,12 @@ public class MysqlDbMapTestGenerator {
                 expression += (rand.nextInt(4) == 0 ? "\n" : "")
                         + (rand.nextBoolean() ? " + " : " - ")
                         + gen.getTableColumnVariable(tableType.getBaseTableName()
-                                + (tableType != TableType.VARS ? (rand.nextInt(tableType.getNTables()) + 1) : ""), FIELDS[rand
-                                .nextInt(FIELDS.length)]
-                                + (rand.nextInt(nFields) + 1))
-                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$array_var" + rand.nextInt(10) + "[test_var]"
-                                : "")
-                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$hash_var" + rand.nextInt(10) + "{test_var}" : "")
+                                + (tableType != TableType.VARS ? (rand.nextInt(tableType.getNTables()) + 1) : ""),
+                                FIELDS[rand.nextInt(FIELDS.length)] + (rand.nextInt(nFields) + 1))
+                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$array_var"
+                                + rand.nextInt(10) + "[test_var]" : "")
+                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$hash_var" + rand.nextInt(10)
+                                + "{test_var}" : "")
                         + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$var" + rand.nextInt(10) : "");
             }
         }
@@ -399,7 +403,6 @@ public class MysqlDbMapTestGenerator {
         // INPUTS
 
         ExternalDbMapTable mapperTable = new ExternalDbMapTable();
-
 
         mapperTable.setName("book");
 
@@ -465,7 +468,6 @@ public class MysqlDbMapTestGenerator {
         mapperTable = new ExternalDbMapTable();
         mapperTable.setName("userInput");
 
-
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
@@ -520,7 +522,8 @@ public class MysqlDbMapTestGenerator {
         mapperTableEntry.setName("upperCaseContent");
         mapperTableEntry.setOperator("String");
         mapperTableEntry.setExpression("uc " + gen.getTableColumnVariable("page", "content") + " + "
-                + gen.getTableColumnVariable("book", "id_book") + " - 2 * " + gen.getTableColumnVariable("book", "id_book"));
+                + gen.getTableColumnVariable("book", "id_book") + " - 2 * "
+                + gen.getTableColumnVariable("book", "id_book"));
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
@@ -667,32 +670,6 @@ public class MysqlDbMapTestGenerator {
         mapperTable = new ExternalDbMapTable();
         mapperTable.setName("newPageRejected");
 
-        if (currentTest == TEST.ONE_INNER_JOIN_AND_NOT_ANY_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER
-                || currentTest == TEST.ONE_INNER_JOIN_AND_ONLY_ONE_INNER_JOIN_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER
-                || currentTest == TEST.NO_INNER_JOIN_AND_ONLY_ONE_INNER_JOIN_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER
-                || currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_REJECT_AND_INNER_JOIN_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER) {
-            mapperTable.setReject(false);
-            mapperTable.setRejectInnerJoin(false);
-        } else if (currentTest == TEST.NO_INNER_JOIN_AND_ONE_INNER_JOIN_REJECT_AND_2_REJECT_TABLE_WITHOUT_FILTER) {
-            mapperTable.setReject(true);
-            mapperTable.setRejectInnerJoin(true);
-        } else if (currentTest == TEST.MAIN_CONNECTION_WITH_INNER_JOIN_AND_A_TABLE_WITH_FILTER_AND_A_TABLE_WITH_REJECT_AND_A_TABLE_WITH_REJECT_INNER_JOIN
-                || currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_INNER_JOIN_REJECT_WITHOUT_REGULAR_TABLE) {
-            mapperTable.setReject(false);
-            mapperTable.setRejectInnerJoin(true);
-        } else if (currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_FILTER_AND_A_TABLE_WITH_REJECT_AND_A_TABLE_WITH_REJECT_INNER_JOIN
-                || currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_FILTER_AND_A_TABLE_WITH_REJECT) {
-            mapperTable.setReject(true);
-            mapperTable.setRejectInnerJoin(false);
-        } else if (currentTest == TEST.NO_INNER_JOIN_AND_A_TABLE_WITH_FILTER_AND_A_TABLE_WITH_REJECT
-                || currentTest == TEST.NO_INNER_JOIN_AND_A_TABLE_WITH_FILTER_AND_A_TABLE_WITH_REJECT) {
-            mapperTable.setReject(true);
-            mapperTable.setRejectInnerJoin(false);
-        } else {
-            mapperTable.setReject(true);
-            mapperTable.setRejectInnerJoin(true);
-        }
-
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
@@ -709,7 +686,8 @@ public class MysqlDbMapTestGenerator {
 
         mapperTableEntry = new ExternalDbMapEntry();
         mapperTableEntry.setName("content");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent"));
+        mapperTableEntry
+                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent"));
         mapperTableEntry.setOperator("String");
         tableEntries.add(mapperTableEntry);
 
@@ -745,24 +723,6 @@ public class MysqlDbMapTestGenerator {
         mapperTable = new ExternalDbMapTable();
         mapperTable.setName("newPageRejected2");
 
-        if (currentTest == TEST.ONE_INNER_JOIN_AND_NOT_ANY_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER) {
-            mapperTable.setReject(false);
-            mapperTable.setRejectInnerJoin(false);
-        } else if (currentTest == TEST.ONE_INNER_JOIN_AND_ONLY_ONE_INNER_JOIN_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER
-                || currentTest == TEST.NO_INNER_JOIN_AND_ONLY_ONE_INNER_JOIN_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER
-                || currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_FILTER_AND_A_TABLE_WITH_REJECT_AND_A_TABLE_WITH_REJECT_INNER_JOIN
-                || currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_REJECT_AND_INNER_JOIN_REJECT_AND_ONE_OUT_TABLE_WITHOUT_FILTER) {
-            mapperTable.setReject(false);
-            mapperTable.setRejectInnerJoin(true);
-        } else if (currentTest == TEST.NO_INNER_JOIN_AND_ONE_INNER_JOIN_REJECT_AND_2_REJECT_TABLE_WITHOUT_FILTER
-                || currentTest == TEST.MAIN_CONNECTION_WITH_INNER_JOIN_AND_A_TABLE_WITH_FILTER_AND_A_TABLE_WITH_REJECT_AND_A_TABLE_WITH_REJECT_INNER_JOIN) {
-            mapperTable.setReject(true);
-            mapperTable.setRejectInnerJoin(false);
-        } else {
-            mapperTable.setReject(true);
-            mapperTable.setRejectInnerJoin(true);
-        }
-
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
@@ -779,7 +739,8 @@ public class MysqlDbMapTestGenerator {
 
         mapperTableEntry = new ExternalDbMapEntry();
         mapperTableEntry.setName("content");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent"));
+        mapperTableEntry
+                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent"));
         mapperTableEntry.setOperator("int");
         tableEntries.add(mapperTableEntry);
 
@@ -879,8 +840,8 @@ public class MysqlDbMapTestGenerator {
                 }
                 metadataColumn.setLabel(baseColumnName + j);
                 metadataColumn.setKey(rand.nextBoolean());
-//                EMetadataType[] types = EMetadataType.values();
-//                metadataColumn.setType(types[rand.nextInt(types.length - 1)].toString());
+                // EMetadataType[] types = EMetadataType.values();
+                // metadataColumn.setType(types[rand.nextInt(types.length - 1)].toString());
                 metadataColumn.setNullable(rand.nextBoolean());
                 metadatColumns.add(metadataColumn);
             }
@@ -1468,7 +1429,9 @@ public class MysqlDbMapTestGenerator {
             return null;
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.talend.core.model.process.INode#hasConditionalOutputs()
          */
         public Boolean hasConditionalOutputs() {
