@@ -1,8 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: org.talend.designer.codegen.perlmodule Nl Fragment
-Bundle-SymbolicName: org.talend.designer.codegen.perlmodule.nl
-Bundle-Version: 2.0.0.qualifier
-Fragment-Host: org.talend.designer.codegen.perlmodule;bundle-version="1.2.0"
-Bundle-Localization: plugin
-Bundle-Vendor: .Talend SA.
