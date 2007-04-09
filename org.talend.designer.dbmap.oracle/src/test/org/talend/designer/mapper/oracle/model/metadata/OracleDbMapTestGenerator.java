@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.eclipse.draw2d.geometry.Point;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IODataComponent;
 import org.talend.core.model.metadata.IMetadataColumn;
@@ -1435,6 +1436,11 @@ public class OracleDbMapTestGenerator {
          * @see org.talend.core.model.process.INode#hasConditionalOutputs()
          */
         public Boolean hasConditionalOutputs() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        public Point getLocation() {
             // TODO Auto-generated method stub
             return null;
         }
