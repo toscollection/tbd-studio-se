@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.talend.core.model.metadata.IMetadataTable;
+import org.talend.core.model.process.IConnection;
 import org.talend.designer.dbmap.AbstractDbMapComponent;
 import org.talend.designer.dbmap.external.data.ExternalDbMapData;
 import org.talend.designer.dbmap.external.data.ExternalDbMapEntry;
@@ -89,9 +91,16 @@ public class OracleGenerationManager extends DbGenerationManager {
     }
 
     @Override
-    public String buildSqlSelect(AbstractDbMapComponent component, String tableName) {
+    public String buildSqlSelect(AbstractDbMapComponent component, String outputTableName) {
 
         aliasAlreadyDeclared.clear();
+
+        List<IConnection> outputConnections = (List<IConnection>) component.getOutgoingConnections();
+
+        Map<String, IConnection> nameToOutputConnection = new HashMap<String, IConnection>();
+        for (IConnection connection : outputConnections) {
+            nameToOutputConnection.put(connection.getUniqueName(), connection);
+        }
 
         ExternalDbMapData data = (ExternalDbMapData) component.getExternalData();
 
@@ -102,14 +111,19 @@ public class OracleGenerationManager extends DbGenerationManager {
         ExternalDbMapTable outputTable = null;
         for (int i = 0; i < lstOutputTablesSize; i++) {
             ExternalDbMapTable temp = outputTables.get(i);
-            if (tableName.equals(temp.getName())) {
+            if (outputTableName.equals(temp.getName())) {
                 outputTable = temp;
                 break;
             }
         }
 
+        IConnection connection = nameToOutputConnection.get(outputTable.getName());
         if (outputTable == null) {
             return "";
+        }
+
+        if (connection != null) {
+            outputTable = removeUnmatchingEntriesWithColumnsOfMetadataTable(outputTable, connection.getMetadataTable());
         }
 
         sb.append("SELECT\n");
@@ -132,8 +146,6 @@ public class OracleGenerationManager extends DbGenerationManager {
 
         List<ExternalDbMapTable> inputTables = data.getInputTables();
         sb.append("\nFROM");
-
-        DataMapExpressionParser parser = new DataMapExpressionParser(language);
 
         // load input table in hash
         boolean explicitJoin = false;
@@ -221,11 +233,13 @@ public class OracleGenerationManager extends DbGenerationManager {
                 isFirstClause = true;
                 for (int i = 0; i < lstSizeInputTables; i++) {
                     ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
-                    if (!isFirstClause) {
-                        sbAddClauses.append("\n AND ");
+                    if (dbMapEntry.getExpression() != null) {
+                        if (!isFirstClause) {
+                            sbAddClauses.append("\n AND ");
+                        }
+                        sbAddClauses.append(dbMapEntry.getExpression());
+                        isFirstClause = false;
                     }
-                    sbAddClauses.append(dbMapEntry.getExpression());
-                    isFirstClause = false;
                 }
             }
         }
