@@ -116,146 +116,147 @@ public class MysqlGenerationManager extends DbGenerationManager {
             }
         }
 
-        IConnection connection = nameToOutputConnection.get(outputTable.getName());
-        if (outputTable == null) {
-            return "";
-        }
-
-        if (connection != null) {
-            outputTable = removeUnmatchingEntriesWithColumnsOfMetadataTable(outputTable, connection.getMetadataTable());
-        }
-
-        sb.append("SELECT\n");
-
-        List<ExternalDbMapEntry> metadataTableEntries = outputTable.getMetadataTableEntries();
-        int lstSizeOutTableEntries = metadataTableEntries.size();
-        for (int i = 0; i < lstSizeOutTableEntries; i++) {
-            ExternalDbMapEntry dbMapEntry = metadataTableEntries.get(i);
-            String expression = dbMapEntry.getExpression();
-            if (i > 0) {
-                sb.append(", ");
-            }
-            if (expression != null && expression.trim().length() > 0) {
-                sb.append(dbMapEntry.getExpression());
-            } else {
-                sb.append("/* Expression of output entry '" + outputTable.getName() + "." + dbMapEntry.getName()
-                        + "' is not set */");
-            }
-        }
-
-        List<ExternalDbMapTable> inputTables = data.getInputTables();
-        sb.append("\nFROM");
-
-        // load input table in hash
-        boolean explicitJoin = false;
-        int lstSizeInputTables = inputTables.size();
-        Map<String, ExternalDbMapTable> nameToInputTable = new HashMap<String, ExternalDbMapTable>();
-        for (int i = 0; i < lstSizeInputTables; i++) {
-            ExternalDbMapTable inputTable = inputTables.get(i);
-            nameToInputTable.put(inputTable.getName(), inputTable);
-            IJoinType joinType = language.getJoin(inputTable.getJoinType());
-            if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && i > 0) {
-                explicitJoin = true;
-            }
-
-        }
-
-        StringBuilder sbWhere = new StringBuilder();
-        boolean isFirstClause = true;
-        for (int i = 0; i < lstSizeInputTables; i++) {
-            ExternalDbMapTable inputTable = inputTables.get(i);
-            if (buildConditions(sbWhere, inputTable, false, isFirstClause)) {
-                isFirstClause = false;
-            }
-        }
-
-        sb.append("\n");
-
-        IJoinType previousJoinType = null;
-
-        for (int i = 0; i < lstSizeInputTables; i++) {
-            ExternalDbMapTable inputTable = inputTables.get(i);
-            IJoinType joinType = null;
-            if (i == 0) {
-                joinType = AbstractDbLanguage.JOIN.NO_JOIN;
-            } else {
-                joinType = language.getJoin(inputTable.getJoinType());
-            }
-            boolean commaCouldBeAdded = !explicitJoin && i > 0;
-            boolean crCouldBeAdded = false;
-            if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && !explicitJoin) {
-                buildTableDeclaration(sb, inputTable, commaCouldBeAdded, crCouldBeAdded, false);
-
-            } else if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
-                if (i > 0) {
-                    if (previousJoinType == null) {
-                        buildTableDeclaration(sb, inputTables.get(i - 1), commaCouldBeAdded, crCouldBeAdded, true);
-                        previousJoinType = joinType;
-                    } else {
-                        sb.append("\n");
-                    }
-                    sb.append(" ");
-                }
-                String labelJoinType = joinType.getLabel();
-                sb.append(labelJoinType).append(" ");
-                if (joinType == AbstractDbLanguage.JOIN.CROSS_JOIN) {
-                    ExternalDbMapTable nextTable = null;
-                    if (i < lstSizeInputTables) {
-                        nextTable = inputTables.get(i);
-                        buildTableDeclaration(sb, nextTable, false, false, true);
-                    }
-
-                } else {
-
-                    // ExternalDbMapTable rightTable = joinLeftToJoinRightTables.get(inputTable.getName());
-                    buildTableDeclaration(sb, inputTable, false, false, true);
-                    // if (rightTable != null) {
-                    // } else {
-                    // sb.append(" <!! NO JOIN CLAUSES FOR '" + inputTable.getName() + "' !!> ");
-                    // }
-                    sb.append(" ");
-                    sb.append("ON( ");
-                    if (!buildConditions(sb, inputTable, true, true)) {
-                        sb.append("/* Conditions of joint are not set */");
-                    }
-                    sb.append(" )");
-                }
-
-            }
-        }
-
-        StringBuilder sbAddClauses = new StringBuilder();
         if (outputTable != null) {
-            List<ExternalDbMapEntry> customConditionsEntries = outputTable.getCustomConditionsEntries();
-            if (customConditionsEntries != null) {
-                lstSizeInputTables = customConditionsEntries.size();
-                isFirstClause = true;
-                for (int i = 0; i < lstSizeInputTables; i++) {
-                    ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
-                    if(dbMapEntry.getExpression() != null) {
-	                    if (!isFirstClause) {
-	                        sbAddClauses.append("\n AND ");
-	                    }
-	                    sbAddClauses.append(dbMapEntry.getExpression());
-	                    isFirstClause = false;
+
+            IConnection connection = nameToOutputConnection.get(outputTable.getName());
+            if (connection != null) {
+                outputTable = removeUnmatchingEntriesWithColumnsOfMetadataTable(outputTable, connection
+                        .getMetadataTable());
+            }
+
+            sb.append("SELECT\n");
+
+            List<ExternalDbMapEntry> metadataTableEntries = outputTable.getMetadataTableEntries();
+            if (metadataTableEntries != null) {
+                int lstSizeOutTableEntries = metadataTableEntries.size();
+                for (int i = 0; i < lstSizeOutTableEntries; i++) {
+                    ExternalDbMapEntry dbMapEntry = metadataTableEntries.get(i);
+                    String expression = dbMapEntry.getExpression();
+                    if (i > 0) {
+                        sb.append(", ");
+                    }
+                    if (expression != null && expression.trim().length() > 0) {
+                        sb.append(dbMapEntry.getExpression());
+                    } else {
+                        sb.append("/* Expression of output entry '" + outputTable.getName() + "."
+                                + dbMapEntry.getName() + "' is not set */");
                     }
                 }
             }
-        }
 
-        String whereClauses = sbWhere.toString();
-        String addClauses = sbAddClauses.toString();
+            List<ExternalDbMapTable> inputTables = data.getInputTables();
+            sb.append("\nFROM");
 
-        if (whereClauses.trim().length() > 0 || addClauses.trim().length() > 0) {
-            sb.append("\nWHERE ");
-            sb.append(whereClauses);
-            if (whereClauses.trim().length() > 0 && addClauses.trim().length() > 0) {
-                sb.append("\n AND ");
+            // load input table in hash
+            boolean explicitJoin = false;
+            int lstSizeInputTables = inputTables.size();
+            Map<String, ExternalDbMapTable> nameToInputTable = new HashMap<String, ExternalDbMapTable>();
+            for (int i = 0; i < lstSizeInputTables; i++) {
+                ExternalDbMapTable inputTable = inputTables.get(i);
+                nameToInputTable.put(inputTable.getName(), inputTable);
+                IJoinType joinType = language.getJoin(inputTable.getJoinType());
+                if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && i > 0) {
+                    explicitJoin = true;
+                }
+
             }
 
-            sb.append(addClauses);
-        }
+            StringBuilder sbWhere = new StringBuilder();
+            boolean isFirstClause = true;
+            for (int i = 0; i < lstSizeInputTables; i++) {
+                ExternalDbMapTable inputTable = inputTables.get(i);
+                if (buildConditions(sbWhere, inputTable, false, isFirstClause)) {
+                    isFirstClause = false;
+                }
+            }
 
+            sb.append("\n");
+
+            IJoinType previousJoinType = null;
+
+            for (int i = 0; i < lstSizeInputTables; i++) {
+                ExternalDbMapTable inputTable = inputTables.get(i);
+                IJoinType joinType = null;
+                if (i == 0) {
+                    joinType = AbstractDbLanguage.JOIN.NO_JOIN;
+                } else {
+                    joinType = language.getJoin(inputTable.getJoinType());
+                }
+                boolean commaCouldBeAdded = !explicitJoin && i > 0;
+                boolean crCouldBeAdded = false;
+                if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && !explicitJoin) {
+                    buildTableDeclaration(sb, inputTable, commaCouldBeAdded, crCouldBeAdded, false);
+
+                } else if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
+                    if (i > 0) {
+                        if (previousJoinType == null) {
+                            buildTableDeclaration(sb, inputTables.get(i - 1), commaCouldBeAdded, crCouldBeAdded, true);
+                            previousJoinType = joinType;
+                        } else {
+                            sb.append("\n");
+                        }
+                        sb.append(" ");
+                    }
+                    String labelJoinType = joinType.getLabel();
+                    sb.append(labelJoinType).append(" ");
+                    if (joinType == AbstractDbLanguage.JOIN.CROSS_JOIN) {
+                        ExternalDbMapTable nextTable = null;
+                        if (i < lstSizeInputTables) {
+                            nextTable = inputTables.get(i);
+                            buildTableDeclaration(sb, nextTable, false, false, true);
+                        }
+
+                    } else {
+
+                        // ExternalDbMapTable rightTable = joinLeftToJoinRightTables.get(inputTable.getName());
+                        buildTableDeclaration(sb, inputTable, false, false, true);
+                        // if (rightTable != null) {
+                        // } else {
+                        // sb.append(" <!! NO JOIN CLAUSES FOR '" + inputTable.getName() + "' !!> ");
+                        // }
+                        sb.append(" ");
+                        sb.append("ON( ");
+                        if (!buildConditions(sb, inputTable, true, true)) {
+                            sb.append("/* Conditions of joint are not set */");
+                        }
+                        sb.append(" )");
+                    }
+
+                }
+            }
+
+            StringBuilder sbAddClauses = new StringBuilder();
+            if (outputTable != null) {
+                List<ExternalDbMapEntry> customConditionsEntries = outputTable.getCustomConditionsEntries();
+                if (customConditionsEntries != null) {
+                    lstSizeInputTables = customConditionsEntries.size();
+                    isFirstClause = true;
+                    for (int i = 0; i < lstSizeInputTables; i++) {
+                        ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
+                        if (dbMapEntry.getExpression() != null) {
+                            if (!isFirstClause) {
+                                sbAddClauses.append("\n AND ");
+                            }
+                            sbAddClauses.append(dbMapEntry.getExpression());
+                            isFirstClause = false;
+                        }
+                    }
+                }
+            }
+
+            String whereClauses = sbWhere.toString();
+            String addClauses = sbAddClauses.toString();
+
+            if (whereClauses.trim().length() > 0 || addClauses.trim().length() > 0) {
+                sb.append("\nWHERE ");
+                sb.append(whereClauses);
+                if (whereClauses.trim().length() > 0 && addClauses.trim().length() > 0) {
+                    sb.append("\n AND ");
+                }
+
+                sb.append(addClauses);
+            }
+        }
         return sb.toString();
     }
 
