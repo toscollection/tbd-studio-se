@@ -32,7 +32,7 @@ Bundle-ClassPath: .,
  saxon8-xpath.jar,
  saxon8-xqj.jar,
  jconn3.jar,
- mysql-connector-java-5.0.4-bin.jar
+ mysql-connector-java-5.1.0-bin.jar
 Bundle-Localization: plugin
 Export-Package: com.ibm.db2.jcc,
  com.mysql.jdbc,

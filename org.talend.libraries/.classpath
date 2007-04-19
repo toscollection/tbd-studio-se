@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry path="src/main/java" kind="src"/>
-	<classpathentry path="mysql-connector-java-5.0.4-bin.jar" exported="true" kind="lib"/>
 	<classpathentry path="db2jcc_license_cu.jar" exported="true" kind="lib"/>
 	<classpathentry path="db2jcc.jar" exported="true" kind="lib"/>
 	<classpathentry path="jtds-1.2.jar" exported="true" kind="lib"/>
@@ -20,10 +19,11 @@
 	<classpathentry path="rowset.jar" exported="true" kind="lib"/>
 	<classpathentry path="sqlexplorer.jar" exported="true" kind="lib"/>
 	<classpathentry path="squirrel.jar" exported="true" kind="lib"/>
+	<classpathentry path="junit-4.0.jar" exported="true" kind="lib"/>
+	<classpathentry path="jconn3.jar" exported="true" kind="lib"/>
+	<classpathentry path="iijdbc.jar" exported="true" kind="lib"/>
+	<classpathentry path="mysql-connector-java-5.1.0-bin.jar" exported="true" kind="lib"/>
 	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
 	<classpathentry path="org.eclipse.pde.core.requiredPlugins" kind="con"/>
-	<classpathentry path="junit-4.0.jar" exported="true" kind="lib"/>
-	<classpathentry path="jconn3.jar" kind="lib"/>
-	<classpathentry path="iijdbc.jar" kind="lib"/>
 	<classpathentry path="class" kind="output"/>
 </classpath>
