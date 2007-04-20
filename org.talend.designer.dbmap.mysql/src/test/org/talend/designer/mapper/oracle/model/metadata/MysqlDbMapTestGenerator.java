@@ -1445,6 +1445,11 @@ public class MysqlDbMapTestGenerator {
             return null;
         }
 
+        public boolean isThereLinkWithHash() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
     }
 
     public ArrayList<IConnection> getConnectionList() {
