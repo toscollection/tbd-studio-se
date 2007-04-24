@@ -22,6 +22,8 @@
 
 package org.talend.designer.dbmap.mysql;
 
+import org.talend.core.model.genhtml.HTMLDocUtils;
+import org.talend.core.model.process.IComponentDocumentation;
 import org.talend.designer.dbmap.AbstractDbMapComponent;
 import org.talend.designer.dbmap.language.generation.DbGenerationManager;
 import org.talend.designer.dbmap.mysql.language.MysqlGenerationManager;
@@ -78,4 +80,17 @@ public class MysqlMapperComponent extends AbstractDbMapComponent {
         return this.generationManager;
     }
 
+    /* (non-Javadoc)
+     * @see org.talend.core.model.process.IExternalNode#getComponentDocumentation(java.lang.String, java.lang.String)
+     */
+    public IComponentDocumentation getComponentDocumentation(String componentName, String tempFolderPath) {
+        MysqlMapperComponentDocumentation componentDocumentation = new MysqlMapperComponentDocumentation();
+        componentDocumentation.setComponentName(componentName);
+        componentDocumentation.setTempFolderPath(tempFolderPath);
+        componentDocumentation.setExternalData(this.getExternalData());
+
+        componentDocumentation.setPreviewPicPath(HTMLDocUtils.getPreviewPicPath(this));
+
+        return componentDocumentation;
+    }
 }

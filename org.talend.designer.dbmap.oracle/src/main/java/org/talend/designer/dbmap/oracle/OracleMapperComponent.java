@@ -22,6 +22,8 @@
 
 package org.talend.designer.dbmap.oracle;
 
+import org.talend.core.model.genhtml.HTMLDocUtils;
+import org.talend.core.model.process.IComponentDocumentation;
 import org.talend.designer.dbmap.AbstractDbMapComponent;
 import org.talend.designer.dbmap.language.generation.DbGenerationManager;
 import org.talend.designer.dbmap.oracle.language.OracleGenerationManager;
@@ -78,4 +80,19 @@ public class OracleMapperComponent extends AbstractDbMapComponent {
         return this.generationManager;
     }
 
+    public IComponentDocumentation getComponentDocumentation(String componentName, String tempFolderPath) {
+        OracleMapperComponentDocumentation componentDocumentation = new OracleMapperComponentDocumentation();
+        componentDocumentation.setComponentName(componentName);
+        componentDocumentation.setTempFolderPath(tempFolderPath);
+        componentDocumentation.setExternalData(this.getExternalData());
+
+        componentDocumentation.setPreviewPicPath(HTMLDocUtils.getPreviewPicPath(this));
+
+        return componentDocumentation;
+    }
+
+    public boolean isThereLinkWithHash() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
