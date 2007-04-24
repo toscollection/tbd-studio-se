@@ -1456,7 +1456,13 @@ public class MysqlDbMapTestGenerator {
             return false;
         }
         
-
+       public List<? extends IConnection> getOutgoingSortedConnections() {
+            return org.talend.core.model.utils.NodeUtil.getOutgoingSortedConnections(this);
+       } 
+       
+       public List<? extends IConnection> getMainOutgoingConnections() {
+           return org.talend.core.model.utils.NodeUtil.getMainOutgoingConnections(this);
+       }
     }
 
     public ArrayList<IConnection> getConnectionList() {
