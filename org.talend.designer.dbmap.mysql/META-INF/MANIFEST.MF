@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mysql Plug-in
 Bundle-SymbolicName: org.talend.designer.dbmap.mysql;singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-Activator: org.talend.designer.dbmap.mysql.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
