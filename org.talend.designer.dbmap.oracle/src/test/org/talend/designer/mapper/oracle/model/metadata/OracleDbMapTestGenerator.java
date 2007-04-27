@@ -1202,6 +1202,11 @@ public class OracleDbMapTestGenerator {
             return name;
         }
 
+        public IElementParameter getElementParameter(String name) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
     };
 
     /**
@@ -1463,6 +1468,11 @@ public class OracleDbMapTestGenerator {
        public List<? extends IConnection> getMainOutgoingConnections() {
            return org.talend.core.model.utils.NodeUtil.getMainOutgoingConnections(this);
        }
+
+    public IElementParameter getElementParameter(String name) {
+        // TODO Auto-generated method stub
+        return null;
+    }
     }
 
     public ArrayList<IConnection> getConnectionList() {
