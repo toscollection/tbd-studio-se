@@ -170,7 +170,8 @@ Export-Package: com.ibm.db2.jcc,
  org.junit.runner.notification,
  org.junit.runners,
  org.postgresql,
- org.talend.libraries
+ org.talend.libraries,
+ org.vafada.swtcalendar
 Eclipse-LazyStart: true
 Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.views,
