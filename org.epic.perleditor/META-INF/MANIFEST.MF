@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.debug.ui,
  org.eclipse.team.core,
  org.eclipse.core.variables,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ org.talend.core
 Eclipse-LazyStart: true
 Bundle-ClassPath: antlr-2.7.5.jar,
  jdom.jar,
