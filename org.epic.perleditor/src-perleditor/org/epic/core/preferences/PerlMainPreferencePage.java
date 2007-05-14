@@ -255,7 +255,7 @@ public class PerlMainPreferencePage extends PreferencePage implements IWorkbench
      */
     public void setEpicPerlExecutableText(String text) {
         text = "\"" + text + "\"";
-        if (executableText != null) {
+        if (executableText != null && !executableText.isDisposed()) {
             executableText.setText(text);
         }
         executableTextValue = text;
