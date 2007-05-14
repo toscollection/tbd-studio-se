@@ -2,7 +2,7 @@
 <feature
       id="org.epic_feature"
       label="Epic_feature Feature"
-      version="0.3.12.qualifier"
+      version="2.1.0.qualifier"
       provider-name=".EPIC Project.">
 
    <description url="http://e-p-i-c.sourceforge.net/">
