@@ -1,7 +1,5 @@
 package org.epic.core.preferences;
 
-import org.eclipse.core.runtime.preferences.DefaultScope;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.*;
@@ -9,22 +7,16 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
-import org.epic.perleditor.IEpicService;
 import org.epic.perleditor.PerlEditorPlugin;
-import org.talend.core.CorePlugin;
-import org.talend.core.prefs.ITalendCorePrefConstants;
 
-public class PerlMainPreferencePage extends PreferencePage implements IWorkbenchPreferencePage, IEpicService {
+public class PerlMainPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
     private static Text executableText;
-
-    private static String executableTextValue;
 
     private Text browserLabelText;
 
@@ -99,12 +91,7 @@ public class PerlMainPreferencePage extends PreferencePage implements IWorkbench
         data.grabExcessHorizontalSpace = true;
         executableText.setLayoutData(data);
 
-        IEclipsePreferences node = new DefaultScope().getNode(CorePlugin.getDefault().getBundle().getSymbolicName());
-        if (executableTextValue == null) {
-            executableText.setText("\"" + node.get(ITalendCorePrefConstants.PERL_INTERPRETER, getDescription()) + "\"");
-        } else {
-            executableText.setText(executableTextValue);
-        }
+        executableText.setText(PerlEditorPlugin.getDefault().getExecutablePreference());
 
         /*
          * Label executableInfoLabel = new Label(top, SWT.NONE); executableInfoLabel.setText( "(Windows users, please
@@ -213,8 +200,7 @@ public class PerlMainPreferencePage extends PreferencePage implements IWorkbench
      * color field to the default value in the preference store.
      */
     protected void performDefaults() {
-        IEclipsePreferences node = new DefaultScope().getNode(CorePlugin.getDefault().getBundle().getSymbolicName());
-        executableText.setText("\"" + node.get(ITalendCorePrefConstants.PERL_INTERPRETER, getDescription()) + "\"");
+        executableText.setText(PerlEditorPlugin.getDefault().getDefaultExecutablePreference());
 
         warningsCheckBox.setSelection(PerlEditorPlugin.getDefault().getDefaultWarningsPreference());
         taintCheckBox.setSelection(PerlEditorPlugin.getDefault().getDefaultTaintPreference());
@@ -248,16 +234,15 @@ public class PerlMainPreferencePage extends PreferencePage implements IWorkbench
         return super.performOk();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Refresh the vlaue of executableText. 
      * 
-     * @see org.epic.perleditor.IEpicService#setEpicPerlExecutableText(java.lang.String)
+     *  yzhang Comment method "refreshExecutableTextValue".
+     * @param text
      */
-    public void setEpicPerlExecutableText(String text) {
-        text = "\"" + text + "\"";
-        if (executableText != null && !executableText.isDisposed()) {
+    public static void refreshExecutableTextValue(String text) {
+        if(executableText!=null&&!executableText.isDisposed()){
             executableText.setText(text);
-        }
-        executableTextValue = text;
+        }      
     }
 }

@@ -756,11 +756,5 @@
             markerSeverity="1">
         </type>
     </extension>
-    <extension
-          point="org.talend.core.service">
-       <Service
-             class="org.epic.core.preferences.PerlMainPreferencePage"
-             serviceId="IEpicService"/>
-    </extension>
 
 </plugin>

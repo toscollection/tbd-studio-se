@@ -204,6 +204,7 @@ public class PerlEditorPlugin extends AbstractUIPlugin {
 	public void setExecutablePreference(String value) {
 
 		getPreferenceStore().setValue(PERL_EXECUTABLE_PREFERENCE, value);
+       
         requirePerlErrorDisplayed = false;
         checkForPerlInterpreter(true);
 	}
