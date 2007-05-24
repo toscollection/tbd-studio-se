@@ -1207,6 +1207,11 @@ public class OracleDbMapTestGenerator {
             return null;
         }
 
+        public String getConnectorName() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
     };
 
     /**
@@ -1470,6 +1475,16 @@ public class OracleDbMapTestGenerator {
        }
 
     public IElementParameter getElementParameter(String name) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<? extends IConnection> getOutgoingConnections(EConnectionType connectionType) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<? extends IConnection> getOutgoingConnections(String connectorName) {
         // TODO Auto-generated method stub
         return null;
     }
