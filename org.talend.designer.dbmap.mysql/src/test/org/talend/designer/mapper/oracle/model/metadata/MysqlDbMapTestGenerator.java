@@ -1450,6 +1450,14 @@ public class MysqlDbMapTestGenerator {
             // TODO Auto-generated method stub
             return null;
         }
+        
+        /* (non-Javadoc)
+         * @see org.talend.core.model.process.INode#isMultiplyingOutputs()
+         */
+        public Boolean isMultiplyingOutputs() {
+            // TODO Auto-generated method stub
+            return null;
+        }
 
         public Point getLocation() {
             // TODO Auto-generated method stub
