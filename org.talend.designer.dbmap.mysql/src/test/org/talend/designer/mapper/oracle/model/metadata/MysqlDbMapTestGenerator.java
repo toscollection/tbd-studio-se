@@ -32,6 +32,7 @@ import org.talend.core.model.metadata.IMetadataColumn;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.metadata.MetadataColumn;
 import org.talend.core.model.metadata.MetadataTable;
+import org.talend.core.model.process.BlockCode;
 import org.talend.core.model.process.EConnectionType;
 import org.talend.core.model.process.IConnection;
 import org.talend.core.model.process.IElementParameter;
@@ -1493,6 +1494,14 @@ public class MysqlDbMapTestGenerator {
     }
 
     public List<? extends IConnection> getOutgoingConnections(String connectorName) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /* (non-Javadoc)
+     * @see org.talend.core.model.process.INode#getBlockCodesToClose()
+     */
+    public List<BlockCode> getBlocksCodeToClose() {
         // TODO Auto-generated method stub
         return null;
     }
