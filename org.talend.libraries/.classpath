@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="ifxjdbc.jar"/>
+	<classpathentry exported="true" kind="lib" path="jaybird-2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="sqlitejdbc-v033-nested.jar"/>
+	<classpathentry exported="true" kind="lib" path="interclient.jar"/>
 	<classpathentry exported="true" kind="lib" path="db2jcc_license_cu.jar"/>
 	<classpathentry exported="true" kind="lib" path="db2jcc.jar"/>
 	<classpathentry exported="true" kind="lib" path="jtds-1.2.jar"/>
