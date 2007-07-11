@@ -40,7 +40,9 @@ Bundle-ClassPath: .,
  interclient.jar,
  sqlitejdbc-v033-nested.jar,
  jaybird-2.1.1.jar,
- ifxjdbc.jar
+ ifxjdbc.jar,
+ jaas.jar,
+ mini-j2ee.jar
 Bundle-Localization: plugin
 Export-Package: ca.ingres.jdbc,
  com.csvreader,

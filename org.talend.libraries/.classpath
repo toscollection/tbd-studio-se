@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="jaas.jar"/>
+	<classpathentry exported="true" kind="lib" path="mini-j2ee.jar"/>
 	<classpathentry exported="true" kind="lib" path="ifxjdbc.jar"/>
 	<classpathentry exported="true" kind="lib" path="jaybird-2.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="sqlitejdbc-v033-nested.jar"/>
