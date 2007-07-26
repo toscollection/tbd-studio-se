@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="tdgssconfig.jar"/>
+	<classpathentry exported="true" kind="lib" path="tdgssjava.jar"/>
+	<classpathentry exported="true" kind="lib" path="terajdbc4.jar"/>
 	<classpathentry exported="true" kind="lib" path="jaas.jar"/>
 	<classpathentry exported="true" kind="lib" path="mini-j2ee.jar"/>
 	<classpathentry exported="true" kind="lib" path="ifxjdbc.jar"/>
