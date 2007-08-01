@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.talend.core.model.process.IConnection;
-import org.talend.designer.dbmap.AbstractDbMapComponent;
+import org.talend.designer.dbmap.DbMapComponent;
 import org.talend.designer.dbmap.external.data.ExternalDbMapData;
 import org.talend.designer.dbmap.external.data.ExternalDbMapEntry;
 import org.talend.designer.dbmap.external.data.ExternalDbMapTable;
@@ -90,7 +90,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
     }
 
     @Override
-    public String buildSqlSelect(AbstractDbMapComponent component, String outputTableName) {
+    public String buildSqlSelect(DbMapComponent component, String outputTableName) {
 
         aliasAlreadyDeclared.clear();
 

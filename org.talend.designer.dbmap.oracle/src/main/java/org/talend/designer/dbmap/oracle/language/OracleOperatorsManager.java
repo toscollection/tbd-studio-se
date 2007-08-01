@@ -163,4 +163,12 @@ public class OracleOperatorsManager implements IDbOperatorManager {
         return null;
     }
 
+    /* (non-Javadoc)
+     * @see org.talend.designer.dbmap.language.IDbOperatorManager#getDefaultEqualOperator()
+     */
+    public IDbOperator getDefaultEqualOperator() {
+        return DB_OPERATOR.EQUAL;
+    }
+
+
 }
