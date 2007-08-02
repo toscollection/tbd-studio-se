@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Oracle Plug-in
 Bundle-SymbolicName: org.talend.designer.dbmap.oracle;singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.2.0.qualifier
 Bundle-Activator: org.talend.designer.dbmap.oracle.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
