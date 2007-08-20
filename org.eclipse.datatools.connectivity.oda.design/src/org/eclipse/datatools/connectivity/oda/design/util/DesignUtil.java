@@ -31,6 +31,7 @@ import org.eclipse.datatools.connectivity.oda.design.nls.Messages;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticException;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.Diagnostician;
 
@@ -126,7 +127,7 @@ public class DesignUtil
             
             // add specialized design validator(s) to registry
             // for use by Diagnostician
-            eValidatorRegistry.put( DesignPackage.eINSTANCE.getDataSetQuery().eContainer(),
+            eValidatorRegistry.put( (EPackage) DesignPackage.eINSTANCE.getDataSetQuery().eContainer(),
                                     new DesignValidator() );
             sm_diagnostician = new Diagnostician( eValidatorRegistry );
         }
