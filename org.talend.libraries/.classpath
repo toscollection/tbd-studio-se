@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="jt400.jar"/>
+	<classpathentry exported="true" kind="lib" path="derby.jar"/>
+	<classpathentry exported="true" kind="lib" path="derbyclient.jar"/>
 	<classpathentry exported="true" kind="lib" path="tdgssconfig.jar"/>
 	<classpathentry exported="true" kind="lib" path="tdgssjava.jar"/>
 	<classpathentry exported="true" kind="lib" path="terajdbc4.jar"/>
