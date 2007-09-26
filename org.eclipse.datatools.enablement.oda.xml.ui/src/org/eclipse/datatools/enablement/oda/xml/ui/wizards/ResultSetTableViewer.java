@@ -93,7 +93,7 @@ public final class ResultSetTableViewer
 			btnData.heightHint = 20;
 			btnRefresh = new Button( btnComposite, SWT.PUSH );
 			//TODO to externalize into message file
-			btnRefresh.setToolTipText( "Preview the result set" );
+			btnRefresh.setToolTipText( Messages.getString("ResultSetTableViewer.PreviewResultSet") ); //$NON-NLS-1$
 			btnRefresh.setImage( PlatformUI.getWorkbench( )
 					.getSharedImages( )
 					.getImage( ISharedImages.IMG_DEF_VIEW ) );
@@ -119,7 +119,7 @@ public final class ResultSetTableViewer
 			Menu menu = new Menu( viewer );
 
 			itmRefresh = new MenuItem( menu, SWT.NONE );
-			itmRefresh.setText( Messages.getString( "button.refresh" ) ); //$NON-NLS-1$
+			itmRefresh.setText( "Refresh" ); 
 			itmRefresh.addSelectionListener( new SelectionAdapter( ) {
 
 				public void widgetSelected( SelectionEvent e )

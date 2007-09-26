@@ -271,7 +271,7 @@ public class ColumnMappingPage extends DataSetWizardPage implements ITableLabelP
 		btnAdd = new Button( btnComposite, SWT.NONE );
 		btnAdd.setText( ">" ); //$NON-NLS-1$
 		//TODO to externalize into message file
-		btnAdd.setToolTipText( "Use the selected node as column mapping" );
+		btnAdd.setToolTipText( Messages.getString("ColumnMappingPage.UseSelected.NodeAsColumn.Mapping") ); //$NON-NLS-1$
 		btnAdd.addSelectionListener( new SelectionAdapter( ) {
 
 			/*
@@ -618,7 +618,7 @@ public class ColumnMappingPage extends DataSetWizardPage implements ITableLabelP
 				} );
     	//TODO to externalize into message file
 		columnMappingTable.getRemoveButton( )
-				.setToolTipText( "Remove column mapping" );
+				.setToolTipText( Messages.getString("ColumnMappingPage.RemoveColumn.Mapping") ); //$NON-NLS-1$
 
 		columnMappingTable.getRemoveMenuItem( )
 				.addSelectionListener( new SelectionListener( ) {
@@ -665,7 +665,7 @@ public class ColumnMappingPage extends DataSetWizardPage implements ITableLabelP
 				} );
 		//TODO to externalize into message file
 		columnMappingTable.getUpButton( )
-				.setToolTipText( "Move column mappping Up" );
+				.setToolTipText( Messages.getString("ColumnMappingPage.MoveColumn.MappingUp") ); //$NON-NLS-1$
 
 		columnMappingTable.getDownButton( )
 				.addSelectionListener( new SelectionListener( ) {
@@ -682,7 +682,7 @@ public class ColumnMappingPage extends DataSetWizardPage implements ITableLabelP
 				} );
 		//TODO to externalize into message file
 		columnMappingTable.getDownButton( )
-				.setToolTipText("Move column mapping Down" );
+				.setToolTipText(Messages.getString("ColumnMappingPage.MoveColumn.MappingDown") ); //$NON-NLS-1$
 	}
 
 	/**
