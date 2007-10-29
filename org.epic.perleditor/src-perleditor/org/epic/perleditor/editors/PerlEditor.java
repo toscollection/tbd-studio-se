@@ -124,7 +124,7 @@ public class PerlEditor extends TextEditor implements IPropertyChangeListener {
         installProjectionSupport();
         installBracketInserter();
         installCaretMoveListener();
-        installModuleCompletionHelper();
+        // installModuleCompletionHelper();
         installIdleTimer();
         installSyntaxValidationThread();
         installFoldReconciler();
