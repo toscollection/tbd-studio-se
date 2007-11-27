@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/je-3.2.44.jar"/>
+	<classpathentry kind="lib" path="lib/sqlitejdbc-v037-nested.jar"/>
+	<classpathentry kind="lib" path="lib/trove-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
