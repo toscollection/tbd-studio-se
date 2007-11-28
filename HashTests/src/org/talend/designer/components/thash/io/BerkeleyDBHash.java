@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.designer.components.thash.io;
 
-import gnu.trove.THashMap;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -23,8 +21,6 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.Set;
 
 import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseConfig;
@@ -210,23 +206,24 @@ class BerkeleyDBHash implements IMapHashFile {
         // Map m = new THashMap();
         long end = 0;
         long start = java.util.Calendar.getInstance().getTimeInMillis();
-        for (int i = 0; i < loop; i++) {
-            Bean bean = new Bean(i, "test" + (i));
-            bh.put("", bean);
-            // KeyForMap k = new KeyForMap(i, bean.hashCode());
-            // m.put(k, k);
-        }
+//        for (int i = 0; i < loop; i++) {
+//            Bean bean = new Bean(i, "test" + (i));
+//            bh.put("", bean);
+//            // KeyForMap k = new KeyForMap(i, bean.hashCode());
+//            // m.put(k, k);
+//        }
         end = java.util.Calendar.getInstance().getTimeInMillis();
         System.out.println((end - start) + " milliseconds for " + loop + " objects to store.");
 
         int size = 1000000;
         int[] ri = new int[size];
         for (int i = 0; i < size; i++) {
-            ri[i] = (int) Math.random() * loop;
+            ri[i] = (int) (Math.random() * loop);
         }
         start = java.util.Calendar.getInstance().getTimeInMillis();
         for (int i = 0; i < size; i++) {
             Bean b = (Bean) (bh.get("", ri[i], ri[i]));
+//            System.out.println(b.primitiveInt+"   "+b.name);
         }
         end = java.util.Calendar.getInstance().getTimeInMillis();
         System.out.println((end - start) + " milliseconds for " + size + " objects to get randomly.");
