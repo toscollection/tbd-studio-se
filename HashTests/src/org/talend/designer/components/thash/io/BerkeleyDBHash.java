@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.designer.components.thash.io;
 
+import gnu.trove.THashMap;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -20,9 +22,9 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Map;
+import java.util.Set;
 
 import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseConfig;
@@ -58,8 +60,6 @@ class BerkeleyDBHash implements IMapHashFile {
     }
 
     boolean readonly;
-
-    private Statement stmt = null;
 
     private int counter;
 
@@ -120,12 +120,12 @@ class BerkeleyDBHash implements IMapHashFile {
         try {
             EnvironmentConfig envConfig = new EnvironmentConfig();
             envConfig.setAllowCreate(true);
-            myDbEnvironment = new Environment(new File("/export/dbEnv"), envConfig);
+            myDbEnvironment = new Environment(new File("D:/dbEnv"), envConfig);
 
             // Open the database. Create it if it does not already exist.
             DatabaseConfig dbConfig = new DatabaseConfig();
             dbConfig.setAllowCreate(true);
-            myDatabase = myDbEnvironment.openDatabase(null, "sampleDatabase", dbConfig);
+            myDatabase = myDbEnvironment.openDatabase(null, database, dbConfig);
 
         } catch (DatabaseException dbe) {
             dbe.printStackTrace();
@@ -133,23 +133,23 @@ class BerkeleyDBHash implements IMapHashFile {
     }
 
     public void dropTable(String table) throws SQLException {
-//        if (conn != null) {
-//            stmt.execute("DROP TABLE IF EXISTS '" + table + "';");
-//            tables.remove(table);
-//            PreparedStatement pstmt = pstmts.remove(table);
-//            if (pstmt != null) {
-//                pstmt.close();
-//            }
-//        }
-//        commit();
+        // if (conn != null) {
+        // stmt.execute("DROP TABLE IF EXISTS '" + table + "';");
+        // tables.remove(table);
+        // PreparedStatement pstmt = pstmts.remove(table);
+        // if (pstmt != null) {
+        // pstmt.close();
+        // }
+        // }
+        // commit();
     }
 
     public void createTable(String table) throws SQLException {
-//        stmt.execute("DROP TABLE IF EXISTS '" + table + "';");
-//        stmt.execute("CREATE TABLE '" + table + "'(id INT NOT NULL PRIMARY KEY, object BLOB NOT NULL);");
-//        tables.put(table, 0);
-//        pstmts.put(table, conn.prepareStatement("INSERT INTO '" + table + "' VALUES(?, ?);"));
-//        commit();
+        // stmt.execute("DROP TABLE IF EXISTS '" + table + "';");
+        // stmt.execute("CREATE TABLE '" + table + "'(id INT NOT NULL PRIMARY KEY, object BLOB NOT NULL);");
+        // tables.put(table, 0);
+        // pstmts.put(table, conn.prepareStatement("INSERT INTO '" + table + "' VALUES(?, ?);"));
+        // commit();
     }
 
     public void close() throws SQLException {
@@ -201,6 +201,36 @@ class BerkeleyDBHash implements IMapHashFile {
     public long getTotalSize() {
         // TODO Auto-generated method stub
         return 0;
+    }
+
+    public static void main(String[] args) throws Exception {
+        BerkeleyDBHash bh = BerkeleyDBHash.getInstance();
+        bh.connect("sampledatabase");
+        int loop = 20000000;
+        // Map m = new THashMap();
+        long end = 0;
+        long start = java.util.Calendar.getInstance().getTimeInMillis();
+        for (int i = 0; i < loop; i++) {
+            Bean bean = new Bean(i, "test" + (i));
+            bh.put("", bean);
+            // KeyForMap k = new KeyForMap(i, bean.hashCode());
+            // m.put(k, k);
+        }
+        end = java.util.Calendar.getInstance().getTimeInMillis();
+        System.out.println((end - start) + " milliseconds for " + loop + " objects to store.");
+
+        int size = 1000000;
+        int[] ri = new int[size];
+        for (int i = 0; i < size; i++) {
+            ri[i] = (int) Math.random() * loop;
+        }
+        start = java.util.Calendar.getInstance().getTimeInMillis();
+        for (int i = 0; i < size; i++) {
+            Bean b = (Bean) (bh.get("", ri[i], ri[i]));
+        }
+        end = java.util.Calendar.getInstance().getTimeInMillis();
+        System.out.println((end - start) + " milliseconds for " + size + " objects to get randomly.");
+
     }
 
 }
