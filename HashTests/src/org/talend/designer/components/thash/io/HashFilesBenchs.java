@@ -75,7 +75,8 @@ public class HashFilesBenchs {
         TURNING_POINTERS_NEAREST("Turning pointers nearest", "/home/amaumont/hash_benchs/talend_hash_perfs_beans_0"),
         TURNING_POINTERS_NEXT("Turning pointers next", "/home/amaumont/hash_benchs/talend_hash_perfs_beans_0"),
         SQL_LITE_DB("Sql lite", "/home/amaumont/hash_benchs/sql_lite_bench.db"),
-        BERKELEY_DB("Berkeley DB", "hash_benchs"),
+        BERKELEY_DB_BY_ID("Berkeley DB by id", "hash_benchs_by_id"),
+        BERKELEY_DB_BY_CRC("Berkeley DB by CEC", "hash_benchs_by_crc"),
 
         ;
 
@@ -137,15 +138,15 @@ public class HashFilesBenchs {
         super();
 
         int[] nbItemsArray = new int[] {
-                
-//                10000, // 10 k
+
+        // 10000, // 10 k
         // 100000, // 100 k
-//         1000000, // 1 M
-//         10000000, // 10 M 
+        // 1000000, // 1 M
+        10000000, // 10 M
         // 20000000, // 20 M
-          25000000, // 25 M
+        // 25000000, // 25 M
         // 30000000, // 30 M
-//         60000000, // 60 M
+        // 60000000, // 60 M
         // 100000000, // 100 M
         };
 
@@ -177,8 +178,9 @@ public class HashFilesBenchs {
         // PERSISTENT_METHOD.FIXED_AREA_POINTERS,
         // PERSISTENT_METHOD.TURNING_POINTERS_NEAREST,
         // PERSISTENT_METHOD.TURNING_POINTERS_NEXT,
-//        PERSISTENT_METHOD.SQL_LITE_DB,
-         PERSISTENT_METHOD.BERKELEY_DB,
+        // PERSISTENT_METHOD.SQL_LITE_DB,
+        // PERSISTENT_METHOD.BERKELEY_DB_BY_ID,
+        PERSISTENT_METHOD.BERKELEY_DB_BY_CRC,
 
         };
 
@@ -257,8 +259,13 @@ public class HashFilesBenchs {
                             nbFiles = 1;
                             break;
 
-                        case BERKELEY_DB:
-                            hashFile = new BerkeleyDBHash(persistMethod.filePath);
+                        case BERKELEY_DB_BY_ID:
+                            hashFile = new BerkeleyDBHashById(persistMethod.filePath);
+                            nbFiles = 1;
+                            break;
+
+                        case BERKELEY_DB_BY_CRC:
+                            hashFile = new BerkeleyDBHashByCRC(persistMethod.filePath);
                             nbFiles = 1;
                             break;
 
@@ -271,14 +278,16 @@ public class HashFilesBenchs {
 
                         dataWrite.setPersistentMethod(persistMethod);
                         dataWrite.setNbFiles(nbFiles);
-                        try {
-                            launchWriteBenchs(persistMethod, nbItems, nbFiles, dataWrite);
-                            dataWrite.setWriteEndedWithSuccess(true);
-                        } catch (Throwable e) {
-                            e.printStackTrace();
-                            dataWrite.setWriteError(e.getMessage() + ":" + e.getStackTrace()[0]);
-                            writeData(dataWrite);
-                            continue;
+                        if (!readonly && persistMethod != PERSISTENT_METHOD.BERKELEY_DB_BY_CRC) {
+                            try {
+                                launchWriteBenchs(persistMethod, nbItems, nbFiles, dataWrite);
+                                dataWrite.setWriteEndedWithSuccess(true);
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                                dataWrite.setWriteError(e.getMessage() + ":" + e.getStackTrace()[0]);
+                                writeData(dataWrite);
+                                continue;
+                            }
                         }
 
                         for (int pointersByFileIdx = 0; pointersByFileIdx < pointersByFileArray.length; pointersByFileIdx++) {
@@ -332,7 +341,7 @@ public class HashFilesBenchs {
                         case TURNING_POINTERS_NEAREST:
                         case TURNING_POINTERS_NEXT:
                         case SQL_LITE_DB:
-                        case BERKELEY_DB:
+                        case BERKELEY_DB_BY_ID:
 
                             breakForFiles = true;
 
@@ -440,29 +449,31 @@ public class HashFilesBenchs {
 
         };
 
-        // ################################################################################
-        // Do not compare bytes number in this class with bytes number MemoryHashMapTest,
-        // the purpose of this test class is not to measure heap memory !
-        // ################################################################################
-
-        // Map hashMap = new HashMap();
-        // hashMap = new HashMap(nbItems, 1f);
-        // Map hashMap = new HashMap(10000, 1f);
-        // Map hashMap = new THashMap(objectHashingStrategy);
-        // Map hashMap = new THashMap(loop, 0.1f, objectHashingStrategy);
-        // Map hashMap = new THashMap(loop, 1f, objectHashingStrategy);
-        // Map hashMap = new THashMap(loop + 10000, 1.0f, objectHashingStrategy);
-        // Map hashMap = new THashMap(loop + 10000, 0.99f, objectHashingStrategy);
-        // Map hashMap = new THashMap(10000, 1.0f, objectHashingStrategy);
-
-        // Data in Memory, 119 bytes , all=34 s
-        // Data in Sqlite DB, ?? bytes , all=?? s, write=2550 s (42 min), read=???? s (?? min)
-        // Data in File, ?? bytes , all=?? s, write=?? s (?? min), read=???? s (?? min)
-
         dataWrite.setNbItems(nbItems);
         dataWrite.setNbFiles(nbFiles);
 
-        hashMap = new THashMap(nbItems, 1.0f, objectHashingStrategy); // ??
+        if (persistMethod != PERSISTENT_METHOD.BERKELEY_DB_BY_CRC) {
+            // ################################################################################
+            // Do not compare bytes number in this class with bytes number MemoryHashMapTest,
+            // the purpose of this test class is not to measure heap memory !
+            // ################################################################################
+
+            // Map hashMap = new HashMap();
+            // hashMap = new HashMap(nbItems, 1f);
+            // Map hashMap = new HashMap(10000, 1f);
+            // Map hashMap = new THashMap(objectHashingStrategy);
+            // Map hashMap = new THashMap(loop, 0.1f, objectHashingStrategy);
+            // Map hashMap = new THashMap(loop, 1f, objectHashingStrategy);
+            // Map hashMap = new THashMap(loop + 10000, 1.0f, objectHashingStrategy);
+            // Map hashMap = new THashMap(loop + 10000, 0.99f, objectHashingStrategy);
+            // Map hashMap = new THashMap(10000, 1.0f, objectHashingStrategy);
+
+            // Data in Memory, 119 bytes , all=34 s
+            // Data in Sqlite DB, ?? bytes , all=?? s, write=2550 s (42 min), read=???? s (?? min)
+            // Data in File, ?? bytes , all=?? s, write=?? s (?? min), read=???? s (?? min)
+
+            hashMap = new THashMap(nbItems, 1.0f, objectHashingStrategy); // ??
+        }
         // Map hashMap = new THashMap(loop + (int)((float)loop * 0.1f), 0.1f, objectHashingStrategy);
 
         dataWrite.setInitialCapacityMap(nbItems);
@@ -482,7 +493,7 @@ public class HashFilesBenchs {
         case SQL_LITE_DB:
             break;
 
-        case BERKELEY_DB:
+        case BERKELEY_DB_BY_ID:
             break;
 
         default:
@@ -495,14 +506,18 @@ public class HashFilesBenchs {
                 // => bean from tFileInput for example...
                 Bean bean = new Bean(i, String.valueOf(i));
 
-                KeyForMap keyForMap = null;
-                // => THash storing step
-                if (readAfterStore) {
-                    keyForMap = new KeyForMap((int) hashFile.put("buffer", bean), bean.hashCode());
+                if (persistMethod != PERSISTENT_METHOD.BERKELEY_DB_BY_CRC) {
+                    KeyForMap keyForMap = null;
+                    // => THash storing step
+                    if (readAfterStore) {
+                        keyForMap = new KeyForMap((int) hashFile.put("buffer", bean), bean.hashCode());
+                    } else {
+                        keyForMap = new KeyForMap(i, bean.hashCode());
+                    }
+                    localHashMap.put(keyForMap, keyForMap);
                 } else {
-                    keyForMap = new KeyForMap(i, bean.hashCode());
+                    hashFile.put("buffer", bean);
                 }
-                localHashMap.put(keyForMap, keyForMap);
 
                 if (i % 100000 == 0) {
                     System.out.println("Writing " + i);
@@ -512,6 +527,8 @@ public class HashFilesBenchs {
 
             dataWrite.setWriteEndedWithSuccess(true);
 
+        } catch (Throwable e) {
+            e.printStackTrace();
         } finally {
             hashFile.endPut();
         }
@@ -583,7 +600,7 @@ public class HashFilesBenchs {
         case SQL_LITE_DB:
             break;
 
-        case BERKELEY_DB:
+        case BERKELEY_DB_BY_ID:
             break;
 
         default:
@@ -615,25 +632,38 @@ public class HashFilesBenchs {
                         bean = new Bean(i, String.valueOf(i));
                     }
 
-                    // => search properties of bean in lookup for example...
-                    KeyForMap keyForMap = (KeyForMap) localHashMap.get(bean);
+                    Bean persistentBean = null;
 
-                    // validity test
-                    if (keyForMap == null) {
-                        throw new RuntimeException("keyForMap not found with id " + i);
-                    }
+                    if (persistMethod != PERSISTENT_METHOD.BERKELEY_DB_BY_CRC) {
+                        // => search properties of bean in lookup for example...
+                        KeyForMap keyForMap = (KeyForMap) localHashMap.get(bean);
 
-                    // => bean found from DB
-                    Bean beanFromDB = (Bean) hashFile.get("buffer", keyForMap.cursorPosition, keyForMap.hashcode);
+                        // validity test
+                        if (keyForMap == null) {
+                            throw new RuntimeException("keyForMap not found with id " + i);
+                        }
 
-                    // validity test
-                    if (beanFromDB == null) {
-                        throw new RuntimeException("Bean not found with cursorPosition " + keyForMap.cursorPosition);
-                    }
-                    // validity test
-                    if (!beanFromDB.name.equals(bean.name) || beanFromDB.primitiveInt != bean.primitiveInt) {
-                        throw new RuntimeException("Values of beans are different with cursorPosition "
-                                + keyForMap.cursorPosition);
+                        // => bean found from DB
+                        persistentBean = (Bean) hashFile.get("buffer", keyForMap.cursorPosition, keyForMap.hashcode);
+                        // validity test
+                        if (persistentBean == null) {
+                            throw new RuntimeException("Bean not found with cursorPosition " + keyForMap.cursorPosition);
+                        }
+                        // validity test
+                        if (!persistentBean.name.equals(bean.name) || persistentBean.primitiveInt != bean.primitiveInt) {
+                            throw new RuntimeException("Values of beans are different with cursorPosition "
+                                    + keyForMap.cursorPosition);
+                        }
+                    } else {
+                        persistentBean = (Bean) hashFile.get("buffer", -1, bean.hashCode());
+                        // validity test
+                        if (persistentBean == null) {
+                            throw new RuntimeException("Bean not found with id " + i);
+                        }
+                        // validity test
+//                        if (!persistentBean.name.equals(bean.name) || persistentBean.primitiveInt != bean.primitiveInt) {
+//                            throw new RuntimeException("Values of beans are different with id " + i);
+//                        }
                     }
 
                     if (false && System.currentTimeMillis() - lastTime > timeOut) {

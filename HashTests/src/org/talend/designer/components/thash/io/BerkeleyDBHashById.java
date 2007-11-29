@@ -36,11 +36,11 @@ import com.sleepycat.je.OperationStatus;
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-class BerkeleyDBHash implements IMapHashFile {
+class BerkeleyDBHashById implements IMapHashFile {
 
-    private static BerkeleyDBHash instance;
+    private static BerkeleyDBHashById instance;
 
-    private BerkeleyDBHash() {
+    private BerkeleyDBHashById() {
     }
 
     /**
@@ -48,14 +48,14 @@ class BerkeleyDBHash implements IMapHashFile {
      * 
      * @return the instance if this project handler
      */
-    public synchronized static BerkeleyDBHash getInstance() {
+    public synchronized static BerkeleyDBHashById getInstance() {
         if (instance == null) {
-            instance = new BerkeleyDBHash();
+            instance = new BerkeleyDBHashById();
         }
         return instance;
     }
 
-    public BerkeleyDBHash(String database) throws ClassNotFoundException, SQLException {
+    public BerkeleyDBHashById(String database) throws ClassNotFoundException, SQLException {
         connect(database);
     }
 
@@ -208,7 +208,7 @@ class BerkeleyDBHash implements IMapHashFile {
     }
 
     public static void main(String[] args) throws Exception {
-        BerkeleyDBHash bh = BerkeleyDBHash.getInstance();
+        BerkeleyDBHashById bh = BerkeleyDBHashById.getInstance();
         bh.connect("sampledatabase");
         int loop = 20000000;
         // Map m = new THashMap();
