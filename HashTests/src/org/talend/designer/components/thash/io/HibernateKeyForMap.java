@@ -56,12 +56,10 @@ public class HibernateKeyForMap {
         int size = dis.readInt();
         TObjectHashingStrategy objectHashingStrategy = new TObjectHashingStrategy() {
 
-            @Override
             public int computeHashCode(Object arg0) {
                 return arg0 == null ? 0 : arg0.hashCode();
             }
 
-            @Override
             public boolean equals(Object arg0, Object arg1) {
                 return arg1 == null ? arg0 == null : arg1.equals(arg0);
             }

@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.talend.designer.components.thash.io.HashFilesBenchs.PERSISTENT_METHOD;
 
 /**
  * 
@@ -26,6 +27,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 public class DataBench implements Cloneable {
 
     private final static String[] PROPERTIES = new String[] {
+        "persistentMethod",
         "nbItems",
         "nbFiles",
         "pointersByFile",
@@ -95,6 +97,8 @@ public class DataBench implements Cloneable {
     private Date endReadDate;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+    private PERSISTENT_METHOD persistentMethod;
 
     /*
      * (non-Javadoc)
@@ -526,6 +530,8 @@ public class DataBench implements Cloneable {
                     value = "";
                 } else if (object instanceof Date) {
                     value = sdf.format((Date) object);
+                } else if (object instanceof PERSISTENT_METHOD) {
+                    value = ((PERSISTENT_METHOD) object).getLabel();
                 } else {
                     value = String.valueOf(object);
                 }
@@ -556,5 +562,24 @@ public class DataBench implements Cloneable {
         }
         return buffer.toString();
     }
+
+    /**
+     * DOC amaumont Comment method "setPersistMethod".
+     * @param persistMethod
+     */
+    public void setPersistentMethod(PERSISTENT_METHOD persistMethod) {
+        this.persistentMethod = persistMethod;
+    }
+
+    
+    /**
+     * Getter for persistMethod.
+     * @return the persistMethod
+     */
+    public PERSISTENT_METHOD getPersistentMethod() {
+        return this.persistentMethod;
+    }
+    
+    
 
 }

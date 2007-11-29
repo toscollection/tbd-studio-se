@@ -232,7 +232,6 @@ class ArrayHashFile implements IMapHashFile {
     /* (non-Javadoc)
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
-    @Override
     public long getTotalSize() {
         // TODO Auto-generated method stub
         return 0;

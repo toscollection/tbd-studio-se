@@ -169,7 +169,6 @@ class NewMultiplePointerSimpleHashFile implements IMapHashFile {
      * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
-    @Override
     public long getTotalSize() {
         // TODO Auto-generated method stub
         return 0;

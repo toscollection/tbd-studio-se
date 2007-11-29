@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -39,7 +38,7 @@ import org.talend.designer.components.thash.Sizeof;
  */
 public class HashFilesBenchs {
 
-    public static MultiPointersMultiHashFiles hashFile;
+    public static IMapHashFile hashFile;
 
     public static void main(String[] args) throws Exception {
 
@@ -68,6 +67,66 @@ public class HashFilesBenchs {
     private FileOutputStream fileData;
 
     /**
+     * DOC amaumont HashFilesBenchs class global comment. Detailled comment
+     */
+    enum PERSISTENT_METHOD {
+        // FIXED_AREA_POINTERS("Fixed area pointers", "/home/amaumont/hash_benchs/talend_hash_perfs"),
+        FIXED_AREA_POINTERS("Fixed area pointers", "/home/amaumont/hash_benchs/talend_hash_perfs_beans_n"),
+        TURNING_POINTERS_NEAREST("Turning pointers nearest", "/home/amaumont/hash_benchs/talend_hash_perfs_beans_0"),
+        TURNING_POINTERS_NEXT("Turning pointers next", "/home/amaumont/hash_benchs/talend_hash_perfs_beans_0"),
+        SQL_LITE_DB("Sql lite", "/home/amaumont/hash_benchs/sql_lite_bench.db"),
+        BERKELEY_DB("Berkeley DB", "hash_benchs"),
+
+        ;
+
+        private String filePath;
+
+        private String label;
+
+        PERSISTENT_METHOD(String label, String filePath) {
+            this.label = label;
+            this.filePath = filePath;
+        }
+
+        /**
+         * Getter for filePath.
+         * 
+         * @return the filePath
+         */
+        public String getFilePath() {
+            return this.filePath;
+        }
+
+        /**
+         * Sets the filePath.
+         * 
+         * @param filePath the filePath to set
+         */
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
+
+        /**
+         * Getter for label.
+         * 
+         * @return the label
+         */
+        public String getLabel() {
+            return this.label;
+        }
+
+        /**
+         * Sets the label.
+         * 
+         * @param label the label to set
+         */
+        public void setLabel(String label) {
+            this.label = label;
+        }
+
+    }
+
+    /**
      * DOC amaumont ReliabilityHashMapFileTest constructor comment.
      * 
      * @throws Exception
@@ -77,42 +136,51 @@ public class HashFilesBenchs {
     public HashFilesBenchs() throws IOException, ClassNotFoundException, Exception {
         super();
 
-        int[] nbItemsArray = new int[] { 
-//                10000, 
-//                100000, 
-//                1000000, 
-//                10000000, 
-                20000000, 
-//                30000000, 
-//                60000000, 
-//                100000000,
-                };
-
-        int[] nbFilesArray = new int[] { 
-                1, 
-//                10, 
-//                20, 
-//                40, 
-//                60, 
-//                80, 
-//                100, 
-//                150, 
-                };// , };
-
-        int[] pointersByFileArray = new int[] { 
-                1, 
-//                10, 
-//                20, 
-//                40, 
-//                60, 
-//                80, 
-//                100, 
-//                200, 
-//                400, 
-//                800, 
-//                1000 
+        int[] nbItemsArray = new int[] {
                 
+//                10000, // 10 k
+        // 100000, // 100 k
+//         1000000, // 1 M
+//         10000000, // 10 M 
+        // 20000000, // 20 M
+          25000000, // 25 M
+        // 30000000, // 30 M
+//         60000000, // 60 M
+        // 100000000, // 100 M
+        };
+
+        int[] nbFilesArray = new int[] { 1,
+        // 10,
+        // 20,
+        // 40,
+        // 60,
+        // 80,
+        // 100,
+        // 150,
         };// , };
+
+        int[] pointersByFileArray = new int[] { 1,
+        // 10,
+        // 20,
+        // 40,
+        // 60,
+        // 80,
+        // 100,
+        // 200,
+        // 400,
+        // 800,
+        // 1000
+
+        };// , };
+
+        PERSISTENT_METHOD[] testCases = new PERSISTENT_METHOD[] {
+        // PERSISTENT_METHOD.FIXED_AREA_POINTERS,
+        // PERSISTENT_METHOD.TURNING_POINTERS_NEAREST,
+        // PERSISTENT_METHOD.TURNING_POINTERS_NEXT,
+//        PERSISTENT_METHOD.SQL_LITE_DB,
+         PERSISTENT_METHOD.BERKELEY_DB,
+
+        };
 
         // int loop = 1;
         // int loop = 10000;
@@ -126,16 +194,10 @@ public class HashFilesBenchs {
         // int loop = 70000000;
         // int loop = 80000000;
 
-        // change also in Bean.equals(...) class
-        // hashFile = MultipleHashFile.getInstance();
-        // hashFile = MultiplePointerSimpleHashFile.getInstance();
-        // hashFile = DoubleHashFile.getInstance();
-
         StringBuilder sbPreview = new StringBuilder();
-        
-        NumberFormat nf = NumberFormat.getInstance(); 
-        
-        
+
+        NumberFormat nf = NumberFormat.getInstance();
+
         sbPreview.append("nbItems list: ");
         for (int i = 0; i < nbItemsArray.length; i++) {
             int j = nbItemsArray[i];
@@ -143,7 +205,7 @@ public class HashFilesBenchs {
             sbPreview.append("  |  ");
         }
         sbPreview.append("\n");
-        
+
         sbPreview.append("nbFiles list: ");
         for (int i = 0; i < nbFilesArray.length; i++) {
             int j = nbFilesArray[i];
@@ -151,7 +213,7 @@ public class HashFilesBenchs {
             sbPreview.append("  |  ");
         }
         sbPreview.append("\n");
-        
+
         sbPreview.append("pointersByFile list: ");
         for (int i = 0; i < pointersByFileArray.length; i++) {
             int j = pointersByFileArray[i];
@@ -159,76 +221,134 @@ public class HashFilesBenchs {
             sbPreview.append("  |  ");
         }
         sbPreview.append("\n");
-        
+
         System.out.println(sbPreview.toString());
-        
+
         openDataFile();
 
         try {
-            for (int nbItemsIndex = 0; nbItemsIndex < nbItemsArray.length; nbItemsIndex++) {
-                int nbItems = nbItemsArray[nbItemsIndex];
 
-                System.out.println("Current items number: " + nf.format(nbItems));
-                
-                for (int j = 0; j < nbFilesArray.length; j++) {
-                    int nbFiles = nbFilesArray[j];
-                    System.out.println("Current files number: " + nf.format(nbFiles));
-                    DataBench dataWrite = new DataBench();
-                    dataWrite.setNbFiles(nbFiles);
-                    hashFile = new MultiPointersMultiHashFiles(filePath, nbFiles);
-                    try {
-                        launchWriteBenchs(nbItems, nbFiles, dataWrite);
-                        dataWrite.setWriteEndedWithSuccess(true);
-                    } catch (Throwable e) {
-                        e.printStackTrace();
-                        dataWrite.setWriteError(e.getMessage() + ":" + e.getStackTrace()[0]);
-                        writeData(dataWrite);
-                        continue;
-                    }
+            for (int i = 0; i < testCases.length; i++) {
+                PERSISTENT_METHOD persistMethod = testCases[i];
+                System.out.println("Current method: " + persistMethod.label + "(" + persistMethod.toString() + ")");
 
-                    for (int pointersByFileIdx = 0; pointersByFileIdx < pointersByFileArray.length; pointersByFileIdx++) {
-                        DataBench dataReadWrite = (DataBench) dataWrite.clone();
-                        int pointersByFile = pointersByFileArray[pointersByFileIdx];
-                        System.out.println("Current items number: " + nf.format(nbItems));
+                for (int nbItemsIndex = 0; nbItemsIndex < nbItemsArray.length; nbItemsIndex++) {
+                    int nbItems = nbItemsArray[nbItemsIndex];
+
+                    System.out.println("Current items number: " + nf.format(nbItems));
+
+                    for (int j = 0; j < nbFilesArray.length; j++) {
+                        int nbFiles = -1;
+
+                        switch (persistMethod) {
+                        case FIXED_AREA_POINTERS:
+                            hashFile = new MultiPointersMultiHashFiles(filePath, nbFiles);
+                            nbFiles = nbFilesArray[j];
+                            break;
+
+                        case TURNING_POINTERS_NEAREST:
+                        case TURNING_POINTERS_NEXT:
+                            nbFiles = 1;
+                            throw new UnsupportedOperationException();
+                            // break;
+
+                        case SQL_LITE_DB:
+                            hashFile = SqliteDBHash.getInstance();
+                            nbFiles = 1;
+                            break;
+
+                        case BERKELEY_DB:
+                            hashFile = new BerkeleyDBHash(persistMethod.filePath);
+                            nbFiles = 1;
+                            break;
+
+                        default:
+                            break;
+                        }
+
                         System.out.println("Current files number: " + nf.format(nbFiles));
-                        System.out.println("Current pointersByFile number: " + nf.format(pointersByFile));
+                        DataBench dataWrite = new DataBench();
+
+                        dataWrite.setPersistentMethod(persistMethod);
+                        dataWrite.setNbFiles(nbFiles);
                         try {
-                            launchReadBenchs(nbItems, nbFiles, pointersByFile, dataReadWrite);
-                            dataReadWrite.setReadEndedWithSuccess(true);
+                            launchWriteBenchs(persistMethod, nbItems, nbFiles, dataWrite);
+                            dataWrite.setWriteEndedWithSuccess(true);
                         } catch (Throwable e) {
                             e.printStackTrace();
-                            dataReadWrite.setReadError(e.getMessage() + ":" + e.getStackTrace()[0]);
+                            dataWrite.setWriteError(e.getMessage() + ":" + e.getStackTrace()[0]);
+                            writeData(dataWrite);
                             continue;
-                        } finally {
-                            writeData(dataReadWrite);
                         }
+
+                        for (int pointersByFileIdx = 0; pointersByFileIdx < pointersByFileArray.length; pointersByFileIdx++) {
+                            DataBench dataReadWrite = (DataBench) dataWrite.clone();
+                            int pointersByFile = pointersByFileArray[pointersByFileIdx];
+                            System.out.println("Current items number: " + nf.format(nbItems));
+                            System.out.println("Current files number: " + nf.format(nbFiles));
+                            System.out.println("Current pointersByFile number: " + nf.format(pointersByFile));
+                            try {
+                                launchReadBenchs(persistMethod, nbItems, nbFiles, pointersByFile, dataReadWrite);
+                                dataReadWrite.setReadEndedWithSuccess(true);
+                            } catch (Throwable e) {
+                                e.printStackTrace();
+                                dataReadWrite.setReadError(e.getMessage() + ":" + e.getStackTrace()[0]);
+                                continue;
+                            } finally {
+                                writeData(dataReadWrite);
+                            }
+                        }
+
+                        hashMap = null;
+
+                        // System.out.println("countReturnFalse1=" + Bean.countReturnFalse1);
+                        // System.out.println("waiting for garbage collector...");
+                        // Sizeof.runGC();
+                        // long heap2 = Sizeof.usedMemory(); // Take a before heap snapshot
+                        //
+                        // final int size = Math.round(((float) (heap2 - heap1)) / loop);
+                        // System.out.println("'before' heap: " + heap1 + " bytes, 'after' heap: " + heap2 + " bytes ");
+                        // //
+                        // not
+                        // needed
+                        // // here
+                        // System.out.println("heap delta: " + (heap2 - heap1) + " bytes ");
+                        // System.out.println("size by item: " + size + " bytes ");
+                        // System.out.println("Number of loops: " + loop);
+                        // System.out.println("Number of items: " + hashMap.size());
+                        // System.out.println("Read randomized: " + randomRead);
+                        // System.out.println("Hash class used: " + hashFile.getClass().getName());
+                        // if (loop != hashMap.size()) {
+                        // System.out.println("WARNING: loops number is different of items number !");
+                        // }
+                        // System.out.println("Time: " + ((time2 - time1) / 1000) + " s");
+
+                        boolean breakForFiles = false;
+
+                        switch (persistMethod) {
+                        case FIXED_AREA_POINTERS:
+                            break;
+
+                        case TURNING_POINTERS_NEAREST:
+                        case TURNING_POINTERS_NEXT:
+                        case SQL_LITE_DB:
+                        case BERKELEY_DB:
+
+                            breakForFiles = true;
+
+                            break;
+
+                        default:
+                            break;
+                        }
+
+                        if (breakForFiles) {
+                            break;
+                        }
+
                     }
 
-                    hashMap = null;
-
-                    // System.out.println("countReturnFalse1=" + Bean.countReturnFalse1);
-                    // System.out.println("waiting for garbage collector...");
-                    // Sizeof.runGC();
-                    // long heap2 = Sizeof.usedMemory(); // Take a before heap snapshot
-                    //
-                    // final int size = Math.round(((float) (heap2 - heap1)) / loop);
-                    // System.out.println("'before' heap: " + heap1 + " bytes, 'after' heap: " + heap2 + " bytes "); //
-                    // not
-                    // needed
-                    // // here
-                    // System.out.println("heap delta: " + (heap2 - heap1) + " bytes ");
-                    // System.out.println("size by item: " + size + " bytes ");
-                    // System.out.println("Number of loops: " + loop);
-                    // System.out.println("Number of items: " + hashMap.size());
-                    // System.out.println("Read randomized: " + randomRead);
-                    // System.out.println("Hash class used: " + hashFile.getClass().getName());
-                    // if (loop != hashMap.size()) {
-                    // System.out.println("WARNING: loops number is different of items number !");
-                    // }
-                    // System.out.println("Time: " + ((time2 - time1) / 1000) + " s");
-
                 }
-
             }
         } finally {
             closeDataFile();
@@ -247,13 +367,13 @@ public class HashFilesBenchs {
         String filePath = folderStatsPath
         // + sdf.format(new Date())
                 + "_" + fileHashBenchsBaseName + ".csv";
-        
+
         File file = new File(filePath);
         boolean exists = file.exists();
-        
+
         try {
             this.fileData = new FileOutputStream(filePath, true);
-            if(!exists) {
+            if (!exists) {
                 this.fileData.write(DataBench.getFileHeader().getBytes());
                 this.fileData.write('\n');
             }
@@ -285,8 +405,8 @@ public class HashFilesBenchs {
         this.fileData.write('\n');
     }
 
-    private void launchWriteBenchs(int nbItems, int nbFiles, DataBench dataWrite) throws Exception, IOException,
-            ClassNotFoundException {
+    private void launchWriteBenchs(PERSISTENT_METHOD persistMethod, int nbItems, int nbFiles, DataBench dataWrite)
+            throws Exception, IOException, ClassNotFoundException {
 
         System.out.println("Write step");
 
@@ -326,7 +446,7 @@ public class HashFilesBenchs {
         // ################################################################################
 
         // Map hashMap = new HashMap();
-//         hashMap = new HashMap(nbItems, 1f);
+        // hashMap = new HashMap(nbItems, 1f);
         // Map hashMap = new HashMap(10000, 1f);
         // Map hashMap = new THashMap(objectHashingStrategy);
         // Map hashMap = new THashMap(loop, 0.1f, objectHashingStrategy);
@@ -342,7 +462,7 @@ public class HashFilesBenchs {
         dataWrite.setNbItems(nbItems);
         dataWrite.setNbFiles(nbFiles);
 
-//        hashMap = new THashMap(nbItems, 1.0f, objectHashingStrategy); // ??
+        hashMap = new THashMap(nbItems, 1.0f, objectHashingStrategy); // ??
         // Map hashMap = new THashMap(loop + (int)((float)loop * 0.1f), 0.1f, objectHashingStrategy);
 
         dataWrite.setInitialCapacityMap(nbItems);
@@ -350,7 +470,24 @@ public class HashFilesBenchs {
 
         Map localHashMap = hashMap;
 
-        hashFile.readonly = readonly;
+        switch (persistMethod) {
+        case FIXED_AREA_POINTERS:
+            ((MultiPointersMultiHashFiles) hashFile).readonly = readonly;
+            break;
+
+        case TURNING_POINTERS_NEAREST:
+        case TURNING_POINTERS_NEXT:
+            break;
+
+        case SQL_LITE_DB:
+            break;
+
+        case BERKELEY_DB:
+            break;
+
+        default:
+            break;
+        }
 
         try {
             hashFile.initPut(filePath);
@@ -403,14 +540,15 @@ public class HashFilesBenchs {
 
         dataWrite.setItemsPerSecWrite(itemsPerSec);
 
-        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to STORE. " + itemsPerSec
-                + " items/s ");
+        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to STORE. " + itemsPerSec + " items/s ");
 
         dataWrite.setTotalFilesSize(hashFile.getTotalSize());
     }
 
     /**
      * DOC amaumont Comment method "launchBenchs".
+     * 
+     * @param persistMethod
      * 
      * @param pointersByFile
      * @param nbFiles
@@ -420,8 +558,8 @@ public class HashFilesBenchs {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    private void launchReadBenchs(int nbItems, int nbFiles, int pointersByFile, DataBench dataReadWrite)
-            throws Exception, IOException, ClassNotFoundException {
+    private void launchReadBenchs(PERSISTENT_METHOD persistMethod, int nbItems, int nbFiles, int pointersByFile,
+            DataBench dataReadWrite) throws Exception, IOException, ClassNotFoundException {
 
         System.out.println("Starting with " + nbItems + " items ");
 
@@ -433,14 +571,32 @@ public class HashFilesBenchs {
 
         Random rand = new Random(System.currentTimeMillis());
 
-        hashFile.setFilePointersNumber(pointersByFile);
+        switch (persistMethod) {
+        case FIXED_AREA_POINTERS:
+            ((MultiPointersMultiHashFiles) hashFile).setFilePointersNumber(pointersByFile);
+            break;
+
+        case TURNING_POINTERS_NEAREST:
+        case TURNING_POINTERS_NEXT:
+            break;
+
+        case SQL_LITE_DB:
+            break;
+
+        case BERKELEY_DB:
+            break;
+
+        default:
+
+            break;
+        }
 
         dataReadWrite.setPointersByFile(pointersByFile);
 
         Map localHashMap = hashMap;
 
         Bean.getDataCountRequested = 0;
-        
+
         if (readAfterStore) {
             System.out.println("Read step");
             long lastTime = start;
@@ -448,8 +604,8 @@ public class HashFilesBenchs {
             try {
                 hashFile.initGet(filePath);
                 for (int i = 0; i < nbItems; i++) {
-//                    System.out.println(i);
-                    
+                    // System.out.println(i);
+
                     Bean bean = null;
                     // => bean from main flow in tMap for example...
                     if (randomRead) {
@@ -480,18 +636,18 @@ public class HashFilesBenchs {
                                 + keyForMap.cursorPosition);
                     }
 
-                    if(false && System.currentTimeMillis() - lastTime > timeOut) {
-                        int timeRead = (int)(((double)(System.currentTimeMillis() - lastTime)* nbItems) / (double)i);
+                    if (false && System.currentTimeMillis() - lastTime > timeOut) {
+                        int timeRead = (int) (((double) (System.currentTimeMillis() - lastTime) * nbItems) / (double) i);
                         dataReadWrite.setTimeRead(timeRead);
                         dataReadWrite.setItemsPerSecRead(1000 * nbItems / timeRead);
                         throw new RuntimeException("Timeout, read is too long !");
                     }
-                    
+
                     if (i % 10000 == 0) {
                         long currentTimeMillis = System.currentTimeMillis();
                         System.out.println("Reading " + i + ", time since last display: "
                                 + (int) ((float) (currentTimeMillis - lastTime)) + " ms");
-                        
+
                         System.out.println("Bean.getDataCountRequested =" + Bean.getDataCountRequested);
                         lastTime = currentTimeMillis;
                     }
@@ -525,11 +681,10 @@ public class HashFilesBenchs {
             dataReadWrite.setTimeRead(deltaTime);
 
             int itemsPerSec = (int) ((float) nbItems / (float) deltaTime * 1000f);
-            
+
             dataReadWrite.setItemsPerSecRead(itemsPerSec);
-            
-            System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to READ. "
-                    + itemsPerSec + "  items/s ");
+
+            System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to READ. " + itemsPerSec + "  items/s ");
 
         }
 

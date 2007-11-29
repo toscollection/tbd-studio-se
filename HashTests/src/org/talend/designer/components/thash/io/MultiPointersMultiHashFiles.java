@@ -110,7 +110,6 @@ class MultiPointersMultiHashFiles implements IMapHashFile {
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
             byteArrayOutputStream = new ByteArrayOutputStream();
-            // byteArrayOutputStream.wr
             objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
             objectOutputStream.writeObject(bean);
             objectOutputStream.flush();
@@ -384,7 +383,6 @@ class MultiPointersMultiHashFiles implements IMapHashFile {
      * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
-    @Override
     public long getTotalSize() {
         long size = 0;
         for (int i = 0; i < hashFilesNumber; i++) {

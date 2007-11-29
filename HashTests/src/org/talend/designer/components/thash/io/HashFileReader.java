@@ -279,7 +279,6 @@ class RandomAccessFileWithPosition implements Comparable<RandomAccessFileWithPos
         this.position = position;
     }
 
-    @Override
     public int compareTo(RandomAccessFileWithPosition o) {
         return (int) (this.position - o.position);
     }

@@ -55,6 +55,10 @@ class BerkeleyDBHash implements IMapHashFile {
         return instance;
     }
 
+    public BerkeleyDBHash(String database) throws ClassNotFoundException, SQLException {
+        connect(database);
+    }
+
     boolean readonly;
 
     private int counter;
@@ -62,6 +66,8 @@ class BerkeleyDBHash implements IMapHashFile {
     private Environment myDbEnvironment;
 
     private Database myDatabase;
+    
+    private String container = "/home/amaumont/hash_benchs/berkeley_db_files";
 
     byte[] key = new byte[4];
 
@@ -113,14 +119,17 @@ class BerkeleyDBHash implements IMapHashFile {
     }
 
     public void connect(String database) throws ClassNotFoundException, SQLException {
+    
         try {
             EnvironmentConfig envConfig = new EnvironmentConfig();
             envConfig.setAllowCreate(true);
-            myDbEnvironment = new Environment(new File("D:/dbEnv"), envConfig);
+            envConfig.setCacheSize(50000000);
+            myDbEnvironment = new Environment(new File(container), envConfig);
 
             // Open the database. Create it if it does not already exist.
             DatabaseConfig dbConfig = new DatabaseConfig();
             dbConfig.setAllowCreate(true);
+            dbConfig.setExclusiveCreate(true);
             myDatabase = myDbEnvironment.openDatabase(null, database, dbConfig);
 
         } catch (DatabaseException dbe) {
@@ -193,7 +202,6 @@ class BerkeleyDBHash implements IMapHashFile {
      * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
-    @Override
     public long getTotalSize() {
         // TODO Auto-generated method stub
         return 0;
