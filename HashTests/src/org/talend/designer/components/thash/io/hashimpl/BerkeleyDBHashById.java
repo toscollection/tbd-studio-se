@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.hashimpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,6 +21,9 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.SQLException;
+
+import org.talend.designer.components.thash.io.IMapHashFile;
+import org.talend.designer.components.thash.io.beans.Bean;
 
 import com.sleepycat.je.Database;
 import com.sleepycat.je.DatabaseConfig;
@@ -36,11 +39,11 @@ import com.sleepycat.je.OperationStatus;
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-class BerkeleyDBHashByCRC implements IMapHashFile {
+public class BerkeleyDBHashById implements IMapHashFile {
 
-    private static BerkeleyDBHashByCRC instance;
+    private static BerkeleyDBHashById instance;
 
-    private BerkeleyDBHashByCRC() {
+    private BerkeleyDBHashById() {
     }
 
     /**
@@ -48,14 +51,14 @@ class BerkeleyDBHashByCRC implements IMapHashFile {
      * 
      * @return the instance if this project handler
      */
-    public synchronized static BerkeleyDBHashByCRC getInstance() {
+    public synchronized static BerkeleyDBHashById getInstance() {
         if (instance == null) {
-            instance = new BerkeleyDBHashByCRC();
+            instance = new BerkeleyDBHashById();
         }
         return instance;
     }
 
-    public BerkeleyDBHashByCRC(String database) throws ClassNotFoundException, SQLException {
+    public BerkeleyDBHashById(String database) throws ClassNotFoundException, SQLException {
         connect(database);
     }
 
@@ -71,27 +74,21 @@ class BerkeleyDBHashByCRC implements IMapHashFile {
 
     byte[] key = new byte[4];
 
-    private String database;
+    public Object get(String container, long id, int hashcode) throws Exception {
 
-    public void initPut(String container) throws IOException {
-        try {
-            myDbEnvironment.removeDatabase(null, database);
-        } catch (DatabaseException e) {
-            
+        extractBytesKey(key, (int) id);
+        DatabaseEntry theKey = new DatabaseEntry(key);
+        DatabaseEntry theData = new DatabaseEntry();
+        // Perform the get.
+        if (myDatabase.get(null, theKey, theData, LockMode.DEFAULT) == OperationStatus.SUCCESS) {
+            ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(theData.getData()));
+            return oi.readObject();
+        } else {
+            return null;
         }
 
-        try {
-            // Open the database. Create it if it does not already exist.
-            DatabaseConfig dbConfig = new DatabaseConfig();
-            dbConfig.setAllowCreate(true);
-            dbConfig.setExclusiveCreate(true);
-            myDatabase = myDbEnvironment.openDatabase(null, database, dbConfig);
-        } catch (DatabaseException e) {
-            throw new RuntimeException(e);
-        }
-        
     }
-    
+
     public long put(String container, Object bean) throws IOException {
         ObjectOutputStream objectOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
@@ -112,7 +109,7 @@ class BerkeleyDBHashByCRC implements IMapHashFile {
             }
         }
 
-        extractBytesKey(key, bean.hashCode());
+        extractBytesKey(key, counter);
         DatabaseEntry theKey = new DatabaseEntry(key);
         DatabaseEntry theData = new DatabaseEntry(byteArrayOutputStream.toByteArray());
         try {
@@ -121,68 +118,22 @@ class BerkeleyDBHashByCRC implements IMapHashFile {
             throw new RuntimeException(e);
         }
 
-        return -1;
+        return counter++;
     }
 
-    public void endPut() throws IOException {
-        try {
-            myDatabase.close();
-        } catch (DatabaseException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void initGet(String container) throws FileNotFoundException {
-
-        try {
-            // Open the database. Create it if it does not already exist.
-            DatabaseConfig dbConfig = new DatabaseConfig();
-            dbConfig.setReadOnly(true);
-            myDatabase = myDbEnvironment.openDatabase(null, database, dbConfig);
-        } catch (DatabaseException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    public Object get(String container, long id, int hashcode) throws Exception {
-
-        extractBytesKey(key, hashcode);
-        DatabaseEntry theKey = new DatabaseEntry(key);
-        DatabaseEntry theData = new DatabaseEntry();
-        // Perform the get.
-        if (myDatabase.get(null, theKey, theData, LockMode.DEFAULT) == OperationStatus.SUCCESS) {
-            ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(theData.getData()));
-            return oi.readObject();
-        } else {
-            return null;
-        }
-
-    }
-
-    public void endGet(String container) throws IOException {
-
-        try {
-            myDatabase.close();
-        } catch (DatabaseException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-
-    
     public void connect(String database) throws ClassNotFoundException, SQLException {
     
-        this.database = database;
-        
         try {
             EnvironmentConfig envConfig = new EnvironmentConfig();
             envConfig.setAllowCreate(true);
-            envConfig.setCacheSize(512950272);
-            envConfig.setCachePercent(90);
+            envConfig.setCacheSize(50000000);
             myDbEnvironment = new Environment(new File(container), envConfig);
 
+            // Open the database. Create it if it does not already exist.
+            DatabaseConfig dbConfig = new DatabaseConfig();
+            dbConfig.setAllowCreate(true);
+            dbConfig.setExclusiveCreate(true);
+            myDatabase = myDbEnvironment.openDatabase(null, database, dbConfig);
 
         } catch (DatabaseException dbe) {
             dbe.printStackTrace();
@@ -224,6 +175,22 @@ class BerkeleyDBHashByCRC implements IMapHashFile {
         } catch (DatabaseException dbe) {
             dbe.printStackTrace();
         }
+    }
+
+    public void endGet(String container) throws IOException {
+
+    }
+
+    public void endPut() throws IOException {
+
+    }
+
+    public void initGet(String container) throws FileNotFoundException {
+
+    }
+
+    public void initPut(String container) throws IOException {
+
     }
 
     public void extractBytesKey(byte[] b, int val) {

@@ -18,18 +18,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.talend.designer.components.thash.io.hashimpl.InternalSmallBean;
 
 /**
  * 
  * DOC slanglois class global comment. Detailled comment <br/>
  * 
  */
-class IntrospectionHashFile {
+public class IntrospectionHashFile {
 
     private static IntrospectionHashFile instance;
 

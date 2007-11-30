@@ -10,29 +10,26 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.hashimpl;
 
 import gnu.trove.THashMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.talend.designer.components.thash.io.IMapHashFile;
 
 /**
  * 
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-class MultiPointersMultiHashFiles implements IMapHashFile {
+public class MultiPointersMultiHashFiles implements IMapHashFile {
 
     /**
      * 
@@ -45,7 +42,7 @@ class MultiPointersMultiHashFiles implements IMapHashFile {
 
     private int[] bwPositionArray = null;
 
-    boolean readonly;
+    public boolean readonly;
 
     private int hashFilesNumber;
 
@@ -288,7 +285,7 @@ class MultiPointersMultiHashFiles implements IMapHashFile {
      * 
      * DOC amaumont MultiPointersMultiHashFiles class global comment. Detailled comment
      */
-    class MultiReadPointersFileHandler {
+    public class MultiReadPointersFileHandler {
 
         private String containerFilePath;
 

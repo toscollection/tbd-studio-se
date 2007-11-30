@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.beans;
     /**
      * 
      * DOC amaumont  class global comment. Detailled comment
@@ -19,11 +19,11 @@ package org.talend.designer.components.thash.io;
      * 
      *
      */
-    class KeyForMap {
+    public class KeyForMap {
 
-        int cursorPosition;
+        public int cursorPosition;
 
-        int hashcode;
+        public int hashcode;
         
         /**
          * DOC amaumont KeyForMap constructor comment.

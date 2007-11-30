@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.designer.components.thash.io;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.ObjectOutputStream;
 
 
 /**

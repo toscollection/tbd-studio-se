@@ -10,9 +10,11 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.beans;
 
 import java.io.Serializable;
+
+import org.talend.designer.components.thash.io.HashFilesBenchs;
 
 /**
  * 
@@ -21,9 +23,9 @@ import java.io.Serializable;
  */
 public class Bean implements Serializable {
 
-    int primitiveInt;
+    public int primitiveInt;
 
-    String name;
+    public String name;
 
     transient int hashcode = -1;
 

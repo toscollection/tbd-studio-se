@@ -13,7 +13,6 @@
 
 package org.talend.designer.components.thash.io;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -21,7 +20,7 @@ import java.io.IOException;
  * <br/>
  *
  */
-interface IMapHashFile {
+public interface IMapHashFile {
 
     public Object get(String container, long cursorPosition, int hashcode) throws Exception;
 

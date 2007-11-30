@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.hashimpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -23,16 +23,14 @@ import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.zip.DataFormatException;
-import java.util.zip.Deflater;
-import java.util.zip.Inflater;
+
+import org.talend.designer.components.thash.io.IMapHashFile;
 
 /**
  * 
- * DOC amaumont class global comment. Detailled comment <br/>
- * 
+ * DOC amaumont  class global comment. Detailled comment
  */
-class DoubleHashFileWithCompressor implements IMapHashFile {
+public class DoubleHashFile implements IMapHashFile {
 
     /**
      * 
@@ -49,21 +47,9 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
 
     private ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    private Deflater compressor;
+    private static DoubleHashFile instance;
 
-    private Inflater decompressor;
-
-    private static DoubleHashFileWithCompressor instance;
-
-    private DoubleHashFileWithCompressor() {
-        if(compress) {
-            // Compressor with highest level of compression
-            compressor = new Deflater();
-            compressor.setLevel(Deflater.BEST_SPEED);
-            compressor.setStrategy(Deflater.DEFAULT_STRATEGY);
-            decompressor = new Inflater();
-        }
-
+    private DoubleHashFile() {
     }
 
     /**
@@ -71,9 +57,9 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
      * 
      * @return the instance if this project handler
      */
-    public synchronized static DoubleHashFileWithCompressor getInstance() {
+    public synchronized static DoubleHashFile getInstance() {
         if (instance == null) {
-            instance = new DoubleHashFileWithCompressor();
+            instance = new DoubleHashFile();
         }
         return instance;
     }
@@ -100,8 +86,6 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
 
     private int lastRetrievedCursorPosition = -1;
 
-    boolean compress = false;
-
     public Object get(String container, long positionIdx, int hashcode) throws IOException, ClassNotFoundException {
         if (positionIdx != lastRetrievedCursorPosition) {
             fhGetIdx.seek(positionIdx);
@@ -109,21 +93,7 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
             fhGetData.seek(positionGetData);
             byte[] byteArray = new byte[fhGetData.readInt()];
             fhGetData.read(byteArray);
-
-            if (compress) {
-                decompressor.setInput(byteArray);
-                byte[] result = new byte[byteArray.length];
-                try {
-                    decompressor.inflate(result);
-                } catch (DataFormatException e) {
-                    throw new RuntimeException(e);
-                }
-                decompressor.reset();
-                lastRetrievedObject = new ObjectInputStream(new ByteArrayInputStream(result)).readObject();
-            } else {
-                lastRetrievedObject = new ObjectInputStream(new ByteArrayInputStream(byteArray)).readObject();
-            }
-
+            lastRetrievedObject = new ObjectInputStream(new ByteArrayInputStream(byteArray)).readObject();
             lastRetrievedCursorPosition = (int) positionIdx;
         }
         return lastRetrievedObject;
@@ -150,39 +120,11 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
             }
         }
 
-        if (compress) {
-
-            byte[] input = byteArrayOutputStream.toByteArray();
-
-            // Give the compressor the data to compress
-            compressor.setInput(input);
-            compressor.finish();
-
-            // Create an expandable byte array to hold the compressed data.
-            // It is not necessary that the compressed data will be smaller than
-            // the uncompressed data.
-            byteArrayOutputStream = new ByteArrayOutputStream(input.length);
-
-            // Compress the data
-            byte[] buf = new byte[1024];
-            while (!compressor.finished()) {
-                byteArrayOutputStream.write(buf, 0, compressor.deflate(buf));
-            }
-            try {
-                byteArrayOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            compressor.reset();
-
-        }
-
-        int dataSizeBytes = byteArrayOutputStream.size();
+        final int dataSizeBytes = byteArrayOutputStream.size();
 
         final boolean[] writeEnded = new boolean[1];
 
         if (THREADED) {
-            final int dataSizeBytesFinal = dataSizeBytes;
             executor.execute(new Runnable() {
 
                 /*
@@ -199,7 +141,7 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
                                 e.printStackTrace();
                             }
                         }
-                        positionData += (INTEGER_BYTES_SIZE + dataSizeBytesFinal);
+                        positionData += (INTEGER_BYTES_SIZE + dataSizeBytes);
                     } catch (RuntimeException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -217,10 +159,8 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
         }
 
         if (!readonly) {
-
             fhPutData.writeInt(dataSizeBytes);
             fhPutData.write(byteArrayOutputStream.toByteArray());
-
         }
 
         byteArrayOutputStream.close();
@@ -259,9 +199,6 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
             fhPutIdx.close();
             fhPutData.close();
         }
-        if (compress) {
-            compressor.end();
-        }
     }
 
     public void initGet(String container) throws FileNotFoundException {
@@ -275,20 +212,12 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
                 fhGetIdx.close();
             }
             File file = new File(container + SUFFIX_FILE_INDICES);
-            long size1 = file.length();
-            System.out.println("File " + container + SUFFIX_FILE_INDICES + ":" + size1 + " bytes");
             file.delete();
             if (fhGetData != null) {
                 fhGetData.close();
             }
             file = new File(container + SUFFIX_FILE_DATA);
-            long size2 = file.length();
-            System.out.println("File " + container + SUFFIX_FILE_DATA + ":" + size2 + " bytes");
-            System.out.println("Total size on disk : " + (size1 + size2) + " bytes");
             file.delete();
-        }
-        if (compress) {
-            decompressor.end();
         }
     }
 
@@ -301,65 +230,3 @@ class DoubleHashFileWithCompressor implements IMapHashFile {
     }
 
 }
-
-
-/*
-
-Without compression
-
-6030 milliseconds for 100000 objects to STORE. 16583 items/s 
-Read step
-Reading 0, time since last display0 s
-File /tmp/talend_hash.idx:800000 bytes
-File /tmp/talend_hash.data:12388890 bytes
-Total size on disk : 13188890
-4537 milliseconds for 100000 objects to READ. 22040  items/s 
-waiting for garbage collector...
-'before' heap: 1276456 bytes, 'after' heap: 3689648 bytes 
-heap delta: 2413192 bytes 
-size by item: 24 bytes 
-Number of loops: 100000
-Number of items: 100000
-Time: 10 s
-
-
-
-compressor.setLevel(Deflater.BEST_COMPRESSION);
-compressor.setStrategy(Deflater.HUFFMAN_ONLY);
-
-9987 milliseconds for 100000 objects to STORE. 10013 items/s 
-Read step
-Reading 0, time since last display0 s
-File /tmp/talend_hash.idx:800000 bytes
-File /tmp/talend_hash.data:13248205 bytes
-Total size on disk : 14048205 bytes
-5063 milliseconds for 100000 objects to READ. 19751  items/s 
-waiting for garbage collector...
-'before' heap: 1276456 bytes, 'after' heap: 3689616 bytes 
-heap delta: 2413160 bytes 
-size by item: 24 bytes 
-Number of loops: 100000
-Number of items: 100000
-Time: 15 s
-
-
-
-compressor.setLevel(Deflater.BEST_COMPRESSION);
-compressor.setStrategy(Deflater.FILTERED);
-
-9970 milliseconds for 100000 objects to STORE. 10030 items/s 
-Read step
-Reading 0, time since last display0 s
-File /tmp/talend_hash.idx:800000 bytes
-File /tmp/talend_hash.data:13248205 bytes
-Total size on disk : 14048205 bytes
-4932 milliseconds for 100000 objects to READ. 20275  items/s 
-waiting for garbage collector...
-'before' heap: 1276456 bytes, 'after' heap: 3689616 bytes 
-heap delta: 2413160 bytes 
-size by item: 24 bytes 
-Number of loops: 100000
-Number of items: 100000
-Time: 14 s
-
-*/

@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/xxl.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -25,6 +25,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
+import org.talend.designer.components.thash.io.beans.KeyForMap;
+
 /**
  * 
  * DOC slanglois class global comment. Detailled comment <br/>

@@ -26,7 +26,9 @@ import java.util.Locale;
 import java.util.Random;
 
 import org.jfree.data.xy.DefaultXYDataset;
-import org.talend.designer.components.thash.io.MultiPointersMultiHashFiles.MultiReadPointersFileHandler;
+import org.talend.designer.components.thash.io.hashimpl.HashFileReader;
+import org.talend.designer.components.thash.io.hashimpl.MultiPointersMultiHashFiles;
+import org.talend.designer.components.thash.io.hashimpl.MultiPointersMultiHashFiles.MultiReadPointersFileHandler;
 
 /**
  * DOC amaumont class global comment. Detailled comment <br/>

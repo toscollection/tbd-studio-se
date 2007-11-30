@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.hashimpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,12 +28,14 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.talend.designer.components.thash.io.IMapHashFile;
+
 /**
  * 
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-class SqliteDBHash implements IMapHashFile {
+public class SqliteDBHash implements IMapHashFile {
 
 	private static SqliteDBHash instance;
 

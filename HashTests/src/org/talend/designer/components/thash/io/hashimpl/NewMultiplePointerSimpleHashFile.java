@@ -11,7 +11,7 @@
 //
 // ============================================================================
 
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.hashimpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -21,10 +21,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 
+import org.talend.designer.components.thash.io.IMapHashFile;
+
 /**
  * DOC slanglois class global comment. Detailled comment
  */
-class NewMultiplePointerSimpleHashFile implements IMapHashFile {
+public class NewMultiplePointerSimpleHashFile implements IMapHashFile {
 
     private static NewMultiplePointerSimpleHashFile instance;
 

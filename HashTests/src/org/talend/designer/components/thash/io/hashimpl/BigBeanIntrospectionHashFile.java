@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.hashimpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +20,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.talend.designer.components.thash.io.IMapHashFile;
+import org.talend.designer.components.thash.io.IntrospectionHashFile;
 
 /**
  * 
@@ -33,7 +36,7 @@ import java.util.List;
 44406 milliseconds for 1000000 objects to STORE using DoubleHashFile. 22000 items/s. 
  * 
  */
-class BigBeanIntrospectionHashFile implements IMapHashFile {
+public class BigBeanIntrospectionHashFile implements IMapHashFile {
 
     private static BigBeanIntrospectionHashFile instance;
 

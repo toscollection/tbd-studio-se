@@ -10,10 +10,12 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.beans;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import org.talend.designer.components.thash.io.HashFilesBenchs;
 
 /**
  * 
