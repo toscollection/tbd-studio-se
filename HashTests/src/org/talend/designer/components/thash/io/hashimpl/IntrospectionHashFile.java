@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.thash.io.hashimpl;
 
 import java.beans.PropertyDescriptor;
 import java.io.File;
@@ -21,14 +21,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.talend.designer.components.thash.io.hashimpl.InternalSmallBean;
+import org.talend.designer.components.thash.io.IMapHashFile;
 
 /**
  * 
  * DOC slanglois class global comment. Detailled comment <br/>
  * 
  */
-public class IntrospectionHashFile {
+public class IntrospectionHashFile implements IMapHashFile {
 
     private static IntrospectionHashFile instance;
 
@@ -63,7 +63,7 @@ public class IntrospectionHashFile {
 
     private Class<InternalSmallBean> beanClass;
 
-    public Object get(String container, long cursorPosition) throws IOException, ClassNotFoundException,
+    public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException,
             InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (cursorPosition != lastRetrievedCursorPosition) {
             lastRetrievedObject = beanClass.newInstance();
@@ -77,16 +77,23 @@ public class IntrospectionHashFile {
 
     }
 
-    public long put(String container, Object bean) throws IOException, IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
-        long returnPosition = bw.getFilePointer();
-        if (!readonly) {
-            lastRetrievedObject = bean;
-            for (int i = 0; i < names.length; i++) {
-                write(i);
+    public long put(String container, Object bean) throws IOException {
+        try {
+            long returnPosition = bw.getFilePointer();
+            if (!readonly) {
+                lastRetrievedObject = bean;
+                for (int i = 0; i < names.length; i++) {
+                    write(i);
+                }
             }
+            return returnPosition;
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
-        return returnPosition;
     }
 
     public void initPut(String container) throws IOException {
@@ -277,4 +284,14 @@ public class IntrospectionHashFile {
         }
     }
 
+    /* (non-Javadoc)
+     * @see org.talend.designer.components.thash.io.IMapHashFile#getTotalSize()
+     */
+    public long getTotalSize() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    
+    
 }

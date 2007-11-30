@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.talend.designer.components.thash.io.IMapHashFile;
-import org.talend.designer.components.thash.io.IntrospectionHashFile;
 
 /**
  * 
