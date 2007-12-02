@@ -318,8 +318,12 @@ public class ExternalSort {
 
         // int nbItems = 60000000;
         // int bufferSize = 2000000;
+//        int nbItems = 60000000;
+//        int bufferSize = 4000000;
         int nbItems = 60000000;
         int bufferSize = 10000000;
+//        int nbItems = 10000000;
+//        int bufferSize = 1000000;
         // int nbItems = 1000000;
         // int bufferSize = 100000;
         // int nbItems = 20;
