@@ -33,9 +33,9 @@ public class ExternalSort {
 
     public List<File> files = new ArrayList<File>();
 
-    public String workDirectory = "D:/temp/";
+    // public String workDirectory = "D:/temp/";
 
-    // public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
+    public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
 
     public int count = 0;
 
@@ -172,6 +172,101 @@ public class ExternalSort {
         return output;
     }
 
+    /**
+     * Merger all the sorted files for one time, the function is the same as sort();
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void mergeFiles() throws IOException, ClassNotFoundException {
+        File file = new File(workDirectory + "TEMP_" + count);
+
+        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+        int numFiles = files.size();
+        List<DataInputStream> diss = new ArrayList<DataInputStream>();
+        List<DataContainer> datas = new ArrayList<DataContainer>();
+        List<Long> fileLengths = new ArrayList<Long>();
+
+        boolean someFileStillHasRows = false;
+
+        for (int i = 0; i < numFiles; i++) {
+            diss.add(new DataInputStream(new BufferedInputStream(new FileInputStream(files.get(i)))));
+            fileLengths.add(files.get(i).length());
+            DataContainer dc = new DataContainer();
+            if (dc.cursorPosition < fileLengths.get(i)) {
+                read(diss.get(i), dc);
+                if (!someFileStillHasRows) {
+                    someFileStillHasRows = true;
+                }
+            }
+            datas.add(dc);
+        }
+
+        DataContainer dataContainer;
+
+        while (someFileStillHasRows) {
+            DataContainer min = null;
+            int minIndex = 0;
+            dataContainer = datas.get(0);
+
+            if (dataContainer.object != null) {
+                min = dataContainer;
+                minIndex = 0;
+            } else {
+                min = null;
+                minIndex = -1;
+            }
+
+            // check which one is min
+            for (int i = 1; i < datas.size(); i++) {
+                dataContainer = datas.get(i);
+
+                if (min != null) {
+                    if (dataContainer.object != null && ((Comparable) (dataContainer.object)).compareTo(min.object) < 0) {
+                        minIndex = i;
+                        min = dataContainer;
+                    }
+                } else {
+                    if (dataContainer.object != null) {
+                        min = dataContainer;
+                        minIndex = i;
+                    }
+                }
+            }
+
+            if (minIndex < 0) {
+                someFileStillHasRows = false;
+            } else {
+                // write to the sorted file
+                write(min.data, dos);
+                min.reset();
+
+                // get another data from the file
+                if (min.cursorPosition < fileLengths.get(minIndex)) {
+                    read(diss.get(minIndex), min);
+                }
+                // check if one still has data
+                someFileStillHasRows = false;
+                for (int i = 0; i < datas.size(); i++) {
+                    if (datas.get(i).object != null) {
+                        someFileStillHasRows = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // close all the streams
+        dos.close();
+        for (int i = 0; i < diss.size(); i++) {
+            diss.get(i).close();
+        }
+        // delete files
+        for (int i = 0; i < files.size(); i++) {
+            files.get(i).delete();
+        }
+    }
+
     private void write(Object bean, DataOutputStream w) throws IOException {
         ObjectOutputStream objectOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
@@ -264,7 +359,8 @@ public class ExternalSort {
         System.out.println("Final process : merging file...");
         long time1 = System.currentTimeMillis();
 
-        esort.sort();
+        // esort.sort();
+        esort.mergeFiles();
 
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
