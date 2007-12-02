@@ -1,24 +1,27 @@
 package org.talend.designer.components.thash.io.hashimpl;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.RandomAccessFile;
 import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.talend.designer.components.thash.io.beans.Bean;
 import org.talend.designer.components.thash.io.beans.KeyForMap;
 
 /**
@@ -30,19 +33,18 @@ public class ExternalSort {
 
     public List<File> files = new ArrayList<File>();
 
-    // public String workDirectory = "D:/temp/";
-    public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
+    public String workDirectory = "D:/temp/";
+
+    // public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
 
     public int count = 0;
 
     public void writeBuffer(Data[] list) throws FileNotFoundException, IOException {
         long time1 = System.currentTimeMillis();
         System.out.println("Sorting buffer...");
-        
-        
+
         Arrays.sort(list);
-        
-        
+
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
         int itemsPerSecSort = (int) ((float) list.length / (float) deltaTimeSort * 1000f);
@@ -54,21 +56,19 @@ public class ExternalSort {
 
         File file = new File(workDirectory + "TEMP_" + count);
         count++;
-        RandomAccessFile rw = new RandomAccessFile(file, "rw");
+        DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         for (int i = 0; i < list.length; i++) {
             write(list[i], rw);
         }
         rw.close();
         files.add(file);
 
-        
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
         int itemsPerSecWrite = (int) ((float) list.length / (float) deltaTimeWrite * 1000f);
         System.out.println(deltaTimeWrite + " milliseconds for " + list.length + " objects to write in file. " + itemsPerSecWrite
                 + "  items/s ");
 
-    
     }
 
     public Map<KeyForMap, KeyForMap> sort() throws IOException, ClassNotFoundException {
@@ -106,25 +106,25 @@ public class ExternalSort {
      * @throws ClassNotFoundException
      */
     private File merge(File one, File two) throws IOException, ClassNotFoundException {
-        RandomAccessFile rr1 = new RandomAccessFile(one, "r");
-        RandomAccessFile rr2 = new RandomAccessFile(two, "r");
 
-        long rr1Length = rr1.length();
-        long rr2Length = rr2.length();
-        
+        DataInputStream rr1 = new DataInputStream(new BufferedInputStream(new FileInputStream(one)));
+        DataInputStream rr2 = new DataInputStream(new BufferedInputStream(new FileInputStream(two)));
+
+        long rr1Length = one.length();
+        long rr2Length = two.length();
+
         DataContainer a = new DataContainer();
         DataContainer b = new DataContainer();
-        
+
         File output = new File(workDirectory + "TEMP_" + count);
 
         count++;
-        RandomAccessFile rw = new RandomAccessFile(output, "rw");
-        
+        DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(output)));
         read(rr1, a);
         read(rr2, b);
 
         while (a.object != null && b.object != null) {
-            if (((Comparable)(a.object)).compareTo(b.object) < 0) {
+            if (((Comparable) (a.object)).compareTo(b.object) < 0) {
                 write(a.data, rw);
                 if (a.cursorPosition < rr1Length) {
                     read(rr1, a);
@@ -172,7 +172,7 @@ public class ExternalSort {
         return output;
     }
 
-    private void write(Object bean, RandomAccessFile w) throws IOException {
+    private void write(Object bean, DataOutputStream w) throws IOException {
         ObjectOutputStream objectOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
@@ -199,23 +199,16 @@ public class ExternalSort {
 
     }
 
-    private void write(byte[] data, RandomAccessFile w) throws IOException {
+    private void write(byte[] data, DataOutputStream w) throws IOException {
         w.writeInt(data.length);
         w.write(data);
     }
-    
-    private void read(RandomAccessFile r, DataContainer dataContainer) throws IOException, ClassNotFoundException {
+
+    private void read(DataInputStream r, DataContainer dataContainer) throws IOException, ClassNotFoundException {
         dataContainer.data = new byte[r.readInt()];
         r.read(dataContainer.data);
         dataContainer.object = new ObjectInputStream(new ByteArrayInputStream(dataContainer.data)).readObject();
-        dataContainer.cursorPosition += 4 + dataContainer.data.length; 
-    }
-
-
-    private Object read(RandomAccessFile r) throws IOException, ClassNotFoundException {
-        byte[] byteArray = new byte[r.readInt()];
-        r.read(byteArray);
-        return new ObjectInputStream(new ByteArrayInputStream(byteArray)).readObject();
+        dataContainer.cursorPosition += 4 + dataContainer.data.length;
     }
 
     /**
@@ -227,15 +220,15 @@ public class ExternalSort {
         ExternalSort esort = new ExternalSort();
 
         NumberFormat numberFormat = NumberFormat.getInstance();
-        
-//        int nbItems = 60000000;
-//        int bufferSize = 2000000;
+
+        // int nbItems = 60000000;
+        // int bufferSize = 2000000;
         int nbItems = 60000000;
         int bufferSize = 10000000;
-//        int nbItems = 1000000;
-//        int bufferSize = 100000;
-//         int nbItems = 20;
-//         int bufferSize = 2;
+        // int nbItems = 1000000;
+        // int bufferSize = 100000;
+        // int nbItems = 20;
+        // int bufferSize = 2;
 
         Random rand = new Random(System.currentTimeMillis());
 
@@ -253,19 +246,15 @@ public class ExternalSort {
             if (i == bufferSize - 1) {
 
                 esort.writeBuffer(arrayData);
-               
-                
+
                 long time1 = System.currentTimeMillis();
 
-                
                 Arrays.fill(arrayData, null);
 
-                
                 long time2 = System.currentTimeMillis();
                 long deltaTimeNull = (time2 - time1);
                 System.out.println(deltaTimeNull + " milliseconds for " + bufferSize + " objects to set buffer as null. ");
-                
-                
+
                 nbItemsProcessed += i + 1;
                 System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems) + " processed.");
                 i = -1;
@@ -274,39 +263,36 @@ public class ExternalSort {
         }
         System.out.println("Final process : merging file...");
         long time1 = System.currentTimeMillis();
-        
-        
+
         esort.sort();
 
-        
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
         int itemsPerSecMerge = (int) ((float) nbItems / (float) deltaTimeMerge * 1000f);
         System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. " + itemsPerSecMerge
                 + "  items/s ");
 
-        
         long end = System.currentTimeMillis();
 
         long deltaTime = (end - start);
 
         int itemsPerSec = (int) ((float) nbItems / (float) deltaTime * 1000f);
 
-        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects all sort process. " + itemsPerSec + "  items/s ");
+        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects all sort process. " + itemsPerSec
+                + "  items/s ");
 
     }
 
 }
 
 class DataContainer {
-    
+
     long cursorPosition;
-    
+
     Object object;
-    
+
     byte[] data;
 
-    
     public void reset() {
         object = null;
         data = null;
