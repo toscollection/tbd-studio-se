@@ -39,6 +39,174 @@ public class ExternalSort {
 
     public int count = 0;
 
+    ILightSerializable iLightSerializable = new Data();
+
+    /**
+     * sort list and then use light serialization to store Data
+     * 
+     * @param list
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void writeBuffer2(Data[] list) throws FileNotFoundException, IOException {
+        long time1 = System.currentTimeMillis();
+        System.out.println("Sorting buffer...");
+
+        Arrays.sort(list);
+
+        long time2 = System.currentTimeMillis();
+        long deltaTimeSort = (time2 - time1);
+        int itemsPerSecSort = (int) ((float) list.length / (float) deltaTimeSort * 1000f);
+        System.out.println(deltaTimeSort + " milliseconds for " + list.length + " objects to sort in memory. " + itemsPerSecSort
+                + "  items/s ");
+
+        time1 = System.currentTimeMillis();
+        System.out.println("Writing ordered buffer in file...");
+
+        File file = new File(workDirectory + "TEMP_" + count);
+        count++;
+        DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+        byte[] bytes = null;
+        for (int i = 0; i < list.length; i++) {
+            bytes = list[i].toByteArray();
+            rw.writeInt(bytes.length);
+            rw.write(bytes);
+        }
+        rw.close();
+        files.add(file);
+
+        time2 = System.currentTimeMillis();
+        long deltaTimeWrite = (time2 - time1);
+        int itemsPerSecWrite = (int) ((float) list.length / (float) deltaTimeWrite * 1000f);
+        System.out.println(deltaTimeWrite + " milliseconds for " + list.length + " objects to write in file. " + itemsPerSecWrite
+                + "  items/s ");
+
+    }
+
+    /**
+     * Merger all the sorted files for one time(data stored in the files used light serialization);
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void mergeFiles2() throws IOException, ClassNotFoundException {
+        File file = new File(workDirectory + "TEMP_" + count);
+
+        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+        int numFiles = files.size();
+        List<DataInputStream> diss = new ArrayList<DataInputStream>();
+        List<ILightSerializable> datas = new ArrayList<ILightSerializable>();
+        List<Long> positions = new ArrayList<Long>();
+        List<Long> fileLengths = new ArrayList<Long>();
+
+        boolean someFileStillHasRows = false;
+        byte[] bytes = null;
+        DataInputStream dis = null;
+        for (int i = 0; i < numFiles; i++) {
+            dis = new DataInputStream(new BufferedInputStream(new FileInputStream(files.get(i))));
+            diss.add(dis);
+            fileLengths.add(files.get(i).length());
+            if (0 < fileLengths.get(i)) {
+                bytes = new byte[dis.readInt()];
+                dis.read(bytes);
+                datas.add(iLightSerializable.createInstance(bytes));
+                if (!someFileStillHasRows) {
+                    someFileStillHasRows = true;
+                }
+                positions.add((long) (4 + bytes.length));
+            } else {
+                datas.add(null);
+            }
+        }
+
+        bytes = null;
+        dis = null;
+        ILightSerializable dc = null;
+        long position = -1;
+
+        while (someFileStillHasRows) {
+            ILightSerializable min = null;
+            int minIndex = 0;
+            dc = datas.get(0);
+
+            if (dc != null) {
+                min = dc;
+                minIndex = 0;
+            } else {
+                min = null;
+                minIndex = -1;
+            }
+
+            // check which one is min
+            for (int i = 1; i < datas.size(); i++) {
+                dc = datas.get(i);
+
+                if (min != null) {
+                    if (dc != null && dc.compareTo(min) < 0) {
+                        minIndex = i;
+                        min = dc;
+                    }
+                } else {
+                    if (dc != null) {
+                        min = dc;
+                        minIndex = i;
+                    }
+                }
+            }
+
+            if (minIndex < 0) {
+                someFileStillHasRows = false;
+            } else {
+                // write to the sorted file
+                bytes = min.toByteArray();
+                dos.writeInt(bytes.length);
+                dos.write(bytes);
+                bytes = null;
+
+                // get another data from the file
+                position = positions.get(minIndex);
+                if (position < fileLengths.get(minIndex)) {
+                    dis = diss.get(minIndex);
+                    bytes = new byte[dis.readInt()];
+                    dis.read(bytes);
+                    datas.set(minIndex, iLightSerializable.createInstance(bytes));
+                    positions.set(minIndex, position + 4 + bytes.length);
+                    bytes = null;
+                } else {
+                    datas.set(minIndex, null);
+                }
+
+                // check if one still has data
+                someFileStillHasRows = false;
+                for (int i = 0; i < datas.size(); i++) {
+                    if (datas.get(i) != null) {
+                        someFileStillHasRows = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // close all the streams
+        dos.close();
+        for (int i = 0; i < diss.size(); i++) {
+            diss.get(i).close();
+        }
+        // delete files
+        for (int i = 0; i < files.size(); i++) {
+            files.get(i).delete();
+        }
+    }
+
+    // ////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * sort list and then use light serialization to store Data
+     * 
+     * @param list
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public void writeBuffer(Data[] list) throws FileNotFoundException, IOException {
         long time1 = System.currentTimeMillis();
         System.out.println("Sorting buffer...");
@@ -344,7 +512,8 @@ public class ExternalSort {
 
             if (i == bufferSize - 1) {
 
-                esort.writeBuffer(arrayData);
+                // esort.writeBuffer(arrayData);
+                esort.writeBuffer2(arrayData);
 
                 long time1 = System.currentTimeMillis();
 
@@ -364,7 +533,8 @@ public class ExternalSort {
         long time1 = System.currentTimeMillis();
 
         // esort.sort();
-        esort.mergeFiles();
+        // esort.mergeFiles();
+        esort.mergeFiles2();
 
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
@@ -382,7 +552,6 @@ public class ExternalSort {
                 + "  items/s ");
 
     }
-
 }
 
 class DataContainer {
@@ -402,7 +571,7 @@ class DataContainer {
 /**
  * A simple example class for a data object.
  */
-class Data implements Serializable, Comparable<Data> {
+class Data implements Serializable, ILightSerializable {
 
     /**
      * Name of the person.
@@ -432,6 +601,10 @@ class Data implements Serializable, Comparable<Data> {
         this.income = income;
     }
 
+    public Data() {
+
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -443,6 +616,83 @@ class Data implements Serializable, Comparable<Data> {
 
     public int compareTo(Data o) {
         return this.id - o.id;
+    }
+
+    @Override
+    public ILightSerializable createInstance(byte[] byteArray) {
+        Data result = new Data();
+
+        ByteArrayInputStream byteArrayInputStream = null;
+        DataInputStream dataInputStream = null;
+
+        try {
+            byteArrayInputStream = new ByteArrayInputStream(byteArray);
+            dataInputStream = new DataInputStream(byteArrayInputStream);
+
+            int length = dataInputStream.readInt();
+            byte[] bytes = null;
+            if (length == -1) {
+                result.name = null;
+            } else {
+                bytes = new byte[length];
+                dataInputStream.read(bytes);
+                result.name = new String(bytes);
+            }
+            result.id = dataInputStream.readInt();
+            result.income = dataInputStream.readDouble();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (dataInputStream != null) {
+                try {
+                    dataInputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public byte[] toByteArray() {
+        byte[] bytes = null;
+        DataOutputStream dataOutputStream = null;
+        ByteArrayOutputStream byteArrayOutputStream = null;
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+            if (this.name == null) {
+                dataOutputStream.writeInt(-1);
+            } else {
+                bytes = this.name.getBytes();
+                dataOutputStream.writeInt(bytes.length);
+                dataOutputStream.write(bytes);
+            }
+
+            dataOutputStream.writeInt(this.id);
+            dataOutputStream.writeDouble(this.income);
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (dataOutputStream != null) {
+                try {
+                    dataOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        bytes = byteArrayOutputStream.toByteArray();
+        return bytes;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Data data = (Data) o;
+        return this.id - data.id;
     }
 
 }
