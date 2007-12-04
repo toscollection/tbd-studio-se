@@ -48,16 +48,16 @@ public class ExternalSort {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void writeBuffer2(Data[] list) throws FileNotFoundException, IOException {
+    public void writeBuffer2(Data[] list, int length) throws FileNotFoundException, IOException {
         long time1 = System.currentTimeMillis();
         System.out.println("Sorting buffer...");
 
-        Arrays.sort(list);
+        Arrays.sort(list, 0, length);
 
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
-        int itemsPerSecSort = (int) ((float) list.length / (float) deltaTimeSort * 1000f);
-        System.out.println(deltaTimeSort + " milliseconds for " + list.length + " objects to sort in memory. " + itemsPerSecSort
+        int itemsPerSecSort = (int) ((float) length / (float) deltaTimeSort * 1000f);
+        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
                 + "  items/s ");
 
         time1 = System.currentTimeMillis();
@@ -67,7 +67,7 @@ public class ExternalSort {
         count++;
         DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         byte[] bytes = null;
-        for (int i = 0; i < list.length; i++) {
+        for (int i = 0; i < length; i++) {
             bytes = list[i].toByteArray();
             rw.writeInt(bytes.length);
             rw.write(bytes);
@@ -77,8 +77,8 @@ public class ExternalSort {
 
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
-        int itemsPerSecWrite = (int) ((float) list.length / (float) deltaTimeWrite * 1000f);
-        System.out.println(deltaTimeWrite + " milliseconds for " + list.length + " objects to write in file. " + itemsPerSecWrite
+        int itemsPerSecWrite = (int) ((float) length / (float) deltaTimeWrite * 1000f);
+        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. " + itemsPerSecWrite
                 + "  items/s ");
 
     }
@@ -192,6 +192,106 @@ public class ExternalSort {
         for (int i = 0; i < diss.size(); i++) {
             diss.get(i).close();
         }
+        // delete files
+        for (int i = 0; i < files.size(); i++) {
+            files.get(i).delete();
+        }
+    }
+
+    /**
+     * same as mergeFiles2(). this should perform better if the number of files is big.
+     * 
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void eMergeFiles2() throws IOException, ClassNotFoundException {
+        File file = new File(workDirectory + "TEMP_" + count);
+
+        DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+        int numFiles = files.size();
+        List<DataInputStream> diss = new ArrayList<DataInputStream>();
+        List<ILightSerializable> datas = new ArrayList<ILightSerializable>();
+        List<Long> positions = new ArrayList<Long>();
+        List<Long> fileLengths = new ArrayList<Long>();
+
+        byte[] bytes = null;
+        DataInputStream dis = null;
+        int fileCount = 0;
+        for (int i = 0; i < numFiles; i++) {
+            dis = new DataInputStream(new BufferedInputStream(new FileInputStream(files.get(i))));
+            long fileLength = files.get(i).length();
+            if (0 < fileLength) {
+                bytes = new byte[dis.readInt()];
+                dis.read(bytes);
+                datas.add(iLightSerializable.createInstance(bytes));
+                diss.add(dis);
+                fileLengths.add(fileLength);
+                positions.add((long) (4 + bytes.length));
+                fileCount++;
+            }
+        }
+
+        bytes = null;
+        dis = null;
+        ILightSerializable dc = null;
+        long position = -1;
+
+        while (fileCount > 1) {
+            ILightSerializable min = null;
+            int minIndex = 0;
+            min = datas.get(0);
+
+            // check which one is min
+            for (int i = 1; i < fileCount; i++) {
+                dc = datas.get(i);
+
+                if (dc.compareTo(min) < 0) {
+                    minIndex = i;
+                    min = dc;
+                }
+            }
+
+            // write to the sorted file
+            bytes = min.toByteArray();
+            dos.writeInt(bytes.length);
+            dos.write(bytes);
+            bytes = null;
+
+            // get another data from the file
+            position = positions.get(minIndex);
+            dis = diss.get(minIndex);
+            if (position < fileLengths.get(minIndex)) {
+                bytes = new byte[dis.readInt()];
+                dis.read(bytes);
+                datas.set(minIndex, iLightSerializable.createInstance(bytes));
+                positions.set(minIndex, position + 4 + bytes.length);
+                bytes = null;
+            } else {
+                dis.close();
+                diss.remove(minIndex);
+                datas.remove(minIndex);
+                positions.remove(minIndex);
+                fileLengths.remove(minIndex);
+                fileCount--;
+            }
+        }
+
+        // copy the last file contents to dos
+        bytes = datas.get(0).toByteArray();
+        dos.writeInt(bytes.length);
+        dos.write(bytes);
+
+        dis = diss.get(0);
+        bytes = new byte[1024];
+        int count = 0;
+        while ((count = dis.read(bytes)) > 0) {
+            dos.write(bytes, 0, count);
+        }
+
+        // close all the streams
+        dos.close();
+        dis.close();
+
         // delete files
         for (int i = 0; i < files.size(); i++) {
             files.get(i).delete();
@@ -486,12 +586,12 @@ public class ExternalSort {
 
         // int nbItems = 60000000;
         // int bufferSize = 2000000;
-//        int nbItems = 60000000;
-//        int bufferSize = 4000000;
+        // int nbItems = 60000000;
+        // int bufferSize = 4000000;
         int nbItems = 60000000;
         int bufferSize = 10000000;
-//        int nbItems = 10000000;
-//        int bufferSize = 1000000;
+        // int nbItems = 10000000;
+        // int bufferSize = 1000000;
         // int nbItems = 1000000;
         // int bufferSize = 100000;
         // int nbItems = 20;
@@ -513,7 +613,7 @@ public class ExternalSort {
             if (i == bufferSize - 1) {
 
                 // esort.writeBuffer(arrayData);
-                esort.writeBuffer2(arrayData);
+                esort.writeBuffer2(arrayData, arrayData.length);
 
                 long time1 = System.currentTimeMillis();
 
@@ -534,7 +634,8 @@ public class ExternalSort {
 
         // esort.sort();
         // esort.mergeFiles();
-        esort.mergeFiles2();
+        // esort.mergeFiles2();
+        esort.eMergeFiles2();
 
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
