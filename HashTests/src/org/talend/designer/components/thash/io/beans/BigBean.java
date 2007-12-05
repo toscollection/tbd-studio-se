@@ -188,7 +188,6 @@ public class BigBean implements Serializable, ILightSerializable {
         this.flag = flag;
     }
 
-    @Override
     public ILightSerializable createInstance(byte[] byteArray) {
         BigBean result = new BigBean();
         ByteArrayInputStream bai = null;
@@ -257,7 +256,6 @@ public class BigBean implements Serializable, ILightSerializable {
         return result;
     }
 
-    @Override
     public byte[] toByteArray() {
         ByteArrayOutputStream bao = null;
         DataOutputStream dos = null;
@@ -320,7 +318,6 @@ public class BigBean implements Serializable, ILightSerializable {
         return bytes;
     }
 
-    @Override
     public int compareTo(Object o) {
         Bean bean = (Bean) o;
         if (this.primitiveInt != bean.primitiveInt) {

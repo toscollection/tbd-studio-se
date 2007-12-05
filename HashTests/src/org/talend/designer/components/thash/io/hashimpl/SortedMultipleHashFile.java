@@ -64,8 +64,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     int numberFiles = 10;
 
-    byte numberOfChars = (byte) (String.valueOf(numberFiles).length() - 1);
-
     RandomAccessFile[] raArray = null;
 
     Object[] lastRetrievedObjectArray = null;
@@ -81,7 +79,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     private int itemCountInBuffer = 0;
 
-    private ILightSerializable[] buffer = new ILightSerializable[bufferSize];
+    private ILightSerializable[] buffer;
 
     private String container = null;
 
@@ -89,25 +87,9 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     private Map map;
 
+    private int beansCount;
+
     // ///////////////////////
-
-    public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException {
-
-        byte fileNumber = getFileNumber(hashcode);
-
-        RandomAccessFile ra = raArray[fileNumber];
-
-        if (cursorPosition != lastRetrievedCursorPositionArray[fileNumber]) {
-            ++countUniqueGet;
-            ra.seek(cursorPosition);
-            byte[] byteArray = new byte[ra.readInt()];
-            ra.read(byteArray);
-
-            lastRetrievedObjectArray[fileNumber] = iLightSerializable.createInstance(byteArray);
-            lastRetrievedCursorPositionArray[fileNumber] = cursorPosition;
-        }
-        return lastRetrievedObjectArray[fileNumber];
-    }
 
     /**
      * DOC amaumont Comment method "getFileNumber".
@@ -115,9 +97,24 @@ public class SortedMultipleHashFile implements IMapHashFile {
      * @param hashcode
      * @return
      */
-    private byte getFileNumber(int hashcode) {
-        String valueOf = String.valueOf(Math.abs(hashcode));
-        return Byte.parseByte(valueOf.substring(valueOf.length() - numberOfChars, valueOf.length()));
+    private int getFileNumber(int hashcode) {
+        return Math.abs(hashcode) % numberFiles; 
+    }
+
+    /**
+     * DOC amaumont Comment method "getFilePath".
+     * @param container
+     * @param i
+     * @param j 
+     * @return
+     */
+    private String getFilePath(String container, int i, int j) {
+        return container + "_" + i + "_" + j;
+    }
+
+    public void initPut(String container) throws IOException {
+        this.container = container;
+        buffer = new ILightSerializable[bufferSize];
     }
 
     public long put(String container, Object bean) throws IOException {
@@ -126,15 +123,17 @@ public class SortedMultipleHashFile implements IMapHashFile {
         if (itemCountInBuffer >= bufferSize) {// buffer is full do sort and write.
             // sort
             Arrays.sort(buffer, 0, itemCountInBuffer);
+            
+//            System.out.println("array for buffer " + bufferCount + " : " + Arrays.toString(buffer));;
 
             // write
             DataOutputStream[] doss = new DataOutputStream[numberFiles];
             for (int i = 0; i < numberFiles; i++) {
                 doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(
-                        new File(container + i + bufferCount))));
+                        new File(getFilePath(container, i, bufferCount)))));
             }
 
-            byte fileNumber = 0;
+            int fileNumber = 0;
             byte[] bytes = null;
             for (int i = 0; i < itemCountInBuffer; i++) {
                 fileNumber = getFileNumber(buffer[i].hashCode());
@@ -156,13 +155,12 @@ public class SortedMultipleHashFile implements IMapHashFile {
         }
         buffer[itemCountInBuffer++] = item;
 
+        beansCount++;
+        
         return -1;
 
     }
 
-    public void initPut(String container) throws IOException {
-        this.container = container;
-    }
 
     /*
      * (non-Javadoc)
@@ -178,10 +176,10 @@ public class SortedMultipleHashFile implements IMapHashFile {
             DataOutputStream[] doss = new DataOutputStream[numberFiles];
             for (int i = 0; i < numberFiles; i++) {
                 doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(
-                        new File(container + i + bufferCount))));
+                        new File(getFilePath(container, i, bufferCount)))));
             }
 
-            byte fileNumber = 0;
+            int fileNumber = 0;
             byte[] bytes = null;
             for (int i = 0; i < itemCountInBuffer; i++) {
                 fileNumber = getFileNumber(buffer[i].hashCode());
@@ -194,6 +192,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 doss[i].close();
             }
 
+            buffer = null;
             bufferCount++;
         }
 
@@ -208,33 +207,34 @@ public class SortedMultipleHashFile implements IMapHashFile {
             }
 
         };
-        map = new THashMap<KeyForMap, KeyForMap>(10000, objectHashingStrategy);
+        map = new THashMap<KeyForMap, KeyForMap>(beansCount, objectHashingStrategy);
 
-        for (int i = 0; i < numberFiles; i++) {
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(container + i))));
+        for (int iFinalHashFile = 0; iFinalHashFile < numberFiles; iFinalHashFile++) {
+//            System.out.println(">> iFinalHashFile = " + iFinalHashFile);
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(container + iFinalHashFile))));
             int cursorPosition = 0;
 
             List<File> files = new ArrayList<File>();
-            for (int j = 0; j < bufferCount; j++) {
-                files.add(new File(container + i + j));
+            for (int iDivHashFile = 0; iDivHashFile < bufferCount; iDivHashFile++) {
+                files.add(new File(getFilePath(container, iFinalHashFile, iDivHashFile)));
             }
 
             int numFiles = files.size();
             List<DataInputStream> diss = new ArrayList<DataInputStream>();
-            List<ILightSerializable> datas = new ArrayList<ILightSerializable>();
+            List<ILightSerializable> datasSameHashcodeValue = new ArrayList<ILightSerializable>();
             List<Long> positions = new ArrayList<Long>();
             List<Long> fileLengths = new ArrayList<Long>();
 
             byte[] bytes = null;
             DataInputStream dis = null;
             int fileCount = 0;
-            for (int k = 0; k < numFiles; k++) {
-                dis = new DataInputStream(new BufferedInputStream(new FileInputStream(files.get(k))));
-                long fileLength = files.get(k).length();
+            for (int iDivHashFile = 0; iDivHashFile < numFiles; iDivHashFile++) {
+                dis = new DataInputStream(new BufferedInputStream(new FileInputStream(files.get(iDivHashFile))));
+                long fileLength = files.get(iDivHashFile).length();
                 if (0 < fileLength) {
                     bytes = new byte[dis.readInt()];
                     dis.read(bytes);
-                    datas.add(iLightSerializable.createInstance(bytes));
+                    datasSameHashcodeValue.add(iLightSerializable.createInstance(bytes));
                     diss.add(dis);
                     fileLengths.add(fileLength);
                     positions.add((long) (4 + bytes.length));
@@ -242,6 +242,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 }
             }
 
+//            System.out.println("datasSameHashcodeValue=" + datasSameHashcodeValue.toString());
+            
             bytes = null;
             dis = null;
             ILightSerializable dc = null;
@@ -250,17 +252,18 @@ public class SortedMultipleHashFile implements IMapHashFile {
             while (fileCount > 0) {
                 ILightSerializable min = null;
                 int minIndex = 0;
-                min = datas.get(0);
+                min = datasSameHashcodeValue.get(0);
 
                 // check which one is min
                 for (int k = 1; k < fileCount; k++) {
-                    dc = datas.get(k);
+                    dc = datasSameHashcodeValue.get(k);
 
                     if (dc.compareTo(min) < 0) {
                         minIndex = k;
                         min = dc;
                     }
                 }
+                
 
                 // write to the sorted file
                 bytes = min.toByteArray();
@@ -269,21 +272,24 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 KeyForMap keyForMap = new KeyForMap(cursorPosition, min.hashCode());
                 map.put(keyForMap, keyForMap);
                 cursorPosition += (4 + bytes.length);
-                bytes = null;
 
+//                System.out.println("min=" + min + " -> " + keyForMap.toString() + "  ->  " + bytes.length);
+
+                bytes = null;
+                
                 // get another data from the file
                 position = positions.get(minIndex);
                 dis = diss.get(minIndex);
                 if (position < fileLengths.get(minIndex)) {
                     bytes = new byte[dis.readInt()];
                     dis.read(bytes);
-                    datas.set(minIndex, iLightSerializable.createInstance(bytes));
+                    datasSameHashcodeValue.set(minIndex, iLightSerializable.createInstance(bytes));
                     positions.set(minIndex, position + 4 + bytes.length);
                     bytes = null;
                 } else {
                     dis.close();
                     diss.remove(minIndex);
-                    datas.remove(minIndex);
+                    datasSameHashcodeValue.remove(minIndex);
                     positions.remove(minIndex);
                     fileLengths.remove(minIndex);
                     fileCount--;
@@ -313,6 +319,31 @@ public class SortedMultipleHashFile implements IMapHashFile {
         }
     }
 
+    public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException {
+
+        
+//        System.out.println("GET cursorPosition="+cursorPosition + " hashcode="+hashcode);
+        
+        int fileNumber = getFileNumber(hashcode);
+
+//        System.out.println(fileNumber);
+        
+        RandomAccessFile ra = raArray[fileNumber];
+
+        if (cursorPosition != lastRetrievedCursorPositionArray[fileNumber]) {
+            ++countUniqueGet;
+            ra.seek(cursorPosition);
+            int readInt = ra.readInt();
+            byte[] byteArray = new byte[readInt];
+            ra.read(byteArray);
+
+            lastRetrievedObjectArray[fileNumber] = iLightSerializable.createInstance(byteArray);
+            lastRetrievedCursorPositionArray[fileNumber] = cursorPosition;
+        }
+//        System.out.println("Found:" + lastRetrievedObjectArray[fileNumber]);
+        return lastRetrievedObjectArray[fileNumber];
+    }
+
     public void endGet(String container) throws IOException {
         if (!readonly) {
             for (int i = 0; i < numberFiles; i++) {
@@ -325,7 +356,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
             }
         }
 
-        System.out.println("countUniqueGet = " + countUniqueGet);
+//        System.out.println("countUniqueGet = " + countUniqueGet);
     }
 
     /*
@@ -344,7 +375,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
-        this.buffer = new ILightSerializable[bufferSize];
     }
     
     public void setILightSerializable(ILightSerializable ils){

@@ -117,7 +117,6 @@ public class Bean implements Serializable, ILightSerializable {
         return true;
     }
 
-    @Override
     public ILightSerializable createInstance(byte[] bytes) {
         Bean result = new Bean();
         ByteArrayInputStream bai = null;
@@ -149,7 +148,6 @@ public class Bean implements Serializable, ILightSerializable {
         return result;
     }
 
-    @Override
     public byte[] toByteArray() {
         ByteArrayOutputStream bao = null;
         DataOutputStream dos = null;
@@ -180,7 +178,6 @@ public class Bean implements Serializable, ILightSerializable {
         return bytes;
     }
 
-    @Override
     public int compareTo(Object o) {
         Bean bean = (Bean) o;
         if (this.primitiveInt != bean.primitiveInt) {
@@ -202,6 +199,6 @@ public class Bean implements Serializable, ILightSerializable {
     }
     
     public String toString(){
-        return primitiveInt+"   "+name;
+        return "primitiveInt="+primitiveInt+"   name="+name;
     }
 }

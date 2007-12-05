@@ -66,4 +66,18 @@ package org.talend.designer.components.thash.io.beans;
             return true;
         }
 
+        /**
+             * 
+             * @return 
+             * @author 
+             */
+            public String toString() {
+                StringBuffer buffer = new StringBuffer();
+                buffer.append("KeyForMap[");
+                buffer.append("cursorPosition = ").append(cursorPosition);
+                buffer.append(" hashcode = ").append(hashcode);
+                buffer.append("]");
+                return buffer.toString();
+            }
+
     }
