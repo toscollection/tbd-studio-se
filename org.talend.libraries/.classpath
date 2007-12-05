@@ -16,7 +16,6 @@
 	<classpathentry exported="true" kind="lib" path="interclient.jar"/>
 	<classpathentry exported="true" kind="lib" path="db2jcc_license_cu.jar"/>
 	<classpathentry exported="true" kind="lib" path="db2jcc.jar"/>
-	<classpathentry exported="true" kind="lib" path="jtds-1.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="postgresql-8.1-405.jdbc3.jar"/>
 	<classpathentry exported="true" kind="lib" path="jakarta-oro-2.0.8.jar" sourcepath="libs_src/jakarta-oro-2.0.8"/>
 	<classpathentry exported="true" kind="lib" path="commons-beanutils.jar" sourcepath="libs_src/commons-beanutils-1.7.0-src"/>
@@ -35,7 +34,6 @@
 	<classpathentry exported="true" kind="lib" path="junit-4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="jconn3.jar"/>
 	<classpathentry exported="true" kind="lib" path="iijdbc.jar"/>
-	<classpathentry exported="true" kind="lib" path="mysql-connector-java-5.1.0-bin.jar"/>
 	<classpathentry exported="true" kind="lib" path="javacsv.jar"/>
 	<classpathentry exported="true" kind="lib" path="ldapjdk.jar"/>
 	<classpathentry exported="true" kind="lib" path="talend-file-enhanced-1.1.jar"/>
