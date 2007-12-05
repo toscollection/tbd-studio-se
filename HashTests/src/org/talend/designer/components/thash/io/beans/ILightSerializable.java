@@ -1,4 +1,4 @@
-package org.talend.designer.components.thash.io.hashimpl;
+package org.talend.designer.components.thash.io.beans;
 
 public interface ILightSerializable extends Comparable {
 

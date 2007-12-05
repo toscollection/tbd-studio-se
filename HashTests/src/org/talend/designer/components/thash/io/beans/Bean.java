@@ -12,6 +12,11 @@
 // ============================================================================
 package org.talend.designer.components.thash.io.beans;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 
 import org.talend.designer.components.thash.io.HashFilesBenchs;
@@ -21,7 +26,7 @@ import org.talend.designer.components.thash.io.HashFilesBenchs;
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-public class Bean implements Serializable {
+public class Bean implements Serializable, ILightSerializable {
 
     public int primitiveInt;
 
@@ -112,4 +117,91 @@ public class Bean implements Serializable {
         return true;
     }
 
+    @Override
+    public ILightSerializable createInstance(byte[] bytes) {
+        Bean result = new Bean();
+        ByteArrayInputStream bai = null;
+        DataInputStream dis = null;
+        try {
+            bai = new ByteArrayInputStream(bytes);
+            dis = new DataInputStream(bai);
+            result.primitiveInt = dis.readInt();
+            byte[] byteArray = null;
+            int length = dis.readInt();
+            if (length == -1) {
+                result.name = null;
+            } else {
+                byteArray = new byte[length];
+                dis.read(byteArray);
+                result.name = new String(byteArray);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (dis != null) {
+                try {
+                    dis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public byte[] toByteArray() {
+        ByteArrayOutputStream bao = null;
+        DataOutputStream dos = null;
+        byte[] bytes = null;
+        try {
+            bao = new ByteArrayOutputStream();
+            dos = new DataOutputStream(bao);
+            dos.writeInt(this.primitiveInt);
+            if (this.name == null) {
+                dos.writeInt(-1);
+            } else {
+                bytes = this.name.getBytes();
+                dos.writeInt(bytes.length);
+                dos.write(bytes);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (dos != null) {
+                try {
+                    dos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        bytes = bao.toByteArray();
+        return bytes;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Bean bean = (Bean) o;
+        if (this.primitiveInt != bean.primitiveInt) {
+            return this.primitiveInt - bean.primitiveInt;
+        }
+        if (this.name == null) {
+            if (bean.name == null) {
+                return 0;
+            } else {
+                return -1;
+            }
+        } else {
+            if (bean.name == null) {
+                return 1;
+            } else {
+                return this.name.compareTo(bean.name);
+            }
+        }
+    }
+    
+    public String toString(){
+        return primitiveInt+"   "+name;
+    }
 }

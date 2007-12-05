@@ -12,6 +12,11 @@
 // ============================================================================
 package org.talend.designer.components.thash.io.beans;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,24 +27,24 @@ import org.talend.designer.components.thash.io.HashFilesBenchs;
  * DOC slanglois class global comment. Detailled comment <br/>
  * 
  */
-public class BigBean implements Serializable {
+public class BigBean implements Serializable, ILightSerializable {
 
     int primitiveInt;
 
     String name;
-    
+
     String address;
-    
+
     float price;
 
     Date date = null;
-    
+
     Date date2 = null;
-    
-    byte[] b= null;
-    
+
+    byte[] b = null;
+
     boolean flag;
-    
+
     transient int hashcode = -1;
 
     /**
@@ -56,11 +61,11 @@ public class BigBean implements Serializable {
         this.b = address.getBytes();
         this.date = new Date();
         this.date2 = new Date();
-        this.price = (float)primitiveInt;
+        this.price = (float) primitiveInt;
         this.flag = true;
     }
-    
-    public BigBean(){
+
+    public BigBean() {
         super();
     }
 
@@ -135,64 +140,205 @@ public class BigBean implements Serializable {
         this.name = name;
     }
 
-    
     public Date getDate() {
         return date;
     }
 
-    
     public void setDate(Date date) {
         this.date = date;
     }
 
-    
     public byte[] getB() {
         return b;
     }
 
-    
     public void setB(byte[] b) {
         this.b = b;
     }
 
-    
     public String getAddress() {
         return address;
     }
 
-    
     public void setAddress(String address) {
         this.address = address;
     }
 
-    
     public float getPrice() {
         return price;
     }
 
-    
     public void setPrice(float price) {
         this.price = price;
     }
 
-    
     public Date getDate2() {
         return date2;
     }
 
-    
     public void setDate2(Date date2) {
         this.date2 = date2;
     }
 
-    
     public boolean isFlag() {
         return flag;
     }
 
-    
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+
+    @Override
+    public ILightSerializable createInstance(byte[] byteArray) {
+        BigBean result = new BigBean();
+        ByteArrayInputStream bai = null;
+        DataInputStream dis = null;
+
+        try {
+            bai = new ByteArrayInputStream(byteArray);
+            dis = new DataInputStream(bai);
+            result.primitiveInt = dis.readInt();
+            byte[] bytes = null;
+            int length = dis.readInt();
+            if (length == -1) {
+                result.name = null;
+            } else {
+                bytes = new byte[length];
+                dis.read(bytes);
+                result.name = new String(bytes);
+            }
+
+            length = dis.readInt();
+            if (length == -1) {
+                result.address = null;
+            } else {
+                bytes = new byte[length];
+                dis.read(bytes);
+                result.address = new String(bytes);
+            }
+
+            result.price = dis.readFloat();
+
+            long time = dis.readLong();
+            if (time == -1) {
+                result.date = null;
+            } else {
+                result.date = new Date(time);
+            }
+
+            time = dis.readLong();
+            if (time == -1) {
+                result.date2 = null;
+            } else {
+                result.date2 = new Date(time);
+            }
+
+            length = dis.readInt();
+            if (length == -1) {
+                result.b = null;
+            } else {
+                bytes = new byte[length];
+                dis.read(bytes);
+                result.b = bytes;
+            }
+            result.flag = dis.readBoolean();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (dis != null) {
+                try {
+                    dis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public byte[] toByteArray() {
+        ByteArrayOutputStream bao = null;
+        DataOutputStream dos = null;
+        byte[] bytes = null;
+
+        try {
+            bao = new ByteArrayOutputStream();
+            dos = new DataOutputStream(bao);
+            dos.writeInt(this.primitiveInt);
+
+            if (this.name == null) {
+                dos.writeInt(-1);
+            } else {
+                bytes = this.name.getBytes();
+                dos.writeInt(bytes.length);
+                dos.write(bytes);
+            }
+
+            if (this.address == null) {
+                dos.writeInt(-1);
+            } else {
+                bytes = this.address.getBytes();
+                dos.writeInt(bytes.length);
+                dos.write(bytes);
+            }
+
+            dos.writeFloat(this.price);
+
+            if (this.date == null) {
+                dos.writeLong(-1);
+            } else {
+                dos.writeLong(this.date.getTime());
+            }
+
+            if (this.date2 == null) {
+                dos.writeLong(-1);
+            } else {
+                dos.writeLong(this.date2.getTime());
+            }
+
+            if (this.b == null) {
+                dos.writeInt(-1);
+            } else {
+                dos.writeInt(this.b.length);
+                dos.write(this.b);
+            }
+            dos.writeBoolean(this.flag);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (dos != null) {
+                try {
+                    dos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        bytes = bao.toByteArray();
+        return bytes;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Bean bean = (Bean) o;
+        if (this.primitiveInt != bean.primitiveInt) {
+            return this.primitiveInt - bean.primitiveInt;
+        }
+        if (this.name == null) {
+            if (bean.name == null) {
+                return 0;
+            } else {
+                return -1;
+            }
+        } else {
+            if (bean.name == null) {
+                return 1;
+            } else {
+                return this.name.compareTo(bean.name);
+            }
+        }
     }
 
 }
