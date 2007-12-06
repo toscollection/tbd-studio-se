@@ -569,6 +569,7 @@ public class HashFilesBenchs {
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {
+            randomArray = null;
             hashFile.endPut();
         }
 
