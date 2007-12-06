@@ -90,6 +90,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     private int beansCount;
 
+    private int replacedObjectsCount;
+
     // ///////////////////////
 
     /**
@@ -276,7 +278,12 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 dos.writeInt(bytes.length);
                 dos.write(bytes);
                 KeyForMap keyForMap = new KeyForMap(cursorPosition, min.hashCode());
-                map.put(keyForMap, keyForMap);
+                Object replacedObject = map.put(keyForMap, keyForMap);
+                
+                if(replacedObject != null) {
+                    replacedObjectsCount++;
+                }
+                
                 cursorPosition += (4 + bytes.length);
 
                 //System.out.println(map.size());
@@ -314,6 +321,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
             }
 
         }
+        
+        System.out.println("replacedObjectsCount = " + replacedObjectsCount);
 
     }
 

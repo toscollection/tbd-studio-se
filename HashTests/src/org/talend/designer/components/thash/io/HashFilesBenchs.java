@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -151,7 +152,7 @@ public class HashFilesBenchs {
 
         int[] nbItemsArray = new int[] {
 
-        // 100, // 100
+         100, // 100
         // 10000, // 10 k
         // 100000, // 100 k
 //        1000000, // 1 M
@@ -160,7 +161,7 @@ public class HashFilesBenchs {
         // 25000000, // 25 M
         // 30000000, // 30 M
         // 55000000, // 55 M
-         60000000, // 60 M
+//         60000000, // 60 M
         // 100000000, // 100 M
         };
 
