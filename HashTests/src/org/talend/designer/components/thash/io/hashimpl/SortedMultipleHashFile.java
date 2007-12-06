@@ -73,7 +73,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
     int countUniqueGet;
 
     // ////////////////////////
-    private int bufferSize = 10000000;
+    //private int bufferSize = 5000000;
+     private int bufferSize = 10000000;
 
     private int bufferCount = 0;
 
@@ -151,6 +152,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
             // clear buffer
             Arrays.fill(buffer, 0, itemCountInBuffer, null);
 
+            System.gc();
+
             itemCountInBuffer = 0;
         }
         buffer[itemCountInBuffer++] = item;
@@ -192,9 +195,9 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 doss[i].close();
             }
 
-            buffer = null;
             bufferCount++;
         }
+        buffer = null;
 
         TObjectHashingStrategy objectHashingStrategy = new TObjectHashingStrategy() {
 
@@ -207,7 +210,10 @@ public class SortedMultipleHashFile implements IMapHashFile {
             }
 
         };
-        map = new THashMap<KeyForMap, KeyForMap>(beansCount, objectHashingStrategy);
+	
+	System.gc();
+
+        map = new THashMap<KeyForMap, KeyForMap>(beansCount, 1.0f, objectHashingStrategy);
 
         for (int iFinalHashFile = 0; iFinalHashFile < numberFiles; iFinalHashFile++) {
 //            System.out.println(">> iFinalHashFile = " + iFinalHashFile);
@@ -273,6 +279,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 map.put(keyForMap, keyForMap);
                 cursorPosition += (4 + bytes.length);
 
+                //System.out.println(map.size());
+                
 //                System.out.println("min=" + min + " -> " + keyForMap.toString() + "  ->  " + bytes.length);
 
                 bytes = null;

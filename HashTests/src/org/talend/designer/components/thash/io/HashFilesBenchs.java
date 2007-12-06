@@ -153,10 +153,11 @@ public class HashFilesBenchs {
         // 10000, // 10 k
         // 100000, // 100 k
 //         1000000, // 1 M
-        // 10000000, // 10 M
+//         10000000, // 10 M
         // 20000000, // 20 M
-        // 25000000, // 25 M
-        // 30000000, // 30 M
+//         25000000, // 25 M
+//         30000000, // 30 M
+//         55000000, // 55 M
          60000000, // 60 M
         // 100000000, // 100 M
         };
@@ -259,7 +260,7 @@ public class HashFilesBenchs {
                             nbFiles = nbFilesArray[j];
                             // hashFile = new MultiPointersMultiHashFiles(filePath, nbFiles);
                             hashFile = SortedMultipleHashFile.getInstance();
-                            ((SortedMultipleHashFile) hashFile).setBufferSize(nbItems / 10);// setBufferSize
+                            //((SortedMultipleHashFile) hashFile).setBufferSize(nbItems / 10);// setBufferSize
                             ((SortedMultipleHashFile) hashFile).setILightSerializable(new Bean());// set an Instance
                             // of proccessed
                             // Bean;
