@@ -76,6 +76,8 @@ public class HashFilesBenchs {
 
     private FileOutputStream fileData;
 
+    private int beanReads;
+
     /**
      * DOC amaumont HashFilesBenchs class global comment. Detailled comment
      */
@@ -149,15 +151,15 @@ public class HashFilesBenchs {
 
         int[] nbItemsArray = new int[] {
 
-//        100, // 100
+        // 100, // 100
         // 10000, // 10 k
         // 100000, // 100 k
-//         1000000, // 1 M
-//         10000000, // 10 M
+//        1000000, // 1 M
+        // 10000000, // 10 M
         // 20000000, // 20 M
-//         25000000, // 25 M
-//         30000000, // 30 M
-//         55000000, // 55 M
+        // 25000000, // 25 M
+        // 30000000, // 30 M
+        // 55000000, // 55 M
          60000000, // 60 M
         // 100000000, // 100 M
         };
@@ -186,7 +188,9 @@ public class HashFilesBenchs {
 
         };// , };
 
-        PERSISTENT_METHOD[] testCases = new PERSISTENT_METHOD[] { PERSISTENT_METHOD.SORTED_MULTIPLE_HASH,
+        PERSISTENT_METHOD[] testCases = new PERSISTENT_METHOD[] {
+        //
+        PERSISTENT_METHOD.SORTED_MULTIPLE_HASH,
         // PERSISTENT_METHOD.FIXED_AREA_POINTERS,
         // PERSISTENT_METHOD.TURNING_POINTERS_NEAREST,
         // PERSISTENT_METHOD.TURNING_POINTERS_NEXT,
@@ -195,18 +199,6 @@ public class HashFilesBenchs {
         // PERSISTENT_METHOD.BERKELEY_DB_BY_CRC,
 
         };
-
-        // int loop = 1;
-        // int loop = 10000;
-        // int loop = 100000; // 100 000
-        // int loop = 1000000; // 1 000 000
-        // int loop = 10000000; // 10 000 000
-        // int loop = 25000000;
-        // int loop = 42000000;
-        // int loop = 53000000;
-        // int loop = 60000000;
-        // int loop = 70000000;
-        // int loop = 80000000;
 
         StringBuilder sbPreview = new StringBuilder();
 
@@ -260,7 +252,7 @@ public class HashFilesBenchs {
                             nbFiles = nbFilesArray[j];
                             // hashFile = new MultiPointersMultiHashFiles(filePath, nbFiles);
                             hashFile = SortedMultipleHashFile.getInstance();
-                            //((SortedMultipleHashFile) hashFile).setBufferSize(nbItems / 10);// setBufferSize
+                            // ((SortedMultipleHashFile) hashFile).setBufferSize(nbItems / 10);// setBufferSize
                             ((SortedMultipleHashFile) hashFile).setILightSerializable(new Bean());// set an Instance
                             // of proccessed
                             // Bean;
@@ -442,6 +434,25 @@ public class HashFilesBenchs {
 
         System.out.println("Write step");
 
+        int[] randomArray = null;
+        
+        if(randomWrite) {
+            randomArray = new int[nbItems];
+            for (int i = 0; i < randomArray.length; i++) {
+                randomArray[i] = i;
+            }
+            int j = 0;
+            Random rand = new Random(System.currentTimeMillis());
+            // shiffle unique values
+            for (int i = 0; i < randomArray.length; i++) {
+                j = rand.nextInt(nbItems);
+                int vj = randomArray[j];
+                randomArray[j] = randomArray[i];
+                randomArray[i] = vj;
+            }
+        }
+        
+        
         Sizeof.runGC();
         long heap1 = Sizeof.usedMemory(); // Take a before heap snapshot
 
@@ -518,16 +529,15 @@ public class HashFilesBenchs {
             break;
         }
 
-        Random rand = new Random(System.currentTimeMillis());
-
         try {
             hashFile.initPut(persistMethod.filePath);
+            
             for (int i = 0; i < nbItems; i++) {
                 int v = i;
 
                 if (randomWrite) {
-                    v = rand.nextInt(nbItems);
-//                    System.out.println("reandom value =" + v);
+                    v = randomArray[i];
+                    // System.out.println("reandom value =" + v);
                 }
 
                 // => bean from tFileInput for example...
@@ -655,6 +665,7 @@ public class HashFilesBenchs {
 
             try {
                 hashFile.initGet(persistMethod.filePath);
+
                 for (int i = 0; i < nbItems; i++) {
                     // System.out.println(i);
 
@@ -703,6 +714,9 @@ public class HashFilesBenchs {
                                 throw new RuntimeException("Values of beans are different with cursorPosition "
                                         + keyForMap.cursorPosition);
                             }
+
+                            beanReads++;
+
                         }
                     }
 
@@ -713,7 +727,7 @@ public class HashFilesBenchs {
                         throw new RuntimeException("Timeout, read is too long !");
                     }
 
-                    if (i % 10000 == 0) {
+                    if (i % 100000 == 0) {
                         long currentTimeMillis = System.currentTimeMillis();
                         System.out.println("Reading " + i + ", time since last display: "
                                 + (int) ((float) (currentTimeMillis - lastTime)) + " ms");
@@ -736,6 +750,8 @@ public class HashFilesBenchs {
             long heap2 = Sizeof.usedMemory(); // Take a before heap snapshot
 
             long memoryHeap = heap2 - heap1;
+
+            System.out.println("beanReads=" + beanReads);
 
             dataReadWrite.setHeapMemoryRead(memoryHeap);
 
