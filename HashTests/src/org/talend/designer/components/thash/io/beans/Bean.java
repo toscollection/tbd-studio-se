@@ -19,20 +19,22 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
-import org.talend.designer.components.thash.io.HashFilesBenchs;
+import org.talend.designer.components.thash.io.IMapHashFile;
 
 /**
  * 
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-public class Bean implements Serializable, ILightSerializable {
+public class Bean implements Serializable, ILightSerializable, IPersistentBean {
 
     public int primitiveInt;
 
     public String name;
 
     transient int hashcode = -1;
+
+    public static IMapHashFile hashFile;
 
     public static int countReturnFalse1 = 0;
 
@@ -92,7 +94,7 @@ public class Bean implements Serializable, ILightSerializable {
         Object o = null;
         try {
             getDataCountRequested++;
-            o = HashFilesBenchs.hashFile.get("buffer", (long) other.cursorPosition, hashcode);
+            o = hashFile.get("buffer", (long) other.cursorPosition, hashcode);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,7 +137,7 @@ public class Bean implements Serializable, ILightSerializable {
                 result.name = new String(byteArray);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             if (dis != null) {
                 try {
@@ -164,7 +166,7 @@ public class Bean implements Serializable, ILightSerializable {
                 dos.write(bytes);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             if (dos != null) {
                 try {
@@ -174,8 +176,7 @@ public class Bean implements Serializable, ILightSerializable {
                 }
             }
         }
-        bytes = bao.toByteArray();
-        return bytes;
+        return bao.toByteArray();
     }
 
     public int compareTo(Object o) {
@@ -198,6 +199,15 @@ public class Bean implements Serializable, ILightSerializable {
         }
     }
     
+    
+    
+    /* (non-Javadoc)
+     * @see org.talend.designer.components.thash.io.beans.IPersistentBean#setHashFile(org.talend.designer.components.thash.io.IMapHashFile)
+     */
+    public void setHashFile(IMapHashFile hashFile) {
+        Bean.hashFile = hashFile;
+    }
+
     public String toString(){
         return "primitiveInt="+primitiveInt+"   name="+name;
     }

@@ -53,6 +53,12 @@ public class Test {
 //        
 //        randomAccessFile.write(bao.toByteArray()
         
+        long maxMinusMin = Long.MAX_VALUE - Long.MIN_VALUE;
+        
+        System.out.println(maxMinusMin); 
+        System.out.println((int)(maxMinusMin)); 
+        
+        
         
     }
     

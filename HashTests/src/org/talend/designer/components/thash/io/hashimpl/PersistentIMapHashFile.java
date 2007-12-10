@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.designer.components.thash.io.hashimpl;
 
-import gnu.trove.TObjectHashingStrategy;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -30,19 +28,88 @@ import java.util.List;
 
 import org.talend.designer.components.thash.io.IMapHashFile;
 import org.talend.designer.components.thash.io.beans.ILightSerializable;
+import org.talend.designer.components.thash.io.beans.KeyForMap;
 
 /**
  * 
- * DOC amaumont class global comment. Detailled comment <br/>
+ * DOC slanglois class global comment. Detailled comment <br/>
  * 
  */
-public class SortedMultipleHashFile implements IMapHashFile {
+public class PersistentIMapHashFile extends PersistentAdvancedLookup<Object> implements IMapHashFile {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.designer.components.thash.io.hashimpl.NewAdvancedLookup#getResultArray()
+     */
+    public Object[] getResultArray() {
+        return getResultList().toArray();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.designer.components.thash.io.hashimpl.NewAdvancedLookup#getResultList()
+     */
+    public List<Object> getResultList() {
+        List<Object> keyForMaps = super.getResultList();
+        List<Object> resultList = new ArrayList<Object>();
+        for (int index = 0; index < keyForMaps.size(); index++) {
+            KeyForMap keyForMap = (KeyForMap) keyForMaps.get(index);
+            try {
+                resultList.add(this.get(container, keyForMap.cursorPosition, keyForMap.hashcode));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return resultList;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.designer.components.thash.io.hashimpl.NewAdvancedLookup#getResultObject()
+     */
+    public Object getResultObject() {
+        Object o = super.getResultObject();
+        if (o == null) {
+            return null;
+        }
+
+        KeyForMap keyForMap = (KeyForMap) o;
+
+        Object resultObject = null;
+        try {
+            resultObject = this.get(container, keyForMap.cursorPosition, keyForMap.hashcode);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return resultObject;
+    }
+
+    private PersistentIMapHashFile(MATCHING_MODE matchingMode, boolean keepAllValues, boolean countValuesForEachKey) {
+        super(matchingMode, keepAllValues, countValuesForEachKey);
+    }
+
+    private static PersistentIMapHashFile instance;
 
     /**
-     * DOC amaumont SortedMultipleHashFile constructor comment.
+     * getInstance.
+     * 
+     * @return the instance if this project handler
      */
-    public SortedMultipleHashFile() {
-        super();
+    public static synchronized PersistentIMapHashFile getInstance(MATCHING_MODE matchingMode, boolean keepAllValues,
+            boolean countValuesForEachKey) {
+        if (instance == null) {
+            instance = new PersistentIMapHashFile(matchingMode, keepAllValues, countValuesForEachKey);
+        }
+        return instance;
     }
 
     int[] bwPositionArray = null;
@@ -74,6 +141,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
     ILightSerializable iLightSerializable = null;// Change this based on the Bean class;
 
     private int beansCount;
+
+    // private int replacedObjectsCount;
 
     // ///////////////////////
 
@@ -184,18 +253,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
         }
         buffer = null;
 
-        TObjectHashingStrategy objectHashingStrategy = new TObjectHashingStrategy() {
-
-            public int computeHashCode(Object arg0) {
-                return arg0 == null ? 0 : arg0.hashCode();
-            }
-
-            public boolean equals(Object arg0, Object arg1) {
-                return arg1 == null ? arg0 == null : arg1.equals(arg0);
-            }
-
-        };
-
         System.gc();
 
         for (int iFinalHashFile = 0; iFinalHashFile < numberFiles; iFinalHashFile++) {
@@ -258,8 +315,9 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 bytes = min.toByteArray();
                 dos.writeInt(bytes.length);
                 dos.write(bytes);
-
-                processData(cursorPosition, min);
+                KeyForMap keyForMap = new KeyForMap(cursorPosition, min.hashCode());
+                System.out.println(keyForMap);
+                super.put(keyForMap);
 
                 cursorPosition += (4 + bytes.length);
 
@@ -290,9 +348,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
             // close all the streams
             dos.close();
-            if(dis != null) {
+            if (dis != null)
                 dis.close();
-            }
 
             // delete files
             for (int k = 0; k < files.size(); k++) {
@@ -300,16 +357,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
             }
 
         }
-
-    }
-
-    /**
-     * DOC amaumont Comment method "processData".
-     * 
-     * @param cursorPosition
-     * @param min
-     */
-    public void processData(int cursorPosition, ILightSerializable min) {
 
     }
 
@@ -325,10 +372,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException {
 
-        if(raArray == null) {
-            throw new IllegalStateException("Call initGet(..) one time before all call on get(..) method");
-        }
-        
         // System.out.println("GET cursorPosition="+cursorPosition + " hashcode="+hashcode);
 
         int fileNumber = getFileNumber(hashcode);
@@ -387,37 +430,5 @@ public class SortedMultipleHashFile implements IMapHashFile {
     public void setILightSerializable(ILightSerializable ils) {
         this.iLightSerializable = ils;
     }
-
-    /**
-     * get number of objects already put.
-     * 
-     * @return
-     */
-    public int getObjectsCount() {
-        return beansCount;
-    }
-
-    // /////////////
-    // tips for use//
-    // /////////////
-
-    // ///before put//////
-    // SortedMultipleHashFile smh = SortedMultipleHashFile.getInstance();
-    // smh.setBufferSize(10000000);//setBufferSize
-    // smh.setILightSerializable(new Bean());//set an Instance of proccessed Bean;
-    // String container = "D:/temp/test";
-    // smh.initPut(container);
-
-    // ////do put//////
-    // smh.put(container, data);
-
-    // ////endput to merge files and gain the map//////
-    // smh.endPut();
-
-    // ////get the result map, it is a THashMap instance.//////
-    // Map map = smh.getMap();
-
-    // ////the get proccess will be the same as other IMapHashFile.//////
-    // ......
 
 }

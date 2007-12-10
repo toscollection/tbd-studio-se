@@ -21,14 +21,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import org.talend.designer.components.thash.Sizeof;
 import org.talend.designer.components.thash.io.beans.Bean;
+import org.talend.designer.components.thash.io.beans.ILightSerializable;
 import org.talend.designer.components.thash.io.beans.KeyForMap;
 import org.talend.designer.components.thash.io.hashimpl.BerkeleyDBHashByCRC;
 import org.talend.designer.components.thash.io.hashimpl.BerkeleyDBHashById;
@@ -252,7 +251,20 @@ public class HashFilesBenchs {
                         case SORTED_MULTIPLE_HASH:
                             nbFiles = nbFilesArray[j];
                             // hashFile = new MultiPointersMultiHashFiles(filePath, nbFiles);
-                            hashFile = SortedMultipleHashFile.getInstance();
+                            hashFile = new SortedMultipleHashFile() {
+
+                                /* (non-Javadoc)
+                                 * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#processData(int, org.talend.designer.components.thash.io.beans.ILightSerializable)
+                                 */
+                                @Override
+                                public void processData(int cursorPosition, ILightSerializable min) {
+                                    KeyForMap keyForMap = new KeyForMap(cursorPosition, min.hashCode());
+                                    hashMap.put(keyForMap, keyForMap);
+                                }
+                                
+                                
+                                
+                            };
                             // ((SortedMultipleHashFile) hashFile).setBufferSize(nbItems / 10);// setBufferSize
                             ((SortedMultipleHashFile) hashFile).setILightSerializable(new Bean());// set an Instance
                             // of proccessed
@@ -487,10 +499,18 @@ public class HashFilesBenchs {
         dataWrite.setNbItems(nbItems);
         dataWrite.setNbFiles(nbFiles);
 
-        if (persistMethod == PERSISTENT_METHOD.BERKELEY_DB_BY_CRC || persistMethod == PERSISTENT_METHOD.SORTED_MULTIPLE_HASH) {
+        if (persistMethod == PERSISTENT_METHOD.BERKELEY_DB_BY_CRC) {
 
             // nothing
 
+        } else if (persistMethod == PERSISTENT_METHOD.SORTED_MULTIPLE_HASH) {
+            
+            int count = ((SortedMultipleHashFile)hashFile).getObjectsCount();
+            if(count != nbItems) {
+                throw new IllegalStateException("hash does not contain attempted objects count=" + count + ", nbItems="+nbItems);
+            }
+            hashMap = new THashMap(count, 1.0f, objectHashingStrategy); // ??
+            
         } else {
 
             // ################################################################################
@@ -499,7 +519,7 @@ public class HashFilesBenchs {
             // ################################################################################
 
             // Map hashMap = new HashMap();
-            hashMap = new HashMap(nbItems, 1f);
+//            hashMap = new HashMap(nbItems, 1f);
             // Map hashMap = new HashMap(10000, 1f);
             // Map hashMap = new THashMap(objectHashingStrategy);
             // Map hashMap = new THashMap(loop, 0.1f, objectHashingStrategy);
@@ -512,7 +532,7 @@ public class HashFilesBenchs {
             // Data in Sqlite DB, ?? bytes , all=?? s, write=2550 s (42 min), read=???? s (?? min)
             // Data in File, ?? bytes , all=?? s, write=?? s (?? min), read=???? s (?? min)
 
-            // hashMap = new THashMap(nbItems, 1.0f, objectHashingStrategy); // ??
+             hashMap = new THashMap(nbItems, 1.0f, objectHashingStrategy); // ??
         }
         // Map hashMap = new THashMap(loop + (int)((float)loop * 0.1f), 0.1f, objectHashingStrategy);
 
@@ -653,10 +673,6 @@ public class HashFilesBenchs {
         Map localHashMap = hashMap;
 
         Bean.getDataCountRequested = 0;
-
-        if (persistMethod == PERSISTENT_METHOD.SORTED_MULTIPLE_HASH) {
-            localHashMap = ((SortedMultipleHashFile) hashFile).getMap();
-        }
 
         System.out.println("Items written in hash: " + localHashMap.size());
 

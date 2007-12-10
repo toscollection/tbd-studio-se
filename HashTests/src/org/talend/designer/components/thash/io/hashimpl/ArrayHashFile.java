@@ -12,23 +12,15 @@
 // ============================================================================
 package org.talend.designer.components.thash.io.hashimpl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.talend.designer.components.thash.io.HashFilesBenchs;
 import org.talend.designer.components.thash.io.IMapHashFile;
-import org.talend.designer.components.thash.io.beans.KeyForMap;
 
 /**
  * 

@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/je-3.2.44.jar" sourcepath="/Berkeley_DB"/>
 	<classpathentry kind="lib" path="lib/sqlitejdbc-v037-nested.jar"/>
-	<classpathentry kind="lib" path="lib/trove-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/trove-2.0.1.jar" sourcepath="/Trove"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
@@ -12,6 +12,9 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/xxl.jar"/>
+	<classpathentry kind="lib" path="lib/xxl.jar" sourcepath="/XXL"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.talend.commons"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.talend.core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.talend.designer.components.localprovider"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
