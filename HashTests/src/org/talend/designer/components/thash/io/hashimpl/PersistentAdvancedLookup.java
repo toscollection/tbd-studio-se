@@ -1,434 +1,452 @@
-// ============================================================================
-//
-// Copyright (C) 2006-2007 Talend Inc. - www.talend.com
-//
-// This source code is available under agreement available at
-// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
-//
-// You should have received a copy of the agreement
-// along with this program; if not, write to Talend SA
-// 9 rue Pages 92150 Suresnes, France
-//
-// ============================================================================
 package org.talend.designer.components.thash.io.hashimpl;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import gnu.trove.THashMap;
+import gnu.trove.TObjectHashingStrategy;
 
-import org.talend.designer.components.thash.io.IMapHashFile;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.list.GrowthList;
+import org.talend.commons.utils.data.map.MultiLazyValuesMap;
+import org.talend.designer.components.commons.AdvancedLookup;
 import org.talend.designer.components.thash.io.beans.ILightSerializable;
+import org.talend.designer.components.thash.io.beans.IPersistentBean;
 import org.talend.designer.components.thash.io.beans.KeyForMap;
 
-/**
- * 
- * DOC slanglois class global comment. Detailled comment <br/>
- * 
- */
-public class PersistentAdvancedLookup extends NewAdvancedLookup<Object> implements IMapHashFile {
+public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.designer.components.thash.io.hashimpl.NewAdvancedLookup#getResultArray()
-     */
-    public Object[] getResultArray() {
-        return getResultList().toArray();
-    }
+    private MultiLazyValuesMap mapOfCol;
 
-    /*
-     * (non-Javadoc)
+    private Map<KeyForMap, KeyForMap> uniqueHash;
+
+    private boolean countValuesForEachKey;
+
+    private Map<V, Integer> counterHash;
+
+    private List<V> list = new ArrayList<V>();
+
+    private Object[] arrayValues;
+
+    private boolean arrayIsDirty = true;
+
+    private List<V> listResult;
+
+    private V objectResult;
+
+    private boolean keepAllValues;
+
+    private MATCHING_MODE matchingMode;
+
+    private static final int ZERO = 0;
+
+    private static final int ONE = 1;
+
+    SortedMultipleHashFile hashFile;
+
+    private String container = "/home/amaumont/hash_benchs/external_sort/tmp_";
+
+    private boolean firstGet = true;
+
+    private boolean firstPut = true;
+
+    /**
      * 
-     * @see org.talend.designer.components.thash.io.hashimpl.NewAdvancedLookup#getResultList()
+     * <code>AdvancedLookup</code> can be configured to store values in different modes.
+     * 
+     * @param useHashKeys use <code>equals()</code> and <code>hashCode()</code> methods by storing objects in hash
+     * maps
+     * @param matchingMode to optimize storing and searching, and to specify which matching mode should used
+     * @param uniqueMatch keep in the lookup only the last put object, but store the current number of same values for
+     * each key
+     * @param keepAllValues keep all identical values (with same key values) in each list of each key
+     * @param countValuesForEachKey force internal count of values
      */
-    public List<Object> getResultList() {
-        List<Object> keyForMaps = super.getResultList();
-        List<Object> resultList = new ArrayList<Object>();
-        for (int index = 0; index < keyForMaps.size(); index++) {
-            KeyForMap keyForMap = (KeyForMap) keyForMaps.get(index);
-            try {
-                resultList.add(this.get(container, keyForMap.cursorPosition, keyForMap.hashcode));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+    public PersistentAdvancedLookup(MATCHING_MODE matchingMode, boolean keepAllValues, boolean countValuesForEachKey) {
+        super();
+        this.keepAllValues = keepAllValues;
+        this.matchingMode = matchingMode == null ? MATCHING_MODE.UNIQUE_MATCH : matchingMode;
+        this.countValuesForEachKey = countValuesForEachKey || this.matchingMode == MATCHING_MODE.UNIQUE_MATCH;
+
+        hashFile = new SortedMultipleHashFile() {
+
+            /*
+             * (non-Javadoc)
+             * 
+             * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#processData(int,
+             * org.talend.designer.components.thash.io.beans.ILightSerializable)
+             */
+            @Override
+            public void processData(int cursorPosition, ILightSerializable data) {
+                KeyForMap keyForMap = new KeyForMap(cursorPosition, data.hashCode());
+                uniqueHash.put(keyForMap, keyForMap);
+
             }
-        }
-        return resultList;
-    }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.designer.components.thash.io.hashimpl.NewAdvancedLookup#getResultObject()
-     */
-    public Object getResultObject() {
-        Object o = super.getResultObject();
-        if (o == null) {
-            return null;
-        }
+        };
 
-        KeyForMap keyForMap = (KeyForMap) o;
-
-        Object resultObject = null;
         try {
-            resultObject = this.get(container, keyForMap.cursorPosition, keyForMap.hashcode);
+            hashFile.initPut(container);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return resultObject;
+
     }
 
-    private PersistentAdvancedLookup(MATCHING_MODE matchingMode, boolean keepAllValues, boolean countValuesForEachKey) {
-        super(matchingMode, keepAllValues, countValuesForEachKey);
+    public static <V> PersistentAdvancedLookup<V> getLookup(MATCHING_MODE matchingMode) {
+        return new PersistentAdvancedLookup<V>(matchingMode, false, false);
     }
 
-    private static PersistentAdvancedLookup instance;
-
-    /**
-     * getInstance.
-     * 
-     * @return the instance if this project handler
-     */
-    public static synchronized PersistentAdvancedLookup getInstance(MATCHING_MODE matchingMode, boolean keepAllValues,
-            boolean countValuesForEachKey) {
-        if (instance == null) {
-            instance = new PersistentAdvancedLookup(matchingMode, keepAllValues, countValuesForEachKey);
+    public Object[] getResultArray() {
+        if (matchingMode == MATCHING_MODE.ALL_ROWS) {
+            if (listResult == null) {
+                listResult = list;
+            }
+            if (arrayIsDirty) {
+                arrayValues = listResult.toArray();
+                arrayIsDirty = false;
+            }
+            return arrayValues;
+        } else {
+            return listResult.toArray();
         }
-        return instance;
     }
 
-    int[] bwPositionArray = null;
-
-    boolean readonly;
-
-    int numberFiles = 10;
-
-    RandomAccessFile[] raArray = null;
-
-    Object[] lastRetrievedObjectArray = null;
-
-    long[] lastRetrievedCursorPositionArray = null;
-
-    int countUniqueGet;
-
-    // ////////////////////////
-    // private int bufferSize = 5000000;
-    private int bufferSize = 10000000;
-
-    private int bufferCount = 0;
-
-    private int itemCountInBuffer = 0;
-
-    private ILightSerializable[] buffer;
-
-    private String container = null;
-
-    ILightSerializable iLightSerializable = null;// Change this based on the Bean class;
-
-    private int beansCount;
-
-    // private int replacedObjectsCount;
-
-    // ///////////////////////
-
-    /**
-     * DOC amaumont Comment method "getFileNumber".
-     * 
-     * @param hashcode
-     * @return
-     */
-    private int getFileNumber(int hashcode) {
-        return Math.abs(hashcode) % numberFiles;
+    public List<V> getResultList() {
+        return listResult;
     }
 
-    /**
-     * DOC amaumont Comment method "getFilePath".
-     * 
-     * @param container
-     * @param i
-     * @param j
-     * @return
-     */
-    private String getFilePath(String container, int i, int j) {
-        return container + "_" + i + "_" + j;
+    public V getResultObject() {
+        return objectResult;
     }
 
-    public void initPut(String container) throws IOException {
-        this.container = container;
-        buffer = new ILightSerializable[bufferSize];
-    }
-
-    public long put(String container, Object bean) throws IOException {
-        ILightSerializable item = (ILightSerializable) bean;
-
-        if (itemCountInBuffer >= bufferSize) {// buffer is full do sort and write.
-            // sort
-            Arrays.sort(buffer, 0, itemCountInBuffer);
-
-            // System.out.println("array for buffer " + bufferCount + " : " + Arrays.toString(buffer));;
-
-            // write
-            DataOutputStream[] doss = new DataOutputStream[numberFiles];
-            for (int i = 0; i < numberFiles; i++) {
-                doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(getFilePath(container, i,
-                        bufferCount)))));
+    public void get(V key) {
+        if (firstGet) {
+            System.out.println("Merging ordered data...");
+            initKeyContainers(hashFile.getObjectsCount());
+            try {
+                hashFile.endPut();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-
-            int fileNumber = 0;
-            byte[] bytes = null;
-            for (int i = 0; i < itemCountInBuffer; i++) {
-                fileNumber = getFileNumber(buffer[i].hashCode());
-                bytes = buffer[i].toByteArray();
-                doss[fileNumber].writeInt(bytes.length);
-                doss[fileNumber].write(bytes);
+            System.out.println("Merging done...");
+            firstGet = false;
+            try {
+                hashFile.initGet(container);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
             }
-
-            for (int i = 0; i < numberFiles; i++) {
-                doss[i].close();
-            }
-
-            bufferCount++;
-
-            // clear buffer
-            Arrays.fill(buffer, 0, itemCountInBuffer, null);
-
-            System.gc();
-
-            itemCountInBuffer = 0;
         }
-        buffer[itemCountInBuffer++] = item;
 
-        beansCount++;
+        if (matchingMode == MATCHING_MODE.UNIQUE_MATCH) {
+            listResult = null;
 
-        return -1;
-
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.designer.components.thash.io.IMapHashFile#endPut()
-     */
-    public void endPut() throws IOException {
-        if (itemCountInBuffer > 0) {
-            // sort
-            Arrays.sort(buffer, 0, itemCountInBuffer);
-
-            // write
-            DataOutputStream[] doss = new DataOutputStream[numberFiles];
-            for (int i = 0; i < numberFiles; i++) {
-                doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(getFilePath(container, i,
-                        bufferCount)))));
-            }
-
-            int fileNumber = 0;
-            byte[] bytes = null;
-            for (int i = 0; i < itemCountInBuffer; i++) {
-                fileNumber = getFileNumber(buffer[i].hashCode());
-                bytes = buffer[i].toByteArray();
-                doss[fileNumber].writeInt(bytes.length);
-                doss[fileNumber].write(bytes);
-            }
-
-            for (int i = 0; i < numberFiles; i++) {
-                doss[i].close();
-            }
-
-            bufferCount++;
-        }
-        buffer = null;
-
-        System.gc();
-
-        for (int iFinalHashFile = 0; iFinalHashFile < numberFiles; iFinalHashFile++) {
-            // System.out.println(">> iFinalHashFile = " + iFinalHashFile);
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(container
-                    + iFinalHashFile))));
-            int cursorPosition = 0;
-
-            List<File> files = new ArrayList<File>();
-            for (int iDivHashFile = 0; iDivHashFile < bufferCount; iDivHashFile++) {
-                files.add(new File(getFilePath(container, iFinalHashFile, iDivHashFile)));
-            }
-
-            int numFiles = files.size();
-            List<DataInputStream> diss = new ArrayList<DataInputStream>();
-            List<ILightSerializable> datasSameHashcodeValue = new ArrayList<ILightSerializable>();
-            List<Long> positions = new ArrayList<Long>();
-            List<Long> fileLengths = new ArrayList<Long>();
-
-            byte[] bytes = null;
-            DataInputStream dis = null;
-            int fileCount = 0;
-            for (int iDivHashFile = 0; iDivHashFile < numFiles; iDivHashFile++) {
-                dis = new DataInputStream(new BufferedInputStream(new FileInputStream(files.get(iDivHashFile))));
-                long fileLength = files.get(iDivHashFile).length();
-                if (0 < fileLength) {
-                    bytes = new byte[dis.readInt()];
-                    dis.read(bytes);
-                    datasSameHashcodeValue.add(iLightSerializable.createInstance(bytes));
-                    diss.add(dis);
-                    fileLengths.add(fileLength);
-                    positions.add((long) (4 + bytes.length));
-                    fileCount++;
+            KeyForMap keyForMap = uniqueHash.get(key);
+            if (keyForMap != null) {
+                try {
+                    objectResult = (V) hashFile.get(container, keyForMap.cursorPosition, keyForMap.hashcode);
+                } catch (IOException e) {
+                    objectResult = null;
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    objectResult = null;
+                    e.printStackTrace();
                 }
             }
 
-            // System.out.println("datasSameHashcodeValue=" + datasSameHashcodeValue.toString());
-
-            bytes = null;
-            dis = null;
-            ILightSerializable dc = null;
-            long position = -1;
-
-            while (fileCount > 0) {
-                ILightSerializable min = null;
-                int minIndex = 0;
-                min = datasSameHashcodeValue.get(0);
-
-                // check which one is min
-                for (int k = 1; k < fileCount; k++) {
-                    dc = datasSameHashcodeValue.get(k);
-
-                    if (dc.compareTo(min) < 0) {
-                        minIndex = k;
-                        min = dc;
+        } else {
+            if (matchingMode != MATCHING_MODE.ALL_ROWS && key != null) {
+                Object v = mapOfCol.get(key);
+                if (v instanceof List) {
+                    List<V> localList = (List<V>) v;
+                    if (matchingMode == MATCHING_MODE.ALL_MATCHES) {
+                        listResult = localList;
+                        objectResult = null;
+                    } else if (matchingMode == MATCHING_MODE.FIRST_MATCH) {
+                        objectResult = localList.get(ZERO);
+                    } else if (matchingMode == MATCHING_MODE.LAST_MATCH) {
+                        listResult = null;
+                        objectResult = localList.get(localList.size() - ONE);
                     }
-                }
-
-                // write to the sorted file
-                bytes = min.toByteArray();
-                dos.writeInt(bytes.length);
-                dos.write(bytes);
-                KeyForMap keyForMap = new KeyForMap(cursorPosition, min.hashCode());
-                System.out.println(keyForMap);
-                super.put(keyForMap);
-
-                cursorPosition += (4 + bytes.length);
-
-                // System.out.println(map.size());
-
-                // System.out.println("min=" + min + " -> " + keyForMap.toString() + " -> " + bytes.length);
-
-                bytes = null;
-
-                // get another data from the file
-                position = positions.get(minIndex);
-                dis = diss.get(minIndex);
-                if (position < fileLengths.get(minIndex)) {
-                    bytes = new byte[dis.readInt()];
-                    dis.read(bytes);
-                    datasSameHashcodeValue.set(minIndex, iLightSerializable.createInstance(bytes));
-                    positions.set(minIndex, position + 4 + bytes.length);
-                    bytes = null;
                 } else {
-                    dis.close();
-                    diss.remove(minIndex);
-                    datasSameHashcodeValue.remove(minIndex);
-                    positions.remove(minIndex);
-                    fileLengths.remove(minIndex);
-                    fileCount--;
+                    objectResult = (V) v;
+                    listResult = null;
                 }
-            }
-
-            // close all the streams
-            dos.close();
-            if (dis != null)
-                dis.close();
-
-            // delete files
-            for (int k = 0; k < files.size(); k++) {
-                files.get(k).delete();
-            }
-
-        }
-
-    }
-
-    public void initGet(String container) throws FileNotFoundException {
-        raArray = new RandomAccessFile[numberFiles];
-        lastRetrievedCursorPositionArray = new long[numberFiles];
-        lastRetrievedObjectArray = new Object[numberFiles];
-        for (int i = 0; i < numberFiles; i++) {
-            raArray[i] = new RandomAccessFile(container + i, "r");
-            lastRetrievedCursorPositionArray[i] = -1;
-        }
-    }
-
-    public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException {
-
-        // System.out.println("GET cursorPosition="+cursorPosition + " hashcode="+hashcode);
-
-        int fileNumber = getFileNumber(hashcode);
-
-        // System.out.println(fileNumber);
-
-        RandomAccessFile ra = raArray[fileNumber];
-
-        if (cursorPosition != lastRetrievedCursorPositionArray[fileNumber]) {
-            ++countUniqueGet;
-            ra.seek(cursorPosition);
-            int readInt = ra.readInt();
-            byte[] byteArray = new byte[readInt];
-            ra.read(byteArray);
-
-            lastRetrievedObjectArray[fileNumber] = iLightSerializable.createInstance(byteArray);
-            lastRetrievedCursorPositionArray[fileNumber] = cursorPosition;
-        }
-        // System.out.println("Found:" + lastRetrievedObjectArray[fileNumber]);
-        return lastRetrievedObjectArray[fileNumber];
-    }
-
-    public void endGet(String container) throws IOException {
-        if (!readonly) {
-            for (int i = 0; i < numberFiles; i++) {
-                RandomAccessFile ra = raArray[i];
-                if (ra != null) {
-                    ra.close();
-                }
-                File file = new File(container + i);
-                // file.delete();
+            } else {
+                listResult = list;
+                objectResult = null;
             }
         }
-
-        // System.out.println("countUniqueGet = " + countUniqueGet);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * DOC amaumont Comment method "initKeyContainers".
      * 
-     * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
+     * @param objectsCount
      */
-    public long getTotalSize() {
-        // TODO Auto-generated method stub
-        return 0;
+    private void initKeyContainers(int objectsCount) {
+        if (matchingMode != MATCHING_MODE.ALL_ROWS) {
+            TObjectHashingStrategy objectHashingStrategy = new TObjectHashingStrategy() {
+
+                public int computeHashCode(Object arg0) {
+                    return arg0 == null ? 0 : arg0.hashCode();
+                }
+
+                public boolean equals(Object arg0, Object arg1) {
+                    return arg1 == null ? arg0 == null : arg1.equals(arg0);
+                }
+
+            };
+
+            if (this.countValuesForEachKey) {
+                counterHash = new THashMap<V, Integer>(objectsCount, 1.0f, objectHashingStrategy);
+            }
+
+            if (matchingMode == MATCHING_MODE.UNIQUE_MATCH && !keepAllValues) {
+                uniqueHash = new THashMap<KeyForMap, KeyForMap>(objectsCount, 1.0f, objectHashingStrategy);
+            } else {
+                mapOfCol = new MultiLazyValuesMap(new THashMap(objectsCount, 1.0f, objectHashingStrategy)) {
+
+                    @Override
+                    public Collection instanciateNewCollection() {
+                        return new GrowthList(3);
+                    }
+
+                };
+            }
+        }
+
     }
 
-    public int getBufferSize() {
-        return bufferSize;
+    public boolean resultIsObject() {
+        return objectResult != null;
     }
 
-    public void setBufferSize(int bufferSize) {
-        this.bufferSize = bufferSize;
+    public boolean resultIsList() {
+        return listResult != null;
     }
 
-    public void setILightSerializable(ILightSerializable ils) {
-        this.iLightSerializable = ils;
+    public V put(V value) {
+
+        if (firstPut) {
+            hashFile.setILightSerializable((ILightSerializable)value);// set an Instance
+            ((IPersistentBean) value).setHashFile(hashFile);
+            firstPut = false;
+        }
+
+        if (value != null) {
+            if (matchingMode == MATCHING_MODE.UNIQUE_MATCH && !keepAllValues) {
+                // V previousValue = uniqueHash.put(value, value);
+                // incrementCountValues(value, previousValue);
+                try {
+                    hashFile.put(container, value);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                // return previousValue;
+                return null;
+            } else {
+                if (matchingMode == MATCHING_MODE.ALL_ROWS) {
+                    list.add(value);
+                    return null;
+                } else {
+                    arrayIsDirty = true;
+                    V previousValue = (V) mapOfCol.put(value, value);
+                    incrementCountValues(value, previousValue);
+                    return previousValue;
+                }
+            }
+        }
+        return null;
     }
 
+    /**
+     * DOC amaumont Comment method "incrementCountValues".
+     * 
+     * @param value
+     * @param previousValue
+     */
+    private void incrementCountValues(V value, V previousValue) {
+        if (countValuesForEachKey && previousValue != null) {
+            Integer count = counterHash.get(value);
+            if (count == null) {
+                count = ONE;
+            } else {
+                count++;
+            }
+            counterHash.put(value, count);
+        }
+    }
+
+    public void clear() {
+        if (mapOfCol != null) {
+            mapOfCol.clear();
+        }
+        if (uniqueHash != null) {
+            uniqueHash.clear();
+        }
+        if (counterHash != null) {
+            counterHash.clear();
+        }
+        arrayValues = null;
+        if (list != null) {
+            list.clear();
+        }
+        if (listResult != null) {
+            listResult = null;
+        }
+        try {
+            hashFile.endGet(container);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * DOC amaumont Comment method "hasResult".
+     * 
+     * @return
+     */
+    public boolean hasResult() {
+        return resultIsObject() || resultIsList();
+    }
+
+    /**
+     * Getter for hasHashKeys.
+     * 
+     * @return the hasHashKeys
+     */
+    public boolean isUseHashKeys() {
+        return matchingMode != MATCHING_MODE.ALL_ROWS;
+    }
+
+    /**
+     * Getter for countValuesForEachKey.
+     * 
+     * @return the countValuesForEachKey
+     */
+    public boolean isCountValuesForEachKey() {
+        return this.countValuesForEachKey;
+    }
+
+    /**
+     * Getter for keepAllValues.
+     * 
+     * @return the keepAllValues
+     */
+    public boolean isKeepAllValues() {
+        return this.keepAllValues;
+    }
+
+    /**
+     * Getter for uniqueMatch.
+     * 
+     * @return the uniqueMatch
+     */
+    public boolean isUniqueMatch() {
+        return matchingMode == MATCHING_MODE.UNIQUE_MATCH;
+    }
+
+    /**
+     * Getter for uniqueMatch.
+     * 
+     * @return the uniqueMatch
+     */
+    public boolean isOnlyOneMatchResult() {
+        return matchingMode == MATCHING_MODE.UNIQUE_MATCH || matchingMode == MATCHING_MODE.FIRST_MATCH
+                || matchingMode == MATCHING_MODE.LAST_MATCH;
+    }
+
+    public int getCount(V key) {
+        if (countValuesForEachKey) {
+            Integer count = counterHash.get(key);
+            if (count == null) {
+                return ZERO;
+            } else {
+                return count;
+            }
+        } else if (matchingMode == MATCHING_MODE.UNIQUE_MATCH && !keepAllValues) {
+            if (uniqueHash.get(key) != null) {
+                return ONE;
+            } else {
+                return ZERO;
+            }
+
+        } else if (matchingMode != MATCHING_MODE.ALL_ROWS) {
+            Object v = mapOfCol.get(key);
+            if (v instanceof List) {
+                List<V> localList = (List<V>) v;
+                return localList.size();
+            } else {
+                if (v != null) {
+                    return ONE;
+                } else {
+                    return ZERO;
+                }
+            }
+        } else {
+            if (list.contains(key)) {
+                return 1;
+            } else {
+                return ZERO;
+            }
+        }
+    }
+
+//    public static void main(String[] args) {
+//
+//        PersistentAdvancedLookup<Bean> lookup = PersistentAdvancedLookup.<Bean> getLookup(MATCHING_MODE.UNIQUE_MATCH);
+//
+//        final int nbItems = 100;
+//
+//        int[] randomArray = null;
+//
+//        boolean randomWrite = true;
+//
+//        if (randomWrite) {
+//            randomArray = new int[nbItems];
+//            for (int i = 0; i < randomArray.length; i++) {
+//                randomArray[i] = i;
+//            }
+//            int j = 0;
+//            Random rand = new Random(System.currentTimeMillis());
+//            // shiffle unique values
+//            for (int i = 0; i < randomArray.length; i++) {
+//                j = rand.nextInt(nbItems);
+//                int vj = randomArray[j];
+//                randomArray[j] = randomArray[i];
+//                randomArray[i] = vj;
+//            }
+//        }
+//
+//        for (int i = 0; i < nbItems; i++) {
+//            int v = i;
+//
+//            if (randomWrite) {
+//                v = randomArray[i];
+//                // System.out.println("reandom value =" + v);
+//            }
+//            Bean bean = new Bean(v, String.valueOf(v));
+//            lookup.put(bean);
+//        }
+//
+//        for (int i = 0; i < nbItems; i++) {
+//            Bean bean = new Bean(i, String.valueOf(i));
+//            lookup.get(bean);
+//            Bean persistentBean = lookup.getResultObject();
+//
+//            if (persistentBean != null) {
+//                if (!persistentBean.name.equals(bean.name) || persistentBean.primitiveInt != bean.primitiveInt) {
+//                    throw new RuntimeException("Bean data does not match " + i);
+//                }
+//            } else {
+//                throw new NullPointerException("persistentBean should'nt be null");
+//            }
+//
+//        }
+//
+//    }
 }
