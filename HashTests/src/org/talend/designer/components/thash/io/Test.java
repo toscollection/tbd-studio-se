@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.designer.components.thash.io;
 
+import org.talend.designer.components.thash.io.beans.Bean;
+
 
 
 /**
@@ -56,8 +58,42 @@ public class Test {
         long maxMinusMin = Long.MAX_VALUE - Long.MIN_VALUE;
         
         System.out.println(maxMinusMin); 
-        System.out.println((int)(maxMinusMin)); 
+        System.out.println((int)(maxMinusMin));
         
+        class BeanValue {
+            String value;
+        }
+        
+
+        BeanValue b1 = new BeanValue();
+        BeanValue b2 = new BeanValue();
+        
+        b1.value = "test";
+        
+        b2.value = b1.value;
+        
+        System.out.println();
+        
+//        long time1 = System.currentTimeMillis();
+//        int n = 10000000;
+//        
+//        for (int i = 0; i < n; i++) {
+//            long test = System.currentTimeMillis();
+//        }
+//        
+//        long time2 = System.currentTimeMillis();
+//        
+//        System.out.println("time:" + (time2 - time1));
+//        
+//        time1 = System.currentTimeMillis();
+//        
+//        for (int i = 0; i < n; i++) {
+//            long test = java.util.Calendar.getInstance().getTimeInMillis();
+//        }
+//        
+//        time2 = System.currentTimeMillis();
+//        
+//        System.out.println("time:" + (time2 - time1));
         
         
     }

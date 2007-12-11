@@ -656,19 +656,6 @@ public class ExternalSort {
     }
 }
 
-class DataContainer {
-
-    long cursorPosition;
-
-    Object object;
-
-    byte[] data;
-
-    public void reset() {
-        object = null;
-        data = null;
-    }
-}
 
 /**
  * A simple example class for a data object.

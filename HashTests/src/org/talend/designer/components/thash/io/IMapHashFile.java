@@ -20,11 +20,11 @@ import java.io.IOException;
  * <br/>
  *
  */
-public interface IMapHashFile {
+public interface IMapHashFile<V> {
 
-    public Object get(String container, long cursorPosition, int hashcode) throws Exception;
+    public V get(String container, long cursorPosition, int hashcode) throws Exception;
 
-    public long put(String container, Object bean) throws IOException;
+    public long put(String container, V bean) throws IOException;
 
     public void initPut(String container) throws IOException;
 

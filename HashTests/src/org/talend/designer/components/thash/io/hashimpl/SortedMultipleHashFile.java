@@ -60,8 +60,11 @@ public class SortedMultipleHashFile implements IMapHashFile {
     int countUniqueGet;
 
     // ////////////////////////
-    // private int bufferSize = 5000000;
-    private int bufferSize = 10000000;
+//     private int bufferSize = 5000000;
+//     private int bufferSize = 8000000;
+//     private int bufferSize = 9000000;
+     private int bufferSize = 9200000;
+//    private int bufferSize = 10000000;
 
     private int bufferCount = 0;
 
@@ -100,6 +103,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
     }
 
     public void initPut(String container) throws IOException {
+        System.out.println("bufferSize="+bufferSize +" objects");
         this.container = container;
         buffer = new ILightSerializable[bufferSize];
     }
@@ -184,20 +188,16 @@ public class SortedMultipleHashFile implements IMapHashFile {
         }
         buffer = null;
 
-        TObjectHashingStrategy objectHashingStrategy = new TObjectHashingStrategy() {
-
-            public int computeHashCode(Object arg0) {
-                return arg0 == null ? 0 : arg0.hashCode();
-            }
-
-            public boolean equals(Object arg0, Object arg1) {
-                return arg1 == null ? arg0 == null : arg1.equals(arg0);
-            }
-
-        };
-
         System.gc();
 
+    }
+
+    /**
+     * DOC amaumont Comment method "mergeFiles".
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    private void mergeFiles() throws FileNotFoundException, IOException {
         for (int iFinalHashFile = 0; iFinalHashFile < numberFiles; iFinalHashFile++) {
             // System.out.println(">> iFinalHashFile = " + iFinalHashFile);
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(container
@@ -300,7 +300,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
             }
 
         }
-
     }
 
     /**
@@ -313,7 +312,10 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     }
 
-    public void initGet(String container) throws FileNotFoundException {
+    public void initGet(String container) throws IOException {
+        
+        mergeFiles();
+
         raArray = new RandomAccessFile[numberFiles];
         lastRetrievedCursorPositionArray = new long[numberFiles];
         lastRetrievedObjectArray = new Object[numberFiles];

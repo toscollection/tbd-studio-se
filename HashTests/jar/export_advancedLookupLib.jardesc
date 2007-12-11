@@ -11,7 +11,9 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+        <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{DataContainer.java"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{PersistentAdvancedLookup.java"/>
+        <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{FlowSorterIterator.java"/>
         <javaElement handleIdentifier="=org.talend.designer.components.localprovider/src\/main\/java&lt;org.talend.designer.components.commons"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{SortedMultipleHashFile.java"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io{IMapHashFile.java"/>

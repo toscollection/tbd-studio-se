@@ -88,12 +88,6 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
 
         };
 
-        try {
-            hashFile.initPut(container);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
     public static <V> PersistentAdvancedLookup<V> getLookup(MATCHING_MODE matchingMode) {
@@ -123,27 +117,23 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
         return objectResult;
     }
 
-    public void get(V key) {
-        if (firstGet) {
-            System.out.println("Merging ordered data...");
-            initKeyContainers(hashFile.getObjectsCount());
-            try {
-                hashFile.endPut();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println("Merging done...");
-            firstGet = false;
-            try {
-                hashFile.initGet(container);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+    /**
+     * @param container
+     * @throws IOException
+     * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#initGet(java.lang.String)
+     */
+    public void initGet() {
+        initKeyContainers(hashFile.getObjectsCount());
+        try {
+            this.hashFile.initGet(container);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
 
+
+    public void get(V key) {
         if (matchingMode == MATCHING_MODE.UNIQUE_MATCH) {
-            listResult = null;
-
             KeyForMap keyForMap = uniqueHash.get(key);
             if (keyForMap != null) {
                 try {
@@ -155,6 +145,8 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
                     objectResult = null;
                     e.printStackTrace();
                 }
+            } else {
+                objectResult = null;
             }
 
         } else {
@@ -181,6 +173,21 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
             }
         }
     }
+
+    /**
+     * @param container
+     * @throws IOException 
+     * @throws IOException
+     * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#endGet(java.lang.String)
+     */
+    public void endGet(String container) throws IOException {
+        try {
+            this.hashFile.endGet(container);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * DOC amaumont Comment method "initKeyContainers".
@@ -229,6 +236,19 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
         return listResult != null;
     }
 
+    /**
+     * @param container
+     * @throws IOException
+     * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#initPut(java.lang.String)
+     */
+    public void initPut() {
+        try {
+            this.hashFile.initPut(container);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public V put(V value) {
 
         if (firstPut) {
@@ -261,6 +281,20 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
             }
         }
         return null;
+    }
+
+    
+    
+    /**
+     * @throws IOException
+     * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#endPut()
+     */
+    public void endPut() {
+        try {
+            this.hashFile.endPut();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
