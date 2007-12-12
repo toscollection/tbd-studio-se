@@ -53,18 +53,20 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     RandomAccessFile[] raArray = null;
 
+    DataInputStream[] disArray = null;
+
     Object[] lastRetrievedObjectArray = null;
+
+    Object[] nextObjectsArray = null;
 
     long[] lastRetrievedCursorPositionArray = null;
 
-    int countUniqueGet;
-
     // ////////////////////////
-//     private int bufferSize = 5000000;
-//     private int bufferSize = 8000000;
-//     private int bufferSize = 9000000;
-     private int bufferSize = 9200000;
-//    private int bufferSize = 10000000;
+    // private int bufferSize = 5000000;
+    // private int bufferSize = 8000000;
+    // private int bufferSize = 9000000;
+    // private int bufferSize = 9200000;
+    private int bufferSize = 10000000;
 
     private int bufferCount = 0;
 
@@ -74,9 +76,13 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     private String container = null;
 
+    private String mergeRepository = "/home/amaumont/abc/a/lookup_merge_";
+
     ILightSerializable iLightSerializable = null;// Change this based on the Bean class;
 
     private int beansCount;
+
+    private long[] disPositionsArray;
 
     // ///////////////////////
 
@@ -103,7 +109,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
     }
 
     public void initPut(String container) throws IOException {
-        System.out.println("bufferSize="+bufferSize +" objects");
+        System.out.println("Hash file bufferSize=" + bufferSize + " objects");
         this.container = container;
         buffer = new ILightSerializable[bufferSize];
     }
@@ -194,13 +200,14 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     /**
      * DOC amaumont Comment method "mergeFiles".
+     * 
      * @throws FileNotFoundException
      * @throws IOException
      */
     private void mergeFiles() throws FileNotFoundException, IOException {
         for (int iFinalHashFile = 0; iFinalHashFile < numberFiles; iFinalHashFile++) {
             // System.out.println(">> iFinalHashFile = " + iFinalHashFile);
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(container
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(mergeRepository
                     + iFinalHashFile))));
             int cursorPosition = 0;
 
@@ -290,7 +297,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
             // close all the streams
             dos.close();
-            if(dis != null) {
+            if (dis != null) {
                 dis.close();
             }
 
@@ -313,24 +320,28 @@ public class SortedMultipleHashFile implements IMapHashFile {
     }
 
     public void initGet(String container) throws IOException {
-        
+
         mergeFiles();
 
         raArray = new RandomAccessFile[numberFiles];
+        disArray = new DataInputStream[numberFiles];
+        disPositionsArray = new long[numberFiles];
         lastRetrievedCursorPositionArray = new long[numberFiles];
         lastRetrievedObjectArray = new Object[numberFiles];
+        nextObjectsArray = new Object[numberFiles];
         for (int i = 0; i < numberFiles; i++) {
-            raArray[i] = new RandomAccessFile(container + i, "r");
+            raArray[i] = new RandomAccessFile(mergeRepository + i, "r");
+            disArray[i] = new DataInputStream(new BufferedInputStream(new FileInputStream(mergeRepository + i)));
             lastRetrievedCursorPositionArray[i] = -1;
         }
     }
 
     public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException {
 
-        if(raArray == null) {
+        if (raArray == null) {
             throw new IllegalStateException("Call initGet(..) one time before all call on get(..) method");
         }
-        
+
         // System.out.println("GET cursorPosition="+cursorPosition + " hashcode="+hashcode);
 
         int fileNumber = getFileNumber(hashcode);
@@ -340,7 +351,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
         RandomAccessFile ra = raArray[fileNumber];
 
         if (cursorPosition != lastRetrievedCursorPositionArray[fileNumber]) {
-            ++countUniqueGet;
             ra.seek(cursorPosition);
             int readInt = ra.readInt();
             byte[] byteArray = new byte[readInt];
@@ -348,10 +358,110 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
             lastRetrievedObjectArray[fileNumber] = iLightSerializable.createInstance(byteArray);
             lastRetrievedCursorPositionArray[fileNumber] = cursorPosition;
+
+            DataInputStream dis = disArray[fileNumber];
+
+            long disPosition = disPositionsArray[fileNumber];
+
+            long raPosition = ra.getFilePointer();
+            
+            if (raPosition < disPosition) {
+                
+            } else  {
+                
+                if(raPosition > disPosition) {
+                    dis.skip(raPosition - disPosition);
+                }
+
+                try {
+                    // readInt = ra.readInt();
+                    // byteArray = new byte[readInt];
+                    // ra.read(byteArray);
+                    readInt = dis.readInt();
+                    byteArray = new byte[readInt];
+                    dis.read(byteArray);
+
+                    disPositionsArray[fileNumber] += 4 + byteArray.length;
+
+                    nextObjectsArray[fileNumber] = iLightSerializable.createInstance(byteArray);
+                } catch (IOException e) {
+                    // EOF
+                    nextObjectsArray[fileNumber] = null;
+                }
+            }
         }
         // System.out.println("Found:" + lastRetrievedObjectArray[fileNumber]);
         return lastRetrievedObjectArray[fileNumber];
     }
+
+    /**
+     * DOC amaumont Comment method "next".
+     * 
+     * @param hashcode
+     * @throws IOException
+     */
+    public Object next(int hashcode) throws IOException {
+
+        Object objectToReturn = null;
+        
+        int fileNumber = getFileNumber(hashcode);
+
+        Object next = nextObjectsArray[fileNumber];
+        
+        objectToReturn = next;
+        
+        RandomAccessFile ra = raArray[fileNumber];
+        DataInputStream dis = disArray[fileNumber];
+
+        long disPosition = disPositionsArray[fileNumber];
+
+        long raPosition = ra.getFilePointer();
+        
+        if (raPosition < disPosition && next == null) {
+            
+        } else  {
+            
+            if(raPosition > disPosition) {
+                dis.skip(raPosition - disPosition);
+            }
+
+            try {
+                // readInt = ra.readInt();
+                // byteArray = new byte[readInt];
+                // ra.read(byteArray);
+                int readInt = dis.readInt();
+                byte[] byteArray = new byte[readInt];
+                dis.read(byteArray);
+
+                disPositionsArray[fileNumber] += 4 + byteArray.length;
+
+                nextObjectsArray[fileNumber] = iLightSerializable.createInstance(byteArray);
+            } catch (IOException e) {
+                // EOF
+                nextObjectsArray[fileNumber] = null;
+            }
+        }
+
+        
+        
+        
+
+//        int readInt;
+//        try {
+//            readInt = ra.readInt();
+//        } catch (IOException e) {
+//            // EOF
+//            nextObjectsArray[fileNumber] = null;
+//            return null;
+//        }
+//        byte[] byteArray = new byte[readInt];
+//        ra.read(byteArray);
+//
+//        nextObjectsArray[fileNumber] = iLightSerializable.createInstance(byteArray);
+
+        return objectToReturn;
+    }
+
 
     public void endGet(String container) throws IOException {
         if (!readonly) {

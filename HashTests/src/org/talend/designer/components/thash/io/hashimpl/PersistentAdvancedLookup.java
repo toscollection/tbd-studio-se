@@ -47,7 +47,8 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
 
     SortedMultipleHashFile hashFile;
 
-    private String container = "/home/amaumont/hash_benchs/external_sort/tmp_";
+    // private String container = "/home/amaumont/hash_benchs/external_sort/tmp_";
+    private String container = "/home/amaumont/abc/c/lookup_sorted_";
 
     private boolean firstGet = true;
 
@@ -131,22 +132,27 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
         }
     }
 
-
     public void get(V key) {
         if (matchingMode == MATCHING_MODE.UNIQUE_MATCH) {
-            KeyForMap keyForMap = uniqueHash.get(key);
-            if (keyForMap != null) {
-                try {
-                    objectResult = (V) hashFile.get(container, keyForMap.cursorPosition, keyForMap.hashcode);
-                } catch (IOException e) {
-                    objectResult = null;
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    objectResult = null;
-                    e.printStackTrace();
+
+            try {
+                Object next = hashFile.next(key.hashCode());
+                if (key.equals(next)) {
+                    objectResult = (V) next;
+                } else {
+                    KeyForMap keyForMap = uniqueHash.get(key);
+                    if (keyForMap != null) {
+                        objectResult = (V) hashFile.get(container, keyForMap.cursorPosition, keyForMap.hashcode);
+                    } else {
+                        objectResult = null;
+                    }
                 }
-            } else {
+            } catch (IOException e) {
                 objectResult = null;
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                objectResult = null;
+                e.printStackTrace();
             }
 
         } else {
@@ -176,7 +182,7 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
 
     /**
      * @param container
-     * @throws IOException 
+     * @throws IOException
      * @throws IOException
      * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#endGet(java.lang.String)
      */
@@ -187,7 +193,6 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
             throw new RuntimeException(e);
         }
     }
-
 
     /**
      * DOC amaumont Comment method "initKeyContainers".
@@ -252,7 +257,7 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
     public V put(V value) {
 
         if (firstPut) {
-            hashFile.setILightSerializable((ILightSerializable)value);// set an Instance
+            hashFile.setILightSerializable((ILightSerializable) value);// set an Instance
             ((IPersistentBean) value).setHashFile(hashFile);
             firstPut = false;
         }
@@ -283,8 +288,6 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
         return null;
     }
 
-    
-    
     /**
      * @throws IOException
      * @see org.talend.designer.components.thash.io.hashimpl.SortedMultipleHashFile#endPut()
@@ -430,57 +433,57 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
         }
     }
 
-//    public static void main(String[] args) {
-//
-//        PersistentAdvancedLookup<Bean> lookup = PersistentAdvancedLookup.<Bean> getLookup(MATCHING_MODE.UNIQUE_MATCH);
-//
-//        final int nbItems = 100;
-//
-//        int[] randomArray = null;
-//
-//        boolean randomWrite = true;
-//
-//        if (randomWrite) {
-//            randomArray = new int[nbItems];
-//            for (int i = 0; i < randomArray.length; i++) {
-//                randomArray[i] = i;
-//            }
-//            int j = 0;
-//            Random rand = new Random(System.currentTimeMillis());
-//            // shiffle unique values
-//            for (int i = 0; i < randomArray.length; i++) {
-//                j = rand.nextInt(nbItems);
-//                int vj = randomArray[j];
-//                randomArray[j] = randomArray[i];
-//                randomArray[i] = vj;
-//            }
-//        }
-//
-//        for (int i = 0; i < nbItems; i++) {
-//            int v = i;
-//
-//            if (randomWrite) {
-//                v = randomArray[i];
-//                // System.out.println("reandom value =" + v);
-//            }
-//            Bean bean = new Bean(v, String.valueOf(v));
-//            lookup.put(bean);
-//        }
-//
-//        for (int i = 0; i < nbItems; i++) {
-//            Bean bean = new Bean(i, String.valueOf(i));
-//            lookup.get(bean);
-//            Bean persistentBean = lookup.getResultObject();
-//
-//            if (persistentBean != null) {
-//                if (!persistentBean.name.equals(bean.name) || persistentBean.primitiveInt != bean.primitiveInt) {
-//                    throw new RuntimeException("Bean data does not match " + i);
-//                }
-//            } else {
-//                throw new NullPointerException("persistentBean should'nt be null");
-//            }
-//
-//        }
-//
-//    }
+    // public static void main(String[] args) {
+    //
+    // PersistentAdvancedLookup<Bean> lookup = PersistentAdvancedLookup.<Bean> getLookup(MATCHING_MODE.UNIQUE_MATCH);
+    //
+    // final int nbItems = 100;
+    //
+    // int[] randomArray = null;
+    //
+    // boolean randomWrite = true;
+    //
+    // if (randomWrite) {
+    // randomArray = new int[nbItems];
+    // for (int i = 0; i < randomArray.length; i++) {
+    // randomArray[i] = i;
+    // }
+    // int j = 0;
+    // Random rand = new Random(System.currentTimeMillis());
+    // // shiffle unique values
+    // for (int i = 0; i < randomArray.length; i++) {
+    // j = rand.nextInt(nbItems);
+    // int vj = randomArray[j];
+    // randomArray[j] = randomArray[i];
+    // randomArray[i] = vj;
+    // }
+    // }
+    //
+    // for (int i = 0; i < nbItems; i++) {
+    // int v = i;
+    //
+    // if (randomWrite) {
+    // v = randomArray[i];
+    // // System.out.println("reandom value =" + v);
+    // }
+    // Bean bean = new Bean(v, String.valueOf(v));
+    // lookup.put(bean);
+    // }
+    //
+    // for (int i = 0; i < nbItems; i++) {
+    // Bean bean = new Bean(i, String.valueOf(i));
+    // lookup.get(bean);
+    // Bean persistentBean = lookup.getResultObject();
+    //
+    // if (persistentBean != null) {
+    // if (!persistentBean.name.equals(bean.name) || persistentBean.primitiveInt != bean.primitiveInt) {
+    // throw new RuntimeException("Bean data does not match " + i);
+    // }
+    // } else {
+    // throw new NullPointerException("persistentBean should'nt be null");
+    // }
+    //
+    // }
+    //
+    // }
 }

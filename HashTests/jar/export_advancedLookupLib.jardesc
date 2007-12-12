@@ -13,14 +13,15 @@
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{DataContainer.java"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{PersistentAdvancedLookup.java"/>
-        <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{FlowSorterIterator.java"/>
         <javaElement handleIdentifier="=org.talend.designer.components.localprovider/src\/main\/java&lt;org.talend.designer.components.commons"/>
+        <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{FlowSorterIterator.java"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.hashimpl{SortedMultipleHashFile.java"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io{IMapHashFile.java"/>
         <javaElement handleIdentifier="=org.talend.commons/src\/main\/java&lt;org.talend.commons.utils.data.map{MultiLazyValuesMap.java"/>
-        <javaElement handleIdentifier="=org.talend.core/src\/main\/java&lt;org.talend.core.model.process{IMatchingMode.java"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.beans{IPersistentBean.java"/>
+        <javaElement handleIdentifier="=org.talend.core/src\/main\/java&lt;org.talend.core.model.process{IMatchingMode.java"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.beans{ILightSerializable.java"/>
+        <javaElement handleIdentifier="=org.talend.commons/src\/main\/java&lt;org.talend.commons.utils.time"/>
         <javaElement handleIdentifier="=HashTests/src&lt;org.talend.designer.components.thash.io.beans{KeyForMap.java"/>
     </selectedElements>
 </jardesc>

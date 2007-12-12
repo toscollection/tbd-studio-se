@@ -65,8 +65,8 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
 //     private int bufferSize = 5000000;
 //     private int bufferSize = 8000000;
 //     private int bufferSize = 9000000;
-     private int bufferSize = 9200000;
-//    private int bufferSize = 10000000;
+//     private int bufferSize = 9200000;
+    private int bufferSize = 10000000;
 
     private int itemCountInBuffer = 0;
 
@@ -87,7 +87,8 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
     
     
     
-    public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
+//    public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
+    public String workDirectory = "/home/amaumont/abc/c/";
 
     public int count = 0;
 
@@ -166,6 +167,7 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
         if (itemCountInBuffer > 0) {
             writeBuffer(buffer, itemCountInBuffer);
         }
+        buffer = null;
     }
 
     public void initGet(String container) throws FileNotFoundException {
