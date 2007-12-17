@@ -47,8 +47,9 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
 
     SortedMultipleHashFile hashFile;
 
-    // private String container = "/home/amaumont/hash_benchs/external_sort/tmp_";
-    private String container = "/home/amaumont/abc/c/lookup_sorted_";
+    private String container = "/home/amaumont/hash_benchs/external_sort/lookup_sorted_";
+
+    // private String container = "/home/amaumont/abc/c/lookup_sorted_";
 
     private boolean firstGet = true;
 
@@ -136,15 +137,20 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
         if (matchingMode == MATCHING_MODE.UNIQUE_MATCH) {
 
             try {
-                Object next = hashFile.next(key.hashCode());
-                if (key.equals(next)) {
-                    objectResult = (V) next;
+                V current = (V) hashFile.current(key.hashCode());
+                if (key.equals(current)) {
+                    objectResult = (V) current;
                 } else {
-                    KeyForMap keyForMap = uniqueHash.get(key);
-                    if (keyForMap != null) {
-                        objectResult = (V) hashFile.get(container, keyForMap.cursorPosition, keyForMap.hashcode);
+                    V next = (V) hashFile.next(key.hashCode());
+                    if (key.equals(next)) {
+                        objectResult = (V) next;
                     } else {
-                        objectResult = null;
+                        KeyForMap keyForMap = uniqueHash.get(key);
+                        if (keyForMap != null) {
+                            objectResult = (V) hashFile.get(container, keyForMap.cursorPosition, keyForMap.hashcode);
+                        } else {
+                            objectResult = null;
+                        }
                     }
                 }
             } catch (IOException e) {

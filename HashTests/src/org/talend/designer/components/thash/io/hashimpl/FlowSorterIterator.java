@@ -87,8 +87,8 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
     
     
     
-//    public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
-    public String workDirectory = "/home/amaumont/abc/c/";
+    public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
+//    public String workDirectory = "/home/amaumont/abc/c/";
 
     public int count = 0;
 

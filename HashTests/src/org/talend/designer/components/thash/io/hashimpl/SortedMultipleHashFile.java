@@ -76,7 +76,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
 
     private String container = null;
 
-    private String mergeRepository = "/home/amaumont/abc/a/lookup_merge_";
+    private String mergeRepository = "/home/amaumont/hash_benchs/external_sort/lookup_merge_";
+//    private String mergeRepository = "/home/amaumont/abc/a/lookup_merge_";
 
     ILightSerializable iLightSerializable = null;// Change this based on the Bean class;
 
@@ -332,6 +333,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
         for (int i = 0; i < numberFiles; i++) {
             raArray[i] = new RandomAccessFile(mergeRepository + i, "r");
             disArray[i] = new DataInputStream(new BufferedInputStream(new FileInputStream(mergeRepository + i)));
+            next(i);
             lastRetrievedCursorPositionArray[i] = -1;
         }
     }
@@ -394,6 +396,11 @@ public class SortedMultipleHashFile implements IMapHashFile {
         return lastRetrievedObjectArray[fileNumber];
     }
 
+    public Object current(int hashcode) throws IOException {
+        int fileNumber = getFileNumber(hashcode);
+        return lastRetrievedObjectArray[fileNumber];
+    }
+    
     /**
      * DOC amaumont Comment method "next".
      * 
@@ -443,9 +450,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
         }
 
         
+        lastRetrievedObjectArray[fileNumber] = objectToReturn;
         
-        
-
 //        int readInt;
 //        try {
 //            readInt = ra.readInt();
@@ -469,6 +475,10 @@ public class SortedMultipleHashFile implements IMapHashFile {
                 RandomAccessFile ra = raArray[i];
                 if (ra != null) {
                     ra.close();
+                }
+                DataInputStream dis = disArray[i];
+                if (dis != null) {
+                    dis.close();
                 }
                 File file = new File(container + i);
                 // file.delete();
