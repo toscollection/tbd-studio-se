@@ -33,5 +33,10 @@
 	<classpathentry exported="true" kind="lib" path="talend-file-enhanced-1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry exported="true" kind="lib" path="core-renderer.jar"/>
+	<classpathentry exported="true" kind="lib" path="core-renderer-minimal.jar"/>
+	<classpathentry exported="true" kind="lib" path="itext-paulo-155.jar"/>
+	<classpathentry exported="true" kind="lib" path="minium.jar"/>
+	<classpathentry exported="true" kind="lib" path="Tidy.jar"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
