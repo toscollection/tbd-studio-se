@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.libraries;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.core.runtime.Plugin;
 
 /**
  * DOC cantoine class global comment. Detailled comment <br/>
@@ -20,7 +20,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * $Id$
  * 
  */
-public class LibrariesPlugin extends AbstractUIPlugin {
+public class LibrariesPlugin extends Plugin {
 
     public LibrariesPlugin() {
     }
