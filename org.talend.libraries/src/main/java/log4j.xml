@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- For layout pattern, see doc at http://jakarta.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
+
+	<!-- The TOS appender -->
+	<appender name="TOSAppender" class="org.talend.libraries.PluginLogAppender">
+		<param name="Threshold" value="debug" />
+		<param name="SymbolicName" value="org.talend.libraries"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d %-5p %c %x - %m%n" />
+		</layout>
+	</appender>
+
+	<!-- The console appender (will output in catalina.out when used in Tomcat) -->
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="info" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p: %m%n" />
+		</layout>
+	</appender>
+
+	<!--  Set here specific level for packages  -->
+	<logger name="org.talend" additivity="true"> <level value="debug" /> </logger>
+	<logger name="org.talend.commons.utils.workbench.resources" additivity="true"> <level value="debug" /> </logger>
+	
+
+	<!--  Set here specific level for classes  -->
+	<logger name="org.talend.designer.runprocess.ui.views.ProcessView" additivity="true"> <level value="debug" /> </logger>
+	<logger name="org.talend.designer.core.ui.views.modules.ModulesView" additivity="true"> <level value="debug" /> </logger>
+	<logger name="org.talend.designer.codegen.model.CodeGeneratorEmittersPoolFactory" additivity="true"> <level value="debug" /> </logger>
+	<logger name="org.talend.designer.components.model.ComponentsFactory" additivity="true"> <level value="debug" /> </logger>
+	<logger name="org.talend.repository.ui.views.RepositoryView"> <level value="debug" /> </logger>
+	
+	
+	<root>
+		<priority value="trace" />
+		<!-- Put here your appenders -->
+		
+		<!-- uncomment the following appender in order to have a console log -->
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="TOSAppender" />
+	</root>
+
+</log4j:configuration>

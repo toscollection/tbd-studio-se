@@ -47,7 +47,6 @@ Bundle-ClassPath: .,
  itext-paulo-155.jar,
  minium.jar,
  Tidy.jar
-Bundle-Localization: plugin
 Export-Package: COM.ibm.db2.app,
  COM.ibm.db2os390.dsn,
  COM.ibm.db2os390.sqlj.jdbc,
