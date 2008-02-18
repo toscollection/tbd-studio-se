@@ -17,7 +17,7 @@
 
 	<!-- The console appender (will output in catalina.out when used in Tomcat) -->
 	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
-		<param name="Threshold" value="info" />
+		<param name="Threshold" value="error" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p: %m%n" />
 		</layout>
@@ -37,7 +37,7 @@
 	
 	
 	<root>
-		<priority value="trace" />
+		<priority value="debug" />
 		<!-- Put here your appenders -->
 		
 		<!-- uncomment the following appender in order to have a console log -->
