@@ -554,14 +554,14 @@ Export-Package: COM.ibm.db2.app,
  sqlj.runtime.util,
  translation,
  utilities
-Eclipse-BuddyPolicy: registered, dependent
 Eclipse-LazyStart: true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.talend.libraries.jdbc.jtds;visibility:=reexport,
  org.talend.libraries.jdbc.mysql;visibility:=reexport,
- org.talend.libraries.apache;visibility:=reexport
+ org.talend.libraries.apache;visibility:=reexport,
+ org.talend.libraries.logging
 Bundle-Activator: org.talend.libraries.LibrariesPlugin
 Import-Package: com.ibm.icu.text
 Bundle-Vendor: .Talend SA.
