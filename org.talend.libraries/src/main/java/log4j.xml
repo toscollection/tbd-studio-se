@@ -7,7 +7,7 @@
 
 	<!-- The TOS appender -->
 	<appender name="TOSAppender" class="org.talend.libraries.PluginLogAppender">
-		<param name="Threshold" value="debug" />
+		<param name="Threshold" value="info" />
 		<param name="SymbolicName" value="org.talend.libraries"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
@@ -23,25 +23,12 @@
 		</layout>
 	</appender>
 
-	<!--  Set here specific level for packages  -->
-	<logger name="org.talend" additivity="true"> <level value="debug" /> </logger>
-	<logger name="org.talend.commons.utils.workbench.resources" additivity="true"> <level value="debug" /> </logger>
-	
-
-	<!--  Set here specific level for classes  -->
-	<logger name="org.talend.designer.runprocess.ui.views.ProcessView" additivity="true"> <level value="debug" /> </logger>
-	<logger name="org.talend.designer.core.ui.views.modules.ModulesView" additivity="true"> <level value="debug" /> </logger>
-	<logger name="org.talend.designer.codegen.model.CodeGeneratorEmittersPoolFactory" additivity="true"> <level value="debug" /> </logger>
-	<logger name="org.talend.designer.components.model.ComponentsFactory" additivity="true"> <level value="debug" /> </logger>
-	<logger name="org.talend.repository.ui.views.RepositoryView"> <level value="debug" /> </logger>
-
 	<logger name="org.hibernate" additivity="true"> <level value="warn" /> </logger>
 	<logger name="com.mchange" additivity="true"> <level value="warn" /> </logger>
 	<logger name="net.sf.ehcache" additivity="true"> <level value="warn" /> </logger>
 	
-	
 	<root>
-		<priority value="debug" />
+		<priority value="info" />
 		<!-- Put here your appenders -->
 		
 		<!-- uncomment the following appender in order to have a console log -->
