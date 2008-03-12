@@ -3,7 +3,6 @@ package org.talend.designer.components.thash.io.hashimpl;
 import gnu.trove.THashMap;
 import gnu.trove.TObjectHashingStrategy;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.designer.components.thash.io.hashimpl;
 
-import gnu.trove.TObjectHashingStrategy;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
@@ -28,7 +26,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 import org.talend.designer.components.thash.io.IMapHashFile;

@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.designer.components.thash.io;
 
-import org.talend.designer.components.thash.io.beans.Bean;
 
 
 

@@ -12,8 +12,6 @@
 // ============================================================================
 package org.talend.designer.components.thash.io.hashimpl;
 
-import gnu.trove.TObjectHashingStrategy;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
