@@ -39,5 +39,6 @@
 	<classpathentry exported="true" kind="lib" path="core-renderer-minimal.jar"/>
 	<classpathentry exported="true" kind="lib" path="itext-paulo-155.jar"/>
 	<classpathentry exported="true" kind="lib" path="minium.jar"/>
+	<classpathentry kind="lib" path="jxl.jar"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
