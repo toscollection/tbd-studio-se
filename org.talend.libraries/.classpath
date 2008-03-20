@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="jxl.jar"/>
 	<classpathentry exported="true" kind="lib" path="sapdbc.jar"/>
 	<classpathentry exported="true" kind="lib" path="Tidy.jar"/>
 	<classpathentry exported="true" kind="lib" path="hsqldb.jar"/>
@@ -39,6 +40,5 @@
 	<classpathentry exported="true" kind="lib" path="core-renderer-minimal.jar"/>
 	<classpathentry exported="true" kind="lib" path="itext-paulo-155.jar"/>
 	<classpathentry exported="true" kind="lib" path="minium.jar"/>
-	<classpathentry kind="lib" path="jxl.jar"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
