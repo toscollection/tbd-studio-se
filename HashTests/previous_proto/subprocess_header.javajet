@@ -1,0 +1,238 @@
+<%@ jet 
+	package="org.talend.designer.codegen.translators" 
+	imports="
+		org.talend.designer.codegen.config.NodesSubTree
+		org.talend.core.model.process.INode
+		java.util.List
+		java.util.HashSet
+		java.util.Set
+		java.util.Map
+		org.talend.core.model.process.IProcess
+		org.talend.core.model.process.EConnectionType
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.process.IHashableInputConnections
+		org.talend.core.model.process.IHashConfiguration
+		org.talend.core.model.process.IHashableColumn
+	" 
+	class="SubProcessHeader"
+	skeleton="subprocess_header_java.skeleton"
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	NodesSubTree subTree = (NodesSubTree) codeGenArgument.getArgument();
+	boolean isRunInMultiThread = codeGenArgument.getIsRunInMultiThread();
+%>
+
+<%
+	HashSet<String> hSet = new HashSet<String>();
+	for (INode node : subTree.getNodes()) {
+		List<IMetadataTable> metadatas = node.getMetadataList();
+			List< ? extends IConnection> conns = node.getOutgoingConnections();
+			for (IConnection conn : conns) {
+				// templateOrigin is used for Virtual COmponents
+				String templateOrigin = "";
+				if (conn.getTarget()!=null) {
+					templateOrigin = ElementParameterParser.getValue(conn.getTarget(), "__ORIGIN__");
+				}
+				if (
+					(templateOrigin.compareTo("")!=0) ||
+					(conn.getLineStyle().equals(EConnectionType.FLOW_MAIN))||
+					(conn.getLineStyle().equals(EConnectionType.FLOW_REF)) ||
+					(conn.getLineStyle().equals(EConnectionType.FLOW_MERGE))||
+					(conn.getLineStyle().equals(EConnectionType.RUN_AFTER)) 
+				) {
+
+					if(conn.getLineStyle().equals(EConnectionType.RUN_AFTER)){
+						templateOrigin = ElementParameterParser.getValue(conn.getSource(), "__ORIGIN__");
+					}				
+					if (!hSet.contains(conn.getName() + templateOrigin)) {
+						hSet.add(conn.getName() + templateOrigin);
+						IMetadataTable metadata = conn.getMetadataTable();
+						
+						Set<String> hashableColumnsNames = new HashSet<String>();
+						if(conn.getTarget() instanceof IHashableInputConnections) {
+							IHashableInputConnections target = (IHashableInputConnections) conn.getTarget();
+							IHashConfiguration hashConfiguration = target.getHashConfiguration(conn.getName());
+							if(hashConfiguration != null) {
+								for(IHashableColumn hashableColumn : hashConfiguration.getHashableColumns()) {
+									hashableColumnsNames.add(hashableColumn.getName());
+								}
+							}
+						} else {
+						
+							//only for the lookup branch of the tJoin
+							boolean isLookOftJoin = false;
+							if(conn.getLineStyle().equals(EConnectionType.FLOW_REF)){
+    							IProcess process = conn.getTarget().getProcess();
+    							for (INode tjoinNode : process.getNodesOfType("tJoin")) {
+    								if(conn.getTarget().getUniqueName().equals(tjoinNode.getUniqueName())){
+    									List<Map<String, String>> joinKeys = (List<Map<String,String>>)ElementParameterParser.getObjectValue(conn.getTarget(), "__JOIN_KEY__");
+    									for(Map<String, String> joinKeyLine : joinKeys){       
+                                			String lookupKey = joinKeyLine.get("LOOKUP_COLUMN");
+                                			hashableColumnsNames.add(lookupKey);
+    									}
+    									isLookOftJoin = true;
+    								}
+    							}
+							}
+													
+							if (!isLookOftJoin && metadata!=null) { 
+								for (IMetadataColumn column: metadata.getListColumns()) {
+									if (column.isKey()) {
+										hashableColumnsNames.add(column.getLabel());
+									}
+								}
+							}
+						}
+						boolean hasAtLeastOneKey = hashableColumnsNames.size() > 0;
+						
+%>
+
+private class <%=conn.getName() %>Struct<%=templateOrigin %> {
+<%
+	if(hasAtLeastOneKey) {
+%>
+	private static final int DEFAULT_HASHCODE = 1;
+    private static final int PRIME = 31;
+    private int hashCode = DEFAULT_HASHCODE;
+    public boolean hashCodeDirty = true;
+<%
+	}
+%>
+    
+	<%
+		if (metadata !=null) {
+			for (IMetadataColumn column: metadata.getListColumns()) {
+    %>
+    	<%= JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable()) %> <%=column.getLabel() %>;
+	<%
+			}
+		}
+    %>
+    
+    <%
+	if(hasAtLeastOneKey) {
+	%>
+    
+	@Override
+	public int hashCode() {
+		if (this.hashCodeDirty) {
+			final int prime = PRIME;
+			int result = DEFAULT_HASHCODE;
+	<%
+		if (metadata !=null) {
+			for (IMetadataColumn column: metadata.getListColumns()) {
+				if (hashableColumnsNames.contains(column.getLabel())) {
+					if (JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable())) {
+	%>
+				result = prime * result + (int) this.<%=column.getLabel() %>;
+	<%
+				} else {
+	%>
+				result = prime * result + ((this.<%=column.getLabel() %> == null) ? 0 : this.<%=column.getLabel() %>.hashCode());
+	<%
+					}
+				}
+			}
+		}
+    %>
+    		this.hashCode = result;
+    		this.hashCodeDirty = false;		
+		}
+		return this.hashCode;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		final <%=conn.getName() %>Struct<%=templateOrigin %> other = (<%=conn.getName() %>Struct<%=templateOrigin %>) obj;
+		<%	
+		if (metadata !=null) {
+			for (IMetadataColumn column: metadata.getListColumns()) {
+				if (hashableColumnsNames.contains(column.getLabel())) {
+					if (JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable())) {
+				%>
+					if (this.<%=column.getLabel() %> != other.<%=column.getLabel() %>) 
+						return false;
+				<%
+					} else {
+				%>
+					if (this.<%=column.getLabel() %> == null) {
+						if (other.<%=column.getLabel() %> != null) 
+							return false;
+					} else if (!this.<%=column.getLabel() %>.equals(other.<%=column.getLabel() %>)) 
+						return false;
+				<%
+					}
+				}
+			}
+    	}
+    %>
+		return true;
+    }
+    
+    <%
+	}
+	%>
+    
+}
+<%
+						}
+					}
+				}
+	}
+%>
+
+public void <%=subTree.getName() %>Process() throws TalendException {
+<%
+	if(isRunInMultiThread){
+%>
+	String currentComponent = "";
+<%
+	}
+%>				
+	try {
+<%
+	// Call for RUN AFTER links
+	for (String after : subTree.getAfterSubProcesses()) {
+%>
+		<%=after %>Process();
+<%
+	}
+%>
+
+<%
+	if(!subTree.isMergeSubTree()) {
+	List< ? extends IConnection> rootConns = subTree.getRootNode().getOutgoingConnections();
+	if ((rootConns!=null)&&(rootConns.size()>0)) {
+%>
+		<%=createPrivateClassInstance(subTree.getRootNode(), rootConns.get(0).getName(), false)%>
+<%
+	}
+  } else {  
+    List<INode> sortedMergeBranchStarts = subTree.getSortedMergeBranchStarts();    
+    for (INode startNode : sortedMergeBranchStarts) {
+       List< ? extends IConnection> rootConns = startNode.getOutgoingConnections();
+       if ((rootConns!=null)&&(rootConns.size()>0)) {
+%>		  
+		<%=createPrivateClassInstance(startNode, rootConns.get(0).getName(), false)%>
+<%
+      }
+    }
+    
+	List< ? extends IConnection> rootConns = subTree.getMergeNode().getOutgoingConnections();
+	if ((rootConns!=null)&&(rootConns.size()>0)) {
+%>
+		<%=createPrivateClassInstance(subTree.getMergeNode(), rootConns.get(0).getName(), false)%>
+<%
+	}
+    
+  }
+%>

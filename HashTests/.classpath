@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="lib" path="lib/je-3.2.44.jar" sourcepath="/Berkeley_DB"/>
 	<classpathentry kind="lib" path="lib/sqlitejdbc-v037-nested.jar"/>
 	<classpathentry kind="lib" path="lib/trove-2.0.1.jar" sourcepath="/Trove"/>
@@ -16,5 +17,9 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/org.talend.commons"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.talend.core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.talend.designer.components.localprovider"/>
+	<classpathentry kind="lib" path="lib/javacsv.jar"/>
+	<classpathentry kind="lib" path="lib/systemRoutines.jar"/>
+	<classpathentry kind="lib" path="lib/talend_file_enhanced_20070724.jar"/>
+	<classpathentry kind="lib" path="lib/userRoutines.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
