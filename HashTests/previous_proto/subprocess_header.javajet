@@ -6,18 +6,18 @@
 		java.util.List
 		java.util.HashSet
 		java.util.Set
-		java.util.Map
-		org.talend.core.model.process.IProcess
 		org.talend.core.model.process.EConnectionType
 		org.talend.core.model.process.IConnection
 		org.talend.core.model.metadata.IMetadataTable 
 		org.talend.core.model.metadata.IMetadataColumn
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.core.model.process.IHashableInputConnections
 		org.talend.core.model.process.IHashConfiguration
 		org.talend.core.model.process.IHashableColumn
+				
 	" 
 	class="SubProcessHeader"
 	skeleton="subprocess_header_java.skeleton"
@@ -47,14 +47,24 @@
 					(conn.getLineStyle().equals(EConnectionType.RUN_AFTER)) 
 				) {
 
+						Set<String> hashableColumnsNames = new HashSet<String>();
+						IMetadataTable metadata = conn.getMetadataTable();
+
+							if (metadata!=null) { 
+								for (IMetadataColumn column: metadata.getListColumns()) {
+									if (column.isKey()) {
+										hashableColumnsNames.add(column.getLabel());
+									}
+								}
+							}
+
+
 					if(conn.getLineStyle().equals(EConnectionType.RUN_AFTER)){
 						templateOrigin = ElementParameterParser.getValue(conn.getSource(), "__ORIGIN__");
 					}				
 					if (!hSet.contains(conn.getName() + templateOrigin)) {
 						hSet.add(conn.getName() + templateOrigin);
-						IMetadataTable metadata = conn.getMetadataTable();
 						
-						Set<String> hashableColumnsNames = new HashSet<String>();
 						if(conn.getTarget() instanceof IHashableInputConnections) {
 							IHashableInputConnections target = (IHashableInputConnections) conn.getTarget();
 							IHashConfiguration hashConfiguration = target.getHashConfiguration(conn.getName());
@@ -64,24 +74,7 @@
 								}
 							}
 						} else {
-						
-							//only for the lookup branch of the tJoin
-							boolean isLookOftJoin = false;
-							if(conn.getLineStyle().equals(EConnectionType.FLOW_REF)){
-    							IProcess process = conn.getTarget().getProcess();
-    							for (INode tjoinNode : process.getNodesOfType("tJoin")) {
-    								if(conn.getTarget().getUniqueName().equals(tjoinNode.getUniqueName())){
-    									List<Map<String, String>> joinKeys = (List<Map<String,String>>)ElementParameterParser.getObjectValue(conn.getTarget(), "__JOIN_KEY__");
-    									for(Map<String, String> joinKeyLine : joinKeys){       
-                                			String lookupKey = joinKeyLine.get("LOOKUP_COLUMN");
-                                			hashableColumnsNames.add(lookupKey);
-    									}
-    									isLookOftJoin = true;
-    								}
-    							}
-							}
-													
-							if (!isLookOftJoin && metadata!=null) { 
+							if (metadata!=null) { 
 								for (IMetadataColumn column: metadata.getListColumns()) {
 									if (column.isKey()) {
 										hashableColumnsNames.add(column.getLabel());
@@ -93,7 +86,9 @@
 						
 %>
 
-private class <%=conn.getName() %>Struct<%=templateOrigin %> {
+private static class <%=conn.getName() %>Struct<%=templateOrigin %> implements ILightSerializable, IPersistentBean {
+
+
 <%
 	if(hasAtLeastOneKey) {
 %>
@@ -115,8 +110,217 @@ private class <%=conn.getName() %>Struct<%=templateOrigin %> {
 		}
     %>
     
+    
+    
+    
+    
+        public ILightSerializable createInstance(byte[] bytes) {
+        <%=conn.getName() %>Struct<%=templateOrigin %> result = new <%=conn.getName() %>Struct<%=templateOrigin %>();
+        ByteArrayInputStream bai = null;
+        DataInputStream dis = null;
+        byte[] byteArray = null;
+        try {
+            bai = new ByteArrayInputStream(bytes);
+            dis = new DataInputStream(bai);
+            
+			int length = 0;
+		<%	
+		if (metadata !=null) {
+			for (IMetadataColumn column: metadata.getListColumns()) {
+				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+			 	String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+				if (JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable())) {
+					typeToGenerate=typeToGenerate.substring(0,1).toUpperCase()+typeToGenerate.substring(1);
+					%>
+			            result.<%=column.getLabel() %> = dis.read<%= typeToGenerate %>();
+					<%
+				} else if(javaType.isNumber()) {
+					typeToGenerate =JavaTypesManager.getTypeToGenerate(column.getTalendType(), false);
+					typeToGenerate=typeToGenerate.substring(0,1).toUpperCase()+typeToGenerate.substring(1);
+					%>
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			result.<%=column.getLabel() %> = null;
+           				} else {
+           			    	result.<%=column.getLabel() %> = dis.read<%= typeToGenerate %>();
+           				}
+					<%
+				
+				} else if(typeToGenerate.equals("java.util.Date")) {
+					%>
+			            length = dis.readByte();
+           				if (length == -1) {
+           	    			result.<%=column.getLabel() %> = null;
+           				} else {
+           			    	result.<%=column.getLabel() %> = new Date(dis.readLong());
+           				}
+					<%
+				} else if(typeToGenerate.equals("String")) {
+					%>
+			            length = dis.readInt();
+           				if (length == -1) {
+           	    			result.<%=column.getLabel() %> = null;
+           				} else {
+               				byteArray = new byte[length];
+               				dis.read(byteArray);
+               				result.<%=column.getLabel() %> = new String(byteArray);
+           				}
+					<%
+				} else {
+					%>
+						throw new UnsupportedOperationException("Unknow types are not supported");
+					<%
+				}
+			}
+    	}
+	    %>
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (dis != null) {
+                try {
+                    dis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
+
+    public byte[] toByteArray() {
+        ByteArrayOutputStream bao = null;
+        DataOutputStream dos = null;
+        byte[] byteArray = null;
+        try {
+            bao = new ByteArrayOutputStream();
+            dos = new DataOutputStream(bao);
+
+		<%	
+		if (metadata !=null) {
+			for (IMetadataColumn column: metadata.getListColumns()) {
+				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+			 	String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+				if (JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable())) {
+					typeToGenerate=typeToGenerate.substring(0,1).toUpperCase()+typeToGenerate.substring(1);
+					%>
+		            	dos.write<%= typeToGenerate %>(this.<%=column.getLabel() %>);
+					<%
+				} else if(javaType.isNumber()) {
+					typeToGenerate =JavaTypesManager.getTypeToGenerate(column.getTalendType(), false);
+					typeToGenerate = typeToGenerate.substring(0,1).toUpperCase()+typeToGenerate.substring(1);
+					%>
+						if(this.<%=column.getLabel() %> == null) {
+			                dos.writeByte(-1);
+						} else {
+               				dos.writeByte(0);
+           			    	dos.write<%= typeToGenerate %>(this.<%=column.getLabel() %>);
+		            	}
+					<%
+				
+				} else if(typeToGenerate.equals("String")) {
+					%>
+						if(this.<%=column.getLabel() %> == null) {
+			                dos.writeInt(-1);
+						} else {
+			                byteArray = this.<%=column.getLabel() %>.getBytes();
+           			    	dos.writeInt(byteArray.length);
+               				dos.write(byteArray);
+		            	}
+					<%
+				} else if(typeToGenerate.equals("java.util.Date")) {
+					%>
+						if(this.<%=column.getLabel() %> == null) {
+			                dos.writeInt(-1);
+						} else {
+           			    	dos.writeLong(this.<%=column.getLabel() %>.getTime());
+		            	}
+					<%
+				} else {
+					%>
+						throw new UnsupportedOperationException("Unknow types are not supported");
+					<%
+				}
+			}
+    	}
+	    %>
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (dos != null) {
+                try {
+                    dos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bao.toByteArray();
+    }
+
+
+    public int compareTo(Object o) {
+        <%=conn.getName() %>Struct<%=templateOrigin %> other = (<%=conn.getName() %>Struct<%=templateOrigin %>) o;
+		
+		int returnValue = 0;
+		<%	
+		if (metadata !=null) {
+			for (IMetadataColumn column: metadata.getListColumns()) {
+				if (hashableColumnsNames.contains(column.getLabel())) {
+					%>
+						returnValue = checkNullsAndCompare(this.<%=column.getLabel() %>, other.<%=column.getLabel() %>);
+						if(returnValue != 0) {
+							return returnValue;
+						}
+
+					<%
+				}
+			}
+    	}
+	    %>
+	    return returnValue;
+    }
+    
+    
+    private int checkNullsAndCompare(Object object1, Object object2) {
+        int returnValue = 0;
+		if (object1 instanceof Comparable && object2 instanceof Comparable) {
+            returnValue = ((Comparable) object1).compareTo(object2);
+        } else if (object1 != null && object2 != null) {
+            returnValue = compareStrings(object1.toString(), object2.toString());
+        } else if (object1 == null && object2 != null) {
+            returnValue = 1;
+        } else if (object1 != null && object2 == null) {
+            returnValue = -1;
+        } else {
+            returnValue = 0;
+        }
+
+        return returnValue;
+    }
+
+    private int compareStrings(String string1, String string2) {
+        //if (this.ignoreCase) {
+            return string1.compareToIgnoreCase(string2);
+        //} else {
+        //    return string1.compareTo(string2);
+        //}
+    }
+
+    public static IMapHashFile hashFile;
+    
+    /* (non-Javadoc)
+     * @see org.talend.designer.components.thash.io.beans.IPersistentBean#setHashFile(org.talend.designer.components.thash.io.IMapHashFile)
+     */
+    public void setHashFile(IMapHashFile hashFile) {
+        <%=conn.getName() %>Struct<%=templateOrigin %>.hashFile = hashFile;
+    }
+    
+	
+
+
     <%
-	if(hasAtLeastOneKey) {
+	if(hasAtLeastOneKey) { // 01
 	%>
     
 	@Override
@@ -146,13 +350,34 @@ private class <%=conn.getName() %>Struct<%=templateOrigin %> {
 		}
 		return this.hashCode;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
 		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
-		final <%=conn.getName() %>Struct<%=templateOrigin %> other = (<%=conn.getName() %>Struct<%=templateOrigin %>) obj;
+        if (this.hashCode() != obj.hashCode()) {
+            return false;
+        }
+        
+       	<%=conn.getName() %>Struct<%=templateOrigin %> other = null;
+        if(obj instanceof KeyForMap) {
+        
+        	final KeyForMap key = (KeyForMap) obj;
+
+        	try {
+            	other = (<%=conn.getName() %>Struct<%=templateOrigin %>) hashFile.get(null, (long) key.cursorPosition, this.hashCode);
+        	} catch (Exception e) {
+            	throw new RuntimeException(e);
+        	}
+        
+        } else {
+        	other = (<%=conn.getName() %>Struct<%=templateOrigin %>) obj;
+        }
+        
+        if (other == null) {
+            return false;
+        }
+
 		<%	
 		if (metadata !=null) {
 			for (IMetadataColumn column: metadata.getListColumns()) {
@@ -179,7 +404,7 @@ private class <%=conn.getName() %>Struct<%=templateOrigin %> {
     }
     
     <%
-	}
+	} // 01
 	%>
     
 }
