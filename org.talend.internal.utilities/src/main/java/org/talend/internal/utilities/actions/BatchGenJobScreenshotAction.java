@@ -53,7 +53,7 @@ import org.talend.repository.ui.views.RepositoryView;
  */
 public class BatchGenJobScreenshotAction extends Action {
 
-    private boolean debug = true;
+    private boolean debug = false;
 
     private void trace(String s) {
         if (debug) {
