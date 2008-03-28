@@ -132,7 +132,7 @@ public class PersistentAdvancedLookup<V> extends AdvancedLookup<V> {
         }
     }
 
-    public void get(V key) {
+    public void lookup(V key) {
         if (matchingMode == MATCHING_MODE.UNIQUE_MATCH) {
 
             try {

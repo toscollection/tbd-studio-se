@@ -400,86 +400,6 @@ public class MainPrototype1 {
 
             }
 
-            class SortableRow_Lookup_LF1 implements Comparable<SortableRow_Lookup_LF1>, ILookupBean {
-
-                int LF1__K1;
-
-                int LF1__K2;
-
-                String LF1__V;
-
-                public byte[] toKeysData(int valuesDataSize) {
-
-                    ByteArrayOutputStream bao = null;
-                    DataOutputStream dos = null;
-
-                    try {
-                        dos.writeInt(LF1__K1);
-                        dos.writeInt(LF1__K2);
-
-                        dos.writeInt(valuesDataSize);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return bao.toByteArray();
-                }
-
-                public int loadKeysData(byte[] keysData) {
-
-                    DataInputStream dis = null;
-
-                    int valuesDataSize = 0;
-                    try {
-                        this.LF1__K1 = dis.readInt();
-                        this.LF1__K2 = dis.readInt();
-
-                        valuesDataSize = dis.readInt();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return valuesDataSize;
-                }
-
-                public byte[] toValuesData() {
-                    ByteArrayOutputStream bao = null;
-                    DataOutputStream dos = null;
-
-                    try {
-                        dos.writeUTF(LF1__V);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return bao.toByteArray();
-
-                }
-
-                public void loadValuesData(byte[] valuesData) {
-                    DataInputStream dis = null;
-
-                    try {
-                        this.LF1__V = dis.readUTF();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                public int compareTo(SortableRow_Lookup_LF1 other) {
-
-                    int returnValue = 0;
-                    returnValue = checkNullsAndCompare(this.LF1__K1, other.LF1__K1);
-                    if (returnValue != 0) {
-                        return returnValue;
-                    }
-                    returnValue = checkNullsAndCompare(this.LF1__K2, other.LF1__K2);
-                    return returnValue;
-                }
-
-            }
-
             class SortableRow_Join_M__LF1 implements Comparable<SortableRow_Join_M__LF1>, IMainBean {
 
                 int expKey_LF2__K1;
@@ -578,85 +498,6 @@ public class MainPrototype1 {
                     }
                     returnValue = checkNullsAndCompare(this.expKey_LF2__K2, other.expKey_LF2__K2);
 
-                    return returnValue;
-                }
-
-            }
-
-            class SortableRow_Lookup_LF2 implements Comparable<SortableRow_Lookup_LF2>, ILookupBean {
-
-                int LF2__K1;
-
-                int LF2__K2;
-
-                String LF2__V;
-
-                public byte[] toKeysData(int valuesDataSize) {
-
-                    ByteArrayOutputStream bao = null;
-                    DataOutputStream dos = null;
-
-                    try {
-                        dos.writeInt(LF2__K1);
-                        dos.writeInt(LF2__K2);
-
-                        dos.writeInt(valuesDataSize);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return bao.toByteArray();
-                }
-
-                public int loadKeysData(byte[] keysData) {
-
-                    DataInputStream dis = null;
-
-                    int valuesDataSize = 0;
-                    try {
-                        this.LF2__K1 = dis.readInt();
-                        this.LF2__K2 = dis.readInt();
-
-                        valuesDataSize = dis.readInt();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return valuesDataSize;
-                }
-
-                public byte[] toValuesData() {
-                    ByteArrayOutputStream bao = null;
-                    DataOutputStream dos = null;
-
-                    try {
-                        dos.writeUTF(LF2__V);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    return bao.toByteArray();
-
-                }
-
-                public void loadValuesData(byte[] valuesData) {
-                    DataInputStream dis = null;
-
-                    try {
-                        this.LF2__V = dis.readUTF();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                public int compareTo(SortableRow_Lookup_LF2 other) {
-
-                    int returnValue = 0;
-                    returnValue = checkNullsAndCompare(this.LF2__K1, other.LF2__K1);
-                    if (returnValue != 0) {
-                        return returnValue;
-                    }
-                    returnValue = checkNullsAndCompare(this.LF2__K2, other.LF2__K2);
                     return returnValue;
                 }
 
@@ -878,8 +719,11 @@ public class MainPrototype1 {
 
             boolean rejectedInnerJoin_tMap_1 = false;
 
-            org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1 = null;//new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
-            org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1__LF2 = null;//new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
+            org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_Join_M__LF1 = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
+            org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_Join_M__LF1__LF2 = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
+
+//            org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1 = null;//new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
+//            org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1__LF2 = null;//new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
 
             while (fsi_M.hasNext()) { // loop M
 
@@ -923,7 +767,7 @@ public class MainPrototype1 {
                     /** End MODIFIED */
 
                     LF1HashKey.hashCodeDirty = true;
-                    tHash_Lookup_LF1.get(LF1HashKey);
+                    tHash_Lookup_LF1.lookup(LF1HashKey);
 
                     if (tHash_Lookup_LF1.hasResult()) { // G 90
 
@@ -1035,7 +879,7 @@ public class MainPrototype1 {
                     /** End MODIFIED */
 
                     LF2HashKey.hashCodeDirty = true;
-                    tHash_Lookup_LF2.get(LF2HashKey);
+                    tHash_Lookup_LF2.lookup(LF2HashKey);
 
                     if (tHash_Lookup_LF2.hasResult()) { // G 90
 
@@ -1111,7 +955,7 @@ public class MainPrototype1 {
                         /** End MODIFIED */
 
                         LF3HashKey.hashCodeDirty = true;
-                        tHash_Lookup_LF3.get(LF3HashKey);
+                        tHash_Lookup_LF3.lookup(LF3HashKey);
 
                         if (tHash_Lookup_LF3.hasResult()) { // G 90
 
@@ -1413,7 +1257,7 @@ public class MainPrototype1 {
 
     }
 
-    private class LF1Struct implements Comparable<LF1Struct> {
+    private class LF1Struct implements Comparable<LF1Struct>, ILookupBean {
 
         private static final int DEFAULT_HASHCODE = 1;
 
@@ -1471,6 +1315,65 @@ public class MainPrototype1 {
         }
 
         /** Start ADDED */
+
+        public byte[] toKeysData(int valuesDataSize) {
+
+            ByteArrayOutputStream bao = null;
+            DataOutputStream dos = null;
+
+            try {
+                dos.writeInt(K1);
+                dos.writeInt(K2);
+
+                dos.writeInt(valuesDataSize);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bao.toByteArray();
+        }
+
+        public int loadKeysData(byte[] keysData) {
+
+            DataInputStream dis = null;
+
+            int valuesDataSize = 0;
+            try {
+                this.K1 = dis.readInt();
+                this.K2 = dis.readInt();
+
+                valuesDataSize = dis.readInt();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return valuesDataSize;
+        }
+
+        public byte[] toValuesData() {
+            ByteArrayOutputStream bao = null;
+            DataOutputStream dos = null;
+
+            try {
+                dos.writeUTF(V);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bao.toByteArray();
+
+        }
+
+        public void loadValuesData(byte[] valuesData) {
+            DataInputStream dis = null;
+
+            try {
+                this.V = dis.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
         public int compareTo(LF1Struct other) {
 
@@ -1618,7 +1521,7 @@ public class MainPrototype1 {
 
     }
 
-    private class LF2Struct implements Comparable<LF2Struct> {
+    private class LF2Struct implements Comparable<LF2Struct>, ILookupBean {
 
         private static final int DEFAULT_HASHCODE = 1;
 
@@ -1676,6 +1579,65 @@ public class MainPrototype1 {
         }
 
         /** Start ADDED */
+
+        public byte[] toKeysData(int valuesDataSize) {
+
+            ByteArrayOutputStream bao = null;
+            DataOutputStream dos = null;
+
+            try {
+                dos.writeInt(K1);
+                dos.writeInt(K2);
+
+                dos.writeInt(valuesDataSize);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bao.toByteArray();
+        }
+
+        public int loadKeysData(byte[] keysData) {
+
+            DataInputStream dis = null;
+
+            int valuesDataSize = 0;
+            try {
+                this.K1 = dis.readInt();
+                this.K2 = dis.readInt();
+
+                valuesDataSize = dis.readInt();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return valuesDataSize;
+        }
+
+        public byte[] toValuesData() {
+            ByteArrayOutputStream bao = null;
+            DataOutputStream dos = null;
+
+            try {
+                dos.writeUTF(V);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bao.toByteArray();
+
+        }
+
+        public void loadValuesData(byte[] valuesData) {
+            DataInputStream dis = null;
+
+            try {
+                this.V = dis.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
         public int compareTo(LF2Struct other) {
 
@@ -1822,7 +1784,7 @@ public class MainPrototype1 {
 
     }
 
-    private class LF3Struct implements Comparable<LF3Struct> {
+    private class LF3Struct implements Comparable<LF3Struct>, ILookupBean {
 
         private static final int DEFAULT_HASHCODE = 1;
 
@@ -1880,6 +1842,65 @@ public class MainPrototype1 {
         }
 
         /** Start ADDED */
+
+        public byte[] toKeysData(int valuesDataSize) {
+
+            ByteArrayOutputStream bao = null;
+            DataOutputStream dos = null;
+
+            try {
+                dos.writeInt(K1);
+                dos.writeInt(K2);
+
+                dos.writeInt(valuesDataSize);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bao.toByteArray();
+        }
+
+        public int loadKeysData(byte[] keysData) {
+
+            DataInputStream dis = null;
+
+            int valuesDataSize = 0;
+            try {
+                this.K1 = dis.readInt();
+                this.K2 = dis.readInt();
+
+                valuesDataSize = dis.readInt();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return valuesDataSize;
+        }
+
+        public byte[] toValuesData() {
+            ByteArrayOutputStream bao = null;
+            DataOutputStream dos = null;
+
+            try {
+                dos.writeUTF(V);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return bao.toByteArray();
+
+        }
+
+        public void loadValuesData(byte[] valuesData) {
+            DataInputStream dis = null;
+
+            try {
+                this.V = dis.readUTF();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
 
         public int compareTo(LF3Struct other) {
 
