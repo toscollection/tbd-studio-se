@@ -312,6 +312,8 @@ public class MainPrototype1 {
             outStruct out_tmp = new outStruct();
             // ###############################
 
+            /** Start ADDED */
+
             org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_M = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
             fsi_M.initPut(null);
 
@@ -347,7 +349,6 @@ public class MainPrototype1 {
                         dos.writeInt(expKey_LF1__K1);
                         dos.writeInt(expKey_LF1__K2);
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                     return bao.toByteArray();
@@ -420,7 +421,6 @@ public class MainPrototype1 {
 
                         dos.writeInt(valuesDataSize);
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
@@ -438,7 +438,6 @@ public class MainPrototype1 {
 
                         valuesDataSize = dis.readInt();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
@@ -493,7 +492,7 @@ public class MainPrototype1 {
 
             }
 
-            class RowSortContainerLookup_M__LF1 implements Comparable<RowSortContainerLookup_M__LF1> {
+            class RowSortContainerJoin_M__LF1 implements Comparable<RowSortContainerJoin_M__LF1> {
 
                 int expKey_LF2__K1;
 
@@ -511,25 +510,15 @@ public class MainPrototype1 {
 
                 String LF1__V;
 
-                public RowSortContainerLookup_M__LF1(MStruct M, LF1Struct LF1, int expKey_LF2__K1, int expKey_LF2__K2) {
-                    this.M__K1 = M.K1;
-                    this.M__K2 = M.K2;
-                    this.M__V = M.V;
-
-                    this.LF1__K1 = LF1.K1;
-                    this.LF1__K2 = LF1.K2;
-                    this.LF1__V = LF1.V;
-
-                    this.expKey_LF2__K1 = expKey_LF2__K1;
-                    this.expKey_LF2__K1 = expKey_LF2__K1;
+                public RowSortContainerJoin_M__LF1() {
+                    super();
                 }
-
+                
                 public byte[] toKeysData(int valuesDataSize) {
 
                     ByteArrayOutputStream bao = null;
                     DataOutputStream dos = null;
 
-                    // (vue simplifiée de l'écriture)
                     try {
                         dos.writeInt(expKey_LF2__K1);
                         dos.writeInt(expKey_LF2__K1);
@@ -562,15 +551,24 @@ public class MainPrototype1 {
 
                 }
 
-                public void loadInto(MStruct M) {
+                public void fillFrom(MStruct M, LF1Struct LF1, int expKey_LF2__K1, int expKey_LF2__K2) {
+                    this.M__K1 = M.K1;
+                    this.M__K2 = M.K2;
+                    this.M__V = M.V;
+
+                    this.LF1__K1 = LF1.K1;
+                    this.LF1__K2 = LF1.K2;
+                    this.LF1__V = LF1.V;
+
+                    this.expKey_LF2__K1 = expKey_LF2__K1;
+                    this.expKey_LF2__K1 = expKey_LF2__K1;
+                }
+
+                public void copyDataTo(MStruct M, LF1Struct LF1) {
 
                     M.K1 = M__K1;
                     M.K2 = M__K2;
                     M.V = M__V;
-
-                }
-
-                public void loadInto(LF1Struct LF1) {
 
                     LF1.K1 = LF1__K1;
                     LF1.K2 = LF1__K2;
@@ -578,20 +576,7 @@ public class MainPrototype1 {
 
                 }
 
-                /*******************************************************************************************************
-                 * * see useful of these methods at this step (?)
-                 * 
-                 * public void loadFrom(MStruct M, LF1Struct LF1) { M__K1 = M.K1; M__K2 = M.K2; M__V = M.V;
-                 * 
-                 * LF1__K1 = LF1.K1; LF1__K2 = LF1.K2; LF1__V = LF1.V; }
-                 * 
-                 * public void loadInto(MStruct M, LF1Struct LF1) { M.K1 = M__K1; M.K2 = M__K2; M.V = M__V;
-                 * 
-                 * LF1.K1 = LF1__K1; LF1.K2 = LF1__K2; LF1.V = LF1__V; }
-                 * 
-                 ******************************************************************************************************/
-
-                public int compareTo(RowSortContainerLookup_M__LF1 other) {
+                public int compareTo(RowSortContainerJoin_M__LF1 other) {
 
                     int returnValue = 0;
                     returnValue = checkNullsAndCompare(this.expKey_LF2__K1, other.expKey_LF2__K1);
@@ -684,7 +669,7 @@ public class MainPrototype1 {
 
             }
 
-            class RowSortContainerLookup_M__LF1__LF2 {
+            class RowSortContainerJoin_M__LF1__LF2 {
 
                 int expKey_LF3__K1;
 
@@ -708,22 +693,7 @@ public class MainPrototype1 {
 
                 String LF2__V;
 
-                public RowSortContainerLookup_M__LF1__LF2(MStruct M, LF1Struct LF1, LF2Struct LF2, int expKey_LF3__K1,
-                        int expKey_LF3__K2) {
-                    this.M__K1 = M.K1;
-                    this.M__K2 = M.K2;
-                    this.M__V = M.V;
-
-                    this.LF1__K1 = LF1.K1;
-                    this.LF1__K2 = LF1.K2;
-                    this.LF1__V = LF1.V;
-
-                    this.LF2__K1 = LF2.K1;
-                    this.LF2__K2 = LF2.K2;
-                    this.LF2__V = LF2.V;
-
-                    this.expKey_LF3__K1 = expKey_LF3__K1;
-                    this.expKey_LF3__K2 = expKey_LF3__K2;
+                public RowSortContainerJoin_M__LF1__LF2() {
                 }
 
                 public byte[] toKeysData(int valuesDataSize) {
@@ -759,21 +729,24 @@ public class MainPrototype1 {
                     return bao.toByteArray();
                 }
 
-                public void loadFrom(MStruct M, LF1Struct LF1, LF2Struct LF2) {
-                    M__K1 = M.K1;
-                    M__K2 = M.K2;
-                    M__V = M.V;
+                public void fillDataFrom(MStruct M, LF1Struct LF1, LF2Struct LF2, int expKey_LF3__K1, int expKey_LF3__K2) {
+                    this.M__K1 = M.K1;
+                    this.M__K2 = M.K2;
+                    this.M__V = M.V;
 
-                    LF1__K1 = LF1.K1;
-                    LF1__K2 = LF1.K2;
-                    LF1__V = LF1.V;
+                    this.LF1__K1 = LF1.K1;
+                    this.LF1__K2 = LF1.K2;
+                    this.LF1__V = LF1.V;
 
-                    LF2__K1 = LF2.K1;
-                    LF2__K2 = LF2.K2;
-                    LF2__V = LF2.V;
+                    this.LF2__K1 = LF2.K1;
+                    this.LF2__K2 = LF2.K2;
+                    this.LF2__V = LF2.V;
+
+                    this.expKey_LF3__K1 = expKey_LF3__K1;
+                    this.expKey_LF3__K2 = expKey_LF3__K2;
                 }
 
-                public void loadInto(MStruct M, LF1Struct LF1, LF2Struct LF2) {
+                public void copyDataTo(MStruct M, LF1Struct LF1, LF2Struct LF2) {
 
                     M.K1 = M__K1;
                     M.K2 = M__K2;
@@ -816,6 +789,8 @@ public class MainPrototype1 {
                 }
 
             }
+
+            /** End ADDED */
 
             /**
              * [tMap_1 begin ] stop
@@ -899,14 +874,12 @@ public class MainPrototype1 {
             tHash_Lookup_LF3.initGet();
 
             RowSortContainerMain_M rscM;
-            RowSortContainerLookup_M__LF1 rsc_Join_M__LF1;
+            RowSortContainerJoin_M__LF1 rsc_Join_M__LF1;
 
             boolean rejectedInnerJoin_tMap_1 = false;
 
             org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_Join_M__LF1 = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
             org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_Join_M__LF1__LF2 = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
-            // org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_Join_M__LF1__LF2 = new
-            // org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
 
             while (fsi_M.hasNext()) { // loop M
 
@@ -935,7 +908,6 @@ public class MainPrototype1 {
                 // ////////////////////////////////////////////////////////
                 // //////////////////////// LF1 (ALL MATCHES) //////////
                 // ////////////////////////////////////////////////////////
-
                 boolean forceLoopLF1 = false;
                 int sizeResultsFromLookup_LF1 = -1;
 
@@ -982,8 +954,8 @@ public class MainPrototype1 {
                 } // G 21
 
                 for (int iLF1 = 0; sizeResultsFromLookup_LF1 != -1 && iLF1 < sizeResultsFromLookup_LF1 || forceLoopLF1; iLF1++) { // for
-                                                                                                                                    // loop
-                                                                                                                                    // LF1
+                    // loop
+                    // LF1
 
                     LF1Struct fromLookup_LF1 = null;
                     LF1Struct LF1 = LF1Default;
@@ -1025,9 +997,11 @@ public class MainPrototype1 {
                     int expKey_LF2__K1 = LF1.K1 != null && LF1.K2 != null ? LF1.K1 - LF1.K2 : null;
                     int expKey_LF2__K2 = LF1.K1 != null && LF1.K2 != null ? LF1.K1 + LF1.K2 : null;
 
-                    rsc_Join_M__LF1 = new RowSortContainerLookup_M__LF1(M, LF1, expKey_LF2__K1, expKey_LF2__K2);
+                    rsc_Join_M__LF1 = new RowSortContainerJoin_M__LF1();
 
-                    // Sort and store in KeyFile(s) and DataFile(s) 
+                    rsc_Join_M__LF1.fillFrom(M, LF1, expKey_LF2__K1, expKey_LF2__K2);
+                    
+                    // Sort and store in KeyFile(s) and DataFile(s)
                     fsi_Join_M__LF1.put(null, rsc_Join_M__LF1);
 
                     // WARNING: THIS BRACKET MUST APPEAR ONLY WITH "ALL MATCHES" or "ALL ROWS" mode
@@ -1038,14 +1012,13 @@ public class MainPrototype1 {
             M = new MStruct();
             LF1Struct LF1 = new LF1Struct();
 
-            RowSortContainerLookup_M__LF1__LF2 rsc_Join_M__LF1__LF2;
+            RowSortContainerJoin_M__LF1__LF2 rsc_Join_M__LF1__LF2;
 
             while (fsi_Join_M__LF1.hasNext()) { // loop Join_M__LF1
 
-                rsc_Join_M__LF1 = (RowSortContainerLookup_M__LF1) fsi_Join_M__LF1.next();
+                rsc_Join_M__LF1 = (RowSortContainerJoin_M__LF1) fsi_Join_M__LF1.next();
 
-                rsc_Join_M__LF1.loadInto(M);
-                rsc_Join_M__LF1.loadInto(LF1);
+                rsc_Join_M__LF1.copyDataTo(M, LF1);
 
                 /** End ADDED */
 
@@ -1104,9 +1077,11 @@ public class MainPrototype1 {
                 int expKey_LF3__K1 = LF1.K1 != null && LF2.K1 != null ? LF1.K1 - LF2.K1 : null;
                 int expKey_LF3__K2 = LF1.K2 != null && LF2.K2 != null ? LF1.K2 + LF2.K2 : null;
 
-                rsc_Join_M__LF1__LF2 = new RowSortContainerLookup_M__LF1__LF2(M, LF1, LF2, expKey_LF3__K1, expKey_LF3__K2);
+                rsc_Join_M__LF1__LF2 = new RowSortContainerJoin_M__LF1__LF2();
+                
+                rsc_Join_M__LF1__LF2.fillDataFrom(M, LF1, LF2, expKey_LF3__K1, expKey_LF3__K2);
 
-                // Sort and store in KeyFile(s) and DataFile(s) 
+                // Sort and store in KeyFile(s) and DataFile(s)
                 fsi_Join_M__LF1__LF2.put(null, rsc_Join_M__LF1__LF2);
 
             } // loop on each Join_M__LF1 row
@@ -1117,14 +1092,15 @@ public class MainPrototype1 {
 
                 while (fsi_Join_M__LF1__LF2.hasNext()) { // loop on each Join_M__LF1__LF2 row
 
-                    rsc_Join_M__LF1__LF2 = (RowSortContainerLookup_M__LF1__LF2) fsi_Join_M__LF1__LF2.next();
+                    rsc_Join_M__LF1__LF2 = (RowSortContainerJoin_M__LF1__LF2) fsi_Join_M__LF1__LF2.next();
+                    
+                    rsc_Join_M__LF1__LF2.copyDataTo(M, LF1, LF2);
 
                     /** End ADDED */
 
                     // ////////////////////////////////////////////////////////
                     // //////////////////////// LF3 ///////////////////////
                     // ////////////////////////////////////////////////////////
-
                     LF3Struct LF3ObjectFromLookup = null;
 
                     if (!rejectedInnerJoin_tMap_1) { // G 20
@@ -1494,6 +1470,8 @@ public class MainPrototype1 {
             return true;
         }
 
+        /** Start ADDED */
+
         public int compareTo(LF1Struct other) {
 
             int returnValue = 0;
@@ -1505,6 +1483,8 @@ public class MainPrototype1 {
 
             return returnValue;
         }
+
+        /** End ADDED */
 
     }
 
@@ -1695,6 +1675,8 @@ public class MainPrototype1 {
             return true;
         }
 
+        /** Start ADDED */
+
         public int compareTo(LF2Struct other) {
 
             int returnValue = 0;
@@ -1707,6 +1689,7 @@ public class MainPrototype1 {
             return returnValue;
         }
 
+        /** End ADDED */
     }
 
     public void tFileInputDelimited_3Process() throws TalendException {
@@ -1896,6 +1879,8 @@ public class MainPrototype1 {
             return true;
         }
 
+        /** Start ADDED */
+
         public int compareTo(LF3Struct other) {
 
             int returnValue = 0;
@@ -1907,6 +1892,8 @@ public class MainPrototype1 {
 
             return returnValue;
         }
+
+        /** End ADDED */
 
     }
 
