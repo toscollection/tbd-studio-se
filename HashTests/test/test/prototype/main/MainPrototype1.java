@@ -317,7 +317,7 @@ public class MainPrototype1 {
             org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_M = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
             fsi_M.initPut(null);
 
-            class SortableRow_Main_M implements Comparable<SortableRow_Main_M> {
+            class SortableRow_Main_M implements Comparable<SortableRow_Main_M>, IMainBean {
 
                 int expKey_LF1__K1;
 
@@ -400,7 +400,7 @@ public class MainPrototype1 {
 
             }
 
-            class SortableRow_Lookup_LF1 implements Comparable<SortableRow_Lookup_LF1> {
+            class SortableRow_Lookup_LF1 implements Comparable<SortableRow_Lookup_LF1>, ILookupBean {
 
                 int LF1__K1;
 
@@ -480,7 +480,7 @@ public class MainPrototype1 {
 
             }
 
-            class SortableRow_Join_M__LF1 implements Comparable<SortableRow_Join_M__LF1> {
+            class SortableRow_Join_M__LF1 implements Comparable<SortableRow_Join_M__LF1>, IMainBean {
 
                 int expKey_LF2__K1;
 
@@ -498,7 +498,7 @@ public class MainPrototype1 {
 
                 String LF1__V;
 
-                public byte[] toKeysData(int valuesDataSize) {
+                public byte[] toData() {
 
                     ByteArrayOutputStream bao = null;
                     DataOutputStream dos = null;
@@ -506,8 +506,15 @@ public class MainPrototype1 {
                     try {
                         dos.writeInt(expKey_LF2__K1);
                         dos.writeInt(expKey_LF2__K1);
+                        
+                        dos.writeInt(M__K1);
+                        dos.writeInt(M__K2);
+                        dos.writeUTF(M__V);
+                        
+                        dos.writeInt(LF1__K1);
+                        dos.writeInt(LF1__K2);
+                        dos.writeUTF(LF1__V);
 
-                        dos.writeInt(valuesDataSize);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -516,22 +523,24 @@ public class MainPrototype1 {
 
                 }
 
-                public byte[] toValuesData() {
-                    ByteArrayOutputStream bao = null;
-                    DataOutputStream dos = null;
+                public void loadData(byte[] data) {
+
+                    DataInputStream dis = null;
 
                     try {
-                        dos.writeInt(M__K1);
-                        dos.writeInt(M__K2);
-                        dos.writeUTF(M__V);
-
-                        dos.writeInt(LF1__K1);
-                        dos.writeInt(LF1__K2);
-                        dos.writeUTF(LF1__V);
+                        this.expKey_LF2__K1 = dis.readInt();
+                        this.expKey_LF2__K2 = dis.readInt();
+                        
+                        this.M__K1 = dis.readInt();
+                        this.M__K2 = dis.readInt();
+                        this.M__V = dis.readUTF();
+                        
+                        this.LF1__K1 = dis.readInt();
+                        this.LF1__K2 = dis.readInt();
+                        this.LF1__V = dis.readUTF();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    return bao.toByteArray();
 
                 }
 
@@ -574,7 +583,7 @@ public class MainPrototype1 {
 
             }
 
-            class SortableRow_Lookup_LF2 implements Comparable<SortableRow_Lookup_LF2> {
+            class SortableRow_Lookup_LF2 implements Comparable<SortableRow_Lookup_LF2>, ILookupBean {
 
                 int LF2__K1;
 
@@ -653,7 +662,7 @@ public class MainPrototype1 {
 
             }
 
-            class SortableRow_Join_M__LF1__LF2 implements Comparable<SortableRow_Join_M__LF1__LF2> {
+            class SortableRow_Join_M__LF1__LF2 implements Comparable<SortableRow_Join_M__LF1__LF2>, IMainBean {
 
                 int expKey_LF3__K1;
 
@@ -677,25 +686,15 @@ public class MainPrototype1 {
 
                 String LF2__V;
 
-                public byte[] toKeysData(int valuesDataSize) {
-
-                    ByteArrayOutputStream bao = null;
-                    DataOutputStream dos = null;
-                    try {
-                        dos.writeInt(valuesDataSize);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    return bao.toByteArray();
-
-                }
-
-                public byte[] toValuesData() {
+                public byte[] toData() {
                     ByteArrayOutputStream bao = null;
                     DataOutputStream dos = null;
 
                     try {
+                        
+                        dos.writeInt(expKey_LF3__K1);
+                        dos.writeInt(expKey_LF3__K2);
+
                         dos.writeInt(M__K1);
                         dos.writeInt(M__K2);
                         dos.writeUTF(M__V);
@@ -703,12 +702,44 @@ public class MainPrototype1 {
                         dos.writeInt(LF1__K1);
                         dos.writeInt(LF1__K2);
                         dos.writeUTF(LF1__V);
+                        
+                        dos.writeInt(LF2__K1);
+                        dos.writeInt(LF2__K2);
+                        dos.writeUTF(LF2__V);
+                        
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     return bao.toByteArray();
                 }
+
+                public void loadData(byte[] data) {
+
+                    DataInputStream dis = null;
+
+                    try {
+                        this.expKey_LF3__K1 = dis.readInt();
+                        this.expKey_LF3__K2 = dis.readInt();
+                        
+                        this.M__K1 = dis.readInt();
+                        this.M__K2 = dis.readInt();
+                        this.M__V = dis.readUTF();
+                        
+                        this.LF1__K1 = dis.readInt();
+                        this.LF1__K2 = dis.readInt();
+                        this.LF1__V = dis.readUTF();
+                        
+                        this.LF2__K1 = dis.readInt();
+                        this.LF2__K2 = dis.readInt();
+                        this.LF2__V = dis.readUTF();
+                        
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
 
                 public void fillFrom(MStruct M, LF1Struct LF1, LF2Struct LF2, int expKey_LF3__K1, int expKey_LF3__K2) {
                     this.M__K1 = M.K1;
