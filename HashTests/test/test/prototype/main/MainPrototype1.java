@@ -6,7 +6,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.talend.designer.components.thash.io.hashimpl.PersistentAdvancedLookup;
+import org.talend.designer.components.persistent.PersistentSortedAdvancedLookup;
+import org.talend.designer.components.thash.io.hashimpl.IAdvancedLookup;
 
 import routines.TalendString;
 import routines.system.ParserUtils;
@@ -287,17 +288,17 @@ public class MainPrototype1 {
             // ###############################
             // # Lookup's keys initialization
 
-            PersistentAdvancedLookup<LF1Struct> tHash_Lookup_LF1 = (PersistentAdvancedLookup<LF1Struct>) globalMap
+            PersistentSortedAdvancedLookup<LF1Struct> tHash_Lookup_LF1 = (PersistentSortedAdvancedLookup<LF1Struct>) globalMap
                     .get("tHash_Lookup_LF1");
             LF1Struct LF1HashKey = new LF1Struct();
             LF1Struct LF1Default = new LF1Struct();
 
-            PersistentAdvancedLookup<LF2Struct> tHash_Lookup_LF2 = (PersistentAdvancedLookup<LF2Struct>) globalMap
+            PersistentSortedAdvancedLookup<LF2Struct> tHash_Lookup_LF2 = (PersistentSortedAdvancedLookup<LF2Struct>) globalMap
                     .get("tHash_Lookup_LF2");
             LF2Struct LF2HashKey = new LF2Struct();
             LF2Struct LF2Default = new LF2Struct();
 
-            PersistentAdvancedLookup<LF3Struct> tHash_Lookup_LF3 = (PersistentAdvancedLookup<LF3Struct>) globalMap
+            PersistentSortedAdvancedLookup<LF3Struct> tHash_Lookup_LF3 = (PersistentSortedAdvancedLookup<LF3Struct>) globalMap
                     .get("tHash_Lookup_LF3");
             LF3Struct LF3HashKey = new LF3Struct();
             LF3Struct LF3Default = new LF3Struct();
@@ -355,7 +356,7 @@ public class MainPrototype1 {
                     try {
                         this.expKey_LF1__K1 = dis.readInt();
                         this.expKey_LF1__K2 = dis.readInt();
-                        
+
                         this.M__K1 = dis.readInt();
                         this.M__K2 = dis.readInt();
                         this.M__V = dis.readUTF();
@@ -426,11 +427,11 @@ public class MainPrototype1 {
                     try {
                         dos.writeInt(expKey_LF2__K1);
                         dos.writeInt(expKey_LF2__K1);
-                        
+
                         dos.writeInt(M__K1);
                         dos.writeInt(M__K2);
                         dos.writeUTF(M__V);
-                        
+
                         dos.writeInt(LF1__K1);
                         dos.writeInt(LF1__K2);
                         dos.writeUTF(LF1__V);
@@ -450,11 +451,11 @@ public class MainPrototype1 {
                     try {
                         this.expKey_LF2__K1 = dis.readInt();
                         this.expKey_LF2__K2 = dis.readInt();
-                        
+
                         this.M__K1 = dis.readInt();
                         this.M__K2 = dis.readInt();
                         this.M__V = dis.readUTF();
-                        
+
                         this.LF1__K1 = dis.readInt();
                         this.LF1__K2 = dis.readInt();
                         this.LF1__V = dis.readUTF();
@@ -532,7 +533,7 @@ public class MainPrototype1 {
                     DataOutputStream dos = null;
 
                     try {
-                        
+
                         dos.writeInt(expKey_LF3__K1);
                         dos.writeInt(expKey_LF3__K2);
 
@@ -543,11 +544,11 @@ public class MainPrototype1 {
                         dos.writeInt(LF1__K1);
                         dos.writeInt(LF1__K2);
                         dos.writeUTF(LF1__V);
-                        
+
                         dos.writeInt(LF2__K1);
                         dos.writeInt(LF2__K2);
                         dos.writeUTF(LF2__V);
-                        
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -562,25 +563,24 @@ public class MainPrototype1 {
                     try {
                         this.expKey_LF3__K1 = dis.readInt();
                         this.expKey_LF3__K2 = dis.readInt();
-                        
+
                         this.M__K1 = dis.readInt();
                         this.M__K2 = dis.readInt();
                         this.M__V = dis.readUTF();
-                        
+
                         this.LF1__K1 = dis.readInt();
                         this.LF1__K2 = dis.readInt();
                         this.LF1__V = dis.readUTF();
-                        
+
                         this.LF2__K1 = dis.readInt();
                         this.LF2__K2 = dis.readInt();
                         this.LF2__V = dis.readUTF();
-                        
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 }
-
 
                 public void fillFrom(MStruct M, LF1Struct LF1, LF2Struct LF2, int expKey_LF3__K1, int expKey_LF3__K2) {
                     this.M__K1 = M.K1;
@@ -699,7 +699,7 @@ public class MainPrototype1 {
                     int expKey_LF1__K2 = M.K1 + M.K2;
 
                     SortableRow_Main_M rscM = new SortableRow_Main_M();
-                    
+
                     rscM.fillFrom(M, expKey_LF1__K1, expKey_LF1__K2);
 
                     fsi_M.put(null, rscM);
@@ -722,8 +722,10 @@ public class MainPrototype1 {
             org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_Join_M__LF1 = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
             org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_Join_M__LF1__LF2 = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
 
-//            org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1 = null;//new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
-//            org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1__LF2 = null;//new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
+            // org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1 = null;//new
+            // org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
+            // org.talend.designer.components.thash.io.IPersistentJoiner<V> fsi_Join_M__LF1__LF2 = null;//new
+            // org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
 
             while (fsi_M.hasNext()) { // loop M
 
@@ -844,7 +846,7 @@ public class MainPrototype1 {
                     rsc_Join_M__LF1 = new SortableRow_Join_M__LF1();
 
                     rsc_Join_M__LF1.fillFrom(M, LF1, expKey_LF2__K1, expKey_LF2__K2);
-                    
+
                     // Sort and store in KeyFile(s) and DataFile(s)
                     fsi_Join_M__LF1.put(null, rsc_Join_M__LF1);
 
@@ -922,7 +924,7 @@ public class MainPrototype1 {
                 int expKey_LF3__K2 = LF1.K2 != null && LF2.K2 != null ? LF1.K2 + LF2.K2 : null;
 
                 rsc_Join_M__LF1__LF2 = new SortableRow_Join_M__LF1__LF2();
-                
+
                 rsc_Join_M__LF1__LF2.fillFrom(M, LF1, LF2, expKey_LF3__K1, expKey_LF3__K2);
 
                 // Sort and store in KeyFile(s) and DataFile(s)
@@ -937,7 +939,7 @@ public class MainPrototype1 {
                 while (fsi_Join_M__LF1__LF2.hasNext()) { // loop on each Join_M__LF1__LF2 row
 
                     rsc_Join_M__LF1__LF2 = (SortableRow_Join_M__LF1__LF2) fsi_Join_M__LF1__LF2.next();
-                    
+
                     rsc_Join_M__LF1__LF2.copyDataTo(M, LF1, LF2);
 
                     /** End ADDED */
@@ -1404,9 +1406,13 @@ public class MainPrototype1 {
             start_Hash.put("tAdvancedHash_LF1", System.currentTimeMillis());
             currentComponent = "tAdvancedHash_LF1";
 
-            PersistentAdvancedLookup.MATCHING_MODE matchingModeEnum_LF1 = PersistentAdvancedLookup.MATCHING_MODE.ALL_MATCHES;
-            PersistentAdvancedLookup<LF1Struct> tHash_Lookup_LF1 = PersistentAdvancedLookup
-                    .<LF1Struct> getLookup(matchingModeEnum_LF1);
+            PersistentSortedAdvancedLookup.MATCHING_MODE matchingModeEnum_LF1 = org.talend.designer.components.persistent.ALL_MATCHES;
+
+            PersistentSortedAdvancedLookup<LF1Struct> tHash_Lookup_LF1 = 
+                new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF1Struct>(matchingModeEnum_LF1, false, false);
+                
+            tHash_Lookup_LF1.initPut();
+
             globalMap.put("tHash_Lookup_LF1", tHash_Lookup_LF1);
 
             /**
@@ -1507,6 +1513,12 @@ public class MainPrototype1 {
 
             currentComponent = "tAdvancedHash_LF1";
 
+            /** Start ADDED */
+
+            tHash_Lookup_LF1.endPut();
+            
+            /** End ADDED */
+            
             ok_Hash.put("tAdvancedHash_LF1", true);
             end_Hash.put("tAdvancedHash_LF1", System.currentTimeMillis());
 
@@ -1667,9 +1679,11 @@ public class MainPrototype1 {
             start_Hash.put("tAdvancedHash_LF2", System.currentTimeMillis());
             currentComponent = "tAdvancedHash_LF2";
 
-            PersistentAdvancedLookup.MATCHING_MODE matchingModeEnum_LF2 = PersistentAdvancedLookup.MATCHING_MODE.LAST_MATCH;
-            PersistentAdvancedLookup<LF2Struct> tHash_Lookup_LF2 = PersistentAdvancedLookup
-                    .<LF2Struct> getLookup(matchingModeEnum_LF2);
+            PersistentSortedAdvancedLookup.MATCHING_MODE matchingModeEnum_LF2 = org.talend.designer.components.persistent.LAST_MATCH;
+            PersistentSortedAdvancedLookup<LF2Struct> tHash_Lookup_LF2 = 
+                new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF2Struct>(matchingModeEnum_LF2, false, false);
+                
+            tHash_Lookup_LF2.initPut();
             globalMap.put("tHash_Lookup_LF2", tHash_Lookup_LF2);
 
             /**
@@ -1770,6 +1784,12 @@ public class MainPrototype1 {
 
             currentComponent = "tAdvancedHash_LF2";
 
+            /** Start ADDED */
+
+            tHash_Lookup_LF2.endPut();
+
+            /** End ADDED */
+            
             ok_Hash.put("tAdvancedHash_LF2", true);
             end_Hash.put("tAdvancedHash_LF2", System.currentTimeMillis());
 
@@ -1931,9 +1951,17 @@ public class MainPrototype1 {
             start_Hash.put("tAdvancedHash_LF3", System.currentTimeMillis());
             currentComponent = "tAdvancedHash_LF3";
 
-            PersistentAdvancedLookup.MATCHING_MODE matchingModeEnum_LF3 = PersistentAdvancedLookup.MATCHING_MODE.LAST_MATCH;
-            PersistentAdvancedLookup<LF3Struct> tHash_Lookup_LF3 = PersistentAdvancedLookup
-                    .<LF3Struct> getLookup(matchingModeEnum_LF3);
+            PersistentSortedAdvancedLookup.MATCHING_MODE matchingModeEnum_LF3 = org.talend.designer.components.persistent.LAST_MATCH;
+
+            /** Start MODIFIED */
+
+            PersistentSortedAdvancedLookup<LF3Struct> tHash_Lookup_LF3 = 
+            new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF3Struct>(matchingModeEnum_LF3, false, false);
+            
+            tHash_Lookup_LF3.initPut();
+            
+            /** End MODIFIED */
+            
             globalMap.put("tHash_Lookup_LF3", tHash_Lookup_LF3);
 
             /**
@@ -2034,8 +2062,15 @@ public class MainPrototype1 {
 
             currentComponent = "tAdvancedHash_LF3";
 
+            /** Start ADDED */
+
+            tHash_Lookup_LF3.endPut();
+
+            /** End ADDED */
+
             ok_Hash.put("tAdvancedHash_LF3", true);
             end_Hash.put("tAdvancedHash_LF3", System.currentTimeMillis());
+
 
             /**
              * [tAdvancedHash_LF3 end ] stop
