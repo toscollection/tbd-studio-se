@@ -19,12 +19,14 @@ public interface IPersistentHash<K,V> {
 
     public void initGet() throws IOException;
 
-    public void lookup(K key) throws Exception;
+    public void lookup(K key) throws IOException;
     
-    public boolean hasNext() throws Exception;
+    public boolean hasNext() throws IOException;
 
-    public V next() throws Exception;
+    public V next() throws IOException;
     
     public void endGet() throws IOException;
+
+    public void clear() throws IOException;
     
 }

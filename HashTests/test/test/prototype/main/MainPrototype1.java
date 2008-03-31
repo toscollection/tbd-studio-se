@@ -5,9 +5,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Comparator;
 
+import org.talend.designer.components.commons.AdvancedLookup;
 import org.talend.designer.components.persistent.PersistentSortedAdvancedLookup;
-import org.talend.designer.components.thash.io.hashimpl.IAdvancedLookup;
 
 import routines.TalendString;
 import routines.system.ParserUtils;
@@ -288,17 +289,17 @@ public class MainPrototype1 {
             // ###############################
             // # Lookup's keys initialization
 
-            PersistentSortedAdvancedLookup<LF1Struct> tHash_Lookup_LF1 = (PersistentSortedAdvancedLookup<LF1Struct>) globalMap
+            PersistentSortedAdvancedLookup<LF1Struct, LF1Struct> tHash_Lookup_LF1 = (PersistentSortedAdvancedLookup<LF1Struct, LF1Struct>) globalMap
                     .get("tHash_Lookup_LF1");
             LF1Struct LF1HashKey = new LF1Struct();
             LF1Struct LF1Default = new LF1Struct();
 
-            PersistentSortedAdvancedLookup<LF2Struct> tHash_Lookup_LF2 = (PersistentSortedAdvancedLookup<LF2Struct>) globalMap
+            PersistentSortedAdvancedLookup<LF2Struct, LF2Struct> tHash_Lookup_LF2 = (PersistentSortedAdvancedLookup<LF2Struct, LF2Struct>) globalMap
                     .get("tHash_Lookup_LF2");
             LF2Struct LF2HashKey = new LF2Struct();
             LF2Struct LF2Default = new LF2Struct();
 
-            PersistentSortedAdvancedLookup<LF3Struct> tHash_Lookup_LF3 = (PersistentSortedAdvancedLookup<LF3Struct>) globalMap
+            PersistentSortedAdvancedLookup<LF3Struct, LF3Struct> tHash_Lookup_LF3 = (PersistentSortedAdvancedLookup<LF3Struct, LF3Struct>) globalMap
                     .get("tHash_Lookup_LF3");
             LF3Struct LF3HashKey = new LF3Struct();
             LF3Struct LF3Default = new LF3Struct();
@@ -771,27 +772,29 @@ public class MainPrototype1 {
                     LF1HashKey.hashCodeDirty = true;
                     tHash_Lookup_LF1.lookup(LF1HashKey);
 
-                    if (tHash_Lookup_LF1.hasResult()) { // G 90
-
-                        if (tHash_Lookup_LF1.resultIsObject()) { // G 49
-
-                            LF1ObjectFromLookup = (LF1Struct) tHash_Lookup_LF1.getResultObject();
-
-                            sizeResultsFromLookup_LF1 = LF1ObjectFromLookup != null ? 1 : -1;
-
-                        } else { // G 49
-
-                            listFromLookup_LF1 = (java.util.List<LF1Struct>) tHash_Lookup_LF1.getResultList();
-                            sizeResultsFromLookup_LF1 = listFromLookup_LF1 != null ? listFromLookup_LF1.size() : -1;
-
-                        }
-
-                    } // G 90
-                    else { // G 91
-
-                        forceLoopLF1 = true;
-
-                    } // G 91
+                    /** Start REMOVED */
+                    // if (tHash_Lookup_LF1.hasResult()) { // G 90
+                    //
+                    // if (tHash_Lookup_LF1.resultIsObject()) { // G 49
+                    //
+                    // LF1ObjectFromLookup = (LF1Struct) tHash_Lookup_LF1.getResultObject();
+                    //
+                    // sizeResultsFromLookup_LF1 = LF1ObjectFromLookup != null ? 1 : -1;
+                    //
+                    // } else { // G 49
+                    //
+                    // listFromLookup_LF1 = (java.util.List<LF1Struct>) tHash_Lookup_LF1.getResultList();
+                    // sizeResultsFromLookup_LF1 = listFromLookup_LF1 != null ? listFromLookup_LF1.size() : -1;
+                    //
+                    // }
+                    //
+                    // } // G 90
+                    // else { // G 91
+                    //
+                    // forceLoopLF1 = true;
+                    //
+                    // } // G 91
+                    /** End REMOVED */
 
                 } // G 20
 
@@ -799,25 +802,41 @@ public class MainPrototype1 {
                     forceLoopLF1 = true;
                 } // G 21
 
-                for (int iLF1 = 0; sizeResultsFromLookup_LF1 != -1 && iLF1 < sizeResultsFromLookup_LF1 || forceLoopLF1; iLF1++) { // for
-                    // loop
-                    // LF1
+                /** Start REPLACED */
+                // for (int iLF1 = 0; sizeResultsFromLookup_LF1 != -1 && iLF1 < sizeResultsFromLookup_LF1 ||
+                // forceLoopLF1; iLF1++) { // for
+                // loop
+                // LF1
+                /** REPLACED by */
 
-                    LF1Struct fromLookup_LF1 = null;
+                while (tHash_Lookup_LF1.hasNext()) {
+
+                    /** End REPLACED */
+
+                    LF1Struct fromLookup_LF1;
                     LF1Struct LF1 = LF1Default;
 
                     if (!forceLoopLF1) { // G 46
 
-                        if (LF1ObjectFromLookup != null) {
+                        /** Start REPLACED */
+                        // if (LF1ObjectFromLookup != null) {
+                        //
+                        // fromLookup_LF1 = LF1ObjectFromLookup;
+                        // LF1 = fromLookup_LF1;
+                        // }
+                        //
+                        // else if (listFromLookup_LF1 != null) {
+                        // fromLookup_LF1 = listFromLookup_LF1.get(iLF1);
+                        // LF1 = fromLookup_LF1;
+                        // }
+                        /** REPLACED by */
 
-                            fromLookup_LF1 = LF1ObjectFromLookup;
+                        fromLookup_LF1 = tHash_Lookup_LF1.next();
+                        if (fromLookup_LF1 != null) {
                             LF1 = fromLookup_LF1;
                         }
 
-                        else if (listFromLookup_LF1 != null) {
-                            fromLookup_LF1 = listFromLookup_LF1.get(iLF1);
-                            LF1 = fromLookup_LF1;
-                        }
+                        /** End REPLACED */
 
                         if (!rejectedInnerJoin_tMap_1 &&
 
@@ -883,23 +902,24 @@ public class MainPrototype1 {
                     LF2HashKey.hashCodeDirty = true;
                     tHash_Lookup_LF2.lookup(LF2HashKey);
 
-                    if (tHash_Lookup_LF2.hasResult()) { // G 90
+                    /** Start REMOVED */
 
-                        LF2ObjectFromLookup = (LF2Struct) tHash_Lookup_LF2.getResultObject();
-
-                    } // G 90
-                    else { // G 91
-
-                    } // G 91
-
+                    // if (tHash_Lookup_LF2.hasResult()) { // G 90
+                    //
+                    // LF2ObjectFromLookup = (LF2Struct) tHash_Lookup_LF2.getResultObject();
+                    //
+                    // } // G 90
+                    // else { // G 91
+                    //
+                    // } // G 91
+                    /** End REMOVED */
                 } // G 20
 
-                LF2Struct fromLookup_LF2 = null;
+                LF2Struct fromLookup_LF2;
                 LF2Struct LF2 = LF2Default;
-
-                if (LF2ObjectFromLookup != null) {
-
-                    fromLookup_LF2 = LF2ObjectFromLookup;
+                
+                fromLookup_LF2 = tHash_Lookup_LF2.next();
+                if (fromLookup_LF2 != null) {
                     LF2 = fromLookup_LF2;
                 }
 
@@ -959,25 +979,33 @@ public class MainPrototype1 {
                         LF3HashKey.hashCodeDirty = true;
                         tHash_Lookup_LF3.lookup(LF3HashKey);
 
-                        if (tHash_Lookup_LF3.hasResult()) { // G 90
+                        /** Start REMOVED */
 
-                            LF3ObjectFromLookup = (LF3Struct) tHash_Lookup_LF3.getResultObject();
-
-                        } // G 90
-                        else { // G 91
-
-                        } // G 91
+                        // if (tHash_Lookup_LF3.hasResult()) { // G 90
+                        //
+                        // LF3ObjectFromLookup = (LF3Struct) tHash_Lookup_LF3.getResultObject();
+                        //
+                        // } // G 90
+                        // else { // G 91
+                        //
+                        // } // G 91
+                        /** End REMOVED */
 
                     } // G 20
 
-                    LF3Struct fromLookup_LF3 = null;
+
+                    LF3Struct fromLookup_LF3;
                     LF3Struct LF3 = LF3Default;
 
-                    if (LF3ObjectFromLookup != null) {
+                    // if (LF3ObjectFromLookup != null) {
 
-                        fromLookup_LF3 = LF3ObjectFromLookup;
+                    
+                    fromLookup_LF3 = tHash_Lookup_LF3.next();
+                    if (fromLookup_LF3 != null) {
                         LF3 = fromLookup_LF3;
                     }
+
+                    // }
 
                     // ###############################
 
@@ -1406,11 +1434,11 @@ public class MainPrototype1 {
             start_Hash.put("tAdvancedHash_LF1", System.currentTimeMillis());
             currentComponent = "tAdvancedHash_LF1";
 
-            PersistentSortedAdvancedLookup.MATCHING_MODE matchingModeEnum_LF1 = org.talend.designer.components.persistent.ALL_MATCHES;
+            AdvancedLookup.MATCHING_MODE matchingModeEnum_LF1 = AdvancedLookup.MATCHING_MODE.ALL_MATCHES;
 
-            PersistentSortedAdvancedLookup<LF1Struct> tHash_Lookup_LF1 = 
-                new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF1Struct>(matchingModeEnum_LF1, false, false);
-                
+            PersistentSortedAdvancedLookup<LF1Struct, LF1Struct> tHash_Lookup_LF1 = new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF1Struct, LF1Struct>(
+                    matchingModeEnum_LF1, "file_path_container_LF2");
+
             tHash_Lookup_LF1.initPut();
 
             globalMap.put("tHash_Lookup_LF1", tHash_Lookup_LF1);
@@ -1516,9 +1544,9 @@ public class MainPrototype1 {
             /** Start ADDED */
 
             tHash_Lookup_LF1.endPut();
-            
+
             /** End ADDED */
-            
+
             ok_Hash.put("tAdvancedHash_LF1", true);
             end_Hash.put("tAdvancedHash_LF1", System.currentTimeMillis());
 
@@ -1679,10 +1707,10 @@ public class MainPrototype1 {
             start_Hash.put("tAdvancedHash_LF2", System.currentTimeMillis());
             currentComponent = "tAdvancedHash_LF2";
 
-            PersistentSortedAdvancedLookup.MATCHING_MODE matchingModeEnum_LF2 = org.talend.designer.components.persistent.LAST_MATCH;
-            PersistentSortedAdvancedLookup<LF2Struct> tHash_Lookup_LF2 = 
-                new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF2Struct>(matchingModeEnum_LF2, false, false);
-                
+            AdvancedLookup.MATCHING_MODE matchingModeEnum_LF2 = AdvancedLookup.MATCHING_MODE.LAST_MATCH;
+            PersistentSortedAdvancedLookup<LF2Struct, LF2Struct> tHash_Lookup_LF2 = new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF2Struct, LF2Struct>(
+                    matchingModeEnum_LF2, "file_path_container_LF2");
+
             tHash_Lookup_LF2.initPut();
             globalMap.put("tHash_Lookup_LF2", tHash_Lookup_LF2);
 
@@ -1789,7 +1817,7 @@ public class MainPrototype1 {
             tHash_Lookup_LF2.endPut();
 
             /** End ADDED */
-            
+
             ok_Hash.put("tAdvancedHash_LF2", true);
             end_Hash.put("tAdvancedHash_LF2", System.currentTimeMillis());
 
@@ -1951,17 +1979,15 @@ public class MainPrototype1 {
             start_Hash.put("tAdvancedHash_LF3", System.currentTimeMillis());
             currentComponent = "tAdvancedHash_LF3";
 
-            PersistentSortedAdvancedLookup.MATCHING_MODE matchingModeEnum_LF3 = org.talend.designer.components.persistent.LAST_MATCH;
-
             /** Start MODIFIED */
+            AdvancedLookup.MATCHING_MODE matchingModeEnum_LF3 = AdvancedLookup.MATCHING_MODE.LAST_MATCH;
+            PersistentSortedAdvancedLookup<LF3Struct, LF3Struct> tHash_Lookup_LF3 = new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF3Struct, LF3Struct>(
+                    matchingModeEnum_LF3, "file_path_container_LF3");
 
-            PersistentSortedAdvancedLookup<LF3Struct> tHash_Lookup_LF3 = 
-            new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<LF3Struct>(matchingModeEnum_LF3, false, false);
-            
             tHash_Lookup_LF3.initPut();
-            
+
             /** End MODIFIED */
-            
+
             globalMap.put("tHash_Lookup_LF3", tHash_Lookup_LF3);
 
             /**
@@ -2070,7 +2096,6 @@ public class MainPrototype1 {
 
             ok_Hash.put("tAdvancedHash_LF3", true);
             end_Hash.put("tAdvancedHash_LF3", System.currentTimeMillis());
-
 
             /**
              * [tAdvancedHash_LF3 end ] stop

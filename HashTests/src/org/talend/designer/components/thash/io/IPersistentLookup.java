@@ -15,22 +15,27 @@ package org.talend.designer.components.thash.io;
 
 import java.io.IOException;
 
+
 /**
  * DOC amaumont  class global comment. Detailled comment
  * <br/>
  *
  */
-public interface IPersistentLookup<V> {
+public interface IPersistentLookup<K,V> {
 
-    public V get(V bean) throws IOException;
-
-    public long put(V bean) throws IOException;
-
-    public void initPut(String container) throws IOException;
+    public void initPut() throws IOException;
+    
+    public void put(V bean) throws IOException;
 
     public void endPut() throws IOException;
 
-    public void initGet(String container) throws IOException;
+    public void initGet() throws IOException;
+
+    public void lookup(K key) throws IOException;
+    
+    public boolean hasNext() throws IOException;
+
+    public V next() throws IOException;
 
     public void endGet() throws IOException;
     

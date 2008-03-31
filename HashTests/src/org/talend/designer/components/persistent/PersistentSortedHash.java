@@ -29,18 +29,15 @@ import java.util.Comparator;
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-public class PersistentSortedHash<K, V> implements IPersistentHash<K, V> {
-
-    private Comparator<Object> keyValueComparator;
+public class PersistentSortedHash<K extends Comparable<V>, V extends Comparable<V>> implements IPersistentHash<K, V> {
 
     private String container;
 
     private KEYS_MANAGEMENT keysManagement;
 
-    public PersistentSortedHash(KEYS_MANAGEMENT keysManagement, String container, Comparator<Object> keyValueComparator) {
+    public PersistentSortedHash(KEYS_MANAGEMENT keysManagement, String container) {
         this.keysManagement = keysManagement;
         this.container = container;
-        this.keyValueComparator = keyValueComparator;
 
     }
 
@@ -60,20 +57,24 @@ public class PersistentSortedHash<K, V> implements IPersistentHash<K, V> {
 
     }
 
-    public void lookup(K key) throws Exception {
+    public void lookup(K key) throws IOException {
 
     }
 
-    public boolean hasNext() throws Exception {
+    public boolean hasNext() throws IOException {
         return false;
     }
 
-    public V next() throws Exception {
+    public V next() throws IOException {
         return null;
     }
 
     public void endGet() throws IOException {
 
+    }
+
+    public void clear() throws IOException {
+        
     }
 
 }
