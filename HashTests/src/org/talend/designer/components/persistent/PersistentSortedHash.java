@@ -49,7 +49,7 @@ public class PersistentSortedHash<K> implements IPersistentHash<K, ILookupBean> 
     //
     private List<OrderedBeanLookup> lookupList;
 
-    private int bufferSize = 25;
+    private int bufferSize = 100000;
 
     private ILookupBean[] buffer = null;
 
