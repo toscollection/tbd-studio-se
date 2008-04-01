@@ -19,14 +19,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Comparator;
 
 import test.prototype.main.ILookupBean;
 
 /**
  * DOC slanglois class global comment. Detailled comment
  */
-public class OrderedBeanLookup {
+class OrderedBeanLookup {
 
     DataInputStream keysDataStream;
 
@@ -46,8 +45,6 @@ public class OrderedBeanLookup {
 
     boolean noDataInStream;
 
-    private Comparator<Object> comparator;
-
     /**
      * DOC slanglois OrderedBeanLookup constructor comment.
      * 
@@ -59,8 +56,8 @@ public class OrderedBeanLookup {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public OrderedBeanLookup(String baseDirectory, int fileIndex, ILookupBean[] buffer, Comparator<Object> comparator)
-            throws IOException, InstantiationException, IllegalAccessException {
+    public OrderedBeanLookup(String baseDirectory, int fileIndex, ILookupBean[] buffer) throws IOException,
+            InstantiationException, IllegalAccessException {
         if (buffer == null || buffer.length < 1) {
             throw new IllegalArgumentException();
         }
@@ -73,8 +70,6 @@ public class OrderedBeanLookup {
         this.buffer = buffer;
         valuesDataLengths = new int[buffer.length];
 
-        this.comparator = comparator;
-
         loadBuffer();
     }
 
@@ -83,7 +78,7 @@ public class OrderedBeanLookup {
      * 
      * @return
      */
-    public boolean hasNext(Object key) {
+    public boolean hasNext(Comparable key) {
         if (index == size) {
             if (cursorPosition < length) {
                 try {
@@ -96,7 +91,7 @@ public class OrderedBeanLookup {
             }
         }
 
-        int compareResult = comparator.compare(buffer[index], key);
+        int compareResult = key.compareTo(buffer[index]);
 
         if (compareResult == 0) {
             byte[] bytes = new byte[valuesDataLengths[index]];
@@ -107,7 +102,7 @@ public class OrderedBeanLookup {
             }
             buffer[index].loadValuesData(bytes);
             return true;
-        } else if (compareResult > 0) {
+        } else if (compareResult < 0) {
             return false;
         } else {
             try {
