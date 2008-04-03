@@ -20,7 +20,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import test.prototype.main.ILookupBean;
 
 /**
  * DOC slanglois class global comment. Detailled comment

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.Comparator;
 
 import org.talend.designer.components.commons.AdvancedLookup;
+import org.talend.designer.components.persistent.ILookupBean;
+import org.talend.designer.components.persistent.IMainBean;
 import org.talend.designer.components.persistent.PersistentSortedAdvancedLookup;
 
 import routines.TalendString;
@@ -869,7 +871,6 @@ public class MainPrototype1 {
                     // Sort and store in KeyFile(s) and DataFile(s)
                     fsi_Join_M__LF1.put(null, rsc_Join_M__LF1);
 
-                    // WARNING: THIS BRACKET MUST APPEAR ONLY WITH "ALL MATCHES" or "ALL ROWS" mode
                 } // for loop LF1
 
             } // loop on each M row
@@ -1363,7 +1364,7 @@ public class MainPrototype1 {
             return bao.toByteArray();
         }
 
-        public int loadKeysData(byte[] keysData) {
+        public void loadKeysData(byte[] keysData) {
 
             DataInputStream dis = null;
 
@@ -1377,7 +1378,6 @@ public class MainPrototype1 {
                 e.printStackTrace();
             }
 
-            return valuesDataSize;
         }
 
         public byte[] toValuesData() {

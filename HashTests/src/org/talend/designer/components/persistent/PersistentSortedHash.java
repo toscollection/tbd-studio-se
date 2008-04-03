@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import test.prototype.main.ILookupBean;
 
 /**
  * DOC amaumont class global comment. Detailled comment <br/>

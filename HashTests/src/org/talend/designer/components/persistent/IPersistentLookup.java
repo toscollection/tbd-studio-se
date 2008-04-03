@@ -11,7 +11,7 @@
 //
 // ============================================================================
 
-package org.talend.designer.components.thash.io;
+package org.talend.designer.components.persistent;
 
 import java.io.IOException;
 

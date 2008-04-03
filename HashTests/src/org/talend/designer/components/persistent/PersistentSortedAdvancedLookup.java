@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
 import org.talend.designer.components.persistent.IPersistentHash.KEYS_MANAGEMENT;
-import org.talend.designer.components.thash.io.IPersistentLookup;
 import org.talend.designer.components.thash.io.hashimpl.IAdvancedLookup;
 
 public class PersistentSortedAdvancedLookup<K, V> implements IPersistentLookup<K, V> {

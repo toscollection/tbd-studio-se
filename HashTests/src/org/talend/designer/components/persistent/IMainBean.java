@@ -1,4 +1,4 @@
-package test.prototype.main;
+package org.talend.designer.components.persistent;
 
 
 
