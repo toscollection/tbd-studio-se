@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 /**
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
@@ -238,6 +237,14 @@ public class PersistentSortedHash<K extends Comparable<V>, V extends ILookupBean
             (new File(container + "/KeysData_" + i + ".bin")).delete();
             (new File(container + "/ValuesData_" + i + ".bin")).delete();
         }
+    }
+
+    public boolean hasFreeBean() {
+        return fileIndex > 0;
+    }
+
+    public V nextFreeBean() {
+        return (V) buffer[bufferIndex];
     }
 
 }

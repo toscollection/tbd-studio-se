@@ -266,8 +266,7 @@ public class test {
             start_Hash.put("tJoin_1", System.currentTimeMillis());
             currentComponent = "tJoin_1";
 
-            final IPersistentHash<Lookup, Lookup> tHash_tJoin_1 = (IPersistentHash<Lookup, Lookup>) globalMap
-                    .get("tHash_row4");
+            final IPersistentHash<Lookup, Lookup> tHash_tJoin_1 = (IPersistentHash<Lookup, Lookup>) globalMap.get("tHash_row4");
             tHash_tJoin_1.initGet();
 
             // class Util_tJoin_1 {
@@ -711,9 +710,12 @@ public class test {
                      */
 
                     currentComponent = "tHash_row4";
-
-                    Lookup row4_HashRow = new Lookup();
-
+                    Lookup row4_HashRow = null;
+                    if (tHash_row4.hasFreeBean()) {
+                        row4_HashRow = tHash_row4.nextFreeBean();
+                    } else {
+                        row4_HashRow = new Lookup();
+                    }
                     row4_HashRow.id = lookupRow.id;
                     row4_HashRow.time = lookupRow.time;
                     tHash_row4.put(row4_HashRow);
