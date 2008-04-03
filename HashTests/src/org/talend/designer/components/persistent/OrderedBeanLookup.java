@@ -30,7 +30,7 @@ class OrderedBeanLookup {
 
     InputStream valuesDataStream;
 
-    ILookupBean[] buffer;
+    IPersistableLookupRow[] buffer;
 
     int[] valuesDataLengths;
 
@@ -55,7 +55,7 @@ class OrderedBeanLookup {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public OrderedBeanLookup(String baseDirectory, int fileIndex, ILookupBean[] buffer) throws IOException,
+    public OrderedBeanLookup(String baseDirectory, int fileIndex, IPersistableLookupRow[] buffer) throws IOException,
             InstantiationException, IllegalAccessException {
         if (buffer == null || buffer.length < 1) {
             throw new IllegalArgumentException();
@@ -119,7 +119,7 @@ class OrderedBeanLookup {
      * 
      * @return
      */
-    public ILookupBean next() {
+    public IPersistableLookupRow next() {
         return buffer[index++];
     }
 

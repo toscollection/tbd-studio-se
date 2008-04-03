@@ -266,7 +266,8 @@ public class test {
             start_Hash.put("tJoin_1", System.currentTimeMillis());
             currentComponent = "tJoin_1";
 
-            final IPersistentHash<Lookup, Lookup> tHash_tJoin_1 = (IPersistentHash<Lookup, Lookup>) globalMap.get("tHash_row4");
+            final IPersistableHash<Lookup, Lookup> tHash_tJoin_1 = (IPersistableHash<Lookup, Lookup>) globalMap
+                    .get("tHash_row4");
             tHash_tJoin_1.initGet();
 
             // class Util_tJoin_1 {
@@ -464,7 +465,7 @@ public class test {
 
     }
 
-    private class Lookup implements ILookupBean, Comparable<Lookup> {
+    private class Lookup implements IPersistableLookupRow, Comparable<Lookup> {
 
         private static final int DEFAULT_HASHCODE = 1;
 
@@ -648,8 +649,8 @@ public class test {
             start_Hash.put("tHash_row4", System.currentTimeMillis());
             currentComponent = "tHash_row4";
 
-            IPersistentHash<Lookup, Lookup> tHash_row4 = new PersistentSortedHash<Lookup, Lookup>(
-                    IPersistentHash.KEYS_MANAGEMENT.KEEP_FIRST, pathFolderTest + "container");
+            IPersistableHash<Lookup, Lookup> tHash_row4 = new PersistentSortedHash<Lookup, Lookup>(
+                    IPersistableHash.KEYS_MANAGEMENT.KEEP_FIRST, pathFolderTest + "container");
 
             tHash_row4.initPut();
 

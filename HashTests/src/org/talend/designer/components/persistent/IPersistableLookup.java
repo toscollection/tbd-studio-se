@@ -14,26 +14,28 @@
 package org.talend.designer.components.persistent;
 
 import java.io.IOException;
-import java.util.Comparator;
+
 
 /**
  * DOC amaumont  class global comment. Detailled comment
  * <br/>
  *
  */
-public interface IPersistentBinaryDataManager {
+public interface IPersistableLookup<K,V> {
 
     public void initPut() throws IOException;
-
-    public void put(byte[] data) throws IOException;
+    
+    public void put(V bean) throws IOException;
 
     public void endPut() throws IOException;
 
     public void initGet() throws IOException;
+
+    public void lookup(K key) throws IOException;
     
     public boolean hasNext() throws IOException;
-    
-    public byte[] next(int length) throws IOException;
+
+    public V next() throws IOException;
 
     public void endGet() throws IOException;
     

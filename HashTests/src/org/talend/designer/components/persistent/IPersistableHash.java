@@ -2,7 +2,8 @@ package org.talend.designer.components.persistent;
 
 import java.io.IOException;
 
-public interface IPersistentHash<K, V> {
+
+public interface IPersistableHash<K,V> {
 
     public enum KEYS_MANAGEMENT {
         KEEP_FIRST,
@@ -31,5 +32,5 @@ public interface IPersistentHash<K, V> {
     public boolean hasFreeBean();
 
     public V nextFreeBean();
-
+    
 }

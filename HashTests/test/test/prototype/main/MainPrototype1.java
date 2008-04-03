@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.Comparator;
 
 import org.talend.designer.components.commons.AdvancedLookup;
-import org.talend.designer.components.persistent.ILookupBean;
-import org.talend.designer.components.persistent.IMainBean;
+import org.talend.designer.components.persistent.IPersistableLookupRow;
+import org.talend.designer.components.persistent.IPersistableRow;
 import org.talend.designer.components.persistent.PersistentSortedAdvancedLookup;
 
 import routines.TalendString;
@@ -321,7 +321,7 @@ public class MainPrototype1 {
             org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator fsi_M = new org.talend.designer.components.thash.io.hashimpl.FlowSorterIterator();
             fsi_M.initPut(null);
 
-            class SortableRow_Main_M implements Comparable<SortableRow_Main_M>, IMainBean {
+            class SortableRow_Main_M implements Comparable<SortableRow_Main_M>, IPersistableRow {
 
                 int expKey_LF1__K1;
 
@@ -404,7 +404,7 @@ public class MainPrototype1 {
 
             }
 
-            class SortableRow_Join_M__LF1 implements Comparable<SortableRow_Join_M__LF1>, IMainBean {
+            class SortableRow_Join_M__LF1 implements Comparable<SortableRow_Join_M__LF1>, IPersistableRow {
 
                 int expKey_LF2__K1;
 
@@ -507,7 +507,7 @@ public class MainPrototype1 {
 
             }
 
-            class SortableRow_Join_M__LF1__LF2 implements Comparable<SortableRow_Join_M__LF1__LF2>, IMainBean {
+            class SortableRow_Join_M__LF1__LF2 implements Comparable<SortableRow_Join_M__LF1__LF2>, IPersistableRow {
 
                 int expKey_LF3__K1;
 
@@ -1288,7 +1288,7 @@ public class MainPrototype1 {
 
     }
 
-    private class LF1Struct implements Comparable<LF1Struct>, ILookupBean {
+    private class LF1Struct implements Comparable<LF1Struct>, IPersistableLookupRow {
 
         private static final int DEFAULT_HASHCODE = 1;
 
@@ -1561,7 +1561,7 @@ public class MainPrototype1 {
 
     }
 
-    private class LF2Struct implements Comparable<LF2Struct>, ILookupBean {
+    private class LF2Struct implements Comparable<LF2Struct>, IPersistableLookupRow {
 
         private static final int DEFAULT_HASHCODE = 1;
 
@@ -1832,7 +1832,7 @@ public class MainPrototype1 {
 
     }
 
-    private class LF3Struct implements Comparable<LF3Struct>, ILookupBean {
+    private class LF3Struct implements Comparable<LF3Struct>, IPersistableLookupRow {
 
         private static final int DEFAULT_HASHCODE = 1;
 

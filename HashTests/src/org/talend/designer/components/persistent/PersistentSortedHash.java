@@ -36,7 +36,7 @@ import java.util.List;
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
  */
-public class PersistentSortedHash<K extends Comparable<V>, V extends ILookupBean> implements IPersistentHash<K, V> {
+public class PersistentSortedHash<K extends Comparable<V>, V extends IPersistableLookupRow> implements IPersistableHash<K, V> {
 
     private String container;
 
@@ -47,7 +47,7 @@ public class PersistentSortedHash<K extends Comparable<V>, V extends ILookupBean
 
     private int bufferSize = 100000;
 
-    private ILookupBean[] buffer = null;
+    private IPersistableLookupRow[] buffer = null;
 
     private int fileIndex = 0;
 
@@ -70,7 +70,7 @@ public class PersistentSortedHash<K extends Comparable<V>, V extends ILookupBean
     }
 
     public void initPut() throws IOException {
-        buffer = new ILookupBean[bufferSize];
+        buffer = new IPersistableLookupRow[bufferSize];
     }
 
     public void put(V bean) throws IOException {
@@ -83,7 +83,7 @@ public class PersistentSortedHash<K extends Comparable<V>, V extends ILookupBean
             BufferedOutputStream valuesDataOutputStream = new BufferedOutputStream(new FileOutputStream(valuesDataFile));
             byte[] keysData = null;
             byte[] valuesData = null;
-            for (ILookupBean curBean : buffer) {
+            for (IPersistableLookupRow curBean : buffer) {
                 valuesData = curBean.toValuesData();
                 keysData = curBean.toKeysData();
 
@@ -113,7 +113,7 @@ public class PersistentSortedHash<K extends Comparable<V>, V extends ILookupBean
         byte[] keysData = null;
         byte[] valuesData = null;
         for (int i = 0; i < bufferIndex; i++) {
-            ILookupBean curBean = buffer[i];
+            IPersistableLookupRow curBean = buffer[i];
             valuesData = curBean.toValuesData();
             keysData = curBean.toKeysData();
 
@@ -141,9 +141,9 @@ public class PersistentSortedHash<K extends Comparable<V>, V extends ILookupBean
         // bufferSize = 10;
         int j = 0;
         for (int i = 0; i < fileIndex; i++) {
-            ILookupBean[] reusedBuffer = ((Object) ((Class<ILookupBean[]>) buffer.getClass()) == (Object) Object[].class) ? (ILookupBean[]) new Object[bufferSize]
-                    : (ILookupBean[]) Array
-                            .newInstance(((Class<ILookupBean[]>) buffer.getClass()).getComponentType(), bufferSize);
+            IPersistableLookupRow[] reusedBuffer = ((Object) ((Class<IPersistableLookupRow[]>) buffer.getClass()) == (Object) Object[].class) ? (IPersistableLookupRow[]) new Object[bufferSize]
+                    : (IPersistableLookupRow[]) Array
+                            .newInstance(((Class<IPersistableLookupRow[]>) buffer.getClass()).getComponentType(), bufferSize);
             System.arraycopy(buffer, j, reusedBuffer, 0, Math.min(buffer.length - j, bufferSize));
 
             j += bufferSize;

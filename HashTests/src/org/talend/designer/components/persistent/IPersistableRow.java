@@ -2,7 +2,7 @@ package org.talend.designer.components.persistent;
 
 
 
-public interface IMainBean {
+public interface IPersistableRow {
 
     public byte[] toData();
 

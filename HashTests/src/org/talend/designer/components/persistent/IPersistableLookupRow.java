@@ -1,6 +1,6 @@
 package org.talend.designer.components.persistent;
 
-public interface ILookupBean {
+public interface IPersistableLookupRow {
 
     public byte[] toKeysData();
 

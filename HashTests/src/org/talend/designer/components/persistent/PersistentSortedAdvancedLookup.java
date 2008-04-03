@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
-import org.talend.designer.components.persistent.IPersistentHash.KEYS_MANAGEMENT;
+import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
 import org.talend.designer.components.thash.io.hashimpl.IAdvancedLookup;
 
-public class PersistentSortedAdvancedLookup<K, V> implements IPersistentLookup<K, V> {
+public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<K, V> {
 
     List<V> list = new ArrayList<V>();
 
@@ -27,7 +27,7 @@ public class PersistentSortedAdvancedLookup<K, V> implements IPersistentLookup<K
 
     static final int ONE = 1;
 
-    IPersistentHash<K, V> persistentSortedHash;
+    IPersistableHash<K, V> persistentSortedHash;
 
     String container;
 
