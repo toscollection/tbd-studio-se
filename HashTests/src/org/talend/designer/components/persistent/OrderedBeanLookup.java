@@ -19,108 +19,164 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.NoSuchElementException;
 
+import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
 
 /**
  * DOC slanglois class global comment. Detailled comment
  */
-class OrderedBeanLookup {
+class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
+
+    private static final int MARK_READ_LIMIT = 256 * 1024 * 1024;
+
+    private static final int KEYS_SIZE_PLUS_VALUES_SIZE = 8;
 
     DataInputStream keysDataStream;
 
     InputStream valuesDataStream;
 
-    IPersistableLookupRow[] buffer;
-
-    int[] valuesDataLengths;
-
     long cursorPosition;
 
     long length;
 
-    int size;
+    private B internalInstance;
 
-    int index;
+    private int currentValuesSize;
 
-    boolean noDataInStream;
+    private int skipValuesSize;
+
+    private boolean nextDirty = true;
+
+    private boolean noMoreNext;
+
+    private Comparable<B> previousAskedKey;
+
+    private long markCursorPosition;
+
+    private KEYS_MANAGEMENT keysManagement;
+
+    private B currentKey;
+
+    private boolean hasNext;
 
     /**
-     * DOC slanglois OrderedBeanLookup constructor comment.
+     * 
+     * DOC amaumont OrderedBeanLookup constructor comment.
      * 
      * @param baseDirectory
      * @param fileIndex
-     * @param buffer
-     * @param comparator
+     * @param internalKeyInstance
+     * @param keys_management
      * @throws IOException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
-    public OrderedBeanLookup(String baseDirectory, int fileIndex, IPersistableLookupRow[] buffer) throws IOException,
-            InstantiationException, IllegalAccessException {
-        if (buffer == null || buffer.length < 1) {
-            throw new IllegalArgumentException();
-        }
+    public OrderedBeanLookup(String baseDirectory, int fileIndex, B internalKeyInstance, KEYS_MANAGEMENT keysManagement)
+            throws IOException {
         File keysDataFile = new File(baseDirectory + "/KeysData_" + fileIndex + ".bin");
-        length = keysDataFile.length();
-        cursorPosition = 0;
-        keysDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
-        valuesDataStream = new BufferedInputStream(new FileInputStream(baseDirectory + "/ValuesData_" + fileIndex + ".bin"));
+        this.length = keysDataFile.length();
 
-        this.buffer = buffer;
-        valuesDataLengths = new int[buffer.length];
+        this.cursorPosition = 0;
+        this.keysDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
+        this.valuesDataStream = new BufferedInputStream(new FileInputStream(baseDirectory + "/ValuesData_" + fileIndex + ".bin"));
+        this.internalInstance = internalKeyInstance;
+        this.keysManagement = keysManagement;
+    }
 
-        loadBuffer();
+    public void lookup(B key) throws IOException {
+
+        currentKey = key;
+
+        nextDirty = true;
+        
+        if (keysManagement != KEYS_MANAGEMENT.KEEP_ALL && previousAskedKey != null && previousAskedKey.compareTo(key) == 0) {
+            valuesDataStream.reset();
+            cursorPosition = markCursorPosition;
+        } else {
+            valuesDataStream.mark(MARK_READ_LIMIT);
+            markCursorPosition = cursorPosition;
+        }
+
+        previousAskedKey = key;
+
     }
 
     /**
      * DOC slanglois Comment method "hasNext".
      * 
      * @return
+     * @throws IOException
      */
-    public boolean hasNext(Comparable key) {
-        if (index == size) {
-            if (cursorPosition < length) {
-                try {
-                    loadBuffer();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
+    public boolean hasNext() throws IOException {
+
+        if (nextDirty) {
+            if (cursorPosition >= length) {
+                noMoreNext = true;
                 return false;
             }
-        }
 
-        int compareResult = key.compareTo(buffer[index]);
+            currentValuesSize = 0;
 
-        if (compareResult == 0) {
-            byte[] bytes = new byte[valuesDataLengths[index]];
-            try {
-                valuesDataStream.read(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
+            int compareResult;
+            do {
+                skipValuesSize += currentValuesSize;
+                loadDataKeys();
+            } while ((compareResult = internalInstance.compareTo(currentKey)) < 0 && cursorPosition < length);
+
+            if (compareResult == 0) {
+                hasNext = true;
+                noMoreNext = false;
+                nextDirty = false;
+                return true;
+            } else if (compareResult < 0) {
+                noMoreNext = true;
+                hasNext = false;
+                return false;
+            } else {
+                noMoreNext = false;
+                nextDirty = false;
+                hasNext = false;
+                return false;
             }
-            buffer[index].loadValuesData(bytes);
-            return true;
-        } else if (compareResult < 0) {
-            return false;
         } else {
-            try {
-                valuesDataStream.skip(valuesDataLengths[index]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            index++;
-            return hasNext(key);
+            return hasNext;
         }
+    }
+
+    private void loadDataKeys() throws IOException {
+        int keysDataLength = keysDataStream.readInt();
+        byte[] bytes = new byte[keysDataLength];
+        keysDataStream.read(bytes);
+        internalInstance.loadKeysData(bytes);
+        currentValuesSize = keysDataStream.readInt();
+        cursorPosition += (keysDataLength + KEYS_SIZE_PLUS_VALUES_SIZE);
+    }
+
+    private void loadDataValues(int valuesSize) throws IOException {
+        if (skipValuesSize > 0) {
+            valuesDataStream.skip(skipValuesSize);
+            skipValuesSize = 0;
+        }
+        byte[] bytes = new byte[valuesSize];
+        valuesDataStream.read(bytes);
+        internalInstance.loadValuesData(bytes);
     }
 
     /**
      * DOC slanglois Comment method "next".
      * 
      * @return
+     * @throws IOException
      */
-    public IPersistableLookupRow next() {
-        return buffer[index++];
+    public B next() throws IOException {
+
+        if (noMoreNext || nextDirty) {
+            throw new NoSuchElementException();
+        }
+
+        loadDataValues(currentValuesSize);
+
+        nextDirty = true;
+        return internalInstance;
     }
 
     /**
@@ -135,34 +191,6 @@ class OrderedBeanLookup {
         if (valuesDataStream != null) {
             valuesDataStream.close();
         }
-        buffer = null;
     }
 
-    /**
-     * DOC slanglois Comment method "hasMoreBean".
-     * 
-     * @return
-     */
-    public boolean hasMoreBean() {
-        return (cursorPosition < length) || (index < size);
-    }
-
-    /**
-     * DOC slanglois Comment method "loadBuffer".
-     * 
-     * @throws IOException
-     */
-    private void loadBuffer() throws IOException {
-        int i = 0;
-        for (; i < buffer.length && cursorPosition < length; i++) {
-            int keysDataLength = keysDataStream.readInt();
-            byte[] bytes = new byte[keysDataLength];
-            keysDataStream.read(bytes);
-            buffer[i].loadKeysData(bytes);
-            valuesDataLengths[i] = keysDataStream.readInt();
-            cursorPosition += (keysDataLength + 8);
-        }
-        size = i;
-        index = 0;
-    }
 }

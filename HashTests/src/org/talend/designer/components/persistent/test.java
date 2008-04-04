@@ -266,7 +266,7 @@ public class test {
             start_Hash.put("tJoin_1", System.currentTimeMillis());
             currentComponent = "tJoin_1";
 
-            final IPersistableHash<Lookup, Lookup> tHash_tJoin_1 = (IPersistableHash<Lookup, Lookup>) globalMap
+            final IPersistableHash<Lookup> tHash_tJoin_1 = (IPersistableHash<Lookup>) globalMap
                     .get("tHash_row4");
             tHash_tJoin_1.initGet();
 
@@ -649,8 +649,8 @@ public class test {
             start_Hash.put("tHash_row4", System.currentTimeMillis());
             currentComponent = "tHash_row4";
 
-            IPersistableHash<Lookup, Lookup> tHash_row4 = new PersistentSortedHash<Lookup, Lookup>(
-                    IPersistableHash.KEYS_MANAGEMENT.KEEP_FIRST, pathFolderTest + "container");
+            IPersistableHash<Lookup> tHash_row4 = new PersistentSortedHash<Lookup>(
+                    IPersistableHash.KEYS_MANAGEMENT.KEEP_ALL, pathFolderTest + "container", lookupRow);
 
             tHash_row4.initPut();
 

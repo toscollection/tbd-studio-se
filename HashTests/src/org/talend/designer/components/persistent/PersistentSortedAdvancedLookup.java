@@ -9,17 +9,17 @@ import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
 import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
 import org.talend.designer.components.thash.io.hashimpl.IAdvancedLookup;
 
-public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<K, V> {
+public abstract class PersistentSortedAdvancedLookup<B extends Comparable<B> & IPersistableLookupRow> implements IPersistableLookup<B> {
 
-    List<V> list = new ArrayList<V>();
+    List<B> list = new ArrayList<B>();
 
     Object[] arrayValues;
 
     boolean arrayIsDirty = true;
 
-    List<V> listResult;
+    List<B> listResult;
 
-    V objectResult;
+    B objectResult;
 
     MATCHING_MODE matchingMode;
 
@@ -27,7 +27,7 @@ public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<
 
     static final int ONE = 1;
 
-    IPersistableHash<K, V> persistentSortedHash;
+    IPersistableHash<B> persistentSortedHash;
 
     String container;
 
@@ -55,7 +55,7 @@ public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<
             throw new IllegalArgumentException("matchingMode unknown");
         }
 
-        persistentSortedHash = new PersistentSortedHash(keysManagement, container);
+        persistentSortedHash = new PersistentSortedHash<B>(keysManagement, container, createRowInstance());
 
     }
 
@@ -68,7 +68,7 @@ public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<
         this.persistentSortedHash.initPut();
     }
 
-    public void put(V value) throws IOException {
+    public void put(B value) throws IOException {
         if (value != null) {
             persistentSortedHash.put(value);
         }
@@ -92,7 +92,7 @@ public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<
         this.persistentSortedHash.initGet();
     }
 
-    public void lookup(K key) throws IOException {
+    public void lookup(B key) throws IOException {
         persistentSortedHash.lookup(key);
     }
 
@@ -100,7 +100,7 @@ public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<
         return persistentSortedHash.hasNext();
     }
 
-    public V next() throws IOException {
+    public B next() throws IOException {
         return persistentSortedHash.next();
     }
 
@@ -117,4 +117,6 @@ public class PersistentSortedAdvancedLookup<K, V> implements IPersistableLookup<
     public void clear() throws IOException {
     }
 
+    public abstract B createRowInstance();
+    
 }

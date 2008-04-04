@@ -21,21 +21,21 @@ import java.io.IOException;
  * <br/>
  *
  */
-public interface IPersistableLookup<K,V> {
+public interface IPersistableLookup<B> {
 
     public void initPut() throws IOException;
     
-    public void put(V bean) throws IOException;
+    public void put(B bean) throws IOException;
 
     public void endPut() throws IOException;
 
     public void initGet() throws IOException;
 
-    public void lookup(K key) throws IOException;
+    public void lookup(B key) throws IOException;
     
     public boolean hasNext() throws IOException;
 
-    public V next() throws IOException;
+    public B next() throws IOException;
 
     public void endGet() throws IOException;
     

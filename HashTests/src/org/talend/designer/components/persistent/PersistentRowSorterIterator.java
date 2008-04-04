@@ -51,13 +51,12 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 //     private int bufferSize = 8000000;
 //     private int bufferSize = 9000000;
 //     private int bufferSize = 9200000;
+//    private int bufferSize = 10000000;
     private int bufferSize = 10000000;
 
     private int itemCountInBuffer = 0;
 
     private IPersistableRow[] buffer;
-
-    private String container = null;
 
     IPersistableRow iLightSerializable = null;// Change this based on the Bean class;
 
@@ -68,16 +67,12 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
     private ArrayList<DataInputStream> diss;
 
     private ArrayList<File> files = new ArrayList<File>();
-
     
-    
-    
-    public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
-//    public String workDirectory = "/home/amaumont/abc/c/";
+    private String container;
 
-    public int count = 0;
+    private int count = 0;
 
-    private boolean someFileStillHasRows = true;
+    private boolean someFileStillHasRows = false;
 
     private ArrayList<DataContainer<V>> datas;
 
@@ -116,6 +111,8 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         }
         buffer[itemCountInBuffer++] = item;
 
+        someFileStillHasRows = true;
+        
         beansCount++;
     }
 
@@ -142,26 +139,12 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         throw new UnsupportedOperationException();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
-     */
-    public long getTotalSize() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
     public int getBufferSize() {
         return bufferSize;
     }
 
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
-    }
-
-    public void setILightSerializable(IPersistableRow ils) {
-        this.iLightSerializable = ils;
     }
 
     /**
@@ -195,7 +178,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         time1 = System.currentTimeMillis();
         System.out.println("Writing ordered buffer in file...");
 
-        File file = new File(workDirectory + "TEMP_" + count);
+        File file = new File(container + "TEMP_" + count);
         count++;
         DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         byte[] bytes = null;
@@ -285,6 +268,12 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
     private void findNextData() throws IOException {
         DataContainer<V> min = null;
         int minIndex = 0;
+        
+        if(datas.size() == 0) {
+            currentObject = null;
+            return;
+        }
+        
         DataContainer<V> dataContainer = datas.get(0);
 
         if (dataContainer.object != null) {
@@ -371,10 +360,9 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
     }
     
     public static void main(String[] args) {
-        new PersistentRowSorterIterator<IPersistableRow>("test") {
+        new PersistentRowSorterIterator<IPersistableRow>("/home/amaumont/data/dev/projets/Talend/hashfile/sort") {
 
             protected IPersistableRow createRowInstance() {
-                // TODO Auto-generated method stub
                 return null;
             }
             
