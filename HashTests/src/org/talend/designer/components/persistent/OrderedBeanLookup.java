@@ -40,7 +40,7 @@ class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
 
     long length;
 
-    private B internalInstance;
+    private B lookupInstance;
 
     private int currentValuesSize;
 
@@ -52,13 +52,29 @@ class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
 
     private Comparable<B> previousAskedKey;
 
-    private long markCursorPosition;
+    private long markCursorPosition = -1;
 
     private KEYS_MANAGEMENT keysManagement;
 
-    private B currentKey;
+    private B currentSearchedKey;
 
     private boolean hasNext;
+
+    boolean atLeastOneLoadkeys = false;
+
+    private boolean startWithNewKey;
+
+    private boolean marking = true;
+
+    private IRowProvider<B> rowProvider;
+
+    private boolean nextFromCache;
+
+    private int remainingSkip;
+
+    private boolean previousCompareResultMatch;
+
+    private B previousLookupInstance;
 
     /**
      * 
@@ -70,7 +86,7 @@ class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
      * @param keys_management
      * @throws IOException
      */
-    public OrderedBeanLookup(String baseDirectory, int fileIndex, B internalKeyInstance, KEYS_MANAGEMENT keysManagement)
+    public OrderedBeanLookup(String baseDirectory, int fileIndex, IRowProvider<B> rowProvider, KEYS_MANAGEMENT keysManagement)
             throws IOException {
         File keysDataFile = new File(baseDirectory + "/KeysData_" + fileIndex + ".bin");
         this.length = keysDataFile.length();
@@ -78,23 +94,28 @@ class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
         this.cursorPosition = 0;
         this.keysDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
         this.valuesDataStream = new BufferedInputStream(new FileInputStream(baseDirectory + "/ValuesData_" + fileIndex + ".bin"));
-        this.internalInstance = internalKeyInstance;
+        this.lookupInstance = rowProvider.createInstance();
+        this.rowProvider = rowProvider;
         this.keysManagement = keysManagement;
     }
 
     public void lookup(B key) throws IOException {
 
-        currentKey = key;
+        currentSearchedKey = key;
 
         nextDirty = true;
-        
-        if (keysManagement != KEYS_MANAGEMENT.KEEP_ALL && previousAskedKey != null && previousAskedKey.compareTo(key) == 0) {
-            valuesDataStream.reset();
-            cursorPosition = markCursorPosition;
+
+        if (keysManagement == KEYS_MANAGEMENT.KEEP_ALL && previousAskedKey != null && previousAskedKey.compareTo(key) == 0) {
+            startWithNewKey = false;
+            nextFromCache = true;
+            rowProvider.resetInstanceIndex();
         } else {
-            valuesDataStream.mark(MARK_READ_LIMIT);
-            markCursorPosition = cursorPosition;
+            rowProvider.resetFreeIndex();
+            startWithNewKey = true;
+            nextFromCache = false;
+            lookupInstance = rowProvider.getFreeInstance();
         }
+
 
         previousAskedKey = key;
 
@@ -108,32 +129,74 @@ class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
      */
     public boolean hasNext() throws IOException {
 
+        if (currentSearchedKey == null) {
+            return false;
+        }
+
+        if (nextFromCache) {
+            return rowProvider.hasNext();
+        }
+
         if (nextDirty) {
             if (cursorPosition >= length) {
                 noMoreNext = true;
                 return false;
             }
 
-            currentValuesSize = 0;
+            int compareResult = -1;
 
-            int compareResult;
-            do {
-                skipValuesSize += currentValuesSize;
-                loadDataKeys();
-            } while ((compareResult = internalInstance.compareTo(currentKey)) < 0 && cursorPosition < length);
+            if (atLeastOneLoadkeys && startWithNewKey) {
+                compareResult = previousLookupInstance.compareTo(currentSearchedKey);
+                if (compareResult == 0) {
+                    lookupInstance = previousLookupInstance;
+                    if (previousCompareResultMatch) {
+                        remainingSkip = 0;
+                    }
+                }
+            }
+            startWithNewKey = false;
 
+            int localSkip = 0;
+
+            if (compareResult < 0 || !atLeastOneLoadkeys) {
+
+                do {
+
+                    loadDataKeys();
+                    compareResult = lookupInstance.compareTo(currentSearchedKey);
+                    if (compareResult > 0) {
+                        marking = false;
+                        remainingSkip = currentValuesSize;
+                        // localSkip += currentValuesSize;
+                    }
+                    if (compareResult >= 0 || cursorPosition >= length) {
+                        previousLookupInstance = lookupInstance;
+                        break;
+                    }
+                    if (compareResult < 0) {
+                        marking = false;
+                        localSkip += currentValuesSize;
+                    }
+                } while (true);
+            }
+            previousCompareResultMatch = false;
             if (compareResult == 0) {
+//                skipValuesSize -= remainingSkip;
+                skipValuesSize += localSkip;
                 hasNext = true;
                 noMoreNext = false;
                 nextDirty = false;
                 return true;
             } else if (compareResult < 0) {
+                skipValuesSize += localSkip;
+                nextDirty = true;
                 noMoreNext = true;
                 hasNext = false;
                 return false;
             } else {
+                skipValuesSize += localSkip;
+                nextDirty = true;
                 noMoreNext = false;
-                nextDirty = false;
                 hasNext = false;
                 return false;
             }
@@ -143,22 +206,28 @@ class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
     }
 
     private void loadDataKeys() throws IOException {
+        atLeastOneLoadkeys = true;
         int keysDataLength = keysDataStream.readInt();
         byte[] bytes = new byte[keysDataLength];
         keysDataStream.read(bytes);
-        internalInstance.loadKeysData(bytes);
+        lookupInstance.loadKeysData(bytes);
         currentValuesSize = keysDataStream.readInt();
         cursorPosition += (keysDataLength + KEYS_SIZE_PLUS_VALUES_SIZE);
     }
 
     private void loadDataValues(int valuesSize) throws IOException {
         if (skipValuesSize > 0) {
+            skipValuesSize += remainingSkip;
             valuesDataStream.skip(skipValuesSize);
+            // valuesDataStream.mark(MARK_READ_LIMIT);
+            // markCursorPosition = cursorPosition;
+            remainingSkip = 0;
             skipValuesSize = 0;
+            marking = true;
         }
         byte[] bytes = new byte[valuesSize];
         valuesDataStream.read(bytes);
-        internalInstance.loadValuesData(bytes);
+        lookupInstance.loadValuesData(bytes);
     }
 
     /**
@@ -169,14 +238,26 @@ class OrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow> {
      */
     public B next() throws IOException {
 
+        previousCompareResultMatch = true;
+        if (nextFromCache) {
+            return rowProvider.next();
+        }
+
         if (noMoreNext || nextDirty) {
             throw new NoSuchElementException();
         }
 
+        
         loadDataValues(currentValuesSize);
 
         nextDirty = true;
-        return internalInstance;
+
+        B row = lookupInstance;
+        lookupInstance = rowProvider.getFreeInstance();
+
+        atLeastOneLoadkeys = false;
+
+        return row;
     }
 
     /**

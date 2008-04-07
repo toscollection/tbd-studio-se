@@ -613,6 +613,7 @@ public class test {
 
             } catch (java.io.IOException e) {
                 e.printStackTrace();
+                System.exit(0);
             } finally {
                 if (dis != null) {
                     try {
@@ -650,7 +651,13 @@ public class test {
             currentComponent = "tHash_row4";
 
             IPersistableHash<Lookup> tHash_row4 = new PersistentSortedHash<Lookup>(
-                    IPersistableHash.KEYS_MANAGEMENT.KEEP_ALL, pathFolderTest + "container", lookupRow);
+                    IPersistableHash.KEYS_MANAGEMENT.KEEP_LAST, pathFolderTest + "container", new IRowCreator<Lookup>() {
+
+                        public Lookup createRowInstance() {
+                            return new Lookup();
+                        }
+                        
+                    });
 
             tHash_row4.initPut();
 
@@ -669,7 +676,7 @@ public class test {
             currentComponent = "tFileInputDelimited_2";
 
             org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_2 = new org.talend.fileprocess.FileInputDelimited(
-                    pathFolderTest + "/lookup.txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
+                    pathFolderTest + "/lookup2.txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
             while (fid_tFileInputDelimited_2.nextRecord()) {
                 lookupRow = null;
                 lookupRow = null;
