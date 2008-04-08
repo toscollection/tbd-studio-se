@@ -1,6 +1,6 @@
 package org.talend.designer.components.persistent;
 
-public interface IPersistableLookupRow {
+public interface IPersistableLookupRow<R> {
 
     public byte[] toKeysData();
 
@@ -10,4 +10,6 @@ public interface IPersistableLookupRow {
 
     public void loadValuesData(byte[] valuesData);
 
+    public void copyDataTo(R other);
+    
 }

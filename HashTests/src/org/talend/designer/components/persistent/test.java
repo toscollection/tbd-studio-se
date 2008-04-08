@@ -465,7 +465,7 @@ public class test {
 
     }
 
-    private class Lookup implements IPersistableLookupRow, Comparable<Lookup> {
+    private class Lookup implements IPersistableLookupRow<Lookup>, Comparable<Lookup> {
 
         private static final int DEFAULT_HASHCODE = 1;
 
@@ -576,6 +576,7 @@ public class test {
                     bytes = this.time.getBytes();
                     dos.writeInt(bytes.length);
                     dos.write(bytes);
+                    System.out.println(this.time + " => " + bytes.length + " + " + 4 + " = " + (bytes.length + 4) );
                 }
 
             } catch (java.io.IOException e) {
@@ -635,6 +636,13 @@ public class test {
             return this.id - o.id;
         }
 
+        public void copyDataTo(Lookup other) {
+            other.id = this.id;
+            other.time = this.time;
+        }
+        
+        
+
     }
 
     public void tFileInputDelimited_2Process() throws TalendException {
@@ -651,7 +659,7 @@ public class test {
             currentComponent = "tHash_row4";
 
             IPersistableHash<Lookup> tHash_row4 = new PersistentSortedHash<Lookup>(
-                    IPersistableHash.KEYS_MANAGEMENT.KEEP_LAST, pathFolderTest + "container", new IRowCreator<Lookup>() {
+                    IPersistableHash.KEYS_MANAGEMENT.KEEP_ALL, pathFolderTest + "container", new IRowCreator<Lookup>() {
 
                         public Lookup createRowInstance() {
                             return new Lookup();
