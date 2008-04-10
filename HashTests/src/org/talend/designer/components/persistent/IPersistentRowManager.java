@@ -15,6 +15,8 @@ package org.talend.designer.components.persistent;
 
 import java.io.IOException;
 
+import routines.system.IPersistableRow;
+
 /**
  * DOC amaumont  class global comment. Detailled comment
  * <br/>

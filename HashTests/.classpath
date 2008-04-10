@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="lib/systemRoutines.jar"/>
 	<classpathentry kind="lib" path="lib/talend_file_enhanced_20070724.jar"/>
 	<classpathentry kind="lib" path="lib/userRoutines.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.talend.librariesmanager"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

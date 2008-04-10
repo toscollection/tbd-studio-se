@@ -33,6 +33,8 @@ import java.util.List;
 
 import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
 
+import routines.system.IPersistableLookupRow;
+
 /**
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
@@ -77,7 +79,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
         this.container = container;
         this.rowCreator = rowCreator;
         this.rowProvider = new RowProvider<B>(rowCreator);
-        
+
     }
 
     public void initPut() throws IOException {
@@ -153,16 +155,16 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
         switch (keysManagement) {
         case KEEP_FIRST:
             throw new UnsupportedOperationException();
-            //return new OrderedBeanLookupMatchLast<B>(container, i, rowProvider);
+            // return new OrderedBeanLookupMatchLast<B>(container, i, rowProvider);
 
         case KEEP_LAST:
-            
+
             return new OrderedBeanLookupMatchLast<B>(container, i, rowProvider);
-            
+
         case KEEP_ALL:
-            
+
             return new OrderedBeanLookupMatchAll<B>(container, i, rowProvider);
-            
+
         default:
             throw new IllegalArgumentException();
         }
@@ -178,7 +180,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
         for (lookupIndex = 0; lookupIndex < size; lookupIndex++) {
             AbstractOrderedBeanLookup<B> tempLookup = lookupList.get(lookupIndex);
             tempLookup.lookup(key);
-            if(keysManagement != KEYS_MANAGEMENT.KEEP_ALL || keysManagement == KEYS_MANAGEMENT.KEEP_ALL && tempLookup.hasNext()) {
+            if (keysManagement != KEYS_MANAGEMENT.KEEP_ALL || keysManagement == KEYS_MANAGEMENT.KEEP_ALL && tempLookup.hasNext()) {
                 return;
             }
         }
@@ -186,11 +188,11 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
     }
 
     public boolean hasNext() throws IOException {
-        
-        if(!hasNextCanBeEvaluated) {
+
+        if (!hasNextCanBeEvaluated) {
             return false;
         }
-        
+
         if (keysManagement == KEYS_MANAGEMENT.KEEP_FIRST || keysManagement == KEYS_MANAGEMENT.KEEP_LAST) {
             if (hasGet) {
                 return false;
@@ -207,23 +209,16 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
                     B temp = null;
                     for (AbstractOrderedBeanLookup<B> tempLookup : lookupList) {
                         if (tempLookup.hasNext()) {
-                            temp = tempLookup.next();
-                            break;
+                            return true;
                         }
                     }
-                    if (temp != null) {
-                        result = temp;
-                        hasGet = true;
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return false;
                 }
             }
         } else {
             hasGet = false;
             int size = lookupList.size();
-            if(lookupIndex >= size) {
+            if (lookupIndex >= size) {
                 lookupIndex = 0;
             }
             for (; lookupIndex < size; lookupIndex++) {
@@ -238,7 +233,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
     }
 
     public B next() throws IOException {
-        if(!hasGet) {
+        if (!hasGet) {
             hasGet = true;
             return currLookup.next();
         } else {

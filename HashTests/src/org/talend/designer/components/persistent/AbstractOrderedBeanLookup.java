@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import routines.system.IPersistableLookupRow;
+
 
 public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow<B>> {
 
@@ -60,7 +62,9 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     protected int sizeDataToRead;
 
-    
+    protected B resultLookupInstance;
+
+
     /**
      * 
      * DOC amaumont OrderedBeanLookup constructor comment.
@@ -103,7 +107,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
      */
     public abstract B next() throws IOException;
 
-    protected void loadDataKeys() throws IOException {
+    protected void loadDataKeys(B lookupInstance) throws IOException {
         atLeastOneLoadkeys = true;
         int keysDataLength = keysDataStream.readInt();
         byte[] bytes = new byte[keysDataLength];
@@ -113,7 +117,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
         cursorPosition += (keysDataLength + KEYS_SIZE_PLUS_VALUES_SIZE);
     }
 
-    protected void loadDataValues(int valuesSize) throws IOException {
+    protected void loadDataValues(B lookupInstance, int valuesSize) throws IOException {
         if (skipValuesSize > 0) {
             skipValuesSize += remainingSkip;
             valuesDataStream.skip(skipValuesSize);

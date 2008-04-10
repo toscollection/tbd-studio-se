@@ -16,6 +16,8 @@ package org.talend.designer.components.persistent;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import routines.system.IPersistableLookupRow;
+
 /**
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
@@ -24,10 +26,19 @@ import java.util.NoSuchElementException;
  */
 public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLookupRow<B>> extends AbstractOrderedBeanLookup<B> {
 
+    private boolean previousKeyLoaded;
+
+    private boolean swaped;
+
+    private boolean usePreviousForNextLookup;
+
+    private int previousValuesSize;
+
     public OrderedBeanLookupMatchLast(String baseDirectory, int fileIndex, IRowProvider<B> rowProvider) throws IOException {
         super(baseDirectory, fileIndex, rowProvider);
         lookupInstance = rowProvider.createInstance();
         previousLookupInstance = rowProvider.createInstance();
+        resultLookupInstance = rowProvider.createInstance();
     }
 
     /*
@@ -41,14 +52,27 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
         nextDirty = true;
 
-//        if (previousAskedKey != null && previousAskedKey.compareTo(key) == 0) {
-//            startWithNewKey = true;
-//        } else {
-//            startWithNewKey = true;
-//        }
-      startWithNewKey = true;
+        if (previousKeyLoaded && previousAskedKey.compareTo(key) == 0) {
+            nextWithPreviousLookup = true;
+            nextDirty = false;
+            hasNext = true;
+        } else {
+            if (usePreviousForNextLookup) {
+                // swapInstances();
+                // skipValuesSize -= currentValuesSize;
+            }
+            // if (hasNext && nextWithPreviousLookup && previousLookupInstance.compareTo(currentSearchedKey) == 0 &&
+            // previousLookupInstance.compareTo(previousAskedKey) > 0) {
+            // swapInstances();
+            // }
+            hasNext = false;
+            nextDirty = true;
+            startWithNewKey = true;
+            nextWithPreviousLookup = false;
+        }
 
-//        previousAskedKey = key;
+        key.copyDataTo(previousAskedKey);
+        previousKeyLoaded = true;
 
     }
 
@@ -64,69 +88,103 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
         }
 
         if (nextDirty) {
-            if (cursorPosition >= length) {
-                noMoreNext = true;
-                return false;
-            }
-
             int compareResult = -1;
 
             int localSkip = 0;
 
+            boolean endOfFile = cursorPosition >= length;
+
+            if (endOfFile && !swaped) {
+                swaped = true;
+//                swapInstances();
+            }
+
             if (atLeastOneLoadkeys) {
                 compareResult = lookupInstance.compareTo(currentSearchedKey);
+                // if(compareResult != 0) {
+                // int compareResultInternal = previousLookupInstance.compareTo(currentSearchedKey);
+                // if(compareResultInternal == 0) {
+                // compareResult = compareResultInternal;
+                // swapInstances();
+                // }
+                // }
+
                 if (compareResult == 0) {
-//                    swapInstances();
-                    if(startWithNewKey && !previousCompareResultMatch) {
+                    if(endOfFile) {
+                        lookupInstance.copyKeysDataTo(resultLookupInstance);
+                    } else {
                         localSkip += currentValuesSize;
                         compareResult = -1;
-                    } else {
-                        nextWithPreviousLookup = true;
-                        if (previousCompareResultMatch) {
-                            remainingSkip = 0;
-                        }
                     }
+
+                    // if (startWithNewKey) {
+                    // if (!endOfFile) {
+                    // if (usePreviousForNextLookup) {
+                    // usePreviousForNextLookup = false;
+                    // } else {
+                    // localSkip += currentValuesSize;
+                    // compareResult = -1;
+                    // }
+                    // }
+                    // } else {
+                    // nextWithPreviousLookup = true;
+                    // if (previousCompareResultMatch) {
+                    // remainingSkip = 0;
+                    // }
+                    // }
                 } else if (compareResult < 0) {
-                    localSkip += currentValuesSize;
+                    // if(previousLookupInstance.compareTo(currentSearchedKey) > 0) {
+                    // compareResult = 1;
+                    // swapInstances();
+                    // } else {
+                    // localSkip += currentValuesSize;
+                    // }
                 }
             }
             startWithNewKey = false;
 
-            int previousValuesSize = 0;
+            if (!endOfFile && (compareResult < 0 || !atLeastOneLoadkeys)) {
 
-            if (compareResult < 0 || !atLeastOneLoadkeys) {
-
-                boolean searchingNextNotMatch = false;
+                boolean searchingNextNotMatchAfterMatchFound = false;
                 do {
 
-                    loadDataKeys();
+                    loadDataKeys(lookupInstance);
                     compareResult = lookupInstance.compareTo(currentSearchedKey);
                     if (compareResult > 0) {
                         // remainingSkip = currentValuesSize;
                         // localSkip += currentValuesSize;
                     }
-                    if (compareResult >= 0 || cursorPosition >= length) {
-                        if (!searchingNextNotMatch && compareResult == 0) {
-                            searchingNextNotMatch = true;
-                        } else if (compareResult > 0 || cursorPosition >= length) {
+
+                    endOfFile = cursorPosition >= length;
+                    if (compareResult >= 0 || endOfFile) {
+
+                        if (!searchingNextNotMatchAfterMatchFound && compareResult == 0 && !endOfFile) {
+                            searchingNextNotMatchAfterMatchFound = true;
+                        } else if (compareResult > 0 || endOfFile) {
                             // localSkip -= currentValuesSize;
-                            remainingSkip = 0;
-                            sizeDataToRead = previousValuesSize;
-                            if(searchingNextNotMatch) {
-                                localSkip -= previousValuesSize;
-                                swapInstances();
-                                compareResult = 0;
+                            
+                            if(endOfFile && compareResult == 0) {
+                                
+                                System.out.println();
+                                
                             } else {
-                                localSkip += previousValuesSize;
-//                                previousValuesSize = currentValuesSize;
+                                sizeDataToRead = previousValuesSize;
+                                localSkip -= previousValuesSize;
                             }
+                            
+                            remainingSkip = 0;
+                            usePreviousForNextLookup = true;
+                            previousLookupInstance.copyKeysDataTo(resultLookupInstance);
+                            lookupInstance.copyKeysDataTo(previousLookupInstance);
+                            compareResult = 0;
+                            previousValuesSize = currentValuesSize;
                             break;
                         }
                         swapInstances();
                         localSkip += currentValuesSize;
                         previousValuesSize = currentValuesSize;
                     }
-                    if (compareResult < 0 && !searchingNextNotMatch) {
+                    if (compareResult < 0 && !searchingNextNotMatchAfterMatchFound) {
                         localSkip += currentValuesSize;
                     }
                 } while (true);
@@ -157,6 +215,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
         } else {
             return hasNext;
         }
+
     }
 
     private void swapInstances() {
@@ -181,15 +240,13 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
         nextDirty = true;
         B row = null;
         if (nextWithPreviousLookup) {
-            nextWithPreviousLookup = false;
-            row = lookupInstance;
-//            swapInstances();
+            row = resultLookupInstance;
+            // swapInstances();
         } else {
-            loadDataValues(sizeDataToRead);
-            row = lookupInstance;
+            loadDataValues(resultLookupInstance, sizeDataToRead);
+            row = resultLookupInstance;
+
         }
-
-
 
         return row;
     }

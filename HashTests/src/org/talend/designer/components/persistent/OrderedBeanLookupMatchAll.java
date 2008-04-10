@@ -16,6 +16,8 @@ package org.talend.designer.components.persistent;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import routines.system.IPersistableLookupRow;
+
 /**
  * DOC amaumont class global comment. Detailled comment <br/>
  * 
@@ -57,11 +59,17 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
             rowProvider.resetInstanceIndex();
         } else {
             rowProvider.resetFreeIndex();
+            lookupInstance = rowProvider.getFreeInstance();
+            if(previousLookupInstance == null) {
+                previousLookupInstance = rowProvider.createInstance();                
+            } else {
+                previousLookupInstance.copyKeysDataTo(lookupInstance);
+            }
             startWithNewKey = true;
             nextFromCache = false;
         }
 
-        key.copyDataTo(previousAskedKey);
+        key.copyKeysDataTo(previousAskedKey);
         previousKeyLoaded = true;
 
     }
@@ -83,10 +91,6 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
         }
 
         if (nextDirty) {
-            if (cursorPosition >= length) {
-                noMoreNext = true;
-                return false;
-            }
 
             int compareResult = -1;
 
@@ -109,9 +113,14 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
 
             if (compareResult < 0 || !atLeastOneLoadkeys) {
 
+                if (cursorPosition >= length) {
+                    noMoreNext = true;
+                    return false;
+                }
+
                 do {
 
-                    loadDataKeys();
+                    loadDataKeys(lookupInstance);
                     compareResult = lookupInstance.compareTo(currentSearchedKey);
                     if (compareResult > 0) {
                         // remainingSkip = currentValuesSize;
@@ -123,6 +132,7 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
                                 // localSkip -= currentValuesSize;
                             }
                         } else {
+                            lookupInstance.copyKeysDataTo(previousLookupInstance);
                             previousValuesSize = currentValuesSize;
                             localSkip += currentValuesSize;
                         }
@@ -181,13 +191,17 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
             throw new NoSuchElementException();
         }
 
-        loadDataValues(sizeDataToRead);
+        loadDataValues(lookupInstance, sizeDataToRead);
 
+//        lookupInstance.copyKeysDataTo(previousLookupInstance);
+        
         nextDirty = true;
 
         B row = lookupInstance;
         lookupInstance = rowProvider.getFreeInstance();
 
+//        previousLookupInstance.copyKeysDataTo(lookupInstance);
+        
         atLeastOneLoadkeys = false;
 
         return row;

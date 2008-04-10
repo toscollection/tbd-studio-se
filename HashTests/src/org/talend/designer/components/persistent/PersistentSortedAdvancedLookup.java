@@ -2,12 +2,12 @@ package org.talend.designer.components.persistent;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
 import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
-import org.talend.designer.components.thash.io.hashimpl.IAdvancedLookup;
+
+import routines.system.IPersistableLookupRow;
 
 public abstract class PersistentSortedAdvancedLookup<B extends Comparable<B> & IPersistableLookupRow<B>> implements IPersistableLookup<B>, IRowCreator<B> {
 

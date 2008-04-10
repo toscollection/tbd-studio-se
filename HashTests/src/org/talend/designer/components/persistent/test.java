@@ -13,7 +13,10 @@ package org.talend.designer.components.persistent;
 
 import java.util.Comparator;
 
+import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
+
 import routines.TalendString;
+import routines.system.IPersistableLookupRow;
 import routines.system.ParserUtils;
 import routines.system.TDieException;
 
@@ -26,6 +29,10 @@ import routines.system.TDieException;
  * @status
  */
 public class test {
+
+    private static final KEYS_MANAGEMENT KEEP_MODE = IPersistableHash.KEYS_MANAGEMENT.KEEP_LAST;
+
+    private static final String NUMBER = "7";
 
     // create and load default properties
     private static java.util.Properties defaultProps = new java.util.Properties();
@@ -63,6 +70,7 @@ public class test {
     public static final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
 
     private static final String pathFolderTest = "/home/amaumont/data/dev/projets/Talend/hashfile/testData/";
+
 
     private class TalendException extends Exception {
 
@@ -303,7 +311,7 @@ public class test {
             currentComponent = "tFileInputDelimited_1";
 
             org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_1 = new org.talend.fileprocess.FileInputDelimited(
-                    pathFolderTest + "main.txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
+                    pathFolderTest + "main" + NUMBER +".txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
             while (fid_tFileInputDelimited_1.nextRecord()) {
                 row3 = null;
                 boolean whetherReject_tFileInputDelimited_1 = false;
@@ -347,7 +355,11 @@ public class test {
                     lookup.id = row3.id;
                     tHash_tJoin_1.lookup(lookup);
                     while (tHash_tJoin_1.hasNext()) {
+                        tHash_tJoin_1.hasNext();
+                        tHash_tJoin_1.hasNext();
+                        tHash_tJoin_1.hasNext();
                         Lookup tempLookup = (Lookup) tHash_tJoin_1.next();
+                        tHash_tJoin_1.hasNext();
                         row5 = new Result();
                         row5.id = row3.id;
                         row5.time = tempLookup.time;
@@ -627,6 +639,9 @@ public class test {
 
         }
 
+        
+        
+        
         public String toString() {
             return "id = " + id + "; time = " + time;
         }
@@ -639,6 +654,10 @@ public class test {
         public void copyDataTo(Lookup other) {
             other.id = this.id;
             other.time = this.time;
+        }
+        
+        public void copyKeysDataTo(Lookup other) {
+            other.id = this.id;
         }
         
         
@@ -659,7 +678,7 @@ public class test {
             currentComponent = "tHash_row4";
 
             IPersistableHash<Lookup> tHash_row4 = new PersistentSortedHash<Lookup>(
-                    IPersistableHash.KEYS_MANAGEMENT.KEEP_ALL, pathFolderTest + "container", new IRowCreator<Lookup>() {
+                    KEEP_MODE, pathFolderTest + "container", new IRowCreator<Lookup>() {
 
                         public Lookup createRowInstance() {
                             return new Lookup();
@@ -684,7 +703,7 @@ public class test {
             currentComponent = "tFileInputDelimited_2";
 
             org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_2 = new org.talend.fileprocess.FileInputDelimited(
-                    pathFolderTest + "/lookup2.txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
+                    pathFolderTest + "/lookup"+ NUMBER +".txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
             while (fid_tFileInputDelimited_2.nextRecord()) {
                 lookupRow = null;
                 lookupRow = null;

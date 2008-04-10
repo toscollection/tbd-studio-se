@@ -21,7 +21,7 @@ public class RowProvider<B> implements IRowProvider<B> {
 
     public B getFreeInstance() {
         B row = null;
-        if(cache.size() == currentFreeIndex) {
+        if(currentFreeIndex >= cache.size()) {
             row = this.rowCreator.createRowInstance();
             cache.add(row);
         } else {

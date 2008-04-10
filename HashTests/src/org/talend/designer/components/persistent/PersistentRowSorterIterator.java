@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import routines.system.IPersistableRow;
+
 /**
  * 
  * DOC amaumont class global comment. Detailled comment <br/>
