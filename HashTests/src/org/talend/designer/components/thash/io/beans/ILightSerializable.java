@@ -1,8 +1,15 @@
 package org.talend.designer.components.thash.io.beans;
 
-public interface ILightSerializable extends Comparable {
+/**
+ * 
+ * Interface to load/unload instance data from/to a byte array 
+ * <br/>
+ *
+ * @param <B>
+ */
+public interface ILightSerializable<B> extends Comparable<B> {
 
-    public ILightSerializable createInstance(byte[] byteArray);
+    public ILightSerializable<B> createInstance(byte[] byteArray);
 
     public byte[] toByteArray();
 
