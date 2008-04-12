@@ -184,10 +184,12 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         count++;
         DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         byte[] bytes = null;
+        System.out.println("Start write buffer ");
         for (int i = 0; i < length; i++) {
             bytes = list[i].toData();
             rw.writeInt(bytes.length);
             rw.write(bytes);
+            System.out.println(list[i]); 
         }
         rw.close();
         files.add(file);

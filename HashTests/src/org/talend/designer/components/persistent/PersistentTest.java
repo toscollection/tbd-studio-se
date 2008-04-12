@@ -28,7 +28,7 @@ import routines.system.TDieException;
  * @version 0_1
  * @status
  */
-public class test {
+public class PersistentTest {
 
     private static final KEYS_MANAGEMENT KEEP_MODE = IPersistableHash.KEYS_MANAGEMENT.KEEP_LAST;
 
@@ -76,9 +76,9 @@ public class test {
 
         private Exception e = null;
 
-        private test c = null;
+        private PersistentTest c = null;
 
-        private TalendException(test c, Exception e) {
+        private TalendException(PersistentTest c, Exception e) {
             this.e = e;
             this.c = c;
         }
@@ -354,12 +354,11 @@ public class test {
                     Lookup lookup = new Lookup();
                     lookup.id = row3.id;
                     tHash_tJoin_1.lookup(lookup);
+                    if(row3.id % 2 == 1) {
+                    }
+                    tHash_tJoin_1.hasNext();
                     while (tHash_tJoin_1.hasNext()) {
-                        tHash_tJoin_1.hasNext();
-                        tHash_tJoin_1.hasNext();
-                        tHash_tJoin_1.hasNext();
                         Lookup tempLookup = (Lookup) tHash_tJoin_1.next();
-                        tHash_tJoin_1.hasNext();
                         row5 = new Result();
                         row5.id = row3.id;
                         row5.time = tempLookup.time;
@@ -746,7 +745,7 @@ public class test {
 
                     currentComponent = "tHash_row4";
                     Lookup row4_HashRow = null;
-                    if (tHash_row4.hasFreeBean()) {
+                    if (false && tHash_row4.hasFreeBean()) {
                         row4_HashRow = tHash_row4.nextFreeBean();
                     } else {
                         row4_HashRow = new Lookup();
@@ -868,7 +867,7 @@ public class test {
         }
 
         try {
-            java.io.InputStream inContext = test.class.getClassLoader().getResourceAsStream(
+            java.io.InputStream inContext = PersistentTest.class.getClassLoader().getResourceAsStream(
                     "tuj/test/contexts/Default.properties");
             if (inContext != null) {
                 defaultProps.load(inContext);
@@ -877,7 +876,7 @@ public class test {
             }
 
             if (contextStr.compareTo("Default") != 0) {
-                inContext = test.class.getClassLoader().getResourceAsStream("tuj/test/contexts/" + contextStr + ".properties");
+                inContext = PersistentTest.class.getClassLoader().getResourceAsStream("tuj/test/contexts/" + contextStr + ".properties");
                 if (inContext != null) {
                     context.load(inContext);
                     inContext.close();
@@ -897,7 +896,7 @@ public class test {
         long endUsedMemory = 0;
         long end = 0;
         long start = System.currentTimeMillis();
-        final test testClass = new test();
+        final PersistentTest testClass = new PersistentTest();
         try {
             errorCode = null;
             testClass.tFileInputDelimited_1Process();

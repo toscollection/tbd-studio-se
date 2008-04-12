@@ -64,6 +64,8 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     protected B resultLookupInstance;
 
+    protected int fileIndex;
+
 
     /**
      * 
@@ -80,6 +82,8 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
         File keysDataFile = new File(baseDirectory + "/KeysData_" + fileIndex + ".bin");
         this.length = keysDataFile.length();
 
+        this.fileIndex = fileIndex;
+        
         this.cursorPosition = 0;
         this.keysDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
         this.valuesDataStream = new BufferedInputStream(new FileInputStream(baseDirectory + "/ValuesData_" + fileIndex + ".bin"));

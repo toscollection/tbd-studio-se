@@ -28,10 +28,6 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
     private boolean previousKeyLoaded;
 
-    private boolean swaped;
-
-    private boolean usePreviousForNextLookup;
-
     private int previousValuesSize;
 
     public OrderedBeanLookupMatchLast(String baseDirectory, int fileIndex, IRowProvider<B> rowProvider) throws IOException {
@@ -50,28 +46,19 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
         currentSearchedKey = key;
 
-        nextDirty = true;
-
         if (previousKeyLoaded && previousAskedKey.compareTo(key) == 0) {
             nextWithPreviousLookup = true;
             nextDirty = false;
             hasNext = true;
+            noMoreNext = false;
         } else {
-            if (usePreviousForNextLookup) {
-                // swapInstances();
-                // skipValuesSize -= currentValuesSize;
-            }
-            // if (hasNext && nextWithPreviousLookup && previousLookupInstance.compareTo(currentSearchedKey) == 0 &&
-            // previousLookupInstance.compareTo(previousAskedKey) > 0) {
-            // swapInstances();
-            // }
             hasNext = false;
             nextDirty = true;
             startWithNewKey = true;
             nextWithPreviousLookup = false;
         }
 
-        key.copyDataTo(previousAskedKey);
+        key.copyKeysDataTo(previousAskedKey);
         previousKeyLoaded = true;
 
     }
@@ -94,51 +81,21 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
             boolean endOfFile = cursorPosition >= length;
 
-            if (endOfFile && !swaped) {
-                swaped = true;
-//                swapInstances();
-            }
+            boolean previousCompareHasMatched = false;
 
             if (atLeastOneLoadkeys) {
                 compareResult = lookupInstance.compareTo(currentSearchedKey);
-                // if(compareResult != 0) {
-                // int compareResultInternal = previousLookupInstance.compareTo(currentSearchedKey);
-                // if(compareResultInternal == 0) {
-                // compareResult = compareResultInternal;
-                // swapInstances();
-                // }
-                // }
 
                 if (compareResult == 0) {
-                    if(endOfFile) {
+                    if (endOfFile) {
+                        sizeDataToRead = currentValuesSize;
                         lookupInstance.copyKeysDataTo(resultLookupInstance);
                     } else {
                         localSkip += currentValuesSize;
                         compareResult = -1;
+                        previousCompareHasMatched = true;
                     }
 
-                    // if (startWithNewKey) {
-                    // if (!endOfFile) {
-                    // if (usePreviousForNextLookup) {
-                    // usePreviousForNextLookup = false;
-                    // } else {
-                    // localSkip += currentValuesSize;
-                    // compareResult = -1;
-                    // }
-                    // }
-                    // } else {
-                    // nextWithPreviousLookup = true;
-                    // if (previousCompareResultMatch) {
-                    // remainingSkip = 0;
-                    // }
-                    // }
-                } else if (compareResult < 0) {
-                    // if(previousLookupInstance.compareTo(currentSearchedKey) > 0) {
-                    // compareResult = 1;
-                    // swapInstances();
-                    // } else {
-                    // localSkip += currentValuesSize;
-                    // }
                 }
             }
             startWithNewKey = false;
@@ -150,37 +107,49 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
                     loadDataKeys(lookupInstance);
                     compareResult = lookupInstance.compareTo(currentSearchedKey);
-                    if (compareResult > 0) {
-                        // remainingSkip = currentValuesSize;
-                        // localSkip += currentValuesSize;
-                    }
 
                     endOfFile = cursorPosition >= length;
                     if (compareResult >= 0 || endOfFile) {
 
                         if (!searchingNextNotMatchAfterMatchFound && compareResult == 0 && !endOfFile) {
                             searchingNextNotMatchAfterMatchFound = true;
+                            previousCompareHasMatched = true;
                         } else if (compareResult > 0 || endOfFile) {
-                            // localSkip -= currentValuesSize;
-                            
-                            if(endOfFile && compareResult == 0) {
+
+                            if (endOfFile) {
+                                if(compareResult == 0) {
+                                    sizeDataToRead = currentValuesSize;
+                                    lookupInstance.copyKeysDataTo(resultLookupInstance);
+                                    
+                                    if(!previousCompareHasMatched) {
+                                        localSkip += previousValuesSize;
+                                    }
+                                    
+                                } else if(compareResult > 0) {
+                                    System.out.println();
+                                    if(!previousCompareHasMatched) {
+                                        localSkip += previousValuesSize;
+                                    }
+                                }
                                 
-                                System.out.println();
                                 
                             } else {
                                 sizeDataToRead = previousValuesSize;
-                                localSkip -= previousValuesSize;
+                                if (previousCompareHasMatched) {
+                                    localSkip -= previousValuesSize;
+                                    compareResult = 0;
+                                } else {
+                                    localSkip += previousValuesSize;
+                                }
+                                previousLookupInstance.copyKeysDataTo(resultLookupInstance);
                             }
-                            
+
                             remainingSkip = 0;
-                            usePreviousForNextLookup = true;
-                            previousLookupInstance.copyKeysDataTo(resultLookupInstance);
                             lookupInstance.copyKeysDataTo(previousLookupInstance);
-                            compareResult = 0;
                             previousValuesSize = currentValuesSize;
                             break;
                         }
-                        swapInstances();
+                        lookupInstance.copyKeysDataTo(previousLookupInstance);
                         localSkip += currentValuesSize;
                         previousValuesSize = currentValuesSize;
                     }
@@ -191,7 +160,6 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
             }
             if (compareResult == 0) {
                 previousCompareResultMatch = true;
-                // skipValuesSize -= remainingSkip;
                 skipValuesSize += localSkip;
                 hasNext = true;
                 noMoreNext = false;
@@ -218,12 +186,6 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
     }
 
-    private void swapInstances() {
-        B temp = previousLookupInstance;
-        previousLookupInstance = lookupInstance;
-        lookupInstance = temp;
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -241,11 +203,9 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
         B row = null;
         if (nextWithPreviousLookup) {
             row = resultLookupInstance;
-            // swapInstances();
         } else {
             loadDataValues(resultLookupInstance, sizeDataToRead);
             row = resultLookupInstance;
-
         }
 
         return row;
