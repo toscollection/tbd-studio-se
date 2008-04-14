@@ -51,18 +51,19 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
     //
     private List<AbstractOrderedBeanLookup<B>> lookupList;
 
-    private int bufferSize = 3;
+    private int bufferSize = 10000000;
+
+    // private int bufferSize = 100;
+    // private int bufferSize = 3;
 
     private IPersistableLookupRow<B>[] buffer = null;
 
     private int fileIndex = 0;
 
     // ////////////////////////////////////////
-    private int bufferIndex = 0;
+    private int bufferBeanIndex = 0;
 
     private int lookupIndex = 0;
-
-    private boolean hasGet;
 
     AbstractOrderedBeanLookup<B> currLookup;
 
@@ -84,6 +85,10 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
 
     private boolean previousResultRetrieved;
 
+    private int bufferMarkLimit = -1;
+
+    private boolean bufferIsMarked;
+
     public PersistentSortedHash(KEYS_MANAGEMENT keysManagement, String container, IRowCreator<B> rowCreator) {
         this.keysManagement = keysManagement;
         this.container = container;
@@ -93,29 +98,40 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
 
     public void initPut() throws IOException {
         buffer = new IPersistableLookupRow[bufferSize];
-        bufferIndex = 0;
+        bufferBeanIndex = 0;
     }
 
     public void put(B bean) throws IOException {
-        if (bufferIndex == bufferSize) {
+
+        if (bufferBeanIndex > 1000 && !bufferIsMarked && !MemoryHelper.hasFreeMemory(0.20f)) {
+            bufferMarkLimit = bufferBeanIndex;
+            bufferIsMarked = true;
+        }
+
+        if (bufferBeanIndex == bufferSize || bufferIsMarked && bufferBeanIndex == bufferMarkLimit) {
             writeBuffer();
         }
-        buffer[bufferIndex] = bean;
-        bufferIndex++;
+        buffer[bufferBeanIndex++] = bean;
     }
 
     public void endPut() throws IOException {
 
-        if (bufferIndex > 0) {
+        if (bufferBeanIndex > 0) {
             writeBuffer();
         }
+
+        //Arrays.fill(buffer, null);
+
+        buffer = null;
+
+        MemoryHelper.gc();
 
     }
 
     private void writeBuffer() throws FileNotFoundException, IOException {
-        Arrays.sort(buffer, 0, bufferIndex);
-        File keysDataFile = new File(container + "/KeysData_" + fileIndex + ".bin");
-        File valuesDataFile = new File(container + "/ValuesData_" + fileIndex + ".bin");
+        Arrays.sort(buffer, 0, bufferBeanIndex);
+        File keysDataFile = new File(buildKeysFilePath(fileIndex));
+        File valuesDataFile = new File(buildValuesFilePath(fileIndex));
         DataOutputStream keysDataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(keysDataFile)));
         BufferedOutputStream valuesDataOutputStream = new BufferedOutputStream(new FileOutputStream(valuesDataFile));
         byte[] keysData = null;
@@ -123,8 +139,8 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
 
         System.out.println("-------------------------------------------------------------");
         System.out.println("Writing LOOKUP buffer " + fileIndex + "... ");
-        
-        for (int i = 0; i < bufferIndex; i++) {
+
+        for (int i = 0; i < bufferBeanIndex; i++) {
 
             IPersistableLookupRow<B> curBean = buffer[i];
             valuesData = curBean.toValuesData();
@@ -135,27 +151,36 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
             keysDataOutputStream.writeInt(valuesData.length);
 
             valuesDataOutputStream.write(valuesData);
-            
-            System.out.println(curBean);
+
+            // System.out.println(curBean);
         }
         System.out.println("Write ended LOOKUP buffer " + fileIndex);
         keysDataOutputStream.close();
         valuesDataOutputStream.close();
         fileIndex++;
-        bufferIndex = 0;
+        bufferBeanIndex = 0;
+    }
+
+    private String buildValuesFilePath(int i) {
+        return container + "ValuesData_" + i + ".bin";
+    }
+
+    private String buildKeysFilePath(int i) {
+        return container + "KeysData_" + i + ".bin";
     }
 
     public void initGet() throws IOException {
         lookupList = new ArrayList<AbstractOrderedBeanLookup<B>>();
         for (int i = 0; i < fileIndex; i++) {
             RowProvider<B> rowProvider = new RowProvider<B>(rowCreator);
-            lookupList.add(getOrderedBeanLoohupInstance(container, i, rowProvider, this.keysManagement));
+            lookupList.add(getOrderedBeanLoohupInstance(buildKeysFilePath(i), buildValuesFilePath(i), i, rowProvider,
+                    this.keysManagement));
         }
         lookupListSize = fileIndex;
     }
 
-    private AbstractOrderedBeanLookup<B> getOrderedBeanLoohupInstance(String container, int i, RowProvider<B> rowProvider,
-            KEYS_MANAGEMENT keysManagement) throws IOException {
+    private AbstractOrderedBeanLookup<B> getOrderedBeanLoohupInstance(String keysFilePath, String valuesFilePath, int i,
+            RowProvider<B> rowProvider, KEYS_MANAGEMENT keysManagement) throws IOException {
         switch (keysManagement) {
         case KEEP_FIRST:
             throw new UnsupportedOperationException();
@@ -163,11 +188,11 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
 
         case KEEP_LAST:
 
-            return new OrderedBeanLookupMatchLast<B>(container, i, rowProvider);
+            return new OrderedBeanLookupMatchLast<B>(keysFilePath, valuesFilePath, i, rowProvider);
 
         case KEEP_ALL:
 
-            return new OrderedBeanLookupMatchAll<B>(container, i, rowProvider);
+            return new OrderedBeanLookupMatchAll<B>(keysFilePath, valuesFilePath, i, rowProvider);
 
         default:
             throw new IllegalArgumentException();
@@ -175,7 +200,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
     }
 
     public void lookup(B key) throws IOException {
-        
+
         waitingNext = false;
         if (keysManagement == KEYS_MANAGEMENT.KEEP_ALL) {
             lookupIndex = 0;
@@ -185,10 +210,10 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
             }
         } else {
             try {
-                if(lookupKey.compareTo(key) == 0 && previousResultRetrieved) {
+                if (lookupKey.compareTo(key) == 0 && previousResultRetrieved) {
                     nextIsPreviousResult = true;
                 }
-            } catch(NullPointerException e) {
+            } catch (NullPointerException e) {
                 // nothing
             }
             noMoreNext = false;
@@ -203,19 +228,19 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
             return true;
         }
 
-        if(!lookupKeyIsInitialized || noMoreNext) {
+        if (!lookupKeyIsInitialized || noMoreNext) {
             return false;
         }
-        
+
         if (keysManagement == KEYS_MANAGEMENT.KEEP_LAST) {
             for (int lookupIndexLocal = lookupListSize - 1; lookupIndexLocal >= 0; lookupIndexLocal--) {
                 AbstractOrderedBeanLookup<B> tempLookup = lookupList.get(lookupIndexLocal);
-                System.out.println("########################################");
-                System.out.println(lookupKey);
-                System.out.println("lookupIndexLocal=" + lookupIndexLocal);
+                // System.out.println("########################################");
+                // System.out.println(lookupKey);
+                // System.out.println("lookupIndexLocal=" + lookupIndexLocal);
                 tempLookup.lookup(lookupKey);
                 if (tempLookup.hasNext()) {
-                    System.out.println("Found in " + lookupIndexLocal);
+                    // System.out.println("Found in " + lookupIndexLocal);
                     currLookup = tempLookup;
                     waitingNext = true;
                     noMoreNext = true;
@@ -251,22 +276,22 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
     }
 
     public B next() throws IOException {
-        
-        if(nextIsPreviousResult) {
+
+        if (nextIsPreviousResult) {
             nextIsPreviousResult = false;
             noMoreNext = true;
             return previousResult;
         }
-        
+
         if (waitingNext) {
             waitingNext = false;
             previousResult = currLookup.next();
-            
-            if(keysManagement == KEYS_MANAGEMENT.KEEP_LAST || keysManagement == KEYS_MANAGEMENT.KEEP_FIRST) {
+
+            if (keysManagement == KEYS_MANAGEMENT.KEEP_LAST || keysManagement == KEYS_MANAGEMENT.KEEP_FIRST) {
                 previousResultRetrieved = true;
                 noMoreNext = true;
             }
-            
+
             return previousResult;
         } else {
             throw new NoSuchElementException();
@@ -278,22 +303,26 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
             orderedBeanLookup.close();
         }
         lookupList = null;
-        buffer = null;
     }
 
     public void clear() throws IOException {
         for (int i = 0; i < fileIndex; i++) {
-            (new File(container + "/KeysData_" + i + ".bin")).delete();
-            (new File(container + "/ValuesData_" + i + ".bin")).delete();
+            (new File(buildKeysFilePath(i))).delete();
+            (new File(buildValuesFilePath(i))).delete();
         }
     }
 
-    public boolean hasFreeBean() {
-        return buffer.length > 0 && bufferIndex != buffer.length && buffer[bufferIndex] != null;
-    }
-
-    public B nextFreeBean() {
-        return (B) buffer[bufferIndex];
+    public B getNextFreeRow() {
+        if (buffer.length > 0 && bufferBeanIndex != buffer.length) {
+            B nextBean = (B) buffer[bufferBeanIndex];
+            if (nextBean == null) {
+                return this.rowCreator.createRowInstance();
+            } else {
+                return nextBean;
+            }
+        } else {
+            return this.rowCreator.createRowInstance();
+        }
     }
 
 }

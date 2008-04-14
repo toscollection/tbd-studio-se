@@ -71,22 +71,23 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
      * 
      * DOC amaumont OrderedBeanLookup constructor comment.
      * 
-     * @param baseDirectory
+     * @param keysFilePath
+     * @param valuesFilePath 
      * @param fileIndex
      * @param internalKeyInstance
      * @param keys_management
      * @throws IOException
      */
-    public AbstractOrderedBeanLookup(String baseDirectory, int fileIndex, IRowProvider<B> rowProvider)
+    public AbstractOrderedBeanLookup(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider)
             throws IOException {
-        File keysDataFile = new File(baseDirectory + "/KeysData_" + fileIndex + ".bin");
+        File keysDataFile = new File(keysFilePath);
         this.length = keysDataFile.length();
 
         this.fileIndex = fileIndex;
         
         this.cursorPosition = 0;
         this.keysDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
-        this.valuesDataStream = new BufferedInputStream(new FileInputStream(baseDirectory + "/ValuesData_" + fileIndex + ".bin"));
+        this.valuesDataStream = new BufferedInputStream(new FileInputStream(valuesFilePath));
         this.lookupInstance = rowProvider.createInstance();
         this.previousAskedKey = rowProvider.createInstance();
         this.rowProvider = rowProvider;
@@ -126,7 +127,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
             skipValuesSize += remainingSkip;
             valuesDataStream.skip(skipValuesSize);
             globalSkippedValues += skipValuesSize;
-            System.out.println("Data skipped:" + skipValuesSize);
+            //System.out.println("Data skipped:" + skipValuesSize);
             remainingSkip = 0;
             skipValuesSize = 0;
         }
@@ -134,9 +135,9 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
         valuesDataStream.read(bytes);
         lookupInstance.loadValuesData(bytes);
         globalValuesSize += valuesSize;
-        System.out.println("Data read:" + valuesSize);
+        //System.out.println("Data read:" + valuesSize);
         
-        System.out.println("cursorPosition:" + (globalValuesSize + globalSkippedValues));
+        //System.out.println("cursorPosition:" + (globalValuesSize + globalSkippedValues));
         
         
     }

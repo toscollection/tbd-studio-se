@@ -118,5 +118,9 @@ public abstract class PersistentSortedAdvancedLookup<B extends Comparable<B> & I
     }
 
     public abstract B createRowInstance();
+
+    public B getNextFreeRow() {
+        return persistentSortedHash.getNextFreeRow();
+    }
     
 }

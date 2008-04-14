@@ -11,6 +11,7 @@
 // ============================================================================
 package org.talend.designer.components.persistent;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
@@ -32,7 +33,7 @@ public class PersistentTest {
 
     private static final KEYS_MANAGEMENT KEEP_MODE = IPersistableHash.KEYS_MANAGEMENT.KEEP_LAST;
 
-    private static final String NUMBER = "7";
+    private static final String NUMBER = "6";
 
     // create and load default properties
     private static java.util.Properties defaultProps = new java.util.Properties();
@@ -70,7 +71,6 @@ public class PersistentTest {
     public static final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
 
     private static final String pathFolderTest = "/home/amaumont/data/dev/projets/Talend/hashfile/testData/";
-
 
     private class TalendException extends Exception {
 
@@ -274,8 +274,7 @@ public class PersistentTest {
             start_Hash.put("tJoin_1", System.currentTimeMillis());
             currentComponent = "tJoin_1";
 
-            final IPersistableHash<Lookup> tHash_tJoin_1 = (IPersistableHash<Lookup>) globalMap
-                    .get("tHash_row4");
+            final IPersistableHash<Lookup> tHash_tJoin_1 = (IPersistableHash<Lookup>) globalMap.get("tHash_row4");
             tHash_tJoin_1.initGet();
 
             // class Util_tJoin_1 {
@@ -311,7 +310,7 @@ public class PersistentTest {
             currentComponent = "tFileInputDelimited_1";
 
             org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_1 = new org.talend.fileprocess.FileInputDelimited(
-                    pathFolderTest + "main" + NUMBER +".txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
+                    pathFolderTest + "main" + NUMBER + ".txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
             while (fid_tFileInputDelimited_1.nextRecord()) {
                 row3 = null;
                 boolean whetherReject_tFileInputDelimited_1 = false;
@@ -354,9 +353,6 @@ public class PersistentTest {
                     Lookup lookup = new Lookup();
                     lookup.id = row3.id;
                     tHash_tJoin_1.lookup(lookup);
-                    if(row3.id % 2 == 1) {
-                    }
-                    tHash_tJoin_1.hasNext();
                     while (tHash_tJoin_1.hasNext()) {
                         Lookup tempLookup = (Lookup) tHash_tJoin_1.next();
                         row5 = new Result();
@@ -587,7 +583,9 @@ public class PersistentTest {
                     bytes = this.time.getBytes();
                     dos.writeInt(bytes.length);
                     dos.write(bytes);
-                    System.out.println(this.time + " => " + bytes.length + " + " + 4 + " = " + (bytes.length + 4) );
+                    System.out.println("############################");
+                    System.out.println(this.time + " => " + bytes.length + " + " + 4 + " = " + (bytes.length + 4));
+                    System.out.println(Arrays.toString(bytes));
                 }
 
             } catch (java.io.IOException e) {
@@ -638,9 +636,6 @@ public class PersistentTest {
 
         }
 
-        
-        
-        
         public String toString() {
             return "id = " + id + "; time = " + time;
         }
@@ -654,12 +649,10 @@ public class PersistentTest {
             other.id = this.id;
             other.time = this.time;
         }
-        
+
         public void copyKeysDataTo(Lookup other) {
             other.id = this.id;
         }
-        
-        
 
     }
 
@@ -676,13 +669,13 @@ public class PersistentTest {
             start_Hash.put("tHash_row4", System.currentTimeMillis());
             currentComponent = "tHash_row4";
 
-            IPersistableHash<Lookup> tHash_row4 = new PersistentSortedHash<Lookup>(
-                    KEEP_MODE, pathFolderTest + "container", new IRowCreator<Lookup>() {
+            IPersistableHash<Lookup> tHash_row4 = new PersistentSortedHash<Lookup>(KEEP_MODE, pathFolderTest + "container",
+                    new IRowCreator<Lookup>() {
 
                         public Lookup createRowInstance() {
                             return new Lookup();
                         }
-                        
+
                     });
 
             tHash_row4.initPut();
@@ -702,7 +695,7 @@ public class PersistentTest {
             currentComponent = "tFileInputDelimited_2";
 
             org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_2 = new org.talend.fileprocess.FileInputDelimited(
-                    pathFolderTest + "/lookup"+ NUMBER +".txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
+                    pathFolderTest + "/lookup" + NUMBER + ".txt", "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
             while (fid_tFileInputDelimited_2.nextRecord()) {
                 lookupRow = null;
                 lookupRow = null;
@@ -745,11 +738,7 @@ public class PersistentTest {
 
                     currentComponent = "tHash_row4";
                     Lookup row4_HashRow = null;
-                    if (false && tHash_row4.hasFreeBean()) {
-                        row4_HashRow = tHash_row4.nextFreeBean();
-                    } else {
-                        row4_HashRow = new Lookup();
-                    }
+                    row4_HashRow = tHash_row4.getNextFreeRow();
                     row4_HashRow.id = lookupRow.id;
                     row4_HashRow.time = lookupRow.time;
                     tHash_row4.put(row4_HashRow);
@@ -876,7 +865,8 @@ public class PersistentTest {
             }
 
             if (contextStr.compareTo("Default") != 0) {
-                inContext = PersistentTest.class.getClassLoader().getResourceAsStream("tuj/test/contexts/" + contextStr + ".properties");
+                inContext = PersistentTest.class.getClassLoader().getResourceAsStream(
+                        "tuj/test/contexts/" + contextStr + ".properties");
                 if (inContext != null) {
                     context.load(inContext);
                     inContext.close();

@@ -30,8 +30,9 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
     private int previousValuesSize;
 
-    public OrderedBeanLookupMatchLast(String baseDirectory, int fileIndex, IRowProvider<B> rowProvider) throws IOException {
-        super(baseDirectory, fileIndex, rowProvider);
+    public OrderedBeanLookupMatchLast(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider)
+            throws IOException {
+        super(keysFilePath, valuesFilePath, fileIndex, rowProvider);
         lookupInstance = rowProvider.createInstance();
         previousLookupInstance = rowProvider.createInstance();
         resultLookupInstance = rowProvider.createInstance();
@@ -92,6 +93,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                         lookupInstance.copyKeysDataTo(resultLookupInstance);
                     } else {
                         localSkip += currentValuesSize;
+                        previousValuesSize = currentValuesSize;
                         compareResult = -1;
                         previousCompareHasMatched = true;
                     }
@@ -106,6 +108,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                 do {
 
                     loadDataKeys(lookupInstance);
+                    //System.out.println("Loaded keys:" + lookupInstance);
+
                     compareResult = lookupInstance.compareTo(currentSearchedKey);
 
                     endOfFile = cursorPosition >= length;
@@ -117,22 +121,25 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                         } else if (compareResult > 0 || endOfFile) {
 
                             if (endOfFile) {
-                                if(compareResult == 0) {
+                                if (compareResult == 0) {
                                     sizeDataToRead = currentValuesSize;
                                     lookupInstance.copyKeysDataTo(resultLookupInstance);
-                                    
-                                    if(!previousCompareHasMatched) {
+
+                                    if (!previousCompareHasMatched) {
                                         localSkip += previousValuesSize;
                                     }
-                                    
-                                } else if(compareResult > 0) {
-                                    System.out.println();
-                                    if(!previousCompareHasMatched) {
+
+                                } else if (compareResult > 0) {
+                                    if (previousCompareHasMatched) {
+                                        previousLookupInstance.copyKeysDataTo(resultLookupInstance);
+                                        compareResult = 0;
+                                        sizeDataToRead = previousValuesSize;
+                                        localSkip -= previousValuesSize;
+                                    } else {
                                         localSkip += previousValuesSize;
                                     }
                                 }
-                                
-                                
+
                             } else {
                                 sizeDataToRead = previousValuesSize;
                                 if (previousCompareHasMatched) {

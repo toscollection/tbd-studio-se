@@ -29,8 +29,6 @@ public interface IPersistableHash<B> {
 
     public void clear() throws IOException;
 
-    public boolean hasFreeBean();
-
-    public B nextFreeBean();
+    public B getNextFreeRow();
     
 }

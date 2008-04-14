@@ -36,14 +36,15 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
      * 
      * DOC amaumont OrderedBeanLookupMatchAll constructor comment.
      * 
-     * @param baseDirectory
+     * @param keysFilePath
+     * @param valuesFilePath 
      * @param fileIndex
      * @param rowProvider
      * @param keysManagement
      * @throws IOException
      */
-    public OrderedBeanLookupMatchAll(String baseDirectory, int fileIndex, IRowProvider<B> rowProvider) throws IOException {
-        super(baseDirectory, fileIndex, rowProvider);
+    public OrderedBeanLookupMatchAll(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider) throws IOException {
+        super(keysFilePath, valuesFilePath, fileIndex, rowProvider);
         lookupInstance = rowProvider.getFreeInstance();
     }
 

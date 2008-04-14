@@ -20,12 +20,12 @@ package org.talend.designer.components.thash;
  */
 public class Sizeof {
 
-    public void main2(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         // Warm up all classes/methods we will use
         runGC();
         usedMemory();
         // Array to keep strong references to allocated objects
-        final int count = 100000;
+        final int count = 30;
         Object[] objects = new Object[count];
 
         long heap1 = 0;
@@ -35,11 +35,13 @@ public class Sizeof {
 
             // Instantiate your data here and assign it to object
 
-            object = new Object();
+//            object = new Object();
             // object = new Integer (i);
             // object = new Long (i);
             // object = new String ();
             // object = new byte [128][1]
+            object = new Object[10000000];
+            
 
             if (i >= 0)
                 objects[i] = object;

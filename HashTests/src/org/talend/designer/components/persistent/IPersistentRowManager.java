@@ -38,5 +38,7 @@ public interface IPersistentRowManager<R extends IPersistableRow> {
     public R next() throws IOException;
 
     public void endGet() throws IOException;
+
+    public R getNextFreeRow();
     
 }

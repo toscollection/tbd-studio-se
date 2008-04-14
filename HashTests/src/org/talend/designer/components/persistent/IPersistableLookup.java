@@ -38,5 +38,6 @@ public interface IPersistableLookup<B> {
     public B next() throws IOException;
 
     public void endGet() throws IOException;
-    
+ 
+    public B getNextFreeRow();
 }

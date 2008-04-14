@@ -48,19 +48,13 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     int countUniqueGet;
 
-    // ////////////////////////
-//     private int bufferSize = 5000000;
-//     private int bufferSize = 8000000;
-//     private int bufferSize = 9000000;
-//     private int bufferSize = 9200000;
-//    private int bufferSize = 10000000;
     private int bufferSize = 10000000;
 
-    private int itemCountInBuffer = 0;
+    private int bufferBeanIndex = 0;
 
-    private IPersistableRow[] buffer;
+    private V[] buffer;
 
-    IPersistableRow iLightSerializable = null;// Change this based on the Bean class;
+    IPersistableRow<V> persistableRow = null;// Change this based on the Bean class;
 
     private int beansCount;
 
@@ -82,6 +76,11 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     private boolean isFirstNext = true;
 
+    private int bufferMarkLimit = - 1;
+
+    private boolean bufferIsMarked;
+    
+
     /**
      * DOC amaumont SortedMultipleHashFile constructor comment.
      */
@@ -96,22 +95,24 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     public void initPut() {
         System.out.println("bufferSize="+bufferSize +" objects");
-        buffer = new IPersistableRow[bufferSize];
+        buffer = (V[]) new IPersistableRow[bufferSize];
     }
 
     public void put(V bean) throws IOException {
-        IPersistableRow item = (IPersistableRow) bean;
 
-        if (itemCountInBuffer >= bufferSize) {// buffer is full do sort and write.
-            // sort
-            
-            writeBuffer(buffer, itemCountInBuffer);
-
-            System.gc();
-
-            itemCountInBuffer = 0;
+        if(bufferBeanIndex > 1000 && !bufferIsMarked && !MemoryHelper.hasFreeMemory(0.10f)) {
+            bufferMarkLimit = bufferBeanIndex;
+            bufferIsMarked = true;
         }
-        buffer[itemCountInBuffer++] = item;
+        
+        if (bufferBeanIndex == bufferSize || bufferIsMarked && bufferBeanIndex == bufferMarkLimit) {// buffer is full do sort and write.
+            // sort
+            writeBuffer();
+
+            bufferBeanIndex = 0;
+        }
+        
+        buffer[bufferBeanIndex++] = bean;
 
         someFileStillHasRows = true;
         
@@ -120,9 +121,6 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     public void endPut() throws IOException {
         writeRemainingData();
-
-        System.gc();
-
     }
 
     /**
@@ -131,31 +129,12 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
      * @throws IOException
      */
     private void writeRemainingData() throws IOException {
-        if (itemCountInBuffer > 0) {
-            writeBuffer(buffer, itemCountInBuffer);
+        if (bufferBeanIndex > 0) {
+            writeBuffer();
         }
+//        Arrays.fill(buffer, null);
         buffer = null;
-    }
-
-    public void initGet() {
-        throw new UnsupportedOperationException();
-    }
-
-    public int getBufferSize() {
-        return bufferSize;
-    }
-
-    public void setBufferSize(int bufferSize) {
-        this.bufferSize = bufferSize;
-    }
-
-    /**
-     * get number of objects already put.
-     * 
-     * @return
-     */
-    public int getObjectsCount() {
-        return beansCount;
+        MemoryHelper.gc();
     }
 
     /**
@@ -165,14 +144,15 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void writeBuffer(IPersistableRow[] list, int length) throws IOException {
+    public void writeBuffer() throws IOException {
         long time1 = System.currentTimeMillis();
         System.out.println("Sorting buffer...");
 
-        Arrays.sort(list, 0, length);
+        Arrays.sort(buffer, 0, bufferBeanIndex);
 
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
+        int length = bufferBeanIndex + 1;
         int itemsPerSecSort = (int) ((float) length / (float) deltaTimeSort * 1000f);
         System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
                 + "  items/s ");
@@ -180,16 +160,16 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         time1 = System.currentTimeMillis();
         System.out.println("Writing ordered buffer in file...");
 
-        File file = new File(container + "TEMP_" + count);
+        File file = new File(buildFilePath());
         count++;
         DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         byte[] bytes = null;
         System.out.println("Start write buffer ");
-        for (int i = 0; i < length; i++) {
-            bytes = list[i].toData();
+        for (int i = 0; i < bufferBeanIndex; i++) {
+            bytes = buffer[i].toData();
             rw.writeInt(bytes.length);
             rw.write(bytes);
-            System.out.println(list[i]); 
+            //System.out.println(buffer[i]); 
         }
         rw.close();
         files.add(file);
@@ -202,6 +182,14 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     }
 
+    private String buildFilePath() {
+        return container + "TEMP_" + count + ".bin";
+    }
+    
+    public void initGet() {
+        
+    }
+    
     public boolean hasNext() {
         return someFileStillHasRows;
     }
@@ -360,9 +348,22 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
      * @see org.talend.designer.components.thash.io.IMapHashFile#endGet(java.lang.String)
      */
     public void endGet() {
-        throw new UnsupportedOperationException();
+        afterLoopFind();
     }
     
+    public V getNextFreeRow() {
+        if(buffer.length > 0 && bufferBeanIndex != buffer.length) {
+            V nextBean = (V) buffer[bufferBeanIndex];
+            if(nextBean == null) {
+                return createRowInstance();
+            } else {
+                return nextBean;
+            }
+        } else {
+            return createRowInstance();
+        }
+    }
+
     public static void main(String[] args) {
         new PersistentRowSorterIterator<IPersistableRow>("/home/amaumont/data/dev/projets/Talend/hashfile/sort") {
 
