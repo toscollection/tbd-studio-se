@@ -1925,7 +1925,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.libraries.jdbc.jtds;visibility:=reexport,
  org.talend.libraries.jdbc.mysql;visibility:=reexport,
  org.talend.libraries.apache;visibility:=reexport,
- org.talend.libraries.logging
+ org.talend.libraries.logging,
+ org.apache.axis,
+ javax.xml.rpc,
+ javax.xml.soap
 Bundle-Activator: org.talend.libraries.LibrariesPlugin
 Import-Package: com.ibm.icu.text
 Bundle-Vendor: .Talend SA.
