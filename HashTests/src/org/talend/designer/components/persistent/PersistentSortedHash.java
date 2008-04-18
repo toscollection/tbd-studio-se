@@ -44,6 +44,8 @@ import routines.system.IPersistableLookupRow;
  */
 public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRow<B>> implements IPersistableHash<B> {
 
+    private static final float MARGIN_MAX = 0.20f;
+
     private String container;
 
     private KEYS_MANAGEMENT keysManagement;
@@ -51,7 +53,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
     //
     private List<AbstractOrderedBeanLookup<B>> lookupList;
 
-    private int bufferSize = 10000000;
+    private int bufferSize = 15000000;
 
     // private int bufferSize = 100;
     // private int bufferSize = 3;
@@ -89,6 +91,10 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
 
     private boolean bufferIsMarked;
 
+    private boolean firstUnsifficientMemory = true;
+
+    private boolean waitingHeapException;
+
     public PersistentSortedHash(KEYS_MANAGEMENT keysManagement, String container, IRowCreator<B> rowCreator) {
         this.keysManagement = keysManagement;
         this.container = container;
@@ -103,9 +109,26 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
 
     public void put(B bean) throws IOException {
 
-        if (bufferBeanIndex > 1000 && !bufferIsMarked && !MemoryHelper.hasFreeMemory(0.20f)) {
-            bufferMarkLimit = bufferBeanIndex;
-            bufferIsMarked = true;
+        if (!MemoryHelper.hasFreeMemory(MARGIN_MAX)) {
+            if (!bufferIsMarked) {
+                if (firstUnsifficientMemory) {
+                    firstUnsifficientMemory = false;
+                    MemoryHelper.gc();
+                    if (bufferBeanIndex == 0) {
+                        waitingHeapException = true;
+                    }
+                }
+                if (!waitingHeapException && !MemoryHelper.hasFreeMemory(MARGIN_MAX)) {
+                    float _10P = ((float) bufferSize) * 0.1f;
+                    if ((float) bufferBeanIndex >= _10P) {
+                        bufferMarkLimit = bufferBeanIndex;
+                    } else {
+                        bufferMarkLimit = (int) _10P;
+                    }
+                    System.out.println("Buffer marked at index " + bufferMarkLimit);
+                    bufferIsMarked = true;
+                }
+            }
         }
 
         if (bufferBeanIndex == bufferSize || bufferIsMarked && bufferBeanIndex == bufferMarkLimit) {
@@ -120,7 +143,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
             writeBuffer();
         }
 
-        //Arrays.fill(buffer, null);
+        // Arrays.fill(buffer, null);
 
         buffer = null;
 
@@ -302,6 +325,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
         for (AbstractOrderedBeanLookup<B> orderedBeanLookup : lookupList) {
             orderedBeanLookup.close();
         }
+        clear();
         lookupList = null;
     }
 

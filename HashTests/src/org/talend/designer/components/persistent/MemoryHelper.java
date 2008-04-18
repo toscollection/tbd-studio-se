@@ -20,12 +20,8 @@ public class MemoryHelper {
         return S_RUNTIME.totalMemory();
     }
 
-    public static boolean hasFreeMemory() {
-        return totalMemory() < maxMemory();
-    }
-
     public static boolean hasFreeMemory(float margin) {
-        return usedMemory() < ((float) maxMemory()) * (1f - margin);
+        return usedMemory() < (1f - margin) * ((float) maxMemory());
     }
 
     public static void gc() {

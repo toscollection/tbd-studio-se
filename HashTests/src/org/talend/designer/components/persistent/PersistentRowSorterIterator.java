@@ -36,6 +36,8 @@ import routines.system.IPersistableRow;
  */
 public abstract class PersistentRowSorterIterator<V extends IPersistableRow> implements IPersistentRowManager<V>, Iterator<V> {
 
+    private static final float MARGIN_MAX = 0.20f;
+
     int[] bwPositionArray = null;
 
     boolean readonly;
@@ -48,7 +50,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     int countUniqueGet;
 
-    private int bufferSize = 10000000;
+    private int bufferSize = 15000000;
 
     private int bufferBeanIndex = 0;
 
@@ -80,6 +82,10 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     private boolean bufferIsMarked;
     
+    private boolean firstUnsifficientMemory = true;
+
+    private boolean waitingHeapException;
+
 
     /**
      * DOC amaumont SortedMultipleHashFile constructor comment.
@@ -100,11 +106,28 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     public void put(V bean) throws IOException {
 
-        if(bufferBeanIndex > 1000 && !bufferIsMarked && !MemoryHelper.hasFreeMemory(0.10f)) {
-            bufferMarkLimit = bufferBeanIndex;
-            bufferIsMarked = true;
+        if (!MemoryHelper.hasFreeMemory(MARGIN_MAX)) {
+            if (!bufferIsMarked) {
+                if (firstUnsifficientMemory) {
+                    firstUnsifficientMemory = false;
+                    MemoryHelper.gc();
+                    if (bufferBeanIndex == 0) {
+                        waitingHeapException = true;
+                    }
+                }
+                if (!waitingHeapException && !MemoryHelper.hasFreeMemory(MARGIN_MAX)) {
+                    float _10P = ((float) bufferSize) * 0.1f;
+                    if ((float) bufferBeanIndex >= _10P) {
+                        bufferMarkLimit = bufferBeanIndex;
+                    } else {
+                        bufferMarkLimit = (int) _10P;
+                    }
+                    System.out.println("Buffer marked at index " + bufferMarkLimit);
+                    bufferIsMarked = true;
+                }
+            }
         }
-        
+
         if (bufferBeanIndex == bufferSize || bufferIsMarked && bufferBeanIndex == bufferMarkLimit) {// buffer is full do sort and write.
             // sort
             writeBuffer();
