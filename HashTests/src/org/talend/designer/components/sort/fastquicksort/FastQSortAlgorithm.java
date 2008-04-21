@@ -84,13 +84,13 @@ public class FastQSortAlgorithm extends SortAlgorithm
 			while(a[--j]>v);
 			if (j<i) break;
 			swap (a,i,j);
-			pause(i,j);
+//			pause(i,j);
                         if (stopRequested) {
                             return;
                         }
 		}
 		swap(a,i,r-1);
-		pause(i);
+//		pause(i);
 		QuickSort(a,l,j);
 		QuickSort(a,i+1,r);
 	}
@@ -117,7 +117,7 @@ public class FastQSortAlgorithm extends SortAlgorithm
 			while ((j>lo0) && (a[j-1]>v))
 			{
 				a[j] = a[j-1];
-				pause(i,j);
+//				pause(i,j);
 				j--;
 			}
 			a[j] = v;
@@ -128,7 +128,7 @@ public class FastQSortAlgorithm extends SortAlgorithm
 	{
 		QuickSort(a, 0, a.length - 1);
 		InsertionSort(a,0,a.length-1);
-		pause(-1,-1);
+//		pause(-1,-1);
 	}
 }
 

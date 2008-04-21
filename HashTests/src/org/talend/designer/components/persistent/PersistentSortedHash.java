@@ -160,7 +160,6 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
         byte[] keysData = null;
         byte[] valuesData = null;
 
-        System.out.println("-------------------------------------------------------------");
         System.out.println("Writing LOOKUP buffer " + fileIndex + "... ");
 
         for (int i = 0; i < bufferBeanIndex; i++) {
@@ -206,8 +205,7 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
             RowProvider<B> rowProvider, KEYS_MANAGEMENT keysManagement) throws IOException {
         switch (keysManagement) {
         case KEEP_FIRST:
-            throw new UnsupportedOperationException();
-            // return new OrderedBeanLookupMatchLast<B>(container, i, rowProvider);
+            return new OrderedBeanLookupMatchFirst<B>(keysFilePath, valuesFilePath, i, rowProvider);
 
         case KEEP_LAST:
 
@@ -285,6 +283,21 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
                     return true;
                 }
             }
+            return false;
+
+        } else if (keysManagement == KEYS_MANAGEMENT.KEEP_FIRST) {
+            for (int lookupIndexLocal = 0; lookupIndexLocal < lookupListSize; lookupIndexLocal++) {
+                AbstractOrderedBeanLookup<B> tempLookup = lookupList.get(lookupIndexLocal);
+                tempLookup.lookup(lookupKey);
+                if (tempLookup.hasNext()) {
+                    currLookup = tempLookup;
+                    waitingNext = true;
+                    noMoreNext = true;
+                    previousResultRetrieved = false;
+                    return true;
+                }
+            }
+            noMoreNext = true;
             return false;
 
         } else {
