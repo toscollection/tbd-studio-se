@@ -1,31 +1,19 @@
 //============================================================================
 package java_project_6.hashfilesbench_tmappersistent_0_2;
 
-import routines.libs;
-import routines.randomGenerator;
-import routines.DataOperation;
-import routines.Mathematical;
-import routines.Numeric;
-import routines.Relational;
-import routines.StringHandling;
-import routines.TalendDataGenerator;
-import routines.TalendDate;
-import routines.TalendString;
-import routines.system.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.math.BigDecimal;
-import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
 import java.io.IOException;
-import java.util.Comparator;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+import org.talend.designer.components.persistent.PersistentSortedAdvancedLookup;
+
+import routines.TalendString;
+import routines.system.ParserUtils;
+import routines.system.TDieException;
 
 /**
  * Job: Copy_of_TUnit_tMap_JAVA_04 Purpose: <br>
@@ -1454,7 +1442,7 @@ public class Copy_of_TUnit_tMap_JAVA_04 {
 
             org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE matchingModeEnum_row2 = org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE.ALL_MATCHES;
 
-            org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<row2Struct> tHash_Lookup_row2 = new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<row2Struct>(
+            PersistentSortedAdvancedLookup<row2Struct> tHash_Lookup_row2 = new PersistentSortedAdvancedLookup<row2Struct>(
                     matchingModeEnum_row2,
             "/home/amaumont/data/dev/projets/Talend/hashfile/testData/container/Lookup_row2_") {
                 public row2Struct createRowInstance() {
@@ -4018,7 +4006,7 @@ public class Copy_of_TUnit_tMap_JAVA_04 {
 //          ###############################
 //          # Lookup's keys initialization
 
-            org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<row2Struct> tHash_Lookup_row2 = (org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<row2Struct>) globalMap.get( "tHash_Lookup_row2" );
+            PersistentSortedAdvancedLookup<row2Struct> tHash_Lookup_row2 = (PersistentSortedAdvancedLookup<row2Struct>) globalMap.get( "tHash_Lookup_row2" );
 
 
             row2Struct row2HashKey = new row2Struct();

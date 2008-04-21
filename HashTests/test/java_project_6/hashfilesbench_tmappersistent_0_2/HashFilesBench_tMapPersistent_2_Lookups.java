@@ -11,31 +11,20 @@
 // ============================================================================ 
 package java_project_6.hashfilesbench_tmappersistent_0_2;
 
-import routines.libs;
-import routines.randomGenerator;
-import routines.DataOperation;
-import routines.Mathematical;
-import routines.Numeric;
-import routines.Relational;
-import routines.StringHandling;
-import routines.TalendDataGenerator;
-import routines.TalendDate;
-import routines.TalendString;
-import routines.system.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.math.BigDecimal;
-import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
 import java.io.IOException;
-import java.util.Comparator;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+
+import org.talend.designer.components.persistent.PersistentSortedAdvancedLookup;
+
+import routines.TalendString;
+import routines.system.ParserUtils;
+import routines.system.TDieException;
 
 //the import part of tJava_1
 //import java.util.List;
@@ -1113,7 +1102,7 @@ public class HashFilesBench_tMapPersistent_2_Lookups {
             // ###############################
             // # Lookup's keys initialization
 
-            org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<lookupStruct> tHash_Lookup_lookup = (org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<lookupStruct>) globalMap
+            PersistentSortedAdvancedLookup<lookupStruct> tHash_Lookup_lookup = (PersistentSortedAdvancedLookup<lookupStruct>) globalMap
                     .get("tHash_Lookup_lookup");
 
             lookupStruct lookupHashKey = new lookupStruct();
@@ -2738,7 +2727,7 @@ public class HashFilesBench_tMapPersistent_2_Lookups {
 
             org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE matchingModeEnum_lookup = org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE.LAST_MATCH;
 
-            org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<lookupStruct> tHash_Lookup_lookup = new org.talend.designer.components.persistent.PersistentSortedAdvancedLookup<lookupStruct>(
+            PersistentSortedAdvancedLookup<lookupStruct> tHash_Lookup_lookup = new PersistentSortedAdvancedLookup<lookupStruct>(
                     matchingModeEnum_lookup, context.rootFolder + "/temp"
                             + "/Lookup_lookup_") {
                 public lookupStruct createRowInstance() {

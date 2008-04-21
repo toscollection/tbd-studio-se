@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
-import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
 
 import routines.system.IPersistableLookupRow;
 
@@ -27,7 +26,7 @@ public abstract class PersistentSortedAdvancedLookup<B extends Comparable<B> & I
 
     static final int ONE = 1;
 
-    IPersistableHash<B> persistentSortedHash;
+    IPersistentLookupManager<B> persistentSortedHash;
 
     String container;
 
@@ -37,25 +36,7 @@ public abstract class PersistentSortedAdvancedLookup<B extends Comparable<B> & I
         }
         this.container = container;
 
-        KEYS_MANAGEMENT keysManagement = null;
-        switch (matchingMode) {
-        case FIRST_MATCH:
-            keysManagement = KEYS_MANAGEMENT.KEEP_FIRST;
-            break;
-        case LAST_MATCH:
-        case UNIQUE_MATCH:
-            keysManagement = KEYS_MANAGEMENT.KEEP_LAST;
-            break;
-        case ALL_MATCHES:
-        case ALL_ROWS:
-            keysManagement = KEYS_MANAGEMENT.KEEP_ALL;
-            break;
-
-        default:
-            throw new IllegalArgumentException("matchingMode unknown");
-        }
-
-        persistentSortedHash = new PersistentSortedHash<B>(keysManagement, container, this);
+        persistentSortedHash = new PersistentSortedLookupManager<B>(matchingMode, container, this);
 
     }
 

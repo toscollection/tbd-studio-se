@@ -18,6 +18,7 @@ public class MainSort {
 
         int[] dataFQS = generateData();
         int[] dataSun = dataFQS.clone();
+        int[] dataShellSort = dataFQS.clone();
         
 //        long heap1 = Sizeof.usedMemory();
         long start = System.currentTimeMillis();
@@ -27,7 +28,9 @@ public class MainSort {
 
         long end = System.currentTimeMillis();
         long delta = end - start; 
-        
+
+        // ####################################
+
         System.out.println("Time FastQSortAlgorithm:" + delta + " ms");
         
         start = System.currentTimeMillis();
@@ -38,6 +41,17 @@ public class MainSort {
         delta = end - start; 
         
         System.out.println("Sun Algorithm:" + delta + " ms");
+
+        // ####################################
+        
+        start = System.currentTimeMillis();
+        
+        ShellSort.shellsort(dataShellSort, 0, dataShellSort.length - 1);
+        
+        end = System.currentTimeMillis();
+        delta = end - start; 
+        
+        System.out.println("mergeSortArray Algorithm:" + delta + " ms");
         
 //        long heap2 = Sizeof.usedMemory();
 
@@ -47,7 +61,7 @@ public class MainSort {
     private static int[] generateData() {
         int[] randomArray = null;
 
-        int nbItems = 5000000;
+        int nbItems = 10000000;
         
         randomArray = new int[nbItems];
         for (int i = 0; i < randomArray.length; i++) {

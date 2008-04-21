@@ -3,13 +3,7 @@ package org.talend.designer.components.persistent;
 import java.io.IOException;
 
 
-public interface IPersistableHash<B> {
-
-    public enum KEYS_MANAGEMENT {
-        KEEP_FIRST,
-        KEEP_LAST,
-        KEEP_ALL,
-    }
+public interface IPersistentLookupManager<B> {
 
     public void initPut() throws IOException;
 

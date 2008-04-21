@@ -10,7 +10,7 @@ import java.io.InputStream;
 import routines.system.IPersistableLookupRow;
 
 
-public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow<B>> {
+public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersistableLookupRow<B>> implements ILookupManagerUnit<B> {
 
     protected static final int MARK_READ_LIMIT = 256 * 1024 * 1024;
 
@@ -94,21 +94,18 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     }
 
+    /* (non-Javadoc)
+     * @see org.talend.designer.components.persistent.ILookupManager#lookup(B)
+     */
     public abstract void lookup(B key) throws IOException;
 
-    /**
-     * DOC slanglois Comment method "hasNext".
-     * 
-     * @return
-     * @throws IOException
+    /* (non-Javadoc)
+     * @see org.talend.designer.components.persistent.ILookupManager#hasNext()
      */
     public abstract boolean hasNext() throws IOException;
 
-    /**
-     * DOC slanglois Comment method "next".
-     * 
-     * @return
-     * @throws IOException
+    /* (non-Javadoc)
+     * @see org.talend.designer.components.persistent.ILookupManager#next()
      */
     public abstract B next() throws IOException;
 
@@ -143,10 +140,8 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
     }
 
 
-    /**
-     * DOC slanglois Comment method "close".
-     * 
-     * @throws IOException
+    /* (non-Javadoc)
+     * @see org.talend.designer.components.persistent.ILookupManager#close()
      */
     public void close() throws IOException {
         if (keysDataStream != null) {

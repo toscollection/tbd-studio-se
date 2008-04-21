@@ -12,9 +12,8 @@
 package org.talend.designer.components.persistent;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
-import org.talend.designer.components.persistent.IPersistableHash.KEYS_MANAGEMENT;
+import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
 
 import routines.TalendString;
 import routines.system.IPersistableLookupRow;
@@ -30,8 +29,6 @@ import routines.system.TDieException;
  * @status
  */
 public class PersistentTest {
-
-    private static final KEYS_MANAGEMENT KEEP_MODE = IPersistableHash.KEYS_MANAGEMENT.KEEP_LAST;
 
     private static final String NUMBER = "6";
 
@@ -274,7 +271,7 @@ public class PersistentTest {
             start_Hash.put("tJoin_1", System.currentTimeMillis());
             currentComponent = "tJoin_1";
 
-            final IPersistableHash<Lookup> tHash_tJoin_1 = (IPersistableHash<Lookup>) globalMap.get("tHash_row4");
+            final IPersistentLookupManager<Lookup> tHash_tJoin_1 = (IPersistentLookupManager<Lookup>) globalMap.get("tHash_row4");
             tHash_tJoin_1.initGet();
 
             // class Util_tJoin_1 {
@@ -669,7 +666,7 @@ public class PersistentTest {
             start_Hash.put("tHash_row4", System.currentTimeMillis());
             currentComponent = "tHash_row4";
 
-            IPersistableHash<Lookup> tHash_row4 = new PersistentSortedHash<Lookup>(KEEP_MODE, pathFolderTest + "container",
+            IPersistentLookupManager<Lookup> tHash_row4 = new PersistentSortedLookupManager<Lookup>(MATCHING_MODE.ALL_MATCHES, pathFolderTest + "container",
                     new IRowCreator<Lookup>() {
 
                         public Lookup createRowInstance() {
