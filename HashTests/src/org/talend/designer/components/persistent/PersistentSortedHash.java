@@ -235,9 +235,11 @@ public class PersistentSortedHash<B extends Comparable<B> & IPersistableLookupRo
             try {
                 if (lookupKey.compareTo(key) == 0 && previousResultRetrieved) {
                     nextIsPreviousResult = true;
+                } else {
+                    previousResult = null;
                 }
             } catch (NullPointerException e) {
-                // nothing
+                previousResult = null;
             }
             noMoreNext = false;
         }

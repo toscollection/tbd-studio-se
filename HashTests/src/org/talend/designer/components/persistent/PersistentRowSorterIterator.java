@@ -62,7 +62,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     private ArrayList<Long> fileLengths;
 
-    private ArrayList<DataInputStream> diss;
+    private ArrayList<DataInputStream> diss = new ArrayList<DataInputStream>();
 
     private ArrayList<File> files = new ArrayList<File>();
     
@@ -100,7 +100,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
     // ///////////////////////
 
     public void initPut() {
-        System.out.println("bufferSize="+bufferSize +" objects");
+        //System.out.println("bufferSize="+bufferSize +" objects");
         buffer = (V[]) new IPersistableRow[bufferSize];
     }
 
@@ -251,7 +251,6 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
         // DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         int numFiles = files.size();
-        diss = new ArrayList<DataInputStream>();
         datas = new ArrayList<DataContainer<V>>();
         fileLengths = new ArrayList<Long>();
 
