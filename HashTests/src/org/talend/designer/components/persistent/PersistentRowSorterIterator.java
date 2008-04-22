@@ -122,7 +122,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
                     } else {
                         bufferMarkLimit = (int) _10P;
                     }
-                    System.out.println("Buffer marked at index " + bufferMarkLimit);
+                    //System.out.println("Buffer marked at index " + bufferMarkLimit);
                     bufferIsMarked = true;
                 }
             }
@@ -169,7 +169,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
      */
     public void writeBuffer() throws IOException {
         long time1 = System.currentTimeMillis();
-        System.out.println("Sorting buffer...");
+//        System.out.println("Sorting buffer...");
 
         Arrays.sort(buffer, 0, bufferBeanIndex);
 
@@ -177,17 +177,17 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         long deltaTimeSort = (time2 - time1);
         int length = bufferBeanIndex + 1;
         int itemsPerSecSort = (int) ((float) length / (float) deltaTimeSort * 1000f);
-        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
-                + "  items/s ");
+//        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
+//                + "  items/s ");
 
         time1 = System.currentTimeMillis();
-        System.out.println("Writing ordered buffer in file...");
+//        System.out.println("Writing ordered buffer in file...");
 
         File file = new File(buildFilePath());
         count++;
         DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         byte[] bytes = null;
-        System.out.println("Start write buffer ");
+//        System.out.println("Start write buffer ");
         for (int i = 0; i < bufferBeanIndex; i++) {
             bytes = buffer[i].toData();
             rw.writeInt(bytes.length);
@@ -200,8 +200,8 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
         int itemsPerSecWrite = (int) ((float) length / (float) deltaTimeWrite * 1000f);
-        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. " + itemsPerSecWrite
-                + "  items/s ");
+//        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. " + itemsPerSecWrite
+//                + "  items/s ");
 
     }
 

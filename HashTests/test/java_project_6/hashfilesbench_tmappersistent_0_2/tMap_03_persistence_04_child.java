@@ -1,19 +1,31 @@
 // ============================================================================
 package java_project_6.hashfilesbench_tmappersistent_0_2;
 
-import java.io.ByteArrayInputStream;
+import routines.libs;
+import routines.randomGenerator;
+import routines.DataOperation;
+import routines.Mathematical;
+import routines.Numeric;
+import routines.Relational;
+import routines.StringHandling;
+import routines.TalendDataGenerator;
+import routines.TalendDate;
+import routines.TalendString;
+import routines.system.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.math.BigDecimal;
 import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import org.talend.designer.components.persistent.PersistentSortedAdvancedLookup;
-
-import routines.TalendString;
-import routines.system.ParserUtils;
-import routines.system.TDieException;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+import java.util.Comparator;
 
 //the import part of tJavaFlex_2
 //import java.util.List;
@@ -25,14 +37,14 @@ import routines.system.TDieException;
 //import java.util.List;
 
 /**
- * Job: tMap_03_persistence_03_child Purpose: <br>
+ * Job: tMap_03_persistence_04_child Purpose: <br>
  * Description: <br>
  * 
  * @author amaumont@talend.com
  * @version 2.2.0.qualifier
  * @status
  */
-public class tMap_03_persistence_03_child {
+public class tMap_03_persistence_04_child {
 	// create and load default properties
 	private static java.util.Properties defaultProps = new java.util.Properties();
 
@@ -67,8 +79,8 @@ public class tMap_03_persistence_03_child {
 	}
 
 	private static ContextProperties context = new ContextProperties();
-	private static final String jobName = "tMap_03_persistence_03_child";
-	private static final String projectName = "JAVA_PROJECT_6";
+	private static final String jobName = "tMap_03_persistence_04_child";
+	private static final String projectName = "JAVA_PROJECT_8";
 	public static Integer errorCode = null;
 	private static String currentComponent = "";
 	private static final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
@@ -79,9 +91,9 @@ public class tMap_03_persistence_03_child {
 
 	private class TalendException extends Exception {
 		private Exception e = null;
-		private tMap_03_persistence_03_child c = null;
+		private tMap_03_persistence_04_child c = null;
 
-		private TalendException(tMap_03_persistence_03_child c, Exception e) {
+		private TalendException(tMap_03_persistence_04_child c, Exception e) {
 			this.e = e;
 			this.c = c;
 		}
@@ -122,34 +134,6 @@ public class tMap_03_persistence_03_child {
 		}
 	}
 
-	public void tAssert_7_error(Exception exception) throws TalendException {
-		end_Hash.put("tAssert_7", System.currentTimeMillis());
-		tAssert_7_onSubJobError(exception);
-	}
-
-	public void tFileCompare_1_error(Exception exception)
-			throws TalendException {
-		end_Hash.put("tFileCompare_1", System.currentTimeMillis());
-		tFileCompare_1_onSubJobError(exception);
-	}
-
-	public void tJavaFlex_4_error(Exception exception) throws TalendException {
-		end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
-		tJavaFlex_4_onSubJobError(exception);
-	}
-
-	public void tFixedFlowInput_1_error(Exception exception)
-			throws TalendException {
-		end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
-		tJavaFlex_4_onSubJobError(exception);
-	}
-
-	public void tBufferOutput_1_error(Exception exception)
-			throws TalendException {
-		end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
-		tJavaFlex_4_onSubJobError(exception);
-	}
-
 	public void tFileInputDelimited_2_error(Exception exception)
 			throws TalendException {
 		end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
@@ -185,6 +169,29 @@ public class tMap_03_persistence_03_child {
 		tFileInputDelimited_8_onSubJobError(exception);
 	}
 
+	public void tFileCompare_1_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFileCompare_1", System.currentTimeMillis());
+		tFileCompare_1_onSubJobError(exception);
+	}
+
+	public void tJavaFlex_4_error(Exception exception) throws TalendException {
+		end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
+		tJavaFlex_4_onSubJobError(exception);
+	}
+
+	public void tFixedFlowInput_1_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
+		tJavaFlex_4_onSubJobError(exception);
+	}
+
+	public void tBufferOutput_1_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
+		tJavaFlex_4_onSubJobError(exception);
+	}
+
 	public void tFileInputDelimited_9_error(Exception exception)
 			throws TalendException {
 		end_Hash.put("tFileInputDelimited_9", System.currentTimeMillis());
@@ -196,18 +203,6 @@ public class tMap_03_persistence_03_child {
 		end_Hash.put("tAdvancedHashPersistent_lookup", System
 				.currentTimeMillis());
 		tFileInputDelimited_8_onSubJobError(exception);
-	}
-
-	public void tAssert_7_onSubJobError(Exception exception)
-			throws TalendException {
-	}
-
-	public void tFileCompare_1_onSubJobError(Exception exception)
-			throws TalendException {
-	}
-
-	public void tJavaFlex_4_onSubJobError(Exception exception)
-			throws TalendException {
 	}
 
 	public void tFileInputDelimited_2_onSubJobError(Exception exception)
@@ -222,415 +217,12 @@ public class tMap_03_persistence_03_child {
 			throws TalendException {
 	}
 
-	public void tAssert_7Process() throws TalendException {
-		try {
-			/**
-			 * [tAssert_7 begin ] start
-			 */
-
-			ok_Hash.put("tAssert_7", false);
-			start_Hash.put("tAssert_7", System.currentTimeMillis());
-			currentComponent = "tAssert_7";
-
-			/**
-			 * [tAssert_7 begin ] stop
-			 */
-			/**
-			 * [tAssert_7 main ] start
-			 */
-
-			currentComponent = "tAssert_7";
-
-			/**
-			 * [tAssert_7 main ] stop
-			 */
-			/**
-			 * [tAssert_7 end ] start
-			 */
-
-			currentComponent = "tAssert_7";
-
-			ok_Hash.put("tAssert_7", true);
-			end_Hash.put("tAssert_7", System.currentTimeMillis());
-
-			/**
-			 * [tAssert_7 end ] stop
-			 */
-
-		} catch (Exception e) {
-
-			throw new TalendException(this, e);
-		}
-
+	public void tFileCompare_1_onSubJobError(Exception exception)
+			throws TalendException {
 	}
 
-	public void tFileCompare_1Process() throws TalendException {
-		try {
-
-			/**
-			 * [tFileCompare_1 begin ] start
-			 */
-
-			ok_Hash.put("tFileCompare_1", false);
-			start_Hash.put("tFileCompare_1", System.currentTimeMillis());
-			currentComponent = "tFileCompare_1";
-
-			/**
-			 * [tFileCompare_1 begin ] stop
-			 */
-			/**
-			 * [tFileCompare_1 main ] start
-			 */
-
-			currentComponent = "tFileCompare_1";
-
-			boolean result_tFileCompare_1 = true;
-
-			if (result_tFileCompare_1) {
-
-				java.io.BufferedReader file_tFileCompare_1 = new java.io.BufferedReader(
-						new java.io.FileReader(context.data_output_dir
-								+ context.current_job_dir + "out_main_"
-								+ context.indexMain + "__lookup_"
-								+ context.indexLookup + ".csv"));
-				java.io.BufferedReader fileRef_tFileCompare_1 = new java.io.BufferedReader(
-						new java.io.FileReader((String) context
-								.getProperty("data_dir")
-								+ context.current_job_dir
-								+ "ref/out_main_"
-								+ context.indexMain
-								+ "__lookup_"
-								+ context.indexLookup + ".csv"));
-				String content_tFileCompare_1 = null, contentRef_tFileCompare_1 = null;
-				while ((content_tFileCompare_1 = file_tFileCompare_1.readLine()) != null
-						&& (contentRef_tFileCompare_1 = fileRef_tFileCompare_1
-								.readLine()) != null) {
-					if (content_tFileCompare_1
-							.compareTo(contentRef_tFileCompare_1) != 0) {
-						result_tFileCompare_1 = false;
-						break;
-					}
-				}
-
-				// Check if files has a different number of lines:
-				if (content_tFileCompare_1 == null) {
-					// This step is done in case of the while upper ignore
-					// second part:
-					contentRef_tFileCompare_1 = fileRef_tFileCompare_1
-							.readLine();
-				}
-				if (content_tFileCompare_1 != null
-						|| contentRef_tFileCompare_1 != null) {
-					result_tFileCompare_1 = false;
-				}
-
-				file_tFileCompare_1.close();
-				fileRef_tFileCompare_1.close();
-
-			}
-
-			String messagetFileCompare_1 = "";
-			if (result_tFileCompare_1) {
-				messagetFileCompare_1 = "[" + jobName + "." + currentComponent
-						+ "] 'main_" + context.indexMain + ".csv' and 'lookup_"
-						+ context.indexLookup + ".csv', OK";
-
-			} else {
-				messagetFileCompare_1 = "[" + jobName + "." + currentComponent
-						+ "] Files differ: check files 'main_"
-						+ context.indexMain + ".csv' and 'lookup_"
-						+ context.indexLookup + ".csv', DIFFERENT";
-			}
-			globalMap.put("tFileCompare_1_DIFFERENCE", result_tFileCompare_1);
-
-			System.out.println(messagetFileCompare_1);
-
-			/**
-			 * [tFileCompare_1 main ] stop
-			 */
-			/**
-			 * [tFileCompare_1 end ] start
-			 */
-
-			currentComponent = "tFileCompare_1";
-
-			ok_Hash.put("tFileCompare_1", true);
-			end_Hash.put("tFileCompare_1", System.currentTimeMillis());
-
-			/**
-			 * [tFileCompare_1 end ] stop
-			 */
-			tAssert_7Process();
-			tJavaFlex_4Process();
-
-		} catch (Exception e) {
-
-			throw new TalendException(this, e);
-		}
-
-	}
-
-	private class row4Struct implements
-			routines.system.IPersistableRow<row4Struct>, Comparable<row4Struct> {
-
-		Boolean testOk;
-
-		public void loadData(byte[] data) {
-
-			ByteArrayInputStream bai = null;
-			ObjectInputStream dis = null;
-			byte[] byteArray = null;
-			try {
-				bai = new ByteArrayInputStream(data);
-				dis = new ObjectInputStream(bai);
-
-				int length = 0;
-
-				length = dis.readByte();
-				if (length == -1) {
-					this.testOk = null;
-				} else {
-					this.testOk = dis.readBoolean();
-				}
-
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-
-			} finally {
-				if (dis != null) {
-					try {
-						dis.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-
-		public byte[] toData() {
-			ByteArrayOutputStream bao = null;
-			ObjectOutputStream dos = null;
-			byte[] byteArray = null;
-			try {
-				bao = new ByteArrayOutputStream();
-				dos = new ObjectOutputStream(bao);
-
-				if (this.testOk == null) {
-					dos.writeByte(-1);
-				} else {
-					dos.writeByte(0);
-					dos.writeBoolean(this.testOk);
-				}
-
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			} finally {
-				if (dos != null) {
-					try {
-						dos.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			return bao.toByteArray();
-		}
-
-		public String toString() {
-
-			StringBuilder sb = new StringBuilder();
-			sb.append(super.toString());
-			sb.append("[");
-
-			sb.append("testOk");
-			sb.append("=");
-			sb.append(String.valueOf(this.testOk));
-
-			sb.append("]");
-
-			return sb.toString();
-		}
-
-		/**
-		 * Compare keys
-		 */
-		public int compareTo(row4Struct other) {
-
-			int returnValue = -1;
-
-			return returnValue;
-		}
-
-		private int checkNullsAndCompare(Object object1, Object object2) {
-			int returnValue = 0;
-			if (object1 instanceof Comparable && object2 instanceof Comparable) {
-				returnValue = ((Comparable) object1).compareTo(object2);
-			} else if (object1 != null && object2 != null) {
-				returnValue = compareStrings(object1.toString(), object2
-						.toString());
-			} else if (object1 == null && object2 != null) {
-				returnValue = 1;
-			} else if (object1 != null && object2 == null) {
-				returnValue = -1;
-			} else {
-				returnValue = 0;
-			}
-
-			return returnValue;
-		}
-
-		private int compareStrings(String string1, String string2) {
-			// if (this.ignoreCase) {
-			return string1.compareToIgnoreCase(string2);
-			// } else {
-			// return string1.compareTo(string2);
-			// }
-		}
-
-	}
-
-	public void tJavaFlex_4Process() throws TalendException {
-		try {
-
-			row4Struct row4 = new row4Struct();
-			/**
-			 * [tJavaFlex_4 begin ] start
-			 */
-
-			ok_Hash.put("tJavaFlex_4", false);
-			start_Hash.put("tJavaFlex_4", System.currentTimeMillis());
-			currentComponent = "tJavaFlex_4";
-
-			// start part of your Java code
-
-			/**
-			 * [tJavaFlex_4 begin ] stop
-			 */
-			/**
-			 * [tJavaFlex_4 main ] start
-			 */
-
-			currentComponent = "tJavaFlex_4";
-
-			// here is the main part of the component,
-			// a piece of code executed in the row
-			// loop
-
-			// Map parentGlobalMap =
-			// java_project_6.tmap_03_persistence_01_0_1.tMap_03_persistence_01.globalMap;
-
-			// if(((Boolean)globalMap.get("tFileCompare_1_DIFFERENCE"))) {
-			// parentGlobalMap.put("validatesCasesCount",
-			// (Integer)parentGlobalMap.get("validatesCasesCount") + 1);
-			// }
-
-			/**
-			 * [tJavaFlex_4 main ] stop
-			 */
-
-			/**
-			 * [tBufferOutput_1 begin ] start
-			 */
-
-			ok_Hash.put("tBufferOutput_1", false);
-			start_Hash.put("tBufferOutput_1", System.currentTimeMillis());
-			currentComponent = "tBufferOutput_1";
-
-			/**
-			 * [tBufferOutput_1 begin ] stop
-			 */
-
-			/**
-			 * [tFixedFlowInput_1 begin ] start
-			 */
-
-			ok_Hash.put("tFixedFlowInput_1", false);
-			start_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
-			currentComponent = "tFixedFlowInput_1";
-
-			globalMap.put("NB_LINE", 1);
-			for (int i_tFixedFlowInput_1 = 0; i_tFixedFlowInput_1 < 1; i_tFixedFlowInput_1++) {
-
-				row4.testOk = ((Boolean) globalMap
-						.get("tFileCompare_1_DIFFERENCE"));
-
-				/**
-				 * [tFixedFlowInput_1 begin ] stop
-				 */
-				/**
-				 * [tFixedFlowInput_1 main ] start
-				 */
-
-				currentComponent = "tFixedFlowInput_1";
-
-				/**
-				 * [tFixedFlowInput_1 main ] stop
-				 */
-				/**
-				 * [tBufferOutput_1 main ] start
-				 */
-
-				currentComponent = "tBufferOutput_1";
-
-				String[] row_tBufferOutput_1 = new String[] { "", };
-				if (row4.testOk != null) {
-
-					row_tBufferOutput_1[0] = String.valueOf(row4.testOk);
-
-				}
-				globalBuffer.add(row_tBufferOutput_1);
-
-				/**
-				 * [tBufferOutput_1 main ] stop
-				 */
-
-				/**
-				 * [tFixedFlowInput_1 end ] start
-				 */
-
-				currentComponent = "tFixedFlowInput_1";
-
-			}
-
-			ok_Hash.put("tFixedFlowInput_1", true);
-			end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
-
-			/**
-			 * [tFixedFlowInput_1 end ] stop
-			 */
-			/**
-			 * [tBufferOutput_1 end ] start
-			 */
-
-			currentComponent = "tBufferOutput_1";
-
-			ok_Hash.put("tBufferOutput_1", true);
-			end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
-
-			/**
-			 * [tBufferOutput_1 end ] stop
-			 */
-
-			/**
-			 * [tJavaFlex_4 end ] start
-			 */
-
-			currentComponent = "tJavaFlex_4";
-
-			// end of the component, outside/closing the loop
-
-			ok_Hash.put("tJavaFlex_4", true);
-			end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
-
-			/**
-			 * [tJavaFlex_4 end ] stop
-			 */
-
-		} catch (Exception e) {
-
-			throw new TalendException(this, e);
-		}
-
+	public void tJavaFlex_4_onSubJobError(Exception exception)
+			throws TalendException {
 	}
 
 	private class row6Struct implements
@@ -1916,8 +1508,10 @@ public class tMap_03_persistence_03_child {
 			// ###############################
 			// # Lookup's keys initialization
 
-			PersistentSortedAdvancedLookup<lookupStruct> tHash_Lookup_lookup = (PersistentSortedAdvancedLookup<lookupStruct>) globalMap
+			org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct> tHash_Lookup_lookup = (org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct>) globalMap
 					.get("tHash_Lookup_lookup");
+
+			tHash_Lookup_lookup.initGet();
 
 			lookupStruct lookupHashKey = new lookupStruct();
 			lookupStruct lookupDefault = new lookupStruct();
@@ -1937,16 +1531,13 @@ public class tMap_03_persistence_03_child {
 
 				boolean is__rejectedInnerJoin;
 
-				Integer exprKey_lookup__ID_LOOKUP1;
 				Integer main__ID_MAIN;
 				String main__LABEL_MAIN;
 
-				public void fillFrom(mainStruct main,
-						Integer exprKey_lookup__ID_LOOKUP1) {
+				public void fillFrom(mainStruct main) {
 
 					this.main__ID_MAIN = main.ID_MAIN;
 					this.main__LABEL_MAIN = main.LABEL_MAIN;
-					this.exprKey_lookup__ID_LOOKUP1 = exprKey_lookup__ID_LOOKUP1;
 
 				}
 
@@ -1981,13 +1572,6 @@ public class tMap_03_persistence_03_child {
 				public int compareTo(SortableRow_main other) {
 
 					int returnValue = 0;
-
-					returnValue = checkNullsAndCompare(
-							this.exprKey_lookup__ID_LOOKUP1,
-							other.exprKey_lookup__ID_LOOKUP1);
-					if (returnValue != 0) {
-						return returnValue;
-					}
 
 					return returnValue;
 				}
@@ -2055,13 +1639,6 @@ public class tMap_03_persistence_03_child {
 							this.main__LABEL_MAIN = new String(byteArray);
 						}
 
-						length = dis.readByte();
-						if (length == -1) {
-							this.exprKey_lookup__ID_LOOKUP1 = null;
-						} else {
-							this.exprKey_lookup__ID_LOOKUP1 = dis.readInt();
-						}
-
 					} catch (IOException e) {
 						throw new RuntimeException(e);
 
@@ -2099,13 +1676,6 @@ public class tMap_03_persistence_03_child {
 							byteArray = this.main__LABEL_MAIN.getBytes();
 							dos.writeInt(byteArray.length);
 							dos.write(byteArray);
-						}
-
-						if (this.exprKey_lookup__ID_LOOKUP1 == null) {
-							dos.writeByte(-1);
-						} else {
-							dos.writeByte(0);
-							dos.writeInt(this.exprKey_lookup__ID_LOOKUP1);
 						}
 
 					} catch (IOException e) {
@@ -2193,46 +1763,14 @@ public class tMap_03_persistence_03_child {
 
 					currentComponent = "tMapPersistent_1";
 
-					Integer exprKey_lookup__ID_LOOKUP1 = main.ID_MAIN;
+					// ###############################
+					// # Input tables (lookups)
+					boolean rejectedInnerJoin_tMapPersistent_1 = false;
+					boolean mainRowRejected_tMapPersistent_1 = false;
 
-					SortableRow_main rsc_main = fsi_main.getNextFreeRow();
-
-					rsc_main.fillFrom(main, exprKey_lookup__ID_LOOKUP1);
-
-					fsi_main.put(rsc_main);
-
-				}// End of branch temporary "main"
-
-			} // end temporary main loop ##(1)##
-
-			fsi_main.endPut();
-
-			// ###############################
-			// # Input tables (lookups)
-			boolean rejectedInnerJoin_tMapPersistent_1 = false;
-			boolean mainRowRejected_tMapPersistent_1 = false;
-
-			// /////////////////////////////////////////////
-			// Starting Lookup Table "lookup"
-			// /////////////////////////////////////////////
-
-			SortableRow_main rsc_main;
-
-			{ // start main loop
-
-				tHash_Lookup_lookup.initGet();
-
-				// TEST firstLookupIsPersistentSorted=true
-				// isFirstPersistentSortedTable=true
-
-				rejectedInnerJoin_tMapPersistent_1 = false;
-
-				while (fsi_main.hasNext()) { // G_TM_M_250 loop "main"
-
-					rsc_main = (SortableRow_main) fsi_main.next();
-					rsc_main.copyDataTo(main);
-
-					rejectedInnerJoin_tMapPersistent_1 = rsc_main.is__rejectedInnerJoin;
+					// /////////////////////////////////////////////
+					// Starting Lookup Table "lookup"
+					// /////////////////////////////////////////////
 
 					boolean forceLooplookup = false;
 
@@ -2240,132 +1778,144 @@ public class tMap_03_persistence_03_child {
 
 					if (!rejectedInnerJoin_tMapPersistent_1) { // G 20
 
-						lookupHashKey.ID_LOOKUP1 = rsc_main.exprKey_lookup__ID_LOOKUP1;
-
 						tHash_Lookup_lookup.lookup(lookupHashKey);
 
 						if (!tHash_Lookup_lookup.hasNext()) { // G 090
+
+							forceLooplookup = true;
 
 						} // G 090
 
 					} // G 20
 
+					else { // G 20 - G 21
+						forceLooplookup = true;
+					} // G 21
+
 					lookupStruct lookup = null;
 
-					lookupStruct fromLookup_lookup = null;
-					lookup = lookupDefault;
+					while (tHash_Lookup_lookup.hasNext() || forceLooplookup) { // G_TM_M_043
 
-					if (tHash_Lookup_lookup.hasNext()) { // G 099
+						// CALL "close loop of lookup '" lookup'
 
-						fromLookup_lookup = tHash_Lookup_lookup.next();
+						lookupStruct fromLookup_lookup = null;
+						lookup = lookupDefault;
 
-					} // G 099
+						if (!forceLooplookup) { // G 46
 
-					if (fromLookup_lookup != null) {
-						lookup = fromLookup_lookup;
-					}
+							fromLookup_lookup = tHash_Lookup_lookup.next();
 
-					// { // Dummy bracket to open block for "main" ##(1)##
+							if (fromLookup_lookup != null) {
+								lookup = fromLookup_lookup;
+							}
 
-					// ###############################
-					{ // start of Var scope
+						} // G 46
+
+						forceLooplookup = false;
+
+						// { // Dummy bracket to open block for "main" ##(1)##
 
 						// ###############################
-						// # Vars tables
-						// ###############################
-						// ###############################
-						// # Output tables
+						{ // start of Var scope
 
-						out = null;
+							// ###############################
+							// # Vars tables
+							// ###############################
+							// ###############################
+							// # Output tables
 
-						// # Output table : 'out'
-						out_tmp.ID_MAIN = main.ID_MAIN;
-						out_tmp.LABEL_MAIN = main.LABEL_MAIN;
-						out_tmp.ID_LOOKUP1 = lookup.ID_LOOKUP1;
-						out_tmp.LABEL_LOOKUP1 = lookup.LABEL_LOOKUP1;
-						out = out_tmp;
-						// ###############################
+							out = null;
 
-					} // end of Var scope
+							// # Output table : 'out'
+							out_tmp.ID_MAIN = main.ID_MAIN;
+							out_tmp.LABEL_MAIN = main.LABEL_MAIN;
+							out_tmp.ID_LOOKUP1 = lookup.ID_LOOKUP1;
+							out_tmp.LABEL_LOOKUP1 = lookup.LABEL_LOOKUP1;
+							out = out_tmp;
+							// ###############################
 
-					rejectedInnerJoin_tMapPersistent_1 = false;
+						} // end of Var scope
 
-					/**
-					 * [tMapPersistent_1 main ] stop
-					 */
-					// Start of branch "out"
-					if (out != null) {
+						rejectedInnerJoin_tMapPersistent_1 = false;
 
 						/**
-						 * [tFileOutputDelimited_2 main ] start
+						 * [tMapPersistent_1 main ] stop
 						 */
+						// Start of branch "out"
+						if (out != null) {
 
-						currentComponent = "tFileOutputDelimited_2";
+							/**
+							 * [tFileOutputDelimited_2 main ] start
+							 */
 
-						StringBuilder sb_tFileOutputDelimited_2 = new StringBuilder();
+							currentComponent = "tFileOutputDelimited_2";
 
-						if (out.ID_MAIN != null) {
+							StringBuilder sb_tFileOutputDelimited_2 = new StringBuilder();
 
-							sb_tFileOutputDelimited_2.append(
+							if (out.ID_MAIN != null) {
 
-							out.ID_MAIN
+								sb_tFileOutputDelimited_2.append(
 
-							);
+								out.ID_MAIN
 
-						}
+								);
 
-						sb_tFileOutputDelimited_2
-								.append(OUT_DELIM_tFileOutputDelimited_2);
+							}
 
-						if (out.LABEL_MAIN != null) {
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-							sb_tFileOutputDelimited_2.append(
+							if (out.LABEL_MAIN != null) {
 
-							out.LABEL_MAIN
+								sb_tFileOutputDelimited_2.append(
 
-							);
+								out.LABEL_MAIN
 
-						}
+								);
 
-						sb_tFileOutputDelimited_2
-								.append(OUT_DELIM_tFileOutputDelimited_2);
+							}
 
-						if (out.ID_LOOKUP1 != null) {
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-							sb_tFileOutputDelimited_2.append(
+							if (out.ID_LOOKUP1 != null) {
 
-							out.ID_LOOKUP1
+								sb_tFileOutputDelimited_2.append(
 
-							);
+								out.ID_LOOKUP1
 
-						}
+								);
 
-						sb_tFileOutputDelimited_2
-								.append(OUT_DELIM_tFileOutputDelimited_2);
+							}
 
-						if (out.LABEL_LOOKUP1 != null) {
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-							sb_tFileOutputDelimited_2.append(
+							if (out.LABEL_LOOKUP1 != null) {
 
-							out.LABEL_LOOKUP1
+								sb_tFileOutputDelimited_2.append(
 
-							);
+								out.LABEL_LOOKUP1
 
-						}
+								);
 
-						sb_tFileOutputDelimited_2
-								.append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
+							}
 
-						outtFileOutputDelimited_2
-								.write(sb_tFileOutputDelimited_2.toString());
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
 
-						nb_line_tFileOutputDelimited_2++;
+							outtFileOutputDelimited_2
+									.write(sb_tFileOutputDelimited_2.toString());
 
-						/**
-						 * [tFileOutputDelimited_2 main ] stop
-						 */
+							nb_line_tFileOutputDelimited_2++;
 
-					} // End of branch "out"
+							/**
+							 * [tFileOutputDelimited_2 main ] stop
+							 */
+
+						} // End of branch "out"
+
+					} // close loop of lookup 'lookup' // G_TM_M_043
 
 				} // End of branch "main"
 
@@ -2440,68 +1990,117 @@ public class tMap_03_persistence_03_child {
 
 	}
 
-	private class lookupStruct implements
-			routines.system.IPersistableLookupRow<lookupStruct>,
-			Comparable<lookupStruct> {
-		private static final int DEFAULT_HASHCODE = 1;
-		private static final int PRIME = 31;
-		private int hashCode = DEFAULT_HASHCODE;
-		public boolean hashCodeDirty = true;
+	public void tFileCompare_1Process() throws TalendException {
+		try {
 
-		Integer ID_LOOKUP1;
+			/**
+			 * [tFileCompare_1 begin ] start
+			 */
 
-		String LABEL_LOOKUP1;
+			ok_Hash.put("tFileCompare_1", false);
+			start_Hash.put("tFileCompare_1", System.currentTimeMillis());
+			currentComponent = "tFileCompare_1";
 
-		@Override
-		public int hashCode() {
-			if (this.hashCodeDirty) {
-				final int prime = PRIME;
-				int result = DEFAULT_HASHCODE;
+			/**
+			 * [tFileCompare_1 begin ] stop
+			 */
+			/**
+			 * [tFileCompare_1 main ] start
+			 */
 
-				result = prime
-						* result
-						+ ((this.ID_LOOKUP1 == null) ? 0 : this.ID_LOOKUP1
-								.hashCode());
+			currentComponent = "tFileCompare_1";
 
-				this.hashCode = result;
-				this.hashCodeDirty = false;
+			boolean result_tFileCompare_1 = true;
+
+			if (result_tFileCompare_1) {
+
+				java.io.BufferedReader file_tFileCompare_1 = new java.io.BufferedReader(
+						new java.io.FileReader(context.data_output_dir
+								+ context.current_job_dir + "out_main_"
+								+ context.indexMain + "__lookup_"
+								+ context.indexLookup + ".csv"));
+				java.io.BufferedReader fileRef_tFileCompare_1 = new java.io.BufferedReader(
+						new java.io.FileReader((String) context
+								.getProperty("data_dir")
+								+ context.current_job_dir
+								+ "ref/out_main_"
+								+ context.indexMain
+								+ "__lookup_"
+								+ context.indexLookup + ".csv"));
+				String content_tFileCompare_1 = null, contentRef_tFileCompare_1 = null;
+				while ((content_tFileCompare_1 = file_tFileCompare_1.readLine()) != null
+						&& (contentRef_tFileCompare_1 = fileRef_tFileCompare_1
+								.readLine()) != null) {
+					if (content_tFileCompare_1
+							.compareTo(contentRef_tFileCompare_1) != 0) {
+						result_tFileCompare_1 = false;
+						break;
+					}
+				}
+
+				// Check if files has a different number of lines:
+				if (content_tFileCompare_1 == null) {
+					// This step is done in case of the while upper ignore
+					// second part:
+					contentRef_tFileCompare_1 = fileRef_tFileCompare_1
+							.readLine();
+				}
+				if (content_tFileCompare_1 != null
+						|| contentRef_tFileCompare_1 != null) {
+					result_tFileCompare_1 = false;
+				}
+
+				file_tFileCompare_1.close();
+				fileRef_tFileCompare_1.close();
+
 			}
-			return this.hashCode;
+
+			String messagetFileCompare_1 = "";
+			if (result_tFileCompare_1) {
+				messagetFileCompare_1 = "[" + jobName + "." + currentComponent
+						+ "] 'main_" + context.indexMain + ".csv' and 'lookup_"
+						+ context.indexLookup + ".csv', OK";
+
+			} else {
+				messagetFileCompare_1 = "[" + jobName + "." + currentComponent
+						+ "] Files differ: check files 'main_"
+						+ context.indexMain + ".csv' and 'lookup_"
+						+ context.indexLookup + ".csv', DIFFERENT";
+			}
+			globalMap.put("tFileCompare_1_DIFFERENCE", result_tFileCompare_1);
+
+			System.out.println(messagetFileCompare_1);
+
+			/**
+			 * [tFileCompare_1 main ] stop
+			 */
+			/**
+			 * [tFileCompare_1 end ] start
+			 */
+
+			currentComponent = "tFileCompare_1";
+
+			ok_Hash.put("tFileCompare_1", true);
+			end_Hash.put("tFileCompare_1", System.currentTimeMillis());
+
+			/**
+			 * [tFileCompare_1 end ] stop
+			 */
+			tJavaFlex_4Process();
+
+		} catch (Exception e) {
+
+			throw new TalendException(this, e);
 		}
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			final lookupStruct other = (lookupStruct) obj;
+	}
 
-			if (this.ID_LOOKUP1 == null) {
-				if (other.ID_LOOKUP1 != null)
-					return false;
-			} else if (!this.ID_LOOKUP1.equals(other.ID_LOOKUP1))
-				return false;
+	private class row4Struct implements
+			routines.system.IPersistableRow<row4Struct>, Comparable<row4Struct> {
 
-			return true;
-		}
+		Boolean testOk;
 
-		public void copyDataTo(lookupStruct other) {
-
-			other.ID_LOOKUP1 = this.ID_LOOKUP1;
-			other.LABEL_LOOKUP1 = this.LABEL_LOOKUP1;
-
-		}
-
-		public void copyKeysDataTo(lookupStruct other) {
-
-			other.ID_LOOKUP1 = this.ID_LOOKUP1;
-
-		}
-
-		public void loadKeysData(byte[] data) {
+		public void loadData(byte[] data) {
 
 			ByteArrayInputStream bai = null;
 			ObjectInputStream dis = null;
@@ -2514,9 +2113,9 @@ public class tMap_03_persistence_03_child {
 
 				length = dis.readByte();
 				if (length == -1) {
-					this.ID_LOOKUP1 = null;
+					this.testOk = null;
 				} else {
-					this.ID_LOOKUP1 = dis.readInt();
+					this.testOk = dis.readBoolean();
 				}
 
 			} catch (IOException e) {
@@ -2533,7 +2132,7 @@ public class tMap_03_persistence_03_child {
 			}
 		}
 
-		public byte[] toKeysData() {
+		public byte[] toData() {
 			ByteArrayOutputStream bao = null;
 			ObjectOutputStream dos = null;
 			byte[] byteArray = null;
@@ -2541,11 +2140,11 @@ public class tMap_03_persistence_03_child {
 				bao = new ByteArrayOutputStream();
 				dos = new ObjectOutputStream(bao);
 
-				if (this.ID_LOOKUP1 == null) {
+				if (this.testOk == null) {
 					dos.writeByte(-1);
 				} else {
 					dos.writeByte(0);
-					dos.writeInt(this.ID_LOOKUP1);
+					dos.writeBoolean(this.testOk);
 				}
 
 			} catch (IOException e) {
@@ -2562,10 +2161,213 @@ public class tMap_03_persistence_03_child {
 			return bao.toByteArray();
 		}
 
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+
+			sb.append("testOk");
+			sb.append("=");
+			sb.append(String.valueOf(this.testOk));
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+
 		/**
-		 * Fill Values data from the given byte array.
+		 * Compare keys
 		 */
-		public void loadValuesData(byte[] data) {
+		public int compareTo(row4Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
+
+	}
+
+	public void tJavaFlex_4Process() throws TalendException {
+		try {
+
+			row4Struct row4 = new row4Struct();
+			/**
+			 * [tJavaFlex_4 begin ] start
+			 */
+
+			ok_Hash.put("tJavaFlex_4", false);
+			start_Hash.put("tJavaFlex_4", System.currentTimeMillis());
+			currentComponent = "tJavaFlex_4";
+
+			// start part of your Java code
+
+			/**
+			 * [tJavaFlex_4 begin ] stop
+			 */
+			/**
+			 * [tJavaFlex_4 main ] start
+			 */
+
+			currentComponent = "tJavaFlex_4";
+
+			// here is the main part of the component,
+			// a piece of code executed in the row
+			// loop
+
+			// Map parentGlobalMap =
+			// java_project_6.tmap_03_persistence_01_0_1.tMap_03_persistence_01.globalMap;
+
+			// if(((Boolean)globalMap.get("tFileCompare_1_DIFFERENCE"))) {
+			// parentGlobalMap.put("validatesCasesCount",
+			// (Integer)parentGlobalMap.get("validatesCasesCount") + 1);
+			// }
+
+			/**
+			 * [tJavaFlex_4 main ] stop
+			 */
+
+			/**
+			 * [tBufferOutput_1 begin ] start
+			 */
+
+			ok_Hash.put("tBufferOutput_1", false);
+			start_Hash.put("tBufferOutput_1", System.currentTimeMillis());
+			currentComponent = "tBufferOutput_1";
+
+			/**
+			 * [tBufferOutput_1 begin ] stop
+			 */
+
+			/**
+			 * [tFixedFlowInput_1 begin ] start
+			 */
+
+			ok_Hash.put("tFixedFlowInput_1", false);
+			start_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
+			currentComponent = "tFixedFlowInput_1";
+
+			globalMap.put("NB_LINE", 1);
+			for (int i_tFixedFlowInput_1 = 0; i_tFixedFlowInput_1 < 1; i_tFixedFlowInput_1++) {
+
+				row4.testOk = ((Boolean) globalMap
+						.get("tFileCompare_1_DIFFERENCE"));
+
+				/**
+				 * [tFixedFlowInput_1 begin ] stop
+				 */
+				/**
+				 * [tFixedFlowInput_1 main ] start
+				 */
+
+				currentComponent = "tFixedFlowInput_1";
+
+				/**
+				 * [tFixedFlowInput_1 main ] stop
+				 */
+				/**
+				 * [tBufferOutput_1 main ] start
+				 */
+
+				currentComponent = "tBufferOutput_1";
+
+				String[] row_tBufferOutput_1 = new String[] { "", };
+				if (row4.testOk != null) {
+
+					row_tBufferOutput_1[0] = String.valueOf(row4.testOk);
+
+				}
+				globalBuffer.add(row_tBufferOutput_1);
+
+				/**
+				 * [tBufferOutput_1 main ] stop
+				 */
+
+				/**
+				 * [tFixedFlowInput_1 end ] start
+				 */
+
+				currentComponent = "tFixedFlowInput_1";
+
+			}
+
+			ok_Hash.put("tFixedFlowInput_1", true);
+			end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
+
+			/**
+			 * [tFixedFlowInput_1 end ] stop
+			 */
+			/**
+			 * [tBufferOutput_1 end ] start
+			 */
+
+			currentComponent = "tBufferOutput_1";
+
+			ok_Hash.put("tBufferOutput_1", true);
+			end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
+
+			/**
+			 * [tBufferOutput_1 end ] stop
+			 */
+
+			/**
+			 * [tJavaFlex_4 end ] start
+			 */
+
+			currentComponent = "tJavaFlex_4";
+
+			// end of the component, outside/closing the loop
+
+			ok_Hash.put("tJavaFlex_4", true);
+			end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
+
+			/**
+			 * [tJavaFlex_4 end ] stop
+			 */
+
+		} catch (Exception e) {
+
+			throw new TalendException(this, e);
+		}
+
+	}
+
+	private class lookupStruct implements
+			routines.system.IPersistableRow<lookupStruct>,
+			Comparable<lookupStruct> {
+
+		Integer ID_LOOKUP1;
+
+		String LABEL_LOOKUP1;
+
+		public void loadData(byte[] data) {
+
 			ByteArrayInputStream bai = null;
 			ObjectInputStream dis = null;
 			byte[] byteArray = null;
@@ -2574,6 +2376,13 @@ public class tMap_03_persistence_03_child {
 				dis = new ObjectInputStream(bai);
 
 				int length = 0;
+
+				length = dis.readByte();
+				if (length == -1) {
+					this.ID_LOOKUP1 = null;
+				} else {
+					this.ID_LOOKUP1 = dis.readInt();
+				}
 
 				length = dis.readInt();
 				if (length == -1) {
@@ -2598,16 +2407,20 @@ public class tMap_03_persistence_03_child {
 			}
 		}
 
-		/**
-		 * Return a byte array which represents Values data.
-		 */
-		public byte[] toValuesData() {
+		public byte[] toData() {
 			ByteArrayOutputStream bao = null;
 			ObjectOutputStream dos = null;
 			byte[] byteArray = null;
 			try {
 				bao = new ByteArrayOutputStream();
 				dos = new ObjectOutputStream(bao);
+
+				if (this.ID_LOOKUP1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.ID_LOOKUP1);
+				}
 
 				if (this.LABEL_LOOKUP1 == null) {
 					dos.writeInt(-1);
@@ -2659,12 +2472,6 @@ public class tMap_03_persistence_03_child {
 
 			int returnValue = -1;
 
-			returnValue = checkNullsAndCompare(this.ID_LOOKUP1,
-					other.ID_LOOKUP1);
-			if (returnValue != 0) {
-				return returnValue;
-			}
-
 			return returnValue;
 		}
 
@@ -2710,16 +2517,17 @@ public class tMap_03_persistence_03_child {
 					.currentTimeMillis());
 			currentComponent = "tAdvancedHashPersistent_lookup";
 
-			org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE matchingModeEnum_lookup = org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE.FIRST_MATCH;
+			org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE matchingModeEnum_lookup = org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE.ALL_ROWS;
 
-			PersistentSortedAdvancedLookup<lookupStruct> tHash_Lookup_lookup = new PersistentSortedAdvancedLookup<lookupStruct>(
+			org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct> tHash_Lookup_lookup = new org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct>(
 					matchingModeEnum_lookup,
 					"/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product2"
-							+ "/Lookup_lookup_") {
-				public lookupStruct createRowInstance() {
-					return new lookupStruct();
-				}
-			};
+							+ "/Lookup_lookup_",
+					new org.talend.designer.components.persistent.IRowCreator() {
+						public lookupStruct createRowInstance() {
+							return new lookupStruct();
+						}
+					});
 
 			tHash_Lookup_lookup.initPut();
 
@@ -2902,10 +2710,10 @@ public class tMap_03_persistence_03_child {
 		}
 
 		try {
-			java.io.InputStream inContext = tMap_03_persistence_03_child.class
+			java.io.InputStream inContext = tMap_03_persistence_04_child.class
 					.getClassLoader()
 					.getResourceAsStream(
-							"java_project_6/tmap_03_persistence_03_child_0_1/contexts/Default.properties");
+							"java_project_8/tmap_03_persistence_04_child_0_1/contexts/Default.properties");
 			if (inContext != null) {
 				defaultProps.load(inContext);
 				inContext.close();
@@ -2913,9 +2721,9 @@ public class tMap_03_persistence_03_child {
 			}
 
 			if (contextStr.compareTo("Default") != 0) {
-				inContext = tMap_03_persistence_03_child.class.getClassLoader()
+				inContext = tMap_03_persistence_04_child.class.getClassLoader()
 						.getResourceAsStream(
-								"java_project_6/tmap_03_persistence_03_child_0_1/contexts/"
+								"java_project_8/tmap_03_persistence_04_child_0_1/contexts/"
 										+ contextStr + ".properties");
 				if (inContext != null) {
 					context.load(inContext);
@@ -2979,10 +2787,10 @@ public class tMap_03_persistence_03_child {
 		long endUsedMemory = 0;
 		long end = 0;
 		long start = System.currentTimeMillis();
-		final tMap_03_persistence_03_child tMap_03_persistence_03_childClass = new tMap_03_persistence_03_child();
+		final tMap_03_persistence_04_child tMap_03_persistence_04_childClass = new tMap_03_persistence_04_child();
 		try {
 			errorCode = null;
-			tMap_03_persistence_03_childClass.tFileInputDelimited_2Process();
+			tMap_03_persistence_04_childClass.tFileInputDelimited_2Process();
 			status = "end";
 		} catch (TalendException e_tFileInputDelimited_2) {
 			status = "failure";
@@ -3000,7 +2808,7 @@ public class tMap_03_persistence_03_child {
 		if (false) {
 			System.out
 					.println((endUsedMemory - startUsedMemory)
-							+ " bytes memory increase when running : tMap_03_persistence_03_child");
+							+ " bytes memory increase when running : tMap_03_persistence_04_child");
 		}
 
 		reset();
@@ -3066,6 +2874,6 @@ public class tMap_03_persistence_03_child {
 	}
 }
 /*******************************************************************************
- * 86996 characters generated by Talend OpenStudio on the 21 avril 2008 13:20:45
+ * 81825 characters generated by Talend OpenStudio on the 22 avril 2008 13:44:11
  * CEST
  ******************************************************************************/

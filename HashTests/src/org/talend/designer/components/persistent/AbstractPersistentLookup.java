@@ -1,8 +1,8 @@
 package org.talend.designer.components.persistent;
 
-import routines.system.IPersistableLookupRow;
+import routines.system.IPersistableComparableLookupRow;
 
-public class AbstractPersistentLookup<B extends Comparable<B> & IPersistableLookupRow<B>> {
+public class AbstractPersistentLookup<B extends IPersistableComparableLookupRow<B>> {
 
     public AbstractPersistentLookup() {
         super();

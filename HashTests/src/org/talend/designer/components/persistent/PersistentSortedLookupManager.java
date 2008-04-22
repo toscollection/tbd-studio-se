@@ -35,6 +35,7 @@ import java.util.NoSuchElementException;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
 
+import routines.system.IPersistableComparableLookupRow;
 import routines.system.IPersistableLookupRow;
 
 /**
@@ -42,7 +43,7 @@ import routines.system.IPersistableLookupRow;
  * 
  * 
  */
-public class PersistentSortedLookupManager<B extends Comparable<B> & IPersistableLookupRow<B>> extends 
+public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends 
 AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
     private static final float MARGIN_MAX = 0.20f;
@@ -126,7 +127,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
                     } else {
                         bufferMarkLimit = (int) _10P;
                     }
-                    System.out.println("Buffer marked at index " + bufferMarkLimit);
+//                    System.out.println("Buffer marked at index " + bufferMarkLimit);
                     bufferIsMarked = true;
                 }
             }
@@ -161,7 +162,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
         byte[] keysData = null;
         byte[] valuesData = null;
 
-        System.out.println("Writing LOOKUP buffer " + fileIndex + "... ");
+//        System.out.println("Writing LOOKUP buffer " + fileIndex + "... ");
 
         for (int i = 0; i < bufferBeanIndex; i++) {
 
@@ -177,7 +178,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
             // System.out.println(curBean);
         }
-        System.out.println("Write ended LOOKUP buffer " + fileIndex);
+//        System.out.println("Write ended LOOKUP buffer " + fileIndex);
         keysDataOutputStream.close();
         valuesDataOutputStream.close();
         fileIndex++;
