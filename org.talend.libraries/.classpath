@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="nlog4j-1.2.25.jar"/>
+	<classpathentry exported="true" kind="lib" path="shared-ldap-0.9.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="shared-ldap-constants-0.9.8.jar"/>
+	<classpathentry exported="true" kind="lib" path="org.apache.directory.studio.jars_1.1.0.v20080331.jar"/>
+	<classpathentry exported="true" kind="lib" path="org.apache.directory.studio.ldifparser_1.1.0.v20080331.jar"/>
+	<classpathentry exported="true" kind="lib" path="antlr-2.7.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="org.apache.directory.studio.ldapbrowser.core_1.1.0.v20080331.jar"/>
 	<classpathentry exported="true" kind="lib" path="salesforce_enterprise.jar"/>
 	<classpathentry exported="true" kind="lib" path="jxl.jar"/>
 	<classpathentry exported="true" kind="lib" path="sapdbc.jar"/>
