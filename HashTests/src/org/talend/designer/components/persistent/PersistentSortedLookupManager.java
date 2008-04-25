@@ -262,7 +262,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
             return false;
         }
 
-        if (matchingMode == MATCHING_MODE.LAST_MATCH) {
+        if (matchingMode == MATCHING_MODE.LAST_MATCH || matchingMode == MATCHING_MODE.UNIQUE_MATCH) {
             for (int lookupIndexLocal = lookupListSize - 1; lookupIndexLocal >= 0; lookupIndexLocal--) {
                 ILookupManagerUnit<B> tempLookup = lookupList.get(lookupIndexLocal);
                 // System.out.println("########################################");

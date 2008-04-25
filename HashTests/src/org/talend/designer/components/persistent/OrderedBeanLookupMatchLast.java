@@ -30,6 +30,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
     private int previousValuesSize;
 
+    private boolean resultIsObsolete = true;
+
     public OrderedBeanLookupMatchLast(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider)
             throws IOException {
         super(keysFilePath, valuesFilePath, fileIndex, rowProvider);
@@ -47,12 +49,13 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
         currentSearchedKey = key;
 
-        if (previousKeyLoaded && previousAskedKey.compareTo(key) == 0) {
+        if (!resultIsObsolete && previousKeyLoaded && previousAskedKey.compareTo(key) == 0) {
             nextWithPreviousLookup = true;
             nextDirty = false;
             hasNext = true;
             noMoreNext = false;
         } else {
+            resultIsObsolete = true;
             hasNext = false;
             nextDirty = true;
             startWithNewKey = true;
@@ -166,6 +169,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                 } while (true);
             }
             if (compareResult == 0) {
+                resultIsObsolete = false;
                 previousCompareResultMatch = true;
                 skipValuesSize += localSkip;
                 hasNext = true;
