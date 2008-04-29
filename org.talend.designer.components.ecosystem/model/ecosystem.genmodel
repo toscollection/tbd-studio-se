@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="// ============================================================================&#xD;&#xA;//&#xD;&#xA;// Copyright (C) 2006-2007 Talend Inc. - www.talend.com&#xD;&#xA;//&#xD;&#xA;// This source code is available under agreement available at&#xD;&#xA;// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt&#xD;&#xA;//&#xD;&#xA;// You should have received a copy of the agreement&#xD;&#xA;// along with this program; if not, write to Talend SA&#xD;&#xA;// 9 rue Pages 92150 Suresnes, France&#xD;&#xA;//&#xD;&#xA;// ============================================================================"
+    modelDirectory="/org.talend.designer.components.ecosystem/src/main/java" modelPluginID="org.talend.designer.components.ecosystem"
+    modelName="Ecosystem" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false">
+  <foreignModel>ecosystem.ecore</foreignModel>
+  <genPackages prefix="Ecosystem" basePackage="org.talend.designer.components.ecosystem"
+      disposableProviderFactory="true" ecorePackage="ecosystem.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ecosystem.ecore#//Language">
+      <genEnumLiterals ecoreEnumLiteral="ecosystem.ecore#//Language/PERL"/>
+      <genEnumLiterals ecoreEnumLiteral="ecosystem.ecore#//Language/JAVA"/>
+    </genEnums>
+    <genClasses ecoreClass="ecosystem.ecore#//ComponentExtension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//ComponentExtension/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//ComponentExtension/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//ComponentExtension/language"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ecosystem.ecore#//ComponentExtension/revisions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ecosystem.ecore#//ComponentExtension/installedRevision"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ecosystem.ecore#//ComponentExtension/latestRevision"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//ComponentExtension/installedLocation"/>
+    </genClasses>
+    <genClasses ecoreClass="ecosystem.ecore#//Revision">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/date"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ecosystem.ecore#//Revision/extension"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
