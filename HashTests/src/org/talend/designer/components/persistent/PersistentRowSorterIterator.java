@@ -36,7 +36,7 @@ import routines.system.IPersistableRow;
  */
 public abstract class PersistentRowSorterIterator<V extends IPersistableRow> implements IPersistentRowManager<V>, Iterator<V> {
 
-    private static final float MARGIN_MAX = 0.20f;
+    private static final float MARGIN_MAX = 0.35f;
 
     int[] bwPositionArray = null;
 
@@ -50,7 +50,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     int countUniqueGet;
 
-    private int bufferSize = 15000000;
+    private int bufferSize = 10000000;
 
     private int bufferBeanIndex = 0;
 
@@ -99,6 +99,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     // ///////////////////////
 
+    @SuppressWarnings("unchecked")
     public void initPut() {
         //System.out.println("bufferSize="+bufferSize +" objects");
         buffer = (V[]) new IPersistableRow[bufferSize];

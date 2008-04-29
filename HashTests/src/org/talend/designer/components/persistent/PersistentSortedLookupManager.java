@@ -46,7 +46,7 @@ import routines.system.IPersistableLookupRow;
 public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends 
 AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
-    private static final float MARGIN_MAX = 0.20f;
+    private static final float MARGIN_MAX = 0.35f;
 
     private String container;
 
@@ -55,7 +55,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
     //
     private List<ILookupManagerUnit<B>> lookupList;
 
-    private int bufferSize = 15000000;
+    private int bufferSize = 10000000;
 
     // private int bufferSize = 100;
     // private int bufferSize = 3;
