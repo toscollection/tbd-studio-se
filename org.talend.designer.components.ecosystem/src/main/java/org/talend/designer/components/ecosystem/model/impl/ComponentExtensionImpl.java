@@ -48,6 +48,7 @@ import org.talend.designer.components.ecosystem.model.Revision;
  *   <li>{@link org.talend.designer.components.ecosystem.model.impl.ComponentExtensionImpl#getInstalledRevision <em>Installed Revision</em>}</li>
  *   <li>{@link org.talend.designer.components.ecosystem.model.impl.ComponentExtensionImpl#getLatestRevision <em>Latest Revision</em>}</li>
  *   <li>{@link org.talend.designer.components.ecosystem.model.impl.ComponentExtensionImpl#getInstalledLocation <em>Installed Location</em>}</li>
+ *   <li>{@link org.talend.designer.components.ecosystem.model.impl.ComponentExtensionImpl#getAuthor <em>Author</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,477 +56,530 @@ import org.talend.designer.components.ecosystem.model.Revision;
  */
 public class ComponentExtensionImpl extends EObjectImpl implements ComponentExtension {
     /**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
     protected static final String NAME_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getName()
+     * @generated
+     * @ordered
+     */
     protected String name = NAME_EDEFAULT;
 
     /**
-	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getDescription()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getDescription()
+     * @generated
+     * @ordered
+     */
     protected static final String DESCRIPTION_EDEFAULT = null;
 
     /**
-	 * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getDescription() <em>Description</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getDescription()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getDescription()
+     * @generated
+     * @ordered
+     */
     protected String description = DESCRIPTION_EDEFAULT;
 
     /**
-	 * The default value of the '{@link #getLanguage() <em>Language</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getLanguage() <em>Language</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getLanguage()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getLanguage()
+     * @generated
+     * @ordered
+     */
     protected static final Language LANGUAGE_EDEFAULT = Language.PERL;
 
     /**
-	 * The cached value of the '{@link #getLanguage() <em>Language</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getLanguage() <em>Language</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getLanguage()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getLanguage()
+     * @generated
+     * @ordered
+     */
     protected Language language = LANGUAGE_EDEFAULT;
 
     /**
-	 * The cached value of the '{@link #getRevisions() <em>Revisions</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getRevisions() <em>Revisions</em>}' containment reference list.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #getRevisions()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getRevisions()
+     * @generated
+     * @ordered
+     */
     protected EList<Revision> revisions;
 
     /**
-	 * The cached value of the '{@link #getInstalledRevision() <em>Installed Revision</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getInstalledRevision() <em>Installed Revision</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getInstalledRevision()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getInstalledRevision()
+     * @generated
+     * @ordered
+     */
 	protected Revision installedRevision;
 
 				/**
-	 * The cached value of the '{@link #getLatestRevision() <em>Latest Revision</em>}' reference.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getLatestRevision() <em>Latest Revision</em>}' reference.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLatestRevision()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getLatestRevision()
+     * @generated
+     * @ordered
+     */
 	protected Revision latestRevision;
 
 				/**
-	 * The default value of the '{@link #getInstalledLocation() <em>Installed Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getInstalledLocation() <em>Installed Location</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getInstalledLocation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getInstalledLocation()
+     * @generated
+     * @ordered
+     */
 	protected static final String INSTALLED_LOCATION_EDEFAULT = null;
 
 				/**
-	 * The cached value of the '{@link #getInstalledLocation() <em>Installed Location</em>}' attribute.
-	 * <!-- begin-user-doc -->
+     * The cached value of the '{@link #getInstalledLocation() <em>Installed Location</em>}' attribute.
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getInstalledLocation()
-	 * @generated
-	 * @ordered
-	 */
+     * @see #getInstalledLocation()
+     * @generated
+     * @ordered
+     */
 	protected String installedLocation = INSTALLED_LOCATION_EDEFAULT;
 
 				/**
-	 * <!-- begin-user-doc -->
+     * The default value of the '{@link #getAuthor() <em>Author</em>}' attribute.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @see #getAuthor()
+     * @generated
+     * @ordered
+     */
+    protected static final String AUTHOR_EDEFAULT = null;
+
+                /**
+     * The cached value of the '{@link #getAuthor() <em>Author</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAuthor()
+     * @generated
+     * @ordered
+     */
+    protected String author = AUTHOR_EDEFAULT;
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     protected ComponentExtensionImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     protected EClass eStaticClass() {
-		return EcosystemPackage.Literals.COMPONENT_EXTENSION;
-	}
+        return EcosystemPackage.Literals.COMPONENT_EXTENSION;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getName() {
-		return name;
-	}
+        return name;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__NAME, oldName, name));
-	}
+        String oldName = name;
+        name = newName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__NAME, oldName, name));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getDescription() {
-		return description;
-	}
+        return description;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setDescription(String newDescription) {
-		String oldDescription = description;
-		description = newDescription;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION, oldDescription, description));
-	}
+        String oldDescription = description;
+        description = newDescription;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION, oldDescription, description));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Language getLanguage() {
-		return language;
-	}
+        return language;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public void setLanguage(Language newLanguage) {
-		Language oldLanguage = language;
-		language = newLanguage == null ? LANGUAGE_EDEFAULT : newLanguage;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE, oldLanguage, language));
-	}
+        Language oldLanguage = language;
+        language = newLanguage == null ? LANGUAGE_EDEFAULT : newLanguage;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE, oldLanguage, language));
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EList<Revision> getRevisions() {
-		if (revisions == null) {
-			revisions = new EObjectContainmentWithInverseEList<Revision>(Revision.class, this, EcosystemPackage.COMPONENT_EXTENSION__REVISIONS, EcosystemPackage.REVISION__EXTENSION);
-		}
-		return revisions;
-	}
+        if (revisions == null) {
+            revisions = new EObjectContainmentWithInverseEList<Revision>(Revision.class, this, EcosystemPackage.COMPONENT_EXTENSION__REVISIONS, EcosystemPackage.REVISION__EXTENSION);
+        }
+        return revisions;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Revision getInstalledRevision() {
-		if (installedRevision != null && installedRevision.eIsProxy()) {
-			InternalEObject oldInstalledRevision = (InternalEObject)installedRevision;
-			installedRevision = (Revision)eResolveProxy(oldInstalledRevision);
-			if (installedRevision != oldInstalledRevision) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION, oldInstalledRevision, installedRevision));
-			}
-		}
-		return installedRevision;
-	}
+        if (installedRevision != null && installedRevision.eIsProxy()) {
+            InternalEObject oldInstalledRevision = (InternalEObject)installedRevision;
+            installedRevision = (Revision)eResolveProxy(oldInstalledRevision);
+            if (installedRevision != oldInstalledRevision) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION, oldInstalledRevision, installedRevision));
+            }
+        }
+        return installedRevision;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Revision basicGetInstalledRevision() {
-		return installedRevision;
-	}
+        return installedRevision;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setInstalledRevision(Revision newInstalledRevision) {
-		Revision oldInstalledRevision = installedRevision;
-		installedRevision = newInstalledRevision;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION, oldInstalledRevision, installedRevision));
-	}
+        Revision oldInstalledRevision = installedRevision;
+        installedRevision = newInstalledRevision;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION, oldInstalledRevision, installedRevision));
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Revision getLatestRevision() {
-		if (latestRevision != null && latestRevision.eIsProxy()) {
-			InternalEObject oldLatestRevision = (InternalEObject)latestRevision;
-			latestRevision = (Revision)eResolveProxy(oldLatestRevision);
-			if (latestRevision != oldLatestRevision) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION, oldLatestRevision, latestRevision));
-			}
-		}
-		return latestRevision;
-	}
+        if (latestRevision != null && latestRevision.eIsProxy()) {
+            InternalEObject oldLatestRevision = (InternalEObject)latestRevision;
+            latestRevision = (Revision)eResolveProxy(oldLatestRevision);
+            if (latestRevision != oldLatestRevision) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION, oldLatestRevision, latestRevision));
+            }
+        }
+        return latestRevision;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public Revision basicGetLatestRevision() {
-		return latestRevision;
-	}
+        return latestRevision;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setLatestRevision(Revision newLatestRevision) {
-		Revision oldLatestRevision = latestRevision;
-		latestRevision = newLatestRevision;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION, oldLatestRevision, latestRevision));
-	}
+        Revision oldLatestRevision = latestRevision;
+        latestRevision = newLatestRevision;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION, oldLatestRevision, latestRevision));
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public String getInstalledLocation() {
-		return installedLocation;
-	}
+        return installedLocation;
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
 	public void setInstalledLocation(String newInstalledLocation) {
-		String oldInstalledLocation = installedLocation;
-		installedLocation = newInstalledLocation;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION, oldInstalledLocation, installedLocation));
-	}
+        String oldInstalledLocation = installedLocation;
+        installedLocation = newInstalledLocation;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION, oldInstalledLocation, installedLocation));
+    }
 
 				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
+    public String getAuthor() {
+        return author;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setAuthor(String newAuthor) {
+        String oldAuthor = author;
+        author = newAuthor;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, EcosystemPackage.COMPONENT_EXTENSION__AUTHOR, oldAuthor, author));
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRevisions()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRevisions()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
-				return ((InternalEList<?>)getRevisions()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+        switch (featureID) {
+            case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
+                return ((InternalEList<?>)getRevisions()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case EcosystemPackage.COMPONENT_EXTENSION__NAME:
-				return getName();
-			case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
-				return getDescription();
-			case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
-				return getLanguage();
-			case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
-				return getRevisions();
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
-				if (resolve) return getInstalledRevision();
-				return basicGetInstalledRevision();
-			case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
-				if (resolve) return getLatestRevision();
-				return basicGetLatestRevision();
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
-				return getInstalledLocation();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+        switch (featureID) {
+            case EcosystemPackage.COMPONENT_EXTENSION__NAME:
+                return getName();
+            case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
+                return getDescription();
+            case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
+                return getLanguage();
+            case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
+                return getRevisions();
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
+                if (resolve) return getInstalledRevision();
+                return basicGetInstalledRevision();
+            case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
+                if (resolve) return getLatestRevision();
+                return basicGetLatestRevision();
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
+                return getInstalledLocation();
+            case EcosystemPackage.COMPONENT_EXTENSION__AUTHOR:
+                return getAuthor();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case EcosystemPackage.COMPONENT_EXTENSION__NAME:
-				setName((String)newValue);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
-				setDescription((String)newValue);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
-				setLanguage((Language)newValue);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
-				getRevisions().clear();
-				getRevisions().addAll((Collection<? extends Revision>)newValue);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
-				setInstalledRevision((Revision)newValue);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
-				setLatestRevision((Revision)newValue);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
-				setInstalledLocation((String)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+        switch (featureID) {
+            case EcosystemPackage.COMPONENT_EXTENSION__NAME:
+                setName((String)newValue);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
+                setDescription((String)newValue);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
+                setLanguage((Language)newValue);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
+                getRevisions().clear();
+                getRevisions().addAll((Collection<? extends Revision>)newValue);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
+                setInstalledRevision((Revision)newValue);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
+                setLatestRevision((Revision)newValue);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
+                setInstalledLocation((String)newValue);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__AUTHOR:
+                setAuthor((String)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public void eUnset(int featureID) {
-		switch (featureID) {
-			case EcosystemPackage.COMPONENT_EXTENSION__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
-				setDescription(DESCRIPTION_EDEFAULT);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
-				setLanguage(LANGUAGE_EDEFAULT);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
-				getRevisions().clear();
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
-				setInstalledRevision((Revision)null);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
-				setLatestRevision((Revision)null);
-				return;
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
-				setInstalledLocation(INSTALLED_LOCATION_EDEFAULT);
-				return;
-		}
-		super.eUnset(featureID);
-	}
+        switch (featureID) {
+            case EcosystemPackage.COMPONENT_EXTENSION__NAME:
+                setName(NAME_EDEFAULT);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
+                setDescription(DESCRIPTION_EDEFAULT);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
+                setLanguage(LANGUAGE_EDEFAULT);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
+                getRevisions().clear();
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
+                setInstalledRevision((Revision)null);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
+                setLatestRevision((Revision)null);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
+                setInstalledLocation(INSTALLED_LOCATION_EDEFAULT);
+                return;
+            case EcosystemPackage.COMPONENT_EXTENSION__AUTHOR:
+                setAuthor(AUTHOR_EDEFAULT);
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case EcosystemPackage.COMPONENT_EXTENSION__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
-				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
-			case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
-				return language != LANGUAGE_EDEFAULT;
-			case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
-				return revisions != null && !revisions.isEmpty();
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
-				return installedRevision != null;
-			case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
-				return latestRevision != null;
-			case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
-				return INSTALLED_LOCATION_EDEFAULT == null ? installedLocation != null : !INSTALLED_LOCATION_EDEFAULT.equals(installedLocation);
-		}
-		return super.eIsSet(featureID);
-	}
+        switch (featureID) {
+            case EcosystemPackage.COMPONENT_EXTENSION__NAME:
+                return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION:
+                return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+            case EcosystemPackage.COMPONENT_EXTENSION__LANGUAGE:
+                return language != LANGUAGE_EDEFAULT;
+            case EcosystemPackage.COMPONENT_EXTENSION__REVISIONS:
+                return revisions != null && !revisions.isEmpty();
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_REVISION:
+                return installedRevision != null;
+            case EcosystemPackage.COMPONENT_EXTENSION__LATEST_REVISION:
+                return latestRevision != null;
+            case EcosystemPackage.COMPONENT_EXTENSION__INSTALLED_LOCATION:
+                return INSTALLED_LOCATION_EDEFAULT == null ? installedLocation != null : !INSTALLED_LOCATION_EDEFAULT.equals(installedLocation);
+            case EcosystemPackage.COMPONENT_EXTENSION__AUTHOR:
+                return AUTHOR_EDEFAULT == null ? author != null : !AUTHOR_EDEFAULT.equals(author);
+        }
+        return super.eIsSet(featureID);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		if (eIsProxy()) return super.toString();
+        if (eIsProxy()) return super.toString();
 
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(", description: ");
-		result.append(description);
-		result.append(", language: ");
-		result.append(language);
-		result.append(", installedLocation: ");
-		result.append(installedLocation);
-		result.append(')');
-		return result.toString();
-	}
+        StringBuffer result = new StringBuffer(super.toString());
+        result.append(" (name: ");
+        result.append(name);
+        result.append(", description: ");
+        result.append(description);
+        result.append(", language: ");
+        result.append(language);
+        result.append(", installedLocation: ");
+        result.append(installedLocation);
+        result.append(", author: ");
+        result.append(author);
+        result.append(')');
+        return result.toString();
+    }
 
 } //ComponentExtensionImpl

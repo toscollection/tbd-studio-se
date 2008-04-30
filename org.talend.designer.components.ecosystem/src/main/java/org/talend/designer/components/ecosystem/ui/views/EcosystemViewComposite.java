@@ -45,6 +45,8 @@ public class EcosystemViewComposite extends Composite {
 
     private static final String COMPONENT_NAME_TITLE = Messages.getString("EcosystemViewComposite.ComponentName.Title"); //$NON-NLS-1$
 
+    private static final String AUTHOR_TITLE = Messages.getString("EcosystemViewComposite.Author.Title"); //$NON-NLS-1$
+
     private static final String RELEASED_DATE_TITLE = Messages.getString("EcosystemViewComposite.ReleasedDate.Title"); //$NON-NLS-1$
 
     private static final String DESCRIPTION_TITLE = Messages.getString("EcosystemViewComposite.Description.Title"); //$NON-NLS-1$
@@ -52,6 +54,8 @@ public class EcosystemViewComposite extends Composite {
     private static final IBeanPropertyAccessors<ComponentExtension, String> DESCRIPTION_ACCESSOR;
 
     private static final IBeanPropertyAccessors<ComponentExtension, String> NAME_ACCESSOR;
+
+    private static final IBeanPropertyAccessors<ComponentExtension, String> AUTHOR_ACCESSOR;
 
     private static final IBeanPropertyAccessors<ComponentExtension, String> STATUS_ACCESSOR;
 
@@ -78,6 +82,15 @@ public class EcosystemViewComposite extends Composite {
             @Override
             public String get(ComponentExtension bean) {
                 return bean.getName();
+            }
+
+        };
+
+        AUTHOR_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+
+            @Override
+            public String get(ComponentExtension bean) {
+                return bean.getAuthor();
             }
 
         };
@@ -152,17 +165,22 @@ public class EcosystemViewComposite extends Composite {
         fTableViewerCreator.setCheckboxInFirstColumn(false);
         fTableViewerCreator.setColumnsResizableByDefault(true);
         fTableViewerCreator.setLayoutMode(LAYOUT_MODE.FILL_HORIZONTAL);
+        fTableViewerCreator.setHorizontalScroll(true);
+        fTableViewerCreator.setVerticalScroll(true);
         fTableViewerCreator.createTable();
 
-        // Status | Component Name | Revision | Released Date | Description
-        TableViewerCreatorColumn<ComponentExtension, String> statusColumn = createTableColumn(STATUS_TITLE, true, false, 3,
+        // Status | Component Name | Author | Revision | Released Date | Description
+        TableViewerCreatorColumn<ComponentExtension, String> statusColumn = createTableColumn(STATUS_TITLE, true, false, 4,
                 STATUS_ACCESSOR);
         statusColumn.setImageProvider(new StatusImageProvider());
 
-        fNameColumn = createTableColumn(COMPONENT_NAME_TITLE, true, false, 3, NAME_ACCESSOR);
-        createTableColumn(REVISION_TITLE, true, false, 3, REVISION_ACCESSOR); // revisionColumn
-        createTableColumn(RELEASED_DATE_TITLE, true, false, 3, DATE_ACCESSOR); // dateColumn
-        createTableColumn(DESCRIPTION_TITLE, true, false, 10, DESCRIPTION_ACCESSOR); // descriptionColumn
+        fNameColumn = createTableColumn(COMPONENT_NAME_TITLE, true, false, 4, NAME_ACCESSOR);
+        createTableColumn(AUTHOR_TITLE, true, false, 4, AUTHOR_ACCESSOR); // authorColumn
+        createTableColumn(REVISION_TITLE, true, false, 2, REVISION_ACCESSOR); // revisionColumn
+        createTableColumn(RELEASED_DATE_TITLE, true, false, 5, DATE_ACCESSOR); // dateColumn
+        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(DESCRIPTION_TITLE, true,
+                false, 18, DESCRIPTION_ACCESSOR); // descriptionColumn
+        descriptionColumn.setMinimumWidth(1300);
     }
 
     /**

@@ -28,38 +28,38 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface EcosystemFactory extends EFactory {
     /**
-	 * The singleton instance of the factory.
-	 * <!-- begin-user-doc -->
+     * The singleton instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     EcosystemFactory eINSTANCE = org.talend.designer.components.ecosystem.model.impl.EcosystemFactoryImpl.init();
 
     /**
-	 * Returns a new object of class '<em>Component Extension</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Component Extension</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Component Extension</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Component Extension</em>'.
+     * @generated
+     */
     ComponentExtension createComponentExtension();
 
     /**
-	 * Returns a new object of class '<em>Revision</em>'.
-	 * <!-- begin-user-doc -->
+     * Returns a new object of class '<em>Revision</em>'.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Revision</em>'.
-	 * @generated
-	 */
+     * @return a new object of class '<em>Revision</em>'.
+     * @generated
+     */
     Revision createRevision();
 
     /**
-	 * Returns the package supported by this factory.
-	 * <!-- begin-user-doc -->
+     * Returns the package supported by this factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @return the package supported by this factory.
-	 * @generated
-	 */
+     * @return the package supported by this factory.
+     * @generated
+     */
     EcosystemPackage getEcosystemPackage();
 
 } //EcosystemFactory

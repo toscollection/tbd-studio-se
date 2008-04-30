@@ -99,7 +99,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
     private void updateUI(final IAction action, final IJobChangeEvent event) {
         // activate action again after job finished
         action.setEnabled(true);
-        if (event.getResult().isOK() && fExtensionDownloaded > 0) {
+        if (fExtensionDownloaded > 0) {
             fView.refresh(); // refresh table
             EcosystemUtils.reloadComponents(); // refresh palette
             fView.saveToFile();
@@ -130,7 +130,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         private List<ComponentExtension> fExtensions;
 
         public DownloadJob(List<ComponentExtension> extensions) {
-            super("Download Component Extensions");
+            super(DOWNLOAD_TASK_NAME);
             fExtensions = extensions;
         }
 

@@ -60,6 +60,7 @@ public class ComponentSearcher {
                 if (extension == null) {
                     extension = EcosystemFactory.eINSTANCE.createComponentExtension();
                     extension.setName(revision.getExtension_name());
+                    extension.setAuthor(revision.getExtension_author());
                     extension.setLanguage(Language.get(getLanguageId(language)));
                     extension.setDescription(revision.getExtension_description());
 
@@ -147,29 +148,30 @@ public class ComponentSearcher {
      * @param query The user input.
      * @param featureIds The field to search, e.g. name or description.
      * @return
+     * @throws Exception
      */
     public static List<ComponentExtension> filterComponentExtensions(List<ComponentExtension> components, String query,
-            int[] featureIds) {
-        query = query.toLowerCase();
-        List<ComponentExtension> matched = new ArrayList<ComponentExtension>();
+            int[] featureIds) throws Exception {
+        ISearchProvider<ComponentExtension> provider = SearchProviderFactory.getInstance().getSearchProvider();
+        provider.init();
 
         for (ComponentExtension component : components) {
-            for (int featureId : featureIds) {
 
-                String text = "";
-                if (featureId == EcosystemPackage.COMPONENT_EXTENSION__NAME) {
-                    text = component.getName().toLowerCase();
-                } else if (featureId == EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION) {
-                    text = component.getDescription().toLowerCase();
-                }
-
-                if (text.indexOf(query) > 0) {
-                    matched.add(component);
-                    break;
+            String[] text = new String[featureIds.length];
+            for (int i = 0; i < featureIds.length; i++) {
+                if (featureIds[i] == EcosystemPackage.COMPONENT_EXTENSION__NAME) {
+                    text[i] = component.getName();
+                } else if (featureIds[i] == EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION) {
+                    text[i] = component.getDescription();
+                } else {
+                    text[i] = "";
                 }
             }
+
+            provider.addRecord(component, component.getName(), text);
         }
-        return matched;
+        return provider.search(query);
+
     }
 
     /**

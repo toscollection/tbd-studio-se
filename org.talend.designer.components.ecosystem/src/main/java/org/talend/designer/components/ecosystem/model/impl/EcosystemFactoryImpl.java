@@ -35,137 +35,137 @@ import org.talend.designer.components.ecosystem.model.*;
  */
 public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFactory {
     /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static EcosystemFactory init() {
-		try {
-			EcosystemFactory theEcosystemFactory = (EcosystemFactory)EPackage.Registry.INSTANCE.getEFactory("model"); 
-			if (theEcosystemFactory != null) {
-				return theEcosystemFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new EcosystemFactoryImpl();
-	}
+        try {
+            EcosystemFactory theEcosystemFactory = (EcosystemFactory)EPackage.Registry.INSTANCE.getEFactory("model"); 
+            if (theEcosystemFactory != null) {
+                return theEcosystemFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new EcosystemFactoryImpl();
+    }
 
     /**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EcosystemFactoryImpl() {
-		super();
-	}
+        super();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case EcosystemPackage.COMPONENT_EXTENSION: return createComponentExtension();
-			case EcosystemPackage.REVISION: return createRevision();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eClass.getClassifierID()) {
+            case EcosystemPackage.COMPONENT_EXTENSION: return createComponentExtension();
+            case EcosystemPackage.REVISION: return createRevision();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			case EcosystemPackage.LANGUAGE:
-				return createLanguageFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case EcosystemPackage.LANGUAGE:
+                return createLanguageFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			case EcosystemPackage.LANGUAGE:
-				return convertLanguageToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        switch (eDataType.getClassifierID()) {
+            case EcosystemPackage.LANGUAGE:
+                return convertLanguageToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public ComponentExtension createComponentExtension() {
-		ComponentExtensionImpl componentExtension = new ComponentExtensionImpl();
-		return componentExtension;
-	}
+        ComponentExtensionImpl componentExtension = new ComponentExtensionImpl();
+        return componentExtension;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Revision createRevision() {
-		RevisionImpl revision = new RevisionImpl();
-		return revision;
-	}
+        RevisionImpl revision = new RevisionImpl();
+        return revision;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public Language createLanguageFromString(EDataType eDataType, String initialValue) {
-		Language result = Language.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
+        Language result = Language.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String convertLanguageToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
+        return instanceValue == null ? null : instanceValue.toString();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public EcosystemPackage getEcosystemPackage() {
-		return (EcosystemPackage)getEPackage();
-	}
+        return (EcosystemPackage)getEPackage();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
     @Deprecated
     public static EcosystemPackage getPackage() {
-		return EcosystemPackage.eINSTANCE;
-	}
+        return EcosystemPackage.eINSTANCE;
+    }
 
 } //EcosystemFactoryImpl

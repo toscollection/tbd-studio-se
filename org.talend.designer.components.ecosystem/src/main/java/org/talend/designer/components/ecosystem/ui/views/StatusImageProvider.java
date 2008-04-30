@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.designer.components.ecosystem.ui.views;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.talend.commons.ui.image.ImageProvider;
 import org.talend.commons.ui.swt.tableviewer.behavior.IColumnImageProvider;
@@ -23,11 +24,14 @@ import org.talend.designer.components.ecosystem.model.ComponentExtension;
  */
 public class StatusImageProvider implements IColumnImageProvider<ComponentExtension> {
 
+    private static final Image NOT_INSTALLED_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
+            "/icons/not_installed.gif").createImage();
+
     public Image getImage(ComponentExtension extension) {
         if (extension.getInstalledLocation() == null) {
-            return ImageProvider.getImage(ECoreImage.MODULE_ERROR_ICON);
+            return NOT_INSTALLED_ICON;
         } else if (!extension.getLatestRevision().getName().equals(extension.getInstalledRevision().getName())) {
-            return ImageProvider.getImage(ECoreImage.MODULE_WARNING_ICON);
+            return NOT_INSTALLED_ICON;
         } else {
             return ImageProvider.getImage(ECoreImage.MODULE_INSTALLED_ICON);
         }

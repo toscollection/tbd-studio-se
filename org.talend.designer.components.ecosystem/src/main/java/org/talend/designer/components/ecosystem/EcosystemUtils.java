@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -41,6 +40,7 @@ import org.talend.core.model.components.IComponentsFactory;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Revision;
+import org.talend.designer.components.ecosystem.ui.views.EcosystemPreferencePage;
 import org.talend.repository.model.ComponentsFactoryProvider;
 
 /**
@@ -49,9 +49,9 @@ import org.talend.repository.model.ComponentsFactoryProvider;
 public class EcosystemUtils {
 
     // see ComponentsPreferencePage
-    public static final String USER_COMPONENTS_FOLDER = "USER_COMPONENTS_FOLDER"; //$NON-NLS-1$
+    // public static final String USER_COMPONENTS_FOLDER = "USER_COMPONENTS_FOLDER"; //$NON-NLS-1$
 
-    public static final String ID_COMPONENT_PREFERENCE_PAGE = "org.talend.designer.components.localprovider.page1";
+    // public static final String ID_COMPONENT_PREFERENCE_PAGE = "org.talend.designer.components.localprovider.page1";
 
     /**
      * This method is used for generating current T.O.S version.
@@ -73,13 +73,13 @@ public class EcosystemUtils {
      * @return
      */
     public static File getUserComponentFolder() {
-        IPreferenceStore store = CorePlugin.getDefault().getComponentsLocalProviderService().getPreferenceStore();
-        String path = store.getString(USER_COMPONENTS_FOLDER);
+        IPreferenceStore store = EcosystemPlugin.getDefault().getPreferenceStore();
+        String path = store.getString(EcosystemPreferencePage.ECOSYSTEM_COMPONENTS_FOLDER);
         return StringUtils.isEmpty(path) ? null : new File(path);
     }
 
     public static void showComponentPreferencePage(Shell shell) {
-        showPreferencePage(shell, ID_COMPONENT_PREFERENCE_PAGE);
+        showPreferencePage(shell, EcosystemPreferencePage.ID);
     }
 
     /**
@@ -113,8 +113,9 @@ public class EcosystemUtils {
      * @throws IOException
      */
     public static void saveInstallComponents(String fileName, List<ComponentExtension> components) throws IOException {
-        IPath folder = EcosystemPlugin.getDefault().getStateLocation();
-        File file = folder.append(fileName).toFile();
+        // IPath folder = EcosystemPlugin.getDefault().getStateLocation();
+        // File file = folder.append(fileName).toFile();
+        File file = new File(getUserComponentFolder(), fileName);
         saveEmfModel(EcosystemPackage.eNS_URI, EcosystemPackage.eINSTANCE, components, file.getAbsolutePath());
     }
 
@@ -127,8 +128,9 @@ public class EcosystemUtils {
      */
     @SuppressWarnings("unchecked")
     public static List<ComponentExtension> loadInstallComponents(String fileName) throws IOException {
-        IPath folder = EcosystemPlugin.getDefault().getStateLocation();
-        File file = folder.append(fileName).toFile();
+        // IPath folder = EcosystemPlugin.getDefault().getStateLocation();
+        // File file = folder.append(fileName).toFile();
+        File file = new File(getUserComponentFolder(), fileName);
         return loadEmfModel(EcosystemPackage.eNS_URI, EcosystemPackage.eINSTANCE, file.getAbsolutePath());
     }
 

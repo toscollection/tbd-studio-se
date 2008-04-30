@@ -33,190 +33,190 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum Language implements Enumerator {
     /**
-	 * The '<em><b>PERL</b></em>' literal object.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>PERL</b></em>' literal object.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #PERL_VALUE
-	 * @generated
-	 * @ordered
-	 */
+     * @see #PERL_VALUE
+     * @generated
+     * @ordered
+     */
     PERL(1, "PERL", "PERL"),
 
     /**
-	 * The '<em><b>JAVA</b></em>' literal object.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>JAVA</b></em>' literal object.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @see #JAVA_VALUE
-	 * @generated
-	 * @ordered
-	 */
+     * @see #JAVA_VALUE
+     * @generated
+     * @ordered
+     */
     JAVA(2, "JAVA", "JAVA");
 
     /**
-	 * The '<em><b>PERL</b></em>' literal value.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>PERL</b></em>' literal value.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of '<em><b>PERL</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @see #PERL
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
+     * @see #PERL
+     * @model
+     * @generated
+     * @ordered
+     */
     public static final int PERL_VALUE = 1;
 
     /**
-	 * The '<em><b>JAVA</b></em>' literal value.
-	 * <!-- begin-user-doc -->
+     * The '<em><b>JAVA</b></em>' literal value.
+     * <!-- begin-user-doc -->
      * <p>
      * If the meaning of '<em><b>JAVA</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-	 * @see #JAVA
-	 * @model
-	 * @generated
-	 * @ordered
-	 */
+     * @see #JAVA
+     * @model
+     * @generated
+     * @ordered
+     */
     public static final int JAVA_VALUE = 2;
 
     /**
-	 * An array of all the '<em><b>Language</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
+     * An array of all the '<em><b>Language</b></em>' enumerators.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private static final Language[] VALUES_ARRAY =
         new Language[] {
-			PERL,
-			JAVA,
-		};
+            PERL,
+            JAVA,
+        };
 
     /**
-	 * A public read-only list of all the '<em><b>Language</b></em>' enumerators.
-	 * <!-- begin-user-doc -->
+     * A public read-only list of all the '<em><b>Language</b></em>' enumerators.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static final List<Language> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
 
     /**
-	 * Returns the '<em><b>Language</b></em>' literal with the specified literal value.
-	 * <!-- begin-user-doc -->
+     * Returns the '<em><b>Language</b></em>' literal with the specified literal value.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static Language get(String literal) {
-		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			Language result = VALUES_ARRAY[i];
-			if (result.toString().equals(literal)) {
-				return result;
-			}
-		}
-		return null;
-	}
+        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+            Language result = VALUES_ARRAY[i];
+            if (result.toString().equals(literal)) {
+                return result;
+            }
+        }
+        return null;
+    }
 
     /**
-	 * Returns the '<em><b>Language</b></em>' literal with the specified name.
-	 * <!-- begin-user-doc -->
+     * Returns the '<em><b>Language</b></em>' literal with the specified name.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static Language getByName(String name) {
-		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			Language result = VALUES_ARRAY[i];
-			if (result.getName().equals(name)) {
-				return result;
-			}
-		}
-		return null;
-	}
+        for (int i = 0; i < VALUES_ARRAY.length; ++i) {
+            Language result = VALUES_ARRAY[i];
+            if (result.getName().equals(name)) {
+                return result;
+            }
+        }
+        return null;
+    }
 
     /**
-	 * Returns the '<em><b>Language</b></em>' literal with the specified integer value.
-	 * <!-- begin-user-doc -->
+     * Returns the '<em><b>Language</b></em>' literal with the specified integer value.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static Language get(int value) {
-		switch (value) {
-			case PERL_VALUE: return PERL;
-			case JAVA_VALUE: return JAVA;
-		}
-		return null;
-	}
+        switch (value) {
+            case PERL_VALUE: return PERL;
+            case JAVA_VALUE: return JAVA;
+        }
+        return null;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private final int value;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private final String name;
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private final String literal;
 
     /**
-	 * Only this class can construct instances.
-	 * <!-- begin-user-doc -->
+     * Only this class can construct instances.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     private Language(int value, String name, String literal) {
-		this.value = value;
-		this.name = name;
-		this.literal = literal;
-	}
+        this.value = value;
+        this.name = name;
+        this.literal = literal;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public int getValue() {
-	  return value;
-	}
+      return value;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getName() {
-	  return name;
-	}
+      return name;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String getLiteral() {
-	  return literal;
-	}
+      return literal;
+    }
 
     /**
-	 * Returns the literal value of the enumerator, which is its string representation.
-	 * <!-- begin-user-doc -->
+     * Returns the literal value of the enumerator, which is its string representation.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     @Override
     public String toString() {
-		return literal;
-	}
+        return literal;
+    }
     
 } //Language

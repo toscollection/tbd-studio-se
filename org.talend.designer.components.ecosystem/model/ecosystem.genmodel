@@ -20,6 +20,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ecosystem.ecore#//ComponentExtension/installedRevision"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ecosystem.ecore#//ComponentExtension/latestRevision"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//ComponentExtension/installedLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//ComponentExtension/author"/>
     </genClasses>
     <genClasses ecoreClass="ecosystem.ecore#//Revision">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/id"/>

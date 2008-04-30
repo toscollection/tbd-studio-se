@@ -150,9 +150,13 @@ public class EcosystemView extends ViewPart {
         for (int i = 0; i < fFilters.length; i++) {
             featureId[i] = FILTER_MAP.get(fFilters[i]);
         }
-        List<ComponentExtension> found = ComponentSearcher.filterComponentExtensions(fAvailableExtensions, fFilterText.getText(),
-                featureId);
-        fEcosystemViewComposite.updateTable(found);
+        List<ComponentExtension> found;
+        try {
+            found = ComponentSearcher.filterComponentExtensions(fAvailableExtensions, fFilterText.getText(), featureId);
+            fEcosystemViewComposite.updateTable(found);
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
     }
 
     /**
@@ -278,7 +282,7 @@ public class EcosystemView extends ViewPart {
      * Update the component status if we have already installed.
      */
     private void checkInstalledExtensions() {
-        if (fInstalledExtensions.size() == 0 || fAvailableExtensions == null) {
+        if (fInstalledExtensions == null || fAvailableExtensions == null) {
             return;
         }
         Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
@@ -287,10 +291,11 @@ public class EcosystemView extends ViewPart {
         }
 
         for (ComponentExtension installed : fInstalledExtensions) {
-            // fAvailableExtensions must contain elements in fInstalledExtensions
             ComponentExtension available = extensionsMap.get(installed.getName());
-            available.setInstalledRevision(installed.getInstalledRevision());
-            available.setInstalledLocation(installed.getInstalledLocation());
+            if (available != null) {
+                available.setInstalledRevision(installed.getInstalledRevision());
+                available.setInstalledLocation(installed.getInstalledLocation());
+            }
         }
     }
 

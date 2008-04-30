@@ -81,7 +81,7 @@ public class ComponentDownloader {
             }
 
             bos.flush();
-            System.out.println(bytesDownloaded);
+            // System.out.println(bytesDownloaded);
             fireDownloadComplete();
         } finally {
             Exception e = null;

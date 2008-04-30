@@ -38,5 +38,23 @@
          </action>
       </viewContribution>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.talend.core.prefs"
+            class="org.talend.designer.components.ecosystem.ui.views.EcosystemPreferencePage"
+            id="org.talend.designer.components.ecosystem.ui.views.ecosystem.page"
+            name="%Ecosystem"/>
+   </extension>
+   
+   <extension
+         point="org.talend.core.components_provider">
+      <ComponentsProvider
+            class="org.talend.designer.components.ecosystem.EcosystemComponentsProvider"
+            folderName="ecosystem"
+            id="org.talend.designer.components.ecosystem.EcosystemComponentsProvider">
+      </ComponentsProvider>
+   </extension>
 
 </plugin>
