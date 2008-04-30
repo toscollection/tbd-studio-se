@@ -106,7 +106,7 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
         return componentFolder;
     }
 
-    private File getExternalComponentsLocation() {
+    protected File getExternalComponentsLocation() {
         IPreferenceStore prefStore = EcosystemPlugin.getDefault().getPreferenceStore();
         String path = prefStore.getString(EcosystemPreferencePage.ECOSYSTEM_COMPONENTS_FOLDER);
         return (path == null || path.length() == 0 ? null : new File(path));
