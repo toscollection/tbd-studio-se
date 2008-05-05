@@ -9,7 +9,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -38,6 +37,7 @@ import org.talend.designer.core.ui.MultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.ProcessEditorInput;
 import org.talend.designer.core.ui.editor.nodes.Node;
 import org.talend.designer.core.ui.views.properties.ComponentSettingsView;
+import org.talend.designer.core.ui.views.properties.MultipleThreadDynamicComposite;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNode.ENodeType;
 import org.talend.repository.model.RepositoryNode.EProperties;
@@ -64,6 +64,7 @@ public class BatchGenJobScreenshotAction extends Action {
     /**
      * 
      */
+
     private static final int TIME_DELAY = 3000;
 
     private IPath destination = new Path("c:/");
@@ -276,17 +277,20 @@ public class BatchGenJobScreenshotAction extends Action {
             Display.getDefault().syncExec(new Runnable() {
 
                 public void run() {
+                    MultipleThreadDynamicComposite.isRefreshing = true;
                     select(editor, node);
                     selectBasicTab();
                 }
             });
 
-            try {
-                Thread.sleep(TIME_DELAY);
-            } catch (Exception e) {
-                ExceptionHandler.process(e);
-            }
-
+            do {
+                try {
+                    Thread.sleep(TIME_DELAY);
+                } catch (Exception e) {
+                    ExceptionHandler.process(e);
+                }
+            } while ( MultipleThreadDynamicComposite.isRefreshing);
+            
             Display.getDefault().syncExec(new Runnable() {
 
                 public void run() {
@@ -301,16 +305,19 @@ public class BatchGenJobScreenshotAction extends Action {
             Display.getDefault().syncExec(new Runnable() {
 
                 public void run() {
+                    MultipleThreadDynamicComposite.isRefreshing = true;
                     select(editor, node);
                     selectadvancedTab();
                 }
             });
 
-            try {
-                Thread.sleep(TIME_DELAY);
-            } catch (Exception e) {
-                ExceptionHandler.process(e);
-            }
+            do {
+                try {
+                    Thread.sleep(TIME_DELAY);
+                } catch (Exception e) {
+                    ExceptionHandler.process(e);
+                }
+            } while ( MultipleThreadDynamicComposite.isRefreshing);
 
             Display.getDefault().syncExec(new Runnable() {
 
