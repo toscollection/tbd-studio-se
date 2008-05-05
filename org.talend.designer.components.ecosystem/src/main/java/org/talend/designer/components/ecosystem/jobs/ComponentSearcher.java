@@ -19,8 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.language.ECodeLanguage;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
@@ -38,6 +39,8 @@ public class ComponentSearcher {
     private static final String RELEASE_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private static DateFormat formatter = new SimpleDateFormat(RELEASE_DATE_FORMAT);
+
+    private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)");
 
     /**
      * Find available components.
@@ -108,20 +111,9 @@ public class ComponentSearcher {
      * @return
      */
     private static String normalizeVersion(String version) {
-        String[] nums = version.split("\\.");
-        List<String> parts = new ArrayList<String>(nums.length);
-        for (String num : nums) {
-            if (StringUtils.isNumeric(num)) {
-                parts.add(num);
-            } else {
-                parts.add("0");
-            }
-            if (parts.size() >= 3) {
-                break;
-            }
-        }
-        return StringUtils.join(parts.iterator(), '.');
-
+        Matcher matcher = VERSION_PATTERN.matcher(version);
+        matcher.find();
+        return matcher.group();
     }
 
     /**
@@ -189,10 +181,6 @@ public class ComponentSearcher {
         }
         return installed;
 
-    }
-
-    public static void main(String[] args) {
-        System.out.println(normalizeVersion("2.3.1rc"));
     }
 
 }

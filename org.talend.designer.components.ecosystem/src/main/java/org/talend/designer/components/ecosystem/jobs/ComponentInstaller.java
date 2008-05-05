@@ -13,19 +13,17 @@
 package org.talend.designer.components.ecosystem.jobs;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import org.apache.commons.io.FileUtils;
+import org.talend.commons.utils.io.FilesUtils;
 
 /**
  * Install component to tos.
  */
 public class ComponentInstaller {
-
-    private static final int BUFFER_SIZE = 8192;
 
     /**
      * Unzip the component file to user folder.
@@ -39,7 +37,6 @@ public class ComponentInstaller {
     public static File unzip(String zipFile, String targetFolder) throws Exception {
 
         ZipFile zip = new ZipFile(zipFile);
-        byte[] buf = new byte[BUFFER_SIZE];
 
         // folder that contains all the unzipped files
         File rootFolder = getRootFolder(zip, targetFolder);
@@ -47,47 +44,19 @@ public class ComponentInstaller {
         if (rootFolder == null) {
             // the zip does not have any directory, fix it
             String fileName = zip.getName().substring(zip.getName().lastIndexOf(File.separatorChar) + 1);
-            fileName = fileName.substring(0, fileName.indexOf('.')); // remove extension
+            fileName = fileName.substring(0, fileName.lastIndexOf('.')); // remove extension
             rootFolder = new File(targetFolder, fileName);
             targetFolder = targetFolder + File.separatorChar + fileName;
         }
 
         if (rootFolder.exists()) {
             // we have installed older revision, delete it
-            rootFolder.delete();
+            FileUtils.deleteDirectory(rootFolder);
         }
         rootFolder.mkdir();
+        // move some common use codes for unzipping file to FilesUtils
+        FilesUtils.unzip(zipFile, targetFolder);
 
-        Enumeration<ZipEntry> enumeration = (Enumeration<ZipEntry>) zip.entries();
-
-        while (enumeration.hasMoreElements()) {
-            ZipEntry entry = enumeration.nextElement();
-
-            File file = new File(targetFolder, entry.getName());
-            String filePath = file.getAbsolutePath();
-
-            if (entry.isDirectory()) {
-                if (!file.exists()) {
-                    file.mkdir();
-                }
-            } else {
-
-                InputStream zin = zip.getInputStream(entry);
-                OutputStream fout = new FileOutputStream(filePath);
-
-                while (true) {
-                    int bytesRead = zin.read(buf);
-                    if (bytesRead == -1) { // end of file
-                        break;
-                    }
-                    fout.write(buf, 0, bytesRead);
-
-                }
-                fout.flush();
-                fout.close();
-            }
-        }
-        zip.close();
         return rootFolder;
     }
 
@@ -115,14 +84,6 @@ public class ComponentInstaller {
             }
         }
         return rootFolder;
-    }
-
-    public static void main(String[] args) {
-        try {
-            unzip("d:/tFileOutputPDF.zip", "d:/temp");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }

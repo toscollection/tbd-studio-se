@@ -151,20 +151,23 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
         private void downloadExtension(ComponentExtension extension, IProgressMonitor monitor) {
 
-            if (extension.getInstalledLocation() != null) {
-                // already install the latest revision, ignore
-                if (extension.getInstalledRevision().getName().equals(extension.getLatestRevision().getName())) {
-                    monitor.done();
-                    return;
-                }
-            }
-
             // get the latest revision url
             String componentUrl = extension.getLatestRevision().getUrl();
             String targetFolder = EcosystemUtils.getUserComponentFolder().getAbsolutePath();
             try {
                 String fileName = componentUrl.substring(componentUrl.lastIndexOf('/'));
                 File localZipFile = new File(targetFolder + fileName);
+
+                if (extension.getInstalledLocation() != null && extension.getInstalledRevision() != null) {
+                    // if already install the latest revision, ignore
+                    if (extension.getInstalledRevision().getName().equals(extension.getLatestRevision().getName())) {
+                        if (localZipFile.exists() && checkIfInstalled(extension.getInstalledLocation())) {
+                            monitor.done();
+                            return;
+                        }
+                    }
+                }
+
                 URL url = new URL(componentUrl);
 
                 monitor.setTaskName(DOWNLOAD_TASK_NAME + url.toString());
@@ -182,11 +185,29 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                     monitor.done();
                     extensionDownloadCompleted(extension);
                 }
-                // delete the component zip file
-                localZipFile.delete();
+                // the component zip file
+                // localZipFile.delete();
             } catch (Exception e) {
                 ExceptionHandler.process(e);
             }
+        }
+
+        /**
+         * Check if the component folder really exist, as the user may delete the folder from filesystem.
+         * 
+         * @param installedLocation
+         * @return
+         */
+        private boolean checkIfInstalled(String installedLocation) {
+            try {
+                File dir = new File(installedLocation);
+                if (dir.exists()) {
+                    return true;
+                }
+            } catch (Throwable e) {
+                // do nothing;
+            }
+            return false;
         }
 
         public void downloadComplete() {

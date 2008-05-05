@@ -75,9 +75,11 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
              * Some components have: <componentName>/<files> . some other have: <folder>/<componentName>/<files> .
              */
             File componentFolder = searchComponentFolder(folder);
-            // System.out.println(componentFolder.getName());
-            File target = new File(installFolder, componentFolder.getName());
-            FileUtils.copyDirectory(componentFolder, target);
+            // if we cannot find the component folder, just ignore it
+            if (componentFolder != null) {
+                File target = new File(installFolder, componentFolder.getName());
+                FileUtils.copyDirectory(componentFolder, target);
+            }
         }
     }
 
@@ -89,23 +91,27 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
      */
     private File searchComponentFolder(File folder) {
         File componentFolder = null;
-        for (File file : folder.listFiles()) {
-            if (file.isDirectory()) {
-                componentFolder = searchComponentFolder(file);
-                if (componentFolder != null) {
-                    break;
-                }
-            } else {
-                // assumes that if the folder contains properties file, it is the root folder of component
-                if (file.getName().indexOf(".properties") > -1) {
-                    componentFolder = folder;
-                    break;
+        File[] files = folder.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    componentFolder = searchComponentFolder(file);
+                    if (componentFolder != null) {
+                        break;
+                    }
+                } else {
+                    // assumes that if the folder contains properties file, it is the root folder of component
+                    if (file.getName().endsWith(".properties")) {
+                        componentFolder = folder;
+                        break;
+                    }
                 }
             }
         }
         return componentFolder;
     }
 
+    @Override
     protected File getExternalComponentsLocation() {
         IPreferenceStore prefStore = EcosystemPlugin.getDefault().getPreferenceStore();
         String path = prefStore.getString(EcosystemPreferencePage.ECOSYSTEM_COMPONENTS_FOLDER);

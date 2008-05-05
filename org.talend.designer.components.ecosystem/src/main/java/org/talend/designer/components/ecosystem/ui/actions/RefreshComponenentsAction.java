@@ -107,10 +107,15 @@ public class RefreshComponenentsAction implements IViewActionDelegate {
 
             monitor.beginTask(EcosystemView.FIND_EXTENSIONS_MSG, IProgressMonitor.UNKNOWN);
 
-            fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(EcosystemUtils.getCurrentTosVersion(),
-                    EcosystemUtils.getCurrentLanguage());
-
-            monitor.done();
+            try {
+                fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(EcosystemUtils.getCurrentTosVersion(),
+                        EcosystemUtils.getCurrentLanguage());
+            } catch (Throwable e) {
+                ExceptionHandler.process(e);
+                return Status.CANCEL_STATUS;
+            } finally {
+                monitor.done();
+            }
             return Status.OK_STATUS;
         }
 
