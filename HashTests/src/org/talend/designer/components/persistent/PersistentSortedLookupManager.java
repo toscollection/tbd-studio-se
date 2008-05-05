@@ -43,8 +43,8 @@ import routines.system.IPersistableLookupRow;
  * 
  * 
  */
-public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends 
-AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
+public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends AbstractPersistentLookup<B>
+        implements IPersistentLookupManager<B> {
 
     private static final float MARGIN_MAX = 0.35f;
 
@@ -53,9 +53,11 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
     private MATCHING_MODE matchingMode;
 
     //
-    private List<ILookupManagerUnit<B>> lookupList;
+    private ILookupManagerUnit<B>[] lookupList;
 
     private int bufferSize = 10000000;
+//    private int bufferSize = 100;
+//    private int bufferSize = 20;
 
     // private int bufferSize = 100;
     // private int bufferSize = 3;
@@ -104,6 +106,12 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
         this.lookupKey = rowCreator.createRowInstance();
     }
 
+    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator, int bufferSize) {
+        this(matchingMode, container, rowCreator);
+        this.bufferSize = bufferSize;
+    }
+    
+    
     public void initPut() throws IOException {
         buffer = new IPersistableLookupRow[bufferSize];
         bufferBeanIndex = 0;
@@ -127,7 +135,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
                     } else {
                         bufferMarkLimit = (int) _10P;
                     }
-//                    System.out.println("Buffer marked at index " + bufferMarkLimit);
+                    System.out.println("Buffer marked at index (1-Lookup) " + bufferMarkLimit);
                     bufferIsMarked = true;
                 }
             }
@@ -135,6 +143,12 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
         if (bufferBeanIndex == bufferSize || bufferIsMarked && bufferBeanIndex == bufferMarkLimit) {
             writeBuffer();
+            if (!bufferIsMarked) {
+                bufferMarkLimit = bufferBeanIndex;
+//                System.out.println("Buffer marked at index (2-Lookup) " + bufferMarkLimit);
+                bufferIsMarked = true;
+            }
+            bufferBeanIndex = 0;
         }
         buffer[bufferBeanIndex++] = bean;
     }
@@ -158,31 +172,25 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
         File keysDataFile = new File(buildKeysFilePath(fileIndex));
         File valuesDataFile = new File(buildValuesFilePath(fileIndex));
         DataOutputStream keysDataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(keysDataFile)));
-        BufferedOutputStream valuesDataOutputStream = new BufferedOutputStream(new FileOutputStream(valuesDataFile));
-        byte[] keysData = null;
-        byte[] valuesData = null;
+        DataOutputStream valuesDataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(
+                valuesDataFile)));
 
-//        System.out.println("Writing LOOKUP buffer " + fileIndex + "... ");
+        // System.out.println("Writing LOOKUP buffer " + fileIndex + "... ");
 
         for (int i = 0; i < bufferBeanIndex; i++) {
 
             IPersistableLookupRow<B> curBean = buffer[i];
-            valuesData = curBean.toValuesData();
-            keysData = curBean.toKeysData();
 
-            keysDataOutputStream.writeInt(keysData.length);
-            keysDataOutputStream.write(keysData);
-            keysDataOutputStream.writeInt(valuesData.length);
-
-            valuesDataOutputStream.write(valuesData);
+            int writtenValuesDataSize = curBean.toValuesData(valuesDataOutputStream);
+            curBean.toKeysData(keysDataOutputStream);
+            keysDataOutputStream.writeInt(writtenValuesDataSize);
 
             // System.out.println(curBean);
         }
-//        System.out.println("Write ended LOOKUP buffer " + fileIndex);
+        // System.out.println("Write ended LOOKUP buffer " + fileIndex);
         keysDataOutputStream.close();
         valuesDataOutputStream.close();
         fileIndex++;
-        bufferBeanIndex = 0;
     }
 
     private String buildValuesFilePath(int i) {
@@ -194,13 +202,13 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
     }
 
     public void initGet() throws IOException {
-        lookupList = new ArrayList<ILookupManagerUnit<B>>();
+        lookupList = (ILookupManagerUnit<B>[]) new ILookupManagerUnit[fileIndex];
         for (int i = 0; i < fileIndex; i++) {
             RowProvider<B> rowProvider = new RowProvider<B>(rowCreator);
-            lookupList.add(getOrderedBeanLoohupInstance(buildKeysFilePath(i), buildValuesFilePath(i), i, rowProvider,
-                    this.matchingMode));
+            lookupList[i] = getOrderedBeanLoohupInstance(buildKeysFilePath(i), buildValuesFilePath(i), i, rowProvider,
+                    this.matchingMode);
         }
-        lookupListSize = fileIndex;
+        lookupListSize = lookupList.length;
     }
 
     private ILookupManagerUnit<B> getOrderedBeanLoohupInstance(String keysFilePath, String valuesFilePath, int i,
@@ -219,9 +227,9 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
             return new OrderedBeanLookupMatchAll<B>(keysFilePath, valuesFilePath, i, rowProvider);
 
         case ALL_ROWS:
-            
+
             return new OrderedBeanLookupAll<B>(valuesFilePath);
-            
+
         default:
             throw new IllegalArgumentException();
         }
@@ -233,7 +241,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
         if (matchingMode == MATCHING_MODE.ALL_MATCHES) {
             lookupIndex = 0;
             for (int lookupIndexLocal = 0; lookupIndexLocal < lookupListSize; lookupIndexLocal++) {
-                ILookupManagerUnit<B> tempLookup = lookupList.get(lookupIndexLocal);
+                ILookupManagerUnit<B> tempLookup = lookupList[lookupIndexLocal];
                 tempLookup.lookup(key);
             }
         } else {
@@ -264,7 +272,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
         if (matchingMode == MATCHING_MODE.LAST_MATCH || matchingMode == MATCHING_MODE.UNIQUE_MATCH) {
             for (int lookupIndexLocal = lookupListSize - 1; lookupIndexLocal >= 0; lookupIndexLocal--) {
-                ILookupManagerUnit<B> tempLookup = lookupList.get(lookupIndexLocal);
+                ILookupManagerUnit<B> tempLookup = lookupList[lookupIndexLocal];
                 // System.out.println("########################################");
                 // System.out.println(lookupKey);
                 // System.out.println("lookupIndexLocal=" + lookupIndexLocal);
@@ -283,7 +291,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
         } else if (matchingMode == MATCHING_MODE.ALL_MATCHES) {
             for (; lookupIndex < lookupListSize; lookupIndex++) {
-                ILookupManagerUnit<B> tempLookup = lookupList.get(lookupIndex);
+                ILookupManagerUnit<B> tempLookup = lookupList[lookupIndex];
                 if (tempLookup.hasNext()) {
                     currLookup = tempLookup;
                     waitingNext = true;
@@ -294,7 +302,7 @@ AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
         } else if (matchingMode == MATCHING_MODE.FIRST_MATCH) {
             for (int lookupIndexLocal = 0; lookupIndexLocal < lookupListSize; lookupIndexLocal++) {
-                ILookupManagerUnit<B> tempLookup = lookupList.get(lookupIndexLocal);
+                ILookupManagerUnit<B> tempLookup = lookupList[lookupIndexLocal];
                 tempLookup.lookup(lookupKey);
                 if (tempLookup.hasNext()) {
                     currLookup = tempLookup;

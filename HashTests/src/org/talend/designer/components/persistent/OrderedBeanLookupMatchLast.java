@@ -48,6 +48,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
     public void lookup(B key) throws IOException {
 
         currentSearchedKey = key;
+        
+//        System.out.println("currentSearchedKey=" + currentSearchedKey);
 
         if (!resultIsObsolete && previousKeyLoaded && previousAskedKey.compareTo(key) == 0) {
             nextWithPreviousLookup = true;
@@ -81,9 +83,9 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
         if (nextDirty) {
             int compareResult = -1;
 
-            int localSkip = 0;
+            long localSkip = 0;
 
-            boolean endOfFile = cursorPosition >= length;
+            boolean endOfFile = isEndOfKeysFile();
 
             boolean previousCompareHasMatched = false;
 
@@ -111,11 +113,11 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                 do {
 
                     loadDataKeys(lookupInstance);
-                    //System.out.println("Loaded keys:" + lookupInstance);
+//                    System.out.println("Loaded keys:" + lookupInstance);
 
                     compareResult = lookupInstance.compareTo(currentSearchedKey);
 
-                    endOfFile = cursorPosition >= length;
+                    endOfFile = isEndOfKeysFile();
                     if (compareResult >= 0 || endOfFile) {
 
                         if (!searchingNextNotMatchAfterMatchFound && compareResult == 0 && !endOfFile) {

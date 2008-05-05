@@ -114,7 +114,7 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
 
             if (compareResult < 0 || !atLeastOneLoadkeys) {
 
-                if (cursorPosition >= length) {
+                if (isEndOfKeysFile()) {
                     noMoreNext = true;
                     return false;
                 }
@@ -127,7 +127,7 @@ public class OrderedBeanLookupMatchAll<B extends Comparable<B> & IPersistableLoo
                         // remainingSkip = currentValuesSize;
                         // localSkip += currentValuesSize;
                     }
-                    if (compareResult >= 0 || cursorPosition >= length) {
+                    if (compareResult >= 0 || isEndOfKeysFile()) {
                         if (compareResult == 0) {
                             if (!startWithNewKey) {
                                 // localSkip -= currentValuesSize;

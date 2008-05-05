@@ -339,12 +339,12 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         // int bufferSize = 10000000;
         // int nbItems = 10000000;
         // int bufferSize = 1000000;
-        // int nbItems = 1000000;
-        // int bufferSize = 100000;
+         int nbItems = 1000000;
+         int bufferSize = 100000;
         // int nbItems = 20;
         // int bufferSize = 2;
-        int nbItems = 100;
-        int bufferSize = 20;
+//        int nbItems = 100;
+//        int bufferSize = 20;
 
         Random rand = new Random(System.currentTimeMillis());
 

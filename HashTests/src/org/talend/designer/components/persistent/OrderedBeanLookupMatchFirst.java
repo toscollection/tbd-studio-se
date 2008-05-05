@@ -79,7 +79,7 @@ public class OrderedBeanLookupMatchFirst<B extends Comparable<B> & IPersistableL
 
             int localSkip = 0;
 
-            boolean endOfFile = cursorPosition >= length;
+            boolean endOfFile = isEndOfKeysFile();
 
              if (atLeastOneLoadkeys) {
                 compareResult = lookupInstance.compareTo(currentSearchedKey);
@@ -99,7 +99,7 @@ public class OrderedBeanLookupMatchFirst<B extends Comparable<B> & IPersistableL
 
                     compareResult = lookupInstance.compareTo(currentSearchedKey);
 
-                    endOfFile = cursorPosition >= length;
+                    endOfFile = isEndOfKeysFile();
                     if (compareResult >= 0 || endOfFile) {
 
                         if (compareResult == 0) {

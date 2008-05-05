@@ -49,10 +49,7 @@ public class PersistentLookupManager <B extends IPersistableRow<B>> implements I
 
 
     public void put(B bean) throws IOException {
-        byte[] data = bean.toData();
-        dataOut.writeInt(data.length);
-        dataOut.write(data);
-        
+        bean.writeData(dataOut);
     }
     
     public void endPut() throws IOException {
@@ -90,11 +87,7 @@ public class PersistentLookupManager <B extends IPersistableRow<B>> implements I
     }
     
     public B next() throws IOException {
-        
-        int length = this.dataIn.readInt();
-        byte[] data = new byte[length];
-        this.dataIn.read(data);
-        dataInstance.loadData(data);
+        dataInstance.readData(this.dataIn);
         return dataInstance;
     }
     
