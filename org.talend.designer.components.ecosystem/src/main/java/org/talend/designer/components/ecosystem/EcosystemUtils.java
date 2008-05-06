@@ -14,27 +14,17 @@ package org.talend.designer.components.ecosystem;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.PreferencesUtil;
+import org.talend.commons.emf.EmfHelper;
 import org.talend.core.CorePlugin;
-import org.talend.core.context.Context;
-import org.talend.core.context.RepositoryContext;
 import org.talend.core.language.ECodeLanguage;
+import org.talend.core.language.LanguageManager;
 import org.talend.core.model.components.ComponentUtilities;
 import org.talend.core.model.components.IComponentsFactory;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
@@ -48,11 +38,6 @@ import org.talend.repository.model.ComponentsFactoryProvider;
  */
 public class EcosystemUtils {
 
-    // see ComponentsPreferencePage
-    // public static final String USER_COMPONENTS_FOLDER = "USER_COMPONENTS_FOLDER"; //$NON-NLS-1$
-
-    // public static final String ID_COMPONENT_PREFERENCE_PAGE = "org.talend.designer.components.localprovider.page1";
-
     /**
      * This method is used for generating current T.O.S version.
      * 
@@ -63,8 +48,7 @@ public class EcosystemUtils {
     }
 
     public static ECodeLanguage getCurrentLanguage() {
-        return ((RepositoryContext) CorePlugin.getContext().getProperty(Context.REPOSITORY_CONTEXT_KEY)).getProject()
-                .getLanguage();
+        return LanguageManager.getCurrentLanguage();
     }
 
     /**
@@ -116,7 +100,7 @@ public class EcosystemUtils {
         // IPath folder = EcosystemPlugin.getDefault().getStateLocation();
         // File file = folder.append(fileName).toFile();
         File file = new File(getUserComponentFolder(), fileName);
-        saveEmfModel(EcosystemPackage.eNS_URI, EcosystemPackage.eINSTANCE, components, file.getAbsolutePath());
+        EmfHelper.saveEmfModel(EcosystemPackage.eINSTANCE, components, file.getAbsolutePath());
     }
 
     /**
@@ -131,53 +115,7 @@ public class EcosystemUtils {
         // IPath folder = EcosystemPlugin.getDefault().getStateLocation();
         // File file = folder.append(fileName).toFile();
         File file = new File(getUserComponentFolder(), fileName);
-        return loadEmfModel(EcosystemPackage.eNS_URI, EcosystemPackage.eINSTANCE, file.getAbsolutePath());
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> List<T> loadEmfModel(String nsURI, EPackage pkg, String file) throws IOException {
-        ResourceSet resourceSet = new ResourceSetImpl();
-
-        Resource.Factory.Registry registry = resourceSet.getResourceFactoryRegistry();
-        registry.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-        registry.getExtensionToFactoryMap().put("xml", new XMLResourceFactoryImpl());
-        registry.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-
-        EPackage.Registry reg = resourceSet.getPackageRegistry();
-        reg.put(nsURI, pkg);
-
-        List<T> list = new ArrayList<T>();
-
-        URI uri = URI.createFileURI(file);
-        Resource resource = resourceSet.getResource(uri, true);
-        resource.load(null);
-
-        for (EObject obj : resource.getContents()) {
-            list.add((T) obj);
-        }
-        return list;
-    }
-
-    public static void saveEmfModel(String nsURI, EPackage pkg, List<? extends EObject> models, String file) throws IOException {
-        ResourceSet resourceSet = new ResourceSetImpl();
-
-        Resource.Factory.Registry registry = resourceSet.getResourceFactoryRegistry();
-        registry.getExtensionToFactoryMap().put("ecore", new EcoreResourceFactoryImpl());
-        registry.getExtensionToFactoryMap().put("xml", new XMLResourceFactoryImpl());
-        registry.getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
-
-        EPackage.Registry reg = resourceSet.getPackageRegistry();
-        reg.put(nsURI, pkg);
-
-        URI uri = URI.createFileURI(file);
-
-        Resource resource = resourceSet.createResource(uri);
-
-        for (EObject model : models) {
-            resource.getContents().add(model);
-        }
-
-        resource.save(null);
+        return EmfHelper.loadEmfModel(EcosystemPackage.eINSTANCE, file.getAbsolutePath());
     }
 
     /**
@@ -214,11 +152,6 @@ public class EcosystemUtils {
         }
         // the two revision has different length, the longer one is newer
         return rev1.length > rev2.length;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("1.2.3".split("\\.")[0]);
-
     }
 
 }
