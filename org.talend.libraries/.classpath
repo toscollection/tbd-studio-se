@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="jaxen-1.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="nlog4j-1.2.25.jar"/>
 	<classpathentry exported="true" kind="lib" path="shared-ldap-0.9.8.jar"/>
 	<classpathentry exported="true" kind="lib" path="shared-ldap-constants-0.9.8.jar"/>
