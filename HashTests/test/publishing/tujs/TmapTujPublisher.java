@@ -27,6 +27,9 @@ public class TmapTujPublisher {
      */
     public static void main(String[] args) throws MalformedPatternException, IOException {
 
+        
+        boolean copyData = true;
+        
         String sourceFilesDir = "/home/amaumont/data/dev/projets/Talend/TUJV/files/tMap";
         String sourceJobsDir = "/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product3/JAVA_PROJECT_8/process/components/tMap";
 
@@ -34,7 +37,7 @@ public class TmapTujPublisher {
 
         String staticPrefix = "tMap_";
 
-        String[] firstIndices = { "03", "04", "05", "06", "07", "08" };
+        String[] firstIndices = { "03", "04", "05", "06", "07", "08", "09" };
 
         File sourceJobsDirFile = new File(sourceJobsDir);
 
@@ -79,6 +82,38 @@ public class TmapTujPublisher {
 
                                 // String sourceJobItem = sourceJobsDir + "/" + file.getName() +
 
+                                if(copyData) {
+                                    
+                                    File sourceFilesDirFile = new File(sourceFilesDir + "/" + baseName + "/files/in/");
+                                    String targetDirFiles = targetDir + "/files/in/";
+
+                                    File[] listDataFiles = sourceFilesDirFile.listFiles();
+                                    for (File dataFile : listDataFiles) {
+                                        String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/" + dataFile.getName();
+                                        String targetFilePath = targetDirFiles + dataFile.getName();
+                                        //copyFile(sourceFilePath, targetFilePath);
+                                        
+                                    }
+                                    
+                                    
+                                    sourceFilesDirFile = new File(sourceFilesDir + "/ref");
+                                    targetDirFiles = targetDir + "/files/ref/";
+                                    
+                                    listDataFiles = sourceFilesDirFile.listFiles();
+                                    for (File dataFile : listDataFiles) {
+                                        String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/" + dataFile.getName();
+                                        String targetFilePath = targetDirFiles + dataFile.getName();
+                                        copyFile(sourceFilePath, targetFilePath);
+                                        
+                                    }
+                                    
+                                    
+                                    
+                                    
+                                }
+                                
+                                
+                                
                             } else {
 
                                 System.out.println(itemName + " can't be matched");
