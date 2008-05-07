@@ -1,5 +1,6 @@
 package org.talend.internal.utilities.actions;
 
+import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorReference;
@@ -65,9 +67,11 @@ public class BatchGenJobScreenshotAction extends Action {
      * 
      */
 
-    private static final int TIME_DELAY = 3000;
+    private static final int TIME_DELAY = 400;
 
     private IPath destination = new Path("c:/");
+
+    private Point mouseLocationBackup;
 
     /**
      * The constructor.
@@ -101,6 +105,8 @@ public class BatchGenJobScreenshotAction extends Action {
         if (!askForDestination()) {
             return;
         }
+        trace("Move the mouse outside Component Setting View");
+        moveMouse();
 
         trace("close all editors");
         closeAllEditor();
@@ -119,6 +125,7 @@ public class BatchGenJobScreenshotAction extends Action {
                 Display.getDefault().syncExec(new Runnable() {
 
                     public void run() {
+                        restoreMousePosition();
                         String msg = "Operation is successful, all the screenshots are stored in the directory <a>"
                                 + destination.toPortableString() + "</a>.";
                         ResultrDialog d = new ResultrDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), msg);
@@ -128,6 +135,29 @@ public class BatchGenJobScreenshotAction extends Action {
             }
         };
         t.start();
+    }
+
+    /**
+     * DOC bqian Comment method "moveMouse".
+     */
+    private void moveMouse() {
+        try {
+            mouseLocationBackup = Display.getCurrent().getCursorLocation();
+            ComponentSettingsView view = (ComponentSettingsView) getActivePage().showView(ComponentSettingsView.ID);
+            Point p = view.getParent().toDisplay(view.getParent().getLocation());
+            Robot r = new Robot();
+            r.mouseMove(p.x - 50, p.y - 50);
+        } catch (Exception e) {
+        }
+
+    }
+
+    private void restoreMousePosition() {
+        try {
+            Robot r = new Robot();
+            r.mouseMove(mouseLocationBackup.x, mouseLocationBackup.y);
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -245,7 +275,7 @@ public class BatchGenJobScreenshotAction extends Action {
 
         try {
 
-            Thread.sleep(TIME_DELAY * 2);
+            Thread.sleep(TIME_DELAY * 20);
 
         } catch (Exception e) {
             ExceptionHandler.process(e);
@@ -289,8 +319,8 @@ public class BatchGenJobScreenshotAction extends Action {
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
                 }
-            } while ( MultipleThreadDynamicComposite.isRefreshing);
-            
+            } while (MultipleThreadDynamicComposite.isRefreshing);
+
             Display.getDefault().syncExec(new Runnable() {
 
                 public void run() {
@@ -317,7 +347,7 @@ public class BatchGenJobScreenshotAction extends Action {
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
                 }
-            } while ( MultipleThreadDynamicComposite.isRefreshing);
+            } while (MultipleThreadDynamicComposite.isRefreshing);
 
             Display.getDefault().syncExec(new Runnable() {
 

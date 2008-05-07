@@ -76,6 +76,7 @@ public class ResultrDialog extends Dialog {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 Program.launch(e.text);
+                shell.close();
             }
         });
 
@@ -90,13 +91,7 @@ public class ResultrDialog extends Dialog {
             public void widgetSelected(SelectionEvent e) {
                 shell.close();
             }
-
         });
 
-    }
-
-    public static void main(String[] args) {
-        ResultrDialog dialog = new ResultrDialog(new Shell(), "Open dir <a>c:\\</a> by explorer");
-        dialog.open();
     }
 }
