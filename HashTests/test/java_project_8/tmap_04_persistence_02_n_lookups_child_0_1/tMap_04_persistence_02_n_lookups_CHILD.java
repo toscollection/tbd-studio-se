@@ -5330,7 +5330,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void loadKeysData(DataInputStream dis) {
+		public void readKeysData(DataInputStream dis) {
 
 			try {
 
@@ -5351,7 +5351,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void toKeysData(DataOutputStream dos) {
+		public void writeKeysData(DataOutputStream dos) {
 			try {
 
 				ObjectOutputStream oos = null;
@@ -5372,7 +5372,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Fill Values data by reading DataInputStream.
 		 */
-		public void loadValuesData(DataInputStream dis) {
+		public void readValuesData(DataInputStream dis) {
 			try {
 
 				ObjectInputStream ois = null;
@@ -5396,7 +5396,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Return a byte array which represents Values data.
 		 */
-		public int toValuesData(DataOutputStream dos) {
+		public int writeValuesData(DataOutputStream dos) {
 			int previousSize = dos.size();
 			try {
 
@@ -5692,7 +5692,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void loadKeysData(DataInputStream dis) {
+		public void readKeysData(DataInputStream dis) {
 
 			try {
 
@@ -5713,7 +5713,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void toKeysData(DataOutputStream dos) {
+		public void writeKeysData(DataOutputStream dos) {
 			try {
 
 				ObjectOutputStream oos = null;
@@ -5734,7 +5734,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Fill Values data by reading DataInputStream.
 		 */
-		public void loadValuesData(DataInputStream dis) {
+		public void readValuesData(DataInputStream dis) {
 			try {
 
 				ObjectInputStream ois = null;
@@ -5758,7 +5758,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Return a byte array which represents Values data.
 		 */
-		public int toValuesData(DataOutputStream dos) {
+		public int writeValuesData(DataOutputStream dos) {
 			int previousSize = dos.size();
 			try {
 
@@ -6054,7 +6054,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void loadKeysData(DataInputStream dis) {
+		public void readKeysData(DataInputStream dis) {
 
 			try {
 
@@ -6075,7 +6075,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void toKeysData(DataOutputStream dos) {
+		public void writeKeysData(DataOutputStream dos) {
 			try {
 
 				ObjectOutputStream oos = null;
@@ -6096,7 +6096,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Fill Values data by reading DataInputStream.
 		 */
-		public void loadValuesData(DataInputStream dis) {
+		public void readValuesData(DataInputStream dis) {
 			try {
 
 				ObjectInputStream ois = null;
@@ -6120,7 +6120,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Return a byte array which represents Values data.
 		 */
-		public int toValuesData(DataOutputStream dos) {
+		public int writeValuesData(DataOutputStream dos) {
 			int previousSize = dos.size();
 			try {
 
@@ -6416,7 +6416,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void loadKeysData(DataInputStream dis) {
+		public void readKeysData(DataInputStream dis) {
 
 			try {
 
@@ -6437,7 +6437,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 
 		}
 
-		public void toKeysData(DataOutputStream dos) {
+		public void writeKeysData(DataOutputStream dos) {
 			try {
 
 				ObjectOutputStream oos = null;
@@ -6458,7 +6458,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Fill Values data by reading DataInputStream.
 		 */
-		public void loadValuesData(DataInputStream dis) {
+		public void readValuesData(DataInputStream dis) {
 			try {
 
 				ObjectInputStream ois = null;
@@ -6482,7 +6482,7 @@ public class tMap_04_persistence_02_n_lookups_CHILD {
 		/**
 		 * Return a byte array which represents Values data.
 		 */
-		public int toValuesData(DataOutputStream dos) {
+		public int writeValuesData(DataOutputStream dos) {
 			int previousSize = dos.size();
 			try {
 

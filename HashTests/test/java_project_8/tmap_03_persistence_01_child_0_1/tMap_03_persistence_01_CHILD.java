@@ -2928,7 +2928,7 @@ public class tMap_03_persistence_01_CHILD {
 			return bao.toByteArray();
 		}
 
-		public void loadKeysData(DataInputStream dis) {
+		public void readKeysData(DataInputStream dis) {
 
 			try {
 
@@ -2947,7 +2947,7 @@ public class tMap_03_persistence_01_CHILD {
 			}
 		}
 
-		public void toKeysData(DataOutputStream dos) {
+		public void writeKeysData(DataOutputStream dos) {
 			try {
 
 				if (this.ID_LOOKUP1 == null) {
@@ -3032,7 +3032,7 @@ public class tMap_03_persistence_01_CHILD {
 		/**
 		 * Fill Values data from the given byte array.
 		 */
-		public void loadValuesData(DataInputStream dis) {
+		public void readValuesData(DataInputStream dis) {
 			try {
 
 				int length = 0;
@@ -3055,7 +3055,7 @@ public class tMap_03_persistence_01_CHILD {
 		/**
 		 * Return a byte array which represents Values data.
 		 */
-		public int toValuesData(DataOutputStream dos) {
+		public int writeValuesData(DataOutputStream dos) {
 			int previousSize = dos.size();
 			try {
 

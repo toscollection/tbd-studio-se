@@ -13,6 +13,7 @@ import org.apache.oro.text.regex.MatchResult;
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
+import org.eclipse.core.runtime.Path;
 
 public class TmapTujPublisher {
 
@@ -37,7 +38,11 @@ public class TmapTujPublisher {
 
         String staticPrefix = "tMap_";
 
-        String[] firstIndices = { "03", "04", "05", "06", "07", "08", "09" };
+        String[] firstIndices = { 
+        "03", "04", "05", "06", "07", 
+        "08",
+        "09",
+        };
 
         File sourceJobsDirFile = new File(sourceJobsDir);
 
@@ -73,42 +78,78 @@ public class TmapTujPublisher {
                                 MatchResult match = matcher.getMatch();
                                 baseName = match.group(1);
 
+                                boolean isChild = false;
                                 if(baseName.endsWith("_CHILD")) {
                                     baseName = baseName.replaceAll("_CHILD", "");
+                                    isChild = true;
                                 }
+                                
+                                System.out.println("Job '" + baseName + "': ");
                                 
                                 copyFile(itemFilePath, targetDir + baseName + "/process/components/tMap/" + itemName);
                                 copyFile(propertyFilePath, targetDir + baseName + "/process/components/tMap/" + propertyName);
 
+                                if(isChild) {
+                                    continue;
+                                }
+                                
                                 // String sourceJobItem = sourceJobsDir + "/" + file.getName() +
 
                                 if(copyData) {
                                     
                                     File sourceFilesDirFile = new File(sourceFilesDir + "/" + baseName + "/files/in/");
-                                    String targetDirFiles = targetDir + "/files/in/";
+                                    String targetDirFiles = targetDir+ "/" + baseName  + "/files/in/";
+
+                                    if(!sourceFilesDirFile.isDirectory()) {
+                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"+ sourceFilesDirFile.getAbsolutePath() +"'");
+                                    }
+                                    
+                                    File targetFolder = new File(targetDirFiles);
+                                    if(!targetFolder.isDirectory()) {
+                                        throw new IllegalStateException("The folder targetFolder does not exist: '"+ targetFolder.getAbsolutePath() +"'");
+                                    }
+                                    
+                                    File[] listFilesToRemove = targetFolder.listFiles();
+                                    for (File fileToRemove : listFilesToRemove) {
+                                        if(fileToRemove.isFile()) {
+                                            fileToRemove.delete();
+                                        }
+                                    }
 
                                     File[] listDataFiles = sourceFilesDirFile.listFiles();
                                     for (File dataFile : listDataFiles) {
                                         String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/" + dataFile.getName();
                                         String targetFilePath = targetDirFiles + dataFile.getName();
-                                        //copyFile(sourceFilePath, targetFilePath);
-                                        
+                                        copyFile(sourceFilePath, targetFilePath);
                                     }
                                     
                                     
-                                    sourceFilesDirFile = new File(sourceFilesDir + "/ref");
-                                    targetDirFiles = targetDir + "/files/ref/";
+                                    sourceFilesDirFile = new File(sourceFilesDir + "/" + baseName + "/files/ref/");
+                                    targetDirFiles = targetDir + "/" + baseName + "/files/ref/";
                                     
+                                    if(!sourceFilesDirFile.isDirectory()) {
+                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"+ sourceFilesDirFile.getAbsolutePath() +"'");
+                                    }
+
+                                    targetFolder = new File(targetDirFiles);
+                                    if(!targetFolder.isDirectory()) {
+                                        throw new IllegalStateException("The folder targetFolder does not exist: '"+ targetFolder.getAbsolutePath() +"'");
+                                    }
+                                    
+                                    listFilesToRemove = targetFolder.listFiles();
+                                    for (File fileToRemove : listFilesToRemove) {
+                                        if(fileToRemove.isFile()) {
+                                            fileToRemove.delete();
+                                        }
+                                    }
+
                                     listDataFiles = sourceFilesDirFile.listFiles();
+                                    
                                     for (File dataFile : listDataFiles) {
                                         String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/" + dataFile.getName();
                                         String targetFilePath = targetDirFiles + dataFile.getName();
                                         copyFile(sourceFilePath, targetFilePath);
-                                        
                                     }
-                                    
-                                    
-                                    
                                     
                                 }
                                 
@@ -144,7 +185,8 @@ public class TmapTujPublisher {
         in.close();
         out.close();
         
-        System.out.println("Copied " + sourcePathFile + "\n -> " + destPathFile);
+//        System.out.println("Copied " + sourcePathFile + "\n -> " + destPathFile);
+        System.out.println("   Copied: '" + new Path(destPathFile).lastSegment() + "'");
         
     }
 

@@ -181,8 +181,8 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
 
             IPersistableLookupRow<B> curBean = buffer[i];
 
-            int writtenValuesDataSize = curBean.toValuesData(valuesDataOutputStream);
-            curBean.toKeysData(keysDataOutputStream);
+            int writtenValuesDataSize = curBean.writeValuesData(valuesDataOutputStream);
+            curBean.writeKeysData(keysDataOutputStream);
             keysDataOutputStream.writeInt(writtenValuesDataSize);
 
             // System.out.println(curBean);

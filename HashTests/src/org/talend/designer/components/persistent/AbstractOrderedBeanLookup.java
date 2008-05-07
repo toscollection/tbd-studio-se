@@ -109,7 +109,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     protected void loadDataKeys(B lookupInstance) throws IOException {
         atLeastOneLoadkeys = true;
-        lookupInstance.loadKeysData(keysDataStream);
+        lookupInstance.readKeysData(keysDataStream);
         currentValuesSize = keysDataStream.readInt();
     }
 
@@ -128,7 +128,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
             remainingSkip = 0;
             skipValuesSize = 0;
         }
-        lookupInstance.loadValuesData(valuesDataStream);
+        lookupInstance.readValuesData(valuesDataStream);
 
     }
 
