@@ -16,7 +16,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorReference;
@@ -273,13 +272,14 @@ public class BatchGenJobScreenshotAction extends Action {
             }
         });
 
-        try {
+        // try {
+        //
+        // Thread.sleep(TIME_DELAY * 20);
+        //
+        // } catch (Exception e) {
+        // ExceptionHandler.process(e);
+        // }
 
-            Thread.sleep(TIME_DELAY * 20);
-
-        } catch (Exception e) {
-            ExceptionHandler.process(e);
-        }
         takeScreenshot(editor[0]);
         // close editor
         Display.getDefault().syncExec(new Runnable() {
