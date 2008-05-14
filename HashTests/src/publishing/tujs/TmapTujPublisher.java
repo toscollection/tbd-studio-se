@@ -1,6 +1,5 @@
 package publishing.tujs;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,9 +28,8 @@ public class TmapTujPublisher {
      */
     public static void main(String[] args) throws MalformedPatternException, IOException {
 
-        
         boolean copyData = true;
-        
+
         String sourceFilesDir = "/home/amaumont/data/dev/projets/Talend/TUJV/files/tMap";
         String sourceJobsDir = "/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product3/JAVA_PROJECT_8/process/components/tMap";
         String sourceRoutineDir = "/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product3/JAVA_PROJECT_8/code/routines";
@@ -40,12 +38,7 @@ public class TmapTujPublisher {
 
         String staticPrefix = "tMap_";
 
-        String[] firstIndices = { 
-        "03", "04", "05", "06", "07", 
-        "08",
-        "09",
-        "10",
-        };
+        String[] firstIndices = { "03", "04", "05", "06", "07", "08", "09", "10", };
 
         File sourceJobsDirFile = new File(sourceJobsDir);
 
@@ -58,7 +51,7 @@ public class TmapTujPublisher {
             File[] listFiles = sourceJobsDirFile.listFiles();
 
             Arrays.sort(listFiles);
-            
+
             for (File file : listFiles) {
 
                 if (!file.isDirectory()) {
@@ -82,65 +75,68 @@ public class TmapTujPublisher {
                                 baseName = match.group(1);
 
                                 boolean isChild = false;
-                                if(baseName.endsWith("_CHILD")) {
+                                if (baseName.endsWith("_CHILD")) {
                                     baseName = baseName.replaceAll("_CHILD", "");
                                     isChild = true;
                                 }
-                                
+
                                 System.out.println("Job '" + baseName + "': ");
-                                
+
                                 String targetDirectoryPath = targetDir + baseName + "/process/components/tMap/";
-                                
+
                                 File targetDirectoryItems = new File(targetDirectoryPath);
-                                
-                                File[] listFilesItemsToRemove = targetDirectoryItems.listFiles();
-                                for (File fileToRemove : listFilesItemsToRemove) {
-                                    if(fileToRemove.isFile()) {
-                                        fileToRemove.delete();
+
+                                if (!isChild) {
+                                    File[] listFilesItemsToRemove = targetDirectoryItems.listFiles();
+                                    for (File fileToRemove : listFilesItemsToRemove) {
+                                        if (fileToRemove.isFile()) {
+                                            fileToRemove.delete();
+                                        }
                                     }
                                 }
-                                
+
                                 copyFile(itemFilePath, targetDirectoryPath + itemName);
                                 copyFile(propertyFilePath, targetDirectoryPath + propertyName);
 
-                                if(isChild) {
+                                if (isChild) {
                                     continue;
                                 }
-                                
+
                                 // String sourceJobItem = sourceJobsDir + "/" + file.getName() +
 
-                                if(copyData) {
-                                    
+                                if (copyData) {
+
                                     String routineFileName = "routine_" + baseName + "_0.1.item";
                                     String routinePropertiesFileName = "routine_" + baseName + "_0.1.properties";
-                                    
+
                                     String routineItem = sourceRoutineDir + "/" + routineFileName;
                                     String routineProperties = sourceRoutineDir + "/" + routinePropertiesFileName;
                                     String targetRoutineFolder = targetDir + baseName + "/code/routines/";
-                                    
+
                                     File routineFile = new File(routineItem);
-                                    
-                                    if(routineFile.isFile()) {
+
+                                    if (routineFile.isFile()) {
                                         copyFile(routineItem, targetRoutineFolder + routineFileName);
                                         copyFile(routineProperties, targetRoutineFolder + routinePropertiesFileName);
                                     }
-                                    
-                                    
-                                    File sourceFilesDirFile = new File(sourceFilesDir + "/" + baseName + "/files/in/");
-                                    String targetDirFiles = targetDir + "/" + baseName  + "/files/in/";
 
-                                    if(!sourceFilesDirFile.isDirectory()) {
-                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"+ sourceFilesDirFile.getAbsolutePath() +"'");
+                                    File sourceFilesDirFile = new File(sourceFilesDir + "/" + baseName + "/files/in/");
+                                    String targetDirFiles = targetDir + "/" + baseName + "/files/in/";
+
+                                    if (!sourceFilesDirFile.isDirectory()) {
+                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"
+                                                + sourceFilesDirFile.getAbsolutePath() + "'");
                                     }
-                                    
+
                                     File targetFolder = new File(targetDirFiles);
-                                    if(!targetFolder.isDirectory()) {
-                                        throw new IllegalStateException("The folder targetFolder does not exist: '"+ targetFolder.getAbsolutePath() +"'");
+                                    if (!targetFolder.isDirectory()) {
+                                        throw new IllegalStateException("The folder targetFolder does not exist: '"
+                                                + targetFolder.getAbsolutePath() + "'");
                                     }
-                                    
+
                                     File[] listFilesToRemove = targetFolder.listFiles();
                                     for (File fileToRemove : listFilesToRemove) {
-                                        if(fileToRemove.isFile()) {
+                                        if (fileToRemove.isFile()) {
                                             fileToRemove.delete();
                                         }
                                     }
@@ -151,39 +147,38 @@ public class TmapTujPublisher {
                                         String targetFilePath = targetDirFiles + dataFile.getName();
                                         copyFile(sourceFilePath, targetFilePath);
                                     }
-                                    
-                                    
+
                                     sourceFilesDirFile = new File(sourceFilesDir + "/" + baseName + "/files/ref/");
                                     targetDirFiles = targetDir + "/" + baseName + "/files/ref/";
-                                    
-                                    if(!sourceFilesDirFile.isDirectory()) {
-                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"+ sourceFilesDirFile.getAbsolutePath() +"'");
+
+                                    if (!sourceFilesDirFile.isDirectory()) {
+                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"
+                                                + sourceFilesDirFile.getAbsolutePath() + "'");
                                     }
 
                                     targetFolder = new File(targetDirFiles);
-                                    if(!targetFolder.isDirectory()) {
-                                        throw new IllegalStateException("The folder targetFolder does not exist: '"+ targetFolder.getAbsolutePath() +"'");
+                                    if (!targetFolder.isDirectory()) {
+                                        throw new IllegalStateException("The folder targetFolder does not exist: '"
+                                                + targetFolder.getAbsolutePath() + "'");
                                     }
-                                    
+
                                     listFilesToRemove = targetFolder.listFiles();
                                     for (File fileToRemove : listFilesToRemove) {
-                                        if(fileToRemove.isFile()) {
+                                        if (fileToRemove.isFile()) {
                                             fileToRemove.delete();
                                         }
                                     }
 
                                     listDataFiles = sourceFilesDirFile.listFiles();
-                                    
+
                                     for (File dataFile : listDataFiles) {
                                         String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/" + dataFile.getName();
                                         String targetFilePath = targetDirFiles + dataFile.getName();
                                         copyFile(sourceFilePath, targetFilePath);
                                     }
-                                    
+
                                 }
-                                
-                                
-                                
+
                             } else {
 
                                 System.out.println(itemName + " can't be matched");
@@ -213,10 +208,10 @@ public class TmapTujPublisher {
 
         in.close();
         out.close();
-        
-//        System.out.println("Copied " + sourcePathFile + "\n -> " + destPathFile);
+
+        // System.out.println("Copied " + sourcePathFile + "\n -> " + destPathFile);
         System.out.println("   Copied: '" + new Path(destPathFile).lastSegment() + "'");
-        
+
     }
 
 }
