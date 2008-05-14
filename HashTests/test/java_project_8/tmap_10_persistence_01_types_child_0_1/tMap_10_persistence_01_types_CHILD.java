@@ -13,6 +13,7 @@ package java_project_8.tmap_10_persistence_01_types_child_0_1;
 
 import routines.libs;
 import routines.randomGenerator;
+import routines.routine_tMap_10_persistence_01_types;
 import routines.DataOperation;
 import routines.Mathematical;
 import routines.Numeric;
@@ -21,7 +22,6 @@ import routines.StringHandling;
 import routines.TalendDataGenerator;
 import routines.TalendDate;
 import routines.TalendString;
-import routines.tMap_10_persistence_01_types;
 import routines.system.*;
 
 import java.text.ParseException;
@@ -31,8 +31,8 @@ import java.util.List;
 import java.math.BigDecimal;
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.IOException;
@@ -56,10412 +56,10307 @@ import java.util.Comparator;
  * @status
  */
 public class tMap_10_persistence_01_types_CHILD {
-    // create and load default properties
-    private static java.util.Properties defaultProps = new java.util.Properties();
-
-    // create application properties with default
-    private static class ContextProperties extends java.util.Properties {
-
-        public ContextProperties(java.util.Properties properties) {
-            super(properties);
-        }
-
-        public ContextProperties() {
-            super();
-        }
-
-        public static String param_file_path;
-        public static String data_dir;
-        public static String data_output_dir;
-        public static String result_host;
-        public static String result_port;
-        public static String result_database;
-        public static String result_username;
-        public static String result_password;
-        public static String result_table;
-        public static String mysql_host;
-        public static String mysql_port;
-        public static String mysql_schema;
-        public static String mysql_username;
-        public static String mysql_password;
-        public static String current_job_dir;
-        public static String indexMain;
-        public static String indexLookup;
-        public static String bufferSizeValue;
-    }
-
-    private static ContextProperties context = new ContextProperties();
-    private static final String jobName = "tMap_10_persistence_01_types_CHILD";
-    private static final String projectName = "JAVA_PROJECT_8";
-    public static Integer errorCode = null;
-    private static String currentComponent = "";
-    private static final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
-    private static final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
-    private static final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
-    private static final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
-    public static final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
-
-    private class TalendException extends Exception {
-        private Exception e = null;
-        private tMap_10_persistence_01_types_CHILD c = null;
-
-        private TalendException(tMap_10_persistence_01_types_CHILD c,
-                Exception e) {
-            this.e = e;
-            this.c = c;
-        }
-
-        @Override
-        public void printStackTrace() {
-            if (!(e instanceof TalendException || e instanceof TDieException)) {
-                globalMap.put(currentComponent + "_ERROR_MESSAGE", e
-                        .getMessage());
-                System.err
-                        .println("Exception in component " + currentComponent);
-            }
-            if (!(e instanceof TDieException)) {
-                e.printStackTrace();
-            }
-            if (!(e instanceof TalendException)) {
-                try {
-                    for (java.lang.reflect.Method m : this.getClass()
-                            .getEnclosingClass().getMethods()) {
-                        if (m.getName().compareTo(currentComponent + "_error") == 0) {
-                            m.invoke(c, new Object[] { e });
-                            break;
-                        }
-                    }
-
-                    if (!(e instanceof TDieException)) {
-                    }
-                } catch (java.lang.SecurityException e) {
-                    this.e.printStackTrace();
-                } catch (java.lang.IllegalArgumentException e) {
-                    this.e.printStackTrace();
-                } catch (java.lang.IllegalAccessException e) {
-                    this.e.printStackTrace();
-                } catch (java.lang.reflect.InvocationTargetException e) {
-                    this.e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void tFileInputDelimited_2_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
-        tFileInputDelimited_2_onSubJobError(exception);
-    }
-
-    public void tContextLoad_1_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tContextLoad_1", System.currentTimeMillis());
-        tFileInputDelimited_2_onSubJobError(exception);
-    }
-
-    public void tJavaFlex_3_error(Exception exception) throws TalendException {
-        end_Hash.put("tJavaFlex_3", System.currentTimeMillis());
-        tJavaFlex_3_onSubJobError(exception);
-    }
-
-    public void tFixedFlowInput_2_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tFixedFlowInput_2", System.currentTimeMillis());
-        tFixedFlowInput_2_onSubJobError(exception);
-    }
-
-    public void tMap_1_error(Exception exception) throws TalendException {
-        end_Hash.put("tMap_1", System.currentTimeMillis());
-        tFixedFlowInput_2_onSubJobError(exception);
-    }
-
-    public void tMap_2_error(Exception exception) throws TalendException {
-        end_Hash.put("tMap_2", System.currentTimeMillis());
-        tFixedFlowInput_2_onSubJobError(exception);
-    }
-
-    public void tFileOutputDelimited_2_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
-        tFixedFlowInput_2_onSubJobError(exception);
-    }
-
-    public void tFileCompare_1_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tFileCompare_1", System.currentTimeMillis());
-        tFileCompare_1_onSubJobError(exception);
-    }
-
-    public void tJavaFlex_4_error(Exception exception) throws TalendException {
-        end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
-        tJavaFlex_4_onSubJobError(exception);
-    }
-
-    public void tFixedFlowInput_1_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
-        tJavaFlex_4_onSubJobError(exception);
-    }
-
-    public void tBufferOutput_1_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
-        tJavaFlex_4_onSubJobError(exception);
-    }
-
-    public void tFixedFlowInput_3_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tFixedFlowInput_3", System.currentTimeMillis());
-        tFixedFlowInput_2_onSubJobError(exception);
-    }
-
-    public void tAdvancedHash_lookup_error(Exception exception)
-            throws TalendException {
-        end_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
-        tFixedFlowInput_2_onSubJobError(exception);
-    }
-
-    public void tFileInputDelimited_2_onSubJobError(Exception exception)
-            throws TalendException {
-    }
-
-    public void tJavaFlex_3_onSubJobError(Exception exception)
-            throws TalendException {
-    }
-
-    public void tFixedFlowInput_2_onSubJobError(Exception exception)
-            throws TalendException {
-    }
-
-    public void tFileCompare_1_onSubJobError(Exception exception)
-            throws TalendException {
-    }
-
-    public void tJavaFlex_4_onSubJobError(Exception exception)
-            throws TalendException {
-    }
-
-    private class row6Struct implements
-            routines.system.IPersistableRow<row6Struct> {
-
-        String key;
-
-        String value;
-
-        public void readData(DataInputStream dis) {
-
-            try {
-
-                ObjectInputStream ois = null;
-                int length = 0;
-
-                length = dis.readInt();
-                if (length == -1) {
-                    this.key = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.key = new String(byteArray);
-                }
-
-                length = dis.readInt();
-                if (length == -1) {
-                    this.value = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.value = new String(byteArray);
-                }
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-
-            }
-
-        }
-
-        public void writeData(DataOutputStream dos) {
-            try {
-
-                ObjectOutputStream oos = null;
-
-                // String
-
-                if (this.key == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.key.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
-
-                // String
-
-                if (this.value == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.value.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-
-        public String toString() {
-
-            StringBuilder sb = new StringBuilder();
-            sb.append(super.toString());
-            sb.append("[");
-
-            sb.append("key");
-            sb.append("=");
-            sb.append(String.valueOf(this.key));
-
-            sb.append(", ");
-
-            sb.append("value");
-            sb.append("=");
-            sb.append(String.valueOf(this.value));
-
-            sb.append("]");
-
-            return sb.toString();
-        }
-
-        /**
-         * Compare keys
-         */
-        public int compareTo(row6Struct other) {
-
-            int returnValue = -1;
-
-            return returnValue;
-        }
-
-        private int checkNullsAndCompare(Object object1, Object object2) {
-            int returnValue = 0;
-            if (object1 instanceof Comparable && object2 instanceof Comparable) {
-                returnValue = ((Comparable) object1).compareTo(object2);
-            } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
-            } else if (object1 == null && object2 != null) {
-                returnValue = 1;
-            } else if (object1 != null && object2 == null) {
-                returnValue = -1;
-            } else {
-                returnValue = 0;
-            }
-
-            return returnValue;
-        }
-
-        private int compareStrings(String string1, String string2) {
-            // if (this.ignoreCase) {
-            return string1.compareToIgnoreCase(string2);
-            // } else {
-            // return string1.compareTo(string2);
-            // }
-        }
-
-    }
-
-    public void tFileInputDelimited_2Process() throws TalendException {
-        try {
-
-            row6Struct row6 = new row6Struct();
-
-            /*******************************************************************
-             * / [tContextLoad_1 begin ] start
-             */
-
-            ok_Hash.put("tContextLoad_1", false);
-            start_Hash.put("tContextLoad_1", System.currentTimeMillis());
-            currentComponent = "tContextLoad_1";
-
-            java.util.List<String> assignList_tContextLoad_1 = new java.util.ArrayList<String>();
-            java.util.List<String> newPropertyList_tContextLoad_1 = new java.util.ArrayList<String>();
-            java.util.List<String> noAssignList_tContextLoad_1 = new java.util.ArrayList<String>();
-            int nb_line_tContextLoad_1 = 0;
-
-            /**
-             * [tContextLoad_1 begin ] stop
-             */
-
-            /*******************************************************************
-             * / [tFileInputDelimited_2 begin ] start
-             */
-
-            ok_Hash.put("tFileInputDelimited_2", false);
-            start_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
-            currentComponent = "tFileInputDelimited_2";
-
-            int nb_line_tFileInputDelimited_2 = 0;
-            int footer_tFileInputDelimited_2 = 0;
-            int totalLinetFileInputDelimited_2 = 0;
-            int limittFileInputDelimited_2 = -1;
-            int lastLinetFileInputDelimited_2 = -1;
-
-            com.csvreader.CsvReader csvReadertFileInputDelimited_2 = new com.csvreader.CsvReader(
-                    new java.io.BufferedReader(new java.io.InputStreamReader(
-                            new java.io.FileInputStream(/**
-                                                         * Start field
-                                                         * tFileInputDelimited_2:FILENAME
-                                                         */
-                            context.param_file_path/**
-                                                     * End field
-                                                     * tFileInputDelimited_2:FILENAME
-                                                     */
-                            ), "ISO-8859-15")), ',');
-
-            csvReadertFileInputDelimited_2.setSkipEmptyRecords(true);
-            csvReadertFileInputDelimited_2.setTextQualifier('"');
-
-            csvReadertFileInputDelimited_2
-                    .setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
-
-            String[] rowtFileInputDelimited_2 = null;
-
-            if (footer_tFileInputDelimited_2 > 0) {
-
-                while (csvReadertFileInputDelimited_2.readRecord()) {
-                    rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2
-                            .getValues();
-                    if (!(rowtFileInputDelimited_2.length == 1 && rowtFileInputDelimited_2[0]
-                            .equals("\015"))) {// empty line when row separator
-                                                // is '\n'
-
-                        totalLinetFileInputDelimited_2++;
-
-                    }
-
-                }
-                int lastLineTemptFileInputDelimited_2 = totalLinetFileInputDelimited_2
-                        - footer_tFileInputDelimited_2 < 0 ? 0
-                        : totalLinetFileInputDelimited_2
-                                - footer_tFileInputDelimited_2;
-                if (lastLinetFileInputDelimited_2 > 0) {
-                    lastLinetFileInputDelimited_2 = lastLinetFileInputDelimited_2 < lastLineTemptFileInputDelimited_2 ? lastLinetFileInputDelimited_2
-                            : lastLineTemptFileInputDelimited_2;
-                } else {
-                    lastLinetFileInputDelimited_2 = lastLineTemptFileInputDelimited_2;
-                }
-
-                csvReadertFileInputDelimited_2.close();
-
-                csvReadertFileInputDelimited_2 = new com.csvreader.CsvReader(
-                        new java.io.BufferedReader(
-                                new java.io.InputStreamReader(
-                                        new java.io.FileInputStream(/**
-                                                                     * Start
-                                                                     * field
-                                                                     * tFileInputDelimited_2:FILENAME
-                                                                     */
-                                        context.param_file_path/**
-                                                                 * End field
-                                                                 * tFileInputDelimited_2:FILENAME
-                                                                 */
-                                        ), "ISO-8859-15")), ',');
-                csvReadertFileInputDelimited_2.setSkipEmptyRecords(true);
-                csvReadertFileInputDelimited_2.setTextQualifier('"');
-
-                csvReadertFileInputDelimited_2
-                        .setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
-
-            }
-
-            int currentLinetFileInputDelimited_2 = 0;
-            int outputLinetFileInputDelimited_2 = 0;
-
-            while (csvReadertFileInputDelimited_2.readRecord()) {
-
-                rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2
-                        .getValues();
-
-                if (rowtFileInputDelimited_2.length == 1
-                        && rowtFileInputDelimited_2[0].equals("\015")) {// empty
-                                                                        // line
-                                                                        // when
-                                                                        // row
-                                                                        // separator
-                                                                        // is
-                                                                        // '\n'
-                    continue;
-                }
-
-                currentLinetFileInputDelimited_2++;
-                if (currentLinetFileInputDelimited_2 < 0 + 1) {
-                    continue;
-                }
-
-                if (lastLinetFileInputDelimited_2 > -1
-                        && currentLinetFileInputDelimited_2 > lastLinetFileInputDelimited_2) {
-                    break;
-                }
-                outputLinetFileInputDelimited_2++;
-                if (limittFileInputDelimited_2 != -1
-                        && outputLinetFileInputDelimited_2 > limittFileInputDelimited_2) {
-                    break;
-                }
-
-                row6 = null;
-                boolean whetherReject_tFileInputDelimited_2 = false;
-                row6 = new row6Struct();
-                try {
-
-                    if (rowtFileInputDelimited_2.length == 1
-                            && rowtFileInputDelimited_2[0].equals("\015")) {// empty
-                                                                            // line
-                                                                            // when
-                                                                            // row
-                                                                            // separator
-                                                                            // is
-                                                                            // '\n'
-
-                        row6.key = null;
-
-                        row6.value = null;
-
-                    } else {
-
-                        if (0 < rowtFileInputDelimited_2.length) {
-                            row6.key = rowtFileInputDelimited_2[0].trim();
-
-                        } else {
-
-                            row6.key = null;
-
-                        }
-
-                        if (1 < rowtFileInputDelimited_2.length) {
-                            row6.value = rowtFileInputDelimited_2[1].trim();
-
-                        } else {
-
-                            row6.value = null;
-
-                        }
-
-                    }
-
-                } catch (Exception e) {
-                    whetherReject_tFileInputDelimited_2 = true;
-                    throw (e);
-                }
-
-                /**
-                 * [tFileInputDelimited_2 begin ] stop
-                 */
-                /***************************************************************
-                 * / [tFileInputDelimited_2 main ] start
-                 */
-
-                currentComponent = "tFileInputDelimited_2";
-
-                /**
-                 * [tFileInputDelimited_2 main ] stop
-                 */
-                // Start of branch "row6"
-                if (row6 != null) {
-
-                    /***********************************************************
-                     * / [tContextLoad_1 main ] start
-                     */
-
-                    currentComponent = "tContextLoad_1";
-
-                    // ////////////////////////
-                    String key_tContextLoad_1 = null;
-                    if (row6.key != null) {
-                        key_tContextLoad_1 = row6.key;
-                    }
-                    String value_tContextLoad_1 = null;
-                    if (row6.value != null) {
-                        value_tContextLoad_1 = row6.value;
-                    }
-                    if (context.getProperty(key_tContextLoad_1) != null) {
-                        context.setProperty(key_tContextLoad_1,
-                                value_tContextLoad_1);
-
-                        if (key_tContextLoad_1 != null
-                                && "param_file_path".equals(key_tContextLoad_1)) {
-                            context.param_file_path = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "data_dir".equals(key_tContextLoad_1)) {
-                            context.data_dir = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "data_output_dir".equals(key_tContextLoad_1)) {
-                            context.data_output_dir = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_host".equals(key_tContextLoad_1)) {
-                            context.result_host = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_port".equals(key_tContextLoad_1)) {
-                            context.result_port = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_database".equals(key_tContextLoad_1)) {
-                            context.result_database = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_username".equals(key_tContextLoad_1)) {
-                            context.result_username = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_password".equals(key_tContextLoad_1)) {
-                            context.result_password = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_table".equals(key_tContextLoad_1)) {
-                            context.result_table = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_host".equals(key_tContextLoad_1)) {
-                            context.mysql_host = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_port".equals(key_tContextLoad_1)) {
-                            context.mysql_port = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_schema".equals(key_tContextLoad_1)) {
-                            context.mysql_schema = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_username".equals(key_tContextLoad_1)) {
-                            context.mysql_username = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_password".equals(key_tContextLoad_1)) {
-                            context.mysql_password = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "current_job_dir".equals(key_tContextLoad_1)) {
-                            context.current_job_dir = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "indexMain".equals(key_tContextLoad_1)) {
-                            context.indexMain = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "indexLookup".equals(key_tContextLoad_1)) {
-                            context.indexLookup = value_tContextLoad_1;
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "bufferSizeValue".equals(key_tContextLoad_1)) {
-                            context.bufferSizeValue = value_tContextLoad_1;
-                        }
-
-                        assignList_tContextLoad_1.add(key_tContextLoad_1);
-                    } else {
-                        context.setProperty(key_tContextLoad_1,
-                                value_tContextLoad_1);
-
-                        if (key_tContextLoad_1 != null
-                                && "param_file_path".equals(key_tContextLoad_1)) {
-                            context.param_file_path = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "data_dir".equals(key_tContextLoad_1)) {
-                            context.data_dir = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "data_output_dir".equals(key_tContextLoad_1)) {
-                            context.data_output_dir = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_host".equals(key_tContextLoad_1)) {
-                            context.result_host = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_port".equals(key_tContextLoad_1)) {
-                            context.result_port = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_database".equals(key_tContextLoad_1)) {
-                            context.result_database = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_username".equals(key_tContextLoad_1)) {
-                            context.result_username = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_password".equals(key_tContextLoad_1)) {
-                            context.result_password = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "result_table".equals(key_tContextLoad_1)) {
-                            context.result_table = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_host".equals(key_tContextLoad_1)) {
-                            context.mysql_host = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_port".equals(key_tContextLoad_1)) {
-                            context.mysql_port = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_schema".equals(key_tContextLoad_1)) {
-                            context.mysql_schema = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_username".equals(key_tContextLoad_1)) {
-                            context.mysql_username = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "mysql_password".equals(key_tContextLoad_1)) {
-                            context.mysql_password = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "current_job_dir".equals(key_tContextLoad_1)) {
-                            context.current_job_dir = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "indexMain".equals(key_tContextLoad_1)) {
-                            context.indexMain = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "indexLookup".equals(key_tContextLoad_1)) {
-                            context.indexLookup = value_tContextLoad_1;
-
-                        }
-
-                        if (key_tContextLoad_1 != null
-                                && "bufferSizeValue".equals(key_tContextLoad_1)) {
-                            context.bufferSizeValue = value_tContextLoad_1;
-
-                        }
-
-                        newPropertyList_tContextLoad_1.add(key_tContextLoad_1);
-                    }
-                    nb_line_tContextLoad_1++;
-                    // ////////////////////////
-
-                    /**
-                     * [tContextLoad_1 main ] stop
-                     */
-
-                } // End of branch "row6"
-
-                /***************************************************************
-                 * / [tFileInputDelimited_2 end ] start
-                 */
-
-                currentComponent = "tFileInputDelimited_2";
-
-                nb_line_tFileInputDelimited_2++;
-            }
-            csvReadertFileInputDelimited_2.close();
-            globalMap.put("tFileInputDelimited_2_NB_LINE",
-                    nb_line_tFileInputDelimited_2);
-
-            ok_Hash.put("tFileInputDelimited_2", true);
-            end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
-
-            /**
-             * [tFileInputDelimited_2 end ] stop
-             */
-            /*******************************************************************
-             * / [tContextLoad_1 end ] start
-             */
-
-            currentComponent = "tContextLoad_1";
+	// create and load default properties
+	private static java.util.Properties defaultProps = new java.util.Properties();
+
+	// create application properties with default
+	private static class ContextProperties extends java.util.Properties {
+
+		public ContextProperties(java.util.Properties properties) {
+			super(properties);
+		}
+
+		public ContextProperties() {
+			super();
+		}
+
+		public static String param_file_path;
+		public static String data_dir;
+		public static String data_output_dir;
+		public static String result_host;
+		public static String result_port;
+		public static String result_database;
+		public static String result_username;
+		public static String result_password;
+		public static String result_table;
+		public static String mysql_host;
+		public static String mysql_port;
+		public static String mysql_schema;
+		public static String mysql_username;
+		public static String mysql_password;
+		public static String current_job_dir;
+		public static String indexMain;
+		public static String indexLookup;
+		public static String bufferSizeValue;
+	}
+
+	private static ContextProperties context = new ContextProperties();
+	private static final String jobName = "tMap_10_persistence_01_types_CHILD";
+	private static final String projectName = "JAVA_PROJECT_8";
+	public static Integer errorCode = null;
+	private static String currentComponent = "";
+	private static final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
+	private static final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
+	private static final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
+	private static final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
+	public static final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
+
+	private class TalendException extends Exception {
+		private Exception e = null;
+		private tMap_10_persistence_01_types_CHILD c = null;
+
+		private TalendException(tMap_10_persistence_01_types_CHILD c,
+				Exception e) {
+			this.e = e;
+			this.c = c;
+		}
+
+		@Override
+		public void printStackTrace() {
+			if (!(e instanceof TalendException || e instanceof TDieException)) {
+				globalMap.put(currentComponent + "_ERROR_MESSAGE", e
+						.getMessage());
+				System.err
+						.println("Exception in component " + currentComponent);
+			}
+			if (!(e instanceof TDieException)) {
+				e.printStackTrace();
+			}
+			if (!(e instanceof TalendException)) {
+				try {
+					for (java.lang.reflect.Method m : this.getClass()
+							.getEnclosingClass().getMethods()) {
+						if (m.getName().compareTo(currentComponent + "_error") == 0) {
+							m.invoke(c, new Object[] { e });
+							break;
+						}
+					}
+
+					if (!(e instanceof TDieException)) {
+					}
+				} catch (java.lang.SecurityException e) {
+					this.e.printStackTrace();
+				} catch (java.lang.IllegalArgumentException e) {
+					this.e.printStackTrace();
+				} catch (java.lang.IllegalAccessException e) {
+					this.e.printStackTrace();
+				} catch (java.lang.reflect.InvocationTargetException e) {
+					this.e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void tFileInputDelimited_2_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
+		tFileInputDelimited_2_onSubJobError(exception);
+	}
+
+	public void tContextLoad_1_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tContextLoad_1", System.currentTimeMillis());
+		tFileInputDelimited_2_onSubJobError(exception);
+	}
+
+	public void tJavaFlex_3_error(Exception exception) throws TalendException {
+		end_Hash.put("tJavaFlex_3", System.currentTimeMillis());
+		tJavaFlex_3_onSubJobError(exception);
+	}
+
+	public void tFixedFlowInput_2_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFixedFlowInput_2", System.currentTimeMillis());
+		tFixedFlowInput_2_onSubJobError(exception);
+	}
+
+	public void tMap_1_error(Exception exception) throws TalendException {
+		end_Hash.put("tMap_1", System.currentTimeMillis());
+		tFixedFlowInput_2_onSubJobError(exception);
+	}
+
+	public void tMap_2_error(Exception exception) throws TalendException {
+		end_Hash.put("tMap_2", System.currentTimeMillis());
+		tFixedFlowInput_2_onSubJobError(exception);
+	}
+
+	public void tFileOutputDelimited_2_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
+		tFixedFlowInput_2_onSubJobError(exception);
+	}
+
+	public void tFileCompare_1_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFileCompare_1", System.currentTimeMillis());
+		tFileCompare_1_onSubJobError(exception);
+	}
+
+	public void tJavaFlex_4_error(Exception exception) throws TalendException {
+		end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
+		tJavaFlex_4_onSubJobError(exception);
+	}
+
+	public void tFixedFlowInput_1_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
+		tJavaFlex_4_onSubJobError(exception);
+	}
+
+	public void tBufferOutput_1_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
+		tJavaFlex_4_onSubJobError(exception);
+	}
+
+	public void tFixedFlowInput_3_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tFixedFlowInput_3", System.currentTimeMillis());
+		tFixedFlowInput_2_onSubJobError(exception);
+	}
+
+	public void tAdvancedHash_lookup_error(Exception exception)
+			throws TalendException {
+		end_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
+		tFixedFlowInput_2_onSubJobError(exception);
+	}
+
+	public void tFileInputDelimited_2_onSubJobError(Exception exception)
+			throws TalendException {
+	}
+
+	public void tJavaFlex_3_onSubJobError(Exception exception)
+			throws TalendException {
+	}
+
+	public void tFixedFlowInput_2_onSubJobError(Exception exception)
+			throws TalendException {
+	}
+
+	public void tFileCompare_1_onSubJobError(Exception exception)
+			throws TalendException {
+	}
+
+	public void tJavaFlex_4_onSubJobError(Exception exception)
+			throws TalendException {
+	}
+
+	private class row6Struct implements
+			routines.system.IPersistableRow<row6Struct> {
+
+		String key;
+
+		String value;
+
+		public void readData(ObjectInputStream dis) {
+
+			try {
+
+				
+				int length = 0;
+
+				length = dis.readInt();
+				if (length == -1) {
+					this.key = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.key = new String(byteArray);
+				}
+
+				length = dis.readInt();
+				if (length == -1) {
+					this.value = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.value = new String(byteArray);
+				}
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+
+			}
+
+		}
+
+		public void writeData(ObjectOutputStream dos) {
+			try {
+
+				// String
+
+				if (this.key == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.key.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
+
+				// String
+
+				if (this.value == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.value.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
+
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+
+		}
+
+		public String toString() {
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
+
+			sb.append("key");
+			sb.append("=");
+			sb.append(String.valueOf(this.key));
+
+			sb.append(", ");
+
+			sb.append("value");
+			sb.append("=");
+			sb.append(String.valueOf(this.value));
+
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row6Struct other) {
+
+			int returnValue = -1;
+
+			return returnValue;
+		}
+
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
+
+			return returnValue;
+		}
+
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
+
+	}
+
+	public void tFileInputDelimited_2Process() throws TalendException {
+		try {
+
+			row6Struct row6 = new row6Struct();
+
+			/*******************************************************************
+			 * / [tContextLoad_1 begin ] start
+			 */
+
+			ok_Hash.put("tContextLoad_1", false);
+			start_Hash.put("tContextLoad_1", System.currentTimeMillis());
+			currentComponent = "tContextLoad_1";
+
+			java.util.List<String> assignList_tContextLoad_1 = new java.util.ArrayList<String>();
+			java.util.List<String> newPropertyList_tContextLoad_1 = new java.util.ArrayList<String>();
+			java.util.List<String> noAssignList_tContextLoad_1 = new java.util.ArrayList<String>();
+			int nb_line_tContextLoad_1 = 0;
+
+			/**
+			 * [tContextLoad_1 begin ] stop
+			 */
+
+			/*******************************************************************
+			 * / [tFileInputDelimited_2 begin ] start
+			 */
+
+			ok_Hash.put("tFileInputDelimited_2", false);
+			start_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
+			currentComponent = "tFileInputDelimited_2";
+
+			int nb_line_tFileInputDelimited_2 = 0;
+			int footer_tFileInputDelimited_2 = 0;
+			int totalLinetFileInputDelimited_2 = 0;
+			int limittFileInputDelimited_2 = -1;
+			int lastLinetFileInputDelimited_2 = -1;
+
+			com.csvreader.CsvReader csvReadertFileInputDelimited_2 = new com.csvreader.CsvReader(
+					new java.io.BufferedReader(new java.io.InputStreamReader(
+							new java.io.FileInputStream(/**
+														 * Start field
+														 * tFileInputDelimited_2:FILENAME
+														 */
+							context.param_file_path/**
+													 * End field
+													 * tFileInputDelimited_2:FILENAME
+													 */
+							), "ISO-8859-15")), ',');
+
+			csvReadertFileInputDelimited_2.setSkipEmptyRecords(true);
+			csvReadertFileInputDelimited_2.setTextQualifier('"');
+
+			csvReadertFileInputDelimited_2
+					.setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
+
+			String[] rowtFileInputDelimited_2 = null;
+
+			if (footer_tFileInputDelimited_2 > 0) {
+
+				while (csvReadertFileInputDelimited_2.readRecord()) {
+					rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2
+							.getValues();
+					if (!(rowtFileInputDelimited_2.length == 1 && rowtFileInputDelimited_2[0]
+							.equals("\015"))) {// empty line when row separator
+												// is '\n'
+
+						totalLinetFileInputDelimited_2++;
+
+					}
+
+				}
+				int lastLineTemptFileInputDelimited_2 = totalLinetFileInputDelimited_2
+						- footer_tFileInputDelimited_2 < 0 ? 0
+						: totalLinetFileInputDelimited_2
+								- footer_tFileInputDelimited_2;
+				if (lastLinetFileInputDelimited_2 > 0) {
+					lastLinetFileInputDelimited_2 = lastLinetFileInputDelimited_2 < lastLineTemptFileInputDelimited_2 ? lastLinetFileInputDelimited_2
+							: lastLineTemptFileInputDelimited_2;
+				} else {
+					lastLinetFileInputDelimited_2 = lastLineTemptFileInputDelimited_2;
+				}
+
+				csvReadertFileInputDelimited_2.close();
+
+				csvReadertFileInputDelimited_2 = new com.csvreader.CsvReader(
+						new java.io.BufferedReader(
+								new java.io.InputStreamReader(
+										new java.io.FileInputStream(/**
+																	 * Start
+																	 * field
+																	 * tFileInputDelimited_2:FILENAME
+																	 */
+										context.param_file_path/**
+																 * End field
+																 * tFileInputDelimited_2:FILENAME
+																 */
+										), "ISO-8859-15")), ',');
+				csvReadertFileInputDelimited_2.setSkipEmptyRecords(true);
+				csvReadertFileInputDelimited_2.setTextQualifier('"');
+
+				csvReadertFileInputDelimited_2
+						.setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
+
+			}
+
+			int currentLinetFileInputDelimited_2 = 0;
+			int outputLinetFileInputDelimited_2 = 0;
+
+			while (csvReadertFileInputDelimited_2.readRecord()) {
+
+				rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2
+						.getValues();
+
+				if (rowtFileInputDelimited_2.length == 1
+						&& rowtFileInputDelimited_2[0].equals("\015")) {// empty
+																		// line
+																		// when
+																		// row
+																		// separator
+																		// is
+																		// '\n'
+					continue;
+				}
+
+				currentLinetFileInputDelimited_2++;
+				if (currentLinetFileInputDelimited_2 < 0 + 1) {
+					continue;
+				}
+
+				if (lastLinetFileInputDelimited_2 > -1
+						&& currentLinetFileInputDelimited_2 > lastLinetFileInputDelimited_2) {
+					break;
+				}
+				outputLinetFileInputDelimited_2++;
+				if (limittFileInputDelimited_2 != -1
+						&& outputLinetFileInputDelimited_2 > limittFileInputDelimited_2) {
+					break;
+				}
+
+				row6 = null;
+				boolean whetherReject_tFileInputDelimited_2 = false;
+				row6 = new row6Struct();
+				try {
+
+					if (rowtFileInputDelimited_2.length == 1
+							&& rowtFileInputDelimited_2[0].equals("\015")) {// empty
+																			// line
+																			// when
+																			// row
+																			// separator
+																			// is
+																			// '\n'
+
+						row6.key = null;
+
+						row6.value = null;
+
+					} else {
+
+						if (0 < rowtFileInputDelimited_2.length) {
+							row6.key = rowtFileInputDelimited_2[0].trim();
+
+						} else {
+
+							row6.key = null;
+
+						}
+
+						if (1 < rowtFileInputDelimited_2.length) {
+							row6.value = rowtFileInputDelimited_2[1].trim();
+
+						} else {
+
+							row6.value = null;
+
+						}
+
+					}
+
+				} catch (Exception e) {
+					whetherReject_tFileInputDelimited_2 = true;
+					throw (e);
+				}
+
+				/**
+				 * [tFileInputDelimited_2 begin ] stop
+				 */
+				/***************************************************************
+				 * / [tFileInputDelimited_2 main ] start
+				 */
+
+				currentComponent = "tFileInputDelimited_2";
+
+				/**
+				 * [tFileInputDelimited_2 main ] stop
+				 */
+				// Start of branch "row6"
+				if (row6 != null) {
+
+					/***********************************************************
+					 * / [tContextLoad_1 main ] start
+					 */
+
+					currentComponent = "tContextLoad_1";
+
+					// ////////////////////////
+					String key_tContextLoad_1 = null;
+					if (row6.key != null) {
+						key_tContextLoad_1 = row6.key;
+					}
+					String value_tContextLoad_1 = null;
+					if (row6.value != null) {
+						value_tContextLoad_1 = row6.value;
+					}
+					if (context.getProperty(key_tContextLoad_1) != null) {
+						context.setProperty(key_tContextLoad_1,
+								value_tContextLoad_1);
+
+						if (key_tContextLoad_1 != null
+								&& "param_file_path".equals(key_tContextLoad_1)) {
+							context.param_file_path = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "data_dir".equals(key_tContextLoad_1)) {
+							context.data_dir = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "data_output_dir".equals(key_tContextLoad_1)) {
+							context.data_output_dir = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_host".equals(key_tContextLoad_1)) {
+							context.result_host = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_port".equals(key_tContextLoad_1)) {
+							context.result_port = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_database".equals(key_tContextLoad_1)) {
+							context.result_database = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_username".equals(key_tContextLoad_1)) {
+							context.result_username = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_password".equals(key_tContextLoad_1)) {
+							context.result_password = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_table".equals(key_tContextLoad_1)) {
+							context.result_table = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_host".equals(key_tContextLoad_1)) {
+							context.mysql_host = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_port".equals(key_tContextLoad_1)) {
+							context.mysql_port = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_schema".equals(key_tContextLoad_1)) {
+							context.mysql_schema = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_username".equals(key_tContextLoad_1)) {
+							context.mysql_username = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_password".equals(key_tContextLoad_1)) {
+							context.mysql_password = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "current_job_dir".equals(key_tContextLoad_1)) {
+							context.current_job_dir = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "indexMain".equals(key_tContextLoad_1)) {
+							context.indexMain = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "indexLookup".equals(key_tContextLoad_1)) {
+							context.indexLookup = value_tContextLoad_1;
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "bufferSizeValue".equals(key_tContextLoad_1)) {
+							context.bufferSizeValue = value_tContextLoad_1;
+						}
+
+						assignList_tContextLoad_1.add(key_tContextLoad_1);
+					} else {
+						context.setProperty(key_tContextLoad_1,
+								value_tContextLoad_1);
+
+						if (key_tContextLoad_1 != null
+								&& "param_file_path".equals(key_tContextLoad_1)) {
+							context.param_file_path = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "data_dir".equals(key_tContextLoad_1)) {
+							context.data_dir = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "data_output_dir".equals(key_tContextLoad_1)) {
+							context.data_output_dir = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_host".equals(key_tContextLoad_1)) {
+							context.result_host = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_port".equals(key_tContextLoad_1)) {
+							context.result_port = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_database".equals(key_tContextLoad_1)) {
+							context.result_database = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_username".equals(key_tContextLoad_1)) {
+							context.result_username = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_password".equals(key_tContextLoad_1)) {
+							context.result_password = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "result_table".equals(key_tContextLoad_1)) {
+							context.result_table = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_host".equals(key_tContextLoad_1)) {
+							context.mysql_host = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_port".equals(key_tContextLoad_1)) {
+							context.mysql_port = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_schema".equals(key_tContextLoad_1)) {
+							context.mysql_schema = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_username".equals(key_tContextLoad_1)) {
+							context.mysql_username = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "mysql_password".equals(key_tContextLoad_1)) {
+							context.mysql_password = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "current_job_dir".equals(key_tContextLoad_1)) {
+							context.current_job_dir = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "indexMain".equals(key_tContextLoad_1)) {
+							context.indexMain = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "indexLookup".equals(key_tContextLoad_1)) {
+							context.indexLookup = value_tContextLoad_1;
+
+						}
+
+						if (key_tContextLoad_1 != null
+								&& "bufferSizeValue".equals(key_tContextLoad_1)) {
+							context.bufferSizeValue = value_tContextLoad_1;
+
+						}
+
+						newPropertyList_tContextLoad_1.add(key_tContextLoad_1);
+					}
+					nb_line_tContextLoad_1++;
+					// ////////////////////////
+
+					/**
+					 * [tContextLoad_1 main ] stop
+					 */
+
+				} // End of branch "row6"
+
+				/***************************************************************
+				 * / [tFileInputDelimited_2 end ] start
+				 */
+
+				currentComponent = "tFileInputDelimited_2";
+
+				nb_line_tFileInputDelimited_2++;
+			}
+			csvReadertFileInputDelimited_2.close();
+			globalMap.put("tFileInputDelimited_2_NB_LINE",
+					nb_line_tFileInputDelimited_2);
+
+			ok_Hash.put("tFileInputDelimited_2", true);
+			end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
+
+			/**
+			 * [tFileInputDelimited_2 end ] stop
+			 */
+			/*******************************************************************
+			 * / [tContextLoad_1 end ] start
+			 */
+
+			currentComponent = "tContextLoad_1";
+
+			java.util.Enumeration<?> enu_tContextLoad_1 = context
+					.propertyNames();
+			while (enu_tContextLoad_1.hasMoreElements()) {
+				String key_tContextLoad_1 = (String) enu_tContextLoad_1
+						.nextElement();
+				if (!assignList_tContextLoad_1.contains(key_tContextLoad_1)
+						&& !newPropertyList_tContextLoad_1
+								.contains(key_tContextLoad_1)) {
+					noAssignList_tContextLoad_1.add(key_tContextLoad_1);
+				}
+			}
+			globalMap.put("tContextLoad_1_NB_LINE", nb_line_tContextLoad_1);
 
-            java.util.Enumeration<?> enu_tContextLoad_1 = context
-                    .propertyNames();
-            while (enu_tContextLoad_1.hasMoreElements()) {
-                String key_tContextLoad_1 = (String) enu_tContextLoad_1
-                        .nextElement();
-                if (!assignList_tContextLoad_1.contains(key_tContextLoad_1)
-                        && !newPropertyList_tContextLoad_1
-                                .contains(key_tContextLoad_1)) {
-                    noAssignList_tContextLoad_1.add(key_tContextLoad_1);
-                }
-            }
-            globalMap.put("tContextLoad_1_NB_LINE", nb_line_tContextLoad_1);
+			ok_Hash.put("tContextLoad_1", true);
+			end_Hash.put("tContextLoad_1", System.currentTimeMillis());
 
-            ok_Hash.put("tContextLoad_1", true);
-            end_Hash.put("tContextLoad_1", System.currentTimeMillis());
+			/**
+			 * [tContextLoad_1 end ] stop
+			 */
 
-            /**
-             * [tContextLoad_1 end ] stop
-             */
+			tJavaFlex_3Process();
 
-            tJavaFlex_3Process();
+		} catch (Exception e) {
 
-        } catch (Exception e) {
+			throw new TalendException(this, e);
+		}
 
-            throw new TalendException(this, e);
-        }
+	}
 
-    }
+	public void tJavaFlex_3Process() throws TalendException {
+		try {
 
-    public void tJavaFlex_3Process() throws TalendException {
-        try {
+			/*******************************************************************
+			 * / [tJavaFlex_3 begin ] start
+			 */
 
-            /*******************************************************************
-             * / [tJavaFlex_3 begin ] start
-             */
+			ok_Hash.put("tJavaFlex_3", false);
+			start_Hash.put("tJavaFlex_3", System.currentTimeMillis());
+			currentComponent = "tJavaFlex_3";
 
-            ok_Hash.put("tJavaFlex_3", false);
-            start_Hash.put("tJavaFlex_3", System.currentTimeMillis());
-            currentComponent = "tJavaFlex_3";
+			// start part of your Java code
 
-            // start part of your Java code
+			/**
+			 * [tJavaFlex_3 begin ] stop
+			 */
+			/*******************************************************************
+			 * / [tJavaFlex_3 main ] start
+			 */
 
-            /**
-             * [tJavaFlex_3 begin ] stop
-             */
-            /*******************************************************************
-             * / [tJavaFlex_3 main ] start
-             */
+			currentComponent = "tJavaFlex_3";
 
-            currentComponent = "tJavaFlex_3";
+			// here is the main part of the component,
+			// a piece of code executed in the row
+			// loop
+			// System.out.println("Testing with files 'main_" +
+			// context.indexMain + ".csv' and 'lookup_" + context.indexLookup
+			// +".csv' ...");
 
-            // here is the main part of the component,
-            // a piece of code executed in the row
-            // loop
-            // System.out.println("Testing with files 'main_" +
-            // context.indexMain + ".csv' and 'lookup_" + context.indexLookup
-            // +".csv' ...");
+			/**
+			 * [tJavaFlex_3 main ] stop
+			 */
+			/*******************************************************************
+			 * / [tJavaFlex_3 end ] start
+			 */
 
-            /**
-             * [tJavaFlex_3 main ] stop
-             */
-            /*******************************************************************
-             * / [tJavaFlex_3 end ] start
-             */
+			currentComponent = "tJavaFlex_3";
 
-            currentComponent = "tJavaFlex_3";
+			// end of the component, outside/closing the loop
 
-            // end of the component, outside/closing the loop
+			ok_Hash.put("tJavaFlex_3", true);
+			end_Hash.put("tJavaFlex_3", System.currentTimeMillis());
 
-            ok_Hash.put("tJavaFlex_3", true);
-            end_Hash.put("tJavaFlex_3", System.currentTimeMillis());
+			/**
+			 * [tJavaFlex_3 end ] stop
+			 */
+			tFixedFlowInput_2Process();
 
-            /**
-             * [tJavaFlex_3 end ] stop
-             */
-            tFixedFlowInput_2Process();
+		} catch (Exception e) {
 
-        } catch (Exception e) {
+			throw new TalendException(this, e);
+		}
 
-            throw new TalendException(this, e);
-        }
+	}
 
-    }
+	private class out2Struct implements
+			routines.system.IPersistableRow<out2Struct> {
 
-    private class out2Struct implements
-            routines.system.IPersistableRow<out2Struct> {
+		boolean DEFINED_EXP_boolean;
 
-        boolean DEFINED_EXP_boolean;
+		Boolean DEFINED_EXP_Boolean;
 
-        Boolean DEFINED_EXP_Boolean;
+		Boolean UNDEFINED_EXP_Boolean;
 
-        Boolean UNDEFINED_EXP_Boolean;
+		byte DEFINED_EXP_byte;
 
-        byte DEFINED_EXP_byte;
+		Byte DEFINED_EXP_Byte;
 
-        Byte DEFINED_EXP_Byte;
+		Byte UNDEFINED_EXP_Byte;
 
-        Byte UNDEFINED_EXP_Byte;
+		String DEFINED_EXP_byte_array;
 
-        String DEFINED_EXP_byte_array;
+		byte[] DEFINED_EXP_byte_array_nullable;
 
-        byte[] DEFINED_EXP_byte_array_nullable;
+		char DEFINED_EXP_char;
 
-        char DEFINED_EXP_char;
+		Character DEFINED_EXP_Character;
 
-        Character DEFINED_EXP_Character;
+		Character UNDEFINED_EXP_Character;
 
-        Character UNDEFINED_EXP_Character;
+		String DEFINED_EXP_Date;
 
-        String DEFINED_EXP_Date;
+		java.util.Date UNDEFINED_EXP_Date;
 
-        java.util.Date UNDEFINED_EXP_Date;
+		double DEFINED_EXP_double;
 
-        double DEFINED_EXP_double;
+		Double DEFINED_EXP_Double;
 
-        Double DEFINED_EXP_Double;
+		Double UNDEFINED_EXP_Double;
 
-        Double UNDEFINED_EXP_Double;
+		int DEFINED_EXP_int;
 
-        int DEFINED_EXP_int;
+		Integer DEFINED_EXP_Integer;
 
-        Integer DEFINED_EXP_Integer;
+		Integer UNDEFINED_EXP_Integer;
 
-        Integer UNDEFINED_EXP_Integer;
+		float DEFINED_EXP_float;
 
-        float DEFINED_EXP_float;
+		Float DEFINED_EXP_Float;
 
-        Float DEFINED_EXP_Float;
+		Float UNDEFINED_EXP_Float;
 
-        Float UNDEFINED_EXP_Float;
+		long DEFINED_EXP_long;
 
-        long DEFINED_EXP_long;
+		Long DEFINED_EXP_Long;
 
-        Long DEFINED_EXP_Long;
+		Long UNDEFINED_EXP_Long;
 
-        Long UNDEFINED_EXP_Long;
+		Object DEFINED_EXP_Object;
 
-        Object DEFINED_EXP_Object;
+		Object UNDEFINED_EXP_Object;
 
-        Object UNDEFINED_EXP_Object;
+		short DEFINED_EXP_short;
 
-        short DEFINED_EXP_short;
+		Short DEFINED_EXP_Short;
 
-        Short DEFINED_EXP_Short;
+		Short UNDEFINED_EXP_Short;
 
-        Short UNDEFINED_EXP_Short;
+		String DEFINED_EXP_String;
 
-        String DEFINED_EXP_String;
+		String UNDEFINED_EXP_String;
 
-        String UNDEFINED_EXP_String;
+		boolean DEFINED_EXP_boolean_1;
 
-        boolean DEFINED_EXP_boolean_1;
+		Boolean DEFINED_EXP_Boolean_1;
 
-        Boolean DEFINED_EXP_Boolean_1;
+		Boolean UNDEFINED_EXP_Boolean_1;
 
-        Boolean UNDEFINED_EXP_Boolean_1;
+		byte DEFINED_EXP_byte_1;
 
-        byte DEFINED_EXP_byte_1;
+		Byte DEFINED_EXP_Byte_1;
 
-        Byte DEFINED_EXP_Byte_1;
+		Byte UNDEFINED_EXP_Byte_1;
 
-        Byte UNDEFINED_EXP_Byte_1;
+		String DEFINED_EXP_byte_array_1;
 
-        String DEFINED_EXP_byte_array_1;
+		byte[] DEFINED_EXP_byte_array_nullable_1;
 
-        byte[] DEFINED_EXP_byte_array_nullable_1;
+		char DEFINED_EXP_char_1;
 
-        char DEFINED_EXP_char_1;
+		Character DEFINED_EXP_Character_1;
 
-        Character DEFINED_EXP_Character_1;
+		Character UNDEFINED_EXP_Character_1;
 
-        Character UNDEFINED_EXP_Character_1;
+		String DEFINED_EXP_Date_1;
 
-        String DEFINED_EXP_Date_1;
+		java.util.Date UNDEFINED_EXP_Date_1;
 
-        java.util.Date UNDEFINED_EXP_Date_1;
+		double DEFINED_EXP_double_1;
 
-        double DEFINED_EXP_double_1;
+		Double DEFINED_EXP_Double_1;
 
-        Double DEFINED_EXP_Double_1;
+		Double UNDEFINED_EXP_Double_1;
 
-        Double UNDEFINED_EXP_Double_1;
+		int DEFINED_EXP_int_1;
 
-        int DEFINED_EXP_int_1;
+		Integer DEFINED_EXP_Integer_1;
 
-        Integer DEFINED_EXP_Integer_1;
+		Integer UNDEFINED_EXP_Integer_1;
 
-        Integer UNDEFINED_EXP_Integer_1;
+		float DEFINED_EXP_float_1;
 
-        float DEFINED_EXP_float_1;
+		Float DEFINED_EXP_Float_1;
 
-        Float DEFINED_EXP_Float_1;
+		Float UNDEFINED_EXP_Float_1;
 
-        Float UNDEFINED_EXP_Float_1;
+		long DEFINED_EXP_long_1;
 
-        long DEFINED_EXP_long_1;
+		Long DEFINED_EXP_Long_1;
 
-        Long DEFINED_EXP_Long_1;
+		Long UNDEFINED_EXP_Long_1;
 
-        Long UNDEFINED_EXP_Long_1;
+		Object DEFINED_EXP_Object_1;
 
-        Object DEFINED_EXP_Object_1;
+		Object UNDEFINED_EXP_Object_1;
 
-        Object UNDEFINED_EXP_Object_1;
+		short DEFINED_EXP_short_1;
 
-        short DEFINED_EXP_short_1;
+		Short DEFINED_EXP_Short_1;
 
-        Short DEFINED_EXP_Short_1;
+		Short UNDEFINED_EXP_Short_1;
 
-        Short UNDEFINED_EXP_Short_1;
+		String DEFINED_EXP_String_1;
 
-        String DEFINED_EXP_String_1;
+		String UNDEFINED_EXP_String_1;
 
-        String UNDEFINED_EXP_String_1;
+		public void readData(ObjectInputStream dis) {
 
-        public void readData(DataInputStream dis) {
+			try {
 
-            try {
+				
+				int length = 0;
 
-                ObjectInputStream ois = null;
-                int length = 0;
+				this.DEFINED_EXP_boolean = dis.readBoolean();
 
-                this.DEFINED_EXP_boolean = dis.readBoolean();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Boolean = null;
+				} else {
+					this.DEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Boolean = null;
-                } else {
-                    this.DEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Boolean = null;
+				} else {
+					this.UNDEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Boolean = null;
-                } else {
-                    this.UNDEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				this.DEFINED_EXP_byte = dis.readByte();
 
-                this.DEFINED_EXP_byte = dis.readByte();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Byte = null;
+				} else {
+					this.DEFINED_EXP_Byte = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Byte = null;
-                } else {
-                    this.DEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Byte = null;
+				} else {
+					this.UNDEFINED_EXP_Byte = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Byte = null;
-                } else {
-                    this.UNDEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_nullable = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_nullable = byteArray;
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_nullable = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_nullable = byteArray;
-                }
+				this.DEFINED_EXP_char = dis.readChar();
 
-                this.DEFINED_EXP_char = dis.readChar();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Character = null;
+				} else {
+					this.DEFINED_EXP_Character = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Character = null;
-                } else {
-                    this.DEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Character = null;
+				} else {
+					this.UNDEFINED_EXP_Character = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Character = null;
-                } else {
-                    this.UNDEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_Date = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_Date = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_Date = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_Date = new String(byteArray);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Date = null;
+				} else {
+					this.UNDEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Date = null;
-                } else {
-                    this.UNDEFINED_EXP_Date = new Date(dis.readLong());
-                }
+				this.DEFINED_EXP_double = dis.readDouble();
 
-                this.DEFINED_EXP_double = dis.readDouble();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Double = null;
+				} else {
+					this.DEFINED_EXP_Double = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Double = null;
-                } else {
-                    this.DEFINED_EXP_Double = dis.readDouble();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Double = null;
+				} else {
+					this.UNDEFINED_EXP_Double = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Double = null;
-                } else {
-                    this.UNDEFINED_EXP_Double = dis.readDouble();
-                }
+				this.DEFINED_EXP_int = dis.readInt();
 
-                this.DEFINED_EXP_int = dis.readInt();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Integer = null;
+				} else {
+					this.DEFINED_EXP_Integer = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Integer = null;
-                } else {
-                    this.DEFINED_EXP_Integer = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Integer = null;
+				} else {
+					this.UNDEFINED_EXP_Integer = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Integer = null;
-                } else {
-                    this.UNDEFINED_EXP_Integer = dis.readInt();
-                }
+				this.DEFINED_EXP_float = dis.readFloat();
 
-                this.DEFINED_EXP_float = dis.readFloat();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Float = null;
+				} else {
+					this.DEFINED_EXP_Float = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Float = null;
-                } else {
-                    this.DEFINED_EXP_Float = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Float = null;
+				} else {
+					this.UNDEFINED_EXP_Float = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Float = null;
-                } else {
-                    this.UNDEFINED_EXP_Float = dis.readFloat();
-                }
+				this.DEFINED_EXP_long = dis.readLong();
 
-                this.DEFINED_EXP_long = dis.readLong();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Long = null;
+				} else {
+					this.DEFINED_EXP_Long = dis.readLong();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Long = null;
-                } else {
-                    this.DEFINED_EXP_Long = dis.readLong();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Long = null;
+				} else {
+					this.UNDEFINED_EXP_Long = dis.readLong();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Long = null;
-                } else {
-                    this.UNDEFINED_EXP_Long = dis.readLong();
-                }
+				this.DEFINED_EXP_Object = dis.readObject();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.DEFINED_EXP_Object = ois.readObject();
+				this.UNDEFINED_EXP_Object = dis.readObject();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.UNDEFINED_EXP_Object = ois.readObject();
+				this.DEFINED_EXP_short = dis.readShort();
 
-                this.DEFINED_EXP_short = dis.readShort();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Short = null;
+				} else {
+					this.DEFINED_EXP_Short = dis.readShort();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Short = null;
-                } else {
-                    this.DEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Short = null;
+				} else {
+					this.UNDEFINED_EXP_Short = dis.readShort();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Short = null;
-                } else {
-                    this.UNDEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_String = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_String = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.UNDEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.UNDEFINED_EXP_String = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.UNDEFINED_EXP_String = new String(byteArray);
-                }
+				this.DEFINED_EXP_boolean_1 = dis.readBoolean();
 
-                this.DEFINED_EXP_boolean_1 = dis.readBoolean();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Boolean_1 = null;
+				} else {
+					this.DEFINED_EXP_Boolean_1 = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Boolean_1 = null;
-                } else {
-                    this.DEFINED_EXP_Boolean_1 = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Boolean_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Boolean_1 = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Boolean_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Boolean_1 = dis.readBoolean();
-                }
+				this.DEFINED_EXP_byte_1 = dis.readByte();
 
-                this.DEFINED_EXP_byte_1 = dis.readByte();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Byte_1 = null;
+				} else {
+					this.DEFINED_EXP_Byte_1 = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Byte_1 = null;
-                } else {
-                    this.DEFINED_EXP_Byte_1 = dis.readByte();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Byte_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Byte_1 = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Byte_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Byte_1 = dis.readByte();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_1 = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_1 = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_nullable_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_nullable_1 = byteArray;
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_nullable_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_nullable_1 = byteArray;
-                }
+				this.DEFINED_EXP_char_1 = dis.readChar();
 
-                this.DEFINED_EXP_char_1 = dis.readChar();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Character_1 = null;
+				} else {
+					this.DEFINED_EXP_Character_1 = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Character_1 = null;
-                } else {
-                    this.DEFINED_EXP_Character_1 = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Character_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Character_1 = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Character_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Character_1 = dis.readChar();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_Date_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_Date_1 = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_Date_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_Date_1 = new String(byteArray);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Date_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Date_1 = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Date_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Date_1 = new Date(dis.readLong());
-                }
+				this.DEFINED_EXP_double_1 = dis.readDouble();
 
-                this.DEFINED_EXP_double_1 = dis.readDouble();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Double_1 = null;
+				} else {
+					this.DEFINED_EXP_Double_1 = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Double_1 = null;
-                } else {
-                    this.DEFINED_EXP_Double_1 = dis.readDouble();
-                }
-
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Double_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Double_1 = dis.readDouble();
-                }
-
-                this.DEFINED_EXP_int_1 = dis.readInt();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Double_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Double_1 = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Integer_1 = null;
-                } else {
-                    this.DEFINED_EXP_Integer_1 = dis.readInt();
-                }
+				this.DEFINED_EXP_int_1 = dis.readInt();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Integer_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Integer_1 = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Integer_1 = null;
+				} else {
+					this.DEFINED_EXP_Integer_1 = dis.readInt();
+				}
 
-                this.DEFINED_EXP_float_1 = dis.readFloat();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Integer_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Integer_1 = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Float_1 = null;
-                } else {
-                    this.DEFINED_EXP_Float_1 = dis.readFloat();
-                }
+				this.DEFINED_EXP_float_1 = dis.readFloat();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Float_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Float_1 = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Float_1 = null;
+				} else {
+					this.DEFINED_EXP_Float_1 = dis.readFloat();
+				}
 
-                this.DEFINED_EXP_long_1 = dis.readLong();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Float_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Float_1 = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Long_1 = null;
-                } else {
-                    this.DEFINED_EXP_Long_1 = dis.readLong();
-                }
+				this.DEFINED_EXP_long_1 = dis.readLong();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Long_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Long_1 = dis.readLong();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Long_1 = null;
+				} else {
+					this.DEFINED_EXP_Long_1 = dis.readLong();
+				}
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.DEFINED_EXP_Object_1 = ois.readObject();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Long_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Long_1 = dis.readLong();
+				}
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.UNDEFINED_EXP_Object_1 = ois.readObject();
+				this.DEFINED_EXP_Object_1 = dis.readObject();
 
-                this.DEFINED_EXP_short_1 = dis.readShort();
+				this.UNDEFINED_EXP_Object_1 = dis.readObject();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Short_1 = null;
-                } else {
-                    this.DEFINED_EXP_Short_1 = dis.readShort();
-                }
+				this.DEFINED_EXP_short_1 = dis.readShort();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Short_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Short_1 = dis.readShort();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Short_1 = null;
+				} else {
+					this.DEFINED_EXP_Short_1 = dis.readShort();
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_String_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_String_1 = new String(byteArray);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Short_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Short_1 = dis.readShort();
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_String_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.UNDEFINED_EXP_String_1 = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_String_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_String_1 = new String(byteArray);
+				}
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+				length = dis.readInt();
+				if (length == -1) {
+					this.UNDEFINED_EXP_String_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.UNDEFINED_EXP_String_1 = new String(byteArray);
+				}
 
-            } catch (ClassNotFoundException eCNFE) {
-                throw new RuntimeException(eCNFE);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 
-            }
+			} catch (ClassNotFoundException eCNFE) {
+				throw new RuntimeException(eCNFE);
 
-        }
+			}
 
-        public void writeData(DataOutputStream dos) {
-            try {
+		}
 
-                ObjectOutputStream oos = null;
+		public void writeData(ObjectOutputStream dos) {
+			try {
 
-                // boolean
+				// boolean
 
-                dos.writeBoolean(this.DEFINED_EXP_boolean);
+				dos.writeBoolean(this.DEFINED_EXP_boolean);
 
-                // Boolean
+				// Boolean
 
-                if (this.DEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.DEFINED_EXP_Boolean);
-                }
+				if (this.DEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.DEFINED_EXP_Boolean);
+				}
 
-                // Boolean
+				// Boolean
 
-                if (this.UNDEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
-                }
+				if (this.UNDEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
+				}
 
-                // byte
+				// byte
 
-                dos.writeByte(this.DEFINED_EXP_byte);
+				dos.writeByte(this.DEFINED_EXP_byte);
 
-                // Byte
+				// Byte
 
-                if (this.DEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.DEFINED_EXP_Byte);
-                }
+				if (this.DEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.DEFINED_EXP_Byte);
+				}
 
-                // Byte
+				// Byte
 
-                if (this.UNDEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.UNDEFINED_EXP_Byte);
-                }
+				if (this.UNDEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.UNDEFINED_EXP_Byte);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_byte_array == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_byte_array.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.DEFINED_EXP_byte_array == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_byte_array.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // byte[]
+				// byte[]
 
-                if (this.DEFINED_EXP_byte_array_nullable == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
-                    dos.write(this.DEFINED_EXP_byte_array_nullable);
-                }
+				if (this.DEFINED_EXP_byte_array_nullable == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
+					dos.write(this.DEFINED_EXP_byte_array_nullable);
+				}
 
-                // char
+				// char
 
-                dos.writeChar(this.DEFINED_EXP_char);
+				dos.writeChar(this.DEFINED_EXP_char);
 
-                // Character
+				// Character
 
-                if (this.DEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.DEFINED_EXP_Character);
-                }
+				if (this.DEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.DEFINED_EXP_Character);
+				}
 
-                // Character
+				// Character
 
-                if (this.UNDEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.UNDEFINED_EXP_Character);
-                }
+				if (this.UNDEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.UNDEFINED_EXP_Character);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_Date.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.DEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_Date.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // java.util.Date
+				// java.util.Date
 
-                if (this.UNDEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
-                }
+				if (this.UNDEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
+				}
 
-                // double
+				// double
 
-                dos.writeDouble(this.DEFINED_EXP_double);
+				dos.writeDouble(this.DEFINED_EXP_double);
 
-                // Double
+				// Double
 
-                if (this.DEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.DEFINED_EXP_Double);
-                }
+				if (this.DEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.DEFINED_EXP_Double);
+				}
 
-                // Double
+				// Double
 
-                if (this.UNDEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.UNDEFINED_EXP_Double);
-                }
+				if (this.UNDEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.UNDEFINED_EXP_Double);
+				}
 
-                // int
+				// int
 
-                dos.writeInt(this.DEFINED_EXP_int);
+				dos.writeInt(this.DEFINED_EXP_int);
 
-                // Integer
+				// Integer
 
-                if (this.DEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.DEFINED_EXP_Integer);
-                }
+				if (this.DEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.DEFINED_EXP_Integer);
+				}
 
-                // Integer
+				// Integer
 
-                if (this.UNDEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.UNDEFINED_EXP_Integer);
-                }
+				if (this.UNDEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.UNDEFINED_EXP_Integer);
+				}
 
-                // float
+				// float
 
-                dos.writeFloat(this.DEFINED_EXP_float);
+				dos.writeFloat(this.DEFINED_EXP_float);
 
-                // Float
+				// Float
 
-                if (this.DEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.DEFINED_EXP_Float);
-                }
+				if (this.DEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.DEFINED_EXP_Float);
+				}
 
-                // Float
+				// Float
 
-                if (this.UNDEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.UNDEFINED_EXP_Float);
-                }
+				if (this.UNDEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.UNDEFINED_EXP_Float);
+				}
 
-                // long
+				// long
 
-                dos.writeLong(this.DEFINED_EXP_long);
+				dos.writeLong(this.DEFINED_EXP_long);
 
-                // Long
+				// Long
 
-                if (this.DEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.DEFINED_EXP_Long);
-                }
+				if (this.DEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.DEFINED_EXP_Long);
+				}
 
-                // Long
+				// Long
 
-                if (this.UNDEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.UNDEFINED_EXP_Long);
-                }
+				if (this.UNDEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.UNDEFINED_EXP_Long);
+				}
 
-                // Object
+				// Object
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.DEFINED_EXP_Object);
+				dos.writeObject(this.DEFINED_EXP_Object);
 
-                // Object
+				// Object
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.UNDEFINED_EXP_Object);
+				dos.writeObject(this.UNDEFINED_EXP_Object);
 
-                // short
+				// short
 
-                dos.writeShort(this.DEFINED_EXP_short);
+				dos.writeShort(this.DEFINED_EXP_short);
 
-                // Short
+				// Short
 
-                if (this.DEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.DEFINED_EXP_Short);
-                }
+				if (this.DEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.DEFINED_EXP_Short);
+				}
 
-                // Short
+				// Short
 
-                if (this.UNDEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.UNDEFINED_EXP_Short);
-                }
+				if (this.UNDEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.UNDEFINED_EXP_Short);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.DEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // String
+				// String
 
-                if (this.UNDEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.UNDEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // boolean
+				// boolean
 
-                dos.writeBoolean(this.DEFINED_EXP_boolean_1);
+				dos.writeBoolean(this.DEFINED_EXP_boolean_1);
 
-                // Boolean
+				// Boolean
 
-                if (this.DEFINED_EXP_Boolean_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.DEFINED_EXP_Boolean_1);
-                }
+				if (this.DEFINED_EXP_Boolean_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.DEFINED_EXP_Boolean_1);
+				}
 
-                // Boolean
+				// Boolean
 
-                if (this.UNDEFINED_EXP_Boolean_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.UNDEFINED_EXP_Boolean_1);
-                }
+				if (this.UNDEFINED_EXP_Boolean_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.UNDEFINED_EXP_Boolean_1);
+				}
 
-                // byte
+				// byte
 
-                dos.writeByte(this.DEFINED_EXP_byte_1);
+				dos.writeByte(this.DEFINED_EXP_byte_1);
 
-                // Byte
+				// Byte
 
-                if (this.DEFINED_EXP_Byte_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.DEFINED_EXP_Byte_1);
-                }
+				if (this.DEFINED_EXP_Byte_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.DEFINED_EXP_Byte_1);
+				}
 
-                // Byte
+				// Byte
 
-                if (this.UNDEFINED_EXP_Byte_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.UNDEFINED_EXP_Byte_1);
-                }
+				if (this.UNDEFINED_EXP_Byte_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.UNDEFINED_EXP_Byte_1);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_byte_array_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_byte_array_1.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.DEFINED_EXP_byte_array_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_byte_array_1.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // byte[]
+				// byte[]
 
-                if (this.DEFINED_EXP_byte_array_nullable_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_nullable_1.length);
-                    dos.write(this.DEFINED_EXP_byte_array_nullable_1);
-                }
+				if (this.DEFINED_EXP_byte_array_nullable_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_nullable_1.length);
+					dos.write(this.DEFINED_EXP_byte_array_nullable_1);
+				}
 
-                // char
+				// char
 
-                dos.writeChar(this.DEFINED_EXP_char_1);
+				dos.writeChar(this.DEFINED_EXP_char_1);
 
-                // Character
+				// Character
 
-                if (this.DEFINED_EXP_Character_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.DEFINED_EXP_Character_1);
-                }
+				if (this.DEFINED_EXP_Character_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.DEFINED_EXP_Character_1);
+				}
 
-                // Character
+				// Character
 
-                if (this.UNDEFINED_EXP_Character_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.UNDEFINED_EXP_Character_1);
-                }
+				if (this.UNDEFINED_EXP_Character_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.UNDEFINED_EXP_Character_1);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_Date_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_Date_1.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.DEFINED_EXP_Date_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_Date_1.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // java.util.Date
+				// java.util.Date
 
-                if (this.UNDEFINED_EXP_Date_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.UNDEFINED_EXP_Date_1.getTime());
-                }
+				if (this.UNDEFINED_EXP_Date_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.UNDEFINED_EXP_Date_1.getTime());
+				}
 
-                // double
+				// double
 
-                dos.writeDouble(this.DEFINED_EXP_double_1);
+				dos.writeDouble(this.DEFINED_EXP_double_1);
 
-                // Double
+				// Double
 
-                if (this.DEFINED_EXP_Double_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.DEFINED_EXP_Double_1);
-                }
+				if (this.DEFINED_EXP_Double_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.DEFINED_EXP_Double_1);
+				}
 
-                // Double
+				// Double
 
-                if (this.UNDEFINED_EXP_Double_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.UNDEFINED_EXP_Double_1);
-                }
+				if (this.UNDEFINED_EXP_Double_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.UNDEFINED_EXP_Double_1);
+				}
 
-                // int
+				// int
 
-                dos.writeInt(this.DEFINED_EXP_int_1);
+				dos.writeInt(this.DEFINED_EXP_int_1);
 
-                // Integer
+				// Integer
 
-                if (this.DEFINED_EXP_Integer_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.DEFINED_EXP_Integer_1);
-                }
+				if (this.DEFINED_EXP_Integer_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.DEFINED_EXP_Integer_1);
+				}
 
-                // Integer
+				// Integer
 
-                if (this.UNDEFINED_EXP_Integer_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.UNDEFINED_EXP_Integer_1);
-                }
+				if (this.UNDEFINED_EXP_Integer_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.UNDEFINED_EXP_Integer_1);
+				}
 
-                // float
+				// float
 
-                dos.writeFloat(this.DEFINED_EXP_float_1);
+				dos.writeFloat(this.DEFINED_EXP_float_1);
 
-                // Float
+				// Float
 
-                if (this.DEFINED_EXP_Float_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.DEFINED_EXP_Float_1);
-                }
+				if (this.DEFINED_EXP_Float_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.DEFINED_EXP_Float_1);
+				}
 
-                // Float
+				// Float
 
-                if (this.UNDEFINED_EXP_Float_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.UNDEFINED_EXP_Float_1);
-                }
+				if (this.UNDEFINED_EXP_Float_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.UNDEFINED_EXP_Float_1);
+				}
 
-                // long
+				// long
 
-                dos.writeLong(this.DEFINED_EXP_long_1);
+				dos.writeLong(this.DEFINED_EXP_long_1);
 
-                // Long
+				// Long
 
-                if (this.DEFINED_EXP_Long_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.DEFINED_EXP_Long_1);
-                }
+				if (this.DEFINED_EXP_Long_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.DEFINED_EXP_Long_1);
+				}
 
-                // Long
+				// Long
 
-                if (this.UNDEFINED_EXP_Long_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.UNDEFINED_EXP_Long_1);
-                }
+				if (this.UNDEFINED_EXP_Long_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.UNDEFINED_EXP_Long_1);
+				}
 
-                // Object
+				// Object
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.DEFINED_EXP_Object_1);
+				dos.writeObject(this.DEFINED_EXP_Object_1);
 
-                // Object
+				// Object
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.UNDEFINED_EXP_Object_1);
+				dos.writeObject(this.UNDEFINED_EXP_Object_1);
 
-                // short
+				// short
 
-                dos.writeShort(this.DEFINED_EXP_short_1);
+				dos.writeShort(this.DEFINED_EXP_short_1);
 
-                // Short
+				// Short
 
-                if (this.DEFINED_EXP_Short_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.DEFINED_EXP_Short_1);
-                }
+				if (this.DEFINED_EXP_Short_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.DEFINED_EXP_Short_1);
+				}
 
-                // Short
+				// Short
 
-                if (this.UNDEFINED_EXP_Short_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.UNDEFINED_EXP_Short_1);
-                }
+				if (this.UNDEFINED_EXP_Short_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.UNDEFINED_EXP_Short_1);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_String_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_String_1.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.DEFINED_EXP_String_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_String_1.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // String
+				// String
 
-                if (this.UNDEFINED_EXP_String_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.UNDEFINED_EXP_String_1.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.UNDEFINED_EXP_String_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.UNDEFINED_EXP_String_1.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 
-        }
+		}
 
-        public String toString() {
+		public String toString() {
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(super.toString());
-            sb.append("[");
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
 
-            sb.append("DEFINED_EXP_boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_boolean));
+			sb.append("DEFINED_EXP_boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_boolean));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
+			sb.append("DEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
+			sb.append("UNDEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte));
+			sb.append("DEFINED_EXP_byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Byte));
+			sb.append("DEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
+			sb.append("UNDEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
+			sb.append("DEFINED_EXP_byte_array");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array_nullable");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
+			sb.append("DEFINED_EXP_byte_array_nullable");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_char");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_char));
+			sb.append("DEFINED_EXP_char");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_char));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Character));
+			sb.append("DEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Character));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
+			sb.append("UNDEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Date));
+			sb.append("DEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Date));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
+			sb.append("UNDEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_double));
+			sb.append("DEFINED_EXP_double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Double));
+			sb.append("DEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
+			sb.append("UNDEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_int");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_int));
+			sb.append("DEFINED_EXP_int");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_int));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Integer));
+			sb.append("DEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Integer));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
+			sb.append("UNDEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_float));
+			sb.append("DEFINED_EXP_float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Float));
+			sb.append("DEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
+			sb.append("UNDEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_long));
+			sb.append("DEFINED_EXP_long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Long));
+			sb.append("DEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
+			sb.append("UNDEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Object));
+			sb.append("DEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Object));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
+			sb.append("UNDEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_short));
+			sb.append("DEFINED_EXP_short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Short));
+			sb.append("DEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
+			sb.append("UNDEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_String));
+			sb.append("DEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_String));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_String));
+			sb.append("UNDEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_String));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_boolean_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_boolean_1));
+			sb.append("DEFINED_EXP_boolean_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_boolean_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Boolean_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Boolean_1));
+			sb.append("DEFINED_EXP_Boolean_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Boolean_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Boolean_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean_1));
+			sb.append("UNDEFINED_EXP_Boolean_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_1));
+			sb.append("DEFINED_EXP_byte_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Byte_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Byte_1));
+			sb.append("DEFINED_EXP_Byte_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Byte_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Byte_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Byte_1));
+			sb.append("UNDEFINED_EXP_Byte_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Byte_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_1));
+			sb.append("DEFINED_EXP_byte_array_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array_nullable_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable_1));
+			sb.append("DEFINED_EXP_byte_array_nullable_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_char_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_char_1));
+			sb.append("DEFINED_EXP_char_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_char_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Character_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Character_1));
+			sb.append("DEFINED_EXP_Character_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Character_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Character_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Character_1));
+			sb.append("UNDEFINED_EXP_Character_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Character_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Date_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Date_1));
+			sb.append("DEFINED_EXP_Date_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Date_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Date_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Date_1));
+			sb.append("UNDEFINED_EXP_Date_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Date_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_double_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_double_1));
+			sb.append("DEFINED_EXP_double_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_double_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Double_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Double_1));
+			sb.append("DEFINED_EXP_Double_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Double_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Double_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Double_1));
+			sb.append("UNDEFINED_EXP_Double_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Double_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_int_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_int_1));
+			sb.append("DEFINED_EXP_int_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_int_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Integer_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Integer_1));
+			sb.append("DEFINED_EXP_Integer_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Integer_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Integer_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Integer_1));
+			sb.append("UNDEFINED_EXP_Integer_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Integer_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_float_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_float_1));
+			sb.append("DEFINED_EXP_float_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_float_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Float_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Float_1));
+			sb.append("DEFINED_EXP_Float_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Float_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Float_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Float_1));
+			sb.append("UNDEFINED_EXP_Float_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Float_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_long_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_long_1));
+			sb.append("DEFINED_EXP_long_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_long_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Long_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Long_1));
+			sb.append("DEFINED_EXP_Long_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Long_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Long_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Long_1));
+			sb.append("UNDEFINED_EXP_Long_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Long_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Object_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Object_1));
+			sb.append("DEFINED_EXP_Object_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Object_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Object_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Object_1));
+			sb.append("UNDEFINED_EXP_Object_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Object_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_short_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_short_1));
+			sb.append("DEFINED_EXP_short_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_short_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Short_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Short_1));
+			sb.append("DEFINED_EXP_Short_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Short_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Short_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Short_1));
+			sb.append("UNDEFINED_EXP_Short_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Short_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_String_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_String_1));
+			sb.append("DEFINED_EXP_String_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_String_1));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_String_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_String_1));
+			sb.append("UNDEFINED_EXP_String_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_String_1));
 
-            sb.append("]");
+			sb.append("]");
 
-            return sb.toString();
-        }
+			return sb.toString();
+		}
 
-        /**
-         * Compare keys
-         */
-        public int compareTo(out2Struct other) {
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(out2Struct other) {
 
-            int returnValue = -1;
+			int returnValue = -1;
 
-            return returnValue;
-        }
+			return returnValue;
+		}
 
-        private int checkNullsAndCompare(Object object1, Object object2) {
-            int returnValue = 0;
-            if (object1 instanceof Comparable && object2 instanceof Comparable) {
-                returnValue = ((Comparable) object1).compareTo(object2);
-            } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
-            } else if (object1 == null && object2 != null) {
-                returnValue = 1;
-            } else if (object1 != null && object2 == null) {
-                returnValue = -1;
-            } else {
-                returnValue = 0;
-            }
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
 
-            return returnValue;
-        }
+			return returnValue;
+		}
 
-        private int compareStrings(String string1, String string2) {
-            // if (this.ignoreCase) {
-            return string1.compareToIgnoreCase(string2);
-            // } else {
-            // return string1.compareTo(string2);
-            // }
-        }
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
 
-    }
+	}
 
-    private class outStruct implements
-            routines.system.IPersistableRow<outStruct> {
+	private class outStruct implements
+			routines.system.IPersistableRow<outStruct> {
 
-        boolean DEFINED_EXP_boolean;
+		boolean DEFINED_EXP_boolean;
 
-        Boolean DEFINED_EXP_Boolean;
+		Boolean DEFINED_EXP_Boolean;
 
-        Boolean UNDEFINED_EXP_Boolean;
+		Boolean UNDEFINED_EXP_Boolean;
 
-        byte DEFINED_EXP_byte;
+		byte DEFINED_EXP_byte;
 
-        Byte DEFINED_EXP_Byte;
+		Byte DEFINED_EXP_Byte;
 
-        Byte UNDEFINED_EXP_Byte;
+		Byte UNDEFINED_EXP_Byte;
 
-        byte[] DEFINED_EXP_byte_array;
+		byte[] DEFINED_EXP_byte_array;
 
-        byte[] DEFINED_EXP_byte_array_nullable;
+		byte[] DEFINED_EXP_byte_array_nullable;
 
-        char DEFINED_EXP_char;
+		char DEFINED_EXP_char;
 
-        Character DEFINED_EXP_Character;
+		Character DEFINED_EXP_Character;
 
-        Character UNDEFINED_EXP_Character;
+		Character UNDEFINED_EXP_Character;
 
-        java.util.Date DEFINED_EXP_Date;
+		java.util.Date DEFINED_EXP_Date;
 
-        java.util.Date UNDEFINED_EXP_Date;
+		java.util.Date UNDEFINED_EXP_Date;
 
-        double DEFINED_EXP_double;
+		double DEFINED_EXP_double;
 
-        Double DEFINED_EXP_Double;
+		Double DEFINED_EXP_Double;
 
-        Double UNDEFINED_EXP_Double;
+		Double UNDEFINED_EXP_Double;
 
-        int DEFINED_EXP_int;
+		int DEFINED_EXP_int;
 
-        Integer DEFINED_EXP_Integer;
+		Integer DEFINED_EXP_Integer;
 
-        Integer UNDEFINED_EXP_Integer;
+		Integer UNDEFINED_EXP_Integer;
 
-        float DEFINED_EXP_float;
+		float DEFINED_EXP_float;
 
-        Float DEFINED_EXP_Float;
+		Float DEFINED_EXP_Float;
 
-        Float UNDEFINED_EXP_Float;
+		Float UNDEFINED_EXP_Float;
 
-        long DEFINED_EXP_long;
+		long DEFINED_EXP_long;
 
-        Long DEFINED_EXP_Long;
+		Long DEFINED_EXP_Long;
 
-        Long UNDEFINED_EXP_Long;
+		Long UNDEFINED_EXP_Long;
 
-        Object DEFINED_EXP_Object;
+		Object DEFINED_EXP_Object;
 
-        Object UNDEFINED_EXP_Object;
+		Object UNDEFINED_EXP_Object;
 
-        short DEFINED_EXP_short;
+		short DEFINED_EXP_short;
 
-        Short DEFINED_EXP_Short;
+		Short DEFINED_EXP_Short;
 
-        Short UNDEFINED_EXP_Short;
+		Short UNDEFINED_EXP_Short;
 
-        String DEFINED_EXP_String;
+		String DEFINED_EXP_String;
 
-        String UNDEFINED_EXP_String;
+		String UNDEFINED_EXP_String;
 
-        boolean DEFINED_EXP_boolean_1;
+		boolean DEFINED_EXP_boolean_1;
 
-        Boolean DEFINED_EXP_Boolean_1;
+		Boolean DEFINED_EXP_Boolean_1;
 
-        Boolean UNDEFINED_EXP_Boolean_1;
+		Boolean UNDEFINED_EXP_Boolean_1;
 
-        byte DEFINED_EXP_byte_1;
+		byte DEFINED_EXP_byte_1;
 
-        Byte DEFINED_EXP_Byte_1;
+		Byte DEFINED_EXP_Byte_1;
 
-        Byte UNDEFINED_EXP_Byte_1;
+		Byte UNDEFINED_EXP_Byte_1;
 
-        byte[] DEFINED_EXP_byte_array_1;
+		byte[] DEFINED_EXP_byte_array_1;
 
-        byte[] DEFINED_EXP_byte_array_nullable_1;
+		byte[] DEFINED_EXP_byte_array_nullable_1;
 
-        char DEFINED_EXP_char_1;
+		char DEFINED_EXP_char_1;
 
-        Character DEFINED_EXP_Character_1;
+		Character DEFINED_EXP_Character_1;
 
-        Character UNDEFINED_EXP_Character_1;
+		Character UNDEFINED_EXP_Character_1;
 
-        java.util.Date DEFINED_EXP_Date_1;
+		java.util.Date DEFINED_EXP_Date_1;
 
-        java.util.Date UNDEFINED_EXP_Date_1;
+		java.util.Date UNDEFINED_EXP_Date_1;
 
-        double DEFINED_EXP_double_1;
+		double DEFINED_EXP_double_1;
 
-        Double DEFINED_EXP_Double_1;
+		Double DEFINED_EXP_Double_1;
 
-        Double UNDEFINED_EXP_Double_1;
+		Double UNDEFINED_EXP_Double_1;
 
-        int DEFINED_EXP_int_1;
+		int DEFINED_EXP_int_1;
 
-        Integer DEFINED_EXP_Integer_1;
+		Integer DEFINED_EXP_Integer_1;
 
-        Integer UNDEFINED_EXP_Integer_1;
+		Integer UNDEFINED_EXP_Integer_1;
 
-        float DEFINED_EXP_float_1;
+		float DEFINED_EXP_float_1;
 
-        Float DEFINED_EXP_Float_1;
+		Float DEFINED_EXP_Float_1;
 
-        Float UNDEFINED_EXP_Float_1;
+		Float UNDEFINED_EXP_Float_1;
 
-        long DEFINED_EXP_long_1;
+		long DEFINED_EXP_long_1;
 
-        Long DEFINED_EXP_Long_1;
+		Long DEFINED_EXP_Long_1;
 
-        Long UNDEFINED_EXP_Long_1;
+		Long UNDEFINED_EXP_Long_1;
 
-        Object DEFINED_EXP_Object_1;
+		Object DEFINED_EXP_Object_1;
 
-        Object UNDEFINED_EXP_Object_1;
+		Object UNDEFINED_EXP_Object_1;
 
-        short DEFINED_EXP_short_1;
+		short DEFINED_EXP_short_1;
 
-        Short DEFINED_EXP_Short_1;
+		Short DEFINED_EXP_Short_1;
 
-        Short UNDEFINED_EXP_Short_1;
+		Short UNDEFINED_EXP_Short_1;
 
-        String DEFINED_EXP_String_1;
+		String DEFINED_EXP_String_1;
 
-        String UNDEFINED_EXP_String_1;
+		String UNDEFINED_EXP_String_1;
 
-        public void readData(DataInputStream dis) {
+		public void readData(ObjectInputStream dis) {
 
-            try {
+			try {
 
-                ObjectInputStream ois = null;
-                int length = 0;
+				
+				int length = 0;
 
-                this.DEFINED_EXP_boolean = dis.readBoolean();
+				this.DEFINED_EXP_boolean = dis.readBoolean();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Boolean = null;
-                } else {
-                    this.DEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Boolean = null;
+				} else {
+					this.DEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Boolean = null;
-                } else {
-                    this.UNDEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Boolean = null;
+				} else {
+					this.UNDEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                this.DEFINED_EXP_byte = dis.readByte();
+				this.DEFINED_EXP_byte = dis.readByte();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Byte = null;
-                } else {
-                    this.DEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Byte = null;
+				} else {
+					this.DEFINED_EXP_Byte = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Byte = null;
-                } else {
-                    this.UNDEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Byte = null;
+				} else {
+					this.UNDEFINED_EXP_Byte = dis.readByte();
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array = byteArray;
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array = byteArray;
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_nullable = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_nullable = byteArray;
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_nullable = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_nullable = byteArray;
+				}
 
-                this.DEFINED_EXP_char = dis.readChar();
+				this.DEFINED_EXP_char = dis.readChar();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Character = null;
-                } else {
-                    this.DEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Character = null;
+				} else {
+					this.DEFINED_EXP_Character = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Character = null;
-                } else {
-                    this.UNDEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Character = null;
+				} else {
+					this.UNDEFINED_EXP_Character = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Date = null;
-                } else {
-                    this.DEFINED_EXP_Date = new Date(dis.readLong());
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Date = null;
+				} else {
+					this.DEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Date = null;
-                } else {
-                    this.UNDEFINED_EXP_Date = new Date(dis.readLong());
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Date = null;
+				} else {
+					this.UNDEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                this.DEFINED_EXP_double = dis.readDouble();
+				this.DEFINED_EXP_double = dis.readDouble();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Double = null;
-                } else {
-                    this.DEFINED_EXP_Double = dis.readDouble();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Double = null;
+				} else {
+					this.DEFINED_EXP_Double = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Double = null;
-                } else {
-                    this.UNDEFINED_EXP_Double = dis.readDouble();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Double = null;
+				} else {
+					this.UNDEFINED_EXP_Double = dis.readDouble();
+				}
 
-                this.DEFINED_EXP_int = dis.readInt();
+				this.DEFINED_EXP_int = dis.readInt();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Integer = null;
-                } else {
-                    this.DEFINED_EXP_Integer = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Integer = null;
+				} else {
+					this.DEFINED_EXP_Integer = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Integer = null;
-                } else {
-                    this.UNDEFINED_EXP_Integer = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Integer = null;
+				} else {
+					this.UNDEFINED_EXP_Integer = dis.readInt();
+				}
 
-                this.DEFINED_EXP_float = dis.readFloat();
+				this.DEFINED_EXP_float = dis.readFloat();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Float = null;
-                } else {
-                    this.DEFINED_EXP_Float = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Float = null;
+				} else {
+					this.DEFINED_EXP_Float = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Float = null;
-                } else {
-                    this.UNDEFINED_EXP_Float = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Float = null;
+				} else {
+					this.UNDEFINED_EXP_Float = dis.readFloat();
+				}
 
-                this.DEFINED_EXP_long = dis.readLong();
+				this.DEFINED_EXP_long = dis.readLong();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Long = null;
-                } else {
-                    this.DEFINED_EXP_Long = dis.readLong();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Long = null;
+				} else {
+					this.DEFINED_EXP_Long = dis.readLong();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Long = null;
-                } else {
-                    this.UNDEFINED_EXP_Long = dis.readLong();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Long = null;
+				} else {
+					this.UNDEFINED_EXP_Long = dis.readLong();
+				}
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.DEFINED_EXP_Object = ois.readObject();
+				this.DEFINED_EXP_Object = dis.readObject();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.UNDEFINED_EXP_Object = ois.readObject();
+				this.UNDEFINED_EXP_Object = dis.readObject();
 
-                this.DEFINED_EXP_short = dis.readShort();
+				this.DEFINED_EXP_short = dis.readShort();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Short = null;
-                } else {
-                    this.DEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Short = null;
+				} else {
+					this.DEFINED_EXP_Short = dis.readShort();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Short = null;
-                } else {
-                    this.UNDEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Short = null;
+				} else {
+					this.UNDEFINED_EXP_Short = dis.readShort();
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_String = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_String = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.UNDEFINED_EXP_String = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.UNDEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.UNDEFINED_EXP_String = new String(byteArray);
+				}
 
-                this.DEFINED_EXP_boolean_1 = dis.readBoolean();
+				this.DEFINED_EXP_boolean_1 = dis.readBoolean();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Boolean_1 = null;
-                } else {
-                    this.DEFINED_EXP_Boolean_1 = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Boolean_1 = null;
+				} else {
+					this.DEFINED_EXP_Boolean_1 = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Boolean_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Boolean_1 = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Boolean_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Boolean_1 = dis.readBoolean();
+				}
 
-                this.DEFINED_EXP_byte_1 = dis.readByte();
+				this.DEFINED_EXP_byte_1 = dis.readByte();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Byte_1 = null;
-                } else {
-                    this.DEFINED_EXP_Byte_1 = dis.readByte();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Byte_1 = null;
+				} else {
+					this.DEFINED_EXP_Byte_1 = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Byte_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Byte_1 = dis.readByte();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Byte_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Byte_1 = dis.readByte();
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_1 = byteArray;
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_1 = byteArray;
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_nullable_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_nullable_1 = byteArray;
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_nullable_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_nullable_1 = byteArray;
+				}
 
-                this.DEFINED_EXP_char_1 = dis.readChar();
+				this.DEFINED_EXP_char_1 = dis.readChar();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Character_1 = null;
-                } else {
-                    this.DEFINED_EXP_Character_1 = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Character_1 = null;
+				} else {
+					this.DEFINED_EXP_Character_1 = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Character_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Character_1 = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Character_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Character_1 = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Date_1 = null;
-                } else {
-                    this.DEFINED_EXP_Date_1 = new Date(dis.readLong());
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Date_1 = null;
+				} else {
+					this.DEFINED_EXP_Date_1 = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Date_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Date_1 = new Date(dis.readLong());
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Date_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Date_1 = new Date(dis.readLong());
+				}
 
-                this.DEFINED_EXP_double_1 = dis.readDouble();
+				this.DEFINED_EXP_double_1 = dis.readDouble();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Double_1 = null;
-                } else {
-                    this.DEFINED_EXP_Double_1 = dis.readDouble();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Double_1 = null;
+				} else {
+					this.DEFINED_EXP_Double_1 = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Double_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Double_1 = dis.readDouble();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Double_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Double_1 = dis.readDouble();
+				}
 
-                this.DEFINED_EXP_int_1 = dis.readInt();
+				this.DEFINED_EXP_int_1 = dis.readInt();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Integer_1 = null;
-                } else {
-                    this.DEFINED_EXP_Integer_1 = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Integer_1 = null;
+				} else {
+					this.DEFINED_EXP_Integer_1 = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Integer_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Integer_1 = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Integer_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Integer_1 = dis.readInt();
+				}
 
-                this.DEFINED_EXP_float_1 = dis.readFloat();
+				this.DEFINED_EXP_float_1 = dis.readFloat();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Float_1 = null;
-                } else {
-                    this.DEFINED_EXP_Float_1 = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Float_1 = null;
+				} else {
+					this.DEFINED_EXP_Float_1 = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Float_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Float_1 = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Float_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Float_1 = dis.readFloat();
+				}
 
-                this.DEFINED_EXP_long_1 = dis.readLong();
+				this.DEFINED_EXP_long_1 = dis.readLong();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Long_1 = null;
-                } else {
-                    this.DEFINED_EXP_Long_1 = dis.readLong();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Long_1 = null;
+				} else {
+					this.DEFINED_EXP_Long_1 = dis.readLong();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Long_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Long_1 = dis.readLong();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Long_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Long_1 = dis.readLong();
+				}
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.DEFINED_EXP_Object_1 = ois.readObject();
+				this.DEFINED_EXP_Object_1 = dis.readObject();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.UNDEFINED_EXP_Object_1 = ois.readObject();
+				this.UNDEFINED_EXP_Object_1 = dis.readObject();
 
-                this.DEFINED_EXP_short_1 = dis.readShort();
+				this.DEFINED_EXP_short_1 = dis.readShort();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Short_1 = null;
-                } else {
-                    this.DEFINED_EXP_Short_1 = dis.readShort();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Short_1 = null;
+				} else {
+					this.DEFINED_EXP_Short_1 = dis.readShort();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Short_1 = null;
-                } else {
-                    this.UNDEFINED_EXP_Short_1 = dis.readShort();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Short_1 = null;
+				} else {
+					this.UNDEFINED_EXP_Short_1 = dis.readShort();
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_String_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_String_1 = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_String_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_String_1 = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_String_1 = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.UNDEFINED_EXP_String_1 = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.UNDEFINED_EXP_String_1 = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.UNDEFINED_EXP_String_1 = new String(byteArray);
+				}
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 
-            } catch (ClassNotFoundException eCNFE) {
-                throw new RuntimeException(eCNFE);
+			} catch (ClassNotFoundException eCNFE) {
+				throw new RuntimeException(eCNFE);
 
-            }
+			}
 
-        }
+		}
 
-        public void writeData(DataOutputStream dos) {
-            try {
+		public void writeData(ObjectOutputStream dos) {
+			try {
 
-                ObjectOutputStream oos = null;
+				// boolean
 
-                // boolean
+				dos.writeBoolean(this.DEFINED_EXP_boolean);
 
-                dos.writeBoolean(this.DEFINED_EXP_boolean);
+				// Boolean
 
-                // Boolean
+				if (this.DEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.DEFINED_EXP_Boolean);
+				}
 
-                if (this.DEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.DEFINED_EXP_Boolean);
-                }
+				// Boolean
 
-                // Boolean
+				if (this.UNDEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
+				}
 
-                if (this.UNDEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
-                }
+				// byte
 
-                // byte
+				dos.writeByte(this.DEFINED_EXP_byte);
 
-                dos.writeByte(this.DEFINED_EXP_byte);
+				// Byte
 
-                // Byte
+				if (this.DEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.DEFINED_EXP_Byte);
+				}
 
-                if (this.DEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.DEFINED_EXP_Byte);
-                }
+				// Byte
 
-                // Byte
+				if (this.UNDEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.UNDEFINED_EXP_Byte);
+				}
 
-                if (this.UNDEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.UNDEFINED_EXP_Byte);
-                }
+				// byte[]
 
-                // byte[]
+				if (this.DEFINED_EXP_byte_array == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array.length);
+					dos.write(this.DEFINED_EXP_byte_array);
+				}
 
-                if (this.DEFINED_EXP_byte_array == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array.length);
-                    dos.write(this.DEFINED_EXP_byte_array);
-                }
+				// byte[]
 
-                // byte[]
+				if (this.DEFINED_EXP_byte_array_nullable == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
+					dos.write(this.DEFINED_EXP_byte_array_nullable);
+				}
 
-                if (this.DEFINED_EXP_byte_array_nullable == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
-                    dos.write(this.DEFINED_EXP_byte_array_nullable);
-                }
+				// char
 
-                // char
+				dos.writeChar(this.DEFINED_EXP_char);
 
-                dos.writeChar(this.DEFINED_EXP_char);
+				// Character
 
-                // Character
+				if (this.DEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.DEFINED_EXP_Character);
+				}
 
-                if (this.DEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.DEFINED_EXP_Character);
-                }
+				// Character
 
-                // Character
+				if (this.UNDEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.UNDEFINED_EXP_Character);
+				}
 
-                if (this.UNDEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.UNDEFINED_EXP_Character);
-                }
+				// java.util.Date
 
-                // java.util.Date
+				if (this.DEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.DEFINED_EXP_Date.getTime());
+				}
 
-                if (this.DEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.DEFINED_EXP_Date.getTime());
-                }
+				// java.util.Date
 
-                // java.util.Date
+				if (this.UNDEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
+				}
 
-                if (this.UNDEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
-                }
+				// double
 
-                // double
+				dos.writeDouble(this.DEFINED_EXP_double);
 
-                dos.writeDouble(this.DEFINED_EXP_double);
+				// Double
 
-                // Double
+				if (this.DEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.DEFINED_EXP_Double);
+				}
 
-                if (this.DEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.DEFINED_EXP_Double);
-                }
+				// Double
 
-                // Double
+				if (this.UNDEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.UNDEFINED_EXP_Double);
+				}
 
-                if (this.UNDEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.UNDEFINED_EXP_Double);
-                }
+				// int
 
-                // int
+				dos.writeInt(this.DEFINED_EXP_int);
 
-                dos.writeInt(this.DEFINED_EXP_int);
+				// Integer
 
-                // Integer
+				if (this.DEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.DEFINED_EXP_Integer);
+				}
 
-                if (this.DEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.DEFINED_EXP_Integer);
-                }
+				// Integer
 
-                // Integer
+				if (this.UNDEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.UNDEFINED_EXP_Integer);
+				}
 
-                if (this.UNDEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.UNDEFINED_EXP_Integer);
-                }
+				// float
 
-                // float
+				dos.writeFloat(this.DEFINED_EXP_float);
 
-                dos.writeFloat(this.DEFINED_EXP_float);
+				// Float
 
-                // Float
+				if (this.DEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.DEFINED_EXP_Float);
+				}
 
-                if (this.DEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.DEFINED_EXP_Float);
-                }
+				// Float
 
-                // Float
+				if (this.UNDEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.UNDEFINED_EXP_Float);
+				}
 
-                if (this.UNDEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.UNDEFINED_EXP_Float);
-                }
+				// long
 
-                // long
+				dos.writeLong(this.DEFINED_EXP_long);
 
-                dos.writeLong(this.DEFINED_EXP_long);
+				// Long
 
-                // Long
+				if (this.DEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.DEFINED_EXP_Long);
+				}
 
-                if (this.DEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.DEFINED_EXP_Long);
-                }
+				// Long
 
-                // Long
+				if (this.UNDEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.UNDEFINED_EXP_Long);
+				}
 
-                if (this.UNDEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.UNDEFINED_EXP_Long);
-                }
+				// Object
 
-                // Object
+				dos.writeObject(this.DEFINED_EXP_Object);
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.DEFINED_EXP_Object);
+				// Object
 
-                // Object
+				dos.writeObject(this.UNDEFINED_EXP_Object);
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.UNDEFINED_EXP_Object);
+				// short
 
-                // short
+				dos.writeShort(this.DEFINED_EXP_short);
 
-                dos.writeShort(this.DEFINED_EXP_short);
+				// Short
 
-                // Short
+				if (this.DEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.DEFINED_EXP_Short);
+				}
 
-                if (this.DEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.DEFINED_EXP_Short);
-                }
+				// Short
 
-                // Short
+				if (this.UNDEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.UNDEFINED_EXP_Short);
+				}
 
-                if (this.UNDEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.UNDEFINED_EXP_Short);
-                }
+				// String
 
-                // String
+				if (this.DEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                if (this.DEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				// String
 
-                // String
+				if (this.UNDEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                if (this.UNDEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				// boolean
 
-                // boolean
+				dos.writeBoolean(this.DEFINED_EXP_boolean_1);
 
-                dos.writeBoolean(this.DEFINED_EXP_boolean_1);
+				// Boolean
 
-                // Boolean
+				if (this.DEFINED_EXP_Boolean_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.DEFINED_EXP_Boolean_1);
+				}
 
-                if (this.DEFINED_EXP_Boolean_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.DEFINED_EXP_Boolean_1);
-                }
+				// Boolean
 
-                // Boolean
+				if (this.UNDEFINED_EXP_Boolean_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.UNDEFINED_EXP_Boolean_1);
+				}
 
-                if (this.UNDEFINED_EXP_Boolean_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.UNDEFINED_EXP_Boolean_1);
-                }
+				// byte
 
-                // byte
+				dos.writeByte(this.DEFINED_EXP_byte_1);
 
-                dos.writeByte(this.DEFINED_EXP_byte_1);
+				// Byte
 
-                // Byte
+				if (this.DEFINED_EXP_Byte_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.DEFINED_EXP_Byte_1);
+				}
 
-                if (this.DEFINED_EXP_Byte_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.DEFINED_EXP_Byte_1);
-                }
+				// Byte
 
-                // Byte
+				if (this.UNDEFINED_EXP_Byte_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.UNDEFINED_EXP_Byte_1);
+				}
 
-                if (this.UNDEFINED_EXP_Byte_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.UNDEFINED_EXP_Byte_1);
-                }
+				// byte[]
 
-                // byte[]
+				if (this.DEFINED_EXP_byte_array_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_1.length);
+					dos.write(this.DEFINED_EXP_byte_array_1);
+				}
 
-                if (this.DEFINED_EXP_byte_array_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_1.length);
-                    dos.write(this.DEFINED_EXP_byte_array_1);
-                }
+				// byte[]
 
-                // byte[]
+				if (this.DEFINED_EXP_byte_array_nullable_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_nullable_1.length);
+					dos.write(this.DEFINED_EXP_byte_array_nullable_1);
+				}
 
-                if (this.DEFINED_EXP_byte_array_nullable_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_nullable_1.length);
-                    dos.write(this.DEFINED_EXP_byte_array_nullable_1);
-                }
+				// char
 
-                // char
+				dos.writeChar(this.DEFINED_EXP_char_1);
 
-                dos.writeChar(this.DEFINED_EXP_char_1);
+				// Character
 
-                // Character
+				if (this.DEFINED_EXP_Character_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.DEFINED_EXP_Character_1);
+				}
 
-                if (this.DEFINED_EXP_Character_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.DEFINED_EXP_Character_1);
-                }
+				// Character
 
-                // Character
+				if (this.UNDEFINED_EXP_Character_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.UNDEFINED_EXP_Character_1);
+				}
 
-                if (this.UNDEFINED_EXP_Character_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.UNDEFINED_EXP_Character_1);
-                }
+				// java.util.Date
 
-                // java.util.Date
+				if (this.DEFINED_EXP_Date_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.DEFINED_EXP_Date_1.getTime());
+				}
 
-                if (this.DEFINED_EXP_Date_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.DEFINED_EXP_Date_1.getTime());
-                }
+				// java.util.Date
 
-                // java.util.Date
+				if (this.UNDEFINED_EXP_Date_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.UNDEFINED_EXP_Date_1.getTime());
+				}
 
-                if (this.UNDEFINED_EXP_Date_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.UNDEFINED_EXP_Date_1.getTime());
-                }
+				// double
 
-                // double
+				dos.writeDouble(this.DEFINED_EXP_double_1);
 
-                dos.writeDouble(this.DEFINED_EXP_double_1);
+				// Double
 
-                // Double
+				if (this.DEFINED_EXP_Double_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.DEFINED_EXP_Double_1);
+				}
 
-                if (this.DEFINED_EXP_Double_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.DEFINED_EXP_Double_1);
-                }
+				// Double
 
-                // Double
+				if (this.UNDEFINED_EXP_Double_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.UNDEFINED_EXP_Double_1);
+				}
 
-                if (this.UNDEFINED_EXP_Double_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.UNDEFINED_EXP_Double_1);
-                }
+				// int
 
-                // int
+				dos.writeInt(this.DEFINED_EXP_int_1);
 
-                dos.writeInt(this.DEFINED_EXP_int_1);
+				// Integer
 
-                // Integer
+				if (this.DEFINED_EXP_Integer_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.DEFINED_EXP_Integer_1);
+				}
 
-                if (this.DEFINED_EXP_Integer_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.DEFINED_EXP_Integer_1);
-                }
+				// Integer
 
-                // Integer
+				if (this.UNDEFINED_EXP_Integer_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.UNDEFINED_EXP_Integer_1);
+				}
 
-                if (this.UNDEFINED_EXP_Integer_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.UNDEFINED_EXP_Integer_1);
-                }
+				// float
 
-                // float
+				dos.writeFloat(this.DEFINED_EXP_float_1);
 
-                dos.writeFloat(this.DEFINED_EXP_float_1);
+				// Float
 
-                // Float
+				if (this.DEFINED_EXP_Float_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.DEFINED_EXP_Float_1);
+				}
 
-                if (this.DEFINED_EXP_Float_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.DEFINED_EXP_Float_1);
-                }
+				// Float
 
-                // Float
+				if (this.UNDEFINED_EXP_Float_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.UNDEFINED_EXP_Float_1);
+				}
 
-                if (this.UNDEFINED_EXP_Float_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.UNDEFINED_EXP_Float_1);
-                }
+				// long
 
-                // long
+				dos.writeLong(this.DEFINED_EXP_long_1);
 
-                dos.writeLong(this.DEFINED_EXP_long_1);
+				// Long
 
-                // Long
+				if (this.DEFINED_EXP_Long_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.DEFINED_EXP_Long_1);
+				}
 
-                if (this.DEFINED_EXP_Long_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.DEFINED_EXP_Long_1);
-                }
+				// Long
 
-                // Long
+				if (this.UNDEFINED_EXP_Long_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.UNDEFINED_EXP_Long_1);
+				}
 
-                if (this.UNDEFINED_EXP_Long_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.UNDEFINED_EXP_Long_1);
-                }
+				// Object
 
-                // Object
+				dos.writeObject(this.DEFINED_EXP_Object_1);
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.DEFINED_EXP_Object_1);
+				// Object
 
-                // Object
+				dos.writeObject(this.UNDEFINED_EXP_Object_1);
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.UNDEFINED_EXP_Object_1);
+				// short
 
-                // short
+				dos.writeShort(this.DEFINED_EXP_short_1);
 
-                dos.writeShort(this.DEFINED_EXP_short_1);
+				// Short
 
-                // Short
+				if (this.DEFINED_EXP_Short_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.DEFINED_EXP_Short_1);
+				}
 
-                if (this.DEFINED_EXP_Short_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.DEFINED_EXP_Short_1);
-                }
+				// Short
 
-                // Short
+				if (this.UNDEFINED_EXP_Short_1 == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.UNDEFINED_EXP_Short_1);
+				}
 
-                if (this.UNDEFINED_EXP_Short_1 == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.UNDEFINED_EXP_Short_1);
-                }
+				// String
 
-                // String
+				if (this.DEFINED_EXP_String_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_String_1.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                if (this.DEFINED_EXP_String_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_String_1.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				// String
 
-                // String
+				if (this.UNDEFINED_EXP_String_1 == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.UNDEFINED_EXP_String_1.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                if (this.UNDEFINED_EXP_String_1 == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.UNDEFINED_EXP_String_1.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+		}
 
-        }
+		public String toString() {
 
-        public String toString() {
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(super.toString());
-            sb.append("[");
+			sb.append("DEFINED_EXP_boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_boolean));
 
-            sb.append("DEFINED_EXP_boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_boolean));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
 
-            sb.append("DEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
 
-            sb.append("UNDEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte));
 
-            sb.append("DEFINED_EXP_byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Byte));
 
-            sb.append("DEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Byte));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
 
-            sb.append("UNDEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte_array");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
 
-            sb.append("DEFINED_EXP_byte_array");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte_array_nullable");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
 
-            sb.append("DEFINED_EXP_byte_array_nullable");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_char");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_char));
 
-            sb.append("DEFINED_EXP_char");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_char));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Character));
 
-            sb.append("DEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Character));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
 
-            sb.append("UNDEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Date));
 
-            sb.append("DEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Date));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
 
-            sb.append("UNDEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_double));
 
-            sb.append("DEFINED_EXP_double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_double));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Double));
 
-            sb.append("DEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Double));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
 
-            sb.append("UNDEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_int");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_int));
 
-            sb.append("DEFINED_EXP_int");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_int));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Integer));
 
-            sb.append("DEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Integer));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
 
-            sb.append("UNDEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_float));
 
-            sb.append("DEFINED_EXP_float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_float));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Float));
 
-            sb.append("DEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Float));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
 
-            sb.append("UNDEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_long));
 
-            sb.append("DEFINED_EXP_long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_long));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Long));
 
-            sb.append("DEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Long));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
 
-            sb.append("UNDEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Object));
 
-            sb.append("DEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Object));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
 
-            sb.append("UNDEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_short));
 
-            sb.append("DEFINED_EXP_short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_short));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Short));
 
-            sb.append("DEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Short));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
 
-            sb.append("UNDEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_String));
 
-            sb.append("DEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_String));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_String));
 
-            sb.append("UNDEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_String));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_boolean_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_boolean_1));
 
-            sb.append("DEFINED_EXP_boolean_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_boolean_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Boolean_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Boolean_1));
 
-            sb.append("DEFINED_EXP_Boolean_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Boolean_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Boolean_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean_1));
 
-            sb.append("UNDEFINED_EXP_Boolean_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_1));
 
-            sb.append("DEFINED_EXP_byte_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Byte_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Byte_1));
 
-            sb.append("DEFINED_EXP_Byte_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Byte_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Byte_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Byte_1));
 
-            sb.append("UNDEFINED_EXP_Byte_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Byte_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte_array_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_1));
 
-            sb.append("DEFINED_EXP_byte_array_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte_array_nullable_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable_1));
 
-            sb.append("DEFINED_EXP_byte_array_nullable_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_char_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_char_1));
 
-            sb.append("DEFINED_EXP_char_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_char_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Character_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Character_1));
 
-            sb.append("DEFINED_EXP_Character_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Character_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Character_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Character_1));
 
-            sb.append("UNDEFINED_EXP_Character_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Character_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Date_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Date_1));
 
-            sb.append("DEFINED_EXP_Date_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Date_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Date_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Date_1));
 
-            sb.append("UNDEFINED_EXP_Date_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Date_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_double_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_double_1));
 
-            sb.append("DEFINED_EXP_double_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_double_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Double_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Double_1));
 
-            sb.append("DEFINED_EXP_Double_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Double_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Double_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Double_1));
 
-            sb.append("UNDEFINED_EXP_Double_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Double_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_int_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_int_1));
 
-            sb.append("DEFINED_EXP_int_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_int_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Integer_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Integer_1));
 
-            sb.append("DEFINED_EXP_Integer_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Integer_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Integer_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Integer_1));
 
-            sb.append("UNDEFINED_EXP_Integer_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Integer_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_float_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_float_1));
 
-            sb.append("DEFINED_EXP_float_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_float_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Float_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Float_1));
 
-            sb.append("DEFINED_EXP_Float_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Float_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Float_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Float_1));
 
-            sb.append("UNDEFINED_EXP_Float_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Float_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_long_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_long_1));
 
-            sb.append("DEFINED_EXP_long_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_long_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Long_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Long_1));
 
-            sb.append("DEFINED_EXP_Long_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Long_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Long_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Long_1));
 
-            sb.append("UNDEFINED_EXP_Long_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Long_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Object_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Object_1));
 
-            sb.append("DEFINED_EXP_Object_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Object_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Object_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Object_1));
 
-            sb.append("UNDEFINED_EXP_Object_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Object_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_short_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_short_1));
 
-            sb.append("DEFINED_EXP_short_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_short_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Short_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Short_1));
 
-            sb.append("DEFINED_EXP_Short_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Short_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Short_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Short_1));
 
-            sb.append("UNDEFINED_EXP_Short_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Short_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_String_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_String_1));
 
-            sb.append("DEFINED_EXP_String_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_String_1));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_String_1");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_String_1));
 
-            sb.append("UNDEFINED_EXP_String_1");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_String_1));
+			sb.append("]");
 
-            sb.append("]");
+			return sb.toString();
+		}
 
-            return sb.toString();
-        }
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(outStruct other) {
 
-        /**
-         * Compare keys
-         */
-        public int compareTo(outStruct other) {
+			int returnValue = -1;
 
-            int returnValue = -1;
+			return returnValue;
+		}
 
-            return returnValue;
-        }
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
 
-        private int checkNullsAndCompare(Object object1, Object object2) {
-            int returnValue = 0;
-            if (object1 instanceof Comparable && object2 instanceof Comparable) {
-                returnValue = ((Comparable) object1).compareTo(object2);
-            } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
-            } else if (object1 == null && object2 != null) {
-                returnValue = 1;
-            } else if (object1 != null && object2 == null) {
-                returnValue = -1;
-            } else {
-                returnValue = 0;
-            }
+			return returnValue;
+		}
 
-            return returnValue;
-        }
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
 
-        private int compareStrings(String string1, String string2) {
-            // if (this.ignoreCase) {
-            return string1.compareToIgnoreCase(string2);
-            // } else {
-            // return string1.compareTo(string2);
-            // }
-        }
+	}
 
-    }
+	private class mainStruct implements
+			routines.system.IPersistableRow<mainStruct> {
 
-    private class mainStruct implements
-            routines.system.IPersistableRow<mainStruct> {
+		boolean DEFINED_EXP_boolean;
 
-        boolean DEFINED_EXP_boolean;
+		Boolean DEFINED_EXP_Boolean;
 
-        Boolean DEFINED_EXP_Boolean;
+		Boolean UNDEFINED_EXP_Boolean;
 
-        Boolean UNDEFINED_EXP_Boolean;
+		byte DEFINED_EXP_byte;
 
-        byte DEFINED_EXP_byte;
+		Byte DEFINED_EXP_Byte;
 
-        Byte DEFINED_EXP_Byte;
+		Byte UNDEFINED_EXP_Byte;
 
-        Byte UNDEFINED_EXP_Byte;
+		byte[] DEFINED_EXP_byte_array;
 
-        byte[] DEFINED_EXP_byte_array;
+		byte[] DEFINED_EXP_byte_array_nullable;
 
-        byte[] DEFINED_EXP_byte_array_nullable;
+		char DEFINED_EXP_char;
 
-        char DEFINED_EXP_char;
+		Character DEFINED_EXP_Character;
 
-        Character DEFINED_EXP_Character;
+		Character UNDEFINED_EXP_Character;
 
-        Character UNDEFINED_EXP_Character;
+		java.util.Date DEFINED_EXP_Date;
 
-        java.util.Date DEFINED_EXP_Date;
+		java.util.Date UNDEFINED_EXP_Date;
 
-        java.util.Date UNDEFINED_EXP_Date;
+		double DEFINED_EXP_double;
 
-        double DEFINED_EXP_double;
+		Double DEFINED_EXP_Double;
 
-        Double DEFINED_EXP_Double;
+		Double UNDEFINED_EXP_Double;
 
-        Double UNDEFINED_EXP_Double;
+		int DEFINED_EXP_int;
 
-        int DEFINED_EXP_int;
+		Integer DEFINED_EXP_Integer;
 
-        Integer DEFINED_EXP_Integer;
+		Integer UNDEFINED_EXP_Integer;
 
-        Integer UNDEFINED_EXP_Integer;
+		float DEFINED_EXP_float;
 
-        float DEFINED_EXP_float;
+		Float DEFINED_EXP_Float;
 
-        Float DEFINED_EXP_Float;
+		Float UNDEFINED_EXP_Float;
 
-        Float UNDEFINED_EXP_Float;
+		long DEFINED_EXP_long;
 
-        long DEFINED_EXP_long;
+		Long DEFINED_EXP_Long;
 
-        Long DEFINED_EXP_Long;
+		Long UNDEFINED_EXP_Long;
 
-        Long UNDEFINED_EXP_Long;
+		Object DEFINED_EXP_Object;
 
-        Object DEFINED_EXP_Object;
+		Object UNDEFINED_EXP_Object;
 
-        Object UNDEFINED_EXP_Object;
+		short DEFINED_EXP_short;
 
-        short DEFINED_EXP_short;
+		Short DEFINED_EXP_Short;
 
-        Short DEFINED_EXP_Short;
+		Short UNDEFINED_EXP_Short;
 
-        Short UNDEFINED_EXP_Short;
+		String DEFINED_EXP_String;
 
-        String DEFINED_EXP_String;
+		String UNDEFINED_EXP_String;
 
-        String UNDEFINED_EXP_String;
+		public void readData(ObjectInputStream dis) {
 
-        public void readData(DataInputStream dis) {
+			try {
 
-            try {
+				
+				int length = 0;
 
-                ObjectInputStream ois = null;
-                int length = 0;
+				this.DEFINED_EXP_boolean = dis.readBoolean();
 
-                this.DEFINED_EXP_boolean = dis.readBoolean();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Boolean = null;
+				} else {
+					this.DEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Boolean = null;
-                } else {
-                    this.DEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Boolean = null;
+				} else {
+					this.UNDEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Boolean = null;
-                } else {
-                    this.UNDEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				this.DEFINED_EXP_byte = dis.readByte();
 
-                this.DEFINED_EXP_byte = dis.readByte();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Byte = null;
+				} else {
+					this.DEFINED_EXP_Byte = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Byte = null;
-                } else {
-                    this.DEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Byte = null;
+				} else {
+					this.UNDEFINED_EXP_Byte = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Byte = null;
-                } else {
-                    this.UNDEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array = byteArray;
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array = byteArray;
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_nullable = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_nullable = byteArray;
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_nullable = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_nullable = byteArray;
-                }
+				this.DEFINED_EXP_char = dis.readChar();
 
-                this.DEFINED_EXP_char = dis.readChar();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Character = null;
+				} else {
+					this.DEFINED_EXP_Character = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Character = null;
-                } else {
-                    this.DEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Character = null;
+				} else {
+					this.UNDEFINED_EXP_Character = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Character = null;
-                } else {
-                    this.UNDEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Date = null;
+				} else {
+					this.DEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Date = null;
-                } else {
-                    this.DEFINED_EXP_Date = new Date(dis.readLong());
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Date = null;
+				} else {
+					this.UNDEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Date = null;
-                } else {
-                    this.UNDEFINED_EXP_Date = new Date(dis.readLong());
-                }
+				this.DEFINED_EXP_double = dis.readDouble();
 
-                this.DEFINED_EXP_double = dis.readDouble();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Double = null;
+				} else {
+					this.DEFINED_EXP_Double = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Double = null;
-                } else {
-                    this.DEFINED_EXP_Double = dis.readDouble();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Double = null;
+				} else {
+					this.UNDEFINED_EXP_Double = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Double = null;
-                } else {
-                    this.UNDEFINED_EXP_Double = dis.readDouble();
-                }
+				this.DEFINED_EXP_int = dis.readInt();
 
-                this.DEFINED_EXP_int = dis.readInt();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Integer = null;
+				} else {
+					this.DEFINED_EXP_Integer = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Integer = null;
-                } else {
-                    this.DEFINED_EXP_Integer = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Integer = null;
+				} else {
+					this.UNDEFINED_EXP_Integer = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Integer = null;
-                } else {
-                    this.UNDEFINED_EXP_Integer = dis.readInt();
-                }
+				this.DEFINED_EXP_float = dis.readFloat();
 
-                this.DEFINED_EXP_float = dis.readFloat();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Float = null;
+				} else {
+					this.DEFINED_EXP_Float = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Float = null;
-                } else {
-                    this.DEFINED_EXP_Float = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Float = null;
+				} else {
+					this.UNDEFINED_EXP_Float = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Float = null;
-                } else {
-                    this.UNDEFINED_EXP_Float = dis.readFloat();
-                }
+				this.DEFINED_EXP_long = dis.readLong();
 
-                this.DEFINED_EXP_long = dis.readLong();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Long = null;
+				} else {
+					this.DEFINED_EXP_Long = dis.readLong();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Long = null;
-                } else {
-                    this.DEFINED_EXP_Long = dis.readLong();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Long = null;
+				} else {
+					this.UNDEFINED_EXP_Long = dis.readLong();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Long = null;
-                } else {
-                    this.UNDEFINED_EXP_Long = dis.readLong();
-                }
+				this.DEFINED_EXP_Object = dis.readObject();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.DEFINED_EXP_Object = ois.readObject();
+				this.UNDEFINED_EXP_Object = dis.readObject();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.UNDEFINED_EXP_Object = ois.readObject();
+				this.DEFINED_EXP_short = dis.readShort();
 
-                this.DEFINED_EXP_short = dis.readShort();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Short = null;
+				} else {
+					this.DEFINED_EXP_Short = dis.readShort();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Short = null;
-                } else {
-                    this.DEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Short = null;
+				} else {
+					this.UNDEFINED_EXP_Short = dis.readShort();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Short = null;
-                } else {
-                    this.UNDEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_String = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_String = new String(byteArray);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.UNDEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.UNDEFINED_EXP_String = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.UNDEFINED_EXP_String = new String(byteArray);
-                }
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+			} catch (ClassNotFoundException eCNFE) {
+				throw new RuntimeException(eCNFE);
 
-            } catch (ClassNotFoundException eCNFE) {
-                throw new RuntimeException(eCNFE);
+			}
 
-            }
+		}
 
-        }
+		public void writeData(ObjectOutputStream dos) {
+			try {
 
-        public void writeData(DataOutputStream dos) {
-            try {
+				// boolean
 
-                ObjectOutputStream oos = null;
+				dos.writeBoolean(this.DEFINED_EXP_boolean);
 
-                // boolean
+				// Boolean
 
-                dos.writeBoolean(this.DEFINED_EXP_boolean);
+				if (this.DEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.DEFINED_EXP_Boolean);
+				}
 
-                // Boolean
+				// Boolean
 
-                if (this.DEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.DEFINED_EXP_Boolean);
-                }
+				if (this.UNDEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
+				}
 
-                // Boolean
+				// byte
 
-                if (this.UNDEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
-                }
+				dos.writeByte(this.DEFINED_EXP_byte);
 
-                // byte
+				// Byte
 
-                dos.writeByte(this.DEFINED_EXP_byte);
+				if (this.DEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.DEFINED_EXP_Byte);
+				}
 
-                // Byte
+				// Byte
 
-                if (this.DEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.DEFINED_EXP_Byte);
-                }
+				if (this.UNDEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.UNDEFINED_EXP_Byte);
+				}
 
-                // Byte
+				// byte[]
 
-                if (this.UNDEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.UNDEFINED_EXP_Byte);
-                }
+				if (this.DEFINED_EXP_byte_array == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array.length);
+					dos.write(this.DEFINED_EXP_byte_array);
+				}
 
-                // byte[]
+				// byte[]
 
-                if (this.DEFINED_EXP_byte_array == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array.length);
-                    dos.write(this.DEFINED_EXP_byte_array);
-                }
+				if (this.DEFINED_EXP_byte_array_nullable == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
+					dos.write(this.DEFINED_EXP_byte_array_nullable);
+				}
 
-                // byte[]
+				// char
 
-                if (this.DEFINED_EXP_byte_array_nullable == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
-                    dos.write(this.DEFINED_EXP_byte_array_nullable);
-                }
+				dos.writeChar(this.DEFINED_EXP_char);
 
-                // char
+				// Character
 
-                dos.writeChar(this.DEFINED_EXP_char);
+				if (this.DEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.DEFINED_EXP_Character);
+				}
 
-                // Character
+				// Character
 
-                if (this.DEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.DEFINED_EXP_Character);
-                }
+				if (this.UNDEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.UNDEFINED_EXP_Character);
+				}
 
-                // Character
+				// java.util.Date
 
-                if (this.UNDEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.UNDEFINED_EXP_Character);
-                }
+				if (this.DEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.DEFINED_EXP_Date.getTime());
+				}
 
-                // java.util.Date
+				// java.util.Date
 
-                if (this.DEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.DEFINED_EXP_Date.getTime());
-                }
+				if (this.UNDEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
+				}
 
-                // java.util.Date
+				// double
 
-                if (this.UNDEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
-                }
+				dos.writeDouble(this.DEFINED_EXP_double);
 
-                // double
+				// Double
 
-                dos.writeDouble(this.DEFINED_EXP_double);
+				if (this.DEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.DEFINED_EXP_Double);
+				}
 
-                // Double
+				// Double
 
-                if (this.DEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.DEFINED_EXP_Double);
-                }
+				if (this.UNDEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.UNDEFINED_EXP_Double);
+				}
 
-                // Double
+				// int
 
-                if (this.UNDEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.UNDEFINED_EXP_Double);
-                }
+				dos.writeInt(this.DEFINED_EXP_int);
 
-                // int
+				// Integer
 
-                dos.writeInt(this.DEFINED_EXP_int);
+				if (this.DEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.DEFINED_EXP_Integer);
+				}
 
-                // Integer
+				// Integer
 
-                if (this.DEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.DEFINED_EXP_Integer);
-                }
+				if (this.UNDEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.UNDEFINED_EXP_Integer);
+				}
 
-                // Integer
+				// float
 
-                if (this.UNDEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.UNDEFINED_EXP_Integer);
-                }
+				dos.writeFloat(this.DEFINED_EXP_float);
 
-                // float
+				// Float
 
-                dos.writeFloat(this.DEFINED_EXP_float);
+				if (this.DEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.DEFINED_EXP_Float);
+				}
 
-                // Float
+				// Float
 
-                if (this.DEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.DEFINED_EXP_Float);
-                }
+				if (this.UNDEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.UNDEFINED_EXP_Float);
+				}
 
-                // Float
+				// long
 
-                if (this.UNDEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.UNDEFINED_EXP_Float);
-                }
+				dos.writeLong(this.DEFINED_EXP_long);
 
-                // long
+				// Long
 
-                dos.writeLong(this.DEFINED_EXP_long);
+				if (this.DEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.DEFINED_EXP_Long);
+				}
 
-                // Long
+				// Long
 
-                if (this.DEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.DEFINED_EXP_Long);
-                }
+				if (this.UNDEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.UNDEFINED_EXP_Long);
+				}
 
-                // Long
+				// Object
 
-                if (this.UNDEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.UNDEFINED_EXP_Long);
-                }
+				dos.writeObject(this.DEFINED_EXP_Object);
 
-                // Object
+				// Object
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.DEFINED_EXP_Object);
+				dos.writeObject(this.UNDEFINED_EXP_Object);
 
-                // Object
+				// short
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.UNDEFINED_EXP_Object);
+				dos.writeShort(this.DEFINED_EXP_short);
 
-                // short
+				// Short
 
-                dos.writeShort(this.DEFINED_EXP_short);
+				if (this.DEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.DEFINED_EXP_Short);
+				}
 
-                // Short
+				// Short
 
-                if (this.DEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.DEFINED_EXP_Short);
-                }
+				if (this.UNDEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.UNDEFINED_EXP_Short);
+				}
 
-                // Short
+				// String
 
-                if (this.UNDEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.UNDEFINED_EXP_Short);
-                }
+				if (this.DEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.UNDEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // String
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 
-                if (this.UNDEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+		}
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+		public String toString() {
 
-        }
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
 
-        public String toString() {
+			sb.append("DEFINED_EXP_boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_boolean));
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(super.toString());
-            sb.append("[");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_boolean));
+			sb.append("DEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
+			sb.append("UNDEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
+			sb.append("DEFINED_EXP_byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte));
+			sb.append("DEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Byte));
+			sb.append("UNDEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
+			sb.append("DEFINED_EXP_byte_array");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
+			sb.append("DEFINED_EXP_byte_array_nullable");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array_nullable");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
+			sb.append("DEFINED_EXP_char");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_char));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_char");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_char));
+			sb.append("DEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Character));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Character));
+			sb.append("UNDEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
+			sb.append("DEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Date));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Date));
+			sb.append("UNDEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
+			sb.append("DEFINED_EXP_double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_double));
+			sb.append("DEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Double));
+			sb.append("UNDEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
+			sb.append("DEFINED_EXP_int");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_int));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_int");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_int));
+			sb.append("DEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Integer));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Integer));
+			sb.append("UNDEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
+			sb.append("DEFINED_EXP_float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_float));
+			sb.append("DEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Float));
+			sb.append("UNDEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
+			sb.append("DEFINED_EXP_long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_long));
+			sb.append("DEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Long));
+			sb.append("UNDEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
+			sb.append("DEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Object));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Object));
+			sb.append("UNDEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
+			sb.append("DEFINED_EXP_short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_short));
+			sb.append("DEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Short));
+			sb.append("UNDEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
+			sb.append("DEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_String));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_String));
+			sb.append("UNDEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_String));
 
-            sb.append(", ");
+			sb.append("]");
 
-            sb.append("UNDEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_String));
+			return sb.toString();
+		}
 
-            sb.append("]");
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(mainStruct other) {
 
-            return sb.toString();
-        }
+			int returnValue = -1;
 
-        /**
-         * Compare keys
-         */
-        public int compareTo(mainStruct other) {
+			return returnValue;
+		}
 
-            int returnValue = -1;
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
 
-            return returnValue;
-        }
+			return returnValue;
+		}
 
-        private int checkNullsAndCompare(Object object1, Object object2) {
-            int returnValue = 0;
-            if (object1 instanceof Comparable && object2 instanceof Comparable) {
-                returnValue = ((Comparable) object1).compareTo(object2);
-            } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
-            } else if (object1 == null && object2 != null) {
-                returnValue = 1;
-            } else if (object1 != null && object2 == null) {
-                returnValue = -1;
-            } else {
-                returnValue = 0;
-            }
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
 
-            return returnValue;
-        }
+	}
 
-        private int compareStrings(String string1, String string2) {
-            // if (this.ignoreCase) {
-            return string1.compareToIgnoreCase(string2);
-            // } else {
-            // return string1.compareTo(string2);
-            // }
-        }
+	private class after_tFixedFlowInput_2Struct implements
+			routines.system.IPersistableRow<after_tFixedFlowInput_2Struct> {
 
-    }
+		boolean DEFINED_EXP_boolean;
 
-    private class after_tFixedFlowInput_2Struct implements
-            routines.system.IPersistableRow<after_tFixedFlowInput_2Struct> {
+		Boolean DEFINED_EXP_Boolean;
 
-        boolean DEFINED_EXP_boolean;
+		Boolean UNDEFINED_EXP_Boolean;
 
-        Boolean DEFINED_EXP_Boolean;
+		byte DEFINED_EXP_byte;
 
-        Boolean UNDEFINED_EXP_Boolean;
+		Byte DEFINED_EXP_Byte;
 
-        byte DEFINED_EXP_byte;
+		Byte UNDEFINED_EXP_Byte;
 
-        Byte DEFINED_EXP_Byte;
+		byte[] DEFINED_EXP_byte_array;
 
-        Byte UNDEFINED_EXP_Byte;
+		byte[] DEFINED_EXP_byte_array_nullable;
 
-        byte[] DEFINED_EXP_byte_array;
+		char DEFINED_EXP_char;
 
-        byte[] DEFINED_EXP_byte_array_nullable;
+		Character DEFINED_EXP_Character;
 
-        char DEFINED_EXP_char;
+		Character UNDEFINED_EXP_Character;
 
-        Character DEFINED_EXP_Character;
+		java.util.Date DEFINED_EXP_Date;
 
-        Character UNDEFINED_EXP_Character;
+		java.util.Date UNDEFINED_EXP_Date;
 
-        java.util.Date DEFINED_EXP_Date;
+		double DEFINED_EXP_double;
 
-        java.util.Date UNDEFINED_EXP_Date;
+		Double DEFINED_EXP_Double;
 
-        double DEFINED_EXP_double;
+		Double UNDEFINED_EXP_Double;
 
-        Double DEFINED_EXP_Double;
+		int DEFINED_EXP_int;
 
-        Double UNDEFINED_EXP_Double;
+		Integer DEFINED_EXP_Integer;
 
-        int DEFINED_EXP_int;
+		Integer UNDEFINED_EXP_Integer;
 
-        Integer DEFINED_EXP_Integer;
+		float DEFINED_EXP_float;
 
-        Integer UNDEFINED_EXP_Integer;
+		Float DEFINED_EXP_Float;
 
-        float DEFINED_EXP_float;
+		Float UNDEFINED_EXP_Float;
 
-        Float DEFINED_EXP_Float;
+		long DEFINED_EXP_long;
 
-        Float UNDEFINED_EXP_Float;
+		Long DEFINED_EXP_Long;
 
-        long DEFINED_EXP_long;
+		Long UNDEFINED_EXP_Long;
 
-        Long DEFINED_EXP_Long;
+		Object DEFINED_EXP_Object;
 
-        Long UNDEFINED_EXP_Long;
+		Object UNDEFINED_EXP_Object;
 
-        Object DEFINED_EXP_Object;
+		short DEFINED_EXP_short;
 
-        Object UNDEFINED_EXP_Object;
+		Short DEFINED_EXP_Short;
 
-        short DEFINED_EXP_short;
+		Short UNDEFINED_EXP_Short;
 
-        Short DEFINED_EXP_Short;
+		String DEFINED_EXP_String;
 
-        Short UNDEFINED_EXP_Short;
+		String UNDEFINED_EXP_String;
 
-        String DEFINED_EXP_String;
+		public void readData(ObjectInputStream dis) {
 
-        String UNDEFINED_EXP_String;
+			try {
 
-        public void readData(DataInputStream dis) {
+				
+				int length = 0;
 
-            try {
+				this.DEFINED_EXP_boolean = dis.readBoolean();
 
-                ObjectInputStream ois = null;
-                int length = 0;
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Boolean = null;
+				} else {
+					this.DEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                this.DEFINED_EXP_boolean = dis.readBoolean();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Boolean = null;
+				} else {
+					this.UNDEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Boolean = null;
-                } else {
-                    this.DEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				this.DEFINED_EXP_byte = dis.readByte();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Boolean = null;
-                } else {
-                    this.UNDEFINED_EXP_Boolean = dis.readBoolean();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Byte = null;
+				} else {
+					this.DEFINED_EXP_Byte = dis.readByte();
+				}
 
-                this.DEFINED_EXP_byte = dis.readByte();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Byte = null;
+				} else {
+					this.UNDEFINED_EXP_Byte = dis.readByte();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Byte = null;
-                } else {
-                    this.DEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array = byteArray;
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Byte = null;
-                } else {
-                    this.UNDEFINED_EXP_Byte = dis.readByte();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_nullable = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_nullable = byteArray;
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array = byteArray;
-                }
+				this.DEFINED_EXP_char = dis.readChar();
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_nullable = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_nullable = byteArray;
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Character = null;
+				} else {
+					this.DEFINED_EXP_Character = dis.readChar();
+				}
 
-                this.DEFINED_EXP_char = dis.readChar();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Character = null;
+				} else {
+					this.UNDEFINED_EXP_Character = dis.readChar();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Character = null;
-                } else {
-                    this.DEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Date = null;
+				} else {
+					this.DEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Character = null;
-                } else {
-                    this.UNDEFINED_EXP_Character = dis.readChar();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Date = null;
+				} else {
+					this.UNDEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Date = null;
-                } else {
-                    this.DEFINED_EXP_Date = new Date(dis.readLong());
-                }
+				this.DEFINED_EXP_double = dis.readDouble();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Date = null;
-                } else {
-                    this.UNDEFINED_EXP_Date = new Date(dis.readLong());
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Double = null;
+				} else {
+					this.DEFINED_EXP_Double = dis.readDouble();
+				}
 
-                this.DEFINED_EXP_double = dis.readDouble();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Double = null;
+				} else {
+					this.UNDEFINED_EXP_Double = dis.readDouble();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Double = null;
-                } else {
-                    this.DEFINED_EXP_Double = dis.readDouble();
-                }
+				this.DEFINED_EXP_int = dis.readInt();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Double = null;
-                } else {
-                    this.UNDEFINED_EXP_Double = dis.readDouble();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Integer = null;
+				} else {
+					this.DEFINED_EXP_Integer = dis.readInt();
+				}
 
-                this.DEFINED_EXP_int = dis.readInt();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Integer = null;
+				} else {
+					this.UNDEFINED_EXP_Integer = dis.readInt();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Integer = null;
-                } else {
-                    this.DEFINED_EXP_Integer = dis.readInt();
-                }
+				this.DEFINED_EXP_float = dis.readFloat();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Integer = null;
-                } else {
-                    this.UNDEFINED_EXP_Integer = dis.readInt();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Float = null;
+				} else {
+					this.DEFINED_EXP_Float = dis.readFloat();
+				}
 
-                this.DEFINED_EXP_float = dis.readFloat();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Float = null;
+				} else {
+					this.UNDEFINED_EXP_Float = dis.readFloat();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Float = null;
-                } else {
-                    this.DEFINED_EXP_Float = dis.readFloat();
-                }
+				this.DEFINED_EXP_long = dis.readLong();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Float = null;
-                } else {
-                    this.UNDEFINED_EXP_Float = dis.readFloat();
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Long = null;
+				} else {
+					this.DEFINED_EXP_Long = dis.readLong();
+				}
 
-                this.DEFINED_EXP_long = dis.readLong();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Long = null;
+				} else {
+					this.UNDEFINED_EXP_Long = dis.readLong();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Long = null;
-                } else {
-                    this.DEFINED_EXP_Long = dis.readLong();
-                }
+				this.DEFINED_EXP_Object = dis.readObject();
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Long = null;
-                } else {
-                    this.UNDEFINED_EXP_Long = dis.readLong();
-                }
+				this.UNDEFINED_EXP_Object = dis.readObject();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.DEFINED_EXP_Object = ois.readObject();
+				this.DEFINED_EXP_short = dis.readShort();
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.UNDEFINED_EXP_Object = ois.readObject();
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Short = null;
+				} else {
+					this.DEFINED_EXP_Short = dis.readShort();
+				}
 
-                this.DEFINED_EXP_short = dis.readShort();
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Short = null;
+				} else {
+					this.UNDEFINED_EXP_Short = dis.readShort();
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Short = null;
-                } else {
-                    this.DEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_String = new String(byteArray);
+				}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Short = null;
-                } else {
-                    this.UNDEFINED_EXP_Short = dis.readShort();
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.UNDEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.UNDEFINED_EXP_String = new String(byteArray);
+				}
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_String = new String(byteArray);
-                }
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.UNDEFINED_EXP_String = new String(byteArray);
-                }
+			} catch (ClassNotFoundException eCNFE) {
+				throw new RuntimeException(eCNFE);
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+			}
 
-            } catch (ClassNotFoundException eCNFE) {
-                throw new RuntimeException(eCNFE);
+		}
 
-            }
+		public void writeData(ObjectOutputStream dos) {
+			try {
 
-        }
+				ObjectOutputStream oos = null;
 
-        public void writeData(DataOutputStream dos) {
-            try {
+				// boolean
 
-                ObjectOutputStream oos = null;
+				dos.writeBoolean(this.DEFINED_EXP_boolean);
 
-                // boolean
+				// Boolean
 
-                dos.writeBoolean(this.DEFINED_EXP_boolean);
+				if (this.DEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.DEFINED_EXP_Boolean);
+				}
 
-                // Boolean
+				// Boolean
 
-                if (this.DEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.DEFINED_EXP_Boolean);
-                }
+				if (this.UNDEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
+				}
 
-                // Boolean
+				// byte
 
-                if (this.UNDEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
-                }
+				dos.writeByte(this.DEFINED_EXP_byte);
 
-                // byte
+				// Byte
 
-                dos.writeByte(this.DEFINED_EXP_byte);
+				if (this.DEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.DEFINED_EXP_Byte);
+				}
 
-                // Byte
+				// Byte
 
-                if (this.DEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.DEFINED_EXP_Byte);
-                }
+				if (this.UNDEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.UNDEFINED_EXP_Byte);
+				}
 
-                // Byte
+				// byte[]
 
-                if (this.UNDEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.UNDEFINED_EXP_Byte);
-                }
+				if (this.DEFINED_EXP_byte_array == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array.length);
+					dos.write(this.DEFINED_EXP_byte_array);
+				}
 
-                // byte[]
+				// byte[]
 
-                if (this.DEFINED_EXP_byte_array == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array.length);
-                    dos.write(this.DEFINED_EXP_byte_array);
-                }
+				if (this.DEFINED_EXP_byte_array_nullable == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
+					dos.write(this.DEFINED_EXP_byte_array_nullable);
+				}
 
-                // byte[]
+				// char
 
-                if (this.DEFINED_EXP_byte_array_nullable == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
-                    dos.write(this.DEFINED_EXP_byte_array_nullable);
-                }
+				dos.writeChar(this.DEFINED_EXP_char);
 
-                // char
+				// Character
 
-                dos.writeChar(this.DEFINED_EXP_char);
+				if (this.DEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.DEFINED_EXP_Character);
+				}
 
-                // Character
+				// Character
 
-                if (this.DEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.DEFINED_EXP_Character);
-                }
+				if (this.UNDEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.UNDEFINED_EXP_Character);
+				}
 
-                // Character
+				// java.util.Date
 
-                if (this.UNDEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.UNDEFINED_EXP_Character);
-                }
+				if (this.DEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.DEFINED_EXP_Date.getTime());
+				}
 
-                // java.util.Date
+				// java.util.Date
 
-                if (this.DEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.DEFINED_EXP_Date.getTime());
-                }
+				if (this.UNDEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
+				}
 
-                // java.util.Date
+				// double
 
-                if (this.UNDEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
-                }
+				dos.writeDouble(this.DEFINED_EXP_double);
 
-                // double
+				// Double
 
-                dos.writeDouble(this.DEFINED_EXP_double);
+				if (this.DEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.DEFINED_EXP_Double);
+				}
 
-                // Double
+				// Double
 
-                if (this.DEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.DEFINED_EXP_Double);
-                }
+				if (this.UNDEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.UNDEFINED_EXP_Double);
+				}
 
-                // Double
+				// int
 
-                if (this.UNDEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.UNDEFINED_EXP_Double);
-                }
+				dos.writeInt(this.DEFINED_EXP_int);
 
-                // int
+				// Integer
 
-                dos.writeInt(this.DEFINED_EXP_int);
+				if (this.DEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.DEFINED_EXP_Integer);
+				}
 
-                // Integer
+				// Integer
 
-                if (this.DEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.DEFINED_EXP_Integer);
-                }
+				if (this.UNDEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.UNDEFINED_EXP_Integer);
+				}
 
-                // Integer
+				// float
 
-                if (this.UNDEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.UNDEFINED_EXP_Integer);
-                }
+				dos.writeFloat(this.DEFINED_EXP_float);
 
-                // float
+				// Float
 
-                dos.writeFloat(this.DEFINED_EXP_float);
+				if (this.DEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.DEFINED_EXP_Float);
+				}
 
-                // Float
+				// Float
 
-                if (this.DEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.DEFINED_EXP_Float);
-                }
+				if (this.UNDEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.UNDEFINED_EXP_Float);
+				}
 
-                // Float
+				// long
 
-                if (this.UNDEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.UNDEFINED_EXP_Float);
-                }
+				dos.writeLong(this.DEFINED_EXP_long);
 
-                // long
+				// Long
 
-                dos.writeLong(this.DEFINED_EXP_long);
+				if (this.DEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.DEFINED_EXP_Long);
+				}
 
-                // Long
+				// Long
 
-                if (this.DEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.DEFINED_EXP_Long);
-                }
+				if (this.UNDEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.UNDEFINED_EXP_Long);
+				}
 
-                // Long
+				// Object
 
-                if (this.UNDEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.UNDEFINED_EXP_Long);
-                }
+				dos.writeObject(this.DEFINED_EXP_Object);
 
-                // Object
+				// Object
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.DEFINED_EXP_Object);
+				dos.writeObject(this.UNDEFINED_EXP_Object);
 
-                // Object
+				// short
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.UNDEFINED_EXP_Object);
+				dos.writeShort(this.DEFINED_EXP_short);
 
-                // short
+				// Short
 
-                dos.writeShort(this.DEFINED_EXP_short);
+				if (this.DEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.DEFINED_EXP_Short);
+				}
 
-                // Short
+				// Short
 
-                if (this.DEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.DEFINED_EXP_Short);
-                }
+				if (this.UNDEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.UNDEFINED_EXP_Short);
+				}
 
-                // Short
+				// String
 
-                if (this.UNDEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.UNDEFINED_EXP_Short);
-                }
+				if (this.DEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // String
+				// String
 
-                if (this.DEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				if (this.UNDEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-                // String
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 
-                if (this.UNDEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+		}
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+		public String toString() {
 
-        }
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
 
-        public String toString() {
+			sb.append("DEFINED_EXP_boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_boolean));
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(super.toString());
-            sb.append("[");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_boolean));
+			sb.append("DEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
+			sb.append("UNDEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
+			sb.append("DEFINED_EXP_byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte));
+			sb.append("DEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Byte));
+			sb.append("UNDEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
+			sb.append("DEFINED_EXP_byte_array");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
+			sb.append("DEFINED_EXP_byte_array_nullable");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_byte_array_nullable");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
+			sb.append("DEFINED_EXP_char");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_char));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_char");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_char));
+			sb.append("DEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Character));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Character));
+			sb.append("UNDEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
+			sb.append("DEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Date));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Date));
+			sb.append("UNDEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
+			sb.append("DEFINED_EXP_double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_double));
+			sb.append("DEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Double));
+			sb.append("UNDEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
+			sb.append("DEFINED_EXP_int");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_int));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_int");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_int));
+			sb.append("DEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Integer));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Integer));
+			sb.append("UNDEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
+			sb.append("DEFINED_EXP_float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_float));
+			sb.append("DEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Float));
+			sb.append("UNDEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
+			sb.append("DEFINED_EXP_long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_long));
+			sb.append("DEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Long));
+			sb.append("UNDEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
+			sb.append("DEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Object));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Object));
+			sb.append("UNDEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
+			sb.append("DEFINED_EXP_short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_short));
+			sb.append("DEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Short));
+			sb.append("UNDEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("UNDEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
+			sb.append("DEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_String));
 
-            sb.append(", ");
+			sb.append(", ");
 
-            sb.append("DEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_String));
+			sb.append("UNDEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_String));
 
-            sb.append(", ");
+			sb.append("]");
 
-            sb.append("UNDEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_String));
+			return sb.toString();
+		}
 
-            sb.append("]");
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(after_tFixedFlowInput_2Struct other) {
 
-            return sb.toString();
-        }
+			int returnValue = -1;
 
-        /**
-         * Compare keys
-         */
-        public int compareTo(after_tFixedFlowInput_2Struct other) {
+			return returnValue;
+		}
 
-            int returnValue = -1;
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
 
-            return returnValue;
-        }
+			return returnValue;
+		}
 
-        private int checkNullsAndCompare(Object object1, Object object2) {
-            int returnValue = 0;
-            if (object1 instanceof Comparable && object2 instanceof Comparable) {
-                returnValue = ((Comparable) object1).compareTo(object2);
-            } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
-            } else if (object1 == null && object2 != null) {
-                returnValue = 1;
-            } else if (object1 != null && object2 == null) {
-                returnValue = -1;
-            } else {
-                returnValue = 0;
-            }
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
 
-            return returnValue;
-        }
+	}
 
-        private int compareStrings(String string1, String string2) {
-            // if (this.ignoreCase) {
-            return string1.compareToIgnoreCase(string2);
-            // } else {
-            // return string1.compareTo(string2);
-            // }
-        }
+	public void tFixedFlowInput_2Process() throws TalendException {
+		try {
+			tFixedFlowInput_3Process();
 
-    }
+			mainStruct main = new mainStruct();
+			outStruct out = new outStruct();
+			out2Struct out2 = new out2Struct();
 
-    public void tFixedFlowInput_2Process() throws TalendException {
-        try {
-            tFixedFlowInput_3Process();
+			/*******************************************************************
+			 * / [tFileOutputDelimited_2 begin ] start
+			 */
 
-            mainStruct main = new mainStruct();
-            outStruct out = new outStruct();
-            out2Struct out2 = new out2Struct();
+			ok_Hash.put("tFileOutputDelimited_2", false);
+			start_Hash
+					.put("tFileOutputDelimited_2", System.currentTimeMillis());
+			currentComponent = "tFileOutputDelimited_2";
 
-            /*******************************************************************
-             * / [tFileOutputDelimited_2 begin ] start
-             */
+			String fileName_tFileOutputDelimited_2 = (new java.io.File(
+					context.data_output_dir + context.current_job_dir
+							+ "out_main_" + context.indexMain + "__lookup_"
+							+ context.indexLookup + "__bufferSize_"
+							+ context.bufferSizeValue + ".csv"))
+					.getAbsolutePath().replace("\\", "/");
+			String fullName_tFileOutputDelimited_2 = null;
+			String extension_tFileOutputDelimited_2 = null;
+			String directory_tFileOutputDelimited_2 = null;
+			if ((fileName_tFileOutputDelimited_2.indexOf("/") != -1)) {
+				if (fileName_tFileOutputDelimited_2.lastIndexOf(".") < fileName_tFileOutputDelimited_2
+						.lastIndexOf("/")) {
+					fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
+					extension_tFileOutputDelimited_2 = "";
+				} else {
+					fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
+							.substring(0, fileName_tFileOutputDelimited_2
+									.lastIndexOf("."));
+					extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
+							.substring(fileName_tFileOutputDelimited_2
+									.lastIndexOf("."));
+				}
+				directory_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
+						.substring(0, fileName_tFileOutputDelimited_2
+								.lastIndexOf("/"));
+			} else {
+				if (fileName_tFileOutputDelimited_2.lastIndexOf(".") != -1) {
+					fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
+							.substring(0, fileName_tFileOutputDelimited_2
+									.lastIndexOf("."));
+					extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
+							.substring(fileName_tFileOutputDelimited_2
+									.lastIndexOf("."));
+				} else {
+					fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
+					extension_tFileOutputDelimited_2 = "";
+				}
+				directory_tFileOutputDelimited_2 = "";
+			}
 
-            ok_Hash.put("tFileOutputDelimited_2", false);
-            start_Hash
-                    .put("tFileOutputDelimited_2", System.currentTimeMillis());
-            currentComponent = "tFileOutputDelimited_2";
+			int nb_line_tFileOutputDelimited_2 = 0;
+			int splitEvery_tFileOutputDelimited_2 = 1000;
+			int splitedFileNo_tFileOutputDelimited_2 = 0;
+			int currentRow_tFileOutputDelimited_2 = 0;
 
-            String fileName_tFileOutputDelimited_2 = (new java.io.File(
-                    context.data_output_dir + context.current_job_dir
-                            + "out_main_" + context.indexMain + "__lookup_"
-                            + context.indexLookup + "__bufferSize_"
-                            + context.bufferSizeValue + ".csv"))
-                    .getAbsolutePath().replace("\\", "/");
-            String fullName_tFileOutputDelimited_2 = null;
-            String extension_tFileOutputDelimited_2 = null;
-            String directory_tFileOutputDelimited_2 = null;
-            if ((fileName_tFileOutputDelimited_2.indexOf("/") != -1)) {
-                if (fileName_tFileOutputDelimited_2.lastIndexOf(".") < fileName_tFileOutputDelimited_2
-                        .lastIndexOf("/")) {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
-                    extension_tFileOutputDelimited_2 = "";
-                } else {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(0, fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
-                    extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
-                }
-                directory_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                        .substring(0, fileName_tFileOutputDelimited_2
-                                .lastIndexOf("/"));
-            } else {
-                if (fileName_tFileOutputDelimited_2.lastIndexOf(".") != -1) {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(0, fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
-                    extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
-                } else {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
-                    extension_tFileOutputDelimited_2 = "";
-                }
-                directory_tFileOutputDelimited_2 = "";
-            }
+			final String OUT_DELIM_tFileOutputDelimited_2 = /**
+															 * Start field
+															 * tFileOutputDelimited_2:FIELDSEPARATOR
+															 */
+			";"/** End field tFileOutputDelimited_2:FIELDSEPARATOR */
+			;
 
-            int nb_line_tFileOutputDelimited_2 = 0;
-            int splitEvery_tFileOutputDelimited_2 = 1000;
-            int splitedFileNo_tFileOutputDelimited_2 = 0;
-            int currentRow_tFileOutputDelimited_2 = 0;
+			final String OUT_DELIM_ROWSEP_tFileOutputDelimited_2 = /**
+																	 * Start
+																	 * field
+																	 * tFileOutputDelimited_2:ROWSEPARATOR
+																	 */
+			"\n"/** End field tFileOutputDelimited_2:ROWSEPARATOR */
+			;
 
-            final String OUT_DELIM_tFileOutputDelimited_2 = /**
-                                                             * Start field
-                                                             * tFileOutputDelimited_2:FIELDSEPARATOR
-                                                             */
-            ";"/** End field tFileOutputDelimited_2:FIELDSEPARATOR */
-            ;
+			// create directory only if not exists
+			if (directory_tFileOutputDelimited_2 != null
+					&& directory_tFileOutputDelimited_2.trim().length() != 0) {
+				java.io.File dir_tFileOutputDelimited_2 = new java.io.File(
+						directory_tFileOutputDelimited_2);
+				if (!dir_tFileOutputDelimited_2.exists()) {
+					dir_tFileOutputDelimited_2.mkdirs();
+				}
+			}
 
-            final String OUT_DELIM_ROWSEP_tFileOutputDelimited_2 = /**
-                                                                     * Start
-                                                                     * field
-                                                                     * tFileOutputDelimited_2:ROWSEPARATOR
-                                                                     */
-            "\n"/** End field tFileOutputDelimited_2:ROWSEPARATOR */
-            ;
+			java.io.BufferedWriter outtFileOutputDelimited_2 = new java.io.BufferedWriter(
+					new java.io.OutputStreamWriter(
+							new java.io.FileOutputStream(
+									fileName_tFileOutputDelimited_2, false),
+							"ISO-8859-15"));
+			java.io.File filetFileOutputDelimited_2 = new java.io.File(
+					fileName_tFileOutputDelimited_2);
 
-            // create directory only if not exists
-            if (directory_tFileOutputDelimited_2 != null
-                    && directory_tFileOutputDelimited_2.trim().length() != 0) {
-                java.io.File dir_tFileOutputDelimited_2 = new java.io.File(
-                        directory_tFileOutputDelimited_2);
-                if (!dir_tFileOutputDelimited_2.exists()) {
-                    dir_tFileOutputDelimited_2.mkdirs();
-                }
-            }
+			if (filetFileOutputDelimited_2.length() == 0) {
 
-            java.io.BufferedWriter outtFileOutputDelimited_2 = new java.io.BufferedWriter(
-                    new java.io.OutputStreamWriter(
-                            new java.io.FileOutputStream(
-                                    fileName_tFileOutputDelimited_2, false),
-                            "ISO-8859-15"));
-            java.io.File filetFileOutputDelimited_2 = new java.io.File(
-                    fileName_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2.write("DEFINED_EXP_boolean");
 
-            if (filetFileOutputDelimited_2.length() == 0) {
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_boolean");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Boolean");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Boolean");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Boolean");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Boolean");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_byte");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_byte");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Byte");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Byte");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Byte");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Byte");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array");
+				outtFileOutputDelimited_2
+						.write("DEFINED_EXP_byte_array_nullable");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2
-                        .write("DEFINED_EXP_byte_array_nullable");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_char");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_char");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Character");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Character");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Character");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Character");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Date");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Date");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Date");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Date");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_double");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_double");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Double");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Double");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Double");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Double");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_int");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_int");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Integer");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Integer");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Integer");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Integer");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_float");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_float");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Float");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Float");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Float");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Float");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_long");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_long");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Long");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Long");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Long");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Long");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Object");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Object");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Object");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Object");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_short");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_short");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Short");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Short");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Short");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Short");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_String");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_String");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_String");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_String");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_boolean_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_boolean_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Boolean_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Boolean_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Boolean_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Boolean_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_byte_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_byte_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Byte_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Byte_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Byte_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Byte_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array_1");
+				outtFileOutputDelimited_2
+						.write("DEFINED_EXP_byte_array_nullable_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2
-                        .write("DEFINED_EXP_byte_array_nullable_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_char_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_char_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Character_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Character_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Character_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Character_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Date_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Date_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Date_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Date_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_double_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_double_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Double_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Double_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Double_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Double_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_int_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_int_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Integer_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Integer_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Integer_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Integer_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_float_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_float_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Float_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Float_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Float_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Float_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_long_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_long_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Long_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Long_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Long_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Long_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Object_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Object_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Object_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Object_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_short_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_short_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_Short_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_Short_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_Short_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_Short_1");
+				outtFileOutputDelimited_2.write("DEFINED_EXP_String_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2.write("DEFINED_EXP_String_1");
+				outtFileOutputDelimited_2.write("UNDEFINED_EXP_String_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+				outtFileOutputDelimited_2
+						.write(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
+			}
 
-                outtFileOutputDelimited_2.write("UNDEFINED_EXP_String_1");
+			/**
+			 * [tFileOutputDelimited_2 begin ] stop
+			 */
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
-            }
+			/*******************************************************************
+			 * / [tMap_2 begin ] start
+			 */
 
-            /**
-             * [tFileOutputDelimited_2 begin ] stop
-             */
+			ok_Hash.put("tMap_2", false);
+			start_Hash.put("tMap_2", System.currentTimeMillis());
+			currentComponent = "tMap_2";
 
-            /*******************************************************************
-             * / [tMap_2 begin ] start
-             */
+			// ###############################
+			// # Lookup's keys initialization
+			// ###############################
 
-            ok_Hash.put("tMap_2", false);
-            start_Hash.put("tMap_2", System.currentTimeMillis());
-            currentComponent = "tMap_2";
+			// ###############################
+			// # Vars initialization
+			// ###############################
 
-            // ###############################
-            // # Lookup's keys initialization
-            // ###############################
+			// ###############################
+			// # Outputs initialization
+			out2Struct out2_tmp = new out2Struct();
+			// ###############################
 
-            // ###############################
-            // # Vars initialization
-            // ###############################
+			/**
+			 * [tMap_2 begin ] stop
+			 */
 
-            // ###############################
-            // # Outputs initialization
-            out2Struct out2_tmp = new out2Struct();
-            // ###############################
+			/*******************************************************************
+			 * / [tMap_1 begin ] start
+			 */
 
-            /**
-             * [tMap_2 begin ] stop
-             */
+			ok_Hash.put("tMap_1", false);
+			start_Hash.put("tMap_1", System.currentTimeMillis());
+			currentComponent = "tMap_1";
 
-            /*******************************************************************
-             * / [tMap_1 begin ] start
-             */
+			// ###############################
+			// # Lookup's keys initialization
 
-            ok_Hash.put("tMap_1", false);
-            start_Hash.put("tMap_1", System.currentTimeMillis());
-            currentComponent = "tMap_1";
+			org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct> tHash_Lookup_lookup = (org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct>) globalMap
+					.get("tHash_Lookup_lookup");
 
-            // ###############################
-            // # Lookup's keys initialization
+			tHash_Lookup_lookup.initGet();
 
-            org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct> tHash_Lookup_lookup = (org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct>) globalMap
-                    .get("tHash_Lookup_lookup");
+			lookupStruct lookupHashKey = new lookupStruct();
+			lookupStruct lookupDefault = new lookupStruct();
+			// ###############################
 
-            tHash_Lookup_lookup.initGet();
+			// ###############################
+			// # Vars initialization
+			// ###############################
 
-            lookupStruct lookupHashKey = new lookupStruct();
-            lookupStruct lookupDefault = new lookupStruct();
-            // ###############################
+			// ###############################
+			// # Outputs initialization
+			outStruct out_tmp = new outStruct();
+			// ###############################
 
-            // ###############################
-            // # Vars initialization
-            // ###############################
+			class SortableRow_main implements Comparable<SortableRow_main>,
+					routines.system.IPersistableRow<SortableRow_main> { // G_TM_B_001
 
-            // ###############################
-            // # Outputs initialization
-            outStruct out_tmp = new outStruct();
-            // ###############################
+				boolean is__rejectedInnerJoin;
 
-            class SortableRow_main implements Comparable<SortableRow_main>,
-                    routines.system.IPersistableRow<SortableRow_main> { // G_TM_B_001
+				// main
+				boolean main__DEFINED_EXP_boolean;
+				Boolean main__DEFINED_EXP_Boolean;
+				Boolean main__UNDEFINED_EXP_Boolean;
+				byte main__DEFINED_EXP_byte;
+				Byte main__DEFINED_EXP_Byte;
+				Byte main__UNDEFINED_EXP_Byte;
+				byte[] main__DEFINED_EXP_byte_array;
+				byte[] main__DEFINED_EXP_byte_array_nullable;
+				char main__DEFINED_EXP_char;
+				Character main__DEFINED_EXP_Character;
+				Character main__UNDEFINED_EXP_Character;
+				java.util.Date main__DEFINED_EXP_Date;
+				java.util.Date main__UNDEFINED_EXP_Date;
+				double main__DEFINED_EXP_double;
+				Double main__DEFINED_EXP_Double;
+				Double main__UNDEFINED_EXP_Double;
+				int main__DEFINED_EXP_int;
+				Integer main__DEFINED_EXP_Integer;
+				Integer main__UNDEFINED_EXP_Integer;
+				float main__DEFINED_EXP_float;
+				Float main__DEFINED_EXP_Float;
+				Float main__UNDEFINED_EXP_Float;
+				long main__DEFINED_EXP_long;
+				Long main__DEFINED_EXP_Long;
+				Long main__UNDEFINED_EXP_Long;
+				Object main__DEFINED_EXP_Object;
+				Object main__UNDEFINED_EXP_Object;
+				short main__DEFINED_EXP_short;
+				Short main__DEFINED_EXP_Short;
+				Short main__UNDEFINED_EXP_Short;
+				String main__DEFINED_EXP_String;
+				String main__UNDEFINED_EXP_String;
 
-                boolean is__rejectedInnerJoin;
+				public void fillFrom(mainStruct main) {
 
-                // main
-                boolean main__DEFINED_EXP_boolean;
-                Boolean main__DEFINED_EXP_Boolean;
-                Boolean main__UNDEFINED_EXP_Boolean;
-                byte main__DEFINED_EXP_byte;
-                Byte main__DEFINED_EXP_Byte;
-                Byte main__UNDEFINED_EXP_Byte;
-                byte[] main__DEFINED_EXP_byte_array;
-                byte[] main__DEFINED_EXP_byte_array_nullable;
-                char main__DEFINED_EXP_char;
-                Character main__DEFINED_EXP_Character;
-                Character main__UNDEFINED_EXP_Character;
-                java.util.Date main__DEFINED_EXP_Date;
-                java.util.Date main__UNDEFINED_EXP_Date;
-                double main__DEFINED_EXP_double;
-                Double main__DEFINED_EXP_Double;
-                Double main__UNDEFINED_EXP_Double;
-                int main__DEFINED_EXP_int;
-                Integer main__DEFINED_EXP_Integer;
-                Integer main__UNDEFINED_EXP_Integer;
-                float main__DEFINED_EXP_float;
-                Float main__DEFINED_EXP_Float;
-                Float main__UNDEFINED_EXP_Float;
-                long main__DEFINED_EXP_long;
-                Long main__DEFINED_EXP_Long;
-                Long main__UNDEFINED_EXP_Long;
-                Object main__DEFINED_EXP_Object;
-                Object main__UNDEFINED_EXP_Object;
-                short main__DEFINED_EXP_short;
-                Short main__DEFINED_EXP_Short;
-                Short main__UNDEFINED_EXP_Short;
-                String main__DEFINED_EXP_String;
-                String main__UNDEFINED_EXP_String;
+					this.main__DEFINED_EXP_boolean = main.DEFINED_EXP_boolean;
+					this.main__DEFINED_EXP_Boolean = main.DEFINED_EXP_Boolean;
+					this.main__UNDEFINED_EXP_Boolean = main.UNDEFINED_EXP_Boolean;
+					this.main__DEFINED_EXP_byte = main.DEFINED_EXP_byte;
+					this.main__DEFINED_EXP_Byte = main.DEFINED_EXP_Byte;
+					this.main__UNDEFINED_EXP_Byte = main.UNDEFINED_EXP_Byte;
+					this.main__DEFINED_EXP_byte_array = main.DEFINED_EXP_byte_array;
+					this.main__DEFINED_EXP_byte_array_nullable = main.DEFINED_EXP_byte_array_nullable;
+					this.main__DEFINED_EXP_char = main.DEFINED_EXP_char;
+					this.main__DEFINED_EXP_Character = main.DEFINED_EXP_Character;
+					this.main__UNDEFINED_EXP_Character = main.UNDEFINED_EXP_Character;
+					this.main__DEFINED_EXP_Date = main.DEFINED_EXP_Date;
+					this.main__UNDEFINED_EXP_Date = main.UNDEFINED_EXP_Date;
+					this.main__DEFINED_EXP_double = main.DEFINED_EXP_double;
+					this.main__DEFINED_EXP_Double = main.DEFINED_EXP_Double;
+					this.main__UNDEFINED_EXP_Double = main.UNDEFINED_EXP_Double;
+					this.main__DEFINED_EXP_int = main.DEFINED_EXP_int;
+					this.main__DEFINED_EXP_Integer = main.DEFINED_EXP_Integer;
+					this.main__UNDEFINED_EXP_Integer = main.UNDEFINED_EXP_Integer;
+					this.main__DEFINED_EXP_float = main.DEFINED_EXP_float;
+					this.main__DEFINED_EXP_Float = main.DEFINED_EXP_Float;
+					this.main__UNDEFINED_EXP_Float = main.UNDEFINED_EXP_Float;
+					this.main__DEFINED_EXP_long = main.DEFINED_EXP_long;
+					this.main__DEFINED_EXP_Long = main.DEFINED_EXP_Long;
+					this.main__UNDEFINED_EXP_Long = main.UNDEFINED_EXP_Long;
+					this.main__DEFINED_EXP_Object = main.DEFINED_EXP_Object;
+					this.main__UNDEFINED_EXP_Object = main.UNDEFINED_EXP_Object;
+					this.main__DEFINED_EXP_short = main.DEFINED_EXP_short;
+					this.main__DEFINED_EXP_Short = main.DEFINED_EXP_Short;
+					this.main__UNDEFINED_EXP_Short = main.UNDEFINED_EXP_Short;
+					this.main__DEFINED_EXP_String = main.DEFINED_EXP_String;
+					this.main__UNDEFINED_EXP_String = main.UNDEFINED_EXP_String;
 
-                public void fillFrom(mainStruct main) {
+				}
 
-                    this.main__DEFINED_EXP_boolean = main.DEFINED_EXP_boolean;
-                    this.main__DEFINED_EXP_Boolean = main.DEFINED_EXP_Boolean;
-                    this.main__UNDEFINED_EXP_Boolean = main.UNDEFINED_EXP_Boolean;
-                    this.main__DEFINED_EXP_byte = main.DEFINED_EXP_byte;
-                    this.main__DEFINED_EXP_Byte = main.DEFINED_EXP_Byte;
-                    this.main__UNDEFINED_EXP_Byte = main.UNDEFINED_EXP_Byte;
-                    this.main__DEFINED_EXP_byte_array = main.DEFINED_EXP_byte_array;
-                    this.main__DEFINED_EXP_byte_array_nullable = main.DEFINED_EXP_byte_array_nullable;
-                    this.main__DEFINED_EXP_char = main.DEFINED_EXP_char;
-                    this.main__DEFINED_EXP_Character = main.DEFINED_EXP_Character;
-                    this.main__UNDEFINED_EXP_Character = main.UNDEFINED_EXP_Character;
-                    this.main__DEFINED_EXP_Date = main.DEFINED_EXP_Date;
-                    this.main__UNDEFINED_EXP_Date = main.UNDEFINED_EXP_Date;
-                    this.main__DEFINED_EXP_double = main.DEFINED_EXP_double;
-                    this.main__DEFINED_EXP_Double = main.DEFINED_EXP_Double;
-                    this.main__UNDEFINED_EXP_Double = main.UNDEFINED_EXP_Double;
-                    this.main__DEFINED_EXP_int = main.DEFINED_EXP_int;
-                    this.main__DEFINED_EXP_Integer = main.DEFINED_EXP_Integer;
-                    this.main__UNDEFINED_EXP_Integer = main.UNDEFINED_EXP_Integer;
-                    this.main__DEFINED_EXP_float = main.DEFINED_EXP_float;
-                    this.main__DEFINED_EXP_Float = main.DEFINED_EXP_Float;
-                    this.main__UNDEFINED_EXP_Float = main.UNDEFINED_EXP_Float;
-                    this.main__DEFINED_EXP_long = main.DEFINED_EXP_long;
-                    this.main__DEFINED_EXP_Long = main.DEFINED_EXP_Long;
-                    this.main__UNDEFINED_EXP_Long = main.UNDEFINED_EXP_Long;
-                    this.main__DEFINED_EXP_Object = main.DEFINED_EXP_Object;
-                    this.main__UNDEFINED_EXP_Object = main.UNDEFINED_EXP_Object;
-                    this.main__DEFINED_EXP_short = main.DEFINED_EXP_short;
-                    this.main__DEFINED_EXP_Short = main.DEFINED_EXP_Short;
-                    this.main__UNDEFINED_EXP_Short = main.UNDEFINED_EXP_Short;
-                    this.main__DEFINED_EXP_String = main.DEFINED_EXP_String;
-                    this.main__UNDEFINED_EXP_String = main.UNDEFINED_EXP_String;
+				public void copyDataTo(mainStruct main) {
 
-                }
+					main.DEFINED_EXP_boolean = this.main__DEFINED_EXP_boolean;
+					main.DEFINED_EXP_Boolean = this.main__DEFINED_EXP_Boolean;
+					main.UNDEFINED_EXP_Boolean = this.main__UNDEFINED_EXP_Boolean;
+					main.DEFINED_EXP_byte = this.main__DEFINED_EXP_byte;
+					main.DEFINED_EXP_Byte = this.main__DEFINED_EXP_Byte;
+					main.UNDEFINED_EXP_Byte = this.main__UNDEFINED_EXP_Byte;
+					main.DEFINED_EXP_byte_array = this.main__DEFINED_EXP_byte_array;
+					main.DEFINED_EXP_byte_array_nullable = this.main__DEFINED_EXP_byte_array_nullable;
+					main.DEFINED_EXP_char = this.main__DEFINED_EXP_char;
+					main.DEFINED_EXP_Character = this.main__DEFINED_EXP_Character;
+					main.UNDEFINED_EXP_Character = this.main__UNDEFINED_EXP_Character;
+					main.DEFINED_EXP_Date = this.main__DEFINED_EXP_Date;
+					main.UNDEFINED_EXP_Date = this.main__UNDEFINED_EXP_Date;
+					main.DEFINED_EXP_double = this.main__DEFINED_EXP_double;
+					main.DEFINED_EXP_Double = this.main__DEFINED_EXP_Double;
+					main.UNDEFINED_EXP_Double = this.main__UNDEFINED_EXP_Double;
+					main.DEFINED_EXP_int = this.main__DEFINED_EXP_int;
+					main.DEFINED_EXP_Integer = this.main__DEFINED_EXP_Integer;
+					main.UNDEFINED_EXP_Integer = this.main__UNDEFINED_EXP_Integer;
+					main.DEFINED_EXP_float = this.main__DEFINED_EXP_float;
+					main.DEFINED_EXP_Float = this.main__DEFINED_EXP_Float;
+					main.UNDEFINED_EXP_Float = this.main__UNDEFINED_EXP_Float;
+					main.DEFINED_EXP_long = this.main__DEFINED_EXP_long;
+					main.DEFINED_EXP_Long = this.main__DEFINED_EXP_Long;
+					main.UNDEFINED_EXP_Long = this.main__UNDEFINED_EXP_Long;
+					main.DEFINED_EXP_Object = this.main__DEFINED_EXP_Object;
+					main.UNDEFINED_EXP_Object = this.main__UNDEFINED_EXP_Object;
+					main.DEFINED_EXP_short = this.main__DEFINED_EXP_short;
+					main.DEFINED_EXP_Short = this.main__DEFINED_EXP_Short;
+					main.UNDEFINED_EXP_Short = this.main__UNDEFINED_EXP_Short;
+					main.DEFINED_EXP_String = this.main__DEFINED_EXP_String;
+					main.UNDEFINED_EXP_String = this.main__UNDEFINED_EXP_String;
 
-                public void copyDataTo(mainStruct main) {
+				}
 
-                    main.DEFINED_EXP_boolean = this.main__DEFINED_EXP_boolean;
-                    main.DEFINED_EXP_Boolean = this.main__DEFINED_EXP_Boolean;
-                    main.UNDEFINED_EXP_Boolean = this.main__UNDEFINED_EXP_Boolean;
-                    main.DEFINED_EXP_byte = this.main__DEFINED_EXP_byte;
-                    main.DEFINED_EXP_Byte = this.main__DEFINED_EXP_Byte;
-                    main.UNDEFINED_EXP_Byte = this.main__UNDEFINED_EXP_Byte;
-                    main.DEFINED_EXP_byte_array = this.main__DEFINED_EXP_byte_array;
-                    main.DEFINED_EXP_byte_array_nullable = this.main__DEFINED_EXP_byte_array_nullable;
-                    main.DEFINED_EXP_char = this.main__DEFINED_EXP_char;
-                    main.DEFINED_EXP_Character = this.main__DEFINED_EXP_Character;
-                    main.UNDEFINED_EXP_Character = this.main__UNDEFINED_EXP_Character;
-                    main.DEFINED_EXP_Date = this.main__DEFINED_EXP_Date;
-                    main.UNDEFINED_EXP_Date = this.main__UNDEFINED_EXP_Date;
-                    main.DEFINED_EXP_double = this.main__DEFINED_EXP_double;
-                    main.DEFINED_EXP_Double = this.main__DEFINED_EXP_Double;
-                    main.UNDEFINED_EXP_Double = this.main__UNDEFINED_EXP_Double;
-                    main.DEFINED_EXP_int = this.main__DEFINED_EXP_int;
-                    main.DEFINED_EXP_Integer = this.main__DEFINED_EXP_Integer;
-                    main.UNDEFINED_EXP_Integer = this.main__UNDEFINED_EXP_Integer;
-                    main.DEFINED_EXP_float = this.main__DEFINED_EXP_float;
-                    main.DEFINED_EXP_Float = this.main__DEFINED_EXP_Float;
-                    main.UNDEFINED_EXP_Float = this.main__UNDEFINED_EXP_Float;
-                    main.DEFINED_EXP_long = this.main__DEFINED_EXP_long;
-                    main.DEFINED_EXP_Long = this.main__DEFINED_EXP_Long;
-                    main.UNDEFINED_EXP_Long = this.main__UNDEFINED_EXP_Long;
-                    main.DEFINED_EXP_Object = this.main__DEFINED_EXP_Object;
-                    main.UNDEFINED_EXP_Object = this.main__UNDEFINED_EXP_Object;
-                    main.DEFINED_EXP_short = this.main__DEFINED_EXP_short;
-                    main.DEFINED_EXP_Short = this.main__DEFINED_EXP_Short;
-                    main.UNDEFINED_EXP_Short = this.main__UNDEFINED_EXP_Short;
-                    main.DEFINED_EXP_String = this.main__DEFINED_EXP_String;
-                    main.UNDEFINED_EXP_String = this.main__UNDEFINED_EXP_String;
+				public String toString() {
 
-                }
+					StringBuilder sb = new StringBuilder();
+					sb.append(super.toString());
+					sb.append("[");
 
-                public String toString() {
+					sb.append("main__DEFINED_EXP_boolean");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_boolean));
 
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(super.toString());
-                    sb.append("[");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_boolean");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_boolean));
+					sb.append("main__DEFINED_EXP_Boolean");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Boolean));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Boolean");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Boolean));
+					sb.append("main__UNDEFINED_EXP_Boolean");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Boolean));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Boolean");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Boolean));
+					sb.append("main__DEFINED_EXP_byte");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_byte));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_byte");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_byte));
+					sb.append("main__DEFINED_EXP_Byte");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Byte));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Byte");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Byte));
+					sb.append("main__UNDEFINED_EXP_Byte");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Byte));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Byte");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Byte));
+					sb.append("main__DEFINED_EXP_byte_array");
+					sb.append("=");
+					sb
+							.append(String
+									.valueOf(this.main__DEFINED_EXP_byte_array));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_byte_array");
-                    sb.append("=");
-                    sb
-                            .append(String
-                                    .valueOf(this.main__DEFINED_EXP_byte_array));
+					sb.append("main__DEFINED_EXP_byte_array_nullable");
+					sb.append("=");
+					sb
+							.append(String
+									.valueOf(this.main__DEFINED_EXP_byte_array_nullable));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_byte_array_nullable");
-                    sb.append("=");
-                    sb
-                            .append(String
-                                    .valueOf(this.main__DEFINED_EXP_byte_array_nullable));
+					sb.append("main__DEFINED_EXP_char");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_char));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_char");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_char));
+					sb.append("main__DEFINED_EXP_Character");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Character));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Character");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Character));
+					sb.append("main__UNDEFINED_EXP_Character");
+					sb.append("=");
+					sb.append(String
+							.valueOf(this.main__UNDEFINED_EXP_Character));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Character");
-                    sb.append("=");
-                    sb.append(String
-                            .valueOf(this.main__UNDEFINED_EXP_Character));
+					sb.append("main__DEFINED_EXP_Date");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Date));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Date");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Date));
+					sb.append("main__UNDEFINED_EXP_Date");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Date));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Date");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Date));
+					sb.append("main__DEFINED_EXP_double");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_double));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_double");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_double));
+					sb.append("main__DEFINED_EXP_Double");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Double));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Double");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Double));
+					sb.append("main__UNDEFINED_EXP_Double");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Double));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Double");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Double));
+					sb.append("main__DEFINED_EXP_int");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_int));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_int");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_int));
+					sb.append("main__DEFINED_EXP_Integer");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Integer));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Integer");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Integer));
+					sb.append("main__UNDEFINED_EXP_Integer");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Integer));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Integer");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Integer));
+					sb.append("main__DEFINED_EXP_float");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_float));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_float");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_float));
+					sb.append("main__DEFINED_EXP_Float");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Float));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Float");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Float));
+					sb.append("main__UNDEFINED_EXP_Float");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Float));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Float");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Float));
+					sb.append("main__DEFINED_EXP_long");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_long));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_long");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_long));
+					sb.append("main__DEFINED_EXP_Long");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Long));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Long");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Long));
+					sb.append("main__UNDEFINED_EXP_Long");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Long));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Long");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Long));
+					sb.append("main__DEFINED_EXP_Object");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Object));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Object");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Object));
+					sb.append("main__UNDEFINED_EXP_Object");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Object));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Object");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Object));
+					sb.append("main__DEFINED_EXP_short");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_short));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_short");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_short));
+					sb.append("main__DEFINED_EXP_Short");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_Short));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_Short");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_Short));
+					sb.append("main__UNDEFINED_EXP_Short");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_Short));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__UNDEFINED_EXP_Short");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_Short));
+					sb.append("main__DEFINED_EXP_String");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__DEFINED_EXP_String));
 
-                    sb.append(", ");
+					sb.append(", ");
 
-                    sb.append("main__DEFINED_EXP_String");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__DEFINED_EXP_String));
+					sb.append("main__UNDEFINED_EXP_String");
+					sb.append("=");
+					sb.append(String.valueOf(this.main__UNDEFINED_EXP_String));
 
-                    sb.append(", ");
+					sb.append("]");
 
-                    sb.append("main__UNDEFINED_EXP_String");
-                    sb.append("=");
-                    sb.append(String.valueOf(this.main__UNDEFINED_EXP_String));
+					return sb.toString();
+				}
 
-                    sb.append("]");
+				public int compareTo(SortableRow_main other) {
 
-                    return sb.toString();
-                }
+					int returnValue = 0;
 
-                public int compareTo(SortableRow_main other) {
+					return returnValue;
+				}
 
-                    int returnValue = 0;
+				private int checkNullsAndCompare(Object object1, Object object2) {
 
-                    return returnValue;
-                }
+					int ascendingInt = 1;
 
-                private int checkNullsAndCompare(Object object1, Object object2) {
+					int returnValue = 0;
+					if (object1 instanceof String && object2 instanceof String) {
+						returnValue = compareStrings((String) object1,
+								(String) object2);
+					} else if (object1 instanceof Comparable
+							&& object2 instanceof Comparable) {
+						returnValue = ((Comparable) object1).compareTo(object2);
+					} else if (object1 != null && object2 != null) {
+						returnValue = compareStrings(object1.toString(),
+								object2.toString());
+					} else if (object1 == null && object2 != null) {
+						returnValue = 1;
+					} else if (object1 != null && object2 == null) {
+						returnValue = -1;
+					} else {
+						returnValue = 0;
+					}
 
-                    int ascendingInt = 1;
+					return ascendingInt * returnValue;
+				}
 
-                    int returnValue = 0;
-                    if (object1 instanceof String && object2 instanceof String) {
-                        returnValue = compareStrings((String) object1,
-                                (String) object2);
-                    } else if (object1 instanceof Comparable
-                            && object2 instanceof Comparable) {
-                        returnValue = ((Comparable) object1).compareTo(object2);
-                    } else if (object1 != null && object2 != null) {
-                        returnValue = compareStrings(object1.toString(),
-                                object2.toString());
-                    } else if (object1 == null && object2 != null) {
-                        returnValue = 1;
-                    } else if (object1 != null && object2 == null) {
-                        returnValue = -1;
-                    } else {
-                        returnValue = 0;
-                    }
+				private int compareStrings(String string1, String string2) {
+					boolean ignoreCase = true;
+					if (ignoreCase) {
+						return string1.compareToIgnoreCase(string2);
+					} else {
+						return string1.compareTo(string2);
+					}
+				}
 
-                    return ascendingInt * returnValue;
-                }
+				public void readData(ObjectInputStream dis) {
 
-                private int compareStrings(String string1, String string2) {
-                    boolean ignoreCase = true;
-                    if (ignoreCase) {
-                        return string1.compareToIgnoreCase(string2);
-                    } else {
-                        return string1.compareTo(string2);
-                    }
-                }
+					try {
 
-                public void readData(DataInputStream dis) {
+						int length = 0;
 
-                    try {
+						
 
-                        int length = 0;
+						this.is__rejectedInnerJoin = dis.readBoolean();
 
-                        ObjectInputStream ois = null;
+						this.main__DEFINED_EXP_boolean = dis.readBoolean();
 
-                        this.is__rejectedInnerJoin = dis.readBoolean();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Boolean = null;
+						} else {
+							this.main__DEFINED_EXP_Boolean = dis.readBoolean();
+						}
 
-                        this.main__DEFINED_EXP_boolean = dis.readBoolean();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Boolean = null;
+						} else {
+							this.main__UNDEFINED_EXP_Boolean = dis
+									.readBoolean();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Boolean = null;
-                        } else {
-                            this.main__DEFINED_EXP_Boolean = dis.readBoolean();
-                        }
+						this.main__DEFINED_EXP_byte = dis.readByte();
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Boolean = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Boolean = dis
-                                    .readBoolean();
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Byte = null;
+						} else {
+							this.main__DEFINED_EXP_Byte = dis.readByte();
+						}
 
-                        this.main__DEFINED_EXP_byte = dis.readByte();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Byte = null;
+						} else {
+							this.main__UNDEFINED_EXP_Byte = dis.readByte();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Byte = null;
-                        } else {
-                            this.main__DEFINED_EXP_Byte = dis.readByte();
-                        }
+						length = dis.readInt();
+						if (length == -1) {
+							this.main__DEFINED_EXP_byte_array = null;
+						} else {
+							byte[] byteArray = new byte[length];
+							dis.read(byteArray);
+							this.main__DEFINED_EXP_byte_array = byteArray;
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Byte = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Byte = dis.readByte();
-                        }
+						length = dis.readInt();
+						if (length == -1) {
+							this.main__DEFINED_EXP_byte_array_nullable = null;
+						} else {
+							byte[] byteArray = new byte[length];
+							dis.read(byteArray);
+							this.main__DEFINED_EXP_byte_array_nullable = byteArray;
+						}
 
-                        length = dis.readInt();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_byte_array = null;
-                        } else {
-                            byte[] byteArray = new byte[length];
-                            dis.read(byteArray);
-                            this.main__DEFINED_EXP_byte_array = byteArray;
-                        }
+						this.main__DEFINED_EXP_char = dis.readChar();
 
-                        length = dis.readInt();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_byte_array_nullable = null;
-                        } else {
-                            byte[] byteArray = new byte[length];
-                            dis.read(byteArray);
-                            this.main__DEFINED_EXP_byte_array_nullable = byteArray;
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Character = null;
+						} else {
+							this.main__DEFINED_EXP_Character = dis.readChar();
+						}
 
-                        this.main__DEFINED_EXP_char = dis.readChar();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Character = null;
+						} else {
+							this.main__UNDEFINED_EXP_Character = dis.readChar();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Character = null;
-                        } else {
-                            this.main__DEFINED_EXP_Character = dis.readChar();
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Date = null;
+						} else {
+							this.main__DEFINED_EXP_Date = new Date(dis
+									.readLong());
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Character = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Character = dis.readChar();
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Date = null;
+						} else {
+							this.main__UNDEFINED_EXP_Date = new Date(dis
+									.readLong());
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Date = null;
-                        } else {
-                            this.main__DEFINED_EXP_Date = new Date(dis
-                                    .readLong());
-                        }
+						this.main__DEFINED_EXP_double = dis.readDouble();
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Date = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Date = new Date(dis
-                                    .readLong());
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Double = null;
+						} else {
+							this.main__DEFINED_EXP_Double = dis.readDouble();
+						}
 
-                        this.main__DEFINED_EXP_double = dis.readDouble();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Double = null;
+						} else {
+							this.main__UNDEFINED_EXP_Double = dis.readDouble();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Double = null;
-                        } else {
-                            this.main__DEFINED_EXP_Double = dis.readDouble();
-                        }
+						this.main__DEFINED_EXP_int = dis.readInt();
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Double = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Double = dis.readDouble();
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Integer = null;
+						} else {
+							this.main__DEFINED_EXP_Integer = dis.readInt();
+						}
 
-                        this.main__DEFINED_EXP_int = dis.readInt();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Integer = null;
+						} else {
+							this.main__UNDEFINED_EXP_Integer = dis.readInt();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Integer = null;
-                        } else {
-                            this.main__DEFINED_EXP_Integer = dis.readInt();
-                        }
+						this.main__DEFINED_EXP_float = dis.readFloat();
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Integer = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Integer = dis.readInt();
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Float = null;
+						} else {
+							this.main__DEFINED_EXP_Float = dis.readFloat();
+						}
 
-                        this.main__DEFINED_EXP_float = dis.readFloat();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Float = null;
+						} else {
+							this.main__UNDEFINED_EXP_Float = dis.readFloat();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Float = null;
-                        } else {
-                            this.main__DEFINED_EXP_Float = dis.readFloat();
-                        }
+						this.main__DEFINED_EXP_long = dis.readLong();
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Float = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Float = dis.readFloat();
-                        }
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Long = null;
+						} else {
+							this.main__DEFINED_EXP_Long = dis.readLong();
+						}
 
-                        this.main__DEFINED_EXP_long = dis.readLong();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Long = null;
+						} else {
+							this.main__UNDEFINED_EXP_Long = dis.readLong();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Long = null;
-                        } else {
-                            this.main__DEFINED_EXP_Long = dis.readLong();
-                        }
+						this.main__DEFINED_EXP_Object = dis.readObject();
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Long = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Long = dis.readLong();
-                        }
+						this.main__UNDEFINED_EXP_Object = dis.readObject();
 
-                        if (ois == null) {
-                            ois = new ObjectInputStream(dis);
-                        }
-                        this.main__DEFINED_EXP_Object = ois.readObject();
+						this.main__DEFINED_EXP_short = dis.readShort();
 
-                        if (ois == null) {
-                            ois = new ObjectInputStream(dis);
-                        }
-                        this.main__UNDEFINED_EXP_Object = ois.readObject();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__DEFINED_EXP_Short = null;
+						} else {
+							this.main__DEFINED_EXP_Short = dis.readShort();
+						}
 
-                        this.main__DEFINED_EXP_short = dis.readShort();
+						length = dis.readByte();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_Short = null;
+						} else {
+							this.main__UNDEFINED_EXP_Short = dis.readShort();
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_Short = null;
-                        } else {
-                            this.main__DEFINED_EXP_Short = dis.readShort();
-                        }
+						length = dis.readInt();
+						if (length == -1) {
+							this.main__DEFINED_EXP_String = null;
+						} else {
+							byte[] byteArray = new byte[length];
+							dis.read(byteArray);
+							this.main__DEFINED_EXP_String = new String(
+									byteArray);
+						}
 
-                        length = dis.readByte();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_Short = null;
-                        } else {
-                            this.main__UNDEFINED_EXP_Short = dis.readShort();
-                        }
+						length = dis.readInt();
+						if (length == -1) {
+							this.main__UNDEFINED_EXP_String = null;
+						} else {
+							byte[] byteArray = new byte[length];
+							dis.read(byteArray);
+							this.main__UNDEFINED_EXP_String = new String(
+									byteArray);
+						}
 
-                        length = dis.readInt();
-                        if (length == -1) {
-                            this.main__DEFINED_EXP_String = null;
-                        } else {
-                            byte[] byteArray = new byte[length];
-                            dis.read(byteArray);
-                            this.main__DEFINED_EXP_String = new String(
-                                    byteArray);
-                        }
+					} catch (IOException e) {
+						throw new RuntimeException(e);
 
-                        length = dis.readInt();
-                        if (length == -1) {
-                            this.main__UNDEFINED_EXP_String = null;
-                        } else {
-                            byte[] byteArray = new byte[length];
-                            dis.read(byteArray);
-                            this.main__UNDEFINED_EXP_String = new String(
-                                    byteArray);
-                        }
+					} catch (ClassNotFoundException eCNFE) {
+						throw new RuntimeException(eCNFE);
 
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+					}
+				}
 
-                    } catch (ClassNotFoundException eCNFE) {
-                        throw new RuntimeException(eCNFE);
+				public void writeData(ObjectOutputStream dos) {
+					try {
 
-                    }
-                }
+						dos.writeBoolean(this.is__rejectedInnerJoin);
 
-                public void writeData(DataOutputStream dos) {
-                    try {
+						dos.writeBoolean(this.main__DEFINED_EXP_boolean);
 
-                        ObjectOutputStream oos = null;
+						if (this.main__DEFINED_EXP_Boolean == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeBoolean(this.main__DEFINED_EXP_Boolean);
+						}
 
-                        dos.writeBoolean(this.is__rejectedInnerJoin);
+						if (this.main__UNDEFINED_EXP_Boolean == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeBoolean(this.main__UNDEFINED_EXP_Boolean);
+						}
 
-                        dos.writeBoolean(this.main__DEFINED_EXP_boolean);
+						dos.writeByte(this.main__DEFINED_EXP_byte);
 
-                        if (this.main__DEFINED_EXP_Boolean == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeBoolean(this.main__DEFINED_EXP_Boolean);
-                        }
+						if (this.main__DEFINED_EXP_Byte == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeByte(this.main__DEFINED_EXP_Byte);
+						}
 
-                        if (this.main__UNDEFINED_EXP_Boolean == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeBoolean(this.main__UNDEFINED_EXP_Boolean);
-                        }
+						if (this.main__UNDEFINED_EXP_Byte == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeByte(this.main__UNDEFINED_EXP_Byte);
+						}
 
-                        dos.writeByte(this.main__DEFINED_EXP_byte);
+						if (this.main__DEFINED_EXP_byte_array == null) {
+							dos.writeInt(-1);
+						} else {
+							dos
+									.writeInt(this.main__DEFINED_EXP_byte_array.length);
+							dos.write(this.main__DEFINED_EXP_byte_array);
+						}
 
-                        if (this.main__DEFINED_EXP_Byte == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeByte(this.main__DEFINED_EXP_Byte);
-                        }
+						if (this.main__DEFINED_EXP_byte_array_nullable == null) {
+							dos.writeInt(-1);
+						} else {
+							dos
+									.writeInt(this.main__DEFINED_EXP_byte_array_nullable.length);
+							dos
+									.write(this.main__DEFINED_EXP_byte_array_nullable);
+						}
 
-                        if (this.main__UNDEFINED_EXP_Byte == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeByte(this.main__UNDEFINED_EXP_Byte);
-                        }
+						dos.writeChar(this.main__DEFINED_EXP_char);
 
-                        if (this.main__DEFINED_EXP_byte_array == null) {
-                            dos.writeInt(-1);
-                        } else {
-                            dos
-                                    .writeInt(this.main__DEFINED_EXP_byte_array.length);
-                            dos.write(this.main__DEFINED_EXP_byte_array);
-                        }
+						if (this.main__DEFINED_EXP_Character == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeChar(this.main__DEFINED_EXP_Character);
+						}
 
-                        if (this.main__DEFINED_EXP_byte_array_nullable == null) {
-                            dos.writeInt(-1);
-                        } else {
-                            dos
-                                    .writeInt(this.main__DEFINED_EXP_byte_array_nullable.length);
-                            dos
-                                    .write(this.main__DEFINED_EXP_byte_array_nullable);
-                        }
+						if (this.main__UNDEFINED_EXP_Character == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeChar(this.main__UNDEFINED_EXP_Character);
+						}
 
-                        dos.writeChar(this.main__DEFINED_EXP_char);
+						if (this.main__DEFINED_EXP_Date == null) {
+							dos.writeInt(-1);
+						} else {
+							dos
+									.writeLong(this.main__DEFINED_EXP_Date
+											.getTime());
+						}
 
-                        if (this.main__DEFINED_EXP_Character == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeChar(this.main__DEFINED_EXP_Character);
-                        }
+						if (this.main__UNDEFINED_EXP_Date == null) {
+							dos.writeInt(-1);
+						} else {
+							dos.writeLong(this.main__UNDEFINED_EXP_Date
+									.getTime());
+						}
 
-                        if (this.main__UNDEFINED_EXP_Character == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeChar(this.main__UNDEFINED_EXP_Character);
-                        }
+						dos.writeDouble(this.main__DEFINED_EXP_double);
 
-                        if (this.main__DEFINED_EXP_Date == null) {
-                            dos.writeInt(-1);
-                        } else {
-                            dos
-                                    .writeLong(this.main__DEFINED_EXP_Date
-                                            .getTime());
-                        }
+						if (this.main__DEFINED_EXP_Double == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeDouble(this.main__DEFINED_EXP_Double);
+						}
 
-                        if (this.main__UNDEFINED_EXP_Date == null) {
-                            dos.writeInt(-1);
-                        } else {
-                            dos.writeLong(this.main__UNDEFINED_EXP_Date
-                                    .getTime());
-                        }
+						if (this.main__UNDEFINED_EXP_Double == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeDouble(this.main__UNDEFINED_EXP_Double);
+						}
 
-                        dos.writeDouble(this.main__DEFINED_EXP_double);
+						dos.writeInt(this.main__DEFINED_EXP_int);
 
-                        if (this.main__DEFINED_EXP_Double == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeDouble(this.main__DEFINED_EXP_Double);
-                        }
+						if (this.main__DEFINED_EXP_Integer == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeInt(this.main__DEFINED_EXP_Integer);
+						}
 
-                        if (this.main__UNDEFINED_EXP_Double == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeDouble(this.main__UNDEFINED_EXP_Double);
-                        }
+						if (this.main__UNDEFINED_EXP_Integer == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeInt(this.main__UNDEFINED_EXP_Integer);
+						}
 
-                        dos.writeInt(this.main__DEFINED_EXP_int);
+						dos.writeFloat(this.main__DEFINED_EXP_float);
 
-                        if (this.main__DEFINED_EXP_Integer == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeInt(this.main__DEFINED_EXP_Integer);
-                        }
+						if (this.main__DEFINED_EXP_Float == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeFloat(this.main__DEFINED_EXP_Float);
+						}
 
-                        if (this.main__UNDEFINED_EXP_Integer == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeInt(this.main__UNDEFINED_EXP_Integer);
-                        }
+						if (this.main__UNDEFINED_EXP_Float == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeFloat(this.main__UNDEFINED_EXP_Float);
+						}
 
-                        dos.writeFloat(this.main__DEFINED_EXP_float);
+						dos.writeLong(this.main__DEFINED_EXP_long);
 
-                        if (this.main__DEFINED_EXP_Float == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeFloat(this.main__DEFINED_EXP_Float);
-                        }
+						if (this.main__DEFINED_EXP_Long == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeLong(this.main__DEFINED_EXP_Long);
+						}
 
-                        if (this.main__UNDEFINED_EXP_Float == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeFloat(this.main__UNDEFINED_EXP_Float);
-                        }
+						if (this.main__UNDEFINED_EXP_Long == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeLong(this.main__UNDEFINED_EXP_Long);
+						}
 
-                        dos.writeLong(this.main__DEFINED_EXP_long);
+						dos.writeObject(this.main__DEFINED_EXP_Object);
 
-                        if (this.main__DEFINED_EXP_Long == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeLong(this.main__DEFINED_EXP_Long);
-                        }
+						dos.writeObject(this.main__UNDEFINED_EXP_Object);
 
-                        if (this.main__UNDEFINED_EXP_Long == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeLong(this.main__UNDEFINED_EXP_Long);
-                        }
+						dos.writeShort(this.main__DEFINED_EXP_short);
 
-                        if (oos == null) {
-                            oos = new ObjectOutputStream(dos);
-                        }
-                        oos.writeObject(this.main__DEFINED_EXP_Object);
+						if (this.main__DEFINED_EXP_Short == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeShort(this.main__DEFINED_EXP_Short);
+						}
 
-                        if (oos == null) {
-                            oos = new ObjectOutputStream(dos);
-                        }
-                        oos.writeObject(this.main__UNDEFINED_EXP_Object);
+						if (this.main__UNDEFINED_EXP_Short == null) {
+							dos.writeByte(-1);
+						} else {
+							dos.writeByte(0);
+							dos.writeShort(this.main__UNDEFINED_EXP_Short);
+						}
 
-                        dos.writeShort(this.main__DEFINED_EXP_short);
+						if (this.main__DEFINED_EXP_String == null) {
+							dos.writeInt(-1);
+						} else {
+							byte[] byteArray = this.main__DEFINED_EXP_String
+									.getBytes();
+							dos.writeInt(byteArray.length);
+							dos.write(byteArray);
+						}
 
-                        if (this.main__DEFINED_EXP_Short == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeShort(this.main__DEFINED_EXP_Short);
-                        }
+						if (this.main__UNDEFINED_EXP_String == null) {
+							dos.writeInt(-1);
+						} else {
+							byte[] byteArray = this.main__UNDEFINED_EXP_String
+									.getBytes();
+							dos.writeInt(byteArray.length);
+							dos.write(byteArray);
+						}
 
-                        if (this.main__UNDEFINED_EXP_Short == null) {
-                            dos.writeByte(-1);
-                        } else {
-                            dos.writeByte(0);
-                            dos.writeShort(this.main__UNDEFINED_EXP_Short);
-                        }
+					} catch (IOException e) {
+						throw new RuntimeException(e);
+					}
+				}
 
-                        if (this.main__DEFINED_EXP_String == null) {
-                            dos.writeInt(-1);
-                        } else {
-                            byte[] byteArray = this.main__DEFINED_EXP_String
-                                    .getBytes();
-                            dos.writeInt(byteArray.length);
-                            dos.write(byteArray);
-                        }
+			} // G_TM_B_001
 
-                        if (this.main__UNDEFINED_EXP_String == null) {
-                            dos.writeInt(-1);
-                        } else {
-                            byte[] byteArray = this.main__UNDEFINED_EXP_String
-                                    .getBytes();
-                            dos.writeInt(byteArray.length);
-                            dos.write(byteArray);
-                        }
+			org.talend.designer.components.persistent.PersistentRowSorterIterator<SortableRow_main> fsi_main = new org.talend.designer.components.persistent.PersistentRowSorterIterator<SortableRow_main>(
+					context.data_output_dir + "/" + jobName + "_tMapData_main",
+					Integer.parseInt(context.bufferSizeValue)) {
+				public SortableRow_main createRowInstance() {
+					return new SortableRow_main();
+				}
+			};
 
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+			fsi_main.initPut();
 
-            } // G_TM_B_001
+			/**
+			 * [tMap_1 begin ] stop
+			 */
 
-            org.talend.designer.components.persistent.PersistentRowSorterIterator<SortableRow_main> fsi_main = new org.talend.designer.components.persistent.PersistentRowSorterIterator<SortableRow_main>(
-                    context.data_output_dir + "/" + jobName + "_tMapData_main",
-                    Integer.parseInt(context.bufferSizeValue)) {
-                public SortableRow_main createRowInstance() {
-                    return new SortableRow_main();
-                }
-            };
+			/*******************************************************************
+			 * / [tFixedFlowInput_2 begin ] start
+			 */
 
-            fsi_main.initPut();
+			ok_Hash.put("tFixedFlowInput_2", false);
+			start_Hash.put("tFixedFlowInput_2", System.currentTimeMillis());
+			currentComponent = "tFixedFlowInput_2";
 
-            /**
-             * [tMap_1 begin ] stop
-             */
+			globalMap.put("NB_LINE", 5);
+			for (int i_tFixedFlowInput_2 = 0; i_tFixedFlowInput_2 < 5; i_tFixedFlowInput_2++) {
 
-            /*******************************************************************
-             * / [tFixedFlowInput_2 begin ] start
-             */
+				main.DEFINED_EXP_boolean = true;
 
-            ok_Hash.put("tFixedFlowInput_2", false);
-            start_Hash.put("tFixedFlowInput_2", System.currentTimeMillis());
-            currentComponent = "tFixedFlowInput_2";
+				main.DEFINED_EXP_Boolean = false;
 
-            globalMap.put("NB_LINE", 5);
-            for (int i_tFixedFlowInput_2 = 0; i_tFixedFlowInput_2 < 5; i_tFixedFlowInput_2++) {
+				main.UNDEFINED_EXP_Boolean = null;
 
-                main.DEFINED_EXP_boolean = true;
+				main.DEFINED_EXP_byte = Byte.MAX_VALUE;
 
-                main.DEFINED_EXP_Boolean = false;
+				main.DEFINED_EXP_Byte = Byte.MIN_VALUE;
 
-                main.UNDEFINED_EXP_Boolean = null;
+				main.UNDEFINED_EXP_Byte = null;
 
-                main.DEFINED_EXP_byte = Byte.MAX_VALUE;
+				main.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
+						Byte.MIN_VALUE };
 
-                main.DEFINED_EXP_Byte = Byte.MIN_VALUE;
+				main.DEFINED_EXP_byte_array_nullable = null;
 
-                main.UNDEFINED_EXP_Byte = null;
+				main.DEFINED_EXP_char = '0';
 
-                main.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
-                        Byte.MIN_VALUE };
+				main.DEFINED_EXP_Character = new Character('9');
 
-                main.DEFINED_EXP_byte_array_nullable = null;
+				main.UNDEFINED_EXP_Character = null;
 
-                main.DEFINED_EXP_char = '0';
+				main.DEFINED_EXP_Date = new Date(0);
 
-                main.DEFINED_EXP_Character = new Character('9');
+				main.UNDEFINED_EXP_Date = null;
 
-                main.UNDEFINED_EXP_Character = null;
+				main.DEFINED_EXP_double = Double.MAX_VALUE;
 
-                main.DEFINED_EXP_Date = new Date(0);
+				main.DEFINED_EXP_Double = Double.MIN_VALUE;
 
-                main.UNDEFINED_EXP_Date = null;
+				main.UNDEFINED_EXP_Double = null;
 
-                main.DEFINED_EXP_double = Double.MAX_VALUE;
+				main.DEFINED_EXP_int = Integer.MAX_VALUE;
 
-                main.DEFINED_EXP_Double = Double.MIN_VALUE;
+				main.DEFINED_EXP_Integer = Integer.MIN_VALUE;
 
-                main.UNDEFINED_EXP_Double = null;
+				main.UNDEFINED_EXP_Integer = null;
 
-                main.DEFINED_EXP_int = Integer.MAX_VALUE;
+				main.DEFINED_EXP_float = Float.MAX_VALUE;
 
-                main.DEFINED_EXP_Integer = Integer.MIN_VALUE;
+				main.DEFINED_EXP_Float = Float.MIN_VALUE;
 
-                main.UNDEFINED_EXP_Integer = null;
+				main.UNDEFINED_EXP_Float = null;
 
-                main.DEFINED_EXP_float = Float.MAX_VALUE;
+				main.DEFINED_EXP_long = Long.MAX_VALUE;
 
-                main.DEFINED_EXP_Float = Float.MIN_VALUE;
+				main.DEFINED_EXP_Long = Long.MIN_VALUE;
 
-                main.UNDEFINED_EXP_Float = null;
+				main.UNDEFINED_EXP_Long = null;
 
-                main.DEFINED_EXP_long = Long.MAX_VALUE;
+				main.DEFINED_EXP_Object = routine_tMap_10_persistence_01_types
+                .getCustomObject();
 
-                main.DEFINED_EXP_Long = Long.MIN_VALUE;
+				main.UNDEFINED_EXP_Object = routine_tMap_10_persistence_01_types
+						.getCustomObject();
 
-                main.UNDEFINED_EXP_Long = null;
+				main.DEFINED_EXP_short = Short.MAX_VALUE;
 
-                main.DEFINED_EXP_Object = null;
+				main.DEFINED_EXP_Short = Short.MIN_VALUE;
 
-                main.UNDEFINED_EXP_Object = tMap_10_persistence_01_types
-                        .getCustomObject();
+				main.UNDEFINED_EXP_Short = null;
 
-                main.DEFINED_EXP_short = Short.MAX_VALUE;
+				main.DEFINED_EXP_String = "A";
 
-                main.DEFINED_EXP_Short = Short.MIN_VALUE;
+				main.UNDEFINED_EXP_String = null;
 
-                main.UNDEFINED_EXP_Short = null;
+				/**
+				 * [tFixedFlowInput_2 begin ] stop
+				 */
+				/***************************************************************
+				 * / [tFixedFlowInput_2 main ] start
+				 */
 
-                main.DEFINED_EXP_String = "A";
+				currentComponent = "tFixedFlowInput_2";
 
-                main.UNDEFINED_EXP_String = null;
+				/**
+				 * [tFixedFlowInput_2 main ] stop
+				 */
+				/***************************************************************
+				 * / [tMap_1 main ] start
+				 */
 
-                /**
-                 * [tFixedFlowInput_2 begin ] stop
-                 */
-                /***************************************************************
-                 * / [tFixedFlowInput_2 main ] start
-                 */
+				currentComponent = "tMap_1";
 
-                currentComponent = "tFixedFlowInput_2";
+				// ###############################
+				// # Input tables (lookups)
+				boolean rejectedInnerJoin_tMap_1 = false;
+				boolean mainRowRejected_tMap_1 = false;
 
-                /**
-                 * [tFixedFlowInput_2 main ] stop
-                 */
-                /***************************************************************
-                 * / [tMap_1 main ] start
-                 */
+				// /////////////////////////////////////////////
+				// Starting Lookup Table "lookup"
+				// /////////////////////////////////////////////
 
-                currentComponent = "tMap_1";
+				boolean forceLooplookup = false;
 
-                // ###############################
-                // # Input tables (lookups)
-                boolean rejectedInnerJoin_tMap_1 = false;
-                boolean mainRowRejected_tMap_1 = false;
+				lookupStruct lookupObjectFromLookup = null;
 
-                // /////////////////////////////////////////////
-                // Starting Lookup Table "lookup"
-                // /////////////////////////////////////////////
+				if (!rejectedInnerJoin_tMap_1) { // G 20
 
-                boolean forceLooplookup = false;
+					tHash_Lookup_lookup.lookup(lookupHashKey);
 
-                lookupStruct lookupObjectFromLookup = null;
+					if (!tHash_Lookup_lookup.hasNext()) { // G 090
 
-                if (!rejectedInnerJoin_tMap_1) { // G 20
+						forceLooplookup = true;
 
-                    tHash_Lookup_lookup.lookup(lookupHashKey);
+					} // G 090
 
-                    if (!tHash_Lookup_lookup.hasNext()) { // G 090
+				} // G 20
 
-                        forceLooplookup = true;
+				else { // G 20 - G 21
+					forceLooplookup = true;
+				} // G 21
 
-                    } // G 090
+				lookupStruct lookup = null;
 
-                } // G 20
+				while (tHash_Lookup_lookup.hasNext() || forceLooplookup) { // G_TM_M_043
 
-                else { // G 20 - G 21
-                    forceLooplookup = true;
-                } // G 21
+					// CALL close loop of lookup 'lookup'
 
-                lookupStruct lookup = null;
+					lookupStruct fromLookup_lookup = null;
+					lookup = lookupDefault;
 
-                while (tHash_Lookup_lookup.hasNext() || forceLooplookup) { // G_TM_M_043
+					if (!forceLooplookup) { // G 46
 
-                    // CALL close loop of lookup 'lookup'
+						fromLookup_lookup = tHash_Lookup_lookup.next();
 
-                    lookupStruct fromLookup_lookup = null;
-                    lookup = lookupDefault;
+						if (fromLookup_lookup != null) {
+							lookup = fromLookup_lookup;
+						}
 
-                    if (!forceLooplookup) { // G 46
+					} // G 46
 
-                        fromLookup_lookup = tHash_Lookup_lookup.next();
+					forceLooplookup = false;
 
-                        if (fromLookup_lookup != null) {
-                            lookup = fromLookup_lookup;
-                        }
+					// { // Dummy bracket to open block for "main" ##(1)##
 
-                    } // G 46
+					// ###############################
+					{ // start of Var scope
 
-                    forceLooplookup = false;
+						// ###############################
+						// # Vars tables
+						// ###############################
+						// ###############################
+						// # Output tables
 
-                    // { // Dummy bracket to open block for "main" ##(1)##
+						out = null;
 
-                    // ###############################
-                    { // start of Var scope
+						// # Output table : 'out'
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean
+						 */
+						out_tmp.DEFINED_EXP_boolean = main.DEFINED_EXP_boolean;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean
+						 */
+						out_tmp.DEFINED_EXP_Boolean = main.DEFINED_EXP_Boolean;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean
+						 */
+						out_tmp.UNDEFINED_EXP_Boolean = main.UNDEFINED_EXP_Boolean;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte
+						 */
+						out_tmp.DEFINED_EXP_byte = main.DEFINED_EXP_byte;
+						/** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte
+						 */
+						out_tmp.DEFINED_EXP_Byte = main.DEFINED_EXP_Byte;
+						/** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte
+						 */
+						out_tmp.UNDEFINED_EXP_Byte = main.UNDEFINED_EXP_Byte;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array
+						 */
+						out_tmp.DEFINED_EXP_byte_array = main.DEFINED_EXP_byte_array;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable
+						 */
+						out_tmp.DEFINED_EXP_byte_array_nullable = main.DEFINED_EXP_byte_array_nullable;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char
+						 */
+						out_tmp.DEFINED_EXP_char = main.DEFINED_EXP_char;
+						/** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character
+						 */
+						out_tmp.DEFINED_EXP_Character = main.DEFINED_EXP_Character;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character
+						 */
+						out_tmp.UNDEFINED_EXP_Character = main.UNDEFINED_EXP_Character;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date
+						 */
+						out_tmp.DEFINED_EXP_Date = main.DEFINED_EXP_Date;
+						/** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date
+						 */
+						out_tmp.UNDEFINED_EXP_Date = main.UNDEFINED_EXP_Date;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double
+						 */
+						out_tmp.DEFINED_EXP_double = main.DEFINED_EXP_double;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double
+						 */
+						out_tmp.DEFINED_EXP_Double = main.DEFINED_EXP_Double;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double
+						 */
+						out_tmp.UNDEFINED_EXP_Double = main.UNDEFINED_EXP_Double;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int
+						 */
+						out_tmp.DEFINED_EXP_int = main.DEFINED_EXP_int;
+						/** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer
+						 */
+						out_tmp.DEFINED_EXP_Integer = main.DEFINED_EXP_Integer;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer
+						 */
+						out_tmp.UNDEFINED_EXP_Integer = main.UNDEFINED_EXP_Integer;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float
+						 */
+						out_tmp.DEFINED_EXP_float = main.DEFINED_EXP_float;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float
+						 */
+						out_tmp.DEFINED_EXP_Float = main.DEFINED_EXP_Float;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float
+						 */
+						out_tmp.UNDEFINED_EXP_Float = main.UNDEFINED_EXP_Float;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long
+						 */
+						out_tmp.DEFINED_EXP_long = main.DEFINED_EXP_long;
+						/** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long
+						 */
+						out_tmp.DEFINED_EXP_Long = main.DEFINED_EXP_Long;
+						/** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long
+						 */
+						out_tmp.UNDEFINED_EXP_Long = main.UNDEFINED_EXP_Long;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object
+						 */
+						out_tmp.DEFINED_EXP_Object = main.DEFINED_EXP_Object;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object
+						 */
+						out_tmp.UNDEFINED_EXP_Object = main.UNDEFINED_EXP_Object;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short
+						 */
+						out_tmp.DEFINED_EXP_short = main.DEFINED_EXP_short;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short
+						 */
+						out_tmp.DEFINED_EXP_Short = main.DEFINED_EXP_Short;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short
+						 */
+						out_tmp.UNDEFINED_EXP_Short = main.UNDEFINED_EXP_Short;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String
+						 */
+						out_tmp.DEFINED_EXP_String = main.DEFINED_EXP_String;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String
+						 */
+						out_tmp.UNDEFINED_EXP_String = main.UNDEFINED_EXP_String;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean_1
+						 */
+						out_tmp.DEFINED_EXP_boolean_1 = lookup.DEFINED_EXP_boolean;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean_1
+						 */
+						out_tmp.DEFINED_EXP_Boolean_1 = lookup.DEFINED_EXP_Boolean;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean_1
+						 */
+						out_tmp.UNDEFINED_EXP_Boolean_1 = lookup.UNDEFINED_EXP_Boolean;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_1
+						 */
+						out_tmp.DEFINED_EXP_byte_1 = lookup.DEFINED_EXP_byte;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte_1
+						 */
+						out_tmp.DEFINED_EXP_Byte_1 = lookup.DEFINED_EXP_Byte;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte_1
+						 */
+						out_tmp.UNDEFINED_EXP_Byte_1 = lookup.UNDEFINED_EXP_Byte;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_1
+						 */
+						out_tmp.DEFINED_EXP_byte_array_1 = lookup.DEFINED_EXP_byte_array;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable_1
+						 */
+						out_tmp.DEFINED_EXP_byte_array_nullable_1 = lookup.DEFINED_EXP_byte_array_nullable;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char_1
+						 */
+						out_tmp.DEFINED_EXP_char_1 = lookup.DEFINED_EXP_char;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character_1
+						 */
+						out_tmp.DEFINED_EXP_Character_1 = lookup.DEFINED_EXP_Character;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character_1
+						 */
+						out_tmp.UNDEFINED_EXP_Character_1 = lookup.UNDEFINED_EXP_Character;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date_1
+						 */
+						out_tmp.DEFINED_EXP_Date_1 = lookup.DEFINED_EXP_Date;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date_1
+						 */
+						out_tmp.UNDEFINED_EXP_Date_1 = lookup.UNDEFINED_EXP_Date;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double_1
+						 */
+						out_tmp.DEFINED_EXP_double_1 = lookup.DEFINED_EXP_double;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double_1
+						 */
+						out_tmp.DEFINED_EXP_Double_1 = lookup.DEFINED_EXP_Double;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double_1
+						 */
+						out_tmp.UNDEFINED_EXP_Double_1 = lookup.UNDEFINED_EXP_Double;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int_1
+						 */
+						out_tmp.DEFINED_EXP_int_1 = lookup.DEFINED_EXP_int;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer_1
+						 */
+						out_tmp.DEFINED_EXP_Integer_1 = lookup.DEFINED_EXP_Integer;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer_1
+						 */
+						out_tmp.UNDEFINED_EXP_Integer_1 = lookup.UNDEFINED_EXP_Integer;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float_1
+						 */
+						out_tmp.DEFINED_EXP_float_1 = lookup.DEFINED_EXP_float;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float_1
+						 */
+						out_tmp.DEFINED_EXP_Float_1 = lookup.DEFINED_EXP_Float;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float_1
+						 */
+						out_tmp.UNDEFINED_EXP_Float_1 = lookup.UNDEFINED_EXP_Float;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long_1
+						 */
+						out_tmp.DEFINED_EXP_long_1 = lookup.DEFINED_EXP_long;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long_1
+						 */
+						out_tmp.DEFINED_EXP_Long_1 = lookup.DEFINED_EXP_Long;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long_1
+						 */
+						out_tmp.UNDEFINED_EXP_Long_1 = lookup.UNDEFINED_EXP_Long;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object_1
+						 */
+						out_tmp.DEFINED_EXP_Object_1 = lookup.DEFINED_EXP_Object;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object_1
+						 */
+						out_tmp.UNDEFINED_EXP_Object_1 = lookup.UNDEFINED_EXP_Object;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short_1
+						 */
+						out_tmp.DEFINED_EXP_short_1 = lookup.DEFINED_EXP_short;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short_1
+						 */
+						out_tmp.DEFINED_EXP_Short_1 = lookup.DEFINED_EXP_Short;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short_1
+						 */
+						out_tmp.UNDEFINED_EXP_Short_1 = lookup.UNDEFINED_EXP_Short;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String_1
+						 */
+						out_tmp.DEFINED_EXP_String_1 = lookup.DEFINED_EXP_String;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String_1
+						 */
+						/**
+						 * Start field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String_1
+						 */
+						out_tmp.UNDEFINED_EXP_String_1 = lookup.UNDEFINED_EXP_String;
+						/**
+						 * End field
+						 * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String_1
+						 */
+						out = out_tmp;
+						// ###############################
 
-                        // ###############################
-                        // # Vars tables
-                        // ###############################
-                        // ###############################
-                        // # Output tables
+					} // end of Var scope
 
-                        out = null;
+					rejectedInnerJoin_tMap_1 = false;
 
-                        // # Output table : 'out'
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean
-                         */
-                        out_tmp.DEFINED_EXP_boolean = main.DEFINED_EXP_boolean;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean
-                         */
-                        out_tmp.DEFINED_EXP_Boolean = main.DEFINED_EXP_Boolean;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean
-                         */
-                        out_tmp.UNDEFINED_EXP_Boolean = main.UNDEFINED_EXP_Boolean;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte
-                         */
-                        out_tmp.DEFINED_EXP_byte = main.DEFINED_EXP_byte;
-                        /** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte
-                         */
-                        out_tmp.DEFINED_EXP_Byte = main.DEFINED_EXP_Byte;
-                        /** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte
-                         */
-                        out_tmp.UNDEFINED_EXP_Byte = main.UNDEFINED_EXP_Byte;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array
-                         */
-                        out_tmp.DEFINED_EXP_byte_array = main.DEFINED_EXP_byte_array;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable
-                         */
-                        out_tmp.DEFINED_EXP_byte_array_nullable = main.DEFINED_EXP_byte_array_nullable;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char
-                         */
-                        out_tmp.DEFINED_EXP_char = main.DEFINED_EXP_char;
-                        /** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character
-                         */
-                        out_tmp.DEFINED_EXP_Character = main.DEFINED_EXP_Character;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character
-                         */
-                        out_tmp.UNDEFINED_EXP_Character = main.UNDEFINED_EXP_Character;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date
-                         */
-                        out_tmp.DEFINED_EXP_Date = main.DEFINED_EXP_Date;
-                        /** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date
-                         */
-                        out_tmp.UNDEFINED_EXP_Date = main.UNDEFINED_EXP_Date;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double
-                         */
-                        out_tmp.DEFINED_EXP_double = main.DEFINED_EXP_double;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double
-                         */
-                        out_tmp.DEFINED_EXP_Double = main.DEFINED_EXP_Double;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double
-                         */
-                        out_tmp.UNDEFINED_EXP_Double = main.UNDEFINED_EXP_Double;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int
-                         */
-                        out_tmp.DEFINED_EXP_int = main.DEFINED_EXP_int;
-                        /** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer
-                         */
-                        out_tmp.DEFINED_EXP_Integer = main.DEFINED_EXP_Integer;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer
-                         */
-                        out_tmp.UNDEFINED_EXP_Integer = main.UNDEFINED_EXP_Integer;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float
-                         */
-                        out_tmp.DEFINED_EXP_float = main.DEFINED_EXP_float;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float
-                         */
-                        out_tmp.DEFINED_EXP_Float = main.DEFINED_EXP_Float;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float
-                         */
-                        out_tmp.UNDEFINED_EXP_Float = main.UNDEFINED_EXP_Float;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long
-                         */
-                        out_tmp.DEFINED_EXP_long = main.DEFINED_EXP_long;
-                        /** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long
-                         */
-                        out_tmp.DEFINED_EXP_Long = main.DEFINED_EXP_Long;
-                        /** End field tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long
-                         */
-                        out_tmp.UNDEFINED_EXP_Long = main.UNDEFINED_EXP_Long;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object
-                         */
-                        out_tmp.DEFINED_EXP_Object = main.DEFINED_EXP_Object;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object
-                         */
-                        out_tmp.UNDEFINED_EXP_Object = main.UNDEFINED_EXP_Object;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short
-                         */
-                        out_tmp.DEFINED_EXP_short = main.DEFINED_EXP_short;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short
-                         */
-                        out_tmp.DEFINED_EXP_Short = main.DEFINED_EXP_Short;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short
-                         */
-                        out_tmp.UNDEFINED_EXP_Short = main.UNDEFINED_EXP_Short;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String
-                         */
-                        out_tmp.DEFINED_EXP_String = main.DEFINED_EXP_String;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String
-                         */
-                        out_tmp.UNDEFINED_EXP_String = main.UNDEFINED_EXP_String;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean_1
-                         */
-                        out_tmp.DEFINED_EXP_boolean_1 = lookup.DEFINED_EXP_boolean;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_boolean_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean_1
-                         */
-                        out_tmp.DEFINED_EXP_Boolean_1 = lookup.DEFINED_EXP_Boolean;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Boolean_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Boolean_1 = lookup.UNDEFINED_EXP_Boolean;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Boolean_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_1
-                         */
-                        out_tmp.DEFINED_EXP_byte_1 = lookup.DEFINED_EXP_byte;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte_1
-                         */
-                        out_tmp.DEFINED_EXP_Byte_1 = lookup.DEFINED_EXP_Byte;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Byte_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Byte_1 = lookup.UNDEFINED_EXP_Byte;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Byte_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_1
-                         */
-                        out_tmp.DEFINED_EXP_byte_array_1 = lookup.DEFINED_EXP_byte_array;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable_1
-                         */
-                        out_tmp.DEFINED_EXP_byte_array_nullable_1 = lookup.DEFINED_EXP_byte_array_nullable;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_byte_array_nullable_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char_1
-                         */
-                        out_tmp.DEFINED_EXP_char_1 = lookup.DEFINED_EXP_char;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_char_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character_1
-                         */
-                        out_tmp.DEFINED_EXP_Character_1 = lookup.DEFINED_EXP_Character;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Character_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Character_1 = lookup.UNDEFINED_EXP_Character;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Character_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date_1
-                         */
-                        out_tmp.DEFINED_EXP_Date_1 = lookup.DEFINED_EXP_Date;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Date_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Date_1 = lookup.UNDEFINED_EXP_Date;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Date_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double_1
-                         */
-                        out_tmp.DEFINED_EXP_double_1 = lookup.DEFINED_EXP_double;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_double_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double_1
-                         */
-                        out_tmp.DEFINED_EXP_Double_1 = lookup.DEFINED_EXP_Double;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Double_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Double_1 = lookup.UNDEFINED_EXP_Double;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Double_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int_1
-                         */
-                        out_tmp.DEFINED_EXP_int_1 = lookup.DEFINED_EXP_int;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_int_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer_1
-                         */
-                        out_tmp.DEFINED_EXP_Integer_1 = lookup.DEFINED_EXP_Integer;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Integer_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Integer_1 = lookup.UNDEFINED_EXP_Integer;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Integer_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float_1
-                         */
-                        out_tmp.DEFINED_EXP_float_1 = lookup.DEFINED_EXP_float;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_float_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float_1
-                         */
-                        out_tmp.DEFINED_EXP_Float_1 = lookup.DEFINED_EXP_Float;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Float_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Float_1 = lookup.UNDEFINED_EXP_Float;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Float_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long_1
-                         */
-                        out_tmp.DEFINED_EXP_long_1 = lookup.DEFINED_EXP_long;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_long_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long_1
-                         */
-                        out_tmp.DEFINED_EXP_Long_1 = lookup.DEFINED_EXP_Long;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Long_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Long_1 = lookup.UNDEFINED_EXP_Long;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Long_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object_1
-                         */
-                        out_tmp.DEFINED_EXP_Object_1 = lookup.DEFINED_EXP_Object;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Object_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Object_1 = lookup.UNDEFINED_EXP_Object;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Object_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short_1
-                         */
-                        out_tmp.DEFINED_EXP_short_1 = lookup.DEFINED_EXP_short;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_short_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short_1
-                         */
-                        out_tmp.DEFINED_EXP_Short_1 = lookup.DEFINED_EXP_Short;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_Short_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short_1
-                         */
-                        out_tmp.UNDEFINED_EXP_Short_1 = lookup.UNDEFINED_EXP_Short;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_Short_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String_1
-                         */
-                        out_tmp.DEFINED_EXP_String_1 = lookup.DEFINED_EXP_String;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:DEFINED_EXP_String_1
-                         */
-                        /**
-                         * Start field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String_1
-                         */
-                        out_tmp.UNDEFINED_EXP_String_1 = lookup.UNDEFINED_EXP_String;
-                        /**
-                         * End field
-                         * tMap_1:METADATA_COLUMN:out:UNDEFINED_EXP_String_1
-                         */
-                        out = out_tmp;
-                        // ###############################
-
-                    } // end of Var scope
-
-                    rejectedInnerJoin_tMap_1 = false;
-
-                    /**
-                     * [tMap_1 main ] stop
-                     */
-                    // Start of branch "out"
-                    if (out != null) {
-
-                        /*******************************************************
-                         * / [tMap_2 main ] start
-                         */
-
-                        currentComponent = "tMap_2";
-
-                        // ###############################
-                        // # Input tables (lookups)
-                        boolean rejectedInnerJoin_tMap_2 = false;
-                        boolean mainRowRejected_tMap_2 = false;
-
-                        // { // Dummy bracket to open block for "out" ##(1)##
-
-                        // ###############################
-                        { // start of Var scope
-
-                            // ###############################
-                            // # Vars tables
-                            // ###############################
-                            // ###############################
-                            // # Output tables
-
-                            out2 = null;
-
-                            // # Output table : 'out2'
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean
-                             */
-                            out2_tmp.DEFINED_EXP_boolean = out.DEFINED_EXP_boolean;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean
-                             */
-                            out2_tmp.DEFINED_EXP_Boolean = out.DEFINED_EXP_Boolean;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean
-                             */
-                            out2_tmp.UNDEFINED_EXP_Boolean = out.UNDEFINED_EXP_Boolean;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte
-                             */
-                            out2_tmp.DEFINED_EXP_byte = out.DEFINED_EXP_byte;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte
-                             */
-                            out2_tmp.DEFINED_EXP_Byte = out.DEFINED_EXP_Byte;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte
-                             */
-                            out2_tmp.UNDEFINED_EXP_Byte = out.UNDEFINED_EXP_Byte;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array
-                             */
-                            out2_tmp.DEFINED_EXP_byte_array = java.util.Arrays
-                                    .toString(out.DEFINED_EXP_byte_array);
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable
-                             */
-                            out2_tmp.DEFINED_EXP_byte_array_nullable = out.DEFINED_EXP_byte_array_nullable;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char
-                             */
-                            out2_tmp.DEFINED_EXP_char = out.DEFINED_EXP_char;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character
-                             */
-                            out2_tmp.DEFINED_EXP_Character = out.DEFINED_EXP_Character;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character
-                             */
-                            out2_tmp.UNDEFINED_EXP_Character = out.UNDEFINED_EXP_Character;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date
-                             */
-                            out2_tmp.DEFINED_EXP_Date = TalendDate.formatDate(
-                                    "dd-MM-yyyy", out.DEFINED_EXP_Date);
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date
-                             */
-                            out2_tmp.UNDEFINED_EXP_Date = out.UNDEFINED_EXP_Date;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double
-                             */
-                            out2_tmp.DEFINED_EXP_double = out.DEFINED_EXP_double;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double
-                             */
-                            out2_tmp.DEFINED_EXP_Double = out.DEFINED_EXP_Double;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double
-                             */
-                            out2_tmp.UNDEFINED_EXP_Double = out.UNDEFINED_EXP_Double;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int
-                             */
-                            out2_tmp.DEFINED_EXP_int = out.DEFINED_EXP_int;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer
-                             */
-                            out2_tmp.DEFINED_EXP_Integer = out.DEFINED_EXP_Integer;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer
-                             */
-                            out2_tmp.UNDEFINED_EXP_Integer = out.UNDEFINED_EXP_Integer;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float
-                             */
-                            out2_tmp.DEFINED_EXP_float = out.DEFINED_EXP_float;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float
-                             */
-                            out2_tmp.DEFINED_EXP_Float = out.DEFINED_EXP_Float;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float
-                             */
-                            out2_tmp.UNDEFINED_EXP_Float = out.UNDEFINED_EXP_Float;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long
-                             */
-                            out2_tmp.DEFINED_EXP_long = out.DEFINED_EXP_long;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long
-                             */
-                            out2_tmp.DEFINED_EXP_Long = out.DEFINED_EXP_Long;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long
-                             */
-                            out2_tmp.UNDEFINED_EXP_Long = out.UNDEFINED_EXP_Long;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object
-                             */
-                            out2_tmp.DEFINED_EXP_Object = out.DEFINED_EXP_Object;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object
-                             */
-                            out2_tmp.UNDEFINED_EXP_Object = out.UNDEFINED_EXP_Object;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short
-                             */
-                            out2_tmp.DEFINED_EXP_short = out.DEFINED_EXP_short;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short
-                             */
-                            out2_tmp.DEFINED_EXP_Short = out.DEFINED_EXP_Short;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short
-                             */
-                            out2_tmp.UNDEFINED_EXP_Short = out.UNDEFINED_EXP_Short;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String
-                             */
-                            out2_tmp.DEFINED_EXP_String = out.DEFINED_EXP_String;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String
-                             */
-                            out2_tmp.UNDEFINED_EXP_String = out.UNDEFINED_EXP_String;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean_1
-                             */
-                            out2_tmp.DEFINED_EXP_boolean_1 = out.DEFINED_EXP_boolean_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean_1
-                             */
-                            out2_tmp.DEFINED_EXP_Boolean_1 = out.DEFINED_EXP_Boolean_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Boolean_1 = out.UNDEFINED_EXP_Boolean_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_1
-                             */
-                            out2_tmp.DEFINED_EXP_byte_1 = out.DEFINED_EXP_byte_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte_1
-                             */
-                            out2_tmp.DEFINED_EXP_Byte_1 = out.DEFINED_EXP_Byte_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Byte_1 = out.UNDEFINED_EXP_Byte_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_1
-                             */
-                            out2_tmp.DEFINED_EXP_byte_array_1 = java.util.Arrays
-                                    .toString(out.DEFINED_EXP_byte_array_1);
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable_1
-                             */
-                            out2_tmp.DEFINED_EXP_byte_array_nullable_1 = out.DEFINED_EXP_byte_array_nullable_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char_1
-                             */
-                            out2_tmp.DEFINED_EXP_char_1 = out.DEFINED_EXP_char_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character_1
-                             */
-                            out2_tmp.DEFINED_EXP_Character_1 = out.DEFINED_EXP_Character_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Character_1 = out.UNDEFINED_EXP_Character_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date_1
-                             */
-                            out2_tmp.DEFINED_EXP_Date_1 = TalendDate
-                                    .formatDate("dd-MM-yyyy",
-                                            out.DEFINED_EXP_Date_1);
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Date_1 = out.UNDEFINED_EXP_Date_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double_1
-                             */
-                            out2_tmp.DEFINED_EXP_double_1 = out.DEFINED_EXP_double_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double_1
-                             */
-                            out2_tmp.DEFINED_EXP_Double_1 = out.DEFINED_EXP_Double_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Double_1 = out.UNDEFINED_EXP_Double_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int_1
-                             */
-                            out2_tmp.DEFINED_EXP_int_1 = out.DEFINED_EXP_int_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer_1
-                             */
-                            out2_tmp.DEFINED_EXP_Integer_1 = out.DEFINED_EXP_Integer_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Integer_1 = out.UNDEFINED_EXP_Integer_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float_1
-                             */
-                            out2_tmp.DEFINED_EXP_float_1 = out.DEFINED_EXP_float_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float_1
-                             */
-                            out2_tmp.DEFINED_EXP_Float_1 = out.DEFINED_EXP_Float_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Float_1 = out.UNDEFINED_EXP_Float_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long_1
-                             */
-                            out2_tmp.DEFINED_EXP_long_1 = out.DEFINED_EXP_long_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long_1
-                             */
-                            out2_tmp.DEFINED_EXP_Long_1 = out.DEFINED_EXP_Long_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Long_1 = out.UNDEFINED_EXP_Long_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object_1
-                             */
-                            out2_tmp.DEFINED_EXP_Object_1 = out.DEFINED_EXP_Object_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Object_1 = out.UNDEFINED_EXP_Object_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short_1
-                             */
-                            out2_tmp.DEFINED_EXP_short_1 = out.DEFINED_EXP_short_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short_1
-                             */
-                            out2_tmp.DEFINED_EXP_Short_1 = out.DEFINED_EXP_Short_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_Short_1 = out.UNDEFINED_EXP_Short_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String_1
-                             */
-                            out2_tmp.DEFINED_EXP_String_1 = out.DEFINED_EXP_String_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String_1
-                             */
-                            /**
-                             * Start field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String_1
-                             */
-                            out2_tmp.UNDEFINED_EXP_String_1 = out.UNDEFINED_EXP_String_1;
-                            /**
-                             * End field
-                             * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String_1
-                             */
-                            out2 = out2_tmp;
-                            // ###############################
-
-                        } // end of Var scope
-
-                        rejectedInnerJoin_tMap_2 = false;
-
-                        /**
-                         * [tMap_2 main ] stop
-                         */
-                        // Start of branch "out2"
-                        if (out2 != null) {
-
-                            /***************************************************
-                             * / [tFileOutputDelimited_2 main ] start
-                             */
-
-                            currentComponent = "tFileOutputDelimited_2";
-
-                            StringBuilder sb_tFileOutputDelimited_2 = new StringBuilder();
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_boolean
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Boolean != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Boolean
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Boolean != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Boolean
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_byte
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Byte != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Byte
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Byte != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Byte
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_byte_array != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_byte_array
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_byte_array_nullable != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_byte_array_nullable
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_char
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Character != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Character
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Character != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Character
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Date != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Date
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Date != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Date
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_double
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Double != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Double
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Double != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Double
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_int
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Integer != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Integer
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Integer != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Integer
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_float
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Float != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Float
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Float != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Float
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_long
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Long != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Long
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Long != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Long
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Object != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Object
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Object != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Object
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_short
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Short != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Short
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Short != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Short
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_String != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_String
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_String != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_String
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_boolean_1
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Boolean_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Boolean_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Boolean_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Boolean_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_byte_1
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Byte_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Byte_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Byte_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Byte_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_byte_array_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_byte_array_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_byte_array_nullable_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_byte_array_nullable_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            sb_tFileOutputDelimited_2.append(
-
-                            out2.DEFINED_EXP_char_1
-
-                            );
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Character_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Character_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Character_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Character_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.DEFINED_EXP_Date_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.DEFINED_EXP_Date_1
-
-                                );
-
-                            }
-
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
-
-                            if (out2.UNDEFINED_EXP_Date_1 != null) {
-
-                                sb_tFileOutputDelimited_2.append(
-
-                                out2.UNDEFINED_EXP_Date_1
+					/**
+					 * [tMap_1 main ] stop
+					 */
+					// Start of branch "out"
+					if (out != null) {
 
-                                );
+						/*******************************************************
+						 * / [tMap_2 main ] start
+						 */
 
-                            }
+						currentComponent = "tMap_2";
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+						// ###############################
+						// # Input tables (lookups)
+						boolean rejectedInnerJoin_tMap_2 = false;
+						boolean mainRowRejected_tMap_2 = false;
 
-                            sb_tFileOutputDelimited_2.append(
+						// { // Dummy bracket to open block for "out" ##(1)##
 
-                            out2.DEFINED_EXP_double_1
+						// ###############################
+						{ // start of Var scope
 
-                            );
+							// ###############################
+							// # Vars tables
+							// ###############################
+							// ###############################
+							// # Output tables
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							out2 = null;
 
-                            if (out2.DEFINED_EXP_Double_1 != null) {
+							// # Output table : 'out2'
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean
+							 */
+							out2_tmp.DEFINED_EXP_boolean = out.DEFINED_EXP_boolean;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean
+							 */
+							out2_tmp.DEFINED_EXP_Boolean = out.DEFINED_EXP_Boolean;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean
+							 */
+							out2_tmp.UNDEFINED_EXP_Boolean = out.UNDEFINED_EXP_Boolean;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte
+							 */
+							out2_tmp.DEFINED_EXP_byte = out.DEFINED_EXP_byte;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte
+							 */
+							out2_tmp.DEFINED_EXP_Byte = out.DEFINED_EXP_Byte;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte
+							 */
+							out2_tmp.UNDEFINED_EXP_Byte = out.UNDEFINED_EXP_Byte;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array
+							 */
+							out2_tmp.DEFINED_EXP_byte_array = java.util.Arrays
+									.toString(out.DEFINED_EXP_byte_array);
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable
+							 */
+							out2_tmp.DEFINED_EXP_byte_array_nullable = out.DEFINED_EXP_byte_array_nullable;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char
+							 */
+							out2_tmp.DEFINED_EXP_char = out.DEFINED_EXP_char;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character
+							 */
+							out2_tmp.DEFINED_EXP_Character = out.DEFINED_EXP_Character;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character
+							 */
+							out2_tmp.UNDEFINED_EXP_Character = out.UNDEFINED_EXP_Character;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date
+							 */
+							out2_tmp.DEFINED_EXP_Date = TalendDate.formatDate(
+									"dd-MM-yyyy", out.DEFINED_EXP_Date);
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date
+							 */
+							out2_tmp.UNDEFINED_EXP_Date = out.UNDEFINED_EXP_Date;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double
+							 */
+							out2_tmp.DEFINED_EXP_double = out.DEFINED_EXP_double;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double
+							 */
+							out2_tmp.DEFINED_EXP_Double = out.DEFINED_EXP_Double;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double
+							 */
+							out2_tmp.UNDEFINED_EXP_Double = out.UNDEFINED_EXP_Double;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int
+							 */
+							out2_tmp.DEFINED_EXP_int = out.DEFINED_EXP_int;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer
+							 */
+							out2_tmp.DEFINED_EXP_Integer = out.DEFINED_EXP_Integer;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer
+							 */
+							out2_tmp.UNDEFINED_EXP_Integer = out.UNDEFINED_EXP_Integer;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float
+							 */
+							out2_tmp.DEFINED_EXP_float = out.DEFINED_EXP_float;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float
+							 */
+							out2_tmp.DEFINED_EXP_Float = out.DEFINED_EXP_Float;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float
+							 */
+							out2_tmp.UNDEFINED_EXP_Float = out.UNDEFINED_EXP_Float;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long
+							 */
+							out2_tmp.DEFINED_EXP_long = out.DEFINED_EXP_long;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long
+							 */
+							out2_tmp.DEFINED_EXP_Long = out.DEFINED_EXP_Long;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long
+							 */
+							out2_tmp.UNDEFINED_EXP_Long = out.UNDEFINED_EXP_Long;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object
+							 */
+							out2_tmp.DEFINED_EXP_Object = out.DEFINED_EXP_Object;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object
+							 */
+							out2_tmp.UNDEFINED_EXP_Object = out.UNDEFINED_EXP_Object;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short
+							 */
+							out2_tmp.DEFINED_EXP_short = out.DEFINED_EXP_short;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short
+							 */
+							out2_tmp.DEFINED_EXP_Short = out.DEFINED_EXP_Short;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short
+							 */
+							out2_tmp.UNDEFINED_EXP_Short = out.UNDEFINED_EXP_Short;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String
+							 */
+							out2_tmp.DEFINED_EXP_String = out.DEFINED_EXP_String;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String
+							 */
+							out2_tmp.UNDEFINED_EXP_String = out.UNDEFINED_EXP_String;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean_1
+							 */
+							out2_tmp.DEFINED_EXP_boolean_1 = out.DEFINED_EXP_boolean_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_boolean_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean_1
+							 */
+							out2_tmp.DEFINED_EXP_Boolean_1 = out.DEFINED_EXP_Boolean_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Boolean_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Boolean_1 = out.UNDEFINED_EXP_Boolean_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Boolean_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_1
+							 */
+							out2_tmp.DEFINED_EXP_byte_1 = out.DEFINED_EXP_byte_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte_1
+							 */
+							out2_tmp.DEFINED_EXP_Byte_1 = out.DEFINED_EXP_Byte_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Byte_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Byte_1 = out.UNDEFINED_EXP_Byte_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Byte_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_1
+							 */
+							out2_tmp.DEFINED_EXP_byte_array_1 = java.util.Arrays
+									.toString(out.DEFINED_EXP_byte_array_1);
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable_1
+							 */
+							out2_tmp.DEFINED_EXP_byte_array_nullable_1 = out.DEFINED_EXP_byte_array_nullable_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_byte_array_nullable_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char_1
+							 */
+							out2_tmp.DEFINED_EXP_char_1 = out.DEFINED_EXP_char_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_char_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character_1
+							 */
+							out2_tmp.DEFINED_EXP_Character_1 = out.DEFINED_EXP_Character_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Character_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Character_1 = out.UNDEFINED_EXP_Character_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Character_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date_1
+							 */
+							out2_tmp.DEFINED_EXP_Date_1 = TalendDate
+									.formatDate("dd-MM-yyyy",
+											out.DEFINED_EXP_Date_1);
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Date_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Date_1 = out.UNDEFINED_EXP_Date_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Date_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double_1
+							 */
+							out2_tmp.DEFINED_EXP_double_1 = out.DEFINED_EXP_double_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_double_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double_1
+							 */
+							out2_tmp.DEFINED_EXP_Double_1 = out.DEFINED_EXP_Double_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Double_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Double_1 = out.UNDEFINED_EXP_Double_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Double_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int_1
+							 */
+							out2_tmp.DEFINED_EXP_int_1 = out.DEFINED_EXP_int_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_int_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer_1
+							 */
+							out2_tmp.DEFINED_EXP_Integer_1 = out.DEFINED_EXP_Integer_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Integer_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Integer_1 = out.UNDEFINED_EXP_Integer_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Integer_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float_1
+							 */
+							out2_tmp.DEFINED_EXP_float_1 = out.DEFINED_EXP_float_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_float_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float_1
+							 */
+							out2_tmp.DEFINED_EXP_Float_1 = out.DEFINED_EXP_Float_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Float_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Float_1 = out.UNDEFINED_EXP_Float_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Float_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long_1
+							 */
+							out2_tmp.DEFINED_EXP_long_1 = out.DEFINED_EXP_long_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_long_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long_1
+							 */
+							out2_tmp.DEFINED_EXP_Long_1 = out.DEFINED_EXP_Long_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Long_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Long_1 = out.UNDEFINED_EXP_Long_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Long_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object_1
+							 */
+							out2_tmp.DEFINED_EXP_Object_1 = out.DEFINED_EXP_Object_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Object_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Object_1 = out.UNDEFINED_EXP_Object_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Object_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short_1
+							 */
+							out2_tmp.DEFINED_EXP_short_1 = out.DEFINED_EXP_short_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_short_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short_1
+							 */
+							out2_tmp.DEFINED_EXP_Short_1 = out.DEFINED_EXP_Short_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_Short_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short_1
+							 */
+							out2_tmp.UNDEFINED_EXP_Short_1 = out.UNDEFINED_EXP_Short_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_Short_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String_1
+							 */
+							out2_tmp.DEFINED_EXP_String_1 = out.DEFINED_EXP_String_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:DEFINED_EXP_String_1
+							 */
+							/**
+							 * Start field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String_1
+							 */
+							out2_tmp.UNDEFINED_EXP_String_1 = out.UNDEFINED_EXP_String_1;
+							/**
+							 * End field
+							 * tMap_2:METADATA_COLUMN:out2:UNDEFINED_EXP_String_1
+							 */
+							out2 = out2_tmp;
+							// ###############################
+
+						} // end of Var scope
+
+						rejectedInnerJoin_tMap_2 = false;
+
+						/**
+						 * [tMap_2 main ] stop
+						 */
+						// Start of branch "out2"
+						if (out2 != null) {
+
+							/***************************************************
+							 * / [tFileOutputDelimited_2 main ] start
+							 */
+
+							currentComponent = "tFileOutputDelimited_2";
+
+							StringBuilder sb_tFileOutputDelimited_2 = new StringBuilder();
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_boolean
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Boolean != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Boolean
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Boolean != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Boolean
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_byte
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Byte != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Byte
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Byte != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Byte
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_byte_array != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_byte_array
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_byte_array_nullable != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_byte_array_nullable
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_char
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Character != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Character
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Character != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Character
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Date != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Date
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Date != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Date
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_double
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Double != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Double
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Double != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Double
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_int
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Integer != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Integer
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Integer != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Integer
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_float
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Float != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Float
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Float != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Float
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_long
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Long != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Long
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Long != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Long
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Object != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Object
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Object != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Object
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_short
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Short != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Short
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Short != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Short
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_String != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_String
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_String != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_String
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_boolean_1
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Boolean_1 != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Boolean_1
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Boolean_1 != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Boolean_1
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							sb_tFileOutputDelimited_2.append(
+
+							out2.DEFINED_EXP_byte_1
+
+							);
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.DEFINED_EXP_Byte_1 != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.DEFINED_EXP_Byte_1
+
+								);
+
+							}
+
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
+
+							if (out2.UNDEFINED_EXP_Byte_1 != null) {
+
+								sb_tFileOutputDelimited_2.append(
+
+								out2.UNDEFINED_EXP_Byte_1
 
-                                sb_tFileOutputDelimited_2.append(
+								);
 
-                                out2.DEFINED_EXP_Double_1
+							}
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.DEFINED_EXP_byte_array_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            if (out2.UNDEFINED_EXP_Double_1 != null) {
+								out2.DEFINED_EXP_byte_array_1
 
-                                sb_tFileOutputDelimited_2.append(
+								);
 
-                                out2.UNDEFINED_EXP_Double_1
+							}
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.DEFINED_EXP_byte_array_nullable_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            sb_tFileOutputDelimited_2.append(
+								out2.DEFINED_EXP_byte_array_nullable_1
 
-                            out2.DEFINED_EXP_int_1
+								);
 
-                            );
+							}
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            if (out2.DEFINED_EXP_Integer_1 != null) {
+							sb_tFileOutputDelimited_2.append(
 
-                                sb_tFileOutputDelimited_2.append(
+							out2.DEFINED_EXP_char_1
 
-                                out2.DEFINED_EXP_Integer_1
+							);
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.DEFINED_EXP_Character_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            if (out2.UNDEFINED_EXP_Integer_1 != null) {
+								out2.DEFINED_EXP_Character_1
 
-                                sb_tFileOutputDelimited_2.append(
+								);
 
-                                out2.UNDEFINED_EXP_Integer_1
+							}
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.UNDEFINED_EXP_Character_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            sb_tFileOutputDelimited_2.append(
+								out2.UNDEFINED_EXP_Character_1
 
-                            out2.DEFINED_EXP_float_1
+								);
 
-                            );
+							}
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            if (out2.DEFINED_EXP_Float_1 != null) {
+							if (out2.DEFINED_EXP_Date_1 != null) {
 
-                                sb_tFileOutputDelimited_2.append(
+								sb_tFileOutputDelimited_2.append(
 
-                                out2.DEFINED_EXP_Float_1
+								out2.DEFINED_EXP_Date_1
 
-                                );
+								);
 
-                            }
+							}
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            if (out2.UNDEFINED_EXP_Float_1 != null) {
+							if (out2.UNDEFINED_EXP_Date_1 != null) {
 
-                                sb_tFileOutputDelimited_2.append(
+								sb_tFileOutputDelimited_2.append(
 
-                                out2.UNDEFINED_EXP_Float_1
+								out2.UNDEFINED_EXP_Date_1
 
-                                );
+								);
 
-                            }
+							}
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            sb_tFileOutputDelimited_2.append(
+							sb_tFileOutputDelimited_2.append(
 
-                            out2.DEFINED_EXP_long_1
+							out2.DEFINED_EXP_double_1
 
-                            );
+							);
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            if (out2.DEFINED_EXP_Long_1 != null) {
+							if (out2.DEFINED_EXP_Double_1 != null) {
 
-                                sb_tFileOutputDelimited_2.append(
+								sb_tFileOutputDelimited_2.append(
 
-                                out2.DEFINED_EXP_Long_1
+								out2.DEFINED_EXP_Double_1
 
-                                );
+								);
 
-                            }
+							}
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            if (out2.UNDEFINED_EXP_Long_1 != null) {
+							if (out2.UNDEFINED_EXP_Double_1 != null) {
 
-                                sb_tFileOutputDelimited_2.append(
+								sb_tFileOutputDelimited_2.append(
 
-                                out2.UNDEFINED_EXP_Long_1
+								out2.UNDEFINED_EXP_Double_1
 
-                                );
+								);
 
-                            }
+							}
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            if (out2.DEFINED_EXP_Object_1 != null) {
+							sb_tFileOutputDelimited_2.append(
 
-                                sb_tFileOutputDelimited_2.append(
+							out2.DEFINED_EXP_int_1
 
-                                out2.DEFINED_EXP_Object_1
+							);
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.DEFINED_EXP_Integer_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            if (out2.UNDEFINED_EXP_Object_1 != null) {
+								out2.DEFINED_EXP_Integer_1
 
-                                sb_tFileOutputDelimited_2.append(
+								);
 
-                                out2.UNDEFINED_EXP_Object_1
+							}
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.UNDEFINED_EXP_Integer_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            sb_tFileOutputDelimited_2.append(
+								out2.UNDEFINED_EXP_Integer_1
 
-                            out2.DEFINED_EXP_short_1
+								);
 
-                            );
+							}
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            if (out2.DEFINED_EXP_Short_1 != null) {
+							sb_tFileOutputDelimited_2.append(
 
-                                sb_tFileOutputDelimited_2.append(
+							out2.DEFINED_EXP_float_1
 
-                                out2.DEFINED_EXP_Short_1
+							);
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.DEFINED_EXP_Float_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            if (out2.UNDEFINED_EXP_Short_1 != null) {
+								out2.DEFINED_EXP_Float_1
 
-                                sb_tFileOutputDelimited_2.append(
+								);
 
-                                out2.UNDEFINED_EXP_Short_1
+							}
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							if (out2.UNDEFINED_EXP_Float_1 != null) {
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+								sb_tFileOutputDelimited_2.append(
 
-                            if (out2.DEFINED_EXP_String_1 != null) {
+								out2.UNDEFINED_EXP_Float_1
 
-                                sb_tFileOutputDelimited_2.append(
+								);
 
-                                out2.DEFINED_EXP_String_1
+							}
 
-                                );
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            }
+							sb_tFileOutputDelimited_2.append(
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_tFileOutputDelimited_2);
+							out2.DEFINED_EXP_long_1
 
-                            if (out2.UNDEFINED_EXP_String_1 != null) {
+							);
 
-                                sb_tFileOutputDelimited_2.append(
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                                out2.UNDEFINED_EXP_String_1
+							if (out2.DEFINED_EXP_Long_1 != null) {
 
-                                );
+								sb_tFileOutputDelimited_2.append(
 
-                            }
+								out2.DEFINED_EXP_Long_1
 
-                            sb_tFileOutputDelimited_2
-                                    .append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
+								);
 
-                            outtFileOutputDelimited_2
-                                    .write(sb_tFileOutputDelimited_2.toString());
+							}
 
-                            nb_line_tFileOutputDelimited_2++;
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-                            /**
-                             * [tFileOutputDelimited_2 main ] stop
-                             */
+							if (out2.UNDEFINED_EXP_Long_1 != null) {
 
-                        } // End of branch "out2"
+								sb_tFileOutputDelimited_2.append(
 
-                    } // End of branch "out"
+								out2.UNDEFINED_EXP_Long_1
 
-                } // close loop of lookup 'lookup' // G_TM_M_043
+								);
 
-                /***************************************************************
-                 * / [tFixedFlowInput_2 end ] start
-                 */
+							}
 
-                currentComponent = "tFixedFlowInput_2";
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-            }
+							if (out2.DEFINED_EXP_Object_1 != null) {
 
-            ok_Hash.put("tFixedFlowInput_2", true);
-            end_Hash.put("tFixedFlowInput_2", System.currentTimeMillis());
+								sb_tFileOutputDelimited_2.append(
 
-            /**
-             * [tFixedFlowInput_2 end ] stop
-             */
-            /*******************************************************************
-             * / [tMap_1 end ] start
-             */
+								out2.DEFINED_EXP_Object_1
 
-            currentComponent = "tMap_1";
+								);
 
-            // ###############################
-            // # Lookup hashes releasing
-            fsi_main.endGet();
+							}
 
-            tHash_Lookup_lookup.endGet();
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-            globalMap.remove("tHash_Lookup_lookup");
+							if (out2.UNDEFINED_EXP_Object_1 != null) {
 
-            // ###############################
+								sb_tFileOutputDelimited_2.append(
 
-            ok_Hash.put("tMap_1", true);
-            end_Hash.put("tMap_1", System.currentTimeMillis());
+								out2.UNDEFINED_EXP_Object_1
 
-            /**
-             * [tMap_1 end ] stop
-             */
-            /*******************************************************************
-             * / [tMap_2 end ] start
-             */
+								);
 
-            currentComponent = "tMap_2";
+							}
 
-            // ###############################
-            // # Lookup hashes releasing
-            // ###############################
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-            ok_Hash.put("tMap_2", true);
-            end_Hash.put("tMap_2", System.currentTimeMillis());
+							sb_tFileOutputDelimited_2.append(
 
-            /**
-             * [tMap_2 end ] stop
-             */
-            /*******************************************************************
-             * / [tFileOutputDelimited_2 end ] start
-             */
+							out2.DEFINED_EXP_short_1
 
-            currentComponent = "tFileOutputDelimited_2";
+							);
 
-            outtFileOutputDelimited_2.close();
-            globalMap.put("tFileOutputDelimited_2_NB_LINE",
-                    nb_line_tFileOutputDelimited_2);
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-            ok_Hash.put("tFileOutputDelimited_2", true);
-            end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
+							if (out2.DEFINED_EXP_Short_1 != null) {
 
-            /**
-             * [tFileOutputDelimited_2 end ] stop
-             */
+								sb_tFileOutputDelimited_2.append(
 
-            tFileCompare_1Process();
+								out2.DEFINED_EXP_Short_1
 
-        } catch (Exception e) {
+								);
 
-            throw new TalendException(this, e);
-        }
+							}
 
-        finally {
-            // free memory for "tMap_1"
-            globalMap.put("tHash_Lookup_lookup", null);
-            System.gc();
-        }
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-    }
+							if (out2.UNDEFINED_EXP_Short_1 != null) {
 
-    public void tFileCompare_1Process() throws TalendException {
-        try {
+								sb_tFileOutputDelimited_2.append(
 
-            /*******************************************************************
-             * / [tFileCompare_1 begin ] start
-             */
+								out2.UNDEFINED_EXP_Short_1
 
-            ok_Hash.put("tFileCompare_1", false);
-            start_Hash.put("tFileCompare_1", System.currentTimeMillis());
-            currentComponent = "tFileCompare_1";
+								);
 
-            /**
-             * [tFileCompare_1 begin ] stop
-             */
-            /*******************************************************************
-             * / [tFileCompare_1 main ] start
-             */
+							}
 
-            currentComponent = "tFileCompare_1";
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-            boolean result_tFileCompare_1 = true;
+							if (out2.DEFINED_EXP_String_1 != null) {
 
-            if (result_tFileCompare_1) {
+								sb_tFileOutputDelimited_2.append(
 
-                java.io.BufferedReader file_tFileCompare_1 = new java.io.BufferedReader(
-                        new java.io.FileReader(context.data_output_dir
-                                + context.current_job_dir + "out_main_"
-                                + context.indexMain + "__lookup_"
-                                + context.indexLookup + "__bufferSize_"
-                                + context.bufferSizeValue + ".csv"));
-                java.io.BufferedReader fileRef_tFileCompare_1 = new java.io.BufferedReader(
-                        new java.io.FileReader((String) context
-                                .getProperty("data_dir")
-                                + context.current_job_dir
-                                + "ref/out_main_"
-                                + context.indexMain
-                                + "__lookup_"
-                                + context.indexLookup
-                                + "__bufferSize_"
-                                + context.bufferSizeValue + ".csv"));
-                String content_tFileCompare_1 = null, contentRef_tFileCompare_1 = null;
-                while ((content_tFileCompare_1 = file_tFileCompare_1.readLine()) != null
-                        && (contentRef_tFileCompare_1 = fileRef_tFileCompare_1
-                                .readLine()) != null) {
-                    if (content_tFileCompare_1
-                            .compareTo(contentRef_tFileCompare_1) != 0) {
-                        result_tFileCompare_1 = false;
-                        break;
-                    }
-                }
+								out2.DEFINED_EXP_String_1
 
-                // Check if files has a different number of lines:
-                if (content_tFileCompare_1 == null) {
-                    // This step is done in case of the while upper ignore
-                    // second part:
-                    contentRef_tFileCompare_1 = fileRef_tFileCompare_1
-                            .readLine();
-                }
-                if (content_tFileCompare_1 != null
-                        || contentRef_tFileCompare_1 != null) {
-                    result_tFileCompare_1 = false;
-                }
+								);
 
-                file_tFileCompare_1.close();
-                fileRef_tFileCompare_1.close();
+							}
 
-            }
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_tFileOutputDelimited_2);
 
-            String messagetFileCompare_1 = "";
-            if (result_tFileCompare_1) {
-                messagetFileCompare_1 = "[" + jobName + "." + currentComponent
-                        + "] 'main_" + context.indexMain + ".csv' and 'lookup_"
-                        + context.indexLookup + ".csv' with bufferSize="
-                        + context.bufferSizeValue + ", OK";
+							if (out2.UNDEFINED_EXP_String_1 != null) {
 
-            } else {
-                messagetFileCompare_1 = "[" + jobName + "." + currentComponent
-                        + "] Files differ: check files 'main_"
-                        + context.indexMain + ".csv' and 'lookup_"
-                        + context.indexLookup + ".csv' with bufferSize="
-                        + context.bufferSizeValue + ", DIFFERENT";
-            }
-            globalMap.put("tFileCompare_1_DIFFERENCE", result_tFileCompare_1);
+								sb_tFileOutputDelimited_2.append(
 
-            /**
-             * [tFileCompare_1 main ] stop
-             */
-            /*******************************************************************
-             * / [tFileCompare_1 end ] start
-             */
+								out2.UNDEFINED_EXP_String_1
 
-            currentComponent = "tFileCompare_1";
+								);
 
-            ok_Hash.put("tFileCompare_1", true);
-            end_Hash.put("tFileCompare_1", System.currentTimeMillis());
+							}
 
-            /**
-             * [tFileCompare_1 end ] stop
-             */
-            tJavaFlex_4Process();
+							sb_tFileOutputDelimited_2
+									.append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
 
-        } catch (Exception e) {
+							outtFileOutputDelimited_2
+									.write(sb_tFileOutputDelimited_2.toString());
 
-            throw new TalendException(this, e);
-        }
+							nb_line_tFileOutputDelimited_2++;
 
-    }
+							/**
+							 * [tFileOutputDelimited_2 main ] stop
+							 */
 
-    private class row4Struct implements
-            routines.system.IPersistableRow<row4Struct> {
+						} // End of branch "out2"
 
-        Boolean testOk;
+					} // End of branch "out"
 
-        public void readData(DataInputStream dis) {
+				} // close loop of lookup 'lookup' // G_TM_M_043
 
-            try {
+				/***************************************************************
+				 * / [tFixedFlowInput_2 end ] start
+				 */
 
-                ObjectInputStream ois = null;
-                int length = 0;
+				currentComponent = "tFixedFlowInput_2";
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.testOk = null;
-                } else {
-                    this.testOk = dis.readBoolean();
-                }
+			}
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+			ok_Hash.put("tFixedFlowInput_2", true);
+			end_Hash.put("tFixedFlowInput_2", System.currentTimeMillis());
 
-            }
+			/**
+			 * [tFixedFlowInput_2 end ] stop
+			 */
+			/*******************************************************************
+			 * / [tMap_1 end ] start
+			 */
 
-        }
+			currentComponent = "tMap_1";
 
-        public void writeData(DataOutputStream dos) {
-            try {
+			// ###############################
+			// # Lookup hashes releasing
+			fsi_main.endGet();
 
-                ObjectOutputStream oos = null;
+			tHash_Lookup_lookup.endGet();
 
-                // Boolean
+			globalMap.remove("tHash_Lookup_lookup");
 
-                if (this.testOk == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.testOk);
-                }
+			// ###############################
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+			ok_Hash.put("tMap_1", true);
+			end_Hash.put("tMap_1", System.currentTimeMillis());
 
-        }
+			/**
+			 * [tMap_1 end ] stop
+			 */
+			/*******************************************************************
+			 * / [tMap_2 end ] start
+			 */
 
-        public String toString() {
+			currentComponent = "tMap_2";
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(super.toString());
-            sb.append("[");
+			// ###############################
+			// # Lookup hashes releasing
+			// ###############################
 
-            sb.append("testOk");
-            sb.append("=");
-            sb.append(String.valueOf(this.testOk));
+			ok_Hash.put("tMap_2", true);
+			end_Hash.put("tMap_2", System.currentTimeMillis());
 
-            sb.append("]");
+			/**
+			 * [tMap_2 end ] stop
+			 */
+			/*******************************************************************
+			 * / [tFileOutputDelimited_2 end ] start
+			 */
 
-            return sb.toString();
-        }
+			currentComponent = "tFileOutputDelimited_2";
 
-        /**
-         * Compare keys
-         */
-        public int compareTo(row4Struct other) {
+			outtFileOutputDelimited_2.close();
+			globalMap.put("tFileOutputDelimited_2_NB_LINE",
+					nb_line_tFileOutputDelimited_2);
 
-            int returnValue = -1;
+			ok_Hash.put("tFileOutputDelimited_2", true);
+			end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
 
-            return returnValue;
-        }
+			/**
+			 * [tFileOutputDelimited_2 end ] stop
+			 */
 
-        private int checkNullsAndCompare(Object object1, Object object2) {
-            int returnValue = 0;
-            if (object1 instanceof Comparable && object2 instanceof Comparable) {
-                returnValue = ((Comparable) object1).compareTo(object2);
-            } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
-            } else if (object1 == null && object2 != null) {
-                returnValue = 1;
-            } else if (object1 != null && object2 == null) {
-                returnValue = -1;
-            } else {
-                returnValue = 0;
-            }
+			tFileCompare_1Process();
 
-            return returnValue;
-        }
+		} catch (Exception e) {
 
-        private int compareStrings(String string1, String string2) {
-            // if (this.ignoreCase) {
-            return string1.compareToIgnoreCase(string2);
-            // } else {
-            // return string1.compareTo(string2);
-            // }
-        }
+			throw new TalendException(this, e);
+		}
 
-    }
+		finally {
+			// free memory for "tMap_1"
+			globalMap.put("tHash_Lookup_lookup", null);
+			System.gc();
+		}
 
-    public void tJavaFlex_4Process() throws TalendException {
-        try {
+	}
 
-            row4Struct row4 = new row4Struct();
-            /*******************************************************************
-             * / [tJavaFlex_4 begin ] start
-             */
+	public void tFileCompare_1Process() throws TalendException {
+		try {
 
-            ok_Hash.put("tJavaFlex_4", false);
-            start_Hash.put("tJavaFlex_4", System.currentTimeMillis());
-            currentComponent = "tJavaFlex_4";
+			/*******************************************************************
+			 * / [tFileCompare_1 begin ] start
+			 */
 
-            // start part of your Java code
+			ok_Hash.put("tFileCompare_1", false);
+			start_Hash.put("tFileCompare_1", System.currentTimeMillis());
+			currentComponent = "tFileCompare_1";
 
-            /**
-             * [tJavaFlex_4 begin ] stop
-             */
-            /*******************************************************************
-             * / [tJavaFlex_4 main ] start
-             */
+			/**
+			 * [tFileCompare_1 begin ] stop
+			 */
+			/*******************************************************************
+			 * / [tFileCompare_1 main ] start
+			 */
 
-            currentComponent = "tJavaFlex_4";
+			currentComponent = "tFileCompare_1";
 
-            // here is the main part of the component,
-            // a piece of code executed in the row
-            // loop
+			boolean result_tFileCompare_1 = true;
 
-            /**
-             * [tJavaFlex_4 main ] stop
-             */
+			if (result_tFileCompare_1) {
 
-            /*******************************************************************
-             * / [tBufferOutput_1 begin ] start
-             */
+				java.io.BufferedReader file_tFileCompare_1 = new java.io.BufferedReader(
+						new java.io.FileReader(context.data_output_dir
+								+ context.current_job_dir + "out_main_"
+								+ context.indexMain + "__lookup_"
+								+ context.indexLookup + "__bufferSize_"
+								+ context.bufferSizeValue + ".csv"));
+				java.io.BufferedReader fileRef_tFileCompare_1 = new java.io.BufferedReader(
+						new java.io.FileReader((String) context
+								.getProperty("data_dir")
+								+ context.current_job_dir
+								+ "ref/out_main_"
+								+ context.indexMain
+								+ "__lookup_"
+								+ context.indexLookup
+								+ "__bufferSize_"
+								+ context.bufferSizeValue + ".csv"));
+				String content_tFileCompare_1 = null, contentRef_tFileCompare_1 = null;
+				while ((content_tFileCompare_1 = file_tFileCompare_1.readLine()) != null
+						&& (contentRef_tFileCompare_1 = fileRef_tFileCompare_1
+								.readLine()) != null) {
+					if (content_tFileCompare_1
+							.compareTo(contentRef_tFileCompare_1) != 0) {
+						result_tFileCompare_1 = false;
+						break;
+					}
+				}
 
-            ok_Hash.put("tBufferOutput_1", false);
-            start_Hash.put("tBufferOutput_1", System.currentTimeMillis());
-            currentComponent = "tBufferOutput_1";
+				// Check if files has a different number of lines:
+				if (content_tFileCompare_1 == null) {
+					// This step is done in case of the while upper ignore
+					// second part:
+					contentRef_tFileCompare_1 = fileRef_tFileCompare_1
+							.readLine();
+				}
+				if (content_tFileCompare_1 != null
+						|| contentRef_tFileCompare_1 != null) {
+					result_tFileCompare_1 = false;
+				}
 
-            /**
-             * [tBufferOutput_1 begin ] stop
-             */
+				file_tFileCompare_1.close();
+				fileRef_tFileCompare_1.close();
 
-            /*******************************************************************
-             * / [tFixedFlowInput_1 begin ] start
-             */
+			}
 
-            ok_Hash.put("tFixedFlowInput_1", false);
-            start_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
-            currentComponent = "tFixedFlowInput_1";
+			String messagetFileCompare_1 = "";
+			if (result_tFileCompare_1) {
+				messagetFileCompare_1 = "[" + jobName + "." + currentComponent
+						+ "] 'main_" + context.indexMain + ".csv' and 'lookup_"
+						+ context.indexLookup + ".csv' with bufferSize="
+						+ context.bufferSizeValue + ", OK";
 
-            globalMap.put("NB_LINE", 1);
-            for (int i_tFixedFlowInput_1 = 0; i_tFixedFlowInput_1 < 1; i_tFixedFlowInput_1++) {
+			} else {
+				messagetFileCompare_1 = "[" + jobName + "." + currentComponent
+						+ "] Files differ: check files 'main_"
+						+ context.indexMain + ".csv' and 'lookup_"
+						+ context.indexLookup + ".csv' with bufferSize="
+						+ context.bufferSizeValue + ", DIFFERENT";
+			}
+			globalMap.put("tFileCompare_1_DIFFERENCE", result_tFileCompare_1);
 
-                row4.testOk = ((Boolean) globalMap
-                        .get("tFileCompare_1_DIFFERENCE"));
+			/**
+			 * [tFileCompare_1 main ] stop
+			 */
+			/*******************************************************************
+			 * / [tFileCompare_1 end ] start
+			 */
 
-                /**
-                 * [tFixedFlowInput_1 begin ] stop
-                 */
-                /***************************************************************
-                 * / [tFixedFlowInput_1 main ] start
-                 */
+			currentComponent = "tFileCompare_1";
 
-                currentComponent = "tFixedFlowInput_1";
+			ok_Hash.put("tFileCompare_1", true);
+			end_Hash.put("tFileCompare_1", System.currentTimeMillis());
 
-                /**
-                 * [tFixedFlowInput_1 main ] stop
-                 */
-                /***************************************************************
-                 * / [tBufferOutput_1 main ] start
-                 */
+			/**
+			 * [tFileCompare_1 end ] stop
+			 */
+			tJavaFlex_4Process();
 
-                currentComponent = "tBufferOutput_1";
+		} catch (Exception e) {
 
-                String[] row_tBufferOutput_1 = new String[] { "", };
-                if (row4.testOk != null) {
+			throw new TalendException(this, e);
+		}
 
-                    row_tBufferOutput_1[0] = String.valueOf(row4.testOk);
+	}
 
-                }
-                globalBuffer.add(row_tBufferOutput_1);
+	private class row4Struct implements
+			routines.system.IPersistableRow<row4Struct> {
 
-                /**
-                 * [tBufferOutput_1 main ] stop
-                 */
+		Boolean testOk;
 
-                /***************************************************************
-                 * / [tFixedFlowInput_1 end ] start
-                 */
+		public void readData(ObjectInputStream dis) {
 
-                currentComponent = "tFixedFlowInput_1";
+			try {
 
-            }
+				
+				int length = 0;
 
-            ok_Hash.put("tFixedFlowInput_1", true);
-            end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
+				length = dis.readByte();
+				if (length == -1) {
+					this.testOk = null;
+				} else {
+					this.testOk = dis.readBoolean();
+				}
 
-            /**
-             * [tFixedFlowInput_1 end ] stop
-             */
-            /*******************************************************************
-             * / [tBufferOutput_1 end ] start
-             */
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 
-            currentComponent = "tBufferOutput_1";
+			}
 
-            ok_Hash.put("tBufferOutput_1", true);
-            end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
+		}
 
-            /**
-             * [tBufferOutput_1 end ] stop
-             */
+		public void writeData(ObjectOutputStream dos) {
+			try {
 
-            /*******************************************************************
-             * / [tJavaFlex_4 end ] start
-             */
+				// Boolean
 
-            currentComponent = "tJavaFlex_4";
+				if (this.testOk == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.testOk);
+				}
 
-            // end of the component, outside/closing the loop
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 
-            ok_Hash.put("tJavaFlex_4", true);
-            end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
+		}
 
-            /**
-             * [tJavaFlex_4 end ] stop
-             */
+		public String toString() {
 
-        } catch (Exception e) {
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
 
-            throw new TalendException(this, e);
-        }
+			sb.append("testOk");
+			sb.append("=");
+			sb.append(String.valueOf(this.testOk));
 
-    }
+			sb.append("]");
 
-    private class lookupStruct implements
-            routines.system.IPersistableRow<lookupStruct> {
+			return sb.toString();
+		}
 
-        boolean DEFINED_EXP_boolean;
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(row4Struct other) {
 
-        Boolean DEFINED_EXP_Boolean;
+			int returnValue = -1;
 
-        Boolean UNDEFINED_EXP_Boolean;
+			return returnValue;
+		}
 
-        byte DEFINED_EXP_byte;
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
 
-        Byte DEFINED_EXP_Byte;
+			return returnValue;
+		}
 
-        Byte UNDEFINED_EXP_Byte;
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
 
-        byte[] DEFINED_EXP_byte_array;
+	}
 
-        byte[] DEFINED_EXP_byte_array_nullable;
+	public void tJavaFlex_4Process() throws TalendException {
+		try {
 
-        char DEFINED_EXP_char;
+			row4Struct row4 = new row4Struct();
+			/*******************************************************************
+			 * / [tJavaFlex_4 begin ] start
+			 */
 
-        Character DEFINED_EXP_Character;
+			ok_Hash.put("tJavaFlex_4", false);
+			start_Hash.put("tJavaFlex_4", System.currentTimeMillis());
+			currentComponent = "tJavaFlex_4";
 
-        Character UNDEFINED_EXP_Character;
+			// start part of your Java code
 
-        java.util.Date DEFINED_EXP_Date;
+			/**
+			 * [tJavaFlex_4 begin ] stop
+			 */
+			/*******************************************************************
+			 * / [tJavaFlex_4 main ] start
+			 */
 
-        java.util.Date UNDEFINED_EXP_Date;
+			currentComponent = "tJavaFlex_4";
 
-        double DEFINED_EXP_double;
+			// here is the main part of the component,
+			// a piece of code executed in the row
+			// loop
 
-        Double DEFINED_EXP_Double;
+			/**
+			 * [tJavaFlex_4 main ] stop
+			 */
 
-        Double UNDEFINED_EXP_Double;
+			/*******************************************************************
+			 * / [tBufferOutput_1 begin ] start
+			 */
 
-        int DEFINED_EXP_int;
+			ok_Hash.put("tBufferOutput_1", false);
+			start_Hash.put("tBufferOutput_1", System.currentTimeMillis());
+			currentComponent = "tBufferOutput_1";
 
-        Integer DEFINED_EXP_Integer;
+			/**
+			 * [tBufferOutput_1 begin ] stop
+			 */
 
-        Integer UNDEFINED_EXP_Integer;
+			/*******************************************************************
+			 * / [tFixedFlowInput_1 begin ] start
+			 */
 
-        float DEFINED_EXP_float;
+			ok_Hash.put("tFixedFlowInput_1", false);
+			start_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
+			currentComponent = "tFixedFlowInput_1";
 
-        Float DEFINED_EXP_Float;
+			globalMap.put("NB_LINE", 1);
+			for (int i_tFixedFlowInput_1 = 0; i_tFixedFlowInput_1 < 1; i_tFixedFlowInput_1++) {
 
-        Float UNDEFINED_EXP_Float;
+				row4.testOk = ((Boolean) globalMap
+						.get("tFileCompare_1_DIFFERENCE"));
 
-        long DEFINED_EXP_long;
+				/**
+				 * [tFixedFlowInput_1 begin ] stop
+				 */
+				/***************************************************************
+				 * / [tFixedFlowInput_1 main ] start
+				 */
 
-        Long DEFINED_EXP_Long;
+				currentComponent = "tFixedFlowInput_1";
 
-        Long UNDEFINED_EXP_Long;
+				/**
+				 * [tFixedFlowInput_1 main ] stop
+				 */
+				/***************************************************************
+				 * / [tBufferOutput_1 main ] start
+				 */
 
-        Object DEFINED_EXP_Object;
+				currentComponent = "tBufferOutput_1";
 
-        Object UNDEFINED_EXP_Object;
+				String[] row_tBufferOutput_1 = new String[] { "", };
+				if (row4.testOk != null) {
 
-        short DEFINED_EXP_short;
+					row_tBufferOutput_1[0] = String.valueOf(row4.testOk);
 
-        Short DEFINED_EXP_Short;
+				}
+				globalBuffer.add(row_tBufferOutput_1);
 
-        Short UNDEFINED_EXP_Short;
+				/**
+				 * [tBufferOutput_1 main ] stop
+				 */
 
-        String DEFINED_EXP_String;
+				/***************************************************************
+				 * / [tFixedFlowInput_1 end ] start
+				 */
 
-        String UNDEFINED_EXP_String;
+				currentComponent = "tFixedFlowInput_1";
 
-        public void readData(DataInputStream dis) {
+			}
 
-            try {
+			ok_Hash.put("tFixedFlowInput_1", true);
+			end_Hash.put("tFixedFlowInput_1", System.currentTimeMillis());
 
-                ObjectInputStream ois = null;
-                int length = 0;
+			/**
+			 * [tFixedFlowInput_1 end ] stop
+			 */
+			/*******************************************************************
+			 * / [tBufferOutput_1 end ] start
+			 */
 
-                this.DEFINED_EXP_boolean = dis.readBoolean();
+			currentComponent = "tBufferOutput_1";
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Boolean = null;
-                } else {
-                    this.DEFINED_EXP_Boolean = dis.readBoolean();
-                }
+			ok_Hash.put("tBufferOutput_1", true);
+			end_Hash.put("tBufferOutput_1", System.currentTimeMillis());
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Boolean = null;
-                } else {
-                    this.UNDEFINED_EXP_Boolean = dis.readBoolean();
-                }
+			/**
+			 * [tBufferOutput_1 end ] stop
+			 */
 
-                this.DEFINED_EXP_byte = dis.readByte();
+			/*******************************************************************
+			 * / [tJavaFlex_4 end ] start
+			 */
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Byte = null;
-                } else {
-                    this.DEFINED_EXP_Byte = dis.readByte();
-                }
+			currentComponent = "tJavaFlex_4";
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Byte = null;
-                } else {
-                    this.UNDEFINED_EXP_Byte = dis.readByte();
-                }
+			// end of the component, outside/closing the loop
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array = byteArray;
-                }
+			ok_Hash.put("tJavaFlex_4", true);
+			end_Hash.put("tJavaFlex_4", System.currentTimeMillis());
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_byte_array_nullable = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_byte_array_nullable = byteArray;
-                }
+			/**
+			 * [tJavaFlex_4 end ] stop
+			 */
 
-                this.DEFINED_EXP_char = dis.readChar();
+		} catch (Exception e) {
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Character = null;
-                } else {
-                    this.DEFINED_EXP_Character = dis.readChar();
-                }
+			throw new TalendException(this, e);
+		}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Character = null;
-                } else {
-                    this.UNDEFINED_EXP_Character = dis.readChar();
-                }
+	}
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Date = null;
-                } else {
-                    this.DEFINED_EXP_Date = new Date(dis.readLong());
-                }
+	private class lookupStruct implements
+			routines.system.IPersistableRow<lookupStruct> {
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Date = null;
-                } else {
-                    this.UNDEFINED_EXP_Date = new Date(dis.readLong());
-                }
+		boolean DEFINED_EXP_boolean;
 
-                this.DEFINED_EXP_double = dis.readDouble();
+		Boolean DEFINED_EXP_Boolean;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Double = null;
-                } else {
-                    this.DEFINED_EXP_Double = dis.readDouble();
-                }
+		Boolean UNDEFINED_EXP_Boolean;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Double = null;
-                } else {
-                    this.UNDEFINED_EXP_Double = dis.readDouble();
-                }
+		byte DEFINED_EXP_byte;
 
-                this.DEFINED_EXP_int = dis.readInt();
+		Byte DEFINED_EXP_Byte;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Integer = null;
-                } else {
-                    this.DEFINED_EXP_Integer = dis.readInt();
-                }
+		Byte UNDEFINED_EXP_Byte;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Integer = null;
-                } else {
-                    this.UNDEFINED_EXP_Integer = dis.readInt();
-                }
+		byte[] DEFINED_EXP_byte_array;
 
-                this.DEFINED_EXP_float = dis.readFloat();
+		byte[] DEFINED_EXP_byte_array_nullable;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Float = null;
-                } else {
-                    this.DEFINED_EXP_Float = dis.readFloat();
-                }
+		char DEFINED_EXP_char;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Float = null;
-                } else {
-                    this.UNDEFINED_EXP_Float = dis.readFloat();
-                }
+		Character DEFINED_EXP_Character;
 
-                this.DEFINED_EXP_long = dis.readLong();
+		Character UNDEFINED_EXP_Character;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Long = null;
-                } else {
-                    this.DEFINED_EXP_Long = dis.readLong();
-                }
+		java.util.Date DEFINED_EXP_Date;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Long = null;
-                } else {
-                    this.UNDEFINED_EXP_Long = dis.readLong();
-                }
+		java.util.Date UNDEFINED_EXP_Date;
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.DEFINED_EXP_Object = ois.readObject();
+		double DEFINED_EXP_double;
 
-                if (ois == null) {
-                    ois = new ObjectInputStream(dis);
-                }
-                this.UNDEFINED_EXP_Object = ois.readObject();
+		Double DEFINED_EXP_Double;
 
-                this.DEFINED_EXP_short = dis.readShort();
+		Double UNDEFINED_EXP_Double;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.DEFINED_EXP_Short = null;
-                } else {
-                    this.DEFINED_EXP_Short = dis.readShort();
-                }
+		int DEFINED_EXP_int;
 
-                length = dis.readByte();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_Short = null;
-                } else {
-                    this.UNDEFINED_EXP_Short = dis.readShort();
-                }
+		Integer DEFINED_EXP_Integer;
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.DEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.DEFINED_EXP_String = new String(byteArray);
-                }
+		Integer UNDEFINED_EXP_Integer;
 
-                length = dis.readInt();
-                if (length == -1) {
-                    this.UNDEFINED_EXP_String = null;
-                } else {
-                    byte[] byteArray = new byte[length];
-                    dis.read(byteArray);
-                    this.UNDEFINED_EXP_String = new String(byteArray);
-                }
+		float DEFINED_EXP_float;
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+		Float DEFINED_EXP_Float;
 
-            } catch (ClassNotFoundException eCNFE) {
-                throw new RuntimeException(eCNFE);
+		Float UNDEFINED_EXP_Float;
 
-            }
+		long DEFINED_EXP_long;
 
-        }
+		Long DEFINED_EXP_Long;
 
-        public void writeData(DataOutputStream dos) {
-            try {
+		Long UNDEFINED_EXP_Long;
 
-                ObjectOutputStream oos = null;
+		Object DEFINED_EXP_Object;
 
-                // boolean
+		Object UNDEFINED_EXP_Object;
 
-                dos.writeBoolean(this.DEFINED_EXP_boolean);
+		short DEFINED_EXP_short;
 
-                // Boolean
+		Short DEFINED_EXP_Short;
 
-                if (this.DEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.DEFINED_EXP_Boolean);
-                }
+		Short UNDEFINED_EXP_Short;
 
-                // Boolean
+		String DEFINED_EXP_String;
 
-                if (this.UNDEFINED_EXP_Boolean == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
-                }
+		String UNDEFINED_EXP_String;
 
-                // byte
+		public void readData(ObjectInputStream dis) {
 
-                dos.writeByte(this.DEFINED_EXP_byte);
+			try {
 
-                // Byte
+				
+				int length = 0;
 
-                if (this.DEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.DEFINED_EXP_Byte);
-                }
+				this.DEFINED_EXP_boolean = dis.readBoolean();
 
-                // Byte
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Boolean = null;
+				} else {
+					this.DEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                if (this.UNDEFINED_EXP_Byte == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeByte(this.UNDEFINED_EXP_Byte);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Boolean = null;
+				} else {
+					this.UNDEFINED_EXP_Boolean = dis.readBoolean();
+				}
 
-                // byte[]
+				this.DEFINED_EXP_byte = dis.readByte();
 
-                if (this.DEFINED_EXP_byte_array == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array.length);
-                    dos.write(this.DEFINED_EXP_byte_array);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Byte = null;
+				} else {
+					this.DEFINED_EXP_Byte = dis.readByte();
+				}
 
-                // byte[]
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Byte = null;
+				} else {
+					this.UNDEFINED_EXP_Byte = dis.readByte();
+				}
 
-                if (this.DEFINED_EXP_byte_array_nullable == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
-                    dos.write(this.DEFINED_EXP_byte_array_nullable);
-                }
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array = byteArray;
+				}
 
-                // char
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_byte_array_nullable = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_byte_array_nullable = byteArray;
+				}
 
-                dos.writeChar(this.DEFINED_EXP_char);
+				this.DEFINED_EXP_char = dis.readChar();
 
-                // Character
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Character = null;
+				} else {
+					this.DEFINED_EXP_Character = dis.readChar();
+				}
 
-                if (this.DEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.DEFINED_EXP_Character);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Character = null;
+				} else {
+					this.UNDEFINED_EXP_Character = dis.readChar();
+				}
 
-                // Character
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Date = null;
+				} else {
+					this.DEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                if (this.UNDEFINED_EXP_Character == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeChar(this.UNDEFINED_EXP_Character);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Date = null;
+				} else {
+					this.UNDEFINED_EXP_Date = new Date(dis.readLong());
+				}
 
-                // java.util.Date
+				this.DEFINED_EXP_double = dis.readDouble();
 
-                if (this.DEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.DEFINED_EXP_Date.getTime());
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Double = null;
+				} else {
+					this.DEFINED_EXP_Double = dis.readDouble();
+				}
 
-                // java.util.Date
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Double = null;
+				} else {
+					this.UNDEFINED_EXP_Double = dis.readDouble();
+				}
 
-                if (this.UNDEFINED_EXP_Date == null) {
-                    dos.writeInt(-1);
-                } else {
-                    dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
-                }
+				this.DEFINED_EXP_int = dis.readInt();
 
-                // double
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Integer = null;
+				} else {
+					this.DEFINED_EXP_Integer = dis.readInt();
+				}
 
-                dos.writeDouble(this.DEFINED_EXP_double);
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Integer = null;
+				} else {
+					this.UNDEFINED_EXP_Integer = dis.readInt();
+				}
 
-                // Double
+				this.DEFINED_EXP_float = dis.readFloat();
 
-                if (this.DEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.DEFINED_EXP_Double);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Float = null;
+				} else {
+					this.DEFINED_EXP_Float = dis.readFloat();
+				}
 
-                // Double
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Float = null;
+				} else {
+					this.UNDEFINED_EXP_Float = dis.readFloat();
+				}
 
-                if (this.UNDEFINED_EXP_Double == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeDouble(this.UNDEFINED_EXP_Double);
-                }
+				this.DEFINED_EXP_long = dis.readLong();
 
-                // int
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Long = null;
+				} else {
+					this.DEFINED_EXP_Long = dis.readLong();
+				}
 
-                dos.writeInt(this.DEFINED_EXP_int);
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Long = null;
+				} else {
+					this.UNDEFINED_EXP_Long = dis.readLong();
+				}
 
-                // Integer
+				this.DEFINED_EXP_Object = dis.readObject();
 
-                if (this.DEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.DEFINED_EXP_Integer);
-                }
+				this.UNDEFINED_EXP_Object = dis.readObject();
 
-                // Integer
+				this.DEFINED_EXP_short = dis.readShort();
 
-                if (this.UNDEFINED_EXP_Integer == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeInt(this.UNDEFINED_EXP_Integer);
-                }
+				length = dis.readByte();
+				if (length == -1) {
+					this.DEFINED_EXP_Short = null;
+				} else {
+					this.DEFINED_EXP_Short = dis.readShort();
+				}
 
-                // float
+				length = dis.readByte();
+				if (length == -1) {
+					this.UNDEFINED_EXP_Short = null;
+				} else {
+					this.UNDEFINED_EXP_Short = dis.readShort();
+				}
 
-                dos.writeFloat(this.DEFINED_EXP_float);
+				length = dis.readInt();
+				if (length == -1) {
+					this.DEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.DEFINED_EXP_String = new String(byteArray);
+				}
 
-                // Float
+				length = dis.readInt();
+				if (length == -1) {
+					this.UNDEFINED_EXP_String = null;
+				} else {
+					byte[] byteArray = new byte[length];
+					dis.read(byteArray);
+					this.UNDEFINED_EXP_String = new String(byteArray);
+				}
 
-                if (this.DEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.DEFINED_EXP_Float);
-                }
+			} catch (IOException e) {
+				throw new RuntimeException(e);
 
-                // Float
+			} catch (ClassNotFoundException eCNFE) {
+				throw new RuntimeException(eCNFE);
 
-                if (this.UNDEFINED_EXP_Float == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeFloat(this.UNDEFINED_EXP_Float);
-                }
+			}
 
-                // long
+		}
 
-                dos.writeLong(this.DEFINED_EXP_long);
+		public void writeData(ObjectOutputStream dos) {
+			try {
 
-                // Long
+				ObjectOutputStream oos = null;
 
-                if (this.DEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.DEFINED_EXP_Long);
-                }
+				// boolean
 
-                // Long
+				dos.writeBoolean(this.DEFINED_EXP_boolean);
 
-                if (this.UNDEFINED_EXP_Long == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeLong(this.UNDEFINED_EXP_Long);
-                }
+				// Boolean
 
-                // Object
+				if (this.DEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.DEFINED_EXP_Boolean);
+				}
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.DEFINED_EXP_Object);
+				// Boolean
 
-                // Object
+				if (this.UNDEFINED_EXP_Boolean == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeBoolean(this.UNDEFINED_EXP_Boolean);
+				}
 
-                if (oos == null) {
-                    oos = new ObjectOutputStream(dos);
-                }
-                oos.writeObject(this.UNDEFINED_EXP_Object);
+				// byte
 
-                // short
+				dos.writeByte(this.DEFINED_EXP_byte);
 
-                dos.writeShort(this.DEFINED_EXP_short);
+				// Byte
 
-                // Short
+				if (this.DEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.DEFINED_EXP_Byte);
+				}
 
-                if (this.DEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.DEFINED_EXP_Short);
-                }
+				// Byte
 
-                // Short
+				if (this.UNDEFINED_EXP_Byte == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeByte(this.UNDEFINED_EXP_Byte);
+				}
 
-                if (this.UNDEFINED_EXP_Short == null) {
-                    dos.writeByte(-1);
-                } else {
-                    dos.writeByte(0);
-                    dos.writeShort(this.UNDEFINED_EXP_Short);
-                }
+				// byte[]
 
-                // String
+				if (this.DEFINED_EXP_byte_array == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array.length);
+					dos.write(this.DEFINED_EXP_byte_array);
+				}
 
-                if (this.DEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.DEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				// byte[]
 
-                // String
+				if (this.DEFINED_EXP_byte_array_nullable == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeInt(this.DEFINED_EXP_byte_array_nullable.length);
+					dos.write(this.DEFINED_EXP_byte_array_nullable);
+				}
 
-                if (this.UNDEFINED_EXP_String == null) {
-                    dos.writeInt(-1);
-                } else {
-                    byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
-                    dos.writeInt(byteArray.length);
-                    dos.write(byteArray);
-                }
+				// char
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+				dos.writeChar(this.DEFINED_EXP_char);
 
-        }
+				// Character
 
-        public String toString() {
+				if (this.DEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.DEFINED_EXP_Character);
+				}
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(super.toString());
-            sb.append("[");
+				// Character
 
-            sb.append("DEFINED_EXP_boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_boolean));
+				if (this.UNDEFINED_EXP_Character == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeChar(this.UNDEFINED_EXP_Character);
+				}
 
-            sb.append(", ");
+				// java.util.Date
 
-            sb.append("DEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
+				if (this.DEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.DEFINED_EXP_Date.getTime());
+				}
 
-            sb.append(", ");
+				// java.util.Date
 
-            sb.append("UNDEFINED_EXP_Boolean");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
+				if (this.UNDEFINED_EXP_Date == null) {
+					dos.writeInt(-1);
+				} else {
+					dos.writeLong(this.UNDEFINED_EXP_Date.getTime());
+				}
 
-            sb.append(", ");
+				// double
 
-            sb.append("DEFINED_EXP_byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte));
+				dos.writeDouble(this.DEFINED_EXP_double);
 
-            sb.append(", ");
+				// Double
 
-            sb.append("DEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Byte));
+				if (this.DEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.DEFINED_EXP_Double);
+				}
 
-            sb.append(", ");
+				// Double
 
-            sb.append("UNDEFINED_EXP_Byte");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
+				if (this.UNDEFINED_EXP_Double == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeDouble(this.UNDEFINED_EXP_Double);
+				}
 
-            sb.append(", ");
+				// int
 
-            sb.append("DEFINED_EXP_byte_array");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
+				dos.writeInt(this.DEFINED_EXP_int);
 
-            sb.append(", ");
+				// Integer
 
-            sb.append("DEFINED_EXP_byte_array_nullable");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
+				if (this.DEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.DEFINED_EXP_Integer);
+				}
 
-            sb.append(", ");
+				// Integer
 
-            sb.append("DEFINED_EXP_char");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_char));
+				if (this.UNDEFINED_EXP_Integer == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeInt(this.UNDEFINED_EXP_Integer);
+				}
 
-            sb.append(", ");
+				// float
 
-            sb.append("DEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Character));
+				dos.writeFloat(this.DEFINED_EXP_float);
 
-            sb.append(", ");
+				// Float
 
-            sb.append("UNDEFINED_EXP_Character");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
+				if (this.DEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.DEFINED_EXP_Float);
+				}
 
-            sb.append(", ");
+				// Float
 
-            sb.append("DEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Date));
+				if (this.UNDEFINED_EXP_Float == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeFloat(this.UNDEFINED_EXP_Float);
+				}
 
-            sb.append(", ");
+				// long
 
-            sb.append("UNDEFINED_EXP_Date");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
+				dos.writeLong(this.DEFINED_EXP_long);
 
-            sb.append(", ");
+				// Long
 
-            sb.append("DEFINED_EXP_double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_double));
+				if (this.DEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.DEFINED_EXP_Long);
+				}
 
-            sb.append(", ");
+				// Long
 
-            sb.append("DEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Double));
+				if (this.UNDEFINED_EXP_Long == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeLong(this.UNDEFINED_EXP_Long);
+				}
 
-            sb.append(", ");
+				// Object
 
-            sb.append("UNDEFINED_EXP_Double");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
+				dos.writeObject(this.DEFINED_EXP_Object);
 
-            sb.append(", ");
+				// Object
 
-            sb.append("DEFINED_EXP_int");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_int));
+				dos.writeObject(this.UNDEFINED_EXP_Object);
 
-            sb.append(", ");
+				// short
 
-            sb.append("DEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Integer));
+				dos.writeShort(this.DEFINED_EXP_short);
 
-            sb.append(", ");
+				// Short
 
-            sb.append("UNDEFINED_EXP_Integer");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
+				if (this.DEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.DEFINED_EXP_Short);
+				}
 
-            sb.append(", ");
+				// Short
 
-            sb.append("DEFINED_EXP_float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_float));
+				if (this.UNDEFINED_EXP_Short == null) {
+					dos.writeByte(-1);
+				} else {
+					dos.writeByte(0);
+					dos.writeShort(this.UNDEFINED_EXP_Short);
+				}
 
-            sb.append(", ");
+				// String
 
-            sb.append("DEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Float));
+				if (this.DEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.DEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-            sb.append(", ");
+				// String
 
-            sb.append("UNDEFINED_EXP_Float");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
+				if (this.UNDEFINED_EXP_String == null) {
+					dos.writeInt(-1);
+				} else {
+					byte[] byteArray = this.UNDEFINED_EXP_String.getBytes();
+					dos.writeInt(byteArray.length);
+					dos.write(byteArray);
+				}
 
-            sb.append(", ");
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 
-            sb.append("DEFINED_EXP_long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_long));
+		}
 
-            sb.append(", ");
+		public String toString() {
 
-            sb.append("DEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Long));
+			StringBuilder sb = new StringBuilder();
+			sb.append(super.toString());
+			sb.append("[");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_boolean));
 
-            sb.append("UNDEFINED_EXP_Long");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Boolean));
 
-            sb.append("DEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Object));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Boolean");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Boolean));
 
-            sb.append("UNDEFINED_EXP_Object");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte));
 
-            sb.append("DEFINED_EXP_short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_short));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Byte));
 
-            sb.append("DEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_Short));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("UNDEFINED_EXP_Byte");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Byte));
 
-            sb.append("UNDEFINED_EXP_Short");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte_array");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array));
 
-            sb.append("DEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.DEFINED_EXP_String));
+			sb.append(", ");
 
-            sb.append(", ");
+			sb.append("DEFINED_EXP_byte_array_nullable");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_byte_array_nullable));
 
-            sb.append("UNDEFINED_EXP_String");
-            sb.append("=");
-            sb.append(String.valueOf(this.UNDEFINED_EXP_String));
+			sb.append(", ");
 
-            sb.append("]");
+			sb.append("DEFINED_EXP_char");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_char));
 
-            return sb.toString();
-        }
+			sb.append(", ");
 
-        /**
-         * Compare keys
-         */
-        public int compareTo(lookupStruct other) {
+			sb.append("DEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Character));
 
-            int returnValue = -1;
+			sb.append(", ");
 
-            return returnValue;
-        }
+			sb.append("UNDEFINED_EXP_Character");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Character));
 
-        private int checkNullsAndCompare(Object object1, Object object2) {
-            int returnValue = 0;
-            if (object1 instanceof Comparable && object2 instanceof Comparable) {
-                returnValue = ((Comparable) object1).compareTo(object2);
-            } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
-            } else if (object1 == null && object2 != null) {
-                returnValue = 1;
-            } else if (object1 != null && object2 == null) {
-                returnValue = -1;
-            } else {
-                returnValue = 0;
-            }
+			sb.append(", ");
 
-            return returnValue;
-        }
+			sb.append("DEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Date));
 
-        private int compareStrings(String string1, String string2) {
-            // if (this.ignoreCase) {
-            return string1.compareToIgnoreCase(string2);
-            // } else {
-            // return string1.compareTo(string2);
-            // }
-        }
+			sb.append(", ");
 
-    }
+			sb.append("UNDEFINED_EXP_Date");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Date));
 
-    public void tFixedFlowInput_3Process() throws TalendException {
-        try {
+			sb.append(", ");
 
-            lookupStruct lookup = new lookupStruct();
+			sb.append("DEFINED_EXP_double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_double));
 
-            /*******************************************************************
-             * / [tAdvancedHash_lookup begin ] start
-             */
+			sb.append(", ");
 
-            ok_Hash.put("tAdvancedHash_lookup", false);
-            start_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
-            currentComponent = "tAdvancedHash_lookup";
+			sb.append("DEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Double));
 
-            org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE matchingModeEnum_lookup = org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE.ALL_ROWS;
+			sb.append(", ");
 
-            org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct> tHash_Lookup_lookup = new org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct>(
-                    matchingModeEnum_lookup,
-                    context.data_output_dir + "/" + jobName
-                            + "_tMapData_Lookup_lookup_",
-                    new org.talend.designer.components.persistent.IRowCreator() {
-                        public lookupStruct createRowInstance() {
-                            return new lookupStruct();
-                        }
-                    }
+			sb.append("UNDEFINED_EXP_Double");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Double));
 
-            );
+			sb.append(", ");
 
-            tHash_Lookup_lookup.initPut();
+			sb.append("DEFINED_EXP_int");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_int));
 
-            globalMap.put("tHash_Lookup_lookup", tHash_Lookup_lookup);
+			sb.append(", ");
 
-            /**
-             * [tAdvancedHash_lookup begin ] stop
-             */
+			sb.append("DEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Integer));
 
-            /*******************************************************************
-             * / [tFixedFlowInput_3 begin ] start
-             */
+			sb.append(", ");
 
-            ok_Hash.put("tFixedFlowInput_3", false);
-            start_Hash.put("tFixedFlowInput_3", System.currentTimeMillis());
-            currentComponent = "tFixedFlowInput_3";
+			sb.append("UNDEFINED_EXP_Integer");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Integer));
 
-            globalMap.put("NB_LINE", 5);
-            for (int i_tFixedFlowInput_3 = 0; i_tFixedFlowInput_3 < 5; i_tFixedFlowInput_3++) {
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_boolean = true;
+			sb.append("DEFINED_EXP_float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_float));
 
-                lookup.DEFINED_EXP_Boolean = false;
+			sb.append(", ");
 
-                lookup.UNDEFINED_EXP_Boolean = null;
+			sb.append("DEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Float));
 
-                lookup.DEFINED_EXP_byte = Byte.MAX_VALUE;
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_Byte = Byte.MIN_VALUE;
+			sb.append("UNDEFINED_EXP_Float");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Float));
 
-                lookup.UNDEFINED_EXP_Byte = null;
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
-                        Byte.MIN_VALUE };
+			sb.append("DEFINED_EXP_long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_long));
 
-                lookup.DEFINED_EXP_byte_array_nullable = null;
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_char = '0';
+			sb.append("DEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Long));
 
-                lookup.DEFINED_EXP_Character = new Character('9');
+			sb.append(", ");
 
-                lookup.UNDEFINED_EXP_Character = null;
+			sb.append("UNDEFINED_EXP_Long");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Long));
 
-                lookup.DEFINED_EXP_Date = new Date(0);
+			sb.append(", ");
 
-                lookup.UNDEFINED_EXP_Date = null;
+			sb.append("DEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Object));
 
-                lookup.DEFINED_EXP_double = Double.MAX_VALUE;
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_Double = Double.MIN_VALUE;
+			sb.append("UNDEFINED_EXP_Object");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Object));
 
-                lookup.UNDEFINED_EXP_Double = null;
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_int = Integer.MAX_VALUE;
+			sb.append("DEFINED_EXP_short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_short));
 
-                lookup.DEFINED_EXP_Integer = Integer.MIN_VALUE;
+			sb.append(", ");
 
-                lookup.UNDEFINED_EXP_Integer = null;
+			sb.append("DEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_Short));
 
-                lookup.DEFINED_EXP_float = Float.MAX_VALUE;
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_Float = Float.MIN_VALUE;
+			sb.append("UNDEFINED_EXP_Short");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_Short));
 
-                lookup.UNDEFINED_EXP_Float = null;
+			sb.append(", ");
 
-                lookup.DEFINED_EXP_long = Long.MAX_VALUE;
+			sb.append("DEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.DEFINED_EXP_String));
 
-                lookup.DEFINED_EXP_Long = Long.MIN_VALUE;
+			sb.append(", ");
 
-                lookup.UNDEFINED_EXP_Long = null;
+			sb.append("UNDEFINED_EXP_String");
+			sb.append("=");
+			sb.append(String.valueOf(this.UNDEFINED_EXP_String));
 
-                lookup.DEFINED_EXP_Object = null;
+			sb.append("]");
 
-                lookup.UNDEFINED_EXP_Object = tMap_10_persistence_01_types
-                        .getCustomObject();
+			return sb.toString();
+		}
 
-                lookup.DEFINED_EXP_short = Short.MAX_VALUE;
+		/**
+		 * Compare keys
+		 */
+		public int compareTo(lookupStruct other) {
 
-                lookup.DEFINED_EXP_Short = Short.MIN_VALUE;
+			int returnValue = -1;
 
-                lookup.UNDEFINED_EXP_Short = null;
+			return returnValue;
+		}
 
-                lookup.DEFINED_EXP_String = "A";
+		private int checkNullsAndCompare(Object object1, Object object2) {
+			int returnValue = 0;
+			if (object1 instanceof Comparable && object2 instanceof Comparable) {
+				returnValue = ((Comparable) object1).compareTo(object2);
+			} else if (object1 != null && object2 != null) {
+				returnValue = compareStrings(object1.toString(), object2
+						.toString());
+			} else if (object1 == null && object2 != null) {
+				returnValue = 1;
+			} else if (object1 != null && object2 == null) {
+				returnValue = -1;
+			} else {
+				returnValue = 0;
+			}
 
-                lookup.UNDEFINED_EXP_String = null;
+			return returnValue;
+		}
 
-                lookup.DEFINED_EXP_boolean = true;
+		private int compareStrings(String string1, String string2) {
+			// if (this.ignoreCase) {
+			return string1.compareToIgnoreCase(string2);
+			// } else {
+			// return string1.compareTo(string2);
+			// }
+		}
 
-                lookup.DEFINED_EXP_Boolean = false;
+	}
 
-                lookup.UNDEFINED_EXP_Boolean = null;
+	public void tFixedFlowInput_3Process() throws TalendException {
+		try {
 
-                lookup.DEFINED_EXP_byte = Byte.MAX_VALUE;
+			lookupStruct lookup = new lookupStruct();
 
-                lookup.DEFINED_EXP_Byte = Byte.MIN_VALUE;
+			/*******************************************************************
+			 * / [tAdvancedHash_lookup begin ] start
+			 */
 
-                lookup.UNDEFINED_EXP_Byte = null;
+			ok_Hash.put("tAdvancedHash_lookup", false);
+			start_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
+			currentComponent = "tAdvancedHash_lookup";
 
-                lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
-                        Byte.MIN_VALUE };
+			org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE matchingModeEnum_lookup = org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE.ALL_ROWS;
 
-                lookup.DEFINED_EXP_byte_array_nullable = null;
+			org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct> tHash_Lookup_lookup = new org.talend.designer.components.persistent.PersistentLookupManager<lookupStruct>(
+					matchingModeEnum_lookup,
+					context.data_output_dir + "/" + jobName
+							+ "_tMapData_Lookup_lookup_",
+					new org.talend.designer.components.persistent.IRowCreator() {
+						public lookupStruct createRowInstance() {
+							return new lookupStruct();
+						}
+					}
 
-                lookup.DEFINED_EXP_char = '0';
+			);
 
-                lookup.DEFINED_EXP_Character = new Character('9');
+			tHash_Lookup_lookup.initPut();
 
-                lookup.UNDEFINED_EXP_Character = null;
+			globalMap.put("tHash_Lookup_lookup", tHash_Lookup_lookup);
 
-                lookup.DEFINED_EXP_Date = new Date(0);
+			/**
+			 * [tAdvancedHash_lookup begin ] stop
+			 */
 
-                lookup.UNDEFINED_EXP_Date = null;
+			/*******************************************************************
+			 * / [tFixedFlowInput_3 begin ] start
+			 */
 
-                lookup.DEFINED_EXP_double = Double.MAX_VALUE;
+			ok_Hash.put("tFixedFlowInput_3", false);
+			start_Hash.put("tFixedFlowInput_3", System.currentTimeMillis());
+			currentComponent = "tFixedFlowInput_3";
 
-                lookup.DEFINED_EXP_Double = Double.MIN_VALUE;
+			globalMap.put("NB_LINE", 5);
+			for (int i_tFixedFlowInput_3 = 0; i_tFixedFlowInput_3 < 5; i_tFixedFlowInput_3++) {
 
-                lookup.UNDEFINED_EXP_Double = null;
+				lookup.DEFINED_EXP_boolean = true;
 
-                lookup.DEFINED_EXP_int = Integer.MAX_VALUE;
+				lookup.DEFINED_EXP_Boolean = false;
 
-                lookup.DEFINED_EXP_Integer = Integer.MIN_VALUE;
+				lookup.UNDEFINED_EXP_Boolean = null;
 
-                lookup.UNDEFINED_EXP_Integer = null;
+				lookup.DEFINED_EXP_byte = Byte.MAX_VALUE;
 
-                lookup.DEFINED_EXP_float = Float.MAX_VALUE;
+				lookup.DEFINED_EXP_Byte = Byte.MIN_VALUE;
 
-                lookup.DEFINED_EXP_Float = Float.MIN_VALUE;
+				lookup.UNDEFINED_EXP_Byte = null;
 
-                lookup.UNDEFINED_EXP_Float = null;
+				lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
+						Byte.MIN_VALUE };
 
-                lookup.DEFINED_EXP_long = Long.MAX_VALUE;
+				lookup.DEFINED_EXP_byte_array_nullable = null;
 
-                lookup.DEFINED_EXP_Long = Long.MIN_VALUE;
+				lookup.DEFINED_EXP_char = '0';
 
-                lookup.UNDEFINED_EXP_Long = null;
+				lookup.DEFINED_EXP_Character = new Character('9');
 
-                lookup.DEFINED_EXP_Object = null;
+				lookup.UNDEFINED_EXP_Character = null;
 
-                lookup.UNDEFINED_EXP_Object = tMap_10_persistence_01_types
-                        .getCustomObject();
+				lookup.DEFINED_EXP_Date = new Date(0);
 
-                lookup.DEFINED_EXP_short = Short.MAX_VALUE;
+				lookup.UNDEFINED_EXP_Date = null;
 
-                lookup.DEFINED_EXP_Short = Short.MIN_VALUE;
+				lookup.DEFINED_EXP_double = Double.MAX_VALUE;
 
-                lookup.UNDEFINED_EXP_Short = null;
+				lookup.DEFINED_EXP_Double = Double.MIN_VALUE;
 
-                lookup.DEFINED_EXP_String = "A";
+				lookup.UNDEFINED_EXP_Double = null;
 
-                lookup.UNDEFINED_EXP_String = null;
+				lookup.DEFINED_EXP_int = Integer.MAX_VALUE;
 
-                /**
-                 * [tFixedFlowInput_3 begin ] stop
-                 */
-                /***************************************************************
-                 * / [tFixedFlowInput_3 main ] start
-                 */
+				lookup.DEFINED_EXP_Integer = Integer.MIN_VALUE;
 
-                currentComponent = "tFixedFlowInput_3";
+				lookup.UNDEFINED_EXP_Integer = null;
 
-                /**
-                 * [tFixedFlowInput_3 main ] stop
-                 */
-                /***************************************************************
-                 * / [tAdvancedHash_lookup main ] start
-                 */
+				lookup.DEFINED_EXP_float = Float.MAX_VALUE;
 
-                currentComponent = "tAdvancedHash_lookup";
+				lookup.DEFINED_EXP_Float = Float.MIN_VALUE;
 
-                lookupStruct lookup_HashRow = tHash_Lookup_lookup
-                        .getNextFreeRow();
+				lookup.UNDEFINED_EXP_Float = null;
 
-                lookup_HashRow.DEFINED_EXP_boolean = lookup.DEFINED_EXP_boolean;
-                lookup_HashRow.DEFINED_EXP_Boolean = lookup.DEFINED_EXP_Boolean;
-                lookup_HashRow.UNDEFINED_EXP_Boolean = lookup.UNDEFINED_EXP_Boolean;
-                lookup_HashRow.DEFINED_EXP_byte = lookup.DEFINED_EXP_byte;
-                lookup_HashRow.DEFINED_EXP_Byte = lookup.DEFINED_EXP_Byte;
-                lookup_HashRow.UNDEFINED_EXP_Byte = lookup.UNDEFINED_EXP_Byte;
-                lookup_HashRow.DEFINED_EXP_byte_array = lookup.DEFINED_EXP_byte_array;
-                lookup_HashRow.DEFINED_EXP_byte_array_nullable = lookup.DEFINED_EXP_byte_array_nullable;
-                lookup_HashRow.DEFINED_EXP_char = lookup.DEFINED_EXP_char;
-                lookup_HashRow.DEFINED_EXP_Character = lookup.DEFINED_EXP_Character;
-                lookup_HashRow.UNDEFINED_EXP_Character = lookup.UNDEFINED_EXP_Character;
-                lookup_HashRow.DEFINED_EXP_Date = lookup.DEFINED_EXP_Date;
-                lookup_HashRow.UNDEFINED_EXP_Date = lookup.UNDEFINED_EXP_Date;
-                lookup_HashRow.DEFINED_EXP_double = lookup.DEFINED_EXP_double;
-                lookup_HashRow.DEFINED_EXP_Double = lookup.DEFINED_EXP_Double;
-                lookup_HashRow.UNDEFINED_EXP_Double = lookup.UNDEFINED_EXP_Double;
-                lookup_HashRow.DEFINED_EXP_int = lookup.DEFINED_EXP_int;
-                lookup_HashRow.DEFINED_EXP_Integer = lookup.DEFINED_EXP_Integer;
-                lookup_HashRow.UNDEFINED_EXP_Integer = lookup.UNDEFINED_EXP_Integer;
-                lookup_HashRow.DEFINED_EXP_float = lookup.DEFINED_EXP_float;
-                lookup_HashRow.DEFINED_EXP_Float = lookup.DEFINED_EXP_Float;
-                lookup_HashRow.UNDEFINED_EXP_Float = lookup.UNDEFINED_EXP_Float;
-                lookup_HashRow.DEFINED_EXP_long = lookup.DEFINED_EXP_long;
-                lookup_HashRow.DEFINED_EXP_Long = lookup.DEFINED_EXP_Long;
-                lookup_HashRow.UNDEFINED_EXP_Long = lookup.UNDEFINED_EXP_Long;
-                lookup_HashRow.DEFINED_EXP_Object = lookup.DEFINED_EXP_Object;
-                lookup_HashRow.UNDEFINED_EXP_Object = lookup.UNDEFINED_EXP_Object;
-                lookup_HashRow.DEFINED_EXP_short = lookup.DEFINED_EXP_short;
-                lookup_HashRow.DEFINED_EXP_Short = lookup.DEFINED_EXP_Short;
-                lookup_HashRow.UNDEFINED_EXP_Short = lookup.UNDEFINED_EXP_Short;
-                lookup_HashRow.DEFINED_EXP_String = lookup.DEFINED_EXP_String;
-                lookup_HashRow.UNDEFINED_EXP_String = lookup.UNDEFINED_EXP_String;
-                tHash_Lookup_lookup.put(lookup_HashRow);
+				lookup.DEFINED_EXP_long = Long.MAX_VALUE;
 
-                /**
-                 * [tAdvancedHash_lookup main ] stop
-                 */
+				lookup.DEFINED_EXP_Long = Long.MIN_VALUE;
 
-                /***************************************************************
-                 * / [tFixedFlowInput_3 end ] start
-                 */
+				lookup.UNDEFINED_EXP_Long = null;
 
-                currentComponent = "tFixedFlowInput_3";
+				lookup.DEFINED_EXP_Object = routine_tMap_10_persistence_01_types
+                .getCustomObject();
 
-            }
+				lookup.UNDEFINED_EXP_Object = routine_tMap_10_persistence_01_types
+						.getCustomObject();
 
-            ok_Hash.put("tFixedFlowInput_3", true);
-            end_Hash.put("tFixedFlowInput_3", System.currentTimeMillis());
+				lookup.DEFINED_EXP_short = Short.MAX_VALUE;
 
-            /**
-             * [tFixedFlowInput_3 end ] stop
-             */
-            /*******************************************************************
-             * / [tAdvancedHash_lookup end ] start
-             */
+				lookup.DEFINED_EXP_Short = Short.MIN_VALUE;
 
-            currentComponent = "tAdvancedHash_lookup";
+				lookup.UNDEFINED_EXP_Short = null;
 
-            tHash_Lookup_lookup.endPut();
+				lookup.DEFINED_EXP_String = "A";
 
-            ok_Hash.put("tAdvancedHash_lookup", true);
-            end_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
+				lookup.UNDEFINED_EXP_String = null;
 
-            /**
-             * [tAdvancedHash_lookup end ] stop
-             */
+				lookup.DEFINED_EXP_boolean = true;
 
-        } catch (Exception e) {
+				lookup.DEFINED_EXP_Boolean = false;
 
-            throw new TalendException(this, e);
-        }
+				lookup.UNDEFINED_EXP_Boolean = null;
 
-    }
+				lookup.DEFINED_EXP_byte = Byte.MAX_VALUE;
 
-    public static boolean watch = false;
-    public static int portStats = 3334;
-    public static int portTraces = 4334;
-    public static String clientHost;
-    public static String defaultClientHost = "localhost";
-    public static String contextStr = "production";
-    public static String pid = "0";
-    public static String rootPid = null;
-    public static String fatherPid = null;
-    public static long startTime = 0;
+				lookup.DEFINED_EXP_Byte = Byte.MIN_VALUE;
 
-    private static java.util.Properties context_param = new java.util.Properties();
+				lookup.UNDEFINED_EXP_Byte = null;
 
-    public static String status = "";
+				lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
+						Byte.MIN_VALUE };
 
-    public static void main(String[] args) {
+				lookup.DEFINED_EXP_byte_array_nullable = null;
 
-        int exitCode = runJobInTOS(args);
+				lookup.DEFINED_EXP_char = '0';
 
-        globalBuffer.clear();
+				lookup.DEFINED_EXP_Character = new Character('9');
 
-        System.exit(exitCode);
-    }
+				lookup.UNDEFINED_EXP_Character = null;
 
-    public static String[][] runJob(String[] args) {
+				lookup.DEFINED_EXP_Date = new Date(0);
 
-        int exitCode = runJobInTOS(args);
-        String[][] bufferValue = (String[][]) globalBuffer
-                .toArray(new String[globalBuffer.size()][]);
+				lookup.UNDEFINED_EXP_Date = null;
 
-        globalBuffer.clear();
+				lookup.DEFINED_EXP_double = Double.MAX_VALUE;
 
-        return bufferValue;
-    }
+				lookup.DEFINED_EXP_Double = Double.MIN_VALUE;
 
-    public static synchronized int runJobInTOS(String[] args) {
+				lookup.UNDEFINED_EXP_Double = null;
 
-        init();
+				lookup.DEFINED_EXP_int = Integer.MAX_VALUE;
 
-        String lastStr = "";
-        for (String arg : args) {
-            if (arg.equalsIgnoreCase("--context_param")) {
-                lastStr = arg;
-            } else if (lastStr.equals("")) {
-                evalParam(arg);
-            } else {
-                evalParam(lastStr + " " + arg);
-                lastStr = "";
-            }
-        }
+				lookup.DEFINED_EXP_Integer = Integer.MIN_VALUE;
 
-        if (clientHost == null) {
-            clientHost = defaultClientHost;
-        }
+				lookup.UNDEFINED_EXP_Integer = null;
 
-        pid = TalendString.getAsciiRandomString(6);
-        if (rootPid == null) {
-            rootPid = pid;
-        }
-        if (fatherPid == null) {
-            fatherPid = pid;
-        }
+				lookup.DEFINED_EXP_float = Float.MAX_VALUE;
 
-        try {
-            java.io.InputStream inContext = tMap_10_persistence_01_types_CHILD.class
-                    .getClassLoader()
-                    .getResourceAsStream(
-                            "java_project_8/tmap_10_persistence_01_types_child_0_1/contexts/Default.properties");
-            if (inContext != null) {
-                defaultProps.load(inContext);
-                inContext.close();
-                context = new ContextProperties(defaultProps);
-            }
+				lookup.DEFINED_EXP_Float = Float.MIN_VALUE;
 
-            if (contextStr.compareTo("Default") != 0) {
-                inContext = tMap_10_persistence_01_types_CHILD.class
-                        .getClassLoader().getResourceAsStream(
-                                "java_project_8/tmap_10_persistence_01_types_child_0_1/contexts/"
-                                        + contextStr + ".properties");
-                if (inContext != null) {
-                    context.load(inContext);
-                    inContext.close();
-                }
-            }
+				lookup.UNDEFINED_EXP_Float = null;
 
-            if (!context_param.isEmpty()) {
-                context.putAll(context_param);
-            }
+				lookup.DEFINED_EXP_long = Long.MAX_VALUE;
 
-            context.param_file_path = (String) context
-                    .getProperty("param_file_path");
+				lookup.DEFINED_EXP_Long = Long.MIN_VALUE;
 
-            context.data_dir = (String) context.getProperty("data_dir");
+				lookup.UNDEFINED_EXP_Long = null;
 
-            context.data_output_dir = (String) context
-                    .getProperty("data_output_dir");
+				lookup.DEFINED_EXP_Object = routine_tMap_10_persistence_01_types
+                .getCustomObject();
 
-            context.result_host = (String) context.getProperty("result_host");
+				lookup.UNDEFINED_EXP_Object = routine_tMap_10_persistence_01_types
+						.getCustomObject();
 
-            context.result_port = (String) context.getProperty("result_port");
+				lookup.DEFINED_EXP_short = Short.MAX_VALUE;
 
-            context.result_database = (String) context
-                    .getProperty("result_database");
+				lookup.DEFINED_EXP_Short = Short.MIN_VALUE;
 
-            context.result_username = (String) context
-                    .getProperty("result_username");
+				lookup.UNDEFINED_EXP_Short = null;
 
-            context.result_password = (String) context
-                    .getProperty("result_password");
+				lookup.DEFINED_EXP_String = "A";
 
-            context.result_table = (String) context.getProperty("result_table");
+				lookup.UNDEFINED_EXP_String = null;
 
-            context.mysql_host = (String) context.getProperty("mysql_host");
+				/**
+				 * [tFixedFlowInput_3 begin ] stop
+				 */
+				/***************************************************************
+				 * / [tFixedFlowInput_3 main ] start
+				 */
 
-            context.mysql_port = (String) context.getProperty("mysql_port");
+				currentComponent = "tFixedFlowInput_3";
 
-            context.mysql_schema = (String) context.getProperty("mysql_schema");
+				/**
+				 * [tFixedFlowInput_3 main ] stop
+				 */
+				/***************************************************************
+				 * / [tAdvancedHash_lookup main ] start
+				 */
 
-            context.mysql_username = (String) context
-                    .getProperty("mysql_username");
+				currentComponent = "tAdvancedHash_lookup";
 
-            context.mysql_password = (String) context
-                    .getProperty("mysql_password");
+				lookupStruct lookup_HashRow = tHash_Lookup_lookup
+						.getNextFreeRow();
 
-            context.current_job_dir = (String) context
-                    .getProperty("current_job_dir");
+				lookup_HashRow.DEFINED_EXP_boolean = lookup.DEFINED_EXP_boolean;
+				lookup_HashRow.DEFINED_EXP_Boolean = lookup.DEFINED_EXP_Boolean;
+				lookup_HashRow.UNDEFINED_EXP_Boolean = lookup.UNDEFINED_EXP_Boolean;
+				lookup_HashRow.DEFINED_EXP_byte = lookup.DEFINED_EXP_byte;
+				lookup_HashRow.DEFINED_EXP_Byte = lookup.DEFINED_EXP_Byte;
+				lookup_HashRow.UNDEFINED_EXP_Byte = lookup.UNDEFINED_EXP_Byte;
+				lookup_HashRow.DEFINED_EXP_byte_array = lookup.DEFINED_EXP_byte_array;
+				lookup_HashRow.DEFINED_EXP_byte_array_nullable = lookup.DEFINED_EXP_byte_array_nullable;
+				lookup_HashRow.DEFINED_EXP_char = lookup.DEFINED_EXP_char;
+				lookup_HashRow.DEFINED_EXP_Character = lookup.DEFINED_EXP_Character;
+				lookup_HashRow.UNDEFINED_EXP_Character = lookup.UNDEFINED_EXP_Character;
+				lookup_HashRow.DEFINED_EXP_Date = lookup.DEFINED_EXP_Date;
+				lookup_HashRow.UNDEFINED_EXP_Date = lookup.UNDEFINED_EXP_Date;
+				lookup_HashRow.DEFINED_EXP_double = lookup.DEFINED_EXP_double;
+				lookup_HashRow.DEFINED_EXP_Double = lookup.DEFINED_EXP_Double;
+				lookup_HashRow.UNDEFINED_EXP_Double = lookup.UNDEFINED_EXP_Double;
+				lookup_HashRow.DEFINED_EXP_int = lookup.DEFINED_EXP_int;
+				lookup_HashRow.DEFINED_EXP_Integer = lookup.DEFINED_EXP_Integer;
+				lookup_HashRow.UNDEFINED_EXP_Integer = lookup.UNDEFINED_EXP_Integer;
+				lookup_HashRow.DEFINED_EXP_float = lookup.DEFINED_EXP_float;
+				lookup_HashRow.DEFINED_EXP_Float = lookup.DEFINED_EXP_Float;
+				lookup_HashRow.UNDEFINED_EXP_Float = lookup.UNDEFINED_EXP_Float;
+				lookup_HashRow.DEFINED_EXP_long = lookup.DEFINED_EXP_long;
+				lookup_HashRow.DEFINED_EXP_Long = lookup.DEFINED_EXP_Long;
+				lookup_HashRow.UNDEFINED_EXP_Long = lookup.UNDEFINED_EXP_Long;
+				lookup_HashRow.DEFINED_EXP_Object = lookup.DEFINED_EXP_Object;
+				lookup_HashRow.UNDEFINED_EXP_Object = lookup.UNDEFINED_EXP_Object;
+				lookup_HashRow.DEFINED_EXP_short = lookup.DEFINED_EXP_short;
+				lookup_HashRow.DEFINED_EXP_Short = lookup.DEFINED_EXP_Short;
+				lookup_HashRow.UNDEFINED_EXP_Short = lookup.UNDEFINED_EXP_Short;
+				lookup_HashRow.DEFINED_EXP_String = lookup.DEFINED_EXP_String;
+				lookup_HashRow.UNDEFINED_EXP_String = lookup.UNDEFINED_EXP_String;
+				tHash_Lookup_lookup.put(lookup_HashRow);
 
-            context.indexMain = (String) context.getProperty("indexMain");
+				/**
+				 * [tAdvancedHash_lookup main ] stop
+				 */
 
-            context.indexLookup = (String) context.getProperty("indexLookup");
+				/***************************************************************
+				 * / [tFixedFlowInput_3 end ] start
+				 */
 
-            context.bufferSizeValue = (String) context
-                    .getProperty("bufferSizeValue");
+				currentComponent = "tFixedFlowInput_3";
 
-        } catch (java.io.IOException ie) {
-            System.err.println("Could not load context " + contextStr);
-            ie.printStackTrace();
-        }
+			}
 
-        long startUsedMemory = Runtime.getRuntime().totalMemory()
-                - Runtime.getRuntime().freeMemory();
-        long endUsedMemory = 0;
-        long end = 0;
+			ok_Hash.put("tFixedFlowInput_3", true);
+			end_Hash.put("tFixedFlowInput_3", System.currentTimeMillis());
 
-        startTime = System.currentTimeMillis();
-        final tMap_10_persistence_01_types_CHILD tMap_10_persistence_01_types_CHILDClass = new tMap_10_persistence_01_types_CHILD();
-        try {
-            errorCode = null;
-            tMap_10_persistence_01_types_CHILDClass
-                    .tFileInputDelimited_2Process();
-            status = "end";
-        } catch (TalendException e_tFileInputDelimited_2) {
-            status = "failure";
-            e_tFileInputDelimited_2.printStackTrace();
+			/**
+			 * [tFixedFlowInput_3 end ] stop
+			 */
+			/*******************************************************************
+			 * / [tAdvancedHash_lookup end ] start
+			 */
 
-        } finally {
-        }
-        end = System.currentTimeMillis();
+			currentComponent = "tAdvancedHash_lookup";
 
-        if (watch) {
-            System.out.println((end - startTime) + " milliseconds");
-        }
+			tHash_Lookup_lookup.endPut();
 
-        endUsedMemory = Runtime.getRuntime().totalMemory()
-                - Runtime.getRuntime().freeMemory();
-        if (false) {
-            System.out
-                    .println((endUsedMemory - startUsedMemory)
-                            + " bytes memory increase when running : tMap_10_persistence_01_types_CHILD");
-        }
+			ok_Hash.put("tAdvancedHash_lookup", true);
+			end_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
 
-        reset();
+			/**
+			 * [tAdvancedHash_lookup end ] stop
+			 */
 
-        if (errorCode == null) {
-            return status != null && status.equals("failure") ? 1 : 0;
-        } else {
-            return errorCode.intValue();
-        }
-    }
+		} catch (Exception e) {
 
-    public static void evalParam(String arg) {
-        if (arg.startsWith("--watch")) {
-            watch = true;
-        } else if (arg.startsWith("--stat_port=")) {
-            portStats = Integer.parseInt(arg.substring(12));
-        } else if (arg.startsWith("--trace_port=")) {
-            portTraces = Integer.parseInt(arg.substring(13));
-        } else if (arg.startsWith("--client_host=")) {
-            clientHost = arg.substring(14);
-        } else if (arg.startsWith("--context=")) {
-            contextStr = arg.substring(10);
-        } else if (arg.startsWith("--father_pid=")) {
-            fatherPid = arg.substring(13);
-        } else if (arg.startsWith("--root_pid=")) {
-            rootPid = arg.substring(11);
-        } else if (arg.startsWith("--context_param")) {
-            String keyValue = arg.substring(16);
-            int index = -1;
-            if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
-                context_param.put(keyValue.substring(0, index), keyValue
-                        .substring(index + 1));
-            }
-        }
+			throw new TalendException(this, e);
+		}
 
-    }
+	}
 
-    private static void init() {
-        errorCode = null;
-        status = "";
-    }
+	public static boolean watch = false;
+	public static int portStats = 3334;
+	public static int portTraces = 4334;
+	public static String clientHost;
+	public static String defaultClientHost = "localhost";
+	public static String contextStr = "production";
+	public static String pid = "0";
+	public static String rootPid = null;
+	public static String fatherPid = null;
+	public static long startTime = 0;
 
-    private static void reset() {
+	private static java.util.Properties context_param = new java.util.Properties();
 
-        defaultProps.clear();
-        context.clear();
-        currentComponent = "";
-        start_Hash.clear();
-        end_Hash.clear();
-        ok_Hash.clear();
-        globalMap.clear();
-        watch = false;
-        portStats = 3334;
-        portTraces = 4334;
-        clientHost = null;
-        defaultClientHost = "localhost";
-        contextStr = "production";
-        pid = "0";
-        rootPid = null;
-        fatherPid = null;
-        context_param.clear();
-        System.gc();
-    }
+	public static String status = "";
+
+	public static void main(String[] args) {
+
+		int exitCode = runJobInTOS(args);
+
+		globalBuffer.clear();
+
+		System.exit(exitCode);
+	}
+
+	public static String[][] runJob(String[] args) {
+
+		int exitCode = runJobInTOS(args);
+		String[][] bufferValue = (String[][]) globalBuffer
+				.toArray(new String[globalBuffer.size()][]);
+
+		globalBuffer.clear();
+
+		return bufferValue;
+	}
+
+	public static synchronized int runJobInTOS(String[] args) {
+
+		init();
+
+		String lastStr = "";
+		for (String arg : args) {
+			if (arg.equalsIgnoreCase("--context_param")) {
+				lastStr = arg;
+			} else if (lastStr.equals("")) {
+				evalParam(arg);
+			} else {
+				evalParam(lastStr + " " + arg);
+				lastStr = "";
+			}
+		}
+
+		if (clientHost == null) {
+			clientHost = defaultClientHost;
+		}
+
+		pid = TalendString.getAsciiRandomString(6);
+		if (rootPid == null) {
+			rootPid = pid;
+		}
+		if (fatherPid == null) {
+			fatherPid = pid;
+		}
+
+		try {
+			java.io.InputStream inContext = tMap_10_persistence_01_types_CHILD.class
+					.getClassLoader()
+					.getResourceAsStream(
+							"java_project_8/tmap_10_persistence_01_types_child_0_1/contexts/Default.properties");
+			if (inContext != null) {
+				defaultProps.load(inContext);
+				inContext.close();
+				context = new ContextProperties(defaultProps);
+			}
+
+			if (contextStr.compareTo("Default") != 0) {
+				inContext = tMap_10_persistence_01_types_CHILD.class
+						.getClassLoader().getResourceAsStream(
+								"java_project_8/tmap_10_persistence_01_types_child_0_1/contexts/"
+										+ contextStr + ".properties");
+				if (inContext != null) {
+					context.load(inContext);
+					inContext.close();
+				}
+			}
+
+			if (!context_param.isEmpty()) {
+				context.putAll(context_param);
+			}
+
+			context.param_file_path = (String) context
+					.getProperty("param_file_path");
+
+			context.data_dir = (String) context.getProperty("data_dir");
+
+			context.data_output_dir = (String) context
+					.getProperty("data_output_dir");
+
+			context.result_host = (String) context.getProperty("result_host");
+
+			context.result_port = (String) context.getProperty("result_port");
+
+			context.result_database = (String) context
+					.getProperty("result_database");
+
+			context.result_username = (String) context
+					.getProperty("result_username");
+
+			context.result_password = (String) context
+					.getProperty("result_password");
+
+			context.result_table = (String) context.getProperty("result_table");
+
+			context.mysql_host = (String) context.getProperty("mysql_host");
+
+			context.mysql_port = (String) context.getProperty("mysql_port");
+
+			context.mysql_schema = (String) context.getProperty("mysql_schema");
+
+			context.mysql_username = (String) context
+					.getProperty("mysql_username");
+
+			context.mysql_password = (String) context
+					.getProperty("mysql_password");
+
+			context.current_job_dir = (String) context
+					.getProperty("current_job_dir");
+
+			context.indexMain = (String) context.getProperty("indexMain");
+
+			context.indexLookup = (String) context.getProperty("indexLookup");
+
+			context.bufferSizeValue = (String) context
+					.getProperty("bufferSizeValue");
+
+		} catch (java.io.IOException ie) {
+			System.err.println("Could not load context " + contextStr);
+			ie.printStackTrace();
+		}
+
+		long startUsedMemory = Runtime.getRuntime().totalMemory()
+				- Runtime.getRuntime().freeMemory();
+		long endUsedMemory = 0;
+		long end = 0;
+
+		startTime = System.currentTimeMillis();
+		final tMap_10_persistence_01_types_CHILD tMap_10_persistence_01_types_CHILDClass = new tMap_10_persistence_01_types_CHILD();
+		try {
+			errorCode = null;
+			tMap_10_persistence_01_types_CHILDClass
+					.tFileInputDelimited_2Process();
+			status = "end";
+		} catch (TalendException e_tFileInputDelimited_2) {
+			status = "failure";
+			e_tFileInputDelimited_2.printStackTrace();
+
+		} finally {
+		}
+		end = System.currentTimeMillis();
+
+		if (watch) {
+			System.out.println((end - startTime) + " milliseconds");
+		}
+
+		endUsedMemory = Runtime.getRuntime().totalMemory()
+				- Runtime.getRuntime().freeMemory();
+		if (false) {
+			System.out
+					.println((endUsedMemory - startUsedMemory)
+							+ " bytes memory increase when running : tMap_10_persistence_01_types_CHILD");
+		}
+
+		reset();
+
+		if (errorCode == null) {
+			return status != null && status.equals("failure") ? 1 : 0;
+		} else {
+			return errorCode.intValue();
+		}
+	}
+
+	public static void evalParam(String arg) {
+		if (arg.startsWith("--watch")) {
+			watch = true;
+		} else if (arg.startsWith("--stat_port=")) {
+			portStats = Integer.parseInt(arg.substring(12));
+		} else if (arg.startsWith("--trace_port=")) {
+			portTraces = Integer.parseInt(arg.substring(13));
+		} else if (arg.startsWith("--client_host=")) {
+			clientHost = arg.substring(14);
+		} else if (arg.startsWith("--context=")) {
+			contextStr = arg.substring(10);
+		} else if (arg.startsWith("--father_pid=")) {
+			fatherPid = arg.substring(13);
+		} else if (arg.startsWith("--root_pid=")) {
+			rootPid = arg.substring(11);
+		} else if (arg.startsWith("--context_param")) {
+			String keyValue = arg.substring(16);
+			int index = -1;
+			if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
+				context_param.put(keyValue.substring(0, index), keyValue
+						.substring(index + 1));
+			}
+		}
+
+	}
+
+	private static void init() {
+		errorCode = null;
+		status = "";
+	}
+
+	private static void reset() {
+
+		defaultProps.clear();
+		context.clear();
+		currentComponent = "";
+		start_Hash.clear();
+		end_Hash.clear();
+		ok_Hash.clear();
+		globalMap.clear();
+		watch = false;
+		portStats = 3334;
+		portTraces = 4334;
+		clientHost = null;
+		defaultClientHost = "localhost";
+		contextStr = "production";
+		pid = "0";
+		rootPid = null;
+		fatherPid = null;
+		context_param.clear();
+		System.gc();
+	}
 }
 /*******************************************************************************
- * 293605 characters generated by Talend OpenStudio on the 7 mai 2008 18:30:13
+ * 293637 characters generated by Talend OpenStudio on the 9 mai 2008 11:21:46
  * CEST
  ******************************************************************************/

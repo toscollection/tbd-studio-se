@@ -24,6 +24,7 @@ package org.talend.designer.components.persistent;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -171,25 +172,31 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
         Arrays.sort(buffer, 0, bufferBeanIndex);
         File keysDataFile = new File(buildKeysFilePath(fileIndex));
         File valuesDataFile = new File(buildValuesFilePath(fileIndex));
-        DataOutputStream keysDataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(keysDataFile)));
+        ObjectOutputStream keysDataOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(keysDataFile)));
         DataOutputStream valuesDataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(
                 valuesDataFile)));
+        ObjectOutputStream valuesObjectOutputStream = new ObjectOutputStream(valuesDataOutputStream);
 
         // System.out.println("Writing LOOKUP buffer " + fileIndex + "... ");
 
+        int previousSize = valuesDataOutputStream.size();
+        int writtenValuesDataSize = 0;
+        int newSize = 0;
         for (int i = 0; i < bufferBeanIndex; i++) {
 
             IPersistableLookupRow<B> curBean = buffer[i];
 
-            int writtenValuesDataSize = curBean.writeValuesData(valuesDataOutputStream);
+            curBean.writeValuesData(valuesDataOutputStream, valuesObjectOutputStream);
+            newSize = valuesDataOutputStream.size();
+            writtenValuesDataSize = newSize - previousSize;
             curBean.writeKeysData(keysDataOutputStream);
             keysDataOutputStream.writeInt(writtenValuesDataSize);
-
+            previousSize = newSize; 
             // System.out.println(curBean);
         }
         // System.out.println("Write ended LOOKUP buffer " + fileIndex);
         keysDataOutputStream.close();
-        valuesDataOutputStream.close();
+        valuesObjectOutputStream.close();
         fileIndex++;
     }
 

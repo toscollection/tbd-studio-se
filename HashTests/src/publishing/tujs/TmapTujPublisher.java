@@ -1,5 +1,6 @@
 package publishing.tujs;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -33,6 +34,7 @@ public class TmapTujPublisher {
         
         String sourceFilesDir = "/home/amaumont/data/dev/projets/Talend/TUJV/files/tMap";
         String sourceJobsDir = "/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product3/JAVA_PROJECT_8/process/components/tMap";
+        String sourceRoutineDir = "/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product3/JAVA_PROJECT_8/code/routines";
 
         String targetDir = "/home/amaumont/data/dev/eclipse/workspaces/workspace-talend-linux3/tuj/java/";
 
@@ -42,6 +44,7 @@ public class TmapTujPublisher {
         "03", "04", "05", "06", "07", 
         "08",
         "09",
+        "10",
         };
 
         File sourceJobsDirFile = new File(sourceJobsDir);
@@ -86,8 +89,19 @@ public class TmapTujPublisher {
                                 
                                 System.out.println("Job '" + baseName + "': ");
                                 
-                                copyFile(itemFilePath, targetDir + baseName + "/process/components/tMap/" + itemName);
-                                copyFile(propertyFilePath, targetDir + baseName + "/process/components/tMap/" + propertyName);
+                                String targetDirectoryPath = targetDir + baseName + "/process/components/tMap/";
+                                
+                                File targetDirectoryItems = new File(targetDirectoryPath);
+                                
+                                File[] listFilesItemsToRemove = targetDirectoryItems.listFiles();
+                                for (File fileToRemove : listFilesItemsToRemove) {
+                                    if(fileToRemove.isFile()) {
+                                        fileToRemove.delete();
+                                    }
+                                }
+                                
+                                copyFile(itemFilePath, targetDirectoryPath + itemName);
+                                copyFile(propertyFilePath, targetDirectoryPath + propertyName);
 
                                 if(isChild) {
                                     continue;
@@ -97,8 +111,23 @@ public class TmapTujPublisher {
 
                                 if(copyData) {
                                     
+                                    String routineFileName = "routine_" + baseName + "_0.1.item";
+                                    String routinePropertiesFileName = "routine_" + baseName + "_0.1.properties";
+                                    
+                                    String routineItem = sourceRoutineDir + "/" + routineFileName;
+                                    String routineProperties = sourceRoutineDir + "/" + routinePropertiesFileName;
+                                    String targetRoutineFolder = targetDir + baseName + "/code/routines/";
+                                    
+                                    File routineFile = new File(routineItem);
+                                    
+                                    if(routineFile.isFile()) {
+                                        copyFile(routineItem, targetRoutineFolder + routineFileName);
+                                        copyFile(routineProperties, targetRoutineFolder + routinePropertiesFileName);
+                                    }
+                                    
+                                    
                                     File sourceFilesDirFile = new File(sourceFilesDir + "/" + baseName + "/files/in/");
-                                    String targetDirFiles = targetDir+ "/" + baseName  + "/files/in/";
+                                    String targetDirFiles = targetDir + "/" + baseName  + "/files/in/";
 
                                     if(!sourceFilesDirFile.isDirectory()) {
                                         throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"+ sourceFilesDirFile.getAbsolutePath() +"'");

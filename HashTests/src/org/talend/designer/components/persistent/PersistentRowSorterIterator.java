@@ -13,20 +13,18 @@ package org.talend.designer.components.persistent;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.derby.impl.sql.compile.CreateIndexNode;
 
 import routines.system.IPersistableRow;
 
@@ -68,7 +66,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     private int beansCount;
 
-    private DataInputStream[] diss;
+    private ObjectInputStream[] diss;
 
     private ArrayList<File> files = new ArrayList<File>();
 
@@ -206,7 +204,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
         File file = new File(buildFilePath());
         count++;
-        DataOutputStream rw = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+        ObjectOutputStream rw = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         // System.out.println("Start write buffer ");
         for (int i = 0; i < bufferBeanIndex + 1; i++) {
             buffer[i].writeData(rw);
@@ -225,7 +223,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
     }
 
     private String buildFilePath() {
-        return container + "TEMP_" + count + ".bin";
+        return container + "_TEMP_" + count + ".bin";
     }
 
     public void initGet() {
@@ -272,14 +270,14 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         // DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
         int numFiles = files.size();
         List<V> datasList = new ArrayList<V>();
-        List<DataInputStream> dissList = new ArrayList<DataInputStream>();
+        List<ObjectInputStream> dissList = new ArrayList<ObjectInputStream>();
 
         boolean someFileStillHasRows = false;
 
         bufferBeanIndex = INIT_BUFFER_INDEX;
 
         for (int i = 0; i < numFiles; i++) {
-            DataInputStream dis = new DataInputStream(new BufferedInputStream(new FileInputStream(files.get(i))));
+            ObjectInputStream dis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(files.get(i))));
             dissList.add(dis);
 //            V bean = getNextFreeRow();
             V bean = createRowInstance();
@@ -294,7 +292,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         isFirstArray = new boolean[size];
         Arrays.fill(isFirstArray, true);
         datas = (V[]) datasList.toArray(new IPersistableRow[size]);
-        diss = (DataInputStream[]) dissList.toArray(new DataInputStream[size]);
+        diss = (ObjectInputStream[]) dissList.toArray(new ObjectInputStream[size]);
 
     }
 
@@ -348,7 +346,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
             currentObject = min;
 
             // get another data from the file
-            DataInputStream dis = diss[minIndex];
+            ObjectInputStream dis = diss[minIndex];
             if (dis.available() > 0) {
                 // bean = getNextFreeRow();
                 bean = createRowInstance();

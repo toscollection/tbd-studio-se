@@ -5,7 +5,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.ObjectInputStream;
 
 import routines.system.IPersistableLookupRow;
 
@@ -16,9 +16,11 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     protected static final int KEYS_SIZE_PLUS_VALUES_SIZE = 8;
 
-    protected DataInputStream keysDataStream;
+    protected ObjectInputStream keysDataStream;
 
     protected DataInputStream valuesDataStream;
+
+    protected ObjectInputStream valuesObjectStream;
 
     protected long length;
 
@@ -78,8 +80,9 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
         this.fileIndex = fileIndex;
 
-        this.keysDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
+        this.keysDataStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
         this.valuesDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(valuesFilePath)));
+        this.valuesObjectStream = new ObjectInputStream(this.valuesDataStream);
         this.lookupInstance = rowProvider.createInstance();
         this.previousAskedKey = rowProvider.createInstance();
         this.rowProvider = rowProvider;
@@ -128,7 +131,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
             remainingSkip = 0;
             skipValuesSize = 0;
         }
-        lookupInstance.readValuesData(valuesDataStream);
+        lookupInstance.readValuesData(valuesDataStream, valuesObjectStream);
 
     }
 
@@ -142,7 +145,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
             keysDataStream.close();
         }
         if (valuesDataStream != null) {
-            valuesDataStream.close();
+            valuesObjectStream.close();
         }
     }
 

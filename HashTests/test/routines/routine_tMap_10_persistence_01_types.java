@@ -21,10 +21,12 @@ import java.io.Serializable;
  * 
  * 5. {example} gives a example for the Function. it is optional.
  */
-public class tMap_10_persistence_01_types {
+public class routine_tMap_10_persistence_01_types {
 
 	public static class CustomObject implements Serializable {
 
+	    int x = 10;
+	    
 	}
 	
 	public static CustomObject getCustomObject() {
