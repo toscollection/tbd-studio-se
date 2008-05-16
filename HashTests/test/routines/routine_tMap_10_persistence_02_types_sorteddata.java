@@ -21,11 +21,11 @@ import java.io.Serializable;
  * 
  * 5. {example} gives a example for the Function. it is optional.
  */
-public class routine_tMap_10_persistence_01_types {
+public class routine_tMap_10_persistence_02_types_sorteddata {
 
 	public static class CustomObject implements Serializable {
 
-		public int index = -1;
+		int index = -1;
 		
 		public CustomObject(int index) {
 			super();
@@ -40,7 +40,12 @@ public class routine_tMap_10_persistence_01_types {
 		public boolean equals(Object other) {
 			return this.index == ((CustomObject)other).index;
 		}
-		
+
+      public int hashCode() {
+           return this.index;
+	  }
+	        
+
 	}
 	
 	public static CustomObject getCustomObject(int index) {

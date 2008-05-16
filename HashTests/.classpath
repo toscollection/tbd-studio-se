@@ -8,7 +8,7 @@
 	<classpathentry kind="lib" path="lib/trove-2.0.1.jar" sourcepath="/Trove"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.1.jar" sourcepath="/org.talend.libraries/libs_src/commons-lang-2.1"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
