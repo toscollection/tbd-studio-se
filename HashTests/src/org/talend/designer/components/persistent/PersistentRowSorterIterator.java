@@ -26,6 +26,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.talend.designer.components.persistent.utils.FileUtils;
+
 import routines.system.IPersistableRow;
 
 /**
@@ -96,16 +98,19 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     /**
      * DOC amaumont SortedMultipleHashFile constructor comment.
+     * @throws IOException 
      */
-    public PersistentRowSorterIterator(String container) {
+    public PersistentRowSorterIterator(String container) throws IOException {
         super();
         this.container = container;
+        FileUtils.createParentFolderIfNotExists(this.container);
     }
 
     /**
      * DOC amaumont SortedMultipleHashFile constructor comment.
+     * @throws IOException 
      */
-    public PersistentRowSorterIterator(String container, int bufferSize) {
+    public PersistentRowSorterIterator(String container, int bufferSize) throws IOException {
         this(container);
         this.bufferSize = bufferSize;
     }
@@ -421,7 +426,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         afterLoopFind();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new PersistentRowSorterIterator<IPersistableRow>("/home/amaumont/data/dev/projets/Talend/hashfile/sort") {
 
             protected IPersistableRow createRowInstance() {

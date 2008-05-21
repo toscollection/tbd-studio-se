@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
+import org.talend.designer.components.persistent.utils.FileUtils;
 
 import routines.system.IPersistableRow;
 
@@ -29,13 +30,15 @@ public class PersistentLookupManager <B extends IPersistableRow<B>> implements I
     /**
      * DOC amaumont PersistentLookupManager constructor comment.
      * @param container
+     * @throws IOException 
      */
-    public PersistentLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator) {
+    public PersistentLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator) throws IOException {
         super();
         this.matchingMode = matchingMode;
         this.container = container;
         this.rowCreator = rowCreator;
         this.dataInstance = this.rowCreator.createRowInstance();
+        FileUtils.createParentFolderIfNotExists(container);
     }
 
     public void initPut() throws IOException {

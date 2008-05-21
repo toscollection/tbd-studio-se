@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
+import org.talend.designer.components.persistent.utils.FileUtils;
 
 import routines.system.IPersistableComparableLookupRow;
 import routines.system.IPersistableLookupRow;
@@ -100,14 +101,15 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
 
     private boolean waitingHeapException;
 
-    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator) {
+    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator) throws IOException {
         this.matchingMode = matchingMode;
         this.container = container;
         this.rowCreator = rowCreator;
         this.lookupKey = rowCreator.createRowInstance();
+        FileUtils.createParentFolderIfNotExists(container);
     }
 
-    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator, int bufferSize) {
+    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator, int bufferSize) throws IOException {
         this(matchingMode, container, rowCreator);
         this.bufferSize = bufferSize;
     }
