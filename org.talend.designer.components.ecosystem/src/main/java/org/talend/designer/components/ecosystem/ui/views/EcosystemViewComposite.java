@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.designer.components.ecosystem.ui.views;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -50,6 +52,8 @@ public class EcosystemViewComposite extends Composite {
     private static final String RELEASED_DATE_TITLE = Messages.getString("EcosystemViewComposite.ReleasedDate.Title"); //$NON-NLS-1$
 
     private static final String DESCRIPTION_TITLE = Messages.getString("EcosystemViewComposite.Description.Title"); //$NON-NLS-1$
+
+    private static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private static final IBeanPropertyAccessors<ComponentExtension, String> DESCRIPTION_ACCESSOR;
 
@@ -123,7 +127,7 @@ public class EcosystemViewComposite extends Composite {
 
             @Override
             public String get(ComponentExtension bean) {
-                return bean.getLatestRevision().getDate().toString();
+                return dateFormatter.format(bean.getLatestRevision().getDate());
             }
 
         };
@@ -177,7 +181,7 @@ public class EcosystemViewComposite extends Composite {
         fNameColumn = createTableColumn(COMPONENT_NAME_TITLE, true, false, 4, NAME_ACCESSOR);
         createTableColumn(AUTHOR_TITLE, true, false, 4, AUTHOR_ACCESSOR); // authorColumn
         createTableColumn(REVISION_TITLE, true, false, 2, REVISION_ACCESSOR); // revisionColumn
-        createTableColumn(RELEASED_DATE_TITLE, true, false, 5, DATE_ACCESSOR); // dateColumn
+        createTableColumn(RELEASED_DATE_TITLE, true, false, 4, DATE_ACCESSOR); // dateColumn
         TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(DESCRIPTION_TITLE, true,
                 false, 18, DESCRIPTION_ACCESSOR); // descriptionColumn
         descriptionColumn.setMinimumWidth(1300);

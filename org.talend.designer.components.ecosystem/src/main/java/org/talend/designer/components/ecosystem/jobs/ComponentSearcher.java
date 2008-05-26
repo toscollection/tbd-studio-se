@@ -40,7 +40,9 @@ public class ComponentSearcher {
 
     private static DateFormat formatter = new SimpleDateFormat(RELEASE_DATE_FORMAT);
 
-    private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)");
+    private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(\\.(RC|M)\\d+)?_r\\d+");
+
+    private static Pattern DEFAULT_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)");
 
     /**
      * Find available components.
@@ -105,15 +107,22 @@ public class ComponentSearcher {
     }
 
     /**
-     * Make sure that the version match X.X.X, where X are all digit.
+     * Make sure that the version match x.x.x or x.x.x.Mx or x.x.x.RCx, where x are all digit.
      * 
      * @param version
      * @return
      */
     private static String normalizeVersion(String version) {
         Matcher matcher = VERSION_PATTERN.matcher(version);
-        matcher.find();
-        return matcher.group();
+        if (matcher.matches()) {
+            String str = version.substring(0, version.indexOf("_r"));
+            return str.replaceAll("\\.RC", "RC").replaceAll("\\.M", "M");
+        } else {
+            // try again, ignore M, RC
+            matcher = DEFAULT_PATTERN.matcher(version);
+            matcher.find();
+            return matcher.group();
+        }
     }
 
     /**
@@ -182,5 +191,4 @@ public class ComponentSearcher {
         return installed;
 
     }
-
 }
