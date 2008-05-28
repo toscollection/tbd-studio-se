@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.language.ECodeLanguage;
@@ -40,10 +38,6 @@ public class ComponentSearcher {
 
     private static DateFormat formatter = new SimpleDateFormat(RELEASE_DATE_FORMAT);
 
-    private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(\\.(RC|M)\\d+)?_r\\d+");
-
-    private static Pattern DEFAULT_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)");
-
     /**
      * Find available components.
      * 
@@ -56,7 +50,7 @@ public class ComponentSearcher {
 
         try {
             GetRevisionListPortTypeProxy test = new GetRevisionListPortTypeProxy();
-            Revision[] revisions = test.getRevisionList(normalizeVersion(version), getLanguageId(language));
+            Revision[] revisions = test.getRevisionList(version, getLanguageId(language));
 
             Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
 
@@ -104,25 +98,6 @@ public class ComponentSearcher {
         rev.setDescription(revision.getRevision_description());
         rev.setId(revision.getRevision_id());
         return rev;
-    }
-
-    /**
-     * Make sure that the version match x.x.x or x.x.x.Mx or x.x.x.RCx, where x are all digit.
-     * 
-     * @param version
-     * @return
-     */
-    private static String normalizeVersion(String version) {
-        Matcher matcher = VERSION_PATTERN.matcher(version);
-        if (matcher.matches()) {
-            String str = version.substring(0, version.indexOf("_r"));
-            return str.replaceAll("\\.RC", "RC").replaceAll("\\.M", "M");
-        } else {
-            // try again, ignore M, RC
-            matcher = DEFAULT_PATTERN.matcher(version);
-            matcher.find();
-            return matcher.group();
-        }
     }
 
     /**

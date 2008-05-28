@@ -49,6 +49,8 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
     private static final String SET_FOLDER_MESSAGE = Messages.getString("DownloadComponenentsAction.SetUserFolder.Message"); //$NON-NLS-1$
 
+    private static final String RELOAD_PALETTE = Messages.getString("DownloadComponenentsAction.ReloadPalette"); //$NON-NLS-1$
+
     private EcosystemView fView;
 
     private int fExtensionDownloaded;
@@ -136,7 +138,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
         @Override
         protected IStatus run(IProgressMonitor monitor) {
-            SubMonitor progress = SubMonitor.convert(monitor, (fExtensions.size() + 1) * 10);
+            SubMonitor progress = SubMonitor.convert(monitor, fExtensions.size() * 10 + 5);
             progress.setTaskName(this.getName());
             for (ComponentExtension extension : fExtensions) {
                 if (progress.isCanceled()) {
@@ -145,7 +147,8 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 fMonitor = progress.newChild(10);
                 downloadExtension(extension, fMonitor);
             }
-            progress.done();
+            progress.setTaskName(RELOAD_PALETTE);
+            // progress.done();
             return Status.OK_STATUS;
         }
 

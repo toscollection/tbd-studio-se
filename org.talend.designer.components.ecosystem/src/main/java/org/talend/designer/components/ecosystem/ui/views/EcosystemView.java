@@ -50,7 +50,7 @@ import org.talend.designer.components.ecosystem.model.EcosystemPackage;
  */
 public class EcosystemView extends ViewPart {
 
-    public static final String FIND_EXTENSIONS_MSG = Messages.getString("EcosystemView.FindAvailableExtensions"); //$NON-NLS-1$
+    public static final String FIND_EXTENSIONS_MSG = "EcosystemView.FindAvailableExtensions"; //$NON-NLS-1$
 
     public static final String FILTER_LABEL_TEXT = Messages.getString("EcosystemView.FilterLabelText"); //$NON-NLS-1$
 
@@ -209,9 +209,11 @@ public class EcosystemView extends ViewPart {
             PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
 
                 public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-                    monitor.beginTask(FIND_EXTENSIONS_MSG, IProgressMonitor.UNKNOWN);
-                    fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(EcosystemUtils
-                            .getCurrentTosVersion(), EcosystemUtils.getCurrentLanguage());
+
+                    String versionFilter = EcosystemUtils.getTosVersionFilter();
+                    monitor.beginTask(Messages.getString(FIND_EXTENSIONS_MSG, versionFilter), IProgressMonitor.UNKNOWN);
+                    fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils
+                            .getCurrentLanguage());
                     // update status of installed extensions
                     checkInstalledExtensions();
                     monitor.done();

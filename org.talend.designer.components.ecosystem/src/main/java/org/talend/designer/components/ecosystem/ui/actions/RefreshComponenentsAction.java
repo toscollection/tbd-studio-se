@@ -27,6 +27,7 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
+import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
@@ -105,11 +106,12 @@ public class RefreshComponenentsAction implements IViewActionDelegate {
                 return Status.CANCEL_STATUS;
             }
 
-            monitor.beginTask(EcosystemView.FIND_EXTENSIONS_MSG, IProgressMonitor.UNKNOWN);
+            String versionFilter = EcosystemUtils.getTosVersionFilter();
+            monitor.beginTask(Messages.getString(EcosystemView.FIND_EXTENSIONS_MSG, versionFilter), IProgressMonitor.UNKNOWN);
 
             try {
-                fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(EcosystemUtils.getCurrentTosVersion(),
-                        EcosystemUtils.getCurrentLanguage());
+                fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils
+                        .getCurrentLanguage());
             } catch (Throwable e) {
                 ExceptionHandler.process(e);
                 return Status.CANCEL_STATUS;

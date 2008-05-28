@@ -15,6 +15,8 @@ package org.talend.designer.components.ecosystem;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.jobs.Job;
@@ -38,13 +40,51 @@ import org.talend.repository.model.ComponentsFactoryProvider;
  */
 public class EcosystemUtils {
 
+    private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(\\.(RC|M)\\d+)?_r\\d+");
+
+    private static Pattern DEFAULT_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)");
+
+    /**
+     * Make sure that the version match x.x.x or x.x.xMx or x.x.xRCx, where x are all digit.
+     * 
+     * @param version
+     * @return
+     */
+    public static String normalizeVersion(String version) {
+        Matcher matcher = VERSION_PATTERN.matcher(version);
+        if (matcher.matches()) {
+            String str = version.substring(0, version.indexOf("_r"));
+            return str.replaceAll("\\.RC", "RC").replaceAll("\\.M", "M");
+        } else {
+            // try again, ignore M, RC
+            matcher = DEFAULT_PATTERN.matcher(version);
+            matcher.find();
+            return matcher.group();
+        }
+    }
+
     /**
      * This method is used for generating current T.O.S version.
      * 
      * @return
      */
-    public static String getCurrentTosVersion() {
-        return (String) CorePlugin.getDefault().getBundle().getHeaders().get(org.osgi.framework.Constants.BUNDLE_VERSION);
+    public static String getCurrentTosVersion(boolean normalize) {
+        String version = (String) CorePlugin.getDefault().getBundle().getHeaders().get(
+                org.osgi.framework.Constants.BUNDLE_VERSION);
+        if (normalize) {
+            version = normalizeVersion(version);
+        }
+        return version;
+    }
+
+    /**
+     * 
+     * Get tos version filter from preference page.
+     * 
+     * @return
+     */
+    public static String getTosVersionFilter() {
+        return EcosystemPlugin.getDefault().getPreferenceStore().getString(EcosystemPreferencePage.TOS_VERSION_FILTER);
     }
 
     public static ECodeLanguage getCurrentLanguage() {
