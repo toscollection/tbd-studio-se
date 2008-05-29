@@ -18,6 +18,7 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.talend.designer.components.ecosystem.EcosystemPlugin;
+import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.i18n.Messages;
 
 /**
@@ -35,10 +36,6 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
 
     public static String ID = "org.talend.designer.components.ecosystem.ui.views.ecosystem.page"; //$NON-NLS-1$
 
-    // hard coded, should be replaced by some web service invocation
-    private static String[] availableVersionFilter = { "2.4.0RC2", "2.4.0RC1", "2.3.3", "2.3.2", "2.3.1", "2.3.0", "2.3.0RC3",
-            "2.3.0RC2", "2.3.0RC1", "2.2.4", "2.2.3", "2.2.2", "2.2.1", "2.2.0" };
-
     /**
      * EcosystemPreferencePage constructor.
      */
@@ -49,6 +46,8 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
 
     @Override
     public void createFieldEditors() {
+        // get a tos version list from web service
+        String[] availableVersionFilter = EcosystemUtils.getVersionList();
         ComboFieldEditor versionFilter = new ComboFieldEditor(TOS_VERSION_FILTER, VERSION_FILTER_LABEL,
                 convert(availableVersionFilter), getFieldEditorParent());
         addField(versionFilter);
@@ -64,10 +63,14 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
     }
 
     private String[][] convert(String[] values) {
-        String[][] namesAndValues = new String[values.length][2];
-        for (int i = 0; i < values.length; i++) {
-            namesAndValues[i][0] = values[i];
-            namesAndValues[i][1] = values[i];
+        String[][] namesAndValues = null;
+        if (values != null) {
+            namesAndValues = new String[values.length][2];
+
+            for (int i = 0; i < values.length; i++) {
+                namesAndValues[i][0] = values[i];
+                namesAndValues[i][1] = values[i];
+            }
         }
         return namesAndValues;
     }

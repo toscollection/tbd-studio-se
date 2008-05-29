@@ -14,16 +14,19 @@ package org.talend.designer.components.ecosystem;
 
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.talend.commons.emf.EmfHelper;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.CorePlugin;
 import org.talend.core.language.ECodeLanguage;
 import org.talend.core.language.LanguageManager;
@@ -33,6 +36,7 @@ import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Revision;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemPreferencePage;
+import org.talend.designer.components.ecosystem.ws.GetRevisionListPortTypeProxy;
 import org.talend.repository.model.ComponentsFactoryProvider;
 
 /**
@@ -75,6 +79,24 @@ public class EcosystemUtils {
             version = normalizeVersion(version);
         }
         return version;
+    }
+
+    /**
+     * 
+     * Get a tos version list from ecosystem.
+     * 
+     * @return
+     */
+    public static String[] getVersionList() {
+        GetRevisionListPortTypeProxy proxy = new GetRevisionListPortTypeProxy();
+        String[] versions = null;
+        try {
+            versions = proxy.getVersionList().split(",");
+            ArrayUtils.reverse(versions);
+        } catch (RemoteException e) {
+            ExceptionHandler.process(e);
+        }
+        return versions;
     }
 
     /**
