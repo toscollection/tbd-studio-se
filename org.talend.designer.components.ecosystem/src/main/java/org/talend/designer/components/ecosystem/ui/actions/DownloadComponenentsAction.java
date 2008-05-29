@@ -24,12 +24,13 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.GlobalServiceRegister;
+import org.talend.designer.codegen.ICodeGeneratorService;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentDownloader;
@@ -61,11 +62,11 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
     public void run(final IAction action) {
         // check if user have set the folder in preference page
-        if (EcosystemUtils.getUserComponentFolder() == null) {
-            MessageDialog.openError(fView.getSite().getShell(), SET_FOLDER_TITLE, SET_FOLDER_MESSAGE);
-            EcosystemUtils.showComponentPreferencePage(fView.getSite().getShell());
-            return;
-        }
+        // if (EcosystemUtils.getUserComponentFolder() == null) {
+        // MessageDialog.openError(fView.getSite().getShell(), SET_FOLDER_TITLE, SET_FOLDER_MESSAGE);
+        // EcosystemUtils.showComponentPreferencePage(fView.getSite().getShell());
+        // return;
+        // }
 
         // avoid starting multiple action at the same time.
         action.setEnabled(false);
@@ -105,6 +106,11 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             fView.refresh(); // refresh table
             EcosystemUtils.reloadComponents(); // refresh palette
             fView.saveToFile();
+
+            // Start Code Generation Init
+            ICodeGeneratorService codeGenService = (ICodeGeneratorService) GlobalServiceRegister.getDefault().getService(
+                    ICodeGeneratorService.class);
+            codeGenService.initializeTemplates();
         }
     }
 
@@ -156,7 +162,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
             // get the latest revision url
             String componentUrl = extension.getLatestRevision().getUrl();
-            String targetFolder = EcosystemUtils.getUserComponentFolder().getAbsolutePath();
+            String targetFolder = EcosystemUtils.getComponentFolder().getAbsolutePath();
             try {
                 String fileName = componentUrl.substring(componentUrl.lastIndexOf('/'));
                 File localZipFile = new File(targetFolder + fileName);

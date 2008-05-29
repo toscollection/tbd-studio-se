@@ -17,11 +17,9 @@ import java.io.FileFilter;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.model.components.AbstractComponentsProvider;
-import org.talend.designer.components.ecosystem.ui.views.EcosystemPreferencePage;
 
 /**
  * Components provider for ecosystem.
@@ -113,9 +111,7 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
 
     @Override
     protected File getExternalComponentsLocation() {
-        IPreferenceStore prefStore = EcosystemPlugin.getDefault().getPreferenceStore();
-        String path = prefStore.getString(EcosystemPreferencePage.ECOSYSTEM_COMPONENTS_FOLDER);
-        return (path == null || path.length() == 0 ? null : new File(path));
+        return EcosystemUtils.getComponentFolder();
     }
 
 }

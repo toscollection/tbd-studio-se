@@ -13,7 +13,6 @@
 package org.talend.designer.components.ecosystem.ui.views;
 
 import org.eclipse.jface.preference.ComboFieldEditor;
-import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -28,9 +27,10 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
 
     private static final String VERSION_FILTER_LABEL = Messages.getString("EcosystemPreferencePage.VersionFilterLabel"); //$NON-NLS-1$
 
-    private static final String FOLDER_FIELD_LABEL = Messages.getString("EcosystemPreferencePage.DirectoryFieldLabel"); //$NON-NLS-1$
+    // private static final String FOLDER_FIELD_LABEL =
+    // Messages.getString("EcosystemPreferencePage.DirectoryFieldLabel"); //$NON-NLS-1$
 
-    public static final String ECOSYSTEM_COMPONENTS_FOLDER = "ECOSYSTEM_COMPONENTS_FOLDER"; //$NON-NLS-1$
+    // public static final String ECOSYSTEM_COMPONENTS_FOLDER = "ECOSYSTEM_COMPONENTS_FOLDER"; //$NON-NLS-1$
 
     public static final String TOS_VERSION_FILTER = "TOS_VERSION_FILTER"; //$NON-NLS-1$
 
@@ -56,9 +56,9 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
         // getFieldEditorParent());
         // addField(versionFilter);
 
-        DirectoryFieldEditor filePathTemp = new DirectoryFieldEditor(ECOSYSTEM_COMPONENTS_FOLDER, FOLDER_FIELD_LABEL,
-                getFieldEditorParent());
-        addField(filePathTemp);
+        // DirectoryFieldEditor filePathTemp = new DirectoryFieldEditor(ECOSYSTEM_COMPONENTS_FOLDER, FOLDER_FIELD_LABEL,
+        // getFieldEditorParent());
+        // addField(filePathTemp);
 
     }
 
