@@ -16,6 +16,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -170,10 +171,16 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 if (extension.getInstalledLocation() != null && extension.getInstalledRevision() != null) {
                     // if already install the latest revision, ignore
                     if (extension.getInstalledRevision().getName().equals(extension.getLatestRevision().getName())) {
-                        if (localZipFile.exists() && checkIfInstalled(extension.getInstalledLocation())) {
+                        if (localZipFile.exists() && checkIfExisted(extension.getInstalledLocation())) {
                             monitor.done();
                             return;
                         }
+                    } else {
+                        // before installing the new revision, delete the older revision that has been installed
+                        FileUtils.deleteDirectory(new File(extension.getInstalledLocation()));
+                        extension.setInstalledLocation(null);
+                        extension.setInstalledRevision(null);
+                        fView.removeInstalledExtension(extension);
                     }
                 }
 
@@ -207,7 +214,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
          * @param installedLocation
          * @return
          */
-        private boolean checkIfInstalled(String installedLocation) {
+        private boolean checkIfExisted(String installedLocation) {
             try {
                 File dir = new File(installedLocation);
                 if (dir.exists()) {
@@ -242,9 +249,5 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         private String toKbFormat(int size) {
             return String.format("%1$s KB", size >> 10); //$NON-NLS-1$
         }
-    }
-
-    public static void main(String[] args) {
-        System.out.println(String.format("%1$s KB", 2048 >> 10)); //$NON-NLS-1$
     }
 }

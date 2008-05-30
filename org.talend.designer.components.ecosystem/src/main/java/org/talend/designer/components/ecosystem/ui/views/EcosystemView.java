@@ -44,6 +44,7 @@ import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
+import org.talend.designer.components.ecosystem.model.Revision;
 
 /**
  * View part for ecosystem.
@@ -71,7 +72,7 @@ public class EcosystemView extends ViewPart {
 
     private List<ComponentExtension> fAvailableExtensions;
 
-    private List<ComponentExtension> fInstalledExtensions = new ArrayList<ComponentExtension>();
+    private Map<String, ComponentExtension> fInstalledExtensions = new HashMap<String, ComponentExtension>();
 
     private String[] fFilters = AVAILABLE_FILTERS;
 
@@ -164,7 +165,7 @@ public class EcosystemView extends ViewPart {
      */
     public void saveToFile() {
         try {
-            EcosystemUtils.saveInstallComponents(COMPONENT_MODEL_FILE, fInstalledExtensions);
+            EcosystemUtils.saveInstallComponents(COMPONENT_MODEL_FILE, getInstalledExtensions());
         } catch (IOException e) {
             ExceptionHandler.process(e);
         }
@@ -175,7 +176,10 @@ public class EcosystemView extends ViewPart {
      */
     public void loadFromFile() {
         try {
-            fInstalledExtensions = EcosystemUtils.loadInstallComponents(COMPONENT_MODEL_FILE);
+            List<ComponentExtension> extensions = EcosystemUtils.loadInstallComponents(COMPONENT_MODEL_FILE);
+            for (ComponentExtension ext : extensions) {
+                fInstalledExtensions.put(ext.getName(), ext);
+            }
         } catch (Throwable e) {
             // do nothing, the file may not exist because this is the first time we use this view and we haven't
             // installed any extensions
@@ -273,11 +277,15 @@ public class EcosystemView extends ViewPart {
      * @return the installedExtensions
      */
     public List<ComponentExtension> getInstalledExtensions() {
-        return fInstalledExtensions;
+        return new ArrayList<ComponentExtension>(fInstalledExtensions.values());
     }
 
     public void addInstalledExtension(ComponentExtension extension) {
-        fInstalledExtensions.add(extension);
+        fInstalledExtensions.put(extension.getName(), extension);
+    }
+
+    public void removeInstalledExtension(ComponentExtension extension) {
+        fInstalledExtensions.remove(extension.getName());
     }
 
     /**
@@ -287,16 +295,18 @@ public class EcosystemView extends ViewPart {
         if (fInstalledExtensions == null || fAvailableExtensions == null) {
             return;
         }
-        Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
-        for (ComponentExtension extension : fAvailableExtensions) {
-            extensionsMap.put(extension.getName(), extension);
-        }
 
-        for (ComponentExtension installed : fInstalledExtensions) {
-            ComponentExtension available = extensionsMap.get(installed.getName());
-            if (available != null) {
-                available.setInstalledRevision(installed.getInstalledRevision());
-                available.setInstalledLocation(installed.getInstalledLocation());
+        for (ComponentExtension available : fAvailableExtensions) {
+            ComponentExtension installed = fInstalledExtensions.get(available.getName());
+            if (installed != null) {
+                // find installed revision in revisions list
+                for (Revision rev : available.getRevisions()) {
+                    if (rev.getName().equals(installed.getInstalledRevision().getName())) {
+                        available.setInstalledRevision(rev);
+                        available.setInstalledLocation(installed.getInstalledLocation());
+                        break;
+                    }
+                }
             }
         }
     }
