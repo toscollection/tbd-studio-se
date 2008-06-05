@@ -14,11 +14,7 @@ package org.talend.designer.components.ecosystem.ui.actions;
 
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -27,8 +23,6 @@ import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
-import org.talend.designer.components.ecosystem.i18n.Messages;
-import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
 
@@ -90,41 +84,6 @@ public class RefreshComponenentsAction implements IViewActionDelegate {
             List<ComponentExtension> extensions = job.getAvailableExtensions();
             fView.updateAvailableExtensions(extensions);
         }
-    }
-
-    class RefreshJob extends Job {
-
-        public RefreshJob() {
-            super(EcosystemView.FIND_EXTENSIONS_MSG);
-        }
-
-        private List<ComponentExtension> fAvailableExtensions;
-
-        @Override
-        protected IStatus run(IProgressMonitor monitor) {
-            if (monitor.isCanceled()) {
-                return Status.CANCEL_STATUS;
-            }
-
-            String versionFilter = EcosystemUtils.getTosVersionFilter();
-            monitor.beginTask(Messages.getString(EcosystemView.FIND_EXTENSIONS_MSG, versionFilter), IProgressMonitor.UNKNOWN);
-
-            try {
-                fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils
-                        .getCurrentLanguage());
-            } catch (Throwable e) {
-                ExceptionHandler.process(e);
-                return Status.CANCEL_STATUS;
-            } finally {
-                monitor.done();
-            }
-            return Status.OK_STATUS;
-        }
-
-        public List<ComponentExtension> getAvailableExtensions() {
-            return fAvailableExtensions;
-        }
-
     }
 
 }

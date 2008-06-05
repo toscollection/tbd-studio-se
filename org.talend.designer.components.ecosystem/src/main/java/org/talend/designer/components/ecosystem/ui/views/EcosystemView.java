@@ -39,34 +39,22 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
-import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Revision;
+import org.talend.designer.components.ecosystem.ui.actions.RefreshJob;
 
 /**
  * View part for ecosystem.
  */
 public class EcosystemView extends ViewPart {
 
-    public static final String FIND_EXTENSIONS_MSG = "EcosystemView.FindAvailableExtensions"; //$NON-NLS-1$
-
-    public static final String FILTER_LABEL_TEXT = Messages.getString("EcosystemView.FilterLabelText"); //$NON-NLS-1$
-
-    public static final String FILTER_LINK_TEXT = Messages.getString("EcosystemView.FilterLinkText"); //$NON-NLS-1$
-
     private static final String[] AVAILABLE_FILTERS = new String[] { "Name", "Description" }; //$NON-NLS-1$ //$NON-NLS-2$
 
     private static final Map<String, Integer> FILTER_MAP = new HashMap<String, Integer>();
-
-    private static final int KEY_ENTER = 13;
-
-    /**
-     * File that store information about the components we have installed.
-     */
-    private static final String COMPONENT_MODEL_FILE = "component_extensions.xmi"; //$NON-NLS-1$
 
     private EcosystemViewComposite fEcosystemViewComposite;
 
@@ -94,7 +82,7 @@ public class EcosystemView extends ViewPart {
         parent.setLayout(clearGridLayoutSpace(new GridLayout(3, false)));
 
         Label filterLabel = new Label(parent, SWT.NONE);
-        filterLabel.setText(FILTER_LABEL_TEXT);
+        filterLabel.setText(EcosystemConstants.FILTER_LABEL_TEXT);
         filterLabel.setLayoutData(new GridData());
 
         fFilterText = new Text(parent, SWT.BORDER);
@@ -105,7 +93,7 @@ public class EcosystemView extends ViewPart {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.keyCode == KEY_ENTER) {
+                if (e.keyCode == EcosystemConstants.KEY_ENTER) {
                     // press enter key
                     applyFilters();
                 }
@@ -114,7 +102,7 @@ public class EcosystemView extends ViewPart {
         });
 
         final Link filterLink = new Link(parent, SWT.NONE);
-        filterLink.setText("<a href=\"\">" + FILTER_LINK_TEXT + "</a>");
+        filterLink.setText("<a href=\"\">" + EcosystemConstants.FILTER_LINK_TEXT + "</a>");
         filterLink.addSelectionListener(new SelectionAdapter() {
 
             @Override
@@ -165,7 +153,7 @@ public class EcosystemView extends ViewPart {
      */
     public void saveToFile() {
         try {
-            EcosystemUtils.saveInstallComponents(COMPONENT_MODEL_FILE, getInstalledExtensions());
+            EcosystemUtils.saveInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE, getInstalledExtensions());
         } catch (IOException e) {
             ExceptionHandler.process(e);
         }
@@ -176,7 +164,7 @@ public class EcosystemView extends ViewPart {
      */
     public void loadFromFile() {
         try {
-            List<ComponentExtension> extensions = EcosystemUtils.loadInstallComponents(COMPONENT_MODEL_FILE);
+            List<ComponentExtension> extensions = EcosystemUtils.loadInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE);
             for (ComponentExtension ext : extensions) {
                 fInstalledExtensions.put(ext.getName(), ext);
             }
@@ -209,24 +197,22 @@ public class EcosystemView extends ViewPart {
     }
 
     private void findAvailableComponentExtensions() {
+        final RefreshJob job = new RefreshJob();
         try {
             PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
 
                 public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-
-                    String versionFilter = EcosystemUtils.getTosVersionFilter();
-                    monitor.beginTask(Messages.getString(FIND_EXTENSIONS_MSG, versionFilter), IProgressMonitor.UNKNOWN);
-                    fAvailableExtensions = ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils
-                            .getCurrentLanguage());
-                    // update status of installed extensions
-                    checkInstalledExtensions();
-                    monitor.done();
+                    job.run(monitor);
                 }
 
             });
         } catch (Exception e) {
             ExceptionHandler.process(e);
         }
+
+        fAvailableExtensions = job.getAvailableExtensions();
+        // update status of installed extensions
+        checkInstalledExtensions();
         fEcosystemViewComposite.initTable(fAvailableExtensions);
     }
 

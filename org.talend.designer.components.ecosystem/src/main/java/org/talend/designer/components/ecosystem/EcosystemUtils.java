@@ -176,8 +176,6 @@ public class EcosystemUtils {
      * @throws IOException
      */
     public static void saveInstallComponents(String fileName, List<ComponentExtension> components) throws IOException {
-        // IPath folder = EcosystemPlugin.getDefault().getStateLocation();
-        // File file = folder.append(fileName).toFile();
         File file = new File(getComponentFolder(), fileName);
         EmfHelper.saveEmfModel(EcosystemPackage.eINSTANCE, components, file.getAbsolutePath());
     }
@@ -191,8 +189,6 @@ public class EcosystemUtils {
      */
     @SuppressWarnings("unchecked")
     public static List<ComponentExtension> loadInstallComponents(String fileName) throws IOException {
-        // IPath folder = EcosystemPlugin.getDefault().getStateLocation();
-        // File file = folder.append(fileName).toFile();
         File file = new File(getComponentFolder(), fileName);
         return EmfHelper.loadEmfModel(EcosystemPackage.eINSTANCE, file.getAbsolutePath());
     }

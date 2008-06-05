@@ -32,8 +32,8 @@ import org.eclipse.ui.IViewPart;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.designer.codegen.ICodeGeneratorService;
+import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
-import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentDownloader;
 import org.talend.designer.components.ecosystem.jobs.ComponentInstaller;
 import org.talend.designer.components.ecosystem.jobs.DownloadListener;
@@ -45,13 +45,11 @@ import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
  */
 public class DownloadComponenentsAction implements IViewActionDelegate {
 
-    private static final String DOWNLOAD_TASK_NAME = Messages.getString("DownloadComponenentsAction.DownloadTaskName"); //$NON-NLS-1$
+    // private static final String SET_FOLDER_TITLE =
+    // Messages.getString("DownloadComponenentsAction.SetUserFolder.Title"); //$NON-NLS-1$
 
-    private static final String SET_FOLDER_TITLE = Messages.getString("DownloadComponenentsAction.SetUserFolder.Title"); //$NON-NLS-1$
-
-    private static final String SET_FOLDER_MESSAGE = Messages.getString("DownloadComponenentsAction.SetUserFolder.Message"); //$NON-NLS-1$
-
-    private static final String RELOAD_PALETTE = Messages.getString("DownloadComponenentsAction.ReloadPalette"); //$NON-NLS-1$
+    // private static final String SET_FOLDER_MESSAGE =
+    // Messages.getString("DownloadComponenentsAction.SetUserFolder.Message"); //$NON-NLS-1$
 
     private EcosystemView fView;
 
@@ -139,7 +137,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         private List<ComponentExtension> fExtensions;
 
         public DownloadJob(List<ComponentExtension> extensions) {
-            super(DOWNLOAD_TASK_NAME);
+            super(EcosystemConstants.DOWNLOAD_TASK_NAME);
             fExtensions = extensions;
         }
 
@@ -154,7 +152,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 fMonitor = progress.newChild(10);
                 downloadExtension(extension, fMonitor);
             }
-            progress.setTaskName(RELOAD_PALETTE);
+            progress.setTaskName(EcosystemConstants.RELOAD_PALETTE);
             // progress.done();
             return Status.OK_STATUS;
         }
@@ -186,7 +184,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
                 URL url = new URL(componentUrl);
 
-                monitor.setTaskName(DOWNLOAD_TASK_NAME + url.toString());
+                monitor.setTaskName(EcosystemConstants.DOWNLOAD_TASK_NAME + url.toString());
                 ComponentDownloader downloader = new ComponentDownloader();
                 downloader.addDownloadListener(this);
                 // block until download complete

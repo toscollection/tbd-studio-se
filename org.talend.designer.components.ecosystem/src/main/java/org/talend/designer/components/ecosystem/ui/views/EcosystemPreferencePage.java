@@ -16,16 +16,14 @@ import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
-import org.talend.designer.components.ecosystem.i18n.Messages;
 
 /**
  * DOC hcw class global comment. Detailled comment
  */
 public class EcosystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
-
-    private static final String VERSION_FILTER_LABEL = Messages.getString("EcosystemPreferencePage.VersionFilterLabel"); //$NON-NLS-1$
 
     // private static final String FOLDER_FIELD_LABEL =
     // Messages.getString("EcosystemPreferencePage.DirectoryFieldLabel"); //$NON-NLS-1$
@@ -34,7 +32,7 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
 
     public static final String TOS_VERSION_FILTER = "TOS_VERSION_FILTER"; //$NON-NLS-1$
 
-    public static String ID = "org.talend.designer.components.ecosystem.ui.views.ecosystem.page"; //$NON-NLS-1$
+    public static final String ID = "org.talend.designer.components.ecosystem.ui.views.ecosystem.page"; //$NON-NLS-1$
 
     /**
      * EcosystemPreferencePage constructor.
@@ -48,7 +46,7 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
     public void createFieldEditors() {
         // get a tos version list from web service
         String[] availableVersionFilter = EcosystemUtils.getVersionList();
-        ComboFieldEditor versionFilter = new ComboFieldEditor(TOS_VERSION_FILTER, VERSION_FILTER_LABEL,
+        ComboFieldEditor versionFilter = new ComboFieldEditor(TOS_VERSION_FILTER, EcosystemConstants.VERSION_FILTER_LABEL,
                 convert(availableVersionFilter), getFieldEditorParent());
         addField(versionFilter);
 

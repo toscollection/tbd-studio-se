@@ -27,31 +27,13 @@ import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
 import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
-import org.talend.designer.components.ecosystem.i18n.Messages;
+import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 
 /**
  * Composite that contains a table viewer and display in the ecosystem view.
  */
 public class EcosystemViewComposite extends Composite {
-
-    private static final String STATUS_NOT_INSTALLED = Messages.getString("EcosystemViewComposite.Status.NotInstalled"); //$NON-NLS-1$
-
-    private static final String STATUS_INSTALLED = Messages.getString("EcosystemViewComposite.Status.Installed"); //$NON-NLS-1$
-
-    private static final String STATUS_DEPRECATED = Messages.getString("EcosystemViewComposite.Status.Deprecated"); //$NON-NLS-1$
-
-    private static final String REVISION_TITLE = Messages.getString("EcosystemViewComposite.Revision.Title"); //$NON-NLS-1$
-
-    private static final String STATUS_TITLE = Messages.getString("EcosystemViewComposite.Status.Title"); //$NON-NLS-1$
-
-    private static final String COMPONENT_NAME_TITLE = Messages.getString("EcosystemViewComposite.ComponentName.Title"); //$NON-NLS-1$
-
-    private static final String AUTHOR_TITLE = Messages.getString("EcosystemViewComposite.Author.Title"); //$NON-NLS-1$
-
-    private static final String RELEASED_DATE_TITLE = Messages.getString("EcosystemViewComposite.ReleasedDate.Title"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION_TITLE = Messages.getString("EcosystemViewComposite.Description.Title"); //$NON-NLS-1$
 
     private static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -104,11 +86,11 @@ public class EcosystemViewComposite extends Composite {
             @Override
             public String get(ComponentExtension bean) {
                 if (bean.getInstalledLocation() == null) {
-                    return STATUS_NOT_INSTALLED;
+                    return EcosystemConstants.STATUS_NOT_INSTALLED;
                 } else if (!bean.getLatestRevision().getName().equals(bean.getInstalledRevision().getName())) {
-                    return STATUS_DEPRECATED;
+                    return EcosystemConstants.STATUS_DEPRECATED;
                 } else {
-                    return STATUS_INSTALLED;
+                    return EcosystemConstants.STATUS_INSTALLED;
                 }
             }
 
@@ -174,16 +156,16 @@ public class EcosystemViewComposite extends Composite {
         fTableViewerCreator.createTable();
 
         // Status | Component Name | Author | Revision | Released Date | Description
-        TableViewerCreatorColumn<ComponentExtension, String> statusColumn = createTableColumn(STATUS_TITLE, true, false, 4,
-                STATUS_ACCESSOR);
+        TableViewerCreatorColumn<ComponentExtension, String> statusColumn = createTableColumn(EcosystemConstants.STATUS_TITLE,
+                true, false, 4, STATUS_ACCESSOR);
         statusColumn.setImageProvider(new StatusImageProvider());
 
-        fNameColumn = createTableColumn(COMPONENT_NAME_TITLE, true, false, 4, NAME_ACCESSOR);
-        createTableColumn(AUTHOR_TITLE, true, false, 4, AUTHOR_ACCESSOR); // authorColumn
-        createTableColumn(REVISION_TITLE, true, false, 2, REVISION_ACCESSOR); // revisionColumn
-        createTableColumn(RELEASED_DATE_TITLE, true, false, 4, DATE_ACCESSOR); // dateColumn
-        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(DESCRIPTION_TITLE, true,
-                false, 18, DESCRIPTION_ACCESSOR); // descriptionColumn
+        fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 4, NAME_ACCESSOR);
+        createTableColumn(EcosystemConstants.AUTHOR_TITLE, true, false, 4, AUTHOR_ACCESSOR); // authorColumn
+        createTableColumn(EcosystemConstants.REVISION_TITLE, true, false, 2, REVISION_ACCESSOR); // revisionColumn
+        createTableColumn(EcosystemConstants.RELEASED_DATE_TITLE, true, false, 4, DATE_ACCESSOR); // dateColumn
+        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
+                EcosystemConstants.DESCRIPTION_TITLE, true, false, 18, DESCRIPTION_ACCESSOR); // descriptionColumn
         descriptionColumn.setMinimumWidth(1300);
     }
 
@@ -193,6 +175,7 @@ public class EcosystemViewComposite extends Composite {
      * @param extensions
      */
     public void initTable(List<ComponentExtension> extensions) {
+        // fTableViewerCreator.setTableViewerCreatorSorter(new TableViewerCreatorSorter());
         fTableViewerCreator.init(extensions);
         fTableViewerCreator.setSort(fNameColumn, SORT.ASC);
     }
