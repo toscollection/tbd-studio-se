@@ -90,6 +90,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
             boolean previousCompareHasMatched = false;
 
+            boolean previousValuesSizeAlreadyAdded = false;
+
             if (atLeastOneLoadkeys) {
                 compareResult = lookupInstance.compareTo(currentSearchedKey);
 
@@ -105,6 +107,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                     }
 
                 } else if (compareResult < 0) {
+                    previousValuesSizeAlreadyAdded = true;
                     localSkip += previousValuesSize;
                 }
             }
@@ -133,7 +136,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                                     sizeDataToRead = currentValuesSize;
                                     lookupInstance.copyKeysDataTo(resultLookupInstance);
 
-                                    if (!previousCompareHasMatched) {
+                                    if (!previousCompareHasMatched && !previousValuesSizeAlreadyAdded) {
                                         localSkip += previousValuesSize;
                                     }
 
