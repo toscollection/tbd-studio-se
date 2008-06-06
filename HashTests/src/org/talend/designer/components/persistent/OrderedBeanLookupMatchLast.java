@@ -103,6 +103,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                         previousCompareHasMatched = true;
                     }
 
+                } else if(compareResult < 0) {
+                    localSkip += previousValuesSize;
                 }
             }
             startWithNewKey = false;
