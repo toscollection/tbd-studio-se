@@ -8,7 +8,7 @@
 // You may distribute this code under the terms of the GNU LGPL license
 // (http://www.gnu.org/licenses/lgpl.html).
 //
-// ============================================================================ 
+// ============================================================================
 package java_project_8.hashfilesbench_tmappersistent_0_2;
 
 import routines.libs;
@@ -38,11 +38,11 @@ import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.util.Comparator;
 
-//the import part of tJava_1
-//import java.util.List;
+// the import part of tJava_1
+// import java.util.List;
 
-//the import part of tJava_2
-//import java.util.List;
+// the import part of tJava_2
+// import java.util.List;
 
 /**
  * Job: HashFilesBench_tMapPersistent Purpose: <br>
@@ -53,6 +53,7 @@ import java.util.Comparator;
  * @status
  */
 public class HashFilesBench_tMapPersistent {
+
     // create and load default properties
     private static java.util.Properties defaultProps = new java.util.Properties();
 
@@ -68,22 +69,34 @@ public class HashFilesBench_tMapPersistent {
         }
 
         public static Integer nbItems;
+
         public static String rootFolder;
     }
 
     private static ContextProperties context = new ContextProperties();
+
     private static final String jobName = "HashFilesBench_tMapPersistent";
+
     private static final String projectName = "JAVA_PROJECT_8";
+
     public static Integer errorCode = null;
+
     private static String currentComponent = "";
+
     private static final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
+
     private static final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
+
     private static final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
+
     private static final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
+
     public static final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
 
     private class TalendException extends Exception {
+
         private Exception e = null;
+
         private HashFilesBench_tMapPersistent c = null;
 
         private TalendException(HashFilesBench_tMapPersistent c, Exception e) {
@@ -94,18 +107,15 @@ public class HashFilesBench_tMapPersistent {
         @Override
         public void printStackTrace() {
             if (!(e instanceof TalendException || e instanceof TDieException)) {
-                globalMap.put(currentComponent + "_ERROR_MESSAGE", e
-                        .getMessage());
-                System.err
-                        .println("Exception in component " + currentComponent);
+                globalMap.put(currentComponent + "_ERROR_MESSAGE", e.getMessage());
+                System.err.println("Exception in component " + currentComponent);
             }
             if (!(e instanceof TDieException)) {
                 e.printStackTrace();
             }
             if (!(e instanceof TalendException)) {
                 try {
-                    for (java.lang.reflect.Method m : this.getClass()
-                            .getEnclosingClass().getMethods()) {
+                    for (java.lang.reflect.Method m : this.getClass().getEnclosingClass().getMethods()) {
                         if (m.getName().compareTo(currentComponent + "_error") == 0) {
                             m.invoke(c, new Object[] { e });
                             break;
@@ -132,14 +142,12 @@ public class HashFilesBench_tMapPersistent {
         tJava_1_onSubJobError(exception);
     }
 
-    public void tFileInputDelimited_8_error(Exception exception)
-            throws TalendException {
+    public void tFileInputDelimited_8_error(Exception exception) throws TalendException {
         end_Hash.put("tFileInputDelimited_8", System.currentTimeMillis());
         tFileInputDelimited_8_onSubJobError(exception);
     }
 
-    public void tFileOutputDelimited_2_error(Exception exception)
-            throws TalendException {
+    public void tFileOutputDelimited_2_error(Exception exception) throws TalendException {
         end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
         tFileInputDelimited_8_onSubJobError(exception);
     }
@@ -149,46 +157,39 @@ public class HashFilesBench_tMapPersistent {
         tJava_2_onSubJobError(exception);
     }
 
-    public void tFileInputDelimited_9_error(Exception exception)
-            throws TalendException {
+    public void tFileInputDelimited_9_error(Exception exception) throws TalendException {
         end_Hash.put("tFileInputDelimited_9", System.currentTimeMillis());
         tFileInputDelimited_8_onSubJobError(exception);
     }
 
-    public void tAdvancedHash_lookup_error(Exception exception)
-            throws TalendException {
+    public void tAdvancedHash_lookup_error(Exception exception) throws TalendException {
         end_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
         tFileInputDelimited_8_onSubJobError(exception);
     }
 
-    public void tMap_1_TMAP_OUT_error(Exception exception)
-            throws TalendException {
+    public void tMap_1_TMAP_OUT_error(Exception exception) throws TalendException {
         end_Hash.put("tMap_1_TMAP_OUT", System.currentTimeMillis());
         tFileInputDelimited_8_onSubJobError(exception);
     }
 
-    public void tMap_1_TMAP_IN_error(Exception exception)
-            throws TalendException {
+    public void tMap_1_TMAP_IN_error(Exception exception) throws TalendException {
         end_Hash.put("tMap_1_TMAP_IN", System.currentTimeMillis());
         tFileInputDelimited_8_onSubJobError(exception);
     }
 
-    public void tJava_1_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tJava_1_onSubJobError(Exception exception) throws TalendException {
     }
 
-    public void tFileInputDelimited_8_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tFileInputDelimited_8_onSubJobError(Exception exception) throws TalendException {
     }
 
-    public void tJava_2_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tJava_2_onSubJobError(Exception exception) throws TalendException {
     }
 
     public void tJava_1Process() throws TalendException {
         try {
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJava_1 begin ] start
              */
 
@@ -210,7 +211,7 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tJava_1 begin ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJava_1 main ] start
              */
 
@@ -219,7 +220,7 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tJava_1 main ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJava_1 end ] start
              */
 
@@ -240,8 +241,7 @@ public class HashFilesBench_tMapPersistent {
 
     }
 
-    private class outStruct implements
-            routines.system.IPersistableRow<outStruct> {
+    private class outStruct implements routines.system.IPersistableRow<outStruct> {
 
         Integer ID_MAIN;
 
@@ -391,8 +391,7 @@ public class HashFilesBench_tMapPersistent {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -414,8 +413,7 @@ public class HashFilesBench_tMapPersistent {
 
     }
 
-    private class mainStruct implements
-            routines.system.IPersistableRow<mainStruct> {
+    private class mainStruct implements routines.system.IPersistableRow<mainStruct> {
 
         Integer ID_MAIN;
 
@@ -514,8 +512,7 @@ public class HashFilesBench_tMapPersistent {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -539,9 +536,13 @@ public class HashFilesBench_tMapPersistent {
 
     private class after_tFileInputDelimited_8Struct implements
             routines.system.IPersistableRow<after_tFileInputDelimited_8Struct> {
+
         private static final int DEFAULT_HASHCODE = 1;
+
         private static final int PRIME = 31;
+
         private int hashCode = DEFAULT_HASHCODE;
+
         public boolean hashCodeDirty = true;
 
         Integer ID_MAIN;
@@ -554,9 +555,7 @@ public class HashFilesBench_tMapPersistent {
                 final int prime = PRIME;
                 int result = DEFAULT_HASHCODE;
 
-                result = prime
-                        * result
-                        + ((this.ID_MAIN == null) ? 0 : this.ID_MAIN.hashCode());
+                result = prime * result + ((this.ID_MAIN == null) ? 0 : this.ID_MAIN.hashCode());
 
                 this.hashCode = result;
                 this.hashCodeDirty = false;
@@ -694,8 +693,7 @@ public class HashFilesBench_tMapPersistent {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -724,7 +722,7 @@ public class HashFilesBench_tMapPersistent {
             mainStruct main = new mainStruct();
             outStruct out = new outStruct();
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_1_TMAP_OUT begin ] start
              */
 
@@ -759,10 +757,10 @@ public class HashFilesBench_tMapPersistent {
 
                 // main
                 Integer main__ID_MAIN;
+
                 String main__LABEL_MAIN;
 
-                public void fillFrom(mainStruct main,
-                        Integer exprKey_lookup__ID_LOOKUP1) {
+                public void fillFrom(mainStruct main, Integer exprKey_lookup__ID_LOOKUP1) {
 
                     this.main__ID_MAIN = main.ID_MAIN;
                     this.main__LABEL_MAIN = main.LABEL_MAIN;
@@ -802,8 +800,7 @@ public class HashFilesBench_tMapPersistent {
 
                     int returnValue = 0;
 
-                    returnValue = checkNullsAndCompare(
-                            this.exprKey_lookup__ID_LOOKUP1,
+                    returnValue = checkNullsAndCompare(this.exprKey_lookup__ID_LOOKUP1,
                             other.exprKey_lookup__ID_LOOKUP1);
                     if (returnValue != 0) {
                         return returnValue;
@@ -818,14 +815,11 @@ public class HashFilesBench_tMapPersistent {
 
                     int returnValue = 0;
                     if (object1 instanceof String && object2 instanceof String) {
-                        returnValue = compareStrings((String) object1,
-                                (String) object2);
-                    } else if (object1 instanceof Comparable
-                            && object2 instanceof Comparable) {
+                        returnValue = compareStrings((String) object1, (String) object2);
+                    } else if (object1 instanceof Comparable && object2 instanceof Comparable) {
                         returnValue = ((Comparable) object1).compareTo(object2);
                     } else if (object1 != null && object2 != null) {
-                        returnValue = compareStrings(object1.toString(),
-                                object2.toString());
+                        returnValue = compareStrings(object1.toString(), object2.toString());
                     } else if (object1 == null && object2 != null) {
                         returnValue = 1;
                     } else if (object1 != null && object2 == null) {
@@ -878,7 +872,7 @@ public class HashFilesBench_tMapPersistent {
                         }
 
                         System.out.println("Read:" + this);
-                        
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
 
@@ -912,9 +906,8 @@ public class HashFilesBench_tMapPersistent {
                             dos.writeInt(this.exprKey_lookup__ID_LOOKUP1);
                         }
 
-                        
                         System.out.println("Write:" + this);
-                        
+
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -923,8 +916,8 @@ public class HashFilesBench_tMapPersistent {
             } // G_TM_B_001
 
             org.talend.designer.components.persistent.PersistentRowSorterIterator<SortableRow_main> fsi_main = new org.talend.designer.components.persistent.PersistentRowSorterIterator<SortableRow_main>(
-                    context.rootFolder + "/temp" + "/" + jobName
-                            + "_tMapData_main", 15000000) {
+                    context.rootFolder + "/temp" + "/" + jobName + "_tMapData_main", 15000000) {
+
                 public SortableRow_main createRowInstance() {
                     return new SortableRow_main();
                 }
@@ -936,7 +929,7 @@ public class HashFilesBench_tMapPersistent {
              * [tMap_1_TMAP_OUT begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileInputDelimited_8 begin ] start
              */
 
@@ -945,8 +938,7 @@ public class HashFilesBench_tMapPersistent {
             currentComponent = "tFileInputDelimited_8";
 
             org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_8 = new org.talend.fileprocess.FileInputDelimited(
-                    context.rootFolder + "/in/files/big_file_main_"
-                            + context.nbItems + "_id_label.csv", "ISO-8859-15",
+                    context.rootFolder + "/in/files/big_file_main_" + context.nbItems + "_id_label.csv", "ISO-8859-15",
                     ";", "\n", true, 0, 0, -1, -1);
             while (fid_tFileInputDelimited_8.nextRecord()) {
                 main = null;
@@ -954,11 +946,9 @@ public class HashFilesBench_tMapPersistent {
                 main = new mainStruct();
                 try {
                     String temp_tFileInputDelimited_8 = "";
-                    temp_tFileInputDelimited_8 = fid_tFileInputDelimited_8.get(
-                            0).trim();
+                    temp_tFileInputDelimited_8 = fid_tFileInputDelimited_8.get(0).trim();
                     if (temp_tFileInputDelimited_8.length() > 0) {
-                        main.ID_MAIN = ParserUtils
-                                .parseTo_Integer(temp_tFileInputDelimited_8);
+                        main.ID_MAIN = ParserUtils.parseTo_Integer(temp_tFileInputDelimited_8);
                     } else {
                         main.ID_MAIN = null;
                     }
@@ -972,7 +962,7 @@ public class HashFilesBench_tMapPersistent {
                 /**
                  * [tFileInputDelimited_8 begin ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFileInputDelimited_8 main ] start
                  */
 
@@ -984,7 +974,7 @@ public class HashFilesBench_tMapPersistent {
                 // Start of branch "main"
                 if (main != null) {
 
-                    /***********************************************************
+                    /***************************************************************************************************
                      * / [tMap_1_TMAP_OUT main ] start
                      */
 
@@ -1026,7 +1016,7 @@ public class HashFilesBench_tMapPersistent {
 
                 } // End of branch "main"
 
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFileInputDelimited_8 end ] start
                  */
 
@@ -1034,8 +1024,7 @@ public class HashFilesBench_tMapPersistent {
 
             }
             fid_tFileInputDelimited_8.close();
-            globalMap.put("tFileInputDelimited_8_NB_LINE",
-                    fid_tFileInputDelimited_8.getRowNumber());
+            globalMap.put("tFileInputDelimited_8_NB_LINE", fid_tFileInputDelimited_8.getRowNumber());
 
             ok_Hash.put("tFileInputDelimited_8", true);
             end_Hash.put("tFileInputDelimited_8", System.currentTimeMillis());
@@ -1043,7 +1032,7 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tFileInputDelimited_8 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_1_TMAP_OUT end ] start
              */
 
@@ -1060,45 +1049,37 @@ public class HashFilesBench_tMapPersistent {
              * [tMap_1_TMAP_OUT end ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileOutputDelimited_2 begin ] start
              */
 
             ok_Hash.put("tFileOutputDelimited_2", false);
-            start_Hash
-                    .put("tFileOutputDelimited_2", System.currentTimeMillis());
+            start_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
             currentComponent = "tFileOutputDelimited_2";
 
-            String fileName_tFileOutputDelimited_2 = (new java.io.File(
-                    context.rootFolder + "/out/result_" + context.nbItems
-                            + ".csv")).getAbsolutePath().replace("\\", "/");
+            String fileName_tFileOutputDelimited_2 = (new java.io.File(context.rootFolder + "/out/result_"
+                    + context.nbItems + ".csv")).getAbsolutePath().replace("\\", "/");
             String fullName_tFileOutputDelimited_2 = null;
             String extension_tFileOutputDelimited_2 = null;
             String directory_tFileOutputDelimited_2 = null;
             if ((fileName_tFileOutputDelimited_2.indexOf("/") != -1)) {
-                if (fileName_tFileOutputDelimited_2.lastIndexOf(".") < fileName_tFileOutputDelimited_2
-                        .lastIndexOf("/")) {
+                if (fileName_tFileOutputDelimited_2.lastIndexOf(".") < fileName_tFileOutputDelimited_2.lastIndexOf("/")) {
                     fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
                     extension_tFileOutputDelimited_2 = "";
                 } else {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(0, fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2.substring(0,
+                            fileName_tFileOutputDelimited_2.lastIndexOf("."));
                     extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                            .substring(fileName_tFileOutputDelimited_2.lastIndexOf("."));
                 }
-                directory_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                        .substring(0, fileName_tFileOutputDelimited_2
-                                .lastIndexOf("/"));
+                directory_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2.substring(0,
+                        fileName_tFileOutputDelimited_2.lastIndexOf("/"));
             } else {
                 if (fileName_tFileOutputDelimited_2.lastIndexOf(".") != -1) {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(0, fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2.substring(0,
+                            fileName_tFileOutputDelimited_2.lastIndexOf("."));
                     extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                            .substring(fileName_tFileOutputDelimited_2.lastIndexOf("."));
                 } else {
                     fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
                     extension_tFileOutputDelimited_2 = "";
@@ -1112,25 +1093,20 @@ public class HashFilesBench_tMapPersistent {
             int currentRow_tFileOutputDelimited_2 = 0;
 
             final String OUT_DELIM_tFileOutputDelimited_2 = /**
-                                                             * Start field
-                                                             * tFileOutputDelimited_2:FIELDSEPARATOR
+                                                             * Start field tFileOutputDelimited_2:FIELDSEPARATOR
                                                              */
             ";"/** End field tFileOutputDelimited_2:FIELDSEPARATOR */
             ;
 
             final String OUT_DELIM_ROWSEP_tFileOutputDelimited_2 = /**
-                                                                     * Start
-                                                                     * field
-                                                                     * tFileOutputDelimited_2:ROWSEPARATOR
+                                                                     * Start field tFileOutputDelimited_2:ROWSEPARATOR
                                                                      */
             "\n"/** End field tFileOutputDelimited_2:ROWSEPARATOR */
             ;
 
             // create directory only if not exists
-            if (directory_tFileOutputDelimited_2 != null
-                    && directory_tFileOutputDelimited_2.trim().length() != 0) {
-                java.io.File dir_tFileOutputDelimited_2 = new java.io.File(
-                        directory_tFileOutputDelimited_2);
+            if (directory_tFileOutputDelimited_2 != null && directory_tFileOutputDelimited_2.trim().length() != 0) {
+                java.io.File dir_tFileOutputDelimited_2 = new java.io.File(directory_tFileOutputDelimited_2);
                 if (!dir_tFileOutputDelimited_2.exists()) {
                     dir_tFileOutputDelimited_2.mkdirs();
                 }
@@ -1138,17 +1114,14 @@ public class HashFilesBench_tMapPersistent {
 
             java.io.BufferedWriter outtFileOutputDelimited_2 = new java.io.BufferedWriter(
                     new java.io.OutputStreamWriter(
-                            new java.io.FileOutputStream(
-                                    fileName_tFileOutputDelimited_2, false),
-                            "ISO-8859-15"));
-            java.io.File filetFileOutputDelimited_2 = new java.io.File(
-                    fileName_tFileOutputDelimited_2);
+                            new java.io.FileOutputStream(fileName_tFileOutputDelimited_2, false), "ISO-8859-15"));
+            java.io.File filetFileOutputDelimited_2 = new java.io.File(fileName_tFileOutputDelimited_2);
 
             /**
              * [tFileOutputDelimited_2 begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_1_TMAP_IN begin ] start
              */
 
@@ -1172,7 +1145,7 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tMap_1_TMAP_IN begin ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_1_TMAP_IN main ] start
              */
 
@@ -1271,7 +1244,7 @@ public class HashFilesBench_tMapPersistent {
                 // Start of branch "out"
                 if (out != null) {
 
-                    /***********************************************************
+                    /***************************************************************************************************
                      * / [tFileOutputDelimited_2 main ] start
                      */
 
@@ -1289,8 +1262,7 @@ public class HashFilesBench_tMapPersistent {
 
                     }
 
-                    sb_tFileOutputDelimited_2
-                            .append(OUT_DELIM_tFileOutputDelimited_2);
+                    sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                     if (out.LABEL_MAIN != null) {
 
@@ -1302,8 +1274,7 @@ public class HashFilesBench_tMapPersistent {
 
                     }
 
-                    sb_tFileOutputDelimited_2
-                            .append(OUT_DELIM_tFileOutputDelimited_2);
+                    sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                     if (out.ID_LOOKUP1 != null) {
 
@@ -1315,8 +1286,7 @@ public class HashFilesBench_tMapPersistent {
 
                     }
 
-                    sb_tFileOutputDelimited_2
-                            .append(OUT_DELIM_tFileOutputDelimited_2);
+                    sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                     if (out.LABEL_LOOKUP1 != null) {
 
@@ -1328,11 +1298,9 @@ public class HashFilesBench_tMapPersistent {
 
                     }
 
-                    sb_tFileOutputDelimited_2
-                            .append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
+                    sb_tFileOutputDelimited_2.append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
 
-                    outtFileOutputDelimited_2.write(sb_tFileOutputDelimited_2
-                            .toString());
+                    outtFileOutputDelimited_2.write(sb_tFileOutputDelimited_2.toString());
 
                     nb_line_tFileOutputDelimited_2++;
 
@@ -1343,7 +1311,7 @@ public class HashFilesBench_tMapPersistent {
                 } // End of branch "out"
 
             } // G_TM_M_250 close loop read file data 'main'
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_1_TMAP_IN end ] start
              */
 
@@ -1365,15 +1333,14 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tMap_1_TMAP_IN end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileOutputDelimited_2 end ] start
              */
 
             currentComponent = "tFileOutputDelimited_2";
 
             outtFileOutputDelimited_2.close();
-            globalMap.put("tFileOutputDelimited_2_NB_LINE",
-                    nb_line_tFileOutputDelimited_2);
+            globalMap.put("tFileOutputDelimited_2_NB_LINE", nb_line_tFileOutputDelimited_2);
 
             ok_Hash.put("tFileOutputDelimited_2", true);
             end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
@@ -1393,7 +1360,7 @@ public class HashFilesBench_tMapPersistent {
 
     public void tJava_2Process() throws TalendException {
         try {
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJava_2 begin ] start
              */
 
@@ -1409,7 +1376,7 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tJava_2 begin ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJava_2 main ] start
              */
 
@@ -1418,7 +1385,7 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tJava_2 main ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJava_2 end ] start
              */
 
@@ -1438,11 +1405,14 @@ public class HashFilesBench_tMapPersistent {
 
     }
 
-    private class lookupStruct implements
-            routines.system.IPersistableComparableLookupRow<lookupStruct> {
+    private class lookupStruct implements routines.system.IPersistableComparableLookupRow<lookupStruct> {
+
         private static final int DEFAULT_HASHCODE = 1;
+
         private static final int PRIME = 31;
+
         private int hashCode = DEFAULT_HASHCODE;
+
         public boolean hashCodeDirty = true;
 
         Integer ID_LOOKUP1;
@@ -1455,10 +1425,7 @@ public class HashFilesBench_tMapPersistent {
                 final int prime = PRIME;
                 int result = DEFAULT_HASHCODE;
 
-                result = prime
-                        * result
-                        + ((this.ID_LOOKUP1 == null) ? 0 : this.ID_LOOKUP1
-                                .hashCode());
+                result = prime * result + ((this.ID_LOOKUP1 == null) ? 0 : this.ID_LOOKUP1.hashCode());
 
                 this.hashCode = result;
                 this.hashCodeDirty = false;
@@ -1606,8 +1573,7 @@ public class HashFilesBench_tMapPersistent {
 
             int returnValue = -1;
 
-            returnValue = checkNullsAndCompare(this.ID_LOOKUP1,
-                    other.ID_LOOKUP1);
+            returnValue = checkNullsAndCompare(this.ID_LOOKUP1, other.ID_LOOKUP1);
             if (returnValue != 0) {
                 return returnValue;
             }
@@ -1620,8 +1586,7 @@ public class HashFilesBench_tMapPersistent {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -1648,7 +1613,7 @@ public class HashFilesBench_tMapPersistent {
 
             lookupStruct lookup = new lookupStruct();
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAdvancedHash_lookup begin ] start
              */
 
@@ -1659,10 +1624,9 @@ public class HashFilesBench_tMapPersistent {
             org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE matchingModeEnum_lookup = org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE.LAST_MATCH;
 
             org.talend.designer.components.persistent.PersistentSortedLookupManager<lookupStruct> tHash_Lookup_lookup = new org.talend.designer.components.persistent.PersistentSortedLookupManager<lookupStruct>(
-                    matchingModeEnum_lookup,
-                    context.rootFolder + "/temp" + "/" + jobName
-                            + "_tMapData_Lookup_lookup_",
+                    matchingModeEnum_lookup, context.rootFolder + "/temp" + "/" + jobName + "_tMapData_Lookup_lookup_",
                     new org.talend.designer.components.persistent.IRowCreator() {
+
                         public lookupStruct createRowInstance() {
                             return new lookupStruct();
                         }
@@ -1680,7 +1644,7 @@ public class HashFilesBench_tMapPersistent {
              * [tAdvancedHash_lookup begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileInputDelimited_9 begin ] start
              */
 
@@ -1689,9 +1653,8 @@ public class HashFilesBench_tMapPersistent {
             currentComponent = "tFileInputDelimited_9";
 
             org.talend.fileprocess.FileInputDelimited fid_tFileInputDelimited_9 = new org.talend.fileprocess.FileInputDelimited(
-                    context.rootFolder + "/in/files/big_file_lookup_"
-                            + context.nbItems + "_id_label.csv", "ISO-8859-15",
-                    ";", "\n", true, 0, 0, -1, -1);
+                    context.rootFolder + "/in/files/big_file_lookup_" + context.nbItems + "_id_label.csv",
+                    "ISO-8859-15", ";", "\n", true, 0, 0, -1, -1);
             while (fid_tFileInputDelimited_9.nextRecord()) {
                 lookup = null;
                 lookup = null;
@@ -1699,16 +1662,13 @@ public class HashFilesBench_tMapPersistent {
                 lookup = new lookupStruct();
                 try {
                     String temp_tFileInputDelimited_9 = "";
-                    temp_tFileInputDelimited_9 = fid_tFileInputDelimited_9.get(
-                            0).trim();
+                    temp_tFileInputDelimited_9 = fid_tFileInputDelimited_9.get(0).trim();
                     if (temp_tFileInputDelimited_9.length() > 0) {
-                        lookup.ID_LOOKUP1 = ParserUtils
-                                .parseTo_Integer(temp_tFileInputDelimited_9);
+                        lookup.ID_LOOKUP1 = ParserUtils.parseTo_Integer(temp_tFileInputDelimited_9);
                     } else {
                         lookup.ID_LOOKUP1 = null;
                     }
-                    lookup.LABEL_LOOKUP1 = fid_tFileInputDelimited_9.get(1)
-                            .trim();
+                    lookup.LABEL_LOOKUP1 = fid_tFileInputDelimited_9.get(1).trim();
 
                 } catch (Exception e) {
                     whetherReject_tFileInputDelimited_9 = true;
@@ -1718,7 +1678,7 @@ public class HashFilesBench_tMapPersistent {
                 /**
                  * [tFileInputDelimited_9 begin ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFileInputDelimited_9 main ] start
                  */
 
@@ -1730,14 +1690,13 @@ public class HashFilesBench_tMapPersistent {
                 // Start of branch "lookup"
                 if (lookup != null) {
 
-                    /***********************************************************
+                    /***************************************************************************************************
                      * / [tAdvancedHash_lookup main ] start
                      */
 
                     currentComponent = "tAdvancedHash_lookup";
 
-                    lookupStruct lookup_HashRow = tHash_Lookup_lookup
-                            .getNextFreeRow();
+                    lookupStruct lookup_HashRow = tHash_Lookup_lookup.getNextFreeRow();
 
                     lookup_HashRow.ID_LOOKUP1 = lookup.ID_LOOKUP1;
                     lookup_HashRow.LABEL_LOOKUP1 = lookup.LABEL_LOOKUP1;
@@ -1749,7 +1708,7 @@ public class HashFilesBench_tMapPersistent {
 
                 } // End of branch "lookup"
 
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFileInputDelimited_9 end ] start
                  */
 
@@ -1757,8 +1716,7 @@ public class HashFilesBench_tMapPersistent {
 
             }
             fid_tFileInputDelimited_9.close();
-            globalMap.put("tFileInputDelimited_9_NB_LINE",
-                    fid_tFileInputDelimited_9.getRowNumber());
+            globalMap.put("tFileInputDelimited_9_NB_LINE", fid_tFileInputDelimited_9.getRowNumber());
 
             ok_Hash.put("tFileInputDelimited_9", true);
             end_Hash.put("tFileInputDelimited_9", System.currentTimeMillis());
@@ -1766,7 +1724,7 @@ public class HashFilesBench_tMapPersistent {
             /**
              * [tFileInputDelimited_9 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAdvancedHash_lookup end ] start
              */
 
@@ -1789,14 +1747,23 @@ public class HashFilesBench_tMapPersistent {
     }
 
     public static boolean watch = false;
+
     public static int portStats = 3334;
+
     public static int portTraces = 4334;
+
     public static String clientHost;
+
     public static String defaultClientHost = "localhost";
+
     public static String contextStr = "LOCAL";
+
     public static String pid = "0";
+
     public static String rootPid = null;
+
     public static String fatherPid = null;
+
     public static long startTime = 0;
 
     private static java.util.Properties context_param = new java.util.Properties();
@@ -1851,10 +1818,8 @@ public class HashFilesBench_tMapPersistent {
         }
 
         try {
-            java.io.InputStream inContext = HashFilesBench_tMapPersistent.class
-                    .getClassLoader()
-                    .getResourceAsStream(
-                            "java_project_8/hashfilesbench_tmappersistent_0_2/contexts/Default.properties");
+            java.io.InputStream inContext = HashFilesBench_tMapPersistent.class.getClassLoader().getResourceAsStream(
+                    "java_project_8/hashfilesbench_tmappersistent_0_2/contexts/Default.properties");
             if (inContext != null) {
                 defaultProps.load(inContext);
                 inContext.close();
@@ -1862,10 +1827,8 @@ public class HashFilesBench_tMapPersistent {
             }
 
             if (contextStr.compareTo("Default") != 0) {
-                inContext = HashFilesBench_tMapPersistent.class
-                        .getClassLoader().getResourceAsStream(
-                                "java_project_8/hashfilesbench_tmappersistent_0_2/contexts/"
-                                        + contextStr + ".properties");
+                inContext = HashFilesBench_tMapPersistent.class.getClassLoader().getResourceAsStream(
+                        "java_project_8/hashfilesbench_tmappersistent_0_2/contexts/" + contextStr + ".properties");
                 if (inContext != null) {
                     context.load(inContext);
                     inContext.close();
@@ -1877,8 +1840,7 @@ public class HashFilesBench_tMapPersistent {
             }
 
             try {
-                context.nbItems = Integer.parseInt(context
-                        .getProperty("nbItems"));
+                context.nbItems = Integer.parseInt(context.getProperty("nbItems"));
             } catch (NumberFormatException e) {
                 context.nbItems = null;
             }
@@ -1890,8 +1852,7 @@ public class HashFilesBench_tMapPersistent {
             ie.printStackTrace();
         }
 
-        long startUsedMemory = Runtime.getRuntime().totalMemory()
-                - Runtime.getRuntime().freeMemory();
+        long startUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         long endUsedMemory = 0;
         long end = 0;
 
@@ -1913,12 +1874,10 @@ public class HashFilesBench_tMapPersistent {
             System.out.println((end - startTime) + " milliseconds");
         }
 
-        endUsedMemory = Runtime.getRuntime().totalMemory()
-                - Runtime.getRuntime().freeMemory();
+        endUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         if (false) {
-            System.out
-                    .println((endUsedMemory - startUsedMemory)
-                            + " bytes memory increase when running : HashFilesBench_tMapPersistent");
+            System.out.println((endUsedMemory - startUsedMemory)
+                    + " bytes memory increase when running : HashFilesBench_tMapPersistent");
         }
 
         reset();
@@ -1949,8 +1908,7 @@ public class HashFilesBench_tMapPersistent {
             String keyValue = arg.substring(16);
             int index = -1;
             if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
-                context_param.put(keyValue.substring(0, index), keyValue
-                        .substring(index + 1));
+                context_param.put(keyValue.substring(0, index), keyValue.substring(index + 1));
             }
         }
 
@@ -1983,7 +1941,6 @@ public class HashFilesBench_tMapPersistent {
         System.gc();
     }
 }
-/*******************************************************************************
- * 54196 characters generated by Talend OpenStudio on the 12 mai 2008 12:13:05
- * CEST
- ******************************************************************************/
+/***********************************************************************************************************************
+ * 54196 characters generated by Talend OpenStudio on the 12 mai 2008 12:13:05 CEST
+ **********************************************************************************************************************/

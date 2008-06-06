@@ -45,8 +45,8 @@ import routines.system.IPersistableLookupRow;
  * 
  * 
  */
-public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends AbstractPersistentLookup<B>
-        implements IPersistentLookupManager<B> {
+public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends
+        AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
 
     private static final float MARGIN_MAX = 0.35f;
 
@@ -58,8 +58,9 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
     private ILookupManagerUnit<B>[] lookupList;
 
     private int bufferSize = 10000000;
-//    private int bufferSize = 100;
-//    private int bufferSize = 20;
+
+    // private int bufferSize = 100;
+    // private int bufferSize = 20;
 
     // private int bufferSize = 100;
     // private int bufferSize = 3;
@@ -101,7 +102,8 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
 
     private boolean waitingHeapException;
 
-    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator) throws IOException {
+    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator)
+            throws IOException {
         this.matchingMode = matchingMode;
         this.container = container;
         this.rowCreator = rowCreator;
@@ -109,12 +111,12 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
         FileUtils.createParentFolderIfNotExists(container);
     }
 
-    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator, int bufferSize) throws IOException {
+    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator,
+            int bufferSize) throws IOException {
         this(matchingMode, container, rowCreator);
         this.bufferSize = bufferSize;
     }
-    
-    
+
     public void initPut() throws IOException {
         buffer = new IPersistableLookupRow[bufferSize];
         bufferBeanIndex = 0;
@@ -148,7 +150,7 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
             writeBuffer();
             if (!bufferIsMarked) {
                 bufferMarkLimit = bufferBeanIndex;
-//                System.out.println("Buffer marked at index (2-Lookup) " + bufferMarkLimit);
+                // System.out.println("Buffer marked at index (2-Lookup) " + bufferMarkLimit);
                 bufferIsMarked = true;
             }
             bufferBeanIndex = 0;
@@ -174,7 +176,8 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
         Arrays.sort(buffer, 0, bufferBeanIndex);
         File keysDataFile = new File(buildKeysFilePath(fileIndex));
         File valuesDataFile = new File(buildValuesFilePath(fileIndex));
-        ObjectOutputStream keysDataOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(keysDataFile)));
+        ObjectOutputStream keysDataOutputStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(
+                keysDataFile)));
         DataOutputStream valuesDataOutputStream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(
                 valuesDataFile)));
         ObjectOutputStream valuesObjectOutputStream = new ObjectOutputStream(valuesDataOutputStream);
@@ -193,7 +196,7 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
             writtenValuesDataSize = newSize - previousSize;
             curBean.writeKeysData(keysDataOutputStream);
             keysDataOutputStream.writeInt(writtenValuesDataSize);
-            previousSize = newSize; 
+            previousSize = newSize;
             // System.out.println(curBean);
         }
         // System.out.println("Write ended LOOKUP buffer " + fileIndex);

@@ -69,7 +69,7 @@ public class BerkeleyDBHashById implements IMapHashFile {
     private Environment myDbEnvironment;
 
     private Database myDatabase;
-    
+
     private String container = "/home/amaumont/hash_benchs/berkeley_db_files";
 
     byte[] key = new byte[4];
@@ -122,7 +122,7 @@ public class BerkeleyDBHashById implements IMapHashFile {
     }
 
     public void connect(String database) throws ClassNotFoundException, SQLException {
-    
+
         try {
             EnvironmentConfig envConfig = new EnvironmentConfig();
             envConfig.setAllowCreate(true);
@@ -217,12 +217,12 @@ public class BerkeleyDBHashById implements IMapHashFile {
         // Map m = new THashMap();
         long end = 0;
         long start = java.util.Calendar.getInstance().getTimeInMillis();
-//        for (int i = 0; i < loop; i++) {
-//            Bean bean = new Bean(i, "test" + (i));
-//            bh.put("", bean);
-//            // KeyForMap k = new KeyForMap(i, bean.hashCode());
-//            // m.put(k, k);
-//        }
+        // for (int i = 0; i < loop; i++) {
+        // Bean bean = new Bean(i, "test" + (i));
+        // bh.put("", bean);
+        // // KeyForMap k = new KeyForMap(i, bean.hashCode());
+        // // m.put(k, k);
+        // }
         end = java.util.Calendar.getInstance().getTimeInMillis();
         System.out.println((end - start) + " milliseconds for " + loop + " objects to store.");
 
@@ -234,7 +234,7 @@ public class BerkeleyDBHashById implements IMapHashFile {
         start = java.util.Calendar.getInstance().getTimeInMillis();
         for (int i = 0; i < size; i++) {
             Bean b = (Bean) (bh.get("", ri[i], ri[i]));
-//            System.out.println(b.primitiveInt+"   "+b.name);
+            // System.out.println(b.primitiveInt+" "+b.name);
         }
         end = java.util.Calendar.getInstance().getTimeInMillis();
         System.out.println((end - start) + " milliseconds for " + size + " objects to get randomly.");

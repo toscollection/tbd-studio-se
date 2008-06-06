@@ -1,23 +1,23 @@
 /**
  * GetRevisionListLocator.java
- *
- * This file was auto-generated from WSDL
- * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
+ * 
+ * This file was auto-generated from WSDL by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
  */
 
 package org.talend.designer.components.ecosystem.ws;
 
-public class GetRevisionListLocator extends org.apache.axis.client.Service implements org.talend.designer.components.ecosystem.ws.GetRevisionList {
+public class GetRevisionListLocator extends org.apache.axis.client.Service implements
+        org.talend.designer.components.ecosystem.ws.GetRevisionList {
 
     public GetRevisionListLocator() {
     }
-
 
     public GetRevisionListLocator(org.apache.axis.EngineConfiguration config) {
         super(config);
     }
 
-    public GetRevisionListLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
+    public GetRevisionListLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName)
+            throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
     }
 
@@ -39,24 +39,25 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
         getRevisionListPortWSDDServiceName = name;
     }
 
-    public org.talend.designer.components.ecosystem.ws.GetRevisionListPortType getgetRevisionListPort() throws javax.xml.rpc.ServiceException {
-       java.net.URL endpoint;
+    public org.talend.designer.components.ecosystem.ws.GetRevisionListPortType getgetRevisionListPort()
+            throws javax.xml.rpc.ServiceException {
+        java.net.URL endpoint;
         try {
             endpoint = new java.net.URL(getRevisionListPort_address);
-        }
-        catch (java.net.MalformedURLException e) {
+        } catch (java.net.MalformedURLException e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
         return getgetRevisionListPort(endpoint);
     }
 
-    public org.talend.designer.components.ecosystem.ws.GetRevisionListPortType getgetRevisionListPort(java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public org.talend.designer.components.ecosystem.ws.GetRevisionListPortType getgetRevisionListPort(
+            java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
         try {
-            org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub _stub = new org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub(portAddress, this);
+            org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub _stub = new org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub(
+                    portAddress, this);
             _stub.setPortName(getgetRevisionListPortWSDDServiceName());
             return _stub;
-        }
-        catch (org.apache.axis.AxisFault e) {
+        } catch (org.apache.axis.AxisFault e) {
             return null;
         }
     }
@@ -66,38 +67,38 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
     }
 
     /**
-     * For the given interface, get the stub implementation.
-     * If this service has no port for the given interface,
-     * then ServiceException is thrown.
+     * For the given interface, get the stub implementation. If this service has no port for the given interface, then
+     * ServiceException is thrown.
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
-            if (org.talend.designer.components.ecosystem.ws.GetRevisionListPortType.class.isAssignableFrom(serviceEndpointInterface)) {
-                org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub _stub = new org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub(new java.net.URL(getRevisionListPort_address), this);
+            if (org.talend.designer.components.ecosystem.ws.GetRevisionListPortType.class
+                    .isAssignableFrom(serviceEndpointInterface)) {
+                org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub _stub = new org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub(
+                        new java.net.URL(getRevisionListPort_address), this);
                 _stub.setPortName(getgetRevisionListPortWSDDServiceName());
                 return _stub;
             }
-        }
-        catch (java.lang.Throwable t) {
+        } catch (java.lang.Throwable t) {
             throw new javax.xml.rpc.ServiceException(t);
         }
-        throw new javax.xml.rpc.ServiceException("There is no stub implementation for the interface:  " + (serviceEndpointInterface == null ? "null" : serviceEndpointInterface.getName()));
+        throw new javax.xml.rpc.ServiceException("There is no stub implementation for the interface:  "
+                + (serviceEndpointInterface == null ? "null" : serviceEndpointInterface.getName()));
     }
 
     /**
-     * For the given interface, get the stub implementation.
-     * If this service has no port for the given interface,
-     * then ServiceException is thrown.
+     * For the given interface, get the stub implementation. If this service has no port for the given interface, then
+     * ServiceException is thrown.
      */
-    public java.rmi.Remote getPort(javax.xml.namespace.QName portName, Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
+    public java.rmi.Remote getPort(javax.xml.namespace.QName portName, Class serviceEndpointInterface)
+            throws javax.xml.rpc.ServiceException {
         if (portName == null) {
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
         if ("getRevisionListPort".equals(inputPortName)) {
             return getgetRevisionListPort();
-        }
-        else  {
+        } else {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
             ((org.apache.axis.client.Stub) _stub).setPortName(portName);
             return _stub;
@@ -119,23 +120,23 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
     }
 
     /**
-    * Set the endpoint address for the specified port name.
-    */
-    public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
-        
-if ("getRevisionListPort".equals(portName)) {
+     * Set the endpoint address for the specified port name.
+     */
+    public void setEndpointAddress(java.lang.String portName, java.lang.String address)
+            throws javax.xml.rpc.ServiceException {
+
+        if ("getRevisionListPort".equals(portName)) {
             setgetRevisionListPortEndpointAddress(address);
-        }
-        else 
-{ // Unknown Port Name
+        } else { // Unknown Port Name
             throw new javax.xml.rpc.ServiceException(" Cannot set Endpoint Address for Unknown Port" + portName);
         }
     }
 
     /**
-    * Set the endpoint address for the specified port name.
-    */
-    public void setEndpointAddress(javax.xml.namespace.QName portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
+     * Set the endpoint address for the specified port name.
+     */
+    public void setEndpointAddress(javax.xml.namespace.QName portName, java.lang.String address)
+            throws javax.xml.rpc.ServiceException {
         setEndpointAddress(portName.getLocalPart(), address);
     }
 

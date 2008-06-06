@@ -63,11 +63,10 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
     private int cacheLimit = 1000000;
 
     private boolean cacheEnabled;
-    
+
     private THashMap<Integer, Object> cache = (cacheEnabled ? new THashMap<Integer, Object>(cacheLimit) : null);
 
     private long limitEndOfRead;
-    
 
     public MultiPointersMultiHashFiles(String filePath, int hashFilesNumber) {
         super();
@@ -83,7 +82,7 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
      */
     public int getFileNumber(int hashcode) {
         int index = Math.abs(hashcode) % hashFilesNumber;
-//        System.out.println("read file "+ index);
+        // System.out.println("read file "+ index);
         return index;
     }
 
@@ -139,7 +138,7 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
 
         long returnPosition = bwPositionArray[fileNumber];
 
-        //putInCache((int)returnPosition, bean);
+        // putInCache((int)returnPosition, bean);
 
         bwPositionArray[fileNumber] += (INTEGER_BYTES_SIZE + sizeBytes);
 
@@ -173,10 +172,10 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
     }
 
     public void initGet(String container) throws IOException {
-        if(filePointersNumberPrm == -1) {
+        if (filePointersNumberPrm == -1) {
             throw new IllegalStateException("filePointersNumberPrm must be set before call initGet");
         }
-        
+
         fileHandlersArray = new MultiReadPointersFileHandler[hashFilesNumber];
         lastRetrievedCursorPositionArray = new long[hashFilesNumber];
         lastRetrievedObjectArray = new Object[hashFilesNumber];
@@ -196,7 +195,7 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
         RandomAccessFile ra = fh.getPointer(cursorPosition);
 
         if (cursorPosition != lastRetrievedCursorPositionArray[fileNumber]) {
-            if(hashFilesNumber == 1 && cacheEnabled) {
+            if (hashFilesNumber == 1 && cacheEnabled) {
                 Object object = getFromChache((int) cursorPosition);
                 if (object == null) {
                     ++countUniqueGet;
@@ -210,7 +209,7 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
                 readData(cursorPosition, fileNumber, ra);
             }
         } else {
-            //System.out.println("previous is good !");
+            // System.out.println("previous is good !");
         }
         return lastRetrievedObjectArray[fileNumber];
     }
@@ -218,9 +217,10 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
     public MultiReadPointersFileHandler getFileHandler(int index) {
         return fileHandlersArray[index];
     }
-    
+
     /**
      * DOC amaumont Comment method "readData".
+     * 
      * @param cursorPosition
      * @param fileNumber
      * @param ra
@@ -231,16 +231,15 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
     private Object readData(long cursorPosition, int fileNumber, RandomAccessFile ra) throws IOException,
             ClassNotFoundException {
         Object object;
-        
-        if(cursorPosition < 0) {
-            cursorPosition = -1*cursorPosition + Integer.MAX_VALUE; 
+
+        if (cursorPosition < 0) {
+            cursorPosition = -1 * cursorPosition + Integer.MAX_VALUE;
         }
-        
+
         ra.seek(cursorPosition);
         ra.read(readBuffer);
-        object = new ObjectInputStream(new ByteArrayInputStream(readBuffer,
-                INTEGER_BYTES_SIZE, getDataLength(readBuffer[0], readBuffer[1], readBuffer[2], readBuffer[3])))
-                .readObject();
+        object = new ObjectInputStream(new ByteArrayInputStream(readBuffer, INTEGER_BYTES_SIZE, getDataLength(
+                readBuffer[0], readBuffer[1], readBuffer[2], readBuffer[3]))).readObject();
         lastRetrievedObjectArray[fileNumber] = object;
         lastRetrievedCursorPositionArray[fileNumber] = cursorPosition;
         return object;
@@ -318,16 +317,16 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
             pointersArray = new RandomAccessFile[filePointersNumber];
             File file = new File(containerFilePath);
             fileSize = file.length();
-            if(limitEndOfRead != 0) {
+            if (limitEndOfRead != 0) {
                 fileSize = limitEndOfRead;
             }
 
             offsetBetweenPointer = (int) ((float) fileSize / (float) (filePointersNumber));
 
             for (int i = 0; i < filePointersNumber; i++) {
-                if(i == 0 || i ==filePointersNumber -1) {
+                if (i == 0 || i == filePointersNumber - 1) {
                     System.out.println("Pointer " + i + " on '" + containerFilePath + "'");
-                } else if(i == 1) {
+                } else if (i == 1) {
                     System.out.println("...");
                 }
                 pointersArray[i] = new RandomAccessFile(containerFilePath, "r");
@@ -389,24 +388,22 @@ public class MultiPointersMultiHashFiles implements IMapHashFile {
         return size;
     }
 
-    
     /**
      * Getter for limitEndOfRead.
+     * 
      * @return the limitEndOfRead
      */
     public long getLimitEndOfRead() {
         return this.limitEndOfRead;
     }
 
-    
     /**
      * Sets the limitEndOfRead.
+     * 
      * @param limitEndOfRead the limitEndOfRead to set
      */
     public void setLimitEndOfRead(long limitEndOfRead) {
         this.limitEndOfRead = limitEndOfRead;
     }
 
-    
-    
 }

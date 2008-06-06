@@ -14,25 +14,24 @@ package org.talend.designer.components.persistent;
 
 /**
  * 
- * DOC amaumont  class global comment. Detailled comment
- * <br/>
- *
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
  * $Id$
- *
+ * 
  * @param <B>
  */
 public interface IRowProvider<B> {
 
     public B createInstance();
-    
+
     public B getFreeInstance();
-    
+
     public boolean hasNext();
 
     public B next();
 
     public void resetFreeIndex();
-    
+
     public void resetInstanceIndex();
-    
+
 }

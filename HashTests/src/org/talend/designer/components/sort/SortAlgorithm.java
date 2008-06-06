@@ -74,7 +74,7 @@ public class SortAlgorithm {
         }
         parent.apause(H);
     }
-    
+
     /**
      * Pause for a while and mark item 1 & 2.
      */

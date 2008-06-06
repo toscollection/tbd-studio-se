@@ -69,7 +69,8 @@ public class ComponentSearcher {
 
                 org.talend.designer.components.ecosystem.model.Revision rev = convertRevision(revision);
                 extension.getRevisions().add(rev);
-                if (extension.getLatestRevision() == null || extension.getLatestRevision().getDate().before(rev.getDate())) {
+                if (extension.getLatestRevision() == null
+                        || extension.getLatestRevision().getDate().before(rev.getDate())) {
                     // assumes that the revision with latest release date is the newest one.
                     extension.setLatestRevision(rev);
                 }

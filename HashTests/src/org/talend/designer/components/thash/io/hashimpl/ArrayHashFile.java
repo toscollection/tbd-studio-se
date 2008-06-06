@@ -27,10 +27,10 @@ import org.talend.designer.components.thash.io.IMapHashFile;
  * DOC slanglois class global comment. Detailled comment <br/>
  * 
  * 
- * 11687 milliseconds for 1000000 beans to STORE using ArrayHashFile. 85000 items/s. 17 bytes per item in storage. 
- * 20578 milliseconds for 1000000 beans to STORE using SimpleHashFile. 48000 items/s. 137 bytes per item in storage. 
- * 14406 milliseconds for 1000000 big beans to STORE using ArrayHashFile. 69000 items/s. 72 bytes per item in storage. 
- * 34547 milliseconds for 1000000 beans to STORE using SimpleHashFile. 28000 items/s. 329 bytes per item in storage.
+ * 11687 milliseconds for 1000000 beans to STORE using ArrayHashFile. 85000 items/s. 17 bytes per item in storage. 20578
+ * milliseconds for 1000000 beans to STORE using SimpleHashFile. 48000 items/s. 137 bytes per item in storage. 14406
+ * milliseconds for 1000000 big beans to STORE using ArrayHashFile. 69000 items/s. 72 bytes per item in storage. 34547
+ * milliseconds for 1000000 beans to STORE using SimpleHashFile. 28000 items/s. 329 bytes per item in storage.
  * 
  * 
  */
@@ -223,7 +223,9 @@ class ArrayHashFile implements IMapHashFile {
         System.out.println((file.length() / loop) + " bytes per item in storage.");
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
     public long getTotalSize() {
@@ -231,6 +233,4 @@ class ArrayHashFile implements IMapHashFile {
         return 0;
     }
 
-    
 }
-

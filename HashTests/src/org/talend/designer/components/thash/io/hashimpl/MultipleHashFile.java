@@ -48,26 +48,27 @@ public class MultipleHashFile implements IMapHashFile {
     }
 
     RandomAccessFile[] bwArray = null;
+
     int[] bwPositionArray = null;
 
     boolean readonly;
 
     int numberFiles = 10;
-    
-    byte numberOfChars = (byte)(String.valueOf(numberFiles).length() - 1);
+
+    byte numberOfChars = (byte) (String.valueOf(numberFiles).length() - 1);
 
     RandomAccessFile[] raArray = null;
 
     Object[] lastRetrievedObjectArray = null;
 
     long[] lastRetrievedCursorPositionArray = null;
-    
+
     int countUniqueGet;
 
     public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException {
 
         byte fileNumber = getFileNumber(hashcode);
-        
+
         RandomAccessFile ra = raArray[fileNumber];
 
         if (cursorPosition != lastRetrievedCursorPositionArray[fileNumber]) {
@@ -75,7 +76,8 @@ public class MultipleHashFile implements IMapHashFile {
             ra.seek(cursorPosition);
             byte[] byteArray = new byte[ra.readInt()];
             ra.read(byteArray);
-            lastRetrievedObjectArray[fileNumber] = new ObjectInputStream(new ByteArrayInputStream(byteArray)).readObject();
+            lastRetrievedObjectArray[fileNumber] = new ObjectInputStream(new ByteArrayInputStream(byteArray))
+                    .readObject();
             lastRetrievedCursorPositionArray[fileNumber] = cursorPosition;
         }
         return lastRetrievedObjectArray[fileNumber];
@@ -89,13 +91,13 @@ public class MultipleHashFile implements IMapHashFile {
      */
     private byte getFileNumber(int hashcode) {
         String valueOf = String.valueOf(Math.abs(hashcode));
-        return Byte.parseByte(valueOf.substring(valueOf.length() - numberOfChars,valueOf.length()));
+        return Byte.parseByte(valueOf.substring(valueOf.length() - numberOfChars, valueOf.length()));
     }
 
     public long put(String container, Object bean) throws IOException {
 
         byte fileNumber = getFileNumber(bean.hashCode());
-        
+
         ObjectOutputStream objectOutputStream = null;
         ByteArrayOutputStream byteArrayOutputStream = null;
         try {
@@ -154,7 +156,7 @@ public class MultipleHashFile implements IMapHashFile {
 
     public void initGet(String container) throws FileNotFoundException {
         raArray = new RandomAccessFile[numberFiles];
-        lastRetrievedCursorPositionArray = new long[numberFiles]; 
+        lastRetrievedCursorPositionArray = new long[numberFiles];
         lastRetrievedObjectArray = new Object[numberFiles];
         for (int i = 0; i < numberFiles; i++) {
             raArray[i] = new RandomAccessFile(container + i, "r");
@@ -170,14 +172,16 @@ public class MultipleHashFile implements IMapHashFile {
                     ra.close();
                 }
                 File file = new File(container + i);
-//                file.delete();
+                // file.delete();
             }
         }
-        
-        System.out.println("countUniqueGet = "+countUniqueGet);
+
+        System.out.println("countUniqueGet = " + countUniqueGet);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
     public long getTotalSize() {

@@ -11,56 +11,56 @@
 //
 // ============================================================================
 package org.talend.designer.components.thash;
+
+/**
+ * 
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
+ * 
+ * 
+ */
+class KeyForMap {
+
+    int dbIdBean;
+
+    int hashcode;
+
     /**
-     * 
-     * DOC amaumont  class global comment. Detailled comment
-     * <br/>
-     *
-     * 
-     *
+     * DOC amaumont KeyForMap constructor comment.
      */
-    class KeyForMap {
-
-        int dbIdBean;
-
-        int hashcode;
-
-        /**
-         * DOC amaumont KeyForMap constructor comment.
-         */
-        public KeyForMap(int dbIdBean, int hashcode) {
-            super();
-            this.dbIdBean = dbIdBean;
-            this.hashcode = hashcode;
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see java.lang.Object#hashCode()
-         */
-        @Override
-        public int hashCode() {
-            return this.hashcode;
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see java.lang.Object#equals(java.lang.Object)
-         */
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            final KeyForMap other = (KeyForMap) obj;
-            if (this.dbIdBean != other.dbIdBean)
-                return false;
-            return true;
-        }
-
+    public KeyForMap(int dbIdBean, int hashcode) {
+        super();
+        this.dbIdBean = dbIdBean;
+        this.hashcode = hashcode;
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return this.hashcode;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final KeyForMap other = (KeyForMap) obj;
+        if (this.dbIdBean != other.dbIdBean)
+            return false;
+        return true;
+    }
+
+}

@@ -5,7 +5,7 @@
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
 //
-// You should have received a copy of the  agreement
+// You should have received a copy of the agreement
 // along with this program; if not, write to Talend SA
 // 9 rue Pages 92150 Suresnes, France
 //   
@@ -114,7 +114,8 @@ public class PluginLogAppender extends AppenderSkeleton {
         // get the bundle for a plug-in
         Bundle b = Platform.getBundle(getSymbolicName());
         if (b == null) {
-            String m = MessageFormat.format("Plugin: {0} not found in {1}.", new Object[] { getSymbolicName(), this.name });
+            String m = MessageFormat.format("Plugin: {0} not found in {1}.", new Object[] { getSymbolicName(),
+                    this.name });
             this.errorHandler.error(m);
             return null;
         }

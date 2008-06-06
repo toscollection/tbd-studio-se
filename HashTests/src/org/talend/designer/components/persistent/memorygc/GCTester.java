@@ -18,6 +18,7 @@ import routines.system.IPersistableRow;
 public class GCTester {
 
     private static final int INFO_ECART = 400000;
+
     private ArrayList<Measure> measures;
 
     public static void main(String[] args) {
@@ -26,70 +27,66 @@ public class GCTester {
         tester.init();
 
     }
-    
 
     public GCTester() {
         super();
     }
 
-    
     private void init() {
 
         measures = new ArrayList<Measure>();
-        
-//        double[] xTime = new double[x1.size()];
-//        double[] y11 = new double[y1.size()];
-//        for (int iValue = 0; iValue < x1.size(); iValue++) {
-//            x11[iValue] = x1.get(iValue);
-//            y11[iValue] = y1.get(iValue);
-//        }
-//
-//        double[][] data1 = new double[][] { x11, y11 };
-//        dataset.addSeries(testCase.label, data1);
 
-        
+        // double[] xTime = new double[x1.size()];
+        // double[] y11 = new double[y1.size()];
+        // for (int iValue = 0; iValue < x1.size(); iValue++) {
+        // x11[iValue] = x1.get(iValue);
+        // y11[iValue] = y1.get(iValue);
+        // }
+        //
+        // double[][] data1 = new double[][] { x11, y11 };
+        // dataset.addSeries(testCase.label, data1);
+
         int count = 3800000;
-       
+
         ROW1Struct[] array1 = new ROW1Struct[count];
-        
+
         writeMemoryInfos("Start");
         for (int i = 0; i < count; i++) {
             ROW1Struct struct = new ROW1Struct();
             struct.ID_MAIN = i;
             struct.LABEL_MAIN = "Label" + i;
             array1[i] = struct;
-            if(i % INFO_ECART == 0) {
+            if (i % INFO_ECART == 0) {
                 writeMemoryInfos("loop 1 index=" + i);
             }
         }
-        
+
         array1 = null;
-        
+
         writeMemoryInfos("before gc 1");
         MemoryHelper.gc();
         writeMemoryInfos("after gc 1");
-        
+
         ROW2Struct[] array2 = new ROW2Struct[count];
-        
+
         for (int i = 0; i < count; i++) {
             ROW2Struct struct = new ROW2Struct();
             struct.ID_MAIN = i;
             struct.LABEL_MAIN = "Label" + i;
             array2[i] = struct;
-            if(i % INFO_ECART == 0) {
+            if (i % INFO_ECART == 0) {
                 writeMemoryInfos("loop 2 index=" + i);
             }
         }
-        
+
         array2 = null;
-        
+
         writeMemoryInfos("before gc 2");
         MemoryHelper.gc();
         writeMemoryInfos("after gc 2");
-        
+
         int measuresListSize = measures.size();
-        
-        
+
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (int i = 0; i < measuresListSize; i++) {
             Measure measure = measures.get(i);
@@ -100,20 +97,19 @@ public class GCTester {
             dataset.addValue(measure.freeMemory, "Free Memory", contextMeasure);
         }
 
-        new MemoryGcChart("Memory GC", dataset, "Memory GC", "Time"
-                , "bytes", "/home/amaumont/hash_benchs/charts/MemoryGC_" + count + "rows.png", 1024, 800).createDemoPanel(dataset);
+        new MemoryGcChart("Memory GC", dataset, "Memory GC", "Time", "bytes",
+                "/home/amaumont/hash_benchs/charts/MemoryGC_" + count + "rows.png", 1024, 800).createDemoPanel(dataset);
     }
-    
+
     private void writeMemoryInfos(String contextInfo) {
-        
-        measures.add(new Measure(contextInfo, new Date(), MemoryHelper.usedMemory(), MemoryHelper.freeMemory(), MemoryHelper.totalMemory(), MemoryHelper.maxMemory(),
-                MemoryHelper.hasFreeMemory(0.10f)));
-        
-        System.out.println(contextInfo + ";" + MemoryHelper.maxMemory() + ";" + MemoryHelper.freeMemory() + ";" + MemoryHelper.totalMemory() + ";" + MemoryHelper.usedMemory()  + ";" + MemoryHelper.hasFreeMemory(0.10f));
-        
-        
-        
-        
+
+        measures.add(new Measure(contextInfo, new Date(), MemoryHelper.usedMemory(), MemoryHelper.freeMemory(),
+                MemoryHelper.totalMemory(), MemoryHelper.maxMemory(), MemoryHelper.hasFreeMemory(0.10f)));
+
+        System.out.println(contextInfo + ";" + MemoryHelper.maxMemory() + ";" + MemoryHelper.freeMemory() + ";"
+                + MemoryHelper.totalMemory() + ";" + MemoryHelper.usedMemory() + ";"
+                + MemoryHelper.hasFreeMemory(0.10f));
+
     }
 
     public static class ROW1Struct {
@@ -125,25 +121,31 @@ public class GCTester {
     }
 
     public static class ROW2Struct {
-        
+
         Integer ID_MAIN;
-        
+
         String LABEL_MAIN;
-        
+
     }
-    
-    
+
     class Measure {
-     
+
         String contextMeasure;
+
         Date date;
+
         long usedMemory;
+
         long freeMemory;
+
         long totalMemory;
+
         long maxMemory;
+
         boolean hasFreeMemory;
-        
-        public Measure(String contextMeasure, Date date, long usedMemory, long freeMemory, long totalMemory, long maxMemory, boolean hasFreeMemory) {
+
+        public Measure(String contextMeasure, Date date, long usedMemory, long freeMemory, long totalMemory,
+                long maxMemory, boolean hasFreeMemory) {
             super();
             this.contextMeasure = contextMeasure;
             this.date = date;
@@ -153,10 +155,7 @@ public class GCTester {
             this.maxMemory = maxMemory;
             this.hasFreeMemory = hasFreeMemory;
         }
-        
-        
-        
-        
+
     }
 
 }

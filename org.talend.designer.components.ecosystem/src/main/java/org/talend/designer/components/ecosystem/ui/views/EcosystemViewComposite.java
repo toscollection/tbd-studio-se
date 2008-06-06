@@ -156,8 +156,8 @@ public class EcosystemViewComposite extends Composite {
         fTableViewerCreator.createTable();
 
         // Status | Component Name | Author | Revision | Released Date | Description
-        TableViewerCreatorColumn<ComponentExtension, String> statusColumn = createTableColumn(EcosystemConstants.STATUS_TITLE,
-                true, false, 4, STATUS_ACCESSOR);
+        TableViewerCreatorColumn<ComponentExtension, String> statusColumn = createTableColumn(
+                EcosystemConstants.STATUS_TITLE, true, false, 4, STATUS_ACCESSOR);
         statusColumn.setImageProvider(new StatusImageProvider());
 
         fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 4, NAME_ACCESSOR);

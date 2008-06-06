@@ -124,8 +124,9 @@ public class TmapTujPublisher {
                                     String targetDirFiles = targetDir + "/" + baseName + "/files/in/";
 
                                     if (!sourceFilesDirFile.isDirectory()) {
-                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"
-                                                + sourceFilesDirFile.getAbsolutePath() + "'");
+                                        throw new IllegalStateException(
+                                                "The folder sourceFilesDirFile does not exist: '"
+                                                        + sourceFilesDirFile.getAbsolutePath() + "'");
                                     }
 
                                     File targetFolder = new File(targetDirFiles);
@@ -143,7 +144,8 @@ public class TmapTujPublisher {
 
                                     File[] listDataFiles = sourceFilesDirFile.listFiles();
                                     for (File dataFile : listDataFiles) {
-                                        String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/" + dataFile.getName();
+                                        String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/"
+                                                + dataFile.getName();
                                         String targetFilePath = targetDirFiles + dataFile.getName();
                                         copyFile(sourceFilePath, targetFilePath);
                                     }
@@ -152,8 +154,9 @@ public class TmapTujPublisher {
                                     targetDirFiles = targetDir + "/" + baseName + "/files/ref/";
 
                                     if (!sourceFilesDirFile.isDirectory()) {
-                                        throw new IllegalStateException("The folder sourceFilesDirFile does not exist: '"
-                                                + sourceFilesDirFile.getAbsolutePath() + "'");
+                                        throw new IllegalStateException(
+                                                "The folder sourceFilesDirFile does not exist: '"
+                                                        + sourceFilesDirFile.getAbsolutePath() + "'");
                                     }
 
                                     targetFolder = new File(targetDirFiles);
@@ -172,7 +175,8 @@ public class TmapTujPublisher {
                                     listDataFiles = sourceFilesDirFile.listFiles();
 
                                     for (File dataFile : listDataFiles) {
-                                        String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/" + dataFile.getName();
+                                        String sourceFilePath = sourceFilesDirFile.getAbsolutePath() + "/"
+                                                + dataFile.getName();
                                         String targetFilePath = targetDirFiles + dataFile.getName();
                                         copyFile(sourceFilePath, targetFilePath);
                                     }
@@ -198,7 +202,8 @@ public class TmapTujPublisher {
 
     public static void copyFile(String sourcePathFile, String destPathFile) throws IOException {
 
-        FileChannel in = new FileInputStream(sourcePathFile).getChannel(), out = new FileOutputStream(destPathFile).getChannel();
+        FileChannel in = new FileInputStream(sourcePathFile).getChannel(), out = new FileOutputStream(destPathFile)
+                .getChannel();
         ByteBuffer buffer = ByteBuffer.allocate(BSIZE);
         while (in.read(buffer) != -1) {
             buffer.flip(); // Prepare for writing

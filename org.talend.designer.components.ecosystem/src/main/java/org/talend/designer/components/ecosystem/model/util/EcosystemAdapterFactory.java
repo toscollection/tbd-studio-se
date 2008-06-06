@@ -1,17 +1,10 @@
 /**
- * // ============================================================================
- * //
- * // Copyright (C) 2006-2007 Talend Inc. - www.talend.com
- * //
- * // This source code is available under agreement available at
- * // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
- * //
- * // You should have received a copy of the agreement
- * // along with this program; if not, write to Talend SA
- * // 9 rue Pages 92150 Suresnes, France
- * //
- * // ============================================================================
- *
+ * // ============================================================================ // // Copyright (C) 2006-2007 Talend
+ * Inc. - www.talend.com // // This source code is available under agreement available at //
+ * %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt // // You should have received a
+ * copy of the agreement // along with this program; if not, write to Talend SA // 9 rue Pages 92150 Suresnes, France // //
+ * ============================================================================
+ * 
  * $Id$
  */
 package org.talend.designer.components.ecosystem.model.util;
@@ -26,26 +19,24 @@ import org.eclipse.emf.ecore.EObject;
 import org.talend.designer.components.ecosystem.model.*;
 
 /**
- * <!-- begin-user-doc -->
- * The <b>Adapter Factory</b> for the model.
- * It provides an adapter <code>createXXX</code> method for each class of the model.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
+ * method for each class of the model. <!-- end-user-doc -->
+ * 
  * @see org.talend.designer.components.ecosystem.model.EcosystemPackage
  * @generated
  */
 public class EcosystemAdapterFactory extends AdapterFactoryImpl {
+
     /**
-     * The cached model package.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     protected static EcosystemPackage modelPackage;
 
     /**
-     * Creates an instance of the adapter factory.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
     public EcosystemAdapterFactory() {
@@ -55,10 +46,10 @@ public class EcosystemAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Returns whether this factory is applicable for the type of the object.
-     * <!-- begin-user-doc -->
-     * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
-     * <!-- end-user-doc -->
+     * Returns whether this factory is applicable for the type of the object. <!-- begin-user-doc --> This
+     * implementation returns <code>true</code> if the object is either the model's package or is an instance object
+     * of the model. <!-- end-user-doc -->
+     * 
      * @return whether this factory is applicable for the type of the object.
      * @generated
      */
@@ -68,53 +59,51 @@ public class EcosystemAdapterFactory extends AdapterFactoryImpl {
             return true;
         }
         if (object instanceof EObject) {
-            return ((EObject)object).eClass().getEPackage() == modelPackage;
+            return ((EObject) object).eClass().getEPackage() == modelPackage;
         }
         return false;
     }
 
     /**
-     * The switch the delegates to the <code>createXXX</code> methods.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * The switch the delegates to the <code>createXXX</code> methods. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @generated
      */
-    protected EcosystemSwitch<Adapter> modelSwitch =
-        new EcosystemSwitch<Adapter>() {
-            @Override
-            public Adapter caseComponentExtension(ComponentExtension object) {
-                return createComponentExtensionAdapter();
-            }
-            @Override
-            public Adapter caseRevision(Revision object) {
-                return createRevisionAdapter();
-            }
-            @Override
-            public Adapter defaultCase(EObject object) {
-                return createEObjectAdapter();
-            }
-        };
+    protected EcosystemSwitch<Adapter> modelSwitch = new EcosystemSwitch<Adapter>() {
+
+        @Override
+        public Adapter caseComponentExtension(ComponentExtension object) {
+            return createComponentExtensionAdapter();
+        }
+
+        @Override
+        public Adapter caseRevision(Revision object) {
+            return createRevisionAdapter();
+        }
+
+        @Override
+        public Adapter defaultCase(EObject object) {
+            return createEObjectAdapter();
+        }
+    };
 
     /**
-     * Creates an adapter for the <code>target</code>.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+     * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
      * @param target the object to adapt.
      * @return the adapter for the <code>target</code>.
      * @generated
      */
     @Override
     public Adapter createAdapter(Notifier target) {
-        return modelSwitch.doSwitch((EObject)target);
+        return modelSwitch.doSwitch((EObject) target);
     }
-
 
     /**
      * Creates a new adapter for an object of class '{@link org.talend.designer.components.ecosystem.model.ComponentExtension <em>Component Extension</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+     * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+     * 
      * @return the new adapter.
      * @see org.talend.designer.components.ecosystem.model.ComponentExtension
      * @generated
@@ -125,10 +114,9 @@ public class EcosystemAdapterFactory extends AdapterFactoryImpl {
 
     /**
      * Creates a new adapter for an object of class '{@link org.talend.designer.components.ecosystem.model.Revision <em>Revision</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
+     * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
+     * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
+     * 
      * @return the new adapter.
      * @see org.talend.designer.components.ecosystem.model.Revision
      * @generated
@@ -138,10 +126,9 @@ public class EcosystemAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for the default case.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null.
+     * Creates a new adapter for the default case. <!-- begin-user-doc --> This default implementation returns null.
      * <!-- end-user-doc -->
+     * 
      * @return the new adapter.
      * @generated
      */
@@ -149,4 +136,4 @@ public class EcosystemAdapterFactory extends AdapterFactoryImpl {
         return null;
     }
 
-} //EcosystemAdapterFactory
+} // EcosystemAdapterFactory

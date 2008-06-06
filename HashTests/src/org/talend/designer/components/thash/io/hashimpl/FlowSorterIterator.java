@@ -59,10 +59,10 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
     int countUniqueGet;
 
     // ////////////////////////
-//     private int bufferSize = 5000000;
-//     private int bufferSize = 8000000;
-//     private int bufferSize = 9000000;
-//     private int bufferSize = 9200000;
+    // private int bufferSize = 5000000;
+    // private int bufferSize = 8000000;
+    // private int bufferSize = 9000000;
+    // private int bufferSize = 9200000;
     private int bufferSize = 10000000;
 
     private int itemCountInBuffer = 0;
@@ -81,11 +81,9 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
 
     private ArrayList<File> files = new ArrayList<File>();
 
-    
-    
-    
     public String workDirectory = "/home/amaumont/hash_benchs/external_sort/";
-//    public String workDirectory = "/home/amaumont/abc/c/";
+
+    // public String workDirectory = "/home/amaumont/abc/c/";
 
     public int count = 0;
 
@@ -97,11 +95,10 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
 
     private boolean isFirstNext = true;
 
-
     // ///////////////////////
 
     public void initPut(String container) throws IOException {
-        System.out.println("bufferSize="+bufferSize +" objects");
+        System.out.println("bufferSize=" + bufferSize + " objects");
         this.container = container;
         buffer = new ILightSerializable[bufferSize];
     }
@@ -111,7 +108,7 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
 
         if (itemCountInBuffer >= bufferSize) {// buffer is full do sort and write.
             // sort
-            
+
             writeBuffer(buffer, itemCountInBuffer);
 
             System.gc();
@@ -225,7 +222,6 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
     // ////the get proccess will be the same as other IMapHashFile.//////
     // ......
 
-    
     /**
      * sort list and then use light serialization to store Data
      * 
@@ -242,8 +238,8 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
         int itemsPerSecSort = (int) ((float) length / (float) deltaTimeSort * 1000f);
-        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
-                + "  items/s ");
+        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. "
+                + itemsPerSecSort + "  items/s ");
 
         time1 = System.currentTimeMillis();
         System.out.println("Writing ordered buffer in file...");
@@ -263,8 +259,8 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
         int itemsPerSecWrite = (int) ((float) length / (float) deltaTimeWrite * 1000f);
-        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. " + itemsPerSecWrite
-                + "  items/s ");
+        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. "
+                + itemsPerSecWrite + "  items/s ");
 
     }
 
@@ -317,10 +313,12 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
 
                 long time2 = System.currentTimeMillis();
                 long deltaTimeNull = (time2 - time1);
-                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize + " objects to set buffer as null. ");
+                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize
+                        + " objects to set buffer as null. ");
 
                 nbItemsProcessed += i + 1;
-                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems) + " processed.");
+                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems)
+                        + " processed.");
                 i = -1;
             }
 
@@ -341,8 +339,8 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
         int itemsPerSecMerge = (int) ((float) nbItems / (float) deltaTimeMerge * 1000f);
-        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. " + itemsPerSecMerge
-                + "  items/s ");
+        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. "
+                + itemsPerSecMerge + "  items/s ");
 
         long end = System.currentTimeMillis();
 
@@ -495,19 +493,22 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.IMapHashFile#endGet(java.lang.String)
      */
     public void endGet(String container) throws IOException {
         throw new UnsupportedOperationException();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.IMapHashFile#get(java.lang.String, long, int)
      */
     public V get(String container, long cursorPosition, int hashcode) throws Exception {
         throw new UnsupportedOperationException();
     }
 
-    
 }

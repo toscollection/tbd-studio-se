@@ -58,7 +58,7 @@ public class DoubleHashFileWithCompressor implements IMapHashFile {
     private static DoubleHashFileWithCompressor instance;
 
     private DoubleHashFileWithCompressor() {
-        if(compress) {
+        if (compress) {
             // Compressor with highest level of compression
             compressor = new Deflater();
             compressor.setLevel(Deflater.BEST_SPEED);
@@ -294,7 +294,9 @@ public class DoubleHashFileWithCompressor implements IMapHashFile {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
     public long getTotalSize() {
@@ -304,64 +306,34 @@ public class DoubleHashFileWithCompressor implements IMapHashFile {
 
 }
 
-
 /*
-
-Without compression
-
-6030 milliseconds for 100000 objects to STORE. 16583 items/s 
-Read step
-Reading 0, time since last display0 s
-File /tmp/talend_hash.idx:800000 bytes
-File /tmp/talend_hash.data:12388890 bytes
-Total size on disk : 13188890
-4537 milliseconds for 100000 objects to READ. 22040  items/s 
-waiting for garbage collector...
-'before' heap: 1276456 bytes, 'after' heap: 3689648 bytes 
-heap delta: 2413192 bytes 
-size by item: 24 bytes 
-Number of loops: 100000
-Number of items: 100000
-Time: 10 s
-
-
-
-compressor.setLevel(Deflater.BEST_COMPRESSION);
-compressor.setStrategy(Deflater.HUFFMAN_ONLY);
-
-9987 milliseconds for 100000 objects to STORE. 10013 items/s 
-Read step
-Reading 0, time since last display0 s
-File /tmp/talend_hash.idx:800000 bytes
-File /tmp/talend_hash.data:13248205 bytes
-Total size on disk : 14048205 bytes
-5063 milliseconds for 100000 objects to READ. 19751  items/s 
-waiting for garbage collector...
-'before' heap: 1276456 bytes, 'after' heap: 3689616 bytes 
-heap delta: 2413160 bytes 
-size by item: 24 bytes 
-Number of loops: 100000
-Number of items: 100000
-Time: 15 s
-
-
-
-compressor.setLevel(Deflater.BEST_COMPRESSION);
-compressor.setStrategy(Deflater.FILTERED);
-
-9970 milliseconds for 100000 objects to STORE. 10030 items/s 
-Read step
-Reading 0, time since last display0 s
-File /tmp/talend_hash.idx:800000 bytes
-File /tmp/talend_hash.data:13248205 bytes
-Total size on disk : 14048205 bytes
-4932 milliseconds for 100000 objects to READ. 20275  items/s 
-waiting for garbage collector...
-'before' heap: 1276456 bytes, 'after' heap: 3689616 bytes 
-heap delta: 2413160 bytes 
-size by item: 24 bytes 
-Number of loops: 100000
-Number of items: 100000
-Time: 14 s
-
-*/
+ * 
+ * Without compression
+ * 
+ * 6030 milliseconds for 100000 objects to STORE. 16583 items/s Read step Reading 0, time since last display0 s File
+ * /tmp/talend_hash.idx:800000 bytes File /tmp/talend_hash.data:12388890 bytes Total size on disk : 13188890 4537
+ * milliseconds for 100000 objects to READ. 22040 items/s waiting for garbage collector... 'before' heap: 1276456 bytes,
+ * 'after' heap: 3689648 bytes heap delta: 2413192 bytes size by item: 24 bytes Number of loops: 100000 Number of items:
+ * 100000 Time: 10 s
+ * 
+ * 
+ * 
+ * compressor.setLevel(Deflater.BEST_COMPRESSION); compressor.setStrategy(Deflater.HUFFMAN_ONLY);
+ * 
+ * 9987 milliseconds for 100000 objects to STORE. 10013 items/s Read step Reading 0, time since last display0 s File
+ * /tmp/talend_hash.idx:800000 bytes File /tmp/talend_hash.data:13248205 bytes Total size on disk : 14048205 bytes 5063
+ * milliseconds for 100000 objects to READ. 19751 items/s waiting for garbage collector... 'before' heap: 1276456 bytes,
+ * 'after' heap: 3689616 bytes heap delta: 2413160 bytes size by item: 24 bytes Number of loops: 100000 Number of items:
+ * 100000 Time: 15 s
+ * 
+ * 
+ * 
+ * compressor.setLevel(Deflater.BEST_COMPRESSION); compressor.setStrategy(Deflater.FILTERED);
+ * 
+ * 9970 milliseconds for 100000 objects to STORE. 10030 items/s Read step Reading 0, time since last display0 s File
+ * /tmp/talend_hash.idx:800000 bytes File /tmp/talend_hash.data:13248205 bytes Total size on disk : 14048205 bytes 4932
+ * milliseconds for 100000 objects to READ. 20275 items/s waiting for garbage collector... 'before' heap: 1276456 bytes,
+ * 'after' heap: 3689616 bytes heap delta: 2413160 bytes size by item: 24 bytes Number of loops: 100000 Number of items:
+ * 100000 Time: 14 s
+ * 
+ */

@@ -43,7 +43,8 @@ public class RefreshJob extends Job {
     @Override
     public IStatus run(IProgressMonitor monitor) {
         final String versionFilter = EcosystemUtils.getTosVersionFilter();
-        monitor.beginTask(Messages.getString(EcosystemConstants.FIND_EXTENSIONS_MSG, versionFilter), IProgressMonitor.UNKNOWN);
+        monitor.beginTask(Messages.getString(EcosystemConstants.FIND_EXTENSIONS_MSG, versionFilter),
+                IProgressMonitor.UNKNOWN);
 
         // run in another thread, make it possible to stop the remote procedure call when user press cancel
         // button
@@ -51,7 +52,8 @@ public class RefreshJob extends Job {
         Future<List<ComponentExtension>> task = executor.submit(new Callable<List<ComponentExtension>>() {
 
             public List<ComponentExtension> call() throws Exception {
-                return ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils.getCurrentLanguage());
+                return ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils
+                        .getCurrentLanguage());
             }
 
         });

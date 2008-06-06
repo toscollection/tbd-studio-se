@@ -164,7 +164,8 @@ public class EcosystemView extends ViewPart {
      */
     public void loadFromFile() {
         try {
-            List<ComponentExtension> extensions = EcosystemUtils.loadInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE);
+            List<ComponentExtension> extensions = EcosystemUtils
+                    .loadInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE);
             for (ComponentExtension ext : extensions) {
                 fInstalledExtensions.put(ext.getName(), ext);
             }

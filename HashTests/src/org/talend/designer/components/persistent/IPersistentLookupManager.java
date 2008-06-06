@@ -2,7 +2,6 @@ package org.talend.designer.components.persistent;
 
 import java.io.IOException;
 
-
 public interface IPersistentLookupManager<B> {
 
     public void initPut() throws IOException;
@@ -24,5 +23,5 @@ public interface IPersistentLookupManager<B> {
     public void clear() throws IOException;
 
     public B getNextFreeRow();
-    
+
 }

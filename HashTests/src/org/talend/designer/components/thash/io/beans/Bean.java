@@ -198,17 +198,17 @@ public class Bean implements Serializable, ILightSerializable, IPersistentBean {
             }
         }
     }
-    
-    
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.beans.IPersistentBean#setHashFile(org.talend.designer.components.thash.io.IMapHashFile)
      */
     public void setHashFile(IMapHashFile hashFile) {
         Bean.hashFile = hashFile;
     }
 
-    public String toString(){
-        return "primitiveInt="+primitiveInt+"   name="+name;
+    public String toString() {
+        return "primitiveInt=" + primitiveInt + "   name=" + name;
     }
 }

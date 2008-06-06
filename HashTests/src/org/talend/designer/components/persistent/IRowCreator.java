@@ -23,13 +23,12 @@ package org.talend.designer.components.persistent;
 
 /**
  * 
- * DOC amaumont  class global comment. Detailled comment
- * <br/>
- *
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
  * @param <B>
  */
 public interface IRowCreator<B> {
 
     public abstract B createRowInstance();
-    
+
 }

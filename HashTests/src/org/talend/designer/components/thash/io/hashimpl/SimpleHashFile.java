@@ -48,7 +48,6 @@ public class SimpleHashFile implements IMapHashFile {
         return instance;
     }
 
-    
     RandomAccessFile bw = null;
 
     boolean readonly;
@@ -66,9 +65,9 @@ public class SimpleHashFile implements IMapHashFile {
     long lastRetrievedCursorPosition = -1;
 
     private int count;
-    
+
     boolean threaded = true;
-    
+
     long totalGetTime = 0;
 
     public Object get(String container, long cursorPosition, int hashcode) throws IOException, ClassNotFoundException {
@@ -80,7 +79,7 @@ public class SimpleHashFile implements IMapHashFile {
             totalGetTime += System.currentTimeMillis() - timeBefore;
             lastRetrievedObject = new ObjectInputStream(new ByteArrayInputStream(byteArray)).readObject();
             lastRetrievedCursorPosition = cursorPosition;
-            if((++count + 1) % 100000 == 0) {
+            if ((++count + 1) % 100000 == 0) {
                 System.out.println("totalGetTime from disk=" + totalGetTime + " ms");
             }
         }
@@ -149,11 +148,13 @@ public class SimpleHashFile implements IMapHashFile {
                 ra.close();
             }
             File file = new File(container);
-//            file.delete();
+            // file.delete();
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
     public long getTotalSize() {

@@ -165,7 +165,8 @@ public class IntrospectionHashFile implements IMapHashFile {
         }
     }
 
-    public void write(int index) throws IOException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public void write(int index) throws IOException, IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException {
         Object value = PropertyUtils.getSimpleProperty(lastRetrievedObject, names[index]);
         switch (types[index]) {
         case 0:
@@ -284,7 +285,9 @@ public class IntrospectionHashFile implements IMapHashFile {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.IMapHashFile#getTotalSize()
      */
     public long getTotalSize() {
@@ -292,6 +295,4 @@ public class IntrospectionHashFile implements IMapHashFile {
         return 0;
     }
 
-    
-    
 }

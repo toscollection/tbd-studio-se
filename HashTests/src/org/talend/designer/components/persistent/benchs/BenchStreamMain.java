@@ -40,7 +40,7 @@ public class BenchStreamMain {
 
         DataOutputStream dosWithBuffer = null;
         ObjectOutputStream oosDosWithBuffer = null;
-        
+
         if (false) {
 
             ObjectOutputStream oosWithoutBuffer = new ObjectOutputStream(new FileOutputStream(filePath));
@@ -61,7 +61,8 @@ public class BenchStreamMain {
             System.out.println("Time oosWithoutBuffer for write Object: " + timeDelta + " ms");
             oosWithoutBuffer.close();
 
-            ObjectOutputStream oosWithBuffer = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filePath)));
+            ObjectOutputStream oosWithBuffer = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(
+                    filePath)));
             timeStart = System.currentTimeMillis();
             for (long i = 0; i < count; i++) {
                 oosWithBuffer.writeLong(i);
@@ -168,7 +169,6 @@ public class BenchStreamMain {
             System.out.println("Time oosDosWithBuffer to write Object: " + timeDelta + " ms, sizeAll=" + sizeAll);
             oosDosWithBuffer.close();
 
-
         }
 
         dosWithBuffer = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(filePath)));
@@ -185,7 +185,8 @@ public class BenchStreamMain {
             // System.out.println("sizeBefore=" + sizeBefore + ", sizeAfter=" + sizeAfter);
         }
         timeDelta = System.currentTimeMillis() - timeStart;
-        System.out.println("Time ALL oosDosWithBuffer to write (long, Object): " + timeDelta + " ms, sizeAll=" + sizeAll);
+        System.out.println("Time ALL oosDosWithBuffer to write (long, Object): " + timeDelta + " ms, sizeAll="
+                + sizeAll);
         oosDosWithBuffer.close();
 
         DataInputStream disWithBuffer = new DataInputStream(new BufferedInputStream(new FileInputStream(filePath)));

@@ -15,22 +15,21 @@ package org.talend.designer.components.thash;
 import java.io.IOException;
 import java.sql.SQLException;
 
-
 /**
  * 
- * DOC slanglois  class global comment. Detailled comment
- * <br/>
- *
+ * DOC slanglois class global comment. Detailled comment <br/>
+ * 
  */
 public class TestDb {
+
     public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
 
         DB.connect("/tmp/talend.db");
         DB.createTable("buffer");
         DB.commit();
-        
+
         // 48s for 100 000, 0,48 s/bean
-        
+
         int loop = 100000000;
         long end = 0;
         long start = System.currentTimeMillis();
@@ -41,18 +40,17 @@ public class TestDb {
         DB.commit();
         end = System.currentTimeMillis();
         System.out.println((end - start) + " milliseconds for " + loop + " objects to store.");
-        
-        // 17s for 100 000,  0,17 s/bean
-        
+
+        // 17s for 100 000, 0,17 s/bean
+
         start = System.currentTimeMillis();
         for (int i = 0; i < loop; i++) {
-            Bean bean = (Bean)DB.get("buffer", loop);
+            Bean bean = (Bean) DB.get("buffer", loop);
         }
         end = System.currentTimeMillis();
         System.out.println((end - start) + " milliseconds for " + loop + " objects to get.");
-        
+
         DB.close();
-        
+
     }
 }
-

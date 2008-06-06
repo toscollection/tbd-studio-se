@@ -25,7 +25,7 @@ import org.talend.designer.components.thash.io.beans.ILightSerializable;
  * @param <V> object value to sort
  * 
  */
-public class ExternalSortIterator<V>  implements Iterator<V> {
+public class ExternalSortIterator<V> implements Iterator<V> {
 
     public List<File> files = new ArrayList<File>();
 
@@ -67,8 +67,8 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
         int itemsPerSecSort = (int) ((float) length / (float) deltaTimeSort * 1000f);
-        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
-                + "  items/s ");
+        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. "
+                + itemsPerSecSort + "  items/s ");
 
         time1 = System.currentTimeMillis();
         System.out.println("Writing ordered buffer in file...");
@@ -88,97 +88,98 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
         int itemsPerSecWrite = (int) ((float) length / (float) deltaTimeWrite * 1000f);
-        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. " + itemsPerSecWrite
-                + "  items/s ");
+        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. "
+                + itemsPerSecWrite + "  items/s ");
 
     }
 
-//    /**
-//     * @param args
-//     * @throws IOException
-//     * @throws ClassNotFoundException
-//     */
-//    public static void main(String[] args) throws IOException, ClassNotFoundException {
-//        ExternalSortIterator esort = new ExternalSortIterator();
-//
-//        NumberFormat numberFormat = NumberFormat.getInstance();
-//
-//        // int nbItems = 60000000;
-//        // int bufferSize = 2000000;
-//        // int nbItems = 60000000;
-//        // int bufferSize = 4000000;
-//        // int nbItems = 60000000;
-//        // int bufferSize = 10000000;
-//        // int nbItems = 10000000;
-//        // int bufferSize = 1000000;
-//        // int nbItems = 1000000;
-//        // int bufferSize = 100000;
-//        // int nbItems = 20;
-//        // int bufferSize = 2;
-//        int nbItems = 100;
-//        int bufferSize = 20;
-//
-//        Random rand = new Random(System.currentTimeMillis());
-//
-//        long start = System.currentTimeMillis();
-//
-//        Data[] arrayData = new Data[bufferSize];
-//
-//        int nbItemsProcessed = 0;
-//
-//        for (int i = 0; nbItemsProcessed < nbItems; i++) {
-//            int v = rand.nextInt(nbItems);
-//
-//            arrayData[i] = new Data("test" + v, v, 0);
-//
-//            if (i == bufferSize - 1) {
-//
-//                // esort.writeBuffer(arrayData);
-//                esort.writeBuffer(arrayData);
-//
-//                long time1 = System.currentTimeMillis();
-//
-//                Arrays.fill(arrayData, null);
-//
-//                long time2 = System.currentTimeMillis();
-//                long deltaTimeNull = (time2 - time1);
-//                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize + " objects to set buffer as null. ");
-//
-//                nbItemsProcessed += i + 1;
-//                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems) + " processed.");
-//                i = -1;
-//            }
-//
-//        }
-//        System.out.println("Final process : merging file...");
-//        long time1 = System.currentTimeMillis();
-//
-//        // esort.sort();
-//        // esort.mergeFiles();
-//        // esort.mergeFiles2();
-//        // esort.eMergeFiles2();
-//
-//        for (; esort.hasNext();) {
-//            System.out.println(esort.next());
-//            ;
-//        }
-//
-//        long time2 = System.currentTimeMillis();
-//        long deltaTimeMerge = (time2 - time1);
-//        int itemsPerSecMerge = (int) ((float) nbItems / (float) deltaTimeMerge * 1000f);
-//        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. " + itemsPerSecMerge
-//                + "  items/s ");
-//
-//        long end = System.currentTimeMillis();
-//
-//        long deltaTime = (end - start);
-//
-//        int itemsPerSec = (int) ((float) nbItems / (float) deltaTime * 1000f);
-//
-//        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects all sort process. " + itemsPerSec
-//                + "  items/s ");
-//
-//    }
+    // /**
+    // * @param args
+    // * @throws IOException
+    // * @throws ClassNotFoundException
+    // */
+    // public static void main(String[] args) throws IOException, ClassNotFoundException {
+    // ExternalSortIterator esort = new ExternalSortIterator();
+    //
+    // NumberFormat numberFormat = NumberFormat.getInstance();
+    //
+    // // int nbItems = 60000000;
+    // // int bufferSize = 2000000;
+    // // int nbItems = 60000000;
+    // // int bufferSize = 4000000;
+    // // int nbItems = 60000000;
+    // // int bufferSize = 10000000;
+    // // int nbItems = 10000000;
+    // // int bufferSize = 1000000;
+    // // int nbItems = 1000000;
+    // // int bufferSize = 100000;
+    // // int nbItems = 20;
+    // // int bufferSize = 2;
+    // int nbItems = 100;
+    // int bufferSize = 20;
+    //
+    // Random rand = new Random(System.currentTimeMillis());
+    //
+    // long start = System.currentTimeMillis();
+    //
+    // Data[] arrayData = new Data[bufferSize];
+    //
+    // int nbItemsProcessed = 0;
+    //
+    // for (int i = 0; nbItemsProcessed < nbItems; i++) {
+    // int v = rand.nextInt(nbItems);
+    //
+    // arrayData[i] = new Data("test" + v, v, 0);
+    //
+    // if (i == bufferSize - 1) {
+    //
+    // // esort.writeBuffer(arrayData);
+    // esort.writeBuffer(arrayData);
+    //
+    // long time1 = System.currentTimeMillis();
+    //
+    // Arrays.fill(arrayData, null);
+    //
+    // long time2 = System.currentTimeMillis();
+    // long deltaTimeNull = (time2 - time1);
+    // System.out.println(deltaTimeNull + " milliseconds for " + bufferSize + " objects to set buffer as null. ");
+    //
+    // nbItemsProcessed += i + 1;
+    // System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems) + " processed.");
+    // i = -1;
+    // }
+    //
+    // }
+    // System.out.println("Final process : merging file...");
+    // long time1 = System.currentTimeMillis();
+    //
+    // // esort.sort();
+    // // esort.mergeFiles();
+    // // esort.mergeFiles2();
+    // // esort.eMergeFiles2();
+    //
+    // for (; esort.hasNext();) {
+    // System.out.println(esort.next());
+    // ;
+    // }
+    //
+    // long time2 = System.currentTimeMillis();
+    // long deltaTimeMerge = (time2 - time1);
+    // int itemsPerSecMerge = (int) ((float) nbItems / (float) deltaTimeMerge * 1000f);
+    // System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. " +
+    // itemsPerSecMerge
+    // + " items/s ");
+    //
+    // long end = System.currentTimeMillis();
+    //
+    // long deltaTime = (end - start);
+    //
+    // int itemsPerSec = (int) ((float) nbItems / (float) deltaTime * 1000f);
+    //
+    // System.out.println(deltaTime + " milliseconds for " + nbItems + " objects all sort process. " + itemsPerSec
+    // + " items/s ");
+    //
+    // }
 
     public boolean hasNext() {
         return someFileStillHasRows;
@@ -320,7 +321,6 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         }
     }
 
-    
     /**
      * @param args
      * @throws IOException
@@ -339,12 +339,12 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         // int bufferSize = 10000000;
         // int nbItems = 10000000;
         // int bufferSize = 1000000;
-         int nbItems = 1000000;
-         int bufferSize = 100000;
+        int nbItems = 1000000;
+        int bufferSize = 100000;
         // int nbItems = 20;
         // int bufferSize = 2;
-//        int nbItems = 100;
-//        int bufferSize = 20;
+        // int nbItems = 100;
+        // int bufferSize = 20;
 
         Random rand = new Random(System.currentTimeMillis());
 
@@ -370,10 +370,12 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
 
                 long time2 = System.currentTimeMillis();
                 long deltaTimeNull = (time2 - time1);
-                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize + " objects to set buffer as null. ");
+                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize
+                        + " objects to set buffer as null. ");
 
                 nbItemsProcessed += i + 1;
-                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems) + " processed.");
+                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems)
+                        + " processed.");
                 i = -1;
             }
 
@@ -394,8 +396,8 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
         int itemsPerSecMerge = (int) ((float) nbItems / (float) deltaTimeMerge * 1000f);
-        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. " + itemsPerSecMerge
-                + "  items/s ");
+        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. "
+                + itemsPerSecMerge + "  items/s ");
 
         long end = System.currentTimeMillis();
 
@@ -407,6 +409,5 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
                 + "  items/s ");
 
     }
-
 
 }

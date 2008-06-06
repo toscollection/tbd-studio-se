@@ -18,9 +18,8 @@ import java.io.IOException;
 import routines.system.IPersistableRow;
 
 /**
- * DOC amaumont  class global comment. Detailled comment
- * <br/>
- *
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
  * @param <R> R as row
  */
 public interface IPersistentRowManager<R extends IPersistableRow> {
@@ -32,13 +31,13 @@ public interface IPersistentRowManager<R extends IPersistableRow> {
     public void endPut() throws IOException;
 
     public void initGet() throws IOException;
-    
+
     public boolean hasNext() throws IOException;
-    
+
     public R next() throws IOException;
 
     public void endGet() throws IOException;
 
     public R getNextFreeRow();
-    
+
 }

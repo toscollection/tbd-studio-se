@@ -8,7 +8,7 @@
 // You may distribute this code under the terms of the GNU LGPL license
 // (http://www.gnu.org/licenses/lgpl.html).
 //
-// ============================================================================ 
+// ============================================================================
 package java_project_8.tmap_10_persistence_02_types_sorteddata_0_1;
 
 import routines.libs;
@@ -41,11 +41,11 @@ import java.util.Comparator;
 
 import org.apache.commons.lang.ArrayUtils;
 
-//the import part of tJavaFlex_2
-//import java.util.List;
+// the import part of tJavaFlex_2
+// import java.util.List;
 
-//the import part of tJavaFlex_3
-//import java.util.List;
+// the import part of tJavaFlex_3
+// import java.util.List;
 
 /**
  * Job: tMap_10_persistence_02_types_sorteddata Purpose: <br>
@@ -56,6 +56,7 @@ import org.apache.commons.lang.ArrayUtils;
  * @status
  */
 public class tMap_10_persistence_02_types_sorteddata {
+
     // create and load default properties
     private static java.util.Properties defaultProps = new java.util.Properties();
 
@@ -71,41 +72,65 @@ public class tMap_10_persistence_02_types_sorteddata {
         }
 
         public static String param_file_path;
+
         public static String data_dir;
+
         public static String data_output_dir;
+
         public static String result_host;
+
         public static String result_port;
+
         public static String result_database;
+
         public static String result_username;
+
         public static String result_password;
+
         public static String result_table;
+
         public static String mysql_host;
+
         public static String mysql_port;
+
         public static String mysql_schema;
+
         public static String mysql_username;
+
         public static String mysql_password;
+
         public static String current_job_dir;
     }
 
     private static ContextProperties context = new ContextProperties();
+
     private static final String jobName = "tMap_10_persistence_02_types_sorteddata";
+
     private static final String projectName = "JAVA_PROJECT_8";
+
     public static Integer errorCode = null;
+
     private static String currentComponent = "";
+
     private static final java.util.Map<String, Long> start_Hash = new java.util.HashMap<String, Long>();
+
     private static final java.util.Map<String, Long> end_Hash = new java.util.HashMap<String, Long>();
+
     private static final java.util.Map<String, Boolean> ok_Hash = new java.util.HashMap<String, Boolean>();
+
     private static final java.util.Map<String, Object> globalMap = new java.util.HashMap<String, Object>();
+
     public static final java.util.List<String[]> globalBuffer = new java.util.ArrayList<String[]>();
 
     AssertCatcherUtils tAssertCatcher_1 = new AssertCatcherUtils();
 
     private class TalendException extends Exception {
+
         private Exception e = null;
+
         private tMap_10_persistence_02_types_sorteddata c = null;
 
-        private TalendException(tMap_10_persistence_02_types_sorteddata c,
-                Exception e) {
+        private TalendException(tMap_10_persistence_02_types_sorteddata c, Exception e) {
             this.e = e;
             this.c = c;
         }
@@ -113,18 +138,15 @@ public class tMap_10_persistence_02_types_sorteddata {
         @Override
         public void printStackTrace() {
             if (!(e instanceof TalendException || e instanceof TDieException)) {
-                globalMap.put(currentComponent + "_ERROR_MESSAGE", e
-                        .getMessage());
-                System.err
-                        .println("Exception in component " + currentComponent);
+                globalMap.put(currentComponent + "_ERROR_MESSAGE", e.getMessage());
+                System.err.println("Exception in component " + currentComponent);
             }
             if (!(e instanceof TDieException)) {
                 e.printStackTrace();
             }
             if (!(e instanceof TalendException)) {
                 try {
-                    for (java.lang.reflect.Method m : this.getClass()
-                            .getEnclosingClass().getMethods()) {
+                    for (java.lang.reflect.Method m : this.getClass().getEnclosingClass().getMethods()) {
                         if (m.getName().compareTo(currentComponent + "_error") == 0) {
                             m.invoke(c, new Object[] { e });
                             break;
@@ -146,13 +168,11 @@ public class tMap_10_persistence_02_types_sorteddata {
         }
     }
 
-    public void tAssertCatcher_1_error(Exception exception)
-            throws TalendException {
+    public void tAssertCatcher_1_error(Exception exception) throws TalendException {
         end_Hash.put("tAssertCatcher_1", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tAssertCatcher_1_onSubJobError(exception);
@@ -161,45 +181,38 @@ public class tMap_10_persistence_02_types_sorteddata {
     public void tReplicate_1_error(Exception exception) throws TalendException {
         end_Hash.put("tReplicate_1", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tAssertCatcher_1_onSubJobError(exception);
     }
 
-    public void tMysqlOutput_1_error(Exception exception)
-            throws TalendException {
+    public void tMysqlOutput_1_error(Exception exception) throws TalendException {
         end_Hash.put("tMysqlOutput_1", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tAssertCatcher_1_onSubJobError(exception);
     }
 
-    public void tFileInputDelimited_2_error(Exception exception)
-            throws TalendException {
+    public void tFileInputDelimited_2_error(Exception exception) throws TalendException {
         end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFileInputDelimited_2_onSubJobError(exception);
     }
 
-    public void tContextLoad_1_error(Exception exception)
-            throws TalendException {
+    public void tContextLoad_1_error(Exception exception) throws TalendException {
         end_Hash.put("tContextLoad_1", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFileInputDelimited_2_onSubJobError(exception);
@@ -208,21 +221,18 @@ public class tMap_10_persistence_02_types_sorteddata {
     public void tJavaFlex_3_error(Exception exception) throws TalendException {
         end_Hash.put("tJavaFlex_3", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tJavaFlex_3_onSubJobError(exception);
     }
 
-    public void tFixedFlowInput_2_error(Exception exception)
-            throws TalendException {
+    public void tFixedFlowInput_2_error(Exception exception) throws TalendException {
         end_Hash.put("tFixedFlowInput_2", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFixedFlowInput_2_onSubJobError(exception);
@@ -231,9 +241,8 @@ public class tMap_10_persistence_02_types_sorteddata {
     public void tMap_1_error(Exception exception) throws TalendException {
         end_Hash.put("tMap_1", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFixedFlowInput_2_onSubJobError(exception);
@@ -242,33 +251,28 @@ public class tMap_10_persistence_02_types_sorteddata {
     public void tMap_2_error(Exception exception) throws TalendException {
         end_Hash.put("tMap_2", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFixedFlowInput_2_onSubJobError(exception);
     }
 
-    public void tFileOutputDelimited_2_error(Exception exception)
-            throws TalendException {
+    public void tFileOutputDelimited_2_error(Exception exception) throws TalendException {
         end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFixedFlowInput_2_onSubJobError(exception);
     }
 
-    public void tFileCompare_1_error(Exception exception)
-            throws TalendException {
+    public void tFileCompare_1_error(Exception exception) throws TalendException {
         end_Hash.put("tFileCompare_1", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFileCompare_1_onSubJobError(exception);
@@ -277,64 +281,52 @@ public class tMap_10_persistence_02_types_sorteddata {
     public void tAssert_1_error(Exception exception) throws TalendException {
         end_Hash.put("tAssert_1", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tAssert_1_onSubJobError(exception);
     }
 
-    public void tFixedFlowInput_4_error(Exception exception)
-            throws TalendException {
+    public void tFixedFlowInput_4_error(Exception exception) throws TalendException {
         end_Hash.put("tFixedFlowInput_4", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFixedFlowInput_2_onSubJobError(exception);
     }
 
-    public void tAdvancedHash_lookup_error(Exception exception)
-            throws TalendException {
+    public void tAdvancedHash_lookup_error(Exception exception) throws TalendException {
         end_Hash.put("tAdvancedHash_lookup", System.currentTimeMillis());
         if (!(exception instanceof TDieException)) {
-            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                    null, "Failed", "Job execution error", exception
-                            .getMessage());
+            tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", null, "Failed", "Job execution error",
+                    exception.getMessage());
             tAssertCatcher_1Process();
         }
         tFixedFlowInput_2_onSubJobError(exception);
     }
 
-    public void tAssertCatcher_1_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tAssertCatcher_1_onSubJobError(Exception exception) throws TalendException {
     }
 
-    public void tFileInputDelimited_2_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tFileInputDelimited_2_onSubJobError(Exception exception) throws TalendException {
     }
 
-    public void tJavaFlex_3_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tJavaFlex_3_onSubJobError(Exception exception) throws TalendException {
     }
 
-    public void tFixedFlowInput_2_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tFixedFlowInput_2_onSubJobError(Exception exception) throws TalendException {
     }
 
-    public void tFileCompare_1_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tFileCompare_1_onSubJobError(Exception exception) throws TalendException {
     }
 
-    public void tAssert_1_onSubJobError(Exception exception)
-            throws TalendException {
+    public void tAssert_1_onSubJobError(Exception exception) throws TalendException {
     }
 
-    static class row4Struct implements
-            routines.system.IPersistableRow<row4Struct> {
+    static class row4Struct implements routines.system.IPersistableRow<row4Struct> {
 
         static byte[] commonByteArray = new byte[0];
 
@@ -672,8 +664,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -695,8 +686,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
     }
 
-    static class row3Struct implements
-            routines.system.IPersistableRow<row3Struct> {
+    static class row3Struct implements routines.system.IPersistableRow<row3Struct> {
 
         static byte[] commonByteArray = new byte[0];
 
@@ -1034,8 +1024,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -1063,7 +1052,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             row3Struct row3 = new row3Struct();
             row4Struct row4 = new row4Struct();
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMysqlOutput_1 begin ] start
              */
 
@@ -1083,46 +1072,38 @@ public class tMap_10_persistence_02_types_sorteddata {
             String tableName_tMysqlOutput_1 = context.result_table;
             boolean whetherReject_tMysqlOutput_1 = false;
 
-            java.util.Calendar calendar_tMysqlOutput_1 = java.util.Calendar
-                    .getInstance();
+            java.util.Calendar calendar_tMysqlOutput_1 = java.util.Calendar.getInstance();
             calendar_tMysqlOutput_1.set(1, 0, 1, 0, 0, 0);
-            long year1_tMysqlOutput_1 = calendar_tMysqlOutput_1.getTime()
-                    .getTime();
+            long year1_tMysqlOutput_1 = calendar_tMysqlOutput_1.getTime().getTime();
             calendar_tMysqlOutput_1.set(10000, 0, 1, 0, 0, 0);
-            long year10000_tMysqlOutput_1 = calendar_tMysqlOutput_1.getTime()
-                    .getTime();
+            long year10000_tMysqlOutput_1 = calendar_tMysqlOutput_1.getTime().getTime();
             long date_tMysqlOutput_1;
 
             java.sql.Connection conn_tMysqlOutput_1 = null;
             java.lang.Class.forName("org.gjt.mm.mysql.Driver");
 
-            String url_tMysqlOutput_1 = "jdbc:mysql://" + context.result_host
-                    + ":" + context.result_port + "/" + context.result_database
-                    + "?" + "noDatetimeStringSync=true";
+            String url_tMysqlOutput_1 = "jdbc:mysql://" + context.result_host + ":" + context.result_port + "/"
+                    + context.result_database + "?" + "noDatetimeStringSync=true";
 
             String dbUser_tMysqlOutput_1 = context.result_username;
             String dbPwd_tMysqlOutput_1 = context.result_password;
-            conn_tMysqlOutput_1 = java.sql.DriverManager.getConnection(
-                    url_tMysqlOutput_1, dbUser_tMysqlOutput_1,
+            conn_tMysqlOutput_1 = java.sql.DriverManager.getConnection(url_tMysqlOutput_1, dbUser_tMysqlOutput_1,
                     dbPwd_tMysqlOutput_1);
             conn_tMysqlOutput_1.setAutoCommit(false);
 
-            java.sql.DatabaseMetaData dbMetaData_tMysqlOutput_1 = conn_tMysqlOutput_1
-                    .getMetaData();
-            java.sql.ResultSet rsTable_tMysqlOutput_1 = dbMetaData_tMysqlOutput_1
-                    .getTables(null, null, null, new String[] { "TABLE" });
+            java.sql.DatabaseMetaData dbMetaData_tMysqlOutput_1 = conn_tMysqlOutput_1.getMetaData();
+            java.sql.ResultSet rsTable_tMysqlOutput_1 = dbMetaData_tMysqlOutput_1.getTables(null, null, null,
+                    new String[] { "TABLE" });
             boolean whetherExist_tMysqlOutput_1 = false;
             while (rsTable_tMysqlOutput_1.next()) {
-                String table_tMysqlOutput_1 = rsTable_tMysqlOutput_1
-                        .getString("TABLE_NAME");
+                String table_tMysqlOutput_1 = rsTable_tMysqlOutput_1.getString("TABLE_NAME");
                 if (table_tMysqlOutput_1.equalsIgnoreCase(context.result_table)) {
                     whetherExist_tMysqlOutput_1 = true;
                     break;
                 }
             }
             if (!whetherExist_tMysqlOutput_1) {
-                java.sql.Statement stmtCreate_tMysqlOutput_1 = conn_tMysqlOutput_1
-                        .createStatement();
+                java.sql.Statement stmtCreate_tMysqlOutput_1 = conn_tMysqlOutput_1.createStatement();
                 stmtCreate_tMysqlOutput_1
                         .execute("CREATE TABLE `"
                                 + tableName_tMysqlOutput_1
@@ -1141,7 +1122,7 @@ public class tMap_10_persistence_02_types_sorteddata {
              * [tMysqlOutput_1 begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tReplicate_1 begin ] start
              */
 
@@ -1153,7 +1134,7 @@ public class tMap_10_persistence_02_types_sorteddata {
              * [tReplicate_1 begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAssertCatcher_1 begin ] start
              */
 
@@ -1161,17 +1142,14 @@ public class tMap_10_persistence_02_types_sorteddata {
             start_Hash.put("tAssertCatcher_1", System.currentTimeMillis());
             currentComponent = "tAssertCatcher_1";
 
-            for (AssertCatcherUtils.AssertCatcherMessage acm : tAssertCatcher_1
-                    .getMessages()) {
+            for (AssertCatcherUtils.AssertCatcherMessage acm : tAssertCatcher_1.getMessages()) {
                 row3.moment = acm.getMoment();
                 row3.pid = acm.getPid();
                 row3.project = acm.getProject();
                 row3.job = acm.getJob();
                 row3.language = acm.getLanguage();
 
-                row3.origin = (acm.getOrigin() == null
-                        || acm.getOrigin().length() < 1 ? null : acm
-                        .getOrigin());
+                row3.origin = (acm.getOrigin() == null || acm.getOrigin().length() < 1 ? null : acm.getOrigin());
 
                 row3.status = acm.getStatus();
                 row3.substatus = acm.getSubstatus();
@@ -1180,7 +1158,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tAssertCatcher_1 begin ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tAssertCatcher_1 main ] start
                  */
 
@@ -1189,7 +1167,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tAssertCatcher_1 main ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tReplicate_1 main ] start
                  */
 
@@ -1210,7 +1188,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tReplicate_1 main ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tMysqlOutput_1 main ] start
                  */
 
@@ -1219,13 +1197,10 @@ public class tMap_10_persistence_02_types_sorteddata {
                 whetherReject_tMysqlOutput_1 = false;
                 if (row4.moment != null) {
                     date_tMysqlOutput_1 = row4.moment.getTime();
-                    if (date_tMysqlOutput_1 < year1_tMysqlOutput_1
-                            || date_tMysqlOutput_1 >= year10000_tMysqlOutput_1) {
-                        pstmt_tMysqlOutput_1
-                                .setString(1, "0000-00-00 00:00:00");
+                    if (date_tMysqlOutput_1 < year1_tMysqlOutput_1 || date_tMysqlOutput_1 >= year10000_tMysqlOutput_1) {
+                        pstmt_tMysqlOutput_1.setString(1, "0000-00-00 00:00:00");
                     } else {
-                        pstmt_tMysqlOutput_1.setTimestamp(1,
-                                new java.sql.Timestamp(date_tMysqlOutput_1));
+                        pstmt_tMysqlOutput_1.setTimestamp(1, new java.sql.Timestamp(date_tMysqlOutput_1));
                     }
                 } else {
                     pstmt_tMysqlOutput_1.setNull(1, java.sql.Types.DATE);
@@ -1280,8 +1255,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 }
 
                 try {
-                    insertedCount_tMysqlOutput_1 = insertedCount_tMysqlOutput_1
-                            + pstmt_tMysqlOutput_1.executeUpdate();
+                    insertedCount_tMysqlOutput_1 = insertedCount_tMysqlOutput_1 + pstmt_tMysqlOutput_1.executeUpdate();
                     nb_line_tMysqlOutput_1++;
                 } catch (Exception e) {
                     whetherReject_tMysqlOutput_1 = true;
@@ -1301,7 +1275,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                  * [tMysqlOutput_1 main ] stop
                  */
 
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tAssertCatcher_1 end ] start
                  */
 
@@ -1315,7 +1289,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tAssertCatcher_1 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tReplicate_1 end ] start
              */
 
@@ -1327,7 +1301,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tReplicate_1 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMysqlOutput_1 end ] start
              */
 
@@ -1343,20 +1317,14 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             conn_tMysqlOutput_1.close();
 
-            nb_line_deleted_tMysqlOutput_1 = nb_line_deleted_tMysqlOutput_1
-                    + deletedCount_tMysqlOutput_1;
-            nb_line_update_tMysqlOutput_1 = nb_line_update_tMysqlOutput_1
-                    + updatedCount_tMysqlOutput_1;
-            nb_line_inserted_tMysqlOutput_1 = nb_line_inserted_tMysqlOutput_1
-                    + insertedCount_tMysqlOutput_1;
+            nb_line_deleted_tMysqlOutput_1 = nb_line_deleted_tMysqlOutput_1 + deletedCount_tMysqlOutput_1;
+            nb_line_update_tMysqlOutput_1 = nb_line_update_tMysqlOutput_1 + updatedCount_tMysqlOutput_1;
+            nb_line_inserted_tMysqlOutput_1 = nb_line_inserted_tMysqlOutput_1 + insertedCount_tMysqlOutput_1;
 
             globalMap.put("tMysqlOutput_1_NB_LINE", nb_line_tMysqlOutput_1);
-            globalMap.put("tMysqlOutput_1_NB_LINE_UPDATED",
-                    nb_line_update_tMysqlOutput_1);
-            globalMap.put("tMysqlOutput_1_NB_LINE_INSERTED",
-                    nb_line_inserted_tMysqlOutput_1);
-            globalMap.put("tMysqlOutput_1_NB_LINE_DELETED",
-                    nb_line_deleted_tMysqlOutput_1);
+            globalMap.put("tMysqlOutput_1_NB_LINE_UPDATED", nb_line_update_tMysqlOutput_1);
+            globalMap.put("tMysqlOutput_1_NB_LINE_INSERTED", nb_line_inserted_tMysqlOutput_1);
+            globalMap.put("tMysqlOutput_1_NB_LINE_DELETED", nb_line_deleted_tMysqlOutput_1);
 
             ok_Hash.put("tMysqlOutput_1", true);
             end_Hash.put("tMysqlOutput_1", System.currentTimeMillis());
@@ -1372,8 +1340,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
     }
 
-    static class row6Struct implements
-            routines.system.IPersistableRow<row6Struct> {
+    static class row6Struct implements routines.system.IPersistableRow<row6Struct> {
 
         static byte[] commonByteArray = new byte[0];
 
@@ -1489,8 +1456,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -1517,7 +1483,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             row6Struct row6 = new row6Struct();
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tContextLoad_1 begin ] start
              */
 
@@ -1534,7 +1500,7 @@ public class tMap_10_persistence_02_types_sorteddata {
              * [tContextLoad_1 begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileInputDelimited_2 begin ] start
              */
 
@@ -1549,43 +1515,41 @@ public class tMap_10_persistence_02_types_sorteddata {
             int lastLinetFileInputDelimited_2 = -1;
 
             com.csvreader.CsvReader csvReadertFileInputDelimited_2 = new com.csvreader.CsvReader(
-                    new java.io.BufferedReader(new java.io.InputStreamReader(
-                            new java.io.FileInputStream(/**
-                                                         * Start field
-                                                         * tFileInputDelimited_2:FILENAME
-                                                         */
-                            context.param_file_path/**
-                                                     * End field
-                                                     * tFileInputDelimited_2:FILENAME
-                                                     */
-                            ), "ISO-8859-15")), ',');
+                    new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(/**
+                                                                                                             * Start
+                                                                                                             * field
+                                                                                                             * tFileInputDelimited_2:FILENAME
+                                                                                                             */
+                    context.param_file_path/**
+                                             * End field tFileInputDelimited_2:FILENAME
+                                             */
+                    ), "ISO-8859-15")), ',');
 
             csvReadertFileInputDelimited_2.setSkipEmptyRecords(true);
             csvReadertFileInputDelimited_2.setTextQualifier('"');
 
-            csvReadertFileInputDelimited_2
-                    .setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
+            csvReadertFileInputDelimited_2.setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
 
             String[] rowtFileInputDelimited_2 = null;
 
             if (footer_tFileInputDelimited_2 > 0) {
 
                 while (csvReadertFileInputDelimited_2.readRecord()) {
-                    rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2
-                            .getValues();
-                    if (!(rowtFileInputDelimited_2.length == 1 && rowtFileInputDelimited_2[0]
-                            .equals("\015"))) {// empty line when row separator
-                                                // is '\n'
+                    rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2.getValues();
+                    if (!(rowtFileInputDelimited_2.length == 1 && rowtFileInputDelimited_2[0].equals("\015"))) {// empty
+                        // line
+                        // when
+                        // row
+                        // separator
+                        // is '\n'
 
                         totalLinetFileInputDelimited_2++;
 
                     }
 
                 }
-                int lastLineTemptFileInputDelimited_2 = totalLinetFileInputDelimited_2
-                        - footer_tFileInputDelimited_2 < 0 ? 0
-                        : totalLinetFileInputDelimited_2
-                                - footer_tFileInputDelimited_2;
+                int lastLineTemptFileInputDelimited_2 = totalLinetFileInputDelimited_2 - footer_tFileInputDelimited_2 < 0 ? 0
+                        : totalLinetFileInputDelimited_2 - footer_tFileInputDelimited_2;
                 if (lastLinetFileInputDelimited_2 > 0) {
                     lastLinetFileInputDelimited_2 = lastLinetFileInputDelimited_2 < lastLineTemptFileInputDelimited_2 ? lastLinetFileInputDelimited_2
                             : lastLineTemptFileInputDelimited_2;
@@ -1595,24 +1559,19 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 csvReadertFileInputDelimited_2.close();
 
-                csvReadertFileInputDelimited_2 = new com.csvreader.CsvReader(
-                        new java.io.BufferedReader(
-                                new java.io.InputStreamReader(
-                                        new java.io.FileInputStream(/**
-                                                                     * Start
-                                                                     * field
-                                                                     * tFileInputDelimited_2:FILENAME
-                                                                     */
-                                        context.param_file_path/**
-                                                                 * End field
-                                                                 * tFileInputDelimited_2:FILENAME
-                                                                 */
-                                        ), "ISO-8859-15")), ',');
+                csvReadertFileInputDelimited_2 = new com.csvreader.CsvReader(new java.io.BufferedReader(
+                        new java.io.InputStreamReader(new java.io.FileInputStream(/**
+                                                                                     * Start field
+                                                                                     * tFileInputDelimited_2:FILENAME
+                                                                                     */
+                        context.param_file_path/**
+                                                 * End field tFileInputDelimited_2:FILENAME
+                                                 */
+                        ), "ISO-8859-15")), ',');
                 csvReadertFileInputDelimited_2.setSkipEmptyRecords(true);
                 csvReadertFileInputDelimited_2.setTextQualifier('"');
 
-                csvReadertFileInputDelimited_2
-                        .setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
+                csvReadertFileInputDelimited_2.setEscapeMode(com.csvreader.CsvReader.ESCAPE_MODE_DOUBLED);
 
             }
 
@@ -1621,17 +1580,15 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             while (csvReadertFileInputDelimited_2.readRecord()) {
 
-                rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2
-                        .getValues();
+                rowtFileInputDelimited_2 = csvReadertFileInputDelimited_2.getValues();
 
-                if (rowtFileInputDelimited_2.length == 1
-                        && rowtFileInputDelimited_2[0].equals("\015")) {// empty
-                                                                        // line
-                                                                        // when
-                                                                        // row
-                                                                        // separator
-                                                                        // is
-                                                                        // '\n'
+                if (rowtFileInputDelimited_2.length == 1 && rowtFileInputDelimited_2[0].equals("\015")) {// empty
+                    // line
+                    // when
+                    // row
+                    // separator
+                    // is
+                    // '\n'
                     continue;
                 }
 
@@ -1645,8 +1602,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                     break;
                 }
                 outputLinetFileInputDelimited_2++;
-                if (limittFileInputDelimited_2 != -1
-                        && outputLinetFileInputDelimited_2 > limittFileInputDelimited_2) {
+                if (limittFileInputDelimited_2 != -1 && outputLinetFileInputDelimited_2 > limittFileInputDelimited_2) {
                     break;
                 }
 
@@ -1655,14 +1611,13 @@ public class tMap_10_persistence_02_types_sorteddata {
                 row6 = new row6Struct();
                 try {
 
-                    if (rowtFileInputDelimited_2.length == 1
-                            && rowtFileInputDelimited_2[0].equals("\015")) {// empty
-                                                                            // line
-                                                                            // when
-                                                                            // row
-                                                                            // separator
-                                                                            // is
-                                                                            // '\n'
+                    if (rowtFileInputDelimited_2.length == 1 && rowtFileInputDelimited_2[0].equals("\015")) {// empty
+                        // line
+                        // when
+                        // row
+                        // separator
+                        // is
+                        // '\n'
 
                         row6.key = null;
 
@@ -1698,7 +1653,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tFileInputDelimited_2 begin ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFileInputDelimited_2 main ] start
                  */
 
@@ -1710,7 +1665,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 // Start of branch "row6"
                 if (row6 != null) {
 
-                    /***********************************************************
+                    /***************************************************************************************************
                      * / [tContextLoad_1 main ] start
                      */
 
@@ -1726,175 +1681,143 @@ public class tMap_10_persistence_02_types_sorteddata {
                         value_tContextLoad_1 = row6.value;
                     }
                     if (context.getProperty(key_tContextLoad_1) != null) {
-                        context.setProperty(key_tContextLoad_1,
-                                value_tContextLoad_1);
+                        context.setProperty(key_tContextLoad_1, value_tContextLoad_1);
 
-                        if (key_tContextLoad_1 != null
-                                && "param_file_path".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "param_file_path".equals(key_tContextLoad_1)) {
                             context.param_file_path = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "data_dir".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "data_dir".equals(key_tContextLoad_1)) {
                             context.data_dir = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "data_output_dir".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "data_output_dir".equals(key_tContextLoad_1)) {
                             context.data_output_dir = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_host".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_host".equals(key_tContextLoad_1)) {
                             context.result_host = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_port".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_port".equals(key_tContextLoad_1)) {
                             context.result_port = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_database".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_database".equals(key_tContextLoad_1)) {
                             context.result_database = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_username".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_username".equals(key_tContextLoad_1)) {
                             context.result_username = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_password".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_password".equals(key_tContextLoad_1)) {
                             context.result_password = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_table".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_table".equals(key_tContextLoad_1)) {
                             context.result_table = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_host".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_host".equals(key_tContextLoad_1)) {
                             context.mysql_host = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_port".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_port".equals(key_tContextLoad_1)) {
                             context.mysql_port = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_schema".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_schema".equals(key_tContextLoad_1)) {
                             context.mysql_schema = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_username".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_username".equals(key_tContextLoad_1)) {
                             context.mysql_username = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_password".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_password".equals(key_tContextLoad_1)) {
                             context.mysql_password = value_tContextLoad_1;
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "current_job_dir".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "current_job_dir".equals(key_tContextLoad_1)) {
                             context.current_job_dir = value_tContextLoad_1;
                         }
 
                         assignList_tContextLoad_1.add(key_tContextLoad_1);
                     } else {
-                        context.setProperty(key_tContextLoad_1,
-                                value_tContextLoad_1);
+                        context.setProperty(key_tContextLoad_1, value_tContextLoad_1);
 
-                        if (key_tContextLoad_1 != null
-                                && "param_file_path".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "param_file_path".equals(key_tContextLoad_1)) {
                             context.param_file_path = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "data_dir".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "data_dir".equals(key_tContextLoad_1)) {
                             context.data_dir = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "data_output_dir".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "data_output_dir".equals(key_tContextLoad_1)) {
                             context.data_output_dir = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_host".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_host".equals(key_tContextLoad_1)) {
                             context.result_host = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_port".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_port".equals(key_tContextLoad_1)) {
                             context.result_port = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_database".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_database".equals(key_tContextLoad_1)) {
                             context.result_database = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_username".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_username".equals(key_tContextLoad_1)) {
                             context.result_username = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_password".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_password".equals(key_tContextLoad_1)) {
                             context.result_password = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "result_table".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "result_table".equals(key_tContextLoad_1)) {
                             context.result_table = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_host".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_host".equals(key_tContextLoad_1)) {
                             context.mysql_host = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_port".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_port".equals(key_tContextLoad_1)) {
                             context.mysql_port = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_schema".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_schema".equals(key_tContextLoad_1)) {
                             context.mysql_schema = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_username".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_username".equals(key_tContextLoad_1)) {
                             context.mysql_username = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "mysql_password".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "mysql_password".equals(key_tContextLoad_1)) {
                             context.mysql_password = value_tContextLoad_1;
 
                         }
 
-                        if (key_tContextLoad_1 != null
-                                && "current_job_dir".equals(key_tContextLoad_1)) {
+                        if (key_tContextLoad_1 != null && "current_job_dir".equals(key_tContextLoad_1)) {
                             context.current_job_dir = value_tContextLoad_1;
 
                         }
@@ -1910,7 +1833,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 } // End of branch "row6"
 
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFileInputDelimited_2 end ] start
                  */
 
@@ -1919,8 +1842,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 nb_line_tFileInputDelimited_2++;
             }
             csvReadertFileInputDelimited_2.close();
-            globalMap.put("tFileInputDelimited_2_NB_LINE",
-                    nb_line_tFileInputDelimited_2);
+            globalMap.put("tFileInputDelimited_2_NB_LINE", nb_line_tFileInputDelimited_2);
 
             ok_Hash.put("tFileInputDelimited_2", true);
             end_Hash.put("tFileInputDelimited_2", System.currentTimeMillis());
@@ -1928,20 +1850,17 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tFileInputDelimited_2 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tContextLoad_1 end ] start
              */
 
             currentComponent = "tContextLoad_1";
 
-            java.util.Enumeration<?> enu_tContextLoad_1 = context
-                    .propertyNames();
+            java.util.Enumeration<?> enu_tContextLoad_1 = context.propertyNames();
             while (enu_tContextLoad_1.hasMoreElements()) {
-                String key_tContextLoad_1 = (String) enu_tContextLoad_1
-                        .nextElement();
+                String key_tContextLoad_1 = (String) enu_tContextLoad_1.nextElement();
                 if (!assignList_tContextLoad_1.contains(key_tContextLoad_1)
-                        && !newPropertyList_tContextLoad_1
-                                .contains(key_tContextLoad_1)) {
+                        && !newPropertyList_tContextLoad_1.contains(key_tContextLoad_1)) {
                     noAssignList_tContextLoad_1.add(key_tContextLoad_1);
                 }
             }
@@ -1966,7 +1885,7 @@ public class tMap_10_persistence_02_types_sorteddata {
     public void tJavaFlex_3Process() throws TalendException {
         try {
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJavaFlex_3 begin ] start
              */
 
@@ -1979,7 +1898,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tJavaFlex_3 begin ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJavaFlex_3 main ] start
              */
 
@@ -1995,7 +1914,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tJavaFlex_3 main ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tJavaFlex_3 end ] start
              */
 
@@ -2018,8 +1937,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
     }
 
-    static class out2Struct implements
-            routines.system.IPersistableRow<out2Struct> {
+    static class out2Struct implements routines.system.IPersistableRow<out2Struct> {
 
         static byte[] commonByteArray = new byte[0];
 
@@ -2217,8 +2135,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_byte_array = new String(commonByteArray,
-                            0, length);
+                    this.DEFINED_EXP_byte_array = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -2258,8 +2175,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_Date = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_Date = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readByte();
@@ -2369,8 +2285,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -2385,8 +2300,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 this.DEFINED_EXP_List = (List) dis.readObject();
@@ -2437,8 +2351,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_byte_array_1 = new String(commonByteArray,
-                            0, length);
+                    this.DEFINED_EXP_byte_array_1 = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -2478,8 +2391,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_Date_1 = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_Date_1 = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readByte();
@@ -2589,8 +2501,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_String_1 = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_String_1 = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -2605,8 +2516,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.UNDEFINED_EXP_String_1 = new String(commonByteArray,
-                            0, length);
+                    this.UNDEFINED_EXP_String_1 = new String(commonByteArray, 0, length);
                 }
 
                 this.DEFINED_EXP_List_1 = (List) dis.readObject();
@@ -3604,8 +3514,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -3627,8 +3536,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
     }
 
-    static class outStruct implements
-            routines.system.IPersistableRow<outStruct> {
+    static class outStruct implements routines.system.IPersistableRow<outStruct> {
 
         static byte[] commonByteArray = new byte[0];
 
@@ -3962,8 +3870,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -3978,8 +3885,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 this.DEFINED_EXP_List = (List) dis.readObject();
@@ -4166,8 +4072,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_String_1 = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_String_1 = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -4182,8 +4087,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.UNDEFINED_EXP_String_1 = new String(commonByteArray,
-                            0, length);
+                    this.UNDEFINED_EXP_String_1 = new String(commonByteArray, 0, length);
                 }
 
                 this.DEFINED_EXP_List_1 = (List) dis.readObject();
@@ -5177,8 +5081,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -5200,8 +5103,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
     }
 
-    static class mainStruct implements
-            routines.system.IPersistableRow<mainStruct> {
+    static class mainStruct implements routines.system.IPersistableRow<mainStruct> {
 
         static byte[] commonByteArray = new byte[0];
 
@@ -5463,8 +5365,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -5479,8 +5380,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 this.DEFINED_EXP_List = (List) dis.readObject();
@@ -6002,8 +5902,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -6288,8 +6187,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -6304,8 +6202,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 this.DEFINED_EXP_List = (List) dis.readObject();
@@ -6827,8 +6724,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -6858,45 +6754,37 @@ public class tMap_10_persistence_02_types_sorteddata {
             outStruct out = new outStruct();
             out2Struct out2 = new out2Struct();
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileOutputDelimited_2 begin ] start
              */
 
             ok_Hash.put("tFileOutputDelimited_2", false);
-            start_Hash
-                    .put("tFileOutputDelimited_2", System.currentTimeMillis());
+            start_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
             currentComponent = "tFileOutputDelimited_2";
 
-            String fileName_tFileOutputDelimited_2 = (new java.io.File(
-                    context.data_output_dir + context.current_job_dir
-                            + "out.csv")).getAbsolutePath().replace("\\", "/");
+            String fileName_tFileOutputDelimited_2 = (new java.io.File(context.data_output_dir
+                    + context.current_job_dir + "out.csv")).getAbsolutePath().replace("\\", "/");
             String fullName_tFileOutputDelimited_2 = null;
             String extension_tFileOutputDelimited_2 = null;
             String directory_tFileOutputDelimited_2 = null;
             if ((fileName_tFileOutputDelimited_2.indexOf("/") != -1)) {
-                if (fileName_tFileOutputDelimited_2.lastIndexOf(".") < fileName_tFileOutputDelimited_2
-                        .lastIndexOf("/")) {
+                if (fileName_tFileOutputDelimited_2.lastIndexOf(".") < fileName_tFileOutputDelimited_2.lastIndexOf("/")) {
                     fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
                     extension_tFileOutputDelimited_2 = "";
                 } else {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(0, fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2.substring(0,
+                            fileName_tFileOutputDelimited_2.lastIndexOf("."));
                     extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                            .substring(fileName_tFileOutputDelimited_2.lastIndexOf("."));
                 }
-                directory_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                        .substring(0, fileName_tFileOutputDelimited_2
-                                .lastIndexOf("/"));
+                directory_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2.substring(0,
+                        fileName_tFileOutputDelimited_2.lastIndexOf("/"));
             } else {
                 if (fileName_tFileOutputDelimited_2.lastIndexOf(".") != -1) {
-                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(0, fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                    fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2.substring(0,
+                            fileName_tFileOutputDelimited_2.lastIndexOf("."));
                     extension_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2
-                            .substring(fileName_tFileOutputDelimited_2
-                                    .lastIndexOf("."));
+                            .substring(fileName_tFileOutputDelimited_2.lastIndexOf("."));
                 } else {
                     fullName_tFileOutputDelimited_2 = fileName_tFileOutputDelimited_2;
                     extension_tFileOutputDelimited_2 = "";
@@ -6910,25 +6798,20 @@ public class tMap_10_persistence_02_types_sorteddata {
             int currentRow_tFileOutputDelimited_2 = 0;
 
             final String OUT_DELIM_tFileOutputDelimited_2 = /**
-                                                             * Start field
-                                                             * tFileOutputDelimited_2:FIELDSEPARATOR
+                                                             * Start field tFileOutputDelimited_2:FIELDSEPARATOR
                                                              */
             ";"/** End field tFileOutputDelimited_2:FIELDSEPARATOR */
             ;
 
             final String OUT_DELIM_ROWSEP_tFileOutputDelimited_2 = /**
-                                                                     * Start
-                                                                     * field
-                                                                     * tFileOutputDelimited_2:ROWSEPARATOR
+                                                                     * Start field tFileOutputDelimited_2:ROWSEPARATOR
                                                                      */
             "\n"/** End field tFileOutputDelimited_2:ROWSEPARATOR */
             ;
 
             // create directory only if not exists
-            if (directory_tFileOutputDelimited_2 != null
-                    && directory_tFileOutputDelimited_2.trim().length() != 0) {
-                java.io.File dir_tFileOutputDelimited_2 = new java.io.File(
-                        directory_tFileOutputDelimited_2);
+            if (directory_tFileOutputDelimited_2 != null && directory_tFileOutputDelimited_2.trim().length() != 0) {
+                java.io.File dir_tFileOutputDelimited_2 = new java.io.File(directory_tFileOutputDelimited_2);
                 if (!dir_tFileOutputDelimited_2.exists()) {
                     dir_tFileOutputDelimited_2.mkdirs();
                 }
@@ -6936,382 +6819,305 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             java.io.BufferedWriter outtFileOutputDelimited_2 = new java.io.BufferedWriter(
                     new java.io.OutputStreamWriter(
-                            new java.io.FileOutputStream(
-                                    fileName_tFileOutputDelimited_2, false),
-                            "ISO-8859-15"));
-            java.io.File filetFileOutputDelimited_2 = new java.io.File(
-                    fileName_tFileOutputDelimited_2);
+                            new java.io.FileOutputStream(fileName_tFileOutputDelimited_2, false), "ISO-8859-15"));
+            java.io.File filetFileOutputDelimited_2 = new java.io.File(fileName_tFileOutputDelimited_2);
 
             if (filetFileOutputDelimited_2.length() == 0) {
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_boolean");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Boolean");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Boolean");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_byte");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Byte");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Byte");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2
-                        .write("DEFINED_EXP_byte_array_nullable");
+                outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array_nullable");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_char");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Character");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Character");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Date");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Date");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_double");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Double");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Double");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_BigDecimal_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_BigDecimal_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_int");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Integer");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Integer");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_float");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Float");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Float");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_long");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Long");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Long");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Object");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Object");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_short");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Short");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Short");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_String");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_String");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_List");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_List");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_boolean_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Boolean_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Boolean_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_byte_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Byte_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Byte_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
-                outtFileOutputDelimited_2
-                        .write("DEFINED_EXP_byte_array_nullable_1");
+                outtFileOutputDelimited_2.write("DEFINED_EXP_byte_array_nullable_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_char_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Character_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Character_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Date_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Date_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_double_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Double_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Double_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_BigDecimal");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_BigDecimal");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_int_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Integer_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Integer_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_float_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Float_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Float_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_long_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Long_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Long_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Object_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Object_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_short_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_Short_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_Short_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_String_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_String_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("DEFINED_EXP_List_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_tFileOutputDelimited_2);
 
                 outtFileOutputDelimited_2.write("UNDEFINED_EXP_List_1");
 
-                outtFileOutputDelimited_2
-                        .write(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
+                outtFileOutputDelimited_2.write(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
             }
 
             /**
              * [tFileOutputDelimited_2 begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_2 begin ] start
              */
 
@@ -7336,7 +7142,7 @@ public class tMap_10_persistence_02_types_sorteddata {
              * [tMap_2 begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_1 begin ] start
              */
 
@@ -7367,7 +7173,7 @@ public class tMap_10_persistence_02_types_sorteddata {
              * [tMap_1 begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFixedFlowInput_2 begin ] start
              */
 
@@ -7390,8 +7196,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 main.UNDEFINED_EXP_Byte = null;
 
-                main.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
-                        Byte.MIN_VALUE };
+                main.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE, Byte.MIN_VALUE };
 
                 main.DEFINED_EXP_byte_array_nullable = null;
 
@@ -7411,8 +7216,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 main.UNDEFINED_EXP_Double = null;
 
-                main.DEFINED_EXP_BigDecimal = new BigDecimal(
-                        "123456789.123456789");
+                main.DEFINED_EXP_BigDecimal = new BigDecimal("123456789.123456789");
 
                 main.UNDEFINED_EXP_BigDecimal = null;
 
@@ -7456,7 +7260,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tFixedFlowInput_2 begin ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFixedFlowInput_2 main ] start
                  */
 
@@ -7465,7 +7269,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tFixedFlowInput_2 main ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tMap_1 main ] start
                  */
 
@@ -7760,7 +7564,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 // Start of branch "out"
                 if (out != null) {
 
-                    /***********************************************************
+                    /***************************************************************************************************
                      * / [tMap_2 main ] start
                      */
 
@@ -7791,14 +7595,12 @@ public class tMap_10_persistence_02_types_sorteddata {
                         out2_tmp.DEFINED_EXP_byte = out.DEFINED_EXP_byte;
                         out2_tmp.DEFINED_EXP_Byte = out.DEFINED_EXP_Byte;
                         out2_tmp.UNDEFINED_EXP_Byte = out.UNDEFINED_EXP_Byte;
-                        out2_tmp.DEFINED_EXP_byte_array = java.util.Arrays
-                                .toString(out.DEFINED_EXP_byte_array);
+                        out2_tmp.DEFINED_EXP_byte_array = java.util.Arrays.toString(out.DEFINED_EXP_byte_array);
                         out2_tmp.DEFINED_EXP_byte_array_nullable = out.DEFINED_EXP_byte_array_nullable;
                         out2_tmp.DEFINED_EXP_char = out.DEFINED_EXP_char;
                         out2_tmp.DEFINED_EXP_Character = out.DEFINED_EXP_Character;
                         out2_tmp.UNDEFINED_EXP_Character = out.UNDEFINED_EXP_Character;
-                        out2_tmp.DEFINED_EXP_Date = TalendDate.formatDate(
-                                "dd-MM-yyyy", out.DEFINED_EXP_Date);
+                        out2_tmp.DEFINED_EXP_Date = TalendDate.formatDate("dd-MM-yyyy", out.DEFINED_EXP_Date);
                         out2_tmp.UNDEFINED_EXP_Date = out.UNDEFINED_EXP_Date;
                         out2_tmp.DEFINED_EXP_double = out.DEFINED_EXP_double;
                         out2_tmp.DEFINED_EXP_Double = out.DEFINED_EXP_Double;
@@ -7829,14 +7631,12 @@ public class tMap_10_persistence_02_types_sorteddata {
                         out2_tmp.DEFINED_EXP_byte_1 = out.DEFINED_EXP_byte_1;
                         out2_tmp.DEFINED_EXP_Byte_1 = out.DEFINED_EXP_Byte_1;
                         out2_tmp.UNDEFINED_EXP_Byte_1 = out.UNDEFINED_EXP_Byte_1;
-                        out2_tmp.DEFINED_EXP_byte_array_1 = java.util.Arrays
-                                .toString(out.DEFINED_EXP_byte_array_1);
+                        out2_tmp.DEFINED_EXP_byte_array_1 = java.util.Arrays.toString(out.DEFINED_EXP_byte_array_1);
                         out2_tmp.DEFINED_EXP_byte_array_nullable_1 = out.DEFINED_EXP_byte_array_nullable_1;
                         out2_tmp.DEFINED_EXP_char_1 = out.DEFINED_EXP_char_1;
                         out2_tmp.DEFINED_EXP_Character_1 = out.DEFINED_EXP_Character_1;
                         out2_tmp.UNDEFINED_EXP_Character_1 = out.UNDEFINED_EXP_Character_1;
-                        out2_tmp.DEFINED_EXP_Date_1 = TalendDate.formatDate(
-                                "dd-MM-yyyy", out.DEFINED_EXP_Date_1);
+                        out2_tmp.DEFINED_EXP_Date_1 = TalendDate.formatDate("dd-MM-yyyy", out.DEFINED_EXP_Date_1);
                         out2_tmp.UNDEFINED_EXP_Date_1 = out.UNDEFINED_EXP_Date_1;
                         out2_tmp.DEFINED_EXP_double_1 = out.DEFINED_EXP_double_1;
                         out2_tmp.DEFINED_EXP_Double_1 = out.DEFINED_EXP_Double_1;
@@ -7874,7 +7674,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                     // Start of branch "out2"
                     if (out2 != null) {
 
-                        /*******************************************************
+                        /***********************************************************************************************
                          * / [tFileOutputDelimited_2 main ] start
                          */
 
@@ -7888,8 +7688,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Boolean != null) {
 
@@ -7901,8 +7700,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Boolean != null) {
 
@@ -7914,8 +7712,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -7923,8 +7720,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Byte != null) {
 
@@ -7936,8 +7732,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Byte != null) {
 
@@ -7949,8 +7744,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_byte_array != null) {
 
@@ -7962,8 +7756,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_byte_array_nullable != null) {
 
@@ -7975,8 +7768,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -7984,8 +7776,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Character != null) {
 
@@ -7997,8 +7788,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Character != null) {
 
@@ -8010,8 +7800,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Date != null) {
 
@@ -8023,8 +7812,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Date != null) {
 
@@ -8036,8 +7824,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8045,8 +7832,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Double != null) {
 
@@ -8058,8 +7844,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Double != null) {
 
@@ -8071,8 +7856,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_BigDecimal_1 != null) {
 
@@ -8084,8 +7868,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_BigDecimal_1 != null) {
 
@@ -8097,8 +7880,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8106,8 +7888,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Integer != null) {
 
@@ -8119,8 +7900,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Integer != null) {
 
@@ -8132,8 +7912,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8141,8 +7920,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Float != null) {
 
@@ -8154,8 +7932,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Float != null) {
 
@@ -8167,8 +7944,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8176,8 +7952,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Long != null) {
 
@@ -8189,8 +7964,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Long != null) {
 
@@ -8202,8 +7976,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Object != null) {
 
@@ -8215,8 +7988,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Object != null) {
 
@@ -8228,8 +8000,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8237,8 +8008,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Short != null) {
 
@@ -8250,8 +8020,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Short != null) {
 
@@ -8263,8 +8032,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_String != null) {
 
@@ -8276,8 +8044,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_String != null) {
 
@@ -8289,8 +8056,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_List != null) {
 
@@ -8302,8 +8068,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_List != null) {
 
@@ -8315,8 +8080,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8324,8 +8088,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Boolean_1 != null) {
 
@@ -8337,8 +8100,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Boolean_1 != null) {
 
@@ -8350,8 +8112,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8359,8 +8120,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Byte_1 != null) {
 
@@ -8372,8 +8132,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Byte_1 != null) {
 
@@ -8385,8 +8144,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_byte_array_1 != null) {
 
@@ -8398,8 +8156,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_byte_array_nullable_1 != null) {
 
@@ -8411,8 +8168,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8420,8 +8176,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Character_1 != null) {
 
@@ -8433,8 +8188,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Character_1 != null) {
 
@@ -8446,8 +8200,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Date_1 != null) {
 
@@ -8459,8 +8212,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Date_1 != null) {
 
@@ -8472,8 +8224,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8481,8 +8232,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Double_1 != null) {
 
@@ -8494,8 +8244,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Double_1 != null) {
 
@@ -8507,8 +8256,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_BigDecimal != null) {
 
@@ -8520,8 +8268,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_BigDecimal != null) {
 
@@ -8533,8 +8280,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8542,8 +8288,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Integer_1 != null) {
 
@@ -8555,8 +8300,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Integer_1 != null) {
 
@@ -8568,8 +8312,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8577,8 +8320,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Float_1 != null) {
 
@@ -8590,8 +8332,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Float_1 != null) {
 
@@ -8603,8 +8344,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8612,8 +8352,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Long_1 != null) {
 
@@ -8625,8 +8364,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Long_1 != null) {
 
@@ -8638,8 +8376,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Object_1 != null) {
 
@@ -8651,8 +8388,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Object_1 != null) {
 
@@ -8664,8 +8400,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         sb_tFileOutputDelimited_2.append(
 
@@ -8673,8 +8408,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         );
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_Short_1 != null) {
 
@@ -8686,8 +8420,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_Short_1 != null) {
 
@@ -8699,8 +8432,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_String_1 != null) {
 
@@ -8712,8 +8444,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_String_1 != null) {
 
@@ -8725,8 +8456,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.DEFINED_EXP_List_1 != null) {
 
@@ -8738,8 +8468,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_tFileOutputDelimited_2);
 
                         if (out2.UNDEFINED_EXP_List_1 != null) {
 
@@ -8751,11 +8480,9 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                         }
 
-                        sb_tFileOutputDelimited_2
-                                .append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
+                        sb_tFileOutputDelimited_2.append(OUT_DELIM_ROWSEP_tFileOutputDelimited_2);
 
-                        outtFileOutputDelimited_2
-                                .write(sb_tFileOutputDelimited_2.toString());
+                        outtFileOutputDelimited_2.write(sb_tFileOutputDelimited_2.toString());
 
                         nb_line_tFileOutputDelimited_2++;
 
@@ -8767,7 +8494,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 } // End of branch "out"
 
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFixedFlowInput_2 end ] start
                  */
 
@@ -8781,7 +8508,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tFixedFlowInput_2 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_1 end ] start
              */
 
@@ -8801,7 +8528,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tMap_1 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tMap_2 end ] start
              */
 
@@ -8817,15 +8544,14 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tMap_2 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileOutputDelimited_2 end ] start
              */
 
             currentComponent = "tFileOutputDelimited_2";
 
             outtFileOutputDelimited_2.close();
-            globalMap.put("tFileOutputDelimited_2_NB_LINE",
-                    nb_line_tFileOutputDelimited_2);
+            globalMap.put("tFileOutputDelimited_2_NB_LINE", nb_line_tFileOutputDelimited_2);
 
             ok_Hash.put("tFileOutputDelimited_2", true);
             end_Hash.put("tFileOutputDelimited_2", System.currentTimeMillis());
@@ -8852,7 +8578,7 @@ public class tMap_10_persistence_02_types_sorteddata {
     public void tFileCompare_1Process() throws TalendException {
         try {
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileCompare_1 begin ] start
              */
 
@@ -8863,7 +8589,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tFileCompare_1 begin ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileCompare_1 main ] start
              */
 
@@ -8873,19 +8599,14 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             if (result_tFileCompare_1) {
 
-                java.io.BufferedReader file_tFileCompare_1 = new java.io.BufferedReader(
-                        new java.io.FileReader(context.data_output_dir
-                                + context.current_job_dir + "out.csv"));
-                java.io.BufferedReader fileRef_tFileCompare_1 = new java.io.BufferedReader(
-                        new java.io.FileReader((String) context
-                                .getProperty("data_dir")
-                                + context.current_job_dir + "ref/out.csv"));
+                java.io.BufferedReader file_tFileCompare_1 = new java.io.BufferedReader(new java.io.FileReader(
+                        context.data_output_dir + context.current_job_dir + "out.csv"));
+                java.io.BufferedReader fileRef_tFileCompare_1 = new java.io.BufferedReader(new java.io.FileReader(
+                        (String) context.getProperty("data_dir") + context.current_job_dir + "ref/out.csv"));
                 String content_tFileCompare_1 = null, contentRef_tFileCompare_1 = null;
                 while ((content_tFileCompare_1 = file_tFileCompare_1.readLine()) != null
-                        && (contentRef_tFileCompare_1 = fileRef_tFileCompare_1
-                                .readLine()) != null) {
-                    if (content_tFileCompare_1
-                            .compareTo(contentRef_tFileCompare_1) != 0) {
+                        && (contentRef_tFileCompare_1 = fileRef_tFileCompare_1.readLine()) != null) {
+                    if (content_tFileCompare_1.compareTo(contentRef_tFileCompare_1) != 0) {
                         result_tFileCompare_1 = false;
                         break;
                     }
@@ -8895,11 +8616,9 @@ public class tMap_10_persistence_02_types_sorteddata {
                 if (content_tFileCompare_1 == null) {
                     // This step is done in case of the while upper ignore
                     // second part:
-                    contentRef_tFileCompare_1 = fileRef_tFileCompare_1
-                            .readLine();
+                    contentRef_tFileCompare_1 = fileRef_tFileCompare_1.readLine();
                 }
-                if (content_tFileCompare_1 != null
-                        || contentRef_tFileCompare_1 != null) {
+                if (content_tFileCompare_1 != null || contentRef_tFileCompare_1 != null) {
                     result_tFileCompare_1 = false;
                 }
 
@@ -8910,19 +8629,17 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             String messagetFileCompare_1 = "";
             if (result_tFileCompare_1) {
-                messagetFileCompare_1 = "[" + jobName + "." + currentComponent
-                        + "] OK";
+                messagetFileCompare_1 = "[" + jobName + "." + currentComponent + "] OK";
 
             } else {
-                messagetFileCompare_1 = "[" + jobName + "." + currentComponent
-                        + "] Files differ, DIFFERENT";
+                messagetFileCompare_1 = "[" + jobName + "." + currentComponent + "] Files differ, DIFFERENT";
             }
             globalMap.put("tFileCompare_1_DIFFERENCE", result_tFileCompare_1);
 
             /**
              * [tFileCompare_1 main ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFileCompare_1 end ] start
              */
 
@@ -8945,7 +8662,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
     public void tAssert_1Process() throws TalendException {
         try {
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAssert_1 begin ] start
              */
 
@@ -8956,27 +8673,26 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tAssert_1 begin ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAssert_1 main ] start
              */
 
             currentComponent = "tAssert_1";
 
             if (((Boolean) globalMap.get("tFileCompare_1_DIFFERENCE"))) {
-                tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                        "tAssert_1", "Ok", "--", "Data out validation");
+                tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", "tAssert_1", "Ok", "--",
+                        "Data out validation");
                 tAssertCatcher_1Process();
             } else {
-                tAssertCatcher_1.addMessage(pid, projectName, jobName, "java",
-                        "tAssert_1", "Failed", "Test logically failed",
-                        "Data out validation");
+                tAssertCatcher_1.addMessage(pid, projectName, jobName, "java", "tAssert_1", "Failed",
+                        "Test logically failed", "Data out validation");
                 tAssertCatcher_1Process();
             }
 
             /**
              * [tAssert_1 main ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAssert_1 end ] start
              */
 
@@ -8996,13 +8712,16 @@ public class tMap_10_persistence_02_types_sorteddata {
 
     }
 
-    static class lookupStruct implements
-            routines.system.IPersistableComparableLookupRow<lookupStruct> {
+    static class lookupStruct implements routines.system.IPersistableComparableLookupRow<lookupStruct> {
 
         static byte[] commonByteArray = new byte[0];
+
         private static final int DEFAULT_HASHCODE = 1;
+
         private static final int PRIME = 31;
+
         private int hashCode = DEFAULT_HASHCODE;
+
         public boolean hashCodeDirty = true;
 
         boolean DEFINED_EXP_boolean;
@@ -9083,165 +8802,132 @@ public class tMap_10_persistence_02_types_sorteddata {
                 final int prime = PRIME;
                 int result = DEFAULT_HASHCODE;
 
-                System.out.println(result);result = prime * result
-                        + (this.DEFINED_EXP_boolean ? 1231 : 1237);
+                System.out.println(result);
+                result = prime * result + (this.DEFINED_EXP_boolean ? 1231 : 1237);
 
-                System.out.println(result);result = prime
+                System.out.println(result);
+                result = prime * result
+                        + ((this.DEFINED_EXP_Boolean == null) ? 0 : this.DEFINED_EXP_Boolean.hashCode());
+
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_Boolean == null) ? 0 : this.UNDEFINED_EXP_Boolean.hashCode());
+
+                System.out.println(result);
+                result = prime * result + (int) this.DEFINED_EXP_byte;
+
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_Byte == null) ? 0 : this.DEFINED_EXP_Byte.hashCode());
+
+                System.out.println(result);
+                result = prime * result + ((this.UNDEFINED_EXP_Byte == null) ? 0 : this.UNDEFINED_EXP_Byte.hashCode());
+
+                System.out.println(result);
+                result = prime
                         * result
-                        + ((this.DEFINED_EXP_Boolean == null) ? 0
-                                : this.DEFINED_EXP_Boolean.hashCode());
-
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Boolean == null) ? 0
-                                : this.UNDEFINED_EXP_Boolean.hashCode());
-
-                System.out.println(result);result = prime * result + (int) this.DEFINED_EXP_byte;
-
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Byte == null) ? 0
-                                : this.DEFINED_EXP_Byte.hashCode());
-
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Byte == null) ? 0
-                                : this.UNDEFINED_EXP_Byte.hashCode());
-
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_byte_array == null) ? 0
-                                : ArrayUtils.hashCode(this.DEFINED_EXP_byte_array));
+                        + ((this.DEFINED_EXP_byte_array == null) ? 0 : ArrayUtils.hashCode(this.DEFINED_EXP_byte_array));
                 ;
-                
 
-                System.out.println(result);result = prime
+                System.out.println(result);
+                result = prime
                         * result
-                        + ((this.DEFINED_EXP_byte_array_nullable == null) ? 0
-                                : this.DEFINED_EXP_byte_array_nullable
-                                        .hashCode());
+                        + ((this.DEFINED_EXP_byte_array_nullable == null) ? 0 : this.DEFINED_EXP_byte_array_nullable
+                                .hashCode());
 
-                System.out.println(result);result = prime * result + (int) this.DEFINED_EXP_char;
+                System.out.println(result);
+                result = prime * result + (int) this.DEFINED_EXP_char;
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Character == null) ? 0
-                                : this.DEFINED_EXP_Character.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.DEFINED_EXP_Character == null) ? 0 : this.DEFINED_EXP_Character.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Character == null) ? 0
-                                : this.UNDEFINED_EXP_Character.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_Character == null) ? 0 : this.UNDEFINED_EXP_Character.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Date == null) ? 0
-                                : this.DEFINED_EXP_Date.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_Date == null) ? 0 : this.DEFINED_EXP_Date.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Date == null) ? 0
-                                : this.UNDEFINED_EXP_Date.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.UNDEFINED_EXP_Date == null) ? 0 : this.UNDEFINED_EXP_Date.hashCode());
 
-                System.out.println(result);result = prime * result + (int) this.DEFINED_EXP_double;
+                System.out.println(result);
+                result = prime * result + (int) this.DEFINED_EXP_double;
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Double == null) ? 0
-                                : this.DEFINED_EXP_Double.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_Double == null) ? 0 : this.DEFINED_EXP_Double.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Double == null) ? 0
-                                : this.UNDEFINED_EXP_Double.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_Double == null) ? 0 : this.UNDEFINED_EXP_Double.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_BigDecimal == null) ? 0
-                                : this.DEFINED_EXP_BigDecimal.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.DEFINED_EXP_BigDecimal == null) ? 0 : this.DEFINED_EXP_BigDecimal.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_BigDecimal == null) ? 0
-                                : this.UNDEFINED_EXP_BigDecimal.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_BigDecimal == null) ? 0 : this.UNDEFINED_EXP_BigDecimal.hashCode());
 
-                System.out.println(result);result = prime * result + (int) this.DEFINED_EXP_int;
+                System.out.println(result);
+                result = prime * result + (int) this.DEFINED_EXP_int;
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Integer == null) ? 0
-                                : this.DEFINED_EXP_Integer.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.DEFINED_EXP_Integer == null) ? 0 : this.DEFINED_EXP_Integer.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Integer == null) ? 0
-                                : this.UNDEFINED_EXP_Integer.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_Integer == null) ? 0 : this.UNDEFINED_EXP_Integer.hashCode());
 
-                System.out.println(result);result = prime * result + (int) this.DEFINED_EXP_float;
+                System.out.println(result);
+                result = prime * result + (int) this.DEFINED_EXP_float;
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Float == null) ? 0
-                                : this.DEFINED_EXP_Float.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_Float == null) ? 0 : this.DEFINED_EXP_Float.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Float == null) ? 0
-                                : this.UNDEFINED_EXP_Float.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_Float == null) ? 0 : this.UNDEFINED_EXP_Float.hashCode());
 
-                System.out.println(result);result = prime * result + (int) this.DEFINED_EXP_long;
+                System.out.println(result);
+                result = prime * result + (int) this.DEFINED_EXP_long;
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Long == null) ? 0
-                                : this.DEFINED_EXP_Long.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_Long == null) ? 0 : this.DEFINED_EXP_Long.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Long == null) ? 0
-                                : this.UNDEFINED_EXP_Long.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.UNDEFINED_EXP_Long == null) ? 0 : this.UNDEFINED_EXP_Long.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Object == null) ? 0
-                                : this.DEFINED_EXP_Object.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_Object == null) ? 0 : this.DEFINED_EXP_Object.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Object == null) ? 0
-                                : this.UNDEFINED_EXP_Object.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_Object == null) ? 0 : this.UNDEFINED_EXP_Object.hashCode());
 
-                System.out.println(result);result = prime * result + (int) this.DEFINED_EXP_short;
+                System.out.println(result);
+                result = prime * result + (int) this.DEFINED_EXP_short;
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_Short == null) ? 0
-                                : this.DEFINED_EXP_Short.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_Short == null) ? 0 : this.DEFINED_EXP_Short.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_Short == null) ? 0
-                                : this.UNDEFINED_EXP_Short.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_Short == null) ? 0 : this.UNDEFINED_EXP_Short.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_String == null) ? 0
-                                : this.DEFINED_EXP_String.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_String == null) ? 0 : this.DEFINED_EXP_String.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_String == null) ? 0
-                                : this.UNDEFINED_EXP_String.hashCode());
+                System.out.println(result);
+                result = prime * result
+                        + ((this.UNDEFINED_EXP_String == null) ? 0 : this.UNDEFINED_EXP_String.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.DEFINED_EXP_List == null) ? 0
-                                : this.DEFINED_EXP_List.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.DEFINED_EXP_List == null) ? 0 : this.DEFINED_EXP_List.hashCode());
 
-                System.out.println(result);result = prime
-                        * result
-                        + ((this.UNDEFINED_EXP_List == null) ? 0
-                                : this.UNDEFINED_EXP_List.hashCode());
+                System.out.println(result);
+                result = prime * result + ((this.UNDEFINED_EXP_List == null) ? 0 : this.UNDEFINED_EXP_List.hashCode());
 
                 this.hashCode = result;
                 this.hashCodeDirty = false;
@@ -9267,15 +8953,13 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.DEFINED_EXP_Boolean == null) {
                 if (other.DEFINED_EXP_Boolean != null)
                     return false;
-            } else if (!this.DEFINED_EXP_Boolean
-                    .equals(other.DEFINED_EXP_Boolean))
+            } else if (!this.DEFINED_EXP_Boolean.equals(other.DEFINED_EXP_Boolean))
                 return false;
 
             if (this.UNDEFINED_EXP_Boolean == null) {
                 if (other.UNDEFINED_EXP_Boolean != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Boolean
-                    .equals(other.UNDEFINED_EXP_Boolean))
+            } else if (!this.UNDEFINED_EXP_Boolean.equals(other.UNDEFINED_EXP_Boolean))
                 return false;
 
             if (this.DEFINED_EXP_byte != other.DEFINED_EXP_byte)
@@ -9290,8 +8974,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.UNDEFINED_EXP_Byte == null) {
                 if (other.UNDEFINED_EXP_Byte != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Byte
-                    .equals(other.UNDEFINED_EXP_Byte))
+            } else if (!this.UNDEFINED_EXP_Byte.equals(other.UNDEFINED_EXP_Byte))
                 return false;
 
             if (this.DEFINED_EXP_byte_array == null) {
@@ -9303,8 +8986,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.DEFINED_EXP_byte_array_nullable == null) {
                 if (other.DEFINED_EXP_byte_array_nullable != null)
                     return false;
-            } else if (!this.DEFINED_EXP_byte_array_nullable
-                    .equals(other.DEFINED_EXP_byte_array_nullable))
+            } else if (!this.DEFINED_EXP_byte_array_nullable.equals(other.DEFINED_EXP_byte_array_nullable))
                 return false;
 
             if (this.DEFINED_EXP_char != other.DEFINED_EXP_char)
@@ -9313,15 +8995,13 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.DEFINED_EXP_Character == null) {
                 if (other.DEFINED_EXP_Character != null)
                     return false;
-            } else if (!this.DEFINED_EXP_Character
-                    .equals(other.DEFINED_EXP_Character))
+            } else if (!this.DEFINED_EXP_Character.equals(other.DEFINED_EXP_Character))
                 return false;
 
             if (this.UNDEFINED_EXP_Character == null) {
                 if (other.UNDEFINED_EXP_Character != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Character
-                    .equals(other.UNDEFINED_EXP_Character))
+            } else if (!this.UNDEFINED_EXP_Character.equals(other.UNDEFINED_EXP_Character))
                 return false;
 
             if (this.DEFINED_EXP_Date == null) {
@@ -9333,8 +9013,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.UNDEFINED_EXP_Date == null) {
                 if (other.UNDEFINED_EXP_Date != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Date
-                    .equals(other.UNDEFINED_EXP_Date))
+            } else if (!this.UNDEFINED_EXP_Date.equals(other.UNDEFINED_EXP_Date))
                 return false;
 
             if (this.DEFINED_EXP_double != other.DEFINED_EXP_double)
@@ -9343,29 +9022,25 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.DEFINED_EXP_Double == null) {
                 if (other.DEFINED_EXP_Double != null)
                     return false;
-            } else if (!this.DEFINED_EXP_Double
-                    .equals(other.DEFINED_EXP_Double))
+            } else if (!this.DEFINED_EXP_Double.equals(other.DEFINED_EXP_Double))
                 return false;
 
             if (this.UNDEFINED_EXP_Double == null) {
                 if (other.UNDEFINED_EXP_Double != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Double
-                    .equals(other.UNDEFINED_EXP_Double))
+            } else if (!this.UNDEFINED_EXP_Double.equals(other.UNDEFINED_EXP_Double))
                 return false;
 
             if (this.DEFINED_EXP_BigDecimal == null) {
                 if (other.DEFINED_EXP_BigDecimal != null)
                     return false;
-            } else if (!this.DEFINED_EXP_BigDecimal
-                    .equals(other.DEFINED_EXP_BigDecimal))
+            } else if (!this.DEFINED_EXP_BigDecimal.equals(other.DEFINED_EXP_BigDecimal))
                 return false;
 
             if (this.UNDEFINED_EXP_BigDecimal == null) {
                 if (other.UNDEFINED_EXP_BigDecimal != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_BigDecimal
-                    .equals(other.UNDEFINED_EXP_BigDecimal))
+            } else if (!this.UNDEFINED_EXP_BigDecimal.equals(other.UNDEFINED_EXP_BigDecimal))
                 return false;
 
             if (this.DEFINED_EXP_int != other.DEFINED_EXP_int)
@@ -9374,15 +9049,13 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.DEFINED_EXP_Integer == null) {
                 if (other.DEFINED_EXP_Integer != null)
                     return false;
-            } else if (!this.DEFINED_EXP_Integer
-                    .equals(other.DEFINED_EXP_Integer))
+            } else if (!this.DEFINED_EXP_Integer.equals(other.DEFINED_EXP_Integer))
                 return false;
 
             if (this.UNDEFINED_EXP_Integer == null) {
                 if (other.UNDEFINED_EXP_Integer != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Integer
-                    .equals(other.UNDEFINED_EXP_Integer))
+            } else if (!this.UNDEFINED_EXP_Integer.equals(other.UNDEFINED_EXP_Integer))
                 return false;
 
             if (this.DEFINED_EXP_float != other.DEFINED_EXP_float)
@@ -9397,8 +9070,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.UNDEFINED_EXP_Float == null) {
                 if (other.UNDEFINED_EXP_Float != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Float
-                    .equals(other.UNDEFINED_EXP_Float))
+            } else if (!this.UNDEFINED_EXP_Float.equals(other.UNDEFINED_EXP_Float))
                 return false;
 
             if (this.DEFINED_EXP_long != other.DEFINED_EXP_long)
@@ -9413,22 +9085,19 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.UNDEFINED_EXP_Long == null) {
                 if (other.UNDEFINED_EXP_Long != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Long
-                    .equals(other.UNDEFINED_EXP_Long))
+            } else if (!this.UNDEFINED_EXP_Long.equals(other.UNDEFINED_EXP_Long))
                 return false;
 
             if (this.DEFINED_EXP_Object == null) {
                 if (other.DEFINED_EXP_Object != null)
                     return false;
-            } else if (!this.DEFINED_EXP_Object
-                    .equals(other.DEFINED_EXP_Object))
+            } else if (!this.DEFINED_EXP_Object.equals(other.DEFINED_EXP_Object))
                 return false;
 
             if (this.UNDEFINED_EXP_Object == null) {
                 if (other.UNDEFINED_EXP_Object != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Object
-                    .equals(other.UNDEFINED_EXP_Object))
+            } else if (!this.UNDEFINED_EXP_Object.equals(other.UNDEFINED_EXP_Object))
                 return false;
 
             if (this.DEFINED_EXP_short != other.DEFINED_EXP_short)
@@ -9443,22 +9112,19 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.UNDEFINED_EXP_Short == null) {
                 if (other.UNDEFINED_EXP_Short != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_Short
-                    .equals(other.UNDEFINED_EXP_Short))
+            } else if (!this.UNDEFINED_EXP_Short.equals(other.UNDEFINED_EXP_Short))
                 return false;
 
             if (this.DEFINED_EXP_String == null) {
                 if (other.DEFINED_EXP_String != null)
                     return false;
-            } else if (!this.DEFINED_EXP_String
-                    .equals(other.DEFINED_EXP_String))
+            } else if (!this.DEFINED_EXP_String.equals(other.DEFINED_EXP_String))
                 return false;
 
             if (this.UNDEFINED_EXP_String == null) {
                 if (other.UNDEFINED_EXP_String != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_String
-                    .equals(other.UNDEFINED_EXP_String))
+            } else if (!this.UNDEFINED_EXP_String.equals(other.UNDEFINED_EXP_String))
                 return false;
 
             if (this.DEFINED_EXP_List == null) {
@@ -9470,8 +9136,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (this.UNDEFINED_EXP_List == null) {
                 if (other.UNDEFINED_EXP_List != null)
                     return false;
-            } else if (!this.UNDEFINED_EXP_List
-                    .equals(other.UNDEFINED_EXP_List))
+            } else if (!this.UNDEFINED_EXP_List.equals(other.UNDEFINED_EXP_List))
                 return false;
 
             return true;
@@ -9745,8 +9410,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.DEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.DEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 length = dis.readInt();
@@ -9761,8 +9425,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                         }
                     }
                     dis.readFully(commonByteArray, 0, length);
-                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0,
-                            length);
+                    this.UNDEFINED_EXP_String = new String(commonByteArray, 0, length);
                 }
 
                 this.DEFINED_EXP_List = (List) dis.readObject();
@@ -10073,7 +9736,7 @@ public class tMap_10_persistence_02_types_sorteddata {
         public String toString() {
 
             StringBuilder sb = new StringBuilder();
-//            sb.append(super.toString());
+            // sb.append(super.toString());
             sb.append("[");
 
             sb.append("DEFINED_EXP_boolean");
@@ -10302,219 +9965,183 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             int returnValue = -1;
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_boolean,
-                    other.DEFINED_EXP_boolean);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_boolean, other.DEFINED_EXP_boolean);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Boolean,
-                    other.DEFINED_EXP_Boolean);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Boolean, other.DEFINED_EXP_Boolean);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Boolean,
-                    other.UNDEFINED_EXP_Boolean);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Boolean, other.UNDEFINED_EXP_Boolean);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_byte,
-                    other.DEFINED_EXP_byte);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_byte, other.DEFINED_EXP_byte);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Byte,
-                    other.DEFINED_EXP_Byte);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Byte, other.DEFINED_EXP_Byte);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Byte,
-                    other.UNDEFINED_EXP_Byte);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Byte, other.UNDEFINED_EXP_Byte);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_byte_array,
-                    other.DEFINED_EXP_byte_array);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_byte_array, other.DEFINED_EXP_byte_array);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(
-                    this.DEFINED_EXP_byte_array_nullable,
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_byte_array_nullable,
                     other.DEFINED_EXP_byte_array_nullable);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_char,
-                    other.DEFINED_EXP_char);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_char, other.DEFINED_EXP_char);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Character,
-                    other.DEFINED_EXP_Character);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Character, other.DEFINED_EXP_Character);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Character,
-                    other.UNDEFINED_EXP_Character);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Character, other.UNDEFINED_EXP_Character);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Date,
-                    other.DEFINED_EXP_Date);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Date, other.DEFINED_EXP_Date);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Date,
-                    other.UNDEFINED_EXP_Date);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Date, other.UNDEFINED_EXP_Date);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_double,
-                    other.DEFINED_EXP_double);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_double, other.DEFINED_EXP_double);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Double,
-                    other.DEFINED_EXP_Double);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Double, other.DEFINED_EXP_Double);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Double,
-                    other.UNDEFINED_EXP_Double);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Double, other.UNDEFINED_EXP_Double);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_BigDecimal,
-                    other.DEFINED_EXP_BigDecimal);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_BigDecimal, other.DEFINED_EXP_BigDecimal);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_BigDecimal,
-                    other.UNDEFINED_EXP_BigDecimal);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_BigDecimal, other.UNDEFINED_EXP_BigDecimal);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_int,
-                    other.DEFINED_EXP_int);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_int, other.DEFINED_EXP_int);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Integer,
-                    other.DEFINED_EXP_Integer);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Integer, other.DEFINED_EXP_Integer);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Integer,
-                    other.UNDEFINED_EXP_Integer);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Integer, other.UNDEFINED_EXP_Integer);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_float,
-                    other.DEFINED_EXP_float);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_float, other.DEFINED_EXP_float);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Float,
-                    other.DEFINED_EXP_Float);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Float, other.DEFINED_EXP_Float);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Float,
-                    other.UNDEFINED_EXP_Float);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Float, other.UNDEFINED_EXP_Float);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_long,
-                    other.DEFINED_EXP_long);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_long, other.DEFINED_EXP_long);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Long,
-                    other.DEFINED_EXP_Long);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Long, other.DEFINED_EXP_Long);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Long,
-                    other.UNDEFINED_EXP_Long);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Long, other.UNDEFINED_EXP_Long);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Object,
-                    other.DEFINED_EXP_Object);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Object, other.DEFINED_EXP_Object);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Object,
-                    other.UNDEFINED_EXP_Object);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Object, other.UNDEFINED_EXP_Object);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_short,
-                    other.DEFINED_EXP_short);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_short, other.DEFINED_EXP_short);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Short,
-                    other.DEFINED_EXP_Short);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_Short, other.DEFINED_EXP_Short);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Short,
-                    other.UNDEFINED_EXP_Short);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_Short, other.UNDEFINED_EXP_Short);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_String,
-                    other.DEFINED_EXP_String);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_String, other.DEFINED_EXP_String);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_String,
-                    other.UNDEFINED_EXP_String);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_String, other.UNDEFINED_EXP_String);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.DEFINED_EXP_List,
-                    other.DEFINED_EXP_List);
+            returnValue = checkNullsAndCompare(this.DEFINED_EXP_List, other.DEFINED_EXP_List);
             if (returnValue != 0) {
                 return returnValue;
             }
 
-            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_List,
-                    other.UNDEFINED_EXP_List);
+            returnValue = checkNullsAndCompare(this.UNDEFINED_EXP_List, other.UNDEFINED_EXP_List);
             if (returnValue != 0) {
                 return returnValue;
             }
@@ -10527,8 +10154,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             if (object1 instanceof Comparable && object2 instanceof Comparable) {
                 returnValue = ((Comparable) object1).compareTo(object2);
             } else if (object1 != null && object2 != null) {
-                returnValue = compareStrings(object1.toString(), object2
-                        .toString());
+                returnValue = compareStrings(object1.toString(), object2.toString());
             } else if (object1 == null && object2 != null) {
                 returnValue = 1;
             } else if (object1 != null && object2 == null) {
@@ -10555,7 +10181,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             lookupStruct lookup = new lookupStruct();
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAdvancedHash_lookup begin ] start
              */
 
@@ -10574,7 +10200,7 @@ public class tMap_10_persistence_02_types_sorteddata {
              * [tAdvancedHash_lookup begin ] stop
              */
 
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tFixedFlowInput_4 begin ] start
              */
 
@@ -10597,8 +10223,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 lookup.UNDEFINED_EXP_Byte = null;
 
-                lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
-                        Byte.MIN_VALUE };
+                lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE, Byte.MIN_VALUE };
 
                 lookup.DEFINED_EXP_byte_array_nullable = null;
 
@@ -10618,8 +10243,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 lookup.UNDEFINED_EXP_Double = null;
 
-                lookup.DEFINED_EXP_BigDecimal = new BigDecimal(
-                        "123456789.123456789");
+                lookup.DEFINED_EXP_BigDecimal = new BigDecimal("123456789.123456789");
 
                 lookup.UNDEFINED_EXP_BigDecimal = null;
 
@@ -10672,8 +10296,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 lookup.UNDEFINED_EXP_Byte = null;
 
-                lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE,
-                        Byte.MIN_VALUE };
+                lookup.DEFINED_EXP_byte_array = new byte[] { Byte.MAX_VALUE, Byte.MIN_VALUE };
 
                 lookup.DEFINED_EXP_byte_array_nullable = null;
 
@@ -10693,8 +10316,7 @@ public class tMap_10_persistence_02_types_sorteddata {
 
                 lookup.UNDEFINED_EXP_Double = null;
 
-                lookup.DEFINED_EXP_BigDecimal = new BigDecimal(
-                        "123456789.123456789");
+                lookup.DEFINED_EXP_BigDecimal = new BigDecimal("123456789.123456789");
 
                 lookup.UNDEFINED_EXP_BigDecimal = null;
 
@@ -10738,7 +10360,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tFixedFlowInput_4 begin ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFixedFlowInput_4 main ] start
                  */
 
@@ -10747,7 +10369,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                 /**
                  * [tFixedFlowInput_4 main ] stop
                  */
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tAdvancedHash_lookup main ] start
                  */
 
@@ -10797,7 +10419,7 @@ public class tMap_10_persistence_02_types_sorteddata {
                  * [tAdvancedHash_lookup main ] stop
                  */
 
-                /***************************************************************
+                /*******************************************************************************************************
                  * / [tFixedFlowInput_4 end ] start
                  */
 
@@ -10811,7 +10433,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             /**
              * [tFixedFlowInput_4 end ] stop
              */
-            /*******************************************************************
+            /***********************************************************************************************************
              * / [tAdvancedHash_lookup end ] start
              */
 
@@ -10834,14 +10456,23 @@ public class tMap_10_persistence_02_types_sorteddata {
     }
 
     public static boolean watch = false;
+
     public static int portStats = 3334;
+
     public static int portTraces = 4334;
+
     public static String clientHost;
+
     public static String defaultClientHost = "localhost";
+
     public static String contextStr = "production";
+
     public static String pid = "0";
+
     public static String rootPid = null;
+
     public static String fatherPid = null;
+
     public static long startTime = 0;
 
     private static java.util.Properties context_param = new java.util.Properties();
@@ -10896,8 +10527,7 @@ public class tMap_10_persistence_02_types_sorteddata {
         }
 
         try {
-            java.io.InputStream inContext = tMap_10_persistence_02_types_sorteddata.class
-                    .getClassLoader()
+            java.io.InputStream inContext = tMap_10_persistence_02_types_sorteddata.class.getClassLoader()
                     .getResourceAsStream(
                             "java_project_8/tmap_10_persistence_02_types_sorteddata_0_1/contexts/Default.properties");
             if (inContext != null) {
@@ -10907,10 +10537,9 @@ public class tMap_10_persistence_02_types_sorteddata {
             }
 
             if (contextStr.compareTo("Default") != 0) {
-                inContext = tMap_10_persistence_02_types_sorteddata.class
-                        .getClassLoader().getResourceAsStream(
-                                "java_project_8/tmap_10_persistence_02_types_sorteddata_0_1/contexts/"
-                                        + contextStr + ".properties");
+                inContext = tMap_10_persistence_02_types_sorteddata.class.getClassLoader().getResourceAsStream(
+                        "java_project_8/tmap_10_persistence_02_types_sorteddata_0_1/contexts/" + contextStr
+                                + ".properties");
                 if (inContext != null) {
                     context.load(inContext);
                     inContext.close();
@@ -10921,26 +10550,21 @@ public class tMap_10_persistence_02_types_sorteddata {
                 context.putAll(context_param);
             }
 
-            context.param_file_path = (String) context
-                    .getProperty("param_file_path");
+            context.param_file_path = (String) context.getProperty("param_file_path");
 
             context.data_dir = (String) context.getProperty("data_dir");
 
-            context.data_output_dir = (String) context
-                    .getProperty("data_output_dir");
+            context.data_output_dir = (String) context.getProperty("data_output_dir");
 
             context.result_host = (String) context.getProperty("result_host");
 
             context.result_port = (String) context.getProperty("result_port");
 
-            context.result_database = (String) context
-                    .getProperty("result_database");
+            context.result_database = (String) context.getProperty("result_database");
 
-            context.result_username = (String) context
-                    .getProperty("result_username");
+            context.result_username = (String) context.getProperty("result_username");
 
-            context.result_password = (String) context
-                    .getProperty("result_password");
+            context.result_password = (String) context.getProperty("result_password");
 
             context.result_table = (String) context.getProperty("result_table");
 
@@ -10950,22 +10574,18 @@ public class tMap_10_persistence_02_types_sorteddata {
 
             context.mysql_schema = (String) context.getProperty("mysql_schema");
 
-            context.mysql_username = (String) context
-                    .getProperty("mysql_username");
+            context.mysql_username = (String) context.getProperty("mysql_username");
 
-            context.mysql_password = (String) context
-                    .getProperty("mysql_password");
+            context.mysql_password = (String) context.getProperty("mysql_password");
 
-            context.current_job_dir = (String) context
-                    .getProperty("current_job_dir");
+            context.current_job_dir = (String) context.getProperty("current_job_dir");
 
         } catch (java.io.IOException ie) {
             System.err.println("Could not load context " + contextStr);
             ie.printStackTrace();
         }
 
-        long startUsedMemory = Runtime.getRuntime().totalMemory()
-                - Runtime.getRuntime().freeMemory();
+        long startUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         long endUsedMemory = 0;
         long end = 0;
 
@@ -10973,8 +10593,7 @@ public class tMap_10_persistence_02_types_sorteddata {
         final tMap_10_persistence_02_types_sorteddata tMap_10_persistence_02_types_sorteddataClass = new tMap_10_persistence_02_types_sorteddata();
         try {
             errorCode = null;
-            tMap_10_persistence_02_types_sorteddataClass
-                    .tFileInputDelimited_2Process();
+            tMap_10_persistence_02_types_sorteddataClass.tFileInputDelimited_2Process();
             status = "end";
         } catch (TalendException e_tFileInputDelimited_2) {
             status = "failure";
@@ -10988,12 +10607,10 @@ public class tMap_10_persistence_02_types_sorteddata {
             System.out.println((end - startTime) + " milliseconds");
         }
 
-        endUsedMemory = Runtime.getRuntime().totalMemory()
-                - Runtime.getRuntime().freeMemory();
+        endUsedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         if (false) {
-            System.out
-                    .println((endUsedMemory - startUsedMemory)
-                            + " bytes memory increase when running : tMap_10_persistence_02_types_sorteddata");
+            System.out.println((endUsedMemory - startUsedMemory)
+                    + " bytes memory increase when running : tMap_10_persistence_02_types_sorteddata");
         }
 
         reset();
@@ -11024,8 +10641,7 @@ public class tMap_10_persistence_02_types_sorteddata {
             String keyValue = arg.substring(16);
             int index = -1;
             if (keyValue != null && (index = keyValue.indexOf('=')) > -1) {
-                context_param.put(keyValue.substring(0, index), keyValue
-                        .substring(index + 1));
+                context_param.put(keyValue.substring(0, index), keyValue.substring(index + 1));
             }
         }
 
@@ -11058,7 +10674,6 @@ public class tMap_10_persistence_02_types_sorteddata {
         System.gc();
     }
 }
-/*******************************************************************************
- * 329089 characters generated by Talend OpenStudio on the 15 mai 2008 15:58:07
- * CEST
- ******************************************************************************/
+/***********************************************************************************************************************
+ * 329089 characters generated by Talend OpenStudio on the 15 mai 2008 15:58:07 CEST
+ **********************************************************************************************************************/

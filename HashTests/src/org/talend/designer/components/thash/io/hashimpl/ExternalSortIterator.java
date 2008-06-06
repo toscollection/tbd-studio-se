@@ -25,7 +25,7 @@ import org.talend.designer.components.thash.io.beans.ILightSerializable;
  * @param <V> object value to sort
  * 
  */
-public class ExternalSortIterator<V>  implements Iterator<V> {
+public class ExternalSortIterator<V> implements Iterator<V> {
 
     public List<File> files = new ArrayList<File>();
 
@@ -67,8 +67,8 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
         int itemsPerSecSort = (int) ((float) length / (float) deltaTimeSort * 1000f);
-        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
-                + "  items/s ");
+        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. "
+                + itemsPerSecSort + "  items/s ");
 
         time1 = System.currentTimeMillis();
         System.out.println("Writing ordered buffer in file...");
@@ -88,8 +88,8 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
         int itemsPerSecWrite = (int) ((float) length / (float) deltaTimeWrite * 1000f);
-        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. " + itemsPerSecWrite
-                + "  items/s ");
+        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. "
+                + itemsPerSecWrite + "  items/s ");
 
     }
 
@@ -142,10 +142,12 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
 
                 long time2 = System.currentTimeMillis();
                 long deltaTimeNull = (time2 - time1);
-                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize + " objects to set buffer as null. ");
+                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize
+                        + " objects to set buffer as null. ");
 
                 nbItemsProcessed += i + 1;
-                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems) + " processed.");
+                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems)
+                        + " processed.");
                 i = -1;
             }
 
@@ -166,8 +168,8 @@ public class ExternalSortIterator<V>  implements Iterator<V> {
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
         int itemsPerSecMerge = (int) ((float) nbItems / (float) deltaTimeMerge * 1000f);
-        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. " + itemsPerSecMerge
-                + "  items/s ");
+        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. "
+                + itemsPerSecMerge + "  items/s ");
 
         long end = System.currentTimeMillis();
 

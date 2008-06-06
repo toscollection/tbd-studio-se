@@ -16,9 +16,8 @@ package org.talend.designer.components.thash.io;
 import java.io.IOException;
 
 /**
- * DOC amaumont  class global comment. Detailled comment
- * <br/>
- *
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
  */
 public interface IMapHashFile<V> {
 
@@ -35,5 +34,5 @@ public interface IMapHashFile<V> {
     public void endGet(String container) throws IOException;
 
     public long getTotalSize();
-    
+
 }

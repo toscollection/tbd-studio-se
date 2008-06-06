@@ -100,7 +100,8 @@ public class BTreeExample {
         return new Converter() {
 
             public Object read(DataInput dataInput, Object object) throws IOException {
-                return new Interval1D(borderConverter.read(dataInput, null), borderConverter.read(dataInput, null), comparator);
+                return new Interval1D(borderConverter.read(dataInput, null), borderConverter.read(dataInput, null),
+                        comparator);
             }
 
             public void write(DataOutput dataOutput, Object object) throws IOException {
@@ -136,8 +137,8 @@ public class BTreeExample {
         final int fanOut = netBlockSize / indexEntrySize;
         final int leafCapacity = netBlockSize / objectSize;
         final double splitRatio = 0.5;
-        final BufferedContainer treeContainer = new BufferedContainer(new ConverterContainer(new BlockFileContainer(treeName,
-                blockSize), tree.nodeConverter(objectConverter, borderConverter, comparator)), buffer, true);
+        final BufferedContainer treeContainer = new BufferedContainer(new ConverterContainer(new BlockFileContainer(
+                treeName, blockSize), tree.nodeConverter(objectConverter, borderConverter, comparator)), buffer, true);
         DataOutputStream constMetaData = new DataOutputStream(new FileOutputStream(treeName + ".cmd"));
 
         constMetaData.writeInt(objectSize);
@@ -167,7 +168,8 @@ public class BTreeExample {
      * @param comparator comparator for borders used in the tree
      * @throws Exception
      */
-    public static void closeBTree(BTree tree, String treeName, Converter borderConverter, Comparator comparator) throws Exception {
+    public static void closeBTree(BTree tree, String treeName, Converter borderConverter, Comparator comparator)
+            throws Exception {
         Container treeContainer = (Container) tree.getContainer.invoke();
         DataOutputStream varMetaData = new DataOutputStream(new FileOutputStream(treeName + ".vmd"));
 
@@ -193,7 +195,8 @@ public class BTreeExample {
      * @throws Exception
      */
     public static BTree openBTree(final String treeName, final Buffer buffer, final Function getDescriptor,
-            final Converter objectConverter, final Converter borderConverter, final Comparator comparator) throws Exception {
+            final Converter objectConverter, final Converter borderConverter, final Comparator comparator)
+            throws Exception {
         final BTree tree = new BTree();
         DataInputStream constMetaData = new DataInputStream(new FileInputStream(treeName + ".cmd"));
 
@@ -218,19 +221,20 @@ public class BTreeExample {
                 .nodeConverter(objectConverter, borderConverter, comparator)), buffer, true);
 
         varMetaData.close();
-        tree.initialize(rootEntry, getDescriptor, new Constant(treeContainer), new Constant(treeContainer), new Predicate() {
+        tree.initialize(rootEntry, getDescriptor, new Constant(treeContainer), new Constant(treeContainer),
+                new Predicate() {
 
-            public boolean invoke(Object object) {
-                Tree.Node node = (Tree.Node) object;
-                return node.number() < splitRatio * (node.level() > 0 ? fanOut : leafCapacity);
-            }
-        }, new Predicate() {
+                    public boolean invoke(Object object) {
+                        Tree.Node node = (Tree.Node) object;
+                        return node.number() < splitRatio * (node.level() > 0 ? fanOut : leafCapacity);
+                    }
+                }, new Predicate() {
 
-            public boolean invoke(Object object) {
-                Tree.Node node = (Tree.Node) object;
-                return node.number() > (node.level() > 0 ? fanOut : leafCapacity);
-            }
-        }, new Constant(splitRatio), new Constant(1.0 - splitRatio));
+                    public boolean invoke(Object object) {
+                        Tree.Node node = (Tree.Node) object;
+                        return node.number() > (node.level() > 0 ? fanOut : leafCapacity);
+                    }
+                }, new Constant(splitRatio), new Constant(1.0 - splitRatio));
         return tree;
     }
 
@@ -369,27 +373,27 @@ public class BTreeExample {
     }
 
     public static class SimpleIntegerKey implements Comparable, Convertable {
-        
+
         /**
          * A suitable converter for key objects.
          */
         public static Converter CONVERTER = new ConvertableConverter(new Function() {
-            
+
             public Object invoke() {
                 return new SimpleIntegerKey();
             }
         });
-        
+
         /**
          * A comparator for key objects.
          */
         public static Comparator COMPARATOR = ComparableComparator.DEFAULT_INSTANCE;
-        
+
         /**
          * Age of the person.
          */
         public int id;
-        
+
         /**
          * Creates a key object.
          * 
@@ -399,13 +403,13 @@ public class BTreeExample {
         public SimpleIntegerKey(int id) {
             this.id = id;
         }
-        
+
         /**
          * Creates a key object containing no data.
          */
         public SimpleIntegerKey() {
         }
-        
+
         /*
          * (non-Javadoc)
          * 
@@ -415,7 +419,7 @@ public class BTreeExample {
             SimpleIntegerKey key = (SimpleIntegerKey) object;
             return id - key.id;
         }
-        
+
         /*
          * (non-Javadoc)
          * 
@@ -424,7 +428,7 @@ public class BTreeExample {
         public void read(DataInput dataInput) throws IOException {
             id = dataInput.readInt();
         }
-        
+
         /*
          * (non-Javadoc)
          * 
@@ -434,7 +438,7 @@ public class BTreeExample {
             dataOutput.writeInt(id);
         }
     }
-    
+
     /**
      * The main method inserts 100000 elements into a new BTree, closes and reopens it and counts the contained
      * elements.
@@ -446,7 +450,7 @@ public class BTreeExample {
         final Function getDescriptor = new Function() {
 
             public Object invoke(Object object) {
-//                return new Interval1D(new Key(((Data) object).name, ((Data) object).id), Key.COMPARATOR);
+                // return new Interval1D(new Key(((Data) object).name, ((Data) object).id), Key.COMPARATOR);
                 return new Interval1D(new SimpleIntegerKey(((Data) object).id), Key.COMPARATOR);
             }
         };
@@ -465,15 +469,16 @@ public class BTreeExample {
             }
         };
         final int maxNameSize = 2 + 20; // the strings stored in the name-attribute will contain at most 20 characters
-//        final int keySize = maxNameSize + IntegerConverter.SIZE;
+        // final int keySize = maxNameSize + IntegerConverter.SIZE;
         final int keySize = IntegerConverter.SIZE;
         final int objectSize = maxNameSize + keySize + DoubleConverter.SIZE;
-        final String treeName = xxl.core.util.XXLSystem.getOutPath(new String[] { "output", "applications", "indexStructures" })
+        final String treeName = xxl.core.util.XXLSystem.getOutPath(new String[] { "output", "applications",
+                "indexStructures" })
                 + File.separator + "MyBTree";
         System.out.println("Tree: " + treeName);
 
-//        int nbItems = 10000000;
-//        int nbItems = 60000000;
+        // int nbItems = 10000000;
+        // int nbItems = 60000000;
         int nbItems = 500000;
 
         BTree tree = null;
@@ -488,8 +493,8 @@ public class BTreeExample {
 
         long start = System.currentTimeMillis();
 
-        tree = createBTree(treeName, 2048, new LRUBuffer(10), getDescriptor, objectSize, objectConverter, keySize, SimpleIntegerKey.CONVERTER,
-                SimpleIntegerKey.COMPARATOR);
+        tree = createBTree(treeName, 2048, new LRUBuffer(10), getDescriptor, objectSize, objectConverter, keySize,
+                SimpleIntegerKey.CONVERTER, SimpleIntegerKey.COMPARATOR);
         long lastTime = System.currentTimeMillis();
         for (int i = 0; i < nbItems; i++) {
 
@@ -503,7 +508,7 @@ public class BTreeExample {
                 long currentTimeMillis = System.currentTimeMillis();
                 System.out.println("Writing " + i + ", time since last display: "
                         + (int) ((float) (currentTimeMillis - lastTime)) + " ms");
-                
+
                 lastTime = currentTimeMillis;
             }
 
@@ -516,39 +521,41 @@ public class BTreeExample {
 
         int itemsPerSec = (int) ((float) nbItems / (float) deltaTime * 1000f);
 
-        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to WRITE. " + itemsPerSec + "  items/s ");
+        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to WRITE. " + itemsPerSec
+                + "  items/s ");
 
         start = System.currentTimeMillis();
 
-        tree = openBTree(treeName, new LRUBuffer(10), getDescriptor, objectConverter, SimpleIntegerKey.CONVERTER, SimpleIntegerKey.COMPARATOR);
+        tree = openBTree(treeName, new LRUBuffer(10), getDescriptor, objectConverter, SimpleIntegerKey.CONVERTER,
+                SimpleIntegerKey.COMPARATOR);
 
         lastTime = System.currentTimeMillis();
-        if(readNaturally) {
-            
+        if (readNaturally) {
+
             System.out.println(">> readNaturally");
-            
+
             Cursor cursor = tree.query();
-            
-//            System.out.println("Results: " + Cursors.count(cursor));
+
+            // System.out.println("Results: " + Cursors.count(cursor));
             int i = 0;
-            while(cursor.hasNext()) {
+            while (cursor.hasNext()) {
                 Data data = (Data) cursor.next();
 
-//                 System.out.println(data.toString());
+                // System.out.println(data.toString());
                 if (i++ % 10000 == 0) {
                     long currentTimeMillis = System.currentTimeMillis();
                     System.out.println("Reading " + i + ", time since last display: "
                             + (int) ((float) (currentTimeMillis - lastTime)) + " ms");
-                    
+
                     lastTime = currentTimeMillis;
                 }
 
             }
-                    
+
         } else {
-            
-            System.out.println(">> randomRead :"  + (randomRead ? "yes" : "no"));
-            
+
+            System.out.println(">> randomRead :" + (randomRead ? "yes" : "no"));
+
             for (int i = 0; i < nbItems; i++) {
                 int v = i;
                 if (randomRead) {
@@ -561,7 +568,7 @@ public class BTreeExample {
                     long currentTimeMillis = System.currentTimeMillis();
                     System.out.println("Reading " + i + ", time since last display: "
                             + (int) ((float) (currentTimeMillis - lastTime)) + " ms");
-                    
+
                     lastTime = currentTimeMillis;
                 }
             }
@@ -573,8 +580,8 @@ public class BTreeExample {
 
         itemsPerSec = (int) ((float) nbItems / (float) deltaTime * 1000f);
 
-        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to READ. " + itemsPerSec + "  items/s ");
-
+        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to READ. " + itemsPerSec
+                + "  items/s ");
 
         closeBTree(tree, treeName, SimpleIntegerKey.CONVERTER, SimpleIntegerKey.COMPARATOR);
     }

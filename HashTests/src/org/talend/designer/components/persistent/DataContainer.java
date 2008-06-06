@@ -1,4 +1,5 @@
 package org.talend.designer.components.persistent;
+
 class DataContainer<V> {
 
     boolean testBool;

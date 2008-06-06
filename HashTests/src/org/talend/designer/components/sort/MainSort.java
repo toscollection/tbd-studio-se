@@ -12,49 +12,48 @@ public class MainSort {
      * DOC amaumont Comment method "main".
      * 
      * @param args
-     * @throws Exception 
+     * @throws Exception
      */
     public static void main(String[] args) throws Exception {
 
         int[] dataFQS = generateData();
         int[] dataSun = dataFQS.clone();
         int[] dataShellSort = dataFQS.clone();
-        
-//        long heap1 = Sizeof.usedMemory();
+
+        // long heap1 = Sizeof.usedMemory();
         long start = System.currentTimeMillis();
-        
+
         FastQSortAlgorithm fastQSortAlgorithm = new FastQSortAlgorithm();
         fastQSortAlgorithm.sort(dataFQS);
 
         long end = System.currentTimeMillis();
-        long delta = end - start; 
+        long delta = end - start;
 
         // ####################################
 
         System.out.println("Time FastQSortAlgorithm:" + delta + " ms");
-        
+
         start = System.currentTimeMillis();
-        
+
         Arrays.sort(dataFQS);
-        
+
         end = System.currentTimeMillis();
-        delta = end - start; 
-        
+        delta = end - start;
+
         System.out.println("Sun Algorithm:" + delta + " ms");
 
         // ####################################
-        
-        start = System.currentTimeMillis();
-        
-        ShellSort.shellsort(dataShellSort, 0, dataShellSort.length - 1);
-        
-        end = System.currentTimeMillis();
-        delta = end - start; 
-        
-        System.out.println("mergeSortArray Algorithm:" + delta + " ms");
-        
-//        long heap2 = Sizeof.usedMemory();
 
+        start = System.currentTimeMillis();
+
+        ShellSort.shellsort(dataShellSort, 0, dataShellSort.length - 1);
+
+        end = System.currentTimeMillis();
+        delta = end - start;
+
+        System.out.println("mergeSortArray Algorithm:" + delta + " ms");
+
+        // long heap2 = Sizeof.usedMemory();
 
     }
 
@@ -62,7 +61,7 @@ public class MainSort {
         int[] randomArray = null;
 
         int nbItems = 10000000;
-        
+
         randomArray = new int[nbItems];
         for (int i = 0; i < randomArray.length; i++) {
             randomArray[i] = i;

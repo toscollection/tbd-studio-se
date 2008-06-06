@@ -28,8 +28,7 @@ public class OrderedBeanLookupAll<B extends Comparable<B> & IPersistableLookupRo
 
     private String dataFilePath;
 
-    public OrderedBeanLookupAll(String dataFilePath)
-            throws IOException {
+    public OrderedBeanLookupAll(String dataFilePath) throws IOException {
         super();
         this.dataFilePath = dataFilePath;
     }
@@ -42,7 +41,7 @@ public class OrderedBeanLookupAll<B extends Comparable<B> & IPersistableLookupRo
     public void lookup(B key) throws IOException {
 
         throw new UnsupportedOperationException("No sense to use this method");
-        
+
     }
 
     /*
@@ -67,7 +66,7 @@ public class OrderedBeanLookupAll<B extends Comparable<B> & IPersistableLookupRo
     }
 
     public void close() throws IOException {
-        
+
     }
 
 }

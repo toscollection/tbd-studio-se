@@ -73,19 +73,15 @@ public class MemoryGcChart extends ApplicationFrame {
     private JFreeChart createChart(DefaultCategoryDataset dataset) {
         // create the chart...
 
-        JFreeChart chart = ChartFactory.createLineChart(
-                chartTitle != null ? chartTitle
-                : "Memory GC", // chart title
+        JFreeChart chart = ChartFactory.createLineChart(chartTitle != null ? chartTitle : "Memory GC", // chart title
                 xAxisLabel != null ? xAxisLabel : "Time", // x axis label
                 yAxisLabel != null ? yAxisLabel : "Bytes", // y axis label
                 dataset, // data
-                PlotOrientation.VERTICAL, 
-                true, // include legend
+                PlotOrientation.VERTICAL, true, // include legend
                 true, // tooltips
                 false // urls
                 );
 
-        
         chart.setBackgroundPaint(Color.white);
 
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
@@ -93,18 +89,16 @@ public class MemoryGcChart extends ApplicationFrame {
         plot.setRangeGridlinePaint(Color.gray);
         plot.setRangeGridlinesVisible(false);
 
-        
-        //        plot.setBackgroundImageAlpha(1.0f);
+        // plot.setBackgroundImageAlpha(1.0f);
         // customise the range axis...
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
         CategoryAxis categoryAxis = (CategoryAxis) plot.getDomainAxis();
         categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_45);
-        
+
         // customise the renderer...
-        LineAndShapeRenderer renderer 
-            = (LineAndShapeRenderer) plot.getRenderer();
+        LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
         renderer.setShapesVisible(true);
         renderer.setDrawOutlines(true);
         renderer.setUseFillPaint(true);

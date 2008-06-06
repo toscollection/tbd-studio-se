@@ -1,4 +1,5 @@
 package org.talend.designer.components.thash.io.hashimpl;
+
 class DataContainer {
 
     long cursorPosition;

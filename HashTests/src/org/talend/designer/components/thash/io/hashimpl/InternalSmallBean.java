@@ -13,7 +13,7 @@ import org.talend.designer.components.thash.io.beans.KeyForMap;
 
 /**
  * 
- * DOC amaumont  class global comment. Detailled comment
+ * DOC amaumont class global comment. Detailled comment
  */
 public class InternalSmallBean implements Serializable {
 
@@ -91,7 +91,7 @@ public class InternalSmallBean implements Serializable {
 
         Object o = null;
         try {
-            o = HashFilesBenchs.hashFile.get("", (long)other.cursorPosition, -1);
+            o = HashFilesBenchs.hashFile.get("", (long) other.cursorPosition, -1);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -148,7 +148,7 @@ public class InternalSmallBean implements Serializable {
 
 /**
  * 
- * DOC amaumont  class global comment. Detailled comment
+ * DOC amaumont class global comment. Detailled comment
  */
 class InternalBigBean implements Serializable {
 

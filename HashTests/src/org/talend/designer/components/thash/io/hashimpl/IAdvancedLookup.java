@@ -3,8 +3,7 @@ package org.talend.designer.components.thash.io.hashimpl;
 import java.io.IOException;
 import java.util.List;
 
-
-public interface IAdvancedLookup<K,V> {
+public interface IAdvancedLookup<K, V> {
 
     public Object[] getResultArray();
 

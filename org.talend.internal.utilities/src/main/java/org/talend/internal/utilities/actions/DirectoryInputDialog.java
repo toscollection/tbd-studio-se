@@ -67,11 +67,13 @@ public class DirectoryInputDialog extends Dialog {
     public DirectoryInputDialog(Shell parentShell, String title, String message) {
         super(parentShell);
         this.title = title;
-        
+
         this.message = message;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
      */
     @Override
@@ -79,7 +81,7 @@ public class DirectoryInputDialog extends Dialog {
         super.configureShell(newShell);
         newShell.setText(title);
     }
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -99,7 +101,7 @@ public class DirectoryInputDialog extends Dialog {
         input = new Text(composite, SWT.BORDER);
         gd = new GridData(GridData.FILL_HORIZONTAL);
         input.setLayoutData(gd);
-       
+
         String storedPath = Activator.getDefault().getDialogSettings().get(SCREENSHOT_STORE_DIRECTORY);
         if (storedPath == null) {
             storedPath = "";

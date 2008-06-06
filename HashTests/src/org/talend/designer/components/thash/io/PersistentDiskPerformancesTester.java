@@ -202,9 +202,7 @@ public class PersistentDiskPerformancesTester {
                 50,
                 // 60,
                 // 80,
-                100,
-                150,
-                200,
+                100, 150, 200,
 
         };
 
@@ -285,7 +283,8 @@ public class PersistentDiskPerformancesTester {
                     mpfh.setFilePointersNumber(numberOfPointers);
                     mpfh.initGet(testCase.filePath);
                     mpfh.setLimitEndOfRead(randomValue - 1000);
-                } else if (testCase == TEST_CASE.TURNING_POINTERS_NEAREST || testCase == TEST_CASE.TURNING_POINTERS_NEXT) {
+                } else if (testCase == TEST_CASE.TURNING_POINTERS_NEAREST
+                        || testCase == TEST_CASE.TURNING_POINTERS_NEXT) {
                     hfr = new HashFileReader(testCase.filePath, numberOfPointers);
                     hfr.setBytesToRead(bytesToRead);
                     hfr.init();
@@ -315,7 +314,8 @@ public class PersistentDiskPerformancesTester {
                         // System.out.println(nextInt);
                         ra.seek(cursorPosition);
                         ra.read(buffer);
-                    } else if (testCase == TEST_CASE.TURNING_POINTERS_NEAREST || testCase == TEST_CASE.TURNING_POINTERS_NEXT) {
+                    } else if (testCase == TEST_CASE.TURNING_POINTERS_NEAREST
+                            || testCase == TEST_CASE.TURNING_POINTERS_NEXT) {
                         hfr.read(cursorPosition);
                     }
                     // System.out.println(Arrays.toString(buffer));
@@ -325,7 +325,8 @@ public class PersistentDiskPerformancesTester {
 
                 if (testCase == TEST_CASE.FIXED_AREA_POINTERS) {
                     mpfh.endGet(testCase.filePath);
-                } else if (testCase == TEST_CASE.TURNING_POINTERS_NEAREST || testCase == TEST_CASE.TURNING_POINTERS_NEXT) {
+                } else if (testCase == TEST_CASE.TURNING_POINTERS_NEAREST
+                        || testCase == TEST_CASE.TURNING_POINTERS_NEXT) {
                     hfr.close();
                 }
 
@@ -338,8 +339,8 @@ public class PersistentDiskPerformancesTester {
                 System.out.println((double) (((double) numberOfReads / (double) seekTime)) + " items/ms");
                 System.out.println(readsBySecond + " items/s");
                 System.out.println("################################################################");
-                DataDiskBench data = new DataDiskBench(numberOfFiles, numberOfPointers, numberOfReads, fileLength, randomValue,
-                        (int) readsBySecond);
+                DataDiskBench data = new DataDiskBench(numberOfFiles, numberOfPointers, numberOfReads, fileLength,
+                        randomValue, (int) readsBySecond);
                 writeData(data);
                 x1.add((double) randomValue);
                 y1.add((double) readsBySecond);
@@ -371,9 +372,10 @@ public class PersistentDiskPerformancesTester {
         NumberFormat integerInstance = NumberFormat.getIntegerInstance(Locale.FRANCE);
 
         new PersistentDiskBenchsChart("Disk Bench", dataset, "Persistent Hash Benchs for " + numberOfFiles + " file "
-                + integerInstance.format(fileLength) + " bytes, " + numberOfReads + " reads by test, " + numberOfPointers
-                + " pointers by file" + (hfr != null ? ", with turning pointers " : ""), "Max random value for cursor position",
-                "Reads/s", getFilePathBaseName() + ".png", 1024, 800).createDemoPanel(dataset);
+                + integerInstance.format(fileLength) + " bytes, " + numberOfReads + " reads by test, "
+                + numberOfPointers + " pointers by file" + (hfr != null ? ", with turning pointers " : ""),
+                "Max random value for cursor position", "Reads/s", getFilePathBaseName() + ".png", 1024, 800)
+                .createDemoPanel(dataset);
     }
 
     public double average(double[] values) {
@@ -477,8 +479,8 @@ public class PersistentDiskPerformancesTester {
          * @param randomValue
          * @param time
          */
-        public DataDiskBench(int numberOfFiles, int numberOfPointers, int readLoopNumber, int fileLength, int randomValue,
-                int time) {
+        public DataDiskBench(int numberOfFiles, int numberOfPointers, int readLoopNumber, int fileLength,
+                int randomValue, int time) {
             super();
             this.numberOfFiles = numberOfFiles;
             this.numberOfPointers = numberOfPointers;
@@ -494,8 +496,8 @@ public class PersistentDiskPerformancesTester {
          * @return
          */
         public static String getFileHeader() {
-            return "numberOfFiles" + ";" + "numberOfPointers" + ";" + "readLoopNumber" + ";" + "fileLength" + ";" + "randomValue"
-                    + ";" + "time";
+            return "numberOfFiles" + ";" + "numberOfPointers" + ";" + "readLoopNumber" + ";" + "fileLength" + ";"
+                    + "randomValue" + ";" + "time";
         }
 
         /**
@@ -504,8 +506,8 @@ public class PersistentDiskPerformancesTester {
          * @return
          */
         public String toFileRow() {
-            return numberOfFiles + ";" + numberOfPointers + ";" + readLoopNumber + ";" + fileLength + ";" + randomValue + ";"
-                    + time;
+            return numberOfFiles + ";" + numberOfPointers + ";" + readLoopNumber + ";" + fileLength + ";" + randomValue
+                    + ";" + time;
         }
 
     }

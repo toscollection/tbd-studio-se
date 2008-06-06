@@ -28,7 +28,7 @@ import org.talend.designer.components.thash.io.IMapHashFile;
 
 /**
  * 
- * DOC amaumont  class global comment. Detailled comment
+ * DOC amaumont class global comment. Detailled comment
  */
 public class DoubleHashFile implements IMapHashFile {
 
@@ -221,7 +221,9 @@ public class DoubleHashFile implements IMapHashFile {
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
     public long getTotalSize() {

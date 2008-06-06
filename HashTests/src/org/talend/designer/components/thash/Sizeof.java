@@ -14,9 +14,8 @@ package org.talend.designer.components.thash;
 
 /**
  * 
- * DOC amaumont  class global comment. Detailled comment
- * <br/>
- *
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
  */
 public class Sizeof {
 
@@ -35,13 +34,12 @@ public class Sizeof {
 
             // Instantiate your data here and assign it to object
 
-//            object = new Object();
+            // object = new Object();
             // object = new Integer (i);
             // object = new Long (i);
             // object = new String ();
             // object = new byte [128][1]
             object = new Object[10000000];
-            
 
             if (i >= 0)
                 objects[i] = object;

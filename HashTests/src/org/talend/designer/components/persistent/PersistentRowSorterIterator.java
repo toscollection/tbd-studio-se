@@ -36,7 +36,8 @@ import routines.system.IPersistableRow;
  * 
  * @param <V> object value to sort
  */
-public abstract class PersistentRowSorterIterator<V extends IPersistableRow> implements IPersistentRowManager<V>, Iterator<V> {
+public abstract class PersistentRowSorterIterator<V extends IPersistableRow> implements IPersistentRowManager<V>,
+        Iterator<V> {
 
     int INIT_BUFFER_INDEX = -1;
 
@@ -98,7 +99,8 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     /**
      * DOC amaumont SortedMultipleHashFile constructor comment.
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     public PersistentRowSorterIterator(String container) throws IOException {
         super();
@@ -108,7 +110,8 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
 
     /**
      * DOC amaumont SortedMultipleHashFile constructor comment.
-     * @throws IOException 
+     * 
+     * @throws IOException
      */
     public PersistentRowSorterIterator(String container, int bufferSize) throws IOException {
         this(container);
@@ -284,7 +287,7 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         for (int i = 0; i < numFiles; i++) {
             ObjectInputStream dis = new ObjectInputStream(new BufferedInputStream(new FileInputStream(files.get(i))));
             dissList.add(dis);
-//            V bean = getNextFreeRow();
+            // V bean = getNextFreeRow();
             V bean = createRowInstance();
             bean.readData(dis);
             if (!someFileStillHasRows) {

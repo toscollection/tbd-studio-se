@@ -100,8 +100,8 @@ public class MemoryHashMapTest {
 
         for (int i = 0; i < loop; i++) {
             KeyForMap keyForMap = new KeyForMap(i, i /* computed hashcode */); // in reel tests second parameter will
-                                                                                // be computed from properties of value
-                                                                                // bean
+            // be computed from properties of value
+            // bean
             hashMap.put(keyForMap, keyForMap);
         }
 

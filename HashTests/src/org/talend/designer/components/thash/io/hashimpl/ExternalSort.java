@@ -58,8 +58,8 @@ public class ExternalSort {
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
         int itemsPerSecSort = (int) ((float) length / (float) deltaTimeSort * 1000f);
-        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. " + itemsPerSecSort
-                + "  items/s ");
+        System.out.println(deltaTimeSort + " milliseconds for " + length + " objects to sort in memory. "
+                + itemsPerSecSort + "  items/s ");
 
         time1 = System.currentTimeMillis();
         System.out.println("Writing ordered buffer in file...");
@@ -79,8 +79,8 @@ public class ExternalSort {
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
         int itemsPerSecWrite = (int) ((float) length / (float) deltaTimeWrite * 1000f);
-        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. " + itemsPerSecWrite
-                + "  items/s ");
+        System.out.println(deltaTimeWrite + " milliseconds for " + length + " objects to write in file. "
+                + itemsPerSecWrite + "  items/s ");
 
     }
 
@@ -317,8 +317,8 @@ public class ExternalSort {
         long time2 = System.currentTimeMillis();
         long deltaTimeSort = (time2 - time1);
         int itemsPerSecSort = (int) ((float) list.length / (float) deltaTimeSort * 1000f);
-        System.out.println(deltaTimeSort + " milliseconds for " + list.length + " objects to sort in memory. " + itemsPerSecSort
-                + "  items/s ");
+        System.out.println(deltaTimeSort + " milliseconds for " + list.length + " objects to sort in memory. "
+                + itemsPerSecSort + "  items/s ");
 
         time1 = System.currentTimeMillis();
         System.out.println("Writing ordered buffer in file...");
@@ -335,8 +335,8 @@ public class ExternalSort {
         time2 = System.currentTimeMillis();
         long deltaTimeWrite = (time2 - time1);
         int itemsPerSecWrite = (int) ((float) list.length / (float) deltaTimeWrite * 1000f);
-        System.out.println(deltaTimeWrite + " milliseconds for " + list.length + " objects to write in file. " + itemsPerSecWrite
-                + "  items/s ");
+        System.out.println(deltaTimeWrite + " milliseconds for " + list.length + " objects to write in file. "
+                + itemsPerSecWrite + "  items/s ");
 
     }
 
@@ -591,8 +591,8 @@ public class ExternalSort {
         // int bufferSize = 4000000;
         int nbItems = 60000000;
         int bufferSize = 10000000;
-//         int nbItems = 10000000;
-//         int bufferSize = 1000000;
+        // int nbItems = 10000000;
+        // int bufferSize = 1000000;
         // int nbItems = 1000000;
         // int bufferSize = 100000;
         // int nbItems = 20;
@@ -622,10 +622,12 @@ public class ExternalSort {
 
                 long time2 = System.currentTimeMillis();
                 long deltaTimeNull = (time2 - time1);
-                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize + " objects to set buffer as null. ");
+                System.out.println(deltaTimeNull + " milliseconds for " + bufferSize
+                        + " objects to set buffer as null. ");
 
                 nbItemsProcessed += i + 1;
-                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems) + " processed.");
+                System.out.println(numberFormat.format(nbItemsProcessed) + " / " + numberFormat.format(nbItems)
+                        + " processed.");
                 i = -1;
             }
 
@@ -641,8 +643,8 @@ public class ExternalSort {
         long time2 = System.currentTimeMillis();
         long deltaTimeMerge = (time2 - time1);
         int itemsPerSecMerge = (int) ((float) nbItems / (float) deltaTimeMerge * 1000f);
-        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. " + itemsPerSecMerge
-                + "  items/s ");
+        System.out.println(deltaTimeMerge + " milliseconds for " + nbItems + " ordered objects to merge. "
+                + itemsPerSecMerge + "  items/s ");
 
         long end = System.currentTimeMillis();
 
@@ -655,7 +657,6 @@ public class ExternalSort {
 
     }
 }
-
 
 /**
  * A simple example class for a data object.

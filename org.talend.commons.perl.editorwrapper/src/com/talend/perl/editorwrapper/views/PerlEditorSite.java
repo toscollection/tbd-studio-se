@@ -25,100 +25,97 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 
 /**
- * DOC ccarbone  class global comment. Detailled comment
- * <br/>
- *
+ * DOC ccarbone class global comment. Detailled comment <br/>
+ * 
  * $Id$
- *
+ * 
  */
 public class PerlEditorSite implements IEditorSite, IViewSite {
 
-	private IViewSite viewSite;
+    private IViewSite viewSite;
 
-	public PerlEditorSite(IViewSite viewSite) {
-		this.viewSite = viewSite;
-	}
+    public PerlEditorSite(IViewSite viewSite) {
+        this.viewSite = viewSite;
+    }
 
-	public IEditorActionBarContributor getActionBarContributor() {
-		return null;
-	}
+    public IEditorActionBarContributor getActionBarContributor() {
+        return null;
+    }
 
-	public IActionBars getActionBars() {
-		return viewSite.getActionBars();
-	}
+    public IActionBars getActionBars() {
+        return viewSite.getActionBars();
+    }
 
-	public void registerContextMenu(MenuManager menuManager,
-			ISelectionProvider selectionProvider, boolean includeEditorInput) {
-	}
+    public void registerContextMenu(MenuManager menuManager, ISelectionProvider selectionProvider,
+            boolean includeEditorInput) {
+    }
 
-	public void registerContextMenu(String menuId, MenuManager menuManager,
-			ISelectionProvider selectionProvider, boolean includeEditorInput) {
-	}
+    public void registerContextMenu(String menuId, MenuManager menuManager, ISelectionProvider selectionProvider,
+            boolean includeEditorInput) {
+    }
 
-	public String getId() {
-		return viewSite.getId();
-	}
+    public String getId() {
+        return viewSite.getId();
+    }
 
-	public IKeyBindingService getKeyBindingService() {
-		return viewSite.getKeyBindingService();
-	}
+    public IKeyBindingService getKeyBindingService() {
+        return viewSite.getKeyBindingService();
+    }
 
-	public IWorkbenchPart getPart() {
-		return viewSite.getPart();
-	}
+    public IWorkbenchPart getPart() {
+        return viewSite.getPart();
+    }
 
-	public String getPluginId() {
-		return viewSite.getPluginId();
-	}
+    public String getPluginId() {
+        return viewSite.getPluginId();
+    }
 
-	public String getRegisteredName() {
-		return viewSite.getPluginId();
-	}
+    public String getRegisteredName() {
+        return viewSite.getPluginId();
+    }
 
-	public void registerContextMenu(MenuManager menuManager,
-			ISelectionProvider selectionProvider) {
-		viewSite.registerContextMenu(menuManager, selectionProvider);
-	}
+    public void registerContextMenu(MenuManager menuManager, ISelectionProvider selectionProvider) {
+        viewSite.registerContextMenu(menuManager, selectionProvider);
+    }
 
-	public void registerContextMenu(String menuId, MenuManager menuManager,
-			ISelectionProvider selectionProvider) {
-		viewSite.registerContextMenu(menuId, menuManager, selectionProvider);
-	}
+    public void registerContextMenu(String menuId, MenuManager menuManager, ISelectionProvider selectionProvider) {
+        viewSite.registerContextMenu(menuId, menuManager, selectionProvider);
+    }
 
-	public IWorkbenchPage getPage() {
-		return viewSite.getPage();
-	}
+    public IWorkbenchPage getPage() {
+        return viewSite.getPage();
+    }
 
-	public ISelectionProvider getSelectionProvider() {
-		return viewSite.getSelectionProvider();
-	}
+    public ISelectionProvider getSelectionProvider() {
+        return viewSite.getSelectionProvider();
+    }
 
-	public Shell getShell() {
-		return viewSite.getShell();
-	}
+    public Shell getShell() {
+        return viewSite.getShell();
+    }
 
-	public IWorkbenchWindow getWorkbenchWindow() {
-		return viewSite.getWorkbenchWindow();
-	}
+    public IWorkbenchWindow getWorkbenchWindow() {
+        return viewSite.getWorkbenchWindow();
+    }
 
-	public void setSelectionProvider(ISelectionProvider provider) {
-		viewSite.setSelectionProvider(provider);
-	}
+    public void setSelectionProvider(ISelectionProvider provider) {
+        viewSite.setSelectionProvider(provider);
+    }
 
-	public Object getAdapter(Class adapter) {
-		return viewSite.getAdapter(adapter);
-	}
+    public Object getAdapter(Class adapter) {
+        return viewSite.getAdapter(adapter);
+    }
 
-	public Object getService(Class api) {
-		return viewSite.getService(api);
-	}
+    public Object getService(Class api) {
+        return viewSite.getService(api);
+    }
 
-	public boolean hasService(Class api) {
-		return viewSite.hasService(api);
-	}
+    public boolean hasService(Class api) {
+        return viewSite.hasService(api);
+    }
 
-	public String getSecondaryId() {
-		return viewSite.getSecondaryId();
-	}
+    public String getSecondaryId() {
+        return viewSite.getSecondaryId();
+    }
 
 }

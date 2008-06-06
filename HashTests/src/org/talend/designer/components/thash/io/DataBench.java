@@ -20,37 +20,16 @@ import org.talend.designer.components.thash.io.HashFilesBenchs.PERSISTENT_METHOD
 
 /**
  * 
- * DOC amaumont  class global comment. Detailled comment
- * <br/>
- *
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
  */
 public class DataBench implements Cloneable {
 
-    private final static String[] PROPERTIES = new String[] {
-        "persistentMethod",
-        "nbItems",
-        "nbFiles",
-        "pointersByFile",
-        "initialCapacityMap",
-        "loadFactorMap",
-        "startWriteDate",
-        "endWriteDate",
-        "timeWrite",
-        "heapMemoryWrite",
-        "bytesPerItemWrite",
-        "itemsPerSecWrite",
-        "writeEndedWithSuccess",
-        "writeError",
-        "totalFilesSize",
-        "startReadDate",
-        "endReadDate",
-        "timeRead",
-        "heapMemoryRead",
-        "bytesPerItemRead",
-        "itemsPerSecRead",
-        "readEndedWithSuccess",
-        "readError",
-            };
+    private final static String[] PROPERTIES = new String[] { "persistentMethod", "nbItems", "nbFiles",
+            "pointersByFile", "initialCapacityMap", "loadFactorMap", "startWriteDate", "endWriteDate", "timeWrite",
+            "heapMemoryWrite", "bytesPerItemWrite", "itemsPerSecWrite", "writeEndedWithSuccess", "writeError",
+            "totalFilesSize", "startReadDate", "endReadDate", "timeRead", "heapMemoryRead", "bytesPerItemRead",
+            "itemsPerSecRead", "readEndedWithSuccess", "readError", };
 
     private int nbItems;
 
@@ -400,6 +379,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Getter for itemsPerSecWrite.
+     * 
      * @return the itemsPerSecWrite
      */
     public int getItemsPerSecWrite() {
@@ -408,6 +388,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Sets the itemsPerSecWrite.
+     * 
      * @param itemsPerSecWrite the itemsPerSecWrite to set
      */
     public void setItemsPerSecWrite(int itemsPerSecWrite) {
@@ -416,6 +397,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Getter for itemsPerSecRead.
+     * 
      * @return the itemsPerSecRead
      */
     public int getItemsPerSecRead() {
@@ -424,6 +406,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Sets the itemsPerSecRead.
+     * 
      * @param itemsPerSecRead the itemsPerSecRead to set
      */
     public void setItemsPerSecRead(int itemsPerSecRead) {
@@ -432,6 +415,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Getter for startWriteDate.
+     * 
      * @return the startWriteDate
      */
     public Date getStartWriteDate() {
@@ -440,6 +424,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Sets the startWriteDate.
+     * 
      * @param startWriteDate the startWriteDate to set
      */
     public void setStartWriteDate(Date startWriteDate) {
@@ -448,6 +433,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Getter for endWriteDate.
+     * 
      * @return the endWriteDate
      */
     public Date getEndWriteDate() {
@@ -456,6 +442,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Sets the endWriteDate.
+     * 
      * @param endWriteDate the endWriteDate to set
      */
     public void setEndWriteDate(Date endWriteDate) {
@@ -464,6 +451,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Getter for startReadDate.
+     * 
      * @return the startReadDate
      */
     public Date getStartReadDate() {
@@ -472,6 +460,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Sets the startReadDate.
+     * 
      * @param startReadDate the startReadDate to set
      */
     public void setStartReadDate(Date startReadDate) {
@@ -480,6 +469,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Getter for endReadDate.
+     * 
      * @return the endReadDate
      */
     public Date getEndReadDate() {
@@ -488,6 +478,7 @@ public class DataBench implements Cloneable {
 
     /**
      * Sets the endReadDate.
+     * 
      * @param endReadDate the endReadDate to set
      */
     public void setEndReadDate(Date endReadDate) {
@@ -565,21 +556,20 @@ public class DataBench implements Cloneable {
 
     /**
      * DOC amaumont Comment method "setPersistMethod".
+     * 
      * @param persistMethod
      */
     public void setPersistentMethod(PERSISTENT_METHOD persistMethod) {
         this.persistentMethod = persistMethod;
     }
 
-    
     /**
      * Getter for persistMethod.
+     * 
      * @return the persistMethod
      */
     public PERSISTENT_METHOD getPersistentMethod() {
         return this.persistentMethod;
     }
-    
-    
 
 }

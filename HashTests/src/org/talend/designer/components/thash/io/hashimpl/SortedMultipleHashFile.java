@@ -75,7 +75,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
     private String container = null;
 
     private String mergeRepository = "/home/amaumont/hash_benchs/external_sort/lookup_merge_";
-//    private String mergeRepository = "/home/amaumont/abc/a/lookup_merge_";
+
+    // private String mergeRepository = "/home/amaumont/abc/a/lookup_merge_";
 
     ILightSerializable iLightSerializable = null;// Change this based on the Bean class;
 
@@ -125,8 +126,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
             // write
             DataOutputStream[] doss = new DataOutputStream[numberFiles];
             for (int i = 0; i < numberFiles; i++) {
-                doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(getFilePath(container, i,
-                        bufferCount)))));
+                doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(getFilePath(
+                        container, i, bufferCount)))));
             }
 
             int fileNumber = 0;
@@ -172,8 +173,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
             // write
             DataOutputStream[] doss = new DataOutputStream[numberFiles];
             for (int i = 0; i < numberFiles; i++) {
-                doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(getFilePath(container, i,
-                        bufferCount)))));
+                doss[i] = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(getFilePath(
+                        container, i, bufferCount)))));
             }
 
             int fileNumber = 0;
@@ -206,8 +207,8 @@ public class SortedMultipleHashFile implements IMapHashFile {
     private void mergeFiles() throws FileNotFoundException, IOException {
         for (int iFinalHashFile = 0; iFinalHashFile < numberFiles; iFinalHashFile++) {
             // System.out.println(">> iFinalHashFile = " + iFinalHashFile);
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(mergeRepository
-                    + iFinalHashFile))));
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(new File(
+                    mergeRepository + iFinalHashFile))));
             int cursorPosition = 0;
 
             List<File> files = new ArrayList<File>();
@@ -364,12 +365,12 @@ public class SortedMultipleHashFile implements IMapHashFile {
             long disPosition = disPositionsArray[fileNumber];
 
             long raPosition = ra.getFilePointer();
-            
+
             if (raPosition < disPosition) {
-                
-            } else  {
-                
-                if(raPosition > disPosition) {
+
+            } else {
+
+                if (raPosition > disPosition) {
                     dis.skip(raPosition - disPosition);
                 }
 
@@ -398,7 +399,7 @@ public class SortedMultipleHashFile implements IMapHashFile {
         int fileNumber = getFileNumber(hashcode);
         return lastRetrievedObjectArray[fileNumber];
     }
-    
+
     /**
      * DOC amaumont Comment method "next".
      * 
@@ -408,25 +409,25 @@ public class SortedMultipleHashFile implements IMapHashFile {
     public Object next(int hashcode) throws IOException {
 
         Object objectToReturn = null;
-        
+
         int fileNumber = getFileNumber(hashcode);
 
         Object next = nextObjectsArray[fileNumber];
-        
+
         objectToReturn = next;
-        
+
         RandomAccessFile ra = raArray[fileNumber];
         DataInputStream dis = disArray[fileNumber];
 
         long disPosition = disPositionsArray[fileNumber];
 
         long raPosition = ra.getFilePointer();
-        
+
         if (raPosition < disPosition && next == null) {
-            
-        } else  {
-            
-            if(raPosition > disPosition) {
+
+        } else {
+
+            if (raPosition > disPosition) {
                 dis.skip(raPosition - disPosition);
             }
 
@@ -447,25 +448,23 @@ public class SortedMultipleHashFile implements IMapHashFile {
             }
         }
 
-        
         lastRetrievedObjectArray[fileNumber] = objectToReturn;
-        
-//        int readInt;
-//        try {
-//            readInt = ra.readInt();
-//        } catch (IOException e) {
-//            // EOF
-//            nextObjectsArray[fileNumber] = null;
-//            return null;
-//        }
-//        byte[] byteArray = new byte[readInt];
-//        ra.read(byteArray);
-//
-//        nextObjectsArray[fileNumber] = iLightSerializable.createInstance(byteArray);
+
+        // int readInt;
+        // try {
+        // readInt = ra.readInt();
+        // } catch (IOException e) {
+        // // EOF
+        // nextObjectsArray[fileNumber] = null;
+        // return null;
+        // }
+        // byte[] byteArray = new byte[readInt];
+        // ra.read(byteArray);
+        //
+        // nextObjectsArray[fileNumber] = iLightSerializable.createInstance(byteArray);
 
         return objectToReturn;
     }
-
 
     public void endGet(String container) throws IOException {
         if (!readonly) {

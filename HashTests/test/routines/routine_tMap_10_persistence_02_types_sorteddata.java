@@ -23,33 +23,32 @@ import java.io.Serializable;
  */
 public class routine_tMap_10_persistence_02_types_sorteddata {
 
-	public static class CustomObject implements Serializable {
+    public static class CustomObject implements Serializable {
 
-		int index = -1;
-		
-		public CustomObject(int index) {
-			super();
-			this.index = index;
-		}
+        int index = -1;
 
-		@Override
-		public String toString() {
-			return "CustomObject_instance " + index;
-		}
-		
-		public boolean equals(Object other) {
-			return this.index == ((CustomObject)other).index;
-		}
+        public CustomObject(int index) {
+            super();
+            this.index = index;
+        }
 
-      public int hashCode() {
-           return this.index;
-	  }
-	        
+        @Override
+        public String toString() {
+            return "CustomObject_instance " + index;
+        }
 
-	}
-	
-	public static CustomObject getCustomObject(int index) {
-		return new CustomObject(index);
-	}
-	
+        public boolean equals(Object other) {
+            return this.index == ((CustomObject) other).index;
+        }
+
+        public int hashCode() {
+            return this.index;
+        }
+
+    }
+
+    public static CustomObject getCustomObject(int index) {
+        return new CustomObject(index);
+    }
+
 }

@@ -281,7 +281,7 @@ public class HashFilesBenchs {
                             hashFile = new FlowSorterIterator<ILightSerializable>();
                             // ((SortedMultipleHashFile) hashFile).setBufferSize(nbItems / 10);// setBufferSize
                             ((FlowSorterIterator) hashFile).setILightSerializable(new Bean());// set an
-                                                                                                            // Instance
+                            // Instance
                             // of proccessed
                             // Bean;
                             break;
@@ -521,7 +521,8 @@ public class HashFilesBenchs {
 
             int count = ((SortedMultipleHashFile) hashFile).getObjectsCount();
             if (count != nbItems) {
-                throw new IllegalStateException("hash does not contain attempted objects count=" + count + ", nbItems=" + nbItems);
+                throw new IllegalStateException("hash does not contain attempted objects count=" + count + ", nbItems="
+                        + nbItems);
             }
             hashMap = new THashMap(count, 1.0f, objectHashingStrategy); // ??
 
@@ -610,7 +611,8 @@ public class HashFilesBenchs {
             hashFile.endPut();
             int count = ((FlowSorterIterator<ILightSerializable>) hashFile).getObjectsCount();
             if (count != nbItems) {
-                throw new IllegalStateException("hash does not contain attempted objects count=" + count + ", nbItems=" + nbItems);
+                throw new IllegalStateException("hash does not contain attempted objects count=" + count + ", nbItems="
+                        + nbItems);
             }
 
         }
@@ -639,7 +641,8 @@ public class HashFilesBenchs {
 
         dataWrite.setItemsPerSecWrite(itemsPerSec);
 
-        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to STORE. " + itemsPerSec + " items/s ");
+        System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to STORE. " + itemsPerSec
+                + " items/s ");
 
         dataWrite.setTotalFilesSize(hashFile.getTotalSize());
     }
@@ -746,7 +749,8 @@ public class HashFilesBenchs {
                                 throw new RuntimeException("Bean not found with id " + i);
                             }
                             // validity test
-                            if (!persistentBean.name.equals(bean.name) || persistentBean.primitiveInt != bean.primitiveInt) {
+                            if (!persistentBean.name.equals(bean.name)
+                                    || persistentBean.primitiveInt != bean.primitiveInt) {
                                 throw new RuntimeException("Values of beans are different with id " + i);
                             }
 
@@ -768,10 +772,12 @@ public class HashFilesBenchs {
                                         keyForMap.hashcode);
                                 // validity test
                                 if (persistentBean == null) {
-                                    throw new RuntimeException("Bean not found with cursorPosition " + keyForMap.cursorPosition);
+                                    throw new RuntimeException("Bean not found with cursorPosition "
+                                            + keyForMap.cursorPosition);
                                 }
                                 // validity test
-                                if (!persistentBean.name.equals(bean.name) || persistentBean.primitiveInt != bean.primitiveInt) {
+                                if (!persistentBean.name.equals(bean.name)
+                                        || persistentBean.primitiveInt != bean.primitiveInt) {
                                     throw new RuntimeException("Values of beans are different with cursorPosition "
                                             + keyForMap.cursorPosition);
                                 }
@@ -834,7 +840,8 @@ public class HashFilesBenchs {
 
             dataReadWrite.setItemsPerSecRead(itemsPerSec);
 
-            System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to READ. " + itemsPerSec + "  items/s ");
+            System.out.println(deltaTime + " milliseconds for " + nbItems + " objects to READ. " + itemsPerSec
+                    + "  items/s ");
 
         }
 

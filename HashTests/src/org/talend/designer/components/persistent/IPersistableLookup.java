@@ -15,16 +15,14 @@ package org.talend.designer.components.persistent;
 
 import java.io.IOException;
 
-
 /**
- * DOC amaumont  class global comment. Detailled comment
- * <br/>
- *
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
  */
 public interface IPersistableLookup<B> {
 
     public void initPut() throws IOException;
-    
+
     public void put(B bean) throws IOException;
 
     public void endPut() throws IOException;
@@ -32,12 +30,12 @@ public interface IPersistableLookup<B> {
     public void initGet() throws IOException;
 
     public void lookup(B key) throws IOException;
-    
+
     public boolean hasNext() throws IOException;
 
     public B next() throws IOException;
 
     public void endGet() throws IOException;
- 
+
     public B getNextFreeRow();
 }

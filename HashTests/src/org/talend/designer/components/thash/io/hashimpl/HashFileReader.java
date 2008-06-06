@@ -231,7 +231,6 @@ public class HashFileReader {
         this.limitEndOfRead = limitEndOfRead;
     }
 
-
     /**
      * Sets the bytesToRead.
      * 
@@ -241,25 +240,23 @@ public class HashFileReader {
         this.bytesToRead = bytesToRead;
     }
 
-    
     /**
      * Getter for readFixedSizeData.
+     * 
      * @return the readFixedSizeData
      */
     public boolean isReadFixedSizeData() {
         return bytesToRead != 0;
     }
 
-    
     /**
      * Sets the readFixedSizeData.
+     * 
      * @param readFixedSizeData the readFixedSizeData to set
      */
     public void setReadFixedSizeData(int bytesToRead) {
         this.bytesToRead = bytesToRead;
     }
-    
-    
 
 }
 

@@ -4,24 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
 public class RowProvider<B> implements IRowProvider<B> {
 
     private List<B> cache = new ArrayList<B>();
-    
+
     private int currentFreeIndex = 0;
 
     private int currentGetIndex = 0;
 
     private IRowCreator<B> rowCreator;
-    
+
     public RowProvider(IRowCreator<B> rowCreator) {
         this.rowCreator = rowCreator;
     }
 
     public B getFreeInstance() {
         B row = null;
-        if(currentFreeIndex >= cache.size()) {
+        if (currentFreeIndex >= cache.size()) {
             row = this.rowCreator.createRowInstance();
             cache.add(row);
         } else {
@@ -36,7 +35,7 @@ public class RowProvider<B> implements IRowProvider<B> {
     }
 
     public B next() {
-        if(currentGetIndex > currentFreeIndex - 1) {
+        if (currentGetIndex > currentFreeIndex - 1) {
             throw new NoSuchElementException();
         }
         B row = cache.get(currentGetIndex);

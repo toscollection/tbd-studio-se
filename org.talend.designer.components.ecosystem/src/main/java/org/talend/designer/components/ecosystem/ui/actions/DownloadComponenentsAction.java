@@ -107,8 +107,8 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             fView.saveToFile();
 
             // Start Code Generation Init
-            ICodeGeneratorService codeGenService = (ICodeGeneratorService) GlobalServiceRegister.getDefault().getService(
-                    ICodeGeneratorService.class);
+            ICodeGeneratorService codeGenService = (ICodeGeneratorService) GlobalServiceRegister.getDefault()
+                    .getService(ICodeGeneratorService.class);
             codeGenService.initializeTemplates();
         }
     }

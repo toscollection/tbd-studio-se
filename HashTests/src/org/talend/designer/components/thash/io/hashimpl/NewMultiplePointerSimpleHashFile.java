@@ -36,16 +36,12 @@ public class NewMultiplePointerSimpleHashFile implements IMapHashFile {
         this.pointersNumber = pointersNumber;
     }
 
-    
-    
     /**
      * DOC amaumont NewMultiplePointerSimpleHashFile constructor comment.
      */
     public NewMultiplePointerSimpleHashFile() {
         super();
     }
-
-
 
     /**
      * getInstance.
@@ -176,10 +172,9 @@ public class NewMultiplePointerSimpleHashFile implements IMapHashFile {
         return 0;
     }
 
-
-
     /**
      * DOC amaumont Comment method "setFilePointersNumber".
+     * 
      * @param numberOfPointers
      */
     public void setFilePointersNumber(int numberOfPointers) {

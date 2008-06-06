@@ -65,15 +65,10 @@ class DB {
         preparedStatement.setInt(1, id);
         ResultSet rs = preparedStatement.executeQuery();
 
-        
-        
         /*
          * For 100 000 beans less than 73 s
          */
-//         ResultSet rs = stmt.executeQuery("SELECT object FROM '" + container + "' WHERE id = " + id + ";");
-        
-        
-        
+        // ResultSet rs = stmt.executeQuery("SELECT object FROM '" + container + "' WHERE id = " + id + ";");
         if (rs.next()) {
             ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(rs.getBytes(1)));
             return oi.readObject();
@@ -105,8 +100,8 @@ class DB {
             }
         }
         PreparedStatement pstmt = pstmts.get(container);
-        
-        if(pstmt == null) {
+
+        if (pstmt == null) {
             try {
                 DB.connect("/tmp/talend.db");
             } catch (ClassNotFoundException e) {
@@ -117,7 +112,7 @@ class DB {
             DB.commit();
             pstmt = pstmts.get(container);
         }
-        
+
         // int counter = tables.get(container) + 1;
         pstmt.setInt(1, counter++);
         pstmt.setBytes(2, byteArrayOutputStream.toByteArray());

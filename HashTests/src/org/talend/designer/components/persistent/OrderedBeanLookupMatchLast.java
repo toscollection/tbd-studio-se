@@ -24,7 +24,8 @@ import routines.system.IPersistableLookupRow;
  * $Id$
  * 
  */
-public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLookupRow<B>> extends AbstractOrderedBeanLookup<B> {
+public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLookupRow<B>> extends
+        AbstractOrderedBeanLookup<B> {
 
     private boolean previousKeyLoaded;
 
@@ -32,8 +33,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
     private boolean resultIsObsolete = true;
 
-    public OrderedBeanLookupMatchLast(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider)
-            throws IOException {
+    public OrderedBeanLookupMatchLast(String keysFilePath, String valuesFilePath, int fileIndex,
+            IRowProvider<B> rowProvider) throws IOException {
         super(keysFilePath, valuesFilePath, fileIndex, rowProvider);
         lookupInstance = rowProvider.createInstance();
         previousLookupInstance = rowProvider.createInstance();
@@ -48,8 +49,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
     public void lookup(B key) throws IOException {
 
         currentSearchedKey = key;
-        
-//        System.out.println("currentSearchedKey=" + currentSearchedKey);
+
+        // System.out.println("currentSearchedKey=" + currentSearchedKey);
 
         if (!resultIsObsolete && previousKeyLoaded && previousAskedKey.compareTo(key) == 0) {
             nextWithPreviousLookup = true;
@@ -103,7 +104,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                         previousCompareHasMatched = true;
                     }
 
-                } else if(compareResult < 0) {
+                } else if (compareResult < 0) {
                     localSkip += previousValuesSize;
                 }
             }
@@ -115,7 +116,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                 do {
 
                     loadDataKeys(lookupInstance);
-//                    System.out.println("Loaded keys:" + lookupInstance);
+                    // System.out.println("Loaded keys:" + lookupInstance);
 
                     compareResult = lookupInstance.compareTo(currentSearchedKey);
 

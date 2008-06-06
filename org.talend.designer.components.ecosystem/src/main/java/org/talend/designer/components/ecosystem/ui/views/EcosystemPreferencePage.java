@@ -46,8 +46,8 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
     public void createFieldEditors() {
         // get a tos version list from web service
         String[] availableVersionFilter = EcosystemUtils.getVersionList();
-        ComboFieldEditor versionFilter = new ComboFieldEditor(TOS_VERSION_FILTER, EcosystemConstants.VERSION_FILTER_LABEL,
-                convert(availableVersionFilter), getFieldEditorParent());
+        ComboFieldEditor versionFilter = new ComboFieldEditor(TOS_VERSION_FILTER,
+                EcosystemConstants.VERSION_FILTER_LABEL, convert(availableVersionFilter), getFieldEditorParent());
         addField(versionFilter);
 
         // StringFieldEditor versionFilter = new StringFieldEditor(TOS_VERSION_FILTER, VERSION_FILTER_LABEL,

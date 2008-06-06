@@ -26,13 +26,13 @@ import org.talend.designer.components.thash.io.IMapHashFile;
 /**
  * 
  * DOC slanglois class global comment. Detailled comment <br/>
- *
  * 
  * 
-71922 milliseconds for 1000000 objects to STORE using BigBeanIntrospectionHashFile. 13000 items/s. 67 bytes per item in storage.
-82172 milliseconds for 1000000 objects to STORE using IntrospectionHashFile. 12000 items/s. 68 bytes per item in storage.
-30438 milliseconds for 1000000 objects to STORE using SimpleHashFile. 32000 items/s. 321 bytes per item in storage.
-44406 milliseconds for 1000000 objects to STORE using DoubleHashFile. 22000 items/s. 
+ * 
+ * 71922 milliseconds for 1000000 objects to STORE using BigBeanIntrospectionHashFile. 13000 items/s. 67 bytes per item
+ * in storage. 82172 milliseconds for 1000000 objects to STORE using IntrospectionHashFile. 12000 items/s. 68 bytes per
+ * item in storage. 30438 milliseconds for 1000000 objects to STORE using SimpleHashFile. 32000 items/s. 321 bytes per
+ * item in storage. 44406 milliseconds for 1000000 objects to STORE using DoubleHashFile. 22000 items/s.
  * 
  */
 public class BigBeanIntrospectionHashFile implements IMapHashFile {
@@ -77,22 +77,22 @@ public class BigBeanIntrospectionHashFile implements IMapHashFile {
             lastRetrievedObject.address = new String(bytes);
             lastRetrievedObject.price = ra.readFloat();
             long date = ra.readLong();
-            if(date == 0){
+            if (date == 0) {
                 lastRetrievedObject.date = null;
-            }else{
+            } else {
                 lastRetrievedObject.date = new Date(date);
             }
             date = ra.readLong();
-            if(date == 0){
+            if (date == 0) {
                 lastRetrievedObject.date2 = null;
-            }else{
+            } else {
                 lastRetrievedObject.date2 = new Date(date);
             }
             bytes = new byte[ra.readInt()];
             ra.read(bytes);
             lastRetrievedObject.b = bytes;
             lastRetrievedObject.flag = ra.readBoolean();
-            
+
             lastRetrievedCursorPosition = cursorPosition;
         }
         return lastRetrievedObject;
@@ -105,42 +105,42 @@ public class BigBeanIntrospectionHashFile implements IMapHashFile {
     public long put(String container, Object bigBean) throws IOException {
         long returnPosition = bw.getFilePointer();
         if (!readonly) {
-            lastRetrievedObject = (InternalBigBean)bigBean;
+            lastRetrievedObject = (InternalBigBean) bigBean;
             bw.writeInt(lastRetrievedObject.primitiveInt);
             byte[] bytes = null;
-            if(lastRetrievedObject.name == null){
+            if (lastRetrievedObject.name == null) {
                 bytes = new byte[0];
-            }else{
+            } else {
                 bytes = lastRetrievedObject.name.getBytes();
             }
             bw.writeInt(bytes.length);
             bw.write(bytes);
-            if(lastRetrievedObject.address == null){
+            if (lastRetrievedObject.address == null) {
                 bytes = new byte[0];
-            }else{
+            } else {
                 bytes = lastRetrievedObject.address.getBytes();
             }
             bw.writeInt(bytes.length);
             bw.write(bytes);
             bw.writeFloat(lastRetrievedObject.price);
-            if(lastRetrievedObject.date == null){
-                bw.writeLong((long)0);
-            }else{
+            if (lastRetrievedObject.date == null) {
+                bw.writeLong((long) 0);
+            } else {
                 bw.writeLong(lastRetrievedObject.date.getTime());
             }
-            if(lastRetrievedObject.date2 == null){
-                bw.writeLong((long)0);
-            }else{
+            if (lastRetrievedObject.date2 == null) {
+                bw.writeLong((long) 0);
+            } else {
                 bw.writeLong(lastRetrievedObject.date2.getTime());
             }
-            if(lastRetrievedObject.b == null){
+            if (lastRetrievedObject.b == null) {
                 bytes = new byte[0];
-            }else{
+            } else {
                 bytes = lastRetrievedObject.b;
             }
             bw.writeInt(bytes.length);
             bw.write(bytes);
-            
+
         }
         return returnPosition;
     }
@@ -174,14 +174,15 @@ public class BigBeanIntrospectionHashFile implements IMapHashFile {
         }
     }
 
-    public static void main(String[] args) throws IOException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    public static void main(String[] args) throws IOException, IllegalAccessException, InvocationTargetException,
+            NoSuchMethodException {
         int loop = 1000000;
         BigBeanIntrospectionHashFile nihf = BigBeanIntrospectionHashFile.getInstance();
         List<Long> cursors = new ArrayList<Long>();
         long start = System.currentTimeMillis();
 
         String folder = "/tmp/";
-        
+
         nihf.initPut(folder + "cache0");
         for (int i = 1; i < loop; i++) {
             InternalBigBean bean = new InternalBigBean(i, String.valueOf(i));
@@ -191,12 +192,11 @@ public class BigBeanIntrospectionHashFile implements IMapHashFile {
 
         long end = System.currentTimeMillis();
         long deltaTime = (end - start);
-        System.out.print(deltaTime + " milliseconds for " + loop + " objects to STORE using BigBeanIntrospectionHashFile. "
-                + (loop / deltaTime * 1000) + " items/s. ");
+        System.out.print(deltaTime + " milliseconds for " + loop
+                + " objects to STORE using BigBeanIntrospectionHashFile. " + (loop / deltaTime * 1000) + " items/s. ");
         File file = new File(folder + "cache0");
         System.out.println((file.length() / loop) + " bytes per item in storage.");
 
-        
         IntrospectionHashFile ihf = IntrospectionHashFile.getInstance();
         start = System.currentTimeMillis();
 
@@ -214,42 +214,43 @@ public class BigBeanIntrospectionHashFile implements IMapHashFile {
                 + (loop / deltaTime * 1000) + " items/s. ");
         file = new File(folder + "cache1");
         System.out.println((file.length() / loop) + " bytes per item in storage.");
-        
-        
-         SimpleHashFile shf = SimpleHashFile.getInstance();
-         start = System.currentTimeMillis();
-        
-         shf.initPut(folder + "cache2");
-         for (int i = 0; i < loop; i++) {
-             InternalBigBean bean = new InternalBigBean(i, String.valueOf(i));
-         shf.put("", bean);
-         }
-         ihf.endPut();
-        
-         end = System.currentTimeMillis();
-         deltaTime = (end - start);
-         System.out.print(deltaTime + " milliseconds for " + loop + " objects to STORE using SimpleHashFile. "
-         + (loop / deltaTime * 1000) + " items/s. ");
-         file = new File(folder + "cache2");
-         System.out.println((file.length() / loop) + " bytes per item in storage.");
-        
-         DoubleHashFile dhf = DoubleHashFile.getInstance();
-         start = System.currentTimeMillis();
-        
-         dhf.initPut(folder + "cache3");
-         for (int i = 0; i < loop; i++) {
-             InternalBigBean bean = new InternalBigBean(i, String.valueOf(i));
-         dhf.put("", bean);
-         }
-         dhf.endPut();
-        
-         end = System.currentTimeMillis();
-         deltaTime = (end - start);
-         System.out.print(deltaTime + " milliseconds for " + loop + " objects to STORE using DoubleHashFile. "
-         + (loop / deltaTime * 1000) + " items/s. ");
+
+        SimpleHashFile shf = SimpleHashFile.getInstance();
+        start = System.currentTimeMillis();
+
+        shf.initPut(folder + "cache2");
+        for (int i = 0; i < loop; i++) {
+            InternalBigBean bean = new InternalBigBean(i, String.valueOf(i));
+            shf.put("", bean);
+        }
+        ihf.endPut();
+
+        end = System.currentTimeMillis();
+        deltaTime = (end - start);
+        System.out.print(deltaTime + " milliseconds for " + loop + " objects to STORE using SimpleHashFile. "
+                + (loop / deltaTime * 1000) + " items/s. ");
+        file = new File(folder + "cache2");
+        System.out.println((file.length() / loop) + " bytes per item in storage.");
+
+        DoubleHashFile dhf = DoubleHashFile.getInstance();
+        start = System.currentTimeMillis();
+
+        dhf.initPut(folder + "cache3");
+        for (int i = 0; i < loop; i++) {
+            InternalBigBean bean = new InternalBigBean(i, String.valueOf(i));
+            dhf.put("", bean);
+        }
+        dhf.endPut();
+
+        end = System.currentTimeMillis();
+        deltaTime = (end - start);
+        System.out.print(deltaTime + " milliseconds for " + loop + " objects to STORE using DoubleHashFile. "
+                + (loop / deltaTime * 1000) + " items/s. ");
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.talend.designer.components.thash.io.MapHashFile#getTotalSize()
      */
     public long getTotalSize() {

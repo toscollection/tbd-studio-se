@@ -82,7 +82,7 @@ public class ResultrDialog extends Dialog {
 
         Button okButton = new Button(shell, SWT.NONE);
         GridData gd_okButton = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
-        gd_okButton.widthHint=IDialogConstants.BUTTON_WIDTH;
+        gd_okButton.widthHint = IDialogConstants.BUTTON_WIDTH;
         okButton.setLayoutData(gd_okButton);
         okButton.setText("Ok");
         okButton.addSelectionListener(new SelectionAdapter() {
