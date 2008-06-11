@@ -14,7 +14,7 @@ import org.talend.designer.components.persistent.utils.FileUtils;
 
 import routines.system.IPersistableRow;
 
-public class PersistentLookupManager<B extends IPersistableRow<B>> implements IPersistentLookupManager<B> {
+public class PersistentLookupManager<B extends IPersistableRow<B>> implements IPersistentLookupManager<B>, Cloneable {
 
     private String container;
 
@@ -36,19 +36,18 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
      * @param container
      * @throws IOException
      */
-    public PersistentLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator)
-            throws IOException {
+    public PersistentLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator) throws IOException {
         super();
         this.matchingMode = matchingMode;
         this.container = container;
         this.rowCreator = rowCreator;
-        this.dataInstance = this.rowCreator.createRowInstance();
         FileUtils.createParentFolderIfNotExists(container);
     }
 
     public void initPut() throws IOException {
 
         dataOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(buildDataFilePath())));
+        this.dataInstance = this.rowCreator.createRowInstance();
 
     }
 
@@ -69,6 +68,7 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
     public void initGet() throws IOException {
 
         initDataIn();
+        this.dataInstance = this.rowCreator.createRowInstance();
 
     }
 
@@ -110,6 +110,11 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
 
     public void clear() throws IOException {
 
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }

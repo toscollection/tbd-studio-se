@@ -73,8 +73,8 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
      * @param keys_management
      * @throws IOException
      */
-    public AbstractOrderedBeanLookup(String keysFilePath, String valuesFilePath, int fileIndex,
-            IRowProvider<B> rowProvider) throws IOException {
+    public AbstractOrderedBeanLookup(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider)
+            throws IOException {
         File keysDataFile = new File(keysFilePath);
         this.length = keysDataFile.length();
 

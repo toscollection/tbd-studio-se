@@ -36,8 +36,7 @@ import routines.system.IPersistableRow;
  * 
  * @param <V> object value to sort
  */
-public abstract class PersistentRowSorterIterator<V extends IPersistableRow> implements IPersistentRowManager<V>,
-        Iterator<V> {
+public abstract class PersistentRowSorterIterator<V extends IPersistableRow> implements IPersistentRowManager<V>, Iterator<V> {
 
     int INIT_BUFFER_INDEX = -1;
 
@@ -92,8 +91,6 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
     private boolean firstUnsifficientMemory = true;
 
     private boolean waitingHeapException;
-
-    private boolean[] isFirstArray;
 
     private boolean nextFreeRowCalled;
 
@@ -297,8 +294,6 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         }
 
         int size = datasList.size();
-        isFirstArray = new boolean[size];
-        Arrays.fill(isFirstArray, true);
         datas = (V[]) datasList.toArray(new IPersistableRow[size]);
         diss = (ObjectInputStream[]) dissList.toArray(new ObjectInputStream[size]);
 

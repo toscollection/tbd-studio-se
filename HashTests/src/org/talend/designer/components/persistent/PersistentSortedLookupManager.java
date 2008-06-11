@@ -24,14 +24,12 @@ package org.talend.designer.components.persistent;
 
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.talend.designer.components.commons.AdvancedLookup.MATCHING_MODE;
@@ -45,8 +43,8 @@ import routines.system.IPersistableLookupRow;
  * 
  * 
  */
-public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends
-        AbstractPersistentLookup<B> implements IPersistentLookupManager<B> {
+public class PersistentSortedLookupManager<B extends IPersistableComparableLookupRow<B>> extends AbstractPersistentLookup<B>
+        implements IPersistentLookupManager<B>, Cloneable {
 
     private static final float MARGIN_MAX = 0.35f;
 
@@ -107,12 +105,11 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
         this.matchingMode = matchingMode;
         this.container = container;
         this.rowCreator = rowCreator;
-        this.lookupKey = rowCreator.createRowInstance();
         FileUtils.createParentFolderIfNotExists(container);
     }
 
-    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator,
-            int bufferSize) throws IOException {
+    public PersistentSortedLookupManager(MATCHING_MODE matchingMode, String container, IRowCreator<B> rowCreator, int bufferSize)
+            throws IOException {
         this(matchingMode, container, rowCreator);
         this.bufferSize = bufferSize;
     }
@@ -214,6 +211,7 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
     }
 
     public void initGet() throws IOException {
+        this.lookupKey = rowCreator.createRowInstance();
         lookupList = (ILookupManagerUnit<B>[]) new ILookupManagerUnit[fileIndex];
         for (int i = 0; i < fileIndex; i++) {
             RowProvider<B> rowProvider = new RowProvider<B>(rowCreator);
@@ -389,6 +387,11 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
         } else {
             return this.rowCreator.createRowInstance();
         }
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }

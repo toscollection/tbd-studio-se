@@ -11,32 +11,8 @@
 // ============================================================================
 package java_project_8.delete_all_root_and_subdir_files_0_1;
 
-import routines.libs;
-import routines.randomGenerator;
-import routines.routine_tMap_10_persistence_01_types;
-import routines.DataOperation;
-import routines.Mathematical;
-import routines.Numeric;
-import routines.Relational;
-import routines.StringHandling;
-import routines.TalendDataGenerator;
-import routines.TalendDate;
 import routines.TalendString;
-import routines.system.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.math.BigDecimal;
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.IOException;
-import java.util.Comparator;
+import routines.system.TDieException;
 
 /**
  * Job: delete_all_root_and_subdir_files Purpose: <br>
