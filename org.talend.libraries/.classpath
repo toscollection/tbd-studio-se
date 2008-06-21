@@ -50,5 +50,9 @@
 	<classpathentry exported="true" kind="lib" path="core-renderer-minimal.jar"/>
 	<classpathentry exported="true" kind="lib" path="itext-paulo-155.jar"/>
 	<classpathentry exported="true" kind="lib" path="minium.jar"/>
+	<classpathentry exported="true" kind="lib" path="db2jcc_license_cisuz.jar"/>
+	<classpathentry exported="true" kind="lib" path="sas.core.jar"/>
+	<classpathentry exported="true" kind="lib" path="sas.intrnet.javatools.jar"/>
+	<classpathentry exported="true" kind="lib" path="sas.svc.connection.jar"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
