@@ -24,8 +24,7 @@ import routines.system.IPersistableLookupRow;
  * $Id$
  * 
  */
-public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLookupRow<B>> extends
-        AbstractOrderedBeanLookup<B> {
+public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLookupRow<B>> extends AbstractOrderedBeanLookup<B> {
 
     private boolean previousKeyLoaded;
 
@@ -33,8 +32,8 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
 
     private boolean resultIsObsolete = true;
 
-    public OrderedBeanLookupMatchLast(String keysFilePath, String valuesFilePath, int fileIndex,
-            IRowProvider<B> rowProvider) throws IOException {
+    public OrderedBeanLookupMatchLast(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider)
+            throws IOException {
         super(keysFilePath, valuesFilePath, fileIndex, rowProvider);
         lookupInstance = rowProvider.createInstance();
         previousLookupInstance = rowProvider.createInstance();
@@ -146,7 +145,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                                         compareResult = 0;
                                         sizeDataToRead = previousValuesSize;
                                         localSkip -= previousValuesSize;
-                                    } else {
+                                    } else if (!previousValuesSizeAlreadyAdded) {
                                         localSkip += previousValuesSize;
                                     }
                                 }
@@ -156,7 +155,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                                 if (previousCompareHasMatched) {
                                     localSkip -= previousValuesSize;
                                     compareResult = 0;
-                                } else {
+                                } else if (!previousValuesSizeAlreadyAdded) {
                                     localSkip += previousValuesSize;
                                 }
                                 previousLookupInstance.copyKeysDataTo(resultLookupInstance);
@@ -169,6 +168,7 @@ public class OrderedBeanLookupMatchLast<B extends Comparable<B> & IPersistableLo
                         }
                         lookupInstance.copyKeysDataTo(previousLookupInstance);
                         localSkip += currentValuesSize;
+                        previousValuesSizeAlreadyAdded = false;
                         previousValuesSize = currentValuesSize;
                     }
                     if (compareResult < 0 && !searchingNextNotMatchAfterMatchFound) {
