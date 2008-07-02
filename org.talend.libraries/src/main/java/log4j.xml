@@ -26,6 +26,7 @@
 	<logger name="org.hibernate" additivity="true"> <level value="warn" /> </logger>
 	<logger name="com.mchange" additivity="true"> <level value="warn" /> </logger>
 	<logger name="net.sf.ehcache" additivity="true"> <level value="warn" /> </logger>
+	<logger name="org.eclipse.emf.teneo" additivity="true"> <level value="error" /> </logger>
 	
 	<root>
 		<priority value="info" />
