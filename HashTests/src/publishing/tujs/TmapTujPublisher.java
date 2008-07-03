@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
@@ -28,18 +29,35 @@ public class TmapTujPublisher {
      */
     public static void main(String[] args) throws MalformedPatternException, IOException {
 
-        boolean copyData = true;
+        boolean copyData = false;
 
         String sourceFilesDir = "/home/amaumont/data/dev/projets/Talend/TUJV/files/tMap";
         String sourceJobsDir = "/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product3/JAVA_PROJECT_8/process/components/tMap";
         String sourceRoutineDir = "/home/amaumont/data/dev/eclipse/workspaces/runtime-talend.product3/JAVA_PROJECT_8/code/routines";
 
-        String targetDir = "/home/amaumont/data/dev/eclipse/workspaces/workspace-talend-linux3/tuj/java/";
+        String targetDir = "/home/amaumont/data/dev/eclipse/workspaces/workspace-talend-linux-trunk1/tuj/java/";
 
+        
+        System.out.println("sourceFilesDir=" + sourceFilesDir);
+        System.out.println("sourceJobsDir=" + sourceJobsDir);
+        System.out.println("sourceRoutineDir=" + sourceRoutineDir);
+        System.out.println("targetDir=" + targetDir);
+        
+        
+        
         String staticPrefix = "tMap_";
 
         String[] firstIndices = { "03", "04", "05", "06", "07", "08", "09", "10", };
 
+        String[] exceptions = { "tMap_03_persistence_01_bug", };
+        
+        HashSet<String> hExceptions = new HashSet<String>();
+        for (int i = 0; i < exceptions.length; i++) {
+            hExceptions.add(exceptions[i]);
+        }
+
+        
+        
         File sourceJobsDirFile = new File(sourceJobsDir);
 
         Perl5Compiler compiler = new Perl5Compiler();
@@ -80,14 +98,26 @@ public class TmapTujPublisher {
                                     isChild = true;
                                 }
 
+                                if(hExceptions.contains(baseName)) {
+                                    continue;
+                                }
+                                
                                 System.out.println("Job '" + baseName + "': ");
 
                                 String targetDirectoryPath = targetDir + baseName + "/process/components/tMap/";
 
                                 File targetDirectoryItems = new File(targetDirectoryPath);
 
+                                File[] listFilesItemsToRemove = targetDirectoryItems.listFiles();
+
+                                if(listFilesItemsToRemove == null) {
+                                    
+                                    System.err.println("targetDirectoryItems does not exist=" + targetDirectoryItems.getAbsolutePath());
+                                    continue;
+                                }
+
                                 if (!isChild) {
-                                    File[] listFilesItemsToRemove = targetDirectoryItems.listFiles();
+                                    
                                     for (File fileToRemove : listFilesItemsToRemove) {
                                         if (fileToRemove.isFile()) {
                                             fileToRemove.delete();
