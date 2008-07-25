@@ -47,6 +47,8 @@ public class EcosystemConstants {
 
     public static final String DOWNLOAD_TASK_NAME = Messages.getString("DownloadComponenentsAction.DownloadTaskName"); //$NON-NLS-1$
 
+    public static final String DOWNLOAD_TASK_TITLE = Messages.getString("DownloadComponenentsAction.DownloadTaskTitle"); //$NON-NLS-1$
+
     public static final String RELOAD_PALETTE = Messages.getString("DownloadComponenentsAction.ReloadPalette"); //$NON-NLS-1$
 
     public static final String FIND_EXTENSIONS_MSG = "RefreshJob.FindExtensions.Message"; //$NON-NLS-1$

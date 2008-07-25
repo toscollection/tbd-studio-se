@@ -20,7 +20,11 @@ public class Revision implements java.io.Serializable {
 
     private java.lang.String revision_date;
 
-    private java.lang.String revision_url;
+    private java.lang.String file_url;
+
+    private java.lang.String download_url;
+
+    private java.lang.String filename;
 
     private java.lang.String revision_description;
 
@@ -29,14 +33,17 @@ public class Revision implements java.io.Serializable {
 
     public Revision(int revision_id, java.lang.String extension_name, java.lang.String extension_author,
             java.lang.String extension_description, java.lang.String revision_name, java.lang.String revision_date,
-            java.lang.String revision_url, java.lang.String revision_description) {
+            java.lang.String file_url, java.lang.String download_url, java.lang.String filename,
+            java.lang.String revision_description) {
         this.revision_id = revision_id;
         this.extension_name = extension_name;
         this.extension_author = extension_author;
         this.extension_description = extension_description;
         this.revision_name = revision_name;
         this.revision_date = revision_date;
-        this.revision_url = revision_url;
+        this.file_url = file_url;
+        this.download_url = download_url;
+        this.filename = filename;
         this.revision_description = revision_description;
     }
 
@@ -149,21 +156,57 @@ public class Revision implements java.io.Serializable {
     }
 
     /**
-     * Gets the revision_url value for this Revision.
+     * Gets the file_url value for this Revision.
      * 
-     * @return revision_url
+     * @return file_url
      */
-    public java.lang.String getRevision_url() {
-        return revision_url;
+    public java.lang.String getFile_url() {
+        return file_url;
     }
 
     /**
-     * Sets the revision_url value for this Revision.
+     * Sets the file_url value for this Revision.
      * 
-     * @param revision_url
+     * @param file_url
      */
-    public void setRevision_url(java.lang.String revision_url) {
-        this.revision_url = revision_url;
+    public void setFile_url(java.lang.String file_url) {
+        this.file_url = file_url;
+    }
+
+    /**
+     * Gets the download_url value for this Revision.
+     * 
+     * @return download_url
+     */
+    public java.lang.String getDownload_url() {
+        return download_url;
+    }
+
+    /**
+     * Sets the download_url value for this Revision.
+     * 
+     * @param download_url
+     */
+    public void setDownload_url(java.lang.String download_url) {
+        this.download_url = download_url;
+    }
+
+    /**
+     * Gets the filename value for this Revision.
+     * 
+     * @return filename
+     */
+    public java.lang.String getFilename() {
+        return filename;
+    }
+
+    /**
+     * Sets the filename value for this Revision.
+     * 
+     * @param filename
+     */
+    public void setFilename(java.lang.String filename) {
+        this.filename = filename;
     }
 
     /**
@@ -186,14 +229,18 @@ public class Revision implements java.io.Serializable {
 
     private java.lang.Object __equalsCalc = null;
 
+    @Override
     public synchronized boolean equals(java.lang.Object obj) {
-        if (!(obj instanceof Revision))
+        if (!(obj instanceof Revision)) {
             return false;
+        }
         Revision other = (Revision) obj;
-        if (obj == null)
+        if (obj == null) {
             return false;
-        if (this == obj)
+        }
+        if (this == obj) {
             return true;
+        }
         if (__equalsCalc != null) {
             return (__equalsCalc == obj);
         }
@@ -211,8 +258,12 @@ public class Revision implements java.io.Serializable {
                         .equals(other.getRevision_name())))
                 && ((this.revision_date == null && other.getRevision_date() == null) || (this.revision_date != null && this.revision_date
                         .equals(other.getRevision_date())))
-                && ((this.revision_url == null && other.getRevision_url() == null) || (this.revision_url != null && this.revision_url
-                        .equals(other.getRevision_url())))
+                && ((this.file_url == null && other.getFile_url() == null) || (this.file_url != null && this.file_url
+                        .equals(other.getFile_url())))
+                && ((this.download_url == null && other.getDownload_url() == null) || (this.download_url != null && this.download_url
+                        .equals(other.getDownload_url())))
+                && ((this.filename == null && other.getFilename() == null) || (this.filename != null && this.filename
+                        .equals(other.getFilename())))
                 && ((this.revision_description == null && other.getRevision_description() == null) || (this.revision_description != null && this.revision_description
                         .equals(other.getRevision_description())));
         __equalsCalc = null;
@@ -221,6 +272,7 @@ public class Revision implements java.io.Serializable {
 
     private boolean __hashCodeCalc = false;
 
+    @Override
     public synchronized int hashCode() {
         if (__hashCodeCalc) {
             return 0;
@@ -243,8 +295,14 @@ public class Revision implements java.io.Serializable {
         if (getRevision_date() != null) {
             _hashCode += getRevision_date().hashCode();
         }
-        if (getRevision_url() != null) {
-            _hashCode += getRevision_url().hashCode();
+        if (getFile_url() != null) {
+            _hashCode += getFile_url().hashCode();
+        }
+        if (getDownload_url() != null) {
+            _hashCode += getDownload_url().hashCode();
+        }
+        if (getFilename() != null) {
+            _hashCode += getFilename().hashCode();
         }
         if (getRevision_description() != null) {
             _hashCode += getRevision_description().hashCode();
@@ -254,11 +312,10 @@ public class Revision implements java.io.Serializable {
     }
 
     // Type metadata
-    private static org.apache.axis.description.TypeDesc typeDesc = new org.apache.axis.description.TypeDesc(
-            Revision.class, true);
+    private static org.apache.axis.description.TypeDesc typeDesc = new org.apache.axis.description.TypeDesc(Revision.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "Revision"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "revision"));
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("revision_id");
         elemField.setXmlName(new javax.xml.namespace.QName("", "revision_id"));
@@ -296,8 +353,20 @@ public class Revision implements java.io.Serializable {
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("revision_url");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_url"));
+        elemField.setFieldName("file_url");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "file_url"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("download_url");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "download_url"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("filename");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "filename"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
@@ -319,16 +388,16 @@ public class Revision implements java.io.Serializable {
     /**
      * Get Custom Serializer
      */
-    public static org.apache.axis.encoding.Serializer getSerializer(java.lang.String mechType,
-            java.lang.Class _javaType, javax.xml.namespace.QName _xmlType) {
+    public static org.apache.axis.encoding.Serializer getSerializer(java.lang.String mechType, java.lang.Class _javaType,
+            javax.xml.namespace.QName _xmlType) {
         return new org.apache.axis.encoding.ser.BeanSerializer(_javaType, _xmlType, typeDesc);
     }
 
     /**
      * Get Custom Deserializer
      */
-    public static org.apache.axis.encoding.Deserializer getDeserializer(java.lang.String mechType,
-            java.lang.Class _javaType, javax.xml.namespace.QName _xmlType) {
+    public static org.apache.axis.encoding.Deserializer getDeserializer(java.lang.String mechType, java.lang.Class _javaType,
+            javax.xml.namespace.QName _xmlType) {
         return new org.apache.axis.encoding.ser.BeanDeserializer(_javaType, _xmlType, typeDesc);
     }
 

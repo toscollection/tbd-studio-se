@@ -60,6 +60,30 @@
   <children xmi:type="notation:Node" xmi:id="_QiUHZBKLEd2-i-elQytxVA" type="2001">
     <children xmi:type="notation:Node" xmi:id="_QiUHZxKLEd2-i-elQytxVA" type="5001"/>
     <children xmi:type="notation:Node" xmi:id="_QiUHaBKLEd2-i-elQytxVA" type="7001">
+      <children xmi:type="notation:Node" xmi:id="_Dud9UFibEd2zleE_-FEGCA" type="3001">
+        <element xmi:type="ecore:EAttribute" href="ecosystem.ecore#//Revision/id"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Dud9UVibEd2zleE_-FEGCA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_Dud9UlibEd2zleE_-FEGCA" type="3001">
+        <element xmi:type="ecore:EAttribute" href="ecosystem.ecore#//Revision/name"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Dud9U1ibEd2zleE_-FEGCA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_Dud9VFibEd2zleE_-FEGCA" type="3001">
+        <element xmi:type="ecore:EAttribute" href="ecosystem.ecore#//Revision/description"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Dud9VVibEd2zleE_-FEGCA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_Dud9VlibEd2zleE_-FEGCA" type="3001">
+        <element xmi:type="ecore:EAttribute" href="ecosystem.ecore#//Revision/url"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Dud9V1ibEd2zleE_-FEGCA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_Dud9WFibEd2zleE_-FEGCA" type="3001">
+        <element xmi:type="ecore:EAttribute" href="ecosystem.ecore#//Revision/date"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Dud9WVibEd2zleE_-FEGCA"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_MDCbkFibEd2zleE_-FEGCA" type="3001">
+        <element xmi:type="ecore:EAttribute" href="ecosystem.ecore#//Revision/fileName"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_MDCbkVibEd2zleE_-FEGCA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_QiUHaRKLEd2-i-elQytxVA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_QiUHahKLEd2-i-elQytxVA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_QiUHaxKLEd2-i-elQytxVA"/>

@@ -50,7 +50,7 @@ public class ComponentSearcher {
 
         try {
             GetRevisionListPortTypeProxy test = new GetRevisionListPortTypeProxy();
-            Revision[] revisions = test.getRevisionList(version, getLanguageId(language));
+            Revision[] revisions = test.get_revision_list(version, getLanguageId(language));
 
             Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
 
@@ -69,8 +69,7 @@ public class ComponentSearcher {
 
                 org.talend.designer.components.ecosystem.model.Revision rev = convertRevision(revision);
                 extension.getRevisions().add(rev);
-                if (extension.getLatestRevision() == null
-                        || extension.getLatestRevision().getDate().before(rev.getDate())) {
+                if (extension.getLatestRevision() == null || extension.getLatestRevision().getDate().before(rev.getDate())) {
                     // assumes that the revision with latest release date is the newest one.
                     extension.setLatestRevision(rev);
                 }
@@ -95,9 +94,10 @@ public class ComponentSearcher {
         org.talend.designer.components.ecosystem.model.Revision rev = EcosystemFactory.eINSTANCE.createRevision();
         rev.setDate(formatter.parse(revision.getRevision_date()));
         rev.setName(revision.getRevision_name());
-        rev.setUrl(revision.getRevision_url());
+        rev.setUrl(revision.getDownload_url());
         rev.setDescription(revision.getRevision_description());
         rev.setId(revision.getRevision_id());
+        rev.setFileName(revision.getFilename());
         return rev;
     }
 

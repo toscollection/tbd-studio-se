@@ -29,6 +29,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/url"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/date"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ecosystem.ecore#//Revision/extension"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ecosystem.ecore#//Revision/fileName"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

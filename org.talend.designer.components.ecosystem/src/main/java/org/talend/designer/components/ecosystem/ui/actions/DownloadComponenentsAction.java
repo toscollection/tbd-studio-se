@@ -107,8 +107,8 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             fView.saveToFile();
 
             // Start Code Generation Init
-            ICodeGeneratorService codeGenService = (ICodeGeneratorService) GlobalServiceRegister.getDefault()
-                    .getService(ICodeGeneratorService.class);
+            ICodeGeneratorService codeGenService = (ICodeGeneratorService) GlobalServiceRegister.getDefault().getService(
+                    ICodeGeneratorService.class);
             codeGenService.initializeTemplates();
         }
     }
@@ -137,7 +137,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         private List<ComponentExtension> fExtensions;
 
         public DownloadJob(List<ComponentExtension> extensions) {
-            super(EcosystemConstants.DOWNLOAD_TASK_NAME);
+            super(EcosystemConstants.DOWNLOAD_TASK_TITLE);
             fExtensions = extensions;
         }
 
@@ -161,10 +161,12 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
             // get the latest revision url
             String componentUrl = extension.getLatestRevision().getUrl();
+            monitor.setTaskName(EcosystemConstants.DOWNLOAD_TASK_NAME + componentUrl);
             String targetFolder = EcosystemUtils.getComponentFolder().getAbsolutePath();
             try {
-                String fileName = componentUrl.substring(componentUrl.lastIndexOf('/'));
-                File localZipFile = new File(targetFolder + fileName);
+                String fileName = extension.getLatestRevision().getFileName();
+                // fileName = extension.getLatestRevision().getFileName();
+                File localZipFile = new File(targetFolder, fileName);
 
                 if (extension.getInstalledLocation() != null && extension.getInstalledRevision() != null) {
                     // if already install the latest revision, ignore

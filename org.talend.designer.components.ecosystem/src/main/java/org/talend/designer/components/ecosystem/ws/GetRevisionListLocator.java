@@ -50,8 +50,8 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
         return getgetRevisionListPort(endpoint);
     }
 
-    public org.talend.designer.components.ecosystem.ws.GetRevisionListPortType getgetRevisionListPort(
-            java.net.URL portAddress) throws javax.xml.rpc.ServiceException {
+    public org.talend.designer.components.ecosystem.ws.GetRevisionListPortType getgetRevisionListPort(java.net.URL portAddress)
+            throws javax.xml.rpc.ServiceException {
         try {
             org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub _stub = new org.talend.designer.components.ecosystem.ws.GetRevisionListBindingStub(
                     portAddress, this);
@@ -70,6 +70,7 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
      * For the given interface, get the stub implementation. If this service has no port for the given interface, then
      * ServiceException is thrown.
      */
+    @Override
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
             if (org.talend.designer.components.ecosystem.ws.GetRevisionListPortType.class
@@ -90,6 +91,7 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
      * For the given interface, get the stub implementation. If this service has no port for the given interface, then
      * ServiceException is thrown.
      */
+    @Override
     public java.rmi.Remote getPort(javax.xml.namespace.QName portName, Class serviceEndpointInterface)
             throws javax.xml.rpc.ServiceException {
         if (portName == null) {
@@ -105,12 +107,14 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
         }
     }
 
+    @Override
     public javax.xml.namespace.QName getServiceName() {
         return new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "getRevisionList");
     }
 
     private java.util.HashSet ports = null;
 
+    @Override
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
@@ -122,8 +126,7 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
     /**
      * Set the endpoint address for the specified port name.
      */
-    public void setEndpointAddress(java.lang.String portName, java.lang.String address)
-            throws javax.xml.rpc.ServiceException {
+    public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
 
         if ("getRevisionListPort".equals(portName)) {
             setgetRevisionListPortEndpointAddress(address);

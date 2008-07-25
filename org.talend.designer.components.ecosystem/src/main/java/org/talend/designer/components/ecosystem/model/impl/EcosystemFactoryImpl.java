@@ -22,31 +22,31 @@ import org.talend.designer.components.ecosystem.model.*;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFactory {
 
     /**
-     * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public static EcosystemFactory init() {
         try {
-            EcosystemFactory theEcosystemFactory = (EcosystemFactory) EPackage.Registry.INSTANCE.getEFactory("model");
+            EcosystemFactory theEcosystemFactory = (EcosystemFactory)EPackage.Registry.INSTANCE.getEFactory("model"); 
             if (theEcosystemFactory != null) {
                 return theEcosystemFactory;
             }
-        } catch (Exception exception) {
+        }
+        catch (Exception exception) {
             EcorePlugin.INSTANCE.log(exception);
         }
         return new EcosystemFactoryImpl();
     }
 
     /**
-     * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
     public EcosystemFactoryImpl() {
@@ -55,54 +55,48 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-        case EcosystemPackage.COMPONENT_EXTENSION:
-            return createComponentExtension();
-        case EcosystemPackage.REVISION:
-            return createRevision();
-        default:
-            throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+            case EcosystemPackage.COMPONENT_EXTENSION: return createComponentExtension();
+            case EcosystemPackage.REVISION: return createRevision();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
         switch (eDataType.getClassifierID()) {
-        case EcosystemPackage.LANGUAGE:
-            return createLanguageFromString(eDataType, initialValue);
-        default:
-            throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+            case EcosystemPackage.LANGUAGE:
+                return createLanguageFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
         switch (eDataType.getClassifierID()) {
-        case EcosystemPackage.LANGUAGE:
-            return convertLanguageToString(eDataType, instanceValue);
-        default:
-            throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+            case EcosystemPackage.LANGUAGE:
+                return convertLanguageToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public ComponentExtension createComponentExtension() {
@@ -112,7 +106,6 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Revision createRevision() {
@@ -122,20 +115,16 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public Language createLanguageFromString(EDataType eDataType, String initialValue) {
         Language result = Language.get(initialValue);
-        if (result == null)
-            throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-                    + eDataType.getName() + "'");
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
         return result;
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public String convertLanguageToString(EDataType eDataType, Object instanceValue) {
@@ -144,16 +133,14 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public EcosystemPackage getEcosystemPackage() {
-        return (EcosystemPackage) getEPackage();
+        return (EcosystemPackage)getEPackage();
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @deprecated
      * @generated
      */

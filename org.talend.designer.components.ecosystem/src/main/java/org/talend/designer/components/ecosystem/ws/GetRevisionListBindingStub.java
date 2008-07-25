@@ -28,26 +28,26 @@ public class GetRevisionListBindingStub extends org.apache.axis.client.Stub impl
         org.apache.axis.description.OperationDesc oper;
         org.apache.axis.description.ParameterDesc param;
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getRevisionList");
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "version"),
-                org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName(
-                        "http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "category_id"),
-                org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName(
-                        "http://www.w3.org/2001/XMLSchema", "int"), int.class, false, false);
-        oper.addParameter(param);
-        oper.setReturnType(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "RevisionList"));
-        oper.setReturnClass(org.talend.designer.components.ecosystem.ws.Revision[].class);
+        oper.setName("getVersionList");
+        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        oper.setReturnClass(java.lang.String.class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "result"));
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
         _operations[0] = oper;
 
         oper = new org.apache.axis.description.OperationDesc();
-        oper.setName("getVersionList");
-        oper.setReturnType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
-        oper.setReturnClass(java.lang.String.class);
+        oper.setName("get_revision_list");
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "version"),
+                org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema",
+                        "string"), java.lang.String.class, false, false);
+        oper.addParameter(param);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("", "category_id"),
+                org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema",
+                        "int"), int.class, false, false);
+        oper.addParameter(param);
+        oper.setReturnType(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "revision_list"));
+        oper.setReturnClass(org.talend.designer.components.ecosystem.ws.Revision[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "result"));
         oper.setStyle(org.apache.axis.constants.Style.RPC);
         oper.setUse(org.apache.axis.constants.Use.ENCODED);
@@ -59,8 +59,7 @@ public class GetRevisionListBindingStub extends org.apache.axis.client.Stub impl
         this(null);
     }
 
-    public GetRevisionListBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service)
-            throws org.apache.axis.AxisFault {
+    public GetRevisionListBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
         this(service);
         super.cachedEndpoint = endpointURL;
     }
@@ -85,18 +84,18 @@ public class GetRevisionListBindingStub extends org.apache.axis.client.Stub impl
         java.lang.Class simpledf = org.apache.axis.encoding.ser.SimpleDeserializerFactory.class;
         java.lang.Class simplelistsf = org.apache.axis.encoding.ser.SimpleListSerializerFactory.class;
         java.lang.Class simplelistdf = org.apache.axis.encoding.ser.SimpleListDeserializerFactory.class;
-        qName = new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "Revision");
+        qName = new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "revision");
         cachedSerQNames.add(qName);
         cls = org.talend.designer.components.ecosystem.ws.Revision.class;
         cachedSerClasses.add(cls);
         cachedSerFactories.add(beansf);
         cachedDeserFactories.add(beandf);
 
-        qName = new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "RevisionList");
+        qName = new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "revision_list");
         cachedSerQNames.add(qName);
         cls = org.talend.designer.components.ecosystem.ws.Revision[].class;
         cachedSerClasses.add(cls);
-        qName = new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "Revision");
+        qName = new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "revision");
         qName2 = null;
         cachedSerFactories.add(new org.apache.axis.encoding.ser.ArraySerializerFactory(qName, qName2));
         cachedDeserFactories.add(new org.apache.axis.encoding.ser.ArrayDeserializerFactory());
@@ -163,46 +162,12 @@ public class GetRevisionListBindingStub extends org.apache.axis.client.Stub impl
         }
     }
 
-    public org.talend.designer.components.ecosystem.ws.Revision[] getRevisionList(java.lang.String version,
-            int category_id) throws java.rmi.RemoteException {
-        if (super.cachedEndpoint == null) {
-            throw new org.apache.axis.NoEndPointException();
-        }
-        org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[0]);
-        _call.setUseSOAPAction(true);
-        _call.setSOAPActionURI("http://talendforge.org/ext/soap_server.php/getRevisionList");
-        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
-        _call.setOperationName(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "getRevisionList"));
-
-        setRequestHeaders(_call);
-        setAttachments(_call);
-        try {
-            java.lang.Object _resp = _call
-                    .invoke(new java.lang.Object[] { version, new java.lang.Integer(category_id) });
-
-            if (_resp instanceof java.rmi.RemoteException) {
-                throw (java.rmi.RemoteException) _resp;
-            } else {
-                extractAttachments(_call);
-                try {
-                    return (org.talend.designer.components.ecosystem.ws.Revision[]) _resp;
-                } catch (java.lang.Exception _exception) {
-                    return (org.talend.designer.components.ecosystem.ws.Revision[]) org.apache.axis.utils.JavaUtils
-                            .convert(_resp, org.talend.designer.components.ecosystem.ws.Revision[].class);
-                }
-            }
-        } catch (org.apache.axis.AxisFault axisFaultException) {
-            throw axisFaultException;
-        }
-    }
-
     public java.lang.String getVersionList() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
         org.apache.axis.client.Call _call = createCall();
-        _call.setOperation(_operations[1]);
+        _call.setOperation(_operations[0]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("http://talendforge.org/ext/soap_server.php/getVersionList");
         _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
@@ -221,6 +186,39 @@ public class GetRevisionListBindingStub extends org.apache.axis.client.Stub impl
                     return (java.lang.String) _resp;
                 } catch (java.lang.Exception _exception) {
                     return (java.lang.String) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String.class);
+                }
+            }
+        } catch (org.apache.axis.AxisFault axisFaultException) {
+            throw axisFaultException;
+        }
+    }
+
+    public org.talend.designer.components.ecosystem.ws.Revision[] get_revision_list(java.lang.String version, int category_id)
+            throws java.rmi.RemoteException {
+        if (super.cachedEndpoint == null) {
+            throw new org.apache.axis.NoEndPointException();
+        }
+        org.apache.axis.client.Call _call = createCall();
+        _call.setOperation(_operations[1]);
+        _call.setUseSOAPAction(true);
+        _call.setSOAPActionURI("http://talendforge.org/ext/soap_server.php/get_revision_list");
+        _call.setSOAPVersion(org.apache.axis.soap.SOAPConstants.SOAP11_CONSTANTS);
+        _call.setOperationName(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "get_revision_list"));
+
+        setRequestHeaders(_call);
+        setAttachments(_call);
+        try {
+            java.lang.Object _resp = _call.invoke(new java.lang.Object[] { version, new java.lang.Integer(category_id) });
+
+            if (_resp instanceof java.rmi.RemoteException) {
+                throw (java.rmi.RemoteException) _resp;
+            } else {
+                extractAttachments(_call);
+                try {
+                    return (org.talend.designer.components.ecosystem.ws.Revision[]) _resp;
+                } catch (java.lang.Exception _exception) {
+                    return (org.talend.designer.components.ecosystem.ws.Revision[]) org.apache.axis.utils.JavaUtils.convert(
+                            _resp, org.talend.designer.components.ecosystem.ws.Revision[].class);
                 }
             }
         } catch (org.apache.axis.AxisFault axisFaultException) {

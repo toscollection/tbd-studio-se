@@ -1,7 +1,6 @@
 package org.talend.designer.components.ecosystem.ws;
 
-public class GetRevisionListPortTypeProxy implements
-        org.talend.designer.components.ecosystem.ws.GetRevisionListPortType {
+public class GetRevisionListPortTypeProxy implements org.talend.designer.components.ecosystem.ws.GetRevisionListPortType {
 
     private String _endpoint = null;
 
@@ -22,8 +21,8 @@ public class GetRevisionListPortTypeProxy implements
                     .getgetRevisionListPort();
             if (getRevisionListPortType != null) {
                 if (_endpoint != null) {
-                    ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty(
-                            "javax.xml.rpc.service.endpoint.address", _endpoint);
+                    ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty("javax.xml.rpc.service.endpoint.address",
+                            _endpoint);
                 } else {
                     _endpoint = (String) ((javax.xml.rpc.Stub) getRevisionListPortType)
                             ._getProperty("javax.xml.rpc.service.endpoint.address");
@@ -41,8 +40,7 @@ public class GetRevisionListPortTypeProxy implements
     public void setEndpoint(String endpoint) {
         _endpoint = endpoint;
         if (getRevisionListPortType != null) {
-            ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty("javax.xml.rpc.service.endpoint.address",
-                    _endpoint);
+            ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
         }
 
     }
@@ -54,19 +52,19 @@ public class GetRevisionListPortTypeProxy implements
         return getRevisionListPortType;
     }
 
-    public org.talend.designer.components.ecosystem.ws.Revision[] getRevisionList(java.lang.String version,
-            int category_id) throws java.rmi.RemoteException {
-        if (getRevisionListPortType == null) {
-            _initGetRevisionListPortTypeProxy();
-        }
-        return getRevisionListPortType.getRevisionList(version, category_id);
-    }
-
     public java.lang.String getVersionList() throws java.rmi.RemoteException {
         if (getRevisionListPortType == null) {
             _initGetRevisionListPortTypeProxy();
         }
         return getRevisionListPortType.getVersionList();
+    }
+
+    public org.talend.designer.components.ecosystem.ws.Revision[] get_revision_list(java.lang.String version, int category_id)
+            throws java.rmi.RemoteException {
+        if (getRevisionListPortType == null) {
+            _initGetRevisionListPortTypeProxy();
+        }
+        return getRevisionListPortType.get_revision_list(version, category_id);
     }
 
 }
