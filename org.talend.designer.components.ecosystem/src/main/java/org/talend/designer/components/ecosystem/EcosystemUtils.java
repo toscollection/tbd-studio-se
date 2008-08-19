@@ -36,6 +36,7 @@ import org.talend.core.model.components.IComponentsFactory;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Revision;
+import org.talend.designer.components.ecosystem.proxy.EcosystemSocketFactory;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemPreferencePage;
 import org.talend.designer.components.ecosystem.ws.GetRevisionListPortTypeProxy;
 import org.talend.repository.model.ComponentsFactoryProvider;
@@ -48,6 +49,12 @@ public class EcosystemUtils {
     private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(\\.(RC|M)\\d+)?_r\\d+");
 
     private static Pattern DEFAULT_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)");
+
+    static {
+        // System.setProperty("org.apache.axis.components.net.SocketFactory", EcosystemSocketFactory.class.getName());
+        System.setProperty("axis.socketFactory", EcosystemSocketFactory.class.getName());
+        // AxisProperties.setProperty("axis.socketFactory", EcosystemSocketFactory.class.getName());
+    }
 
     /**
      * Make sure that the version match x.x.x or x.x.xMx or x.x.xRCx, where x are all digit.
@@ -83,6 +90,21 @@ public class EcosystemUtils {
     }
 
     /**
+     * DOC chuang Comment method "getRevisionList".
+     * 
+     * @param version
+     * @param language
+     * @return
+     * @throws RemoteException
+     */
+    public static org.talend.designer.components.ecosystem.ws.Revision[] getRevisionList(String version, int language)
+            throws RemoteException {
+        GetRevisionListPortTypeProxy test = new GetRevisionListPortTypeProxy();
+        org.talend.designer.components.ecosystem.ws.Revision[] revisions = test.get_revision_list(version, language);
+        return revisions;
+    }
+
+    /**
      * 
      * Get a tos version list from ecosystem.
      * 
@@ -99,6 +121,27 @@ public class EcosystemUtils {
         }
         return versions;
     }
+
+    // /**
+    // * DOC chuang Comment method "setHttpProxy".
+    // */
+    // public static void setHttpProxy() {
+    // String flag = System.getProperty("proxySet");
+
+    // AxisProperties.setProperty("http.proxyHost", System.getProperty("http.proxyHost"));
+    // AxisProperties.setProperty("http.proxyPort", System.getProperty("http.proxyPort"));
+    // AxisProperties.setProperty("http.proxyUser", System.getProperty("http.proxyUser"));
+    // AxisProperties.setProperty("http.proxyPassword", System.getProperty("http.proxyPassword"));
+    // AxisProperties.setProperty("http.nonProxyHosts",
+    // StringUtils.trimToEmpty(System.getProperty("http.nonProxyHosts")));
+
+    // String[] keys = { "http.proxyHost", "http.proxyPort", "http.proxyUser", "http.proxyPassword",
+    // "http.nonProxyHosts" };
+    // for (String key : keys) {
+    // AxisProperties.setProperty(key, StringUtils.trimToEmpty(System.getProperty(key)));
+    // }
+
+    // }
 
     /**
      * 

@@ -22,11 +22,11 @@ import java.util.Map;
 
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.language.ECodeLanguage;
+import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemFactory;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Language;
-import org.talend.designer.components.ecosystem.ws.GetRevisionListPortTypeProxy;
 import org.talend.designer.components.ecosystem.ws.Revision;
 
 /**
@@ -49,8 +49,7 @@ public class ComponentSearcher {
         List<ComponentExtension> extensions = new ArrayList<ComponentExtension>();
 
         try {
-            GetRevisionListPortTypeProxy test = new GetRevisionListPortTypeProxy();
-            Revision[] revisions = test.get_revision_list(version, getLanguageId(language));
+            Revision[] revisions = EcosystemUtils.getRevisionList(version, getLanguageId(language));
 
             Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
 
@@ -83,6 +82,23 @@ public class ComponentSearcher {
     }
 
     /**
+     * Convert the project language to id.
+     * 
+     * @param language
+     * @return
+     */
+    private static int getLanguageId(ECodeLanguage language) {
+        switch (language) {
+        case JAVA:
+            return Language.JAVA_VALUE;
+        case PERL:
+            return Language.PERL_VALUE;
+        }
+        // unknow language
+        return -1;
+    }
+
+    /**
      * Convert the web service returned value to our model object.
      * 
      * @param revision The message returned from web service method call.
@@ -99,23 +115,6 @@ public class ComponentSearcher {
         rev.setId(revision.getRevision_id());
         rev.setFileName(revision.getFilename());
         return rev;
-    }
-
-    /**
-     * Convert the project language to id.
-     * 
-     * @param language
-     * @return
-     */
-    private static int getLanguageId(ECodeLanguage language) {
-        switch (language) {
-        case JAVA:
-            return Language.JAVA_VALUE;
-        case PERL:
-            return Language.PERL_VALUE;
-        }
-        // unknow language
-        return -1;
     }
 
     /**
