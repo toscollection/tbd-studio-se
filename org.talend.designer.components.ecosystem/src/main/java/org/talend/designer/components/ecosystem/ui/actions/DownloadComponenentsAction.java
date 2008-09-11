@@ -13,10 +13,15 @@
 package org.talend.designer.components.ecosystem.ui.actions;
 
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -25,13 +30,16 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.designer.codegen.ICodeGeneratorService;
+import org.talend.designer.components.ecosystem.EcosystemComponentsProvider;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.jobs.ComponentDownloader;
@@ -55,6 +63,8 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
     private int fExtensionDownloaded;
 
+    private List<ComponentExtension> fInstalledComponents;
+
     public void init(IViewPart view) {
         fView = (EcosystemView) view;
     }
@@ -72,6 +82,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         try {
             Job job = new DownloadJob(fView.getSelectedExtensions());
             fExtensionDownloaded = 0;
+            fInstalledComponents = new ArrayList<ComponentExtension>();
             job.addJobChangeListener(new JobChangeAdapter() {
 
                 @Override
@@ -106,11 +117,52 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             EcosystemUtils.reloadComponents(); // refresh palette
             fView.saveToFile();
 
+            // see feature 0005050: confirmation popup once the component is installed
+            confirmInstallation();
+
             // Start Code Generation Init
             ICodeGeneratorService codeGenService = (ICodeGeneratorService) GlobalServiceRegister.getDefault().getService(
                     ICodeGeneratorService.class);
             codeGenService.initializeTemplates();
         }
+    }
+
+    /**
+     * DOC chuang Comment method "confirmInstallation".
+     */
+    private void confirmInstallation() {
+        FileFilter propertiesFilter = new FileFilter() {
+
+            public boolean accept(File file) {
+                return file.getName().endsWith("_messages.properties");
+            }
+        };
+
+        Shell shell = this.fView.getSite().getShell();
+        StringBuilder message = new StringBuilder();
+        for (ComponentExtension component : fInstalledComponents) {
+            String location = component.getInstalledLocation();
+            File folder = EcosystemComponentsProvider.searchComponentFolder(new File(location));
+            File[] files = folder.listFiles(propertiesFilter);
+            if (files == null) {
+                continue;
+            }
+            // load property file
+            Properties prop = new Properties();
+            try {
+                prop.load(new FileInputStream(files[0]));
+                String name = prop.getProperty("NAME");
+                String family = prop.getProperty("FAMILY");
+                if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(family)) {
+                    message.append("Component ").append(name).append(" installed at ").append(family).append(".\n");
+                }
+            } catch (Exception e) {
+                ExceptionHandler.process(e);
+            }
+        }
+
+        MessageDialog.openInformation(shell, "Installed Ecosystem Components", message.toString());
+
     }
 
     /**
@@ -121,6 +173,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
     void extensionDownloadCompleted(ComponentExtension extension) {
         fView.addInstalledExtension(extension);
         fExtensionDownloaded++;
+        fInstalledComponents.add(extension);
     }
 
     public void selectionChanged(IAction action, ISelection selection) {

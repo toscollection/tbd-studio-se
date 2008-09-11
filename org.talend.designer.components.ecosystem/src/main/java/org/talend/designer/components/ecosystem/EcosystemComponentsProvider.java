@@ -87,7 +87,7 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
      * @param folder
      * @return
      */
-    private File searchComponentFolder(File folder) {
+    public static File searchComponentFolder(File folder) {
         File componentFolder = null;
         File[] files = folder.listFiles();
         if (files != null) {
