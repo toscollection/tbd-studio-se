@@ -16,5 +16,6 @@ Require-Bundle: org.eclipse.ui,
  org.talend.commons.ui,
  javax.xml.rpc,
  org.apache.lucene,
- org.apache.commons.discovery;bundle-version="0.2.0"
+ org.apache.commons.discovery;bundle-version="0.2.0",
+ org.talend.designer.core;bundle-version="2.2.0"
 Eclipse-LazyStart: true

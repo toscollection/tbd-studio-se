@@ -34,8 +34,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.designer.codegen.ICodeGeneratorService;
@@ -47,6 +52,8 @@ import org.talend.designer.components.ecosystem.jobs.ComponentInstaller;
 import org.talend.designer.components.ecosystem.jobs.DownloadListener;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
+import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
+import org.talend.designer.core.ui.editor.AbstractTalendEditor;
 
 /**
  * View action for downloading components.
@@ -88,7 +95,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 @Override
                 public void done(final IJobChangeEvent event) {
 
-                    Display.getDefault().syncExec(new Runnable() {
+                    Display.getDefault().asyncExec(new Runnable() {
 
                         public void run() {
                             updateUI(action, event);
@@ -137,7 +144,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 return file.getName().endsWith("_messages.properties");
             }
         };
-
+        String componentName = null;
         Shell shell = this.fView.getSite().getShell();
         StringBuilder message = new StringBuilder();
         for (ComponentExtension component : fInstalledComponents) {
@@ -154,14 +161,45 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 String name = prop.getProperty("NAME");
                 String family = prop.getProperty("FAMILY");
                 if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(family)) {
+                    componentName = name;
                     message.append("Component ").append(name).append(" installed at ").append(family).append(".\n");
                 }
             } catch (Exception e) {
                 ExceptionHandler.process(e);
             }
         }
+        if (componentName != null) {
+            // see 0005051: [ecosystem view] select component in the palette once component is installed
+            selectPaletteEntry(componentName);
+        }
 
         MessageDialog.openInformation(shell, "Installed Ecosystem Components", message.toString());
+
+    }
+
+    private void selectPaletteEntry(String componentName) {
+        IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        if (activeWorkbenchWindow != null) {
+            IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+            if (activePage != null) {
+                IEditorReference[] editorReferences = activePage.getEditorReferences();
+                if (editorReferences != null) {
+                    for (IEditorReference er : editorReferences) {
+                        IEditorPart part = er.getEditor(false);
+                        if (part instanceof AbstractMultiPageTalendEditor) {
+                            AbstractMultiPageTalendEditor editor = (AbstractMultiPageTalendEditor) part;
+                            AbstractTalendEditor talendEditor = editor.getTalendEditor();
+                            try {
+                                talendEditor.selectPaletteEntry(componentName);
+                            } catch (Exception e) {
+                                ExceptionHandler.process(e);
+                            }
+                            return;
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
