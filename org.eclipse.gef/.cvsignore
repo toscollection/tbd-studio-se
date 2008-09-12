@@ -1,0 +1,9 @@
+bin
+runtime
+temp.folder
+thumbs.db
+preview.pix
+.classpath
+*.jpage
+*.prefs
+org
