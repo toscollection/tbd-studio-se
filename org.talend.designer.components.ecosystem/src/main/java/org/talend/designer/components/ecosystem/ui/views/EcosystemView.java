@@ -66,6 +66,8 @@ public class EcosystemView extends ViewPart {
 
     private Text fFilterText;
 
+    public static final String VIEW_ID = "org.talend.designer.components.ecosystem.ui.views.EcosystemView";
+
     static {
         FILTER_MAP.put(AVAILABLE_FILTERS[0], EcosystemPackage.COMPONENT_EXTENSION__NAME);
         FILTER_MAP.put(AVAILABLE_FILTERS[1], EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION);
@@ -164,8 +166,7 @@ public class EcosystemView extends ViewPart {
      */
     public void loadFromFile() {
         try {
-            List<ComponentExtension> extensions = EcosystemUtils
-                    .loadInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE);
+            List<ComponentExtension> extensions = EcosystemUtils.loadInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE);
             for (ComponentExtension ext : extensions) {
                 fInstalledExtensions.put(ext.getName(), ext);
             }
@@ -273,6 +274,9 @@ public class EcosystemView extends ViewPart {
 
     public void removeInstalledExtension(ComponentExtension extension) {
         fInstalledExtensions.remove(extension.getName());
+        int pos = fAvailableExtensions.indexOf(extension);
+        fAvailableExtensions.get(pos).setInstalledRevision(null);
+        fAvailableExtensions.get(pos).setInstalledLocation(null);
     }
 
     /**

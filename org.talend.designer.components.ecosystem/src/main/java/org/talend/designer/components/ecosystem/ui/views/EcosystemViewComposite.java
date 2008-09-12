@@ -14,9 +14,12 @@ package org.talend.designer.components.ecosystem.ui.views;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -26,14 +29,17 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
+import org.talend.commons.ui.swt.tableviewer.sort.IColumnSortedListener;
 import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
+import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.util.ActionHelper;
 
@@ -41,6 +47,21 @@ import org.talend.designer.components.ecosystem.model.util.ActionHelper;
  * Composite that contains a table viewer and display in the ecosystem view.
  */
 public class EcosystemViewComposite extends Composite {
+
+    /**
+     * 
+     */
+    private static final int INSTALL_BUTTON_COLUMN = 0;
+
+    /**
+     * 
+     */
+    private static final int UPDATE_BUTTON_COLUMN = 1;
+
+    /**
+     * 
+     */
+    private static final int REMOVE_BUTTON_COLUMN = 2;
 
     private static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -59,6 +80,14 @@ public class EcosystemViewComposite extends Composite {
     private TableViewerCreator<ComponentExtension> fTableViewerCreator;
 
     private TableViewerCreatorColumn<ComponentExtension, String> fNameColumn;
+
+    private List<TableEditor> installEditors = new ArrayList<TableEditor>();
+
+    private List<TableEditor> updateEditors = new ArrayList<TableEditor>();
+
+    private List<TableEditor> removeEditors = new ArrayList<TableEditor>();
+
+    private List<TableViewerCreatorColumn> sortableColumns = new ArrayList<TableViewerCreatorColumn>();
 
     static {
         DESCRIPTION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
@@ -161,30 +190,33 @@ public class EcosystemViewComposite extends Composite {
         fTableViewerCreator.setVerticalScroll(true);
         fTableViewerCreator.createTable();
 
+        // install / update / remove actions, see 0005053: [ecosystem view] update and remove components
+        createActionColumn();
+        createActionColumn();
+        createActionColumn();
+
         // Status | Component Name | Author | Revision | Released Date | Description
+        // TableViewerCreatorColumn<ComponentExtension, String> statusColumn =
+        // createTableColumn(EcosystemConstants.STATUS_TITLE,
+        // true, false, 4, STATUS_ACCESSOR);
+        // statusColumn.setImageProvider(new StatusImageProvider());
 
-        createInstallActionColumn();
-
-        TableViewerCreatorColumn<ComponentExtension, String> statusColumn = createTableColumn(EcosystemConstants.STATUS_TITLE,
-                true, false, 4, STATUS_ACCESSOR);
-        statusColumn.setImageProvider(new StatusImageProvider());
-
-        fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 4, NAME_ACCESSOR);
-        createTableColumn(EcosystemConstants.AUTHOR_TITLE, true, false, 4, AUTHOR_ACCESSOR); // authorColumn
-        createTableColumn(EcosystemConstants.REVISION_TITLE, true, false, 2, REVISION_ACCESSOR); // revisionColumn
-        createTableColumn(EcosystemConstants.RELEASED_DATE_TITLE, true, false, 4, DATE_ACCESSOR); // dateColumn
+        fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 5, NAME_ACCESSOR);
+        createTableColumn(EcosystemConstants.AUTHOR_TITLE, true, false, 5, AUTHOR_ACCESSOR); // authorColumn
+        createTableColumn(EcosystemConstants.REVISION_TITLE, true, false, 3, REVISION_ACCESSOR); // revisionColumn
+        createTableColumn(EcosystemConstants.RELEASED_DATE_TITLE, true, false, 5, DATE_ACCESSOR); // dateColumn
         TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
-                EcosystemConstants.DESCRIPTION_TITLE, true, false, 18, DESCRIPTION_ACCESSOR); // descriptionColumn
+                EcosystemConstants.DESCRIPTION_TITLE, true, false, 21, DESCRIPTION_ACCESSOR); // descriptionColumn
         descriptionColumn.setMinimumWidth(1300);
+        fTableViewerCreator.setDefaultSort(fNameColumn, SORT.ASC);
     }
 
     /**
      * DOC YeXiaowei Comment method "createInstallActionColumn".
      */
-    private void createInstallActionColumn() {
-        TableViewerCreatorColumn<ComponentExtension, String> installcolumn = createTableColumn(
-                EcosystemConstants.INSTALL_ACTION_TITLE, false, false, 3, null);
-        installcolumn.setResizable(false);
+    private void createActionColumn() {
+        TableViewerCreatorColumn<ComponentExtension, String> actionColumn = createTableColumn("", false, false, 1, null);
+        actionColumn.setResizable(false);
     }
 
     /**
@@ -195,8 +227,17 @@ public class EcosystemViewComposite extends Composite {
     public void initTable(List<ComponentExtension> extensions) {
         fTableViewerCreator.init(extensions);
         fTableViewerCreator.setSort(fNameColumn, SORT.ASC);
-        // Add install button to first column
-        addInstallButtonToFirstColumn();
+        for (TableViewerCreatorColumn column : sortableColumns) {
+            column.getTableColumnSelectionListener().addColumnSortedListener(new IColumnSortedListener() {
+
+                public void handle() {
+                    addButtons();
+                }
+
+            });
+        }
+
+        addButtons();
     }
 
     /**
@@ -208,42 +249,177 @@ public class EcosystemViewComposite extends Composite {
     public void updateTable(List<ComponentExtension> extensions) {
         fTableViewerCreator.setInputList(extensions);
         fTableViewerCreator.setSort(fNameColumn, SORT.ASC);
-        // Add install button to first column
-        addInstallButtonToFirstColumn();
+
+        addButtons();
+    }
+
+    private void addButtons() {
+        final Table table = fTableViewerCreator.getTable();
+        table.setRedraw(false);
+        addInstallButtons();
+        addUpdateButtons();
+        addRemoveButtons();
+        table.setRedraw(true);
+    }
+
+    /**
+     * DOC chuang Comment method "addRemoveButtons".
+     */
+    private void addRemoveButtons() {
+        disposeEditors(removeEditors);
+        final Table table = fTableViewerCreator.getTable();
+        for (final TableItem item : table.getItems()) {
+            TableEditor editor = new TableEditor(table);
+            removeEditors.add(editor);
+            final Button button = new Button(table, SWT.FLAT);
+            button.setImage(StatusImageProvider.getRemoveImage((ComponentExtension) item.getData()));
+            button.setToolTipText("Remove Component");
+            button.setData(item);
+            if (button.getImage() == StatusImageProvider.REMOVE_ICON) {
+                button.addSelectionListener(new SelectionAdapter() {
+
+                    /*
+                     * (non-Javadoc)
+                     * 
+                     * @see
+                     * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                     */
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        button.setEnabled(false);
+                        EcosystemUtils.deleteComponent((ComponentExtension) item.getData());
+                        // update view
+                        EcosystemView view = EcosystemUtils.getEcosystemView();
+                        view.removeInstalledExtension((ComponentExtension) item.getData());
+                        view.saveToFile();
+                        button.setEnabled(true);
+                        refresh();
+                    }
+
+                });
+            }
+            button.pack();
+            editor.setEditor(button, item, REMOVE_BUTTON_COLUMN);
+            editor.grabHorizontal = true;
+            editor.layout();
+        }
+
+    }
+
+    /**
+     * DOC chuang Comment method "addUpdateButtons".
+     */
+    private void addUpdateButtons() {
+        disposeEditors(updateEditors);
+        final Table table = fTableViewerCreator.getTable();
+        for (final TableItem item : table.getItems()) {
+            TableEditor editor = new TableEditor(table);
+            updateEditors.add(editor);
+            final Button button = new Button(table, SWT.FLAT);
+            button.setImage(StatusImageProvider.getUpdateImage((ComponentExtension) item.getData()));
+            button.setToolTipText("Update Component");
+            button.setData(item);
+            if (button.getImage() == StatusImageProvider.UPDATE_ICON) {
+                button.addSelectionListener(new SelectionAdapter() {
+
+                    /*
+                     * (non-Javadoc)
+                     * 
+                     * @see
+                     * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                     */
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        table.select(table.indexOf(item));
+                        IAction action = ActionHelper.getDownloadAction();
+                        if (action != null) {
+                            addButtonStateListener(button, action);
+                            action.run();
+                        }
+                    }
+
+                });
+            }
+            button.pack();
+            editor.setEditor(button, item, UPDATE_BUTTON_COLUMN);
+            editor.grabHorizontal = true;
+            editor.layout();
+        }
+
+    }
+
+    /**
+     * DOC chuang Comment method "addButtonStateListener".
+     * 
+     * @param button
+     * @param action
+     */
+    protected void addButtonStateListener(final Button button, final IAction action) {
+        action.addPropertyChangeListener(new IPropertyChangeListener() {
+
+            public void propertyChange(PropertyChangeEvent event) {
+                if (!button.isDisposed()) {
+                    if (event.getProperty().equals(IAction.ENABLED)) {
+                        button.setEnabled((Boolean) event.getNewValue());
+                    }
+                } else {
+                    action.removePropertyChangeListener(this);
+                }
+            }
+        });
     }
 
     /**
      * 
      * DOC YeXiaowei Comment method "addInstallButtonToFirstColumn".
      */
-    private void addInstallButtonToFirstColumn() {
+    private void addInstallButtons() {
+        disposeEditors(installEditors);
         final Table table = fTableViewerCreator.getTable();
         for (final TableItem item : table.getItems()) {
             TableEditor editor = new TableEditor(table);
+            installEditors.add(editor);
             final Button button = new Button(table, SWT.FLAT);
-            button.setImage(StatusImageProvider.getDownloadImage());
+            button.setImage(StatusImageProvider.getInstallImage((ComponentExtension) item.getData()));
+            button.setToolTipText("Install Component");
             button.setData(item);
-            button.addSelectionListener(new SelectionAdapter() {
+            if (button.getImage() == StatusImageProvider.INSTALL_ICON) {
+                button.addSelectionListener(new SelectionAdapter() {
 
-                /*
-                 * (non-Javadoc)
-                 * 
-                 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-                 */
-                @Override
-                public void widgetSelected(SelectionEvent e) {
-                    table.select(table.indexOf(item));
-                    IAction action = ActionHelper.getDownloadAction();
-                    if (action != null) {
-                        action.run();
+                    /*
+                     * (non-Javadoc)
+                     * 
+                     * @see
+                     * org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                     */
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        table.select(table.indexOf(item));
+                        IAction action = ActionHelper.getDownloadAction();
+                        if (action != null) {
+                            addButtonStateListener(button, action);
+                            action.run();
+                        }
                     }
-                }
 
-            });
-            editor.setEditor(button, item, 0);
-            editor.grabHorizontal = true;
+                });
+            }
             button.pack();
+            editor.setEditor(button, item, INSTALL_BUTTON_COLUMN);
+            editor.grabHorizontal = true;
+            editor.layout();
         }
+    }
+
+    private void disposeEditors(List<TableEditor> editors) {
+        for (TableEditor editor : editors) {
+            Control control = editor.getEditor();
+            if (control != null) {
+                control.dispose();
+            }
+            editor.dispose();
+        }
+        editors.clear();
     }
 
     private TableViewerCreatorColumn<ComponentExtension, String> createTableColumn(String title, boolean sortable,
@@ -255,11 +431,15 @@ public class EcosystemViewComposite extends Composite {
         column.setModifiable(modifiable);
         column.setWeight(weight);
         column.setBeanPropertyAccessors(accessor);
+        if (sortable) {
+            sortableColumns.add(column);
+        }
         return column;
     }
 
     public void refresh() {
         fTableViewerCreator.getTableViewer().refresh();
+        addButtons();
     }
 
     public TableItem[] getSelectedItems() {

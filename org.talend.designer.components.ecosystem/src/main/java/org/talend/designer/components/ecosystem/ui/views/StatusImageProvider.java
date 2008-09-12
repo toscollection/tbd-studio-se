@@ -30,6 +30,48 @@ public class StatusImageProvider implements IColumnImageProvider<ComponentExtens
     private static final Image DOWNLOAD_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/download.gif")
             .createImage();
 
+    public static final Image INSTALL_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/install.png")
+            .createImage();
+
+    public static final Image INSTALL_UNAVAILABLE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
+            "/icons/install_unavailable.png").createImage();
+
+    public static final Image UPDATE_UNAVAILABLE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
+            "/icons/update_unavailable.png").createImage();
+
+    public static final Image UPDATE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/update.png")
+            .createImage();
+
+    public static final Image REMOVE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/remove.png")
+            .createImage();
+
+    public static final Image REMOVE_UNAVAILABLE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
+            "/icons/remove_unavailable.png").createImage();
+
+    public static Image getInstallImage(ComponentExtension extension) {
+        if (extension.getInstalledRevision() == null) {
+            return INSTALL_ICON;
+        } else {
+            return INSTALL_UNAVAILABLE_ICON;
+        }
+    }
+
+    public static Image getUpdateImage(ComponentExtension extension) {
+        if (extension.getInstalledRevision() != null && !extension.getInstalledRevision().equals(extension.getLatestRevision())) {
+            return UPDATE_ICON;
+        } else {
+            return UPDATE_UNAVAILABLE_ICON;
+        }
+    }
+
+    public static Image getRemoveImage(ComponentExtension extension) {
+        if (extension.getInstalledRevision() != null) {
+            return REMOVE_ICON;
+        } else {
+            return REMOVE_UNAVAILABLE_ICON;
+        }
+    }
+
     public Image getImage(ComponentExtension extension) {
         if (extension.getInstalledLocation() == null) {
             return NOT_INSTALLED_ICON;

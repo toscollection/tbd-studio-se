@@ -25,9 +25,12 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.talend.commons.emf.EmfHelper;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.CorePlugin;
 import org.talend.core.language.ECodeLanguage;
 import org.talend.core.language.LanguageManager;
@@ -38,6 +41,7 @@ import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Revision;
 import org.talend.designer.components.ecosystem.proxy.EcosystemSocketFactory;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemPreferencePage;
+import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
 import org.talend.designer.components.ecosystem.ws.GetRevisionListPortTypeProxy;
 import org.talend.repository.model.ComponentsFactoryProvider;
 
@@ -211,6 +215,13 @@ public class EcosystemUtils {
         ComponentUtilities.updatePalette();
     }
 
+    public static void deleteComponent(ComponentExtension component) {
+        File installFolder = new File(component.getInstalledLocation());
+        FilesUtils.removeFolder(installFolder, true);
+
+        reloadComponents();
+    }
+
     /**
      * Save the emf model of installed components to file.
      * 
@@ -270,6 +281,18 @@ public class EcosystemUtils {
         }
         // the two revision has different length, the longer one is newer
         return rev1.length > rev2.length;
+    }
+
+    public static EcosystemView getEcosystemView() {
+        IViewPart part = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(EcosystemView.VIEW_ID);
+        if (part == null) {
+            try {
+                part = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView(EcosystemView.VIEW_ID);
+            } catch (Exception e) {
+                ExceptionHandler.process(e);
+            }
+        }
+        return (EcosystemView) part;
     }
 
 }
