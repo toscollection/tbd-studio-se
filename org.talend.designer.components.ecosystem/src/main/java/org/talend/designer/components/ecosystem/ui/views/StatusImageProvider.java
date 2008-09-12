@@ -27,6 +27,9 @@ public class StatusImageProvider implements IColumnImageProvider<ComponentExtens
     private static final Image NOT_INSTALLED_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
             "/icons/not_installed.gif").createImage();
 
+    private static final Image DOWNLOAD_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/download.gif")
+            .createImage();
+
     public Image getImage(ComponentExtension extension) {
         if (extension.getInstalledLocation() == null) {
             return NOT_INSTALLED_ICON;
@@ -35,6 +38,15 @@ public class StatusImageProvider implements IColumnImageProvider<ComponentExtens
         } else {
             return ImageProvider.getImage(ECoreImage.MODULE_INSTALLED_ICON);
         }
+    }
 
+    /**
+     * 
+     * DOC YeXiaowei Comment method "getDownloadImage".
+     * 
+     * @return
+     */
+    public static Image getDownloadImage() {
+        return DOWNLOAD_ICON;
     }
 }

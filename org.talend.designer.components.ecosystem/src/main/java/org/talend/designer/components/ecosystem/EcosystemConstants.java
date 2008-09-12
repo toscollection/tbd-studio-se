@@ -27,6 +27,8 @@ public class EcosystemConstants {
 
     public static final String REVISION_TITLE = Messages.getString("EcosystemViewComposite.Revision.Title"); //$NON-NLS-1$
 
+    public static final String INSTALL_ACTION_TITLE = Messages.getString("EcosystemViewComposite.Install.Action.Title"); //$NON-NLS-1$
+
     public static final String STATUS_TITLE = Messages.getString("EcosystemViewComposite.Status.Title"); //$NON-NLS-1$
 
     public static final String COMPONENT_NAME_TITLE = Messages.getString("EcosystemViewComposite.ComponentName.Title"); //$NON-NLS-1$
