@@ -43,6 +43,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.model.components.ComponentUtilities;
 import org.talend.designer.codegen.ICodeGeneratorService;
 import org.talend.designer.components.ecosystem.EcosystemComponentsProvider;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
@@ -117,7 +118,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
      * @param event
      */
     private void updateUI(final IAction action, final IJobChangeEvent event) {
-        // activate action again after job finished
+        // activate aection again after job finished
         action.setEnabled(true);
         if (fExtensionDownloaded > 0) {
             fView.refresh(); // refresh table
@@ -130,7 +131,16 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             // Start Code Generation Init
             ICodeGeneratorService codeGenService = (ICodeGeneratorService) GlobalServiceRegister.getDefault().getService(
                     ICodeGeneratorService.class);
-            codeGenService.initializeTemplates();
+            Job job = codeGenService.initializeTemplates();
+            job.addJobChangeListener(new JobChangeAdapter() {
+
+                @Override
+                public void done(IJobChangeEvent event) {
+
+                    ComponentUtilities.setSkipUpdatePalette(false);
+                }
+
+            });
         }
     }
 
@@ -190,6 +200,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                             AbstractMultiPageTalendEditor editor = (AbstractMultiPageTalendEditor) part;
                             AbstractTalendEditor talendEditor = editor.getTalendEditor();
                             try {
+                                ComponentUtilities.setSkipUpdatePalette(true);
                                 talendEditor.selectPaletteEntry(componentName);
                             } catch (Exception e) {
                                 ExceptionHandler.process(e);
