@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
@@ -287,18 +288,23 @@ public class EcosystemViewComposite extends Composite {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
                         button.setEnabled(false);
-                        EcosystemUtils.deleteComponent((ComponentExtension) item.getData());
+                        ComponentExtension component = (ComponentExtension) item.getData();
+                        EcosystemUtils.deleteComponent(component);
                         // update view
                         EcosystemView view = EcosystemUtils.getEcosystemView();
-                        view.removeInstalledExtension((ComponentExtension) item.getData());
+                        view.removeInstalledExtension(component);
                         view.saveToFile();
+                        StringBuilder message = new StringBuilder();
+                        message.append("Component ").append(component.getName()).append(" is successfully removed.");
+                        MessageDialog.openInformation(EcosystemViewComposite.this.getShell(), "Remove Ecosystem Components",
+                                message.toString());
                         button.setEnabled(true);
                         refresh();
                     }
 
                 });
             }
-            button.pack();
+            // button.pack();
             editor.setEditor(button, item, REMOVE_BUTTON_COLUMN);
             editor.grabHorizontal = true;
             editor.layout();
@@ -340,7 +346,7 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            button.pack();
+            // button.pack();
             editor.setEditor(button, item, UPDATE_BUTTON_COLUMN);
             editor.grabHorizontal = true;
             editor.layout();
@@ -404,7 +410,7 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            button.pack();
+            // button.pack();
             editor.setEditor(button, item, INSTALL_BUTTON_COLUMN);
             editor.grabHorizontal = true;
             editor.layout();
