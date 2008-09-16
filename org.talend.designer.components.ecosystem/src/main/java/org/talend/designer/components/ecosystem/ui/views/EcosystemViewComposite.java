@@ -25,13 +25,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
@@ -49,20 +53,15 @@ import org.talend.designer.components.ecosystem.model.util.ActionHelper;
  */
 public class EcosystemViewComposite extends Composite {
 
-    /**
-     * 
-     */
     private static final int INSTALL_BUTTON_COLUMN = 0;
 
-    /**
-     * 
-     */
     private static final int UPDATE_BUTTON_COLUMN = 1;
 
-    /**
-     * 
-     */
     private static final int REMOVE_BUTTON_COLUMN = 2;
+
+    private static final int ICON_HEIGHT = 22;
+
+    private static final int ICON_WIDTH = 22;
 
     private static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -192,9 +191,9 @@ public class EcosystemViewComposite extends Composite {
         fTableViewerCreator.createTable();
 
         // install / update / remove actions, see 0005053: [ecosystem view] update and remove components
-        createActionColumn();
-        createActionColumn();
-        createActionColumn();
+        createActionColumn(ICON_WIDTH + 4);
+        createActionColumn(ICON_WIDTH + 2);
+        createActionColumn(ICON_WIDTH + 2);
 
         // Status | Component Name | Author | Revision | Released Date | Description
         // TableViewerCreatorColumn<ComponentExtension, String> statusColumn =
@@ -202,21 +201,35 @@ public class EcosystemViewComposite extends Composite {
         // true, false, 4, STATUS_ACCESSOR);
         // statusColumn.setImageProvider(new StatusImageProvider());
 
-        fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 5, NAME_ACCESSOR);
-        createTableColumn(EcosystemConstants.AUTHOR_TITLE, true, false, 5, AUTHOR_ACCESSOR); // authorColumn
-        createTableColumn(EcosystemConstants.REVISION_TITLE, true, false, 3, REVISION_ACCESSOR); // revisionColumn
-        createTableColumn(EcosystemConstants.RELEASED_DATE_TITLE, true, false, 5, DATE_ACCESSOR); // dateColumn
+        fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 100, NAME_ACCESSOR);
+        createTableColumn(EcosystemConstants.AUTHOR_TITLE, true, false, 70, AUTHOR_ACCESSOR); // authorColumn
+        createTableColumn(EcosystemConstants.REVISION_TITLE, true, false, 40, REVISION_ACCESSOR); // revisionColumn
+        createTableColumn(EcosystemConstants.RELEASED_DATE_TITLE, true, false, 70, DATE_ACCESSOR); // dateColumn
         TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
-                EcosystemConstants.DESCRIPTION_TITLE, true, false, 21, DESCRIPTION_ACCESSOR); // descriptionColumn
-        descriptionColumn.setMinimumWidth(1300);
+                EcosystemConstants.DESCRIPTION_TITLE, true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
+        // descriptionColumn.setMinimumWidth(1300);
         fTableViewerCreator.setDefaultSort(fNameColumn, SORT.ASC);
+
+        final Table table = fTableViewerCreator.getTable();
+        table.addListener(SWT.MeasureItem, new Listener() {
+
+            public void handleEvent(Event event) {
+                TableItem item = (TableItem) event.item;
+                String text = item.getText(event.index);
+                Point size = event.gc.textExtent(text);
+                if (event.index < 2) {
+                    // event.width = 40;
+                    event.height = ICON_HEIGHT + 2;
+                }
+            }
+        });
     }
 
     /**
      * DOC YeXiaowei Comment method "createInstallActionColumn".
      */
-    private void createActionColumn() {
-        TableViewerCreatorColumn<ComponentExtension, String> actionColumn = createTableColumn("", false, false, 1, null);
+    private void createActionColumn(int width) {
+        TableViewerCreatorColumn<ComponentExtension, String> actionColumn = createTableColumn("", false, false, width, null);
         actionColumn.setResizable(false);
     }
 
@@ -238,6 +251,14 @@ public class EcosystemViewComposite extends Composite {
             });
         }
 
+        Table table = fTableViewerCreator.getTable();
+        for (TableColumn col : table.getColumns()) {
+            col.pack();
+        }
+        table.setFocus();
+        // Rectangle rect = table.getBounds();
+        // table.redraw(rect.x, rect.y, rect.width, rect.height, true);
+        // table.layout(true, true);
         addButtons();
     }
 
@@ -255,12 +276,14 @@ public class EcosystemViewComposite extends Composite {
     }
 
     private void addButtons() {
-        final Table table = fTableViewerCreator.getTable();
-        table.setRedraw(false);
+        fTableViewerCreator.getTableViewer().getControl().setRedraw(false);
         addInstallButtons();
         addUpdateButtons();
         addRemoveButtons();
-        table.setRedraw(true);
+        fTableViewerCreator.getTableViewer().getTable().layout();
+        fTableViewerCreator.getTableViewer().refresh(true);
+
+        fTableViewerCreator.getTableViewer().getControl().setRedraw(true);
     }
 
     /**
@@ -304,9 +327,10 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            // button.pack();
-            editor.setEditor(button, item, REMOVE_BUTTON_COLUMN);
+            button.pack();
             editor.grabHorizontal = true;
+            editor.minimumHeight = ICON_HEIGHT;
+            editor.setEditor(button, item, REMOVE_BUTTON_COLUMN);
             editor.layout();
         }
 
@@ -346,9 +370,10 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            // button.pack();
-            editor.setEditor(button, item, UPDATE_BUTTON_COLUMN);
+            button.pack();
             editor.grabHorizontal = true;
+            editor.minimumHeight = ICON_HEIGHT;
+            editor.setEditor(button, item, UPDATE_BUTTON_COLUMN);
             editor.layout();
         }
 
@@ -410,9 +435,10 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            // button.pack();
-            editor.setEditor(button, item, INSTALL_BUTTON_COLUMN);
+            button.pack();
             editor.grabHorizontal = true;
+            editor.minimumHeight = ICON_HEIGHT;
+            editor.setEditor(button, item, INSTALL_BUTTON_COLUMN);
             editor.layout();
         }
     }
@@ -429,13 +455,14 @@ public class EcosystemViewComposite extends Composite {
     }
 
     private TableViewerCreatorColumn<ComponentExtension, String> createTableColumn(String title, boolean sortable,
-            boolean modifiable, int weight, IBeanPropertyAccessors<ComponentExtension, String> accessor) {
+            boolean modifiable, int width, IBeanPropertyAccessors<ComponentExtension, String> accessor) {
         TableViewerCreatorColumn<ComponentExtension, String> column = new TableViewerCreatorColumn<ComponentExtension, String>(
                 fTableViewerCreator);
         column.setTitle(title);
         column.setSortable(sortable);
         column.setModifiable(modifiable);
-        column.setWeight(weight);
+        // column.setWeight(weight);
+        column.setWidth(width);
         column.setBeanPropertyAccessors(accessor);
         if (sortable) {
             sortableColumns.add(column);
