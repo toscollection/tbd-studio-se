@@ -195,7 +195,7 @@ public class EcosystemViewComposite extends Composite {
         int width = ICON_WIDTH;
         if (WindowSystem.isGTK()) {
             // fix button icon size in linux
-            width = 30;
+            width = 32;
         }
         createActionColumn(width + 6);
         createActionColumn(width + 4);
@@ -225,7 +225,11 @@ public class EcosystemViewComposite extends Composite {
                 Point size = event.gc.textExtent(text);
                 if (event.index < 2) {
                     // event.width = 40;
-                    event.height = ICON_HEIGHT + 4;
+                    if (WindowSystem.isGTK()) {
+                        event.height = ICON_HEIGHT + 10;
+                    } else {
+                        event.height = ICON_HEIGHT + 6;
+                    }
                 }
             }
         });
