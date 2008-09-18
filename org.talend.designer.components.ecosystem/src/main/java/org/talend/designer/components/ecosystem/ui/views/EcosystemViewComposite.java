@@ -42,6 +42,7 @@ import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
 import org.talend.commons.ui.swt.tableviewer.sort.IColumnSortedListener;
+import org.talend.commons.ui.ws.WindowSystem;
 import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
@@ -191,9 +192,14 @@ public class EcosystemViewComposite extends Composite {
         fTableViewerCreator.createTable();
 
         // install / update / remove actions, see 0005053: [ecosystem view] update and remove components
-        createActionColumn(ICON_WIDTH + 4);
-        createActionColumn(ICON_WIDTH + 2);
-        createActionColumn(ICON_WIDTH + 2);
+        int width = ICON_WIDTH;
+        if (WindowSystem.isGTK()) {
+            // fix button icon size in linux
+            width = 30;
+        }
+        createActionColumn(width + 6);
+        createActionColumn(width + 4);
+        createActionColumn(width + 4);
 
         // Status | Component Name | Author | Revision | Released Date | Description
         // TableViewerCreatorColumn<ComponentExtension, String> statusColumn =
@@ -219,7 +225,7 @@ public class EcosystemViewComposite extends Composite {
                 Point size = event.gc.textExtent(text);
                 if (event.index < 2) {
                     // event.width = 40;
-                    event.height = ICON_HEIGHT + 2;
+                    event.height = ICON_HEIGHT + 4;
                 }
             }
         });
@@ -327,7 +333,7 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            button.pack();
+            // button.pack();
             editor.grabHorizontal = true;
             editor.minimumHeight = ICON_HEIGHT;
             editor.setEditor(button, item, REMOVE_BUTTON_COLUMN);
@@ -370,7 +376,7 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            button.pack();
+            // button.pack();
             editor.grabHorizontal = true;
             editor.minimumHeight = ICON_HEIGHT;
             editor.setEditor(button, item, UPDATE_BUTTON_COLUMN);
@@ -435,7 +441,7 @@ public class EcosystemViewComposite extends Composite {
 
                 });
             }
-            button.pack();
+            // button.pack();
             editor.grabHorizontal = true;
             editor.minimumHeight = ICON_HEIGHT;
             editor.setEditor(button, item, INSTALL_BUTTON_COLUMN);
