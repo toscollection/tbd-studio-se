@@ -16,22 +16,28 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.ecore.util.EcoreSwitch;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.TableItem;
@@ -40,6 +46,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
+import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
@@ -51,6 +58,8 @@ import org.talend.designer.components.ecosystem.ui.actions.RefreshJob;
  * View part for ecosystem.
  */
 public class EcosystemView extends ViewPart {
+
+    public static final String TOS_VERSION_FILTER = "TOS_VERSION_FILTER"; //$NON-NLS-1$
 
     private static final String[] AVAILABLE_FILTERS = new String[] { "Name", "Description" }; //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -113,10 +122,53 @@ public class EcosystemView extends ViewPart {
             }
         });
 
+        creatTosVersionFilter(parent);
+
         fEcosystemViewComposite = new EcosystemViewComposite(parent);
         fEcosystemViewComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
 
         init();
+    }
+
+    /**
+     * yzhang Comment method "creatTosVersionFilter".
+     * 
+     * @param parent
+     */
+    private void creatTosVersionFilter(Composite parent) {
+        Composite tosVersionFilterComposite = new Composite(parent, SWT.NONE);
+        GridData layoutData = new GridData();
+        layoutData.horizontalSpan = 2;
+        tosVersionFilterComposite.setLayoutData(layoutData);
+
+        tosVersionFilterComposite.setLayout(new GridLayout(2, false));
+        Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
+        versionFilterLable.setText(EcosystemConstants.VERSION_FILTER_LABEL);
+        Combo versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString(TOS_VERSION_FILTER);
+        int stringIndex = 0;
+        String versions[] = EcosystemUtils.getVersionList();
+        for (int i = 0; i < versions.length; i++) {
+            versionCombo.add(versions[i]);
+            if (versions[i].equals(currentVersion)) {
+                stringIndex = i;
+            }
+        }
+        versionCombo.select(stringIndex);
+
+        versionCombo.addSelectionListener(new SelectionListener() {
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+
+            public void widgetSelected(SelectionEvent e) {
+                Combo comboControl = (Combo) e.getSource();
+                String value = comboControl.getText();
+                IPreferenceStore preferenceStore = EcosystemPlugin.getDefault().getPreferenceStore();
+                preferenceStore.setValue(TOS_VERSION_FILTER, value);
+            }
+
+        });
     }
 
     /**

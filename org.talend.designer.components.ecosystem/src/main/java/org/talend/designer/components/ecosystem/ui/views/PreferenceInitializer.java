@@ -36,7 +36,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     @Override
     public void initializeDefaultPreferences() {
         IPreferenceStore store = EcosystemPlugin.getDefault().getPreferenceStore();
-        store.setDefault(EcosystemPreferencePage.TOS_VERSION_FILTER, EcosystemUtils.getCurrentTosVersion(true));
+        store.setDefault(EcosystemView.TOS_VERSION_FILTER, EcosystemUtils.getCurrentTosVersion(true));
     }
 
 }

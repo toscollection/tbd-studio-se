@@ -43,7 +43,7 @@
          </action>
       </viewContribution>
    </extension>
-   
+   <!--
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
@@ -52,7 +52,7 @@
             id="org.talend.designer.components.ecosystem.ui.views.ecosystem.page"
             name="%Ecosystem"/>
    </extension>
-   
+   -->
    <extension
          point="org.talend.core.components_provider">
       <ComponentsProvider

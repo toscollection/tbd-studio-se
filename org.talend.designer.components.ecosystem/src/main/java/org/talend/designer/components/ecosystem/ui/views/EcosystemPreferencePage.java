@@ -22,6 +22,10 @@ import org.talend.designer.components.ecosystem.EcosystemUtils;
 
 /**
  * DOC hcw class global comment. Detailled comment
+ * 
+ * Use the tos version filter within the Ecosystem view directly.
+ * 
+ * @deprecated
  */
 public class EcosystemPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
@@ -46,8 +50,8 @@ public class EcosystemPreferencePage extends FieldEditorPreferencePage implement
     public void createFieldEditors() {
         // get a tos version list from web service
         String[] availableVersionFilter = EcosystemUtils.getVersionList();
-        ComboFieldEditor versionFilter = new ComboFieldEditor(TOS_VERSION_FILTER,
-                EcosystemConstants.VERSION_FILTER_LABEL, convert(availableVersionFilter), getFieldEditorParent());
+        ComboFieldEditor versionFilter = new ComboFieldEditor(TOS_VERSION_FILTER, EcosystemConstants.VERSION_FILTER_LABEL,
+                convert(availableVersionFilter), getFieldEditorParent());
         addField(versionFilter);
 
         // StringFieldEditor versionFilter = new StringFieldEditor(TOS_VERSION_FILTER, VERSION_FILTER_LABEL,

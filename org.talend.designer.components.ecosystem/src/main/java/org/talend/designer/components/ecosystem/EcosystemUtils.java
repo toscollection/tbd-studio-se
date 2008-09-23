@@ -154,7 +154,7 @@ public class EcosystemUtils {
      * @return
      */
     public static String getTosVersionFilter() {
-        return EcosystemPlugin.getDefault().getPreferenceStore().getString(EcosystemPreferencePage.TOS_VERSION_FILTER);
+        return EcosystemPlugin.getDefault().getPreferenceStore().getString(EcosystemView.TOS_VERSION_FILTER);
     }
 
     public static ECodeLanguage getCurrentLanguage() {
@@ -186,10 +186,6 @@ public class EcosystemUtils {
             ExceptionHandler.process(e);
         }
         return null;
-    }
-
-    public static void showComponentPreferencePage(Shell shell) {
-        showPreferencePage(shell, EcosystemPreferencePage.ID);
     }
 
     /**
