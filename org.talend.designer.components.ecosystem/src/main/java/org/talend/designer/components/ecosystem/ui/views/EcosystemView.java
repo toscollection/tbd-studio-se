@@ -23,9 +23,12 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -60,6 +63,11 @@ import org.talend.designer.components.ecosystem.ui.actions.RefreshJob;
  */
 public class EcosystemView extends ViewPart {
 
+    /**
+     * 
+     */
+    private static final String REFRESH_COMPONENTS = "refreshComponents";
+
     public static final String TOS_VERSION_FILTER = "TOS_VERSION_FILTER"; //$NON-NLS-1$
 
     private static final String[] AVAILABLE_FILTERS = new String[] { "Name", "Description" }; //$NON-NLS-1$ //$NON-NLS-2$
@@ -75,6 +83,8 @@ public class EcosystemView extends ViewPart {
     private String[] fFilters = AVAILABLE_FILTERS;
 
     private Text fFilterText;
+
+    private Combo versionCombo;
 
     public static final String VIEW_ID = "org.talend.designer.components.ecosystem.ui.views.EcosystemView";
 
@@ -142,7 +152,7 @@ public class EcosystemView extends ViewPart {
         tosVersionFilterComposite.setLayout(new GridLayout(2, false));
         Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
         versionFilterLable.setText(EcosystemConstants.VERSION_FILTER_LABEL);
-        Combo versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString(TOS_VERSION_FILTER);
         int stringIndex = 0;
         String versions[] = EcosystemUtils.getVersionList();
@@ -157,6 +167,7 @@ public class EcosystemView extends ViewPart {
         versionCombo.addSelectionListener(new SelectionListener() {
 
             public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
             }
 
             public void widgetSelected(SelectionEvent e) {
@@ -165,17 +176,46 @@ public class EcosystemView extends ViewPart {
                 IPreferenceStore preferenceStore = EcosystemPlugin.getDefault().getPreferenceStore();
                 preferenceStore.setValue(TOS_VERSION_FILTER, value);
 
-                IContributionItem[] items = getViewSite().getActionBars().getToolBarManager().getItems();
-                for (IContributionItem item : items) {
-                    if (item.getId().equals(RefreshComponenentsAction.ID) && item instanceof PluginActionContributionItem) {
-                        ((ActionContributionItem) item).getAction().run();
-                        break;
-                    }
-                }
-
+                getRefreshComponentsAction().run();
             }
-
         });
+    }
+
+    /**
+     * bqian Comment method "getRefreshComponentsAction".
+     */
+    private IAction getRefreshComponentsAction() {
+        IAction action = (IAction) versionCombo.getData(REFRESH_COMPONENTS);
+        if (action != null) {
+            return action;
+        }
+
+        IContributionItem[] items = getViewSite().getActionBars().getToolBarManager().getItems();
+        for (IContributionItem item : items) {
+            // get the RefreshComponenentsAction
+            if (item.getId().equals(RefreshComponenentsAction.ID) && item instanceof PluginActionContributionItem) {
+                action = ((ActionContributionItem) item).getAction();
+                break;
+            }
+        }
+
+        if (action == null) {
+            throw new IllegalStateException("RefreshComponenentsAction not found, errors in the plugin.xml");
+        }
+
+        versionCombo.setData(REFRESH_COMPONENTS, action);
+        action.addPropertyChangeListener(new IPropertyChangeListener() {
+
+            public void propertyChange(PropertyChangeEvent event) {
+                if (!event.getProperty().endsWith(IAction.ENABLED)) {
+                    return;
+                }
+                Boolean enable = (Boolean) event.getNewValue();
+                versionCombo.setEnabled(enable);
+            }
+        });
+        return action;
+
     }
 
     /**

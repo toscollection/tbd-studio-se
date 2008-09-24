@@ -42,7 +42,6 @@ public class RefreshComponenentsAction implements IViewActionDelegate {
     public void run(final IAction action) {
         // avoid starting multiple action at the same time
         action.setEnabled(false);
-
         try {
             final RefreshJob job = new RefreshJob();
             job.addJobChangeListener(new JobChangeAdapter() {
