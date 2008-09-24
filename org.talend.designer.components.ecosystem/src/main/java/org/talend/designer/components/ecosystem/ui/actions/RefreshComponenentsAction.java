@@ -31,6 +31,8 @@ import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
  */
 public class RefreshComponenentsAction implements IViewActionDelegate {
 
+    public static final String ID = "org.talend.designer.components.ecosystem.ui.actions.RefreshComponenentsAction";
+
     private EcosystemView fView;
 
     public void init(IViewPart view) {

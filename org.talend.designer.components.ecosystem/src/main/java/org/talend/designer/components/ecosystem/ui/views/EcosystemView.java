@@ -16,14 +16,14 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.util.EcoreSwitch;
+import org.eclipse.jface.action.ActionContributionItem;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.window.Window;
@@ -37,12 +37,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.PluginActionContributionItem;
 import org.eclipse.ui.part.ViewPart;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
@@ -52,6 +52,7 @@ import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Revision;
+import org.talend.designer.components.ecosystem.ui.actions.RefreshComponenentsAction;
 import org.talend.designer.components.ecosystem.ui.actions.RefreshJob;
 
 /**
@@ -90,7 +91,7 @@ public class EcosystemView extends ViewPart {
     @Override
     public void createPartControl(Composite parent) {
 
-        parent.setLayout(clearGridLayoutSpace(new GridLayout(3, false)));
+        parent.setLayout(clearGridLayoutSpace(new GridLayout(4, false)));
 
         Label filterLabel = new Label(parent, SWT.NONE);
         filterLabel.setText(EcosystemConstants.FILTER_LABEL_TEXT);
@@ -125,7 +126,7 @@ public class EcosystemView extends ViewPart {
         creatTosVersionFilter(parent);
 
         fEcosystemViewComposite = new EcosystemViewComposite(parent);
-        fEcosystemViewComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+        fEcosystemViewComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 
         init();
     }
@@ -137,9 +138,6 @@ public class EcosystemView extends ViewPart {
      */
     private void creatTosVersionFilter(Composite parent) {
         Composite tosVersionFilterComposite = new Composite(parent, SWT.NONE);
-        GridData layoutData = new GridData();
-        layoutData.horizontalSpan = 2;
-        tosVersionFilterComposite.setLayoutData(layoutData);
 
         tosVersionFilterComposite.setLayout(new GridLayout(2, false));
         Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
@@ -166,6 +164,15 @@ public class EcosystemView extends ViewPart {
                 String value = comboControl.getText();
                 IPreferenceStore preferenceStore = EcosystemPlugin.getDefault().getPreferenceStore();
                 preferenceStore.setValue(TOS_VERSION_FILTER, value);
+
+                IContributionItem[] items = getViewSite().getActionBars().getToolBarManager().getItems();
+                for (IContributionItem item : items) {
+                    if (item.getId().equals(RefreshComponenentsAction.ID) && item instanceof PluginActionContributionItem) {
+                        ((ActionContributionItem) item).getAction().run();
+                        break;
+                    }
+                }
+
             }
 
         });
