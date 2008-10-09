@@ -2,6 +2,9 @@ package org.talend.designer.components.persistent;
 
 public class MemoryHelper {
 
+    private static long startValue;
+    private static String currentKey;
+    
     private static final Runtime S_RUNTIME = Runtime.getRuntime();
 
     public static long usedMemory() {
@@ -41,4 +44,23 @@ public class MemoryHelper {
 
     }
 
+    public static void start(String key) {
+        currentKey = key;
+        gc();
+        startValue = usedMemory();
+    }
+    
+    public static void end(String key) {
+        if(key != null && key.equals(currentKey)) {
+            gc();
+            long usedMemoryBytes = usedMemory() - startValue;
+            long usedMemoryKBytes = usedMemoryBytes / 1024;
+            long usedMemoryMBytes = usedMemoryKBytes / 1024;
+            System.out.println(key + ": usedMemory = " + usedMemoryBytes + " bytes, " + usedMemoryKBytes + "KB, "+  usedMemoryMBytes + "MB");
+        } else {
+            System.err.println("Keys for memory measure do not match: currentKey=" + currentKey + " != " + key);
+        }
+        
+    }
+    
 }
