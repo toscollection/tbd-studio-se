@@ -63,7 +63,7 @@ public class FigureCanvas extends Canvas {
     /** Always show scrollbar */
     public static int ALWAYS = 2;
 
-    private int cashedToolHeight = 30;
+    private int cashedToolHeight = 24;
 
     private int vBarVisibility = AUTOMATIC;
 
@@ -175,6 +175,10 @@ public class FigureCanvas extends Canvas {
 
         if (needTool && toolViewer != null) {
             toolControl = toolViewer.creatToolControl(this);
+            org.eclipse.swt.graphics.Point bounds = toolControl.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+            if (cashedToolHeight < bounds.y) {
+                cashedToolHeight = bounds.y;
+            }
         }
 
         lws.setControl(this);
