@@ -15,6 +15,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
+import org.eclipse.draw2d.Animation;
 import org.eclipse.draw2d.Border;
 import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.ButtonModel;
@@ -91,7 +92,7 @@ public class DrawerFigure extends Figure {
      */
     private class CollapseToggle extends Toggle {
 
-        public CollapseToggle(IFigure contents) {
+        public CollapseToggle(IFigure contents, final Boolean animate) {
             super(contents);
             setSelected(true);
             setRequestFocusEnabled(true);
@@ -99,9 +100,13 @@ public class DrawerFigure extends Figure {
 
                 public void handleStateChanged(ChangeEvent e) {
                     if (e.getPropertyName().equals(ButtonModel.SELECTED_PROPERTY)) {
-                        // Animation.markBegin();
+                        if (animate.booleanValue()) {
+                            Animation.markBegin();
+                        }
                         handleExpandStateChanged();
-                        // Animation.run(150);
+                        if (animate.booleanValue()) {
+                            Animation.run(150);
+                        }
                     } else if (e.getPropertyName().equals(ButtonModel.MOUSEOVER_PROPERTY)) {
                         repaint();
                     }
@@ -176,7 +181,11 @@ public class DrawerFigure extends Figure {
         title.add(pinFigure, BorderLayout.RIGHT);
         title.add(drawerLabel, BorderLayout.CENTER);
 
-        collapseToggle = new CollapseToggle(title);
+        Boolean animate = (Boolean) control.getData("ANIMATE");
+        if (animate == null) {
+            animate = Boolean.TRUE;
+        }
+        collapseToggle = new CollapseToggle(title, animate);
 
         /*
          * @TODO:Pratik
