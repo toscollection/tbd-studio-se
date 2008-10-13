@@ -171,10 +171,11 @@ public class FigureCanvas extends Canvas {
         boolean needTool = true;
         if (parent instanceof ITool) {
             needTool = ((ITool) parent).needTool();
+        } else {
+            toolControl = toolViewer.creatToolControl(this);
         }
 
-        if (needTool && toolViewer != null) {
-            toolControl = toolViewer.creatToolControl(this);
+        if (needTool && toolViewer != null && toolControl != null) {
             org.eclipse.swt.graphics.Point bounds = toolControl.computeSize(SWT.DEFAULT, SWT.DEFAULT);
             if (cashedToolHeight < bounds.y) {
                 cashedToolHeight = bounds.y;
