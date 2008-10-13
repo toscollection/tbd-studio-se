@@ -66,17 +66,17 @@ public class EcosystemViewComposite extends Composite {
 
     private static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-    private static final IBeanPropertyAccessors<ComponentExtension, String> DESCRIPTION_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> DESCRIPTION_ACCESSOR;
 
-    private static final IBeanPropertyAccessors<ComponentExtension, String> NAME_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> NAME_ACCESSOR;
 
-    private static final IBeanPropertyAccessors<ComponentExtension, String> AUTHOR_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> AUTHOR_ACCESSOR;
 
-    private static final IBeanPropertyAccessors<ComponentExtension, String> STATUS_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> STATUS_ACCESSOR;
 
-    private static final IBeanPropertyAccessors<ComponentExtension, String> REVISION_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> REVISION_ACCESSOR;
 
-    private static final IBeanPropertyAccessors<ComponentExtension, String> DATE_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> DATE_ACCESSOR;
 
     private TableViewerCreator<ComponentExtension> fTableViewerCreator;
 
@@ -90,7 +90,7 @@ public class EcosystemViewComposite extends Composite {
 
     private List<TableViewerCreatorColumn> sortableColumns = new ArrayList<TableViewerCreatorColumn>();
 
-    static {
+    private void initialColumnModel() {
         DESCRIPTION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
             @Override
@@ -165,7 +165,7 @@ public class EcosystemViewComposite extends Composite {
         Composite tableComposite = new Composite(this, SWT.NONE);
         tableComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
         tableComposite.setLayout(new FillLayout());
-
+        initialColumnModel();
         createTable(tableComposite);
     }
 
