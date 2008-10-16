@@ -4,8 +4,7 @@ Bundle-Name: Ecosystem Plug-in
 Bundle-SymbolicName: org.talend.designer.components.ecosystem;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-Localization: plugin
-Bundle-ClassPath: .,
- axis.jar
+Bundle-ClassPath: .
 Bundle-Activator: org.talend.designer.components.ecosystem.EcosystemPlugin
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.eclipse.ui,
@@ -14,10 +13,9 @@ Require-Bundle: org.eclipse.ui,
  org.talend.commons,
  org.talend.core,
  org.talend.commons.ui,
+ org.talend.designer.core,
+ org.apache.axis,
  javax.xml.rpc,
- org.apache.lucene,
- org.apache.commons.discovery;bundle-version="0.2.0",
- org.talend.designer.core;bundle-version="2.2.0",
- javax.xml.soap;bundle-version="1.2.0",
- javax.wsdl;bundle-version="1.5.1"
+ org.apache.commons.discovery,
+ org.apache.lucene
 Eclipse-LazyStart: true
