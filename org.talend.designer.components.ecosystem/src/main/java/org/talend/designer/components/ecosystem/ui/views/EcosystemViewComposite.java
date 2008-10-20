@@ -492,24 +492,4 @@ public class EcosystemViewComposite extends Composite {
     public TableItem[] getAllItems() {
         return fTableViewerCreator.getTable().getItems();
     }
-
-    static class BeanPropertyAccessorsAdapter<B, V> implements IBeanPropertyAccessors<B, V> {
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.talend.commons.utils.data.bean.IGetterPropertyAccessor#get(java.lang.Object)
-         */
-        public V get(B bean) {
-            return null;
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see org.talend.commons.utils.data.bean.ISetterPropertyAccessor#set(java.lang.Object, java.lang.Object)
-         */
-        public void set(B bean, V value) {
-        }
-    }
 }

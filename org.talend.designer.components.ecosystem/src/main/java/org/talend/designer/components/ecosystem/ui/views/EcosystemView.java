@@ -154,15 +154,19 @@ public class EcosystemView extends ViewPart {
         versionFilterLable.setText(EcosystemConstants.VERSION_FILTER_LABEL);
         versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString(TOS_VERSION_FILTER);
-        int stringIndex = 0;
+
         String versions[] = EcosystemUtils.getVersionList();
-        for (int i = 0; i < versions.length; i++) {
-            versionCombo.add(versions[i]);
-            if (versions[i].equals(currentVersion)) {
-                stringIndex = i;
+
+        if (versions != null) {
+            int stringIndex = 0;
+            for (int i = 0; i < versions.length; i++) {
+                versionCombo.add(versions[i]);
+                if (versions[i].equals(currentVersion)) {
+                    stringIndex = i;
+                }
             }
+            versionCombo.select(stringIndex);
         }
-        versionCombo.select(stringIndex);
 
         versionCombo.addSelectionListener(new SelectionListener() {
 
