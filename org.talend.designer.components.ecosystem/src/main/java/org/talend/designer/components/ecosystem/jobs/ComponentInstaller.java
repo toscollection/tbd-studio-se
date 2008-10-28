@@ -71,9 +71,11 @@ public class ComponentInstaller {
     private static File getRootFolder(ZipFile zip, String targetFolder) {
         File rootFolder = null;
         Enumeration<ZipEntry> enumeration = (Enumeration<ZipEntry>) zip.entries();
+        String directory = null;
         while (enumeration.hasMoreElements()) {
             ZipEntry entry = enumeration.nextElement();
-            File file = new File(targetFolder, entry.getName());
+            String entryName = entry.getName();
+            File file = new File(targetFolder, entryName);
             if (entry.isDirectory()) {
                 // assumes that the first folder is root folder
                 if (rootFolder == null) {
@@ -82,7 +84,24 @@ public class ComponentInstaller {
                 }
 
             }
+            // some zip file does not have a directory entry, see bug 0005472: [ecosystem view] cannot install
+            // tFileDelimitedSplit from ecosystem
+            if (directory == null) {
+                int pos = entryName.indexOf("/");
+                if (pos > -1) {
+                    directory = entryName.substring(0, pos);
+                } else {
+                    pos = entryName.indexOf("\\");
+                    if (pos > -1) {
+                        directory = entryName.substring(0, pos);
+                    }
+                }
+            }
         }
+        if (rootFolder == null && directory != null) {
+            rootFolder = new File(targetFolder, directory);
+        }
+
         return rootFolder;
     }
 
