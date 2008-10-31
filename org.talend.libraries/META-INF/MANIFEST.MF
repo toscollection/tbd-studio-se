@@ -62,7 +62,8 @@ Bundle-ClassPath: .,
  wsdl4j-1.5.1.jar,
  sas.core.jar,
  sas.intrnet.javatools.jar,
- sas.svc.connection.jar
+ sas.svc.connection.jar,
+ paraccel-jdbc.jar
 Eclipse-LazyStart: true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,

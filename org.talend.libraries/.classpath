@@ -54,5 +54,6 @@
 	<classpathentry exported="true" kind="lib" path="sas.core.jar"/>
 	<classpathentry exported="true" kind="lib" path="sas.intrnet.javatools.jar"/>
 	<classpathentry exported="true" kind="lib" path="sas.svc.connection.jar"/>
+	<classpathentry kind="lib" path="paraccel-jdbc.jar"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
