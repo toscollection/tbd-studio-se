@@ -47,6 +47,7 @@ import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
+import org.talend.designer.components.ecosystem.model.Revision;
 import org.talend.designer.components.ecosystem.model.util.ActionHelper;
 
 /**
@@ -74,9 +75,11 @@ public class EcosystemViewComposite extends Composite {
 
     private IBeanPropertyAccessors<ComponentExtension, String> STATUS_ACCESSOR;
 
-    private IBeanPropertyAccessors<ComponentExtension, String> REVISION_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> LATEST_REVISION_ACCESSOR;
 
-    private IBeanPropertyAccessors<ComponentExtension, String> DATE_ACCESSOR;
+    private IBeanPropertyAccessors<ComponentExtension, String> INSTALLED_REVISION_ACCESSOR;
+
+    // private IBeanPropertyAccessors<ComponentExtension, String> DATE_ACCESSOR;
 
     private TableViewerCreator<ComponentExtension> fTableViewerCreator;
 
@@ -133,23 +136,39 @@ public class EcosystemViewComposite extends Composite {
 
         };
 
-        REVISION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+        LATEST_REVISION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
             @Override
             public String get(ComponentExtension bean) {
-                return bean.getLatestRevision().getName();
+                return String.format("%1$-6s%2$s", bean.getLatestRevision().getName(), " ("
+                        + dateFormatter.format(bean.getLatestRevision().getDate()) + ")");
             }
 
         };
 
-        DATE_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+        INSTALLED_REVISION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
             @Override
             public String get(ComponentExtension bean) {
-                return dateFormatter.format(bean.getLatestRevision().getDate());
+                Revision installed = bean.getInstalledRevision();
+                if (installed == null) {
+                    return "";
+                } else {
+                    return String.format("%1$-6s%2$s", installed.getName(), " (" + dateFormatter.format(installed.getDate())
+                            + ")");
+                }
             }
 
         };
+
+        // DATE_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+        //
+        // @Override
+        // public String get(ComponentExtension bean) {
+        // return dateFormatter.format(bean.getLatestRevision().getDate());
+        // }
+        //
+        // };
     }
 
     /**
@@ -209,8 +228,10 @@ public class EcosystemViewComposite extends Composite {
 
         fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 100, NAME_ACCESSOR);
         createTableColumn(EcosystemConstants.AUTHOR_TITLE, true, false, 70, AUTHOR_ACCESSOR); // authorColumn
-        createTableColumn(EcosystemConstants.REVISION_TITLE, true, false, 40, REVISION_ACCESSOR); // revisionColumn
-        createTableColumn(EcosystemConstants.RELEASED_DATE_TITLE, true, false, 70, DATE_ACCESSOR); // dateColumn
+        // latest revision column
+        createTableColumn(EcosystemConstants.LATEST_REVISION_TITLE, true, false, 110, LATEST_REVISION_ACCESSOR);
+        // install revision column
+        createTableColumn(EcosystemConstants.INSTALLED_REVISION_TITLE, true, false, 110, INSTALLED_REVISION_ACCESSOR);
         TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
                 EcosystemConstants.DESCRIPTION_TITLE, true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
         // descriptionColumn.setMinimumWidth(1300);

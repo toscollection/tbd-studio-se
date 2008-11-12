@@ -25,7 +25,9 @@ public class EcosystemConstants {
 
     public static final String STATUS_DEPRECATED = Messages.getString("EcosystemViewComposite.Status.Deprecated"); //$NON-NLS-1$
 
-    public static final String REVISION_TITLE = Messages.getString("EcosystemViewComposite.Revision.Title"); //$NON-NLS-1$
+    public static final String LATEST_REVISION_TITLE = Messages.getString("EcosystemViewComposite.LatestRevision.Title"); //$NON-NLS-1$
+
+    public static final String INSTALLED_REVISION_TITLE = Messages.getString("EcosystemViewComposite.InstalledRevision.Title"); //$NON-NLS-1$
 
     public static final String INSTALL_ACTION_TITLE = Messages.getString("EcosystemViewComposite.Install.Action.Title"); //$NON-NLS-1$
 
