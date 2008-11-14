@@ -63,8 +63,7 @@ Bundle-ClassPath: .,
  sas.core.jar,
  sas.intrnet.javatools.jar,
  sas.svc.connection.jar,
- paraccel-jdbc.jar,
- nzjdbc.jar
+ paraccel-jdbc.jar
 Eclipse-LazyStart: true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
