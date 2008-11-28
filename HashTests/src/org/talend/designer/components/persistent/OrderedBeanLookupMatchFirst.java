@@ -24,15 +24,14 @@ import routines.system.IPersistableLookupRow;
  * $Id$
  * 
  */
-public class OrderedBeanLookupMatchFirst<B extends Comparable<B> & IPersistableLookupRow<B>> extends
-        AbstractOrderedBeanLookup<B> {
+public class OrderedBeanLookupMatchFirst<B extends Comparable<B> & IPersistableLookupRow<B>> extends AbstractOrderedBeanLookup<B> {
 
     private boolean previousKeyLoaded;
 
     private int previousValuesSize;
 
-    public OrderedBeanLookupMatchFirst(String keysFilePath, String valuesFilePath, int fileIndex,
-            IRowProvider<B> rowProvider) throws IOException {
+    public OrderedBeanLookupMatchFirst(String keysFilePath, String valuesFilePath, int fileIndex, IRowProvider<B> rowProvider)
+            throws IOException {
         super(keysFilePath, valuesFilePath, fileIndex, rowProvider);
         lookupInstance = rowProvider.createInstance();
         resultLookupInstance = rowProvider.createInstance();
@@ -109,7 +108,7 @@ public class OrderedBeanLookupMatchFirst<B extends Comparable<B> & IPersistableL
                             previousValuesSize = 0;
                             currentValuesSize = 0;
                         } else if (compareResult > 0) {
-                            localSkip += previousValuesSize;
+                            // localSkip += previousValuesSize;
                             previousValuesSize = currentValuesSize;
                         }
 
