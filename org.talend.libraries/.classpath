@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry exported="true" kind="lib" path="postgresql-8.3-603.jdbc3.jar"/>
 	<classpathentry exported="true" kind="lib" path="talend_file_enhanced_20070724.jar"/>
 	<classpathentry exported="true" kind="lib" path="wsdl4j-1.5.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="jaxen-1.1.1.jar"/>
@@ -29,9 +28,6 @@
 	<classpathentry exported="true" kind="lib" path="jaybird-2.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="sqlitejdbc-v033-nested.jar"/>
 	<classpathentry exported="true" kind="lib" path="interclient.jar"/>
-	<classpathentry exported="true" kind="lib" path="db2jcc_license_cu.jar"/>
-	<classpathentry exported="true" kind="lib" path="db2jcc.jar"/>
-	<classpathentry exported="true" kind="lib" path="ojdbc14.jar"/>
 	<classpathentry exported="true" kind="lib" path="dom4j-1.6.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="castor-1.0.3.jar" sourcepath="libs_src/castor-1.0.3"/>
 	<classpathentry exported="true" kind="lib" path="xerces-J_1.4.0.jar"/>
@@ -40,7 +36,6 @@
 	<classpathentry exported="true" kind="lib" path="sqlexplorer.jar"/>
 	<classpathentry exported="true" kind="lib" path="squirrel.jar"/>
 	<classpathentry exported="true" kind="lib" path="junit-4.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="jconn3.jar"/>
 	<classpathentry exported="true" kind="lib" path="iijdbc.jar"/>
 	<classpathentry exported="true" kind="lib" path="javacsv.jar"/>
 	<classpathentry exported="true" kind="lib" path="ldapjdk.jar"/>
