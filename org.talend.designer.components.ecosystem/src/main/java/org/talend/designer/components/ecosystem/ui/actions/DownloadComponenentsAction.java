@@ -60,7 +60,8 @@ import org.talend.designer.core.ui.editor.AbstractTalendEditor;
  * View action for downloading components.
  */
 public class DownloadComponenentsAction implements IViewActionDelegate {
-
+	
+	public static final String ID = "org.talend.designer.components.ecosystem.ui.actions.DownloadComponenentsAction";
     // private static final String SET_FOLDER_TITLE =
     // Messages.getString("DownloadComponenentsAction.SetUserFolder.Title"); //$NON-NLS-1$
 
@@ -122,8 +123,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         action.setEnabled(true);
         if (fExtensionDownloaded > 0) {
             fView.refresh(); // refresh table
-            EcosystemUtils.reloadComponents(); // refresh palette
-            fView.saveToFile();
+			EcosystemUtils.reloadComponents(); // refresh palette
 
             // see feature 0005050: confirmation popup once the component is installed
             confirmInstallation();

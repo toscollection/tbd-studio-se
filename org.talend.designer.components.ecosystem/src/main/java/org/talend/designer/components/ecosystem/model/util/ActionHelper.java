@@ -16,6 +16,7 @@ import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.ui.PlatformUI;
+import org.talend.designer.components.ecosystem.ui.actions.DownloadComponenentsAction;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
 
 /**
@@ -24,26 +25,31 @@ import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
 public class ActionHelper {
 
     /**
-     * 
-     * DOC YeXiaowei Comment method "getEcosystemView".
-     * 
-     * @return
-     */
-    public static EcosystemView getEcosystemView() {
-        return (EcosystemView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(
-                "org.talend.designer.components.ecosystem.ui.views.EcosystemView");
-    }
+	 * 
+	 * DOC YeXiaowei Comment method "getEcosystemView".
+	 * 
+	 * @return
+	 */
+	public static EcosystemView getEcosystemView() {
+		return (EcosystemView) PlatformUI
+				.getWorkbench()
+				.getActiveWorkbenchWindow()
+				.getActivePage()
+				.findView(
+						"org.talend.designer.components.ecosystem.ui.views.EcosystemView");
+	}
 
     /**
-     * 
-     * DOC YeXiaowei Comment method "getDownloadAction".
-     * 
-     * @return
-     */
-    public static IAction getDownloadAction() {
-        IContributionItem item = getEcosystemView().getViewSite().getActionBars().getToolBarManager().find(
-                "nts.ecosystem.ui.actions.DownloadComponenentsAction");
+	 * 
+	 * DOC YeXiaowei Comment method "getDownloadAction".
+	 * 
+	 * @return
+	 */
+	public static IAction getDownloadAction() {
+		IContributionItem item = getEcosystemView().getViewSite()
+				.getActionBars().getToolBarManager().find(
+						DownloadComponenentsAction.ID);
         IAction action = ((ActionContributionItem) item).getAction();
-        return action;
-    }
+		return action;
+	}
 }

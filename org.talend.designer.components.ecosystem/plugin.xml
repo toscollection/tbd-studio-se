@@ -35,7 +35,7 @@
          <action
                class="org.talend.designer.components.ecosystem.ui.actions.DownloadComponenentsAction"
                icon="icons/download.gif"
-               id="nts.ecosystem.ui.actions.DownloadComponenentsAction"
+               id="org.talend.designer.components.ecosystem.ui.actions.DownloadComponenentsAction"
                label="%DownloadComponenentsAction.Label"
                style="push"
                toolbarPath="group1"
