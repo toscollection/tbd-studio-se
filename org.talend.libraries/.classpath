@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry exported="true" kind="lib" path="fakejdbc_driver.jar"/>
 	<classpathentry exported="true" kind="lib" path="talend_file_enhanced_20070724.jar"/>
 	<classpathentry exported="true" kind="lib" path="wsdl4j-1.5.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="jaxen-1.1.1.jar"/>
