@@ -226,7 +226,7 @@ public class EcosystemUtils {
 		// reload from folder, see ComponentsFactory and UserComponentsProvider
 		IComponentsFactory componentsFactory = ComponentsFactoryProvider
 				.getInstance();
-		componentsFactory.init();
+		componentsFactory.reset();
 		// update the palette view, the position of the new component is
 		// determined by the FAMILY value in the
 		// component's property file
