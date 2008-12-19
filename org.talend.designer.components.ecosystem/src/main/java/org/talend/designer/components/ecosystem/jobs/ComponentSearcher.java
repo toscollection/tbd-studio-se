@@ -27,7 +27,7 @@ import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemFactory;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.model.Language;
-import org.talend.designer.components.ecosystem.ws.Revision;
+import org.talend.designer.components.ecosystem.model.RevisionInfo;
 
 /**
  * Search for component extensions.
@@ -49,16 +49,17 @@ public class ComponentSearcher {
         List<ComponentExtension> extensions = new ArrayList<ComponentExtension>();
 
         try {
-            Revision[] revisions = EcosystemUtils.getRevisionList(version, getLanguageId(language));
+        	List<RevisionInfo> revisions = EcosystemUtils.getRevisionList(
+					version, getLanguageId(language));
 
             Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
 
-            for (Revision revision : revisions) {
+            for (RevisionInfo revision : revisions) {
                 ComponentExtension extension = extensionsMap.get(revision.getExtension_name());
                 if (extension == null) {
                     extension = EcosystemFactory.eINSTANCE.createComponentExtension();
                     extension.setName(revision.getExtension_name());
-                    extension.setAuthor(revision.getExtension_author());
+                    extension.setAuthor(revision.getAuthor_name());
                     extension.setLanguage(Language.get(getLanguageId(language)));
                     extension.setDescription(revision.getExtension_description());
 
@@ -105,7 +106,8 @@ public class ComponentSearcher {
      * @return
      * @throws ParseException
      */
-    private static org.talend.designer.components.ecosystem.model.Revision convertRevision(Revision revision)
+    private static org.talend.designer.components.ecosystem.model.Revision convertRevision(
+			RevisionInfo revision)
             throws ParseException {
         org.talend.designer.components.ecosystem.model.Revision rev = EcosystemFactory.eINSTANCE.createRevision();
         rev.setDate(formatter.parse(revision.getRevision_date()));

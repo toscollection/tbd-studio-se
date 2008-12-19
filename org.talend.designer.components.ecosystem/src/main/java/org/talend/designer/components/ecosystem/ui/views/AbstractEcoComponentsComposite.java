@@ -199,6 +199,7 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
 				.getPreferenceStore().getString(
 						EcosystemView.TOS_VERSION_FILTER);
 
+		currentVersion = EcosystemUtils.getMainVersion(currentVersion);
 		String versions[] = EcosystemUtils.getVersionList();
 
 		if (versions != null) {

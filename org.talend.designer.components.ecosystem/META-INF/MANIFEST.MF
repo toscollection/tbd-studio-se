@@ -5,7 +5,9 @@ Bundle-SymbolicName: org.talend.designer.components.ecosystem;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-Localization: plugin
 Bundle-ClassPath: .,
- axis.jar
+ axis.jar,
+ commons-httpclient-3.1.jar,
+ jackson-0.9.2.jar
 Bundle-Activator: org.talend.designer.components.ecosystem.EcosystemPlugin
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.eclipse.ui,
