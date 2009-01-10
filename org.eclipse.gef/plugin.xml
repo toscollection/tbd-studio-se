@@ -10,13 +10,6 @@
 		</category>
 
 		<command
-				name="%Palette.Label" 
-				description="" 
-				categoryId="org.eclipse.ui.category.views" 
-				id="org.eclipse.gef.ui.palette_view"> 
-		</command>
-
-		<command
 				name="%ZoomIn.Tooltip"
 				description="%ZoomIn.Tooltip"
 				categoryId="org.eclipse.gef.category.view"
@@ -30,30 +23,7 @@
 				id="org.eclipse.gef.zoom_out">
 		</command>
 			
-	</extension>
-	<extension
-			point="org.eclipse.ui.views">
-		<view
-				name="%Palette.Label"
-				icon="icons/palette_view.gif"
-				category="org.eclipse.ui"
-				class="org.eclipse.gef.ui.views.palette.PaletteView"
-				id="org.eclipse.gef.ui.palette_view">
-		</view>
-	</extension>
-	<extension
-			point="org.eclipse.ui.perspectiveExtensions">
-		<perspectiveExtension
-				targetID="org.eclipse.ui.resourcePerspective">
-			<view
-					ratio="0.16"
-					relative="org.eclipse.ui.editorss"
-					visible="false"
-					relationship="left"
-					id="org.eclipse.gef.ui.palette_view">
-			</view>
-		</perspectiveExtension>
-	</extension>
+	</extension>	
 
 	<extension point="org.eclipse.ui.bindings">
 		<key

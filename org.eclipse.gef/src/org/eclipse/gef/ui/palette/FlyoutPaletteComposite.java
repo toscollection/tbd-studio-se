@@ -98,7 +98,7 @@ import org.eclipse.gef.ui.views.palette.PaletteView;
  */
 public class FlyoutPaletteComposite extends Composite {
 
-    private static final FontManager FONT_MGR = new FontManager();
+    protected static final FontManager FONT_MGR = new FontManager();
 
     private static final String PROPERTY_PALETTE_WIDTH = "org.eclipse.gef.ui.palette.fpa.paletteWidth"; //$NON-NLS-1$
 
@@ -286,7 +286,7 @@ public class FlyoutPaletteComposite extends Composite {
         return new Sash(this, SWT.NONE);
     }
 
-    private Control createTitle(Composite parent, boolean isHorizontal) {
+    protected Control createTitle(Composite parent, boolean isHorizontal) {
         return new TitleCanvas(parent, isHorizontal);
     }
 
@@ -841,7 +841,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    private class ResizeAction extends Action {
+    protected class ResizeAction extends Action {
 
         public ResizeAction() {
             super(PaletteMessages.RESIZE_LABEL);
@@ -867,7 +867,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    private class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
+    protected class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
 
         protected boolean switchDock = false;
 
@@ -1055,7 +1055,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    private static class TitleLabel extends Label {
+    protected static class TitleLabel extends Label {
 
         protected static final Border BORDER = new MarginBorder(4, 3, 4, 3);
 
@@ -1248,9 +1248,9 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    private class TitleCanvas extends Canvas {
+    protected class TitleCanvas extends Canvas {
 
-        private LightweightSystem lws;
+        protected LightweightSystem lws;
 
         public TitleCanvas(Composite parent, boolean horizontal) {
             super(parent, SWT.NO_REDRAW_RESIZE | SWT.NO_BACKGROUND);
@@ -1267,7 +1267,7 @@ public class FlyoutPaletteComposite extends Composite {
             return new org.eclipse.swt.graphics.Point(size.width, size.height);
         }
 
-        private void init(boolean isHorizontal) {
+        protected void init(boolean isHorizontal) {
             final IFigure contents = new TitleLabel(true);
             contents.setRequestFocusEnabled(true);
             contents.setFocusTraversable(true);
@@ -1352,7 +1352,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    private class ChangeDockAction extends Action {
+    protected class ChangeDockAction extends Action {
 
         private int position;
 
@@ -1386,7 +1386,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    private static class FontManager {
+    public static class FontManager {
 
         private final String fontName = getFontType();
 

@@ -78,8 +78,7 @@ public class BatchGenJobScreenshotAction extends Action {
     public BatchGenJobScreenshotAction() {
         super();
         this.setActionDefinitionId("batch.generate.job.screenshot");
-        destination = destination.append("Screenshots").append("ProjectName").append("ComponentSettings").append(
-                "BasicSettings");
+        destination = destination.append("Screenshots").append("ProjectName").append("ComponentSettings").append("BasicSettings");
     }
 
     /**
@@ -128,8 +127,7 @@ public class BatchGenJobScreenshotAction extends Action {
                         restoreMousePosition();
                         String msg = "Operation is successful, all the screenshots are stored in the directory <a>"
                                 + destination.toPortableString() + "</a>.";
-                        ResultrDialog d = new ResultrDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                                .getShell(), msg);
+                        ResultrDialog d = new ResultrDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), msg);
                         d.open();
                     }
                 });
@@ -402,8 +400,8 @@ public class BatchGenJobScreenshotAction extends Action {
         final ProcessEditorInput fileEditorInput = new ProcessEditorInput(item, true);
         fileEditorInput.setView(getViewPart());
         fileEditorInput.setRepositoryNode(repositoryNode);
-        MultiPageTalendEditor openEditor = (MultiPageTalendEditor) page.openEditor(fileEditorInput,
-                FakeMultiPageTalendEditor.ID, true);
+        MultiPageTalendEditor openEditor = (MultiPageTalendEditor) page.openEditor(fileEditorInput, FakeMultiPageTalendEditor.ID,
+                true);
         return openEditor;
     }
 
