@@ -17,7 +17,6 @@ import org.eclipse.swt.events.KeyEvent;
 
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 
@@ -64,7 +63,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
     /**
      * @return <code>true</code> if key pressed indicates a connection traversal/selection
      */
-    boolean acceptConnection(KeyEvent event) {
+    protected boolean acceptConnection(KeyEvent event) {
         return event.character == '/' || event.character == '?' || event.character == '\\' || event.character == '\u001c'
                 || event.character == '|';
     }
@@ -72,14 +71,14 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
     /**
      * @return <code>true</code> if the keys pressed indicate to traverse inside a container
      */
-    boolean acceptIntoContainer(KeyEvent event) {
+    protected boolean acceptIntoContainer(KeyEvent event) {
         return ((event.stateMask & SWT.ALT) != 0) && (event.keyCode == SWT.ARROW_DOWN);
     }
 
     /**
      * @return <code>true</code> if the keys pressed indicate to stop traversing/selecting connection
      */
-    boolean acceptLeaveConnection(KeyEvent event) {
+    protected boolean acceptLeaveConnection(KeyEvent event) {
         int key = event.keyCode;
         if (getFocusEditPart() instanceof ConnectionEditPart)
             if ((key == SWT.ARROW_UP) || (key == SWT.ARROW_RIGHT) || (key == SWT.ARROW_DOWN) || (key == SWT.ARROW_LEFT))
@@ -90,7 +89,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
     /**
      * @return <code>true</code> if the viewer's contents has focus and one of the arrow keys is pressed
      */
-    boolean acceptLeaveContents(KeyEvent event) {
+    protected boolean acceptLeaveContents(KeyEvent event) {
         int key = event.keyCode;
         return getFocusEditPart() == getViewer().getContents()
                 && ((key == SWT.ARROW_UP) || (key == SWT.ARROW_RIGHT) || (key == SWT.ARROW_DOWN) || (key == SWT.ARROW_LEFT));
@@ -100,11 +99,11 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
      * @return <code>true</code> if the keys pressed indicate to traverse to the parent of the currently focused
      * EditPart
      */
-    boolean acceptOutOf(KeyEvent event) {
+    protected boolean acceptOutOf(KeyEvent event) {
         return ((event.stateMask & SWT.ALT) != 0) && (event.keyCode == SWT.ARROW_UP);
     }
 
-    boolean acceptScroll(KeyEvent event) {
+    protected boolean acceptScroll(KeyEvent event) {
         return ((event.stateMask & SWT.CTRL) != 0 && (event.stateMask & SWT.SHIFT) != 0 && (event.keyCode == SWT.ARROW_DOWN
                 || event.keyCode == SWT.ARROW_LEFT || event.keyCode == SWT.ARROW_RIGHT || event.keyCode == SWT.ARROW_UP));
     }
@@ -239,70 +238,70 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
      * @see org.eclipse.gef.KeyHandler#keyPressed(org.eclipse.swt.events.KeyEvent)
      */
     public boolean keyPressed(KeyEvent event) {
-        if (event.character == ' ') {
-            processSelect(event);
-            return true;
-        } else if (acceptIntoContainer(event)) {
-            navigateIntoContainer(event);
-            return true;
-        } else if (acceptOutOf(event)) {
-            navigateOut(event);
-            return true;
-        } else if (acceptConnection(event)) {
-            navigateConnections(event);
-            return true;
-        } else if (acceptScroll(event)) {
-            scrollViewer(event);
-            return true;
-        } else if (acceptLeaveConnection(event)) {
-            navigateOutOfConnection(event);
-            return true;
-        } else if (acceptLeaveContents(event)) {
-            navigateIntoContainer(event);
-            return true;
-        }
-
-        switch (event.keyCode) {
-        case SWT.ARROW_LEFT:
-            if (navigateNextSibling(event, isViewerMirrored() ? PositionConstants.EAST : PositionConstants.WEST))
-                return true;
-            break;
-        case SWT.ARROW_RIGHT:
-            if (navigateNextSibling(event, isViewerMirrored() ? PositionConstants.WEST : PositionConstants.EAST))
-                return true;
-            break;
-        case SWT.ARROW_UP:
-            if (navigateNextSibling(event, PositionConstants.NORTH))
-                return true;
-            break;
-        case SWT.ARROW_DOWN:
-            if (navigateNextSibling(event, PositionConstants.SOUTH))
-                return true;
-            break;
-
-        case SWT.HOME:
-            if (navigateJumpSibling(event, PositionConstants.WEST))
-                return true;
-            break;
-        case SWT.END:
-            if (navigateJumpSibling(event, PositionConstants.EAST))
-                return true;
-            break;
-        case SWT.PAGE_DOWN:
-            if (navigateJumpSibling(event, PositionConstants.SOUTH))
-                return true;
-            break;
-        case SWT.PAGE_UP:
-            if (navigateJumpSibling(event, PositionConstants.NORTH))
-                return true;
-        }
+        // if (event.character == ' ') {
+        // processSelect(event);
+        // return true;
+        // } else if (acceptIntoContainer(event)) {
+        // navigateIntoContainer(event);
+        // return true;
+        // } else if (acceptOutOf(event)) {
+        // navigateOut(event);
+        // return true;
+        // } else if (acceptConnection(event)) {
+        // navigateConnections(event);
+        // return true;
+        // } else if (acceptScroll(event)) {
+        // scrollViewer(event);
+        // return true;
+        // } else if (acceptLeaveConnection(event)) {
+        // navigateOutOfConnection(event);
+        // return true;
+        // } else if (acceptLeaveContents(event)) {
+        // navigateIntoContainer(event);
+        // return true;
+        // }
+        //
+        // switch (event.keyCode) {
+        // case SWT.ARROW_LEFT:
+        // if (navigateNextSibling(event, isViewerMirrored() ? PositionConstants.EAST : PositionConstants.WEST))
+        // return true;
+        // break;
+        // case SWT.ARROW_RIGHT:
+        // if (navigateNextSibling(event, isViewerMirrored() ? PositionConstants.WEST : PositionConstants.EAST))
+        // return true;
+        // break;
+        // case SWT.ARROW_UP:
+        // if (navigateNextSibling(event, PositionConstants.NORTH))
+        // return true;
+        // break;
+        // case SWT.ARROW_DOWN:
+        // if (navigateNextSibling(event, PositionConstants.SOUTH))
+        // return true;
+        // break;
+        //
+        // case SWT.HOME:
+        // if (navigateJumpSibling(event, PositionConstants.WEST))
+        // return true;
+        // break;
+        // case SWT.END:
+        // if (navigateJumpSibling(event, PositionConstants.EAST))
+        // return true;
+        // break;
+        // case SWT.PAGE_DOWN:
+        // if (navigateJumpSibling(event, PositionConstants.SOUTH))
+        // return true;
+        // break;
+        // case SWT.PAGE_UP:
+        // if (navigateJumpSibling(event, PositionConstants.NORTH))
+        // return true;
+        // }
         return super.keyPressed(event);
     }
 
     /**
      * This method navigates through connections based on the keys pressed.
      */
-    void navigateConnections(KeyEvent event) {
+    protected void navigateConnections(KeyEvent event) {
         GraphicalEditPart focus = getFocusEditPart();
         ConnectionEditPart current = null;
         GraphicalEditPart node = getCachedNode();
@@ -325,7 +324,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
     /**
      * This method traverses to the closest child of the currently focused EditPart, if it has one.
      */
-    void navigateIntoContainer(KeyEvent event) {
+    protected void navigateIntoContainer(KeyEvent event) {
         GraphicalEditPart focus = getFocusEditPart();
         List childList = focus.getChildren();
         Point tl = focus.getContentPane().getBounds().getTopLeft();
@@ -335,7 +334,11 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
         GraphicalEditPart closestPart = null;
 
         for (int i = 0; i < childList.size(); i++) {
+
             GraphicalEditPart ged = (GraphicalEditPart) childList.get(i);
+            ged.getContentPane();
+            ged.getFigure();
+            ged.getModel();
             if (!ged.isSelectable())
                 continue;
             Rectangle childBounds = ged.getFigure().getBounds();
@@ -353,7 +356,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
     /**
      * Not yet implemented.
      */
-    boolean navigateJumpSibling(KeyEvent event, int direction) {
+    protected boolean navigateJumpSibling(KeyEvent event, int direction) {
         // TODO: Implement navigateJumpSibling() (for PGUP, PGDN, HOME and END key events)
         return false;
     }
@@ -364,7 +367,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
      * @param event the KeyEvent for the keys that were pressed to trigger this traversal
      * @param direction PositionConstants.* indicating the direction in which to traverse
      */
-    boolean navigateNextSibling(KeyEvent event, int direction) {
+    protected boolean navigateNextSibling(KeyEvent event, int direction) {
         return navigateNextSibling(event, direction, getNavigationSiblings());
     }
 
@@ -389,7 +392,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
     /**
      * Navigates to the parent of the currently focused EditPart.
      */
-    void navigateOut(KeyEvent event) {
+    protected void navigateOut(KeyEvent event) {
         if (getFocusEditPart() == null || getFocusEditPart() == getViewer().getContents()
                 || getFocusEditPart().getParent() == getViewer().getContents())
             return;
@@ -399,7 +402,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
     /**
      * Navigates to the source or target of the currently focused ConnectionEditPart.
      */
-    void navigateOutOfConnection(KeyEvent event) {
+    protected void navigateOutOfConnection(KeyEvent event) {
         GraphicalEditPart cached = getCachedNode();
         ConnectionEditPart conn = (ConnectionEditPart) getFocusEditPart();
         if (cached != null && (cached == conn.getSource() || cached == conn.getTarget()))
@@ -415,6 +418,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
      * @param event the KeyEvent that triggered this traversal
      */
     protected void navigateTo(EditPart part, KeyEvent event) {
+
         if (part == null)
             return;
         if ((event.stateMask & SWT.SHIFT) != 0) {
@@ -445,7 +449,7 @@ public class GraphicalViewerKeyHandler extends KeyHandler {
         }
     }
 
-    void scrollViewer(KeyEvent event) {
+    protected void scrollViewer(KeyEvent event) {
         if (!(getViewer().getControl() instanceof FigureCanvas))
             return;
         FigureCanvas figCanvas = (FigureCanvas) getViewer().getControl();
