@@ -14,17 +14,8 @@
 	<classpathentry exported="true" kind="lib" path="talend_file_enhanced_20070724.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="javacsv.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="ldapjdk.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="interclient.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="sqlitejdbc-v033-nested.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jaybird-2.1.1.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="jaas.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="mini-j2ee.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="tdgssconfig.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="tdgssjava.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="terajdbc4.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="derby.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="derbyclient.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jt400.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="core-renderer.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="core-renderer-minimal.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="itext-paulo-155.jar" sourcepath="org.talend.librariessrc.zip"/>
