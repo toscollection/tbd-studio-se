@@ -48,11 +48,11 @@ Bundle-ClassPath: .,
  paraccel-jdbc.jar,
  fakejdbc_driver.jar
 Eclipse-LazyStart: true
-Require-Bundle: org.eclipse.core.runtime,
+Require-Bundle: org.apache.log4j;bundle-version="1.2.13",
+ org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.talend.libraries.apache;visibility:=reexport,
- org.talend.libraries.logging,
  org.talend.libraries.jdbc.jtds;visibility:=reexport,
  org.talend.libraries.jdbc.mysql;visibility:=reexport,
  org.talend.libraries.jdbc.oracle;visibility:=reexport,

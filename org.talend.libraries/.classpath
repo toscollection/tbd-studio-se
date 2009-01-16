@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="fakejdbc_driver.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/main/java"/>
@@ -37,6 +38,5 @@
 	<classpathentry exported="true" kind="lib" path="sas.intrnet.javatools.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="sas.svc.connection.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="paraccel-jdbc.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="fakejdbc_driver.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
