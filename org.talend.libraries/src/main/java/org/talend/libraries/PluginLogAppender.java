@@ -114,7 +114,7 @@ public class PluginLogAppender extends AppenderSkeleton {
         // get the bundle for a plug-in
         Bundle b = Platform.getBundle(getSymbolicName());
         if (b == null) {
-            String m = MessageFormat.format("Plugin: {0} not found in {1}.", new Object[] { getSymbolicName(),
+            String m = MessageFormat.format("Plugin: {0} not found in {1}.", new Object[] { getSymbolicName(), //$NON-NLS-1$
                     this.name });
             this.errorHandler.error(m);
             return null;
