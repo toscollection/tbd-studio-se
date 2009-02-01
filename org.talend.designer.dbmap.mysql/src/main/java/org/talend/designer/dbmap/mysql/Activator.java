@@ -21,7 +21,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.talend.designer.dbmap.mysql";
+	public static final String PLUGIN_ID = "org.talend.designer.dbmap.mysql"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;

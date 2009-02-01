@@ -46,7 +46,7 @@ public class OracleDbMapTestGenerator {
 
     private boolean fixedData = true;
 
-    private static final String COLUMN_NAME = "column";
+    private static final String COLUMN_NAME = "column"; //$NON-NLS-1$
 
     private DbGenerationManager gen;
 
@@ -87,7 +87,7 @@ public class OracleDbMapTestGenerator {
 
     public final Random rand = new Random();
 
-    private static final String[] FIELDS = new String[] { "id", "name", "street", "address", "city", "country", "zip" };
+    private static final String[] FIELDS = new String[] { "id", "name", "street", "address", "city", "country", "zip" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 
     private int inputsCounter; // remove finally
 
@@ -143,13 +143,13 @@ public class OracleDbMapTestGenerator {
         ArrayList<IMetadataColumn> metadatColumns = new ArrayList<IMetadataColumn>();
 
         MetadataColumn metadataColumn = new MetadataColumn();
-        metadataColumn.setLabel("id");
+        metadataColumn.setLabel("id"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumn();
-        metadataColumn.setLabel("name");
+        metadataColumn.setLabel("name"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
@@ -165,20 +165,20 @@ public class OracleDbMapTestGenerator {
      */
     private IMetadataTable initInputsDataMapTable() {
         MetadataTable metadataTable = new MetadataTable();
-        metadataTable.setTableName("in" + ++inputsCounter);
+        metadataTable.setTableName("in" + ++inputsCounter); //$NON-NLS-1$
 
         ArrayList<IMetadataColumn> metadatColumns = new ArrayList<IMetadataColumn>();
 
         MetadataColumn metadataColumn = new MetadataColumn();
-        metadataColumn.setLabel("id");
+        metadataColumn.setLabel("id"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumn();
-        metadataColumn.setLabel("name");
+        metadataColumn.setLabel("name"); //$NON-NLS-1$
         metadataColumn.setKey(false);
-        metadataColumn.setType("int");
+        metadataColumn.setType("int"); //$NON-NLS-1$
         metadatColumns.add(metadataColumn);
         /*
          * metadataColumn = new MetadataColumn(); metadataColumn.setLabel("name2"); metadataColumn.setKey(false);
@@ -209,20 +209,20 @@ public class OracleDbMapTestGenerator {
      */
     private IMetadataTable initOutputsDataMapTable() {
         MetadataTable metadataTable = new MetadataTable();
-        metadataTable.setTableName("out" + ++outputsCounter);
+        metadataTable.setTableName("out" + ++outputsCounter); //$NON-NLS-1$
 
         ArrayList<IMetadataColumn> metadatColumns = new ArrayList<IMetadataColumn>();
 
         MetadataColumn metadataColumn = new MetadataColumn();
-        metadataColumn.setLabel("newId");
+        metadataColumn.setLabel("newId"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumn();
-        metadataColumn.setLabel("newName");
+        metadataColumn.setLabel("newName"); //$NON-NLS-1$
         metadataColumn.setKey(false);
-        metadataColumn.setType("int");
+        metadataColumn.setType("int"); //$NON-NLS-1$
         metadatColumns.add(metadataColumn);
 
         metadataTable.setListColumns(metadatColumns);
@@ -348,7 +348,7 @@ public class OracleDbMapTestGenerator {
      * @return
      */
     private String generateExpression(TableType[] tables2, int nFields, int nExpressions, int currentIndex) {
-        String expression = "";
+        String expression = ""; //$NON-NLS-1$
         if (fixedData) {
             for (int iTable = 0; iTable < N_TABLES; iTable++) {
                 // for (int iField = 0; iField < tables2.length; iField++) {
@@ -362,16 +362,16 @@ public class OracleDbMapTestGenerator {
         } else {
             for (int j = 0; j < nExpressions; j++) {
                 TableType tableType = tables2[rand.nextInt(tables2.length)];
-                expression += (rand.nextInt(4) == 0 ? "\n" : "")
-                        + (rand.nextBoolean() ? " + " : " - ")
+                expression += (rand.nextInt(4) == 0 ? "\n" : "") //$NON-NLS-1$ //$NON-NLS-2$
+                        + (rand.nextBoolean() ? " + " : " - ") //$NON-NLS-1$ //$NON-NLS-2$
                         + gen.getTableColumnVariable(tableType.getBaseTableName()
-                                + (tableType != TableType.VARS ? (rand.nextInt(tableType.getNTables()) + 1) : ""),
+                                + (tableType != TableType.VARS ? (rand.nextInt(tableType.getNTables()) + 1) : ""), //$NON-NLS-1$
                                 FIELDS[rand.nextInt(FIELDS.length)] + (rand.nextInt(nFields) + 1))
-                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$array_var"
-                                + rand.nextInt(10) + "[test_var]" : "")
-                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$hash_var" + rand.nextInt(10)
-                                + "{test_var}" : "")
-                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$var" + rand.nextInt(10) : "");
+                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$array_var" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                + rand.nextInt(10) + "[test_var]" : "") //$NON-NLS-1$ //$NON-NLS-2$
+                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$hash_var" + rand.nextInt(10) //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                + "{test_var}" : "") //$NON-NLS-1$ //$NON-NLS-2$
+                        + (rand.nextInt(4) == 0 ? (rand.nextBoolean() ? " + " : " - ") + "$var" + rand.nextInt(10) : ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             }
         }
         return expression;
@@ -392,26 +392,26 @@ public class OracleDbMapTestGenerator {
 
         ExternalDbMapTable mapperTable = new ExternalDbMapTable();
 
-        mapperTable.setName("book");
+        mapperTable.setName("book"); //$NON-NLS-1$
 
         List<ExternalDbMapEntry> tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         ExternalDbMapEntry mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id");
-        mapperTableEntry.setExpression("test");
-        mapperTableEntry.setOperator("int");
+        mapperTableEntry.setName("id"); //$NON-NLS-1$
+        mapperTableEntry.setExpression("test"); //$NON-NLS-1$
+        mapperTableEntry.setOperator("int"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("name");
-        mapperTableEntry.setExpression("");
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("name"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("nb_pages");
-        mapperTableEntry.setExpression("");
-        mapperTableEntry.setOperator("Integer");
+        mapperTableEntry.setName("nb_pages"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
+        mapperTableEntry.setOperator("Integer"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setMetadataTableEntries(tableEntries);
@@ -421,26 +421,26 @@ public class OracleDbMapTestGenerator {
         // #########################################################################
 
         mapperTable = new ExternalDbMapTable();
-        mapperTable.setName("page");
+        mapperTable.setName("page"); //$NON-NLS-1$
 
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_page");
-        mapperTableEntry.setExpression("");
-        mapperTableEntry.setOperator("Integer");
+        mapperTableEntry.setName("id_page"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
+        mapperTableEntry.setOperator("Integer"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_book");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("id_book"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id")); //$NON-NLS-1$ //$NON-NLS-2$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("content");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "name"));
-        mapperTableEntry.setOperator("int");
+        mapperTableEntry.setName("content"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "name")); //$NON-NLS-1$ //$NON-NLS-2$
+        mapperTableEntry.setOperator("int"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setMetadataTableEntries(tableEntries);
@@ -454,30 +454,30 @@ public class OracleDbMapTestGenerator {
         // #########################################################################
 
         mapperTable = new ExternalDbMapTable();
-        mapperTable.setName("userInput");
+        mapperTable.setName("userInput"); //$NON-NLS-1$
 
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id");
-        mapperTableEntry.setExpression("");
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("id"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_book");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("id_book"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id")); //$NON-NLS-1$ //$NON-NLS-2$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         if (currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_INNER_JOIN_REJECT_WITHOUT_REGULAR_TABLE) {
             // nothing
         } else {
             mapperTableEntry = new ExternalDbMapEntry();
-            mapperTableEntry.setName("id_page");
-            mapperTableEntry.setOperator("String");
-            mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "id_page") + " . "
-                    + gen.getTableColumnVariable("book", "name"));
+            mapperTableEntry.setName("id_page"); //$NON-NLS-1$
+            mapperTableEntry.setOperator("String"); //$NON-NLS-1$
+            mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "id_page") + " . " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    + gen.getTableColumnVariable("book", "name")); //$NON-NLS-1$ //$NON-NLS-2$
             tableEntries.add(mapperTableEntry);
         }
 
@@ -507,17 +507,17 @@ public class OracleDbMapTestGenerator {
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("upperCaseContent");
-        mapperTableEntry.setOperator("String");
-        mapperTableEntry.setExpression("uc " + gen.getTableColumnVariable("page", "content") + " + "
-                + gen.getTableColumnVariable("book", "id_book") + " - 2 * "
-                + gen.getTableColumnVariable("book", "id_book"));
+        mapperTableEntry.setName("upperCaseContent"); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
+        mapperTableEntry.setExpression("uc " + gen.getTableColumnVariable("page", "content") + " + " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                + gen.getTableColumnVariable("book", "id_book") + " - 2 * " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                + gen.getTableColumnVariable("book", "id_book")); //$NON-NLS-1$ //$NON-NLS-2$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("newId");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id_book") + " + 1");
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("newId"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id_book") + " + 1"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setMetadataTableEntries(tableEntries);
@@ -541,26 +541,26 @@ public class OracleDbMapTestGenerator {
         // #########################################################################
 
         mapperTable = new ExternalDbMapTable();
-        mapperTable.setName("user");
+        mapperTable.setName("user"); //$NON-NLS-1$
 
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("idUser");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "newId"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("idUser"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "newId")); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("idBook");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id_book"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("idBook"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id_book")); //$NON-NLS-1$ //$NON-NLS-2$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("content");
-        mapperTableEntry.setExpression("");
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("content"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setMetadataTableEntries(tableEntries);
@@ -570,8 +570,8 @@ public class OracleDbMapTestGenerator {
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setExpression(" $book[id] == 1");
-        mapperTableEntry.setExpression(" " + gen.getTableColumnVariable("book", "id") + " == 1");
+        mapperTableEntry.setExpression(" $book[id] == 1"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(" " + gen.getTableColumnVariable("book", "id") + " == 1"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setCustomConditionsEntries(tableEntries);
@@ -586,26 +586,26 @@ public class OracleDbMapTestGenerator {
         // #########################################################################
 
         mapperTable = new ExternalDbMapTable();
-        mapperTable.setName("newBook");
+        mapperTable.setName("newBook"); //$NON-NLS-1$
 
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("newIdBook");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "newId"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("newIdBook"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "newId")); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_book");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id_book"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("id_book"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("book", "id_book")); //$NON-NLS-1$ //$NON-NLS-2$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("content");
-        mapperTableEntry.setOperator("String");
-        mapperTableEntry.setExpression("");
+        mapperTableEntry.setName("content"); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setMetadataTableEntries(tableEntries);
@@ -616,8 +616,8 @@ public class OracleDbMapTestGenerator {
         // CONSTRAINTS newBook
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setExpression(" test == 3 ");
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setExpression(" test == 3 "); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         // mapperTableEntry = new ExternalMapperTableEntry();
@@ -656,27 +656,27 @@ public class OracleDbMapTestGenerator {
         // #########################################################################
 
         mapperTable = new ExternalDbMapTable();
-        mapperTable.setName("newPageRejected");
+        mapperTable.setName("newPageRejected"); //$NON-NLS-1$
 
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_page");
-        mapperTableEntry.setExpression("");
-        mapperTableEntry.setOperator("int");
+        mapperTableEntry.setName("id_page"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
+        mapperTableEntry.setOperator("int"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_book");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "id_book"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("id_book"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "id_book")); //$NON-NLS-1$ //$NON-NLS-2$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("content");
+        mapperTableEntry.setName("content"); //$NON-NLS-1$
         mapperTableEntry
-                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent"));
-        mapperTableEntry.setOperator("String");
+                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent")); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setMetadataTableEntries(tableEntries);
@@ -697,7 +697,7 @@ public class OracleDbMapTestGenerator {
                 || currentTest == TEST.ONE_INNER_JOIN_AND_A_TABLE_WITH_INNER_JOIN_REJECT_WITHOUT_REGULAR_TABLE) {
             // nothing
         } else {
-            mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "newId") + " == 1");
+            mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "newId") + " == 1"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             tableEntries.add(mapperTableEntry);
         }
 
@@ -709,27 +709,27 @@ public class OracleDbMapTestGenerator {
         // #########################################################################
 
         mapperTable = new ExternalDbMapTable();
-        mapperTable.setName("newPageRejected2");
+        mapperTable.setName("newPageRejected2"); //$NON-NLS-1$
 
         tableEntries = new ArrayList<ExternalDbMapEntry>();
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_page");
-        mapperTableEntry.setExpression("");
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("id_page"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(""); //$NON-NLS-1$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("id_book");
-        mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "id_book"));
-        mapperTableEntry.setOperator("String");
+        mapperTableEntry.setName("id_book"); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable("page", "id_book")); //$NON-NLS-1$ //$NON-NLS-2$
+        mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTableEntry = new ExternalDbMapEntry();
-        mapperTableEntry.setName("content");
+        mapperTableEntry.setName("content"); //$NON-NLS-1$
         mapperTableEntry
-                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent"));
-        mapperTableEntry.setOperator("int");
+                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent")); //$NON-NLS-1$
+        mapperTableEntry.setOperator("int"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
         mapperTable.setMetadataTableEntries(tableEntries);
@@ -847,30 +847,30 @@ public class OracleDbMapTestGenerator {
         connectionList = new ArrayList<IConnection>();
 
         Connection connection = new Connection();
-        connection.setName("book");
+        connection.setName("book"); //$NON-NLS-1$
         connection.setLineStyle(EConnectionType.FLOW_MAIN);
 
         MetadataTable metadataTable = new MetadataTable();
-        metadataTable.setTableName("book2");
+        metadataTable.setTableName("book2"); //$NON-NLS-1$
 
         connection.setMetadataTable(metadataTable);
 
         ArrayList<IMetadataColumn> metadatColumns = new ArrayList<IMetadataColumn>();
 
         MetadataColumn metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id_book");
+        metadataColumn.setLabel("id_book"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("name");
+        metadataColumn.setLabel("name"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("nb_pages");
+        metadataColumn.setLabel("nb_pages"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
@@ -880,29 +880,29 @@ public class OracleDbMapTestGenerator {
         connectionList.add(connection);
 
         connection = new Connection();
-        connection.setName("page");
+        connection.setName("page"); //$NON-NLS-1$
         connection.setLineStyle(EConnectionType.FLOW_REF);
 
         metadataTable = new MetadataTable();
-        metadataTable.setTableName("page2");
+        metadataTable.setTableName("page2"); //$NON-NLS-1$
 
         connection.setMetadataTable(metadataTable);
 
         metadatColumns = new ArrayList<IMetadataColumn>();
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id");
+        metadataColumn.setLabel("id"); //$NON-NLS-1$
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id_book");
+        metadataColumn.setLabel("id_book"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("content");
+        metadataColumn.setLabel("content"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
@@ -912,29 +912,29 @@ public class OracleDbMapTestGenerator {
         connectionList.add(connection);
 
         connection = new Connection();
-        connection.setName("userInput");
+        connection.setName("userInput"); //$NON-NLS-1$
         connection.setLineStyle(EConnectionType.FLOW_REF);
 
         metadataTable = new MetadataTable();
-        metadataTable.setTableName("user_input50");
+        metadataTable.setTableName("user_input50"); //$NON-NLS-1$
 
         connection.setMetadataTable(metadataTable);
 
         metadatColumns = new ArrayList<IMetadataColumn>();
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id");
+        metadataColumn.setLabel("id"); //$NON-NLS-1$
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id_book");
+        metadataColumn.setLabel("id_book"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id_page_different");
+        metadataColumn.setLabel("id_page_different"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
@@ -955,24 +955,24 @@ public class OracleDbMapTestGenerator {
         List<IMetadataTable> list = new ArrayList<IMetadataTable>();
 
         MetadataTable metadataTable = new MetadataTable();
-        metadataTable.setTableName("newBook");
+        metadataTable.setTableName("newBook"); //$NON-NLS-1$
 
         ArrayList<IMetadataColumn> metadatColumns = new ArrayList<IMetadataColumn>();
 
         MetadataColumn metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("newIdBook");
+        metadataColumn.setLabel("newIdBook"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("name");
+        metadataColumn.setLabel("name"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("nb_pages");
+        metadataColumn.setLabel("nb_pages"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
@@ -982,24 +982,24 @@ public class OracleDbMapTestGenerator {
         list.add(metadataTable);
 
         metadataTable = new MetadataTable();
-        metadataTable.setTableName("user");
+        metadataTable.setTableName("user"); //$NON-NLS-1$
 
         metadatColumns = new ArrayList<IMetadataColumn>();
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("idUser");
+        metadataColumn.setLabel("idUser"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("idBook");
+        metadataColumn.setLabel("idBook"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("content");
+        metadataColumn.setLabel("content"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
@@ -1009,24 +1009,24 @@ public class OracleDbMapTestGenerator {
         list.add(metadataTable);
 
         metadataTable = new MetadataTable();
-        metadataTable.setTableName("newPageRejected");
+        metadataTable.setTableName("newPageRejected"); //$NON-NLS-1$
 
         metadatColumns = new ArrayList<IMetadataColumn>();
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id");
+        metadataColumn.setLabel("id"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id_book");
+        metadataColumn.setLabel("id_book"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("content");
+        metadataColumn.setLabel("content"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
@@ -1036,24 +1036,24 @@ public class OracleDbMapTestGenerator {
         list.add(metadataTable);
 
         metadataTable = new MetadataTable();
-        metadataTable.setTableName("newPageRejected2");
+        metadataTable.setTableName("newPageRejected2"); //$NON-NLS-1$
 
         metadatColumns = new ArrayList<IMetadataColumn>();
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id");
+        metadataColumn.setLabel("id"); //$NON-NLS-1$
         metadataColumn.setKey(true);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("id_book");
+        metadataColumn.setLabel("id_book"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.INTEGER.toString());
         metadatColumns.add(metadataColumn);
 
         metadataColumn = new MetadataColumnTest();
-        metadataColumn.setLabel("content");
+        metadataColumn.setLabel("content"); //$NON-NLS-1$
         metadataColumn.setKey(false);
         // metadataColumn.setType(EMetadataType.STRING.toString());
         metadatColumns.add(metadataColumn);
@@ -1084,7 +1084,7 @@ public class OracleDbMapTestGenerator {
 
         @Override
         public String getTalendType() {
-            return "";
+            return ""; //$NON-NLS-1$
         }
 
     }

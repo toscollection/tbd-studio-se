@@ -31,43 +31,43 @@ public class OracleOperatorsManager implements IDbOperatorManager {
      * 
      */
     public enum DB_OPERATOR implements IDbOperator {
-        EQUAL("="),
-        DIFFERENT("<>"),
-        STRICTLY_INFERIOR("<"),
-        INFERIOR_OR_EQUAL("<="),
-        SUPERIOR(">"),
-        SUPERIOR_OR_EQUAL(">="),
+        EQUAL("="), //$NON-NLS-1$
+        DIFFERENT("<>"), //$NON-NLS-1$
+        STRICTLY_INFERIOR("<"), //$NON-NLS-1$
+        INFERIOR_OR_EQUAL("<="), //$NON-NLS-1$
+        SUPERIOR(">"), //$NON-NLS-1$
+        SUPERIOR_OR_EQUAL(">="), //$NON-NLS-1$
 
-        IS_NULL("IS NULL", null, true),
-        IS_NOT_NULL("IS NOT NULL", null, true),
-        BETWEEN("BETWEEN", " AND ", false),
-        NOT_BETWEEN("NOT BETWEEN", " AND ", false),
-        IN("IN", "( , )", false),
-        NOT_IN("NOT IN", "( , )", false),
-        LIKE("LIKE", "'%'", false),
-        NOT_LIKE("NOT LIKE", "'%'", false),
-        EXISTS("EXISTS", "(SELECT * FROM MyTable)", false),
+        IS_NULL("IS NULL", null, true), //$NON-NLS-1$
+        IS_NOT_NULL("IS NOT NULL", null, true), //$NON-NLS-1$
+        BETWEEN("BETWEEN", " AND ", false), //$NON-NLS-1$ //$NON-NLS-2$
+        NOT_BETWEEN("NOT BETWEEN", " AND ", false), //$NON-NLS-1$ //$NON-NLS-2$
+        IN("IN", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        NOT_IN("NOT IN", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        LIKE("LIKE", "'%'", false), //$NON-NLS-1$ //$NON-NLS-2$
+        NOT_LIKE("NOT LIKE", "'%'", false), //$NON-NLS-1$ //$NON-NLS-2$
+        EXISTS("EXISTS", "(SELECT * FROM MyTable)", false), //$NON-NLS-1$ //$NON-NLS-2$
 
-        EQUAL_ANY("=", "( , )", false),
-        DIFFERENT_ANY("<> ANY", "( , )", false),
-        STRICTLY_INFERIOR_ANY("< ANY", "( , )", false),
-        INFERIOR_OR_EQUAL_ANY("<= ANY", "( , )", false),
-        SUPERIOR_ANY("> ANY", "( , )", false),
-        SUPERIOR_OR_EQUAL_ANY(">= ANY", "( , )", false),
+        EQUAL_ANY("=", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        DIFFERENT_ANY("<> ANY", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        STRICTLY_INFERIOR_ANY("< ANY", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        INFERIOR_OR_EQUAL_ANY("<= ANY", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        SUPERIOR_ANY("> ANY", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        SUPERIOR_OR_EQUAL_ANY(">= ANY", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
 
-        EQUAL_SOME("= SOME", "( , )", false),
-        DIFFERENT_SOME("<> SOME", "( , )", false),
-        STRICTLY_INFERIOR_SOME("< SOME", "( , )", false),
-        INFERIOR_OR_EQUAL_SOME("<= SOME", "( , )", false),
-        SUPERIOR_SOME("> SOME", "( , )", false),
-        SUPERIOR_OR_EQUAL_SOME(">= SOME", "( , )", false),
+        EQUAL_SOME("= SOME", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        DIFFERENT_SOME("<> SOME", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        STRICTLY_INFERIOR_SOME("< SOME", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        INFERIOR_OR_EQUAL_SOME("<= SOME", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        SUPERIOR_SOME("> SOME", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        SUPERIOR_OR_EQUAL_SOME(">= SOME", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
 
-        EQUAL_ALL("= ALL", "( , )", false),
-        DIFFERENT_ALL("<> ALL", "( , )", false),
-        STRICTLY_INFERIOR_ALL("< ALL", "( , )", false),
-        INFERIOR_OR_EQUAL_ALL("<= ALL", "( , )", false),
-        SUPERIOR_ALL("> ALL", "( , )", false),
-        SUPERIOR_OR_EQUAL_ALL(">= ALL", "( , )", false),
+        EQUAL_ALL("= ALL", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        DIFFERENT_ALL("<> ALL", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        STRICTLY_INFERIOR_ALL("< ALL", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        INFERIOR_OR_EQUAL_ALL("<= ALL", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        SUPERIOR_ALL("> ALL", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        SUPERIOR_OR_EQUAL_ALL(">= ALL", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
 
         ;
 

@@ -58,17 +58,17 @@ public class TMapperMainPerljet {
             MysqlDbMapTestGenerator testGenerator = new MysqlDbMapTestGenerator(gm, false);
             connections = testGenerator.getConnectionList();
             data = (ExternalDbMapData) testGenerator.getExternalData();
-            uniqueNameComponent = "testUniqueNameNode";
+            uniqueNameComponent = "testUniqueNameNode"; //$NON-NLS-1$
         }
 
         List<ExternalDbMapTable> outputTables = data.getOutputTables();
 
-        String insertQuery = "";
+        String insertQuery = ""; //$NON-NLS-1$
         if (outputTables.size() > 0) {
             ExternalDbMapTable outputTable = outputTables.get(0);
 
             String sqlQuery = gm.buildSqlSelect((MysqlMapperComponent) node, outputTable.getName());
-            insertQuery = "$select_query_" + outputTable.getName() + " = \"" + sqlQuery + "\"";
+            insertQuery = "$select_query_" + outputTable.getName() + " = \"" + sqlQuery + "\""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         }
 

@@ -31,22 +31,22 @@ public class MysqlOperatorsManager implements IDbOperatorManager {
      * 
      */
     public enum DB_OPERATOR implements IDbOperator {
-        EQUAL("="),
-        DIFFERENT("<>"),
-        STRICTLY_INFERIOR("<"),
-        INFERIOR_OR_EQUAL("<="),
-        SUPERIOR(">"),
-        SUPERIOR_OR_EQUAL(">="),
+        EQUAL("="), //$NON-NLS-1$
+        DIFFERENT("<>"), //$NON-NLS-1$
+        STRICTLY_INFERIOR("<"), //$NON-NLS-1$
+        INFERIOR_OR_EQUAL("<="), //$NON-NLS-1$
+        SUPERIOR(">"), //$NON-NLS-1$
+        SUPERIOR_OR_EQUAL(">="), //$NON-NLS-1$
 
-        IS_NULL("IS NULL", null, true),
-        IS_NOT_NULL("IS NOT NULL", null, true),
-        BETWEEN("BETWEEN", " AND ", false),
-        NOT_BETWEEN("NOT BETWEEN", " AND ", false),
-        IN("IN", "( , )", false),
-        NOT_IN("NOT IN", "( , )", false),
-        LIKE("LIKE", "'%'", false),
-        NOT_LIKE("NOT LIKE", "'%'", false),
-        EXISTS("EXISTS", "(SELECT * FROM MyTable)", false), ;
+        IS_NULL("IS NULL", null, true), //$NON-NLS-1$
+        IS_NOT_NULL("IS NOT NULL", null, true), //$NON-NLS-1$
+        BETWEEN("BETWEEN", " AND ", false), //$NON-NLS-1$ //$NON-NLS-2$
+        NOT_BETWEEN("NOT BETWEEN", " AND ", false), //$NON-NLS-1$ //$NON-NLS-2$
+        IN("IN", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        NOT_IN("NOT IN", "( , )", false), //$NON-NLS-1$ //$NON-NLS-2$
+        LIKE("LIKE", "'%'", false), //$NON-NLS-1$ //$NON-NLS-2$
+        NOT_LIKE("NOT LIKE", "'%'", false), //$NON-NLS-1$ //$NON-NLS-2$
+        EXISTS("EXISTS", "(SELECT * FROM MyTable)", false), ; //$NON-NLS-1$ //$NON-NLS-2$
 
         private String operator;
 

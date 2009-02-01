@@ -115,7 +115,7 @@ public class OracleGenerationManager extends DbGenerationManager {
                         .getMetadataTable());
             }
 
-            sb.append("SELECT\n");
+            sb.append("SELECT\n"); //$NON-NLS-1$
 
             List<ExternalDbMapEntry> metadataTableEntries = outputTable.getMetadataTableEntries();
             if (metadataTableEntries != null) {
@@ -124,19 +124,19 @@ public class OracleGenerationManager extends DbGenerationManager {
                     ExternalDbMapEntry dbMapEntry = metadataTableEntries.get(i);
                     String expression = dbMapEntry.getExpression();
                     if (i > 0) {
-                        sb.append(", ");
+                        sb.append(", "); //$NON-NLS-1$
                     }
                     if (expression != null && expression.trim().length() > 0) {
                         sb.append(dbMapEntry.getExpression());
                     } else {
-                        sb.append("/* Expression of output entry '" + outputTable.getName() + "."
-                                + dbMapEntry.getName() + "' is not set */");
+                        sb.append("/* Expression of output entry '" + outputTable.getName() + "." //$NON-NLS-1$ //$NON-NLS-2$
+                                + dbMapEntry.getName() + "' is not set */"); //$NON-NLS-1$
                     }
                 }
             }
 
             List<ExternalDbMapTable> inputTables = data.getInputTables();
-            sb.append("\nFROM");
+            sb.append("\nFROM"); //$NON-NLS-1$
 
             // load input table in hash
             boolean explicitJoin = false;
@@ -161,7 +161,7 @@ public class OracleGenerationManager extends DbGenerationManager {
                 }
             }
 
-            sb.append("\n");
+            sb.append("\n"); //$NON-NLS-1$
 
             IJoinType previousJoinType = null;
 
@@ -184,12 +184,12 @@ public class OracleGenerationManager extends DbGenerationManager {
                             buildTableDeclaration(sb, inputTables.get(i - 1), commaCouldBeAdded, crCouldBeAdded, true);
                             previousJoinType = joinType;
                         } else {
-                            sb.append("\n");
+                            sb.append("\n"); //$NON-NLS-1$
                         }
-                        sb.append(" ");
+                        sb.append(" "); //$NON-NLS-1$
                     }
                     String labelJoinType = joinType.getLabel();
-                    sb.append(labelJoinType).append(" ");
+                    sb.append(labelJoinType).append(" "); //$NON-NLS-1$
                     if (joinType == AbstractDbLanguage.JOIN.CROSS_JOIN) {
                         ExternalDbMapTable nextTable = null;
                         if (i < lstSizeInputTables) {
@@ -205,12 +205,12 @@ public class OracleGenerationManager extends DbGenerationManager {
                         // } else {
                         // sb.append(" <!! NO JOIN CLAUSES FOR '" + inputTable.getName() + "' !!> ");
                         // }
-                        sb.append(" ");
-                        sb.append("ON( ");
+                        sb.append(" "); //$NON-NLS-1$
+                        sb.append("ON( "); //$NON-NLS-1$
                         if (!buildConditions(sb, inputTable, true, true)) {
-                            sb.append("/* Conditions of joint are not set */");
+                            sb.append("/* Conditions of joint are not set */"); //$NON-NLS-1$
                         }
-                        sb.append(" )");
+                        sb.append(" )"); //$NON-NLS-1$
                     }
 
                 }
@@ -226,7 +226,7 @@ public class OracleGenerationManager extends DbGenerationManager {
                         ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
                         if (dbMapEntry.getExpression() != null) {
                             if (!isFirstClause) {
-                                sbAddClauses.append("\n AND ");
+                                sbAddClauses.append("\n AND "); //$NON-NLS-1$
                             }
                             sbAddClauses.append(dbMapEntry.getExpression());
                             isFirstClause = false;
@@ -239,10 +239,10 @@ public class OracleGenerationManager extends DbGenerationManager {
             String addClauses = sbAddClauses.toString();
 
             if (whereClauses.trim().length() > 0 || addClauses.trim().length() > 0) {
-                sb.append("\nWHERE ");
+                sb.append("\nWHERE "); //$NON-NLS-1$
                 sb.append(whereClauses);
                 if (whereClauses.trim().length() > 0 && addClauses.trim().length() > 0) {
-                    sb.append("\n AND ");
+                    sb.append("\n AND "); //$NON-NLS-1$
                 }
 
                 sb.append(addClauses);
@@ -301,23 +301,23 @@ public class OracleGenerationManager extends DbGenerationManager {
         if (operatorIsSet) {
 
             if (writeCr) {
-                sbWhere.append("\n ");
+                sbWhere.append("\n "); //$NON-NLS-1$
             }
             if (!isFirstClause) {
-                sbWhere.append(" AND ");
+                sbWhere.append(" AND "); //$NON-NLS-1$
             }
             String locationInputEntry = language.getLocation(table.getName(), dbMapEntry.getName());
-            sbWhere.append(" ");
+            sbWhere.append(" "); //$NON-NLS-1$
             sbWhere.append(locationInputEntry);
-            sbWhere.append(" ");
+            sbWhere.append(" "); //$NON-NLS-1$
             if (operatorIsSet) {
-                sbWhere.append(dbOperator.getOperator()).append(" ");
+                sbWhere.append(dbOperator.getOperator()).append(" "); //$NON-NLS-1$
             } else if (!operatorIsSet && expressionIsSet) {
-                sbWhere.append("/* Operator of input entry '" + dbMapEntry.getName() + "' is not set */ ");
+                sbWhere.append("/* Operator of input entry '" + dbMapEntry.getName() + "' is not set */ "); //$NON-NLS-1$ //$NON-NLS-2$
             }
             if (operatorIsSet && !expressionIsSet && !dbOperator.isMonoOperand()) {
-                sbWhere.append("/* Expression of input entry '" + table.getName() + "." + dbMapEntry.getName()
-                        + "' is not set */");
+                sbWhere.append("/* Expression of input entry '" + table.getName() + "." + dbMapEntry.getName() //$NON-NLS-1$ //$NON-NLS-2$
+                        + "' is not set */"); //$NON-NLS-1$
             } else if (expressionIsSet) {
                 sbWhere.append(dbMapEntry.getExpression());
             }
@@ -339,18 +339,18 @@ public class OracleGenerationManager extends DbGenerationManager {
      */
     private void buildTableDeclaration(StringBuilder sb, ExternalDbMapTable inputTable, boolean commaCouldBeAdded,
             boolean crCouldBeAdded, boolean writingInJoin) {
-        sb.append(" ");
+        sb.append(" "); //$NON-NLS-1$
         String alias = inputTable.getAlias();
         if (alias != null) {
             if (!aliasAlreadyDeclared.contains(inputTable.getName())) {
                 if (crCouldBeAdded) {
-                    sb.append("\n");
+                    sb.append("\n"); //$NON-NLS-1$
                 }
                 if (commaCouldBeAdded) {
-                    sb.append(", ");
+                    sb.append(", "); //$NON-NLS-1$
                 }
                 sb.append(inputTable.getTableName());
-                sb.append(" ");
+                sb.append(" "); //$NON-NLS-1$
                 sb.append(alias);
                 aliasAlreadyDeclared.add(alias);
             } else {
@@ -360,10 +360,10 @@ public class OracleGenerationManager extends DbGenerationManager {
             }
         } else {
             if (crCouldBeAdded) {
-                sb.append("\n");
+                sb.append("\n"); //$NON-NLS-1$
             }
             if (commaCouldBeAdded) {
-                sb.append(", ");
+                sb.append(", "); //$NON-NLS-1$
             }
             sb.append(inputTable.getName());
         }
