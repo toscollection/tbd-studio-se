@@ -16,11 +16,13 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     protected static final int KEYS_SIZE_PLUS_VALUES_SIZE = 8;
 
-    protected ObjectInputStream keysDataStream;
+    protected BufferedInputStream keysBufferedInStream;
+    
+    protected ObjectInputStream keysObjectInStream;
 
-    protected DataInputStream valuesDataStream;
-
-    protected ObjectInputStream valuesObjectStream;
+    protected DataInputStream valuesDataInStream;
+    
+    protected ObjectInputStream valuesObjectInStream;
 
     protected long length;
 
@@ -62,6 +64,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     protected int fileIndex;
 
+
     /**
      * 
      * DOC amaumont OrderedBeanLookup constructor comment.
@@ -80,9 +83,10 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
         this.fileIndex = fileIndex;
 
-        this.keysDataStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(keysDataFile)));
-        this.valuesDataStream = new DataInputStream(new BufferedInputStream(new FileInputStream(valuesFilePath)));
-        this.valuesObjectStream = new ObjectInputStream(this.valuesDataStream);
+        this.keysBufferedInStream = new BufferedInputStream(new FileInputStream(keysDataFile));
+        this.keysObjectInStream = new ObjectInputStream(keysBufferedInStream);
+        this.valuesDataInStream = new DataInputStream(new BufferedInputStream(new FileInputStream(valuesFilePath)));
+        this.valuesObjectInStream = new ObjectInputStream(this.valuesDataInStream);
         this.lookupInstance = rowProvider.createInstance();
         this.previousAskedKey = rowProvider.createInstance();
         this.rowProvider = rowProvider;
@@ -112,12 +116,12 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
 
     protected void loadDataKeys(B lookupInstance) throws IOException {
         atLeastOneLoadkeys = true;
-        lookupInstance.readKeysData(keysDataStream);
-        currentValuesSize = keysDataStream.readInt();
+        lookupInstance.readKeysData(keysObjectInStream);
+        currentValuesSize = keysObjectInStream.readInt();
     }
 
     protected boolean isEndOfKeysFile() throws IOException {
-        return keysDataStream.available() == 0;
+        return keysBufferedInStream.available() == 0;
     }
 
     protected void loadDataValues(B lookupInstance, int valuesSize) throws IOException {
@@ -125,13 +129,13 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
             skipValuesSize += remainingSkip;
 
             int currentSkipped = 0;
-            while (skipValuesSize != (currentSkipped += valuesDataStream.skip(skipValuesSize - currentSkipped))) {
+            while (skipValuesSize != (currentSkipped += valuesDataInStream.skip(skipValuesSize - currentSkipped))) {
             }
             // System.out.println("Data skipped:" + skipValuesSize);
             remainingSkip = 0;
             skipValuesSize = 0;
         }
-        lookupInstance.readValuesData(valuesDataStream, valuesObjectStream);
+        lookupInstance.readValuesData(valuesDataInStream, valuesObjectInStream);
 
     }
 
@@ -141,11 +145,11 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
      * @see org.talend.designer.components.persistent.ILookupManager#close()
      */
     public void close() throws IOException {
-        if (keysDataStream != null) {
-            keysDataStream.close();
+        if (keysObjectInStream != null) {
+            keysObjectInStream.close();
         }
-        if (valuesDataStream != null) {
-            valuesObjectStream.close();
+        if (valuesDataInStream != null) {
+            valuesObjectInStream.close();
         }
     }
 

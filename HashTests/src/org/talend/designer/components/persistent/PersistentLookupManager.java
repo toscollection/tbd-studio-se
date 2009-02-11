@@ -18,17 +18,17 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
 
     private String container;
 
-    // private DataOutputStream dataOut;
-    private ObjectOutputStream dataOut;
+    private ObjectOutputStream objectOutStream;
 
-    // private DataInputStream dataIn;
-    private ObjectInputStream dataIn;
+    private BufferedInputStream bufferedInStream;
+    private ObjectInputStream objectInStream;
 
     private IRowCreator<B> rowCreator;
 
     private B dataInstance;
 
     private MATCHING_MODE matchingMode;
+
 
     /**
      * DOC amaumont PersistentLookupManager constructor comment.
@@ -46,7 +46,7 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
 
     public void initPut() throws IOException {
 
-        dataOut = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(buildDataFilePath())));
+        objectOutStream = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(buildDataFilePath())));
         this.dataInstance = this.rowCreator.createRowInstance();
 
     }
@@ -56,12 +56,12 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
     }
 
     public void put(B bean) throws IOException {
-        bean.writeData(dataOut);
+        bean.writeData(objectOutStream);
     }
 
     public void endPut() throws IOException {
 
-        dataOut.close();
+        objectOutStream.close();
 
     }
 
@@ -74,8 +74,8 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
 
     public void lookup(B key) throws IOException {
 
-        if (this.dataIn != null) {
-            this.dataIn.close();
+        if (this.objectInStream != null) {
+            this.objectInStream.close();
         }
 
         initDataIn();
@@ -83,7 +83,8 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
     }
 
     private void initDataIn() throws IOException {
-        this.dataIn = new ObjectInputStream(new BufferedInputStream(new FileInputStream(buildDataFilePath())));
+        this.bufferedInStream = new BufferedInputStream(new FileInputStream(buildDataFilePath()));
+        this.objectInStream = new ObjectInputStream(bufferedInStream);
     }
 
     public B getNextFreeRow() {
@@ -91,17 +92,17 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
     }
 
     public boolean hasNext() throws IOException {
-        return this.dataIn.available() > 0;
+        return this.bufferedInStream.available() > 0;
     }
 
     public B next() throws IOException {
-        dataInstance.readData(this.dataIn);
+        dataInstance.readData(this.objectInStream);
         return dataInstance;
     }
 
     public void endGet() throws IOException {
 
-        this.dataIn.close();
+        this.objectInStream.close();
 
         File file = new File(buildDataFilePath());
         file.delete();
