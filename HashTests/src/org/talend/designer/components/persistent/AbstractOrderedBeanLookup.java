@@ -121,7 +121,7 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
     }
 
     protected boolean isEndOfKeysFile() throws IOException {
-        return keysBufferedInStream.available() == 0;
+        return !(keysObjectInStream.available() > 0 || keysBufferedInStream.available() > 0);
     }
 
     protected void loadDataValues(B lookupInstance, int valuesSize) throws IOException {
@@ -147,6 +147,9 @@ public abstract class AbstractOrderedBeanLookup<B extends Comparable<B> & IPersi
     public void close() throws IOException {
         if (keysObjectInStream != null) {
             keysObjectInStream.close();
+        }
+        if (keysBufferedInStream != null) {
+            keysBufferedInStream.close();
         }
         if (valuesDataInStream != null) {
             valuesObjectInStream.close();

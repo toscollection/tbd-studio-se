@@ -180,7 +180,6 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
             writeBuffer();
         }
         buffer = null;
-        MemoryHelper.gc();
     }
 
     /**
@@ -394,8 +393,6 @@ public abstract class PersistentRowSorterIterator<V extends IPersistableRow> imp
         for (int i = 0; i < files.size(); i++) {
             files.get(i).delete();
         }
-
-        MemoryHelper.gc();
 
     }
 

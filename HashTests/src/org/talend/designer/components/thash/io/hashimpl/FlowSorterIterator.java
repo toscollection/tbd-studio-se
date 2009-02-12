@@ -111,8 +111,6 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
 
             writeBuffer(buffer, itemCountInBuffer);
 
-            System.gc();
-
             itemCountInBuffer = 0;
         }
         buffer[itemCountInBuffer++] = item;
@@ -130,8 +128,6 @@ public class FlowSorterIterator<V extends ILightSerializable> implements IMapHas
      */
     public void endPut() throws IOException {
         writeRemainingData();
-
-        System.gc();
 
         // for (; iFinalHashFile < numberFiles; iFinalHashFile++) {
         //

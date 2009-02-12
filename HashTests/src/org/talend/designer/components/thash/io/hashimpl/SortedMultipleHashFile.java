@@ -148,8 +148,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
             // clear buffer
             Arrays.fill(buffer, 0, itemCountInBuffer, null);
 
-            System.gc();
-
             itemCountInBuffer = 0;
         }
         buffer[itemCountInBuffer++] = item;
@@ -193,8 +191,6 @@ public class SortedMultipleHashFile implements IMapHashFile {
             bufferCount++;
         }
         buffer = null;
-
-        System.gc();
 
     }
 

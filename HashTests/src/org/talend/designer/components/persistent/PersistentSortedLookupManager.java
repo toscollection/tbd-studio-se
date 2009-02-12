@@ -165,8 +165,6 @@ public class PersistentSortedLookupManager<B extends IPersistableComparableLooku
 
         buffer = null;
 
-        MemoryHelper.gc();
-
     }
 
     private void writeBuffer() throws FileNotFoundException, IOException {

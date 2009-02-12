@@ -77,6 +77,9 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
         if (this.objectInStream != null) {
             this.objectInStream.close();
         }
+        if(this.bufferedInStream != null) {
+            this.bufferedInStream.close();
+        }
 
         initDataIn();
 
@@ -92,7 +95,7 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
     }
 
     public boolean hasNext() throws IOException {
-        return this.bufferedInStream.available() > 0;
+        return this.objectInStream.available() > 0 || this.bufferedInStream.available() > 0;
     }
 
     public B next() throws IOException {
@@ -103,6 +106,7 @@ public class PersistentLookupManager<B extends IPersistableRow<B>> implements IP
     public void endGet() throws IOException {
 
         this.objectInStream.close();
+        this.bufferedInStream.close();
 
         File file = new File(buildDataFilePath());
         file.delete();
