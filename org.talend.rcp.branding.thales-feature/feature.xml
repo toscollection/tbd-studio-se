@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.talend.rcp.branding.thales_feature"
+      label="Thales branding feature"
+      version="2.1.0.qualifier"
+      provider-name=".Talend SA."
+      plugin="org.talend.rcp.branding.thales">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <url>
+      <update label="Thales In-Gest Talend update site for stables" url="http://talendforge.org/core/updatesite/stable/"/>
+   </url>
+
+   <includes
+         id="org.epic_feature"
+         version="0.0.0"
+         search-location="self"/>
+         
+   <includes
+         id="org.eclipse.datatools_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.commons_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.help_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.core_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.repository_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.designer_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.designer.business_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.rcp_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.sbi_feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.talend.spagic_feature"
+         version="0.0.0"
+         search-location="self"/>
+         
+                  
+   <includes
+         id="org.talend.componentdesigner_feature"
+         version="0.0.0"
+         search-location="self"/>
+         
+	<includes
+         id="org.talend.componentdesigner_feature"
+         version="0.0.0"
+         search-location="self"/>
+         
+   <plugin
+         id="org.talend.rcp.branding.thales"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>
