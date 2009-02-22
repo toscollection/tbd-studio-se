@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+<extension
+      id="product"
+      point="org.eclipse.core.runtime.products">
+   <product
+         application="org.talend.rcp.branding.thales.application"
+         name="ThalesInGest">
+      <property
+            name="windowImages"
+            value="platform:/plugin/org.talend.rcp/icons/appli_16x16.gif,platform:/plugin/org.talend.rcp/icons/appli_32x32.gif,platform:/plugin/org.talend.rcp/icons/appli_48x48.gif"/>
+      <property
+            name="aboutImage"
+            value="/icons/about.gif"/>
+      <property
+            name="aboutText"
+            value="%productBlurb"/>
+      <property
+            name="preferenceCustomization"
+            value="plugin_customization.ini"/>
+   </product>
+</extension>
+   <extension
+         point="org.eclipse.ui.intro.config">
+      <config
+            introId="org.talend.rcp.thales.intro"
+            content="introContent.xml"
+            id="org.talend.rcp.thales.configId">
+         <presentation
+               home-page-id="root">
+            <implementation
+                  kind="html"
+                  os="win32,linux,macosx">
+            </implementation>
+         </presentation>
+      </config>
+   </extension>
+      <extension
+         point="org.eclipse.ui.intro">
+      <intro
+            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
+            icon="platform:/plugin/org.talend.rcp/icons/appli_16x16.png"
+            id="org.talend.rcp.thales.intro">
+      </intro>
+      <introProductBinding
+            introId="org.talend.rcp.thales.intro"
+            productId="org.talend.rcp.branding.thales.product">
+      </introProductBinding>
+   </extension>
+      <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.talend.rcp.intro.Application">
+         </run>
+      </application>
+   </extension>
+      <extension
+            point="org.talend.core.service">
+         <Service
+               class="org.talend.rcp.branding.thales.ThalesBrandingService"
+               serviceId="org.talend.core.ui.branding.IBrandingService"/>
+      </extension>
+</plugin>
