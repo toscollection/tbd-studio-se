@@ -14,6 +14,7 @@ package org.talend.rcp.branding.thales;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
                 IBrandingService.class);
         try {
             File setupFile = new File(FileLocator.resolve(Activator.BUNDLE.getEntry("resources/setup.properties")).getFile());
-            FileReader fileReader = new FileReader(setupFile);
+            FileInputStream fileReader = new FileInputStream(setupFile);
             brandingProperties.load(fileReader);
             fileReader.close();
         } catch (Exception e) {
