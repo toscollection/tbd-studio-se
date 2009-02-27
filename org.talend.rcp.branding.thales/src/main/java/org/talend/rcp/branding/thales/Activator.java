@@ -1,6 +1,8 @@
 package org.talend.rcp.branding.thales;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -10,6 +12,8 @@ public class Activator extends AbstractUIPlugin {
 
     // The plug-in ID
     public static final String PLUGIN_ID = "org.talend.rcp.branding.thales"; //$NON-NLS-1$
+
+    public static final Bundle BUNDLE = Platform.getBundle(PLUGIN_ID);
 
     // The shared instance
     private static Activator plugin;

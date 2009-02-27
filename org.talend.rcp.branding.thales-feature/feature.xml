@@ -26,7 +26,7 @@
          id="org.epic_feature"
          version="0.0.0"
          search-location="self"/>
-         
+
    <includes
          id="org.eclipse.datatools_feature"
          version="0.0.0"
@@ -76,18 +76,7 @@
          id="org.talend.spagic_feature"
          version="0.0.0"
          search-location="self"/>
-         
-                  
-   <includes
-         id="org.talend.componentdesigner_feature"
-         version="0.0.0"
-         search-location="self"/>
-         
-	<includes
-         id="org.talend.componentdesigner_feature"
-         version="0.0.0"
-         search-location="self"/>
-         
+
    <plugin
          id="org.talend.rcp.branding.thales"
          download-size="0"
