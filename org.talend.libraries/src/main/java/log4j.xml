@@ -6,7 +6,7 @@
 	<!-- For layout pattern, see doc at http://jakarta.apache.org/log4j/docs/api/org/apache/log4j/PatternLayout.html -->
 
 	<!-- The TOS appender -->
-	<appender name="TOSAppender" class="org.talend.libraries.PluginLogAppender">
+	<appender name="TOSAppender" class="org.talend.platform.logging.TalendPlatformLogAppender">
 		<param name="Threshold" value="info" />
 		<param name="SymbolicName" value="org.talend.libraries"/>
 		<layout class="org.apache.log4j.PatternLayout">
