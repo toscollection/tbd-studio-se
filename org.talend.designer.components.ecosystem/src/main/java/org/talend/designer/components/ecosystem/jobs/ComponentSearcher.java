@@ -49,8 +49,43 @@ public class ComponentSearcher {
         List<ComponentExtension> extensions = new ArrayList<ComponentExtension>();
 
         try {
-        	List<RevisionInfo> revisions = EcosystemUtils.getRevisionList(
-					version, getLanguageId(language));
+            List<RevisionInfo> revisions = EcosystemUtils.getRevisionList(version, getLanguageId(language));
+
+            Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
+
+            for (RevisionInfo revision : revisions) {
+                ComponentExtension extension = extensionsMap.get(revision.getExtension_name());
+                if (extension == null) {
+                    extension = EcosystemFactory.eINSTANCE.createComponentExtension();
+                    extension.setName(revision.getExtension_name());
+                    extension.setAuthor(revision.getAuthor_name());
+                    extension.setLanguage(Language.get(getLanguageId(language)));
+                    extension.setDescription(revision.getExtension_description());
+
+                    extensionsMap.put(extension.getName(), extension);
+                    extensions.add(extension);
+                }
+
+                org.talend.designer.components.ecosystem.model.Revision rev = convertRevision(revision);
+                extension.getRevisions().add(rev);
+                if (extension.getLatestRevision() == null || extension.getLatestRevision().getDate().before(rev.getDate())) {
+                    // assumes that the revision with latest release date is the newest one.
+                    extension.setLatestRevision(rev);
+                }
+            }
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+
+        return extensions;
+
+    }
+
+    public static List<ComponentExtension> getAvailableComponentExtensions(String version, ECodeLanguage language, String type) {
+        List<ComponentExtension> extensions = new ArrayList<ComponentExtension>();
+
+        try {
+            List<RevisionInfo> revisions = EcosystemUtils.getRevisionList(version, getLanguageId(language), type);
 
             Map<String, ComponentExtension> extensionsMap = new HashMap<String, ComponentExtension>();
 
@@ -106,8 +141,7 @@ public class ComponentSearcher {
      * @return
      * @throws ParseException
      */
-    private static org.talend.designer.components.ecosystem.model.Revision convertRevision(
-			RevisionInfo revision)
+    private static org.talend.designer.components.ecosystem.model.Revision convertRevision(RevisionInfo revision)
             throws ParseException {
         org.talend.designer.components.ecosystem.model.Revision rev = EcosystemFactory.eINSTANCE.createRevision();
         rev.setDate(formatter.parse(revision.getRevision_date()));

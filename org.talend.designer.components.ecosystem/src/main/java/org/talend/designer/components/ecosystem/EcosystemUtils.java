@@ -66,7 +66,7 @@ import org.talend.repository.model.ComponentsFactoryProvider;
  */
 public class EcosystemUtils {
 
-    public static String VERSION_LIST_URL = "http://talendforge.org/ext/api/get_version_list.php";
+    public static String VERSION_LIST_URL = "http://talendforge.org/exchange/tos/api/get_version_list.php";
 
     public static String REVISION_LIST_URL = "http://talendforge.org/exchange/tos/api/get_revision_list.php";
 
@@ -140,6 +140,15 @@ public class EcosystemUtils {
         url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",6").append("&version=");
         String[] branch = getBranch(version);
         url.append(StringUtils.join(branch, ","));
+        String jsonContent = sendGetRequest(url.toString());
+        return parseJsonObject(jsonContent, RevisionInfo.class);
+
+    }
+
+    public static List<RevisionInfo> getRevisionList(String version, int language, String type) throws Exception {
+        StringBuffer url = new StringBuffer();
+        url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",").append(type).append("&version=")
+                .append(version);
         String jsonContent = sendGetRequest(url.toString());
         return parseJsonObject(jsonContent, RevisionInfo.class);
 

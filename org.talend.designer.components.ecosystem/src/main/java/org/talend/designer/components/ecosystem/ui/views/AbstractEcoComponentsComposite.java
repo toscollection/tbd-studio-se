@@ -49,322 +49,303 @@ import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.Revision;
 
 /**
- * DOC chuang  class global comment. Detailled comment
+ * DOC chuang class global comment. Detailled comment
  */
 public abstract class AbstractEcoComponentsComposite extends Composite {
-	
-	protected static final int ICON_HEIGHT = 22;
 
-	protected static final int ICON_WIDTH = 22;
+    protected static final int ICON_HEIGHT = 22;
 
-	Map<String, ComponentExtension> fInstalledExtensions = new HashMap<String, ComponentExtension>();
-	
-	protected static DateFormat dateFormatter = new SimpleDateFormat(
-			"yyyy-MM-dd");
+    protected static final int ICON_WIDTH = 22;
 
-	protected IBeanPropertyAccessors<ComponentExtension, String> DESCRIPTION_ACCESSOR;
+    Map<String, ComponentExtension> fInstalledExtensions = new HashMap<String, ComponentExtension>();
 
-	protected IBeanPropertyAccessors<ComponentExtension, String> NAME_ACCESSOR;
+    protected static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-	protected IBeanPropertyAccessors<ComponentExtension, String> AUTHOR_ACCESSOR;
+    protected IBeanPropertyAccessors<ComponentExtension, String> DESCRIPTION_ACCESSOR;
 
-	protected IBeanPropertyAccessors<ComponentExtension, String> STATUS_ACCESSOR;
+    protected IBeanPropertyAccessors<ComponentExtension, String> NAME_ACCESSOR;
 
-	protected IBeanPropertyAccessors<ComponentExtension, String> LATEST_REVISION_ACCESSOR;
+    protected IBeanPropertyAccessors<ComponentExtension, String> AUTHOR_ACCESSOR;
 
-	protected IBeanPropertyAccessors<ComponentExtension, String> INSTALLED_REVISION_ACCESSOR;
+    protected IBeanPropertyAccessors<ComponentExtension, String> STATUS_ACCESSOR;
 
-	// protected IBeanPropertyAccessors<ComponentExtension, String>
-	// DATE_ACCESSOR;
+    protected IBeanPropertyAccessors<ComponentExtension, String> LATEST_REVISION_ACCESSOR;
 
-	protected TableViewerCreator<ComponentExtension> fTableViewerCreator;
-	
-	protected Combo versionCombo;
-	
-	protected Shell shell;
-	
-	protected List<TableViewerCreatorColumn> sortableColumns = new ArrayList<TableViewerCreatorColumn>();
-	
-	protected TableViewerCreatorColumn<ComponentExtension, String> fNameColumn;
+    protected IBeanPropertyAccessors<ComponentExtension, String> INSTALLED_REVISION_ACCESSOR;
 
-	/**
-	 * DOC chuang AbstractEcoComponentsComposite constructor comment.
-	 */
-	AbstractEcoComponentsComposite(Composite parent, Shell shell) {
-		super(parent, SWT.NONE);
-		this.shell = shell;		
-		initialColumnModel();
-	}
-	
-	
-	protected void initialColumnModel() {
-		DESCRIPTION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+    // protected IBeanPropertyAccessors<ComponentExtension, String>
+    // DATE_ACCESSOR;
 
-			@Override
-			public String get(ComponentExtension bean) {
-				return bean.getDescription();
-			}
+    protected TableViewerCreator<ComponentExtension> fTableViewerCreator;
 
-		};
+    protected Combo versionCombo;
 
-		NAME_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+    protected Shell shell;
 
-			@Override
-			public String get(ComponentExtension bean) {
-				return bean.getName();
-			}
+    protected List<TableViewerCreatorColumn> sortableColumns = new ArrayList<TableViewerCreatorColumn>();
 
-		};
+    protected TableViewerCreatorColumn<ComponentExtension, String> fNameColumn;
 
-		AUTHOR_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+    /**
+     * DOC chuang AbstractEcoComponentsComposite constructor comment.
+     */
+    AbstractEcoComponentsComposite(Composite parent, Shell shell) {
+        super(parent, SWT.NONE);
+        this.shell = shell;
+        initialColumnModel();
+    }
 
-			@Override
-			public String get(ComponentExtension bean) {
-				return bean.getAuthor();
-			}
+    protected void initialColumnModel() {
+        DESCRIPTION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
-		};
+            @Override
+            public String get(ComponentExtension bean) {
+                return bean.getDescription();
+            }
 
-		STATUS_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+        };
 
-			@Override
-			public String get(ComponentExtension bean) {
-				if (bean.getInstalledLocation() == null) {
-					return EcosystemConstants.STATUS_NOT_INSTALLED;
-				} else if (!bean.getLatestRevision().getName().equals(
-						bean.getInstalledRevision().getName())) {
-					return EcosystemConstants.STATUS_DEPRECATED;
-				} else {
-					return EcosystemConstants.STATUS_INSTALLED;
-				}
-			}
+        NAME_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
-		};
+            @Override
+            public String get(ComponentExtension bean) {
+                return bean.getName();
+            }
 
-		LATEST_REVISION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+        };
 
-			@Override
-			public String get(ComponentExtension bean) {
-				return String.format("%1$-6s%2$s", bean.getLatestRevision()
-						.getName(), " ("
-						+ dateFormatter.format(bean.getLatestRevision()
-								.getDate()) + ")");
-			}
+        AUTHOR_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
-		};
+            @Override
+            public String get(ComponentExtension bean) {
+                return bean.getAuthor();
+            }
 
-		INSTALLED_REVISION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
+        };
 
-			@Override
-			public String get(ComponentExtension bean) {
-				Revision installed = bean.getInstalledRevision();
-				if (installed == null) {
-					return "";
-				} else {
-					return String.format("%1$-6s%2$s", installed.getName(),
-							" (" + dateFormatter.format(installed.getDate())
-									+ ")");
-				}
-			}
+        STATUS_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
-		};
+            @Override
+            public String get(ComponentExtension bean) {
+                if (bean.getInstalledLocation() == null) {
+                    return EcosystemConstants.STATUS_NOT_INSTALLED;
+                } else if (!bean.getLatestRevision().getName().equals(bean.getInstalledRevision().getName())) {
+                    return EcosystemConstants.STATUS_DEPRECATED;
+                } else {
+                    return EcosystemConstants.STATUS_INSTALLED;
+                }
+            }
 
-		// DATE_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension,
-		// String>() {
-		//
-		// @Override
-		// public String get(ComponentExtension bean) {
-		// return dateFormatter.format(bean.getLatestRevision().getDate());
-		// }
-		//
-		// };
-	}
+        };
 
-	
-	/**
-	 * yzhang Comment method "creatTosVersionFilter".
-	 * 
-	 * @param parent
-	 */
-	protected void creatTosVersionFilter(Composite parent) {
-		Composite tosVersionFilterComposite = new Composite(parent, SWT.NONE);
+        LATEST_REVISION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
-		tosVersionFilterComposite.setLayout(new GridLayout(2, false));
-		Label versionFilterLable = new Label(tosVersionFilterComposite,
-				SWT.NONE);
-		versionFilterLable.setText(EcosystemConstants.VERSION_FILTER_LABEL);
-		versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN
-				| SWT.READ_ONLY);
-		String currentVersion = EcosystemPlugin.getDefault()
-				.getPreferenceStore().getString(
-						EcosystemView.TOS_VERSION_FILTER);
+            @Override
+            public String get(ComponentExtension bean) {
+                return String.format("%1$-6s%2$s", bean.getLatestRevision().getName(), " ("
+                        + dateFormatter.format(bean.getLatestRevision().getDate()) + ")");
+            }
 
-		currentVersion = EcosystemUtils.getMainVersion(currentVersion);
-		String versions[] = EcosystemUtils.getVersionList();
+        };
 
-		if (versions != null) {
-			int stringIndex = 0;
-			for (int i = 0; i < versions.length; i++) {
-				versionCombo.add(versions[i]);
-				if (versions[i].equals(currentVersion)) {
-					stringIndex = i;
-				}
-			}
-			versionCombo.select(stringIndex);
-		}
+        INSTALLED_REVISION_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension, String>() {
 
-		versionCombo.addSelectionListener(new SelectionListener() {
+            @Override
+            public String get(ComponentExtension bean) {
+                Revision installed = bean.getInstalledRevision();
+                if (installed == null) {
+                    return "";
+                } else {
+                    return String.format("%1$-6s%2$s", installed.getName(), " (" + dateFormatter.format(installed.getDate())
+                            + ")");
+                }
+            }
 
-			public void widgetDefaultSelected(SelectionEvent e) {
-				widgetSelected(e);
-			}
+        };
 
-			public void widgetSelected(SelectionEvent e) {
+        // DATE_ACCESSOR = new BeanPropertyAccessorsAdapter<ComponentExtension,
+        // String>() {
+        //
+        // @Override
+        // public String get(ComponentExtension bean) {
+        // return dateFormatter.format(bean.getLatestRevision().getDate());
+        // }
+        //
+        // };
+    }
 
-				onVersionFilterChanged(e);
-			}
-		});
-	}
-	
-	protected abstract void onVersionFilterChanged(SelectionEvent e);		
-	
-	GridLayout clearGridLayoutSpace(GridLayout layout) {
-		layout.horizontalSpacing = 0;
-		layout.verticalSpacing = 0;
-		layout.marginWidth = 0;
-		layout.marginHeight = 0;
-		return layout;
-	}
+    /**
+     * yzhang Comment method "creatTosVersionFilter".
+     * 
+     * @param parent
+     */
+    protected void creatTosVersionFilter(Composite parent) {
+        Composite tosVersionFilterComposite = new Composite(parent, SWT.NONE);
 
-	/**
-	 * DOC YeXiaowei Comment method "createInstallActionColumn".
-	 */
-	void createActionColumn(int width) {
-		TableViewerCreatorColumn<ComponentExtension, String> actionColumn = createTableColumn(
-				"", false, false, width, null);
-		actionColumn.setResizable(false);
-	}
+        tosVersionFilterComposite.setLayout(new GridLayout(2, false));
+        Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
+        versionFilterLable.setText(EcosystemConstants.VERSION_FILTER_LABEL);
+        versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString(EcosystemView.TOS_VERSION_FILTER);
 
-	void disposeEditors(List<TableEditor> editors) {
-		for (TableEditor editor : editors) {
-			Control control = editor.getEditor();
-			if (control != null) {
-				control.dispose();
-			}
-			editor.dispose();
-		}
-		editors.clear();
-	}
+        currentVersion = EcosystemUtils.getMainVersion(currentVersion);
+        String versions[] = EcosystemUtils.getVersionList();
 
-	TableViewerCreatorColumn<ComponentExtension, String> createTableColumn(
-			String title, boolean sortable, boolean modifiable, int width,
-			IBeanPropertyAccessors<ComponentExtension, String> accessor) {
-		TableViewerCreatorColumn<ComponentExtension, String> column = new TableViewerCreatorColumn<ComponentExtension, String>(
-				fTableViewerCreator);
-		column.setTitle(title);
-		column.setSortable(sortable);
-		column.setModifiable(modifiable);
-		// column.setWeight(weight);
-		column.setWidth(width);
-		column.setBeanPropertyAccessors(accessor);
-		if (sortable) {
-			sortableColumns.add(column);
-		}
-		return column;
-	}
-	
+        if (versions != null) {
+            int stringIndex = 0;
+            for (int i = 0; i < versions.length; i++) {
+                versionCombo.add(versions[i]);
+                if (versions[i].equals(currentVersion)) {
+                    stringIndex = i;
+                }
+            }
+            versionCombo.select(stringIndex);
+        }
 
-	/**
-	 * Initialize the content of table and sort by name.
-	 * 
-	 * @param extensions
-	 */
-	public void initTable(List<ComponentExtension> extensions) {
-		fTableViewerCreator.init(extensions);
-		fTableViewerCreator.setSort(fNameColumn, SORT.ASC);
-		for (TableViewerCreatorColumn column : sortableColumns) {
-			column.getTableColumnSelectionListener().addColumnSortedListener(
-					new IColumnSortedListener() {
+        versionCombo.addSelectionListener(new SelectionListener() {
 
-						public void handle() {
-							addButtons();
-						}
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
 
-					});
-		}
+            public void widgetSelected(SelectionEvent e) {
 
-		Table table = fTableViewerCreator.getTable();
-		for (TableColumn col : table.getColumns()) {
-			col.pack();
-		}
-		table.setFocus();
+                onVersionFilterChanged(e);
+            }
+        });
+    }
 
-		addButtons();
-	}
-	
-	abstract void addButtons();
+    protected abstract void onVersionFilterChanged(SelectionEvent e);
 
-	/**
-	 * Load installed components information from file.
-	 */
-	public void loadFromFile() {
-		try {
-			List<ComponentExtension> extensions = EcosystemUtils
-					.loadInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE);
-			for (ComponentExtension ext : extensions) {
-				fInstalledExtensions.put(ext.getName(), ext);
-			}
-		} catch (Throwable e) {
-			// do nothing, the file may not exist because this is the first time
-			// we use this view and we haven't
-			// installed any extensions
-		}
-	}
-	
-	/**
-	 * Save installed components information to file.
-	 */
-	public void saveToFile() {
-		try {
-			EcosystemUtils.saveInstallComponents(
-					EcosystemConstants.COMPONENT_MODEL_FILE,
-					getInstalledExtensions());
-		} catch (IOException e) {
-			ExceptionHandler.process(e);
-		}
-	}
-	
-	/**
-	 * @return the installedExtensions
-	 */
-	public List<ComponentExtension> getInstalledExtensions() {
-		return new ArrayList<ComponentExtension>(fInstalledExtensions.values());
-	}
+    protected GridLayout clearGridLayoutSpace(GridLayout layout) {
+        layout.horizontalSpacing = 0;
+        layout.verticalSpacing = 0;
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+        return layout;
+    }
 
-	public void addInstalledExtension(ComponentExtension extension) {
-		fInstalledExtensions.put(extension.getName(), extension);
-	}
-	
-	/**
-	 * DOC chuang Comment method "addButtonStateListener".
-	 * 
-	 * @param button
-	 * @param action
-	 */
-	protected void addButtonStateListener(final Button button,
-			final IAction action) {
-		action.addPropertyChangeListener(new IPropertyChangeListener() {
+    /**
+     * DOC YeXiaowei Comment method "createInstallActionColumn".
+     */
+    protected void createActionColumn(int width) {
+        TableViewerCreatorColumn<ComponentExtension, String> actionColumn = createTableColumn("", false, false, width, null);
+        actionColumn.setResizable(false);
+    }
 
-			public void propertyChange(PropertyChangeEvent event) {
-				if (!button.isDisposed()) {
-					if (event.getProperty().equals(IAction.ENABLED)) {
-						button.setEnabled((Boolean) event.getNewValue());
-					}
-				} else {
-					action.removePropertyChangeListener(this);
-				}
-			}
-		});
-	}
+    void disposeEditors(List<TableEditor> editors) {
+        for (TableEditor editor : editors) {
+            Control control = editor.getEditor();
+            if (control != null) {
+                control.dispose();
+            }
+            editor.dispose();
+        }
+        editors.clear();
+    }
+
+    protected TableViewerCreatorColumn<ComponentExtension, String> createTableColumn(String title, boolean sortable,
+            boolean modifiable, int width, IBeanPropertyAccessors<ComponentExtension, String> accessor) {
+        TableViewerCreatorColumn<ComponentExtension, String> column = new TableViewerCreatorColumn<ComponentExtension, String>(
+                fTableViewerCreator);
+        column.setTitle(title);
+        column.setSortable(sortable);
+        column.setModifiable(modifiable);
+        // column.setWeight(weight);
+        column.setWidth(width);
+        column.setBeanPropertyAccessors(accessor);
+        if (sortable) {
+            sortableColumns.add(column);
+        }
+        return column;
+    }
+
+    /**
+     * Initialize the content of table and sort by name.
+     * 
+     * @param extensions
+     */
+    public void initTable(List<ComponentExtension> extensions) {
+        fTableViewerCreator.init(extensions);
+        fTableViewerCreator.setSort(fNameColumn, SORT.ASC);
+        for (TableViewerCreatorColumn column : sortableColumns) {
+            column.getTableColumnSelectionListener().addColumnSortedListener(new IColumnSortedListener() {
+
+                public void handle() {
+                    addButtons();
+                }
+
+            });
+        }
+
+        Table table = fTableViewerCreator.getTable();
+        for (TableColumn col : table.getColumns()) {
+            col.pack();
+        }
+        table.setFocus();
+
+        addButtons();
+    }
+
+    abstract void addButtons();
+
+    /**
+     * Load installed components information from file.
+     */
+    public void loadFromFile() {
+        try {
+            List<ComponentExtension> extensions = EcosystemUtils.loadInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE);
+            for (ComponentExtension ext : extensions) {
+                fInstalledExtensions.put(ext.getName(), ext);
+            }
+        } catch (Throwable e) {
+            // do nothing, the file may not exist because this is the first time
+            // we use this view and we haven't
+            // installed any extensions
+        }
+    }
+
+    /**
+     * Save installed components information to file.
+     */
+    public void saveToFile() {
+        try {
+            EcosystemUtils.saveInstallComponents(EcosystemConstants.COMPONENT_MODEL_FILE, getInstalledExtensions());
+        } catch (IOException e) {
+            ExceptionHandler.process(e);
+        }
+    }
+
+    /**
+     * @return the installedExtensions
+     */
+    public List<ComponentExtension> getInstalledExtensions() {
+        return new ArrayList<ComponentExtension>(fInstalledExtensions.values());
+    }
+
+    public void addInstalledExtension(ComponentExtension extension) {
+        fInstalledExtensions.put(extension.getName(), extension);
+    }
+
+    /**
+     * DOC chuang Comment method "addButtonStateListener".
+     * 
+     * @param button
+     * @param action
+     */
+    protected void addButtonStateListener(final Button button, final IAction action) {
+        action.addPropertyChangeListener(new IPropertyChangeListener() {
+
+            public void propertyChange(PropertyChangeEvent event) {
+                if (!button.isDisposed()) {
+                    if (event.getProperty().equals(IAction.ENABLED)) {
+                        button.setEnabled((Boolean) event.getNewValue());
+                    }
+                } else {
+                    action.removePropertyChangeListener(this);
+                }
+            }
+        });
+    }
 
 }

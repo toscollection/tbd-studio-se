@@ -21,3 +21,7 @@ Require-Bundle: org.eclipse.ui,
  org.apache.commons.discovery,
  org.apache.lucene
 Eclipse-LazyStart: true
+Export-Package: org.talend.designer.components.ecosystem,
+ org.talend.designer.components.ecosystem.jobs,
+ org.talend.designer.components.ecosystem.model,
+ org.talend.designer.components.ecosystem.ui.views
