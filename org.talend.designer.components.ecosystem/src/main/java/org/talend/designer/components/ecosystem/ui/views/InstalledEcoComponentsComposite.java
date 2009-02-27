@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -68,7 +67,7 @@ import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
-import org.talend.designer.components.ecosystem.model.util.ActionHelper;
+import org.talend.designer.components.ecosystem.ui.actions.UpdateComponenentsUtil;
 
 /**
  * DOC chuang class global comment. Detailled comment
@@ -83,9 +82,13 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
     List<TableEditor> removeEditors = new ArrayList<TableEditor>();
 
+    List<ComponentExtension> compatible;
+
     private Text fFilterText;
 
     private String[] fFilters = AVAILABLE_FILTERS;
+
+    public ComponentExtension curExtensionItem;
 
     private static final String[] AVAILABLE_FILTERS = new String[] { "Name", "Description" }; //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -94,6 +97,8 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
     private static final String REFRESH_COMPONENTS = "refreshComponents";
 
     protected static boolean filterchoose;
+
+    private String UPDATEKEY = "UPDATEKEY";
 
     String value;
 
@@ -407,11 +412,13 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         for (final TableItem item : table.getItems()) {
             TableEditor editor = new TableEditor(table);
             updateEditors.add(editor);
+
             final Button button = new Button(table, SWT.FLAT);
             button.setImage(StatusImageProvider.getUpdateImage((ComponentExtension) item.getData()));
             button.setToolTipText("Update Component");
             button.setData(item);
             if (button.getImage() == StatusImageProvider.UPDATE_ICON) {
+
                 button.addSelectionListener(new SelectionAdapter() {
 
                     /*
@@ -422,12 +429,14 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                      */
                     @Override
                     public void widgetSelected(SelectionEvent e) {
-                        table.select(table.indexOf(item));
-                        IAction action = ActionHelper.getDownloadAction();
-                        if (action != null) {
-                            addButtonStateListener(button, action);
-                            action.run();
-                        }
+                        button.setEnabled(false);
+                        List<ComponentExtension> curExtensionItems = new ArrayList<ComponentExtension>();
+                        curExtensionItems.add((ComponentExtension) item.getData());
+                        UpdateComponenentsUtil update = new UpdateComponenentsUtil();
+                        update.init(EcosystemUtils.getEcosystemView());
+                        update.run(curExtensionItems);
+                        button.setEnabled(true);
+
                     }
 
                 });
@@ -460,6 +469,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
     private void selectInstalledVersion() {
 
+        versionCombo.setEnabled(false);
         Job job = new Job("refresh Installed Components") {
 
             public IStatus run(IProgressMonitor monitor) {
@@ -467,14 +477,21 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                 monitor.beginTask("refresh Installed Components", IProgressMonitor.UNKNOWN);
                 try {
 
-                    List<ComponentExtension> compatible = ComponentSearcher.getAvailableComponentExtensions(value, EcosystemUtils
-                            .getCurrentLanguage());
+                    compatible = ComponentSearcher.getAvailableComponentExtensions(value, EcosystemUtils.getCurrentLanguage());
 
                     final List<ComponentExtension> compatibleAndInstalled = new ArrayList<ComponentExtension>();
                     for (ComponentExtension installed : fInstalledExtensions.values()) {
                         // check if in compatible list
                         for (ComponentExtension curComp : compatible) {
                             if (curComp.getName().equals(installed.getName())) {
+                                // if current version was latest
+                                int installedVersion = Integer.parseInt(installed.getInstalledRevision().getName());
+                                int curCompVerision = Integer.parseInt(curComp.getLatestRevision().getName());
+                                if ((installed.getInstalledRevision() != null && installed.getInstalledRevision().equals(
+                                        installed.getLatestRevision()))
+                                        && (installedVersion < curCompVerision)) {
+                                    installed.setLatestRevision(curComp.getLatestRevision());
+                                }
                                 compatibleAndInstalled.add(installed);
                                 break;
                             }
@@ -503,6 +520,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
         job.setUser(true);
         job.schedule();
+        versionCombo.setEnabled(true);
 
     }
 
