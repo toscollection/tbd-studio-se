@@ -64,9 +64,9 @@ Require-Bundle: org.apache.log4j;bundle-version="1.2.13",
  org.apache.axis,
  javax.xml.rpc,
  javax.xml.soap,
- org.talend.libraries.jdbc.ingres;bundle-version="1.0.0";visibility:=reexport,
- org.talend.libraries.jdbc.hsql;bundle-version="1.0.0";visibility:=reexport,
- org.talend.libraries.jdbc.informix;bundle-version="1.0.0";visibility:=reexport
+ org.talend.libraries.jdbc.ingres;visibility:=reexport,
+ org.talend.libraries.jdbc.hsql;visibility:=reexport,
+ org.talend.libraries.jdbc.informix;visibility:=reexport
 Bundle-Activator: org.talend.libraries.LibrariesPlugin
 Import-Package: com.ibm.icu.text
 Bundle-Vendor: .Talend SA.
