@@ -61,5 +61,12 @@
             id="org.talend.designer.components.ecosystem.EcosystemComponentsProvider">
       </ComponentsProvider>
    </extension>
+   <extension
+         point="org.talend.core.service">
+      <Service
+            class="org.talend.designer.components.ecosystem.ui.dialog.EcosystemService"
+            serviceId="IEcosystemService">
+      </Service>
+   </extension>
 
 </plugin>
