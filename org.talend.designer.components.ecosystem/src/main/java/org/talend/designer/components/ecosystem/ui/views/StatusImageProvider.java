@@ -57,8 +57,8 @@ public class StatusImageProvider implements IColumnImageProvider<ComponentExtens
     }
 
     public static Image getUpdateImage(ComponentExtension extension) {
-        int installedVersion = Integer.parseInt(extension.getInstalledRevision().getName());
-        int LatestRevision = Integer.parseInt(extension.getLatestRevision().getName());
+        double installedVersion = new Double(extension.getInstalledRevision().getName());
+        double LatestRevision = new Double(extension.getLatestRevision().getName());
         if (extension.getInstalledRevision() != null && installedVersion < LatestRevision) {
             return UPDATE_ICON;
         } else {

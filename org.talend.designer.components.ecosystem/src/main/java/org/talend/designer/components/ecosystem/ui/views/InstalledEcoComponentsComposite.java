@@ -485,8 +485,8 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                         for (ComponentExtension curComp : compatible) {
                             if (curComp.getName().equals(installed.getName())) {
                                 // if current version was latest
-                                int installedVersion = Integer.parseInt(installed.getInstalledRevision().getName());
-                                int curCompVerision = Integer.parseInt(curComp.getLatestRevision().getName());
+                                double installedVersion = new Double(installed.getInstalledRevision().getName());
+                                double curCompVerision = new Double(curComp.getLatestRevision().getName());
                                 if (installedVersion <= curCompVerision) {
                                     installed.setLatestRevision(curComp.getLatestRevision());
                                 }
