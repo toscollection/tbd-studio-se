@@ -25,12 +25,14 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -46,6 +48,7 @@ import org.talend.commons.ui.swt.tableviewer.TableViewerCreator;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
+import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentDownloader;
@@ -263,6 +266,34 @@ public class ImportEcosystemDialog extends Dialog {
             });
         }
 
+        @Override
+        protected void onVersionFilterChanged(SelectionEvent e) {
+            if (type == null) {
+                MessageBox box = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_WARNING | SWT.OK);
+                box.setText(Messages.getString("ImportEcosystemDialog.WARNING")); //$NON-NLS-1$
+                box.setMessage("Please choose Job/Templates/Routines first!"); //$NON-NLS-1$
+                box.open();
+                return;
+            }
+            Combo comboControl = (Combo) e.getSource();
+            String value = comboControl.getText();
+            IPreferenceStore preferenceStore = EcosystemPlugin.getDefault().getPreferenceStore();
+            preferenceStore.setValue("TOS_IMPORT_VERSION_FILTER", value);//$NON-NLS-1$
+            version = value;
+            if (type != null && !jobButton.getSelection() && !templatesButton.getSelection() && !routinesButton.getSelection()) {
+                if (type == "7") { //$NON-NLS-1$
+                    jobButton.setSelection(true);
+                } else if (type == "8") { //$NON-NLS-1$
+                    templatesButton.setSelection(true);
+                } else if (type == "9") { //$NON-NLS-1$
+                    routinesButton.setSelection(true);
+                }
+            }
+            progressBarMessage = Messages.getString("ImportEcosystemDialog.DOWNLOADCOMPONENTS"); //$NON-NLS-1$
+            findChoiceExchange();
+
+        }
+
         public void updateTable(List<ComponentExtension> extensions) {
             fTableViewerCreator.setInputList(extensions);
             fTableViewerCreator.setSort(fNameColumn, SORT.ASC);
@@ -289,11 +320,15 @@ public class ImportEcosystemDialog extends Dialog {
         private void creatOptions(Composite ecosystemDialogCom) {
             Group group = new Group(ecosystemDialogCom, SWT.NONE);
             GridLayout layout = new GridLayout();
-            layout.numColumns = 4;
+            layout.numColumns = 5;
             layout.makeColumnsEqualWidth = false;
             layout.marginWidth = 5;
             group.setLayout(layout);
             group.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+            String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString("TOS_IMPORT_VERSION_FILTER");//$NON-NLS-1$
+            currentVersion = EcosystemUtils.getMainVersion(currentVersion);
+            final String temVersion = currentVersion;
 
             jobButton = new Button(group, SWT.RADIO);
             jobButton.setText(Messages.getString("ImportEcosystemDialog.JOB_BUTTON")); //$NON-NLS-1$
@@ -301,7 +336,9 @@ public class ImportEcosystemDialog extends Dialog {
 
                 public void widgetSelected(SelectionEvent e) {
                     type = "7"; //$NON-NLS-1$
-                    version = "35,36,37"; //$NON-NLS-1$
+                    if (version == null) {
+                        version = temVersion;
+                    }
                     progressBarMessage = Messages.getString("ImportEcosystemDialog.DOWNLOAD_JOB"); //$NON-NLS-1$
                     findChoiceExchange();
 
@@ -314,7 +351,9 @@ public class ImportEcosystemDialog extends Dialog {
 
                 public void widgetSelected(SelectionEvent e) {
                     type = "8"; //$NON-NLS-1$
-                    version = "35,36,37"; //$NON-NLS-1$
+                    if (version == null) {
+                        version = temVersion;
+                    }
                     progressBarMessage = Messages.getString("ImportEcosystemDialog.TEMPLATES_PROGRESSBAR"); //$NON-NLS-1$
                     findChoiceExchange();
                 }
@@ -326,15 +365,30 @@ public class ImportEcosystemDialog extends Dialog {
 
                 public void widgetSelected(SelectionEvent e) {
                     type = "9"; //$NON-NLS-1$
-                    version = "35,36,37"; //$NON-NLS-1$
+                    if (version == null) {
+                        version = temVersion;
+                    }
                     progressBarMessage = Messages.getString("ImportEcosystemDialog.ROUTINES_PROGRESSBAR"); //$NON-NLS-1$
                     findChoiceExchange();
                 }
             });
 
+            creatTosVersionFilter(group);
+            String versions[] = EcosystemUtils.getVersionList();
+
+            if (versions != null) {
+                int stringIndex = 0;
+                for (int i = 0; i < versions.length; i++) {
+                    versionCombo.add(versions[i]);
+                    if (versions[i].equals(currentVersion)) {
+                        stringIndex = i;
+                    }
+                }
+                versionCombo.select(stringIndex);
+            }
             refresh = new Button(group, SWT.PUSH);
             refresh.setImage(ImageProvider.getImage(EImage.REFRESH_ICON));
-            refresh.setToolTipText(Messages.getString("ImportEcosystemDialog.REFRESH_BUTTON"));
+            refresh.setToolTipText(Messages.getString("ImportEcosystemDialog.REFRESH_BUTTON"));//$NON-NLS-1$
             //refresh.setText(Messages.getString("ImportEcosystemDialog.REFRESH_BUTTON")); //$NON-NLS-1$
             refresh.addSelectionListener(new SelectionAdapter() {
 

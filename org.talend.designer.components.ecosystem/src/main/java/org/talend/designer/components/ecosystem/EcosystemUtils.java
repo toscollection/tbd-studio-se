@@ -147,8 +147,9 @@ public class EcosystemUtils {
 
     public static List<RevisionInfo> getRevisionList(String version, int language, String type) throws Exception {
         StringBuffer url = new StringBuffer();
-        url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",").append(type).append("&version=") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                .append(version);
+        url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",").append(type).append("&version="); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        String[] branch = getBranch(version);
+        url.append(StringUtils.join(branch, ",")); //$NON-NLS-1$
         String jsonContent = sendGetRequest(url.toString());
         return parseJsonObject(jsonContent, RevisionInfo.class);
 
