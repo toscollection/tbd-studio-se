@@ -49,7 +49,7 @@ import org.talend.internal.utilities.Activator;
  */
 public class DirectoryInputDialog extends Dialog {
 
-    public final static String SCREENSHOT_STORE_DIRECTORY = "SCREENSHOT_STORE_DIRECTORY";
+    public final static String SCREENSHOT_STORE_DIRECTORY = "SCREENSHOT_STORE_DIRECTORY"; //$NON-NLS-1$
 
     private String title;
 
@@ -104,7 +104,7 @@ public class DirectoryInputDialog extends Dialog {
 
         String storedPath = Activator.getDefault().getDialogSettings().get(SCREENSHOT_STORE_DIRECTORY);
         if (storedPath == null) {
-            storedPath = "";
+            storedPath = ""; //$NON-NLS-1$
         }
         input.setText(storedPath);
         input.addModifyListener(new ModifyListener() {
@@ -115,7 +115,7 @@ public class DirectoryInputDialog extends Dialog {
         });
 
         Button button = new Button(composite, SWT.NONE);
-        button.setText("..");
+        button.setText(".."); //$NON-NLS-1$
         gd = new GridData();
         button.setLayoutData(gd);
         button.addSelectionListener(new SelectionAdapter() {

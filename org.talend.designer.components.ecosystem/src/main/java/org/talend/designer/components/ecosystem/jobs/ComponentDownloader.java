@@ -169,8 +169,8 @@ public class ComponentDownloader {
 
     public static void main(String[] args) {
         try {
-            new ComponentDownloader().download("http://talendforge.org/ext/upload/extension-33/revision-45/tFileOutputPDF.zip",
-                    "d:/temp");
+            new ComponentDownloader().download("http://talendforge.org/ext/upload/extension-33/revision-45/tFileOutputPDF.zip", //$NON-NLS-1$
+                    "d:/temp"); //$NON-NLS-1$
         } catch (Exception e) {
             e.printStackTrace();
         }

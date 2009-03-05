@@ -38,9 +38,9 @@ import org.apache.lucene.store.RAMDirectory;
  */
 public class LuceneSearchProvider<T> implements ISearchProvider<T> {
 
-    private static final String KEY_FIELD = "key";
+    private static final String KEY_FIELD = "key"; //$NON-NLS-1$
 
-    private static final String FIELD_PREFIX = "field";
+    private static final String FIELD_PREFIX = "field"; //$NON-NLS-1$
 
     // Construct a RAMDirectory to hold the in-memory representation
     // of the index.

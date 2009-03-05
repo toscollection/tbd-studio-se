@@ -84,7 +84,7 @@ public class ResultrDialog extends Dialog {
         GridData gd_okButton = new GridData(GridData.HORIZONTAL_ALIGN_CENTER);
         gd_okButton.widthHint = IDialogConstants.BUTTON_WIDTH;
         okButton.setLayoutData(gd_okButton);
-        okButton.setText("Ok");
+        okButton.setText("Ok"); //$NON-NLS-1$
         okButton.addSelectionListener(new SelectionAdapter() {
 
             @Override

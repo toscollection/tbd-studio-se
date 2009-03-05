@@ -21,7 +21,7 @@ import org.osgi.framework.BundleContext;
 public class EcosystemPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.talend.designer.components.ecosystem";
+    public static final String PLUGIN_ID = "org.talend.designer.components.ecosystem"; //$NON-NLS-1$
 
     // The shared instance
     private static EcosystemPlugin plugin;

@@ -31,7 +31,7 @@ import org.talend.designer.core.ui.MultiPageTalendEditor;
  */
 public class FakeMultiPageTalendEditor extends MultiPageTalendEditor {
 
-    public final static String ID = "org.talend.internal.utilities.actions.FakeMultiPageTalendEditor";
+    public final static String ID = "org.talend.internal.utilities.actions.FakeMultiPageTalendEditor"; //$NON-NLS-1$
 
     /*
      * (non-Javadoc)

@@ -66,20 +66,20 @@ import org.talend.repository.model.ComponentsFactoryProvider;
  */
 public class EcosystemUtils {
 
-    public static String VERSION_LIST_URL = "http://talendforge.org/exchange/tos/api/get_version_list.php";
+    public static String VERSION_LIST_URL = "http://talendforge.org/exchange/tos/api/get_version_list.php"; //$NON-NLS-1$
 
-    public static String REVISION_LIST_URL = "http://talendforge.org/exchange/tos/api/get_revision_list.php";
+    public static String REVISION_LIST_URL = "http://talendforge.org/exchange/tos/api/get_revision_list.php"; //$NON-NLS-1$
 
-    private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(\\.(RC|M)\\d+)?_r\\d+");
+    private static Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)(\\.(RC|M)\\d+)?_r\\d+"); //$NON-NLS-1$
 
-    private static Pattern DEFAULT_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)");
+    private static Pattern DEFAULT_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.*(\\d*)"); //$NON-NLS-1$
 
     private static MultiValueMap versionMap = new MultiValueMap();
 
     static {
         // System.setProperty("org.apache.axis.components.net.SocketFactory",
         // EcosystemSocketFactory.class.getName());
-        System.setProperty("axis.socketFactory", EcosystemSocketFactory.class.getName());
+        System.setProperty("axis.socketFactory", EcosystemSocketFactory.class.getName()); //$NON-NLS-1$
         // AxisProperties.setProperty("axis.socketFactory",
         // EcosystemSocketFactory.class.getName());
     }
@@ -93,8 +93,8 @@ public class EcosystemUtils {
     public static String normalizeVersion(String version) {
         Matcher matcher = VERSION_PATTERN.matcher(version);
         if (matcher.matches()) {
-            String str = version.substring(0, version.indexOf("_r"));
-            return str.replaceAll("\\.RC", "RC").replaceAll("\\.M", "M");
+            String str = version.substring(0, version.indexOf("_r")); //$NON-NLS-1$
+            return str.replaceAll("\\.RC", "RC").replaceAll("\\.M", "M"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         } else {
             // try again, ignore M, RC
             matcher = DEFAULT_PATTERN.matcher(version);
@@ -137,9 +137,9 @@ public class EcosystemUtils {
 
     public static List<RevisionInfo> getRevisionList(String version, int language) throws Exception {
         StringBuffer url = new StringBuffer();
-        url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",6").append("&version=");
+        url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",6").append("&version="); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         String[] branch = getBranch(version);
-        url.append(StringUtils.join(branch, ","));
+        url.append(StringUtils.join(branch, ",")); //$NON-NLS-1$
         String jsonContent = sendGetRequest(url.toString());
         return parseJsonObject(jsonContent, RevisionInfo.class);
 
@@ -147,7 +147,7 @@ public class EcosystemUtils {
 
     public static List<RevisionInfo> getRevisionList(String version, int language, String type) throws Exception {
         StringBuffer url = new StringBuffer();
-        url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",").append(type).append("&version=")
+        url.append(REVISION_LIST_URL).append("?categories=").append(language).append(",").append(type).append("&version=") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 .append(version);
         String jsonContent = sendGetRequest(url.toString());
         return parseJsonObject(jsonContent, RevisionInfo.class);
@@ -162,7 +162,7 @@ public class EcosystemUtils {
     }
 
     public static String getMainVersion(String version) {
-        Pattern pattern = Pattern.compile("(\\d+\\.\\d+).*");
+        Pattern pattern = Pattern.compile("(\\d+\\.\\d+).*"); //$NON-NLS-1$
         Matcher matcher = pattern.matcher(version);
         if (matcher.matches()) {
             version = matcher.group(1);
@@ -182,7 +182,7 @@ public class EcosystemUtils {
             String jsonContent = sendGetRequest(VERSION_LIST_URL);
             List<VersionInfo> list = parseJsonObject(jsonContent, VersionInfo.class);
 
-            Pattern pattern = Pattern.compile("(\\d+\\.\\d+).*");
+            Pattern pattern = Pattern.compile("(\\d+\\.\\d+).*"); //$NON-NLS-1$
             for (VersionInfo info : list) {
                 String name = info.getName();
                 Matcher matcher = pattern.matcher(name);
@@ -310,7 +310,7 @@ public class EcosystemUtils {
      * @return
      */
     public static File getComponentFolder() {
-        URL url = FileLocator.find(EcosystemPlugin.getDefault().getBundle(), new Path("component"), null);
+        URL url = FileLocator.find(EcosystemPlugin.getDefault().getBundle(), new Path("component"), null); //$NON-NLS-1$
         try {
             URL fileUrl = FileLocator.toFileURL(url);
             return new File(fileUrl.getPath());
@@ -400,8 +400,8 @@ public class EcosystemUtils {
     public static boolean isRevisionNewerThan(Revision revision1, Revision revision2) {
         // assumes that the format is something like X.X.X, where X are all
         // digit
-        String[] rev1 = revision1.getName().split("\\.");
-        String[] rev2 = revision2.getName().split("\\.");
+        String[] rev1 = revision1.getName().split("\\."); //$NON-NLS-1$
+        String[] rev2 = revision2.getName().split("\\."); //$NON-NLS-1$
         for (int i = 0; i < rev1.length && i < rev2.length; i++) {
             int a = Integer.parseInt(rev1[i]);
             int b = Integer.parseInt(rev2[i]);

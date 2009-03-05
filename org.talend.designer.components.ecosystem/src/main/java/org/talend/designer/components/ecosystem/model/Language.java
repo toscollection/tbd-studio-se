@@ -31,7 +31,7 @@ public enum Language implements Enumerator {
      * @generated
      * @ordered
      */
-    PERL(1, "PERL", "PERL"),
+    PERL(1, "PERL", "PERL"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>JAVA</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -40,7 +40,7 @@ public enum Language implements Enumerator {
      * @generated
      * @ordered
      */
-    JAVA(2, "JAVA", "JAVA");
+    JAVA(2, "JAVA", "JAVA"); //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * The '<em><b>PERL</b></em>' literal value. <!-- begin-user-doc -->

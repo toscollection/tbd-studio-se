@@ -87,11 +87,11 @@ public class ComponentInstaller {
             // some zip file does not have a directory entry, see bug 0005472: [ecosystem view] cannot install
             // tFileDelimitedSplit from ecosystem
             if (directory == null) {
-                int pos = entryName.indexOf("/");
+                int pos = entryName.indexOf("/"); //$NON-NLS-1$
                 if (pos > -1) {
                     directory = entryName.substring(0, pos);
                 } else {
-                    pos = entryName.indexOf("\\");
+                    pos = entryName.indexOf("\\"); //$NON-NLS-1$
                     if (pos > -1) {
                         directory = entryName.substring(0, pos);
                     }

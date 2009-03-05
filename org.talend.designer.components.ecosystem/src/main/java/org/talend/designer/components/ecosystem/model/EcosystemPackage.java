@@ -35,21 +35,21 @@ public interface EcosystemPackage extends EPackage {
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    String eNAME = "model";
+    String eNAME = "model"; //$NON-NLS-1$
 
     /**
      * The package namespace URI.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "model";
+    String eNS_URI = "model"; //$NON-NLS-1$
 
     /**
      * The package namespace name.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @generated
      */
-    String eNS_PREFIX = "model";
+    String eNS_PREFIX = "model"; //$NON-NLS-1$
 
     /**
      * The singleton instance of the package.

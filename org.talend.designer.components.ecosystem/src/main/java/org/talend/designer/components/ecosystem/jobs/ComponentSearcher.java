@@ -34,7 +34,7 @@ import org.talend.designer.components.ecosystem.model.RevisionInfo;
  */
 public class ComponentSearcher {
 
-    private static final String RELEASE_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String RELEASE_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"; //$NON-NLS-1$
 
     private static DateFormat formatter = new SimpleDateFormat(RELEASE_DATE_FORMAT);
 
@@ -176,7 +176,7 @@ public class ComponentSearcher {
                 } else if (featureIds[i] == EcosystemPackage.COMPONENT_EXTENSION__DESCRIPTION) {
                     text[i] = component.getDescription();
                 } else {
-                    text[i] = "";
+                    text[i] = ""; //$NON-NLS-1$
                 }
             }
 

@@ -68,7 +68,7 @@ public class BatchGenJobScreenshotAction extends Action {
 
     private static final int TIME_DELAY = 400;
 
-    private IPath destination = new Path("c:/");
+    private IPath destination = new Path("c:/"); //$NON-NLS-1$
 
     private Point mouseLocationBackup;
 
@@ -77,8 +77,8 @@ public class BatchGenJobScreenshotAction extends Action {
      */
     public BatchGenJobScreenshotAction() {
         super();
-        this.setActionDefinitionId("batch.generate.job.screenshot");
-        destination = destination.append("Screenshots").append("ProjectName").append("ComponentSettings").append("BasicSettings");
+        this.setActionDefinitionId("batch.generate.job.screenshot"); //$NON-NLS-1$
+        destination = destination.append("Screenshots").append("ProjectName").append("ComponentSettings").append("BasicSettings"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     /**
@@ -104,14 +104,14 @@ public class BatchGenJobScreenshotAction extends Action {
         if (!askForDestination()) {
             return;
         }
-        trace("Move the mouse outside Component Setting View");
+        trace("Move the mouse outside Component Setting View"); //$NON-NLS-1$
         moveMouse();
 
-        trace("close all editors");
+        trace("close all editors"); //$NON-NLS-1$
         closeAllEditor();
-        trace("show component setting view");
+        trace("show component setting view"); //$NON-NLS-1$
         showComponentSettingView();
-        trace("get all jobs");
+        trace("get all jobs"); //$NON-NLS-1$
         final List<IRepositoryObject> jobs = getAllJobs();
 
         Thread t = new Thread() {
@@ -125,8 +125,8 @@ public class BatchGenJobScreenshotAction extends Action {
 
                     public void run() {
                         restoreMousePosition();
-                        String msg = "Operation is successful, all the screenshots are stored in the directory <a>"
-                                + destination.toPortableString() + "</a>.";
+                        String msg = "Operation is successful, all the screenshots are stored in the directory <a>" //$NON-NLS-1$
+                                + destination.toPortableString() + "</a>."; //$NON-NLS-1$
                         ResultrDialog d = new ResultrDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), msg);
                         d.open();
                     }
@@ -170,8 +170,8 @@ public class BatchGenJobScreenshotAction extends Action {
     }
 
     private boolean askForDestination() {
-        DirectoryInputDialog d = new DirectoryInputDialog(null, "Select Directory",
-                "Please select the directory to save the screenshots.");
+        DirectoryInputDialog d = new DirectoryInputDialog(null, "Select Directory", //$NON-NLS-1$
+                "Please select the directory to save the screenshots."); //$NON-NLS-1$
         if (IDialogConstants.OK_ID == d.open()) {
             String result = d.getResult();
             destination = new Path(result);
@@ -179,7 +179,7 @@ public class BatchGenJobScreenshotAction extends Action {
                     Context.REPOSITORY_CONTEXT_KEY);
             String projectName = repositoryContext.getProject().getLabel();
             // "Screenshots/<technical_project_name>/ComponentSettings/<folders?>/<jobName>_<componentUniqueName>.png"
-            destination = destination.append("Screenshots").append(projectName).append("ComponentSettings");
+            destination = destination.append("Screenshots").append(projectName).append("ComponentSettings"); //$NON-NLS-1$ //$NON-NLS-2$
             return true;
         }
         return false;
@@ -245,7 +245,7 @@ public class BatchGenJobScreenshotAction extends Action {
         if (!folder.exists()) {
             folder.mkdirs();
         }
-        IPath path = directory.append(picName + ".png");
+        IPath path = directory.append(picName + ".png"); //$NON-NLS-1$
         il.save(path.toPortableString(), SWT.IMAGE_PNG);
     }
 
@@ -258,14 +258,14 @@ public class BatchGenJobScreenshotAction extends Action {
         final IRepositoryObject o1 = repositoryObject;
         final MultiPageTalendEditor[] editor = new MultiPageTalendEditor[1];
 
-        trace("open job " + repositoryObject.getProperty().getLabel());
+        trace("open job " + repositoryObject.getProperty().getLabel()); //$NON-NLS-1$
         Display.getDefault().syncExec(new Runnable() {
 
             public void run() {
                 try {
-                    trace("start open job ");
+                    trace("start open job "); //$NON-NLS-1$
                     editor[0] = openJob(o1);
-                    trace(" open job over");
+                    trace(" open job over"); //$NON-NLS-1$
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
                 }
@@ -303,7 +303,7 @@ public class BatchGenJobScreenshotAction extends Action {
 
         // save pic for each node's basic tab
         for (final Node node : nodes) {
-            trace("select node " + node.getUniqueName());
+            trace("select node " + node.getUniqueName()); //$NON-NLS-1$
             Display.getDefault().syncExec(new Runnable() {
 
                 public void run() {
@@ -324,7 +324,7 @@ public class BatchGenJobScreenshotAction extends Action {
             Display.getDefault().syncExec(new Runnable() {
 
                 public void run() {
-                    String picName = node.getUniqueName() + "_" + "BasicSettings";
+                    String picName = node.getUniqueName() + "_" + "BasicSettings"; //$NON-NLS-1$ //$NON-NLS-2$
                     takeSnapForComponentSettingView(jobName, picName, EComponentCategory.BASIC);
                 }
             });
@@ -352,7 +352,7 @@ public class BatchGenJobScreenshotAction extends Action {
             Display.getDefault().syncExec(new Runnable() {
 
                 public void run() {
-                    String picName = node.getUniqueName() + "_" + "AdvancedSettings";
+                    String picName = node.getUniqueName() + "_" + "AdvancedSettings"; //$NON-NLS-1$ //$NON-NLS-2$
                     takeSnapForComponentSettingView(jobName, picName, EComponentCategory.ADVANCED);
                 }
             });

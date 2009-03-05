@@ -99,7 +99,7 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
                     }
                 } else {
                     // assumes that if the folder contains properties file, it is the root folder of component
-                    if (file.getName().endsWith(".properties")) {
+                    if (file.getName().endsWith(".properties")) { //$NON-NLS-1$
                         componentFolder = folder;
                         break;
                     }
