@@ -12,7 +12,6 @@
 	<classpathentry exported="true" kind="lib" path="xerces-J_1.4.0.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="nanoxml.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="rowset.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="sqlexplorer.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="squirrel.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="talend_file_enhanced_20070724.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="javacsv.jar" sourcepath="org.talend.librariessrc.zip"/>
