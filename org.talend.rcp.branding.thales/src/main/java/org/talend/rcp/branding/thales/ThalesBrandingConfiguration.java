@@ -75,6 +75,16 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
             codeNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.ROUTINES);
             nodes.add(codeNode);
         }
+
+        String displayDbConnection = (String) brandingProperties.get("displayDbConnection");
+        if (displayDbConnection == null || !displayDbConnection.equals("true")) {
+            // 7.1. Metadata connections
+            RepositoryNode metadataConNode = new RepositoryNode(null, parent, ENodeType.SYSTEM_FOLDER);
+            metadataConNode.setProperties(EProperties.LABEL, ERepositoryObjectType.METADATA_CONNECTIONS);
+            metadataConNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.METADATA_CONNECTIONS);
+            nodes.add(metadataConNode);
+        }
+
         // 1. Business process
         RepositoryNode businessProcessNode = new RepositoryNode(null, parent, ENodeType.SYSTEM_FOLDER);
         businessProcessNode.setProperties(EProperties.LABEL, ERepositoryObjectType.BUSINESS_PROCESS);
@@ -214,5 +224,25 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
         bottomLayout.addView(problemsViewId);
         bottomLayout.addView(modulesViewId);
         bottomLayout.addView(ecosystemViewId);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.ui.branding.DefaultBrandingConfiguration#isUseMailLoginCheck()
+     */
+    @Override
+    public boolean isUseMailLoginCheck() {
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.ui.branding.DefaultBrandingConfiguration#isUseProductRegistration()
+     */
+    @Override
+    public boolean isUseProductRegistration() {
+        return false;
     }
 }
