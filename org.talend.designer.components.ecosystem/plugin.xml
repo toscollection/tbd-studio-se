@@ -13,7 +13,7 @@
             class="org.talend.designer.components.ecosystem.ui.views.EcosystemView"
             icon="icons/ecosystem_view.gif"
             id="org.talend.designer.components.ecosystem.ui.views.EcosystemView"            
-            name="Ecosystem">
+            name="%Ecosystem">
       </view>
    </extension>
      <extension
