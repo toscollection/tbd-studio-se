@@ -374,18 +374,18 @@ public class ImportEcosystemDialog extends Dialog {
             });
 
             creatTosVersionFilter(group);
-            String versions[] = EcosystemUtils.getVersionList();
-
-            if (versions != null) {
-                int stringIndex = 0;
-                for (int i = 0; i < versions.length; i++) {
-                    versionCombo.add(versions[i]);
-                    if (versions[i].equals(currentVersion)) {
-                        stringIndex = i;
-                    }
-                }
-                versionCombo.select(stringIndex);
-            }
+            // String versions[] = EcosystemUtils.getVersionList();
+            //
+            // if (versions != null) {
+            // int stringIndex = 0;
+            // for (int i = 0; i < versions.length; i++) {
+            // versionCombo.add(versions[i]);
+            // if (versions[i].equals(currentVersion)) {
+            // stringIndex = i;
+            // }
+            // }
+            // versionCombo.select(stringIndex);
+            // }
             refresh = new Button(group, SWT.PUSH);
             refresh.setImage(ImageProvider.getImage(EImage.REFRESH_ICON));
             refresh.setToolTipText(Messages.getString("ImportEcosystemDialog.REFRESH_BUTTON"));//$NON-NLS-1$
