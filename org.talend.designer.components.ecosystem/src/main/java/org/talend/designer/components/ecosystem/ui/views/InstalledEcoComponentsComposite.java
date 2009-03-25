@@ -86,6 +86,8 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
     private Text fFilterText;
 
+    private Button filterbutton;
+
     private String[] fFilters = AVAILABLE_FILTERS;
 
     public ComponentExtension curExtensionItem;
@@ -95,8 +97,6 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
     private static final Map<String, Integer> FILTER_MAP = new HashMap<String, Integer>();
 
     private static final String REFRESH_COMPONENTS = "refreshComponents";
-
-    protected static boolean filterchoose;
 
     private String UPDATEKEY = "UPDATEKEY";
 
@@ -177,15 +177,23 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         });
 
         creatTosVersionFilter(parent);
+        versionCombo.setEnabled(false);
 
-        Button filterbutton = new Button(parent, SWT.CHECK);
+        filterbutton = new Button(parent, SWT.CHECK);
         filterbutton.setText("Use Version Filter");
-        filterbutton.setSelection(true);
+        filterbutton.setSelection(false);
         filterbutton.addSelectionListener(new SelectionListener() {
 
             public void widgetSelected(SelectionEvent e) {
-                versionCombo.setEnabled(filterchoose);
-                filterchoose = !filterchoose;
+                boolean isTosFilterSelect = filterbutton.getSelection();
+                versionCombo.setEnabled(isTosFilterSelect);
+                if (isTosFilterSelect == false) {
+                    updateTable(new ArrayList<ComponentExtension>(fInstalledExtensions.values()));
+                }
+                if (isTosFilterSelect == true) {
+                    value = versionCombo.getText();
+                    selectInstalledVersion();
+                }
             }
 
             public void widgetDefaultSelected(SelectionEvent e) {
@@ -469,7 +477,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
     private void selectInstalledVersion() {
 
-        versionCombo.setEnabled(false);
+        // versionCombo.setEnabled(false);
         Job job = new Job("refresh Installed Components") {
 
             public IStatus run(IProgressMonitor monitor) {
@@ -519,7 +527,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
         job.setUser(true);
         job.schedule();
-        versionCombo.setEnabled(true);
+        // versionCombo.setEnabled(true);
 
     }
 
