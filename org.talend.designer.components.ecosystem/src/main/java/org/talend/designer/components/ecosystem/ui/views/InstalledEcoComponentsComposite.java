@@ -507,7 +507,8 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                     display.syncExec(runnable);
 
                 } catch (Exception exc) {
-                    exc.printStackTrace();
+                    // exc.printStackTrace();
+                    ExceptionHandler.process(exc);
                 } finally {
                     monitor.done();
                 }

@@ -22,6 +22,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.talend.commons.exception.ExceptionHandler;
+
 /**
  * Download components from web site.
  */
@@ -172,7 +174,8 @@ public class ComponentDownloader {
             new ComponentDownloader().download("http://talendforge.org/ext/upload/extension-33/revision-45/tFileOutputPDF.zip", //$NON-NLS-1$
                     "d:/temp"); //$NON-NLS-1$
         } catch (Exception e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            ExceptionHandler.process(e);
         }
     }
 

@@ -147,7 +147,8 @@ public class ImportEcosystemDialog extends Dialog {
         try {
             url = new URL(downloadproperty.getDownloadUrl());
         } catch (MalformedURLException e1) {
-            e1.printStackTrace();
+            // e1.printStackTrace();
+            ExceptionHandler.process(e1);
         }
         if (!pathFile.exists()) {
             pathFile.mkdirs();
@@ -165,7 +166,8 @@ public class ImportEcosystemDialog extends Dialog {
                         try {
                             new ComponentDownloader().download(url, tempFile);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            // e.printStackTrace();
+                            ExceptionHandler.process(e);
                         }
                     }
                 });
