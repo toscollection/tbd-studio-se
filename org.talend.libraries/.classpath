@@ -39,6 +39,5 @@
 	<classpathentry exported="true" kind="lib" path="sas.intrnet.javatools.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="sas.svc.connection.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry exported="true" kind="lib" path="paraccel-jdbc.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry kind="lib" path="jbossesb-listener.jar"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
