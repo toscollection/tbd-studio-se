@@ -274,6 +274,7 @@ public class ImportEcosystemDialog extends Dialog {
                 MessageBox box = new MessageBox(Display.getCurrent().getActiveShell(), SWT.ICON_WARNING | SWT.OK);
                 box.setText(Messages.getString("ImportEcosystemDialog.WARNING")); //$NON-NLS-1$
                 box.setMessage("Please choose Job/Templates/Routines first!"); //$NON-NLS-1$
+                version = versionCombo.getText();
                 box.open();
                 return;
             }
