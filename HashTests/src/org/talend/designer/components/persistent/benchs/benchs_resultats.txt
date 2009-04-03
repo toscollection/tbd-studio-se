@@ -1,6 +1,0 @@
-
-file_main_10000000_id-int_label-string_value-int.csv
-file_lookup_10000000_id-int_label-string_value-int.csv
-
-Last match,memory,110173 ms
-Last match,disk,   ms
