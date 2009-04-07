@@ -50,7 +50,7 @@ public class PaletteDrawer extends PaletteContainer {
 
     private boolean showDefaultIcon = true;
 
-    private String originakName;
+    private String originalName;
 
     /**
      * Constructor
@@ -168,12 +168,12 @@ public class PaletteDrawer extends PaletteContainer {
         this.showDefaultIcon = showDefaultIcon;
     }
 
-    public String getOriginakName() {
-        return this.originakName;
+    public String getOriginalName() {
+        return this.originalName;
     }
 
-    public void setOriginakName(String originakName) {
-        this.originakName = originakName;
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
 }
