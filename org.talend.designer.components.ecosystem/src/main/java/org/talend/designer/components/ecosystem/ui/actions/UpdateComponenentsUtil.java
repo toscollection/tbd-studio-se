@@ -279,11 +279,20 @@ public class UpdateComponenentsUtil {
                 // check if the job is cancelled
                 if (!monitor.isCanceled()) {
                     File installedLocation = ComponentInstaller.unzip(localZipFile.getAbsolutePath(), targetFolder);
-                    // update extesion status
-                    extension.setInstalledRevision(extension.getLatestRevision());
-                    extension.setInstalledLocation(installedLocation.getAbsolutePath());
-                    monitor.done();
-                    extensionDownloadCompleted(extension);
+                    if (installedLocation != null) {
+                        // update extesion status
+                        extension.setInstalledRevision(extension.getLatestRevision());
+                        extension.setInstalledLocation(installedLocation.getAbsolutePath());
+                        monitor.done();
+                        extensionDownloadCompleted(extension);
+                    } else {
+                        Display.getDefault().asyncExec(new Runnable() {
+
+                            public void run() {
+                                fView.refresh();
+                            }
+                        });
+                    }
                 }
                 // the component zip file
                 // localZipFile.delete();

@@ -60,8 +60,9 @@ import org.talend.designer.core.ui.editor.AbstractTalendEditor;
  * View action for downloading components.
  */
 public class DownloadComponenentsAction implements IViewActionDelegate {
-	
-	public static final String ID = "org.talend.designer.components.ecosystem.ui.actions.DownloadComponenentsAction";
+
+    public static final String ID = "org.talend.designer.components.ecosystem.ui.actions.DownloadComponenentsAction";
+
     // private static final String SET_FOLDER_TITLE =
     // Messages.getString("DownloadComponenentsAction.SetUserFolder.Title"); //$NON-NLS-1$
 
@@ -106,7 +107,6 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 }
             });
             EcosystemUtils.scheduleUserJob(job);
-
         } catch (Throwable e) {
             ExceptionHandler.process(e);
         }
@@ -123,7 +123,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         action.setEnabled(true);
         if (fExtensionDownloaded > 0) {
             fView.refresh(); // refresh table
-			EcosystemUtils.reloadComponents(); // refresh palette
+            EcosystemUtils.reloadComponents(); // refresh palette
 
             // see feature 0005050: confirmation popup once the component is installed
             confirmInstallation();
@@ -297,11 +297,21 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 // check if the job is cancelled
                 if (!monitor.isCanceled()) {
                     File installedLocation = ComponentInstaller.unzip(localZipFile.getAbsolutePath(), targetFolder);
-                    // update extesion status
-                    extension.setInstalledRevision(extension.getLatestRevision());
-                    extension.setInstalledLocation(installedLocation.getAbsolutePath());
-                    monitor.done();
-                    extensionDownloadCompleted(extension);
+                    if (installedLocation != null) {
+                        // update extesion status
+                        extension.setInstalledRevision(extension.getLatestRevision());
+                        extension.setInstalledLocation(installedLocation.getAbsolutePath());
+                        monitor.done();
+                        extensionDownloadCompleted(extension);
+                    } else {
+                        Display.getDefault().asyncExec(new Runnable() {
+
+                            public void run() {
+                                fView.refresh();
+                            }
+                        });
+                        // IAction refreshAction = EcosystemUtils.findViewAction(RefreshComponenentsAction.ID);
+                    }
                 }
                 // the component zip file
                 // localZipFile.delete();

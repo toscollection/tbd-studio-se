@@ -19,6 +19,8 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.io.FileUtils;
 import org.talend.commons.utils.io.FilesUtils;
+import org.talend.core.CorePlugin;
+import org.talend.core.language.LanguageManager;
 
 /**
  * Install component to tos.
@@ -56,7 +58,17 @@ public class ComponentInstaller {
         rootFolder.mkdir();
         // move some common use codes for unzipping file to FilesUtils
         FilesUtils.unzip(zipFile, targetFolder);
-
+        boolean valid = CorePlugin.getDefault().getComponentsLocalProviderService().validateComponent(
+                rootFolder.getAbsolutePath(), LanguageManager.getCurrentLanguage());
+        if (!valid) {
+            if (rootFolder.exists() && rootFolder.isDirectory()) {
+                for (File f : rootFolder.listFiles()) {
+                    f.delete();
+                }
+                rootFolder.delete();
+            }
+            return null;
+        }
         return rootFolder;
     }
 
