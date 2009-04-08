@@ -105,7 +105,7 @@ public class CreateNewRuleAction extends AbstractCreateAction {
     }
 
     @Override
-    public void run() {
+    protected void doRun() {
         node = null;
         IPath path = null;
         if (!isToolbar()) {

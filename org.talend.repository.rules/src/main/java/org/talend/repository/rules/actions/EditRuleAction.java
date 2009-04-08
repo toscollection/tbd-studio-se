@@ -63,7 +63,7 @@ public class EditRuleAction extends AContextualAction {
     }
 
     @Override
-    public void run() {
+    protected void doRun() {
         RepositoryNode node = (RepositoryNode) ((IStructuredSelection) getSelection()).getFirstElement();
         RulesItem rulesItem = (RulesItem) node.getObject().getProperty().getItem();
         IProxyRepositoryFactory repositoryFactory = CorePlugin.getDefault().getRepositoryService().getProxyRepositoryFactory();
