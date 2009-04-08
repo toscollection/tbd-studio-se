@@ -38,8 +38,10 @@ import org.eclipse.ui.views.IViewDescriptor;
 import org.eclipse.update.internal.core.UpdateCore;
 import org.talend.core.i18n.Messages;
 import org.talend.core.ui.perspective.PerspectiveMenuManager;
+import org.talend.rcp.branding.thales.about.AboutAction;
 import org.talend.rcp.intro.ActionBarBuildHelper;
 import org.talend.rcp.intro.ExportCommandAction;
+import org.talend.rcp.intro.ShowViewAction;
 import org.talend.rcp.intro.SwitchProjectAction;
 import org.talend.repository.model.ProxyRepositoryFactory;
 import org.talend.repository.ui.actions.toolbar.ProjectSettingsAction;
@@ -147,6 +149,7 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
                 Messages.getString("ApplicationActionBarAdvisor.menuWindowLabel"), IWorkbenchActionConstants.M_WINDOW); //$NON-NLS-1$
         menuBar.add(windowMenu);
         windowMenu.add(perspMenu);
+        windowMenu.add(new ShowViewAction());
         windowMenu.add(new Separator());
         windowMenu.add(ActionFactory.MAXIMIZE.create(window));
 
@@ -160,8 +163,7 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
         // Help
         helpMenu.add(introAction);
         helpMenu.add(ActionFactory.HELP_CONTENTS.create(window));
-        IWorkbenchAction create = ActionFactory.ABOUT.create(window);
-        helpMenu.add(create);
+        helpMenu.add(new AboutAction());
     }
 
     /*
@@ -253,7 +255,7 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
                 "org.eclipse.ui.console.ConsoleView", "org.eclipse.ui.views.TaskList", "org.epic.core.views.browser.BrowserView",
                 "org.epic.perleditor.views.ExplainErrorsView", "org.epic.perleditor.views.PerlDocView",
                 "org.epic.regexp.views.RegExpView", "org.talend.designer.core.codeView", "org.talend.scheduler.views.Scheduler",
-                "org.eclipse.ui.navigator.ProjectExplorer" };
+                "org.eclipse.ui.navigator.ProjectExplorer", "org.talend.designer.components.ecosystem.ui.views.EcosystemView" };
 
         List<IViewDescriptor> viewsToDelete = new ArrayList<IViewDescriptor>();
 

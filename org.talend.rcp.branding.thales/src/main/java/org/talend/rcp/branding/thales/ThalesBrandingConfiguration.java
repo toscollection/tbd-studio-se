@@ -197,7 +197,6 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
         String runProcessViewId = "org.talend.designer.runprocess.ui.views.processview"; //$NON-NLS-1$
         String problemsViewId = "org.talend.designer.core.ui.views.ProblemsView"; //$NON-NLS-1$
         String modulesViewId = "org.talend.designer.codegen.perlmodule.ModulesView"; //$NON-NLS-1$
-        String ecosystemViewId = "org.talend.designer.components.ecosystem.ui.views.EcosystemView"; //$NON-NLS-1$
         String contextsViewId = "org.talend.designer.core.ui.views.ContextsView"; //$NON-NLS-1$
         String gefPaletteViewId = "org.eclipse.gef.ui.palette_view"; //$NON-NLS-1$
         String jobSettingsViewId = "org.talend.designer.core.ui.views.jobsettings.JobSettingsView"; //$NON-NLS-1$
@@ -223,7 +222,6 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
         bottomLayout.addView(runProcessViewId);
         bottomLayout.addView(problemsViewId);
         bottomLayout.addView(modulesViewId);
-        bottomLayout.addView(ecosystemViewId);
     }
 
     /*
@@ -243,6 +241,16 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
      */
     @Override
     public boolean isUseProductRegistration() {
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.ui.branding.DefaultBrandingConfiguration#isAllowDebugMode()
+     */
+    @Override
+    public boolean isAllowDebugMode() {
         return false;
     }
 }
