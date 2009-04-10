@@ -33,27 +33,9 @@ public class EcosystemConstants {
 
     public static final String STATUS_TITLE = Messages.getString("EcosystemViewComposite.Status.Title"); //$NON-NLS-1$
 
-    public static final String COMPONENT_NAME_TITLE = Messages.getString("EcosystemViewComposite.ComponentName.Title"); //$NON-NLS-1$
-
-    public static final String AUTHOR_TITLE = Messages.getString("EcosystemViewComposite.Author.Title"); //$NON-NLS-1$
-
     public static final String RELEASED_DATE_TITLE = Messages.getString("EcosystemViewComposite.ReleasedDate.Title"); //$NON-NLS-1$
 
-    public static final String DESCRIPTION_TITLE = Messages.getString("EcosystemViewComposite.Description.Title"); //$NON-NLS-1$    
-
-    public static final String FILTER_LABEL_TEXT = Messages.getString("EcosystemView.FilterLabelText"); //$NON-NLS-1$
-
-    public static final String FILTER_LINK_TEXT = Messages.getString("EcosystemView.FilterLinkText"); //$NON-NLS-1$
-
     public static final String FILTER_DIALOG_TITLE = Messages.getString("FilterDialog.Title"); //$NON-NLS-1$ 
-
-    public static final String VERSION_FILTER_LABEL = Messages.getString("EcosystemPreferencePage.VersionFilterLabel"); //$NON-NLS-1$
-
-    public static final String DOWNLOAD_TASK_NAME = Messages.getString("DownloadComponenentsAction.DownloadTaskName"); //$NON-NLS-1$
-
-    public static final String DOWNLOAD_TASK_TITLE = Messages.getString("DownloadComponenentsAction.DownloadTaskTitle"); //$NON-NLS-1$
-
-    public static final String RELOAD_PALETTE = Messages.getString("DownloadComponenentsAction.ReloadPalette"); //$NON-NLS-1$
 
     public static final String FIND_EXTENSIONS_MSG = "RefreshJob.FindExtensions.Message"; //$NON-NLS-1$
 
@@ -66,4 +48,39 @@ public class EcosystemConstants {
      */
     public static final String COMPONENT_MODEL_FILE = "component_extensions.xmi"; //$NON-NLS-1$
 
+    public static String getFilterLabelText() {
+        return Messages.getString("EcosystemView.FilterLabelText"); //$NON-NLS-1$
+    }
+
+    public static String getComponentNameTitleLable() {
+        return Messages.getString("EcosystemViewComposite.ComponentName.Title"); //$NON-NLS-1$
+    }
+
+    public static String getAuthorTitleLable() {
+        return Messages.getString("EcosystemViewComposite.Author.Title"); //$NON-NLS-1$
+    }
+
+    public static String getDescriptionTitleLable() {
+        return Messages.getString("EcosystemViewComposite.Description.Title"); //$NON-NLS-1$    
+    }
+
+    public static String getReloadPaletteLable() {
+        return Messages.getString("DownloadComponenentsAction.ReloadPalette"); //$NON-NLS-1$
+    }
+
+    public static String getFilterLinkTextLable() {
+        return Messages.getString("EcosystemView.FilterLinkText"); //$NON-NLS-1$
+    }
+
+    public static String getDownloadTaskTitleLable() {
+        return Messages.getString("DownloadComponenentsAction.DownloadTaskTitle"); //$NON-NLS-1$
+    }
+
+    public static String getDownloadTaskNameLable() {
+        return Messages.getString("DownloadComponenentsAction.DownloadTaskName"); //$NON-NLS-1$
+    }
+
+    public static String getVersionFilterLabel() {
+        return Messages.getString("EcosystemPreferencePage.VersionFilterLabel"); //$NON-NLS-1$
+    }
 }

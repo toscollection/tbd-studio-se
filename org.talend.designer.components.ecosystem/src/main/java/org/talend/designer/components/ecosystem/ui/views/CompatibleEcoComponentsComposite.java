@@ -60,6 +60,7 @@ import org.talend.commons.ui.ws.WindowSystem;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
+import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
@@ -120,7 +121,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
         setLayout(clearGridLayoutSpace(new GridLayout(4, false)));
 
         Label filterLabel = new Label(parent, SWT.NONE);
-        filterLabel.setText(EcosystemConstants.FILTER_LABEL_TEXT);
+        filterLabel.setText(EcosystemConstants.getFilterLabelText());
         filterLabel.setLayoutData(new GridData());
 
         fFilterText = new Text(parent, SWT.BORDER);
@@ -140,7 +141,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
         });
 
         final Link filterLink = new Link(parent, SWT.NONE);
-        filterLink.setText("<a href=\"\">" + EcosystemConstants.FILTER_LINK_TEXT + "</a>");
+        filterLink.setText("<a href=\"\">" + EcosystemConstants.getFilterLinkTextLable() + "</a>");
         filterLink.addSelectionListener(new SelectionAdapter() {
 
             @Override
@@ -187,15 +188,16 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
         // true, false, 4, STATUS_ACCESSOR);
         // statusColumn.setImageProvider(new StatusImageProvider());
 
-        fNameColumn = createTableColumn(EcosystemConstants.COMPONENT_NAME_TITLE, true, false, 100, NAME_ACCESSOR);
-        createTableColumn(EcosystemConstants.AUTHOR_TITLE, true, false, 70, AUTHOR_ACCESSOR); // authorColumn
+        fNameColumn = createTableColumn(EcosystemConstants.getComponentNameTitleLable(), true, false, 100, NAME_ACCESSOR);
+        createTableColumn(EcosystemConstants.getAuthorTitleLable(), true, false, 70, AUTHOR_ACCESSOR); // authorColumn
         // latest revision column
-        createTableColumn(EcosystemConstants.LATEST_REVISION_TITLE, true, false, 110, LATEST_REVISION_ACCESSOR);
+        createTableColumn(Messages.getString("EcosystemViewComposite.LatestRevision.Title"), true, false, 110,
+                LATEST_REVISION_ACCESSOR);
         // install revision column
         // createTableColumn(EcosystemConstants.INSTALLED_REVISION_TITLE, true,
         // false, 110, INSTALLED_REVISION_ACCESSOR);
-        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
-                EcosystemConstants.DESCRIPTION_TITLE, true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
+        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(EcosystemConstants
+                .getDescriptionTitleLable(), true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
         // descriptionColumn.setMinimumWidth(1300);
         fTableViewerCreator.setDefaultSort(fNameColumn, SORT.ASC);
 

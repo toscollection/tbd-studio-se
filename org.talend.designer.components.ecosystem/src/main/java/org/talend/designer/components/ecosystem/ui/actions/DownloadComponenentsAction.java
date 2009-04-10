@@ -239,7 +239,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         private List<ComponentExtension> fExtensions;
 
         public DownloadJob(List<ComponentExtension> extensions) {
-            super(EcosystemConstants.DOWNLOAD_TASK_TITLE);
+            super(EcosystemConstants.getDownloadTaskTitleLable());
             fExtensions = extensions;
         }
 
@@ -254,7 +254,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 fMonitor = progress.newChild(10);
                 downloadExtension(extension, fMonitor);
             }
-            progress.setTaskName(EcosystemConstants.RELOAD_PALETTE);
+            progress.setTaskName(EcosystemConstants.getReloadPaletteLable());
             // progress.done();
             return Status.OK_STATUS;
         }
@@ -263,7 +263,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
             // get the latest revision url
             String componentUrl = extension.getLatestRevision().getUrl();
-            monitor.setTaskName(EcosystemConstants.DOWNLOAD_TASK_NAME + componentUrl);
+            monitor.setTaskName(EcosystemConstants.getDownloadTaskNameLable() + componentUrl);
             String targetFolder = EcosystemUtils.getComponentFolder().getAbsolutePath();
             try {
                 String fileName = extension.getLatestRevision().getFileName();
@@ -288,7 +288,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
                 URL url = new URL(componentUrl);
 
-                monitor.setTaskName(EcosystemConstants.DOWNLOAD_TASK_NAME + url.toString());
+                monitor.setTaskName(EcosystemConstants.getDownloadTaskNameLable() + url.toString());
                 ComponentDownloader downloader = new ComponentDownloader();
                 downloader.addDownloadListener(this);
                 // block until download complete

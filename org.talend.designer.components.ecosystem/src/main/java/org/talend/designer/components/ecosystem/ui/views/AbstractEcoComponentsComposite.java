@@ -45,6 +45,7 @@ import org.talend.commons.utils.data.bean.IBeanPropertyAccessors;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
+import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.Revision;
 
@@ -128,11 +129,11 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
             @Override
             public String get(ComponentExtension bean) {
                 if (bean.getInstalledLocation() == null) {
-                    return EcosystemConstants.STATUS_NOT_INSTALLED;
+                    return Messages.getString("EcosystemViewComposite.Status.NotInstalled");
                 } else if (!bean.getLatestRevision().getName().equals(bean.getInstalledRevision().getName())) {
-                    return EcosystemConstants.STATUS_DEPRECATED;
+                    return Messages.getString("EcosystemViewComposite.Status.Deprecated");
                 } else {
-                    return EcosystemConstants.STATUS_INSTALLED;
+                    return Messages.getString("EcosystemViewComposite.Status.Installed");
                 }
             }
 
@@ -184,7 +185,7 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
 
         tosVersionFilterComposite.setLayout(new GridLayout(2, false));
         Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
-        versionFilterLable.setText(EcosystemConstants.VERSION_FILTER_LABEL);
+        versionFilterLable.setText(EcosystemConstants.getVersionFilterLabel());
         versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
         String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString(EcosystemView.TOS_VERSION_FILTER);
 

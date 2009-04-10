@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.SelectionDialog;
-import org.talend.designer.components.ecosystem.EcosystemConstants;
+import org.talend.designer.components.ecosystem.i18n.Messages;
 
 /**
  * A dialog for user to select filters that will be used to search components.
@@ -50,7 +50,7 @@ public class FilterDialog extends SelectionDialog {
 
     @Override
     protected void configureShell(Shell shell) {
-        setTitle(EcosystemConstants.FILTER_DIALOG_TITLE);
+        setTitle(Messages.getString("FilterDialog.Title"));
         super.configureShell(shell);
     }
 

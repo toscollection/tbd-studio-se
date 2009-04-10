@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.talend.commons.exception.ExceptionHandler;
-import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
@@ -35,7 +34,7 @@ import org.talend.designer.components.ecosystem.model.ComponentExtension;
 public class RefreshJob extends Job {
 
     public RefreshJob() {
-        super(EcosystemConstants.FIND_EXTENSIONS_TITLE);
+        super(Messages.getString("RefreshJob.FindExtensions.Title"));
     }
 
     private List<ComponentExtension> fAvailableExtensions;
@@ -43,8 +42,7 @@ public class RefreshJob extends Job {
     @Override
     public IStatus run(IProgressMonitor monitor) {
         final String versionFilter = EcosystemUtils.getTosVersionFilter();
-        monitor.beginTask(Messages.getString(EcosystemConstants.FIND_EXTENSIONS_MSG, versionFilter),
-                IProgressMonitor.UNKNOWN);
+        monitor.beginTask(Messages.getString("RefreshJob.FindExtensions.Message", versionFilter), IProgressMonitor.UNKNOWN);
 
         // run in another thread, make it possible to stop the remote procedure call when user press cancel
         // button
@@ -52,8 +50,7 @@ public class RefreshJob extends Job {
         Future<List<ComponentExtension>> task = executor.submit(new Callable<List<ComponentExtension>>() {
 
             public List<ComponentExtension> call() throws Exception {
-                return ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils
-                        .getCurrentLanguage());
+                return ComponentSearcher.getAvailableComponentExtensions(versionFilter, EcosystemUtils.getCurrentLanguage());
             }
 
         });
