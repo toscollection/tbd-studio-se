@@ -495,10 +495,14 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                         for (ComponentExtension curComp : compatible) {
                             if (curComp.getName().equals(installed.getName())) {
                                 // if current version was latest
-                                double installedVersion = new Double(installed.getInstalledRevision().getName());
-                                double curCompVerision = new Double(curComp.getLatestRevision().getName());
-                                if (installedVersion <= curCompVerision) {
-                                    installed.setLatestRevision(curComp.getLatestRevision());
+                                if (installed.getInstalledRevision() != null && curComp.getLatestRevision() != null
+                                        && installed.getInstalledRevision().getName() != null
+                                        && curComp.getLatestRevision().getName() != null) {
+                                    double installedVersion = toDoubleversion(installed.getInstalledRevision().getName());
+                                    double curCompVerision = toDoubleversion(curComp.getLatestRevision().getName());
+                                    if (installedVersion <= curCompVerision) {
+                                        installed.setLatestRevision(curComp.getLatestRevision());
+                                    }
                                 }
                                 compatibleAndInstalled.add(installed);
                                 break;
@@ -531,6 +535,17 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         job.schedule();
         // versionCombo.setEnabled(true);
 
+    }
+
+    private double toDoubleversion(String versinonString) {
+        String[] VersionArray = versinonString.replaceAll("^\\B", "").split("\\.");
+        String newVersionString = VersionArray[0] + ".";
+        for (int i = 1; i < VersionArray.length; i++) {
+            newVersionString = newVersionString + VersionArray[i];
+        }
+
+        double versionDouble = new Double(newVersionString);
+        return versionDouble;
     }
 
 }

@@ -102,9 +102,11 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
      * @param parent
      * @param shell
      * @param style
+     * 
      */
+    // gcui:see bug 6831. now it do not init components when first open.
     public CompatibleEcoComponentsComposite(Composite parent, Shell shell) {
-        this(parent, shell, true);
+        this(parent, shell, false);
     }
 
     public CompatibleEcoComponentsComposite(Composite parent, Shell shell, boolean init) {
