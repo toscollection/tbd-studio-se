@@ -31,6 +31,8 @@ public class Messages extends MessagesCore {
 
     private static final String BUNDLE_NAME = "messages"; //$NON-NLS-1$
 
+    private static final String PLUGIN_ID = "org.talend.rcp.branding.thales"; //$NON-NLS-1$
+
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);
 
     /**
@@ -41,7 +43,7 @@ public class Messages extends MessagesCore {
      * @see MessagesCore#getString(String, ResourceBundle)
      */
     public static String getString(String key) {
-        return getString(key, resourceBundle);
+        return getString(key, PLUGIN_ID, resourceBundle);
     }
 
     /**
@@ -53,6 +55,6 @@ public class Messages extends MessagesCore {
      * @see MessagesCore#getString(String, ResourceBundle, Object[])
      */
     public static String getString(String key, Object... args) {
-        return getString(key, resourceBundle, args);
+        return getString(key, PLUGIN_ID, resourceBundle, args);
     }
 }
