@@ -1,13 +1,17 @@
 package org.epic.perleditor.editors.util;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,9 +60,9 @@ abstract class PerlValidatorBase {
     /**
      * Validates the provided source code, creates markers on the given IResource.
      */
-    public synchronized void validate(IResource resource, String sourceCode) throws CoreException {
+    public synchronized Set validate(IResource resource, String sourceCode) throws CoreException {
         String perlOutput = runPerl(resource, sourceCode);
-
+        Set uniSet = new HashSet();
         if (DEBUG)
             printPerlOutput(perlOutput);
 
@@ -87,7 +91,7 @@ abstract class PerlValidatorBase {
             String line = (String) lines.get(i);
 
             // Is this a continuation of the line i-1?
-            if (line.startsWith(" ")) {
+            if (line.startsWith(" ")) {//$NON-NLS-1$
                 continued = true;
                 continue;
             } else {
@@ -98,13 +102,21 @@ abstract class PerlValidatorBase {
 
             ParsedErrorLine pline = new ParsedErrorLine(line, log);
             IResource errorResource = getErrorResource(pline, resource);
+            Integer lineNr = new Integer(pline.getLineNumber());
+            resource.getProject();
+            if (lineNr.intValue() > 0) {
 
+                String uniName = setErrorMark(resource.getLocation().toString(), lineNr.intValue());
+                if (!("".equals(uniName)) && uniName != null) {//$NON-NLS-1$
+                    uniSet.add(uniName);
+                }
+
+            }
             if (shouldIgnore(pline, errorResource))
                 continue;
 
             PerlValidatorErrors.ErrorMessage errorMsg = errors.getErrorMessage(pline.getMessage());
 
-            Integer lineNr = new Integer(pline.getLineNumber());
             Map attributes = new HashMap(11);
 
             attributes.put(IMarker.SEVERITY, errorMsg.getSeverity());
@@ -114,6 +126,7 @@ abstract class PerlValidatorBase {
                 // last resort: we have a non-local error, but the resource
                 // referred to in the error message could not be found
                 attributes.put(IMarker.MESSAGE, pline.getMessage() + " in " + pline.getPath() + " line " + lineNr);
+
             } else {
                 attributes.put(IMarker.MESSAGE, pline.getMessage());
                 attributes.put(IMarker.LINE_NUMBER, lineNr);
@@ -142,6 +155,7 @@ abstract class PerlValidatorBase {
         }
 
         removeUnusedMarkers(resource);
+        return uniSet;
     }
 
     protected abstract void addMarker(IResource resource, Map attributes);
@@ -302,11 +316,120 @@ abstract class PerlValidatorBase {
         attributes.put(IMarker.CHAR_END, new Integer(end));
     }
 
+    public String setErrorMark(String path, int lineNum) {
+        String uniName = null;
+
+        String[][] result = matchString(path, lineNum);
+
+        int first = 0;
+        int second = 0;
+        if (result != null) {
+            if (result[0][0] != null) {
+                first = Integer.parseInt(result[0][0]);
+            }
+            if (result[1][0] != null) {
+                second = Integer.parseInt(result[1][0]);
+
+            }
+        }
+
+        if (lineNum > first && lineNum < second && result != null) {
+            int index1 = result[1][1].indexOf("[");//$NON-NLS-1$
+            int index2 = result[1][1].indexOf("]");//$NON-NLS-1$
+
+            int inde1 = result[0][1].indexOf("[");//$NON-NLS-1$
+            int inde2 = result[0][1].indexOf("]");//$NON-NLS-1$
+
+            String uniNameFir = null;
+            String uniNameSec = null;
+            if (index1 > 0 && index2 > index1) {
+                String nodeAllName = result[1][1].substring(index1, index2);
+                int index3 = nodeAllName.indexOf(" ");//$NON-NLS-1$
+                if (index3 > 0) {
+                    uniNameSec = nodeAllName.substring(1, index3);
+                }
+
+            }
+
+            if (inde1 > 0 && inde2 > inde1) {
+                String nodeAllName = result[0][1].substring(index1, index2);
+                int index3 = nodeAllName.indexOf(" ");//$NON-NLS-1$
+                if (index3 > 0) {
+                    uniNameFir = nodeAllName.substring(1, index3);
+                }
+
+            }
+
+            if (uniNameFir.equals(uniNameSec)) {
+                uniName = uniNameFir;
+            }
+
+        }
+        return uniName;
+    }
+
+    public String[][] matchString(String path, int lineNum) {
+        String[][] result = new String[2][2];
+        Pattern patternStart = Pattern.compile("\\[\\s*(\\w)+_\\d+\\s*\\w+\\s*\\]\\s*start");//$NON-NLS-1$
+        Pattern patternStop = Pattern.compile("\\[\\s*(\\w)+_\\d+\\s*\\w+\\s*\\]\\s*stop");//$NON-NLS-1$
+        File file = new File(path);
+        FileReader fread = null;
+        try {
+            fread = new FileReader(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedReader br = new BufferedReader(fread);
+        int point = 0;
+        String str = null;
+        String strtmp = null;
+        int tmp = 0;
+        int min = lineNum;
+        try {
+            while ((str = br.readLine()) != null) {
+                point++;
+                strtmp = str.trim();
+                if (point < lineNum) {
+                    Matcher matchStart = patternStart.matcher(strtmp);
+                    if (matchStart.find()) {
+                        tmp = lineNum - point;
+                        if (tmp < min) {
+                            min = tmp;
+                            result[0][0] = String.valueOf(point);
+                            result[0][1] = str;
+                        }
+                    }
+
+                } else if (point > lineNum) {
+                    Matcher matchStop = patternStop.matcher(strtmp);
+                    if (matchStop.find()) {
+                        result[1][0] = String.valueOf(point);
+                        result[1][1] = str;
+                        break;
+                    }
+                } else {
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+                fread.close();
+                file = null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
     protected static class ParsedErrorLine {
 
-        private static final Pattern errorLineNoPattern = Pattern.compile("^(.*) at (\\S+) line (\\d+)[\\.,]");
+        private static final Pattern errorLineNoPattern = Pattern.compile("^(.*) at (\\S+) line (\\d+)[\\.,]");//$NON-NLS-1$
 
-        private static final Pattern cgiCarpPattern = Pattern.compile("^\\[.*?\\] \\S+: (.*)");
+        private static final Pattern cgiCarpPattern = Pattern.compile("^\\[.*?\\] \\S+: (.*)");//$NON-NLS-1$
 
         private final ILog log;
 
