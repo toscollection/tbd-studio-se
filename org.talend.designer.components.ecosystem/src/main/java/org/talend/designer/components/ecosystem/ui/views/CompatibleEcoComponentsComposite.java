@@ -152,7 +152,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
             }
         });
 
-        creatTosVersionFilter(parent);
+        creatTosVersionFilter(parent, false);
 
         Composite tableComposite = new Composite(this, SWT.NONE);
         tableComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));

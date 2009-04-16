@@ -158,6 +158,10 @@ public class EcosystemUtils {
     @SuppressWarnings("unchecked")
     public static String[] getBranch(String version) {
         version = getMainVersion(version);
+        if (versionMap.getCollection(version) == null) {
+            getVersionList();
+
+        }
         Collection branch = versionMap.getCollection(version);
         return (String[]) branch.toArray(new String[branch.size()]);
     }

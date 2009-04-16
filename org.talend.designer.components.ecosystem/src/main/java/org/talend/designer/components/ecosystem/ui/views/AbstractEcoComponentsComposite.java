@@ -180,15 +180,35 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
      * 
      * @param parent
      */
-    protected void creatTosVersionFilter(Composite parent) {
+    protected void creatTosVersionFilter(Composite parent, boolean isInitTosVersion) {
         Composite tosVersionFilterComposite = new Composite(parent, SWT.NONE);
 
         tosVersionFilterComposite.setLayout(new GridLayout(2, false));
         Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
         versionFilterLable.setText(EcosystemConstants.getVersionFilterLabel());
         versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
-        String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString(EcosystemView.TOS_VERSION_FILTER);
 
+        if (isInitTosVersion) {
+            initTosVersionFilter();
+        }
+        versionCombo.addSelectionListener(new SelectionListener() {
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+
+            public void widgetSelected(SelectionEvent e) {
+
+                onVersionFilterChanged(e);
+            }
+        });
+    }
+
+    public void initTosVersionFilter() {
+        if (versionCombo.getItemCount() > 0) {
+            return;
+        }
+        String currentVersion = EcosystemPlugin.getDefault().getPreferenceStore().getString(EcosystemView.TOS_VERSION_FILTER);
         currentVersion = EcosystemUtils.getMainVersion(currentVersion);
         String versions[] = EcosystemUtils.getVersionList();
 
@@ -203,17 +223,6 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
             versionCombo.select(stringIndex);
         }
 
-        versionCombo.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
-            public void widgetSelected(SelectionEvent e) {
-
-                onVersionFilterChanged(e);
-            }
-        });
     }
 
     protected abstract void onVersionFilterChanged(SelectionEvent e);

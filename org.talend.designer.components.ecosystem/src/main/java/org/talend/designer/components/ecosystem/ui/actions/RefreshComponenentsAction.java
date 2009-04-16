@@ -25,6 +25,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
+import org.talend.designer.core.ui.views.IEcosystemView;
 
 /**
  * View action for refresh components lists in table viewer.
@@ -84,6 +85,10 @@ public class RefreshComponenentsAction implements IViewActionDelegate {
             // update ecosystem view
             List<ComponentExtension> extensions = job.getAvailableExtensions();
             fView.updateAvailableExtensions(extensions);
+            IEcosystemView ecosystemView = EcosystemView.getEcosystemView();
+            if (ecosystemView != null) {
+                ecosystemView.refreshVersions();
+            }
         }
     }
 

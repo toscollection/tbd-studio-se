@@ -388,7 +388,7 @@ public class ImportEcosystemDialog extends Dialog {
                 }
             });
 
-            creatTosVersionFilter(group);
+            creatTosVersionFilter(group, true);
             version = versionCombo.getText();
             // String versions[] = EcosystemUtils.getVersionList();
             //

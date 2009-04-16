@@ -177,7 +177,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
             }
         });
 
-        creatTosVersionFilter(parent);
+        creatTosVersionFilter(parent, false);
         versionCombo.setEnabled(false);
 
         filterbutton = new Button(parent, SWT.CHECK);
