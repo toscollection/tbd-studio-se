@@ -133,7 +133,7 @@ public class UpdateComponenentsUtil {
         FileFilter propertiesFilter = new FileFilter() {
 
             public boolean accept(File file) {
-                return file.getName().endsWith("_messages.properties");
+                return file.getName().endsWith("_messages.properties"); //$NON-NLS-1$
             }
         };
         String componentName = null;
@@ -150,11 +150,11 @@ public class UpdateComponenentsUtil {
             Properties prop = new Properties();
             try {
                 prop.load(new FileInputStream(files[0]));
-                String name = prop.getProperty("NAME");
-                String family = prop.getProperty("FAMILY");
+                String name = prop.getProperty("NAME"); //$NON-NLS-1$
+                String family = prop.getProperty("FAMILY"); //$NON-NLS-1$
                 if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(family)) {
                     componentName = name;
-                    message.append("Component ").append(name).append(" installed at ").append(family).append(".\n");
+                    message.append("Component ").append(name).append(" installed at ").append(family).append(".\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 }
             } catch (Exception e) {
                 ExceptionHandler.process(e);
@@ -165,7 +165,7 @@ public class UpdateComponenentsUtil {
             selectPaletteEntry(componentName);
         }
 
-        MessageDialog.openInformation(shell, "Installed Ecosystem Components", message.toString());
+        MessageDialog.openInformation(shell, "Installed Ecosystem Components", message.toString()); //$NON-NLS-1$
 
     }
 
@@ -334,9 +334,9 @@ public class UpdateComponenentsUtil {
         }
 
         public void downloadStart(int totalSize) {
-            fProgressLabel = "/" + toKbFormat(totalSize);
+            fProgressLabel = "/" + toKbFormat(totalSize); //$NON-NLS-1$
             fBytesDownloaded = 0;
-            fMonitor.beginTask("0 KB" + fProgressLabel, totalSize);
+            fMonitor.beginTask("0 KB" + fProgressLabel, totalSize); //$NON-NLS-1$
         }
 
         private String toKbFormat(int size) {

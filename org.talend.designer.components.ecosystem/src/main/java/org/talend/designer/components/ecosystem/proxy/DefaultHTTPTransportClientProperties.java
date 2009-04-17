@@ -21,34 +21,34 @@ public class DefaultHTTPTransportClientProperties implements TransportClientProp
      * @see org.apache.axis.components.net.TransportClientProperties#getProxyHost()
      */
     public String getProxyHost() {
-        return StringUtils.trimToEmpty(System.getProperty("http.proxyHost"));
+        return StringUtils.trimToEmpty(System.getProperty("http.proxyHost")); //$NON-NLS-1$
     }
 
     /**
      * @see org.apache.axis.components.net.TransportClientProperties#getNonProxyHosts()
      */
     public String getNonProxyHosts() {
-        return StringUtils.trimToEmpty(System.getProperty("http.nonProxyHosts"));
+        return StringUtils.trimToEmpty(System.getProperty("http.nonProxyHosts")); //$NON-NLS-1$
     }
 
     /**
      * @see org.apache.axis.components.net.TransportClientProperties#getPort()
      */
     public String getProxyPort() {
-        return StringUtils.trimToEmpty(System.getProperty("http.proxyPort"));
+        return StringUtils.trimToEmpty(System.getProperty("http.proxyPort")); //$NON-NLS-1$
     }
 
     /**
      * @see org.apache.axis.components.net.TransportClientProperties#getProxyUser()
      */
     public String getProxyUser() {
-        return StringUtils.trimToEmpty(System.getProperty("http.proxyUser"));
+        return StringUtils.trimToEmpty(System.getProperty("http.proxyUser")); //$NON-NLS-1$
     }
 
     /**
      * @see org.apache.axis.components.net.TransportClientProperties#getProxyPassword()
      */
     public String getProxyPassword() {
-        return StringUtils.trimToEmpty(System.getProperty("http.proxyPassword"));
+        return StringUtils.trimToEmpty(System.getProperty("http.proxyPassword")); //$NON-NLS-1$
     }
 }

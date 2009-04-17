@@ -21,7 +21,7 @@ public class DefaultHTTPSTransportClientProperties extends DefaultHTTPTransportC
      */
     @Override
     public String getProxyHost() {
-        return StringUtils.trimToEmpty(System.getProperty("https.proxyHost"));
+        return StringUtils.trimToEmpty(System.getProperty("https.proxyHost")); //$NON-NLS-1$
     }
 
     /**
@@ -30,7 +30,7 @@ public class DefaultHTTPSTransportClientProperties extends DefaultHTTPTransportC
     @Override
     public String getNonProxyHosts() {
 
-        return StringUtils.trimToEmpty(System.getProperty("https.nonProxyHosts"));
+        return StringUtils.trimToEmpty(System.getProperty("https.nonProxyHosts")); //$NON-NLS-1$
     }
 
     /**
@@ -39,7 +39,7 @@ public class DefaultHTTPSTransportClientProperties extends DefaultHTTPTransportC
     @Override
     public String getProxyPort() {
 
-        return StringUtils.trimToEmpty(System.getProperty("https.proxyPort"));
+        return StringUtils.trimToEmpty(System.getProperty("https.proxyPort")); //$NON-NLS-1$
     }
 
     /**
@@ -48,7 +48,7 @@ public class DefaultHTTPSTransportClientProperties extends DefaultHTTPTransportC
     @Override
     public String getProxyUser() {
 
-        return StringUtils.trimToEmpty(System.getProperty("https.proxyUser"));
+        return StringUtils.trimToEmpty(System.getProperty("https.proxyUser")); //$NON-NLS-1$
     }
 
     /**
@@ -57,6 +57,6 @@ public class DefaultHTTPSTransportClientProperties extends DefaultHTTPTransportC
     @Override
     public String getProxyPassword() {
 
-        return StringUtils.trimToEmpty(System.getProperty("https.proxyPassword"));
+        return StringUtils.trimToEmpty(System.getProperty("https.proxyPassword")); //$NON-NLS-1$
     }
 }

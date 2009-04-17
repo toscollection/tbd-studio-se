@@ -36,7 +36,7 @@ public class ActionHelper {
 				.getActiveWorkbenchWindow()
 				.getActivePage()
 				.findView(
-						"org.talend.designer.components.ecosystem.ui.views.EcosystemView");
+						"org.talend.designer.components.ecosystem.ui.views.EcosystemView"); //$NON-NLS-1$
 	}
 
     /**

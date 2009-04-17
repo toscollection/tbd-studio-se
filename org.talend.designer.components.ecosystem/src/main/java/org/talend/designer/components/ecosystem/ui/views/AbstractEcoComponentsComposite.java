@@ -60,7 +60,7 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
 
     Map<String, ComponentExtension> fInstalledExtensions = new HashMap<String, ComponentExtension>();
 
-    protected static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    protected static DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd"); //$NON-NLS-1$
 
     protected IBeanPropertyAccessors<ComponentExtension, String> DESCRIPTION_ACCESSOR;
 
@@ -129,11 +129,11 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
             @Override
             public String get(ComponentExtension bean) {
                 if (bean.getInstalledLocation() == null) {
-                    return Messages.getString("EcosystemViewComposite.Status.NotInstalled");
+                    return Messages.getString("EcosystemViewComposite.Status.NotInstalled"); //$NON-NLS-1$
                 } else if (!bean.getLatestRevision().getName().equals(bean.getInstalledRevision().getName())) {
-                    return Messages.getString("EcosystemViewComposite.Status.Deprecated");
+                    return Messages.getString("EcosystemViewComposite.Status.Deprecated"); //$NON-NLS-1$
                 } else {
-                    return Messages.getString("EcosystemViewComposite.Status.Installed");
+                    return Messages.getString("EcosystemViewComposite.Status.Installed"); //$NON-NLS-1$
                 }
             }
 
@@ -143,8 +143,8 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
 
             @Override
             public String get(ComponentExtension bean) {
-                return String.format("%1$-6s%2$s", bean.getLatestRevision().getName(), " ("
-                        + dateFormatter.format(bean.getLatestRevision().getDate()) + ")");
+                return String.format("%1$-6s%2$s", bean.getLatestRevision().getName(), " (" //$NON-NLS-1$ //$NON-NLS-2$
+                        + dateFormatter.format(bean.getLatestRevision().getDate()) + ")"); //$NON-NLS-1$
             }
 
         };
@@ -155,10 +155,10 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
             public String get(ComponentExtension bean) {
                 Revision installed = bean.getInstalledRevision();
                 if (installed == null) {
-                    return "";
+                    return ""; //$NON-NLS-1$
                 } else {
-                    return String.format("%1$-6s%2$s", installed.getName(), " (" + dateFormatter.format(installed.getDate())
-                            + ")");
+                    return String.format("%1$-6s%2$s", installed.getName(), " (" + dateFormatter.format(installed.getDate()) //$NON-NLS-1$ //$NON-NLS-2$
+                            + ")"); //$NON-NLS-1$
                 }
             }
 
@@ -239,7 +239,7 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
      * DOC YeXiaowei Comment method "createInstallActionColumn".
      */
     protected void createActionColumn(int width) {
-        TableViewerCreatorColumn<ComponentExtension, String> actionColumn = createTableColumn("", false, false, width, null);
+        TableViewerCreatorColumn<ComponentExtension, String> actionColumn = createTableColumn("", false, false, width, null); //$NON-NLS-1$
         actionColumn.setResizable(false);
     }
 

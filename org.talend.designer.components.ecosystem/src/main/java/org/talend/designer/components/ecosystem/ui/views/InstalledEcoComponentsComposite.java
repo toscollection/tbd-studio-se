@@ -97,9 +97,9 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
     private static final Map<String, Integer> FILTER_MAP = new HashMap<String, Integer>();
 
-    private static final String REFRESH_COMPONENTS = "refreshComponents";
+    private static final String REFRESH_COMPONENTS = "refreshComponents"; //$NON-NLS-1$
 
-    private String UPDATEKEY = "UPDATEKEY";
+    private String UPDATEKEY = "UPDATEKEY"; //$NON-NLS-1$
 
     String value;
 
@@ -168,7 +168,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         });
 
         final Link filterLink = new Link(parent, SWT.NONE);
-        filterLink.setText("<a href=\"\">" + EcosystemConstants.getFilterLinkTextLable() + "</a>");
+        filterLink.setText("<a href=\"\">" + EcosystemConstants.getFilterLinkTextLable() + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
         filterLink.addSelectionListener(new SelectionAdapter() {
 
             @Override
@@ -181,7 +181,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         versionCombo.setEnabled(false);
 
         filterbutton = new Button(parent, SWT.CHECK);
-        filterbutton.setText("Use Version Filter");
+        filterbutton.setText(Messages.getString("InstalledEcoComponentsComposite.useVersionFilter")); //$NON-NLS-1$
         filterbutton.setSelection(false);
         filterbutton.addSelectionListener(new SelectionListener() {
 
@@ -283,7 +283,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         createTableColumn(EcosystemConstants.getAuthorTitleLable(), true, false, 70, AUTHOR_ACCESSOR); // authorColumn
 
         // install revision column
-        createTableColumn(Messages.getString("EcosystemViewComposite.InstalledRevision.Title"), true, false, 110,
+        createTableColumn(Messages.getString("EcosystemViewComposite.InstalledRevision.Title"), true, false, 110, //$NON-NLS-1$
                 INSTALLED_REVISION_ACCESSOR);
         TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(EcosystemConstants
                 .getDescriptionTitleLable(), true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
@@ -332,7 +332,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
             removeEditors.add(editor);
             final Button button = new Button(table, SWT.FLAT);
             button.setImage(StatusImageProvider.getRemoveImage((ComponentExtension) item.getData()));
-            button.setToolTipText("Remove Component");
+            button.setToolTipText(Messages.getString("InstalledEcoComponentsComposite.removeComponent")); //$NON-NLS-1$
             button.setData(item);
             if (button.getImage() == StatusImageProvider.REMOVE_ICON) {
                 button.addSelectionListener(new SelectionAdapter() {
@@ -373,7 +373,8 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         IRunnableWithProgress op = new IRunnableWithProgress() {
 
             public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-                monitor.beginTask("Remove component " + component.getName(), 100);
+                monitor.beginTask(
+                        Messages.getString("InstalledEcoComponentsComposite.removeComponentName", component.getName()), 100); //$NON-NLS-1$
                 monitor.worked(10);
                 EcosystemUtils.deleteComponent(component);
                 monitor.worked(70);
@@ -395,8 +396,9 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
             // ignore me
         }
         StringBuilder message = new StringBuilder();
-        message.append("Component ").append(component.getName()).append(" is successfully removed.");
-        MessageDialog.openInformation(getShell(), "Remove Ecosystem Components", message.toString());
+        message.append("Component ").append(component.getName()).append(" is successfully removed."); //$NON-NLS-1$ //$NON-NLS-2$
+        MessageDialog.openInformation(getShell(),
+                Messages.getString("InstalledEcoComponentsComposite.removeEcosystem"), message.toString()); //$NON-NLS-1$
 
     }
 
@@ -425,7 +427,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
 
             final Button button = new Button(table, SWT.FLAT);
             button.setImage(StatusImageProvider.getUpdateImage((ComponentExtension) item.getData()));
-            button.setToolTipText("Update Component");
+            button.setToolTipText(Messages.getString("InstalledEcoComponentsComposite.updateComponent")); //$NON-NLS-1$
             button.setData(item);
             if (button.getImage() == StatusImageProvider.UPDATE_ICON) {
 
@@ -480,11 +482,12 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
     private void selectInstalledVersion() {
 
         // versionCombo.setEnabled(false);
-        Job job = new Job("refresh Installed Components") {
+        Job job = new Job("refresh Installed Components") { //$NON-NLS-1$
 
             public IStatus run(IProgressMonitor monitor) {
 
-                monitor.beginTask("refresh Installed Components", IProgressMonitor.UNKNOWN);
+                monitor.beginTask(
+                        Messages.getString("InstalledEcoComponentsComposite.refreshComponent"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 try {
 
                     compatible = ComponentSearcher.getAvailableComponentExtensions(value, EcosystemUtils.getCurrentLanguage());
@@ -538,8 +541,8 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
     }
 
     private double toDoubleversion(String versinonString) {
-        String[] VersionArray = versinonString.replaceAll("^\\B", "").split("\\.");
-        String newVersionString = VersionArray[0] + ".";
+        String[] VersionArray = versinonString.replaceAll("^\\B", "").split("\\."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        String newVersionString = VersionArray[0] + "."; //$NON-NLS-1$
         for (int i = 1; i < VersionArray.length; i++) {
             newVersionString = newVersionString + VersionArray[i];
         }

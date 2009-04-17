@@ -535,15 +535,15 @@ public class ComponentExtensionImpl extends EObjectImpl implements ComponentExte
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (name: ");
+        result.append(" (name: "); //$NON-NLS-1$
         result.append(name);
-        result.append(", description: ");
+        result.append(", description: "); //$NON-NLS-1$
         result.append(description);
-        result.append(", language: ");
+        result.append(", language: "); //$NON-NLS-1$
         result.append(language);
-        result.append(", installedLocation: ");
+        result.append(", installedLocation: "); //$NON-NLS-1$
         result.append(installedLocation);
-        result.append(", author: ");
+        result.append(", author: "); //$NON-NLS-1$
         result.append(author);
         result.append(')');
         return result.toString();

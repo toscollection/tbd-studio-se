@@ -315,65 +315,65 @@ public class Revision implements java.io.Serializable {
     private static org.apache.axis.description.TypeDesc typeDesc = new org.apache.axis.description.TypeDesc(Revision.class, true);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "revision"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "revision")); //$NON-NLS-1$ //$NON-NLS-2$
         org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("revision_id");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_id"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
+        elemField.setFieldName("revision_id"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_id")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("extension_name");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "extension_name"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("extension_name"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "extension_name")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("extension_author");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "extension_author"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("extension_author"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "extension_author")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("extension_description");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "extension_description"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("extension_description"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "extension_description")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("revision_name");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_name"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("revision_name"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_name")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("revision_date");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_date"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("revision_date"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_date")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("file_url");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "file_url"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("file_url"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "file_url")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("download_url");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "download_url"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("download_url"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "download_url")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("filename");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "filename"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("filename"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "filename")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
-        elemField.setFieldName("revision_description");
-        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_description"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setFieldName("revision_description"); //$NON-NLS-1$
+        elemField.setXmlName(new javax.xml.namespace.QName("", "revision_description")); //$NON-NLS-1$ //$NON-NLS-2$
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string")); //$NON-NLS-1$ //$NON-NLS-2$
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
     }

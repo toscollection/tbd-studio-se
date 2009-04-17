@@ -32,7 +32,7 @@ import org.talend.designer.core.ui.views.IEcosystemView;
  */
 public class RefreshComponenentsAction implements IViewActionDelegate {
 
-    public static final String ID = "org.talend.designer.components.ecosystem.ui.actions.RefreshComponenentsAction";
+    public static final String ID = "org.talend.designer.components.ecosystem.ui.actions.RefreshComponenentsAction"; //$NON-NLS-1$
 
     private EcosystemView fView;
 

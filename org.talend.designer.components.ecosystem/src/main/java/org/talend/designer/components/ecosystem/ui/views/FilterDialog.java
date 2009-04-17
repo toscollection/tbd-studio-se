@@ -50,7 +50,7 @@ public class FilterDialog extends SelectionDialog {
 
     @Override
     protected void configureShell(Shell shell) {
-        setTitle(Messages.getString("FilterDialog.Title"));
+        setTitle(Messages.getString("FilterDialog.Title")); //$NON-NLS-1$
         super.configureShell(shell);
     }
 

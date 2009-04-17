@@ -25,28 +25,28 @@ import org.talend.designer.components.ecosystem.model.ComponentExtension;
 public class StatusImageProvider implements IColumnImageProvider<ComponentExtension> {
 
     private static final Image NOT_INSTALLED_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
-            "/icons/not_installed.gif").createImage();
+            "/icons/not_installed.gif").createImage(); //$NON-NLS-1$
 
-    private static final Image DOWNLOAD_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/download.gif")
+    private static final Image DOWNLOAD_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/download.gif") //$NON-NLS-1$
             .createImage();
 
-    public static final Image INSTALL_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/install.png")
+    public static final Image INSTALL_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/install.png") //$NON-NLS-1$
             .createImage();
 
     public static final Image INSTALL_UNAVAILABLE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
-            "/icons/install_unavailable.png").createImage();
+            "/icons/install_unavailable.png").createImage(); //$NON-NLS-1$
 
     public static final Image UPDATE_UNAVAILABLE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
-            "/icons/update_unavailable.png").createImage();
+            "/icons/update_unavailable.png").createImage(); //$NON-NLS-1$
 
-    public static final Image UPDATE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/update.png")
+    public static final Image UPDATE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/update.png") //$NON-NLS-1$
             .createImage();
 
-    public static final Image REMOVE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/remove.png")
+    public static final Image REMOVE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class, "/icons/remove.png") //$NON-NLS-1$
             .createImage();
 
     public static final Image REMOVE_UNAVAILABLE_ICON = ImageDescriptor.createFromFile(StatusImageProvider.class,
-            "/icons/remove_unavailable.png").createImage();
+            "/icons/remove_unavailable.png").createImage(); //$NON-NLS-1$
 
     public static Image getInstallImage(ComponentExtension extension) {
         if (extension.getInstalledRevision() == null) {

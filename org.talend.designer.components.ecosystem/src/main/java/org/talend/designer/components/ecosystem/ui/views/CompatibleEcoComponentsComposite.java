@@ -78,7 +78,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
 
     private List<TableEditor> installEditors = new ArrayList<TableEditor>();
 
-    private static final String REFRESH_COMPONENTS = "refreshComponents";
+    private static final String REFRESH_COMPONENTS = "refreshComponents"; //$NON-NLS-1$
 
     private static final String[] AVAILABLE_FILTERS = new String[] { "Name", "Description" }; //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -143,7 +143,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
         });
 
         final Link filterLink = new Link(parent, SWT.NONE);
-        filterLink.setText("<a href=\"\">" + EcosystemConstants.getFilterLinkTextLable() + "</a>");
+        filterLink.setText("<a href=\"\">" + EcosystemConstants.getFilterLinkTextLable() + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
         filterLink.addSelectionListener(new SelectionAdapter() {
 
             @Override
@@ -193,7 +193,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
         fNameColumn = createTableColumn(EcosystemConstants.getComponentNameTitleLable(), true, false, 100, NAME_ACCESSOR);
         createTableColumn(EcosystemConstants.getAuthorTitleLable(), true, false, 70, AUTHOR_ACCESSOR); // authorColumn
         // latest revision column
-        createTableColumn(Messages.getString("EcosystemViewComposite.LatestRevision.Title"), true, false, 110,
+        createTableColumn(Messages.getString("EcosystemViewComposite.LatestRevision.Title"), true, false, 110, //$NON-NLS-1$
                 LATEST_REVISION_ACCESSOR);
         // install revision column
         // createTableColumn(EcosystemConstants.INSTALLED_REVISION_TITLE, true,
@@ -249,7 +249,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
         action = EcosystemUtils.findViewAction(RefreshComponenentsAction.ID);
 
         if (action == null) {
-            throw new IllegalStateException("RefreshComponenentsAction not found, errors in the plugin.xml");
+            throw new IllegalStateException("RefreshComponenentsAction not found, errors in the plugin.xml"); //$NON-NLS-1$
         }
 
         versionCombo.setData(REFRESH_COMPONENTS, action);
@@ -434,7 +434,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
             installEditors.add(editor);
             final Button button = new Button(table, SWT.FLAT);
             button.setImage(StatusImageProvider.getInstallImage((ComponentExtension) item.getData()));
-            button.setToolTipText("Install Component");
+            button.setToolTipText(Messages.getString("CompatibleEcoComponentsComposite.installComponent")); //$NON-NLS-1$
             button.setData(item);
             if (button.getImage() == StatusImageProvider.INSTALL_ICON) {
                 button.addSelectionListener(new SelectionAdapter() {

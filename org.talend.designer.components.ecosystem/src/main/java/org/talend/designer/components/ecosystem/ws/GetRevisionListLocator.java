@@ -22,14 +22,14 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
     }
 
     // Use to get a proxy class for getRevisionListPort
-    private java.lang.String getRevisionListPort_address = "http://talendforge.org/ext/soap_server.php";
+    private java.lang.String getRevisionListPort_address = "http://talendforge.org/ext/soap_server.php"; //$NON-NLS-1$
 
     public java.lang.String getgetRevisionListPortAddress() {
         return getRevisionListPort_address;
     }
 
     // The WSDD service name defaults to the port name.
-    private java.lang.String getRevisionListPortWSDDServiceName = "getRevisionListPort";
+    private java.lang.String getRevisionListPortWSDDServiceName = "getRevisionListPort"; //$NON-NLS-1$
 
     public java.lang.String getgetRevisionListPortWSDDServiceName() {
         return getRevisionListPortWSDDServiceName;
@@ -83,8 +83,8 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
         } catch (java.lang.Throwable t) {
             throw new javax.xml.rpc.ServiceException(t);
         }
-        throw new javax.xml.rpc.ServiceException("There is no stub implementation for the interface:  "
-                + (serviceEndpointInterface == null ? "null" : serviceEndpointInterface.getName()));
+        throw new javax.xml.rpc.ServiceException("There is no stub implementation for the interface:  " //$NON-NLS-1$
+                + (serviceEndpointInterface == null ? "null" : serviceEndpointInterface.getName())); //$NON-NLS-1$
     }
 
     /**
@@ -98,7 +98,7 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
             return getPort(serviceEndpointInterface);
         }
         java.lang.String inputPortName = portName.getLocalPart();
-        if ("getRevisionListPort".equals(inputPortName)) {
+        if ("getRevisionListPort".equals(inputPortName)) { //$NON-NLS-1$
             return getgetRevisionListPort();
         } else {
             java.rmi.Remote _stub = getPort(serviceEndpointInterface);
@@ -109,7 +109,7 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
 
     @Override
     public javax.xml.namespace.QName getServiceName() {
-        return new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "getRevisionList");
+        return new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "getRevisionList"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private java.util.HashSet ports = null;
@@ -118,7 +118,7 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
     public java.util.Iterator getPorts() {
         if (ports == null) {
             ports = new java.util.HashSet();
-            ports.add(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "getRevisionListPort"));
+            ports.add(new javax.xml.namespace.QName("http://talendforge.org/ext/wsdl", "getRevisionListPort")); //$NON-NLS-1$ //$NON-NLS-2$
         }
         return ports.iterator();
     }
@@ -128,10 +128,10 @@ public class GetRevisionListLocator extends org.apache.axis.client.Service imple
      */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
 
-        if ("getRevisionListPort".equals(portName)) {
+        if ("getRevisionListPort".equals(portName)) { //$NON-NLS-1$
             setgetRevisionListPortEndpointAddress(address);
         } else { // Unknown Port Name
-            throw new javax.xml.rpc.ServiceException(" Cannot set Endpoint Address for Unknown Port" + portName);
+            throw new javax.xml.rpc.ServiceException(" Cannot set Endpoint Address for Unknown Port" + portName); //$NON-NLS-1$
         }
     }
 

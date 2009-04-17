@@ -33,7 +33,7 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
      */
     public static EcosystemFactory init() {
         try {
-            EcosystemFactory theEcosystemFactory = (EcosystemFactory)EPackage.Registry.INSTANCE.getEFactory("model"); 
+            EcosystemFactory theEcosystemFactory = (EcosystemFactory)EPackage.Registry.INSTANCE.getEFactory("model");  //$NON-NLS-1$
             if (theEcosystemFactory != null) {
                 return theEcosystemFactory;
             }
@@ -63,7 +63,7 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
             case EcosystemPackage.COMPONENT_EXTENSION: return createComponentExtension();
             case EcosystemPackage.REVISION: return createRevision();
             default:
-                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -77,7 +77,7 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
             case EcosystemPackage.LANGUAGE:
                 return createLanguageFromString(eDataType, initialValue);
             default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -91,7 +91,7 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
             case EcosystemPackage.LANGUAGE:
                 return convertLanguageToString(eDataType, instanceValue);
             default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -119,7 +119,7 @@ public class EcosystemFactoryImpl extends EFactoryImpl implements EcosystemFacto
      */
     public Language createLanguageFromString(EDataType eDataType, String initialValue) {
         Language result = Language.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         return result;
     }
 

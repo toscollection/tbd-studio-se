@@ -28,6 +28,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.core.ui.views.IEcosystemView;
 
@@ -58,10 +59,10 @@ public class EcosystemView extends ViewPart implements IEcosystemView {
         // tab.setBackground(parent.getBackground());
         tab.setLayoutData(new GridData(GridData.FILL_BOTH));
         CTabItem compatibleTab = new CTabItem(tab, SWT.NONE);
-        compatibleTab.setText("compatible components");
+        compatibleTab.setText(Messages.getString("EcosystemView.compatibleComponent")); //$NON-NLS-1$
 
         final CTabItem installedTab = new CTabItem(tab, SWT.NONE);
-        installedTab.setText("installed components");
+        installedTab.setText(Messages.getString("EcosystemView.installedComponent")); //$NON-NLS-1$
 
         Shell shell = this.getViewSite().getShell();
         fEcosystemViewComposite = new CompatibleEcoComponentsComposite(tab, shell);

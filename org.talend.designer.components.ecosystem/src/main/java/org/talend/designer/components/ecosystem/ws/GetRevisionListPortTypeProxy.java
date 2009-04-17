@@ -21,11 +21,11 @@ public class GetRevisionListPortTypeProxy implements org.talend.designer.compone
                     .getgetRevisionListPort();
             if (getRevisionListPortType != null) {
                 if (_endpoint != null) {
-                    ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty("javax.xml.rpc.service.endpoint.address",
+                    ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty("javax.xml.rpc.service.endpoint.address", //$NON-NLS-1$
                             _endpoint);
                 } else {
                     _endpoint = (String) ((javax.xml.rpc.Stub) getRevisionListPortType)
-                            ._getProperty("javax.xml.rpc.service.endpoint.address");
+                            ._getProperty("javax.xml.rpc.service.endpoint.address"); //$NON-NLS-1$
                 }
             }
 
@@ -40,7 +40,7 @@ public class GetRevisionListPortTypeProxy implements org.talend.designer.compone
     public void setEndpoint(String endpoint) {
         _endpoint = endpoint;
         if (getRevisionListPortType != null) {
-            ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
+            ((javax.xml.rpc.Stub) getRevisionListPortType)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint); //$NON-NLS-1$
         }
 
     }

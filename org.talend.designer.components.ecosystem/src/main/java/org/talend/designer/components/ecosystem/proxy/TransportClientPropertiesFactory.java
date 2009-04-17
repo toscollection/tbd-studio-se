@@ -29,8 +29,8 @@ public class TransportClientPropertiesFactory {
     private static HashMap defaults = new HashMap();
 
     static {
-        defaults.put("http", DefaultHTTPTransportClientProperties.class);
-        defaults.put("https", DefaultHTTPSTransportClientProperties.class);
+        defaults.put("http", DefaultHTTPTransportClientProperties.class); //$NON-NLS-1$
+        defaults.put("https", DefaultHTTPSTransportClientProperties.class); //$NON-NLS-1$
     }
 
     public static TransportClientProperties create(String protocol) {

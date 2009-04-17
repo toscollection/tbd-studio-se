@@ -34,7 +34,7 @@ import org.talend.designer.components.ecosystem.model.ComponentExtension;
 public class RefreshJob extends Job {
 
     public RefreshJob() {
-        super(Messages.getString("RefreshJob.FindExtensions.Title"));
+        super(Messages.getString("RefreshJob.FindExtensions.Title")); //$NON-NLS-1$
     }
 
     private List<ComponentExtension> fAvailableExtensions;
@@ -42,7 +42,7 @@ public class RefreshJob extends Job {
     @Override
     public IStatus run(IProgressMonitor monitor) {
         final String versionFilter = EcosystemUtils.getTosVersionFilter();
-        monitor.beginTask(Messages.getString("RefreshJob.FindExtensions.Message", versionFilter), IProgressMonitor.UNKNOWN);
+        monitor.beginTask(Messages.getString("RefreshJob.FindExtensions.Message", versionFilter), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 
         // run in another thread, make it possible to stop the remote procedure call when user press cancel
         // button
