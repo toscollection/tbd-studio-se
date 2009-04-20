@@ -63,4 +63,15 @@
                class="org.talend.rcp.branding.thales.ThalesBrandingService"
                serviceId="org.talend.core.ui.branding.IBrandingService"/>
       </extension>
+      <extension
+            point="org.eclipse.ui.activities">
+         <activity
+               id="org.talend.rcp.branding.thales.activityPatternBinding"
+               name="name">
+         </activity>
+         <activityPatternBinding
+               activityId="org.talend.rcp.branding.thales.activityPatternBinding"
+               pattern="org\.eclipse\.update.*/.*">
+         </activityPatternBinding>
+      </extension>
 </plugin>

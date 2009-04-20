@@ -191,12 +191,10 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
     @Override
     public void initPerspective(IPageLayout layout) {
         String componentSettingViewerId = "org.talend.designer.core.ui.views.properties.ComponentSettingsView";//$NON-NLS-1$
-        String navigatorId = "org.eclipse.ui.views.ResourceNavigator"; //$NON-NLS-1$
         String repositoryId = "org.talend.repository.views.repository"; //$NON-NLS-1$
 
         String runProcessViewId = "org.talend.designer.runprocess.ui.views.processview"; //$NON-NLS-1$
         String problemsViewId = "org.talend.designer.core.ui.views.ProblemsView"; //$NON-NLS-1$
-        String modulesViewId = "org.talend.designer.codegen.perlmodule.ModulesView"; //$NON-NLS-1$
         String contextsViewId = "org.talend.designer.core.ui.views.ContextsView"; //$NON-NLS-1$
         String gefPaletteViewId = "org.eclipse.gef.ui.palette_view"; //$NON-NLS-1$
         String jobSettingsViewId = "org.talend.designer.core.ui.views.jobsettings.JobSettingsView"; //$NON-NLS-1$
@@ -205,7 +203,6 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
         IFolderLayout leftTopLayout = layout.createFolder("navigatorLayout", IPageLayout.LEFT, new Float(0.3), //$NON-NLS-1$
                 IPageLayout.ID_EDITOR_AREA);
         leftTopLayout.addView(repositoryId);
-        leftTopLayout.addView(navigatorId);
 
         IFolderLayout rightTopLayout = layout.createFolder("paletteLayout", IPageLayout.RIGHT, new Float(0.8), //$NON-NLS-1$
                 IPageLayout.ID_EDITOR_AREA);
@@ -221,7 +218,6 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
 
         bottomLayout.addView(runProcessViewId);
         bottomLayout.addView(problemsViewId);
-        bottomLayout.addView(modulesViewId);
     }
 
     /*
@@ -251,6 +247,16 @@ public class ThalesBrandingConfiguration extends DefaultBrandingConfiguration {
      */
     @Override
     public boolean isAllowDebugMode() {
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.ui.branding.DefaultBrandingConfiguration#isUseDemoProjects()
+     */
+    @Override
+    public boolean isUseDemoProjects() {
         return false;
     }
 }

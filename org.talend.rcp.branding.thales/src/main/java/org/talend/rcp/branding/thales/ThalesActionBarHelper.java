@@ -15,8 +15,8 @@ package org.talend.rcp.branding.thales;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -35,12 +35,10 @@ import org.eclipse.ui.internal.registry.PerspectiveRegistry;
 import org.eclipse.ui.internal.registry.ViewDescriptor;
 import org.eclipse.ui.internal.registry.ViewRegistry;
 import org.eclipse.ui.views.IViewDescriptor;
-import org.eclipse.update.internal.core.UpdateCore;
 import org.talend.core.i18n.Messages;
 import org.talend.core.ui.perspective.PerspectiveMenuManager;
 import org.talend.rcp.branding.thales.about.AboutAction;
 import org.talend.rcp.intro.ActionBarBuildHelper;
-import org.talend.rcp.intro.ExportCommandAction;
 import org.talend.rcp.intro.ShowViewAction;
 import org.talend.rcp.intro.SwitchProjectAction;
 import org.talend.repository.model.ProxyRepositoryFactory;
@@ -62,9 +60,8 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
         IActionSetDescriptor[] actionSets = reg.getActionSets();
 
         List<String> list = new ArrayList<String>();
-        for (String item : ACTIONSETID) {
-            list.add(item);
-        }
+        CollectionUtils.addAll(list, ACTIONSETID);
+        list.add("org.eclipse.update.ui.softwareUpdates");
         if (ProxyRepositoryFactory.getInstance().isUserReadOnlyOnCurrentProject()) {
             list.add("org.talend.repository.CreateactionSet"); //$NON-NLS-1$
         }
@@ -104,11 +101,11 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
         ProjectSettingsAction projSetting = new ProjectSettingsAction();
         fileMenu.add(projSetting);
         fileMenu.add(new Separator());
-
-        fileMenu.add(ActionFactory.IMPORT.create(window));
-        fileMenu.add(new ExportCommandAction(window));
-
-        fileMenu.add(new Separator());
+        //
+        // fileMenu.add(ActionFactory.IMPORT.create(window));
+        // fileMenu.add(new ExportCommandAction(window));
+        //
+        // fileMenu.add(new Separator());
         fileMenu.add(ActionFactory.QUIT.create(window));
         editMenu = new MenuManager(
                 Messages.getString("ApplicationActionBarAdvisor.menuEditLabel"), IWorkbenchActionConstants.M_EDIT); //$NON-NLS-1$
@@ -176,8 +173,6 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
     public void preWindowOpen(IWorkbenchWindowConfigurer configurer) {
         super.preWindowOpen(configurer);
         configurer.setShowPerspectiveBar(false);
-        Plugin plugin = UpdateCore.getPlugin();
-        plugin.getPluginPreferences().setDefault(UpdateCore.P_CHECK_SIGNATURE, false);
     }
 
     /*
@@ -219,23 +214,6 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
             registry.removeExtension(perspDesc.getConfigElement().getDeclaringExtension(), descriptors);
         }
 
-        // IWorkbenchActivitySupport workbenchActivitySupport = PlatformUI.getWorkbench().getActivitySupport();
-        //
-        // Set<String> triggerPointsIds = workbenchActivitySupport.getTriggerPointManager().getDefinedTriggerPointIds();
-        // for (String triggerId : triggerPointsIds) {
-        // ITriggerPoint triggerPoint = workbenchActivitySupport.getTriggerPointManager().getTriggerPoint(triggerId);
-        // // triggerPoint.
-        // }
-
-        // IExtensionPoint[] extensionPoints = Platform.getExtensionRegistry().getExtensionPoints();
-        // for (IExtensionPoint extension : extensionPoints) {
-        // IConfigurationElement[] configElements = extension.getConfigurationElements();
-        // for (IConfigurationElement configElement : configElements) {
-        // System.out.println("congigElement:" + configElement.getNamespaceIdentifier() + "/" +
-        // configElement.getName());
-        // }
-        // }
-
         String[] viewsId = { "org.eclipse.ant.ui.views.AntView", "org.eclipse.debug.expressionview",
                 "org.eclipse.debug.ui.BreakpointView", "org.eclipse.debug.ui.DebugView", "org.eclipse.debug.ui.ExpressionView",
                 "org.eclipse.debug.ui.MemoryView", "org.eclipse.debug.ui.ModuleView", "org.eclipse.debug.ui.RegisterView",
@@ -255,7 +233,9 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
                 "org.eclipse.ui.console.ConsoleView", "org.eclipse.ui.views.TaskList", "org.epic.core.views.browser.BrowserView",
                 "org.epic.perleditor.views.ExplainErrorsView", "org.epic.perleditor.views.PerlDocView",
                 "org.epic.regexp.views.RegExpView", "org.talend.designer.core.codeView", "org.talend.scheduler.views.Scheduler",
-                "org.eclipse.ui.navigator.ProjectExplorer", "org.talend.designer.components.ecosystem.ui.views.EcosystemView" };
+                "org.eclipse.ui.navigator.ProjectExplorer", "org.talend.designer.components.ecosystem.ui.views.EcosystemView",
+                "org.eclipse.ui.views.ResourceNavigator", "org.talend.designer.codegen.perlmodule.ModulesView",
+                "org.eclipse.wst.common.snippets.internal.ui.SnippetsView" };
 
         List<IViewDescriptor> viewsToDelete = new ArrayList<IViewDescriptor>();
 
@@ -285,6 +265,5 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
         for (IPreferenceNode node : prefsToDelete) {
             window.getWorkbench().getPreferenceManager().remove(node);
         }
-
     }
 }
