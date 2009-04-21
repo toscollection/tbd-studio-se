@@ -73,5 +73,13 @@
                activityId="org.talend.rcp.branding.thales.activityPatternBinding"
                pattern="org\.eclipse\.update.*/.*">
          </activityPatternBinding>
+         <activityPatternBinding
+               activityId="org.talend.rcp.branding.thales.activityPatternBinding"
+               pattern="org\.talend\.repository\.localprovider/org\.talend\.repository\.localprovider\.ui\.actions\.ImportItemAction">
+         </activityPatternBinding>
+         <activityPatternBinding
+               activityId="org.talend.rcp.branding.thales.activityPatternBinding"
+               pattern="org\.talend\.repository\.localprovider/org\.talend\.repository\.localprovider\.ui\.actions\.ExportItemAction">
+         </activityPatternBinding>
       </extension>
 </plugin>

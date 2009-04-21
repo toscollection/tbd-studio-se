@@ -14,6 +14,5 @@ Require-Bundle: org.eclipse.ui,
  org.talend.core,
  org.talend.commons,
  org.talend.repository,
- org.talend.commons.ui,
- org.eclipse.update.ui;bundle-version="3.2.100"
+ org.talend.commons.ui
 Eclipse-LazyStart: true
