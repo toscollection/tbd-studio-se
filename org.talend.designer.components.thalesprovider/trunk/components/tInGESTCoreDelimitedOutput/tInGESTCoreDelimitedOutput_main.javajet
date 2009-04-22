@@ -1,0 +1,205 @@
+<%@ jet 
+imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.ElementParameterParser 
+    org.talend.core.model.metadata.IMetadataTable 
+    org.talend.core.model.metadata.IMetadataColumn 
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.IConnectionCategory
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.ArrayList
+    org.talend.core.model.metadata.types.JavaTypesManager
+	org.talend.core.model.metadata.types.JavaType
+" 
+%>
+
+<% 
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+String messageKey = ElementParameterParser.getValue(node, "__MESSAGEKEY__");
+String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
+String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
+
+String escapeChar = ElementParameterParser.getValue(node, "__ESCAPE_CHAR__");
+String textEnclosure = ElementParameterParser.getValue(node, "__TEXT_ENCLOSURE__");
+
+boolean isAppend = ElementParameterParser.getValue(node,"__APPEND__").equals("true");
+boolean isIncludeHeader = ElementParameterParser.getValue(node,"__INCLUDEHEADER__").equals("true");
+
+boolean advancedSeparator =  ElementParameterParser.getValue(node, "__ADVANCED_SEPARATOR__").equals("true");
+String thousandsSeparator = ElementParameterParser.getValue(node, "__THOUSANDS_SEPARATOR__");
+String decimalSeparator = ElementParameterParser.getValue(node, "__DECIMAL_SEPARATOR__"); 
+	
+if(ElementParameterParser.getValue(node,"__CSV_OPTION__").equals("false")) {	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    %>
+
+    <%
+    
+    List<IMetadataTable> metadatas = node.getMetadataList();
+    if ((metadatas!=null)&&(metadatas.size()>0)) {
+        IMetadataTable metadata = metadatas.get(0);
+        if (metadata!=null) {
+        	List< ? extends IConnection> conns = node.getIncomingConnections();
+        	for (IConnection conn : conns) {
+        		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+        		    %>    						
+    				<%
+        			List<IMetadataColumn> columns = metadata.getListColumns();
+        			int sizeColumns = columns.size();
+        			for (int i = 0; i < sizeColumns; i++) {
+      			
+        				IMetadataColumn column = columns.get(i);
+    					JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+    					boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( javaType, column.isNullable());
+    					if(!isPrimitive) {
+    					    %>   				
+    	    				if(<%=conn.getName() %>.<%=column.getLabel() %> != null) {
+        				    <%
+    				    } 
+    				    %>
+    					stringBuffer_<%=cid %>.append(
+    			        <%
+    			        String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+    			        if (javaType == JavaTypesManager.DATE && pattern != null && pattern.trim().length() != 0) {
+    			            %>
+    						FormatterUtils.format_Date(<%=conn.getName() %>.<%=column.getLabel() %>, <%= pattern %>)
+    						<%	
+    							} else if(advancedSeparator && JavaTypesManager.isNumberType(javaType, column.isNullable())) { 
+							%>
+        							<% if(javaType == JavaTypesManager.BIGDECIMAL) {%>
+        							FormatterUtils.format_Number(String.valueOf(<%=column.getPrecision() == null? conn.getName() + "." + column.getLabel() : conn.getName() + "." + column.getLabel() + ".setScale(" + column.getPrecision() + ", java.math.RoundingMode.HALF_UP)" %>), <%= thousandsSeparator %>, <%= decimalSeparator %>)					
+        							<% } else { %>
+        							FormatterUtils.format_Number(String.valueOf(<%=conn.getName() %>.<%=column.getLabel() %>), <%= thousandsSeparator %>, <%= decimalSeparator %>)						
+        							<% } %>
+							<%
+								} else if(javaType == JavaTypesManager.BIGDECIMAL){
+    						%>
+    						<%=column.getPrecision() == null? conn.getName() + "." + column.getLabel() : conn.getName() + "." + column.getLabel() + ".setScale(" + column.getPrecision() + ", java.math.RoundingMode.HALF_UP)" %>
+    						<%
+    			        } else {
+    			            %>
+    						<%=conn.getName() %>.<%=column.getLabel() %>
+    						<%				
+    			        }
+    			        %>
+    					);
+    					<%
+    					if(!isPrimitive) {
+    					    %>
+    					    } 
+    					<%
+    			        } 
+    			        if(i != sizeColumns - 1) {
+    			            %>					
+    			            stringBuffer_<%=cid %>.append(OUT_DELIM_<%=cid %>);
+    			            <%
+    			        }
+    		        }
+    		        %>
+    		        stringBuffer_<%=cid %>.append(OUT_DELIM_ROWSEP_<%=cid %>);
+					//assign value to tcMessage at every iterate
+					this.tcMessage.getBody().add(<%=messageKey %>, stringBuffer_<%=cid %>.toString());
+					    		         
+    		        nb_line_<%=cid %>++;
+    		        <%
+    	        }
+            }
+        }
+    }
+    %>
+
+<%
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}else{//the following is the tFileOutputCSV component
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    %>
+
+    <%    
+    List<IMetadataTable> metadatas = node.getMetadataList();
+    if ((metadatas!=null)&&(metadatas.size()>0)) {
+        IMetadataTable metadata = metadatas.get(0);
+        if (metadata!=null) {        	
+        	List< ? extends IConnection> conns = node.getIncomingConnections();
+        	if(conns!=null){
+        		if (conns.size()>0){
+        		    IConnection conn =conns.get(0);
+            		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+        			List<IMetadataColumn> columns = metadata.getListColumns();
+            			int sizeColumns = columns.size();
+            			%>  	
+                    	String[] row<%=cid%>=new String[<%=sizeColumns%>];		
+                    	<%
+            			for (int i = 0; i < sizeColumns; i++) {
+                			IMetadataColumn column = columns.get(i);
+                			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+                			String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+                			if(JavaTypesManager.isJavaPrimitiveType( column.getTalendType(), column.isNullable())){
+                			    %>
+                			    row<%=cid%>[<%=i%>] =String.valueOf(<%=conn.getName() %>.<%=column.getLabel() %>); 
+                			    <%
+                			}else { 
+                			    %>
+                			    if(<%=conn.getName() %>.<%=column.getLabel() %> == null){
+                			        row<%=cid%>[<%=i%>]="";
+                			    }else{
+                			        <%					
+                			        if(javaType == JavaTypesManager.STRING ){
+                			            %>
+                			            row<%=cid%>[<%=i%>] = <%=conn.getName() %>.<%=column.getLabel() %>;
+                			            <%
+                			        }else if(javaType == JavaTypesManager.DATE && pattern != null){
+                			            %>
+                			            row<%=cid%>[<%=i%>] = FormatterUtils.format_Date(<%=conn.getName() %>.<%=column.getLabel() %>, <%= pattern %>);
+                			            <%
+                			        }else if(javaType == JavaTypesManager.BYTE_ARRAY){
+                			            %>
+                			            row<%=cid%>[<%=i%>] = java.nio.charset.Charset.defaultCharset().decode(java.nio.ByteBuffer.wrap(<%=conn.getName() %>.<%=column.getLabel() %>)).toString();
+                			            <%
+                			        } else if(advancedSeparator && JavaTypesManager.isNumberType(javaType, column.isNullable())) { 
+        							%>
+                							<% if(javaType == JavaTypesManager.BIGDECIMAL) {%>
+                							row<%=cid%>[<%=i%>] = FormatterUtils.format_Number(String.valueOf(<%=column.getPrecision() == null? conn.getName() + "." + column.getLabel() : conn.getName() + "." + column.getLabel() + ".setScale(" + column.getPrecision() + ", java.math.RoundingMode.HALF_UP)" %>), <%= thousandsSeparator %>, <%= decimalSeparator %>);					
+                							<% } else { %>
+                							row<%=cid%>[<%=i%>] = FormatterUtils.format_Number(String.valueOf(<%=conn.getName() %>.<%=column.getLabel() %>), <%= thousandsSeparator %>, <%= decimalSeparator %>);						
+                							<% } %>
+        							<%
+        								} else if (javaType == JavaTypesManager.BIGDECIMAL) {
+										%>
+										row<%=cid%>[<%=i%>] = String.valueOf(<%=column.getPrecision() == null? conn.getName() + "." + column.getLabel() : conn.getName() + "." + column.getLabel() + ".setScale(" + column.getPrecision() + ", java.math.RoundingMode.HALF_UP)" %>);
+										<%
+                			        }else{
+                			            %>
+                			            row<%=cid%>[<%=i%>] = String.valueOf(<%=conn.getName() %>.<%=column.getLabel() %>);
+                			            <%
+                			        }
+                			        %>
+                			    }
+                			    <%   			
+                			}
+            			}
+%>
+						csvWriter_<%=cid%>.writeRecord(row<%=cid%>);
+						//assign value to tcMessage at every iterate
+						csvWriter_<%=cid%>.flush();
+						this.tcMessage.getBody().add(<%=messageKey %>, stringWriter_<%=cid %>.getBuffer().toString());
+						
+            			nb_line_<%=cid %>++;
+            			<%   		
+            		}
+        		
+        		}
+        	}	
+    	
+        }
+    
+    }
+    %>
+
+<%
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+%>
