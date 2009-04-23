@@ -53,7 +53,7 @@ public class EditRuleAction extends AContextualAction {
      */
     public void init(TreeViewer viewer, IStructuredSelection selection) {
         RepositoryNode node = (RepositoryNode) selection.getFirstElement();
-        if (node.getType().equals(ENodeType.REPOSITORY_ELEMENT)
+        if (node != null && node.getType().equals(ENodeType.REPOSITORY_ELEMENT)
                 && node.getObject().getType() == ERepositoryObjectType.METADATA_FILE_RULES) {
             this.setText(EDIT_LABEL);
             this.setImageDescriptor(defaultImage);
