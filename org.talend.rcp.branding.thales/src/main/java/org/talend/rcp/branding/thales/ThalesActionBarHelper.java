@@ -152,8 +152,7 @@ public class ThalesActionBarHelper extends ActionBarBuildHelper {
 
         windowMenu.add(ActionFactory.PREFERENCES.create(window));
 
-        helpMenu = new MenuManager(
-                Messages.getString("ApplicationActionBarAdvisor.menuHelpLabel"), IWorkbenchActionConstants.M_HELP); //$NON-NLS-1$
+        helpMenu = new MenuManager(Messages.getString("ApplicationActionBarAdvisor.menuHelpLabel"), "HELP"); //$NON-NLS-1$//$NON-NLS-1$
         menuBar.add(helpMenu);
 
         introAction = ActionFactory.INTRO.create(window);
