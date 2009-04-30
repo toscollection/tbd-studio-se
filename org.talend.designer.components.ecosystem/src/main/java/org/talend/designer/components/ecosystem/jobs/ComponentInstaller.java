@@ -14,6 +14,8 @@ package org.talend.designer.components.ecosystem.jobs;
 
 import java.io.File;
 import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -45,8 +47,13 @@ public class ComponentInstaller {
 
         if (rootFolder == null) {
             // the zip does not have any directory, fix it
-            String fileName = zip.getName().substring(zip.getName().lastIndexOf(File.separatorChar) + 1);
+            String fileName = new File(zip.getName()).getName();
             fileName = fileName.substring(0, fileName.lastIndexOf('.')); // remove extension
+            Pattern pattern = Pattern.compile("^([\\w]*)");
+            Matcher matcher = pattern.matcher(fileName);
+            if (matcher.find()) {
+                fileName = matcher.group(1);
+            }
             rootFolder = new File(targetFolder, fileName);
             targetFolder = targetFolder + File.separatorChar + fileName;
         }
