@@ -14,11 +14,9 @@ package org.talend.designer.components.ecosystem.ui.actions;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -43,6 +41,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.language.ECodeLanguage;
+import org.talend.core.language.LanguageManager;
 import org.talend.core.model.components.ComponentUtilities;
 import org.talend.designer.codegen.ICodeGeneratorService;
 import org.talend.designer.components.ecosystem.EcosystemComponentsProvider;
@@ -54,6 +54,7 @@ import org.talend.designer.components.ecosystem.jobs.ComponentInstaller;
 import org.talend.designer.components.ecosystem.jobs.DownloadListener;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
+import org.talend.designer.core.model.components.EmfComponent;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.AbstractTalendEditor;
 
@@ -151,8 +152,13 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
     private void confirmInstallation() {
         FileFilter propertiesFilter = new FileFilter() {
 
+            // gcui:search xml file.
             public boolean accept(File file) {
-                return file.getName().endsWith("_messages.properties"); //$NON-NLS-1$
+                if (LanguageManager.getCurrentLanguage() == ECodeLanguage.JAVA) {
+                    return file.getName().endsWith("_java.xml"); //$NON-NLS-1$
+                } else {
+                    return file.getName().endsWith("_perl.xml"); //$NON-NLS-1$
+                }
             }
         };
         String componentName = null;
@@ -166,11 +172,16 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 continue;
             }
             // load property file
-            Properties prop = new Properties();
+            // Properties prop = new Properties();
             try {
-                prop.load(new FileInputStream(files[0]));
-                String name = prop.getProperty("NAME"); //$NON-NLS-1$
-                String family = prop.getProperty("FAMILY"); //$NON-NLS-1$
+                // prop.load(new FileInputStream(files[0]));
+                // gcui:get component name and family name from xml file.
+                EmfComponent emfComponent = new EmfComponent(files[0], "component");
+                String name = emfComponent.getName();
+                String family = emfComponent.getOriginalFamilyName();
+                // String name = component.getName();
+                //String name = prop.getProperty("NAME"); //$NON-NLS-1$
+                //String family = prop.getProperty("FAMILY"); //$NON-NLS-1$
                 if (StringUtils.isNotEmpty(name) && StringUtils.isNotEmpty(family)) {
                     componentName = name;
                     message.append("Component ").append(name).append(" installed at ").append(family).append(".\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -184,7 +195,8 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             selectPaletteEntry(componentName);
         }
 
-        MessageDialog.openInformation(shell, Messages.getString("DownloadComponenentsAction.installEcosystem"), message.toString()); //$NON-NLS-1$
+        MessageDialog.openInformation(shell,
+                Messages.getString("DownloadComponenentsAction.installEcosystem"), message.toString()); //$NON-NLS-1$
 
     }
 
