@@ -27,6 +27,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -182,11 +183,15 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
      */
     protected void creatTosVersionFilter(Composite parent, boolean isInitTosVersion) {
         Composite tosVersionFilterComposite = new Composite(parent, SWT.NONE);
+        tosVersionFilterComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         tosVersionFilterComposite.setLayout(new GridLayout(2, false));
         Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
         versionFilterLable.setText(EcosystemConstants.getVersionFilterLabel());
-        versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        // GridData gridData = new GridData();
+        // gridData.widthHint = 60;
+        versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.RESIZE);
+        // versionCombo.setLayoutData(gridData);
 
         if (isInitTosVersion) {
             initTosVersionFilter();
@@ -221,6 +226,7 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
                 }
             }
             versionCombo.select(stringIndex);
+            versionCombo.pack();
         }
 
     }
