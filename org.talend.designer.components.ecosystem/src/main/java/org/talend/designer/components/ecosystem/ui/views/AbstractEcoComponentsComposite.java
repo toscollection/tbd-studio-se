@@ -188,10 +188,10 @@ public abstract class AbstractEcoComponentsComposite extends Composite {
         tosVersionFilterComposite.setLayout(new GridLayout(2, false));
         Label versionFilterLable = new Label(tosVersionFilterComposite, SWT.NONE);
         versionFilterLable.setText(EcosystemConstants.getVersionFilterLabel());
-        // GridData gridData = new GridData();
-        // gridData.widthHint = 60;
+        GridData gridData = new GridData(SWT.Resize);
+        gridData.widthHint = 60;
         versionCombo = new Combo(tosVersionFilterComposite, SWT.DROP_DOWN | SWT.READ_ONLY | SWT.RESIZE);
-        // versionCombo.setLayoutData(gridData);
+        versionCombo.setLayoutData(gridData);
 
         if (isInitTosVersion) {
             initTosVersionFilter();
