@@ -241,47 +241,47 @@
     <extension point="org.eclipse.ui.bindings">
         <key
             sequence="M1+M2+F"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             contextId="org.epic.perleditor.perlEditorScope"
             commandId="org.epic.perleditor.commands.formatSource" />
         <key
             sequence="M1+M2+C"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             contextId="org.epic.perleditor.perlEditorScope"
             commandId="org.epic.perleditor.commands.perlCritic" />
         <key
             sequence="M1+M2+D"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             contextId="org.epic.perleditor.perlEditorScope"
             commandId="org.epic.perleditor.commands.podChecker" />
         <key
             sequence="M1+/"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             contextId="org.epic.perleditor.perlEditorScope"
             commandId="org.epic.perleditor.commands.toggleComment" />
         <key
             sequence="M2+F5"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             contextId="org.epic.perleditor.perlEditorScope"
             commandId="org.epic.perleditor.commands.validateSyntax" />
         <key
             sequence="F3"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             commandId="org.epic.perleditor.commands.openDeclaration"
             contextId="org.epic.perleditor.perlEditorScope" />
         <key
             sequence="M1+M2+H"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             commandId="org.epic.perleditor.commands.searchPerlDoc"
             contextId="org.epic.perleditor.perlEditorScope" />
         <key
             sequence="M1+M2+P"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             commandId="org.epic.perleditor.commands.jump2Bracket"
             contextId="org.epic.perleditor.perlEditorScope" />
         <key
             sequence="M2+M3+O"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             commandId="org.epic.perleditor.commands.toggleMarkOccurrences"
             contextId="org.epic.perleditor.perlEditorScope" />
     </extension>

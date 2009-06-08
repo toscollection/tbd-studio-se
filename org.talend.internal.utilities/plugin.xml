@@ -13,7 +13,7 @@
       <key
             commandId="batch.generate.job.screenshot"
             contextId="talend.global"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            schemeId="org.talend.core.scheme"
             sequence="CTRL+F12"/>
    </extension>
    
