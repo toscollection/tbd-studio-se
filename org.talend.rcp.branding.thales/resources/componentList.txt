@@ -1,3 +1,0 @@
-tFileInputDelimited
-tMap
-tFileOutputDelimited
