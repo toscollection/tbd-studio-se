@@ -468,7 +468,7 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
     public void refresh() {
         fTableViewerCreator.setInputList(fAvailableExtensions);
         fTableViewerCreator.getTableViewer().refresh();
-        // saveToFile();
+        saveToFile();
         addButtons();
     }
 
