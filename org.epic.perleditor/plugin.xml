@@ -85,6 +85,29 @@
             id="org.epic.core.Perspective">
         </perspective>
     </extension>
+    
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.epic.core.Perspective">
+         <actionSet
+               id="org.talend.debug.ui.launchActionSet">
+         </actionSet>
+         <actionSet
+               id="org.talend.repository.CreateactionSet">
+         </actionSet>
+         <actionSet
+               id="org.talend.repository.actionSet">
+         </actionSet>
+         <actionSet
+               id="org.talend.repository.localprovider.actionSet">
+         </actionSet>
+         <actionSet
+         	id="org.talend.repository.bootTalendActionSet">
+         </actionSet>
+      </perspectiveExtension>
+   </extension>
+    
     <extension point="org.eclipse.ui.newWizards">
         <category
             name="Perl"
