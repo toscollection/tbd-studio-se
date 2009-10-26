@@ -172,7 +172,9 @@ public class FigureCanvas extends Canvas {
         if (parent instanceof ITool) {
             needTool = ((ITool) parent).needTool();
         } else {
-            toolControl = toolViewer.creatToolControl(this);
+            if (toolControl != null) {
+                toolControl = toolViewer.creatToolControl(this);
+            }
         }
 
         if (needTool && toolViewer != null && toolControl != null) {
