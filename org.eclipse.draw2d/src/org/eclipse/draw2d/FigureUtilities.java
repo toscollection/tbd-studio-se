@@ -308,7 +308,7 @@ public class FigureUtilities {
      */
     protected static void setFont(Font f) {
         if (f == null) {
-            return;
+            return; // FIXME changeset 18635
         }
         if (appliedFont == f || f.equals(appliedFont))
             return;

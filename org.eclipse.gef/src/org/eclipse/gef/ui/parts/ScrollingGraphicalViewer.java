@@ -12,7 +12,6 @@ import org.eclipse.swt.widgets.Control;
 
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.IToolViewer;
 import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -32,7 +31,7 @@ import org.eclipse.gef.GraphicalEditPart;
  * 
  * @author hudsonr
  */
-public class ScrollingGraphicalViewer extends GraphicalViewerImpl implements IToolViewer {
+public class ScrollingGraphicalViewer extends GraphicalViewerImpl {
 
     /**
      * Constructs a ScrollingGraphicalViewer;
@@ -43,11 +42,10 @@ public class ScrollingGraphicalViewer extends GraphicalViewerImpl implements ITo
     /**
      * @see org.eclipse.gef.EditPartViewer#createControl(org.eclipse.swt.widgets.Composite)
      */
-    public final Control createControl(Composite parent) {
-        FigureCanvas canvas = new FigureCanvas(parent, getLightweightSystem(), this);
+    public Control createControl(Composite parent) {
+        FigureCanvas canvas = new FigureCanvas(parent, getLightweightSystem());
         setControl(canvas);
         installRootFigure();
-
         return canvas;
     }
 
@@ -64,7 +62,7 @@ public class ScrollingGraphicalViewer extends GraphicalViewerImpl implements ITo
     /**
      * If the figure is a viewport, set the canvas' viewport, otherwise, set its contents.
      */
-    private void installRootFigure() {
+    protected void installRootFigure() {
         if (getFigureCanvas() == null)
             return;
         if (rootFigure instanceof Viewport)
@@ -115,10 +113,6 @@ public class ScrollingGraphicalViewer extends GraphicalViewerImpl implements ITo
     protected void setRootFigure(IFigure figure) {
         rootFigure = figure;
         installRootFigure();
-    }
-
-    public Control creatToolControl(Composite parent) {
-        return null;
     }
 
 }

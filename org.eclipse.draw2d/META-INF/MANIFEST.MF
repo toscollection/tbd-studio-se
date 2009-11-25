@@ -1,20 +1,1109 @@
 Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: %Plugin.name
-Bundle-SymbolicName: org.eclipse.draw2d
-Bundle-Version: 3.4.0.v20080529
+Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Plugin.providerName
 Bundle-Localization: plugin
-Import-Package: com.ibm.icu.text
-Export-Package: org.eclipse.draw2d,
- org.eclipse.draw2d.graph,
- org.eclipse.draw2d.geometry,
- org.eclipse.draw2d.images,
- org.eclipse.draw2d.internal;x-internal:=true,
- org.eclipse.draw2d.parts,
- org.eclipse.draw2d.text,
- org.eclipse.draw2d.widgets
-Require-Bundle: org.eclipse.swt;visibility:=reexport;bundle-version="[3.2.0,4.0.0)"
-Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Bundle-Name: %Plugin.name
+Bundle-SymbolicName: org.eclipse.draw2d
+Require-Bundle: org.eclipse.swt;visibility:=reexport;bundle-version="[
+ 3.2.0,4.0.0)"
+Bundle-Version: 3.5.0.v20090528-1511
+Export-Package: org.eclipse.draw2d,org.eclipse.draw2d.graph,org.eclips
+ e.draw2d.geometry,org.eclipse.draw2d.images,org.eclipse.draw2d.intern
+ al;x-internal:=true,org.eclipse.draw2d.parts,org.eclipse.draw2d.text,
+ org.eclipse.draw2d.widgets
+Bundle-ManifestVersion: 2
+Import-Package: com.ibm.icu.text;version="[3.8.1,5.0.0)"
+
+Name: org/eclipse/draw2d/PolylineDecoration.class
+SHA1-Digest: lALrkSS0oHHOfU4dJ7zLoLyBThs=
+
+Name: org/eclipse/draw2d/text/TextFlow.class
+SHA1-Digest: ONc2TJQ/nxI2710nKRdSmV46L0o=
+
+Name: about.ini
+SHA1-Digest: Oa4qhGG6G1I4Lde4oRL9di561+s=
+
+Name: org/eclipse/draw2d/SimpleRaisedBorder.class
+SHA1-Digest: hQRL8/rXImsbzAGc61zi7U9QK4c=
+
+Name: org/eclipse/draw2d/parts/ScrollableThumbnail$3.class
+SHA1-Digest: sspqp4eDIdF0M0GTbk5rKjuEmPs=
+
+Name: org/eclipse/draw2d/LightweightSystem$1.class
+SHA1-Digest: qG37dDSM+7GPOZALKMHuOgrbpJM=
+
+Name: org/eclipse/draw2d/EventListenerList.class
+SHA1-Digest: Ev9KTLviKT8rs2MObi7XRQa+aSk=
+
+Name: org/eclipse/draw2d/ButtonGroup.class
+SHA1-Digest: a4vPeECIrR5IvD8HzXY8+O6nvDc=
+
+Name: org/eclipse/draw2d/LayoutListener$Stub.class
+SHA1-Digest: pYumiaoTaePCadObnnv5NVFdaC0=
+
+Name: org/eclipse/draw2d/graph/TransposeMetrics.class
+SHA1-Digest: +l2sWsKrhOuHV7Cf9LD1Txp5y7w=
+
+Name: org/eclipse/draw2d/XYLayout.class
+SHA1-Digest: /pyvKh3sahqdQDxrjH7q5aVJIuM=
+
+Name: org/eclipse/draw2d/ButtonModel$RepeatFiringBehavior.class
+SHA1-Digest: 4Osj9GDWhWic5NBffMfWaSuqY7Y=
+
+Name: org/eclipse/draw2d/Polygon.class
+SHA1-Digest: N5lIExv06FVQAIuMAKyhzq4J558=
+
+Name: org/eclipse/draw2d/Button.class
+SHA1-Digest: mcuoOxCLiHl5TFebC0mUkt+/q78=
+
+Name: org/eclipse/draw2d/ToolTipHelper$3.class
+SHA1-Digest: 3wvjeW5Tyu4kNrkfKKjI+b/jCNA=
+
+Name: org/eclipse/draw2d/AbsoluteBendpoint.class
+SHA1-Digest: wq2M18BA7BI0yHHRugSPc7J+Ffk=
+
+Name: org/eclipse/draw2d/FreeformLayer.class
+SHA1-Digest: C224DPvVI4iaTwSfpJpx/OlRgm0=
+
+Name: org/eclipse/draw2d/graph/InitialRankSolver.class
+SHA1-Digest: Wq1CcjGWeYCH8EK9vLHzqEyTkwE=
+
+Name: org/eclipse/draw2d/ShortestPathConnectionRouter.class
+SHA1-Digest: LDmQ46I3PVX82AYqiUQmm5NY68s=
+
+Name: org/eclipse/draw2d/ConnectionEndpointLocator.class
+SHA1-Digest: Ei/mLu/YHCAOGdFP2CEk5PJAY3I=
+
+Name: org/eclipse/draw2d/FigureListener.class
+SHA1-Digest: 4nZbWrRYCZK5nzAOnB/pmG72nrg=
+
+Name: org/eclipse/draw2d/DeferredUpdateManager.class
+SHA1-Digest: j0tLKQDVeWtpZifd09VJ/uHHyGw=
+
+Name: org/eclipse/draw2d/PrintOperation.class
+SHA1-Digest: 91jG8Xye6kUF+QP26tAAlVSF7zQ=
+
+Name: org/eclipse/draw2d/widgets/ImageBorder.class
+SHA1-Digest: 7Fo9Hw9cZ1HjYjYSajkmT8bazok=
+
+Name: org/eclipse/draw2d/DeferredUpdateManager$UpdateRequest.class
+SHA1-Digest: r/vZRbFeZ41qSvXjjtplFa81PRk=
+
+Name: org/eclipse/draw2d/KeyEvent.class
+SHA1-Digest: RsU4jBdv/GpB0sVWH/7MV9S7zcs=
+
+Name: org/eclipse/draw2d/SWTEventDispatcher$FigureAccessibilityDispatc
+ her.class
+SHA1-Digest: Z9BNk/BPnrm6MeWgQ8Bmq1p9YvM=
+
+Name: org/eclipse/draw2d/text/FlowContext.class
+SHA1-Digest: +303xX+JPEg1VKR2ccAKe9w4LNQ=
+
+Name: org/eclipse/draw2d/RelativeBendpoint.class
+SHA1-Digest: AU6NeoUKjFgr4i2QhF+uTtvcMos=
+
+Name: about.properties
+SHA1-Digest: iF+sNx22O5D36nP0arNefxsWMbQ=
+
+Name: org/eclipse/draw2d/ScrollBar$1.class
+SHA1-Digest: lEMFaqLD9B5/v+qkCgQEs3Rn/94=
+
+Name: org/eclipse/draw2d/AnchorListener.class
+SHA1-Digest: ZsnP4RaJIcGlHvy0ubAZdGLeqn8=
+
+Name: org/eclipse/draw2d/AbstractRouter.class
+SHA1-Digest: K+3C3Mj7FdnMzEaSEhHn0i/nsqw=
+
+Name: org/eclipse/draw2d/graph/ConvertCompoundGraph.class
+SHA1-Digest: KwszozsoETHDKgsIppUaFFRBjY0=
+
+Name: org/eclipse/draw2d/ImageFigure.class
+SHA1-Digest: 0xFUqdCS0EtwvdY/6eAp1aJVyak=
+
+Name: org/eclipse/draw2d/LabeledBorder.class
+SHA1-Digest: LisLUQK1jWV6g8+GUeODCXfauIs=
+
+Name: org/eclipse/draw2d/widgets/MultiLineLabel$1.class
+SHA1-Digest: k0d69jJrGaAB/LaflUSPFvBK9zI=
+
+Name: org/eclipse/draw2d/text/LineBox.class
+SHA1-Digest: XsbBSztXYS3q7t6/1Odm/eC92Z8=
+
+Name: org/eclipse/draw2d/graph/CompoundVerticalPlacement.class
+SHA1-Digest: mFXGDl5bz7HndtSJKxWDzPFfxPc=
+
+Name: org/eclipse/draw2d/Figure$IdentitySearch.class
+SHA1-Digest: Iao5iBhnKEh1dT0EIk+YLW3YUPQ=
+
+Name: org/eclipse/draw2d/text/FlowBox.class
+SHA1-Digest: zgYDglhM+wpNpjXI6GMQVPrqnSo=
+
+Name: org/eclipse/draw2d/FigureCanvas.class
+SHA1-Digest: wP4haUe+pWE9hX7nqZVEDvq5oW0=
+
+Name: org/eclipse/draw2d/graph/NodePair.class
+SHA1-Digest: B6/R7yxcd1YnbG6GViTNFNsrylE=
+
+Name: org/eclipse/draw2d/AncestorListener$Stub.class
+SHA1-Digest: barPoCSYMnSRo98oxHpTaQQTwbE=
+
+Name: org/eclipse/draw2d/BendpointLocator.class
+SHA1-Digest: 5m7ZbzIj0IBdIGCps/am7nYWQ5M=
+
+Name: org/eclipse/draw2d/KeyListener$Stub.class
+SHA1-Digest: o3pYHuTBUg24ED+dVBJHu34tbu8=
+
+Name: org/eclipse/draw2d/geometry/PrecisionPoint.class
+SHA1-Digest: +x9HjcQM84TIoMX1RnxKPjLhqFE=
+
+Name: org/eclipse/draw2d/geometry/Geometry.class
+SHA1-Digest: 9cdhJROkODxDEKxpG1O56m+uuNE=
+
+Name: org/eclipse/draw2d/CheckBox.class
+SHA1-Digest: n/iN5PeSqnfq+/NX/S2XAx6xffY=
+
+Name: org/eclipse/draw2d/Figure.class
+SHA1-Digest: oLV1rLVVSz9W6tdL6XwPTicyeP8=
+
+Name: org/eclipse/draw2d/text/ContentBox.class
+SHA1-Digest: GChPRL0jLJc5X3ZZGDPmICBevuY=
+
+Name: org/eclipse/draw2d/graph/CompoundHorizontalPlacement.class
+SHA1-Digest: VbkNCT6FvbNPS4bhvZI/VYba42o=
+
+Name: org/eclipse/draw2d/FigureCanvas$4.class
+SHA1-Digest: buDSwY71+i0R8N/Vq1bHspxwhS8=
+
+Name: org/eclipse/draw2d/RangeModel.class
+SHA1-Digest: OzhuN/wIlhtw3g1jI8p3Hqn5mi4=
+
+Name: org/eclipse/draw2d/graph/RevertableChange.class
+SHA1-Digest: HUtcQCEfx63ne76C9ux8ZKztD6E=
+
+Name: org/eclipse/draw2d/SWTGraphics.class
+SHA1-Digest: p2/qRUdk6edyd9Ws2qvy4RkLoSs=
+
+Name: org/eclipse/draw2d/graph/PopulateRanks.class
+SHA1-Digest: kHVUH97j/EvauP5khmhKfH3wLuk=
+
+Name: org/eclipse/draw2d/AbstractBackground.class
+SHA1-Digest: JJyGUg1dRNGoSilrFZk8esSzPnk=
+
+Name: org/eclipse/draw2d/InputEvent.class
+SHA1-Digest: tfql4xKUpGaIBVc3FrFzf4kx9LY=
+
+Name: org/eclipse/draw2d/parts/ScrollableThumbnail$ClickScrollerAndDra
+ gTransferrer.class
+SHA1-Digest: IT3M+fYCEMRPgUVGpABtrHpXlp8=
+
+Name: org/eclipse/draw2d/FreeformHelper$ChildTracker.class
+SHA1-Digest: rEDM5zI066OCHJBV789aEK2hpUU=
+
+Name: org/eclipse/draw2d/FreeformViewport.class
+SHA1-Digest: GAuGfBHQIAJ9cXx9+pEJ16xAyQY=
+
+Name: org/eclipse/draw2d/graph/RankSorter.class
+SHA1-Digest: a4hlNStkzJKqcssqmB5hoi92wz4=
+
+Name: org/eclipse/draw2d/Animation.class
+SHA1-Digest: x2x6r0G2LfFX/J2Nu3wNBvVyT/8=
+
+Name: org/eclipse/draw2d/ActionEvent.class
+SHA1-Digest: raM6FiOdLt3MgLjeU7uM5jdchmo=
+
+Name: org/eclipse/draw2d/text/BlockFlow.class
+SHA1-Digest: dAh7SijH7w22slOfwHxCZgR8QAM=
+
+Name: org/eclipse/draw2d/FigureUtilities.class
+SHA1-Digest: OUHR0P5sBdXfOM6va5lI9pwStCM=
+
+Name: org/eclipse/draw2d/ScalablePolygonShape.class
+SHA1-Digest: bAwusHEmMNv+OCupoErUwP28+VU=
+
+Name: org/eclipse/draw2d/graph/GraphUtilities.class
+SHA1-Digest: x7/ETf+a5gJBrVFIG1AtQSY/6Zo=
+
+Name: org/eclipse/draw2d/RoutingAnimator.class
+SHA1-Digest: 4MMJ7G99T9H7/eTdHMq6Fmls6WA=
+
+Name: org/eclipse/draw2d/geometry/PrecisionRectangle.class
+SHA1-Digest: TQTkFXA1XzWgZzjSk16u/S9Ew+o=
+
+Name: org/eclipse/draw2d/MouseMotionListener$Stub.class
+SHA1-Digest: So+VaFH56p3RdHVqWYB+HvCEqko=
+
+Name: org/eclipse/draw2d/text/ParagraphTextLayout$SegmentLookahead.cla
+ ss
+SHA1-Digest: /3YQ/VGzmj1xzJgnfu+ZIexWPpI=
+
+Name: org/eclipse/draw2d/GraphicsSource.class
+SHA1-Digest: O+vqX4/dpZegKkl3z9O8KNn+PGg=
+
+Name: org/eclipse/draw2d/ScalableFreeformLayeredPane.class
+SHA1-Digest: AUX5T+U8fv/G7s/LDaq0RJ5Cvvg=
+
+Name: org/eclipse/draw2d/geometry/Dimension.class
+SHA1-Digest: hj73HpcqGg05eR/Myyk6uyHaIXg=
+
+Name: org/eclipse/draw2d/Locator.class
+SHA1-Digest: bQh68R3Y/Z+L4u+58pJRJiMhvcI=
+
+Name: org/eclipse/draw2d/ArrowLocator.class
+SHA1-Digest: 8EF3c2TFGZ/nMdnjr61WeDwy/FY=
+
+Name: org/eclipse/draw2d/RoutingListener.class
+SHA1-Digest: TQ1Ldc+Fj8/HwrKqyhfUDhH2Ons=
+
+Name: org/eclipse/draw2d/SimpleEtchedBorder.class
+SHA1-Digest: DloD9Yv4kBSxclypFhczg+Cu/3I=
+
+Name: org/eclipse/draw2d/Cursors.class
+SHA1-Digest: f36W7te1NoGg5TnhPBAI+37DNeQ=
+
+Name: org/eclipse/draw2d/ScaledGraphics$FontKey.class
+SHA1-Digest: pOm1jgFGpwPyFoEpafc4qJiMB+0=
+
+Name: org/eclipse/draw2d/ButtonModel$Task.class
+SHA1-Digest: Civ8eJ6FlZJ9eSeQ3fv2c7keODI=
+
+Name: org/eclipse/draw2d/ScaledGraphics$State.class
+SHA1-Digest: 1uPPB96sN5yvd2FOgKHGq2h372U=
+
+Name: org/eclipse/draw2d/EventDispatcher.class
+SHA1-Digest: /W7Q82Sy7vCmdmZycbmc81R/dw8=
+
+Name: org/eclipse/draw2d/UpdateManager.class
+SHA1-Digest: QdlU6vT0B7Ens2ld+2A8zL02Os4=
+
+Name: org/eclipse/draw2d/GroupBoxBorder.class
+SHA1-Digest: q3WjcNR61yYvkDYZo8ftLZLqmJk=
+
+Name: org/eclipse/draw2d/graph/DirectedGraph.class
+SHA1-Digest: fCIth0DR9eXKBRsqM6Ro/q0ajkI=
+
+Name: org/eclipse/draw2d/text/FlowContainerLayout.class
+SHA1-Digest: 0I6K+isSvmiOywOi+Mn2SibCv7k=
+
+Name: org/eclipse/draw2d/graph/BreakCycles.class
+SHA1-Digest: FOON5nh2crE23SdZozRK3wIcBDI=
+
+Name: org/eclipse/draw2d/ShortestPathConnectionRouter$LayoutTracker.cl
+ ass
+SHA1-Digest: a9XzKNLZk6kdZphEIXh0RXMgDOM=
+
+Name: org/eclipse/draw2d/text/NestedLine.class
+SHA1-Digest: HfXPMxX0KzlOd6Hcl9watCvuk8M=
+
+Name: org/eclipse/draw2d/FocusEvent.class
+SHA1-Digest: ftgNe/5/MdL/jwevS7399Q+AR70=
+
+Name: org/eclipse/draw2d/EventDispatcher$AccessibilityDispatcher.class
+SHA1-Digest: 0s6adyfNrb4gA7SVeK9k7wPX3HU=
+
+Name: org/eclipse/draw2d/Animator.class
+SHA1-Digest: bYDpkYdNaSpNH1+7ZVRNlNPprcA=
+
+Name: org/eclipse/draw2d/ButtonBorder$SCHEMES.class
+SHA1-Digest: bRajKUx3SCSam5HEo91q8Rn9rXc=
+
+Name: org/eclipse/draw2d/FigureCanvas$1.class
+SHA1-Digest: l8lZG/NbR8I+h/BWYtRC8WCw3j8=
+
+Name: org/eclipse/draw2d/graph/LocalOptimizer.class
+SHA1-Digest: B47BZU1kqeUmZO7N+LOSkahuVQo=
+
+Name: org/eclipse/draw2d/Bendpoint.class
+SHA1-Digest: /gQOziJ3DDQhHdaQdjLzl+PRXV8=
+
+Name: org/eclipse/draw2d/ColorConstants.class
+SHA1-Digest: ja5iF3PxZN8CX0FYXGcamxo3JAo=
+
+Name: org/eclipse/draw2d/LayeredPane.class
+SHA1-Digest: E3D72Z8ZGLL/3MX9KL9H9dMU7EE=
+
+Name: org/eclipse/draw2d/FrameBorder.class
+SHA1-Digest: UGPNBmqdgA9SxHUqi0g6s9Ks1w8=
+
+Name: org/eclipse/draw2d/MouseListener.class
+SHA1-Digest: jyCmeeaGIXX7C5NWL5NU6JvyQUA=
+
+Name: org/eclipse/draw2d/text/BidiInfo.class
+SHA1-Digest: Omm8oTw5VQ1ywsIi2C1tz6ZG8lM=
+
+Name: org/eclipse/draw2d/graph/Obstacle.class
+SHA1-Digest: skqpEVD6UoYOPSUzC3uPc9gqgbE=
+
+Name: org/eclipse/draw2d/Figure$1.class
+SHA1-Digest: QemKLto0Uv6tAPPPC9h+qXcAHDs=
+
+Name: org/eclipse/draw2d/ButtonBorder$ButtonScheme.class
+SHA1-Digest: ediMLp5pgHfaNqo7Upju6CPL0wE=
+
+Name: META-INF/eclipse.inf
+SHA1-Digest: KyT9FF7C7t86NoBoa2kZT3ZJBfw=
+
+Name: org/eclipse/draw2d/AbstractConnectionAnchor.class
+SHA1-Digest: mXZrCBSA082JKd0MsuCrH5Gmq/Q=
+
+Name: org/eclipse/draw2d/AutomaticRouter$HashKey.class
+SHA1-Digest: 40GafU6MuIiJhEUFj43UcCSAtmc=
+
+Name: org/eclipse/draw2d/MouseEvent.class
+SHA1-Digest: ioZ+6u4xH8SuFikkIPVM2A9yv6g=
+
+Name: about.mappings
+SHA1-Digest: pd9NZBp1+TQ5UNY8TRw4HhmlWtw=
+
+Name: org/eclipse/draw2d/graph/CompoundDirectedGraphLayout.class
+SHA1-Digest: aqGUZxIfKYavGXy3sz3/OO3lErY=
+
+Name: org/eclipse/draw2d/graph/NestingTree.class
+SHA1-Digest: map5L7zNFz5AV0cwK8mMrwCdFEA=
+
+Name: org/eclipse/draw2d/NativeGraphicsSource.class
+SHA1-Digest: sRBy+I2aDHs8ZlgTpTl7periJGo=
+
+Name: org/eclipse/draw2d/ChangeEvent.class
+SHA1-Digest: Im0j4Zq/CVzobfy7eASb3Q73DIc=
+
+Name: org/eclipse/draw2d/LineBorder.class
+SHA1-Digest: JgWtexyyeCyIAUPohquJdKMIBzM=
+
+Name: org/eclipse/draw2d/Polyline.class
+SHA1-Digest: PS9nkUJsOfFCYSNm6m3Q7dmozXg=
+
+Name: org/eclipse/draw2d/RoundedRectangle.class
+SHA1-Digest: bX3nhZbB6gVE09WbR+1yZp4HYac=
+
+Name: org/eclipse/draw2d/graph/Cell.class
+SHA1-Digest: Y2R5TOPgsXQLkTOkRhC1Zx7XSFY=
+
+Name: org/eclipse/draw2d/MouseMotionListener.class
+SHA1-Digest: 3eDo+KGl3O+r0ffVd9Vn2wGJf6s=
+
+Name: org/eclipse/draw2d/text/BidiProcessor$BidiEntry.class
+SHA1-Digest: 1K5CTT0VID4b8OZwch9eoTRqnII=
+
+Name: org/eclipse/draw2d/Figure$FigureIterator.class
+SHA1-Digest: vrF3yJNXrbqXuck3HhtHoNJiAmc=
+
+Name: org/eclipse/draw2d/ClickableEventHandler.class
+SHA1-Digest: RlqKge9C7aqvdtg7587DtxNf1ps=
+
+Name: org/eclipse/draw2d/widgets/MultiLineLabel.class
+SHA1-Digest: XuznKtBvruO7Pnf1MEhng5r6IXo=
+
+Name: org/eclipse/draw2d/AutomaticRouter.class
+SHA1-Digest: UUAOR72kmbahZxCyn4iVPBWiY40=
+
+Name: org/eclipse/draw2d/ScrollBar$3.class
+SHA1-Digest: 0J/kmUq5OPYSoKIZT8uBZyeT/Kg=
+
+Name: org/eclipse/draw2d/parts/ScrollableThumbnail.class
+SHA1-Digest: qTlDcdZF91XTmqgG08oUartpZzo=
+
+Name: org/eclipse/draw2d/graph/RankList.class
+SHA1-Digest: e2HiLNdeqPV+cfzKQ7amDkWbFHE=
+
+Name: org/eclipse/draw2d/text/LineRoot.class
+SHA1-Digest: P5bRh+N4XsxcDdh0k2Nn/DrOdqA=
+
+Name: org/eclipse/draw2d/DelegatingLayout.class
+SHA1-Digest: D6HHAq0jzxmMKcck0Dshctu/eqA=
+
+Name: org/eclipse/draw2d/CoordinateListener.class
+SHA1-Digest: M1pYddrjl4C8q72iO3biKONkl60=
+
+Name: org/eclipse/draw2d/text/TextLayout.class
+SHA1-Digest: v9egg/F7Q6SthQvmX9W6CQllo64=
+
+Name: org/eclipse/draw2d/ButtonModel$DefaultFiringBehavior.class
+SHA1-Digest: 0PMTPnvlxmbhn52sulrpGA0VJNM=
+
+Name: org/eclipse/draw2d/IFigure$NoInsets.class
+SHA1-Digest: L9VlXomsPeGjhirska/K2Mdl4pk=
+
+Name: org/eclipse/draw2d/text/BidiChars.class
+SHA1-Digest: 4tR/HTbLZ/oRHHEOfD9P0456fUE=
+
+Name: org/eclipse/draw2d/text/FlowBorder.class
+SHA1-Digest: O+pef6vY/jHRxuzJWdN4s1TOZtY=
+
+Name: org/eclipse/draw2d/AbstractLabeledBorder.class
+SHA1-Digest: f1lkvrrEIJZzgNzgl0HlN2nnvrQ=
+
+Name: org/eclipse/draw2d/text/FlowFigureLayout.class
+SHA1-Digest: PRZTa7rj4YT1t6q90LjSr3j6OcU=
+
+Name: org/eclipse/draw2d/images/checkboxenabledon.gif
+SHA1-Digest: FiH5mtPHXhAnRQzFFS7OT5aLMao=
+
+Name: org/eclipse/draw2d/graph/HorizontalPlacement.class
+SHA1-Digest: XbNRDLZIpnLwLhBOJ2T0eJ4MmuU=
+
+Name: org/eclipse/draw2d/Toggle.class
+SHA1-Digest: 0F6PHUS1ZaxKE0UjVhrfQ6NnWKI=
+
+Name: org/eclipse/draw2d/widgets/MultiLineLabel$3.class
+SHA1-Digest: yH0LStHYytL6vwid/E5otyL5LNo=
+
+Name: org/eclipse/draw2d/ScalableLayeredPane.class
+SHA1-Digest: XldX+1lhb1YCjsnBdh/4WC9pZ5I=
+
+Name: org/eclipse/draw2d/parts/ScrollableThumbnail$2.class
+SHA1-Digest: 4dlOm0CjfNe09ifv59kYVbPvruE=
+
+Name: org/eclipse/draw2d/MouseListener$Stub.class
+SHA1-Digest: TQ0lG83vtJUdZGXxm2BPbkveQmM=
+
+Name: plugin.properties
+SHA1-Digest: Vt3GtWFHco/AjnsXkeQcY+2Ve2A=
+
+Name: org/eclipse/draw2d/graph/Edge.class
+SHA1-Digest: HeqpFXXMwSbmqVsNthBpeioFjO4=
+
+Name: org/eclipse/draw2d/graph/TightSpanningTreeSolver.class
+SHA1-Digest: nco8MDe0w5gUrkiwqJgXpAW/Gzs=
+
+Name: org/eclipse/draw2d/EventListenerList$TypeIterator.class
+SHA1-Digest: FUJIEu/QQdDBniwRqnRWiqOLSYE=
+
+Name: org/eclipse/draw2d/graph/Segment.class
+SHA1-Digest: sFLkWWBb3GsPyZZf5g92KntHgIA=
+
+Name: org/eclipse/draw2d/EllipseAnchor.class
+SHA1-Digest: 8HiCsUZgD9US/eptr2EuCda1PJU=
+
+Name: org/eclipse/draw2d/AccessibleBase.class
+SHA1-Digest: Cs9WUscatJrGN8dbYbfnlztqgME=
+
+Name: org/eclipse/draw2d/images/checkboxenabledoff.gif
+SHA1-Digest: sjAXvKYNfICtFa/T7WIYCoj5kxc=
+
+Name: org/eclipse/draw2d/Label.class
+SHA1-Digest: 9DJp5KDkWAt8+8osJXgXeVXZd5g=
+
+Name: org/eclipse/draw2d/RotatableDecoration.class
+SHA1-Digest: LlRoQxZ/krlt9Ds8z20i1pA+UlU=
+
+Name: org/eclipse/draw2d/LightweightSystem$RootFigure.class
+SHA1-Digest: t747T5UqJNxrau/sbhvKHSiAGsg=
+
+Name: org/eclipse/draw2d/AbstractBorder.class
+SHA1-Digest: oidOYvyu5QWlARS0gEBH3YQFPg4=
+
+Name: org/eclipse/draw2d/FlowLayout$WorkingData.class
+SHA1-Digest: awz6s41dwwXqoQO5lRFo2dmx660=
+
+Name: org/eclipse/draw2d/CheckBox$1.class
+SHA1-Digest: Q7Jne8ehvlfILFYq9ny8A/XwyIo=
+
+Name: org/eclipse/draw2d/SWTEventDispatcher.class
+SHA1-Digest: 7Db1AolhX8i/Vq3/yq/3WV11rFE=
+
+Name: org/eclipse/draw2d/ToolTipHelper$2.class
+SHA1-Digest: QWm28aUn56OIdGsFIh84u+4FYAQ=
+
+Name: org/eclipse/draw2d/ManhattanConnectionRouter$ReservedInfo.class
+SHA1-Digest: GqgL7Sl6JClI9WR8lDoDwVtbtJI=
+
+Name: org/eclipse/draw2d/CompoundBorder.class
+SHA1-Digest: xqNEB6M7ZnlyL2BP3G5OfXPua9Y=
+
+Name: org/eclipse/draw2d/ColorConstants$1.class
+SHA1-Digest: REFpgO2UMNosH4erUkrnf1KtAdE=
+
+Name: org/eclipse/draw2d/ButtonStateTransitionListener.class
+SHA1-Digest: iOVjTM3dqNOmaYadVb5kipHvwD4=
+
+Name: org/eclipse/draw2d/SWTGraphics$RectangleClipping.class
+SHA1-Digest: UXwC6Lc2v7N8uoWt2+0ghvu+E5A=
+
+Name: org/eclipse/draw2d/parts/ScrollableThumbnail$ScrollSynchronizer.
+ class
+SHA1-Digest: /ao/Wej0IKpSoc+Lytwm4vNwCK4=
+
+Name: org/eclipse/draw2d/FreeformHelper.class
+SHA1-Digest: ghD6bQnLjqbacDugJ+Ym+PupHAo=
+
+Name: org/eclipse/draw2d/ConnectionRouter$NullConnectionRouter.class
+SHA1-Digest: Dy+AxHx3FfRxZwJwDXP2+Ok7XAg=
+
+Name: org/eclipse/draw2d/text/LineRoot$BidiLevelNode.class
+SHA1-Digest: 7jJKjl3u0unj3tsIm4iB7CB+Umw=
+
+Name: org/eclipse/draw2d/geometry/Translatable.class
+SHA1-Digest: oGhIC9e02duTyq0AejahQVFSXJw=
+
+Name: org/eclipse/draw2d/text/BlockFlowLayout.class
+SHA1-Digest: l/15KDPdLuSwiB9GEVaRykotA7k=
+
+Name: org/eclipse/draw2d/text/InlineFlowLayout.class
+SHA1-Digest: 5+XuUjosQvmuOGr6T2/FGjViqr4=
+
+Name: org/eclipse/draw2d/graph/Path$SegmentStack.class
+SHA1-Digest: OLMMARQSd5gQ9fTWgK0EIVeiDtM=
+
+Name: org/eclipse/draw2d/Triangle.class
+SHA1-Digest: 174hDFfC6CprT7z4Dbkf511A3GM=
+
+Name: org/eclipse/draw2d/ExclusionSearch.class
+SHA1-Digest: SddJa5oaHFwM38FeRsQq69JySxk=
+
+Name: org/eclipse/draw2d/graph/NodeCluster.class
+SHA1-Digest: ZFp7vkzet1ovsKD68AD2gen4+7w=
+
+Name: org/eclipse/draw2d/Animation$AnimPair.class
+SHA1-Digest: JcSjCql0L54aDoCfyQwijP/AmwE=
+
+Name: org/eclipse/draw2d/SchemeBorder$Scheme.class
+SHA1-Digest: 8zs8elbvTKpkBP29oONoRajvmZM=
+
+Name: org/eclipse/draw2d/graph/CompoundRankSorter$RowEntry.class
+SHA1-Digest: YDRYKCEVr8pej/H/c+ZRJXbXpIo=
+
+Name: org/eclipse/draw2d/geometry/Ray.class
+SHA1-Digest: 8CVZQpyXChqKwsiTq4VnIQgLg+8=
+
+Name: org/eclipse/draw2d/SimpleLoweredBorder.class
+SHA1-Digest: 9jN0aNtAaYE4lSzFnUVCP/Hq6lk=
+
+Name: overview.html
+SHA1-Digest: JckW03AgTweI8afEBZ2ClhCn+l0=
+
+Name: org/eclipse/draw2d/GridData.class
+SHA1-Digest: ZcEHjTwPgkKnUfT2RE4scUhOV4M=
+
+Name: org/eclipse/draw2d/parts/ScrollableThumbnail$SelectorFigure.clas
+ s
+SHA1-Digest: eCDtJUXc+yFdkavnS0Ir+TVzGAs=
+
+Name: org/eclipse/draw2d/LightweightSystem.class
+SHA1-Digest: aHoRAsn6IMwVmy+SREWgDJVZQGk=
+
+Name: org/eclipse/draw2d/text/AbstractFlowBorder.class
+SHA1-Digest: kHwi7NLXAP2ICXJ98Fn8gEYwIvc=
+
+Name: org/eclipse/draw2d/LightweightSystem$EventHandler.class
+SHA1-Digest: TFBxjknBnWqLcLB/4y3X9XOG83I=
+
+Name: org/eclipse/draw2d/text/CompositeBox.class
+SHA1-Digest: xA1C1I548V0+dzkGSVra5cd4Oyg=
+
+Name: org/eclipse/draw2d/graph/SortSubgraphs.class
+SHA1-Digest: 2mtW+ZKTBI8r0pBGpWyFpo3au2k=
+
+Name: org/eclipse/draw2d/graph/EdgeList.class
+SHA1-Digest: oxVwNFIDiXOXO7MG6mt1FzKLITc=
+
+Name: org/eclipse/draw2d/RelativeLocator.class
+SHA1-Digest: jWanvvvLsYmUFkPtOs4GPnI1WDE=
+
+Name: org/eclipse/draw2d/graph/VirtualNodeCreation.class
+SHA1-Digest: fYnxtsQDGXoKbZuoxxjHxEkvtgs=
+
+Name: org/eclipse/draw2d/ScrollPaneLayout.class
+SHA1-Digest: 5onE8lD3HrBj89usIAXjO6zRIwA=
+
+Name: org/eclipse/draw2d/graph/CollapsedEdges.class
+SHA1-Digest: 1XZwcqPtB8J8ITCfhwE/qAz+lCA=
+
+Name: org/eclipse/draw2d/graph/NodeList.class
+SHA1-Digest: Zrtkzyixerr+rH5ILD+vnJYXyCI=
+
+Name: org/eclipse/draw2d/graph/GraphVisitor.class
+SHA1-Digest: /x2RjGjvGqRHvct6oLpdTRgnB2Q=
+
+Name: org/eclipse/draw2d/AncestorHelper.class
+SHA1-Digest: sRdZQZ4OUtZ5ToPWUqU38MTamYo=
+
+Name: org/eclipse/draw2d/MidpointLocator.class
+SHA1-Digest: kr+536aOVnecS0WIsKf/1zNjlWo=
+
+Name: org/eclipse/draw2d/graph/DirectedGraphLayout.class
+SHA1-Digest: CWi23AElYbJl6ugvf+J5BVM60OI=
+
+Name: org/eclipse/draw2d/Clickable$1.class
+SHA1-Digest: ldr7AmBAbeTp1qhO5nZSnmFJNEU=
+
+Name: org/eclipse/draw2d/Viewport.class
+SHA1-Digest: FHmyjaUxZRvT8EvBYXuP41icNHw=
+
+Name: org/eclipse/draw2d/ToggleButton.class
+SHA1-Digest: 48QWklhIktccRiD9DjTPQejW8sI=
+
+Name: org/eclipse/draw2d/SWTGraphics$LazyState.class
+SHA1-Digest: WbkW6tIAnRtcHskd1wOBqLQqktA=
+
+Name: org/eclipse/draw2d/FigureCanvas$3.class
+SHA1-Digest: IQrjeCJa4SGkGjsR2s6PlBZSwxs=
+
+Name: org/eclipse/draw2d/ImageUtilities.class
+SHA1-Digest: nnVz1NAbvGS5ItGrLhVbjt+juBk=
+
+Name: org/eclipse/draw2d/FanRouter.class
+SHA1-Digest: tei5EpLYkrMRtiyH2zsGqz5vZsQ=
+
+Name: org/eclipse/draw2d/parts/Thumbnail.class
+SHA1-Digest: cWqIlleLo01NrcqA9V1CtV62C8w=
+
+Name: org/eclipse/draw2d/graph/CompoundBreakCycles.class
+SHA1-Digest: VnjNj8Yl3v5rgPjoomCgj8yEHG8=
+
+Name: org/eclipse/draw2d/graph/ShortestPathRouter$PathStack.class
+SHA1-Digest: k5KkHKbjPtibqbEvvsyj8dHSn2k=
+
+Name: org/eclipse/draw2d/geometry/PrecisionDimension.class
+SHA1-Digest: I+TDRgK+si2UVs5aXs0ZM0rmIrk=
+
+Name: org/eclipse/draw2d/DefaultRangeModel.class
+SHA1-Digest: Ufs+7bJZZ4xRg4kRbyFIEvJGw7A=
+
+Name: org/eclipse/draw2d/FreeformViewport$FreeformViewportLayout.class
+SHA1-Digest: erHgFGbR6HFAOxWbQ6D6nzk158g=
+
+Name: org/eclipse/draw2d/graph/CompoundRankSorter.class
+SHA1-Digest: 1KloVWKUJ0B9JQ0mxXm8IwqfX5w=
+
+Name: org/eclipse/draw2d/ScrollBarLayout.class
+SHA1-Digest: chP5FXdfEim7NhDOVNH6CcSIpvs=
+
+Name: org/eclipse/draw2d/graph/Path.class
+SHA1-Digest: wIMoP90n3e9D6/lC4jrGodhzioI=
+
+Name: org/eclipse/draw2d/ConnectionLayer.class
+SHA1-Digest: A5oouMlJwD1vwmGqd0CJtVY4v2I=
+
+Name: org/eclipse/draw2d/PolygonShape.class
+SHA1-Digest: Xd1Vlv5D/SczBsfoIXF9jp/9gXY=
+
+Name: org/eclipse/draw2d/ScrollPaneSolver.class
+SHA1-Digest: BM/bmZ+yRb1JgcgptFhGhg5f3So=
+
+Name: org/eclipse/draw2d/geometry/Transposer.class
+SHA1-Digest: cZdueTkzXgr0GaasVTQ2aaCP2us=
+
+Name: org/eclipse/draw2d/ScrollBar$5.class
+SHA1-Digest: DtQwGgy+ZWGuc4Enocluh5hhUaY=
+
+Name: org/eclipse/draw2d/ButtonModel.class
+SHA1-Digest: ykh8yudeIPUGjlnEaz3DeEWGWVA=
+
+Name: org/eclipse/draw2d/Graphics.class
+SHA1-Digest: obAdfiQY/W2A+6+r9A5hbvm/dA8=
+
+Name: org/eclipse/draw2d/BendpointConnectionRouter.class
+SHA1-Digest: ki71SC3BDF1ZObPv4cmGrCPFLPs=
+
+Name: org/eclipse/draw2d/Clickable.class
+SHA1-Digest: kTp2r6QVQPNT6O+lN56cotbhwXQ=
+
+Name: org/eclipse/draw2d/ScalableFigure.class
+SHA1-Digest: MyT301prbjLKOTjeW57UuT6so6M=
+
+Name: org/eclipse/draw2d/FreeformLayeredPane.class
+SHA1-Digest: CDkrFcF84+Jj+nzFCxhAOjdhRKI=
+
+Name: org/eclipse/draw2d/UpdateListener.class
+SHA1-Digest: i1hBiWNqD0/mmRQQ2cwpk/cvhYY=
+
+Name: org/eclipse/draw2d/LightweightSystem$2.class
+SHA1-Digest: OVJ8A6s1LO5U1lHkPUhsywBRCKQ=
+
+Name: org/eclipse/draw2d/Orientable.class
+SHA1-Digest: LmBEo1sKkYLY2eml5+Sn/0V+1xA=
+
+Name: org/eclipse/draw2d/graph/VirtualNode.class
+SHA1-Digest: v//aOECR0ZhovVppj0XeuyO9B+Q=
+
+Name: org/eclipse/draw2d/IFigure.class
+SHA1-Digest: 1PWicgSYLZ2f13AX4dRtD/WfUW4=
+
+Name: org/eclipse/draw2d/text/ParagraphTextLayout.class
+SHA1-Digest: lXIu905uqczOrWpD5l89NOYQ1Rg=
+
+Name: org/eclipse/draw2d/graph/Node.class
+SHA1-Digest: M62rYbd7Hnj68xi8QfJ/16Ec5SI=
+
+Name: org/eclipse/draw2d/AncestorListener.class
+SHA1-Digest: Gu0t3GUs2LT8jMBoGkIa0q5WZKc=
+
+Name: org/eclipse/draw2d/KeyListener.class
+SHA1-Digest: HeGM+1oGBRbATrm+9ijPzX592eU=
+
+Name: org/eclipse/draw2d/RectangleFigure.class
+SHA1-Digest: t4vRfVhtTKEto+0XLQL//7fOFIM=
+
+Name: org/eclipse/draw2d/ScrollBar$ThumbDragger.class
+SHA1-Digest: IXx5Hkh7vveH7nmZLwDuZzRhgf8=
+
+Name: org/eclipse/draw2d/graph/HorizontalPlacement$ClusterSet.class
+SHA1-Digest: CW+2wwQJY6ILo2KgHkNCKNrlzpk=
+
+Name: org/eclipse/draw2d/AbstractLayout.class
+SHA1-Digest: ckDKuZNjLOjTkzJBSUTZTXW/J0o=
+
+Name: org/eclipse/draw2d/graph/RankAssignmentSolver.class
+SHA1-Digest: jk/4UDap79ajkPOcJnyU+r+8css=
+
+Name: org/eclipse/draw2d/graph/RouteEdges.class
+SHA1-Digest: usEbGzcGvRmj/mmfLFeMlGGmnog=
+
+Name: org/eclipse/draw2d/text/CaretInfo.class
+SHA1-Digest: ltJy1GusoA7v2YSTk6Er1uPZXm4=
+
+Name: org/eclipse/draw2d/geometry/PointList.class
+SHA1-Digest: F8fBe/9z0Uh+bsHawc0SI9fZKCc=
+
+Name: org/eclipse/draw2d/SchemeBorder.class
+SHA1-Digest: ocQwQixzmeKm4qH9Al2DAx0zBag=
+
+Name: org/eclipse/draw2d/Clickable$ModelObserver.class
+SHA1-Digest: e0730UR1yKHAG4xtd9jG0ocOKbE=
+
+Name: org/eclipse/draw2d/internal/MultiValueMap.class
+SHA1-Digest: 8BIQ3kD94FGNm4cc/N3a/hHPEyk=
+
+Name: org/eclipse/draw2d/text/FlowPage.class
+SHA1-Digest: xPADikBnWLP72x3UhDKf/ETV7z0=
+
+Name: org/eclipse/draw2d/AbstractPointListShape.class
+SHA1-Digest: zimI68PDrq0FzpVMQ/qaXYXLvpY=
+
+Name: org/eclipse/draw2d/XYAnchor.class
+SHA1-Digest: xKbNEIKA7uQIW7doL1V4b+HDOos=
+
+Name: org/eclipse/draw2d/FlowLayout.class
+SHA1-Digest: 88SJ8V8vtAi+9PVZ4+PfumeiAlk=
+
+Name: org/eclipse/draw2d/PrinterGraphics.class
+SHA1-Digest: uUmgpigvSbpnRVquC0FFRinpW/E=
+
+Name: org/eclipse/draw2d/graph/CompoundRankSorter$RowKey.class
+SHA1-Digest: 855pVFYBUbV4xWHFz0lgMaKIY04=
+
+Name: org/eclipse/draw2d/graph/CompoundHorizontalPlacement$LeftRight.c
+ lass
+SHA1-Digest: jb9UO9IuvxViQ86c6HFfWJHpk9U=
+
+Name: org/eclipse/draw2d/ScrollBar.class
+SHA1-Digest: O/rhsuGP0LoBS2ypi1N0D97hDr4=
+
+Name: org/eclipse/draw2d/FreeformLayout.class
+SHA1-Digest: xVKGtA6VFcZD4abhKk+VMKiDjLg=
+
+Name: about.html
+SHA1-Digest: upsJNogaGlPvrCoyWxm5ik9e9Bk=
+
+Name: org/eclipse/draw2d/text/InlineFlow.class
+SHA1-Digest: QNcvIjfe67CFDCQkR2I7IGczCVU=
+
+Name: org/eclipse/draw2d/LabelAnchor.class
+SHA1-Digest: T55HEYWEPAjjBp5uiudms5xHKjg=
+
+Name: org/eclipse/draw2d/ButtonBorder.class
+SHA1-Digest: VoPQcSOTR6MlFX0i2wy46UD0A7Q=
+
+Name: org/eclipse/draw2d/graph/VerticalPlacement.class
+SHA1-Digest: BcoKRoeASl2AFKmlNpxkdo1LUAY=
+
+Name: modeling32.png
+SHA1-Digest: ADlLWFV0eQ74YnLvHnPFkYLeLrs=
+
+Name: org/eclipse/draw2d/Layer.class
+SHA1-Digest: RA+bF2zyICeKfe7YP7b4pUwUhik=
+
+Name: org/eclipse/draw2d/PolylineConnection$RoutingNotifier.class
+SHA1-Digest: te4G7OhtSWwdadKYnRi4lvVhLbE=
+
+Name: org/eclipse/draw2d/ConnectionRouter.class
+SHA1-Digest: xkcveUl3uEhHUlzxa02ENAw/2So=
+
+Name: org/eclipse/draw2d/text/FlowFigure.class
+SHA1-Digest: DyNOyClereFP1bZhlCPYXfThQiI=
+
+Name: org/eclipse/draw2d/ScrollBar$2.class
+SHA1-Digest: BAJHqbJVvULZwXPgLjBDadqStM0=
+
+Name: org/eclipse/draw2d/AbstractLocator.class
+SHA1-Digest: jM+MFtfsAcYdtsrV4wIuXu145Lo=
+
+Name: org/eclipse/draw2d/ChopboxAnchor.class
+SHA1-Digest: UIpblm8gDNf2kXvntLd7e40OCXk=
+
+Name: org/eclipse/draw2d/PopUpHelper.class
+SHA1-Digest: Vh42A2UHc+dxeMO0k9f3VvCH3mk=
+
+Name: org/eclipse/draw2d/GridLayout.class
+SHA1-Digest: 4OlgLnMxeMaGNOkq0l0xUIDlmPM=
+
+Name: org/eclipse/draw2d/TextUtilities.class
+SHA1-Digest: 7NiZsfmvZ5ifgoDdo1yF5Wfdtis=
+
+Name: org/eclipse/draw2d/graph/InvertEdges.class
+SHA1-Digest: /BhMI5GfnaqjqsJlwdI18KbOJ4k=
+
+Name: org/eclipse/draw2d/AbstractHintLayout.class
+SHA1-Digest: 0ex08X1AUtpFtGoRK4F6rylK2Gs=
+
+Name: org/eclipse/draw2d/widgets/MultiLineLabel$2.class
+SHA1-Digest: ynp3y9dr/9hAz8jvRBeDzdQZKlY=
+
+Name: org/eclipse/draw2d/ScrollPane.class
+SHA1-Digest: pm4vbovBCFOEQKlZsE+XyreWC28=
+
+Name: org/eclipse/draw2d/parts/ScrollableThumbnail$1.class
+SHA1-Digest: onYiFLeGd1Cdmn8pulzQboGdnMM=
+
+Name: org/eclipse/draw2d/FocusBorder.class
+SHA1-Digest: MfNsQrSDeWgM18SuoBDNMbk+ViY=
+
+Name: org/eclipse/draw2d/RoutingListener$Stub.class
+SHA1-Digest: GRF/LKUjxbwHT9uvsQbdS8l4Gus=
+
+Name: org/eclipse/draw2d/graph/ShortestPathRouter.class
+SHA1-Digest: q83kdzHu9k3oDyWX1f4dF68PM3c=
+
+Name: org/eclipse/draw2d/PositionConstants.class
+SHA1-Digest: nxrA6UXcp5bK4kkrH0nZTfOz28k=
+
+Name: org/eclipse/draw2d/SchemeBorder$SCHEMES.class
+SHA1-Digest: 4Yy8K7YEQBEDEtMk2Yq+m0NswUY=
+
+Name: org/eclipse/draw2d/ManhattanConnectionRouter.class
+SHA1-Digest: B+0lZ7Ea3Nz8TthgrWJTHWAUvQo=
+
+Name: org/eclipse/draw2d/graph/TightSpanningTreeSolver$CandidateList.c
+ lass
+SHA1-Digest: Fbm0pk5n5f//0feMCl84sTYKCUE=
+
+Name: org/eclipse/draw2d/text/SimpleTextLayout.class
+SHA1-Digest: CEh9UV1qrtIM65xMUuvQ0VKDjss=
+
+Name: org/eclipse/draw2d/FocusListener.class
+SHA1-Digest: +2vQ/EWSZsJOPD2CCUYUPOqz5XM=
+
+Name: org/eclipse/draw2d/FocusTraverseManager.class
+SHA1-Digest: 9sHOmH+CBxlkW32H1LWx0n4qb4c=
+
+Name: org/eclipse/draw2d/parts/Thumbnail$ThumbnailUpdater.class
+SHA1-Digest: v8QSWAwLgaYazz+AjDp961k+1ys=
+
+Name: org/eclipse/draw2d/ConnectionAnchorBase.class
+SHA1-Digest: NKbjlxKhB9CqnFgazEsvkde9ZpU=
+
+Name: org/eclipse/draw2d/ToolTipHelper.class
+SHA1-Digest: 5NSBpif6Uoeziqe89LqrcsKjIPE=
+
+Name: org/eclipse/draw2d/geometry/Insets.class
+SHA1-Digest: 9pKGVOrtDReYgYCMmzJwRAvqPss=
+
+Name: org/eclipse/draw2d/Border.class
+SHA1-Digest: loi139AEvEw0y3mZAIoIpo/NDK0=
+
+Name: org/eclipse/draw2d/FigureCanvas$5.class
+SHA1-Digest: 7fhmnomofuUiMFdWswzda+4CSSQ=
+
+Name: org/eclipse/draw2d/LabeledContainer.class
+SHA1-Digest: h2sYnT+bkrKpMynPNPTZTbVB1dg=
+
+Name: org/eclipse/draw2d/ToolTipHelper$1.class
+SHA1-Digest: i4tKO2D7xAt3MGXLTxAFnzyAfnE=
+
+Name: org/eclipse/draw2d/geometry/Point.class
+SHA1-Digest: 2EkKUv+76qDigzcxxkjbbClDfYg=
+
+Name: org/eclipse/draw2d/FreeformFigure.class
+SHA1-Digest: +DCd1eUYjnh5uQcwb+aRLieQQPI=
+
+Name: org/eclipse/draw2d/SubordinateUpdateManager.class
+SHA1-Digest: aiGAkV/fApVqke62otuoQsU4TpI=
+
+Name: org/eclipse/draw2d/graph/SubgraphBoundary.class
+SHA1-Digest: 78p/damdTPjVGkPmGaKMTXqrw3s=
+
+Name: org/eclipse/draw2d/ToolbarLayout.class
+SHA1-Digest: XpJLqhMHqxeuN+zBTNiiICrewWw=
+
+Name: org/eclipse/draw2d/widgets/MultiLineLabel$FocusableViewport.clas
+ s
+SHA1-Digest: TqaPDuN4upSe8WufQQW8EYF1Fvg=
+
+Name: org/eclipse/draw2d/SWTGraphics$State.class
+SHA1-Digest: tHVNzPsBAIsEVTwuE9yBKtc/CJI=
+
+Name: org/eclipse/draw2d/PolylineConnection.class
+SHA1-Digest: Ab8xMRK9n8JeduzFpJP91wRlI9c=
+
+Name: org/eclipse/draw2d/text/BidiProcessor.class
+SHA1-Digest: JZwUTy4GtdAc6FajkXv2GDccSFg=
+
+Name: org/eclipse/draw2d/Figure$LayoutNotifier.class
+SHA1-Digest: EPTvp7xzqPiBOPpTNLIymTWr7nk=
+
+Name: org/eclipse/draw2d/graph/Vertex.class
+SHA1-Digest: kK8h5lRtFnTZ1rjUluDgxq9d69M=
+
+Name: org/eclipse/draw2d/graph/RankSorter$1.class
+SHA1-Digest: LnadRb15oaxIf3rniHgGRJG+Sdk=
+
+Name: org/eclipse/draw2d/graph/CompoundPopulateRanks.class
+SHA1-Digest: Q9zWXcSQGKiKVDd8gCYVjHH62BI=
+
+Name: org/eclipse/draw2d/ScaledGraphics.class
+SHA1-Digest: lVlDqJ+DEpYoSlSxphq9V/o3n7Q=
+
+Name: org/eclipse/draw2d/StackLayout.class
+SHA1-Digest: cufZIBiyRhuzflCRxZXasn5Ii8A=
+
+Name: org/eclipse/draw2d/FocusListener$Stub.class
+SHA1-Digest: veShyJT5TPUUxtdC5PlCQO+1mK8=
+
+Name: org/eclipse/draw2d/text/LineRoot$Result.class
+SHA1-Digest: Kfpy+/Or/zW1TDztz0z/wOvZcTE=
+
+Name: org/eclipse/draw2d/text/TextFragmentBox.class
+SHA1-Digest: C+kvCvzL2WP97U4U5p2A3B1gYHk=
+
+Name: org/eclipse/draw2d/ConnectionLocator.class
+SHA1-Digest: eWqrA+qVkxzJLyOpBLpzOVz4NRY=
+
+Name: org/eclipse/draw2d/ScrollPaneSolver$Result.class
+SHA1-Digest: RLhyCAVDzvZuViHcot683r6HNeY=
+
+Name: org/eclipse/draw2d/ScaledGraphics$FontHeightCache.class
+SHA1-Digest: 5vD7m2siJ6at6xT+bWiLOFNa6Bo=
+
+Name: org/eclipse/draw2d/ArrowButton.class
+SHA1-Digest: Nmtsmid78IZ1ZvWMdHOLRWXt4FI=
+
+Name: org/eclipse/draw2d/geometry/Rectangle.class
+SHA1-Digest: yIItN+VnDDAXK1yZHifT8aZhDtQ=
+
+Name: org/eclipse/draw2d/Ellipse.class
+SHA1-Digest: pjndV/Tef9lE3qml/ecIx2xe7KU=
+
+Name: org/eclipse/draw2d/text/BlockBox.class
+SHA1-Digest: 1Dr7XdMrsEgNPqL+vVgbLDGSajA=
+
+Name: org/eclipse/draw2d/Shape.class
+SHA1-Digest: /vdpxpWVVPCyqTRRzGCkY7bw0FU=
+
+Name: org/eclipse/draw2d/LayoutManager.class
+SHA1-Digest: R2BIBclWTmJDh01cZL+fb94sm9A=
+
+Name: org/eclipse/draw2d/ButtonModel$1.class
+SHA1-Digest: EThxH8s1klGFu9wjPrcVjjvqOmU=
+
+Name: org/eclipse/draw2d/DeferredUpdateManager$RunnableChain.class
+SHA1-Digest: 8EGeMNE09GU6VHT/z5m/JmLEHxQ=
+
+Name: org/eclipse/draw2d/text/FlowUtilities.class
+SHA1-Digest: uo9acmslfjF38pGTF8s5bCuXxvw=
+
+Name: org/eclipse/draw2d/Connection.class
+SHA1-Digest: KtGmGRZ00gnaUp7wqpVK2PjjXuw=
+
+Name: org/eclipse/draw2d/text/FlowAdapter.class
+SHA1-Digest: P1w3fFi/csfu13uD4tBcZwHik+k=
+
+Name: org/eclipse/draw2d/text/FlowAdapter$FigureBox.class
+SHA1-Digest: KFPLGACXmJq1fNauUVj8aJb1tT4=
+
+Name: org/eclipse/draw2d/TreeSearch.class
+SHA1-Digest: MrXe0hnbxiUJSCtvaoUVwyyvvzU=
+
+Name: org/eclipse/draw2d/TitleBarBorder.class
+SHA1-Digest: BmfSBMftR7diU37HSj/wV2lUx+U=
+
+Name: org/eclipse/draw2d/ToggleModel.class
+SHA1-Digest: +92q9TPH70zkJn+ZP8jMrN3DM1E=
+
+Name: org/eclipse/draw2d/FigureCanvas$2.class
+SHA1-Digest: kRV7L96AjeC/Yci5JnDo2WdwDnQ=
+
+Name: org/eclipse/draw2d/SWTGraphics$Clipping.class
+SHA1-Digest: V9aX5ovuLB4T3/TJp6edD+wliOc=
+
+Name: org/eclipse/draw2d/graph/CompoundDirectedGraph.class
+SHA1-Digest: r80GvSNw4n4tEhvE8pL7Y/P4E+s=
+
+Name: org/eclipse/draw2d/graph/Subgraph.class
+SHA1-Digest: RK6wYGVgV9jMCBxGFNQB1eNPY6k=
+
+Name: org/eclipse/draw2d/graph/MinCross.class
+SHA1-Digest: hjmvZmoq6rsZzKOh2cul9LIoCPM=
+
+Name: org/eclipse/draw2d/graph/Node$1.class
+SHA1-Digest: zPyyV6E2v4SPaf9V4gQesT7zZEs=
+
+Name: org/eclipse/draw2d/ViewportLayout.class
+SHA1-Digest: TeSwMS42DBaDKreZOiDmbj47J4M=
+
+Name: org/eclipse/draw2d/LayoutAnimator.class
+SHA1-Digest: +jgv1gJbn0F1avMmn2YaikoAcKE=
+
+Name: org/eclipse/draw2d/ConnectionAnchor.class
+SHA1-Digest: wXESlDEaFvwGgzW6DcQdsSs3LM0=
+
+Name: org/eclipse/draw2d/PolylineShape.class
+SHA1-Digest: eSnOOr4KtEOpnuDBwjefsXWrt4o=
+
+Name: org/eclipse/draw2d/BorderLayout.class
+SHA1-Digest: 111ESTS5r9Kg0Skuc0ikfDCKi54=
+
+Name: org/eclipse/draw2d/PrintFigureOperation.class
+SHA1-Digest: 65e9B85aojy3YjLgB4KMBLOZemM=
+
+Name: org/eclipse/draw2d/text/FlowUtilities$LookAhead.class
+SHA1-Digest: hNQ5uWASTHu5MD3TxSr6ujpCNys=
+
+Name: org/eclipse/draw2d/Panel.class
+SHA1-Digest: BIYy767tF1a0Frw8/eOD5QUkWRM=
+
+Name: org/eclipse/draw2d/MarginBorder.class
+SHA1-Digest: /7T8xV/Mcp5wGmvL2irjE0LGAis=
+
+Name: org/eclipse/draw2d/text/PageFlowLayout.class
+SHA1-Digest: Wx9jWxQtjTvrjJGy/bGGkYDEQsU=
+
+Name: org/eclipse/draw2d/LayoutListener.class
+SHA1-Digest: HH7DpP7vvN1xx7uxB5RVbAh8Q3s=
+
+Name: org/eclipse/draw2d/PolygonDecoration.class
+SHA1-Digest: T2RtxCNdPZs/CtGKgJn2qEgGseg=
+
+Name: org/eclipse/draw2d/SWTEventDispatcher$1.class
+SHA1-Digest: 4NJETvAzhtgctLNoI8+tGXhyncc=
+
+Name: org/eclipse/draw2d/ColorConstants$SystemColorFactory.class
+SHA1-Digest: HuoYzhQXbVkG8zRsz26jVSS2daQ=
+
+Name: org/eclipse/draw2d/ShortestPathConnectionRouter$1.class
+SHA1-Digest: iim3cF5uezx7qlzdFslvwBxK5HM=
+
+Name: org/eclipse/draw2d/ChangeListener.class
+SHA1-Digest: JYJPVpPyKJkDM7FFa7xl7+ChSVw=
+
+Name: org/eclipse/draw2d/FreeformListener.class
+SHA1-Digest: gTZtupMzsIQ1uewSdxPh0wg5HNE=
+
+Name: org/eclipse/draw2d/graph/SpanningTreeVisitor.class
+SHA1-Digest: 4oiies9lcVmuJEhZ/5XckiEhOAw=
+
+Name: org/eclipse/draw2d/BufferedGraphicsSource.class
+SHA1-Digest: BecGNhCIpy+Z3k5Ll0uwvOv7ITY=
+
+Name: org/eclipse/draw2d/ScrollBar$4.class
+SHA1-Digest: j6UPXg6evQcBnRmbkwAJpX6i6dA=
+
+Name: org/eclipse/draw2d/ActionListener.class
+SHA1-Digest: 8DLpHZJ1JwLWO872uEr1WWo66dM=
+
+Name: org/eclipse/draw2d/graph/Rank.class
+SHA1-Digest: jRMzK7hP5tWL8geIX46pmhRjaO8=
+
+Name: org/eclipse/draw2d/geometry/Transform.class
+SHA1-Digest: 6ELjkZQVYX2doIdMDVwMpX7a5f4=
 

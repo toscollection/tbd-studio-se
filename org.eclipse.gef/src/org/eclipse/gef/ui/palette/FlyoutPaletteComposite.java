@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2008 IBM Corporation and others. All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2004, 2009 IBM Corporation and others. All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
@@ -29,6 +29,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -51,17 +52,19 @@ import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.TransferDropTargetListener;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPerspectiveDescriptor;
 import org.eclipse.ui.IPerspectiveListener;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.XMLMemento;
-import org.eclipse.ui.internal.DragCursors;
 
 import org.eclipse.draw2d.ActionEvent;
 import org.eclipse.draw2d.ActionListener;
@@ -98,7 +101,7 @@ import org.eclipse.gef.ui.views.palette.PaletteView;
  */
 public class FlyoutPaletteComposite extends Composite {
 
-    protected static final FontManager FONT_MGR = new FontManager();
+    public static final FontManager FONT_MGR = new FontManager();
 
     private static final String PROPERTY_PALETTE_WIDTH = "org.eclipse.gef.ui.palette.fpa.paletteWidth"; //$NON-NLS-1$
 
@@ -286,7 +289,7 @@ public class FlyoutPaletteComposite extends Composite {
         return new Sash(this, SWT.NONE);
     }
 
-    protected Control createTitle(Composite parent, boolean isHorizontal) {
+    public Control createTitle(Composite parent, boolean isHorizontal) {
         return new TitleCanvas(parent, isHorizontal);
     }
 
@@ -841,7 +844,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class ResizeAction extends Action {
+    public class ResizeAction extends Action {
 
         public ResizeAction() {
             super(PaletteMessages.RESIZE_LABEL);
@@ -867,7 +870,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
+    public class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
 
         protected boolean switchDock = false;
 
@@ -984,7 +987,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    public class PaletteComposite extends Composite {
+    private class PaletteComposite extends Composite {
 
         protected Control button, title;
 
@@ -1055,7 +1058,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected static class TitleLabel extends Label {
+    public static class TitleLabel extends Label {
 
         protected static final Border BORDER = new MarginBorder(4, 3, 4, 3);
 
@@ -1248,7 +1251,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class TitleCanvas extends Canvas {
+    public class TitleCanvas extends Canvas {
 
         protected LightweightSystem lws;
 
@@ -1352,7 +1355,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class ChangeDockAction extends Action {
+    public class ChangeDockAction extends Action {
 
         private int position;
 
@@ -1495,4 +1498,54 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
+    private static class DragCursors {
+
+        public static final int INVALID = 0;
+
+        public static final int LEFT = 1;
+
+        public static final int RIGHT = 2;
+
+        private final static Cursor cursors[] = new Cursor[3];
+
+        /**
+         * Return the cursor for a drop scenario, as identified by code. Code must be one of INVALID, LEFT, RIGHT. If
+         * the code is not found default to INVALID. Note that since these three cursors are static, they will only be
+         * created once for the lifetime of the eclipse session and shared (i.e this is not an image leak).
+         * 
+         * @param code the code
+         * @return the cursor
+         */
+        public static Cursor getCursor(int code) {
+            Display display = Display.getCurrent();
+            if (cursors[code] == null) {
+                ImageDescriptor source = null;
+                ImageDescriptor mask = null;
+                switch (code) {
+                case LEFT:
+                    source = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
+                            ISharedImages.IMG_OBJS_DND_LEFT_SOURCE);
+                    mask = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_DND_LEFT_MASK);
+                    cursors[LEFT] = new Cursor(display, source.getImageData(), mask.getImageData(), 16, 16);
+                    break;
+                case RIGHT:
+                    source = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
+                            ISharedImages.IMG_OBJS_DND_RIGHT_SOURCE);
+                    mask = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_DND_RIGHT_MASK);
+                    cursors[RIGHT] = new Cursor(display, source.getImageData(), mask.getImageData(), 16, 16);
+                    break;
+                default:
+                case INVALID:
+                    source = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
+                            ISharedImages.IMG_OBJS_DND_INVALID_SOURCE);
+                    mask = PlatformUI.getWorkbench().getSharedImages()
+                            .getImageDescriptor(ISharedImages.IMG_OBJS_DND_INVALID_MASK);
+                    cursors[INVALID] = new Cursor(display, source.getImageData(), mask.getImageData(), 16, 16);
+                    break;
+                }
+            }
+            return cursors[code];
+        }
+
+    }
 }

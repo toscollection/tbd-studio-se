@@ -86,9 +86,9 @@ public class LuceneSearchProvider<T> implements ISearchProvider<T> {
         }
 
         for (int i = 0; i < fields.length; i++) {
-            doc.add(Field.Text(FIELD_PREFIX + i, new StringReader(fields[i])));
+            doc.add(new Field(FIELD_PREFIX + i, new StringReader(fields[i])));
         }
-        doc.add(Field.UnIndexed(KEY_FIELD, key));
+        doc.add(new Field(KEY_FIELD, key, Field.Store.YES, Field.Index.NO));
         fRecords.put(key, bean);
         // add record to index
         if (fWriter == null) {

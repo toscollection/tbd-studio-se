@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2008 IBM Corporation and others. All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2000, 2009 IBM Corporation and others. All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
@@ -23,8 +23,16 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 /**
- * A Canvas that contains {@link Figure Figures}.
- * 
+ * A scrolling Canvas that contains {@link Figure Figures} viewed through a {@link Viewport}. Call
+ * {@link #setContents(IFigure)} to specify the root of the tree of <tt>Figures</tt> to be viewed through the
+ * <tt>Viewport</tt>.
+ * <p>
+ * Normal procedure for using a FigureCanvas:
+ * <ol>
+ * <li>Create a FigureCanvas.
+ * <li>Create a Draw2d Figure and call {@link #setContents(IFigure)}. This Figure will be the top-level Figure of the
+ * Draw2d application.
+ * </ol>
  * <dl>
  * <dt><b>Required Styles (when using certain constructors):</b></dt>
  * <dd>V_SCROLL, H_SCROLL, NO_REDRAW_RESIZE</dd>
@@ -50,7 +58,7 @@ public class FigureCanvas extends Canvas {
      * <LI>{@link SWT#H_SCROLL}</LI>
      * </UL>
      */
-    static final int DEFAULT_STYLES = SWT.NO_REDRAW_RESIZE | SWT.NO_BACKGROUND | SWT.V_SCROLL | SWT.H_SCROLL;
+    protected static final int DEFAULT_STYLES = SWT.NO_REDRAW_RESIZE | SWT.NO_BACKGROUND | SWT.V_SCROLL | SWT.H_SCROLL;
 
     private static final int REQUIRED_STYLES = SWT.NO_REDRAW_RESIZE | SWT.V_SCROLL | SWT.H_SCROLL;
 
@@ -63,8 +71,6 @@ public class FigureCanvas extends Canvas {
     /** Always show scrollbar */
     public static int ALWAYS = 2;
 
-    private int cashedToolHeight = 24;
-
     private int vBarVisibility = AUTOMATIC;
 
     private int hBarVisibility = AUTOMATIC;
@@ -76,8 +82,6 @@ public class FigureCanvas extends Canvas {
     private int hBarOffset;
 
     private int vBarOffset;
-
-    protected Control toolControl;
 
     private PropertyChangeListener horizontalChangeListener = new PropertyChangeListener() {
 
@@ -145,10 +149,6 @@ public class FigureCanvas extends Canvas {
         this(parent, SWT.DOUBLE_BUFFERED, lws);
     }
 
-    public FigureCanvas(Composite parent, LightweightSystem lws, IToolViewer toolViewer) {
-        this(SWT.DOUBLE_BUFFERED | DEFAULT_STYLES, parent, lws, toolViewer);
-    }
-
     /**
      * Constructor taking a lightweight system and SWT style, which is used verbatim. Certain styles must be used with
      * this class. Refer to the class javadoc for more details.
@@ -159,31 +159,10 @@ public class FigureCanvas extends Canvas {
      * @since 3.4
      */
     public FigureCanvas(int style, Composite parent, LightweightSystem lws) {
-        this(style, parent, lws, null);
-    }
-
-    public FigureCanvas(int style, Composite parent, LightweightSystem lws, IToolViewer toolViewer) {
         super(parent, checkStyle(style));
         getHorizontalBar().setVisible(false);
         getVerticalBar().setVisible(false);
         this.lws = lws;
-
-        boolean needTool = true;
-        if (parent instanceof ITool) {
-            needTool = ((ITool) parent).needTool();
-        } else {
-            if (toolViewer != null) {
-                toolControl = toolViewer.creatToolControl(this);
-            }
-        }
-
-        if (needTool && toolViewer != null && toolControl != null) {
-            org.eclipse.swt.graphics.Point bounds = toolControl.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-            if (cashedToolHeight < bounds.y) {
-                cashedToolHeight = bounds.y;
-            }
-        }
-
         lws.setControl(this);
         hook();
     }
@@ -212,8 +191,15 @@ public class FigureCanvas extends Canvas {
      * @see org.eclipse.swt.widgets.Composite#computeSize(int, int, boolean)
      */
     public org.eclipse.swt.graphics.Point computeSize(int wHint, int hHint, boolean changed) {
-        // TODO not accounting for scrollbars and trim
-        Dimension size = getLightweightSystem().getRootFigure().getPreferredSize(wHint, hHint);
+        // TODO Still doesn't handle scrollbar cases, such as when a constrained width
+        // would require a horizontal scrollbar, and therefore additional height.
+        int borderSize = computeTrim(0, 0, 0, 0).x * -2;
+        if (wHint >= 0)
+            wHint = Math.max(0, wHint - borderSize);
+        if (hHint >= 0)
+            hHint = Math.max(0, hHint - borderSize);
+        Dimension size = getLightweightSystem().getRootFigure().getPreferredSize(wHint, hHint)
+                .getExpanded(borderSize, borderSize);
         size.union(new Dimension(wHint, hHint));
         return new org.eclipse.swt.graphics.Point(size.width, size.height);
     }
@@ -306,31 +292,19 @@ public class FigureCanvas extends Canvas {
         getViewport().getVerticalRangeModel().removePropertyChangeListener(verticalChangeListener);
     }
 
-    private void layoutViewport() {
+    protected void layoutViewport() {
         ScrollPaneSolver.Result result;
-        int viewPortY = 0;
-        if (toolControl != null) {
-            viewPortY = cashedToolHeight;
-        }
-        result = ScrollPaneSolver.solve(new Rectangle(getBounds()).setLocation(0, viewPortY), getViewport(),
+        result = ScrollPaneSolver.solve(new Rectangle(getBounds()).setLocation(0, 0), getViewport(),
                 getHorizontalScrollBarVisibility(), getVerticalScrollBarVisibility(), computeTrim(0, 0, 0, 0).width, computeTrim(
                         0, 0, 0, 0).height);
         getLightweightSystem().setIgnoreResize(true);
-
         try {
             if (getHorizontalBar().getVisible() != result.showH)
                 getHorizontalBar().setVisible(result.showH);
             if (getVerticalBar().getVisible() != result.showV)
                 getVerticalBar().setVisible(result.showV);
-
             Rectangle r = new Rectangle(getClientArea());
-            if (toolControl != null) {
-                toolControl.setBounds(0, 0, r.width, cashedToolHeight);
-                r.height -= cashedToolHeight;
-                r.setLocation(0, cashedToolHeight);
-            } else {
-                r.setLocation(0, 0);
-            }
+            r.setLocation(0, 0);
             getLightweightSystem().getRootFigure().setBounds(r);
         } finally {
             getLightweightSystem().setIgnoreResize(false);

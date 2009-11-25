@@ -9,6 +9,7 @@
 				id="org.eclipse.gef.category.view">
 		</category>
 
+
 		<command
 				name="%ZoomIn.Tooltip"
 				description="%ZoomIn.Tooltip"
@@ -23,17 +24,15 @@
 				id="org.eclipse.gef.zoom_out">
 		</command>
 			
-	</extension>	
+	</extension>
 
 	<extension point="org.eclipse.ui.bindings">
 		<key
 			sequence="M1+="
-			contextId="org.eclipse.ui.globalScope"
 			commandId="org.eclipse.gef.zoom_in"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 		<key
 			sequence="M1+-"
-			contextId="org.eclipse.ui.globalScope"
 			commandId="org.eclipse.gef.zoom_out"
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
 
