@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Sybase IQ ELT Map
+Bundle-SymbolicName: org.talend.designer.dbmap.sybase;singleton:=true
+Bundle-Version: 3.2.0.qualifier
+Bundle-Activator: org.talend.designer.dbmap.sybase.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.talend.designer.dbmap,
+ org.talend.core,
+ org.talend.designer.core,
+ org.talend.designer.abstractmap,
+ org.talend.designer.codegen
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
