@@ -101,7 +101,7 @@ import org.eclipse.gef.ui.views.palette.PaletteView;
  */
 public class FlyoutPaletteComposite extends Composite {
 
-    public static final FontManager FONT_MGR = new FontManager();
+    protected static final FontManager FONT_MGR = new FontManager();
 
     private static final String PROPERTY_PALETTE_WIDTH = "org.eclipse.gef.ui.palette.fpa.paletteWidth"; //$NON-NLS-1$
 
@@ -289,7 +289,7 @@ public class FlyoutPaletteComposite extends Composite {
         return new Sash(this, SWT.NONE);
     }
 
-    public Control createTitle(Composite parent, boolean isHorizontal) {
+    protected Control createTitle(Composite parent, boolean isHorizontal) {
         return new TitleCanvas(parent, isHorizontal);
     }
 
@@ -844,7 +844,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    public class ResizeAction extends Action {
+    protected class ResizeAction extends Action {
 
         public ResizeAction() {
             super(PaletteMessages.RESIZE_LABEL);
@@ -870,7 +870,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    public class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
+    protected class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
 
         protected boolean switchDock = false;
 
@@ -1058,7 +1058,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    public static class TitleLabel extends Label {
+    protected static class TitleLabel extends Label {
 
         protected static final Border BORDER = new MarginBorder(4, 3, 4, 3);
 
@@ -1251,7 +1251,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    public class TitleCanvas extends Canvas {
+    protected class TitleCanvas extends Canvas {
 
         protected LightweightSystem lws;
 
@@ -1355,7 +1355,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    public class ChangeDockAction extends Action {
+    protected class ChangeDockAction extends Action {
 
         private int position;
 
@@ -1389,7 +1389,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    public static class FontManager {
+    protected static class FontManager {
 
         private final String fontName = getFontType();
 

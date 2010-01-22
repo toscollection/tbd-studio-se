@@ -89,7 +89,7 @@ private EditPartTipHelper tipHelper;
 private class CollapseToggle
     extends Toggle {
 
-public CollapseToggle(IFigure contents, final Boolean animate) {
+public CollapseToggle(IFigure contents) {
     super(contents);
     setSelected(true);
     setRequestFocusEnabled(true);
@@ -97,13 +97,9 @@ public CollapseToggle(IFigure contents, final Boolean animate) {
 
         public void handleStateChanged(ChangeEvent e) {
             if (e.getPropertyName().equals(ButtonModel.SELECTED_PROPERTY)) {
-                        if (animate.booleanValue()) {
-                            Animation.markBegin();
-                        }
+                Animation.markBegin();
                 handleExpandStateChanged();
-                        if (animate.booleanValue()) {
-                            Animation.run(150);
-                        }
+                Animation.run(150);
             } else if (e.getPropertyName().equals(
                 ButtonModel.MOUSEOVER_PROPERTY)) {
                 repaint();
@@ -183,11 +179,7 @@ public DrawerFigure(final Control control) {
 	title.add(pinFigure, BorderLayout.RIGHT);
 	title.add(drawerLabel, BorderLayout.CENTER);
 	
-	Boolean animate = (Boolean) control.getData("ANIMATE");
-	if (animate == null) {
-		animate = Boolean.TRUE;
-	}
-	collapseToggle = new CollapseToggle(title, animate);
+	collapseToggle = new CollapseToggle(title);
 
 	/*
 	 * @TODO:Pratik
