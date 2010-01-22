@@ -22,7 +22,7 @@ Export-Package: org.eclipse.gef,org.eclipse.gef.commands,org.eclipse.g
  i.properties,org.eclipse.gef.ui.rulers,org.eclipse.gef.ui.stackview,o
  rg.eclipse.gef.ui.stackview.icons,org.eclipse.gef.ui.views.palette,or
  g.eclipse.gef.util
-Bundle-Version: 3.5.0.v20090528-1511
+Bundle-Version: 3.5.1.v20090910-2020
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Plugin.providerName
 Bundle-Name: %Plugin.name
