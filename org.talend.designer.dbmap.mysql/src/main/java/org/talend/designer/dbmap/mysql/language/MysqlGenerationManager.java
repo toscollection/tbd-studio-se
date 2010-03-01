@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.designer.dbmap.mysql.language;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,8 +53,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
      * @param expressionParser
      * @return
      */
-    public String buildConditions(List<ExternalDbMapEntry> constraintTableEntries,
-            DataMapExpressionParser expressionParser) {
+    public String buildConditions(List<ExternalDbMapEntry> constraintTableEntries, DataMapExpressionParser expressionParser) {
         int lstSize = constraintTableEntries.size();
         StringBuilder stringBuilder = new StringBuilder();
         String and = null;
@@ -110,10 +110,10 @@ public class MysqlGenerationManager extends DbGenerationManager {
         if (outputTable != null) {
 
             IConnection connection = nameToOutputConnection.get(outputTable.getName());
-//            if (connection != null) {
-//                outputTable = removeUnmatchingEntriesWithColumnsOfMetadataTable(outputTable, connection
-//                        .getMetadataTable());
-//            }
+            // if (connection != null) {
+            // outputTable = removeUnmatchingEntriesWithColumnsOfMetadataTable(outputTable, connection
+            // .getMetadataTable());
+            // }
 
             sb.append("SELECT\n"); //$NON-NLS-1$
 
@@ -140,8 +140,10 @@ public class MysqlGenerationManager extends DbGenerationManager {
 
             // load input table in hash
             boolean explicitJoin = false;
+            boolean appendNoJoin = false;
             int lstSizeInputTables = inputTables.size();
             Map<String, ExternalDbMapTable> nameToInputTable = new HashMap<String, ExternalDbMapTable>();
+            List<ExternalDbMapTable> appendTableList = new ArrayList<ExternalDbMapTable>();
             for (int i = 0; i < lstSizeInputTables; i++) {
                 ExternalDbMapTable inputTable = inputTables.get(i);
                 nameToInputTable.put(inputTable.getName(), inputTable);
@@ -150,6 +152,15 @@ public class MysqlGenerationManager extends DbGenerationManager {
                     explicitJoin = true;
                 }
 
+            }
+
+            for (int i = 0; i < lstSizeInputTables; i++) {// 11758
+                ExternalDbMapTable inputTable = inputTables.get(i);
+                IJoinType joinType = language.getJoin(inputTable.getJoinType());
+                if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && i > 0 && explicitJoin) {
+                    appendTableList.add(inputTable);
+                    appendNoJoin = true;
+                }
             }
 
             StringBuilder sbWhere = new StringBuilder();
@@ -164,7 +175,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
             sb.append("\n"); //$NON-NLS-1$
 
             IJoinType previousJoinType = null;
-
+            boolean hasToAppend = true;
             for (int i = 0; i < lstSizeInputTables; i++) {
                 ExternalDbMapTable inputTable = inputTables.get(i);
                 IJoinType joinType = null;
@@ -179,6 +190,17 @@ public class MysqlGenerationManager extends DbGenerationManager {
                     buildTableDeclaration(sb, inputTable, commaCouldBeAdded, crCouldBeAdded, false);
 
                 } else if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
+                    if (hasToAppend) {// 11758
+                        for (int j = 0; j < appendTableList.size(); j++) {
+                            ExternalDbMapTable appendTable = appendTableList.get(j);
+                            IJoinType appendType = language.getJoin(appendTable.getJoinType());
+                            if (appendType == AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin && appendNoJoin && i > 0) {
+                                buildTableDeclaration(sb, appendTable, commaCouldBeAdded, crCouldBeAdded, false);
+                                sb.append(", ");
+                                hasToAppend = false;
+                            }
+                        }
+                    }
                     if (i > 0) {
                         if (previousJoinType == null) {
                             buildTableDeclaration(sb, inputTables.get(i - 1), commaCouldBeAdded, crCouldBeAdded, true);
@@ -259,8 +281,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
      * @param writeForJoin TODO
      * @param isFirstClause TODO
      */
-    private boolean buildConditions(StringBuilder sb, ExternalDbMapTable inputTable, boolean writeForJoin,
-            boolean isFirstClause) {
+    private boolean buildConditions(StringBuilder sb, ExternalDbMapTable inputTable, boolean writeForJoin, boolean isFirstClause) {
         List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
         int lstSizeEntries = inputEntries.size();
         boolean atLeastOneConditionWritten = false;
