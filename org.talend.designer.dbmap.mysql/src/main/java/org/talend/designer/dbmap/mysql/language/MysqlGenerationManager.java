@@ -157,7 +157,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
             for (int i = 0; i < lstSizeInputTables; i++) {// 11758
                 ExternalDbMapTable inputTable = inputTables.get(i);
                 IJoinType joinType = language.getJoin(inputTable.getJoinType());
-                if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && i > 0 && explicitJoin) {
+                if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
                     appendTableList.add(inputTable);
                     appendNoJoin = true;
                 }
@@ -190,9 +190,13 @@ public class MysqlGenerationManager extends DbGenerationManager {
                     buildTableDeclaration(sb, inputTable, commaCouldBeAdded, crCouldBeAdded, false);
 
                 } else if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
+                    ExternalDbMapTable joinTable = getExternalDbMapTable(inputTables, inputTable);
                     if (hasToAppend) {// 11758
                         for (int j = 0; j < appendTableList.size(); j++) {
                             ExternalDbMapTable appendTable = appendTableList.get(j);
+                            if (joinTable == appendTable) {
+                                continue;
+                            }
                             IJoinType appendType = language.getJoin(appendTable.getJoinType());
                             if (appendType == AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin && appendNoJoin && i > 0) {
                                 buildTableDeclaration(sb, appendTable, commaCouldBeAdded, crCouldBeAdded, false);
@@ -203,7 +207,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
                     }
                     if (i > 0) {
                         if (previousJoinType == null) {
-                            ExternalDbMapTable joinTable = getExternalDbMapTable(inputTables, inputTable);
+
                             if (joinTable == null) {
                                 joinTable = inputTables.get(i - 1);
                             }
