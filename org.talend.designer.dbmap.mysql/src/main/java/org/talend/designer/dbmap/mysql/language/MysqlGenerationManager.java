@@ -203,7 +203,11 @@ public class MysqlGenerationManager extends DbGenerationManager {
                     }
                     if (i > 0) {
                         if (previousJoinType == null) {
-                            buildTableDeclaration(sb, inputTables.get(i - 1), commaCouldBeAdded, crCouldBeAdded, true);
+                            ExternalDbMapTable joinTable = getExternalDbMapTable(inputTables, inputTable);
+                            if (joinTable == null) {
+                                joinTable = inputTables.get(i - 1);
+                            }
+                            buildTableDeclaration(sb, joinTable, commaCouldBeAdded, crCouldBeAdded, true);
                             previousJoinType = joinType;
                         } else {
                             sb.append("\n"); //$NON-NLS-1$
@@ -298,6 +302,25 @@ public class MysqlGenerationManager extends DbGenerationManager {
             }
         }
         return atLeastOneConditionWritten;
+    }
+
+    private ExternalDbMapTable getExternalDbMapTable(List<ExternalDbMapTable> inputTables, ExternalDbMapTable inputTable) {
+        ExternalDbMapTable joinTable = null;
+        List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
+        for (int j = 0; j < inputEntries.size(); j++) {
+            ExternalDbMapEntry dbMapEntry = inputEntries.get(j);
+            if (dbMapEntry.isJoin()) {
+                String joinTabelName = dbMapEntry.getExpression();
+                joinTabelName = joinTabelName.substring(0, joinTabelName.indexOf("."));
+                for (ExternalDbMapTable table : inputTables) {
+                    if (table.getTableName().equals(joinTabelName)) {
+                        joinTable = table;
+                        return joinTable;
+                    }
+                }
+            }
+        }
+        return inputTable;
     }
 
     /**
