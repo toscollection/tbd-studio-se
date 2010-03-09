@@ -15,6 +15,7 @@ package org.talend.designer.dbmap.mysql.language;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -140,28 +141,35 @@ public class MysqlGenerationManager extends DbGenerationManager {
 
             // load input table in hash
             boolean explicitJoin = false;
-            boolean appendNoJoin = false;
             int lstSizeInputTables = inputTables.size();
             Map<String, ExternalDbMapTable> nameToInputTable = new HashMap<String, ExternalDbMapTable>();
-            List<ExternalDbMapTable> appendTableList = new ArrayList<ExternalDbMapTable>();
             for (int i = 0; i < lstSizeInputTables; i++) {
                 ExternalDbMapTable inputTable = inputTables.get(i);
                 nameToInputTable.put(inputTable.getName(), inputTable);
                 IJoinType joinType = language.getJoin(inputTable.getJoinType());
                 if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && i > 0) {
                     explicitJoin = true;
+                    break;
                 }
 
             }
+            // bug 11758
+            List<ExternalDbMapTable> appendTableList = new ArrayList<ExternalDbMapTable>(inputTables);
+            List<ExternalDbMapTable> tmpTableList = new ArrayList<ExternalDbMapTable>();
 
-            for (int i = 0; i < lstSizeInputTables; i++) {// 11758
-                ExternalDbMapTable inputTable = inputTables.get(i);
+            Iterator<ExternalDbMapTable> iterator = appendTableList.iterator();
+            while (iterator.hasNext()) {
+                ExternalDbMapTable inputTable = iterator.next();
                 IJoinType joinType = language.getJoin(inputTable.getJoinType());
-                if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
-                    appendTableList.add(inputTable);
-                    appendNoJoin = true;
+                ExternalDbMapTable joinTable = getExternalDbMapTable(inputTables, inputTable);
+                if (joinType != AbstractDbLanguage.JOIN.NO_JOIN || joinTable != inputTable) {
+                    iterator.remove();
+                }
+                if (joinTable != inputTable) { // related
+                    tmpTableList.add(joinTable);
                 }
             }
+            appendTableList.removeAll(tmpTableList);
 
             StringBuilder sbWhere = new StringBuilder();
             boolean isFirstClause = true;
@@ -198,7 +206,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
                                 continue;
                             }
                             IJoinType appendType = language.getJoin(appendTable.getJoinType());
-                            if (appendType == AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin && appendNoJoin && i > 0) {
+                            if (appendType == AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin && i > 0) {
                                 buildTableDeclaration(sb, appendTable, commaCouldBeAdded, crCouldBeAdded, false);
                                 sb.append(", ");
                                 hasToAppend = false;
@@ -313,13 +321,18 @@ public class MysqlGenerationManager extends DbGenerationManager {
         List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
         for (int j = 0; j < inputEntries.size(); j++) {
             ExternalDbMapEntry dbMapEntry = inputEntries.get(j);
-            if (dbMapEntry.isJoin()) {
-                String joinTabelName = dbMapEntry.getExpression();
-                joinTabelName = joinTabelName.substring(0, joinTabelName.indexOf("."));
-                for (ExternalDbMapTable table : inputTables) {
-                    if (table.getTableName().equals(joinTabelName)) {
-                        joinTable = table;
-                        return joinTable;
+            for (ExternalDbMapTable table : inputTables) {
+                if (dbMapEntry.isJoin() || language.getJoin(inputTable.getJoinType()) != AbstractDbLanguage.JOIN.NO_JOIN) {
+                    String joinTabelName = dbMapEntry.getExpression();
+                    if (joinTabelName != null) {
+                        int indexOf = joinTabelName.indexOf(".");
+                        if (indexOf > -1) { // found
+                            joinTabelName = joinTabelName.substring(0, indexOf);
+                            if (table.getTableName().equals(joinTabelName)) {
+                                joinTable = table;
+                                return joinTable;
+                            }
+                        }
                     }
                 }
             }
