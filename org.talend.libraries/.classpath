@@ -1,47 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="jxplorer.jar"/>
+	<classpathentry exported="true" kind="lib" path="poi-3.5-beta5-20090219.jar"/>
+	<classpathentry exported="true" kind="lib" path="poi-ooxml-3.5-beta5-20090219.jar"/>
+	<classpathentry exported="true" kind="lib" path="salesforce_enterprise.jar"/>
+	<classpathentry exported="true" kind="lib" path="salesforceCRMManagement.jar"/>
+	<classpathentry exported="true" kind="lib" path="ldapjdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="talend_file_enhanced_20070724.jar"/>
+	<classpathentry exported="true" kind="lib" path="javacsv.jar"/>
+	<classpathentry exported="true" kind="lib" path="jxl.jar"/>
+	<classpathentry exported="true" kind="lib" path="dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="castor-1.0.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="fakejdbc_driver.jar"/>
+	<classpathentry exported="true" kind="lib" path="jackson-0.9.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry exported="true" kind="lib" path="junit-4.0.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="dom4j-1.6.1.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="castor-1.0.3.jar" sourcepath="libs_src/castor-1.0.3"/>
-	<classpathentry exported="true" kind="lib" path="xerces-J_1.4.0.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="nanoxml.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="rowset.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="squirrel.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="talend_file_enhanced_20070724.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="javacsv.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="ldapjdk.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jaas.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="mini-j2ee.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="core-renderer.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="core-renderer-minimal.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="itext-paulo-155.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="minium.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="Tidy.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="sapdbc.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jxl.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="org.apache.directory.studio.ldapbrowser.core_1.1.0.v20080331.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="antlr-2.7.7.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="org.apache.directory.studio.ldifparser_1.1.0.v20080331.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="org.apache.directory.studio.jars_1.1.0.v20080331.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="shared-ldap-0.9.8.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="shared-ldap-constants-0.9.8.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="nlog4j-1.2.25.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jaxen-1.1.1.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="wsdl4j-1.5.1.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="paraccel-jdbc.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="fakejdbc_driver.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="commons-httpclient-3.1.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jackson-0.9.2.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jxplorer.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="salesforceCRMManagement.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="salesforce_enterprise.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="jsr173_1.0_api.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="ooxml-schemas-1.0.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="poi-3.5-beta5-20090219.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="poi-ooxml-3.5-beta5-20090219.jar" sourcepath="org.talend.librariessrc.zip"/>
-	<classpathentry exported="true" kind="lib" path="xmlbeans-2.3.0.jar" sourcepath="org.talend.librariessrc.zip"/>
 	<classpathentry kind="output" path="class"/>
 </classpath>
