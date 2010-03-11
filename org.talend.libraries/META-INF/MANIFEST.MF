@@ -16,7 +16,8 @@ Bundle-ClassPath: .,
  poi-3.5-beta5-20090219.jar,
  poi-ooxml-3.5-beta5-20090219.jar,
  salesforce_enterprise.jar,
- salesforceCRMManagement.jar
+ salesforceCRMManagement.jar,
+ jaxen-1.1.1.jar
 Eclipse-LazyStart: true
 Require-Bundle: org.apache.log4j;visibility:=reexport,
  org.eclipse.core.runtime,
