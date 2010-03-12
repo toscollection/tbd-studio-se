@@ -328,7 +328,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
                         int indexOf = joinTabelName.indexOf(".");
                         if (indexOf > -1) { // found
                             joinTabelName = joinTabelName.substring(0, indexOf);
-                            if (table.getTableName().equals(joinTabelName)) {
+                            if (table.getName().equals(joinTabelName)) {
                                 joinTable = table;
                                 return joinTable;
                             }
