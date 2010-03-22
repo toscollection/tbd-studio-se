@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="ooxml-schemas-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="xmlbeans-2.3.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="jxplorer.jar"/>
 	<classpathentry exported="true" kind="lib" path="poi-3.5-beta5-20090219.jar"/>
 	<classpathentry exported="true" kind="lib" path="poi-ooxml-3.5-beta5-20090219.jar"/>
