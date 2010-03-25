@@ -3,9 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Sybase ASE/IQ ELT Map
 Bundle-SymbolicName: org.talend.designer.dbmap.sybase;singleton:=true
 Bundle-Version: 2.2.0.qualifier
-Bundle-Activator: org.talend.designer.dbmap.sybase.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.talend.designer.dbmap,
- org.talend.core
+ org.talend.core,
+ org.talend.designer.codegen
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: .Talend SA.
