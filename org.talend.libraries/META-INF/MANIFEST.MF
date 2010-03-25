@@ -14,10 +14,11 @@ Bundle-ClassPath: .,
  poi-3.5-beta5-20090219.jar,
  poi-ooxml-3.5-beta5-20090219.jar,
  salesforce_enterprise.jar,
- salesforceCRMManagement.jarxmlbeans-2.3.0.jar,
  ooxml-schemas-1.0.jar,
  commons-discovery-0.2.jar,
- wsdl4j-1.5.1.jar
+ wsdl4j-1.5.1.jar,
+ salesforceCRMManagement.jar,
+ xmlbeans-2.3.0.jar
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.log4j;visibility:=reexport,
  org.eclipse.core.runtime,
