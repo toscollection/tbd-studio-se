@@ -6,9 +6,6 @@ Bundle-Version: 2.2.0.qualifier
 Bundle-Activator: org.talend.designer.dbmap.sybase.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.talend.designer.dbmap,
- org.talend.core,
- org.talend.designer.core,
- org.talend.designer.abstractmap,
- org.talend.designer.codegen
+ org.talend.core
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: .Talend SA.

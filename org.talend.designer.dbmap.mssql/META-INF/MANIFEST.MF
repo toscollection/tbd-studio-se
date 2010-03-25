@@ -4,14 +4,9 @@ Bundle-Name: Mssql Plug-in
 Bundle-SymbolicName: org.talend.designer.dbmap.mssql;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-Activator: org.talend.designer.dbmap.mssql.Activator
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  org.talend.core,
- org.talend.designer.core,
- org.eclipse.core.resources,
  org.talend.designer.dbmap,
- org.talend.designer.abstractmap,
- org.talend.designer.codegen,
  org.talend.commons.ui
 Eclipse-LazyStart: true
 Bundle-Vendor: .Talend SA.
