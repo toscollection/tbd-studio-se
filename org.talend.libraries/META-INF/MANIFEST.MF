@@ -37,9 +37,9 @@ Require-Bundle: org.apache.log4j;visibility:=reexport,
  org.apache.commons.httpclient;visibility:=reexport,
  org.junit4;visibility:=reexport,
  org.apache.xerces;visibility:=reexport,
- org.talend.libraries.jaxen,
+ org.apache.axis,
  org.talend.libraries.jackson,
- org.apache.axis
+ org.talend.libraries.dom4j-jaxen
 Bundle-Activator: org.talend.libraries.LibrariesPlugin
 Import-Package: com.ibm.icu.text
 Bundle-Vendor: .Talend SA.
