@@ -24,7 +24,6 @@ import org.apache.axis.components.net.SocketFactory;
 import org.apache.axis.components.net.TransportClientProperties;
 import org.apache.axis.encoding.Base64;
 import org.apache.axis.transport.http.HTTPConstants;
-import org.apache.axis.utils.Messages;
 import org.apache.commons.logging.Log;
 
 public class EcosystemSocketFactory implements SocketFactory {
@@ -61,6 +60,12 @@ public class EcosystemSocketFactory implements SocketFactory {
     }
 
     /**
+     * DOC zli EcosystemSocketFactory constructor comment.
+     */
+    public EcosystemSocketFactory() {
+    }
+
+    /**
      * Constructor is used only by subclasses.
      * 
      * @param attributes
@@ -88,6 +93,9 @@ public class EcosystemSocketFactory implements SocketFactory {
             String value = (String) attributes.get(CONNECT_TIMEOUT);
             timeout = (value != null) ? Integer.parseInt(value) : 0;
         }
+        if (timeout == 0) {
+            timeout = 10000;
+        }
 
         TransportClientProperties tcp = TransportClientPropertiesFactory.create("http"); //$NON-NLS-1$
 
@@ -106,16 +114,11 @@ public class EcosystemSocketFactory implements SocketFactory {
         }
         if ((tcp.getProxyHost().length() == 0) || (tcp.getProxyPort().length() == 0) || hostInNonProxyList) {
             sock = create(host, port, timeout);
-            if (log.isDebugEnabled()) {
-                log.debug(Messages.getMessage("createdHTTP00")); //$NON-NLS-1$
-            }
         } else {
             sock = create(tcp.getProxyHost(), new Integer(tcp.getProxyPort()).intValue(), timeout);
-            if (log.isDebugEnabled()) {
-                log.debug(Messages.getMessage("createdHTTP01", tcp.getProxyHost(), tcp.getProxyPort())); //$NON-NLS-1$
-            }
             useFullURL.value = true;
         }
+
         return sock;
     }
 
@@ -163,9 +166,6 @@ public class EcosystemSocketFactory implements SocketFactory {
         while (tokenizer.hasMoreTokens()) {
             String pattern = tokenizer.nextToken();
 
-            if (log.isDebugEnabled()) {
-                log.debug(Messages.getMessage("match00", new String[] { "HTTPSender", host, pattern })); //$NON-NLS-1$ //$NON-NLS-2$
-            }
             if (match(pattern, host, false)) {
                 return true;
             }

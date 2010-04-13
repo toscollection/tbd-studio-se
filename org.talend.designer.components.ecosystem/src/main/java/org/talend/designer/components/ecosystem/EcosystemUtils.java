@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.axis.components.net.BooleanHolder;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.httpclient.HttpClient;
@@ -77,11 +78,7 @@ public class EcosystemUtils {
     private static MultiValueMap versionMap = new MultiValueMap();
 
     static {
-        // System.setProperty("org.apache.axis.components.net.SocketFactory",
-        // EcosystemSocketFactory.class.getName());
-        System.setProperty("axis.socketFactory", EcosystemSocketFactory.class.getName()); //$NON-NLS-1$
-        // AxisProperties.setProperty("axis.socketFactory",
-        // EcosystemSocketFactory.class.getName());
+        System.setProperty("axis.socketFactory", EcosystemSocketFactory.class.getName()); //$NON-NLS-1$ 
     }
 
     /**
@@ -116,24 +113,6 @@ public class EcosystemUtils {
         }
         return version;
     }
-
-    // /**
-    // * DOC chuang Comment method "getRevisionList".
-    // *
-    // * @param version
-    // * @param language
-    // * @return
-    // * @throws RemoteException
-    // */
-    // public static org.talend.designer.components.ecosystem.ws.Revision[]
-    // getRevisionList(
-    // String version, int language) throws RemoteException {
-    //		
-    // GetRevisionListPortTypeProxy test = new GetRevisionListPortTypeProxy();
-    // org.talend.designer.components.ecosystem.ws.Revision[] revisions = test
-    // .get_revision_list(version, language);
-    // return revisions;
-    // }
 
     public static List<RevisionInfo> getRevisionList(String version, int language) throws Exception {
         StringBuffer url = new StringBuffer();
@@ -228,6 +207,17 @@ public class EcosystemUtils {
     }
 
     public static String sendGetRequest(String urlAddress) throws Exception {
+
+        String property = System.getProperty("axis.socketFactory");//$NON-NLS-1$
+        Class<?> forName = Class.forName(property);
+        Object newInstance = forName.newInstance();
+
+        EcosystemSocketFactory ecosystemSocketFactory = (EcosystemSocketFactory) newInstance;
+        StringBuffer stringBuffer = new StringBuffer();
+        BooleanHolder booleanHolder = new BooleanHolder(true);
+
+        ecosystemSocketFactory.create("", -1, stringBuffer, booleanHolder);//$NON-NLS-1$
+
         HttpClient httpclient = new HttpClient();
         GetMethod getMethod = new GetMethod(urlAddress);
         httpclient.executeMethod(getMethod);
@@ -255,33 +245,6 @@ public class EcosystemUtils {
         return response;
     }
 
-    // /**
-    // * DOC chuang Comment method "setHttpProxy".
-    // */
-    // public static void setHttpProxy() {
-    // String flag = System.getProperty("proxySet");
-
-    // AxisProperties.setProperty("http.proxyHost",
-    // System.getProperty("http.proxyHost"));
-    // AxisProperties.setProperty("http.proxyPort",
-    // System.getProperty("http.proxyPort"));
-    // AxisProperties.setProperty("http.proxyUser",
-    // System.getProperty("http.proxyUser"));
-    // AxisProperties.setProperty("http.proxyPassword",
-    // System.getProperty("http.proxyPassword"));
-    // AxisProperties.setProperty("http.nonProxyHosts",
-    // StringUtils.trimToEmpty(System.getProperty("http.nonProxyHosts")));
-
-    // String[] keys = { "http.proxyHost", "http.proxyPort", "http.proxyUser",
-    // "http.proxyPassword",
-    // "http.nonProxyHosts" };
-    // for (String key : keys) {
-    // AxisProperties.setProperty(key,
-    // StringUtils.trimToEmpty(System.getProperty(key)));
-    // }
-
-    // }
-
     /**
      * 
      * Get tos version filter from preference page.
@@ -295,19 +258,6 @@ public class EcosystemUtils {
     public static ECodeLanguage getCurrentLanguage() {
         return LanguageManager.getCurrentLanguage();
     }
-
-    // /**
-    // * Get the folder that user have set in preference page.
-    // *
-    // * @return
-    // */
-    // public static File getUserComponentFolder() {
-    // IPreferenceStore store =
-    // EcosystemPlugin.getDefault().getPreferenceStore();
-    // String path =
-    // store.getString(EcosystemPreferencePage.ECOSYSTEM_COMPONENTS_FOLDER);
-    // return StringUtils.isEmpty(path) ? null : new File(path);
-    // }
 
     /**
      * Get the folder that will store downloaded component.
