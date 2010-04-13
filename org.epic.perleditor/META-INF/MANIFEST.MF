@@ -4,7 +4,6 @@ Bundle-Name: Perleditor Plug-in
 Bundle-SymbolicName: org.epic.perleditor;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-Activator: org.epic.perleditor.PerlEditorPlugin
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.editors,

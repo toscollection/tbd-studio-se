@@ -4,7 +4,6 @@ Bundle-Name: Regexp Plug-in
 Bundle-SymbolicName: org.epic.regexp;singleton:=true
 Bundle-Version: 2.2.0.qualifier
 Bundle-Activator: org.epic.regexp.RegExpPlugin
-Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources
