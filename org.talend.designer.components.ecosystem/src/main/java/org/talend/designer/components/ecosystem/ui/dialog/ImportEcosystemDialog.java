@@ -338,16 +338,18 @@ public class ImportEcosystemDialog extends Dialog {
             jobButton.addSelectionListener(new SelectionAdapter() {
 
                 public void widgetSelected(SelectionEvent e) {
-                    type = "7"; //$NON-NLS-1$
-                    if (version == null) {
-                        if (versionCombo.getText() != null) {
-                            version = versionCombo.getText();
-                        } else {
-                            version = temVersion;
+                    if (jobButton.getSelection() == true) {
+                        type = "7"; //$NON-NLS-1$
+                        if (version == null) {
+                            if (versionCombo.getText() != null) {
+                                version = versionCombo.getText();
+                            } else {
+                                version = temVersion;
+                            }
                         }
+                        progressBarMessage = Messages.getString("ImportEcosystemDialog.DOWNLOAD_JOB"); //$NON-NLS-1$
+                        findChoiceExchange();
                     }
-                    progressBarMessage = Messages.getString("ImportEcosystemDialog.DOWNLOAD_JOB"); //$NON-NLS-1$
-                    findChoiceExchange();
 
                 }
             });
@@ -357,16 +359,18 @@ public class ImportEcosystemDialog extends Dialog {
             templatesButton.addSelectionListener(new SelectionAdapter() {
 
                 public void widgetSelected(SelectionEvent e) {
-                    type = "8"; //$NON-NLS-1$
-                    if (version == null) {
-                        if (versionCombo.getText() != null) {
-                            version = versionCombo.getText();
-                        } else {
-                            version = temVersion;
+                    if (templatesButton.getSelection() == true) {
+                        type = "8"; //$NON-NLS-1$
+                        if (version == null) {
+                            if (versionCombo.getText() != null) {
+                                version = versionCombo.getText();
+                            } else {
+                                version = temVersion;
+                            }
                         }
+                        progressBarMessage = Messages.getString("ImportEcosystemDialog.TEMPLATES_PROGRESSBAR"); //$NON-NLS-1$
+                        findChoiceExchange();
                     }
-                    progressBarMessage = Messages.getString("ImportEcosystemDialog.TEMPLATES_PROGRESSBAR"); //$NON-NLS-1$
-                    findChoiceExchange();
                 }
             });
 
@@ -375,16 +379,18 @@ public class ImportEcosystemDialog extends Dialog {
             routinesButton.addSelectionListener(new SelectionAdapter() {
 
                 public void widgetSelected(SelectionEvent e) {
-                    type = "9"; //$NON-NLS-1$
-                    if (version == null) {
-                        if (versionCombo.getText() != null) {
-                            version = versionCombo.getText();
-                        } else {
-                            version = temVersion;
+                    if (routinesButton.getSelection() == true) {
+                        type = "9"; //$NON-NLS-1$
+                        if (version == null) {
+                            if (versionCombo.getText() != null) {
+                                version = versionCombo.getText();
+                            } else {
+                                version = temVersion;
+                            }
                         }
+                        progressBarMessage = Messages.getString("ImportEcosystemDialog.ROUTINES_PROGRESSBAR"); //$NON-NLS-1$
+                        findChoiceExchange();
                     }
-                    progressBarMessage = Messages.getString("ImportEcosystemDialog.ROUTINES_PROGRESSBAR"); //$NON-NLS-1$
-                    findChoiceExchange();
                 }
             });
 
