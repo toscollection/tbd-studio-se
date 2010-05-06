@@ -192,6 +192,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                     updateTable(new ArrayList<ComponentExtension>(fInstalledExtensions.values()));
                 }
                 if (isTosFilterSelect == true) {
+                    initTosVersionFilter();
                     value = versionCombo.getText();
                     selectInstalledVersion();
                 }
