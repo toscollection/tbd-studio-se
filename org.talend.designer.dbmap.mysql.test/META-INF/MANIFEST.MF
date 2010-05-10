@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: org.talend.designer.dbmap.mysql.test
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.talend.designer.dbmap.mysql;bundle-version="2.2.0"
+Require-Bundle: org.junit4;bundle-version="4.5.0"
