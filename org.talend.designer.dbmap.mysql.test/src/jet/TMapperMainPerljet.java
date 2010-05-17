@@ -1,0 +1,82 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2010 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package jet;
+
+import java.util.List;
+
+import model.metadata.MysqlDbMapTestGenerator;
+
+import org.talend.core.model.process.AbstractExternalNode;
+import org.talend.core.model.process.IConnection;
+import org.talend.core.model.process.IExternalNode;
+import org.talend.designer.dbmap.MapperMain;
+import org.talend.designer.dbmap.external.data.ExternalDbMapData;
+import org.talend.designer.dbmap.external.data.ExternalDbMapTable;
+import org.talend.designer.dbmap.language.IDbLanguage;
+import org.talend.designer.dbmap.mysql.MysqlMapperComponent;
+import org.talend.designer.dbmap.mysql.language.MysqlGenerationManager;
+
+/**
+ * DOC amaumont class global comment. Detailled comment <br/>
+ * 
+ * $Id: TMapperMainPerljet.java 1275 2007-01-04 13:35:45Z amaumont $
+ * 
+ */
+public class TMapperMainPerljet {
+
+    @SuppressWarnings("unchecked")
+    public static void main(String[] args) {
+        IExternalNode argument = null;
+
+        AbstractExternalNode node = (AbstractExternalNode) argument;
+
+        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // start of code to copy in template
+
+        MysqlGenerationManager gm = new MysqlGenerationManager();
+        String uniqueNameComponent = null;
+        IDbLanguage currentLanguage = gm.getLanguage();
+        List<IConnection> connections;
+        ExternalDbMapData data;
+        if (node != null) {
+            // normal use
+            connections = (List<IConnection>) node.getIncomingConnections();
+            data = (ExternalDbMapData) node.getExternalData();
+            uniqueNameComponent = node.getUniqueName();
+        } else {
+            // Stand alone / tests
+            MapperMain.setStandAloneMode(true);
+            MysqlDbMapTestGenerator testGenerator = new MysqlDbMapTestGenerator(gm, false);
+            connections = testGenerator.getConnectionList();
+            data = (ExternalDbMapData) testGenerator.getExternalData();
+            uniqueNameComponent = "testUniqueNameNode"; //$NON-NLS-1$
+        }
+
+        List<ExternalDbMapTable> outputTables = data.getOutputTables();
+
+        String insertQuery = ""; //$NON-NLS-1$
+        if (outputTables.size() > 0) {
+            ExternalDbMapTable outputTable = outputTables.get(0);
+
+            String sqlQuery = gm.buildSqlSelect((MysqlMapperComponent) node, outputTable.getName());
+            insertQuery = "$select_query_" + outputTable.getName() + " = \"" + sqlQuery + "\""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+        }
+
+        // end of code to copy in template
+        // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        System.out.println(insertQuery);
+    }
+
+}
