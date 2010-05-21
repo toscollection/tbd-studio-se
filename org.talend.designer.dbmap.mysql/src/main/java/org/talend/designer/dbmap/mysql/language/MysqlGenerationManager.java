@@ -263,8 +263,10 @@ public class MysqlGenerationManager extends DbGenerationManager {
                     for (int i = 0; i < lstSizeInputTables; i++) {
                         ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
                         if (dbMapEntry.getExpression() != null) {
-                            if (!isFirstClause) {
+                            if (!isFirstClause && !bulidConditions(dbMapEntry.getExpression())) {
                                 sbAddClauses.append("\n AND "); //$NON-NLS-1$
+                            } else {
+                                sbAddClauses.append("\n");
                             }
                             sbAddClauses.append(dbMapEntry.getExpression());
                             isFirstClause = false;
@@ -280,13 +282,24 @@ public class MysqlGenerationManager extends DbGenerationManager {
                 sb.append("\nWHERE "); //$NON-NLS-1$
                 sb.append(whereClauses);
                 if (whereClauses.trim().length() > 0 && addClauses.trim().length() > 0) {
-                    sb.append("\n AND "); //$NON-NLS-1$
+                    if (!bulidConditions(addClauses)) {
+                        sb.append("\n AND "); //$NON-NLS-1$
+                    }
                 }
 
                 sb.append(addClauses);
             }
         }
         return sb.toString();
+    }
+
+    private boolean bulidConditions(String pression) {
+        if (pression.toLowerCase().contains("group") && pression.toLowerCase().contains("by")) {
+            return true;
+        } else if (pression.toLowerCase().contains("order") && pression.toLowerCase().contains("by")) {
+            return true;
+        }
+        return false;
     }
 
     /**
