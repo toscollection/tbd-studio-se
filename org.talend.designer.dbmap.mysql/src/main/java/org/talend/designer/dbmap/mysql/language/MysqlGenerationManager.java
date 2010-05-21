@@ -263,7 +263,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
                     for (int i = 0; i < lstSizeInputTables; i++) {
                         ExternalDbMapEntry dbMapEntry = customConditionsEntries.get(i);
                         if (dbMapEntry.getExpression() != null) {
-                            if (!isFirstClause && !bulidConditions(dbMapEntry.getExpression())) {
+                            if (!isFirstClause && !bulidConditions(dbMapEntry.getExpression(), true)) {
                                 sbAddClauses.append("\n AND "); //$NON-NLS-1$
                             } else {
                                 sbAddClauses.append("\n");
@@ -282,7 +282,7 @@ public class MysqlGenerationManager extends DbGenerationManager {
                 sb.append("\nWHERE "); //$NON-NLS-1$
                 sb.append(whereClauses);
                 if (whereClauses.trim().length() > 0 && addClauses.trim().length() > 0) {
-                    if (!bulidConditions(addClauses)) {
+                    if (!bulidConditions(addClauses, false)) {
                         sb.append("\n AND "); //$NON-NLS-1$
                     }
                 }
@@ -293,7 +293,11 @@ public class MysqlGenerationManager extends DbGenerationManager {
         return sb.toString();
     }
 
-    private boolean bulidConditions(String pression) {
+    private boolean bulidConditions(String pression, boolean flag) {
+        if (!flag) {
+            if (pression.contains("\n"))
+                pression = pression.trim().split("\n")[0];
+        }
         if (pression.toLowerCase().contains("group") && pression.toLowerCase().contains("by")) {
             return true;
         } else if (pression.toLowerCase().contains("order") && pression.toLowerCase().contains("by")) {
