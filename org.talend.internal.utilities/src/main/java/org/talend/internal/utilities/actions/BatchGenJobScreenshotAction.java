@@ -33,7 +33,7 @@ import org.talend.core.model.process.INode;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ProcessItem;
 import org.talend.core.model.repository.ERepositoryObjectType;
-import org.talend.core.model.repository.IRepositoryObject;
+import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.designer.core.ui.MultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.ProcessEditorInput;
 import org.talend.designer.core.ui.editor.nodes.Node;
@@ -112,12 +112,12 @@ public class BatchGenJobScreenshotAction extends Action {
         trace("show component setting view"); //$NON-NLS-1$
         showComponentSettingView();
         trace("get all jobs"); //$NON-NLS-1$
-        final List<IRepositoryObject> jobs = getAllJobs();
+        final List<IRepositoryViewObject> jobs = getAllJobs();
 
         Thread t = new Thread() {
 
             public void run() {
-                for (IRepositoryObject repositoryObject : jobs) {
+                for (IRepositoryViewObject repositoryObject : jobs) {
                     takeScreenShotForJobComponent(repositoryObject);
                 }
 
@@ -254,8 +254,8 @@ public class BatchGenJobScreenshotAction extends Action {
      * 
      * @param repositoryObject
      */
-    private void takeScreenShotForJobComponent(IRepositoryObject repositoryObject) {
-        final IRepositoryObject o1 = repositoryObject;
+    private void takeScreenShotForJobComponent(IRepositoryViewObject repositoryObject) {
+        final IRepositoryViewObject o1 = repositoryObject;
         final MultiPageTalendEditor[] editor = new MultiPageTalendEditor[1];
 
         trace("open job " + repositoryObject.getProperty().getLabel()); //$NON-NLS-1$
@@ -389,7 +389,7 @@ public class BatchGenJobScreenshotAction extends Action {
     /**
      * bqian Comment method "openJob".
      */
-    private MultiPageTalendEditor openJob(IRepositoryObject object) throws Exception {
+    private MultiPageTalendEditor openJob(IRepositoryViewObject object) throws Exception {
         IWorkbenchPage page = getActivePage();
         ProcessItem item = (ProcessItem) object.getProperty().getItem();
 
@@ -410,7 +410,7 @@ public class BatchGenJobScreenshotAction extends Action {
      * 
      * @return
      */
-    private List<IRepositoryObject> getAllJobs() {
+    private List<IRepositoryViewObject> getAllJobs() {
         try {
             return CorePlugin.getDefault().getRepositoryService().getProxyRepositoryFactory().getAll(
                     ERepositoryObjectType.PROCESS, false);
