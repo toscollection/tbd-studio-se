@@ -142,7 +142,11 @@ public class EcosystemUtils {
 
         }
         Collection branch = versionMap.getCollection(version);
-        return (String[]) branch.toArray(new String[branch.size()]);
+        if (branch != null) {
+            return (String[]) branch.toArray(new String[branch.size()]);
+        } else {
+            return new String[0];
+        }
     }
 
     public static String getMainVersion(String version) {
