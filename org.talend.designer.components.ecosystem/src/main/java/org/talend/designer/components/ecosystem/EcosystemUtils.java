@@ -198,9 +198,14 @@ public class EcosystemUtils {
 
     public static List parseJsonObject(String jsonContent, Class clazz) throws Exception {
         // need factory for creating parser to use
+        List objList = new ArrayList();
+
+        // for 4.1.0 the is no json param on server ,so jsonContent is "wrong parameters for version"
+        if (!jsonContent.startsWith("[")) {
+            return objList;
+        }
         JsonFactory jf = new JsonFactory();
         List result = (List) new JavaTypeMapper().read(jf.createJsonParser(new StringReader(jsonContent)));
-        List objList = new ArrayList(result.size());
         for (int i = 0; i < result.size(); i++) {
             Object obj = clazz.newInstance();
             Object source = result.get(i);
