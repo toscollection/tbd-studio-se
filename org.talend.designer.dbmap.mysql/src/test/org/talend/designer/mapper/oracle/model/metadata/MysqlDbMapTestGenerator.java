@@ -259,14 +259,13 @@ public class MysqlDbMapTestGenerator {
 
         externalData.setInputTables(generateExternalTables(TableType.INPUT, new TableType[] { TableType.INPUT }, 5, 5));
         externalData.setVarsTables(generateExternalTables(TableType.VARS, new TableType[] { TableType.INPUT }, 20));
-        externalData.setOutputTables(generateExternalTables(TableType.OUTPUT, new TableType[] { TableType.INPUT,
-                TableType.VARS }, 20));
+        externalData.setOutputTables(generateExternalTables(TableType.OUTPUT,
+                new TableType[] { TableType.INPUT, TableType.VARS }, 20));
 
         return externalData;
     }
 
-    private List<ExternalDbMapTable> generateExternalTables(TableType tableType, TableType[] tableTypes,
-            int nExpressionsMax) {
+    private List<ExternalDbMapTable> generateExternalTables(TableType tableType, TableType[] tableTypes, int nExpressionsMax) {
         return generateExternalTables(tableType, tableTypes, nExpressionsMax, null);
     }
 
@@ -325,8 +324,8 @@ public class MysqlDbMapTestGenerator {
                         baseColumnName = COLUMN_NAME;
                     }
                     mapperTableEntry.setName(baseColumnName + j);
-                    mapperTableEntry.setExpression(generateExpression(tableTypes, N_FIELDS, rand
-                            .nextInt(nFieldsMaxInExpression), j));
+                    mapperTableEntry.setExpression(generateExpression(tableTypes, N_FIELDS, rand.nextInt(nFieldsMaxInExpression),
+                            j));
                     tableEntries.add(mapperTableEntry);
                 }
 
@@ -675,8 +674,7 @@ public class MysqlDbMapTestGenerator {
 
         mapperTableEntry = new ExternalDbMapEntry();
         mapperTableEntry.setName("content"); //$NON-NLS-1$
-        mapperTableEntry
-                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent")); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent")); //$NON-NLS-1$
         mapperTableEntry.setOperator("String"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
@@ -728,8 +726,7 @@ public class MysqlDbMapTestGenerator {
 
         mapperTableEntry = new ExternalDbMapEntry();
         mapperTableEntry.setName("content"); //$NON-NLS-1$
-        mapperTableEntry
-                .setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent")); //$NON-NLS-1$
+        mapperTableEntry.setExpression(gen.getTableColumnVariable(VarsTable.PREFIX_VARS_TABLE_NAME, "upperCaseContent")); //$NON-NLS-1$
         mapperTableEntry.setOperator("int"); //$NON-NLS-1$
         tableEntries.add(mapperTableEntry);
 
@@ -1098,6 +1095,10 @@ public class MysqlDbMapTestGenerator {
      * 
      */
     class Connection extends AbstractConnection {
+
+        public String getTraceData() {
+            return null;
+        }
 
     };
 
