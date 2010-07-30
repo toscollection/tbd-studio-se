@@ -10,7 +10,6 @@
             contributorClass="org.epic.perleditor.editors.PerlActionContributor"
             class="org.epic.perleditor.editors.PerlEditor"
             id="org.epic.perleditor.editors.PerlEditor">
-            <contentTypeBinding contentTypeId="org.epic.perleditor.perl" />
         </editor>
     </extension>
     <!--
@@ -447,13 +446,14 @@
             </action>
 
 			<!-- miscGroup -->
+<!--
 			<action
 				definitionId="org.epic.perleditor.commands.clearMarkers"
 				label="Clear All EPIC Markers"
 				class="org.epic.perleditor.actions.DefaultRetargetEditorDelegate"
                 menubarPath="org.epic.perleditor.contextMenu.source/miscGroup"
                 id="org.epic.perleditor.actions.ClearMarkerAction#AllMarkers" />
-
+-->
         </viewerContribution>
     </extension>
 
@@ -682,7 +682,7 @@
             <describer class="org.epic.core.content.PerlContentDescriber" />
         </content-type>
     </extension>
-
+<!--
     <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
         <specification
             annotationType="org.epic.perleditor.occurrence"
@@ -708,7 +708,7 @@
             isGoToPreviousNavigationTarget="false">
         </specification>
     </extension>
-
+-->
     <!--
         marker names are defined relative to the plugin id
 
