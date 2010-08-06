@@ -292,7 +292,7 @@ public class ImportEcosystemDialog extends Dialog {
                     routinesButton.setSelection(true);
                 }
             }
-            progressBarMessage = Messages.getString("ImportEcosystemDialog.DOWNLOADCOMPONENTS"); //$NON-NLS-1$
+            progressBarMessage = Messages.getString("ImportEcosystemDialog.download.components"); //$NON-NLS-1$
             findChoiceExchange();
 
         }
