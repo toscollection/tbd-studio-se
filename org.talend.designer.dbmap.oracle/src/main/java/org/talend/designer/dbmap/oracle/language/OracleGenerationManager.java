@@ -52,8 +52,7 @@ public class OracleGenerationManager extends DbGenerationManager {
      * @param expressionParser
      * @return
      */
-    public String buildConditions(List<ExternalDbMapEntry> constraintTableEntries,
-            DataMapExpressionParser expressionParser) {
+    public String buildConditions(List<ExternalDbMapEntry> constraintTableEntries, DataMapExpressionParser expressionParser) {
         int lstSize = constraintTableEntries.size();
         StringBuilder stringBuilder = new StringBuilder();
         String and = null;
@@ -111,8 +110,7 @@ public class OracleGenerationManager extends DbGenerationManager {
 
             IConnection connection = nameToOutputConnection.get(outputTable.getName());
             if (connection != null) {
-                outputTable = removeUnmatchingEntriesWithColumnsOfMetadataTable(outputTable, connection
-                        .getMetadataTable());
+                outputTable = removeUnmatchingEntriesWithColumnsOfMetadataTable(outputTable, connection.getMetadataTable());
             }
 
             sb.append("SELECT\n"); //$NON-NLS-1$
@@ -146,7 +144,7 @@ public class OracleGenerationManager extends DbGenerationManager {
                 ExternalDbMapTable inputTable = inputTables.get(i);
                 nameToInputTable.put(inputTable.getName(), inputTable);
                 IJoinType joinType = language.getJoin(inputTable.getJoinType());
-                if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && i > 0) {
+                if (!language.unuseWithExplicitJoin().contains(joinType) && i > 0) {
                     explicitJoin = true;
                 }
 
@@ -175,10 +173,10 @@ public class OracleGenerationManager extends DbGenerationManager {
                 }
                 boolean commaCouldBeAdded = !explicitJoin && i > 0;
                 boolean crCouldBeAdded = false;
-                if (joinType == AbstractDbLanguage.JOIN.NO_JOIN && !explicitJoin) {
+                if (language.unuseWithExplicitJoin().contains(joinType) && !explicitJoin) {
                     buildTableDeclaration(sb, inputTable, commaCouldBeAdded, crCouldBeAdded, false);
 
-                } else if (joinType != AbstractDbLanguage.JOIN.NO_JOIN && explicitJoin) {
+                } else if (!language.unuseWithExplicitJoin().contains(joinType) && explicitJoin) {
                     if (i > 0) {
                         if (previousJoinType == null) {
                             buildTableDeclaration(sb, inputTables.get(i - 1), commaCouldBeAdded, crCouldBeAdded, true);
@@ -260,8 +258,7 @@ public class OracleGenerationManager extends DbGenerationManager {
      * @param writeForJoin TODO
      * @param isFirstClause TODO
      */
-    private boolean buildConditions(StringBuilder sb, ExternalDbMapTable inputTable, boolean writeForJoin,
-            boolean isFirstClause) {
+    private boolean buildConditions(StringBuilder sb, ExternalDbMapTable inputTable, boolean writeForJoin, boolean isFirstClause) {
         List<ExternalDbMapEntry> inputEntries = inputTable.getMetadataTableEntries();
         int lstSizeEntries = inputEntries.size();
         boolean atLeastOneConditionWritten = false;
@@ -309,6 +306,12 @@ public class OracleGenerationManager extends DbGenerationManager {
             String locationInputEntry = language.getLocation(table.getName(), dbMapEntry.getName());
             sbWhere.append(" "); //$NON-NLS-1$
             sbWhere.append(locationInputEntry);
+
+            // when use oracle's right join (+)
+            if (language.getJoin(table.getJoinType()) == OracleLanguage.ORACLEJOIN.RIGHT_OUTER_JOIN_ORACLE) {
+                sbWhere.append("(+)");
+            }
+
             sbWhere.append(" "); //$NON-NLS-1$
             if (operatorIsSet) {
                 sbWhere.append(dbOperator.getOperator()).append(" "); //$NON-NLS-1$
@@ -320,6 +323,11 @@ public class OracleGenerationManager extends DbGenerationManager {
                         + "' is not set */"); //$NON-NLS-1$
             } else if (expressionIsSet) {
                 sbWhere.append(dbMapEntry.getExpression());
+
+                // when use oracle's left join (+)
+                if (language.getJoin(table.getJoinType()) == OracleLanguage.ORACLEJOIN.LEFT_OUTER_JOIN_ORACLE) {
+                    sbWhere.append("(+) ");
+                }
             }
             conditionWritten = true;
 

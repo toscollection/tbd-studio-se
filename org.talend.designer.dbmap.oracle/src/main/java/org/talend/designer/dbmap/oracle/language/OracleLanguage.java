@@ -12,8 +12,13 @@
 // ============================================================================
 package org.talend.designer.dbmap.oracle.language;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.talend.designer.dbmap.language.AbstractDbLanguage;
 import org.talend.designer.dbmap.language.IDbOperatorManager;
+import org.talend.designer.dbmap.language.IJoinType;
 
 /**
  * DOC amaumont class global comment. Detailled comment <br/>
@@ -45,8 +50,7 @@ public class OracleLanguage extends AbstractDbLanguage {
 
     private static final String SUFFIX_FIELD_NAME_REGEXP = SUFFIX_FIELD_NAME;
 
-    private static final String LOCATION_PATTERN = PREFIX_TABLE_NAME_REGEXP
-            + "\\s*(\\w+)\\s*" + PREFIX_FIELD_NAME_REGEXP //$NON-NLS-1$
+    private static final String LOCATION_PATTERN = PREFIX_TABLE_NAME_REGEXP + "\\s*(\\w+)\\s*" + PREFIX_FIELD_NAME_REGEXP //$NON-NLS-1$
             + "\\s*(\\w+)\\s*" + SUFFIX_FIELD_NAME_REGEXP; //$NON-NLS-1$
 
     /**
@@ -58,10 +62,8 @@ public class OracleLanguage extends AbstractDbLanguage {
     /**
      * {0} and {1} must be replaced respectively by the table name and the column name.
      */
-    private static final String SUBST_PATTERN_FOR_REPLACE_LOCATION = PREFIX_TABLE_NAME_REGEXP
-            + "(\\s*){0}(\\s*)" //$NON-NLS-1$
-            + SUFFIX_TABLE_NAME_REGEXP
-            + "(\\s*)" + PREFIX_FIELD_NAME_REGEXP + "(\\s*){1}(\\s*)" + SUFFIX_FIELD_NAME_REGEXP; //$NON-NLS-1$ //$NON-NLS-2$
+    private static final String SUBST_PATTERN_FOR_REPLACE_LOCATION = PREFIX_TABLE_NAME_REGEXP + "(\\s*){0}(\\s*)" //$NON-NLS-1$
+            + SUFFIX_TABLE_NAME_REGEXP + "(\\s*)" + PREFIX_FIELD_NAME_REGEXP + "(\\s*){1}(\\s*)" + SUFFIX_FIELD_NAME_REGEXP; //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * {0} and {1} must be replaced respectively by the table name and the column name.
@@ -87,6 +89,39 @@ public class OracleLanguage extends AbstractDbLanguage {
     private static final String TEMPLATE_VARS_COLUMN_VARIABLE = PREFIX_VARIABLE_NAME + "{0}"; //$NON-NLS-1$
 
     private OracleOperatorsManager operatorsManager;
+
+    /**
+     * 
+     * Oracle joins.
+     * 
+     * $Id$
+     * 
+     */
+    public static enum ORACLEJOIN implements IJoinType {
+        // the LEFT_OUTER_JOIN_ORACLE and RIGHT_OUTER_JOIN_ORACLE don't support explicit join
+        LEFT_OUTER_JOIN_ORACLE("LEFT OUTER JOIN (+)"), //$NON-NLS-1$
+        RIGHT_OUTER_JOIN_ORACLE("RIGHT OUTER JOIN (+)"); //$NON-NLS-1$
+
+        String label;
+
+        ORACLEJOIN(String label) {
+            this.label = label;
+        }
+
+        /**
+         * Getter for label.
+         * 
+         * @return the label
+         */
+        public String getLabel() {
+            return this.label;
+        }
+
+        public static IJoinType getJoin(String joinType) {
+            return valueOf(joinType);
+        }
+
+    };
 
     /**
      * DOC amaumont PerlLanguage constructor comment.
@@ -248,6 +283,39 @@ public class OracleLanguage extends AbstractDbLanguage {
      */
     public IDbOperatorManager getOperatorsManager() {
         return operatorsManager;
+    }
+
+    @Override
+    public IJoinType[] getAvailableJoins() {
+        // TODO Auto-generated method stub
+        List joins = new ArrayList();
+        joins.addAll(Arrays.asList(super.getAvailableJoins()));
+        joins.addAll(Arrays.asList(ORACLEJOIN.values()));
+        return (IJoinType[]) joins.toArray(new IJoinType[0]);
+    }
+
+    @Override
+    public IJoinType getJoin(String joinType) {
+        // TODO Auto-generated method stub
+        IJoinType superJoin;
+        try {
+            // if JOIN doesn'e contain the join type, that throw exception.
+            superJoin = super.getJoin(joinType);
+        } catch (java.lang.IllegalArgumentException e) {
+            // TODO Auto-generated catch block
+            return ORACLEJOIN.getJoin(joinType);
+        }
+        return superJoin;
+
+    }
+
+    @Override
+    public List<IJoinType> unuseWithExplicitJoin() {
+        // TODO Auto-generated method stub
+        List<IJoinType> joins = super.unuseWithExplicitJoin();
+        joins.add(ORACLEJOIN.LEFT_OUTER_JOIN_ORACLE);
+        joins.add(ORACLEJOIN.RIGHT_OUTER_JOIN_ORACLE);
+        return joins;
     }
 
 }
