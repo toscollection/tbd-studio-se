@@ -11,12 +11,11 @@ package org.talend.designer.components.ecosystem.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.talend.designer.components.ecosystem.model.*;
+import org.talend.designer.components.ecosystem.model.ComponentExtension;
+import org.talend.designer.components.ecosystem.model.EcosystemPackage;
+import org.talend.designer.components.ecosystem.model.Revision;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>

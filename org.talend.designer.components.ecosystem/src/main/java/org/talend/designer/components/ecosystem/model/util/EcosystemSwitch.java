@@ -13,8 +13,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import org.talend.designer.components.ecosystem.model.*;
+import org.talend.designer.components.ecosystem.model.ComponentExtension;
+import org.talend.designer.components.ecosystem.model.EcosystemPackage;
+import org.talend.designer.components.ecosystem.model.Revision;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call

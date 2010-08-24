@@ -13,12 +13,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import org.talend.designer.components.ecosystem.model.*;
+import org.talend.designer.components.ecosystem.model.ComponentExtension;
+import org.talend.designer.components.ecosystem.model.EcosystemFactory;
+import org.talend.designer.components.ecosystem.model.EcosystemPackage;
+import org.talend.designer.components.ecosystem.model.Language;
+import org.talend.designer.components.ecosystem.model.Revision;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
