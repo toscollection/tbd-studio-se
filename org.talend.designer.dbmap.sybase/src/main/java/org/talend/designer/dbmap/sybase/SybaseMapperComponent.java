@@ -33,9 +33,6 @@ public class SybaseMapperComponent extends DbMapComponent {
         super();
     }
 
-    public static void main(String[] args) {
-    }
-
     /**
      * Getter for generationManager.
      * 
