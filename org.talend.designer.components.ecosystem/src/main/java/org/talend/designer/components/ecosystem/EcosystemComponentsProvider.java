@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.model.components.AbstractComponentsProvider;
@@ -68,6 +67,17 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
                 return file.isDirectory();
             }
         };
+        FileFilter ff = new FileFilter() {
+
+            public boolean accept(File pathname) {
+                if (pathname.getName().equals(".svn")) {
+                    return false;
+                }
+                return true;
+            }
+
+        };
+
         for (File folder : externalComponentsLocation.listFiles(folderFilter)) {
             /*
              * Some components have: <componentName>/<files> . some other have: <folder>/<componentName>/<files> .
@@ -76,7 +86,8 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
             // if we cannot find the component folder, just ignore it
             if (componentFolder != null) {
                 File target = new File(installFolder, componentFolder.getName());
-                FileUtils.copyDirectory(componentFolder, target);
+                // FileUtils.copyDirectory(componentFolder, target);
+                FilesUtils.copyFolder(componentFolder, target, true, ff, null, true, false);
             }
         }
     }
