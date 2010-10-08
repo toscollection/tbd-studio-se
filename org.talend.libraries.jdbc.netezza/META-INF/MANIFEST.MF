@@ -1,9 +1,25 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Netezza
+Bundle-Name: Netezza puglin
 Bundle-SymbolicName: org.talend.libraries.jdbc.netezza
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: lib/nzjdbc.jar,
+ .
+Export-Package: org.netezza,
+ org.netezza.core,
+ org.netezza.dsn,
+ org.netezza.enums,
+ org.netezza.fastpath,
+ org.netezza.jdbc1,
+ org.netezza.jdbc2,
+ org.netezza.jdbc2.optional,
+ org.netezza.jdbc3,
+ org.netezza.logging,
+ org.netezza.ui,
+ org.netezza.ui.cli,
+ org.netezza.ui.gui,
+ org.netezza.util
+Bundle-Vendor: .Talend SA.
