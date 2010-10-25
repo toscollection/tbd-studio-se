@@ -26,10 +26,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.axis.components.net.BooleanHolder;
+import org.apache.axis.components.net.TransportClientProperties;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.map.MultiValueMap;
+import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.codehaus.jackson.JsonFactory;
@@ -59,6 +63,7 @@ import org.talend.designer.components.ecosystem.model.Revision;
 import org.talend.designer.components.ecosystem.model.RevisionInfo;
 import org.talend.designer.components.ecosystem.model.VersionInfo;
 import org.talend.designer.components.ecosystem.proxy.EcosystemSocketFactory;
+import org.talend.designer.components.ecosystem.proxy.TransportClientPropertiesFactory;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
 import org.talend.repository.model.ComponentsFactoryProvider;
 
@@ -229,7 +234,17 @@ public class EcosystemUtils {
 
         HttpClient httpclient = new HttpClient();
         GetMethod getMethod = new GetMethod(urlAddress);
-        httpclient.executeMethod(getMethod);
+        TransportClientProperties tcp = TransportClientPropertiesFactory.create("http");
+        if (tcp.getProxyHost().length() != 0) {
+            UsernamePasswordCredentials creds = new UsernamePasswordCredentials(tcp.getProxyUser() != null ? tcp.getProxyUser()
+                    : "", tcp.getProxyPassword() != null ? tcp.getProxyUser() : "");
+            httpclient.getState().setProxyCredentials(AuthScope.ANY, creds);
+            HostConfiguration hcf = new HostConfiguration();
+            hcf.setProxy(tcp.getProxyHost(), Integer.parseInt(tcp.getProxyPort()));
+            httpclient.executeMethod(hcf, getMethod);
+        } else {
+            httpclient.executeMethod(getMethod);
+        }
         String response = getMethod.getResponseBodyAsString();
         getMethod.releaseConnection();
         return response;
