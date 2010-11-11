@@ -7,6 +7,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.designer.dbmap,
  org.talend.core,
  org.talend.designer.codegen,
- org.eclipse.jface
+ org.eclipse.jface,
+ org.talend.model
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: .Talend SA.
