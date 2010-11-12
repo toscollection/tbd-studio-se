@@ -179,7 +179,7 @@ public class MysqlDbMapTestGenerator {
         metadataColumn = new MetadataColumn();
         metadataColumn.setLabel("name"); //$NON-NLS-1$
         metadataColumn.setKey(false);
-        metadataColumn.setType("int"); //$NON-NLS-1$
+        metadataColumn.setSourceType("int"); //$NON-NLS-1$
         metadatColumns.add(metadataColumn);
         /*
          * metadataColumn = new MetadataColumn(); metadataColumn.setLabel("name2"); metadataColumn.setKey(false);
@@ -223,7 +223,7 @@ public class MysqlDbMapTestGenerator {
         metadataColumn = new MetadataColumn();
         metadataColumn.setLabel("newName"); //$NON-NLS-1$
         metadataColumn.setKey(false);
-        metadataColumn.setType("int"); //$NON-NLS-1$
+        metadataColumn.setSourceType("int"); //$NON-NLS-1$
         metadatColumns.add(metadataColumn);
 
         metadataTable.setListColumns(metadatColumns);
