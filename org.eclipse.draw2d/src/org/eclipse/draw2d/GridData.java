@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2007 IBM Corporation and others.
+ * Copyright (c) 2000, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,9 +11,9 @@
  *******************************************************************************/
 package org.eclipse.draw2d;
 
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.swt.SWT;
+
+import org.eclipse.draw2d.geometry.Dimension;
 
 /**
  * <code>GridData</code> is the layout data object associated with
@@ -45,9 +45,9 @@ import org.eclipse.swt.SWT;
  * </p>
  * <p>
  * NOTE: Do not reuse <code>GridData</code> objects. Every child in the parent
- * <code>Figure</code> that is managed by the <code>GridLayout</code> must
- * have a unique <code>GridData</code> object. If the layout data for a Grid
- * member in a <code>GridLayout</code> is null at layout time, a unique
+ * <code>Figure</code> that is managed by the <code>GridLayout</code> must have
+ * a unique <code>GridData</code> object. If the layout data for a Grid member
+ * in a <code>GridLayout</code> is null at layout time, a unique
  * <code>GridData</code> object is created for it.
  * </p>
  * 
@@ -169,10 +169,9 @@ public final class GridData {
 	public static final int FILL = SWT.FILL;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code>. Position the figure at
-	 * the top of the cell. Not recommended. Use
-	 * <code>new GridData(int, SWT.BEGINNING, boolean, boolean)</code>
-	 * instead.
+	 * Style bit for <code>new GridData(int)</code>. Position the figure at the
+	 * top of the cell. Not recommended. Use
+	 * <code>new GridData(int, SWT.BEGINNING, boolean, boolean)</code> instead.
 	 */
 	public static final int VERTICAL_ALIGN_BEGINNING = 1 << 1;
 
@@ -191,8 +190,8 @@ public final class GridData {
 	public static final int VERTICAL_ALIGN_END = 1 << 3;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code> to resize the figure to
-	 * fill the cell vertically. Not recommended. Use
+	 * Style bit for <code>new GridData(int)</code> to resize the figure to fill
+	 * the cell vertically. Not recommended. Use
 	 * <code>new GridData(int, SWT.FILL, boolean, boolean)</code> instead
 	 */
 	public static final int VERTICAL_ALIGN_FILL = 1 << 4;
@@ -200,8 +199,7 @@ public final class GridData {
 	/**
 	 * Style bit for <code>new GridData(int)</code> to position the figure at
 	 * the left of the cell. Not recommended. Use
-	 * <code>new GridData(SWT.BEGINNING, int, boolean, boolean)</code>
-	 * instead.
+	 * <code>new GridData(SWT.BEGINNING, int, boolean, boolean)</code> instead.
 	 */
 	public static final int HORIZONTAL_ALIGN_BEGINNING = 1 << 5;
 
@@ -220,37 +218,37 @@ public final class GridData {
 	public static final int HORIZONTAL_ALIGN_END = 1 << 7;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code> to resize the figure to
-	 * fill the cell horizontally. Not recommended. Use
+	 * Style bit for <code>new GridData(int)</code> to resize the figure to fill
+	 * the cell horizontally. Not recommended. Use
 	 * <code>new GridData(SWT.FILL, int, boolean, boolean)</code> instead.
 	 */
 	public static final int HORIZONTAL_ALIGN_FILL = 1 << 8;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code> to resize the figure to
-	 * fit the remaining horizontal space. Not recommended. Use
+	 * Style bit for <code>new GridData(int)</code> to resize the figure to fit
+	 * the remaining horizontal space. Not recommended. Use
 	 * <code>new GridData(int, int, true, boolean)</code> instead.
 	 */
 	public static final int GRAB_HORIZONTAL = 1 << 9;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code> to resize the figure to
-	 * fit the remaining vertical space. Not recommended. Use
+	 * Style bit for <code>new GridData(int)</code> to resize the figure to fit
+	 * the remaining vertical space. Not recommended. Use
 	 * <code>new GridData(int, int, boolean, true)</code> instead.
 	 */
 	public static final int GRAB_VERTICAL = 1 << 10;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code> to resize the figure to
-	 * fill the cell vertically and to fit the remaining vertical space.
+	 * Style bit for <code>new GridData(int)</code> to resize the figure to fill
+	 * the cell vertically and to fit the remaining vertical space.
 	 * FILL_VERTICAL = VERTICAL_ALIGN_FILL | GRAB_VERTICAL Not recommended. Use
 	 * <code>new GridData(int, SWT.FILL, boolean, true)</code> instead.
 	 */
 	public static final int FILL_VERTICAL = VERTICAL_ALIGN_FILL | GRAB_VERTICAL;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code> to resize the figure to
-	 * fill the cell horizontally and to fit the remaining horizontal space.
+	 * Style bit for <code>new GridData(int)</code> to resize the figure to fill
+	 * the cell horizontally and to fit the remaining horizontal space.
 	 * FILL_HORIZONTAL = HORIZONTAL_ALIGN_FILL | GRAB_HORIZONTAL Not
 	 * recommended. Use <code>new GridData(SWT.FILL, int, true, boolean)</code>
 	 * instead.
@@ -259,10 +257,10 @@ public final class GridData {
 			| GRAB_HORIZONTAL;
 
 	/**
-	 * Style bit for <code>new GridData(int)</code> to resize the figure to
-	 * fill the cell horizontally and vertically and to fit the remaining
-	 * horizontal and vertical space. FILL_BOTH = FILL_VERTICAL |
-	 * FILL_HORIZONTAL Not recommended. Use
+	 * Style bit for <code>new GridData(int)</code> to resize the figure to fill
+	 * the cell horizontally and vertically and to fit the remaining horizontal
+	 * and vertical space. FILL_BOTH = FILL_VERTICAL | FILL_HORIZONTAL Not
+	 * recommended. Use
 	 * <code>new GridData(SWT.FILL, SWT.FILL, true, true)</code> instead.
 	 */
 	public static final int FILL_BOTH = FILL_VERTICAL | FILL_HORIZONTAL;
@@ -388,7 +386,8 @@ public final class GridData {
 			}
 		}
 
-		Dimension size = figure.getPreferredSize(widthHint, heightHint);
+		Dimension size = figure.getPreferredSize(widthHint, heightHint)
+				.getCopy();
 		if (widthHint != -1)
 			size.width = widthHint;
 		if (heightHint != -1)

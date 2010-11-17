@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2005 IBM Corporation and others.
+ * Copyright (c) 2000, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,24 +21,22 @@ import org.eclipse.gef.ui.palette.PaletteMessages;
  * 
  * @author Pratik Shah
  */
-public class PaletteGroupFactory 
-	extends PaletteContainerFactory
-{
-	
-/**
- * Constructor
- */
-public PaletteGroupFactory() {
-	setLabel(PaletteMessages.MODEL_TYPE_GROUP);
-}
+public class PaletteGroupFactory extends PaletteContainerFactory {
 
-/**
- * @see org.eclipse.gef.ui.palette.customize.PaletteEntryFactory#createNewEntry(Shell)
- */
-protected PaletteEntry createNewEntry(Shell shell) {
-	PaletteGroup group = new PaletteGroup(PaletteMessages.NEW_GROUP_LABEL);
-	group.setUserModificationPermission(PaletteEntry.PERMISSION_FULL_MODIFICATION);
-	return group;
-}
+	/**
+	 * Constructor
+	 */
+	public PaletteGroupFactory() {
+		setLabel(PaletteMessages.MODEL_TYPE_GROUP);
+	}
+
+	/**
+	 * @see org.eclipse.gef.ui.palette.customize.PaletteEntryFactory#createNewEntry(Shell)
+	 */
+	protected PaletteEntry createNewEntry(Shell shell) {
+		PaletteGroup group = new PaletteGroup(PaletteMessages.NEW_GROUP_LABEL);
+		group.setUserModificationPermission(PaletteEntry.PERMISSION_FULL_MODIFICATION);
+		return group;
+	}
 
 }

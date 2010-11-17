@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2005 IBM Corporation and others.
+ * Copyright (c) 2000, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,31 +19,30 @@ import org.eclipse.gef.ui.palette.PaletteViewer;
 /**
  * Selection Tool to be used in the Palette.
  */
-public class PaletteSelectionTool 
-	extends SelectionTool
-{
+public class PaletteSelectionTool extends SelectionTool {
 
-private PaletteViewer getPaletteViewer() {
-	return (PaletteViewer)getCurrentViewer();
-}
-
-private boolean handleAbort(KeyEvent e) {
-	if (e.keyCode == SWT.ESC) {
-		return (getPaletteViewer().getPaletteRoot().getDefaultEntry() != null);
+	private PaletteViewer getPaletteViewer() {
+		return (PaletteViewer) getCurrentViewer();
 	}
-	return false;
-}
 
-protected boolean handleKeyDown(KeyEvent e) {
-	if (handleAbort(e)) {
-		loadDefaultTool();
-		return true;
+	private boolean handleAbort(KeyEvent e) {
+		if (e.keyCode == SWT.ESC) {
+			return (getPaletteViewer().getPaletteRoot().getDefaultEntry() != null);
+		}
+		return false;
 	}
-	return super.handleKeyDown(e);
-}
 
-private void loadDefaultTool() {
-	getPaletteViewer().setActiveTool(getPaletteViewer().getPaletteRoot().getDefaultEntry());
-}
+	protected boolean handleKeyDown(KeyEvent e) {
+		if (handleAbort(e)) {
+			loadDefaultTool();
+			return true;
+		}
+		return super.handleKeyDown(e);
+	}
+
+	private void loadDefaultTool() {
+		getPaletteViewer().setActiveTool(
+				getPaletteViewer().getPaletteRoot().getDefaultEntry());
+	}
 
 }

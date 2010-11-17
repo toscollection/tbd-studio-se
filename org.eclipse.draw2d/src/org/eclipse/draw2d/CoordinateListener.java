@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2005 IBM Corporation and others.
+ * Copyright (c) 2004, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,12 +16,14 @@ package org.eclipse.draw2d;
  */
 public interface CoordinateListener {
 
-/**
- * Indicates that the coordinate system has changed in a way that affects the absolute
- * locations of contained figures.
- * @param source the figure whose coordinate system changed
- * @since 3.1
- */
-void coordinateSystemChanged(IFigure source);
+	/**
+	 * Indicates that the coordinate system has changed in a way that affects
+	 * the absolute locations of contained figures.
+	 * 
+	 * @param source
+	 *            the figure whose coordinate system changed
+	 * @since 3.1
+	 */
+	void coordinateSystemChanged(IFigure source);
 
 }

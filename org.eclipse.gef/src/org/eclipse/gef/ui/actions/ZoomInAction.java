@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2005 IBM Corporation and others.
+ * Copyright (c) 2000, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,30 +19,32 @@ import org.eclipse.gef.internal.InternalImages;
  */
 public class ZoomInAction extends ZoomAction {
 
-/**
- * Constructor for ZoomInAction.
- * @param zoomManager the zoom manager
- */
-public ZoomInAction(ZoomManager zoomManager) {
-	super(GEFMessages.ZoomIn_Label, InternalImages.DESC_ZOOM_IN, zoomManager);
-	setToolTipText(GEFMessages.ZoomIn_Tooltip);
-	setId(GEFActionConstants.ZOOM_IN);
-	setActionDefinitionId(GEFActionConstants.ZOOM_IN);
-}
+	/**
+	 * Constructor for ZoomInAction.
+	 * 
+	 * @param zoomManager
+	 *            the zoom manager
+	 */
+	public ZoomInAction(ZoomManager zoomManager) {
+		super(GEFMessages.ZoomIn_Label, InternalImages.DESC_ZOOM_IN,
+				zoomManager);
+		setToolTipText(GEFMessages.ZoomIn_Tooltip);
+		setId(GEFActionConstants.ZOOM_IN);
+		setActionDefinitionId(GEFActionConstants.ZOOM_IN);
+	}
 
-/**
- * @see org.eclipse.jface.action.IAction#run()
- */
-public void run() {
-	zoomManager.zoomIn();
-}
+	/**
+	 * @see org.eclipse.jface.action.IAction#run()
+	 */
+	public void run() {
+		zoomManager.zoomIn();
+	}
 
-/**
- * @see org.eclipse.gef.editparts.ZoomListener#zoomChanged(double)
- */
-public void zoomChanged(double zoom) {
-	setEnabled(zoomManager.canZoomIn());
-}
-
+	/**
+	 * @see org.eclipse.gef.editparts.ZoomListener#zoomChanged(double)
+	 */
+	public void zoomChanged(double zoom) {
+		setEnabled(zoomManager.canZoomIn());
+	}
 
 }

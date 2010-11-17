@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2006 IBM Corporation and others.
+ * Copyright (c) 2006, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,18 +19,18 @@ import org.eclipse.gef.editparts.AbstractEditPart;
 
 public class PropertySourceAdapterFactory implements IAdapterFactory {
 
-public Object getAdapter(Object adaptableObject, Class adapterType) {
-	AbstractEditPart part = (AbstractEditPart) adaptableObject;
-	Object model = part.getModel();
-	if (model instanceof IPropertySource)
-		return model;
-	if (model instanceof IAdaptable)
-		return ((IAdaptable)model).getAdapter(adapterType);
-	return null;
-}
+	public Object getAdapter(Object adaptableObject, Class adapterType) {
+		AbstractEditPart part = (AbstractEditPart) adaptableObject;
+		Object model = part.getModel();
+		if (model instanceof IPropertySource)
+			return model;
+		if (model instanceof IAdaptable)
+			return ((IAdaptable) model).getAdapter(adapterType);
+		return null;
+	}
 
-public Class[] getAdapterList() {
-	return new Class[]{IPropertySource.class};
-}
+	public Class[] getAdapterList() {
+		return new Class[] { IPropertySource.class };
+	}
 
 }

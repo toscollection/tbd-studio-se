@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 IBM Corporation and others.
+ * Copyright (c) 2008, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,11 +28,12 @@ public class PolylineShape extends AbstractPointListShape {
 
 	/**
 	 * @return true if the distance between specified point and closest segment
-	 * 	of this PolyLine is less then {@link PolylineShape#tolerance}
+	 *         of this PolyLine is less then {@link PolylineShape#tolerance}
 	 */
 	protected boolean shapeContainsPoint(int x, int y) {
 		Point location = getLocation();
-		return Geometry.polylineContainsPoint(points, x - location.x, y - location.y, tolerance);
+		return Geometry.polylineContainsPoint(points, x - location.x, y
+				- location.y, tolerance);
 	}
 
 	protected void fillShape(Graphics graphics) {
@@ -46,8 +47,8 @@ public class PolylineShape extends AbstractPointListShape {
 	}
 
 	/**
-	 * Setting tolerance parameter. This parameter will be used in {@link
-	 * PolylineShape#shapeContainsPoint(int, int)}
+	 * Setting tolerance parameter. This parameter will be used in
+	 * {@link PolylineShape#shapeContainsPoint(int, int)}
 	 */
 	public void setTolerance(int tolerance) {
 		this.tolerance = tolerance;

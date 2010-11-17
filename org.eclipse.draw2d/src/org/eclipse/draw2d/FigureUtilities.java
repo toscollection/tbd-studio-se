@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2007 IBM Corporation and others. All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2000, 2010 IBM Corporation and others. All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
@@ -175,8 +175,8 @@ public class FigureUtilities {
     public static Color lighter(Color rgb) {
         int r = rgb.getRed(), g = rgb.getGreen(), b = rgb.getBlue();
 
-        return new Color(null, Math.max(2, Math.min((int) (r / RGB_VALUE_MULTIPLIER), 255)), Math.max(2, Math.min(
-                (int) (g / RGB_VALUE_MULTIPLIER), 255)), Math.max(2, Math.min((int) (b / RGB_VALUE_MULTIPLIER), 255)));
+        return new Color(null, Math.max(2, Math.min((int) (r / RGB_VALUE_MULTIPLIER), 255)), Math.max(2,
+                Math.min((int) (g / RGB_VALUE_MULTIPLIER), 255)), Math.max(2, Math.min((int) (b / RGB_VALUE_MULTIPLIER), 255)));
     }
 
     /**
@@ -203,9 +203,9 @@ public class FigureUtilities {
      * @since 2.0
      */
     public static Color mixColors(Color c1, Color c2, double weight) {
-        return new Color(null, (int) (c1.getRed() * weight + c2.getRed() * (1 - weight)), (int) (c1.getGreen() * weight + c2
-                .getGreen()
-                * (1 - weight)), (int) (c1.getBlue() * weight + c2.getBlue() * (1 - weight)));
+        return new Color(null, (int) (c1.getRed() * weight + c2.getRed() * (1 - weight)),
+                (int) (c1.getGreen() * weight + c2.getGreen() * (1 - weight)), (int) (c1.getBlue() * weight + c2.getBlue()
+                        * (1 - weight)));
     }
 
     /**
@@ -308,7 +308,7 @@ public class FigureUtilities {
      */
     protected static void setFont(Font f) {
         if (f == null) {
-            return; // FIXME changeset 18635
+            return;
         }
         if (appliedFont == f || f.equals(appliedFont))
             return;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2005 IBM Corporation and others. All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2000, 2010 IBM Corporation and others. All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
@@ -343,16 +343,6 @@ public class PaletteMessages extends NLS {
      * The palette can be moved or resized through the context menu for this control.
      */
     public static String ACC_DESC_PALETTE_TITLE;
-
-    /**
-     * The String "&favorite"
-     */
-    public static String FAVORITE_LABEL;
-
-    /**
-     * The String "&standard"
-     */
-    public static String STANDARD_LABEL;
 
     static {
         NLS.initializeMessages("org.eclipse.gef.ui.palette.messages", PaletteMessages.class); //$NON-NLS-1$

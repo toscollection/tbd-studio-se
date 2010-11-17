@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2005 IBM Corporation and others.
+ * Copyright (c) 2004, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -16,12 +16,12 @@ package org.eclipse.draw2d.text;
  */
 class BidiChars {
 
-static final char P_SEP = '\u2029';
-static final char ZWJ = '\u200d';
-static final char LRO = '\u202d';
-static final char RLO = '\u202e';
-static final char OBJ = '\ufffc';
-static final char LRE = '\u202a';
-static final char RLE = '\u202b';
+	static final char P_SEP = '\u2029';
+	static final char ZWJ = '\u200d';
+	static final char LRO = '\u202d';
+	static final char RLO = '\u202e';
+	static final char OBJ = '\ufffc';
+	static final char LRE = '\u202a';
+	static final char RLE = '\u202b';
 
 }

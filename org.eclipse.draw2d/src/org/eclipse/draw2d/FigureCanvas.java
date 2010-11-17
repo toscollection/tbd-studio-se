@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2000, 2009 IBM Corporation and others. All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2000, 2010 IBM Corporation and others. All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
@@ -191,8 +191,10 @@ public class FigureCanvas extends Canvas {
      * @see org.eclipse.swt.widgets.Composite#computeSize(int, int, boolean)
      */
     public org.eclipse.swt.graphics.Point computeSize(int wHint, int hHint, boolean changed) {
-        // TODO Still doesn't handle scrollbar cases, such as when a constrained width
-        // would require a horizontal scrollbar, and therefore additional height.
+        // TODO Still doesn't handle scrollbar cases, such as when a constrained
+        // width
+        // would require a horizontal scrollbar, and therefore additional
+        // height.
         int borderSize = computeTrim(0, 0, 0, 0).x * -2;
         if (wHint >= 0)
             wHint = Math.max(0, wHint - borderSize);
@@ -295,8 +297,8 @@ public class FigureCanvas extends Canvas {
     protected void layoutViewport() {
         ScrollPaneSolver.Result result;
         result = ScrollPaneSolver.solve(new Rectangle(getBounds()).setLocation(0, 0), getViewport(),
-                getHorizontalScrollBarVisibility(), getVerticalScrollBarVisibility(), computeTrim(0, 0, 0, 0).width, computeTrim(
-                        0, 0, 0, 0).height);
+                getHorizontalScrollBarVisibility(), getVerticalScrollBarVisibility(), computeTrim(0, 0, 0, 0).width,
+                computeTrim(0, 0, 0, 0).height);
         getLightweightSystem().setIgnoreResize(true);
         try {
             if (getHorizontalBar().getVisible() != result.showH)

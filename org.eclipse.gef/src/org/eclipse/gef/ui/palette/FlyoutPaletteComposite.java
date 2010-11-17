@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2009 IBM Corporation and others. All rights reserved. This program and the accompanying materials
+ * Copyright (c) 2004, 2010 IBM Corporation and others. All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is
  * available at http://www.eclipse.org/legal/epl-v10.html
  * 
@@ -101,7 +101,7 @@ import org.eclipse.gef.ui.views.palette.PaletteView;
  */
 public class FlyoutPaletteComposite extends Composite {
 
-    protected static final FontManager FONT_MGR = new FontManager();
+    public static final FontManager FONT_MGR = new FontManager();
 
     private static final String PROPERTY_PALETTE_WIDTH = "org.eclipse.gef.ui.palette.fpa.paletteWidth"; //$NON-NLS-1$
 
@@ -253,7 +253,8 @@ public class FlyoutPaletteComposite extends Composite {
             viewer.saveState(memento);
         } catch (RuntimeException re) {
             // Bug 74843 -- See comment #1
-            // If there's a problem with saving the palette's state, it simply won't be
+            // If there's a problem with saving the palette's state, it simply
+            // won't be
             // transferred to the new palette
             memento = null;
             /*
@@ -297,7 +298,8 @@ public class FlyoutPaletteComposite extends Composite {
         Control result = null;
         if (pViewer != null)
             result = pViewer.getControl();
-        // Fix for bug 101703 -- pViewer.getControl().getParent() might be parented
+        // Fix for bug 101703 -- pViewer.getControl().getParent() might be
+        // parented
         // by paletteContainer
         if (result != null && !result.isDisposed() && result.getParent() != paletteContainer)
             result = result.getParent();
@@ -844,7 +846,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class ResizeAction extends Action {
+    public class ResizeAction extends Action {
 
         public ResizeAction() {
             super(PaletteMessages.RESIZE_LABEL);
@@ -870,7 +872,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
+    public class TitleDragManager extends MouseAdapter implements Listener, MouseTrackListener {
 
         protected boolean switchDock = false;
 
@@ -955,7 +957,8 @@ public class FlyoutPaletteComposite extends Composite {
             if (tracker.open()) {
                 if (switchDock)
                     setDockLocation(PositionConstants.EAST_WEST & ~dock);
-                // mouse up is received by the tracker and by this listener, so we set dragging
+                // mouse up is received by the tracker and by this listener, so
+                // we set dragging
                 // to be false
                 dragging = false;
             }
@@ -1058,7 +1061,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected static class TitleLabel extends Label {
+    public static class TitleLabel extends Label {
 
         protected static final Border BORDER = new MarginBorder(4, 3, 4, 3);
 
@@ -1102,7 +1105,8 @@ public class FlyoutPaletteComposite extends Composite {
             // paint the focus rectangle around the text
             if (hasFocus()) {
                 org.eclipse.draw2d.geometry.Rectangle textBounds = getTextBounds();
-                // We reduce the width by 1 because FigureUtilities grows it by 1 unnecessarily
+                // We reduce the width by 1 because FigureUtilities grows it by
+                // 1 unnecessarily
                 textBounds.width--;
                 graphics.drawFocus(bounds.getResized(-1, -1).intersect(textBounds.getExpanded(getInsets())));
             }
@@ -1251,7 +1255,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class TitleCanvas extends Canvas {
+    public class TitleCanvas extends Canvas {
 
         protected LightweightSystem lws;
 
@@ -1335,7 +1339,7 @@ public class FlyoutPaletteComposite extends Composite {
             getAccessible().addAccessibleControlListener(new AccessibleControlAdapter() {
 
                 public void getRole(AccessibleControlEvent e) {
-                    e.detail = ACC.ROLE_SLIDER;
+                    e.detail = ACC.ROLE_LABEL;
                 }
             });
         }
@@ -1355,7 +1359,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected class ChangeDockAction extends Action {
+    public class ChangeDockAction extends Action {
 
         private int position;
 
@@ -1389,7 +1393,7 @@ public class FlyoutPaletteComposite extends Composite {
         }
     }
 
-    protected static class FontManager {
+    public static class FontManager {
 
         private final String fontName = getFontType();
 
@@ -1523,21 +1527,21 @@ public class FlyoutPaletteComposite extends Composite {
                 ImageDescriptor mask = null;
                 switch (code) {
                 case LEFT:
-                    source = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-                            ISharedImages.IMG_OBJS_DND_LEFT_SOURCE);
+                    source = PlatformUI.getWorkbench().getSharedImages()
+                            .getImageDescriptor(ISharedImages.IMG_OBJS_DND_LEFT_SOURCE);
                     mask = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_DND_LEFT_MASK);
                     cursors[LEFT] = new Cursor(display, source.getImageData(), mask.getImageData(), 16, 16);
                     break;
                 case RIGHT:
-                    source = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-                            ISharedImages.IMG_OBJS_DND_RIGHT_SOURCE);
+                    source = PlatformUI.getWorkbench().getSharedImages()
+                            .getImageDescriptor(ISharedImages.IMG_OBJS_DND_RIGHT_SOURCE);
                     mask = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_DND_RIGHT_MASK);
                     cursors[RIGHT] = new Cursor(display, source.getImageData(), mask.getImageData(), 16, 16);
                     break;
                 default:
                 case INVALID:
-                    source = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(
-                            ISharedImages.IMG_OBJS_DND_INVALID_SOURCE);
+                    source = PlatformUI.getWorkbench().getSharedImages()
+                            .getImageDescriptor(ISharedImages.IMG_OBJS_DND_INVALID_SOURCE);
                     mask = PlatformUI.getWorkbench().getSharedImages()
                             .getImageDescriptor(ISharedImages.IMG_OBJS_DND_INVALID_MASK);
                     cursors[INVALID] = new Cursor(display, source.getImageData(), mask.getImageData(), 16, 16);

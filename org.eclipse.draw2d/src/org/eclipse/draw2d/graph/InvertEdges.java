@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2003, 2005 IBM Corporation and others.
+ * Copyright (c) 2003, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,16 +18,16 @@ package org.eclipse.draw2d.graph;
  */
 class InvertEdges extends GraphVisitor {
 
-/**
- * 
- * @see GraphVisitor#visit(org.eclipse.draw2d.graph.DirectedGraph)
- */
-public void visit(DirectedGraph g) {
-	for (int i = 0; i < g.edges.size(); i++) {
-		Edge e = g.edges.getEdge(i);
-		if (e.isFeedback)
-			e.invert();
+	/**
+	 * 
+	 * @see GraphVisitor#visit(org.eclipse.draw2d.graph.DirectedGraph)
+	 */
+	public void visit(DirectedGraph g) {
+		for (int i = 0; i < g.edges.size(); i++) {
+			Edge e = g.edges.getEdge(i);
+			if (e.isFeedback)
+				e.invert();
+		}
 	}
-}
 
 }

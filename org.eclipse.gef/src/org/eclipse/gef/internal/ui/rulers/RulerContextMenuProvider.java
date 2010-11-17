@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2005 IBM Corporation and others.
+ * Copyright (c) 2004, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,15 +20,15 @@ import org.eclipse.gef.ui.actions.GEFActionConstants;
 /**
  * @author Pratik Shah
  */
-public class RulerContextMenuProvider 
-	extends ContextMenuProvider 
-{
-public RulerContextMenuProvider(EditPartViewer viewer) {
-	super(viewer);
-}
-public void buildContextMenu(IMenuManager menu) {
-	GEFActionConstants.addStandardActionGroups(menu);
-	menu.appendToGroup(GEFActionConstants.GROUP_ADD, new CreateGuideAction(getViewer()));
-}
+public class RulerContextMenuProvider extends ContextMenuProvider {
+	public RulerContextMenuProvider(EditPartViewer viewer) {
+		super(viewer);
+	}
+
+	public void buildContextMenu(IMenuManager menu) {
+		GEFActionConstants.addStandardActionGroups(menu);
+		menu.appendToGroup(GEFActionConstants.GROUP_ADD, new CreateGuideAction(
+				getViewer()));
+	}
 
 }

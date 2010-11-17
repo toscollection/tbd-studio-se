@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008, 2009 IBM Corporation and others.
+ * Copyright (c) 2008, 2010 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -112,8 +112,9 @@ public class ConnectionEndpointHandle extends ConnectionHandle {
 	/**
 	 * Return the endpoint handle.
 	 * 
-	 * @return the endPoint handle, which is is either {@link ConnectionLocator#SOURCE}
-	 *         or {@link ConnectionLocator#TARGET}.
+	 * @return the endPoint handle, which is is either
+	 *         {@link ConnectionLocator#SOURCE} or
+	 *         {@link ConnectionLocator#TARGET}.
 	 * @since 3.5
 	 */
 	public int getEndPoint() {
