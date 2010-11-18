@@ -23,7 +23,6 @@ are also available.
    </license>
 
    <url>
-      <update label="CORE Talend update site for stables" url="http://talendforge.org/core/updatesite/stable/"/>
       <discovery label="Sourceforge Epic Home Page" url="http://sourceforge.net/projects/e-p-i-c"/>
    </url>
 
@@ -425,13 +424,6 @@ are also available.
 
    <plugin
          id="org.eclipse.equinox.p2.artifact.repository"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.lucene.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
