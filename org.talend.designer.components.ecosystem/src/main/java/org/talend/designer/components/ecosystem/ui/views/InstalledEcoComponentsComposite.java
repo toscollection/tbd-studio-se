@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -57,10 +58,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator;
-import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
+import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
 import org.talend.commons.ui.ws.WindowSystem;
+import org.talend.core.model.component_cache.ComponentInfo;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
@@ -69,6 +71,7 @@ import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.model.EcosystemPackage;
 import org.talend.designer.components.ecosystem.ui.actions.UpdateComponenentsUtil;
+import org.talend.designer.core.model.components.manager.ComponentManager;
 
 /**
  * DOC chuang class global comment. Detailled comment
@@ -286,8 +289,8 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         // install revision column
         createTableColumn(Messages.getString("EcosystemViewComposite.InstalledRevision.Title"), true, false, 110, //$NON-NLS-1$
                 INSTALLED_REVISION_ACCESSOR);
-        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(EcosystemConstants
-                .getDescriptionTitleLable(), true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
+        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
+                EcosystemConstants.getDescriptionTitleLable(), true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
         // descriptionColumn.setMinimumWidth(1300);
         fTableViewerCreator.setDefaultSort(fNameColumn, SORT.ASC);
 
@@ -377,6 +380,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                 monitor.beginTask(
                         Messages.getString("InstalledEcoComponentsComposite.removeComponentName", component.getName()), 100); //$NON-NLS-1$
                 monitor.worked(10);
+                saveCache(component.getName());
                 EcosystemUtils.deleteComponent(component);
                 monitor.worked(70);
                 // update view
@@ -384,6 +388,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                 view.removeInstalledExtension(component);
                 monitor.worked(10);
                 saveToFile();
+
                 button.setEnabled(true);
                 view.refresh();
                 monitor.done();
@@ -401,6 +406,12 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         MessageDialog.openInformation(getShell(),
                 Messages.getString("InstalledEcoComponentsComposite.removeEcosystem"), message.toString()); //$NON-NLS-1$
 
+    }
+
+    private void saveCache(String name) {
+        EMap<String, ComponentInfo> cacheMap = ComponentManager.getInstance().getComponentEntryMap();
+        cacheMap.remove(name);
+        ComponentManager.saveResource();
     }
 
     public void removeInstalledExtension(ComponentExtension extension) {

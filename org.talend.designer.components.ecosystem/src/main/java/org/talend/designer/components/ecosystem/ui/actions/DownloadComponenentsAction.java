@@ -55,6 +55,7 @@ import org.talend.designer.components.ecosystem.jobs.DownloadListener;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
 import org.talend.designer.core.model.components.EmfComponent;
+import org.talend.designer.core.model.components.manager.ComponentManager;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.AbstractTalendEditor;
 
@@ -176,7 +177,8 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             try {
                 // prop.load(new FileInputStream(files[0]));
                 // gcui:get component name and family name from xml file.
-                EmfComponent emfComponent = new EmfComponent(files[0], "component");
+                EmfComponent emfComponent = new EmfComponent(files[0].getAbsolutePath(), files[0].getParentFile().getName(),
+                        "component", ComponentManager.getInstance(), false);
                 String name = emfComponent.getName();
                 String family = emfComponent.getOriginalFamilyName();
                 // String name = component.getName();
@@ -190,6 +192,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 ExceptionHandler.process(e);
             }
         }
+
         if (componentName != null) {
             // see 0005051: [ecosystem view] select component in the palette once component is installed
             selectPaletteEntry(componentName);
@@ -197,6 +200,7 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
 
         MessageDialog.openInformation(shell,
                 Messages.getString("DownloadComponenentsAction.installEcosystem"), message.toString()); //$NON-NLS-1$
+        ComponentManager.saveResource();
 
     }
 
