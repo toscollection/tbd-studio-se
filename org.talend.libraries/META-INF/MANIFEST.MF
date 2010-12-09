@@ -58,9 +58,7 @@ Require-Bundle: org.apache.log4j;visibility:=reexport,
  org.apache.xerces;visibility:=reexport,
  org.apache.axis,
  org.talend.libraries.jackson,
- org.talend.libraries.dom4j-jaxen,
- org.eclipse.jface.text,
- org.eclipse.xtext.ui
+ org.talend.libraries.dom4j-jaxen
 Bundle-Activator: org.talend.libraries.LibrariesPlugin
 Import-Package: com.ibm.icu.text
 Bundle-Vendor: .Talend SA.
