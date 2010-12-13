@@ -7,9 +7,6 @@
 	<classpathentry exported="true" kind="lib" path="axis2-kernel-1.5.2.jar" sourcepath="F:/Test/from others/bchen/salesforceCRMManagement"/>
 	<classpathentry exported="true" kind="lib" path="axis2-transport-http-1.5.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="axis2-transport-local-1.5.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="commons-codec-1.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="commons-httpclient-3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="commons-logging-1.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="geronimo-stax-api_1.0_spec-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="httpcore-4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="mail-1.4.jar"/>
@@ -31,10 +28,8 @@
 	<classpathentry exported="true" kind="lib" path="salesforce_enterprise.jar"/>
 	<classpathentry exported="true" kind="lib" path="ldapjdk.jar"/>
 	<classpathentry exported="true" kind="lib" path="talend_file_enhanced_20070724.jar"/>
-	<classpathentry exported="true" kind="lib" path="javacsv.jar"/>
 	<classpathentry exported="true" kind="lib" path="jxl.jar"/>
 	<classpathentry exported="true" kind="lib" path="castor-1.0.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="fakejdbc_driver.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/main/java"/>
