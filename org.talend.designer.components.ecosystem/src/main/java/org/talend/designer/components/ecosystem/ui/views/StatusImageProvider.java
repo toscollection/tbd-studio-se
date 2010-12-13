@@ -14,9 +14,9 @@ package org.talend.designer.components.ecosystem.ui.views;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.talend.commons.ui.image.ImageProvider;
+import org.talend.commons.ui.runtime.image.ECoreImage;
+import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.tableviewer.behavior.IColumnImageProvider;
-import org.talend.core.ui.images.ECoreImage;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 
 /**

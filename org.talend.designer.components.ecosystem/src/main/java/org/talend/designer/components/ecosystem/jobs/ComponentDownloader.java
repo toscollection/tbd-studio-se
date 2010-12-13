@@ -22,7 +22,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 
 /**
  * Download components from web site.

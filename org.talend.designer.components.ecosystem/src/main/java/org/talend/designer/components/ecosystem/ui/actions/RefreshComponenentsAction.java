@@ -21,7 +21,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewActionDelegate;
 import org.eclipse.ui.IViewPart;
-import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;

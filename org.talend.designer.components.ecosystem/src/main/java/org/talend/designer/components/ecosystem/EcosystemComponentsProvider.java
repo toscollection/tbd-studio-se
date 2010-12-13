@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 
-import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.model.components.AbstractComponentsProvider;
 

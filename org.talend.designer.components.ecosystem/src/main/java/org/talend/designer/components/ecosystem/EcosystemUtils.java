@@ -49,7 +49,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.osgi.framework.Version;
 import org.talend.commons.emf.EmfHelper;
-import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.utils.StringUtils;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.CorePlugin;

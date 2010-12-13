@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.i18n.Messages;
 import org.talend.designer.components.ecosystem.jobs.ComponentSearcher;
