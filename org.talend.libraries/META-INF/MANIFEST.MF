@@ -33,7 +33,9 @@ Bundle-ClassPath: .,
  neethi-2.0.4.jar,
  wstx-asl-3.2.9.jar,
  XmlSchema-1.4.5.jar,
- salesforceCRMManagement.jar
+ salesforceCRMManagement.jar,
+ commons-logging-1.1.1.jar,
+ xerces-2.6.2.jar
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.talend.libraries.LibrariesPlugin
 Bundle-Vendor: .Talend SA.
@@ -82,6 +84,8 @@ Export-Package: .,
  netscape.ldap.controls,
  netscape.ldap.factory,
  netscape.ldap.util,
+ org.apache.commons.logging,
+ org.apache.commons.logging.impl,
  org.apache.poi,
  org.apache.poi.common.usermodel,
  org.apache.poi.ddf,
@@ -146,6 +150,7 @@ Export-Package: .,
  org.apache.poi.xwpf.extractor,
  org.apache.poi.xwpf.model,
  org.apache.poi.xwpf.usermodel,
+ org.apache.xerces.parsers,
  org.castor.cache,
  org.castor.cache.distributed,
  org.castor.cache.hashbelt,
