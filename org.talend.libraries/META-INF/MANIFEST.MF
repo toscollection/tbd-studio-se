@@ -34,7 +34,8 @@ Bundle-ClassPath: .,
  wstx-asl-3.2.9.jar,
  XmlSchema-1.4.5.jar,
  salesforceCRMManagement.jar,
- xerces-2.6.2.jar
+ xerces-2.6.2.jar,
+ commons-logging-1.1.1.jar
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.talend.libraries.LibrariesPlugin
 Bundle-Vendor: .Talend SA.
@@ -83,6 +84,8 @@ Export-Package: .,
  netscape.ldap.controls,
  netscape.ldap.factory,
  netscape.ldap.util,
+ org.apache.commons.logging,
+ org.apache.commons.logging.impl,
  org.apache.poi,
  org.apache.poi.common.usermodel,
  org.apache.poi.ddf,
@@ -222,5 +225,4 @@ Export-Package: .,
  uniserv.cliserv,
  uniserv.cliserv.mail,
  uniserv.cliserv.post
-Require-Bundle: org.eclipse.core.runtime,
- org.apache.log4j
+Require-Bundle: org.eclipse.core.runtime
