@@ -15,9 +15,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.team.core,
  org.eclipse.core.variables
 Eclipse-LazyStart: true
-Bundle-ClassPath: antlr-2.7.5.jar,
- jdom.jar,
- .
+Bundle-ClassPath: jdom.jar,
+ .,
+ antlr-2.7.6.jar
 Export-Package: antlr,
  antlr.actions.cpp,
  antlr.actions.csharp,
