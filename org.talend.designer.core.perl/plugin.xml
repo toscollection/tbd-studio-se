@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.designer.core.perl.DesignerPerlService"
+            serviceId="IDesignerPerlService">
+      </Service>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.talend.designer.core.perl.ui.editor.StandAloneTalendPerlEditor"
+            contributorClass="org.epic.perleditor.editors.PerlActionContributor"
+            extensions="pl, ipl, pm, cgi, epl"
+            icon="icons/epic.gif"
+            id="org.talend.designer.core.perl.ui.editor.StandAloneTalendPerlEditor"
+            name="Epic Perl Editor">
+      </editor>
+   </extension>
+
+
+</plugin>
