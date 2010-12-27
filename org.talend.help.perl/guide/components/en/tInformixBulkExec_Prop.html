@@ -1,0 +1,474 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tInformixBulkExec</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tHSQLDbRow_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tInformixBulkExec_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3570339"> </a><h2 class="pHeading1">
+tInformixBulkExec
+</h2>
+<a name="wp3570348"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tInformixBulkExec_icon32_white.png" id="wp3570343" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3570355"> </a><h2 class="pHeading2">
+tInformixBulkExec Properties
+</h2>
+<a name="wp3571870"> </a><p class="pBodyRelative">
+<b class="cBold">tInformixOutputBulk</b> and <b class="cBold">tInformixBulkExec</b> are generally used together in a two step process. In the first step, an output file is generated. In the second step, this file is used in the INSERT operation used to feed a database. These two steps are fused together in the <b class="cBold">tInformixOutputBulk</b><b class="cBold">Exec </b>component, detailed in another section. The advantage of using two components is that data can be transformed before it is loaded in the database.
+</p>
+<a name="wp3571843"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3571357table3571355">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571357"> </a><div class="pCellBody">
+<b class="cBold">Component Family</b>
+</div>
+</td>
+    <td><a name="wp3571359"> </a><div class="pCellBody">
+Databases/Informix
+</div>
+</td>
+    <td><a name="wp3571367"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp3571364" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571372"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3571377"> </a><div class="pCellBody">
+<b class="cBold">tInformixBulkExec</b> executes Insert operations on the data supplied. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571384"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3571389"> </a><div class="pCellBody">
+<b class="cBold">tInformixBulkExec</b> is a dedicated component which improves performance during Insert operations in Informix databases.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571396"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3571401"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp3571403"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b> or <b class="cBold">Repository</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571405"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571407"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571412"> </a><div class="pCellBody">
+<b class="cBold">Built-in:</b> No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571414"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571416"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3599162"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571423"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571428"> </a><div class="pCellHeading">
+<em class="cEmphasis">Execution Platform</em>
+</div>
+</td>
+    <td><a name="wp3571430"> </a><div class="pCellBody">
+Select the operating system you are using.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571432"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571436"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp3571439"> </a><div class="pCellBody">
+Select this check box and click the relevant <b class="cBold">tInformixBulkExec</b><b class="cBold"> </b>component on the <b class="cBold">Component List</b> to reuse the connection details you already defined.<br />
+</div>
+<a name="wp3571454"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3571452" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571469"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571474"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp3571476"> </a><div class="pCellBody">
+Database server IP address.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571478"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571483"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp3571485"> </a><div class="pCellBody">
+DB server listening port.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571487"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571492"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp3571494"> </a><div class="pCellBody">
+Name of the database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571496"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571501"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em>
+</div>
+</td>
+    <td><a name="wp3571503"> </a><div class="pCellBody">
+Name of the schema.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571505"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571510"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp3571515"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571517"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571522"> </a><div class="pCellHeading">
+<em class="cEmphasis">Instance</em>
+</div>
+</td>
+    <td><a name="wp3571524"> </a><div class="pCellBody">
+Name of the Informix instance to be used. This information can generally be found in the <em class="cEmphasis">SQL hosts</em> file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571529"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571534"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp3571536"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571538"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571543"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp3571545"> </a><div class="pCellBody">
+On the table defined, you can perform one of the following operations:<br /><b class="cBold">None</b>: No operation is carried out.<br /><b class="cBold">Drop and create a table</b>: The table is removed and created again.<br /><b class="cBold">Create a table</b>: The table does not exist and gets created.<br /><b class="cBold">Create a table if not exists</b>: The table is created if it does not exist.<br /><b class="cBold">Drop a table if exists and create</b>: The table is removed if it already exists and created again.<br /><b class="cBold">Clear a table</b>: The table content is deleted.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571565"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571572"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3571575"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields to be processed and passed on to the next component. The schema is either built-in or stored remotely in the Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571577"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571579"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571586"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <span style="font-weight: bold">How to set a built-in schema</span> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571598"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571600"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571605"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job designs. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571616"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571621"> </a><div class="pCellHeading">
+<em class="cEmphasis">Informix Directory</em>
+</div>
+</td>
+    <td><a name="wp3571623"> </a><div class="pCellBody">
+Indicate the access path to your Informix directory.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571625"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571630"> </a><div class="pCellHeading">
+<em class="cEmphasis">Data file</em>
+</div>
+</td>
+    <td><a name="wp3571632"> </a><div class="pCellBody">
+Name of the file to be processed.<br />Related topic:<em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571643"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571648"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on data</em>
+</div>
+</td>
+    <td><a name="wp3571650"> </a><div class="pCellBody">
+On the data of the table defined, you can perform the following operations:<br /><b class="cBold">Insert</b>: Add new data to the table. If duplicates are found, the job stops.<br /><b class="cBold">Update</b>: Update the existing table data.<br /><b class="cBold">Insert or update</b>: Add data or update the existing data.<br /><b class="cBold">Update or insert&#160;</b>: Update the existing entries or create them if they do not already exist.<br /><b class="cBold">Delete</b>: Delete the entry data which corresponds to the input flow.
+</div>
+<a name="wp3571671"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3571669" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+You must specify at least one key upon which the Update and Delete operations are to be based. It is possible to define the columns which should be used as the key from the schema, from both the <b style="font-style: normal; font-weight: bold" class="cBold">Basic Settings</b> and the <b style="font-style: normal" class="cBold">Advanced Settings</b>, to optimise these operations.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571694"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3571698"> </a><div class="pCellHeading">
+<em class="cEmphasis">Additional JDBC parameters</em>
+</div>
+</td>
+    <td><a name="wp3571701"> </a><div class="pCellBody">
+Specify additional connection properties for the DB connection you are creating. This option is not available if you have selected the <b class="cBold">Use an existing connection</b> check box in the <b class="cBold">Basic settings</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571709"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571714"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field terminated by</em>
+</div>
+</td>
+    <td><a name="wp3571716"> </a><div class="pCellBody">
+Character, string or regular expression which separates the fields.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571718"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571723"> </a><div class="pCellHeading">
+<em class="cEmphasis">Set DBMONEY</em>
+</div>
+</td>
+    <td><a name="wp3571725"> </a><div class="pCellBody">
+Select this check box to define the decimal separator in the <b class="cBold">Decimal separator</b> field.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571730"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571735"> </a><div class="pCellHeading">
+<em class="cEmphasis">Set DBDATE</em>
+</div>
+</td>
+    <td><a name="wp3571737"> </a><div class="pCellBody">
+Select the date format that you want to apply.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571739"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571744"> </a><div class="pCellHeading">
+<em class="cEmphasis">Rows Before Commit</em>
+</div>
+</td>
+    <td><a name="wp3571746"> </a><div class="pCellBody">
+Enter the numbere of rows to be processed before the commit.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571748"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571752"> </a><div class="pCellHeading">
+<em class="cEmphasis">Bad Rows Before Abort</em>
+</div>
+</td>
+    <td><a name="wp3571755"> </a><div class="pCellBody">
+Enter the number of rows in error at which point the Job should stop.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571757"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571765"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3571767"> </a><div class="pCellBody">
+Select this check box to colelct the log data at  component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3571769"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3571774"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output</em>
+</div>
+</td>
+    <td><a name="wp3571776"> </a><div class="pCellBody">
+Where the output should go.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3571781"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3571783"> </a><div class="pCellBody">
+This component offers database query flexibility and covers all possible DB2 queries which may be required.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tHSQLDbRow_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tInformixBulkExec_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tParAccelInput</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tParAccelConnection_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParAccelInput_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2952350"> </a><h2 class="pHeading1">
+tParAccelInput
+</h2>
+<a name="wp2952362"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tParAccelInput_icon32_white.png" id="wp2952355" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3621011"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3621008" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<br />The Dynamic Schema feature is only functional in <b class="cBold">Talend Integration Suite Studio</b>.<br />
+</div>
+<a name="wp3621019"> </a><h2 class="pHeading2">
+tParAccelInput properties
+</h2>
+<a name="wp2952817"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2952384table2952376">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952384"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2952387"> </a><div class="pCellBody">
+Databases/ ParAccel
+</div>
+</td>
+    <td><a name="wp2952399"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2952394" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952407"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2952414"> </a><div class="pCellBody">
+<b class="cBold">tParAccelInput</b> reads a database and extracts fields based on a query. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952425"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2952432"> </a><div class="pCellBody">
+<b class="cBold">tParAccelInput</b> executes a DB query with a strictly defined order which must correspond to the schema definition. Then it passes on the field list to the next component via a <b class="cBold">Main row</b> link.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952443"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2952450"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2952453"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952457"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952460"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952467"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952471"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952474"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3600771"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952485"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952496"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Save_Icon.png" id="wp2952492" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+    <td><a name="wp2952499"> </a><div class="pCellBody">
+Click this icon to open a database connection wizard and store the database connection parameters you set in the component <b class="cBold">Basic settings </b>view.<br />For more information about setting up and storing database connection parameters, see <em class="cEmphasis">Setting up a DB connection</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952518"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952524"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing  connection</em>
+</div>
+</td>
+    <td><a name="wp2952528"> </a><div class="pCellBody">
+Select this check box when using a configured <b class="cBold">tParAccelConnection</b> component.<br />
+</div>
+<a name="wp3451446"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3451443" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952536"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952543"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2952546"> </a><div class="pCellBody">
+Database server IP address.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952550"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952557"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2952560"> </a><div class="pCellBody">
+Listening port number of the DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952564"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952571"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2952574"> </a><div class="pCellBody">
+Name of the database
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952578"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952585"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em>
+</div>
+</td>
+    <td><a name="wp2952588"> </a><div class="pCellBody">
+Exact name of the schema
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952592"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952599"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2952606"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952610"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952620"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2952624"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields to be processed and passed on to the next component. The schema is either built-in or stored remotely in the Repository. <br />
+</div>
+<a name="wp3625191"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/Components-05-336-0528.jpg" height="47" width="47" align="left" id="wp3604448" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+This component offers the advantage of the dynamic schema feature. This allows  you to retrieve unknown columns from source files or to copy batches of columns from a source without mapping each column individually. For further information about dynamic schemas, see <em class="cEmphasis">Dynamic schema</em> in the <b class="cBold">Talend Integration Suite Studio</b> User Guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952628"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952631"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952638"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema is created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952653"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952656"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952663"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952678"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952689"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table name</em>
+</div>
+</td>
+    <td><a name="wp2952692"> </a><div class="pCellBody">
+Name of the table to be read. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952696"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952707"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query type </em>and <em class="cEmphasis">Query</em>
+</div>
+</td>
+    <td><a name="wp2952710"> </a><div class="pCellBody">
+Enter your DB query paying particularly attention to sequence the fields properly in order to match the schema definition.
+</div>
+<a name="wp3626022"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3626019" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+If using the dynamic schema feature, the SELECT query must include the <b class="cBold">*</b> wildcard, to retrieve all of the columns from the table selected.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952985"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952992"> </a><div class="pCellHeading">
+<em class="cEmphasis">Guess Query</em>
+</div>
+</td>
+    <td><a name="wp2952999"> </a><div class="pCellBody">
+Click the <b class="cBold">Guess Query</b> button to generate the query which corresponds to your table schema in the Query field.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2953039"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2953044"> </a><div class="pCellHeading">
+<em class="cEmphasis">Guess schema</em>
+</div>
+</td>
+    <td><a name="wp2953046"> </a><div class="pCellBody">
+Click the <b class="cBold">Guess schema</b> button to retrieve the table schema.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952720"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2952727"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2952730"> </a><div class="pCellBody">
+Select the encoding type from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952738"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952745"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use cursor</em>
+</div>
+</td>
+    <td><a name="wp2952748"> </a><div class="pCellBody">
+When selected, helps to decide the row set to work with at a time and thus optimize performance.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952752"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952758"> </a><div class="pCellHeading">
+<em class="cEmphasis">Trim all the String/Char columns</em>
+</div>
+</td>
+    <td><a name="wp2952762"> </a><div class="pCellBody">
+Select this check box to remove leading and trailing whitespace from all the String/Char columns.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952766"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952773"> </a><div class="pCellHeading">
+<em class="cEmphasis">Trim column</em>
+</div>
+</td>
+    <td><a name="wp2952776"> </a><div class="pCellBody">
+Remove leading and trailing whitespace from defined columns.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952784"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952795"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2952798"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952806"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2952809"> </a><div class="pCellBody">
+This component covers all possible SQL queries for ParAccel databases.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tParAccelConnection_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParAccelInput_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

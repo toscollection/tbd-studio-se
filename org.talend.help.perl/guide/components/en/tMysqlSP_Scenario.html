@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>Scenario: Finding a State Label using a stored procedure</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlSP_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlTableList_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2766556"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2766564"> </a><h2 class="pHeading2">
+Scenario: Finding a State Label using a stored procedure
+</h2>
+<a name="wp2766567"> </a><p class="pIndented1">
+The following job aims at finding the State labels matching the odd State IDs in a Mysql two-column table. A stored procedure is used to carry out this operation. 
+</p>
+<a name="wp2766575"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP1.png" id="wp2766572" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2766586"> </a><div class="pSmartList2"><li>Drag and drop the following components used in this example: <b class="cBold">tRowGenerator</b>, <b class="cBold">tMysqlSP</b>, <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2766597"> </a><div class="pSmartList2"><li>Connect the components using the <b class="cBold">Row Main </b>link.</li></div>
+<a name="wp2766603"> </a><div class="pSmartList2"><li>The <b class="cBold">tRowGenerator</b> is used to generate the odd id number. Double-click on the component to launch the editor.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2766612"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP2.png" id="wp2766609" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2766621"> </a><div class="pSmartList2"><li>Click on the <b class="cBold">Plus</b> button to add a column to the schema to generate.</li></div>
+<a name="wp2766634"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Key</b> check box and define the <b class="cBold">Type</b> to <b class="cBold">Int</b>. </li></div>
+<a name="wp2766641"> </a><div class="pSmartList2"><li>The <b class="cBold">Length</b> equals to 2 digits max.</li></div>
+<a name="wp2766647"> </a><div class="pSmartList2"><li>Use the preset function called <b class="cBold">sequence</b> but customize the Parameters in the lower part of the window.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2766656"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP2.png" id="wp2766653" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2766674"> </a><div class="pSmartList2"><li>Change the <b class="cBold">Value</b> of <b class="cBold">step</b> from <em class="cEmphasis">1 </em>to <em class="cEmphasis">2 </em>for this example, still starting from 1.</li></div>
+<a name="wp2766680"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Number of generated rows</b> to 25 in order for all the odd State id (of 50 states) to be generated.</li></div>
+<a name="wp2766688"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate the configuration.</li></div>
+<a name="wp2766696"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tMysqlSP</b> component and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2766703"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP3.png" id="wp2766700" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2766714"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Property type </b>field to <b class="cBold">Repository</b> and select the relevant entry on the list. The connection details get filled in automatically.</li></div>
+<a name="wp2766719"> </a><div class="pSmartList2"><li>Else, set manually the connection information.</li></div>
+<a name="wp2766726"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync Column</b> to retrieve the generated schema from the preceding component. </li></div>
+<a name="wp2766732"> </a><div class="pSmartList2"><li>Then click <b class="cBold">Edit Schema</b> and add an extra column to hold the State Label to be output, in addition to the ID.</li></div>
+<a name="wp2766737"> </a><div class="pSmartList2"><li>Select the encoding type on the list.</li></div>
+<a name="wp2766743"> </a><div class="pSmartList2"><li>Type in the name of the procedure in the <b class="cBold">SP Name</b> field as it is called in the Database. In this example, <em class="cEmphasis">getstate</em>. The procedure to be executed states as follows:<br /><code class="cCode">DROP PROCEDURE IF EXISTS `talend`.`getstate` $$<br />CREATE DEFINER=`root`@`localhost` PROCEDURE `getstate`(IN pid INT, OUT pstate VARCHAR(50))<br />BEGIN<br /> SELECT LabelState INTO pstate FROM us_states WHERE idState = pid;<br />END $$</code></li></div>
+<a name="wp2766757"> </a><div class="pSmartList2"><li>In the <b class="cBold">Parameters</b> area, click the plus button to add a line to the table. </li></div>
+<a name="wp2766772"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Column</b> field to <em class="cEmphasis">ID</em>, and the <b class="cBold">Type</b> field to <em class="cEmphasis">IN</em> as it will be given as input parameter to the procedure.</li></div>
+<a name="wp2766788"> </a><div class="pSmartList2"><li>Add a second line and set the <b class="cBold">Column</b> field to <em class="cEmphasis">State</em> and the <b class="cBold">Type</b> to <em class="cEmphasis">Out</em> as this is the output parameter to be returned.</li></div>
+<a name="wp2766797"> </a><div class="pSmartList2"><li>Eventually, set the <b class="cBold">tLogRow</b> component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2766804"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP4.png" id="wp2766801" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2766810"> </a><div class="pSmartList2"><li>Synchronize the schema with the preceding component.</li></div>
+<a name="wp2766817"> </a><div class="pSmartList2"><li>And select the <b class="cBold">Print values in cells of a table</b> check box for reading convenience.</li></div>
+<a name="wp2766822"> </a><div class="pSmartList2"><li>Then save your Job and execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2766829"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP5.png" id="wp2766826" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2767911"> </a><p class="pIndented1">
+The output shows the state labels corresponding to the odd state ids as defined in the procedure.
+</p>
+<a name="wp2767917"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2767915" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Check the <a href="tParseRecordSet_Prop.html">tParseRecordSet</a> component if you want to analyze a set of records from a database table or DB query and return single records.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlSP_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlTableList_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

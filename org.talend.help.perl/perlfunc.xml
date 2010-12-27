@@ -1,0 +1,279 @@
+<toc label="chomp" link_to="user_guide.xml#per_function"> 
+    <topic href="guide/perl/perlfunc.html#item_functions_for_scalars_or_strings" label="SCALARs or strings"> 
+      <topic href="guide/perl/perlfunc.html#item_chomp" label="chomp"/>  
+      <topic href="guide/perl/perlfunc.html#item_chop" label="chop"/>  
+      <topic href="guide/perl/perlfunc.html#item_chr" label="chr"/>  
+      <topic href="guide/perl/perlfunc.html#item_crypt" label="crypt"/>  
+      <topic href="guide/perl/perlfunc.html#item_hex" label="hex"/>  
+      <topic href="guide/perl/perlfunc.html#item_index" label="index"/>  
+      <topic href="guide/perl/perlfunc.html#item_lc" label="lc"/>  
+      <topic href="guide/perl/perlfunc.html#item_lcfirst" label="lcfirst"/>  
+      <topic href="guide/perl/perlfunc.html#item_length" label="length"/>  
+      <topic href="guide/perl/perlfunc.html#item_oct" label="oct"/>  
+      <topic href="guide/perl/perlfunc.html#item_ord" label="ord"/>  
+      <topic href="guide/perl/perlfunc.html#item_pack" label="pack"/>  
+      <topic href="guide/perl/perlfunc.html#item_q_" label="q/STRING/"/>  
+      <topic href="guide/perl/perlfunc.html#item_qq_" label="qq/STRING/"/>  
+      <topic href="guide/perl/perlfunc.html#item_reverse" label="reverse"/>  
+      <topic href="guide/perl/perlfunc.html#item_rindex" label="rindex"/>  
+      <topic href="guide/perl/perlfunc.html#item_sprintf" label="sprintf"/>  
+      <topic href="guide/perl/perlfunc.html#item_substr" label="substr"/>  
+      <topic href="guide/perl/perlfunc.html#item_tr_" label="tr///"/>  
+      <topic href="guide/perl/perlfunc.html#item_uc" label="uc"/>  
+      <topic href="guide/perl/perlfunc.html#item_ucfirst" label="ucfirst"/>  
+      <topic href="guide/perl/perlfunc.html#item_y_" label="y///"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_regular_expressions_and_pattern_matching" label="Regular expressions and pattern matching"> 
+      <topic href="guide/perl/perlfunc.html#item_m_" label="m//"/>  
+      <topic href="guide/perl/perlfunc.html#item_pos" label="pos"/>  
+      <topic href="guide/perl/perlfunc.html#item_quotemeta" label="quotemeta"/>  
+      <topic href="guide/perl/perlfunc.html#item_s_" label="s///"/>  
+      <topic href="guide/perl/perlfunc.html#item_split" label="split"/>  
+      <topic href="guide/perl/perlfunc.html#item_study" label="study"/>  
+      <topic href="guide/perl/perlfunc.html#item_qr_" label="qr//"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_numeric_functions" label="Numeric functions"> 
+      <topic href="guide/perl/perlfunc.html#item_abs" label="abs"/>  
+      <topic href="guide/perl/perlfunc.html#item_atan2" label="atan2"/>  
+      <topic href="guide/perl/perlfunc.html#item_cos" label="cos"/>  
+      <topic href="guide/perl/perlfunc.html#item_exp" label="exp"/>  
+      <topic href="guide/perl/perlfunc.html#item_hex" label="hex"/>  
+      <topic href="guide/perl/perlfunc.html#item_int" label="int"/>  
+      <topic href="guide/perl/perlfunc.html#item_log" label="log"/>  
+      <topic href="guide/perl/perlfunc.html#item_oct" label="oct"/>  
+      <topic href="guide/perl/perlfunc.html#item_rand" label="rand"/>  
+      <topic href="guide/perl/perlfunc.html#item_sin" label="sin"/>  
+      <topic href="guide/perl/perlfunc.html#item_sqrt" label="sqrt"/>  
+      <topic href="guide/perl/perlfunc.html#item_srand" label="srand"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_functions_for_real__40arrays" label="Real @ARRAYs"> 
+      <topic href="guide/perl/perlfunc.html#item_pop" label="pop"/>  
+      <topic href="guide/perl/perlfunc.html#item_push" label="push"/>  
+      <topic href="guide/perl/perlfunc.html#item_shift" label="shift"/>  
+      <topic href="guide/perl/perlfunc.html#item_splice" label="splice"/>  
+      <topic href="guide/perl/perlfunc.html#item_unshift" label="unshift"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_functions_for_list_data" label="List data"> 
+      <topic href="guide/perl/perlfunc.html#item_grep" label="grep"/>  
+      <topic href="guide/perl/perlfunc.html#item_join" label="join"/>  
+      <topic href="guide/perl/perlfunc.html#item_map" label="map"/>  
+      <topic href="guide/perl/perlfunc.html#item_qw_" label="qw/STRING/"/>  
+      <topic href="guide/perl/perlfunc.html#item_reverse" label="reverse"/>  
+      <topic href="guide/perl/perlfunc.html#item_sort" label="sort"/>  
+      <topic href="guide/perl/perlfunc.html#item_unpack" label="unpack"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_functions_for_real__25hashes" label="Real %HASHes"> 
+      <topic href="guide/perl/perlfunc.html#item_delete" label="delete"/>  
+      <topic href="guide/perl/perlfunc.html#item_each" label="each"/>  
+      <topic href="guide/perl/perlfunc.html#item_exists" label="exists"/>  
+      <topic href="guide/perl/perlfunc.html#item_keys" label="keys"/>  
+      <topic href="guide/perl/perlfunc.html#item_values" label="values"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_input_and_output_functions" label="Input and output functions"> 
+      <topic href="guide/perl/perlfunc.html#item_binmode" label="binmode"/>  
+      <topic href="guide/perl/perlfunc.html#item_close" label="close"/>  
+      <topic href="guide/perl/perlfunc.html#item_closedir" label="closedir"/>  
+      <topic href="guide/perl/perlfunc.html#item_dbmclose" label="dbmclose"/>  
+      <topic href="guide/perl/perlfunc.html#item_dbmopen" label="dbmopen"/>  
+      <topic href="guide/perl/perlfunc.html#item_die" label="die"/>  
+      <topic href="guide/perl/perlfunc.html#item_eof" label="eof"/>  
+      <topic href="guide/perl/perlfunc.html#item_fileno" label="fileno"/>  
+      <topic href="guide/perl/perlfunc.html#item_flock" label="flock"/>  
+      <topic href="guide/perl/perlfunc.html#item_format" label="format"/>  
+      <topic href="guide/perl/perlfunc.html#item_getc" label="getc"/>  
+      <topic href="guide/perl/perlfunc.html#item_print" label="print"/>  
+      <topic href="guide/perl/perlfunc.html#item_printf" label="printf"/>  
+      <topic href="guide/perl/perlfunc.html#item_read" label="read"/>  
+      <topic href="guide/perl/perlfunc.html#item_readdir" label="readdir"/>  
+      <topic href="guide/perl/perlfunc.html#item_rewinddir" label="rewinddir"/>  
+      <topic href="guide/perl/perlfunc.html#item_seek" label="seek"/>  
+      <topic href="guide/perl/perlfunc.html#item_seekdir" label="seekdir"/>  
+      <topic href="guide/perl/perlfunc.html#item_select" label="select"/>  
+      <topic href="guide/perl/perlfunc.html#item_syscall" label="syscall"/>  
+      <topic href="guide/perl/perlfunc.html#item_sysread" label="sysread"/>  
+      <topic href="guide/perl/perlfunc.html#item_sysseek" label="sysseek"/>  
+      <topic href="guide/perl/perlfunc.html#item_syswrite" label="syswrite"/>  
+      <topic href="guide/perl/perlfunc.html#item_tell" label="tell"/>  
+      <topic href="guide/perl/perlfunc.html#item_telldir" label="telldir"/>  
+      <topic href="guide/perl/perlfunc.html#item_truncate" label="truncate"/>  
+      <topic href="guide/perl/perlfunc.html#item_warn" label="warn"/>  
+      <topic href="guide/perl/perlfunc.html#item_write" label="write"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_functions_for_fixed_length_data_or_records" label="Fixed length data or records"> 
+      <topic href="guide/perl/perlfunc.html#item_pack" label="pack"/>  
+      <topic href="guide/perl/perlfunc.html#item_read" label="read"/>  
+      <topic href="guide/perl/perlfunc.html#item_syscall" label="syscall"/>  
+      <topic href="guide/perl/perlfunc.html#item_sysread" label="sysread"/>  
+      <topic href="guide/perl/perlfunc.html#item_syswrite" label="syswrite"/>  
+      <topic href="guide/perl/perlfunc.html#item_unpack" label="unpack"/>  
+      <topic href="guide/perl/perlfunc.html#item_vec" label="vec"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_functions_for_filehandles_2c_files_2c_or_directori" label="Filehandles, files, or directories"> 
+      <topic href="guide/perl/perlfunc.html#item__2dx" label="-X"/>  
+      <topic href="guide/perl/perlfunc.html#item_chdir" label="chdir"/>  
+      <topic href="guide/perl/perlfunc.html#item_chmod" label="chmod"/>  
+      <topic href="guide/perl/perlfunc.html#item_chown" label="chown"/>  
+      <topic href="guide/perl/perlfunc.html#item_chroot" label="chroot"/>  
+      <topic href="guide/perl/perlfunc.html#item_fcntl" label="fcntl"/>  
+      <topic href="guide/perl/perlfunc.html#item_glob" label="glob"/>  
+      <topic href="guide/perl/perlfunc.html#item_ioctl" label="ioctl"/>  
+      <topic href="guide/perl/perlfunc.html#item_link" label="link"/>  
+      <topic href="guide/perl/perlfunc.html#item_lstat" label="lstat"/>  
+      <topic href="guide/perl/perlfunc.html#item_mkdir" label="mkdir"/>  
+      <topic href="guide/perl/perlfunc.html#item_open" label="open"/>  
+      <topic href="guide/perl/perlfunc.html#item_opendir" label="opendir"/>  
+      <topic href="guide/perl/perlfunc.html#item_readlink" label="readlink"/>  
+      <topic href="guide/perl/perlfunc.html#item_rename" label="rename"/>  
+      <topic href="guide/perl/perlfunc.html#item_rmdir" label="rmdir"/>  
+      <topic href="guide/perl/perlfunc.html#item_stat" label="stat"/>  
+      <topic href="guide/perl/perlfunc.html#item_symlink" label="symlink"/>  
+      <topic href="guide/perl/perlfunc.html#item_sysopen" label="sysopen"/>  
+      <topic href="guide/perl/perlfunc.html#item_umask" label="umask"/>  
+      <topic href="guide/perl/perlfunc.html#item_unlink" label="unlink"/>  
+      <topic href="guide/perl/perlfunc.html#item_utime" label="utime"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_keywords_related_to_the_control_flow_of_your_perl_" label="Keywords related to control the flow of perl program"> 
+      <topic href="guide/perl/perlfunc.html#item_caller" label="caller"/>  
+      <topic href="guide/perl/perlfunc.html#item_continue" label="continue"/>  
+      <topic href="guide/perl/perlfunc.html#item_die" label="die"/>  
+      <topic href="guide/perl/perlfunc.html#item_do" label="do"/>  
+      <topic href="guide/perl/perlfunc.html#item_dump" label="dump"/>  
+      <topic href="guide/perl/perlfunc.html#item_eval" label="eval"/>  
+      <topic href="guide/perl/perlfunc.html#item_exit" label="exit"/>  
+      <topic href="guide/perl/perlfunc.html#item_goto" label="goto"/>  
+      <topic href="guide/perl/perlfunc.html#item_last" label="last"/>  
+      <topic href="guide/perl/perlfunc.html#item_next" label="next"/>  
+      <topic href="guide/perl/perlfunc.html#item_redo" label="redo"/>  
+      <topic href="guide/perl/perlfunc.html#item_return" label="return"/>  
+      <topic href="guide/perl/perlfunc.html#item_sub" label="sub"/>  
+      <topic href="guide/perl/perlfunc.html#item_wantarray" label="wantarray"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_keywords_related_to_scoping" label="Keywords related to scoping"> 
+      <topic href="guide/perl/perlfunc.html#item_caller" label="caller"/>  
+      <topic href="guide/perl/perlfunc.html#item_import" label="import"/>  
+      <topic href="guide/perl/perlfunc.html#item_local" label="local"/>  
+      <topic href="guide/perl/perlfunc.html#item_my" label="my"/>  
+      <topic href="guide/perl/perlfunc.html#item_our" label="our"/>  
+      <topic href="guide/perl/perlfunc.html#item_package" label="package"/>  
+      <topic href="guide/perl/perlfunc.html#item_use" label="use"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_miscellaneous_functions" label="Miscellaneous"> 
+      <topic href="guide/perl/perlfunc.html#item_defined" label="defined"/>  
+      <topic href="guide/perl/perlfunc.html#item_dump" label="dump"/>  
+      <topic href="guide/perl/perlfunc.html#item_eval" label="eval"/>  
+      <topic href="guide/perl/perlfunc.html#item_formline" label="formline"/>  
+      <topic href="guide/perl/perlfunc.html#item_local" label="local"/>  
+      <topic href="guide/perl/perlfunc.html#item_my" label="my"/>  
+      <topic href="guide/perl/perlfunc.html#item_our" label="our"/>  
+      <topic href="guide/perl/perlfunc.html#item_reset" label="reset"/>  
+      <topic href="guide/perl/perlfunc.html#item_scalar" label="scalar"/>  
+      <topic href="guide/perl/perlfunc.html#item_undef" label="undef"/>  
+      <topic href="guide/perl/perlfunc.html#item_wantarray" label="wantarray"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_functions_for_processes_and_process_groups" label="Processes and process groups"> 
+      <topic href="guide/perl/perlfunc.html#item_alarm" label="alarm"/>  
+      <topic href="guide/perl/perlfunc.html#item_exec" label="exec"/>  
+      <topic href="guide/perl/perlfunc.html#item_fork" label="fork"/>  
+      <topic href="guide/perl/perlfunc.html#item_getpgrp" label="getpgrp"/>  
+      <topic href="guide/perl/perlfunc.html#item_getppid" label="getppid"/>  
+      <topic href="guide/perl/perlfunc.html#item_getpriority" label="getpriority"/>  
+      <topic href="guide/perl/perlfunc.html#item_kill" label="kill"/>  
+      <topic href="guide/perl/perlfunc.html#item_pipe" label="pipe"/>  
+      <topic href="guide/perl/perlfunc.html#item_qx_" label="qx/STRING/"/>  
+      <topic href="guide/perl/perlfunc.html#item_setpgrp" label="setpgrp"/>  
+      <topic href="guide/perl/perlfunc.html#item_setpriority" label="setpriority"/>  
+      <topic href="guide/perl/perlfunc.html#item_sleep" label="sleep"/>  
+      <topic href="guide/perl/perlfunc.html#item_system" label="system"/>  
+      <topic href="guide/perl/perlfunc.html#item_times" label="times"/>  
+      <topic href="guide/perl/perlfunc.html#item_wait" label="wait"/>  
+      <topic href="guide/perl/perlfunc.html#item_waitpid" label="waitpid"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_keywords_related_to_perl_modules" label="Keywords related to perl modules"> 
+      <topic href="guide/perl/perlfunc.html#item_do" label="do"/>  
+      <topic href="guide/perl/perlfunc.html#item_import" label="import"/>  
+      <topic href="guide/perl/perlfunc.html#item_no" label="no"/>  
+      <topic href="guide/perl/perlfunc.html#item_package" label="package"/>  
+      <topic href="guide/perl/perlfunc.html#item_require" label="require"/>  
+      <topic href="guide/perl/perlfunc.html#item_use" label="use"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_keywords_related_to_classes_and_object_2dorientedn" label="Keywords related to classes and object-orientedness"> 
+      <topic href="guide/perl/perlfunc.html#item_bless" label="bless"/>  
+      <topic href="guide/perl/perlfunc.html#item_dbmclose" label="dbmclose"/>  
+      <topic href="guide/perl/perlfunc.html#item_dbmopen" label="dbmopen"/>  
+      <topic href="guide/perl/perlfunc.html#item_package" label="package"/>  
+      <topic href="guide/perl/perlfunc.html#item_ref" label="ref"/>  
+      <topic href="guide/perl/perlfunc.html#item_tie" label="tie"/>  
+      <topic href="guide/perl/perlfunc.html#item_tied" label="tied"/>  
+      <topic href="guide/perl/perlfunc.html#item_untie" label="untie"/>  
+      <topic href="guide/perl/perlfunc.html#item_use" label="use"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_low_2dlevel_socket_functions" label="Low-level socket"> 
+      <topic href="guide/perl/perlfunc.html#item_accept" label="accept"/>  
+      <topic href="guide/perl/perlfunc.html#item_bind" label="bind"/>  
+      <topic href="guide/perl/perlfunc.html#item_connect" label="connect"/>  
+      <topic href="guide/perl/perlfunc.html#item_getpeername" label="getpeername"/>  
+      <topic href="guide/perl/perlfunc.html#item_getsockname" label="getsockname"/>  
+      <topic href="guide/perl/perlfunc.html#item_getsockopt" label="getsockopt"/>  
+      <topic href="guide/perl/perlfunc.html#item_listen" label="listen"/>  
+      <topic href="guide/perl/perlfunc.html#item_recv" label="recv"/>  
+      <topic href="guide/perl/perlfunc.html#item_send" label="send"/>  
+      <topic href="guide/perl/perlfunc.html#item_setsockopt" label="setsockopt"/>  
+      <topic href="guide/perl/perlfunc.html#item_shutdown" label="shutdown"/>  
+      <topic href="guide/perl/perlfunc.html#item_socket" label="socket"/>  
+      <topic href="guide/perl/perlfunc.html#item_socketpair" label="socketpair"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_system_v_interprocess_communication_functions" label="System V interprocess communication"> 
+      <topic href="guide/perl/perlfunc.html#item_msgctl" label="msgctl"/>  
+      <topic href="guide/perl/perlfunc.html#item_msgget" label="msgget"/>  
+      <topic href="guide/perl/perlfunc.html#item_msgrcv" label="msgrcv"/>  
+      <topic href="guide/perl/perlfunc.html#item_msgsnd" label="msgsnd"/>  
+      <topic href="guide/perl/perlfunc.html#item_semctl" label="semctl"/>  
+      <topic href="guide/perl/perlfunc.html#item_semget" label="semget"/>  
+      <topic href="guide/perl/perlfunc.html#item_semop" label="semop"/>  
+      <topic href="guide/perl/perlfunc.html#item_shmctl" label="shmctl"/>  
+      <topic href="guide/perl/perlfunc.html#item_shmget" label="shmget"/>  
+      <topic href="guide/perl/perlfunc.html#item_shmread" label="shmread"/>  
+      <topic href="guide/perl/perlfunc.html#item_shmwrite" label="shmwrite"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_fetching_user_and_group_info" label="Fetching user and group info"> 
+      <topic href="guide/perl/perlfunc.html#item_endgrent" label="endgrent"/>  
+      <topic href="guide/perl/perlfunc.html#item_endhostent" label="endhostent"/>  
+      <topic href="guide/perl/perlfunc.html#item_endnetent" label="endnetent"/>  
+      <topic href="guide/perl/perlfunc.html#item_endpwent" label="endpwent"/>  
+      <topic href="guide/perl/perlfunc.html#item_getgrent" label="getgrent"/>  
+      <topic href="guide/perl/perlfunc.html#item_getgrgid" label="getgrgid"/>  
+      <topic href="guide/perl/perlfunc.html#item_getgrnam" label="getgrnam"/>  
+      <topic href="guide/perl/perlfunc.html#item_getlogin" label="getlogin"/>  
+      <topic href="guide/perl/perlfunc.html#item_getpwent" label="getpwent"/>  
+      <topic href="guide/perl/perlfunc.html#item_getpwnam" label="getpwnam"/>  
+      <topic href="guide/perl/perlfunc.html#item_getpwuid" label="getpwuid"/>  
+      <topic href="guide/perl/perlfunc.html#item_setgrent" label="setgrent"/>  
+      <topic href="guide/perl/perlfunc.html#item_setpwent" label="setpwent"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_fetching_network_info" label="Fetching network info"> 
+      <topic href="guide/perl/perlfunc.html#item_endprotoent" label="endprotoent"/>  
+      <topic href="guide/perl/perlfunc.html#item_endservent" label="endservent"/>  
+      <topic href="guide/perl/perlfunc.html#item_gethostbyaddr" label="gethostbyaddr"/>  
+      <topic href="guide/perl/perlfunc.html#item_gethostbyname" label="gethostbyname"/>  
+      <topic href="guide/perl/perlfunc.html#item_gethostent" label="gethostent"/>  
+      <topic href="guide/perl/perlfunc.html#item_getnetbyaddr" label="getnetbyaddr"/>  
+      <topic href="guide/perl/perlfunc.html#item_getnetbyname" label="getnetbyname"/>  
+      <topic href="guide/perl/perlfunc.html#item_getnetent" label="getnetent"/>  
+      <topic href="guide/perl/perlfunc.html#item_getprotobyname" label="getprotobyname"/>  
+      <topic href="guide/perl/perlfunc.html#item_getprotobynumber" label="getprotobynumber"/>  
+      <topic href="guide/perl/perlfunc.html#item_getprotoent" label="getprotoent"/>  
+      <topic href="guide/perl/perlfunc.html#item_getservbyname" label="getservbyname"/>  
+      <topic href="guide/perl/perlfunc.html#item_getservbyport" label="getservbyport"/>  
+      <topic href="guide/perl/perlfunc.html#item_getservent" label="getservent"/>  
+      <topic href="guide/perl/perlfunc.html#item_sethostent" label="sethostent"/>  
+      <topic href="guide/perl/perlfunc.html#item_setnetent" label="setnetent"/>  
+      <topic href="guide/perl/perlfunc.html#item_setprotoent" label="setprotoent"/>  
+      <topic href="guide/perl/perlfunc.html#item_setservent" label="setservent"/> 
+    </topic>  
+    <topic href="guide/perl/perlfunc.html#item_time_2drelated_functions" label="Time-related"> 
+      <topic href="guide/perl/perlfunc.html#item_gmtime" label="gmtime"/>  
+      <topic href="guide/perl/perlfunc.html#item_localtime" label="localtime"/>  
+      <topic href="guide/perl/perlfunc.html#item_time" label="time"/>  
+      <topic href="guide/perl/perlfunc.html#item_times" label="times"/> 
+    </topic> 
+</toc>

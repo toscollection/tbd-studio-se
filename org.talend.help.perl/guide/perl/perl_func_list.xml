@@ -1,0 +1,764 @@
+
+<help>
+<family name="Perl Built-In">
+	<category name="SCALARs or strings">		
+		<function name="chomp">
+			<anchor>item_chomp</anchor>
+		</function>
+		<function name="chop">
+			<anchor>item_chop</anchor>
+		</function>
+		<function name="chr">
+			<anchor>item_chr</anchor>
+		</function>
+		<function name="crypt">
+			<anchor>item_crypt</anchor>
+		</function>
+		<function name="hex">
+			<anchor>item_hex</anchor>
+		</function>
+		<function name="index">
+			<anchor>item_index</anchor>
+		</function>
+		<function name="lc">
+			<anchor>item_lc</anchor>
+		</function>
+		<function name="lcfirst">
+			<anchor>item_lcfirst</anchor>
+		</function>
+		<function name="length">
+			<anchor>item_length</anchor>
+		</function>
+		<function name="oct">
+			<anchor>item_oct</anchor>
+		</function>
+		<function name="ord">
+			<anchor>item_ord</anchor>
+		</function>
+		<function name="pack">
+			<anchor>item_pack</anchor>
+		</function>
+		<function name="q/STRING/">
+			<anchor>item_q_</anchor>
+		</function>
+		<function name="qq/STRING/">
+			<anchor>item_qq_</anchor>
+		</function>
+		<function name="reverse">
+			<anchor>item_reverse</anchor>
+		</function>
+		<function name="rindex">
+			<anchor>item_rindex</anchor>
+		</function>
+		<function name="sprintf">
+			<anchor>item_sprintf</anchor>
+		</function>
+		<function name="substr">
+			<anchor>item_substr</anchor>
+		</function>
+
+		<function name="tr///">
+			<anchor>item_tr_</anchor>
+		</function>
+		<function name="uc">
+			<anchor>item_uc</anchor>
+		</function>
+		<function name="ucfirst">
+			<anchor>item_ucfirst</anchor>
+		</function>
+		<function name="y///">
+			<anchor>item_y_</anchor>
+		</function>
+	</category>
+	<category name="Regular expressions and pattern matching">		
+		<function name="m//">
+			<anchor>item_m_</anchor>
+		</function>
+		<function name="pos">
+			<anchor>item_pos</anchor>
+		</function>
+		<function name="quotemeta">
+			<anchor>item_quotemeta</anchor>
+		</function>
+		<function name="s///">
+			<anchor>item_s_</anchor>
+		</function>
+		<function name="split">
+			<anchor>item_split</anchor>
+		</function>
+		<function name="study">
+			<anchor>item_study</anchor>
+		</function>
+		<function name="qr//">
+			<anchor>item_qr_</anchor>
+		</function>
+	</category>
+	<category name="Numeric functions">		
+		<function name="abs">
+			<anchor>item_abs</anchor>
+		</function>
+		<function name="atan2">
+			<anchor>item_atan2</anchor>
+		</function>
+		<function name="cos">
+			<anchor>item_cos</anchor>
+		</function>
+		<function name="exp">
+			<anchor>item_exp</anchor>
+		</function>
+		<function name="hex">
+			<anchor>item_hex</anchor>
+		</function>
+		<function name="int">
+			<anchor>item_int</anchor>
+		</function>
+		<function name="log">
+			<anchor>item_log</anchor>
+		</function>
+		<function name="oct">
+			<anchor>item_oct</anchor>
+		</function>
+		<function name="rand">
+			<anchor>item_rand</anchor>
+		</function>
+		<function name="sin">
+			<anchor>item_sin</anchor>
+		</function>
+		<function name="sqrt">
+			<anchor>item_sqrt</anchor>
+		</function>
+		<function name="srand">
+			<anchor>item_srand</anchor>
+		</function>
+	</category>		
+	<category name="Real @ARRAYs">		
+		<function name="pop">
+			<anchor>item_pop</anchor>
+		</function>
+		<function name="push">
+			<anchor>item_push</anchor>
+		</function>
+		<function name="shift">
+			<anchor>item_shift</anchor>
+		</function>
+		<function name="splice">
+			<anchor>item_splice</anchor>
+		</function>
+		<function name="unshift">
+			<anchor>item_unshift</anchor>
+		</function>
+	</category>		
+	<category name="List data">		
+		<function name="grep">
+			<anchor>item_grep</anchor>
+		</function>
+		<function name="join">
+			<anchor>item_join</anchor>
+		</function>
+		<function name="map">
+			<anchor>item_map</anchor>
+		</function>
+		<function name="qw/STRING/">
+			<anchor>item_qw_</anchor>
+		</function>
+		<function name="reverse">
+			<anchor>item_reverse</anchor>
+		</function>
+		<function name="sort">
+			<anchor>item_sort</anchor>
+		</function>
+		<function name="unpack">
+			<anchor>item_unpack</anchor>
+		</function>
+	</category>		
+	<category name="Real %HASHes">		
+		<function name="delete">
+			<anchor>item_delete</anchor>
+		</function>
+		<function name="each">
+			<anchor>item_each</anchor>
+		</function>
+		<function name="exists">
+			<anchor>item_exists</anchor>
+		</function>
+		<function name="keys">
+			<anchor>item_keys</anchor>
+		</function>
+		<function name="values">
+			<anchor>item_values</anchor>
+		</function>
+	</category>		
+	<category name="Input and output functions">		
+		<function name="binmode">
+			<anchor>item_binmode</anchor>
+		</function>
+		<function name="close">
+			<anchor>item_close</anchor>
+		</function>
+		<function name="closedir">
+			<anchor>item_closedir</anchor>
+		</function>
+		<function name="dbmclose">
+			<anchor>item_dbmclose</anchor>
+		</function>
+		<function name="dbmopen">
+			<anchor>item_dbmopen</anchor>
+		</function>
+		<function name="die">
+			<anchor>item_die</anchor>
+		</function>
+		<function name="eof">
+			<anchor>item_eof</anchor>
+		</function>
+		<function name="fileno">
+			<anchor>item_fileno</anchor>
+		</function>
+		<function name="flock">
+			<anchor>item_flock</anchor>
+		</function>
+		<function name="format">
+			<anchor>item_format</anchor>
+		</function>
+		<function name="getc">
+			<anchor>item_getc</anchor>
+		</function>
+		<function name="print">
+			<anchor>item_print</anchor>
+		</function>
+		<function name="printf">
+			<anchor>item_printf</anchor>
+		</function>
+		<function name="read">
+			<anchor>item_read</anchor>
+		</function>
+		<function name="readdir">
+			<anchor>item_readdir</anchor>
+		</function>
+		<function name="rewinddir">
+			<anchor>item_rewinddir</anchor>
+		</function>
+		<function name="seek">
+			<anchor>item_seek</anchor>
+		</function>
+		<function name="seekdir">
+			<anchor>item_seekdir</anchor>
+		</function>
+		<function name="select">
+			<anchor>item_select</anchor>
+		</function>
+		<function name="syscall">
+			<anchor>item_syscall</anchor>
+		</function>
+		<function name="sysread">
+			<anchor>item_sysread</anchor>
+		</function>
+		<function name="sysseek">
+			<anchor>item_sysseek</anchor>
+		</function>
+		<function name="syswrite">
+			<anchor>item_syswrite</anchor>
+		</function>
+		<function name="tell">
+			<anchor>item_tell</anchor>
+		</function>
+		<function name="telldir">
+			<anchor>item_telldir</anchor>
+		</function>
+		<function name="truncate">
+			<anchor>item_truncate</anchor>
+		</function>
+		<function name="warn">
+			<anchor>item_warn</anchor>
+		</function>
+		<function name="write">
+			<anchor>item_write</anchor>
+		</function>
+	</category>		
+	<category name="Fixed length data or records">		
+		<function name="pack">
+			<anchor>item_pack</anchor>
+		</function>
+		<function name="read">
+			<anchor>item_read</anchor>
+		</function>
+		<function name="syscall">
+			<anchor>item_syscall</anchor>
+		</function>
+		<function name="sysread">
+			<anchor>item_sysread</anchor>
+		</function>
+		<function name="syswrite">
+			<anchor>item_syswrite</anchor>
+		</function>
+		<function name="unpack">
+			<anchor>item_unpack</anchor>
+		</function>
+		<function name="vec">
+			<anchor>item_vec</anchor>
+		</function>
+	</category>
+	<category name="Filehandles, files, or directories">		
+		<function name="-X">
+			<anchor>item__2dx</anchor>
+		</function>
+		<function name="chdir">
+			<anchor>item_chdir</anchor>
+		</function>
+		<function name="chmod">
+			<anchor>item_chmod</anchor>
+		</function>
+		<function name="chown">
+			<anchor>item_chown</anchor>
+		</function>
+		<function name="chroot">
+			<anchor>item_chroot</anchor>
+		</function>
+		<function name="fcntl">
+			<anchor>item_fcntl</anchor>
+		</function>
+		<function name="glob">
+			<anchor>item_glob</anchor>
+		</function>
+		<function name="ioctl">
+			<anchor>item_ioctl</anchor>
+		</function>
+		<function name="link">
+			<anchor>item_link</anchor>
+		</function>
+		<function name="lstat">
+			<anchor>item_lstat</anchor>
+		</function>
+		<function name="mkdir">
+			<anchor>item_mkdir</anchor>
+		</function>
+		<function name="open">
+			<anchor>item_open</anchor>
+		</function>
+		<function name="opendir">
+			<anchor>item_opendir</anchor>
+		</function>
+		<function name="readlink">
+			<anchor>item_readlink</anchor>
+		</function>
+		<function name="rename">
+			<anchor>item_rename</anchor>
+		</function>
+		<function name="rmdir">
+			<anchor>item_rmdir</anchor>
+		</function>
+		<function name="stat">
+			<anchor>item_stat</anchor>
+		</function>
+		<function name="symlink">
+			<anchor>item_symlink</anchor>
+		</function>
+		<function name="sysopen">
+			<anchor>item_sysopen</anchor>
+		</function>
+		<function name="umask">
+			<anchor>item_umask</anchor>
+		</function>
+		<function name="unlink">
+			<anchor>item_unlink</anchor>
+		</function>
+		<function name="utime">
+			<anchor>item_utime</anchor>
+		</function>
+	</category>	
+	<category name="Keywords related to control the flow of perl program">		
+		<function name="caller">
+			<anchor>item_caller</anchor>
+		</function>
+		<function name="continue">
+			<anchor>item_continue</anchor>
+		</function>
+		<function name="die">
+			<anchor>item_die</anchor>
+		</function>
+		<function name="do">
+			<anchor>item_do</anchor>
+		</function>
+		<function name="dump">
+			<anchor>item_dump</anchor>
+		</function>
+		<function name="eval">
+			<anchor>item_eval</anchor>
+		</function>
+		<function name="exit">
+			<anchor>item_exit</anchor>
+		</function>
+		<function name="goto">
+			<anchor>item_goto</anchor>
+		</function>
+		<function name="last">
+			<anchor>item_last</anchor>
+		</function>
+		<function name="next">
+			<anchor>item_next</anchor>
+		</function>
+		<function name="redo">
+			<anchor>item_redo</anchor>
+		</function>
+		<function name="return">
+			<anchor>item_return</anchor>
+		</function>
+		<function name="sub">
+			<anchor>item_sub</anchor>
+		</function>
+		<function name="wantarray">
+			<anchor>item_wantarray</anchor>
+		</function>
+	</category>				
+	<category name="Keywords related to scoping">		
+		<function name="caller">
+			<anchor>item_caller</anchor>
+		</function>
+		<function name="import">
+			<anchor>item_import</anchor>
+		</function>
+		<function name="local">
+			<anchor>item_local</anchor>
+		</function>
+		<function name="my">
+			<anchor>item_my</anchor>
+		</function>
+		<function name="our">
+			<anchor>item_our</anchor>
+		</function>
+		<function name="package">
+			<anchor>item_package</anchor>
+		</function>
+		<function name="use">
+			<anchor>item_use</anchor>
+		</function>
+	</category>			
+	<category name="Miscellaneous">		
+		<function name="defined">
+			<anchor>item_defined</anchor>
+		</function>
+		<function name="dump">
+			<anchor>item_dump</anchor>
+		</function>
+		<function name="eval">
+			<anchor>item_eval</anchor>
+		</function>
+		<function name="formline">
+			<anchor>item_formline</anchor>
+		</function>
+		<function name="local">
+			<anchor>item_local</anchor>
+		</function>
+		<function name="my">
+			<anchor>item_my</anchor>
+		</function>
+		<function name="our">
+			<anchor>item_our</anchor>
+		</function>
+		<function name="reset">
+			<anchor>item_reset</anchor>
+		</function>
+		<function name="scalar">
+			<anchor>item_scalar</anchor>
+		</function>
+		<function name="undef">
+			<anchor>item_undef</anchor>
+		</function>
+		<function name="wantarray">
+			<anchor>item_wantarray</anchor>
+		</function>
+	</category>		
+	<category name="Processes and process groups">		
+		<function name="alarm">
+			<anchor>item_alarm</anchor>
+		</function>
+		<function name="exec">
+			<anchor>item_exec</anchor>
+		</function>
+		<function name="fork">
+			<anchor>item_fork</anchor>
+		</function>
+		<function name="getpgrp">
+			<anchor>item_getpgrp</anchor>
+		</function>
+		<function name="getppid">
+			<anchor>item_getppid</anchor>
+		</function>
+		<function name="getpriority">
+			<anchor>item_getpriority</anchor>
+		</function>
+		<function name="kill">
+			<anchor>item_kill</anchor>
+		</function>
+		<function name="pipe">
+			<anchor>item_pipe</anchor>
+		</function>
+		<function name="qx/STRING/">
+			<anchor>item_qx_</anchor>
+		</function>
+		<function name="setpgrp">
+			<anchor>item_setpgrp</anchor>
+		</function>
+		<function name="setpriority">
+			<anchor>item_setpriority</anchor>
+		</function>
+		<function name="sleep">
+			<anchor>item_sleep</anchor>
+		</function>
+		<function name="system">
+			<anchor>item_system</anchor>
+		</function>
+		<function name="times">
+			<anchor>item_times</anchor>
+		</function>
+		<function name="wait">
+			<anchor>item_wait</anchor>
+		</function>
+		<function name="waitpid">
+			<anchor>item_waitpid</anchor>
+		</function>
+	</category>		
+	<category name="Keywords related to perl modules">		
+		<function name="do">
+			<anchor>item_do</anchor>
+		</function>
+		<function name="import">
+			<anchor>item_import</anchor>
+		</function>
+		<function name="no">
+			<anchor>item_no</anchor>
+		</function>
+		<function name="package">
+			<anchor>item_package</anchor>
+		</function>
+		<function name="require">
+			<anchor>item_require</anchor>
+		</function>
+		<function name="use">
+			<anchor>item_use</anchor>
+		</function>
+	</category>		
+	<category name="Keywords related to classes and object-orientedness">		
+		<function name="bless">
+			<anchor>item_bless</anchor>
+		</function>
+		<function name="dbmclose">
+			<anchor>item_dbmclose</anchor>
+		</function>
+		<function name="dbmopen">
+			<anchor>item_dbmopen</anchor>
+		</function>
+		<function name="package">
+			<anchor>item_package</anchor>
+		</function>
+		<function name="ref">
+			<anchor>item_ref</anchor>
+		</function>
+		<function name="tie">
+			<anchor>item_tie</anchor>
+		</function>
+		<function name="tied">
+			<anchor>item_tied</anchor>
+		</function>
+		<function name="untie">
+			<anchor>item_untie</anchor>
+		</function>
+		<function name="use">
+			<anchor>item_use</anchor>
+		</function>
+	</category>		
+	<category name="Low-level socket">		
+		<function name="accept">
+			<anchor>item_accept</anchor>
+		</function>
+		<function name="bind">
+			<anchor>item_bind</anchor>
+		</function>
+		<function name="connect">
+			<anchor>item_connect</anchor>
+		</function>
+		<function name="getpeername">
+			<anchor>item_getpeername</anchor>
+		</function>
+		<function name="getsockname">
+			<anchor>item_getsockname</anchor>
+		</function>
+		<function name="getsockopt">
+			<anchor>item_getsockopt</anchor>
+		</function>
+		<function name="listen">
+			<anchor>item_listen</anchor>
+		</function>
+		<function name="recv">
+			<anchor>item_recv</anchor>
+		</function>
+		<function name="send">
+			<anchor>item_send</anchor>
+		</function>
+		<function name="setsockopt">
+			<anchor>item_setsockopt</anchor>
+		</function>
+		<function name="shutdown">
+			<anchor>item_shutdown</anchor>
+		</function>
+		<function name="socket">
+			<anchor>item_socket</anchor>
+		</function>
+		<function name="socketpair">
+			<anchor>item_socketpair</anchor>
+		</function>
+	</category>			
+	<category name="System V interprocess communication">		
+		<function name="msgctl">
+			<anchor>item_msgctl</anchor>
+		</function>
+		<function name="msgget">
+			<anchor>item_msgget</anchor>
+		</function>
+		<function name="msgrcv">
+			<anchor>item_msgrcv</anchor>
+		</function>
+		<function name="msgsnd">
+			<anchor>item_msgsnd</anchor>
+		</function>
+		<function name="semctl">
+			<anchor>item_semctl</anchor>
+		</function>
+		<function name="semget">
+			<anchor>item_semget</anchor>
+		</function>
+		<function name="semop">
+			<anchor>item_semop</anchor>
+		</function>
+		<function name="shmctl">
+			<anchor>item_shmctl</anchor>
+		</function>
+		<function name="shmget">
+			<anchor>item_shmget</anchor>
+		</function>
+		<function name="shmread">
+			<anchor>item_shmread</anchor>
+		</function>
+		<function name="shmwrite">
+			<anchor>item_shmwrite</anchor>
+		</function>
+	</category>			
+	<category name="Fetching user and group info">		
+		<function name="endgrent">
+			<anchor>item_endgrent</anchor>
+		</function>
+		<function name="endhostent">
+			<anchor>item_endhostent</anchor>
+		</function>
+		<function name="endnetent">
+			<anchor>item_endnetent</anchor>
+		</function>
+		<function name="endpwent">
+			<anchor>item_endpwent</anchor>
+		</function>
+		<function name="getgrent">
+			<anchor>item_getgrent</anchor>
+		</function>
+		<function name="getgrgid">
+			<anchor>item_getgrgid</anchor>
+		</function>
+		<function name="getgrnam">
+			<anchor>item_getgrnam</anchor>
+		</function>
+		<function name="getlogin">
+			<anchor>item_getlogin</anchor>
+		</function>
+		<function name="getpwent">
+			<anchor>item_getpwent</anchor>
+		</function>
+		<function name="getpwnam">
+			<anchor>item_getpwnam</anchor>
+		</function>
+		<function name="getpwuid">
+			<anchor>item_getpwuid</anchor>
+		</function>
+		<function name="setgrent">
+			<anchor>item_setgrent</anchor>
+		</function>
+		<function name="setpwent">
+			<anchor>item_setpwent</anchor>
+		</function>
+	</category>	
+	<category name="Fetching network info">		
+		<function name="endprotoent">
+			<anchor>item_endprotoent</anchor>
+		</function>
+		<function name="endservent">
+			<anchor>item_endservent</anchor>
+		</function>
+		<function name="gethostbyaddr">
+			<anchor>item_gethostbyaddr</anchor>
+		</function>
+		<function name="gethostbyname">
+			<anchor>item_gethostbyname</anchor>
+		</function>
+		<function name="gethostent">
+			<anchor>item_gethostent</anchor>
+		</function>
+		<function name="getnetbyaddr">
+			<anchor>item_getnetbyaddr</anchor>
+		</function>
+		<function name="getnetbyname">
+			<anchor>item_getnetbyname</anchor>
+		</function>
+		<function name="getnetent">
+			<anchor>item_getnetent</anchor>
+		</function>
+		<function name="getprotobyname">
+			<anchor>item_getprotobyname</anchor>
+		</function>
+		<function name="getprotobynumber">
+			<anchor>item_getprotobynumber</anchor>
+		</function>
+		<function name="getprotoent">
+			<anchor>item_getprotoent</anchor>
+		</function>
+		<function name="getservbyname">
+			<anchor>item_getservbyname</anchor>
+		</function>
+		<function name="getservbyport">
+			<anchor>item_getservbyport</anchor>
+		</function>
+		<function name="getservent">
+			<anchor>item_getservent</anchor>
+		</function>
+		<function name="sethostent">
+			<anchor>item_sethostent</anchor>
+		</function>
+		<function name="setnetent">
+			<anchor>item_setnetent</anchor>
+		</function>
+		<function name="setprotoent">
+			<anchor>item_setprotoent</anchor>
+		</function>
+		<function name="setservent">
+			<anchor>item_setservent</anchor>
+		</function>
+	</category>
+	<category name="Time-related">		
+		<function name="gmtime">
+			<anchor>item_gmtime</anchor>
+		</function>
+		<function name="localtime">
+			<anchor>item_localtime</anchor>
+		</function>
+		<function name="time">
+			<anchor>item_time</anchor>
+		</function>
+		<function name="times">
+			<anchor>item_times</anchor>
+		</function>
+	</category>
+</family>
+<family name="Talend library">
+	<category name="fields"/>
+</family>
+<family name="User library">
+	<category name="myf"/>
+</family>
+</help>
+

@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:57">
+    <title>Scénario&#160;1&#160;: Extraire les données XML d&#39;un champ d&#39;une table de base de données </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputXML_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2267944"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2267951"> </a><h2 class="pHeading2">
+Scénario&#160;1&#160;: Extraire les données XML d&#39;un champ d&#39;une table de base de données 
+</h2>
+<a name="wp2267954"> </a><p class="pIndented1">
+Ce scénario est composé de trois composants et permet de lire la structure XML contenue dans les champs d&#39;une base de données et d&#39;en extraire les données.
+</p>
+<a name="wp2267962"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField1.png" id="wp2267959" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2267976"> </a><div class="pSmartList2"><li>Glissez les composants <b class="cBold">tMysqlInput</b> de la famille <b class="cBold">Database</b> &gt; <b class="cBold">Mysql</b>, <b class="cBold">tExtractXMLField</b> de la famille <b class="cBold">Xml</b> et un composant <b class="cBold">tFileOutputDelimited</b> de la famille <b class="cBold">File</b> &gt; <b class="cBold">Output</b> de la Palette dans le Job designer.</li></div>
+<a name="wp2269397"> </a><div class="pSmartList2"><li>Reliez les composants entre eux via des connexions de type <b class="cBold">Main</b> &gt; <b class="cBold">Row</b>.</li></div>
+<a name="wp2267998"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMysqlInput</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2268013"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField2.png" id="wp2268010" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2268024"> </a><div class="pSmartList2"><li>Si votre schéma est déjà stocké sous le noeud <b class="cBold">Db Connections</b> dans le <b class="cBold">Repository</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> dans le champ<b class="cBold"> Schema Type</b> puis choisissez  les métadonnées appropriées à partir de la liste. </li></div>
+<a name="wp2268037"> </a><div class="pSmartList2"><li>Si vous n&#39;avez encore défini aucun schéma, sélectionnez l&#39;option <b class="cBold">Built-in</b> et renseignez manuellement les informations de connexion et la structure des données dans un schéma. Pour plus d&#39;informations sur les propriétés du composant <b class="cBold">tMysqlInput</b><a href="tMysqlInput_Prop.html">, see&#160;<em class="cEmphasis">tMysqlInput.</em></a></li></div>
+<a name="wp2268050"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table Name</b>, saisissez le nom de la table dont les champs contiennent les données XML. Dans ce scénario, la table se nomme <em class="cEmphasis">customerdetails</em> et ne contient qu&#39;une seule colonne.</li></div>
+<a name="wp2268058"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Guess Query</b> pour récupérer la requête correspondant à votre schéma.</li></div>
+<a name="wp2268589"> </a><div class="pSmartList2"><li>Dans le Job designer, double-cliquez sur le composant <b class="cBold">tExtractXMLField</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2268631"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField3.png" id="wp2268628" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2268722"> </a><div class="pSmartList2"><li>Dans la liste déroulante <b class="cBold">Property type</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> si la description de votre fichier est stockée dans une métadonnée du Repository. Si vous cliquez-déposez le composant directement à partir de la métadonnée, vous n&#39;aurez pas besoin de modifier ses propriétés.</li></div>
+<a name="wp2268738"> </a><div class="pSmartList2"><li>Sinon, sélectionnez l&#39;option <b class="cBold">Built-in</b> et renseignez manuellement les champs suivants. </li></div>
+<a name="wp2268752"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent. Vous pouvez cliquer sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour consulter le schéma.</li></div>
+<a name="wp2268807"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Xml field</b>, sélectionnez la colonne dont vous souhaitez extraire le contenu XML. La colonne se nomme <em class="cEmphasis">CustomerDetails</em> et est l&#39;unique colonne de la table <em class="cEmphasis">customerdetails</em>.</li></div>
+<a name="wp2268825"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Loop XPath query</b>, saisissez le noeud de l&#39;arborescence sur lequel effectuer la boucle afin de récupérer les données.</li></div>
+<a name="wp2268939"> </a><div class="pSmartList2"><li>La colonne <b class="cBold">Column</b> du tableau <b class="cBold">Mapping</b> sera automatiquement renseignée avec la description du fichier que vous avez configuré. Dans la colonne <b class="cBold">Xpath query</b>, saisissez entre guillemet le noeud du champ XML contenant les données que vous voulez extraire. Dans ce scénario, l&#39;objectif est d&#39;extraire les noms des clients, saisissez donc <em class="cEmphasis">&quot;CustomerName&quot;</em> qui correspond à l&#39;élément XML contenant cette information.</li></div>
+<a name="wp2269013"> </a><div class="pSmartList2"><li>Dans le Job designer, double-cliquez sur le composant <b class="cBold">tFileOutputDelimited</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;:  </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2269034"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField4.png" id="wp2269031" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2827428"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, indiquez le répertoire et le nom du fichier de sortie. Pour ce scénario, appelez le fichier <em class="cEmphasis">CustomerNames.csv</em>.</li></div>
+<a name="wp2269080"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent. Vous pouvez cliquer sur le bouton<b class="cBold"> [...]</b> à côté du champ <b class="cBold">Edit schema</b> pour consulter le schéma.</li></div>
+<a name="wp2269155"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2269175"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField5.png" id="wp2269172" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2269215"> </a><p class="pIndented1">
+Le Job retourne les noms des clients contenus sous le noeud <code class="cCode">CustomerName</code> du champ <em class="cEmphasis">CustomerDetails</em> de la table. 
+</p>
+<a name="wp2755292"> </a><h2 class="pHeading2">
+Scénario&#160;2&#160;: Extraire les données valides et les données erronées à partir d&#39;un champ XML dans fichier délimité 
+</h2>
+<a name="wp2759361"> </a><p class="pIndented1">
+Ce scénario est composé de quatre composants et permet de lire la structure XML contenue dans les champs d&#39;un fichier délimité, d&#39;en extraire les données et de rejeter les données erronées.
+</p>
+<a name="wp2755306"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField6.png" id="wp2755302" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2755325"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, glissez dans le Job designer les composants <b class="cBold">tFileInputDelimited</b> de la famille <b class="cBold">File</b> &gt; <b class="cBold">Input</b>, <b class="cBold">tExtractXMLField</b> de la famille <b class="cBold">Xml</b>, <b class="cBold">tFileOutputDelimited</b> de la famille <b class="cBold">File</b> &gt; <b class="cBold">Output</b> et <b class="cBold">tLogRow</b> de la famille <b class="cBold">Logs &amp; Errors</b>.</li></div>
+<a name="wp2755359"> </a><div class="pSmartList2"><li>Reliez les composants entre eux comme indiqué sur le schéma ci-dessus.</li></div>
+<a name="wp2755367"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tFileInputDelimited</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2755386"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField7.png" id="wp2755382" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2755418"> </a><div class="pSmartList2"><li>Sélectionnez l&#39;option <b class="cBold">Built-in</b> à partir de la liste déroulante <b class="cBold">Schema</b> et renseignez manuellement les informations concernant le fichier délimité dans les champs correspondants. </li></div>
+<a name="wp2761769"> </a><div class="pSmartList2"><li>Cliquez sur le bouton<b class="cBold"> [...] </b>à côté du champ <b class="cBold">Edit schema</b> pour afficher la boîte de dialogue permettant de définir la structure des données, comme présenté ci-dessus. </li></div>
+<a name="wp2761796"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter autant de lignes que nécessaire à la structure des données. Dans cet exemple, il n&#39;y a qu&#39;une seule colonne dans le schéma&#160;: <em class="cEmphasis">xmlStr</em>.</li></div>
+<a name="wp2762557"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour valider vos changements et fermer la boîte de dialogue. </li></div>
+<a name="wp2762568"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2762561" border="0" hspace="0" vspace="0"/><br />
+Si vous avez préalablement stocké votre schéma dans le répertoire <b class="cBold">Metadata</b> sous <b class="cBold">File delimited</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> dans la liste déroulante <b class="cBold">Schema</b> puis cliquez sur le bouton [...] à côté du champ pour afficher la boîte de dialogue <b class="cBold">[Repository Content]</b> à paritr de laquelle vous pouvez sélectionner un schéma pertinent. Cliquez sur <b class="cBold">Ok </b>pour fermer la boîte de dialogue et remplir les champs automatiquement avec les métadonnées contenues dans le schéma. <br />Pour plus d&#39;informations sur le stockage des schémas de métadonnées dans le <b class="cBold">Repository</b>, consultez les sections <em class="cEmphasis">Configurer un schéma File Delimited</em> et <em class="cEmphasis">Déposer des composants à partir du répertoire Metadata</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>. 
+</p>
+<a name="wp2762600"> </a><div class="pSmartList2"><li>A partir de la liste <b class="cBold">Property type</b>, sélectionnez&#160;: <br />-<b class="cBold">Repository</b> si vous avez déjà stocké les métadonnées de votre fichier d&#39;entrée dans le <b class="cBold">Repository</b>, les champs suivants sont alors renseignés automatiquement avec les informations stockées, ou <br />-<b class="cBold">Built-in</b> si aucune métadonnée n&#39;est stockée pour votre fichier d&#39;entrée&#160;; vous devez alors renseigner manuellement les champs suivants. <br />Dans cet exemple, c&#39;est le mode <b class="cBold">Built-in</b> qui est utilisé. </li></div>
+<a name="wp2762603"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, renseignez le chemin d&#39;accès ou cliquez sur le bouton <b class="cBold">[...]</b> pour parcourir vos dossiers jusqu&#39;au fichier à traiter. Dans cet exemple, il s&#39;agit du fichier <em class="cEmphasis">CustomerDetails_Error</em>.<br />Ce fichier csv stocké localement contient une suite de lignes simples au format XML, séparées par un double retour chariot.</li></div>
+<a name="wp2762613"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Row Separator</b>, renseignez le séparateur de lignes, ici le double retour chariot. Dans le champ <b class="cBold">Field Separator</b>, renseignez le séparateur de champ, aucun ici. </li></div>
+<a name="wp2762626"> </a><div class="pSmartList2"><li>Dans cet exemple, il n&#39;y a pas d&#39;en-tête (<b class="cBold">Header</b>), de pied de page (<b class="cBold">Footer</b>) ou de nombre limite de lignes à traiter (<b class="cBold">Limit</b>).</li></div>
+<a name="wp2762636"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, double-cliquez sur le composant <b class="cBold">tExtractXMLField</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2762651"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/use_case_textractxmlfield8.png" id="wp2762648" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2762661"> </a><div class="pSmartList2"><li>A partir de la liste <b class="cBold">Property type</b>, sélectionnez&#160;: <br />-<b class="cBold">Repository</b> si vous avez déjà stocké les métadonnées de votre fichier d&#39;entrée dans le <b class="cBold">Repository</b>, les champs suivants sont alors renseignés automatiquement avec les informations stockées, ou <br />-<b class="cBold">Built-in</b> si aucune métadonnée n&#39;est stockée pour votre fichier d&#39;entrée&#160;; vous devez alors renseigner manuellement les champs suivants. <br />Dans cet exemple, c&#39;est le mode <b class="cBold">Built-in</b> qui est utilisé.</li></div>
+<a name="wp2755509"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent. Vous pouvez cliquer sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour consulter le schéma ou le modifier. <br />La colonne <b class="cBold">Column</b> du tableau <b class="cBold">Mapping</b> sera automatiquement renseignée avec lae schéma défini.</li></div>
+<a name="wp2756554"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Xml field</b>, sélectionnez la colonne dont vous souhaitez extraire le contenu XML. Dans cet exemple, la colonne se nomme <em class="cEmphasis">xmlStr</em>.</li></div>
+<a name="wp2756564"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Loop XPath query</b>, saisissez le noeud de l&#39;arborescence sur lequel effectuer la boucle afin de récupérer les données.</li></div>
+<a name="wp2756574"> </a><div class="pSmartList2"><li> Dans la colonne <b class="cBold">Xpath query</b>, saisissez entre guillemets le noeud du champ XML contenant les données que vous voulez extraire. </li></div>
+<a name="wp2756697"> </a><div class="pSmartList2"><li>Dans le Job designer, double-cliquez sur le composant <b class="cBold">tFileOutputDelimited</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;:  </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2756602"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField9.png" id="wp2756599" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2762913"> </a><div class="pSmartList2"><li>Choisissez le mode <b class="cBold">Built-in</b> dans la liste déroulante <b class="cBold">Property Type</b>. </li></div>
+<a name="wp2762905"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, indiquez le répertoire et le nom du fichier de sortie. Pour ce scénario, appelez le fichier <em class="cEmphasis">CustomerNames_right.csv</em>.</li></div>
+<a name="wp2755612"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent. Vous pouvez cliquer sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour consulter le schéma ou le modifier.</li></div>
+<a name="wp2756864"> </a><div class="pSmartList2"><li>Dans le Job designer, double-cliquez sur le composant <b class="cBold">tLogRow</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>.</li></div>
+<a name="wp2756894"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync Columns</b> pour récupérer le schéma du composant précédent. Pour plus d&#39;informations sur le composant <b class="cBold">tLogRow</b>, consultez le chapitre <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>. </li></div>
+<a name="wp2755627"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2755636"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/use_case_textractxmlfield10.png" id="wp2755632" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2755644"> </a><p class="pIndented1">
+Le composant <b class="cBold">tExtractXMLField</b> lit et extrait dans un fichier délimité en sortie, <em class="cEmphasis">CustomerNames_right</em> dans cet exemple, les informations concernant les clients dont la structure XML est correcte, et affiche les lignes erronées dans la console de log. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputXML_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

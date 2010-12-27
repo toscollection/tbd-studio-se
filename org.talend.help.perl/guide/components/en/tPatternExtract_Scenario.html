@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>Scenario: Extracting only the data that corresponds to a defined pattern from a delimited file</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPatternExtract_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPostgresqlInvalidRows_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3497345"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3497352"> </a><h2 class="pHeading2">
+Scenario: Extracting only the data that corresponds to a defined pattern from a delimited file
+</h2>
+<a name="wp3497363"> </a><p class="pIndented1">
+This Java scenario describes a three-component Job where the <b class="cBold">tExtractPattern</b> component is used to extract only customers&#39; email addresses (that match the <b class="cBold">Email address</b> pattern) from a delimited file that holds different customer data. And then it writes the extracted data in another delimited file.
+</p>
+<a name="wp3497377"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract.png" id="wp3497373" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3497388"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> to the design workspace: <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tPatternExtract</b> and <b class="cBold">tFileOutputDelimited</b>.</li></div>
+<a name="wp3497413"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputDelimited</b> to display its <b class="cBold">Basic settings</b> view and define the component properties. If you have already stored your input schemas in the <b class="cBold">Repository</b>, you can simply drop the relevant file item from the <b class="cBold">Metadata</b> folder onto the design workspace and the delimited file settings will automatically display in the relevant fields in the component <b class="cBold">Basic settings</b> view. For more information about metadata, see <em class="cEmphasis">Setting up a File Delimited schema</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3497447"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Use_Case_tPatternExtract1.png" id="wp3497443" border="0" hspace="0" vspace="0"/>
+</div>
+<a name="wp3497451"> </a><p class="pIndented1">
+In this scenario, the delimited file holds names, email addresses and telephone numbers, all in a single column: <em class="cEmphasis">Name_Telephone_Address</em>.
+</p>
+<a name="wp3497465"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract2.png" id="wp3497461" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3497470"> </a><p class="pIndented1">
+And therefore the input schema of the delimited file will be as the following:
+</p>
+<a name="wp3497479"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract3.png" id="wp3497475" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3497486"> </a><div class="pSmartList2"><li>If you have not stored the schema of the delimited file locally, define the components properties manually in the <b class="cBold">Basic settings</b> view and click <b class="cBold">Edit schema</b> to display the dialog box where you can define the input schema.</li></div>
+<a name="wp3497499"> </a><div class="pSmartList2"><li>Click the plus button to add as many lines as you have in your input schema, one in this scenario and then click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp3497517"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3497510" border="0" hspace="0" vspace="0"/><br />
+When prompted, click <b class="cBold">OK</b> if you want to accept the schema propagation, so that the next component gets automatically the input schema. Therefore no need to set the schema again.
+</p>
+<a name="wp3497533"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tPatternExtract</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3497544"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract4.png" id="wp3497540" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3497555"> </a><div class="pSmartList2"><li>In the <b class="cBold">Column to check</b> list, select the column you want to check its data against the defined pattern,<em class="cEmphasis"> Name_Telephone_Address</em> in this example.</li></div>
+<a name="wp3497568"> </a><div class="pSmartList2"><li>In the <b class="cBold">Pattern type</b> list, select the pattern you want to extract data according to, <b class="cBold">Email address</b> in this example.</li></div>
+<a name="wp3497582"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to auto propagate all the columns of the input delimited file.</li></div>
+<a name="wp3497590"> </a><div class="pSmartList2"><li>If needed, click <b class="cBold">Edit schema</b> to view the data structure of the input component and that of <b class="cBold">tPatternExtract</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3497605"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract5.png" id="wp3497601" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3497617"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp3497629"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileOutputDelimited</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3497640"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract6.png" id="wp3497636" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3497651"> </a><div class="pSmartList2"><li>Click the three-dot button next to the <b class="cBold">File Name</b> field to browse to the file where you want to write the output data.</li></div>
+<a name="wp3497656"> </a><div class="pSmartList2"><li>Define the row and field separators in the corresponding fields, if any. In this example, we want to separate customers&#39; email addresses by semicolons.</li></div>
+<a name="wp3497665"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Append</b> check box if you want to add the new rows at the end of the records.</li></div>
+<a name="wp3497675"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Include Heade</b>r check box to include a column header in the output data.</li></div>
+<a name="wp3497685"> </a><div class="pSmartList2"><li>If needed, click <b class="cBold">Edit schema</b> to view the input and output data flows.</li></div>
+<a name="wp3497693"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3497690" border="0" hspace="0" vspace="0"/><br />
+Note that the schema in the output components is different from the schema in the component that precedes it since we want only to extract the data that matches the Email address pattern.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3497703"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract7.png" id="wp3497699" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3497716"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6 </b>to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3497720"> </a><p class="pIndented1">
+Customers&#39; email addresses are extracted from the selected column according to the defined Email pattern and written in the output file using semicolons as row separators. You can then, for example, send an email to all your customers in one go.
+</p>
+<a name="wp3497732"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPatternExtract8.png" id="wp3497726" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPatternExtract_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPostgresqlInvalidRows_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

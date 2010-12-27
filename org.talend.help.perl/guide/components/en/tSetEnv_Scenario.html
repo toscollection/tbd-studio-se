@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:38">
+    <title>Scenario: Modifying the Date variable during the execution of a Job </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSetEnv_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSSH_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2753937"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2753947"> </a><h2 class="pHeading2">
+Scenario: Modifying the <em class="cEmphasis">Date</em> variable during the execution of a Job 
+</h2>
+<a name="wp2753950"> </a><p class="pIndented1">
+The following scenario is a Perl Job that reads a column in an Oracle DB, retrieves the current date from the column using a DB query, creates a new variable using <b class="cBold">tSetEnv</b> to modify the date format, and outputs date, in the modified format, on the console. 
+</p>
+<a name="wp2753961"> </a><p class="pIndented1">
+To modify the date format using a new variable created by <b class="cBold">tSetEnv</b>:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2753972"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tSetEnv</b>, <b class="cBold">tOracleInput</b>, and <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2753995"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tSetEnv</b> to <b class="cBold">tOracleInput</b> using an <b class="cBold">OnSubjobOk</b> link.</li></div>
+<a name="wp2754009"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tOracleInput</b> to <b class="cBold">tLogRow </b>using a <b class="cBold">Row Main</b> link.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2754016"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-01.png" id="wp2754013" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2754028"> </a><div class="pSmartList2"><li>Select <b class="cBold">tSetEnv</b> and click the <b class="cBold">Component</b> tab to display the component view.</li></div>
+<a name="wp2754034"> </a><div class="pSmartList2"><li>In the <b class="cBold">Basic settings</b> panel, click the plus button to add a new parameter line and define your new variable.</li></div>
+<a name="wp2754041"> </a><div class="pSmartList2"><li>Click in the <b class="cBold">name </b>cell and enter the syntax for your date variable. In this example, we use <code class="cCode">NLS_DATE_FORMAT.</code></li></div>
+<a name="wp2754053"> </a><div class="pSmartList2"><li>Click in the <b class="cBold">value </b>cell and enter the desired value for your new date variable.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2754060"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-02.png" id="wp2754057" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2754066"> </a><p class="pIndented1">
+In this example, we want to modify the date format <code class="cCode">DD-MMM-YY</code> predefined in the system to display as <code class="cCode">YYYY-MM-DD</code>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2754082"> </a><div class="pSmartList2"><li>Select <b class="cBold">tOracleInput</b> and click the <b class="cBold">Component</b> tab to display the component view.</li></div>
+<a name="wp2754091"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Basic settings </b>for the <b class="cBold">tOracleInput </b>component. For more information, see <a href="tOracleInput_Prop.html"><em class="cEmphasis">tOracleInput</em></a>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2754103"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv3.png" id="wp2754100" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2754106"> </a><p class="pIndented1">
+In this example, we query an Oracle database to extract the data held in the &quot;now&quot; column from the &quot;setenv&quot; table.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2754119"> </a><div class="pSmartList2"><li>Select <b class="cBold">tLogRow</b> and click the <b class="cBold">Component</b> tab to display the component view.</li></div>
+<a name="wp2754128"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Basic settings </b>for the <b class="cBold">tLogRow </b>component as needed. For more information, see <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp2754140"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2754147"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-05.png" id="wp2754144" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2754157"> </a><p class="pIndented1">
+The date displays on the console in the format <code class="cCode">YYYY-MM-DD</code> set with the <b class="cBold">tSetEnv</b> component.
+</p>
+<a name="wp2754161"> </a><p class="pIndented1">
+To display the date in the above Job in the format pre-defined in the system:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2754171"> </a><div class="pSmartList2"><li>In the design workspace, right-click the <b class="cBold">tSetEnv </b>component and select <b class="cBold">Deactivate tSetEnv_1</b> from the drop-down list.</li></div>
+<a name="wp2754181"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to execute your Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2754188"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-07.png" id="wp2754185" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2754197"> </a><p class="pIndented1">
+ The date displays on the console in the format <code class="cCode">DD-MMM-YY</code> pre-defined in the system.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSetEnv_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSSH_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

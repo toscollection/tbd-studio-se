@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;: Lire et mapper la clé et les valeurs de fichiers properties et alimenter un glossaire</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputProperties_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputRegex_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2502733"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2502739"> </a><h2 class="pHeading2">
+Scénario&#160;: Lire et mapper la clé et les valeurs de fichiers properties et alimenter un glossaire
+</h2>
+<a name="wp2502744"> </a><p class="pIndented1">
+Le scénario suivant est un Job de quatre composants lisant deux fichiers propriétés en anglais et en français. Ces données sont ensuite mises en correspondance afin de constituer un glossaire.
+</p>
+<a name="wp2504142"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputProperties.png" id="wp2504139" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2504145"> </a><p class="pIndented1">
+Les fichiers de propriétés utilisés pour ce scénario sont des fichiers contenant les chaînes de caractères utilisés pour la localisation du composant <b class="cBold">tMysqlInput</b> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp2502755"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Components-07-42-179.jpg" height="334" width="631" id="wp2504020" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2502769"> </a><div class="pSmartList2"><li>Cliquez-glissez deux composants <b class="cBold">tFileInputProperties</b> de la famille <b class="cBold">File</b> &gt; <b class="cBold">Input</b> dans le Job designer, un composant <b class="cBold">tMap</b> de la famille <b class="cBold">Processing</b> et un composant <b class="cBold">tLogRow</b> de la famille <b class="cBold">Log &amp; Errors</b>.</li></div>
+<a name="wp2502792"> </a><div class="pSmartList2"><li>Reliez les composants entre eux via des connexions <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp2502798"> </a><div class="pSmartList2"><li>Double-cliquez sur le premier composant <b class="cBold">tFileInputProperties</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2502813"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputProperties1.png" id="wp2502810" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2502822"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Format</b>, sélectionnez le format de votre fichier.</li></div>
+<a name="wp2502831"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, cliquez sur le bouton <b class="cBold">[...]</b> et sélectionnez le fichier <em class="cEmphasis">.properties</em> anglais que vous souhaitez utiliser.</li></div>
+<a name="wp2502837"> </a><div class="pSmartList2"><li>Répétez cette procédure avec le deuxième composant et le fichier français&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2502844"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputProperties2.png" id="wp2502841" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2502854"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMap</b> pour ouvrir son éditeur&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2502861"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputProperties3.png" id="wp2502858" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2502869"> </a><div class="pSmartList2"><li>Sélectionnez toutes les colonnes de la table <em class="cEmphasis">English_terms</em> et glissez-les vers la table de sortie.</li></div>
+<a name="wp2502882"> </a><div class="pSmartList2"><li>Sélectionnez la colonne <em class="cEmphasis">key</em> de la table <em class="cEmphasis">English_terms</em> et glissez-la dans la colonne <em class="cEmphasis">key</em> de la table <em class="cEmphasis">French_terms</em>.</li></div>
+<a name="wp2502898"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">glossary</b> de la zone <b class="cBold">Schema editor</b> en bas du <b class="cBold">tMap</b>, renommez le champ <em class="cEmphasis">value</em> en <em class="cEmphasis">EN</em> puisqu&#39;il contiendra les valeurs du fichier anglais.</li></div>
+<a name="wp2502914"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter une ligne au tableau <b class="cBold">glossary</b> et renommez-la <b class="cBold">FR</b>. Dans le champ <b class="cBold">Length</b>, configurez la taille maximum du champ à <em class="cEmphasis">255</em>.</li></div>
+<a name="wp2502933"> </a><div class="pSmartList2"><li>Sélectionnez la colonne <em class="cEmphasis">value</em> de la table <em class="cEmphasis">English_terms</em> et glissez-la dans la colonne <em class="cEmphasis">FR</em> de la table <em class="cEmphasis">French_terms</em>.</li></div>
+<a name="wp2502944"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2502950"> </a><div class="pSmartList2"><li>Dans le Job designer, double-cliquez sur le composant <b class="cBold">tLogRow</b> pour paramétrer ses propriétés dans la onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>.</li></div>
+<a name="wp2502964"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync Columns</b> pour récupérer le schéma du composant précédent.</li></div>
+<a name="wp2502972"> </a><div class="pSmartList2"><li>Enregitrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2502979"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputProperties4.png" id="wp2502976" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2502985"> </a><p class="pIndented1">
+Le glossaire apparaît dans la console de la vue <b class="cBold">Run</b> avec dans la première colonne le nom de la clé, dans la deuxième le terme du fichier anglais et dans le troisième colonne le terme correspondant du fichier français. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputProperties_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputRegex_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

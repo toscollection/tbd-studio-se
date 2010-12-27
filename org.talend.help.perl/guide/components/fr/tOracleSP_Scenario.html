@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Vérifier le format de numéros à l&#39;aide d&#39;une procédure stockée</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleSP_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleTableList_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2365831"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2365837"> </a><h2 class="pHeading2">
+Scénario&#160;: Vérifier le format de numéros à l&#39;aide d&#39;une procédure stockée
+</h2>
+<a name="wp2365842"> </a><p class="pIndented1">
+Le Job suivant permet de se connecter à une base Oracle contenant des numéros de sécurité social et le nom de leur propriétaire, en appelant une procédure stockée qui vérifie le format des numéros en fonction du format standard ###-##-####. Puis le résultat de la vérifiaction, 1 pour un format valide et 0 pour un format non valide, est affiché en sortie dans la console de la vue <b class="cBold">Run</b>.
+</p>
+<a name="wp2365853"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP1.png" id="wp2365850" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2365864"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants&#160;: <b class="cBold">tOracleConnection</b>, <b class="cBold">tOracleInput</b>, <b class="cBold">tOracleSP</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2365883"> </a><div class="pSmartList2"><li>Reliez le composant <b class="cBold">tOracleConnection</b> au <b class="cBold">tOracleInput</b> à l&#39;aide d&#39;un lien <b class="cBold">Then Run</b> puisqu&#39;aucune donnée n&#39;est traitée ici.</li></div>
+<a name="wp2365890"> </a><div class="pSmartList2"><li>Et connectez les autres composants à l&#39;aide de liens <b class="cBold">Row Main</b> puisque des lignes sont transmises comme paramètres au composant SP et à la console.</li></div>
+<a name="wp2365900"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tOracleConnection</b>, paramétrez les informations de connexion à la base de données correspondante. Vous pourrez donc réutiliser cette information dans tout autre composant lié aux bases de données.</li></div>
+<a name="wp2365909"> </a><div class="pSmartList2"><li>Puis double-cliquez sur le composant <b class="cBold">tOracleInput</b> et paramétrez ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2365916"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP3.png" id="wp2365913" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2365924"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use an existing connection</b> et sélectionnez le composant <b class="cBold">tOracleConnection</b> dans la liste pour réutiliser les informations de connexion déjà paramétrées.</li></div>
+<a name="wp2365937"> </a><div class="pSmartList2"><li>Sélectionnez l&#39;option <b class="cBold">Repository</b> dans le champ <b class="cBold">Property type</b> puisque le schéma Oracle est défini dans une métadonnée du dossier <b class="cBold">Db Connections</b> du <b class="cBold">Repository</b>. Si vous n&#39;avez pas enregistré de métadonnée contenant les informations de connexion à la base de données Oracle dans le <b class="cBold">Repository</b>, renseignez le nom du schéma manuellement.</li></div>
+<a name="wp2365956"> </a><div class="pSmartList2"><li>Puis sélectionnez l&#39;option <b class="cBold">Repository</b> dans le champ <b class="cBold">Schema</b>, et récupérez le schéma correspondant à la table de la base de données Oracle.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2365965"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP2.png" id="wp2365962" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2365970"> </a><div class="pSmartList2"><li>Dans cet exemple, la table contenant le numéro de sécurité social contient un schéma à quatre colonnes dont&#160;: <em class="cEmphasis">ID</em>, <em class="cEmphasis">NAME</em>, <em class="cEmphasis">CITY</em> et <em class="cEmphasis">SSNUMBER</em>.</li></div>
+<a name="wp2365989"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Query</b>, saisissez la requête Select suivante ou sélectionnez-la dans la liste si vous l&#39;aviez stockée dans le <span style="font-weight: bold">Repository</span>.<br /><code class="cCode">select ID, NAME, CITY, SSNUMBER from SSN</code></li></div>
+<a name="wp2366004"> </a><div class="pSmartList2"><li>Puis sélectionnez le <b class="cBold">tOracleSP</b> et paramétrez ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2366011"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP4.png" id="wp2366008" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2366022"> </a><div class="pSmartList2"><li>Comme pour le composant <b class="cBold">tOracleInput</b>, sélectionnez l&#39;option Repository dans le champ <b class="cBold">Property type</b> et cochez la case <b class="cBold">Use an existing connection</b>, puis sélectionnez l&#39;entrée adéquate dans la liste <b class="cBold">Component List</b>.</li></div>
+<a name="wp2366038"> </a><div class="pSmartList2"><li>Le schéma utilisé pour le composant <b class="cBold">tOracleSP</b> diffère légèrement du schéma d&#39;entrée. En effet, une colonne supplémentaire (<em class="cEmphasis">SSN_Valid</em>) est ajoutée au schéma d&#39;entrée. Cette colonne contiendra le statut de validité (<em class="cEmphasis">1</em> ou <em class="cEmphasis">0</em>) généré par la procédure.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2366056"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP5.png" id="wp2366053" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2366065"> </a><div class="pSmartList2"><li>Puis sélectionnez le type d&#39;encodage adéquat dans la liste <b class="cBold">Encoding type</b>.</li></div>
+<a name="wp2366071"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">SP Name</b>, saisissez le nom exact de la procédure stockée (ou de la fonction) telle qu&#39;elle est appelée dans la base de données. Dans cet exemple, le nom de la procédure stockée est <em class="cEmphasis">is_ssn</em>.</li></div>
+<a name="wp2366078"> </a><div class="pSmartList2"><li>La fonction de base utilisée pour cet exemple est&#160;:<br /><code class="cCode">CREATE OR REPLACE FUNCTION is_ssn(string_in VARCHAR2) RETURN PLS_INTEGER<br />IS<br />-- validating ###-##-#### format<br />BEGIN<br />  IF TRANSLATE(string_in, &#39;0123456789A&#39;, &#39;AAAAAAAAAAB&#39;) =<br />     &#39;AAA-AA-AAAA&#39; THEN<br />    RETURN 1;<br />  END IF;<br />  RETURN 0;<br />END is_ssn;<br />/</code></li></div>
+<a name="wp2366085"> </a><div class="pSmartList2"><li>Comme un valeur retournée est attendue dans cet exemple, la procédure agit comme une fonction, ainsi cochez la case <b class="cBold">Is function</b>.</li></div>
+<a name="wp2366095"> </a><div class="pSmartList2"><li>La seule valeur retournée attendue est basée sur la colonne <em class="cEmphasis">ssn_valid</em>. Ainsi, sélectionnez l&#39;entrée correspondante dans la liste.</li></div>
+<a name="wp2366102"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Parameters</b>, définissez les paramètres d&#39;entrée et de sortie utilisés dans la procédure. Dans cet exemple, seule la colonne <em class="cEmphasis">SSNumber</em> du schéma est utilisée dans la procédure.</li></div>
+<a name="wp2366109"> </a><div class="pSmartList2"><li>Cliquez sur le signe <b class="cBold">[+]</b> pour ajouter un nouvelle ligne à la table et sélectionnez la colonne adéquate (<em class="cEmphasis">SSNumber</em>) et son type (<em class="cEmphasis">IN</em>).</li></div>
+<a name="wp2366125"> </a><div class="pSmartList2"><li>Puis sélectionnez le composant <b class="cBold">tLogRow</b> et cliquez sur <b class="cBold">Sync Column</b> pour récupérer le schéma du composant précédent (<b class="cBold">tOracleSP</b>).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2366137"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP6.png" id="wp2366134" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2366146"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Print values in cells of a table</b> pour faciliter la lecture de la sortie.</li></div>
+<a name="wp2366154"> </a><div class="pSmartList2"><li>Puis enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2366161"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP7.png" id="wp2366158" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2366164"> </a><p class="pIndented1">
+Dans la console, vous pouvez lire les résultats en sortie. Toutes les colonnes du schéma d&#39;entrée sont affichées même si elles ne sont pas utilisées comme paramètres dans la procédure stockée.
+</p>
+<a name="wp2366168"> </a><p class="pIndented1">
+La colonne finale affiche la valeur retournée attendue, i.e. que le numéro de sécurité social vérifié soit valide ou non.
+</p>
+<a name="wp2758097"> </a><p class="pIndented1">
+Consultez également le composant <a href="tParseRecordSet_Prop.html"><em class="cEmphasis">tParseRecordSet</em></a> si vous voulez analyser un ensemble d&#39;enregistrements d&#39;une table de données ou d&#39;une requête SQL.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleSP_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleTableList_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

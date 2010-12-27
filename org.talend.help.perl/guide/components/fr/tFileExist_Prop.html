@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>tFileExist</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileDelete_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileExist_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2498084"> </a><h2 class="pHeading1">
+tFileExist
+</h2>
+<a name="wp2498093"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFileExist_icon32_white.png" id="wp2498088" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2498100"> </a><h2 class="pHeading2">
+Propriétés du tFileExist
+</h2>
+<a name="wp2498176"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2498108table2498103">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2498108"> </a><div class="pCellBody">
+<b class="cBold">Famille du composant</b>
+</div>
+</td>
+    <td><a name="wp2498110"> </a><div class="pCellBody">
+File/Management
+</div>
+</td>
+    <td><a name="wp2498119"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-07-15-026.jpg" height="59" width="112" id="wp2498115" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2498124"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2498129"> </a><div class="pCellBody">
+Le composant <b class="cBold">tFileExist </b>vérifie si un fichier existe ou non. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2498136"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2498141"> </a><div class="pCellBody">
+Le<b class="cBold"> tFileExists </b>aide à rationaliser les processus en automatisant les tâches récurrentes et fastidieuses, comme par exemple vérifier si un fichier existe ou non. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2498148"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2498153"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2498155"> </a><div class="pCellBody">
+Chemin d&#39;accès au fichier dont vous voulez vérifier l&#39;existence. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2498160"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2498162"> </a><div class="pCellBody">
+Ce composant peut être utilisé en standalone. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3469406"> </a><div class="pCellBody">
+<b class="cBold">Global Variables</b>
+</div>
+</td>
+    <td><a name="wp3469409"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3469412"> </a><div class="pCellBody">
+<b class="cBold">Exists</b>&#160;: indique si un fichier spécifié existe ou non. Disponible comme variable <b class="cBold">Flow</b>.<br />    Retourne une valeur booléenne&#160;:<br />       -true si le fichier existe.<br />       -false si le fichier n&#39;existe pas.<br /><br /><b class="cBold">File name</b>&#160;: retrouve le nom et le chemin d&#39;accès d&#39;un fichier. Disponible comme variable <b class="cBold">After</b>.<br />    Retourne une chaîne de caractères.<br /><br />Pour plus d&#39;informations concernant les variables, consultez&#160;<em class="cEmphasis">Utiliser les variables dans un Job, page 130</em> dans le <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3469439"> </a><div class="pCellBody">
+<b class="cBold">Connections</b>
+</div>
+</td>
+    <td><a name="wp3469442"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3469445"> </a><div class="pCellBody">
+Liens de sortie (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row</b>&#160;: Main.<br /><b class="cBold">Trigger</b>&#160;: OnSubjobOk, OnSubjobError, Run if, OnComponentOk, OnComponentError.<br /><br />Liens d&#39;entrée (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row</b>&#160;: Main, Reject, Iterate.<br /><b class="cBold">Trigger</b>&#160;: Run if, OnSubjobOk, OnSubjobError, OnComponentOk, OnComponentError, Synchronize, Parallelize.<br /><br />Pour plus d&#39;informations concernant les liens, consultez&#160;<em class="cEmphasis">Types de connexion</em>, dans le <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2498169"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2498171"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileDelete_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileExist_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

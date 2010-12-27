@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>Scénario&#160;: Récupérer des fichiers d&#39;un serveur SCP distant</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSCPGet_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSCPPut_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1624915"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1624923"> </a><h2 class="pHeading2">
+Scénario&#160;: Récupérer des fichiers d&#39;un serveur SCP distant
+</h2>
+<a name="wp1624926"> </a><p class="pIndented1">
+Ce scénario Java crée un Job à un seul composant qui récupère le fichier sélectionné d&#39;un serveur SCP distant. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1624936"> </a><div class="pSmartList2"><li>Cliquez et déposez le composant <b class="cBold">tSCPGet</b> dans l&#39;éditeur graphique.</li></div>
+<a name="wp1624947"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le <b class="cBold">tSCPGet</b> et cliquez sur la vue <b class="cBold">Component</b> pour paramétrer ses propriétés de base.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1624954"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSCPGet.png" id="wp1624951" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1624965"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Host</b>, renseignez l&#39;adresse IP du serveur SCP.</li></div>
+<a name="wp1626790"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Port</b> ,renseignez le numéro du port d&#39;écoute du serveur SCP.</li></div>
+<a name="wp1626813"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, renseignez respectivement le login et le mot de passe de connexion au serveur SCP.</li></div>
+<a name="wp1624972"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Authentication method</b>, sélectionnez la méthode d&#39;authentification appropriée.<br />Notez que les champs suivants changent en fonction de la méthode d&#39;authentification sélectionnée. La méthode d&#39;authentification <em class="cEmphasis">Password</em> est utilisée dans ce scénario.</li></div>
+<a name="wp1624977"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Local directory</b>, renseignez le chemin d&#39;accès au répertoire dans lequel sera copié le fichier.</li></div>
+<a name="wp1624984"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Overwrite or Append</b>, sélectionnez l&#39;action à effectuer.</li></div>
+<a name="wp1624993"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Filelist</b>, cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter une ligne à la liste <b class="cBold">Source</b> et renseignez le chemin d&#39;accès au fichier sur le serveur SCP distant.<br />Dans ce scénario, le fichier à copier du serveur SCP distant sur le disque local s&#39;appelle <em class="cEmphasis">backport.pl.</em></li></div>
+<a name="wp1625005"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1625011"> </a><p class="pIndented1">
+Le fichier du serveur distant est copié sur le disque local.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSCPGet_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSCPPut_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

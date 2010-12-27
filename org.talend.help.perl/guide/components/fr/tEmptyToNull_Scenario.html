@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:29">
+    <title>Scénario&#160;: Remplacer des champs vides par des champs non-définis (NULL) </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEmptyToNull_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExternalSortRow_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2515709"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2515715"> </a><h2 class="pHeading2">
+Scénario&#160;: Remplacer des champs vides par des champs non-définis (NULL) 
+</h2>
+<a name="wp2515752"> </a><p class="pIndented1">
+Ce scénario Perl décrit un Job à trois composants. Il permet de remplacer les champs sans chaînes de caractères par des champs non-définis afin de générer des valeurs NULL en sortie. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2515768"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, cliquez-déposez les composants suivants dans l&#39;éditeur graphique&#160;: le <b class="cBold">tFileInputDelimited</b>, le <b class="cBold">tEmptyToNull</b> et le <b class="cBold">tMysqlOutput</b>.</li></div>
+<a name="wp2515795"> </a><div class="pSmartList2"><li>Connectez les trois composants à l&#39;aide de liens de type <b class="cBold">Row Main</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2515804"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull1.png" id="wp2515800" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2515816"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le composant <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp2515828"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour configurer les paramètres de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tFileInputDelimited</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2515843"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull2.png" id="wp2515839" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2515859"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Property Type</b>, sélectionnez le mode <b class="cBold">Repository</b>  si vous avez stocké les informations du fichier délimité sous le noeud <b class="cBold">Metadata</b> du <b class="cBold">Repository</b> ou sélectionnez le mode <b class="cBold">Built-In</b> pour les définir manuellement. Dans ce scénario, on utilise le mode <b class="cBold">Built-In</b>.</li></div>
+<a name="wp2515867"> </a><div class="pSmartList2"><li>Renseignez le chemin d&#39;accès au fichier à traiter dans le champ <b class="cBold">File Name</b>. Dans cet exemple, on utilise le fichier <em class="cEmphasis">name_list</em>, qui comporte quatre colonnes, <em class="cEmphasis">id</em>, <em class="cEmphasis">first name</em>, <em class="cEmphasis">last name </em>et <em class="cEmphasis">login</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2515890"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull3.png" id="wp2515886" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2515897"> </a><div class="pSmartList2"><li>Définissez si nécessaire les séparateurs de lignes (<b class="cBold">Row separator</b>) et de champs (<b class="cBold">Field separator</b>), l&#39;en-tête (<b class="cBold">Header</b>) et le pied-de-page (<b class="cBold">Footer</b>), ainsi que le nombre de lignes à traiter (<b class="cBold">Limit</b>). La première ligne, qui porte le nom des colonnes, est ignorée dans cet exemple, c&#39;est pourquoi le champ <b class="cBold">Header</b> est défini à &quot;1&quot;. </li></div>
+<a name="wp2516570"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Schema</b>, sélectionnez le mode <b class="cBold">Built in</b> puis cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit Schema </b>pour définir les données à passer au composant suivant. Dans cet exemple, le schéma est constitué de quatre colonnes, <em class="cEmphasis">id</em>, <em class="cEmphasis">first_name</em>, <em class="cEmphasis">last_name </em>et <em class="cEmphasis">login</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2515937"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull4.png" id="wp2515933" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2516729"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, double-cliquez sur le composant <b class="cBold">tMysqlOutput</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2516744"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull5.png" id="wp2516741" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2516755"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent. Vous pouvez cliquer sur le bouton <b class="cBold">[...]</b> à coté du champ <b class="cBold">Edit schema</b> pour consulter le schéma. </li></div>
+<a name="wp2517350"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Repository</b>  si vous avez stocké les informations de connexion à la base de données sous le noeud <b class="cBold">Metadata</b> du <b class="cBold">Repository</b> ou sélectionnez le mode <b class="cBold">Built-In</b>, puis renseignez manuellement les champs suivants&#160;: <b class="cBold">Host</b>, <b class="cBold">Port</b>, <b class="cBold">Database</b>, <b class="cBold">Username</b> et <b class="cBold">Password</b>. Pour plus d&#39;informations sur les propriétés du composant <b class="cBold">tMysqlOutput</b><a href="tMysqlOutput_Prop.html">, see&#160;<em class="cEmphasis">tMysqlOutput.</em></a></li></div>
+<a name="wp2516781"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table</b>, saisissez le nom de la table dont les champs contiendront les données extraites du fichier délimité.</li></div>
+<a name="wp2516788"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Action on table</b>, sélectionnez l&#39;opération que vous souhaitez effectuer sur la table. Pour ce scénario, sélectionnez <b class="cBold">Create table</b> pour créer la table.</li></div>
+<a name="wp2516798"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Action on data</b>, sélectionnez l&#39;opération que vous souhaitez effectuer sur les données. Pour ce scénario, laissez l&#39;option <b class="cBold">Insert</b>.</li></div>
+<a name="wp2516820"> </a><div class="pSmartList2"><li>Enregistrez le Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2517094"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull6.png" id="wp2517090" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2517148"> </a><p class="pIndented1">
+A partir de votre explorateur de base de données, vous pouvez vérifier que la table <em class="cEmphasis">namelist</em> a bien été créée. Elle se présente sous la forme des quatre colonnes <em class="cEmphasis">id</em>, <em class="cEmphasis">first_name</em>, <em class="cEmphasis">last_name </em>et <em class="cEmphasis">login</em> du schéma défini en sortie et les champs vides du fichier de départ on été remplacés par la valeur NULL. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEmptyToNull_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExternalSortRow_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

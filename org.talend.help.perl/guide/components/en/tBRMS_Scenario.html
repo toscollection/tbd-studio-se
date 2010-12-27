@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:29">
+    <title>Scenario: Applying business rules to an input flow to filter relevant data</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBRMS_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tConvertType_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3625496"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3647172"> </a><h2 class="pHeading2">
+Scenario: Applying business rules to an input flow to filter relevant data
+</h2>
+<a name="wp3647180"> </a><p class="pIndented1">
+This scenario describes a five component Job in which <b class="cBold">tBRMS</b> applies Drools Guvnor business rules to an input flow, in order that relevant data can be retrieved in the output. In this case, rules are applied to input data concerning candidates applying for a loan. The output will show whether the candidates qualify or not. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647189"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tFileInputExcel</b>, <b class="cBold">tMap</b>, <b class="cBold">tBRMS</b>, <b class="cBold">tExtractXMLField</b>, <b class="cBold">tLogRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647213"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tBRMS_Components.png" id="wp3647210" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647228"> </a><div class="pSmartList2"><li>Link <b class="cBold">tFileInputExcel</b> to <b class="cBold">tMap</b> using a <b class="cBold">Row &gt; Main</b> connection.</li></div>
+<a name="wp3647241"> </a><div class="pSmartList2"><li>Link <b class="cBold">tMap</b> to <b class="cBold">tBRMS</b> using a <b class="cBold">Row &gt; *New Output* (Main)</b> connection.</li></div>
+<a name="wp3647256"> </a><div class="pSmartList2"><li>Link <b class="cBold">tBRMS</b> to <b class="cBold">tExtractXMLField</b> using a <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> connection and then use another <b class="cBold">Row &gt; Main</b> connection to connect <b class="cBold">tExtractXMLField</b> to <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3647277"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputExcel</b> to open its <b class="cBold">Basic settings</b> view:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647284"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tFileInputExcel_BasicSettings.png" id="wp3647281" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647295"> </a><div class="pSmartList2"><li>Next to the <b class="cBold">File name/Stream</b> field, click<b class="cBold"> [...]</b> to browse to and select the Excel file which contains the input data. </li></div>
+<a name="wp3647312"> </a><div class="pSmartList2"><li>In the <b class="cBold">Sheet list</b> area, click the <img src="../Images/plus_button.png" id="wp3647305" border="0" hspace="0" vspace="0"/> button to add a new <b class="cBold">Sheet</b> row to the table.</li></div>
+<a name="wp3647316"> </a><div class="pSmartList2"><li>Enter the name of the sheet which contains the input data, within double quotation marks.</li></div>
+<a name="wp3647323"> </a><div class="pSmartList2"><li>In the <b class="cBold">Header</b> field, enter the number of the row which contains the column names.</li></div>
+<a name="wp3647333"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tMap</b> to open its <b class="cBold">Map Editor</b>:</li></div>
+<a name="wp3647344"> </a><div class="pSmartList2"><li>To the top right of the <b class="cBold">Map Editor</b>, click  <img src="../Images/plus_button.png" id="wp3647339" border="0" hspace="0" vspace="0"/> to add an output schema.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647351"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tMap_NewOutput.png" id="wp3647348" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647362"> </a><div class="pSmartList2"><li>Enter a name for the <b class="cBold">New output</b> schema in the corresponding field and click <b class="cBold">OK</b> to close the dialog box:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647371"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tMap_Mapped.png" id="wp3647368" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647381"> </a><div class="pSmartList2"><li>Map the columns and set the parameters as required, then click <b class="cBold">Ok</b> to close the <b class="cBold">Map Editor</b>.</li></div>
+<a name="wp3647388"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/Components-13-07-047.jpg" height="50" width="50" align="left" id="wp3647385" border="0" hspace="0" vspace="0"/><br />
+For further information about mapping schemas and defining their parameters, see <em class="cEmphasis">Mapping data flows</em> in the <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.<br />
+</p>
+<a name="wp3647411"> </a><div class="pSmartList2"><li>Click <b class="cBold">tBRMS</b> to open its <b class="cBold">Basic settings</b> view:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647418"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/tBRMS_Basic_settings.png" id="wp3647415" border="0" hspace="0" vspace="0"/>
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647433"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Property Type</b> and <b class="cBold">Schema</b> as <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3647442"> </a><div class="pSmartList2"><li>Click <b class="cBold">[...]</b> next to <b class="cBold">Edit schema</b> to open the schema editor.<br />The input schema to the left is automatically retrieved from <b class="cBold">tMap</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647454"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tBRMS_Schemas.png" id="wp3647451" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647465"> </a><div class="pSmartList2"><li>In the output area to the right, click <img src="../Images/plus_button.png" id="wp3647462" border="0" hspace="0" vspace="0"/> to add a new column which will serve to write the output data to an XML file.</li></div>
+<a name="wp3647473"> </a><div class="pSmartList2"><li>Enter a name for the column and define the <b class="cBold">Type</b> as String.</li></div>
+<a name="wp3647480"> </a><div class="pSmartList2"><li>Next to <b class="cBold">XML Field</b>, select the name of the XML column you entered in the output schema.</li></div>
+<a name="wp3647487"> </a><div class="pSmartList2"><li>Enter the <b class="cBold">Guvnor URL</b> in the corresponding field.</li></div>
+<a name="wp3647496"> </a><div class="pSmartList2"><li>Enter the <b class="cBold">Guvnor Package</b> and <b class="cBold">Class Name</b> which correspond to the business rule you want to apply to the input data.</li></div>
+<a name="wp3647511"> </a><div class="pSmartList2"><li>Next to the <b class="cBold">Module List</b> field,  click <b class="cBold">[...]</b> to open the <b class="cBold">Deploy Jar</b> dialog box.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647518"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tBRMS_DeployJar.png" id="wp3647515" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647527"> </a><div class="pSmartList2"><li>Enter the <b class="cBold">URL</b> and your authentication information in the corresponding fields.</li></div>
+<a name="wp3647538"> </a><div class="pSmartList2"><li>Click <b class="cBold">[...]</b> to browse the Jar files in the <b class="cBold">Select Jar</b><b class="cBold">file</b> dialog box:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647545"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/BRMS_Select_Jarfile.png" id="wp3647542" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647550"> </a><div class="pSmartList2"><li>Expand the nodes to browse to and select the Jar file which contains the rules of interest, then click <b class="cBold">OK</b> to close the dialog box:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647562"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/BRMS_Deploy_Jar2.png" id="wp3647559" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647570"> </a><div class="pSmartList2"><li>From the list next to the Jar file selected, select the corresponding class name and click <b class="cBold">OK</b> to close the dialog box.<br />A <b class="cBold">Talend</b> programme transforms the business rule library into a form which can be used in the Job and creates an XSD file at the root of your studio.</li></div>
+<a name="wp3647582"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Advanced Settings</b> tab to set the additional parameters.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647589"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/BRMS_Advanced_settings.png" id="wp3647586" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647599"> </a><div class="pSmartList2"><li>In the <b class="cBold">XML mapping</b> area, click <b class="cBold">[...]</b> to configure the XML tree:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647606"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree.png" id="wp3647603" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647615"> </a><div class="pSmartList2"><li>Right-click the first row in the <b class="cBold">Link target</b> table and select Import XML Tree.</li></div>
+<a name="wp3647619"> </a><div class="pSmartList2"><li>Browse to and select the XSD file from the root of your studio.</li></div>
+<a name="wp3647627"> </a><div class="pSmartList2"><li>The XML Tree schema is completed automatically:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647634"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree2.png" id="wp3647631" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647642"> </a><div class="pSmartList2"><li>Drop all of the relevant columns from the <b class="cBold">Schema list</b> onto the corresponding related column fields in the <b class="cBold">Link target</b> schema:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647651"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree_attribute.png" id="wp3647648" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647661"> </a><div class="pSmartList2"><li>From the dialog box which appears, select the <b class="cBold">Create as attribute of target node</b> option.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647668"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree3.png" id="wp3647665" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647680"> </a><div class="pSmartList2"><li>Right-click the <b class="cBold">reason</b> field and select <b class="cBold">Set As Loop Element</b> from the list.</li></div>
+<a name="wp3647687"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp3647697"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tExtractXMLField</b> to open its<b class="cBold"> Basic settings</b> view.</li></div>
+<a name="wp3647705"> </a><div class="pSmartList2"><li>Click <b class="cBold">Edit schema</b> to open the schema editor.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647712"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tExtractXMLField_Output_schema.png" id="wp3647709" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647717"> </a><div class="pSmartList2"><li>In the Output schema to the right of the editor, add and define the columns exactly as they appear in the <b class="cBold">tBRMS</b> input schema.</li></div>
+<a name="wp3647728"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the editor.</li></div>
+<a name="wp3647735"> </a><div class="pSmartList2"><li>In the <b class="cBold">Loop XPath query</b> field, enter the name of the <b class="cBold">XML Tree</b> root tag, as it appears in the <b class="cBold">tBRMS</b> component&#39;s <b class="cBold">Configure XML Tree</b> editor, preceeded by the forward slash symbol and between double quotation marks, eg.: &quot;/loanSimulator&quot;.</li></div>
+<a name="wp3647741"> </a><div class="pSmartList2"><li>In the <b class="cBold">XPath query</b> fields, next to the corresponding columns, enter the fields as they appear in the <b class="cBold">tBRMS</b> component&#39;s <b class="cBold">XML Tree</b> fields, in the <b class="cBold">Link Targe</b><b class="cBold">t</b> area of the <b class="cBold">Configure XML tree </b>editor, between double quotation marks.</li></div>
+<a name="wp3647765"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tLogRow</b> to open its <b class="cBold">Basic settings</b> view:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647772"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tLogRow_BasicSettings.png" id="wp3647769" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3647784"> </a><div class="pSmartList2"><li>In the Mode area, select the <b class="cBold">Table (print values in cells of a table)</b> option.</li></div>
+<a name="wp3647790"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6</b> to run it.<br />The results are written to an output table in the <b class="cBold">Run</b> view:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3647800"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tbrms_scenario_result.png" id="wp3649780" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3649783"> </a><p class="pIndented1">
+The business rule has been applied to the input data and the table of results indicates which  candidates have been rejected. The <b class="cBold">name</b> column indicates the reason for which the candidate has been rejected.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBRMS_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tConvertType_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

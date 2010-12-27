@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;: Lire des lignes complètes dans un fichier délimité</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputFullRow_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputJSON_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3449004"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3449011"> </a><h2 class="pHeading2">
+Scénario&#160;: Lire des lignes complètes dans un fichier délimité
+</h2>
+<a name="wp3449014"> </a><p class="pIndented1">
+Le scénario suivant crée un Job à deux composants permettant de lire des lignes complètes à partir d&#39;un fichier et d&#39;afficher les données de sortie dans la console de log <b class="cBold">Run</b>. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3449029"> </a><div class="pSmartList2"><li>A partir de la Palette, cliquez-déposez les composants <b class="cBold">tFileInputFullRow</b> et <b class="cBold">tLogRow</b> dans l&#39;éditeur graphique. </li></div>
+<a name="wp3449039"> </a><div class="pSmartList2"><li>Cliquez-droit sur le composant <b class="cBold">tFileInputFullRow</b> et connectez-le au <b class="cBold">tLogRow </b>à l&#39;aide d&#39;un lien de type <b class="cBold">Row Main</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3449051"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputFullRow.png" id="wp3449048" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3449060"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le composant <b class="cBold">tFileInputFullRow</b>.</li></div>
+<a name="wp3449069"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tFileInputFullRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3449081"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputFullRow1.png" id="wp3449078" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3449096"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b>, configurez le champ <b class="cBold">Schema</b> en mode <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3449105"> </a><div class="pSmartList2"><li>Clickez sur le bouton <b class="cBold">[...]</b> du champ <b class="cBold">Edit schema </b>pour voir les données à passer au composant <b class="cBold">tLogRow</b>. Notez que le schéma est en read-only et ne comporte qu&#39;une seule colonne, <em class="cEmphasis">line.</em></li></div>
+</ul></div>
+</ul></div>
+<a name="wp3449120"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputFullRow2.png" id="wp3449117" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3449128"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, renseignez le chemin d&#39;accès au fichier à traiter ou cliquez sur le bouton <b class="cBold">[...]</b>. Ce champ est obligatoire. Dans ce scénario, le fichier à lire s&#39;appelle <em class="cEmphasis">test5 </em>et comporte trois lignes comprenant chacune deux champs séparés par un point-virgule. </li></div>
+<a name="wp3449141"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Row separator</b>, renseignez le séparateur permettant d&#39;identifier les fins de ligne. </li></div>
+<a name="wp3449148"> </a><div class="pSmartList2"><li>Dans la champ <b class="cBold">Header</b>, indiquez la valeur 1. Dans ce scénario, ni le pied-de-page ni le nombre de lignes à traiter ne sont renseignés. </li></div>
+<a name="wp3449158"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le <b class="cBold">tLogRow</b> puis cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (<b class="cBold">Basic settings</b>). Pour plus d&#39;informations, consultez le <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp3449173"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3449180"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputFullRow3.png" id="wp3449177" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3449186"> </a><p class="pBodyRelative">
+Le composant <b class="cBold">tFileInputFullRow</b> lit les trois lignes une à une sans tenir compte des séparateurs de champs et les lignes complètes apparaissent dans la console <b class="cBold">Run</b>.
+</p>
+<a name="wp3449199"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3449194" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Pour extraire des lignes uniquement les champs, utilisez le <b class="cBold">tExtractDelimitedFields</b>, le <b class="cBold">tExtractPositionalFields</b> et le <b class="cBold">tExtractRegexFields</b>. Pour plus d&#39;informations, consultez les composants <a href="tExtractDelimitedFields_Prop.html"><em class="cEmphasis">tExtractDelimitedFields</em></a>, <a href="tExtractPositionalFields_Prop.html"><em class="cEmphasis">tExtractPositionalFields</em></a> et <a href="tExtractRegexFields_Prop.html"><em class="cEmphasis">tExtractRegexFields</em></a>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputFullRow_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputJSON_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

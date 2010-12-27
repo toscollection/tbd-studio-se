@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:52">
+    <title>Scénario&#160;: Lire des données dans la base de données de la console de stewardship</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tStewardshipTaskInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tStewardshipTaskOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3573900"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3573907"> </a><h2 class="pHeading2">
+Scénario&#160;: Lire des données dans la base de données de la console de stewardship
+</h2>
+<a name="wp3573913"> </a><p class="pIndented1">
+Ce scénario décrit un Job a deux composants qui lit un ensemble de données à partir de la base de données de <b class="cBold">Talend Data Stewardship Console</b>. Vous pouvez utiliser n&#39;importe quel composant <b class="cBold">Talend</b> de sortie et écrire les données récupérées de la base de données de stewardship dans l&#39;application ou la base de données.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3575542"> </a><div class="pSmartList2"><li>Les données maître filtrées sont récupérées et affichées dans la console de log.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3573924"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tStewardshipTaskInput.png" id="wp3573919" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3576032"> </a><div class="pSmartList2"><li>Déposez les composants <b class="cBold">tStewardshipTaskInput</b> et <b class="cBold">tLogRow</b> de la <b class="cBold">Palette </b>dans l&#39;espace de modélisation graphique.</li></div>
+<a name="wp3576040"> </a><div class="pSmartList2"><li>Connectez les deux composants à l&#39;aide d&#39;un lien <b class="cBold">Row Main</b>.</li></div>
+<a name="wp3576049"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tStewardshipTaskInput</b> afin d&#39;ouvrir sa vue <b class="cBold">Basic settings</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3576083"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tStewardshipTaskInput2.png" id="wp3576080" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3576103"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Built-In</b> et cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> afin d&#39;ouvrir une boîte de dialogue. <br />Vous pouvez définir la structure des données que vous souhaitez lire dans la base de données <b class="cBold">Talend Data Stewardship Console</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3576129"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tStewardshipTaskInput3.png" id="wp3576126" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3576150"> </a><div class="pSmartList2"><li>Les données sont collectées des trois colonnes d&#39;entrée définies&#160;: <em class="cEmphasis">Firstname</em>, <em class="cEmphasis">Lastname</em> et <em class="cEmphasis">DOB</em> (prénom, nom et date de naissance).<br /> Les données sont également collectées à partir de toutes les colonnes par défaut correspondant à la liste des tâches dans <b class="cBold">Talend Data Stewardship Console</b>.</li></div>
+<a name="wp3576161"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue et passer à l&#39;étape suivante.</li></div>
+<a name="wp3576167"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Host</b>, saisissez entre guillemets l&#39;adresse IP du serveur de la base de données de la console de stewardship.</li></div>
+<a name="wp3576174"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Port</b>, saisissez entre guillemets le numéro du port d&#39;écoute du serveur de la base de données.</li></div>
+<a name="wp3576184"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez votre identifiant et votre mot de passe de connexion au serveur MDM.</li></div>
+<a name="wp3576191"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Type</b>, sélectionnez le type de tâches que vous souhaitez récupérer de la console de stewardship&#160;: <b class="cBold">Resolution</b> ou <b class="cBold">Data</b>. Dans cet exemple, seules les tâches de résolution sont récupérées.<br />Pour plus d&#39;informations concernant les types de tâches, consultez le <b class="cBold">Guide</b> <b class="cBold">Talend Data Stewardship Console</b> <b class="cBold">User Guide</b> (en anglais).</li></div>
+<a name="wp3576210"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Owner</b>, saisissez entre guillemets le nom du propriétaire de la tâche, c&#39;est-à-dire l&#39;utilisateur auquel est assignée la tâche,&#160;<em class="cEmphasis">Administrator</em> dans cet exemple.</li></div>
+<a name="wp3576271"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3576269" border="0" hspace="0" vspace="0"/><br />
+Une tâche peut être assignée à un utilisateur spécifique soit à partir de la vue <b class="cBold">Basic settings </b>du composant <b class="cBold">tStewardshipTaskOutput</b>, soit directement à partir de la console de stewardship par un administrateur. Pour plus d&#39;informations, consultez&#160;<a href="tStewardshipTaskOutput_Prop.html"><em class="cEmphasis">tStewardshipTaskOutput</em></a> et le <b class="cBold">Guide</b> <b class="cBold">Talend Data Stewardship Console</b> <b class="cBold">User Guide</b> (en anglais).
+</p>
+<a name="wp3576301"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Tag</b>, saisissez le nom de la catégorie du tag associé aux tâches que vous souhaitez lire. Ce champ n&#39;est pas utilisé dans ce scénario. <br />Pour plus d&#39;informations, consultez le <b class="cBold">Guide</b> <b class="cBold">Talend Data Stewardship Console</b> <b class="cBold">User Guide</b> (en anglais).</li></div>
+<a name="wp3576317"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Start Date</b> et <b class="cBold">End Date</b> fields, saisissez entre guillemets une plage de dates de création de tâches durant laquelle vous souhaitez lire les tâches. Ce champ n&#39;est pas utilisé dans ce scénario.</li></div>
+<a name="wp3576324"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Star ranking</b>, sélectionnez dans la liste le nombre d&#39;étoiles, de&#160;0 à&#160;5, à assigner aux tâches dans la console de stewardship. Cela permet de filtrer les tâches à récupérer selon leur nombre d&#39;étoiles.<br />Dans cet exemple, sélectionnez&#160;<em class="cEmphasis">2</em> dans la liste. Toutes les tâches ayant deux étoiles ou plus seront récupérées. </li></div>
+<a name="wp3576365"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3576360" border="0" hspace="0" vspace="0"/><br />
+Si vous sélectionnez&#160; <em class="cEmphasis">All</em> dans la liste, vous récupérerez toutes les tâches, quel que soit leur nombre d&#39;étoiles.
+</p>
+<a name="wp3576385"> </a><div class="pSmartList2"><li>Dans le champ<b class="cBold"> Limit</b>, saisissez un nombre afin de limiter les tâches à récupérer dans la base de données de stewardship.</li></div>
+<a name="wp3576394"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation graphique, double-cliquez sur le composant <b class="cBold">tLogRow</b> afin d&#39;afficher sa vue <b class="cBold">Basic settings</b> et définir ses propriétés.</li></div>
+<a name="wp3576401"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Edit Schema</b> pour ouvrir la boîte de dialogue du schéma et vérifier que le schéma a bien été reçu du composant précédent. Si ce n&#39;est pas le cas, cliquez sur <b class="cBold">Sync Columns</b>.</li></div>
+<a name="wp3576413"> </a><div class="pSmartList2"><li>Sauvegardez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3576448"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tStewardshipTaskInput4.png" id="wp3576445" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3576461"> </a><p class="pIndented1">
+Le composant <b class="cBold">tStewardshipTaskInput</b> a récupéré les ensembles de données stockés dans la base de données de la console de stewardship, sous forme de tâches selon les critères de recherche que vous utilisez. Le schéma de sortie est le même pour toutes les tâches récupérées. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tStewardshipTaskInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tStewardshipTaskOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

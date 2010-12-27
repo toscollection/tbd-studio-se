@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:52">
+    <title>Scénario&#160;: Router un enregistrement vers l&#39;Event Manager</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMRouteRecord_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMSP_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3508214"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3508221"> </a><h2 class="pHeading2">
+Scénario&#160;: Router un enregistrement vers l&#39;Event Manager
+</h2>
+<a name="wp3508230"> </a><p class="pIndented1">
+Dans ce scénario, le composant <b class="cBold">tMDMRouteRecord</b> est utilisé pour soumettre à l&#39;<b class="cBold">Event Manager</b> la clé primaire d&#39;un enregistrement notifiant une mise à jour, afin que l&#39;<b class="cBold">Event Manager</b> déclenche un processus informant l&#39;utilisateur de la mise à jour effectuée. 
+</p>
+<a name="wp3508243"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3508238" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+<b class="cBold">Talend MDM</b> est sensible à la casse, respectez donc les majuscules et les minuscules lorsque vous réalisez ce scénario.
+</p>
+<a name="wp3508250"> </a><h3 class="pHeading3">
+Prérequis du scénario
+</h3>
+<a name="wp3508254"> </a><p class="pIndented2">
+Les prérequis pour la réalisation de ce scénario sont les suivants&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508259"> </a><div class="pSmartList3"><li>Un conteneur de données contenant différents enregistrements utilisant un modèle spécifique. Dans ce scénario, le conteneur de données est <em class="cEmphasis">Product</em>, et un enregistrement est inclus dans le conteneur, en suivant le modèle nommé <em class="cEmphasis">Product</em>&#160;:</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508274"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord1.png" id="wp3508271" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3508277"> </a><p class="pIndented2">
+Cette capture d&#39;écran présente l&#39;un des enregistrements produit stockés avec tous les attributs que vous pouvez voir.
+</p>
+<a name="wp3508281"> </a><p class="pIndented2">
+Pour plus d&#39;informations concernant la création d&#39;un conteneur de données ou d&#39;un modèle de données, consultez votre <b class="cBold">Guide</b> <b class="cBold">Talend</b> <b class="cBold">Master Data Management Administrator Guide</b> (en anglais).
+</p>
+<a name="wp3508294"> </a><p class="pIndented2">
+Pour plus d&#39;informations concernant la création d&#39;un enregistrement et l&#39;accès à ses attributs, consultez le <b class="cBold">Guide</b> <b class="cBold">Talend</b> <b class="cBold">MDM Web User Interface User Guide</b> (en anglais).
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508309"> </a><div class="pSmartList3"><li>Un Job, utilisé pour informer l&#39;utilisateur de la mise à jour, déjà déployé sur votre serveur MDM. Dans ce scénario, le Job est appelé <em class="cEmphasis">message</em>, il n&#39;utilise que le composant <b class="cBold">tMsgBox</b>. </li></div>
+<a name="wp3508324"> </a><div class="pSmartList3"><li>Double-cliquez sur le composant afin d&#39;afficher et configurer ses <b class="cBold">Basic settings</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508331"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord2.png" id="wp3508328" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508343"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Title</b>, saisissez &quot;<em class="cEmphasis">Talend MDM</em>&quot;.</li></div>
+<a name="wp3508354"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Message</b>, saisissez le message qui apparaîtra&#160;: <em class="cEmphasis">&quot;A record is updated&quot;</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508362"> </a><p class="pIndented2">
+Pour plus d&#39;informations concernant le composant <b class="cBold">tMsgBox</b>, consultez la section&#160;<a href="tMsgBox_Prop.html"><em class="cEmphasis">tMsgBox</em></a>.
+</p>
+<a name="wp3508370"> </a><p class="pIndented2">
+Pour plus d&#39;informations sur comment déployer un Job sur le serveur MDM, consultez le <b class="cBold">Guide</b> <b class="cBold">Talend</b> <b class="cBold">Master Data Management Administrator Guide</b> (en anglais).
+</p>
+<a name="wp3508384"> </a><h3 class="pHeading3">
+Router un enregistrement afin de déclencher le processus correspondant
+</h3>
+<a name="wp3508387"> </a><p class="pIndented2">
+Ce scénario vous explique comment déclencher un processus à l&#39;aide d&#39;un composant <b class="cBold">tMDMRouteRecord</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508405"> </a><div class="pSmartList3"><li>Connectez-vous à l&#39;interface Web <b class="cBold">Talend</b> <b class="cBold">MDM</b> et cliquez sur <b class="cBold">Browse Records</b>. <br />Pour plus d&#39;informations concernant la connexion à l&#39;interface Web <b class="cBold">Talend</b> <b class="cBold">MDM</b> et l&#39;ouverture de la vue <b class="cBold">Browse Records</b>, consultez le <b class="cBold">Guide Talend MDM Web User Interface User Guide </b>(en anglais).</li></div>
+<a name="wp3508430"> </a><div class="pSmartList3"><li>Dans le coin supérieur droit de la page Web, cliquez sur le bouton <img src="../Images/show_button.png" id="wp3508427" border="0" hspace="0" vspace="0"/>  afin d&#39;afficher le panneau <b class="cBold">Actions</b>.</li></div>
+<a name="wp3508440"> </a><div class="pSmartList3"><li>Dans le panneau <b class="cBold">Actions</b> de droite, sélectionnez le conteneur de données requis, ainsi que le modèle de données contenant le fichier à mettre à jour. Dans ce scénario, le conteneur de données et le modèle de données sont tous les deux appelés&#160;<em class="cEmphasis">Product</em>.</li></div>
+<a name="wp3508451"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Save</b> afin de sauvegarder le conteneur et le modèle de données sélectionnés.</li></div>
+<a name="wp3508457"> </a><div class="pSmartList3"><li>Dans la vue <b class="cBold">Browse Records</b>, sélectionnez l&#39;entité souhaitée. Dans cet exemple, sélectionnez&#160;<em class="cEmphasis">Product</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508469"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord3.png" id="wp3508466" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508477"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Search</b> pour ouvrir la liste des enregistrements dans la partie inférieure de la page Web.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508486"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord4.png" id="wp3508483" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508491"> </a><div class="pSmartList3"><li>Double-cliquez sur l&#39;un des enregistrements produit afin d&#39;afficher ses attributs dans une nouvelle vue dédiée à ce produit. Par exemple, ouvrez le produit&#160;<em class="cEmphasis">Talend Mug</em> ayant l&#39;Id unique&#160;<em class="cEmphasis">231035938</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508506"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord1.png" id="wp3508503" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508511"> </a><div class="pSmartList3"><li>Dans cette vue, modifiez la valeur de l&#39;un des attributs. Par exemple, mettez à jour ce produit. Rendez-le disponible en cochant la case <b class="cBold">Availability</b>.</li></div>
+<a name="wp3508522"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Save</b> afin de valider la mise à jour.</li></div>
+<a name="wp3508534"> </a><div class="pSmartList3"><li>Ouvrez votre Studio <b class="cBold">Talend</b> <b class="cBold">MDM</b> et accédez au hub MDM (vue <b class="cBold">MDM Server</b>). Pour plus d&#39;informations concernant le lancement du Studio <b class="cBold">Talend</b> <b class="cBold">MDM </b>et sa connexion au hub MDM, consultez le <b class="cBold">Guide</b> <b class="cBold">Talend</b> <b class="cBold">Master Data Management Administrator Guide</b> (en anglais).</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508558"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord5.png" id="wp3508555" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508569"> </a><div class="pSmartList3"><li>Sous le noeud <b class="cBold">Job Repository </b>de la vue <b class="cBold">MDM Server</b>, cliquez-droit sur le Job&#160;<em class="cEmphasis">message</em>.</li></div>
+<a name="wp3508579"> </a><div class="pSmartList3"><li>Dans le menu contextuel, sélectionnez <b class="cBold">Generate Talend Job Caller Process</b>. Le processus utilisé pour appeler ce Job est généré et s&#39;affiche dans le répertoire <b class="cBold">Event Management</b> &gt; <b class="cBold">Process</b>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508594"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord6.png" id="wp3508591" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508606"> </a><div class="pSmartList3"><li>Sous le noeud <b class="cBold">Event Management</b>, cliquez-droit sur <b class="cBold">Trigger</b>.</li></div>
+<a name="wp3508613"> </a><div class="pSmartList3"><li>Dans le menu contextuel, sélectionnez <b class="cBold">New</b>.</li></div>
+<a name="wp3508624"> </a><div class="pSmartList3"><li>Dans l&#39;assistant <b class="cBold">New Trigger</b>, nommez le déclencheur&#160;<em class="cEmphasis">TriggerMessage</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508631"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord7.png" id="wp3508628" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508639"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">OK</b> afin d&#39;ouvrir la vue du nouveau déclencheur dans l&#39;espace de travail de votre studio.</li></div>
+<a name="wp3508643"> </a><div class="pSmartList3"><li>Dans la vue du déclencheur, configurez le déclencheur afin qu&#39;il lance le processus appelant le Job <em class="cEmphasis">message</em> une fois la mise à jour effectuée.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508655"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord8.png" id="wp3508652" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508665"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Description</b>, saisissez&#160;<em class="cEmphasis">Trigger that calls the Talend Job: message_0.1.war</em>.</li></div>
+<a name="wp3508673"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Entity</b>, sélectionnez l&#39;entité métier sur laquelle vous souhaitez déclencher le processus, ou saisissez son nom. Dans cet exemple, son nom est&#160;<em class="cEmphasis">Update</em>.</li></div>
+<a name="wp3508687"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Service JNDI Name</b>, sélectionnez <b class="cBold">callprocess</b> dans la liste déroulante.</li></div>
+<a name="wp3508693"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Service Parameters</b>, complétez la définition des paramètres en saisissant la valeur&#160;: <em class="cEmphasis">CallJob_message_0.1.war</em>. Cette valeur est le nom du processus à appeler, que vous pouvez trouver dans le dossier<b class="cBold"> Event Management</b> &gt; <b class="cBold">Process</b> dans la vue <b class="cBold">MDM server</b>.</li></div>
+<a name="wp3508718"> </a><div class="pSmartList3"><li>Dans la zone <b class="cBold">Trigger xPath Expressions</b>, cliquez sur le bouton <img src="../Images/MDMTrigger_AddButton.png" id="wp3508715" border="0" hspace="0" vspace="0"/> sous le tableau, afin d&#39;ajouter une ligne XPath.</li></div>
+<a name="wp3508725"> </a><div class="pSmartList3"><li>Dans la ligne nouvellement ajoutée, cliquez sur le bouton <b class="cBold">[...]</b> pour ouvrir une boîte de dialogue dans laquelle vous pouvez sélectionner l&#39;entité ou l&#39;élément sur laquelle/lequel vous souhaitez définir des conditions. Dans cet exemple, son nom est&#160;<em class="cEmphasis">Update/OperationType</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508737"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord9.png" id="wp3508734" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508745"> </a><div class="pSmartList3"><li>Dans la colonne <b class="cBold">Value</b>, saisissez une valeur pour cette ligne. Dans cet exemple, la valeur est&#160;<em class="cEmphasis">UPDATE</em>.</li></div>
+<a name="wp3508755"> </a><div class="pSmartList3"><li>Dans la colonne <b class="cBold">Condition Id</b>, saisissez un identifiant unique pour la condition que vous souhaitez définir, par exemple&#160;<em class="cEmphasis">C1</em>.</li></div>
+<a name="wp3508765"> </a><div class="pSmartList3"><li>Dans la zone <b class="cBold">Conditions</b>, saisissez la requête que vous souhaitez exécuter sur les données en utilisant l&#39;ID de la condition ID <em class="cEmphasis">C1</em> défini plus tôt.</li></div>
+<a name="wp3508776"> </a><div class="pSmartList3"><li>Appuyez sur <b class="cBold">Ctrl+S</b> pour sauvegarder le déclencheur.</li></div>
+<a name="wp3508788"> </a><div class="pSmartList3"><li>Dans la vue <b class="cBold">MDM server</b>, double-cliquez sur <b class="cBold">Data container</b> &gt; <b class="cBold">system</b> &gt; <b class="cBold">UpdateReport</b> pour ouvrir la vue <b class="cBold">Data Container Browser UpdateReport</b>. Le rapport <b class="cBold">UpdateReport</b> contient les traces complètes de toutes les actions de création, de mise à jour ou de suppression (create, update ou delete) effectuées sur les données maître.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508806"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord10.png" id="wp3508803" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508820"> </a><div class="pSmartList3"><li>A côté du champ <b class="cBold">Entity</b> de cette vue, cliquez sur le bouton <img src="../Images/SearchButton.png" id="wp3508817" border="0" hspace="0" vspace="0"/> pour rechercher tous les enregistrements concernant les actions dans le rapport <b class="cBold">UpdateReport</b>. Notez que l&#39;entité <b class="cBold">Update</b> ne signifie pas nécessairement que l&#39;action enregistrée est une mise à jour, c&#39;est simplement le nom de l&#39;entité définie par le modèle de données du rapport <b class="cBold">UpdateReport</b> pouvant contenir différentes actions comme <em class="cEmphasis">create</em>, <em class="cEmphasis">delete</em>, et <em class="cEmphasis">update</em>.</li></div>
+<a name="wp3508842"> </a><div class="pSmartList3"><li>Le dernier enregistrement correspond aux modifications apportées à l&#39;enregistrement produit au début du scénario. La clé primaire de cet enregistrement est&#160;<em class="cEmphasis">genericUI.1283244014172</em>. Cet enregistrement sera routé vers l&#39;<b class="cBold">Event trigger</b>.</li></div>
+<a name="wp3508860"> </a><div class="pSmartList3"><li>Dans la barre de menu du studio, cliquez sur <b class="cBold">Window</b> &gt; <b class="cBold">Perspective</b> &gt; <b class="cBold">Design workspace</b> afin de créer le Job routant l&#39;enregistrement.</li></div>
+<a name="wp3508872"> </a><div class="pSmartList3"><li>Dans la perspective <b class="cBold">Design workspace</b>, créez un Job et nommez-le&#160;<em class="cEmphasis">RouteRecord</em>.</li></div>
+<a name="wp3508881"> </a><div class="pSmartList3"><li>Pour ce faire, cliquez-droit sur<b class="cBold"> Job Designs</b>, dans la vue <b class="cBold">Repository</b>. Dans le menu contextuel, sélectionnez <b class="cBold">Create Job</b>.</li></div>
+<a name="wp3508894"> </a><div class="pSmartList3"><li>Un assistant s&#39;ouvre. Dans le champ <b class="cBold">Name</b>, saisissez&#160;<em class="cEmphasis">RouteRecord</em>, puis cliquez sur <b class="cBold">Finish</b>.</li></div>
+<a name="wp3508907"> </a><div class="pSmartList3"><li>Déposez le composant<b class="cBold"> tMDMRouteRecord</b> de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique.</li></div>
+<a name="wp3508916"> </a><div class="pSmartList3"><li>Double-cliquez sur ce composant afin d&#39;ouvrir sa vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3508923"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord11.png" id="wp3508920" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3508931"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">URL</b>, saisissez l&#39;adresse de votre serveur MDM. <em class="cEmphasis">http://localhost:8080/talend/TalendPort, dans cet exemple</em>.</li></div>
+<a name="wp3508944"> </a><div class="pSmartList3"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez respectivement votre identifiant et votre mot de passe de connexion.</li></div>
+<a name="wp3508951"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Data Container</b> saisissez le nom du conteneur de données contenant l&#39;enregistrement que vous souhaitez router vers l&#39;<b class="cBold">Event Manager</b>. Dans cet exemple, son nom est&#160;<em class="cEmphasis">UpdateReport</em>.</li></div>
+<a name="wp3508964"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Entity Name</b>, saisissez le nom de l&#39;entité à laquelle appartient l&#39;enregistrement que vous souhaitez router. Dans cet exemple, son nom est&#160;<em class="cEmphasis">Update</em>.</li></div>
+<a name="wp3508978"> </a><div class="pSmartList3"><li>Dans la zone <b class="cBold">IDS</b>, cliquez sur le bouton <b class="cBold">[+] </b>sous le tableau, afin d&#39;ajouter une ligne.</li></div>
+<a name="wp3508981"> </a><div class="pSmartList3"><li>Dans cette nouvelle ligne, renseignez la clé primaire de l&#39;enregistrement devant être routé vers l&#39;<b class="cBold">Event manager</b>, c&#39;est-à-dire&#160;<em class="cEmphasis">genericUI.1283244014172</em>, comme vous l&#39;avez vu dans le rapport <b class="cBold">Data Container Browser UpdateReport</b>.</li></div>
+<a name="wp3509000"> </a><div class="pSmartList3"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job. L&#39;<b class="cBold">Event manager</b> appelle le processus devant exécuter le Job&#160;<em class="cEmphasis">message</em> et générer la boîte de dialogue informant l&#39;utilisateur de la mise à jour effectuée.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3509012"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord12.png" id="wp3509009" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3509021"> </a><p class="pIndented2">
+Le composant <b class="cBold">tMDMRouteRecord</b> est utilisé pour soumettre à l&#39;<b class="cBold">Event Manager</b> la clé primaire d&#39;un enregistrement notifiant une mise à jour. L&#39;<b class="cBold">Event Manager</b> analyse le fichier et vérifie que les conditions définies dans la vue de configuration du déclencheur <em class="cEmphasis">Trigger&#39;s message</em> sont remplies, puis appelle le processus lançant le Job <em class="cEmphasis">Message</em>. Ce Job informe l&#39;utilisateur de la mise à jour effectuée en faisant apparaître une fenêtre pop-up.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMRouteRecord_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMSP_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

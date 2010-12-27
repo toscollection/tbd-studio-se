@@ -1,0 +1,445 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tMysqlRow</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlRollback_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlRow_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2974853"> </a><h2 class="pHeading1">
+tMysqlRow
+</h2>
+<a name="wp1406855"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tMysqlRow_icon32_white.png" id="wp1406852" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1449075"> </a><h2 class="pHeading2">
+tMysqlRow properties
+</h2>
+<a name="wp1384245"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2212974table1383914">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2212974"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2212976"> </a><div class="pCellBody">
+Databases/MySQL
+</div>
+</td>
+    <td><a name="wp2212985"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-05-274-0063.jpg" height="59" width="112" id="wp2212981" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2212990"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2212995"> </a><div class="pCellBody">
+<b class="cBold">tMysqlRow</b> is the specific component for this database query. It executes the SQL query stated in the specified database. The row suffix  means the component implements a flow in the job design although it doesn&#39;t provide output. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213002"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2213007"> </a><div class="pCellBody">
+Depending on the nature of the query and the database, <b class="cBold">tMysqlRow</b> acts on the actual DB structure or on the data (although without handling data). The SQLBuilder tool helps you write easily your SQL statements.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213014"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2213019"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2213021"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213023"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213025"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213030"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213032"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213034"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3600274"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3014685"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3014688"> </a><div class="pCellHeading">
+<em class="cEmphasis">DB Version</em>
+</div>
+</td>
+    <td><a name="wp3014695"> </a><div class="pCellBody">
+Select the MySQL version that you are using.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213041"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213259"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2213263"> </a><div class="pCellBody">
+Select this check box and click the relevant <b class="cBold">tMysqlConnection </b>component on the <b class="cBold">Component list</b> to reuse the connection details you already defined.<br />
+</div>
+<a name="wp3450906"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3450903" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213053"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213058"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2213060"> </a><div class="pCellBody">
+Database server IP address
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213062"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213067"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2213069"> </a><div class="pCellBody">
+Listening port number of DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213071"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213076"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2213078"> </a><div class="pCellBody">
+Name of the database
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213080"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213085"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2213090"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213092"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213099"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2213102"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields to be processed and passed on to the next component.  The schema is either built-in or stored remotely in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213104"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213106"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2655286"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema is created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213119"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213121"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2656689"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already  exists and is stored in  the Repository, hence can be reused. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3014715"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3014722"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table Name</em>
+</div>
+</td>
+    <td><a name="wp3014725"> </a><div class="pCellBody">
+Name of the table to be processed. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213134"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213139"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query type</em>
+</div>
+</td>
+    <td><a name="wp2213141"> </a><div class="pCellBody">
+Either<b class="cBold"> Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213143"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213145"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213150"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: Fill in manually the query statement or build it graphically using SQLBuilder
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213152"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213154"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213159"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the relevant query stored in the Repository. The Query field gets accordingly filled in.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3014731"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3014738"> </a><div class="pCellHeading">
+<em class="cEmphasis">Guess</em> <em class="cEmphasis">Query</em>
+</div>
+</td>
+    <td><a name="wp3014741"> </a><div class="pCellBody">
+Click the <b class="cBold">Guess Query</b> button to generate the query which corresponds to your table schema in the <b class="cBold">Query</b> field.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213161"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213166"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query</em>
+</div>
+</td>
+    <td><a name="wp2213168"> </a><div class="pCellBody">
+Enter your DB query  paying particularly attention to properly sequence the fields in order to  match  the schema definition. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213170"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213175"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp2213177"> </a><div class="pCellBody">
+This check box is selected by default. Clear the check box to skip the row on error and complete the process for error-free rows. If needed, you can retrieve the rows on error via a <b class="cBold">Row</b> &gt; <b class="cBold">Rejects</b> link.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213182"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2213186"> </a><div class="pCellHeading">
+<em class="cEmphasis">Additional JDBC parameters</em>
+</div>
+</td>
+    <td><a name="wp2213189"> </a><div class="pCellBody">
+Specify additional connection properties for the DB connection you are creating. This option is not available if you have selected the <b class="cBold">Use an existing connection</b> check box in the <b class="cBold">Basic settings</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213191"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213195"> </a><div class="pCellHeading">
+<em class="cEmphasis">Propagate QUERY&#39;s recordset</em>
+</div>
+</td>
+    <td><a name="wp2213198"> </a><div class="pCellBody">
+Select this check box to insert the result of the query in a COLUMN of the current flow. Select this column from the <b class="cBold">use column</b> list.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3014768"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3014774"> </a><div class="pCellBody">
+<em class="cEmphasis">Use PreparedStatement</em>
+</div>
+</td>
+    <td><a name="wp3014842"> </a><div class="pCellBody">
+Select this checkbox if you want to query the database using a PreparedStatement. In the <b class="cBold">Set PreparedStatement Parameter </b>table, define the parameters represented by &quot;?&quot; in the SQL instruction of the <b class="cBold">Query</b> field in the <b class="cBold">Basic Settings</b> tab.<br /><b class="cBold">Parameter Index</b>: Enter the parameter position in the SQL instruction.<br /><b class="cBold">Parameter Type</b>: Enter the parameter type.<br /><b class="cBold">Parameter Value</b>: Enter the parameter value.<br />
+</div>
+<a name="wp3014885"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3014878" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+This option is very useful if you need to execute the same query several times. Performance levels are increased
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213200"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213205"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2213210"> </a><div class="pCellBody">
+Select the encoding from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213212"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213217"> </a><div class="pCellHeading">
+<em class="cEmphasis">Commit every</em>
+</div>
+</td>
+    <td><a name="wp2213219"> </a><div class="pCellBody">
+Number of rows to be completed before committing batches of rows together into the DB. This option ensures transaction quality (but not rollback) and above all better performance on executions.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2213221"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2213226"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2213228"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2213233"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2213235"> </a><div class="pCellBody">
+This component offers the flexibility of the DB query and covers all possible SQL queries.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlRollback_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlRow_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

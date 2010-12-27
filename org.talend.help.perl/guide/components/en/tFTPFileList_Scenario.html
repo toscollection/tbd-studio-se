@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:55">
+    <title>Scenario: Iterating on a remote directory </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFTPFileList_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFTPFileProperties_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2752376"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2752383"> </a><h2 class="pHeading2">
+Scenario: Iterating on a remote directory 
+</h2>
+<a name="wp2752386"> </a><p class="pIndented1">
+The following Java scenario describes a three-component Job that connects to an FTP server, lists files held in a remote directory based on a filemask and finally recuperates and saves the files in a defined local directory. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2752394"> </a><div class="pSmartList2"><li>Drop the following components from the Palette to the design workspace: <b class="cBold">tFTPConnection</b>, <b class="cBold">tFTPFileList</b> and <b class="cBold">tFTPGet</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2757069"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFTPFileList1.png" id="wp2752391" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2752415"> </a><div class="pSmartList2"><li>Link <b class="cBold">tFTPConnection</b> to <b class="cBold">tFTPFileList</b> using an <b class="cBold">OnSubjobOk</b> connection and then <b class="cBold">tFTPFileList</b> to <b class="cBold">tFTPGet</b> using an <b class="cBold">Iterate</b> connection.</li></div>
+<a name="wp2752437"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFTPConnection</b> to display its<b class="cBold"> Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2752654"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFTPFileList2.png" id="wp2752651" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2752663"> </a><div class="pSmartList2"><li>In the <b class="cBold">Host</b> field, enter the IP address of the FTP server.</li></div>
+<a name="wp2752670"> </a><div class="pSmartList2"><li>In the <b class="cBold">Port</b> field, enter the listening port number.</li></div>
+<a name="wp2752679"> </a><div class="pSmartList2"><li>In the <b class="cBold">Username</b> and <b class="cBold">Password</b> fields, enter your authentication information for the FTP server.</li></div>
+<a name="wp2752686"> </a><div class="pSmartList2"><li>In the <b class="cBold">Connect Mode</b> list, select the FTP connection mode you want to use, <b class="cBold">Passive</b> in this example.</li></div>
+<a name="wp2752782"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFTPFileList</b> to open its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2752791"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tftpFileList3.png" id="wp2752788" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2753988"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Use an existing connection</b> check box and in the <b class="cBold">Component list</b>, click the relevant FTP connection component, <b class="cBold">tFTPConnection_1</b> in this scenario. Connection information are automatically filled in.  </li></div>
+<a name="wp2753999"> </a><div class="pSmartList2"><li>In the <b class="cBold">Remote directory</b> field, enter the relative path of the directory that holds the files to be listed. </li></div>
+<a name="wp2754006"> </a><div class="pSmartList2"><li>In the <b class="cBold">Filemask</b> field, click the plus button to add one line and then define a file mask to filter the data to be retrieved. You can use special characters if need be. In this example, we want only to recuperate delimited files (<em class="cEmphasis">*csv</em>). </li></div>
+<a name="wp2755553"> </a><div class="pSmartList2"><li>In the <b class="cBold">Connect Mode</b> list, select the FTP server connection mode you want to use, <b class="cBold">Active</b> in this example.</li></div>
+<a name="wp2755563"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFTPGet</b> to display its <b class="cBold">Basic settings</b> view and define the components properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2755572"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tftpFileList4.png" id="wp2755569" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2755654"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Use an existing connection</b> check box and in the <b class="cBold">Component list</b>, click the relevant FTP connection component, <b class="cBold">tFTPConnection_1</b> in this scenario. Connection information are automatically filled in.  </li></div>
+<a name="wp2755744"> </a><div class="pSmartList2"><li>In the <b class="cBold">Local directory</b> field, enter the relative path for the output local directory where you want to write the recuperated files.</li></div>
+<a name="wp2755751"> </a><div class="pSmartList2"><li>In the <b class="cBold">Remote directory</b> field, enter the relative path of the remote directory that holds the file to be recuperated. </li></div>
+<a name="wp2755758"> </a><div class="pSmartList2"><li>In the <b class="cBold">Transfer Mode</b> list, select the FTP transfer mode you want to use, <b class="cBold">ascii</b> in this example. </li></div>
+<a name="wp2755819"> </a><div class="pSmartList2"><li>In the <b class="cBold">Overwrite file</b> field, select an option for you want to use for the transferred files. </li></div>
+<a name="wp2757648"> </a><div class="pSmartList2"><li>In the <b class="cBold">Files</b> area, click the plus button to add a line in the <b class="cBold">Filemask</b> list, then click in the added line and press<b class="cBold">Ctrl+Space</b> to access the variable list. In the list, select the global variable<code class="cCode"> ((String)globalMap.get(&quot;tFTPFileList_1_CURRENT_FILEPATH&quot;))</code> to process all files in the remote directory.</li></div>
+<a name="wp2755973"> </a><div class="pSmartList2"><li>In the <b class="cBold">Connect Mode</b> list, select the connection mode to the FTP server you want to use. </li></div>
+<a name="wp2756148"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2756155"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFTPFileList5.png" id="wp2756152" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2756158"> </a><p class="pIndented1">
+All .csv files held in the remote directory on the FTP server are listed in the defined directory, as defined in the filemask. Then the files are retrieved and saved in the defined local output directory. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFTPFileList_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFTPFileProperties_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

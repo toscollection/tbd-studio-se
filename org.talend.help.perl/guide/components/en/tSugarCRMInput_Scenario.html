@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:32">
+    <title>Scenario: Extracting account data from SugarCRM</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSugarCRMInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSugarCRMOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2711503"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2711510"> </a><h2 class="pHeading2">
+Scenario: Extracting account data from SugarCRM
+</h2>
+<a name="wp2711513"> </a><p class="pIndented1">
+This scenario describes a two-component Job which extracts account information from a SugarCRM database and writes it to an Excel output file.
+</p>
+<a name="wp2711521"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput1.png" id="wp2711518" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2711533"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tSugarCRMInput</b> and a <b class="cBold">tFileOutputExcel</b> component onto the workspace.</li></div>
+<a name="wp2711537"> </a><div class="pSmartList2"><li>Connect the input component to the output component using a main row link.</li></div>
+<a name="wp2711543"> </a><div class="pSmartList2"><li>On the <b class="cBold">tSugarCRMInput</b> Component view, fill in the connection information in the SugarCRM Web Service URL as well as the <b class="cBold">Username</b> and <b class="cBold">Password</b> fields</li></div>
+<a name="wp2711561"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">Module</b> from the list of modules offered. In this example, <em class="cEmphasis">Accounts</em> is selected.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2711568"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput2.png" id="wp2711565" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2711576"> </a><div class="pSmartList2"><li>The <b class="cBold">Schema</b> is then automatically set according to the module selected. But you can change it and remove the columns that you don&#39;t require in the output. </li></div>
+<a name="wp2711583"> </a><div class="pSmartList2"><li>In the <b class="cBold">Query Condition</b> field, type in the query you want to extract from the CRM. In this example: &quot;billing_address_city=&#39;Sunnyvale&#39;&quot;</li></div>
+<a name="wp2711592"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tFileOutputExcel</b> component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2711599"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput3.png" id="wp2711596" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2711611"> </a><div class="pSmartList2"><li>Set the destination file name as well as the <b class="cBold">Sheet</b> name and select the <b class="cBold">Include header</b> check box.</li></div>
+<a name="wp2711619"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6</b> to run it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2711626"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput4.png" id="wp2711623" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2711632"> </a><p class="pIndented1">
+The filtered data is output in the defined spreadsheet of the specified Excel type file.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSugarCRMInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSugarCRMOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

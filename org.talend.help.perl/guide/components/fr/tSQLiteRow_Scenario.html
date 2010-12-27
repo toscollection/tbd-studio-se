@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Mettre à jour des lignes SQLite</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSQLiteRow_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSybaseBulkExec_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2330130"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2330137"> </a><h2 class="pHeading2">
+Scénario&#160;: Mettre à jour des lignes SQLite
+</h2>
+<a name="wp2330140"> </a><p class="pIndented1">
+Le scénario suivant décrit un Job qui permet de mettre à jour un fichier de base de donnée SQLite en utilisant une requête prédéfinie et un fichier délimité. 
+</p>
+<a name="wp2330148"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLiteRow1.png" id="wp2330145" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2330160"> </a><div class="pSmartList2"><li>Cliquez-déposez les composants <b class="cBold">tFileInputDelimited</b> et <b class="cBold">tSQLiteRow</b>.</li></div>
+<a name="wp2330169"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tFileInputDelimited</b>, parcourez les dossiers et sélectionnez le fichier d&#39;entrée à utiliser pour mettre à jour les lignes dans la base de données.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2330178"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLiteRow2.png" id="wp2330175" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2330183"> </a><div class="pSmartList2"><li>Il n&#39;y a ni en-tête ni pied de page. Le séparateur de ligne (Row separator) est un retour chariot et le séparateur de champ (Field separator) un double point. </li></div>
+<a name="wp2330189"> </a><div class="pSmartList2"><li>Modifiez le schéma s&#39;il n&#39;est pas stocké dans le <b class="cBold">Repository</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2330196"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLiteRow3.png" id="wp2330193" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2330201"> </a><div class="pSmartList2"><li>Assurez-vous que la taille et le genre définissent correctement les colonnes. </li></div>
+<a name="wp2369837"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tSQLiteRow</b>, renseignez le champ <b class="cBold">Database</b> avec le chemin d&#39;accès au fichier à mettre à jour. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2369846"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLiteRow4.png" id="wp2369843" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2369851"> </a><div class="pSmartList2"><li>Le schéma est en mode read-only puisqu&#39;il doit correspondre au schéma d&#39;entrée. </li></div>
+<a name="wp2369857"> </a><div class="pSmartList2"><li>Entrez la requête ou récupérez-la à partir du <b class="cBold">Repository</b>. Dans le cas présent, on a mis à jour la colonne <em class="cEmphasis">type_os</em> en focntion de la valeur <em class="cEmphasis">id</em> définie dans le flux entrant. La requête se présente comme suit&#160;: &#39;Update download set type_os=? where id=?&#39; </li></div>
+<a name="wp2330247"> </a><div class="pSmartList2"><li>Cochez ensuite la case <b class="cBold">Prepared statement</b> pour afficher la table des paramètres substituables. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2330254"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLiteRow4.png" id="wp2330251" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2330259"> </a><div class="pSmartList2"><li>Dans la table des paramètres d&#39;entrée, ajoutez autant de lignes qu&#39;il y a de paramètres substituables. Dans cet exemple, on veut définir <em class="cEmphasis">type_os</em> et <em class="cEmphasis">id</em>. </li></div>
+<a name="wp2330276"> </a><div class="pSmartList2"><li>Renseignez le champ <b class="cBold">Commit every</b> et choisissez le type d&#39;encodage à partir de la liste déroulant <b class="cBold">Encoding type</b>. </li></div>
+<a name="wp2370114"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2370206"> </a><p class="pIndented1">
+La table <em class="cEmphasis">dowload</em> table de la base de données SQLite est ainsi mise à jour le code avec le nouveau code <em class="cEmphasis">type_os</em> et selon le fichier délimité d&#39;entrée.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSQLiteRow_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSybaseBulkExec_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

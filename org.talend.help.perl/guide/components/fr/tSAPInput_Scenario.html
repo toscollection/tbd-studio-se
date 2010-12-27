@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario&#160;1&#160;: Récupérer les métadonnées d&#39;un système SAP</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSAPInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSAPOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1651784"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1647732"> </a><h2 class="pHeading2">
+Scénario&#160;1&#160;: Récupérer les métadonnées d&#39;un système SAP
+</h2>
+<a name="wp2733015"> </a><p class="pIndented1">
+Les composants SAP (<b class="cBold">tSAPInput</b> et <b class="cBold">tSAPOutput</b>) ainsi que l&#39;assistant SAP sont basés sur des bibliothèques validées et fournies par SAP (JCO) permettant à l&#39;utilisateur d&#39;appeler les fonctions RFC ou BAPI et de récupérer les données du système SAP au niveau des tables, RFC ou BAPI.
+</p>
+<a name="wp2733019"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2193888" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Ce scénario utilise l&#39;assistant SAP guidant l&#39;utilisateur à travers les différentes étapes de création de connexions SAP et des fonctions RFC et BAPI. L&#39;assistant SAP est uniquement disponible pour les utilisateurs <b class="cBold">Talend Integration Suite</b>. Si vous êtes utilisateur de <b class="cBold">Talend Open Studio</b> ou <b class="cBold">Talend On Demand</b>, vous devez configurer les propriétés du composant <b class="cBold">tSAPInput</b> manuellement.
+</p>
+<a name="wp1649005"> </a><p class="pIndented1">
+Ce scénario Java utilise un assistant SAP pour créer une connexion au système SAP, appelle une fonction BAPI pour récupérer les informations d&#39;une entreprise stockées dans le système SAP et les affiche dans <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp1658803"> </a><p class="pIndented1">
+Les figures ci-dessous affichent les paramètres du système SAP permettant d&#39;accéder aux informations sur l&#39;entreprise que vous souhaitez lire dans <b class="cBold">Talend Open Studio</b> à l&#39;aide du composant <b class="cBold">tSAPInput</b>.
+</p>
+<a name="wp1658817"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_1.png" id="wp1658814" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1658822"> </a><div class="pSmartList2"><li>Créez une connexion au système SAP à l&#39;aide de l&#39;assistant SAP. Dans ce scénario, la connexion SAP est appelée <b style="font-weight: bold" class="cBold">sap</b><span style="font-weight: normal">.</span> Pour plus d&#39;informations sur la configuration d&#39;une connexion SAP, consultez l&#39;<em class="cEmphasis">Etape&#160;1&#160;: Propriétés générales</em> et l&#39;<em class="cEmphasis">Etape&#160;2&#160;: Informations de connexion</em> du Guide utilisateur de Talend Open Studio. </li></div>
+<a name="wp1658841"> </a><div class="pSmartList2"><li>Appelez la fonction BAPI appelée <em class="cEmphasis">BAPI_COMPANY_GETDETAIL</em> à l&#39;aide de l&#39;assistant SAP pour accéder au document html BAPI stocké dans le système SAP et consultez les informations sur l&#39;entreprise. Pour plus d&#39;informations sur l&#39;appel de fonctions, consultez l&#39; <em class="cEmphasis">Etape&#160;3&#160;: Appeler une fonction SAP</em> du Guide utilisateur de Talend Open Studio. </li></div>
+<a name="wp1658857"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Name filter</b>, saisissez <em class="cEmphasis">BAPI</em>* et cliquez sur le bouton <b class="cBold">Search</b> pour afficher toutes les fonctions BAPI disponibles.</li></div>
+<a name="wp1647831"> </a><div class="pSmartList2"><li>Sélectionnez <em class="cEmphasis">BAPI_COMPANY_GETDETAIL</em> pour afficher le schéma décrivant les informations de l&#39;entreprise.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1647837"> </a><p class="pIndented1">
+La vue à droite de l&#39;assistant affiche les métadonnées de la fonction <em class="cEmphasis">BAPI_COMPANY_GETDETAIL </em>et vous permet de configurer les paramètres nécessaires.
+</p>
+<a name="wp1647850"> </a><p class="pIndented1">
+La vue <b class="cBold">Document</b> affiche le document HTML SAP de la fonction <em class="cEmphasis">BAPI_COMPANY_GETDETAIL</em>.
+</p>
+<a name="wp1647863"> </a><p class="pIndented1">
+La vue <b class="cBold">Parameter</b> fournit les informations sur les paramètres d&#39;entrée et de sortie nécessaire à la fonction <em class="cEmphasis">BAPI_COMPANY_GETDETAIL</em> pour retourner les valeurs.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1647883"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Parameter</b>, cliquez sur l&#39;onglet <b class="cBold">Input</b> pour lister le ou les paramètre(s) d&#39;entrée. Dans ce scénario, il n&#39;y a qu&#39;un seul paramètre d&#39;entrée requis par la fonction <em class="cEmphasis">BAPI_COMPANY_GETDETAIL</em>. Ce paramètre s&#39;appelle <em class="cEmphasis">COMPANYID</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1647906"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_2.png" id="wp1647902" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1659617"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Parameter</b>, cliquez sur l&#39;onglet <b class="cBold">Output</b> pour lister les paramètres de sortie retournés par la fonction <em class="cEmphasis">BAPI_COMPANY_GETDETAIL</em>. Dans ce scénario, il y a deux paramètres de sortie&#160;: <em class="cEmphasis">COMPANY_DETAIL </em>et <em class="cEmphasis">RETURN.</em></li></div>
+</ul></div>
+</ul></div>
+<a name="wp1647948"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_3.png" id="wp1647944" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1647953"> </a><p class="pIndented1">
+Chacun des paramètres de &quot;structure&quot; est composé de nombreux paramètres &quot;single&quot;.
+</p>
+<a name="wp1659782"> </a><p class="pIndented1">
+La vue <b class="cBold">Test it</b> permet d&#39;ajouter ou de supprimer des paramètres d&#39;entrée en fonction de la fonction appelée. Dans ce scénario, l&#39;objectif est de récupérer les métadonnées du paramètre &quot;structure&quot; appelé <em class="cEmphasis">COMPANY_DETAIL</em> qui est composé de 14&#160;paramètres &quot;single&quot;.
+</p>
+<a name="wp1647975"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_4.png" id="wp1647971" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1647990"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Value</b> de la ligne <b class="cBold">COMPANYID</b> du premier tableau, saisissez &quot;<em class="cEmphasis">000001</em>&quot; afin de retourner les données correspondant à l&#39;entreprise dont l&#39;identifiant est 000001.</li></div>
+<a name="wp2733528"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Output type</b> en bas de l&#39;assistant, sélectionnez <b class="cBold">output.table</b>.</li></div>
+<a name="wp2733559"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Launch</b> en bas de la vue pour afficher la valeur de chaque paramètre &quot;single&quot; retourné par la fonction <b class="cBold">BAPI_COMPANY_GETDETAIL</b>.</li></div>
+<a name="wp1648009"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Finish</b> pour fermer l&#39;assistant et créer la connexion.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1648018"> </a><p class="pIndented1">
+La connexion <b class="cBold">sap</b> et la fonction <b class="cBold">BAPI_COMPANY_GETDETAIL</b> apparaissent sous le noeud <b class="cBold">SAP Connections</b> du <b class="cBold">Repository</b>.
+</p>
+<a name="wp2733635"> </a><p class="pIndented1">
+Pour récupérer les différents schémas de la fonction <b class="cBold">BAPI_COMPANY_GETDETAIL</b>&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2733744"> </a><div class="pSmartList2"><li>Cliquez-droit sur <b class="cBold">BAPI_COMPANY_GETDETAIL</b> dans le <b class="cBold">Repository</b>.</li></div>
+<a name="wp2733778"> </a><div class="pSmartList2"><li>Sélectionnez <b class="cBold">Retrieve schema</b> dans le menu.</li></div>
+<a name="wp2733787"> </a><div class="pSmartList2"><li>Dans l&#39;assistant qui s&#39;ouvre, sélectionnez les schémas que vous souhaitez récupérer. Ici, sélectionnez les deux schémas&#160;: <b class="cBold">COMPANY_DETAIL</b> et <b class="cBold">RETURN</b>.</li></div>
+<a name="wp2733815"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Next</b> pour afficher ces différents schémas.</li></div>
+<a name="wp2733830"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Finish</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2988925"> </a><p class="pIndented1">
+Pour plus d&#39;informations concernant la récupération des schémas<em class="cEmphasis">Etape&#160;4&#160;: Récupérer les schémas de la fonction appelée</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp2988937"> </a><p class="pIndented1">
+Les deux schémas apparaissent sous la fonction <b class="cBold">BAPI_COMPANY_GETDETAIL</b> dans le <b class="cBold">Repository.</b>
+</p>
+<a name="wp2733940"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_5.png" id="wp1648014" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1648043"> </a><p class="pIndented1">
+Dans ce scénario, l&#39;objectif est de récupérer les données correspondant à l&#39;entreprise dont l&#39;identifiant est 000001 pour les afficher dans <b class="cBold">Talend Open Studio</b>&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2734444"> </a><div class="pSmartList2"><li>Dans le <b class="cBold">Repository</b>, sélectionnez la connexion SAP que vous venez de créer et glissez-la dans l&#39;espace de modélisation, sélectionnez <b class="cBold">tSAPConnection</b> dans la liste de composants et cliquez sur <b class="cBold">OK</b>. Le composant <b class="cBold">tSAPConnection</b> portant le nom de votre connexion, <em class="cEmphasis">sap</em>, sera ajouté à votre Job et ouvrira une connexion SAP.</li></div>
+<a name="wp2734468"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tSAPConnection</b> pour afficher la vue <b class="cBold">Component</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2734475"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_6.png" id="wp2734472" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2734483"> </a><div class="pSmartList2"><li>Si vous avez utiliser les métadonnées pour créer le composant, le mode <b class="cBold">Repository</b> est sélectionné dans la liste <b class="cBold">Property Type</b> et les champs suivants sont automatiquement renseignés. Si vous n&#39;utilisez pas les métadonnées, sélectionnez le mode <b class="cBold">Built-In</b> et renseignez les champs suivants manuellement. </li></div>
+<a name="wp2734499"> </a><div class="pSmartList2"><li>Dans le <b class="cBold">Repository</b>, sélectionnez le schéma <b class="cBold">BAPI_COMPANY_GETDETAIL </b>dans le dossier <b class="cBold">sap</b>, et glissez-le dans l&#39;espace de modélisation, sélectionnez <b class="cBold">tSAPInput</b> dans la liste de composants et cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2734521"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants <b class="cBold">tFilterColumns</b> et <b class="cBold">tLogRow</b> dans l&#39;espace de modélisation.</li></div>
+<a name="wp2734538"> </a><div class="pSmartList2"><li>Connectez le <b class="cBold">tSAPConnection</b> au <b class="cBold">tSAPInput</b> via un lien <b class="cBold">Trigger</b> &gt; <b class="cBold">OnSubJobOk</b>.</li></div>
+<a name="wp2734546"> </a><div class="pSmartList2"><li>Pour connecter le <b class="cBold">tSAPInput</b> au <b class="cBold">tLogRow</b>, cliquez-droit sur le <b class="cBold">tSAPInput</b>, sélectionnez <b class="cBold">Row</b> puis <b class="cBold">row_COMPANY_DETAIL_1</b> dans le menu et cliquez sur le composant <b class="cBold">tLogRow</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2208408"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_7.png" id="wp2208405" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2208416"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tSAPInput</b> et cliquez sur la vue <b class="cBold">Component</b> pour afficher ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1660279"> </a><p class="pIndented1">
+Les propriétés du composant <b class="cBold">tSAPInput</b> apparaissent automatiquement puisque le schéma est stocké dans le dossier <b class="cBold">Metadata</b> et que le composant est initialisé par l&#39;assistant SAP.
+</p>
+<a name="wp2734902"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_8.png" id="wp2734899" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2734905"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b>, cochez la case <b class="cBold">Use an existing connection</b> et sélectionnez le composant <b class="cBold">tSAPConnection</b> dans la liste <b class="cBold">Component list</b> pour utiliser la connexion ouverte par le composant de connexion.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2734933"> </a><p class="pIndented1">
+ Dans la zone <b class="cBold">Initialize input</b>, vous pouvez voir les paramètres d&#39;entrée nécessaires à la fonction <em class="cEmphasis">BAPI_COMPANY_GETDETAIL</em>.
+</p>
+<a name="wp2734951"> </a><p class="pIndented1">
+Dans la zone <b class="cBold">Outputs</b>, vous pouvez voir les différents schémas de la fonction <b class="cBold">BAPI_COMPANY_GETDETAIL</b>, notamment le schéma <b class="cBold">COMPANY_DETAIL</b> que vous récupérez en sortie.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1661190"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tLogRow</b> et cliquez sur la vue <b class="cBold">Component</b> pour paramétrer ses propriétés. Pour plus d&#39;informations<a href="tLogRow_Prop.html">, see&#160;<em class="cEmphasis">tLogRow.</em></a></li></div>
+<a name="wp1661098"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1648308"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput1_9.png" id="wp1648304" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1648320"> </a><p class="pIndented1">
+Le composant <b class="cBold">tSAPInput</b> récupère du système SAP les métadonnées du paramètre <em class="cEmphasis">COMPANY_DETAIL</em> de type &quot;structure&quot; et le composant <b class="cBold">tLogRow</b> affiche les informations dans la console.
+</p>
+<a name="wp2724864"> </a><h2 class="pHeading2">
+Scénario&#160;2&#160;: Lire les données des différents schémas de la fonction RFC_READ_TABLE
+</h2>
+<a name="wp2724898"> </a><p class="pIndented1">
+Les composants SAP (<b class="cBold">tSAPInput</b> et <b class="cBold">tSAPOutput</b>) ainsi que l&#39;assistant SAP sont basés sur des bibliothèques validées et fournies par SAP (JCO) permettant à l&#39;utilisateur d&#39;appeler les fonctions RFC ou BAPI et de récupérer les données du système SAP au niveau des tables, RFC ou BAPI.
+</p>
+<a name="wp2724907"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2724904" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Ce scénario utilise l&#39;assistant SAP guidant l&#39;utilisateur à travers les différentes étapes de création de connexions SAP et des fonctions RFC et BAPI. L&#39;assistant SAP est uniquement disponible pour les utilisateurs <b class="cBold">Talend Integration Suite</b>. Si vous êtes utilisateur de <b class="cBold">Talend Open Studio</b> ou <b class="cBold">Talend On Demand</b>, vous devez configurer les propriétés du composant <b class="cBold">tSAPInput</b> manuellement.
+</p>
+<a name="wp2724928"> </a><p class="pIndented1">
+Ce scénario Java utilise l&#39;assistant SAP pour créer une connexion au système SAP et pour appeler une fonction RFC permettant de lire directement dans une table appelée <em class="cEmphasis">SFLIGHT</em> à partir du système SAP. Puis, il affiche dans <b class="cBold">Talend Open Studio</b> les différentes structures de la table <em class="cEmphasis">SFLIGHT</em> stockée dans le système SAP.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2724947"> </a><div class="pSmartList2"><li>Créez une connexion au système SAP à l&#39;aide de l&#39;assistant SAP. Dans ce scénario, la connexion SAP est appelée <b class="cBold">sap</b><em class="cEmphasis">.</em> Pour plus d&#39;informations concernant la configuration d&#39;une connexion SAP, consultez l&#39;<em class="cEmphasis">Etape&#160;1&#160;: Propriétés générales</em> et l&#39;<em class="cEmphasis">Etape&#160;2&#160;: Informations de connexion</em> du Guide utilisateur de Talend Open Studio. </li></div>
+<a name="wp2724979"> </a><div class="pSmartList2"><li>Appelez la fonction RFC appelée <em class="cEmphasis">RFC_READ_TABLE</em> à l&#39;aide de l&#39;assistant SAP pour accéder à la table du système SAP et pour visualiser sa structure. Pour plus d&#39;informations concernant l&#39;appel de fonction, consultez l&#39;<em class="cEmphasis">Etape&#160;3&#160;: Appeler une fonction SAP</em> du Guide utilisateur de Talend Open Studio. </li></div>
+<a name="wp2725007"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Name filter</b>, saisissez <em class="cEmphasis">RFC</em>* et cliquez sur le bouton <b class="cBold">Search</b> pour afficher toutes les fonctions RFC disponibles.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2725143"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_1.png" id="wp2725139" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2725154"> </a><div class="pSmartList2"><li>Sélectionnez <em class="cEmphasis">RFC_READ_TABLE</em> pour afficher les schémas de cette fonction.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2725164"> </a><p class="pIndented1">
+La vue à droite de l&#39;assistant affiche les métadonnées de la fonction <em class="cEmphasis">RFC_READ_TABLE</em> et permet de définir les paramètres nécessaires.
+</p>
+<a name="wp2725178"> </a><p class="pIndented1">
+L&#39;onglet <b class="cBold">Document</b> affiche le document html SAP de la fonction <em class="cEmphasis">RFC_READ_TABLE</em>.
+</p>
+<a name="wp2725186"> </a><p class="pIndented1">
+L&#39;onglet <b class="cBold">Parameter</b> fournit les informations sur les paramètres requis par la fonction <em class="cEmphasis">RFC_READ_TABLE</em> pour pouvoir retourner les valeurs des paramètres.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2725206"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Parameter</b>, cliquez sur l&#39;onglet <b class="cBold">Table</b> pour obtenir une description de la structure des différentes tables de la fonction <em class="cEmphasis">RFC_READ_TABLE</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2725237"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_3.png" id="wp2725233" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2725299"> </a><p class="pIndented1">
+La vue <b class="cBold">Test it</b> vous permet d&#39;ajouter ou de supprimer des paramètres d&#39;entrée en fonction de la fonction appelée. Dans ce scénario, l&#39;objectif est de récupérer les différentes structures de la table <em class="cEmphasis">SFLIGHT</em>.
+</p>
+<a name="wp2725313"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_2.png" id="wp2725309" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2729254"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Value</b> de la ligne <b class="cBold">DELIMITER</b> du premier tableau, saisissez &quot;;&quot; comme séparateur de champ.</li></div>
+<a name="wp2729271"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Value</b> de la ligne <b class="cBold">QUERY_TABLE</b>, saisissez <em class="cEmphasis">SFLIGHT</em> comme table à requêter.</li></div>
+<a name="wp2729285"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Output type</b> en bas de l&#39;assistant, sélectionnez <b class="cBold">output.table</b>.</li></div>
+<a name="wp2729288"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Constructure|Table</b>, sélectionnez <b class="cBold">DATA</b>.</li></div>
+<a name="wp2725350"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Launch</b> en bas de la vue pour afficher les valeurs de paramètres retournées par la fonction <em class="cEmphasis">RFC_READ_TABLE</em>. Dans ce scénario, le délimiteur est &quot;;&quot; et la table à lire est <em class="cEmphasis">SFLIGHT</em>.</li></div>
+<a name="wp2726200"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Finish</b> pour fermer l&#39;assistant et créer la connexion.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2725377"> </a><p class="pIndented1">
+La connexion <b class="cBold">sap</b> et la fonction <b class="cBold">RFC_READ_TABLE </b>apparaissent sous le noeud <b class="cBold">SAP Connections</b> du <b class="cBold">Repository</b>.
+</p>
+<a name="wp2726291"> </a><p class="pIndented1">
+Pour récupérer les différents schémas de la fonction <b class="cBold">RFC_READ_TABLE</b>&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2725386"> </a><div class="pSmartList2"><li>Cliquez-droit sur <b class="cBold">RFC_READ_TABLE</b> dans le <b class="cBold">Repository</b>, et sélectionnez <b class="cBold">Retrieve schema</b> dans le menu.</li></div>
+<a name="wp2729670"> </a><div class="pSmartList2"><li>Dans l&#39;assistant qui s&#39;ouvre, sélectionnez les schémas que vous souhaitez récupérer. Ici, sélectionnez les trois schémas&#160;: <b class="cBold">DATA</b>, <b class="cBold">FIELDS</b> et <b class="cBold">OPTIONS</b>.</li></div>
+<a name="wp2726395"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Next</b> pour afficher ces différents schémas.</li></div>
+<a name="wp2726411"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Finish</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2989005"> </a><p class="pIndented1">
+Pour plus d&#39;informations concernant la récupération des schémas<em class="cEmphasis">Etape&#160;4&#160;: Récupérer les schémas de la fonction appelée</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp2989017"> </a><p class="pIndented1">
+Les trois schémas apparaissent sous la fonction <b class="cBold">RFC_READ_TABLE</b> dans le <b class="cBold">Repository.</b>
+</p>
+<a name="wp2728410"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_4.png" id="wp2728407" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2728413"> </a><p class="pIndented1">
+Dans ce scénario, l&#39;objectif est de récupérer les données et le nom des colonnes de la table <b class="cBold">SFLIGHT</b> pour les récupérer et les afficher dans <b class="cBold">Talend Open Studio</b>. Ainsi, intéressez-vous uniquement au schéma <b class="cBold">DATA</b> et <b class="cBold">FIELDS</b>&#160;: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728440"> </a><div class="pSmartList2"><li>Dans le <b class="cBold">Repository</b>, sélectionnez la fonction <b class="cBold">RFC_READ_TABLE </b>de la connexion <b class="cBold">sap</b> et glissez-la dans l&#39;espace de modélisation, sélectionnez <b class="cBold">tSAPInput</b> dans la liste de composants et cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2728206"> </a><div class="pSmartList2"><li>Cliquez et déposez deux composants <b class="cBold">tLogRow</b> dans l&#39;espace de modélisation.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2728210"> </a><p class="pIndented1">
+Pour connecter les composants entre eux&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728224"> </a><div class="pSmartList2"><li>Cliquez-droit sur le <b class="cBold">tSAPInput</b>, sélectionnez <b class="cBold">Row</b> puis <b class="cBold">row_DATA_1</b> dans le menu et cliquez sur le premier composant <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2728240"> </a><div class="pSmartList2"><li>Cliquez-droit sur le <b class="cBold">tSAPInput</b>, sélectionnez <b class="cBold">Row</b> puis <b class="cBold">row_FIELDS_1</b> dans le menu et cliquez sur le deuxième composant <b class="cBold">tLogRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2728473"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_5.png" id="wp2728470" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728476"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, double-cliquez sur <b class="cBold">tSAPInput</b> pour afficher ses propriétés dans la vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2728268"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_6.png" id="wp2728265" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2728274"> </a><p class="pIndented1">
+Les propriétés du composant <b class="cBold">tSAPInput</b> apparaissent automatiquement puisque le schéma est stocké dans le dossier <b class="cBold">Metadata</b> et que le composant est initialisé par l&#39;assistant SAP.
+</p>
+<a name="wp2728489"> </a><p class="pIndented1">
+Dans la zone <b class="cBold">Initialize input</b>, vous pouvez voir les paramètres d&#39;entrée nécessaires pour la fonction <em class="cEmphasis">RFC_READ_TABLE</em>, à savoir le séparateur de champ &quot;;&quot; et le nom de la table <b class="cBold">SFLIGHT</b>.
+</p>
+<a name="wp2728661"> </a><p class="pIndented1">
+Dans la zone <b class="cBold">Outputs</b>, vous pouvez voir les différents schémas de la table <b class="cBold">SFLIGHT</b>, notamment <b class="cBold">FIELDS</b> et <b class="cBold">DATA</b> qui sont chacun dirigés vers des flux de sortie différents.
+</p>
+<a name="wp2728522"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_6.png" id="wp2728519" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728529"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez les composants <b class="cBold">tLogRow</b> et cliquez sur la vue <b class="cBold">Component</b> pour paramétrer leurs propriétés. Pour plus d&#39;informations<a href="tLogRow_Prop.html">, see&#160;<em class="cEmphasis">tLogRow.</em></a></li></div>
+<a name="wp2728153"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2725667"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_SAPInput2_7.png" id="wp2725663" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2725679"> </a><p class="pIndented1">
+Le composant <b class="cBold">tSAPInput</b> récupère le nom des colonnes de la table <em class="cEmphasis">SFLIGHT</em> et les données correspondantes à partir du système SAP et les composants <b class="cBold">tLogRow</b> les affichent sous forme de table dans la console.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSAPInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSAPOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

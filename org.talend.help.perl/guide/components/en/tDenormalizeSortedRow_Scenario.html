@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:29">
+    <title>Scenario: Regrouping sorted rows</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDenormalizeSortedRow_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tEmptyToNull_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1605053"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1605064"> </a><h2 class="pHeading2">
+Scenario: Regrouping sorted rows
+</h2>
+<a name="wp1605072"> </a><p class="pIndented1">
+This Java scenario describes a four-component Job. It aims at reading a given delimited file row by row, sorting input data by sort type and order, denormalizing all input sorted rows and displaying the output on the <b class="cBold">Run </b>log console.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1605084"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tSortRow</b>, <b class="cBold">tDenormalizeSortedRow</b>, and <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1605107"> </a><div class="pSmartList2"><li>Connect the four components using <b class="cBold">Row Main</b> links.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1605128"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDenormalizeSortedRow.png" id="wp1613785" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1613779"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp1605141"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for <b class="cBold">tFileInputDelimited</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1613803"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDenormalizeSortedRow1.png" id="wp1613872" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1613867"> </a><div class="pSmartList2"><li>Set <b class="cBold">Property Type</b> to <b class="cBold">Built-In</b>.</li></div>
+<a name="wp1613809"> </a><div class="pSmartList2"><li>Fill in a path to the processed file in the <b class="cBold">File Name</b> field. The <em class="cEmphasis">name_list </em>file used in this example holds two columns, id and first name.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1613916"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDenormalizeSortedRow2.png" id="wp1613967" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1613962"> </a><div class="pSmartList2"><li>If needed, define row and field separators, header and footer, and the number of processed rows.</li></div>
+<a name="wp1613939"> </a><div class="pSmartList2"><li>Set <b class="cBold">Schema</b> to <b class="cBold">Built in</b> and click the three-dot button next to <b class="cBold">Edit Schema </b>to define the data to pass on to the next component. The schema in this example consists of two columns, <em class="cEmphasis">id</em> and <em class="cEmphasis">name.</em></li></div>
+</ul></div>
+</ul></div>
+<a name="wp1605184"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDenormalizeSortedRow3.png" id="wp1614023" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1605227"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tSortRow</b>.</li></div>
+<a name="wp1605241"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for <b class="cBold">tSortRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1605269"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDenormalizeSortedRow4.png" id="wp1614066" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1614061"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Schema Type</b> to <b class="cBold">Built-In</b> and click <b class="cBold">Sync columns</b> to retrieve the schema from the <b class="cBold">tFileInputDelimited</b> component.</li></div>
+<a name="wp1605282"> </a><div class="pSmartList2"><li>In the <b class="cBold">Criteria</b> panel, use the plus button to add a line and set the sorting parameters for the schema column to be processed. In this example we want to sort the <em class="cEmphasis">id</em> columns in ascending order.</li></div>
+<a name="wp1605295"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tDenormalizeSortedRow</b>.</li></div>
+<a name="wp1614198"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for <b class="cBold">tDenormalizeSortedRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1614107"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDenormalizeSortedRow5.png" id="wp1614240" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1614235"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Schema Type</b> to <b class="cBold">Built-In</b> and click <b class="cBold">Sync columns</b> to retrieve the schema from the <b class="cBold">tSortRow</b> component.</li></div>
+<a name="wp1614300"> </a><div class="pSmartList2"><li>In the <b class="cBold">Input rows count</b>field, enter the number of the input rows to be processed or press <b class="cBold">Ctrl+Space </b>to access the context variable list and select the variable: <code class="cCode">tDenormalize</code>SortedRow_1.NB_LINE<code class="cCode">.</code></li></div>
+<a name="wp1614120"> </a><div class="pSmartList2"><li>In the <b class="cBold">To denormalize</b> panel, use the plus button to add a line and set the parameters to the column to be denormalize. In this example we want to denormalize the <em class="cEmphasis">name</em> column.</li></div>
+<a name="wp1614137"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tLogRow</b> and click the <b class="cBold">Component</b> tab to define its basic settings. For more information about <b class="cBold">tLogRow</b>, see <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp1614156"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1605327"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDenormalizeSortedRow6.png" id="wp1614343" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1614338"> </a><p class="pIndented1">
+The result displayed on the console shows how the <em class="cEmphasis">name</em> column was denormalize.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDenormalizeSortedRow_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tEmptyToNull_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

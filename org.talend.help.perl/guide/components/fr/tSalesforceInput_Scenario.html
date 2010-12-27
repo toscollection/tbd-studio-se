@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario&#160;: Utiliser des requêtes pour extraire des données d&#39;une base de données Salesforce</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2951882"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3460235"> </a><h2 class="pHeading2">
+Scénario&#160;: Utiliser des requêtes pour extraire des données d&#39;une base de données Salesforce
+</h2>
+<a name="wp3460238"> </a><p class="pIndented1">
+Ce scénario décrit un Job comprenant quatre composants, utilisés pour extraire des ensembles spécifiques de données d&#39;objets parents et enfants dans une base de données Salesforce.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460250"> </a><div class="pSmartList2"><li>Déposez deux composants <b class="cBold">tSalesforceInput </b>et deux <b class="cBold">tLogRow</b> dans l&#39;espace de modélisation graphique. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460259"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceInputScenario1.png" id="wp3460828" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460276"> </a><div class="pSmartList2"><li>Reliez chaque composant <b class="cBold">tSalesforceInput</b> à un <b class="cBold">tLogRow</b>, à l&#39;aide de liens <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp3460290"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tSalesforceInput_1</b> au <b class="cBold">tSalesforceInput_2 </b>en utilisant un lien <b class="cBold">OnSubjobOk</b>.</li></div>
+<a name="wp3460304"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tSalesforceInput_1</b> afin de définir ses <b class="cBold">Basic Settings</b> dans la vue <b class="cBold">Component</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460320"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforce_1_Properties.png" id="wp3460841" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460844"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3460326"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Salesforce WebService URL</b>, saisissez l&#39;URL de la base de données à laquelle vous souhaitez vous connecter.</li></div>
+<a name="wp3460337"> </a><div class="pSmartList2"><li>Renseignez vos informations d&#39;authentification dans les champs correspondants, <b class="cBold">Username</b> pour l&#39;identifiant et <b class="cBold">Password</b> pour le mot de passe.</li></div>
+<a name="wp3460347"> </a><div class="pSmartList2"><li>Saisissez la limite de temps que vous souhaitez appliquer à la requête, dans le champ <b class="cBold">Timeout (milliseconds</b><b class="cBold">)</b>.</li></div>
+<a name="wp3460354"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">Module</b> (objet Salesforce) que vous souhaitez interroger.</li></div>
+<a name="wp3460363"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Manual input of SOQL Query</b> afin de saisir votre requête dans le champ <b class="cBold">Query</b>. </li></div>
+<a name="wp3460369"> </a><div class="pSmartList2"><li>Saisissez votre requête, ou votre requête relationnelle, en respectant la syntaxe SOQL requise.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460378"> </a><p class="pIndented1">
+Dans cet exemple, les colonnes <em class="cEmphasis">IsWon</em> et <em class="cEmphasis">FiscalYear</em> dans la requête sont situées dans le module <b class="cBold">Opportunity</b> spécifié. La colonne <em class="cEmphasis">Name</em> est dans un module lié, appelé <em class="cEmphasis">Account</em>. Pour retourner une colonne d&#39;un module lié, la syntaxe correcte est de saisir le nom du module lié, suivi par le caractère point (.), puis par le nom de la colonne appropriée. Ici, la requête requise est donc&#160;: <code class="cCode">&quot;SELECT IsWon, FiscalYear, Account.Name FROM Opportunity&quot;</code>.
+</p>
+<a name="wp3461330"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3461305" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Pour retrouver une colonne d&#39;un modèle lié, il est nécessaire de définir la colonne d&#39;une manière précise dans la vue Edit Schema. La syntaxe correcte est&#160;:<em style="font-style: italic" class="cEmphasis">NameofCurrentModule_NameofLinkedModule_NameofColumnofInterest</em>. Dans notre exemple, la colonne doit se nommer&#160;: <em class="cEmphasis">Opportunity_Account_Name. Si cette syntaxe n&#39;est pas respectée, les données de la table liée ne seront pas retournées.</em>
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460418"> </a><div class="pSmartList2"><li>Sélectionnez <b class="cBold">Built-In</b> dans la liste <b class="cBold">Schema</b> puis cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b>, afin d&#39;ouvrir l&#39;éditeur du schéma.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460434"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceInput_Schema_Editor1.png" id="wp3460854" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460857"> </a><div class="pSmartList2"><li>Modifiez le schéma comme nécessaire, en utilisant les boutons <b class="cBold">[+]</b> et <b class="cBold">[x]</b>.</li></div>
+<a name="wp3460438"> </a><div class="pSmartList2"><li>Ajoutez une nouvelle colonne pour les champs extraits de la colonne <em class="cEmphasis">Name</em> du module <em class="cEmphasis">Account</em>.</li></div>
+<a name="wp3460445"> </a><div class="pSmartList2"><li>Appelez cette colonne&#160;<em class="cEmphasis">Opportunity_Account_Name</em>.</li></div>
+<a name="wp3460452"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> afin de sauvegarder les modifications et fermer l&#39;éditeur du schéma.</li></div>
+<a name="wp3460463"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tSalesforceInput_2</b> afin de définir ses <b class="cBold">Basic settings</b> dans la vue <b class="cBold">Component</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460467"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceInput_2_Properties.png" id="wp3460867" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460479"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3460485"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Salesforce WebService URL</b>, saisissez l&#39;URL de la base de données à laquelle vous souhaitez vous connecter.</li></div>
+<a name="wp3460496"> </a><div class="pSmartList2"><li>Saisissez vos informations d&#39;authentification dans les champs <b class="cBold">Username</b> pour l&#39;identifiant et <b class="cBold">Password</b> pour le mot de passe.</li></div>
+<a name="wp3460506"> </a><div class="pSmartList2"><li>Saisissez la limite de temps que vous souhaitez appliquer sur la requête, dans le champ <b class="cBold">Timeout (milliseconds</b><b class="cBold">)</b>.</li></div>
+<a name="wp3460513"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">Module</b> (objet Salesforce) que vous souhaitez interroger.</li></div>
+<a name="wp3460522"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Manual input of SOQL Query</b> pour saisir votre requête dans le champ <b class="cBold">Query</b>. </li></div>
+<a name="wp3460528"> </a><div class="pSmartList2"><li>Saisissez votre requête ou votre requête relationnelle, en respectant la syntaxe SOQL requise.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460531"> </a><p class="pIndented1">
+Dans cet exemple, l&#39;objectif est d&#39;extraire les champs <em class="cEmphasis">Id</em> et <em class="cEmphasis">CaseNumber</em> du module <em class="cEmphasis">Case</em>, ainsi que les champs <em class="cEmphasis">Name</em> du module <em class="cEmphasis">Account</em>. La requête est donc&#160;: <code class="cCode">&quot;SELECT Id, CaseNumber, Account.Name FROM Case&quot;</code>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460551"> </a><div class="pSmartList2"><li>Sélectionnez <b class="cBold">Built-In</b> dans la liste <b class="cBold">Schema</b> et cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b>, afin d&#39;ouvrir l&#39;éditeur du schéma.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460567"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceInput_Schema_Editor2.png" id="wp3460887" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460890"> </a><div class="pSmartList2"><li>Modifiez le schéma comme nécessaire, en utilisant les boutons <b class="cBold">[+]</b> et <b class="cBold">[x]</b>.</li></div>
+<a name="wp3460571"> </a><div class="pSmartList2"><li>Ajouter une nouvelle colonne pour les champs extraits de la colonne <em class="cEmphasis">Name</em> du module <em class="cEmphasis">Account</em>.</li></div>
+<a name="wp3460578"> </a><div class="pSmartList2"><li>Nommez cette colonne&#160;<em class="cEmphasis">Case_Account_Name</em>.</li></div>
+<a name="wp3460585"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour sauvegarder les modifications et fermer l&#39;éditeur du schéma.</li></div>
+<a name="wp3461963"> </a><div class="pSmartList2"><li>Cliquez sur chaque composant <b class="cBold">tLogRow</b> afin de définir leurs <b class="cBold">Basic settings</b> comme nécessaire. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460603"> </a><p class="pIndented1">
+Dans cet exemple, vous n&#39;avez pas besoin de modifier les paramètres des <b class="cBold">tLogRow</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460611"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job.<br />Les résultats sont affichés dans la console de la vue <b class="cBold">Run</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3460903"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceInput_RunTab.png" id="wp3460900" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,468 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>tParAccelBulkExec</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleTableList_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParAccelBulkExec_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2894378"> </a><h2 class="pHeading1">
+tParAccelBulkExec
+</h2>
+<a name="wp2894390"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tParAccelBulkExec_icon32_white.png" id="wp2894383" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2894400"> </a><h2 class="pHeading2">
+Propriétés du tParAccelBulkExec
+</h2>
+<a name="wp2894412"> </a><p class="pIndented1">
+Les composants <b class="cBold">tParAccelOutputBulk</b> et <b class="cBold">tParAccelBulkExec</b> sont généralement utilisés ensemble pour d&#39;une part générer en sortie le fichier qui sera d&#39;autre part utilisé comme paramètre dans l&#39;exécution de la requête SQL énoncée. Cette exécution en deux étapes est unifiée dans le composant <b class="cBold">tParAccelOutputBulkExec</b>, détaillé dans une section séparée. L&#39;intérêt de proposer deux composants séparés réside dans le fait que cela permet de procéder à des transformations avant le changement des données dans la base de données.
+</p>
+<a name="wp2894898"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2894429table2894421">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894429"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2894432"> </a><div class="pCellBody">
+Databases/ParAccel
+</div>
+</td>
+    <td><a name="wp2894444"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp2894439" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894452"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2894459"> </a><div class="pCellBody">
+Le composant <b class="cBold">tParAccelBulkExec</b> effectue une action d&#39;Insert sur les données fournies.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894470"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2894477"> </a><div class="pCellBody">
+Le <b class="cBold">tParAccelBulkExec</b> est un composant dédié qui permet un gain de performance pendant les opérations d&#39;Insert dans une base de données Greenplum.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894488"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2894495"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2894498"> </a><div class="pCellBody">
+Peut être Built-in ou Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894502"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894505"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894512"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894516"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894519"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894526"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Sélectionnez le fichier de propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894530"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894536"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2894540"> </a><div class="pCellBody">
+Cochez cette case lorsque vous utilisez le composant <b class="cBold">tParAccelConnection</b>.<br />
+</div>
+<a name="wp3467726"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3467723" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Lorsqu&#39;un Job contient un Job parent et un Job enfant, la liste <b class="cBold">Component List</b> présente uniquement les composants de connexion du Job du même niveau. Si vous souhaitez utiliser une connexion existant dans un autre niveau, vérifiez que les composants de connexion disponibles partagent la même connexion.<br />Pour plus d&#39;informations concernant le partage d&#39;une connexion à travers différents niveaux de Jobs, consultez <b class="cBold">Use or register a shared DB connection</b> dans tous les composants de base de données que vous utilisez.
+</p>
+<a name="wp3467751"> </a><div class="pCellBody">
+Sinon, vous pouvez également désactiver le composant de connexion et utiliser les <b class="cBold">Dynamic settings</b> du composant, afin de paramétrer manuellement la connexion. Dans ce cas, vérifiez que le nom de la connexion est unique et distinct tout au long des deux niveaux de Jobs. Pour plus d&#39;informations concernant les paramètres dynamiques (<b class="cBold">Dynamic settings</b>), consultez le <b class="cBold">Guide Utilisateur</b> de votre Studio. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894548"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894555"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2894558"> </a><div class="pCellBody">
+Adresse IP du serveur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894562"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894569"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2894572"> </a><div class="pCellBody">
+Numéro du port d&#39;écoute du serveur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894576"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894583"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2894586"> </a><div class="pCellBody">
+Nom de la base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894590"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894597"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em>
+</div>
+</td>
+    <td><a name="wp2894600"> </a><div class="pCellBody">
+Nom du schéma.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894604"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894611"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2894618"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2895070"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2895075"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2895077"> </a><div class="pCellBody">
+Nom de la table à écrire. Notez qu&#39;une seule table peut être écrite à la fois et la table doit exister pour que l&#39;opération d&#39;Insert soit autorisée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894622"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894629"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2894632"> </a><div class="pCellBody">
+Vous pouvez effectuer l&#39;une des opérations suivantes sur les données de la table sélectionnée&#160;: <br /><b class="cBold">None&#160;</b>: n&#39;effectuer aucune opération de table. <br /><b class="cBold">Drop and create the table</b>&#160;: supprimer la table puis en créer une nouvelle. <br /><b class="cBold">Create a table&#160;</b>: créer une table qui n&#39;existe pas encore. <br /><b class="cBold">Create table if doesn&#39;t exist</b>&#160;: créer la table si nécessaire. <br /><b class="cBold">Clear a table&#160;</b>: supprimer le contenu de la table. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894691"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894701"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2894705"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (Built-in) soit distant dans le <span style="font-weight: bold">Repository</span>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2950051"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2950053"> </a><div class="pCellBody">
+<em class="cEmphasis">Copy mode</em>
+</div>
+</td>
+    <td><a name="wp2950055"> </a><div class="pCellBody">
+Sélectionnez le mode de Copy que vous souhaitez utiliser.<br /><b class="cBold">Basic</b>&#160;: Mode classique, sans optimisation.<br /><b class="cBold">Parallel</b>&#160;: Mode permettant d&#39;utiliser plusieurs API internes à ParAccel, afin d&#39;améliorer les performances de chargement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2950034"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2950039"> </a><div class="pCellHeading">
+<em class="cEmphasis">Filename</em>
+</div>
+</td>
+    <td><a name="wp2950041"> </a><div class="pCellBody">
+Nom du fichier à traiter et chemin d&#39;accès.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2950028"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2950030"> </a><div class="pCellBody">
+<em class="cEmphasis">File Type</em>
+</div>
+</td>
+    <td><a name="wp2950032"> </a><div class="pCellBody">
+Sélectionnez dans la liste le type de fichier.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2950019"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2950024"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field Layout</em>
+</div>
+</td>
+    <td><a name="wp2950026"> </a><div class="pCellBody">
+Sélectionnez dans la liste la disposition du fichier.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2950010"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2950015"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp2950017"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière séparant les champs (si vous chargez un fichier délimité).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2950001"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2950006"> </a><div class="pCellHeading">
+<em class="cEmphasis">Explicit IDs</em>
+</div>
+</td>
+    <td><a name="wp2950008"> </a><div class="pCellBody">
+L&#39;ID sera assigné directement par la base de données ou est déjà présent dans le fichier à charger.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2949992"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2949997"> </a><div class="pCellHeading">
+<em class="cEmphasis">Remove Quotes</em>
+</div>
+</td>
+    <td><a name="wp2949999"> </a><div class="pCellBody">
+Cochez cette case afin de retirer les guillemets de votre fichier à charger. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2949986"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2949988"> </a><div class="pCellBody">
+<em class="cEmphasis">Max. Errors</em>
+</div>
+</td>
+    <td><a name="wp2949990"> </a><div class="pCellBody">
+Saisissez le nombre maximal d&#39;erreurs avant que votre Job ne s&#39;arrête.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2949977"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2949982"> </a><div class="pCellHeading">
+<em class="cEmphasis">Date Format</em>
+</div>
+</td>
+    <td><a name="wp2949984"> </a><div class="pCellBody">
+Saisissez le format de date qui sera utilisé.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2949968"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2949972"> </a><div class="pCellHeading">
+<em class="cEmphasis">Time/Timestamp Format</em>
+</div>
+</td>
+    <td><a name="wp2949975"> </a><div class="pCellBody">
+Saisissez le format de date et heure qui sera utilisé.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2949959"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2949963"> </a><div class="pCellHeading">
+<em class="cEmphasis">Additional COPY Options</em>
+</div>
+</td>
+    <td><a name="wp2949966"> </a><div class="pCellBody">
+Saisissez l&#39;option spécifique à ParAccel et personnalisée que vous souhaitez utiliser.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2949950"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2949955"> </a><div class="pCellHeading">
+<em class="cEmphasis">Log file</em>
+</div>
+</td>
+    <td><a name="wp2949957"> </a><div class="pCellBody">
+Saisissez le chemin d&#39;accès à votre fichier de log, ou parcourez votre répertoire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2949878"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2949946"> </a><div class="pCellHeading">
+<em class="cEmphasis">Logging level</em>
+</div>
+</td>
+    <td><a name="wp2949948"> </a><div class="pCellBody">
+Sélectionnez le niveau de verbose à retourner.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894851"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2894858"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2894861"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2894869"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2894872"> </a><div class="pCellBody">
+Ce composant est généralement utilisé avec un composant <b class="cBold">tParAccelOutputBulk</b>. Ensemble, ils offrent un gain de performance important pour l&#39;alimentation d&#39;une base de données ParAccel.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2894887"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2894890"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleTableList_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParAccelBulkExec_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

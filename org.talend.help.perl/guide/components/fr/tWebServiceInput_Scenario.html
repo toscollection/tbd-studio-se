@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>Scénario&#160;1&#160;: Extraire des images à l&#39;aide d&#39;un Webservice</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWebServiceInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tXMLRPCInput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1558858"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1558864"> </a><h2 class="pHeading2">
+Scénario&#160;1&#160;: Extraire des images à l&#39;aide d&#39;un Webservice
+</h2>
+<a name="wp1307392"> </a><p class="pIndented1">
+Ce scénario décrit un Job constitué de deux composants dont le but est d&#39;utiliser une méthode de service Web et d&#39;afficher le résultat en sortie dans une vue standard.
+</p>
+<a name="wp1306346"> </a><p class="pIndented1">
+La méthode récupère une adresse URL complète sous forme de chaîne en entrée et retourne une liste d&#39;images provenant d&#39;une page Web donnée.
+</p>
+<a name="wp1306409"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput1.png" id="wp1306486" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1559319"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants <b class="cBold">tWebServiceInput</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2371041"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b> du composant <b class="cBold">tWebServiceInput</b>, configurez les spécifications WSDL&#160;: <b class="cBold">WSDL</b> et <b class="cBold">End Point URI</b> lorsque cela est nécessaire.</li></div>
+<a name="wp2371462"> </a><div class="pSmartList2"><li>Si le service Web invoqué requiert des informations d&#39;authentification, cochez la case <b class="cBold">Need&#160;authentication?</b> et renseignez ces informations.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2371474"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2.png" id="wp2371471" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2371600"> </a><div class="pSmartList2"><li>Si vous vous connectez derrière un proxy, cochez la case <b class="cBold">Use http proxy</b> et renseignez les champs concernant l&#39;hôte, l&#39;utilisateur, le port et le mot de passe.</li></div>
+<a name="wp2371607"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Method Name</b>, saisissez le nom de la méthode tel que défini dans la description du service Web. Le nom et la casse de la méthode saisie doivent correspondre parfaitement à la méthode du service Web demandé.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2371509"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput4.png" id="wp2371506" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2371688"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Parameters</b>, cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter une ligne au tableau, puis saisissez le nom exact des paramètres tel qu&#39;attendus par la méthode.</li></div>
+<a name="wp2371692"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Value</b>, saisissez l&#39;adresse URL du site Web à partir duquel les images seront extraites.</li></div>
+<a name="wp1559824"> </a><div class="pSmartList2"><li>Connectez le composant <b class="cBold">tWebServiceInput</b> au composant de sortie standard, <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1306861"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1306885"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput3.png" id="wp1306919" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1560041"> </a><p class="pIndented1">
+Toutes les images extraites du site Web spécifié sont retournées dans la vue <b class="cBold">Run</b>, sous la forme d&#39;une liste d&#39;adresses URL.
+</p>
+<a name="wp2820920"> </a><h2 class="pHeading2">
+Scénario&#160;2&#160;: Lire des données publiées dans un service Web, en utilisant les fonctions avancées du tWebServiceInput (Java)
+</h2>
+<a name="wp2820943"> </a><p class="pIndented1">
+Ce scénario décrit un Job constitué de deux composants dont le but est de récupérer une liste de fonds publiée sur un service Web financier (distribué par www.xignite.com) et d&#39;afficher le résultat en sortie dans la vue standard (la vue <b class="cBold">Run</b>).
+</p>
+<a name="wp2820950"> </a><p class="pIndented1">
+Ce scénario est destiné à des utilisateurs avancés ayant des notions de Java. En effet, l&#39;objectif de ce Job étant de récupérer des données complexes hiérarchiques, il est nécessaire de coder en Java les fonctions dont vous avez besoin pour récupérer ces données.
+</p>
+<a name="wp2507810"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput1.png" id="wp2507807" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2508338"> </a><div class="pSmartList2"><li>Cliquez et déposez le composant <b class="cBold">tWebServiceInput</b> de la famille <b class="cBold">Internet</b> et le composant <b class="cBold">tLogRow</b> de la famille <b class="cBold">Logs &amp; Errors</b> dans l&#39;espace de modélisation.</li></div>
+<a name="wp2507886"> </a><div class="pSmartList2"><li>Reliez les composants à l&#39;aide d&#39;une connexion de type <b class="cBold">Row Main</b>.</li></div>
+<a name="wp2507898"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tWebServiceInput</b> pour afficher la vue <b class="cBold">Component</b> et paramétrer ses propriétés&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2507912"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-2.png" id="wp2507909" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2507970"> </a><p class="pIndented1">
+Dans l&#39;onglet <b class="cBold">Basic settings</b>&#160;: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2507973"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez l&#39;option <b class="cBold">Built-in</b> et renseignez manuellement les champs suivants.</li></div>
+<a name="wp2508002"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema Type</b>, sélectionnez <b class="cBold">Built-in</b> et cliquez sur le bouton <b class="cBold">[...]</b> pour configurer manuellement le schéma comme dans la figure ci-dessous&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2508013"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-3.png" id="wp2508010" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2512741"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour valider le schéma et fermer la fenêtre.</li></div>
+<a name="wp3586332"> </a><div class="pSmartList2"><li>Une boîte de dialogue s&#39;ouvre et vous demande si vous souhaitez propager les modifications. Cliquez sur <b class="cBold">Yes</b> (Oui).</li></div>
+<a name="wp3586308"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">WSDL</b>, saisissez l&#39;adresse du WSDL auquel vous connecter.</li></div>
+<a name="wp2512748"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Time out</b>, saisissez en secondes la durée de la connexion au service Web.</li></div>
+<a name="wp2512754"> </a><div class="pSmartList2"><li>Cliquez sur l&#39;onglet <b class="cBold">Advanced settings</b> pour renseigner les fonctions avancées du composant <b class="cBold">tWebServiceInput</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2508834"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-5.png" id="wp2512775" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2512778"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Advanced Use</b> pour afficher les champs de configuration avancée.</li></div>
+<a name="wp2513409"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> situé à côté du champ <b class="cBold">WSDL2Java</b> pour générer automatiquement des routines à partir du WSDL du service Web.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2513483"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-4.png" id="wp2513422" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2514057"> </a><p class="pIndented1">
+Ces routines apparaissent sous le noeud <b class="cBold">Code</b> &gt; <b class="cBold">Routines</b> du <b class="cBold">Repository</b>, et peuvent être utilisées dans le code pour construire les fonctions nécessaires à la récupération des données hiérarchiques du service Web.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2514115"> </a><div class="pSmartList2"><li>Saisissez les fonctions adéquates dans le champ <b class="cBold">Code</b>. Par défaut, deux exemples de code sont fournis dans le champ <b class="cBold">Code</b>&#160;: le premier sert à retourner une donnée et le deuxième à en retourner plusieurs.</li></div>
+<a name="wp2514119"> </a><div class="pSmartList2"><li>Pour ce scénario, l&#39;objectif est de retourner plusieurs données. Ainsi, supprimez le premier exemple de code et utilisez le deuxième exemple de code pour construire les fonctions.</li></div>
+<a name="wp2513303"> </a><div class="pSmartList2"><li>Dans le deuxième exemple, remplacez les morceaux de code exemple par le code correspondant généré dans les routines à partir du WDSL.</li></div>
+<a name="wp2511857"> </a><div class="pSmartList2"><li>Remplacez <code class="cCode">TalendJob_PortType</code> par le nom de la routine terminant par <b class="cBold">_Port_Type</b>&#160;: <code class="cCode">XigniteFundHoldingsSoap_PortType</code>.</li></div>
+<a name="wp2511874"> </a><div class="pSmartList2"><li>Remplacez les différentes instances de <code class="cCode">TalendJob</code> par un nom plus parlant tel que le nom de la méthode utilisée&#160;: <em class="cEmphasis">fundHolding</em>.</li></div>
+<a name="wp2511901"> </a><div class="pSmartList2"><li>Remplacez <code class="cCode">TalendJobServiceLocator</code> par le nom de la routine terminant par <b class="cBold">Locator</b>&#160;: <code class="cCode">XigniteFundHoldingsLocator</code>.</li></div>
+<a name="wp2511931"> </a><div class="pSmartList2"><li>Remplacez les deux instances de <code class="cCode">TalendJobSoapBindingStub</code> par le nom de la routine terminant par <b class="cBold">BindingStub</b>&#160;: <code class="cCode">XigniteFundHoldingsSoap_BindingStub</code>.</li></div>
+<a name="wp2512178"> </a><div class="pSmartList2"><li>Dans les parenthèses correspondant aux codes <code class="cCode">stub.setUsername</code> et <code class="cCode">stub.setPassword</code>, saisissez respectivement votre identifiant et votre mot de passe entre guillemets.<br />Dans un souci de confidentialité ou de maintenance, vous pouvez mettre votre identifiant et votre mot de passe dans des variables de contexte.</li></div>
+<a name="wp2512188"> </a><div class="pSmartList2"><li>La liste des fonds fournis par le service Web de Xignite sont identifiés à l&#39;aide de &quot;symboles&quot; (<b class="cBold">Symbol</b>), qui sont de type <b class="cBold">String</b> (chaîne de caractères). Dans cet exemple, l&#39;objectif est de récupérer la liste des fonds dont la première lettre du symbole est comprise entre &quot;I&quot; et &quot;J&quot;. Pour cela, définissez les arguments à utiliser&#160;: <code class="cCode">string&#160;startSymbol=&quot;I&quot;</code> et <code class="cCode">String&#160;endSymbol=&quot;J&quot;</code>.</li></div>
+<a name="wp2512481"> </a><div class="pSmartList2"><li>Puis saisissez le code permettant de créer le tableau de résultat récupérant la liste des fonds (<b class="cBold">listFunds</b>) de participation (<b class="cBold">fundholdings</b>) en utilisant les arguments définis&#160;: <code class="cCode">routines.Fund[] result = fundHoldings.listFunds(startSymbol, endSymbol);</code></li></div>
+<a name="wp2512494"> </a><div class="pSmartList2"><li>Effectuez une boucle sur la liste des fonds pour récupérer les fonds compris entre &quot;I&quot; et &quot;J&quot;&#160;: <code class="cCode">for(int i = 0; i &lt; result.length; i++) {</code></li></div>
+<a name="wp2512501"> </a><div class="pSmartList2"><li>Puis définissez les sorties à retourner, par exemple&#160;: récupérez les données <b class="cBold">CIK</b> du schéma <b class="cBold">Security</b> avec le code <code class="cCode">getSecurity().getCIK()</code> et transmettez-les au champ <b class="cBold">CIK</b> du schéma de sortie.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2512506"> </a><p class="pIndented1">
+Le code obtenu pour faire fonctionner le service Web doit correspondre au code suivant&#160;:
+</p>
+<a name="wp2514237"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 36pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<code class="cCode">routines.XigniteFundHoldingsSoap_PortType fundHoldings = new routines.XigniteFundHoldingsLocator().getXigniteFundHoldingsSoap();<br /><br />routines.XigniteFundHoldingsSoap_BindingStub stub = (routines.XigniteFundHoldingsSoap_BindingStub)fundHoldings;<br /><br />stub.setUsername(&quot;identifiant&quot;);<br />stub.setPassword(&quot;mot de passe&quot;);<br /><br />String startSymbol=&quot;I&quot;;<br />String endSymbol=&quot;J&quot;;<br /><br />routines.Fund[] result = fundHoldings.listFunds(startSymbol, endSymbol);<br /><br />for(int i = 0; i &lt; result.length; i++) {<br /><br />	 output_row.CIK = (result[i]).getSecurity().getCIK();<br />	 output_row.cusip = (result[i]).getSecurity().getCusip();<br />	 output_row.symbol = (result[i]).getSecurity().getSymbol();<br />	 output_row.ISIN = (result[i]).getSecurity().getISIN();<br />	 output_row.valoren = (result[i]).getSecurity().getValoren();<br />	 output_row.name = (result[i]).getSecurity().getName();<br />	 output_row.market = (result[i]).getSecurity().getMarket();<br />	 output_row.category = (result[i]).getSecurity().getCategoryOrIndustry();<br />	 output_row.asOfDate = (result[i]).getAsOfDate();</code> 
+</div>
+<a name="wp2511748"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2511746" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Les sorties définies dans le code Java <code class="cCode">output_row.sortie</code> doivent correspondre exactement aux noms des colonnes définis dans le schéma du composant. En effet, la casse doit être respectée pour que les données soient récupérées. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2511752"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Match Brackets</b>, sélectionnez le nombre d&#39;accolades à utiliser pour fermer la boucle <code class="cCode">for</code> en fonction du nombre d&#39;accolades ouvertes. Pour ce scénario, sélectionnez une seule accolade puisqu&#39;une seule accolade a été ouverte dans le code.</li></div>
+<a name="wp2509707"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tLogRow</b> pour afficher la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+<a name="wp2509771"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> situé à côté du champ <b class="cBold">Edit Schema</b> pour vérifier que le schéma du composant précédent a bien été propagé au composant de sortie. Sinon, cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma.</li></div>
+<a name="wp2512972"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2512989"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-6.png" id="wp2512986" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2513004"> </a><p class="pIndented1">
+Les fonds compris entre &quot;I&quot; et &quot;J&quot; sont retournés et affichés dans la console de <b class="cBold">Talend Open Studio</b>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWebServiceInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tXMLRPCInput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

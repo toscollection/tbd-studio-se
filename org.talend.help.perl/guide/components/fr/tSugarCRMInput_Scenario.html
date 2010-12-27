@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario: Extraire les données d&#39;un compte à partir de SugarCRM</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSugarCRMInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSugarCRMOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2506503"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2506510"> </a><h2 class="pHeading2">
+Scénario: Extraire les données d&#39;un compte à partir de SugarCRM
+</h2>
+<a name="wp2506513"> </a><p class="pIndented1">
+Ce scénario décrit un Job à deux composants visant à extraire les informations d&#39;un compte à partir d&#39;une base de données SugarCRM vers un fichier de sortie Excel. 
+</p>
+<a name="wp2506521"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput1.png" id="wp2506518" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2506533"> </a><div class="pSmartList2"><li>A partir de la Palette, cliquez-déposez un composant <b class="cBold">tSugarCRMInput</b> et un composant <b class="cBold">tFileOutputExcel</b>.</li></div>
+<a name="wp2506537"> </a><div class="pSmartList2"><li>Connectez les composants d&#39;entrée et de sortie à l&#39;aide d&#39;un lien de type <b class="cBold">Row Main</b>. </li></div>
+<a name="wp2506543"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b> du <b class="cBold">tSugarCRMInput</b>, remplissez les informations de connexion dans les champs <b class="cBold">SugarCRM Web Service URL</b>, <b class="cBold">Username</b> et <b class="cBold">Password</b>. </li></div>
+<a name="wp2506561"> </a><div class="pSmartList2"><li>Sélectionnez ensuite le module adéquat parmi ceux proposés dans la liste <b class="cBold">Module</b>. Dans cet exemple, c&#39;est <em class="cEmphasis">Accounts</em> qui est sélectionné. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2506568"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput2.png" id="wp2506565" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2506576"> </a><div class="pSmartList2"><li>Le champ <b class="cBold">Schema</b> est automatiquement renseigné en fonction du module sélectionné, mais il est possible de le modifier et de supprimer les colonnes dont vous n&#39;avez pas besoin en sortie. </li></div>
+<a name="wp2506583"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Query Condition</b>, saisissez la requête que vous voulez utiliser pour extraire les données du CRM. Dans cet exemple&#160;: &quot;billing_address_city=&#39;Sunnyvale&#39;&quot;</li></div>
+<a name="wp2506592"> </a><div class="pSmartList2"><li>Sélectionnez ensuite le composant <b class="cBold">tFileOutputExcel</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2506599"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput3.png" id="wp2506596" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2506611"> </a><div class="pSmartList2"><li>Renseignez le nom du fichier de destination dans le champ <b class="cBold">File Name</b> ainsi que le nom de la feuille de calcul dans le champ <b class="cBold">Sheet</b> puis cochez la case <b class="cBold">Include header</b> pour considérer les entêtes.</li></div>
+<a name="wp2506616"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2506623"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSugarCRMInput4.png" id="wp2506620" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2506629"> </a><p class="pIndented1">
+Les données filtrées sont inscrites en sortie dans la feuille de calcul du fichier Excel spécifié. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSugarCRMInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSugarCRMOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

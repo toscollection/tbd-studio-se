@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:29">
+    <title>Scenario: multiple replacements and column filtering</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tReplace_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRules_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1435725"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1438061"> </a><h2 class="pHeading2">
+Scenario: multiple replacements and column filtering
+</h2>
+<a name="wp1438084"> </a><p class="pIndented1">
+This following Job (made in Perl) searches and replaces various typos and defects in a csv file then operates a column filtering before producing a new csv file with the final output.
+</p>
+<a name="wp1435854"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplace1.png" id="wp1435859" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1435877"> </a><div class="pSmartList2"><li>Click &amp; drop the following components from the <b class="cBold">Palette</b>: <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tReplace</b>, <b class="cBold">tFilterColumn</b> and <b class="cBold">tFileOutputDelimited</b>.</li></div>
+<a name="wp1435926"> </a><div class="pSmartList2"><li>Connect the components using<b class="cBold"> Main Row</b> connections via a right-click each component.</li></div>
+<a name="wp1435955"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tFileInputDelimited</b> component and set the input flow parameters.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1435973"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplace2.png" id="wp1435985" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1436342"> </a><div class="pSmartList2"><li>The <b class="cBold">Property type</b> for this scenario is <b class="cBold">Built-in</b>. Therefore the following fields are to be set manually unlike the Properties stored centrally in the repository, that are retrieved automatically.</li></div>
+<a name="wp1436352"> </a><div class="pSmartList2"><li>The <b class="cBold">File</b> is a simple csv file stored locally. The <b class="cBold">Row Separator</b> is a carriage return and the <b class="cBold">Field Separator</b> is a semi-colon. In this example no <b class="cBold">Header</b>, no <b class="cBold">Footer</b> and no <b class="cBold">Limit</b> are to be set.</li></div>
+<a name="wp1436368"> </a><div class="pSmartList2"><li>The file contains characters such as: <code class="cCode">\t, |||, [d]</code> or <code class="cCode">*d</code> which should not be interpreted as special characters or wild card. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1436379"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplace3.png" id="wp1436374" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1436502"> </a><div class="pSmartList2"><li>The schema for this file is built in also and made of four columns of various types (string or int). </li></div>
+<a name="wp1436559"> </a><div class="pSmartList2"><li>Now select the <b class="cBold">tReplace</b> component to set the search &amp; replace parameters.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1436583"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplace4.png" id="wp1436591" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1436603"> </a><div class="pSmartList2"><li>The schema can be synchronized with the incoming flow.</li></div>
+<a name="wp1436622"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Simple mode</b> check box as the search parameters can be easily set without requiring the use of regexp. </li></div>
+<a name="wp1436649"> </a><div class="pSmartList2"><li>Click the plus sign to add some lines to the parameters table. </li></div>
+<a name="wp1436671"> </a><div class="pSmartList2"><li>On the first parameter line, select <em class="cEmphasis">amount</em> as <b class="cBold">input column</b>. In the <b class="cBold">search</b> field look for the decimal <em class="cEmphasis">dot</em> separator and <b class="cBold">replace</b> it with a <em class="cEmphasis">comma</em>, in between single quotes.</li></div>
+<a name="wp1436989"> </a><div class="pSmartList2"><li>On the second parameter line, select <em class="cEmphasis">str</em> as <b class="cBold">input column</b>. I<b class="cBold">n the search field, look for </b><em class="cEmphasis">stret</em> or <em class="cEmphasis">streat</em> or <em class="cEmphasis">stre</em>. Note that these values are separated by a pipe that means <code class="cCode">or</code> in Perl  language. Replace them by <em class="cEmphasis">Street</em>. Select the <b class="cBold">whole word </b>check box. </li></div>
+<a name="wp1437178"> </a><div class="pSmartList2"><li>On the third parameter line, select again <em class="cEmphasis">str</em> as <b class="cBold">input column</b>, <b class="cBold">search</b> the pipe character using a backslash in front, to differentiate it from the &quot;or&quot; in Perl language. and replace it with nothing between single quotes (`&#39;).</li></div>
+<a name="wp1437188"> </a><div class="pSmartList2"><li>On the fourth parameter line, select <em class="cEmphasis">firstname</em> as <b class="cBold">input column</b>. In the <b class="cBold">Search </b>field, look for the following characters: <code class="cCode">[, ], +, *</code>. Note that these values are separated by a pipe that means <code class="cCode">or</code>  in Perl language. Replace them with nothing between single quotes (`&#39;).</li></div>
+<a name="wp1437416"> </a><div class="pSmartList2"><li>On the fifth parameter line, select <em class="cEmphasis">amount</em> as<b class="cBold"> input column</b>. In the Search field, type in the dollar sign between single quotes and In the Replace field, type in the Euro sign.</li></div>
+<a name="wp1437564"> </a><div class="pSmartList2"><li>On the last parameter line, select <em class="cEmphasis">firstname</em> as <b class="cBold">input column</b>. Search the string: <code class="cCode">\t</code>. To differenciate it from the tabulation, add as many backslashes in front of it as there are parsing, in other words, two backlashes are used to avoid misinterpreting and two extra backslashes constitute part of the character being looked for. In total four backslahes including the one in the character it self are being searched. Replace them with nothing between single quotes (`&#39;). And select the <b class="cBold">whole word </b>check box.</li></div>
+<a name="wp1437721"> </a><div class="pSmartList2"><li>The advanced mode isn&#39;t used in this scenario. </li></div>
+<a name="wp1437736"> </a><div class="pSmartList2"><li>Select the next component in the Job, <b class="cBold">tFilterColumn</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1437753"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplace5.png" id="wp1437767" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1437779"> </a><div class="pSmartList2"><li>The <b class="cBold">tFilterColumn</b> component holds a schema editor allowing to build the output schema based on the column names of the input schema. In this use case, change the order of the input schema columns and add 3 new columns, to obtain a schema as follows: <em class="cEmphasis">empty_field, firstname, name, str, amount, filler1, filler2</em>. </li></div>
+<a name="wp1437864"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK </b>to validate.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1437878"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplace6.png" id="wp1437886" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1437902"> </a><div class="pSmartList2"><li>Set the <b class="cBold">tFileOutputDelimited</b> properties manually.</li></div>
+<a name="wp1437921"> </a><div class="pSmartList2"><li>The schema is built-in for this scenario, and comes from the preceding component in the Job.</li></div>
+<a name="wp1437960"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1437971"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplace7.png" id="wp1437982" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1437990"> </a><p class="pIndented1">
+The first column is empty and the rest of the columns have been cleaned up from the parasitical characters. The street column was moved. And the decimal delimiter has been changed from a dot to a comma, along with the currency sign.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tReplace_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRules_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

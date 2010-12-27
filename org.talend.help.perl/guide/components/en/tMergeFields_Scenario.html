@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="06/02/10 16:38:20">
+    <title>Scenario: Merge the content of several rows using different columns as weight values</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMergeField_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMultiPatternCheck_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3493036"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3493043"> </a><h2 class="pHeading2">
+Scenario: Merge the content of several rows using different columns as weight values
+</h2>
+<a name="wp3493054"> </a><p class="pIndented1">
+This Java scenario describes a three-component Job that uses the <b class="cBold">tMergeFields</b> component to merge, based on different weight values, the content of data rows in different columns and writes the result in an output file.
+</p>
+<a name="wp3493059"> </a><p class="pIndented1">
+In this scenario, we have already stored the input schemas of the input file in the Repository. For more information about storing schema metadata in the Repository, see <em class="cEmphasis">Setting up a File Excel schema</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+<a name="wp3493091"> </a><p class="pIndented1">
+The input file contains four columns: <em class="cEmphasis">grp</em>, <em class="cEmphasis">gender</em>, <em class="cEmphasis">firstname</em> and <em class="cEmphasis">count</em>. The data in the input file have problems such as duplication, first names spelled differently or wrongly, different information for the same customer.
+</p>
+<a name="wp3493101"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMergeRow.png" id="wp3493097" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493120"> </a><div class="pSmartList2"><li>In the <b class="cBold">Repository</b> tree view, expand <b class="cBold">Metadata</b> and the <b class="cBold">FileExcel</b> node where you have stored the input schemas and then drop it onto the design workspace.<br />The <b class="cBold">FileInputExcel</b> component holding your schema displays on the workspace.</li></div>
+<a name="wp3493141"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tMergeFields</b> and a <b class="cBold">tFileOutputExcel</b> components from the <b class="cBold">Palette</b> onto the design workspace.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493152"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMergeRow1.png" id="wp3493148" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493164"> </a><div class="pSmartList2"><li>Link the components together using a <b class="cBold">Main</b> row link.</li></div>
+<a name="wp3493182"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputExcel</b> to display its <b class="cBold">Basic settings</b> view. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493191"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMergeRow2.png" id="wp3493187" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3493199"> </a><p class="pIndented1">
+All <b class="cBold">tFileInputExcel</b> property fields are automatically filled in. If you did not define your input schemas locally in the Repository, fill in the details manually after selecting <b class="cBold">Built-in</b> in the <b class="cBold">Schema Type</b> and <b class="cBold">Property Type</b> fields.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493227"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tMergeFields</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493238"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tmergeRow3.png" id="wp3493234" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493249"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to retrieve the schema from the preceding component. You can click the three-dot button next to <b class="cBold">Edit schema</b> to view the schema.</li></div>
+<a name="wp3493263"> </a><div class="pSmartList2"><li>In the <b class="cBold">Key</b> area, click the plus button to add a new line.</li></div>
+<a name="wp3493267"> </a><div class="pSmartList2"><li>Click in the line and select from the list the name of the column you want to use to merge the data. You can select multiple columns as aggregation set if you want to merge data based on multiple criteria. For this scenario, we want to use the <em class="cEmphasis">grp</em> column to merge the data.</li></div>
+<a name="wp3493280"> </a><div class="pSmartList2"><li>In the <b class="cBold">Operations</b> area, click the plus button to add new lines. Here you can define the output columns that will hold the results of the merge operation. In this scenario, we want to merge data in the three columns <em class="cEmphasis">firstname</em>, <em class="cEmphasis">gender</em> and <em class="cEmphasis">count</em>.</li></div>
+<a name="wp3493301"> </a><div class="pSmartList2"><li>Click in the first line of the <b class="cBold">Output column</b> and select the first output column that will hold the merge results.</li></div>
+<a name="wp3493310"> </a><div class="pSmartList2"><li>Click in the first line of the <b class="cBold">Function</b> column and select the merge operation you want to perform.</li></div>
+<a name="wp3493319"> </a><div class="pSmartList2"><li>Click in the first line of the <b class="cBold">Input Column</b> list and select the column from which the input values are to be taken.</li></div>
+<a name="wp3493328"> </a><div class="pSmartList2"><li>Click in the first line of the <b class="cBold">Weight column</b> and select the column that will be used as a basis for the merge operation. </li></div>
+<a name="wp3493333"> </a><div class="pSmartList2"><li>Repeat the same process to define the parameters for the merge operation for all the columns you want to write in the output file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493347"> </a><p class="pIndented1">
+Here we want to read data from the <em class="cEmphasis">firstname</em> and <em class="cEmphasis">gender</em> input columns and write only the values with the maximum weight (row count) in a <em class="cEmphasis">firstname</em> and <em class="cEmphasis">gender</em> output columns. We want also to read data from the <em class="cEmphasis">count</em> input column and write in a <em class="cEmphasis">count</em> output column its maximum value.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493377"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493381"> </a><p class="pIndented1">
+A progress bar displays to show the completed percentage of the merge operation. When the percentage progress bar reaches 100%, the specified data is regrouped and written in the defined output columns.
+</p>
+<a name="wp3493386"> </a><p class="pIndented1">
+The below figure illustrates a sample of the input data and output data after the merge operation.
+</p>
+<a name="wp3493398"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMergeRow4.png" id="wp3493392" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMergeField_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMultiPatternCheck_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

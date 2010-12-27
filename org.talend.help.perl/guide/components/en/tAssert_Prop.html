@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:04">
+    <title>tAssert</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="LogsandErrors_group_intro.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAssert_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2759702"> </a><h2 class="pHeading1">
+tAssert
+</h2>
+<a name="wp2759711"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tAssert_icon32_white.png" id="wp2759706" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2759718"> </a><h2 class="pHeading2">
+tAssert Properties
+</h2>
+<a name="wp2941069"> </a><p class="pIndented1">
+The <b class="cBold">tAssert</b> component works alongside <b class="cBold">tAssertCatcher</b> to evaluate the status of a Job execution. It concludes with the boolean result based on an assertive statement related to the execution and feed the result to <b class="cBold">tAssertCatcher</b> for proper Job status presentation.
+</p>
+<a name="wp2941170"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2941081table2941076">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2941081"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2941083"> </a><div class="pCellBody">
+Logs &amp; Errors 
+</div>
+</td>
+    <td><a name="wp2941092"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-10-02-03.jpg" height="59" width="112" id="wp2941088" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2941097"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2941102"> </a><div class="pCellBody">
+Provides the job status messages to <b class="cBold">tAssertCatcher</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2941109"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2941111"> </a><div class="pCellBody">
+Generates the boolean evaluation on the concern for the job execution status. The status includes:<br />- <b class="cBold">Ok</b>: the job execution succeeds.<br />- <b class="cBold">Fail</b>: the job execution fails. The tested Job&#39;s result does not match the expectation or an execution error occured at runtime.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2941124"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2941129"> </a><div class="pCellHeading">
+<em class="cEmphasis">Description</em>
+</div>
+</td>
+    <td><a name="wp2941131"> </a><div class="pCellBody">
+Type in your descriptive message to help identify the assertion of a <b class="cBold">tAssert</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2941136"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2941141"> </a><div class="pCellHeading">
+<em class="cEmphasis">Expression</em>
+</div>
+</td>
+    <td><a name="wp2941143"> </a><div class="pCellBody">
+Type in the assertive statement you base the evaluation on.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2941148"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2941150"> </a><div class="pCellBody">
+This component follows the action the assertive condition is directly related to. It can be the intermediate or end component of the main job, or the start, intermediate or end component of the secondary job.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2941157"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2941165"> </a><div class="pCellBody">
+The evaluation of <b class="cBold">tAssert</b> is captured only by <b class="cBold">tAssertCatcher</b>.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="LogsandErrors_group_intro.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAssert_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

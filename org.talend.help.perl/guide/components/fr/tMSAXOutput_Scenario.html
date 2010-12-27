@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario&#160;: Insérer des données dans une table définie sur le serveur Microsoft AX </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMSAXOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOpenbravoERPInput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2757352"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2757357"> </a><h2 class="pHeading2">
+Scénario&#160;: Insérer des données dans une table définie sur le serveur Microsoft AX 
+</h2>
+<a name="wp2757364"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2757362" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+<br />Avant de pouvoir utiliser ce composant, vérifiez que vous avez installé et lancé le serveur Microsoft AX correctement.
+</p>
+<a name="wp2757371"> </a><p class="pIndented1">
+Ce scénario Java décrit un Job à deux composants qui utilise le composant <b class="cBold">tMSAXOutput</b> afin d&#39;insérer une ligne dans une table définie stockée sur un serveur Microsoft AX et modifie ensuite les valeurs dans l&#39;une des colonnes insérée.
+</p>
+<a name="wp2757386"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMSAXOutput.png" id="wp2757383" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2757400"> </a><div class="pSmartList2"><li>Glissez le composant <b class="cBold">tFixedFlowInput</b> ainsi que le <b class="cBold">tMSAXOutput</b> de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation.</li></div>
+<a name="wp2757411"> </a><div class="pSmartList2"><li>Connectez les composants à l&#39;aide d&#39;un lien <b class="cBold">Row</b> de type <b class="cBold">Main</b>.</li></div>
+<a name="wp2757419"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tFixedFlowInput</b> afin d&#39;afficher la vue <b class="cBold">Component </b>et de définir ses propriétés.  </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2757429"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMSAXOutput1.png" id="wp2757426" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2839586"> </a><div class="pSmartList2"><li>Sélectionnez le mode <b class="cBold">Built-In </b>dans le champ <b class="cBold">Schema Type</b> et cliquez sur le bouton<b class="cBold"> [...]</b> du champ <b class="cBold">Edit schema</b> afin d&#39;afficher une boîte de dialogue qui vous permettra de définir le schéma d&#39;entrée. </li></div>
+<a name="wp2757456"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Plus</b> vert pour ajouter des colonnes dans le schéma d&#39;entrée, trois dans cet exemple, <em class="cEmphasis">name</em>, <em class="cEmphasis">city </em>et <em class="cEmphasis">street</em> (nom, ville et rue).</li></div>
+<a name="wp2757463"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue. Une nouvelle boîte de dialogue s&#39;ouvre et vous demande si vous voulez propager les modifications, cliquez sur <b class="cBold">Yes</b> (Oui).</li></div>
+<a name="wp2757474"> </a><div class="pSmartList2"><li>Les colonnes du schéma s&#39;affichent automatiquement dans le tableau <b class="cBold">Values</b>.</li></div>
+<a name="wp2757481"> </a><div class="pSmartList2"><li>Cliquez sur la colonne <b class="cBold">Value</b> et saisissez une valeur pour chaque colonne d&#39;entrée.</li></div>
+<a name="wp2758210"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tMSAXOutput</b> pour ouvrir la vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2758219"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMSAXOutput2.png" id="wp2758216" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2758231"> </a><div class="pSmartList2"><li>Sélectionnez le mode <b class="cBold">Built-In</b> dans le champ <b class="cBold">Property Type</b>.</li></div>
+<a name="wp2758238"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Host</b>, saisissez l&#39;adresse IP du serveur MicrosoftAX </li></div>
+<a name="wp2758245"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Domain</b>, saisissez le nom du domaine qui héberge le serveur MicrosoftAX.  </li></div>
+<a name="wp2758248"> </a><div class="pSmartList2"><li>Entrez votre nom d&#39;utilisateur et votre mot de passe de connexion au serveur dans les champs correspondants.</li></div>
+<a name="wp2758255"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table Name</b>, saisissez le nom de la table dans la quelle vous souhaitez écrire des données.</li></div>
+<a name="wp2758265"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Action on data</b>, sélectionnez l&#39;action  que vous désirez exécuter, <b class="cBold">Delete</b> dans cet exemple. </li></div>
+<a name="wp2758272"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Sync columns</b> pour retrouver le schéma du composant précédent. Dans cet exemple, le but est de retrouver les trois colonnes d&#39;entrée&#160;: <em class="cEmphasis">name</em>, <em class="cEmphasis">city</em> et <em class="cEmphasis">street</em> (nom, ville et rue).</li></div>
+<a name="wp2759197"> </a><div class="pSmartList2"><li>Si nécessaire, cliquez sur le bouton <b class="cBold">[...] </b>du champ <b class="cBold">Edit schema</b> afin d&#39;ouvrir une boîte de dialogue qui vous permettra de vérifier le schéma retourné. </li></div>
+<a name="wp2759227"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Additional columns</b>, cliquez sur le bouton <b class="cBold">[+]</b> afin d&#39;ajouter une ligne dans laquelle vous pouvez utiliser une expression locale pour modifier les données que vous voulez écrire dans une colonne spécifique.</li></div>
+<a name="wp2759247"> </a><div class="pSmartList2"><li>Cliquez sur la colonne <b class="cBold">Local expression </b>et appuyez sur <b class="cBold">Ctrl + espace</b> sur votre clavier pour ouvrir la liste des variables de contexte et sélectionnez&#160;:<br /><code class="cCode">StringHandling.UPCASE(row2.city)+&quot;-&quot;+row2.street</code>. Cette expression écrira le nom de la ville avec la première lettre en majuscule, suivi du nom de la rue, pour former l&#39;adresse du <em class="cEmphasis">Bryant park</em>. La colonne address de cet exemple contiendra donc la chaîne de caractères suivante&#160;: <em class="cEmphasis">New York-Midtown Manhattan.</em>  </li></div>
+<a name="wp2759292"> </a><div class="pSmartList2"><li>Sauvegardez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2762422"> </a><p class="pIndented1">
+Le <b class="cBold">tMSAXOutput</b> insère dans la table <em class="cEmphasis">ADDRESS </em>du serveur MicrosoftAX une ligne contenant les trois colonnes d&#39;entrée <em class="cEmphasis">name</em>, <em class="cEmphasis">city</em> et <em class="cEmphasis">street</em>, en plus de la nouvelle colonne <em class="cEmphasis">address</em> qui contient à la fois le nom de la ville et le nom de la rue.
+</p>
+<a name="wp2759568"> </a><h2 class="pHeading2">
+Scénario 2&#160;: Effacer des données d&#39;une table précise sur le serveur MicrosoftAX.
+</h2>
+<a name="wp2759575"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2759573" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Avant de pouvoir utiliser ce composant, vérifiez que vous avez installé et lancé correctement le serveur MicrosoftAX.
+</p>
+<a name="wp2759580"> </a><p class="pIndented1">
+Ce scénario Java décrit un Job à deux composants qui utilise le <b class="cBold">tMSAXOutput</b> dans le but d&#39;effacer toutes les lignes d&#39;une table définie qui ne correspondent pas aux données contenues dans la colonne clé sur un serveur MicrosoftAX.
+</p>
+<a name="wp2759688"> </a><p class="pIndented1">
+Dans cet exemple, le schéma d&#39;entrée que vous utilisez est une colonne <em class="cEmphasis">address</em> (adresse) qui contient les données suivantes&#160;: <em class="cEmphasis">New York-Midtown Manhattan</em>. Vous allez effacer du serveur MicrosoftAX toutes les adresses qui ne sont pas identiques à celle-ci.
+</p>
+<a name="wp2762713"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMSAXOutput3.png" id="wp2759693" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2759701"> </a><div class="pSmartList2"><li>Glissez les composants <b class="cBold">tFixedFlowInput</b> et <b class="cBold">tMSAXOutput </b>de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation.</li></div>
+<a name="wp2759758"> </a><div class="pSmartList2"><li>Connectez les deux composants à l&#39;aide d&#39;un lien <b class="cBold">Row</b> de type <b class="cBold">Main</b>.</li></div>
+<a name="wp2759782"> </a><div class="pSmartList2"><li>Double-cliquez sur le<b class="cBold"> tFixedFlowInput</b> pour afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2759709"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMSAXOutput4.png" id="wp2759802" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2759805"> </a><div class="pSmartList2"><li>Sélectionnez le mode <b class="cBold">Built-In</b> dans le champ <b class="cBold">Schema Type</b> et cliquez sur le bouton <b class="cBold">[...]</b> du champ <b class="cBold">Edit schema</b> pour ouvrir une boîte de dialogue où vous pourrez définir le schéma.</li></div>
+<a name="wp2759837"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[+]</b> et ajoutez les colonnes d&#39;entrée du schéma, <em class="cEmphasis">address</em> dans cet exemple.</li></div>
+<a name="wp2762758"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue. Les colonnes du schéma s&#39;affichent automatiquement dans la list <b class="cBold">Values</b>.</li></div>
+<a name="wp2759892"> </a><div class="pSmartList2"><li>Cliquez sur la colonne <b class="cBold">Value</b> et saisissez une valeur pour la colonne d&#39;entrée.</li></div>
+<a name="wp2759913"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tMSAXOutput</b> pour ouvrir sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2759822"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMSAXOutput5.png" id="wp2759933" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2759481"> </a><div class="pSmartList2"><li>Sélectionnez le mode <b class="cBold">Built-In</b> dans le champ <b class="cBold">Property Type</b>.</li></div>
+<a name="wp2760045"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Host</b>, saisissez l&#39;adresse IP du serveur MicrosoftAX.</li></div>
+<a name="wp2760054"> </a><div class="pSmartList2"><li>Dans le champ<b class="cBold"> Domain</b>, entrez le nom du domaine qui héberge le serveur MicrosoftAX.</li></div>
+<a name="wp2760066"> </a><div class="pSmartList2"><li>Saisissez votre nom d&#39;utilisateur et votre mot de passe de connexion au serveur dans les champs correspondants.</li></div>
+<a name="wp2760105"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table Name,</b> saisissez le nom de la table dans laquelle vous voulez écrire des données.</li></div>
+<a name="wp2760120"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Action on data</b>, sélectionnez l&#39;action que vos souhaitez exécuter, <b class="cBold">Delete </b>dans cet exemple.</li></div>
+<a name="wp2760156"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Sync columns</b> pour retourner le schéma du composant précédent. Dans cet exemple, l&#39;objectif est de récupérer la colonne d&#39;entrée <em class="cEmphasis">zipcode</em> (code postal).</li></div>
+<a name="wp2760196"> </a><div class="pSmartList2"><li>Cliquez sur le bouton<b class="cBold"> [...]</b> du champ <b class="cBold">Edit Schema </b>pour ouvrir la boîte de dialogue dans laquelle vous pouvez vérifier le schéma récupéré.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2760036"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMSAXOutput6.png" id="wp2759478" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2759491"> </a><div class="pSmartList2"><li>Dans le schéma de sortie, cochez la case <b class="cBold">Key</b> (clé) à côté du nom de la colonne.</li></div>
+<a name="wp2759500"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2759495" border="0" hspace="0" vspace="0"/><br />
+Quand vous sélectionnez une option différente de <b class="cBold">Insert</b>, vous devez toujours définir la <b class="cBold">Reference column</b> (colonne de référence) comme colonne clé. 
+</p>
+<a name="wp2760246"> </a><div class="pSmartList2"><li>Cliquez sur OK pour valider les changements et fermer la boîte de dialogue.</li></div>
+<a name="wp2760540"> </a><div class="pSmartList2"><li>Dans le tableau<b class="cBold"> Additional columns</b>, cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter une ligne et définir les paramètres que le composant utilisera comme base pour l&#39;opération d&#39;effacement. </li></div>
+<a name="wp2762854"> </a><div class="pSmartList2"><li>Saisissez un nom (<b class="cBold">name</b>), un opérateur (<b class="cBold">operator</b>), un type de données (<b class="cBold">data type</b>), une expression locale (<b class="cBold">local expression</b>), une position (<b class="cBold">position</b>) et une colonne de référence (<b class="cBold">reference column</b>) dans les colonnes correspondantes à la ligne que vous venez d&#39;ajouter.<br />Dans cet exemple, l&#39;objectif est d&#39;effacer de la table <em class="cEmphasis">ADDRESS</em> du serveur MicrosoftAX toutes les lignes dans lesquelles la colonne <em class="cEmphasis">Address</em> n&#39;est pas identique à l&#39;adresse dans la colonne clé <em class="cEmphasis">address</em>&#160;: <code class="cCode">New York-Midtown Manhattan.</code>  </li></div>
+<a name="wp2762997"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2762989" border="0" hspace="0" vspace="0"/><br />
+Quand vous  sélectionnez une action autre que <b class="cBold">Insert </b>,dans le champ <b class="cBold">Action on data</b> vous devez toujours sélectionner <b class="cBold">Replace</b> dans la colonne <b class="cBold">Position</b>.
+</p>
+<a name="wp2763014"> </a><div class="pSmartList2"><li>Sauvegardez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2836420"> </a><p class="pIndented1">
+Le <b class="cBold">tMSAXOutput</b> supprime de la table <em class="cEmphasis">ADDRESS</em> du serveur MicrosoftAX toutes les lignes pour lesquelles les données de la colonne <em class="cEmphasis">address</em> ne sont pas identiques à celles de la colonne clé.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMSAXOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOpenbravoERPInput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

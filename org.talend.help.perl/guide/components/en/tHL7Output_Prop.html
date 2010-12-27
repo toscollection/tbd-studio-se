@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:32">
+    <title>tHL7Output</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tHL7Input_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tHL7Output_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3452130"> </a><h2 class="pHeading1">
+tHL7Output
+</h2>
+<a name="wp3452139"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/Components-01-14-114.jpg" height="48" width="48" id="wp3452134" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3452146"> </a><h2 class="pHeading2">
+tHL7Output Properties
+</h2>
+<a name="wp3452323"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3452154table3452149">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452154"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp3452156"> </a><div class="pCellBody">
+Business 
+</div>
+</td>
+    <td><a name="wp3452164"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp3452161" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452169"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3452171"> </a><div class="pCellBody">
+Writes an HL7 structured file and inserts the data row by row.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452178"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3452180"> </a><div class="pCellBody">
+This component writes an HL7 structured  file according to the HL7 standards.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452187"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3452192"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp3452194"> </a><div class="pCellBody">
+Either <b class="cBold">Built-In</b> or <b class="cBold">Repository</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452199"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452204"> </a><div class="pCellHeading">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452209"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452211"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452213"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452218"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the Repository file where the properties are stored. The fields that follow are completed automatically using fetched data
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452223"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452228"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema(s)</em>
+</div>
+</td>
+    <td><a name="wp3452233"> </a><div class="pCellBody">
+<b class="cBold">Schema</b>: Enter the node on which the data from the parent row is to be stored. <b class="cBold">Parent row</b>: The data flow source.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452238"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452240"> </a><div class="pCellBody">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp3452242"> </a><div class="pCellBody">
+Browse to where you want to store the file generated.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452244"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452246"> </a><div class="pCellBody">
+<em class="cEmphasis">Configure HL7 Tree</em>
+</div>
+</td>
+    <td><a name="wp3452248"> </a><div class="pCellBody">
+Opens the interface in which you can set up the HL7 mapping.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452250"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452255"> </a><div class="pCellHeading">
+<em class="cEmphasis">HL7 version</em>
+</div>
+</td>
+    <td><a name="wp3452257"> </a><div class="pCellBody">
+Select your HL7 version from the list.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452262"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3452264"> </a><div class="pCellBody">
+<em class="cEmphasis">Create directory only if not exists</em>
+</div>
+</td>
+    <td><a name="wp3452266"> </a><div class="pCellBody">
+This check box is selected by default. This creates a folder for the output file if there isn&#39;t one already.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452268"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452273"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp3452275"> </a><div class="pCellBody">
+Select the encoding type from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452283"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452288"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3452290"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452292"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3452296"> </a><div class="pCellHeading">
+<em class="cEmphasis">Enable parallel execution</em>
+</div>
+</td>
+    <td><a name="wp3452522"> </a><div class="pCellBody">
+Select this check box to perform high-speed data processing, that is treating multiple data flows simultaneously. <br />For more information, see <em class="cEmphasis">How to parallelize data flows</em>of Talend Integration Suite Studio <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3452307"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3452309"> </a><div class="pCellBody">
+Used as an output component. An Input component is required.  
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3452316"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3452318"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tHL7Input_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tHL7Output_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

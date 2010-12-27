@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;1&#160;: Alimenter un entrepôt de données</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlCDC_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlClose_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3493489"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3493496"> </a><h2 class="pHeading2">
+Scénario&#160;1&#160;: Alimenter un entrepôt de données
+</h2>
+<a name="wp3493503"> </a><p class="pIndented1">
+Ce scénario Java suivant permet d&#39;alimenter un entrepôt de données. Il est constitué de trois composants&#160;: le composant <b class="cBold">tMysqlInput</b> correspond aux données de vos clients contenues dans la base <em class="cEmphasis">Customers</em>. Ces données sont modifiées à l&#39;aide d&#39;un composant <b class="cBold">tMap</b> et les modifications sont transmises à la table <em class="cEmphasis">Leadfact</em> de votre entrepôt de données CRM à l&#39;aide du composant de sortie <b class="cBold">tMysqlOutput</b>.
+</p>
+<a name="wp3493533"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM1.png" id="wp3493529" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493540"> </a><div class="pSmartList2"><li>Cliquez et déposez ces trois composants dans l&#39;espace de modélisation et connectez-les à l&#39;aide de lien de type <b class="cBold">Row Main</b>.</li></div>
+<a name="wp3493553"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMysqlInput</b> pour paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493564"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM2.png" id="wp3493560" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493579"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Property Type</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> puis la connexion à la base de données <em class="cEmphasis">Customers</em> contenant les informations sur vos clients. Les informations de connexion seront renseignées automatiquement.</li></div>
+<a name="wp3493593"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3493590" border="0" hspace="0" vspace="0"/><br />
+Si vous n&#39;avez pas créé de connexion à votre base de données dans les métadonnées, sélectionnez <b class="cBold">Built-in</b> dans le champ <b class="cBold">Property Type</b> et renseignez les champs manuellement.
+</p>
+<a name="wp3493617"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Schema</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> puis le schéma de la base <em class="cEmphasis">Customers</em> stocké dans les métadonnées.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493634"> </a><p class="pIndented1">
+Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> et <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <span style="font-weight: bold">Guide Utilisateur</span> <b class="cBold">Talend Open Studio</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493650"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table name</b>, renseignez le nom de la table contenant les informations à modifier.</li></div>
+<a name="wp3493659"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Guess Query</b> pour récupérer toutes les données de votre table.</li></div>
+<a name="wp3493671"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMap</b> pour accéder au <b class="cBold">Map Editor</b>. La zone input est déjà renseignée avec le schéma du composant d&#39;entrée.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493683"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM3.png" id="wp3493679" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493690"> </a><div class="pSmartList2"><li>Sélectionnez les champs de la zone input et glissez-les jusqu&#39;à la table <em class="cEmphasis">Leadfact</em> de la zone output. Pour plus d&#39;informations concernant le mapping de données, consultez <em class="cEmphasis">Mapper des flux de données</em>.</li></div>
+<a name="wp3493708"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Ok</b> pour valider.</li></div>
+<a name="wp3493716"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMysqlOutput</b> pour paramétrer ses propriétés. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493727"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM4.png" id="wp3493723" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493742"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Property Type</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> puis la connexion à votre entrepôt de données <em class="cEmphasis">CRM</em>. Les informations de connexion seront renseignées automatiquement.</li></div>
+<a name="wp3493756"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3493753" border="0" hspace="0" vspace="0"/><br />
+Si vous n&#39;avez pas créé de connexion à votre entrepôt dans les métadonnées, sélectionnez <b class="cBold">Built-in</b> et renseignez les champs manuellement.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3493772"> </a><p class="pIndented1">
+Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> et <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <span style="font-weight: bold">Guide Utilisateur</span> <b class="cBold">Talend Open Studio</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3493788"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table name</b>, renseignez le nom de la table à alimenter, ici <em class="cEmphasis">Leadfact</em>.</li></div>
+<a name="wp3493805"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Action on table</b>, sélectionnez <b class="cBold">Create table</b> pour créer la table.</li></div>
+<a name="wp3493818"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">F6</b> pour créer et alimenter la table <em class="cEmphasis">Leadfact</em> de l&#39;entrepôt de données <em class="cEmphasis">CRM</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3493833"> </a><h2 class="pHeading2">
+Scénario&#160;2&#160;: Extraire les modifications à l&#39;aide du CDC
+</h2>
+<a name="wp3493838"> </a><p class="pIndented1">
+Ce scénario est basé sur le scénario précédent. Il alimente et modifie, au fil de l&#39;eau, les données stockées dans l&#39;entrepôt <em class="cEmphasis">CRM</em> et récupère et enregistre, toutes les nuits, ces modifications à l&#39;aide de la fonction CDC dans une table dédiée. Et ces modifications sont ensuite extraites par les différents services intéressés&#160;: le service Marketing, le service Ventes et le service Finance.
+</p>
+<a name="wp3493851"> </a><h3 class="pHeading3">
+Etape&#160;1&#160;: Configurer le CDC
+</h3>
+<a name="wp3493855"> </a><p class="pIndented2">
+Avant d&#39;extraire les modifications apportées à votre entrepôt de données <em class="cEmphasis">CRM</em>, vous devez&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3493868"> </a><div class="pSmartList3"><li>configurer la connexion à la base de données dédiée au CDC,</li></div>
+<a name="wp3493872"> </a><div class="pSmartList3"><li>configurer la connexion à la base de données source et identifier la table à surveiller,</li></div>
+<a name="wp3493879"> </a><div class="pSmartList3"><li>configurer la connexion entre le CDC et les données.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3493884"> </a><p class="pIndented2">
+Pour cela&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3493899"> </a><div class="pSmartList3"><li>Dans le <b class="cBold">Repository</b>, sous le noeud <b class="cBold">Metadata</b>, créez une connexion à votre base de données dédiée au CDC, ici <em class="cEmphasis">CDC_connection</em>.</li></div>
+<a name="wp3493916"> </a><div class="pSmartList3"><li>Dans le <b class="cBold">Repository</b>, sous le noeud <b class="cBold">Metadata</b>, créez une connexion à votre entrepôt de données dont vous souhaitez extraire les changements, ici <em class="cEmphasis">CRM_connection</em>.</li></div>
+<a name="wp3493929"> </a><div class="pSmartList3"><li>Cliquez-droit sur la connexion à votre <em class="cEmphasis">CRM</em> et sélectionnez l&#39;option <b class="cBold">Retrieve schema</b> pour récupérer le schéma de la table à surveiller.</li></div>
+<a name="wp3493946"> </a><div class="pSmartList3"><li>Cliquez-droit sur le sous-dossier <b class="cBold">CDC Foundation</b> de votre <em class="cEmphasis">CRM</em> et sélectionnez l&#39;option <b class="cBold">Create CDC</b> dans le menu contextuel.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3493961"> </a><p class="pIndented2">
+La boîte de dialogue <b class="cBold">[Create change data capture]</b> apparaît.
+</p>
+<a name="wp3493970"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_Create_Sub1.png" id="wp3493966" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3493981"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Set link Connection</b>, sélectionnez la connexion <em class="cEmphasis">CDC_connection</em>.</li></div>
+<a name="wp3493994"> </a><div class="pSmartList3"><li>Cliquez sur le bouton <b class="cBold">Create Subscriber</b>. La boîte de dialogue <b class="cBold">[Create subscriber and Execute SQL Script]</b> apparaît.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494009"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_Create_Sub2.png" id="wp3494005" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494025"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Execute</b>, puis sur <b class="cBold">Close</b>.</li></div>
+<a name="wp3494033"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Finish</b> pour valider la création de la table des souscripteurs.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494043"> </a><p class="pIndented2">
+Dans le sous-dossier <b class="cBold">CDC Foundation</b>, la table des souscripteurs apparaît.
+</p>
+<a name="wp3494048"> </a><p class="pIndented2">
+Vous devez précisez à quelle table les souscripteurs doivent souscrire puis activer leur souscription. Pour cela&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494060"> </a><div class="pSmartList3"><li>Cliquez-droit sur le schéma de la table <em class="cEmphasis">Leadfact</em> à surveiller dans votre entrepôt de données <em class="cEmphasis">CRM</em> et sélectionnez l&#39;option <b class="cBold">add CDC</b> dans le menu contextuel. La boîte de dialogue <b class="cBold">[Create Subscriber and Execute SQL Script]</b> apparaît.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494083"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_Create_Sub3.png" id="wp3494079" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494102"> </a><div class="pSmartList3"><li>Dans les champs <b class="cBold">Events to catch</b>, cochez les cases <b class="cBold">Insert</b>, <b class="cBold">Update</b> et <b class="cBold">Delete</b> pour surveiller les insertions, mises à jours et suppression.</li></div>
+<a name="wp3494115"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Subscriber Name</b>, saisissez le nom du souscripteur ayant accès à ces modifications, ici <em class="cEmphasis">Sub_Mktg</em> pour le service Marketing.</li></div>
+<a name="wp3494134"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Execute</b>, puis sur <b class="cBold">Close</b> pour valider la souscription.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494142"> </a><p class="pIndented2">
+Dans le sous-dossier <b class="cBold">CDC Foundation</b>, deux nouvelles tables apparaissent et le schéma de la table surveillée est marqué d&#39;un symbole CDC vert.
+</p>
+<a name="wp3494152"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_arbo.png" id="wp3494148" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3494156"> </a><p class="pIndented2">
+Créez de nouveaux souscripteurs pour les services Finance et Ventes, respectivement <em class="cEmphasis">Sub_Finance</em> et <em class="cEmphasis">Sub_Sales</em>&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494176"> </a><div class="pSmartList3"><li>Cliquez-droit sur la table <em class="cEmphasis">Leadfact</em> par le CDC et sélectionnez l&#39;option <b class="cBold">Edit CDC Subscribers</b>. La boîte de dialogue <b class="cBold">[Edit CDC]</b> apparaît.</li></div>
+<a name="wp3494196"> </a><div class="pSmartList3"><li>Cliquez sur le bouton <b class="cBold">Add</b>. La boîte de dialogue <b class="cBold">[Input subscriber name]</b> apparaît.</li></div>
+<a name="wp3494211"> </a><div class="pSmartList3"><li>Saisissez le nom du souscripteur, ici <em class="cEmphasis">Sub_Finance</em> et <em class="cEmphasis">Sub_Sales</em>.</li></div>
+<a name="wp3494226"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Execute</b> puis <b class="cBold">Close</b> pour valider la création.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494234"> </a><h3 class="pHeading3">
+Etape&#160;2&#160;: Modifier les données de votre CRM
+</h3>
+<a name="wp3494242"> </a><p class="pIndented2">
+Modifiez les données de vos clients dans votre <em class="cEmphasis">CRM</em>, par exemple, mettre tous les noms de vos clients en majuscule dans un soucis d&#39;harmonisation.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494254"> </a><div class="pSmartList3"><li>Double-cliquez sur le composant <b class="cBold">tMap</b> et saisissez <code class="cCode">row1.CustomerName.toUpperCase()</code>devant la colonne <b class="cBold">CustomerName</b> pour mettre tous les noms de vos clients en majuscule.</li></div>
+<a name="wp3494272"> </a><div class="pSmartList3"><li>Cliquez sur <b class="cBold">Ok</b>.</li></div>
+<a name="wp3494281"> </a><div class="pSmartList3"><li>Double-cliquez sur le composant <b class="cBold">tMysqlOutput</b>.</li></div>
+<a name="wp3494294"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Action on table</b>, sélectionnez <b class="cBold">None</b>.</li></div>
+<a name="wp3494306"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Action on data</b>, sélectionnez <b class="cBold">Insert or update</b> pour insérer ou mettre à jour les données de la table.</li></div>
+<a name="wp3494317"> </a><div class="pSmartList3"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job de modification de données.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494321"> </a><p class="pIndented2">
+Pour visualiser toutes les modifications apportées, cliquez-droit sur la table <em class="cEmphasis">Leadfact et sélectionnez l&#39;option </em><b style="font-weight: bold" class="cBold">View All Changes</b>.
+</p>
+<a name="wp3494338"> </a><h3 class="pHeading3">
+Etape&#160;3&#160;: Extraire les modifications apportées aux données
+</h3>
+<a name="wp3494343"> </a><p class="pIndented2">
+Après avoir mis en place l&#39;environnement CDC, vous pouvez créer un Job utilisant le composant MySQL CDC pour extraire les modifications apportées aux données de la table <em class="cEmphasis">Leadfact</em>. Pour cela:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494359"> </a><div class="pSmartList3"><li>Dans la Palette, cliquez-déposez les composants <b class="cBold">tMysqlCDC</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3494371"> </a><div class="pSmartList3"><li>Reliez ces deux composants à l&#39;aide d&#39;une connexion de type <b class="cBold">Row Main</b>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494383"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC1.png" id="wp3494379" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494394"> </a><div class="pSmartList3"><li>Double-cliquez sur le composant <b class="cBold">tMysqlCDC</b> pour paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494405"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC2.png" id="wp3494401" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494420"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Property Type</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> puis la connexion <em class="cEmphasis">CDC_connection</em> à la base de données CDC. Les informations de connexion seront renseignées automatiquement.</li></div>
+<a name="wp3494434"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3494431" border="0" hspace="0" vspace="0"/><br />
+Si vous n&#39;avez pas créé de connexion à votre base de données de modifications dans les métadonnées, sélectionnez <b class="cBold">Built-in</b> dans le champ <b class="cBold">Property Type</b> et renseignez les champs manuellement.
+</p>
+<a name="wp3494454"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Schema using CDC</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> puis le schéma de votre table <em class="cEmphasis">Leadfact</em> stockée dans les métadonnées.</li></div>
+<a name="wp3494471"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Table using CDC</b>, renseignez le nom de la table surveillée par le CDC.</li></div>
+<a name="wp3494480"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Subscriber</b>, renseignez le nom du souscripteur qui va extraire les modifications&#160;: <em class="cEmphasis">Sub_Mktg</em> pour le service Marketing, <em class="cEmphasis">Sub_Sales</em> pour le service Ventes ou <em class="cEmphasis">Sub_Finance</em> pour le service Finance.</li></div>
+<a name="wp3494501"> </a><div class="pSmartList3"><li>Dans le champ <b class="cBold">Events to catch</b>, cochez les cases correspondant au type de modifications que le souscripteur va extraire, ici cochez les trois cases pour les trois souscripteurs.</li></div>
+<a name="wp3494510"> </a><div class="pSmartList3"><li>Double-cliquez sur le composant <b class="cBold">tLogRow</b> pour paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494521"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC3.png" id="wp3494517" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3494532"> </a><div class="pSmartList3"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent.</li></div>
+<a name="wp3494543"> </a><div class="pSmartList3"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3494552"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC4.png" id="wp3494548" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3494556"> </a><p class="pIndented2">
+Le nom des clients est donc mis en majuscule et le type de modification apparaît ici sous la forme d&#39;un <em class="cEmphasis">U</em> pour <b class="cBold">Update</b>.
+</p>
+<a name="wp3494569"> </a><p class="pIndented2">
+Une fois, ces modifications extraites, elles ne sont plus disponibles dans la table des modifications. Pour vérifier leur extraction, faites un clic-droit sur la table <em class="cEmphasis">Leadfact</em> surveillée par le CDC et sélectionnez l&#39;option <b class="cBold">Views All Changes</b>. Les modifications extraites n&#39;y apparaissent plus.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlCDC_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlClose_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

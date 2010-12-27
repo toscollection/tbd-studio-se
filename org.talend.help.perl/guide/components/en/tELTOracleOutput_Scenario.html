@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:34">
+    <title>Scenario: Using the Oracle MERGE function to update and add data simultaneously</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTOracleOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTPostgresqlInput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2968897"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2968902"> </a><h2 class="pHeading2">
+Scenario: Using the Oracle MERGE function to update and add data simultaneously
+</h2>
+<a name="wp2968907"> </a><p class="pIndented1">
+The following scenario describes a Job, using three ELT components, which allows you to update data in a client table thanks to the Oracle MERGE command. New client information is added and existing client information is updated.
+</p>
+<a name="wp2968915"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput1.png" id="wp2968912" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2968928"> </a><p class="pIndented1">
+From the <b class="cBold">Metadata</b> node in the <b class="cBold">Repository</b> panel&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968933"> </a><div class="pSmartList2"><li>Under the node which corresponds to the database containing the tables to be used in this scenario, select the table schema which contains the new client data and drag it to the workspace. In this scenario, the schema used is called <em class="cEmphasis">NEW_CUSTOMERS_MLE</em>.</li></div>
+<a name="wp2968946"> </a><div class="pSmartList2"><li>In the <b class="cBold">[Components]</b> dialog box which appears, select the <b class="cBold">tELTOracleInput</b> component and click <b class="cBold">OK</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968959"> </a><p class="pIndented1">
+For further information concerning metadata, see <em class="cEmphasis">How to centralize the Metadata items</em>, in the <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+<a name="wp2968971"> </a><p class="pIndented1">
+From the components <b class="cBold">Palette</b>&#160;: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968984"> </a><div class="pSmartList2"><li>Drag the <b class="cBold">tELTOracleMap</b> and <b class="cBold">tELTOracleOutput</b> components on to the workspace.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968988"> </a><p class="pIndented1">
+To link the components&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968996"> </a><div class="pSmartList2"><li>Right click on the entry component, <em class="cEmphasis">NEW_CUSTOMERS_MLE</em>, drag the line which appears to <b class="cBold">tELTOracleMap</b> and release to create the link.</li></div>
+<a name="wp2969009"> </a><div class="pSmartList2"><li>Repeat the step to connect <b class="cBold">tELTOracleMap</b> to <b class="cBold">tELTOracleOutput</b>.<br />A dialog box appears, in which you must enter a name for the link</li></div>
+<a name="wp2969020"> </a><div class="pSmartList2"><li> Enter a name for the link and click <b class="cBold">OK</b>. In this example, the link is called <em class="cEmphasis">RESULTS</em>.</li></div>
+<a name="wp2969028"> </a><div class="pSmartList2"><li>Double-click on the entry component to display its properties in the <b class="cBold">Components</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969035"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput2.png" id="wp2969032" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969046"> </a><div class="pSmartList2"><li>In the schema list, select <b class="cBold">Repository</b> if you have stored your table schema under <b class="cBold">Metadata</b> in the <b class="cBold">Repository</b>.  Otherwise, select <b class="cBold">Built-in</b> and configure the schema manually by clicking on the <b class="cBold">[...]</b> button next to <b class="cBold">Edit schema</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969064"> </a><p class="pIndented1">
+The schema is configured as follows&#160;:
+</p>
+<a name="wp2969071"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput3.png" id="wp2969068" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969079"> </a><div class="pSmartList2"><li>In the <b class="cBold">Default Table Name</b> field, enter the name of the source table within double quotation marks.  In this example, the table used is called <em class="cEmphasis">NEW_CUSTOMERS_MLE</em>.</li></div>
+<a name="wp2969089"> </a><div class="pSmartList2"><li>In the <b class="cBold">Default Schema Name</b> field, enter the name of the source schema within double quotation marks. In this example, the schema used is called <em class="cEmphasis">ROOT</em>.</li></div>
+<a name="wp2969102"> </a><div class="pSmartList2"><li>Click on the <b class="cBold">tELTOracleMap</b> and on the <b class="cBold">Component</b> view to display the component&#39;s basic properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969111"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput4.png" id="wp2969108" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969122"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Use an existing connection</b> check box and select the <b class="cBold">tOracleConnection</b> component from the <b class="cBold">Component list</b> if you want to use a connection opened by a connection component.</li></div>
+<a name="wp2969138"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property Type</b> list, select <b class="cBold">Repository</b> and click on the <b class="cBold">[...]</b> button to select connection to the database containing the tables used in this scenario. The following fields will be filled in with the connection information for the database. If you haven&#39;t created any metadata with this information, select the <b class="cBold">Built-in</b> mode in the <b class="cBold">Property Type</b> list and enter the metadata manually. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969154"> </a><p class="pIndented1">
+For further information concerning metadata, see <em class="cEmphasis">How to centralize the Metadata items</em> in the <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969170"> </a><div class="pSmartList2"><li>Click on the <b class="cBold">[...]</b> button next to <b class="cBold">ELT Oracle Map Editor</b> to open the editor which allows you to map the input flow to the output flow.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969179"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput5.png" id="wp2969176" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969187"> </a><div class="pSmartList2"><li>Click on the <b class="cBold">[+]</b> button at the top left of the editor <br />A dialog box opens in which you can add an alias for the input table. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969196"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput6.png" id="wp2969193" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2969203"> </a><p class="pIndented1">
+In the <b class="cBold">Add a new alias</b> dialog box&#160;: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969211"> </a><div class="pSmartList2"><li>Select the name of the input table flow from the <b class="cBold">Select the table to use</b> list. Here we have selected <em class="cEmphasis">ROOT.NEW_CUSTOMERS_MLE</em>.</li></div>
+<a name="wp2969221"> </a><div class="pSmartList2"><li>Enter the name you want to give to the corresponding alias in the <b class="cBold">Type in a valid alias</b> field. In this example, we have named the alias <em class="cEmphasis">new_customers</em>.</li></div>
+<a name="wp2969232"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2969230" border="0" hspace="0" vspace="0"/><br />
+<br />The alias isn&#39;t necessary if the input table is only used once in <b class="cBold">tMap</b>.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp2969254"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 54pt; margin-right: 14pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: -11pt; text-transform: none">
+·	Click on the <b class="cBold">OK</b> button.
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969260"> </a><div class="pSmartList2"><li>In the <b class="cBold">tELTOracleMap</b> editor, highlight all of the input table columns and drag them to the output table, <em class="cEmphasis">RESULTS</em>.</li></div>
+<a name="wp2969272"> </a><div class="pSmartList2"><li>Click on the <b class="cBold">Generated SQL Select query tab</b> to display the query to be executed.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969279"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput7.png" id="wp2969276" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969288"> </a><div class="pSmartList2"><li>Click on <b class="cBold">OK</b>.</li></div>
+<a name="wp2969294"> </a><div class="pSmartList2"><li>In the workspace, double-click  on the <b class="cBold">tELTOracleOutput</b> component to configure the properties in the <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969306"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput8.png" id="wp2969303" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969318"> </a><div class="pSmartList2"><li>In the <b class="cBold">Action on data</b> list, select <b class="cBold">MERGE</b>.</li></div>
+<a name="wp2969327"> </a><div class="pSmartList2"><li>Click on the <b class="cBold">Sync columns</b> button to recuperate the schema pertaining to the previous component, or configure the output schema manually by selecting <b class="cBold">Built-in</b> from the <b class="cBold">Schema</b> list and by clicking on the <b class="cBold">[...]</b> button next to the <b class="cBold">Edit schema</b> button.</li></div>
+<a name="wp2969347"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Use Merge Update</b> check box to update the data using Oracle&#39;s MERGE function.</li></div>
+<a name="wp2969350"> </a><div class="pSmartList2"><li>In the table which appears, select the check boxes which correspond to the columns you want to update. We want to update the client data according to their ID. Therefore, select all of the check boxes apart from the one which corresponds to the ID column.</li></div>
+<a name="wp2969359"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp2969356" border="0" hspace="0" vspace="0"/><br />
+The columns defined as the primary key CANNOT and MUST NOT be made subject to updates.
+</p>
+<a name="wp2969369"> </a><div class="pSmartList2"><li>Select the check boxes for <b class="cBold">Use Merge Update Where Clause</b> and <b class="cBold">Use Merge Update Delete Clause</b> if you want to use a WHERE clause to filter the data to be updated, as well as a DELETE WHERE clause to delete, then re-insert the data updated during the MERGE operation.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969379"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput8.png" id="wp2969376" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969387"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Use Merge Insert</b> check box to insert the new data, while the existing data is updated by Oracle&#39;s MERGE function.</li></div>
+<a name="wp2969391"> </a><div class="pSmartList2"><li>In the table which appears, select the check boxes which correspond to the columns you want to insert. We want to insert all the new client data. Therefore, select all of the check boxes which correspond to the columns to be inserted.</li></div>
+<a name="wp2969398"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Use Merge Insert Where Clause</b> check box if you want to use a WHERE clause to filter the data inserted during the MERGE operation.</li></div>
+<a name="wp2969405"> </a><div class="pSmartList2"><li>In the <b class="cBold">Default Table Name</b> field, enter the name of the source table within inverted commas. In this example, the table used is called <em class="cEmphasis">NEW_CUSTOMERS_MLE</em></li></div>
+<a name="wp2969415"> </a><div class="pSmartList2"><li>In the <b class="cBold">Default Schema Name</b> field, enter the name of the source schema within inverted commas. In this example, the schema used is called <em class="cEmphasis">ROOT</em>.</li></div>
+<a name="wp2969427"> </a><div class="pSmartList2"><li>Save the job and press <b class="cBold">F6</b> to run it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969434"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput9.png" id="wp2969431" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2969438"> </a><p class="pIndented1">
+The data is updated and inserted in the database. The query used is displayed in the console.
+</p>
+<a name="wp2969446"> </a><p class="pIndented1">
+For a scenario using the <b class="cBold">tELTOracleOutput</b> component, see <a href="tELTOracleMap_Scenario.html#wp2968406"><em class="cEmphasis">Scenario: Updating Oracle DB entries</em></a>of the <b class="cBold">tELTOracleMap</b> component.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTOracleOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTPostgresqlInput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

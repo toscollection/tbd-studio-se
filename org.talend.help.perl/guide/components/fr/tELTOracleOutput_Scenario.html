@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:03:50">
+    <title>Scénario&#160;: Utiliser la fonction MERGE d&#39;Oracle pour mettre à jour et insérer simultanément des données</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTOracleOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTPostgresqlInput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2968724"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2968729"> </a><h2 class="pHeading2">
+Scénario&#160;: Utiliser la fonction MERGE d&#39;Oracle pour mettre à jour et insérer simultanément des données
+</h2>
+<a name="wp2968734"> </a><p class="pIndented1">
+Le scénario suivant décrit un Job à trois composants ELT permettant de mettre à jour les données d&#39;une table client grâce à la commande MERGE d&#39;Oracle. Les informations des nouveaux clients sont ajoutées et celles des anciens sont mises à jour.
+</p>
+<a name="wp2968742"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput1.png" id="wp2968739" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2968752"> </a><p class="pIndented1">
+A partir du noeud <b class="cBold">Metadata</b> du <b class="cBold">Repository</b>&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968757"> </a><div class="pSmartList2"><li>Sous le noeud correspondant à la base de données contenant les tables à utiliser pour ce scénario, sélectionnez le schéma de la table contenant les nouvelles données sur les clients et glissez dans l&#39;espace de modélisation. Dans ce scénario, le schéma utilisé se nomme <em class="cEmphasis">NEW_CUSTOMERS_MLE</em>. </li></div>
+<a name="wp2968770"> </a><div class="pSmartList2"><li>Dans la boîte de dialogue <b class="cBold">[Components]</b>, sélectionnez le composant <b class="cBold">tELTOracleInput</b> et cliquez sur <b class="cBold">OK</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968780"> </a><p class="pIndented1">
+Pour plus d&#39;informations concernant les métadonnées, consultez la section <em class="cEmphasis">Centraliser les métadonnées</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp2968795"> </a><p class="pIndented1">
+A partir de la <b class="cBold">Palette</b> de composants&#160;: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968806"> </a><div class="pSmartList2"><li>Glissez les composants <b class="cBold">tELTOracleMap</b> et <b class="cBold">tELTOracleOutput</b> dans l&#39;espace de modélisation.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968812"> </a><p class="pIndented1">
+Pour relier les composants entre eux&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968820"> </a><div class="pSmartList2"><li>Cliquez-droit sur le composant d&#39;entrée, <em class="cEmphasis">NEW_CUSTOMERS_MLE</em>, glissez jusqu&#39;au <b class="cBold">tELTOracleMap</b> et relâchez le bouton droit pour créer le lien.</li></div>
+<a name="wp2968833"> </a><div class="pSmartList2"><li>De la même manière, connectez le <b class="cBold">tELTOracleMap</b> au <b class="cBold">tELTOracleOutput</b> à l&#39;aide d&#39;un nouveau lien appelé <em class="cEmphasis">RESULTS</em> dans cet exemple.</li></div>
+<a name="wp2968840"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant d&#39;entrée pour afficher ses propriétés dans la vue <b class="cBold">Components</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968852"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput2.png" id="wp2968849" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968863"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Repository</b> si vous avez stocké le schéma de votre table dans le répertoire <b class="cBold">Metadata</b> du <b class="cBold">Repository</b> ou sélectionnez <b class="cBold">Built-in</b> et configurez-le manuellement en cliquant sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968881"> </a><p class="pIndented1">
+Le schéma est configuré comme suit&#160;:
+</p>
+<a name="wp2968888"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput3.png" id="wp2968885" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968896"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Default Table Name</b>, saisissez entre guillemets le nom de la table source. Ici, la table utilisée se nomme <em class="cEmphasis">NEW_CUSTOMERS_MLE</em>.</li></div>
+<a name="wp2968906"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Default Schema Name</b>, saisissez entre guillemets le nom du schéma source. Ici, le schéma utilisé se nomme <em class="cEmphasis">ROOT</em>.</li></div>
+<a name="wp2968919"> </a><div class="pSmartList2"><li>Cliquez sur le <b class="cBold">tELTOracleMap</b> et sur la vue <b class="cBold">Component</b> pour afficher les propriétés de base du composant.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968928"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput4.png" id="wp2968925" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968936"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use an existing connection</b> et sélectionnez le composant <b class="cBold">tOracleConnection</b> dans la liste <b class="cBold">Component list</b> si vous souhaitez utiliser la connexion ouverte par un composant de connexion.</li></div>
+<a name="wp2968955"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Repository</b> et cliquez sur le bouton <b class="cBold">[...]</b> pour sélectionner la connexion à la base de données contenant les tables utilisées dans ce scénario. Les champs suivants seront automatiquement renseignés avec les informations de connexion à cette base de données. Si vous n&#39;avez pas créé de métadonnées avec ces informations, sélectionnez le mode <b class="cBold">Built-in</b> dans la liste <b class="cBold">Property Type</b> et renseignez-les manuellement. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968968"> </a><p class="pIndented1">
+Pour plus d&#39;informations concernant les métadonnées, consultez la section <em class="cEmphasis">Centraliser les métadonnées</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968987"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> correspondant au champ <b class="cBold">ELT Oracle Map Editor</b> pour ouvrir l&#39;éditeur permettant de faire les correspondances entre le flux d&#39;entrée et le flux de sortie. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968996"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput5.png" id="wp2968993" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969004"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[+]</b> en haut à gauche de l&#39;éditeur pour ouvrir la boîte de dialogue permettant d&#39;ajouter l&#39;alias correspondant à la table d&#39;entrée. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969013"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput6.png" id="wp2969010" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2969020"> </a><p class="pIndented1">
+Dans la boîte de dialogue <b class="cBold">Add a new alias</b>&#160;: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969028"> </a><div class="pSmartList2"><li>Sélectionnez le nom du flux de la table d&#39;entrée dans la liste <b class="cBold">Select the table to use</b>. Ici, vous avez sélectionné <em class="cEmphasis">ROOT.NEW_CUSTOMERS_MLE</em>.</li></div>
+<a name="wp2969037"> </a><div class="pSmartList2"><li>Saisissez le nom que vous souhaitez donner à l&#39;alias correspondant dans le champ <b class="cBold">Type in a valid alias</b>. Ici, vous avez nommé l&#39;alias <em class="cEmphasis">new_customers</em>.</li></div>
+<a name="wp2969049"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2969047" border="0" hspace="0" vspace="0"/><br />
+L&#39;alias n&#39;est pas obligatoire quand la table en entrée n&#39;est utilisée qu&#39;une seule fois dans le <b class="cBold">tMap</b>.
+</p>
+<a name="wp2969062"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2969068"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur du <b class="cBold">tELTOracleMap</b>, sélectionnez toutes les colonnes de la table d&#39;entrée et glissez-les dans la table de sortie, <em class="cEmphasis">RESULTS</em>.</li></div>
+<a name="wp2969080"> </a><div class="pSmartList2"><li>Cliquez sur l&#39;onglet <b class="cBold">Generated SQL Select query</b> pour afficher la requête à exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969087"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput7.png" id="wp2969084" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969096"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2969102"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tELTOracleOutput</b> pour paramétrer ses propriétés dans la vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969114"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput8.png" id="wp2969111" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969126"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Action on data</b>, sélectionnez <b class="cBold">MERGE</b>.</li></div>
+<a name="wp2969135"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent ou paramétrez manuellement le schéma de sortie en sélectionnant <b class="cBold">Built-in</b> dans la liste <b class="cBold">Schema</b> et en cliquant sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b>.</li></div>
+<a name="wp2969154"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use Merge Update</b> pour mettre à jour les données grâce à la fonction MERGE d&#39;Oracle.</li></div>
+<a name="wp2969158"> </a><div class="pSmartList2"><li>Dans le tableau qui apparaît, cochez les cases correspondant aux colonnes que vous souhaitez mettre à jour. L&#39;objectif est de mettre à jour les données client en fonction de leur ID. Ainsi, cochez toutes les cases sauf celle correspondant à la colonne ID.</li></div>
+<a name="wp2969166"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp2969164" border="0" hspace="0" vspace="0"/><br />
+Les colonnes définies comme clé primaire NE PEUVENT PAS et NE DOIVENT PAS faire l&#39;objet d&#39;une mise à jour.
+</p>
+<a name="wp2969178"> </a><div class="pSmartList2"><li>Cochez les cases <b class="cBold">Use Merge Update Where Clause</b> et <b class="cBold">Use Merge Update Delete Clause</b> si vous souhaitez utiliser une clause WHERE pour filtrer les données à mettre à jour et une clause DELETE WHERE pour supprimer les données avant de réinsérer les données mises à jour, lors de l&#39;opération de MERGE.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969187"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput8.png" id="wp2969184" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2969195"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use Merge Insert</b> pour insérer de nouvelles données en même temps que de mettre à jour les anciennes grâce à la fonction MERGE d&#39;Oracle.</li></div>
+<a name="wp2969199"> </a><div class="pSmartList2"><li>Dans le tableau qui apparaît, cochez les cases correspondant aux colonnes que vous souhaitez insérer. L&#39;objectif est d&#39;insérer toutes les nouvelles données client. Ainsi, cochez toutes les cases correspondant de toutes les colonnes à insérer.</li></div>
+<a name="wp2969206"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use Merge Insert Where Clause</b> si vous souhaitez utiliser une clause WHERE pour filtrer les données à insérer lors de l&#39;opération de MERGE.</li></div>
+<a name="wp2969213"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Default Table Name</b>, saisissez entre guillemets le nom de la table source. Ici, la table utilisée se nomme <em class="cEmphasis">NEW_CUSTOMERS_MLE</em></li></div>
+<a name="wp2969223"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Default Schema Name</b>, saisissez entre guillemets le nom du schéma source. Ici, le schéma utilisé se nomme <em class="cEmphasis">ROOT</em>.</li></div>
+<a name="wp2969235"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2969242"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracleOutput9.png" id="wp2969239" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2969245"> </a><p class="pIndented1">
+Les données sont mises à jour et insérées dans la base de données et la requête utilisée s&#39;affiche dans la console.
+</p>
+<a name="wp2969254"> </a><p class="pIndented1">
+Pour un scénario utilisant le composant <b class="cBold">tELTOracleOutput</b>, consultez le <a href="tELTOracleMap_Scenario.html#wp2968195"><em class="cEmphasis">Scénario&#160;: Mettre à jour les lignes d&#39;une base Oracle</em></a> du composant <b class="cBold">tELTOracleMap</b>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTOracleOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTPostgresqlInput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

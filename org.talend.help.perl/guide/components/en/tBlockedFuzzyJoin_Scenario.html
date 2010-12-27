@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>Scenario: Doing a fuzzy match on two columns and outputting the match, possible match and non match values</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBlockedFuzzyJoin_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="Components04-06.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3488942"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3488949"> </a><h2 class="pHeading2">
+Scenario: Doing a fuzzy match on two columns and outputting the match, possible match and non match values
+</h2>
+<a name="wp3488957"> </a><p class="pIndented1">
+This Java scenario describes a six-component Job that aims at:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488968"> </a><div class="pSmartList2"><li> matching each processed group number in the <em class="cEmphasis">grp</em> column against the entries that have exactly the same values in the reference input file,</li></div>
+<a name="wp3488977"> </a><div class="pSmartList2"><li>checking the edit distance between the entries in the <em class="cEmphasis">firstname</em> column of an input file against those of the reference input file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3488983"> </a><p class="pIndented1">
+The outputs of these two matching types are written in three output files: the first for match values, the second for possible match values and the third for the values for which there are no matches in the lookup file. 
+</p>
+<a name="wp3488988"> </a><p class="pIndented1">
+In this scenario, we have already stored the main and reference input schemas in the Repository. For more information about storing schema metadata in the Repository, see <em class="cEmphasis">Setting up a File Excel schema</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+<a name="wp3489020"> </a><p class="pIndented1">
+The main input file contains four columns: <em class="cEmphasis">grp</em>, <em class="cEmphasis">gender</em>, <em class="cEmphasis">firstname</em> and <em class="cEmphasis">count</em>. The data in this input file have problems such as duplication, first names spelled differently or wrongly, different information for the same customer.
+</p>
+<a name="wp3489030"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMergeRow.png" id="wp3489026" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3489049"> </a><div class="pSmartList2"><li>In the <b class="cBold">Repository</b> tree view, expand <b class="cBold">Metadata</b> and the <b class="cBold">FileExcel</b> node where you have stored the main input schemas and then drop it onto the design workspace.<br />A <b class="cBold">tFileInputExcel</b> component holding your schema displays on the workspace.</li></div>
+<a name="wp3489058"> </a><div class="pSmartList2"><li>Do the same with the reference input schema to display the reference <b class="cBold">tFileInputExcel</b> on the workspace.</li></div>
+<a name="wp3489079"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tBlockedFuzzyJoin</b> and <b class="cBold">tLogRow</b> (x3) from the <b class="cBold">Palette</b> onto the design workspace.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489090"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBlockedFuzzyJoin.png" id="wp3489086" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3489105"> </a><div class="pSmartList2"><li>Connect the main and reference input Excel files to <b class="cBold">tBlockedFuzzyJoin</b> using <b class="cBold">Main</b> links. The link between the reference input Excel file and <b class="cBold">tBlockedFuzzyJoin</b> displays as a <b class="cBold">Lookup</b> link on the design workspace.</li></div>
+<a name="wp3489130"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tBlockedFuzzyJoin</b> to the three <b class="cBold">tLogrow </b>components using the <b class="cBold">Matches</b>, <b class="cBold">Possible Matches</b> and <b class="cBold">Non Matches</b> links.</li></div>
+<a name="wp3489143"> </a><div class="pSmartList2"><li>Double-click the main and reference input Excel file components to display their <b class="cBold">Basic settings</b> views.<br />The capture below shows the properties of the main input file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489158"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBlockedFuzzyJoin1.png" id="wp3489154" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3489163"> </a><p class="pIndented1">
+The capture below shows the properties of the reference input file.
+</p>
+<a name="wp3489172"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBlockedFuzzyJoin2.png" id="wp3489168" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3489180"> </a><p class="pIndented1">
+The property fields for both <b class="cBold">tFileInputExcel</b> components are automatically filled in. If you do not define your input schemas locally in the Repository, fill in the details manually after selecting <b class="cBold">Built-in</b> in the <b class="cBold">Schema</b> and <b class="cBold">Property Type</b> fields.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3489208"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tBlockedFuzzyJoin</b> to display its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489219"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBlockedFuzzyJoin3.png" id="wp3489215" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3489230"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Edit schema</b> button to open a dialog box. Here you can define the data you want to pass to the output components.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489236"> </a><p class="pIndented1">
+In this example we want to pass the four input columns to the output components in addition to the new column <em class="cEmphasis">ref_firstname</em>.
+</p>
+<a name="wp3489250"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBlockedFuzzyJoin4.png" id="wp3489246" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3489262"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box and proceed to the next step.</li></div>
+<a name="wp3489278"> </a><div class="pSmartList2"><li>In the <b class="cBold">Key definition</b> area of the <b class="cBold">Basic settings</b> view of <b class="cBold">tBlockedFuzzyJoin</b>, click the plus button to add two columns to the list.</li></div>
+<a name="wp3489283"> </a><div class="pSmartList2"><li>Select the input columns and the output columns you want to do the fuzzy matching on from the <b class="cBold">Input key attribute</b> and <b class="cBold">Lookup key attribute</b> lists respectively, <em class="cEmphasis">grp</em> and <em class="cEmphasis">firstname</em> in this example.</li></div>
+<a name="wp3489308"> </a><div class="pSmartList2"><li>Click in the first cell of the <b class="cBold">Matching type</b> column and select from the list the method to be used to check the incoming data against the reference data, <em class="cEmphasis">Exact match</em> in this example. There is no minimum nor maximum distance to set.</li></div>
+<a name="wp3489322"> </a><div class="pSmartList2"><li>Set the matching type for the second column, <em class="cEmphasis">Levenshtein</em> in this example.</li></div>
+<a name="wp3489326"> </a><div class="pSmartList2"><li>Then set the minimum and maximum distances. In this method, the distance is the number of character changes (insertion, deletion or substitution) that needs to be carried out in order for the entry to fully match the reference. In this example, we want the min. distance to be 0 and the max. distance to be 2. This will output all entries in the <em class="cEmphasis">firstname</em> column that exactly match or that have maximum two character changes.</li></div>
+<a name="wp3489343"> </a><div class="pSmartList2"><li>Double-click the first <b class="cBold">tLogRow </b>component to display its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489354"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBlockedFuzzyJoin5.png" id="wp3489350" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3489373"> </a><div class="pSmartList2"><li>In the <b class="cBold">Mode</b> area, select <b class="cBold">Table</b> to display the source file and the <b class="cBold">tBlockedFuzzyJoin</b> results together to be able to compare them.</li></div>
+<a name="wp3489383"> </a><div class="pSmartList2"><li>Do the same for the other two<b class="cBold"> tLogRow</b> components.</li></div>
+<a name="wp3489393"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489397"> </a><p class="pIndented1">
+Three output tables are written on the console. The first shows the match entries, the second show the possible match entries and the third shows the non match entries according to the used matching method in the defined columns.
+</p>
+<a name="wp3489403"> </a><p class="pIndented1">
+The figure below illustrates extractions of the three output tables.
+</p>
+<a name="wp3489416"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Components-04-05-068.jpg" height="559" width="566" id="wp3489408" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBlockedFuzzyJoin_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="Components04-06.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

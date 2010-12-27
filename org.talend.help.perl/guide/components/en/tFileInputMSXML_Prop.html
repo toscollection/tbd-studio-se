@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:40">
+    <title>tFileInputMSXML</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputMSPositional_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputMSXML_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2940736"> </a><h2 class="pHeading1">
+tFileInputMSXML
+</h2>
+<a name="wp2940748"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFileInputMSXML_icon32.png" id="wp2940741" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2940755"> </a><h2 class="pHeading2">
+tFileInputMSXML Properties
+</h2>
+<a name="wp2940857"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2940763table2940758">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2940763"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2940765"> </a><div class="pCellBody">
+XML or File/Input
+</div>
+</td>
+    <td><a name="wp2940773"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2940770" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2940778"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2940783"> </a><div class="pCellBody">
+<b class="cBold">tFileInputMSXML</b> reads and outputs multiple schema within an XML structured file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2940790"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2940795"> </a><div class="pCellBody">
+<b class="cBold">tFileInputMSXML</b> opens a complex multi-structured file, reads its data structures (schemas) and then uses <b class="cBold">Row</b> links to send fields as defined in the different schemas to the next job components.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2940805"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2940807"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2940809"> </a><div class="pCellBody">
+Name of the file and/or the variable to be processed<br /> <br />Related topic:<em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2940817"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2940822"> </a><div class="pCellHeading">
+<em class="cEmphasis">Root XPath query</em>
+</div>
+</td>
+    <td><a name="wp2940824"> </a><div class="pCellBody">
+The root of the XML tree, which the query is based on.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947424"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947428"> </a><div class="pCellHeading">
+<em class="cEmphasis">Enable XPath in column &quot;Schema XPath loop&quot; But lose the order</em>
+</div>
+</td>
+    <td><a name="wp2947431"> </a><div class="pCellBody">
+Select this check box if you want to define a XPath path in the <b class="cBold">Schema XPath loop</b> field of th <b class="cBold">Outputs</b> array.
+</div>
+<a name="wp2947506"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2947441" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+This option is only available with the <b class="cBold">dom4j</b> generation mode. Make sure this mode is selected in the <b class="cBold">Generation mode</b> list, in the <b class="cBold">Advanced settings</b> tab of your component. If you use this option, the data will not be returned in order.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2940826"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2940831"> </a><div class="pCellHeading">
+<em class="cEmphasis">Outputs</em>
+</div>
+</td>
+    <td><a name="wp2940836"> </a><div class="pCellBody">
+<b class="cBold">Schema</b>: define as many schemas as needed.<br /><b class="cBold">Schema XPath loop</b>: node of the XML tree or XPath path which the loop is based on.
+</div>
+<a name="wp2947669"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2947594" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+If you want to use a XPath path in the  <b class="cBold">Schema XPath loop </b>field, you must select the <b class="cBold">Enable XPath in column &quot;Schema XPath loop&quot; but lose the order </b>check box.
+</div>
+<a name="wp2947689"> </a><div class="pCellBody">
+<b class="cBold">XPath Queries</b>: Enter the fields to be extracted from the structured input.<br /><b class="cBold">Create empty row</b>: select the check boxes of the schemas where you want to create empty rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952488"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952499"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp2952502"> </a><div class="pCellBody">
+Select this check box to stop the execution of the Job when an error occurs. Clear the check box to skip the row on error and complete the process for error-free rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952725"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2952748"> </a><div class="pCellHeading">
+<em class="cEmphasis">Trim all column</em>
+</div>
+</td>
+    <td><a name="wp2952751"> </a><div class="pCellBody">
+Select this check box to remove leading and trailing whitespaces from defined columns.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952707"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952714"> </a><div class="pCellBody">
+<em class="cEmphasis">Generation mode</em>
+</div>
+</td>
+    <td><a name="wp2952717"> </a><div class="pCellBody">
+Select the generation mode from the list.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2952693"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952700"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding Type</em>
+</div>
+</td>
+    <td><a name="wp2952703"> </a><div class="pCellBody">
+Select the encoding type from the list or select <b class="cBold">CUSTOM</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2952661"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2952668"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2952671"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2940850"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2940852"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputMSPositional_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputMSXML_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:52">
+    <title>Scénario&#160;: Exécuter une procédure stockée dans le hub MDM</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMSP_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMViewSearch_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3509292"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3509300"> </a><h2 class="pHeading2">
+Scénario&#160;: Exécuter une procédure stockée dans le hub MDM
+</h2>
+<a name="wp3509303"> </a><p class="pIndented1">
+Le but du Job suivant est de calculer le prix total de chaque produit enregistré dans votre interface Web MDM. 
+</p>
+<a name="wp3509311"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP1.png" id="wp3509308" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3509314"> </a><p class="pIndented1">
+Ce Job va générer des paramètres pour l&#39;exécution d&#39;une procédure stockée dans le hub MDM, puis extraire les données souhaitées du résultat retourné au format XML et présenter les données extraites dans le studio.
+</p>
+<a name="wp3509319"> </a><p class="pIndented1">
+Les produits dont le prix est à traiter sont listés dans votre interface Web MDM.
+</p>
+<a name="wp3509326"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP2.png" id="wp3509323" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3509332"> </a><p class="pIndented1">
+La procédure stockée devant être exécutée peut être trouvée dans le n&#339;ud <b class="cBold">Stored Procedure</b> de l&#39;arborescence <b class="cBold">MDM Server</b> et apparaît comme suit&#160;:
+</p>
+<a name="wp3509343"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP6.png" id="wp3509340" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3509348"> </a><p class="pIndented1">
+Pour plus d&#39;informations concernant la procédure stockée dans le serveur MDM, consultez le Guide <b class="cBold"> Talend Master Data Management</b> <b class="cBold">Administrator Guide</b> (en anglais).
+</p>
+<a name="wp3509357"> </a><p class="pIndented1">
+Pour créer ce Job, procédez comme suit&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3509365"> </a><div class="pSmartList2"><li>Glissez-déposez les composants suivants utilisés dans cet exemple&#160;: <b class="cBold">tFixedFlowInput</b>, <b class="cBold">tMDMSP</b>, <b class="cBold">tExtractXMLField</b>, <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3509382"> </a><div class="pSmartList2"><li>Connectez les composants à l&#39;aide de liens <b class="cBold">Row Main</b>.</li></div>
+<a name="wp3509388"> </a><div class="pSmartList2"><li>Le composant <b class="cBold">tFixedFlowInput</b> sert à générer la gamme de prix vous intéressant pour ce calcul. Dans cet exemple, définissez 10 comme minimum et 17 comme maximum afin de prendre en compte tous les produits.</li></div>
+<a name="wp3509396"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant tFixedFlowInput afin d&#39;ouvrir sa vue <b class="cBold">Component</b>.</li></div>
+<a name="wp3509411"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b>, cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> afin d&#39;ouvrir l&#39;éditeur de schéma de ce composant.</li></div>
+<a name="wp3509427"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur de schéma, ajoutez les deux paramètres <em style="font-style: italic" class="cEmphasis">min</em> et <em class="cEmphasis">max</em> utilisés pour définir la gamme de prix. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3509436"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP3.png" id="wp3509433" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3509445"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> afin de valider cette modification.</li></div>
+<a name="wp3509460"> </a><div class="pSmartList2"><li>Dans la table <b class="cBold">Values</b> dans la zone <b class="cBold">Mode</b> de la vue <b class="cBold">Component</b>, les deux paramètres <em class="cEmphasis">min</em> et <em class="cEmphasis">max</em> que vous avez définis dans l&#39;éditeur de schéma du composant s&#39;affichent.</li></div>
+<a name="wp3509476"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Value</b> de la table <b class="cBold">Values</b>, saisissez le nombre 10 pour le paramètre <em class="cEmphasis">min</em> et 17 pour le paramètre <em class="cEmphasis">max</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3509488"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP4.png" id="wp3509485" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3509501"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMDMSP</b> afin d&#39;ouvrir sa vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3509508"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP5.png" id="wp3509505" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3509519"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">URL</b> de la vue <b class="cBold">Component</b>, saisissez l&#39;adresse du serveur MDM, dans cet exemple&#160;: <em class="cEmphasis">http://localhost:8080/talend/TalendPort</em>.</li></div>
+<a name="wp3509532"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez les données d&#39;authentification, dans cet exemple&#160;: <em class="cEmphasis">admin</em> et <em class="cEmphasis">talend</em> respectivement.</li></div>
+<a name="wp3509548"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Data Container</b> et <b class="cBold">Procedure Name</b>, saisissez les noms exacts du conteneur de données <em class="cEmphasis">Product</em> et de la procédure stockée <em class="cEmphasis">PriceAddition</em>.</li></div>
+<a name="wp3509567"> </a><div class="pSmartList2"><li>Sous la table <b class="cBold">Parameters (in order)</b>, cliquez deux fois sur le bouton <b class="cBold">[+]</b> afin d&#39;ajouter deux lignes à cette table.</li></div>
+<a name="wp3509574"> </a><div class="pSmartList2"><li>Dans la table <b class="cBold">Parameters (in order)</b>, cliquez sur chaque ligne ajoutée et, dans la liste déroulante, sélectionnez le paramètre <em class="cEmphasis">min</em> pour l&#39;une et le paramètre <em class="cEmphasis">max</em> pour l&#39;autre.</li></div>
+<a name="wp3509592"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tExtractXMLField</b> afin d&#39;ouvrir sa vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3509599"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP7.png" id="wp3509596" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3509616"> </a><div class="pSmartList2"><li> Dans la vue <b class="cBold">Component</b>, cliquez sur le bouton <b class="cBold">[...]</b> situé à côté du champ<b class="cBold"> Edit schema</b> afin d&#39;ouvrir l&#39;éditeur de schéma du composant.</li></div>
+<a name="wp3509620"> </a><div class="pSmartList2"><li> Dans l&#39;éditeur de schéma, ajoutez deux colonnes afin de définir la structure des données sortantes. Ces deux colonnes sont <em class="cEmphasis">name</em> et <em class="cEmphasis">sum</em>. Elles représentent respectivement le nom et le prix total de chaque type de produit enregistré dans l&#39;interface Web.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3509635"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP8.png" id="wp3509632" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3509643"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> afin de valider la configuration. Les deux colonnes s&#39;affichent dans la table  <b class="cBold">Mapping</b> de la vue <b class="cBold">Component</b>.</li></div>
+<a name="wp3509659"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Loop XPath</b> <b class="cBold">Query</b>, saisissez le n&#339;ud de l&#39;arborescence XML sur lequel effectuer une boucle. Dans l&#39;exemple, le n&#339;ud est <em class="cEmphasis">/result</em> comme vous pouvez lire dans le code de la procédure&#160;: <code class="cCode">return &lt;result&gt;&lt;Name&gt;{$d}&lt;/Name&gt;&lt;Sum&gt;{sum($product/Price)}&lt;/Sum&gt;&lt;/result&gt;</code>.  </li></div>
+<a name="wp3509675"> </a><div class="pSmartList2"><li>Dans le champ<b class="cBold"> XPath Query</b> de la table <b class="cBold">Mapping</b>, saisissez le nom exact du n&#339;ud sur lequel effectuer la boucle. Pour la colonne <em class="cEmphasis">name</em>, saisissez &quot;<em class="cEmphasis">/result/Name&quot;</em>, pour mapper les noms du produit. Pour la colonne <em class="cEmphasis">sum</em>, saisissez &quot;<em class="cEmphasis">/result/Sum&quot;</em>, pour extraire les prix totaux.</li></div>
+<a name="wp3509699"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tLogRow</b> afin d&#39;ouvrir sa vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3509706"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP9.png" id="wp3509703" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3509713"> </a><div class="pSmartList2"><li>Synchronisez le schéma avec celui du composant précédant (en cliquant sur le bouton <b class="cBold">Sync columns</b>).</li></div>
+<a name="wp3509727"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, sélectionnez l&#39;option <b class="cBold">Table (</b><b class="cBold">print values in cells of a table) </b>pour une meilleure lecture.</li></div>
+<a name="wp3509735"> </a><div class="pSmartList2"><li>Appuyez ensuite sur <b class="cBold">F6 </b>afin d&#39;exécuter le Job.</li></div>
+<a name="wp3509743"> </a><div class="pSmartList2"><li>Les données sortantes s&#39;affichent dans la console de la vue <b class="cBold">Run</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3509750"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP10.png" id="wp3509747" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3509753"> </a><p class="pIndented1">
+La sortie liste les quatre sortes de produit enregistrés dans l&#39;interface Web MDM et le prix total pour chaque type de produit.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMSP_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMViewSearch_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:40">
+    <title>tFileInputRegex</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputProperties_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputRegex_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2089568"> </a><h2 class="pHeading1">
+tFileInputRegex
+</h2>
+<a name="wp2089577"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFileInputRegex.png" id="wp2089572" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2089584"> </a><h2 class="pHeading2">
+tFileInputRegex properties
+</h2>
+<a name="wp2089803"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2089592table2089587">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089592"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2089594"> </a><div class="pCellBody">
+File/Input
+</div>
+</td>
+    <td><a name="wp2089603"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-07-43-014.jpg" height="59" width="112" id="wp2089599" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089608"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2089610"> </a><div class="pCellBody">
+Powerful feature which can replace number of other components of the File family. Requires some advanced knowledge on regular expression syntax
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089617"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2089619"> </a><div class="pCellBody">
+Opens a file and reads it row by row to split them up into fields using regular expressions. Then sends fields as defined in the Schema to the next job component, via a Row link.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089626"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2089631"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2089633"> </a><div class="pCellBody">
+Either Built-in or Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089635"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089637"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089642"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089644"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089646"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3477332"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file where the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089656"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089661"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name/Stream</em>
+</div>
+</td>
+    <td><a name="wp2651087"> </a><div class="pCellBody">
+<b class="cBold">File name</b>: Name of the file and/or the variable to be processed<br /><b class="cBold">Stream</b>: Data flow to be processed.  The data must be added to the flow so that it can be collected by the <b class="cBold">tFileInputRegex </b>via the <em class="cEmphasis">INPUT_STREAM</em> variable in the autocompletion list (<b class="cBold">Ctrl+Space</b>)<br /><br />Related topic:<em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089671"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089676"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row separator</em>
+</div>
+</td>
+    <td><a name="wp2089678"> </a><div class="pCellBody">
+String (ex: &quot;\n&quot;on Unix) to distinguish rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089680"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089682"> </a><div class="pCellHeading">
+<em class="cEmphasis">Regex</em>
+</div>
+</td>
+    <td><a name="wp2089684"> </a><div class="pCellBody">
+This field is Perl or Java compatible and can contain multiple lines. Type in your regular expressions including the subpattern matching the fields to be extracted. <br /><b class="cBold">Note</b>: In Java, antislashes need to be doubled in regexp
+</div>
+<a name="wp2089695"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2755486" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Regex syntax is different in Java/Perl and requires doubel/single quotes respectively.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089697"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089702"> </a><div class="pCellHeading">
+<em class="cEmphasis">Header</em>
+</div>
+</td>
+    <td><a name="wp2089704"> </a><div class="pCellBody">
+Number of rows to be skipped in the beginning of file
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089706"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089711"> </a><div class="pCellHeading">
+<em class="cEmphasis">Footer</em>
+</div>
+</td>
+    <td><a name="wp2089713"> </a><div class="pCellBody">
+Number of rows to be skipped at the end of the file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089715"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089720"> </a><div class="pCellHeading">
+<em class="cEmphasis">Limit</em>
+</div>
+</td>
+    <td><a name="wp2089722"> </a><div class="pCellBody">
+Maximum number of rows to be processed. If Limit = 0, no row is read or processed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089724"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089731"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2089734"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089736"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089738"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2650652"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089751"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089753"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2650929"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job flowcharts. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089766"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089771"> </a><div class="pCellHeading">
+<em class="cEmphasis">Skip empty rows</em>
+</div>
+</td>
+    <td><a name="wp2089773"> </a><div class="pCellBody">
+Select this check box to skip empty rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2950871"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2950906"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp2950909"> </a><div class="pCellBody">
+Select this check box to stop the execution of the Job when an error occurs. Clear the check box to skip the row on error and complete the process for error-free rows. If needed, you can collect the rows on error using a <b class="cBold">Row</b> &gt; <b class="cBold">Reject</b> link.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089775"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2089780"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding Type</em>
+</div>
+</td>
+    <td><a name="wp2089782"> </a><div class="pCellBody">
+Select the encoding from the list or select Custom and define it manually. This field is compulsory for DB data handling. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2089787"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2089789"> </a><div class="pCellBody">
+Use this component to read a file and separate fields contained in this file according to the defined Regex. You can also create a rejection flow using a <b class="cBold">Row &gt; Reject</b> link to filter the data which doesn&#39;t correspond to the type defined.  For an example of how to use these two links, see <a href="tExtractXMLField_Scenario.html#wp2755292"><em class="cEmphasis">Scenario 2: Extracting correct and erroneous data from an XML field in a delimited file</em></a>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2089796"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2089798"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputProperties_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputRegex_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

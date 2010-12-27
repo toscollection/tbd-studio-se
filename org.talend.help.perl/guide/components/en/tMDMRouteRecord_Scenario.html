@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:39">
+    <title>Scenario: Routing a record to Event Manager</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMRouteRecord_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMSP_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3471412"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3471419"> </a><h2 class="pHeading2">
+Scenario: Routing a record to Event Manager
+</h2>
+<a name="wp3471425"> </a><p class="pIndented1">
+In this scenario, the <b class="cBold">tMDMRouteRecord</b> component is used to submit the primary key of a record noting an update to <b class="cBold">Event Manager</b> in order for this element to trigger a process that informs the user of this update. 
+</p>
+<a name="wp3474432"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3474429" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+<b class="cBold">Talend MDM</b> is case-sensitive, so respect the differences of uppercase and lowercase when realizing the scenario.
+</p>
+<a name="wp3474444"> </a><h3 class="pHeading3">
+Scenario prerequisites
+</h3>
+<a name="wp3471439"> </a><p class="pIndented2">
+The following prerequisites must be met in order to replicate this scenario:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471444"> </a><div class="pSmartList3"><li>A data container stores several records using a specific model. In this scenario, the container is named <em class="cEmphasis">Product</em>, and a record in the container is entered against the model named <em class="cEmphasis">Product</em>:</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471459"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord1.png" id="wp3471456" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3471463"> </a><p class="pIndented2">
+This figure shows one of the stored product records with all of its viewable attributes.
+</p>
+<a name="wp3471471"> </a><p class="pIndented2">
+For further information about how to create a data container, a data model, see your <b class="cBold">Talend Master Data Management</b> Administrator Guide.
+</p>
+<a name="wp3471476"> </a><p class="pIndented2">
+For further information about how to create a record and access its viewable attributes, see your <b class="cBold">Talend</b> <b class="cBold">MDM Web User Interface User Guide</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471488"> </a><div class="pSmartList3"><li>A Job used to inform the user of the update and already deployed on the MDM server. In this scenario, the job is called <em class="cEmphasis">message</em>, using only the <b class="cBold">tMsgBox</b> component. </li></div>
+<a name="wp3476031"> </a><div class="pSmartList3"><li>Double-click the component to display and configure its <b class="cBold">Basic settings</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471503"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord2.png" id="wp3471500" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471511"> </a><div class="pSmartList3"><li>In the <b class="cBold">Title</b> field, type in &quot;<em class="cEmphasis">Talend MDM</em>&quot;.</li></div>
+<a name="wp3476102"> </a><div class="pSmartList3"><li>In the <b class="cBold">Message</b> field to be popped up, type in &quot;<em class="cEmphasis">A record is updated</em>&quot;.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471523"> </a><p class="pIndented2">
+For further information about the <b class="cBold">tMsgBox </b>component, see section <a href="tMsgBox_Prop.html"><em class="cEmphasis">tMsgBox</em></a>.
+</p>
+<a name="wp3471528"> </a><p class="pIndented2">
+For further information about how to deploy a Job onto the <b class="cBold">MDM server</b>, see section <em class="cEmphasis">Automatic deployment of Jobs on the MDM server</em> in <b class="cBold">Talend Master Data Management</b> Administrator Guide.
+</p>
+<a name="wp3471543"> </a><h3 class="pHeading3">
+Routing a record to trigger the corresponding process
+</h3>
+<a name="wp3471549"> </a><p class="pIndented2">
+This section shows you how to replicate the whole scenario using <b class="cBold">tMDMRouteRecord</b> to trigger a process.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471564"> </a><div class="pSmartList3"><li>Log onto your <b class="cBold">Talend</b> <b class="cBold">MDM Web UI</b> and click <b class="cBold">Browse Records</b>. <br />For further details about how to log onto the <b class="cBold">Talend</b> <b class="cBold">MDM Web UI</b> and open the <b class="cBold">Browse Records</b> view, see <em class="cEmphasis">Logging in to the Web User Interface on page 6</em>, in the <b class="cBold">Talend MDM Web User Interface User Guide</b>.</li></div>
+<a name="wp3471592"> </a><div class="pSmartList3"><li>In the upper right corner of the web page, click on the <img src="../Images/show_button.png" id="wp3471586" border="0" hspace="0" vspace="0"/> button to show the <b class="cBold">Actions</b> panel.</li></div>
+<a name="wp3471599"> </a><div class="pSmartList3"><li>On the <b class="cBold">Actions</b> panel on the right, select the required data container and data model in which is the record to be updated. In this scenario, the data container and the data model are both <em class="cEmphasis">Product</em>.</li></div>
+<a name="wp3471610"> </a><div class="pSmartList3"><li>Click <b class="cBold">Save</b> to save the selected data container and data model.</li></div>
+<a name="wp3471616"> </a><div class="pSmartList3"><li>In the <b class="cBold">Browse Records</b> view, select the entity of your interest. In this example, it is <em class="cEmphasis">Product</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471628"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord3.png" id="wp3471625" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471638"> </a><div class="pSmartList3"><li>Click <b class="cBold">Search</b> to open the record list on the lower part of the Web page.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471645"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord4.png" id="wp3471642" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471650"> </a><div class="pSmartList3"><li>Double-click one of the product records to display its viewable attributes in a new view dedicated to this product. For example, open the product <em class="cEmphasis">Talend Mug</em> with unique Id <em class="cEmphasis">231035938</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471665"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord1.png" id="wp3471662" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471670"> </a><div class="pSmartList3"><li>In this view, modify one of the attribute values. You can, for example, update this product and make it available by selecting the <b class="cBold">Availability</b> check box.</li></div>
+<a name="wp3471678"> </a><div class="pSmartList3"><li>Click <b class="cBold">Save</b> to validate this update.</li></div>
+<a name="wp3471690"> </a><div class="pSmartList3"><li>Open your <b class="cBold">Talend</b> <b class="cBold">MDM studio</b> and access the MDM hub (<b class="cBold">MDM Server</b>). For further information about how to launch the <b class="cBold">Talend</b> <b class="cBold">MDM studio</b> and connect it to the MDM hub, see the section <em class="cEmphasis">Lauching Talend MDM Studio</em> in the <b class="cBold">Talend Master Data Management</b> Administrator Guide.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471711"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord5.png" id="wp3471708" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471725"> </a><div class="pSmartList3"><li>Under the <b class="cBold">Job Repository </b>node of the <b class="cBold">MDM Server</b> tree view, right click the <em class="cEmphasis">message</em> Job.</li></div>
+<a name="wp3471732"> </a><div class="pSmartList3"><li>In the contextual menu, select <b class="cBold">Generate Talend Job Caller Process</b>.The process used to call this Job is generated and displays in the directory <b class="cBold">Event Management</b> &gt; <b class="cBold">Process</b>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471744"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord6.png" id="wp3471741" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471756"> </a><div class="pSmartList3"><li>Under the <b class="cBold">Event Management</b> node, right click <b class="cBold">Trigger</b>.</li></div>
+<a name="wp3471763"> </a><div class="pSmartList3"><li>In the contextual menu, select <b class="cBold">New</b>.</li></div>
+<a name="wp3471774"> </a><div class="pSmartList3"><li>In the pop-up <b class="cBold">New Trigger</b> wizard, name the trigger as, for example, <em class="cEmphasis">TriggerMessage</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471781"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord7.png" id="wp3471778" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471790"> </a><div class="pSmartList3"><li>Click <b class="cBold">OK</b> to open the new trigger&#39;s view in the workspace of your studio.</li></div>
+<a name="wp3471793"> </a><div class="pSmartList3"><li>In the trigger&#39;s view, configure the trigger to make it launch the process that calls the <em class="cEmphasis">message</em> Job once an update is done.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3471805"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMRouteRecord8.png" id="wp3471802" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3471815"> </a><div class="pSmartList3"><li>In the <b class="cBold">Description</b> field, enter, for example, <em class="cEmphasis">Trigger that calls the Talend Job: message_0.1.war</em> to describe the trigger being created.</li></div>
+<a name="wp3471823"> </a><div class="pSmartList3"><li>In the <b class="cBold">Entity</b> field, select or type in the business entity you want to trigger the process on. In this example, it is exactly <em class="cEmphasis">Update</em>.</li></div>
+<a name="wp3471837"> </a><div class="pSmartList3"><li>In the <b class="cBold">Service JNDI Name</b> field, select <b class="cBold">callprocess</b> from the drop-down list.</li></div>
+<a name="wp3471840"> </a><div class="pSmartList3"><li>In the Service Parameters field, complete the parameter definition by giving the value: <em class="cEmphasis">CallJob_message_0.1.war</em>. This value is the name of the process to be called that you can find in the directory <b class="cBold">Event Management &gt; Process</b> in the <b class="cBold">MDM server</b> tree view.</li></div>
+<a name="wp3471859"> </a><div class="pSmartList3"><li>In the <b class="cBold">Trigger xPath Expressions</b> area, click the <img src="../Images/MDMTrigger_AddButton.png" id="wp3471856" border="0" hspace="0" vspace="0"/> button under the table to add a new XPath line.</li></div>
+<a name="wp3477279"> </a><div class="pSmartList3"><li>In the newly added line, click the three-dot button to open a dialog box where you can select the entity or element on which you want to define conditions. In this example, it is <em class="cEmphasis">Update/OperationType</em>.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3477291"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord9.png" id="wp3477288" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3477303"> </a><div class="pSmartList3"><li>In the <b class="cBold">Value</b> column, enter a value for this line. In this example, it is exactly <em class="cEmphasis">UPDATE</em>.</li></div>
+<a name="wp3477309"> </a><div class="pSmartList3"><li>In the <b class="cBold">Condition Id</b> column, enter a unique identifier for the condition you want to set, for example, <em class="cEmphasis">C1</em>.</li></div>
+<a name="wp3477319"> </a><div class="pSmartList3"><li>In the <b class="cBold">Conditions</b> area, enter the query you want to undertake on the data record using the condition ID <em class="cEmphasis">C1</em> you set earlier.</li></div>
+<a name="wp3477330"> </a><div class="pSmartList3"><li>Press <b class="cBold">Ctrl+S</b> to save the trigger.</li></div>
+<a name="wp3477339"> </a><div class="pSmartList3"><li>In the <b class="cBold">MDM server</b> tree view, double click<b class="cBold"> Data container</b> &gt; <b class="cBold">system</b> &gt; <b class="cBold">UpdateReport</b> to open the <b class="cBold">Data Container Browser UpdateReport</b> view. An Update Report is a complete track of all create, update or delete actions on any master data</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3477351"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord10.png" id="wp3477348" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3477364"> </a><div class="pSmartList3"><li>Next to the <b class="cBold">Entity</b> field of this view, click the <img src="../Images/SearchButton.png" id="wp3477361" border="0" hspace="0" vspace="0"/> button to search all the action records in the <b class="cBold">UpdateReport</b>. Note that the <b class="cBold">Update</b> entity does not necessarily mean that the corresponding action recorded is the update, as it is just the entity name defined by the data model of <b class="cBold">UpdateReport</b> and may record different actions including create, delete, update.</li></div>
+<a name="wp3473822"> </a><div class="pSmartList3"><li>The last record corresponds to what is done on the product record at the beginning of the scenario. The primary key of this record is <em class="cEmphasis">genericUI.1283244014172</em> and this is the record that will be routed to <b class="cBold">Event trigger</b>.</li></div>
+<a name="wp3473328"> </a><div class="pSmartList3"><li>On the menu bar of the studio, click <b class="cBold">Window</b> &gt; <b class="cBold">Perspective</b> &gt; <b class="cBold">Design workspace</b> to design the Job routing a record.</li></div>
+<a name="wp3473199"> </a><div class="pSmartList3"><li>On the <b class="cBold">Design workspace</b> perspective, create a Job and name it <em class="cEmphasis">RouteRecord</em>.</li></div>
+<a name="wp3477577"> </a><div class="pSmartList3"><li>To do so, right-click <b class="cBold">Job Designs</b>, in the <b class="cBold">Repository</b> tree view. In the contextual menu, select <b class="cBold">Create Job</b>.</li></div>
+<a name="wp3477619"> </a><div class="pSmartList3"><li>A wizard opens. In the <b class="cBold">Name</b> field, type in <em class="cEmphasis">RouteRecord</em>, and click <b class="cBold">Finish</b>.</li></div>
+<a name="wp3473846"> </a><div class="pSmartList3"><li>Drop the<b class="cBold"> tMDMRouteRecord</b> component from the <b class="cBold">Palette</b> onto the design workspace.</li></div>
+<a name="wp3473866"> </a><div class="pSmartList3"><li>Double click this component to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3473883"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord11.png" id="wp3473906" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3473921"> </a><div class="pSmartList3"><li>In the <b class="cBold">URL</b> field, enter the address of your <b class="cBold">MDM server</b>. This example uses <em class="cEmphasis">http://localhost:8080/talend/TalendPort</em>.</li></div>
+<a name="wp3473930"> </a><div class="pSmartList3"><li>In the <b class="cBold">Username</b> and the <b class="cBold">Password</b> fields, type in the connection parameters.</li></div>
+<a name="wp3477919"> </a><div class="pSmartList3"><li>In the <b class="cBold">Data Container</b> field, enter the data container name that stores the record you want to route. It is <em class="cEmphasis">UpdateReport</em> in this example.</li></div>
+<a name="wp3477896"> </a><div class="pSmartList3"><li>In the <b class="cBold">Entity Name</b> field, enter the entity name that the record you want to route belongs to. In this example, the entity name is <em class="cEmphasis">Update</em>.</li></div>
+<a name="wp3474036"> </a><div class="pSmartList3"><li>In the <b class="cBold">IDS</b> area, click the plus button under the table to add a new line.</li></div>
+<a name="wp3474121"> </a><div class="pSmartList3"><li>In the newly added line, fill in the primary key of the record to be routed to <b class="cBold">Event Manager</b>, that is, <em class="cEmphasis">genericUI.1283244014172</em>, as was read earlier from the <b class="cBold">Data Container Browser UpdateReport</b>.</li></div>
+<a name="wp3474139"> </a><div class="pSmartList3"><li>Press <b class="cBold">F6</b> to run this Job. <b class="cBold">Event Manager</b> calls the process to execute the <em class="cEmphasis">message</em> Job and generate the dialog box informing the user that this recorded has been updated.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3474165"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMRouteRecord12.png" id="wp3474173" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3476891"> </a><p class="pIndented2">
+This component submits the primary key of the record noting the update to <b class="cBold">Event Manager</b>. When <b class="cBold">Event Manager</b> checks this record and finds that this record meets the conditions you have defined on the trigger <em class="cEmphasis">TriggerMessage</em>&#39;s configuration view, it calls the process that launches the <em class="cEmphasis">message</em> Job to pop up the dialog box informing the user of this update.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMRouteRecord_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMSP_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:35">
+    <title>tFSFilterColumns</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFSCode_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFSFilterColumns_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2843150"> </a><h2 class="pHeading1">
+tFSFilterColumns
+</h2>
+<a name="wp1709895"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFSFilterColumns_icon32.png" id="wp1709890" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2517734"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2517732" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<br />Ce composant n&#39;est disponible dans la Palette que si vous avez souscrit à <b class="cBold">Talend Integration Suite MP</b>x.
+</div>
+<a name="wp2517741"> </a><h2 class="pHeading2">
+Propriétés du tFSFilterColumns
+</h2>
+<a name="wp1710135"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1709911table1709906">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1709911"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp1709913"> </a><div class="pCellBody">
+FileScale
+</div>
+</td>
+    <td><a name="wp1709921"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp1709918" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1709926"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1714561"> </a><div class="pCellBody">
+Le composant <b class="cBold">tFSFilterColumns</b> apporte des changements spécifiques à la table sélectionnée en fonction du mapping effectué sur les noms de colonnes. Ce composant permet de filtrer très rapidement les colonnes des fichiers volumineux. Pour optimiser les performances, le composant trie généralement les données avant de les traiter.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1709938"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1709940"> </a><div class="pCellBody">
+Ce composant permet d&#39;homogénéiser les structures d&#39;un fichier en supprimant les colonnes superflues ou en ajoutant de nouvelles colonnes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1709953"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp1709958"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp1715361"> </a><div class="pCellBody">
+Un schéma est une descritption de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le Repository. <br />Cliquez sur <b class="cBold">Edit Schema </b>pour modifier le schéma.
+</div>
+<a name="wp1709972"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp1715368" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+ Si vous modifiez le schéma, il se met automatiquement en built-in.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1709975"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1709977"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1720755"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé dans divers projets et job designs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du Guide Utilisateur de <b class="cBold">Talend Integration Suite Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1709990"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1709992"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1720603"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé pour ce composant uniquement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du Guide Utilisateur de <b class="cBold">Talend Integration Suite Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1710008"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710013"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp1710021"> </a><div class="pCellBody">
+Peut être Built-in ou Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1710023"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710025"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710030"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1710032"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710034"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710039"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Sélectionnez le fichier de propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1710044"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710049"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input File Name</em>
+</div>
+</td>
+    <td><a name="wp1710051"> </a><div class="pCellBody">
+Nom du fichier contenant les données que vous souhaitez filtrer.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1710056"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710061"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output File Name</em>
+</div>
+</td>
+    <td><a name="wp1710063"> </a><div class="pCellBody">
+Nom du fichier dans lequel vous souhaitez écrire les données filtrées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1710065"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710070"> </a><div class="pCellHeading">
+<em class="cEmphasis">Record separator</em> (char)
+</div>
+</td>
+    <td><a name="wp1710072"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière séparant les lignes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1710074"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710079"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em> (char)
+</div>
+</td>
+    <td><a name="wp1710081"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière séparant les champs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1710083"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710088"> </a><div class="pCellHeading">
+<em class="cEmphasis">Header</em>
+</div>
+</td>
+    <td><a name="wp1710090"> </a><div class="pCellBody">
+Nombre de lignes d&#39;en-tête à ignorer en début de fichier.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1710092"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710097"> </a><div class="pCellHeading">
+<em class="cEmphasis">Footer</em>
+</div>
+</td>
+    <td><a name="wp1710099"> </a><div class="pCellBody">
+Nombre de lignes à ignorer en fin de fichier.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1710101"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1710105"> </a><div class="pCellHeading">
+<em class="cEmphasis">Column configuration</em>
+</div>
+</td>
+    <td><a name="wp1710111"> </a><div class="pCellBody">
+<b class="cBold">Column&#160;</b>: Liste des colonnes à filtrer.<br /><b class="cBold">Keep it&#160;</b>: Cochez la case correspondant au nom de la colonne que vous souhaitez maintenir dans le fichier. Si vous décochez la case, la colonne sera supprimée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2513389"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2513395"> </a><div class="pCellHeading">
+<em class="cEmphasis">Generate FSLang File</em>
+</div>
+</td>
+    <td><a name="wp2513399"> </a><div class="pCellBody">
+Cochez cette case pour générer le fichier FSLang correspondant à votre Job et cliquez sur le bouton [...] à coté du champ <b class="cBold">FSLang File Name</b> pour spécifier son chemin d&#39;accès et son nom.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2513407"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2513413"> </a><div class="pCellHeading">
+<em class="cEmphasis">Assign FileScale Path</em>
+</div>
+</td>
+    <td><a name="wp2513417"> </a><div class="pCellBody">
+Cochez cette case puis cliquez sur le bouton [...] à coté du champ <b class="cBold">FileScale Path</b> pour sélectionner le fichier exécutable correspondant au programme FileScale permettant d&#39;exécuter le composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2843424"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2843431"> </a><div class="pCellHeading">
+<em class="cEmphasis">Sort results</em>
+</div>
+</td>
+    <td><a name="wp2843434"> </a><div class="pCellBody">
+Cochez cette case afin de trier les résultats.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2843406"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2843412"> </a><div class="pCellHeading">
+<em class="cEmphasis">Custom FileScale Parameter (separated by ,)</em>
+</div>
+</td>
+    <td><a name="wp2843416"> </a><div class="pCellBody">
+Saisissez les paramètres de personnalisation, en les séparant par une virgule. Pour plus d&#39;informations concernant les paramètres personnalisables, consultez l&#39;annexe <em class="cEmphasis">Langage de programmation FileScale</em> (en anglais).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2513425"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2513431"> </a><div class="pCellHeading">
+<em class="cEmphasis">Specify Number of Process Child</em>
+</div>
+</td>
+    <td><a name="wp2513435"> </a><div class="pCellBody">
+Cochez cette case et saisissez le nombre  de process fils à utiliser pour l&#39;exécution de l&#39;agrégation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2513439"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2513445"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2513449"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1710119"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1710121"> </a><div class="pCellBody">
+Ce composant traite des fichiers, ainsi il ne nécessite pas de flux de données en entrée ou en sortie. Il sert à vérifier les données contenues dans des fichiers volumineux.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1710128"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1710130"> </a><div class="pCellBody">
+La limitation dépend des limites de la mémoire physique et de l&#39;architecture du processeur. Par exemple, la taille totale des fichiers traités ne peut pas excéder la limite du système de fichiers pour supporter les fichiers très volumineux (maximum de la valeur 64&#160;bits signée).
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFSCode_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFSFilterColumns_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

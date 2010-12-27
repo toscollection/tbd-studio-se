@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:04">
+    <title>Scenario1: warning &amp; log on entries</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLogCatcher_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLogRow_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1205078"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1295180"> </a><h2 class="pHeading2">
+Scenario1: warning &amp; log on entries
+</h2>
+<a name="wp1294091"> </a><p class="pIndented1">
+In this basic scenario made of three components, a <b class="cBold">tRowGenerator</b> creates random entries (id to be incremented). The input hits a <b class="cBold">tWarn</b> component which triggers the <b class="cBold">tLogCatcher</b> subjob. This subjob fetches the warning message as well as standard predefined information and passes them on to the <b class="cBold">tLogRow</b> for a quick display of the log data.
+</p>
+<a name="wp1205101"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCatch1.png" id="wp1205098" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1205118"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tRowGenerator</b>, a <b class="cBold">tWarn</b>, a <b class="cBold">tLogCatcher</b> and a <b class="cBold">tLogRow</b> from the <b class="cBold">Palette</b>, on your design workspace</li></div>
+<a name="wp1205129"> </a><div class="pSmartList2"><li>Connect the <b class="cBold">tRowGenerator</b> to the <b class="cBold">tWarn</b> component.</li></div>
+<a name="wp1205139"> </a><div class="pSmartList2"><li>Connect separately the <b class="cBold">tLogCatcher</b> to the <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1205148"> </a><div class="pSmartList2"><li>On the <b class="cBold">tRowGenerator</b> editor, set the random entries creation using a basic function: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1205157"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCatch2.png" id="wp1205154" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1236843"> </a><div class="pSmartList2"><li>On the <b class="cBold">tWarn</b> <b class="cBold">Component</b> view, set your warning message, the code the priority level. In this case, the message is &quot;this is a warning&#39;.</li></div>
+<a name="wp1205173"> </a><div class="pSmartList2"><li>For this scenario, we will concatenate a function to the message above, in order to collect the first value from the input table.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1205182"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCatch3.png" id="wp1205179" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1205193"> </a><div class="pSmartList2"><li>On the <b class="cBold">Basic settings</b> view of <b class="cBold">tLogCatcher</b>, select the <b class="cBold">tWarn</b> check box in order for the message from the latter to be collected by the subjob.</li></div>
+<a name="wp1205200"> </a><div class="pSmartList2"><li>Click <b class="cBold">Edit Schema </b>to view the schema used as log output. Notice that the log is comprehensive.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1205209"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCatch4.png" id="wp1205206" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1205214"> </a><p class="pIndented1">
+Press <b class="cBold">F6</b> to execute the Job. Notice that the Log produced is exhaustive.
+</p>
+<a name="wp1205220"> </a><h2 class="pHeading2">
+Scenario 2: Log &amp; kill a Job
+</h2>
+<a name="wp1295196"> </a><p class="pIndented1">
+This scenario uses a <b class="cBold">tLogCatcher</b> and a <b class="cBold">tDie</b> component. A <b class="cBold">tRowGenerator</b> is connected to a <b class="cBold">tFileOutputDelimited</b> using a Row link. On error, the <b class="cBold">tDie</b> triggers the catcher subjob which displays the log data content on the <b class="cBold">Run</b> console.
+</p>
+<a name="wp1205249"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDie1.png" id="wp1205246" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1205257"> </a><div class="pSmartList2"><li>Drop all required components from various folders of the <b class="cBold">Palette</b> to the design workspace: <b class="cBold">tRowGenerator</b>, <b class="cBold">tFileOutputDelimited</b>, <b class="cBold">tDie</b>, <b class="cBold">tLogCatcher</b>, <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1205266"> </a><div class="pSmartList2"><li>On the <b class="cBold">tRowGenerator</b> <b class="cBold">Component</b> view, define the setting of the input entries to be handled.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1205273"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDie2.png" id="wp1205270" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1205280"> </a><div class="pSmartList2"><li>Edit the schema and define the following columns as random input examples: <em class="cEmphasis">id, name, quantity, flag and creation</em>.</li></div>
+<a name="wp1205288"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Number of rows</b> onto 0. This will constitute the error which the Die operation is based on.</li></div>
+<a name="wp1205299"> </a><div class="pSmartList2"><li>On the <b class="cBold">Values</b> table, define the functions to feed the input flow.</li></div>
+<a name="wp1205305"> </a><div class="pSmartList2"><li>Define the <b class="cBold">tFileOutputDelimited</b> to hold the possible output data. The <b class="cBold">row</b> connection from the <b class="cBold">tRowGenerator</b> feeds automatically the output schema. The separator is a simple semi-colon.</li></div>
+<a name="wp1237081"> </a><div class="pSmartList2"><li>Connect this output component to the <b class="cBold">tDie</b> using a <b class="cBold">Trigger  &gt; If </b> connection. Double-click on the newly created connection to define the if: <br /><code class="cCode">((Integer)globalMap.get(&quot;tRowGenerator_1_NB_LINE&quot;)) &lt;=0</code></li></div>
+<a name="wp1205331"> </a><div class="pSmartList2"><li>Then double-click to select and define the <b class="cBold">Basic settings</b> of the <b class="cBold">tDie</b> component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1205338"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDie3.png" id="wp1205335" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1205349"> </a><div class="pSmartList2"><li>Enter your <b class="cBold">Die</b> message to be transmitted to the <b class="cBold">tLogCatcher</b> before the actual kill-job operation happens.</li></div>
+<a name="wp1205356"> </a><div class="pSmartList2"><li>Next to the Job but not physically connected to it, drop a <b class="cBold">tLogCatcher</b> from the <b class="cBold">Palette</b> to the design workspace and connect it to a <b class="cBold">tLogRow</b> component.</li></div>
+<a name="wp1205366"> </a><div class="pSmartList2"><li>Define the <b class="cBold">tLogCatcher</b> <b class="cBold">Basic settings</b>. Make sure the <b class="cBold">tDie</b> box is selected in order to add the Die message to the Log information transmitted to the final component. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1205375"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDie4.png" id="wp1205372" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1205381"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to run the Job and notice that the log contains a black message and a red one.</li></div>
+<a name="wp1205384"> </a><div class="pSmartList2"><li>The black log data come from the <b class="cBold">tDie</b> and are transmitted by the <b class="cBold">tLogCatcher</b>. In addition the normal Java Exception message in red displays as a Job abnormally died.</li></div>
+</ul></div>
+</ul></div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLogCatcher_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLogRow_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

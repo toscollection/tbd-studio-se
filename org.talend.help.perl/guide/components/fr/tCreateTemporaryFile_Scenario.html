@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;: Créer un fichier temporaire et y écrire des données</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tCreateTemporaryFile_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileArchive_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1735971"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1735978"> </a><h2 class="pHeading2">
+Scénario&#160;: Créer un fichier temporaire et y écrire des données
+</h2>
+<a name="wp1735981"> </a><p class="pIndented1">
+Le scénario suivant décrit un Job simple permettant de créer un fichier temporaire vide dans un dossier défini, puis d&#39;y écrire des données et enfin de le supprimer après l&#39;exécution du Job. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1735989"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, cliquez-déposez les composants suivants dans l&#39;éditeur graphique&#160;: le <b class="cBold">tCreateTemporaryFile</b>, le <b class="cBold">tRowgenerator</b>, le <b class="cBold">tFileOutputDelimited</b>, le <b class="cBold">tFileInputDelimited </b>et le <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1736016"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tCreateTemporaryFile </b>au <b class="cBold">tRowGenerator</b> à l&#39;aide d&#39;un lien de type <b class="cBold">SubJobOk</b>.</li></div>
+<a name="wp1736029"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tRowGenerator </b>au <b class="cBold">tFileOutputDelimited</b> à l&#39;aide d&#39;un lien de type <b class="cBold">Row Main</b>.</li></div>
+<a name="wp1736042"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tRowGenerator </b>au <b class="cBold">tFileInputDelimited</b> à l&#39;aide d&#39;un lien de type <b class="cBold">SubJobOk</b>.</li></div>
+<a name="wp1736056"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tFileInputDelimited</b> au <b class="cBold">tLogRow </b>à l&#39;aide d&#39;un lien de type <b class="cBold">Row Main</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736063"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile.png" id="wp1736060" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736072"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le composant <b class="cBold">tCreateTemporaryFile</b>.</li></div>
+<a name="wp1736083"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tCreateTemporaryFile</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736090"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile1.png" id="wp1736087" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736098"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Remove file when execution is over</b> pour supprimer, après l&#39;exécution du Job, le fichier temporaire créé. </li></div>
+<a name="wp1736105"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Directory</b> pour parcourir vos dossiers jusqu&#39;à celui où seront stockés les fichiers temporaires. Vous pouvez également entrer directement le chemin d&#39;accès. </li></div>
+<a name="wp1736113"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Template</b>, renseignez le nom du fichier temporaire en veillant à ce qu&#39;il respecte le format du modèle. </li></div>
+<a name="wp1736119"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Suffix</b>, renseignez l&#39;extension du fichier pour indiquer le format que vous voulez donner au fichier temporaire. </li></div>
+<a name="wp1736129"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le <b class="cBold">tRowGenerator</b> puis cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (<b class="cBold">Basic settings</b>). </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736138"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile2.png" id="wp1736135" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736150"> </a><div class="pSmartList2"><li>Dans la liste déroulante <b class="cBold">Schema Type</b>, choisissez le mode <b class="cBold">Built-In</b>.</li></div>
+<a name="wp1736156"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> du champ <b class="cBold">Edit schema</b> pour définir les données à passer au composant <b class="cBold">tFileOutputDelimited</b>. Dans cet exemple, seules les données de la colonne <em class="cEmphasis">value</em> sont traitées.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736171"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile3.png" id="wp1736168" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736180"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue.</li></div>
+<a name="wp2497151"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> du champ <b class="cBold">RowGenerator Editor</b> pour ouvrir la boîte de dialogue de l&#39;éditeur. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736195"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile4.png" id="wp1736192" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736206"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Number of Rows for Rowgenerator</b>, entrez le chiffre &quot;5&quot; pour générer cinq lignes puis cliquez sur <b class="cBold">Ok</b> pour fermer la boîte de dialogue.</li></div>
+<a name="wp1736216"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le <b class="cBold">tFileOutputDelimited</b> puis cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (<b class="cBold">Basic settings</b>).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736225"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile5.png" id="wp1736222" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736237"> </a><div class="pSmartList2"><li>Dans la liste déroulante <b class="cBold">Property Type</b>, choisissez le mode <b class="cBold">Built-In</b>.</li></div>
+<a name="wp1736246"> </a><div class="pSmartList2"><li>Cliquez dans le champ <b class="cBold">File Name</b> puis appuyez simultanément sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste d&#39;auto-complétion. Pour envoyer les données en sortie vers le fichier temporaire créé, sélectionnez l&#39;option <code class="cCode">tCreateTemporaryFile_1.FILEPATH </code>dans la liste des variables. </li></div>
+<a name="wp1736254"> </a><div class="pSmartList2"><li>Renseignez les séparateurs de lignes et de champs dans leurs champs respectifs <b class="cBold">Row Separator</b> et <b class="cBold">Field Separator</b>. </li></div>
+<a name="wp1736266"> </a><div class="pSmartList2"><li>Choisissez le mode <b class="cBold">Built-In</b> dans la liste déroulante <b class="cBold">Schema </b>puis cliquez sur <b class="cBold">Sync columns</b> pour synchroniser les colonnes d&#39;entrée et de sortie. Notez que la connexion <b class="cBold">Row</b> permet d&#39;alimenter automatiquement le schéma de sortie. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2508564"> </a><p class="pIndented1">
+Pour plus d&#39;informations sur les types de schémas, consultez les chapitres <em class="cEmphasis">Paramétrer un schéma built-in</em> et <em class="cEmphasis">Paramétrer un schéma du Repository</em> du Guide Utilisateur de <b class="cBold">Talend Open Studio</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736290"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, sélectionnez le composant <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp1736301"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du<b class="cBold"> tFileInputDelimited</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736308"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile6.png" id="wp1736305" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1736317"> </a><div class="pSmartList2"><li>Choisissez le mode <b class="cBold">Built-in</b> dans la liste déroulante <b class="cBold">Property Type</b>.</li></div>
+<a name="wp1736326"> </a><div class="pSmartList2"><li>Cliquez dans le champ <b class="cBold">File Name</b> puis appuyez simultanément sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste d&#39;auto-complétion. Pour lire les données du fichier temporaire créé, sélectionnez <code class="cCode">tCreateTemporaryFile_1.FILEPATH </code>dans la liste des variables. </li></div>
+<a name="wp1736337"> </a><div class="pSmartList2"><li>Renseignez les séparateurs de lignes et de champs dans leurs champs respectifs <b class="cBold">Row Separator</b> et <b class="cBold">Field Separator</b>.</li></div>
+<a name="wp1736352"> </a><div class="pSmartList2"><li>Dans la liste déroulante <b class="cBold">Schema</b>, choisissez le mode <b class="cBold">Built-In</b> puis cliquez sur le bouton <b class="cBold">[...]</b> du champ <b class="cBold">Edit schema</b> pour définir les données à passer au composant <b class="cBold">tLogRow</b>. Dans cet exemple, le schéma est composé de la seule colonne <em class="cEmphasis">value.</em></li></div>
+<a name="wp1736364"> </a><div class="pSmartList2"><li>Enregistrez le Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1736371"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tCreateTemporaryFile7.png" id="wp1736368" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2799413"> </a><p class="pIndented1">
+Le fichier temporaire est créé, lors de l&#39;exécution du Job, dans le dossier qui a été défini et les cinq lignes générées sont inscrites dans ce fichier. Le fichier temporaire est supprimé après l&#39;exécution du Job. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tCreateTemporaryFile_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileArchive_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

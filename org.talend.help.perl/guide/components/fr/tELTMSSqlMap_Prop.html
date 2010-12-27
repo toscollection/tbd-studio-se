@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:03:50">
+    <title>tELTMSSqlMap</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTMSSqlInput_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTMSSqlMap_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2966177"> </a><h2 class="pHeading1">
+tELTMSSqlMap
+</h2>
+<a name="wp2966185"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tELTMSSqlMap_icon32_white.png" id="wp2966181" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2966192"> </a><h2 class="pHeading2">
+Propriétés de tELTMSSqlMap
+</h2>
+<a name="wp2966204"> </a><p class="pIndented1">
+Les composants <b class="cBold">tELTMSSqlInput</b>, <b class="cBold">tELTMSSqlOutput</b>, et <b class="cBold">tELTMSSqlMap</b> sont très proches dans leurs conditions de fonctionnement. En effet, ces trois composants sont conçus pour manipuler des schémas de données d&#39;une base MSSql afin de générer des commandes Insert, y compris des clauses, qui devront être exécutées dans la table de sortie définie.
+</p>
+<a name="wp2966389"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2966213table2966208">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966213"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2966215"> </a><div class="pCellBody">
+ELT
+</div>
+</td>
+    <td><a name="wp2966223"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp2966220" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2966228"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2966230"> </a><div class="pCellBody">
+Permet de construire votre commande SQL graphiquement en utilisant la table fournie en entrée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966237"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2966239"> </a><div class="pCellBody">
+Utilise les tables fournies en entrée pour alimenter les paramètres nécessaires à l&#39;exécution de la commande SQL souhaitée. La commande peut contenir des jointures internes comme externes entre différentes tables ou entre une table et ses alias.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2966246"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2966250"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp3463225"> </a><div class="pCellBody">
+Cochez la case et cliquez sur le composant de connexion adéquat dans la liste <b class="cBold">Component list</b> pour réutiliser les informations de connexion que vous avez déjà définies.<br />
+</div>
+<a name="wp3463237"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3463234" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Lorsqu&#39;un Job contient un Job parent et un Job enfant, la liste <b class="cBold">Component List</b> présente uniquement les composants de connexion du Job du même niveau. Si vous souhaitez utiliser une connexion existant dans un autre niveau, vérifiez que les composants de connexion disponibles partagent la même connexion.<br />Pour plus d&#39;informations concernant le partage d&#39;une connexion à travers différents niveaux de Jobs, consultez <b class="cBold">Use or register a shared DB connection</b> dans tous les composants de base de données que vous utilisez.
+</p>
+<a name="wp3463247"> </a><div class="pCellBody">
+Sinon, vous pouvez également désactiver le composant de connexion et utiliser les <b class="cBold">Dynamic settings</b> du composant, afinde paramétrer manuellement la connexion. Dans ce cas, vérifiez que le nom de la connexion est unique et distinct tout au long des deux niveaux de Jobs. Pour plus d&#39;informations concernant les paramètres dynamiques (<b class="cBold">Dynamic settings</b>), consultez le <b class="cBold">Guide Utilisateur</b> de votre Studio. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966261"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966265"> </a><div class="pCellHeading">
+<em class="cEmphasis">ELT MSSql Map Editor</em>
+</div>
+</td>
+    <td><a name="wp2966268"> </a><div class="pCellBody">
+L&#39;éditeur ELT du Mapper vous permet de définir le schéma de sortie ainsi que de construire graphiquement la commande SQL à exécuter.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2966270"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966275"> </a><div class="pCellHeading">
+<em class="cEmphasis">Style link</em>
+</div>
+</td>
+    <td><a name="wp3463480"> </a><div class="pCellBody">
+Sélectionnez le type d&#39;affichage des liens.<br /><b class="cBold">Auto</b>&#160;: par défaut, les liens entre les schémas d&#39;entrée et de sortie et les paramètres du service Web sont en forme de courbe.<br /><b class="cBold">Curves</b>&#160;: les liens entre les schémas et les paramètres du service Web sont en forme de ligne.<br /><b class="cBold">Line</b>&#160;: les liens entre les schémas et les paramètres du service Web sont en forme de lignes droites. Cette option vous permettra d&#39;optimiser les performances.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966282"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966287"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2966289"> </a><div class="pCellBody">
+Peut être Built-in ou Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2966291"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966293"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966298"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966300"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966302"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966307"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Sélectionnez le fichier de propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2966309"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966314"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2966316"> </a><div class="pCellBody">
+Adresse IP du serveur de base de données
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966318"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966323"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2966325"> </a><div class="pCellBody">
+Numéro de port d&#39;écoute du serveur de la base.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2966327"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966332"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2966334"> </a><div class="pCellBody">
+Nom de la base de données
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966336"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966341"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2966346"> </a><div class="pCellBody">
+Données d&#39;authentification de l&#39;utilisateur de la base
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2966348"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2966356"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em> <em class="cEmphasis">Type</em>
+</div>
+</td>
+    <td><a name="wp2966358"> </a><div class="pCellBody">
+Sélectionnez l&#39;encodage dans la liste ou sélectionnez <b class="cBold">Custom</b> et définissez-le manuellement. Ce champ est obligatoire pour le traitement des données d&#39;une base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2972147"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2972151"> </a><div class="pCellHeading">
+<em class="cEmphasis">Additional JDBC parameters</em>
+</div>
+</td>
+    <td><a name="wp3134191"> </a><div class="pCellBody">
+Spécifiez des informations supplémentaires de connexion à la base de données créée. Cette option n&#39;est pas disponible lorsque vous utilisez l&#39;option <b class="cBold">Use an existing connection</b> dans les <b class="cBold">Basic settings</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2975626"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2975657"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2975660"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2966366"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2966371"> </a><div class="pCellBody">
+L&#39;utilisation du composant <b class="cBold">tELTMSSqlMap</b> est étroitement liée à celle des composants <b class="cBold">tELTMSSqlInput</b> et <b class="cBold">tELTMSSqlOutput</b>. Notez que le lien de sortie (output) à utiliser avec ces deux composants doit respecter strictement la syntaxe du nom de la table. 
+</div>
+<a name="wp2966383"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2966381" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Les composants ELT ne traitent pas le flux de données lui-même mais uniquement les informations du schéma.
+</p>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTMSSqlInput_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTMSSqlMap_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

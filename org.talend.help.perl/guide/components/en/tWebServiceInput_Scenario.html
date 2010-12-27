@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:55">
+    <title>Scenario 1: Extracting images through a Web service</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWebServiceInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tXMLRPCInput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2548190"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2548197"> </a><h2 class="pHeading2">
+Scenario 1: Extracting images through a Web service
+</h2>
+<a name="wp2548200"> </a><p class="pIndented1">
+This scenario describes a two-component Job which uses a Web service method and displays the output on the <b class="cBold">Run</b> console view.
+</p>
+<a name="wp2548204"> </a><p class="pIndented1">
+The method retrieves a full URL as an input string and returns a string array of images from a given Web page.
+</p>
+<a name="wp2548212"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput1.png" id="wp2548209" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2548224"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tWebServiceInput</b> component and a <b class="cBold">tLogRow</b> component from the <b class="cBold">Palette</b> onto the design workspace.</li></div>
+<a name="wp2548233"> </a><div class="pSmartList2"><li>On the <b class="cBold">Component</b> view of the <b class="cBold">tWebServiceInput</b> component, define the WSDL specifications, such as <b class="cBold">End Point URI</b>, <b class="cBold">WSDL</b> and <b class="cBold">SOAPAction URI</b> where required.</li></div>
+<a name="wp2548248"> </a><div class="pSmartList2"><li>If the Web service you invoke requires authentication details, select the <b class="cBold">Need authentication</b> check box and provide the relevant authentication information.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2548258"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Use_Case_tWebServiceInput2.png" id="wp2548255" border="0" hspace="0" vspace="0"/>
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2548266"> </a><div class="pSmartList2"><li>If you are using a proxy server, select the <b class="cBold">Use http proxy</b> check box and enter the necessary connection information.</li></div>
+<a name="wp2548273"> </a><div class="pSmartList2"><li>In the <b class="cBold">Method Name</b> field, enter the method name as defined in the Web Service description. The name and the case of the method entered must match the corresponding Web service method exactly. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2548282"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput4.png" id="wp2548279" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2548291"> </a><div class="pSmartList2"><li>In the <b class="cBold">Parameters</b> area, click the plus <b class="cBold">[+]</b> button to add a row to the table, then enter the exact name of the parameters which correspond to the method.</li></div>
+<a name="wp2548298"> </a><div class="pSmartList2"><li>In the <b class="cBold">Value</b> column, type in the URL of the Website that the images are to be extracted from.</li></div>
+<a name="wp2548308"> </a><div class="pSmartList2"><li>Link the <b class="cBold">tWebServiceInput</b> component to the standard output component, <b class="cBold">tLogRow</b>. </li></div>
+<a name="wp2548316"> </a><div class="pSmartList2"><li>Then save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2548323"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput3.png" id="wp2548320" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2549721"> </a><p class="pIndented1">
+All of the images extracted from the Web site are returned as a list of URLs on the <b class="cBold">Run</b> view.
+</p>
+<a name="wp2549726"> </a><h2 class="pHeading2">
+Scenario 2: Reading the data published on a Web service using the tWebServiceInput advanced features (Java only)
+</h2>
+<a name="wp2549730"> </a><p class="pIndented1">
+This Java scenario describes a two-component Job that retrieves a list of funds published by a financial Web service (distributed by www.xignite.com) and displays the output on the standard console (the <b class="cBold">Run</b> view).
+</p>
+<a name="wp2552928"> </a><p class="pIndented1">
+This scenario is designed for advanced users with basic knowledge of Java. Since the aim of this Job is to retrieve complex hierarchical data, you need to code the necessary functions in Java.
+</p>
+<a name="wp2552936"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput1.png" id="wp2552933" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2552940"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tWebServiceInput</b> and <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2552963"> </a><div class="pSmartList2"><li>Link the two components together using a <b class="cBold">Row Main </b>connection.</li></div>
+<a name="wp2549779"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tWebServiceInput</b> to show the <b class="cBold">Component </b>view and set the component properties: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2549788"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-2.png" id="wp2549785" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2549792"> </a><p class="pIndented1">
+In the <b class="cBold">Basic settings</b> view:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2549804"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property Type</b> list, select <b class="cBold">Built-in</b> and complete the fields that follow manually. </li></div>
+<a name="wp2549813"> </a><div class="pSmartList2"><li>In the <b class="cBold">Schema Type</b> list, select <b class="cBold">Built-in</b> and click the <b class="cBold">[...] </b>button to configure the data structure (schema) manually, as shown in the figure below:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2549822"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-3.png" id="wp2549819" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2549831"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate the schema and close the window.<br />A dialog box opens and asks you if you want to propagate the modifications.</li></div>
+<a name="wp3594651"> </a><div class="pSmartList2"><li>Click <b class="cBold">Yes</b>. </li></div>
+<a name="wp3594630"> </a><div class="pSmartList2"><li>In the <b class="cBold">WSDL</b> field, enter the URL from which to get the WSDL.</li></div>
+<a name="wp2549838"> </a><div class="pSmartList2"><li>In the <b class="cBold">Time out</b> field, enter the desired duration of the Web Service connection.</li></div>
+<a name="wp2549849"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Advanced settings</b> tab to display the corresponding view where you can set the <b class="cBold">tWebServiceInput</b> advanced features:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2549856"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-5.png" id="wp2549853" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2549865"> </a><div class="pSmartList2"><li>Select the check box next to <b class="cBold">Advanced Use</b> to display the advanced configuration fields.</li></div>
+<a name="wp2549871"> </a><div class="pSmartList2"><li>Click the <b class="cBold">[...]</b> button next to the <b class="cBold">WSDL2Java</b> field in order to generate routines from the WSDL Web service.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2549880"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-4.png" id="wp2549877" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2549889"> </a><p class="pIndented1">
+The routines generated display automatically under <b class="cBold">Code &gt; Routines</b> in the <b class="cBold">Repository </b>tree view. These routines can thus easily be called in the code to build the function required to fetch complex hierarchical data from the Web Service. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2549898"> </a><div class="pSmartList2"><li>Enter the relevant function in the <b class="cBold">Code </b>field. By default, two examples of code are provided in the Code field. The first example returns one piece of data, and the second example returns several.</li></div>
+<a name="wp2549902"> </a><div class="pSmartList2"><li>In this scenario, several data are to be returned. Therefore, remove the first example of code and use the second example of code to build the function. </li></div>
+<a name="wp2549906"> </a><div class="pSmartList2"><li>Replace the pieces of code provided as examples with the relevant routines that have been automatically generated from the WSDL.</li></div>
+<a name="wp2549916"> </a><div class="pSmartList2"><li>Change <code class="cCode">TalendJob_PortType</code> to the routine name ending with <b class="cBold">_Port_Type</b>, such as: <code class="cCode">XigniteFundHoldingsSoap_PortType</code>.</li></div>
+<a name="wp2549926"> </a><div class="pSmartList2"><li>Replace the various instances of <code class="cCode">TalendJob</code> with a more relevant name such as the name of the method in use. In this use case: <em class="cEmphasis">fundHolding</em></li></div>
+<a name="wp2549936"> </a><div class="pSmartList2"><li>Replace <code class="cCode">TalendJobServiceLocator</code> with the name of the routine ending with <b class="cBold">Locator</b>, such as: <code class="cCode">XigniteFundHoldingLocator</code>.</li></div>
+<a name="wp2549949"> </a><div class="pSmartList2"><li>Replace both instances of <code class="cCode">TalendJobSoapBindingStub</code> with the routine name ending with <b class="cBold">BindingStub</b>, such as: <code class="cCode">XigniteFundHoldingsSoap_BindingStub</code>.</li></div>
+<a name="wp2549959"> </a><div class="pSmartList2"><li>Within the brackets corresponding to the pieces of code: stub.setUsername and stub.setPassword, enter your username and password respectively, between quotes.<br />For the sake of confidentiality or maintenance, you can store your username and password in context variables.</li></div>
+<a name="wp2549969"> </a><div class="pSmartList2"><li>The list of funds provided by the <em class="cEmphasis">Xignite</em> Web service is identified using so-called &quot;<em class="cEmphasis">symbols</em>&quot;, which are of string type. In this example, we intend to fetch the list of funds of which the symbol is between &quot;I&quot; and &quot;J&quot;. To do so, define the following statements: <code class="cCode">string startSymbol=&quot;I&quot;</code> and <code class="cCode">string endSymbol=&quot;J&quot;</code>.</li></div>
+<a name="wp2549982"> </a><div class="pSmartList2"><li>Then enter the piece of code to create the result table showing the list of funds (<b class="cBold">listFunds</b>) of funds holdings using the statements defined earlier on: <code class="cCode">routines.Fund[] result = fundHoldings.listFunds(startSymbol, endSymbol);</code></li></div>
+<a name="wp2549991"> </a><div class="pSmartList2"><li>Run a loop on the fund list to fetch the funds ranging from &quot;I&quot; to &quot;J&quot;: <code class="cCode">for(int i = 0; i &lt; result.length; i++) {</code>.</li></div>
+<a name="wp2550002"> </a><div class="pSmartList2"><li>Define the results to return, for example: fetch the <b class="cBold">CIK</b> data from the <b class="cBold">Security</b> schema using the code getSecurity().getCIK(), then pass them on to the <b class="cBold">CIK</b> output schema.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2550620"> </a><p class="pIndented1">
+The function that operates the Web service should read as follows:
+</p>
+<a name="wp2550625"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 36pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<code class="cCode">routines.XigniteFundHoldingsSoap_PortType fundHoldings = new routines.XigniteFundHoldingsLocator().getXigniteFundHoldingsSoap( );</code>
+</div>
+<a name="wp2550823"> </a><p class="pIndented1">
+<code class="cCode">routines.XigniteFundHoldingsSoap_BindingStub stub = (routines.XigniteFundHoldingsSoap_BindingStub)fundHoldings;</code>
+</p>
+<a name="wp2551820"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 36pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<code class="cCode">stub.setUsername(&quot;identifiant&quot;);<br />Stub.setPassword(&quot;mot de passe&quot;);</code>
+</div>
+<a name="wp2551827"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 36pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<code class="cCode">String startSymbol=&quot;I&quot;;<br />String endSymbol=&quot;J&quot;;</code>
+</div>
+<a name="wp2551832"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 36pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<code class="cCode">routines.Fund[ ] result = fundHoldings.listFunds(startSymbol, endSymbol); for(int i = 0; i &lt; result.length; i++) {</code>
+</div>
+<a name="wp2552088"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 36pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<code class="cCode">output_row.CIK = (result[i]).getSecurity().getCIK();<br />output_row.cusip = (result[i]).getSecurity().getCusip();<br />output_row.symbol = (result[i]).getSecurity().getSymbol();<br />output_row.ISIN = (result[i]).getSecurity().getISIN();<br />output_row.valoren = (result[i]).getSecurity().getValoren();<br />output_row.name = (result[i]).getSecurity().getName();<br />output_row.market = (result[i]).getSecurity().getMarket();<br />output_row.category =<br />(result[i]).getSecurity().getCategoryOrIndustry();<br />output_row.asOfDate = (result[i]).getAsOfDate();</code>
+</div>
+<a name="wp2552099"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2552097" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+The outputs defined in the Java function <code class="cCode">output_row.output</code> must match the columns defined in the component schema exactly. The case used must also be matched in order for the data to be retrieved.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2552120"> </a><div class="pSmartList2"><li>In the <b class="cBold">Match Brackets</b> field, select the number of brackets to use to end the For loop, based on the number of open brackets. For this scenario, select one bracket only as only one bracket has been opened in the function.</li></div>
+<a name="wp2552139"> </a><div class="pSmartList2"><li>Double-click the <b class="cBold">tLogRow</b> component to display the <b class="cBold">Component</b> view and set its parameters.</li></div>
+<a name="wp2552172"> </a><div class="pSmartList2"><li>Click the <b class="cBold">[...]</b> button next to the <b class="cBold">Edit Schema</b> field in order to check that the preceding component schema was properly propagated to the output component. If needed, click the <b class="cBold">Sync Columns</b> button to retrieve the schema.</li></div>
+<a name="wp2552199"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to run it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2552219"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWebServiceInput2-6.png" id="wp2552236" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2552244"> </a><p class="pIndented1">
+The funds comprised between &quot;I&quot; and &quot;J&quot; are returned and displayed in the <b class="cBold">Talend Integration Suite Studio</b> console.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWebServiceInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tXMLRPCInput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

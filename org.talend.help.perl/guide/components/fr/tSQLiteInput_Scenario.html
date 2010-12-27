@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Filtrer des données SQlite</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSQLiteInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSQLiteOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2329386"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2329393"> </a><h2 class="pHeading2">
+Scénario&#160;: Filtrer des données SQlite
+</h2>
+<a name="wp2329396"> </a><p class="pIndented1">
+Le scénario suivant décrit un Job assez simple qui permet d&#39;appliquer une requête donnée utilisant un filtre pour extraire des lignes à partir d&#39;une base de données SQLite source et alimenter une table SQLite en sortie.
+</p>
+<a name="wp2329404"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLite1.png" id="wp2329401" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2329422"> </a><div class="pSmartList2"><li>Cliquez-déposez à partir de la <b class="cBold">Palette</b> les composants <b class="cBold">tSQLiteInput</b> et <b class="cBold">tSQLiteOutput</b>.</li></div>
+<a name="wp2329426"> </a><div class="pSmartList2"><li>Reliez le composant d&#39;entrée et de sortie à l&#39;aide d&#39;un lien de type <b class="cBold">row Main</b>.</li></div>
+<a name="wp2329434"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tSQLiteInput</b>, entrez le chemin d&#39;accès ou parcourez vos dossiers jusqu&#39;au fichier d&#39;entrée à la base de donnée SQLite.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2329441"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLite2.png" id="wp2329438" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2329449"> </a><div class="pSmartList2"><li>Le fichier contient des centaines de lignes et comprend une colonne <b class="cBold">ip</b> servant de base à la requête. </li></div>
+<a name="wp2368276"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tSQLiteInput</b>, modifiez le schéma afin qu&#39;il corresponde à la structure de la table. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2329465"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLite3.png" id="wp2329462" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2329477"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Query</b>, renseignez la requête choisie par rapport à la colonne <em class="cEmphasis">ip</em>. </li></div>
+<a name="wp2329481"> </a><div class="pSmartList2"><li>Sélectionnez les paramètres d&#39;encodage correspondant. </li></div>
+<a name="wp2368819"> </a><div class="pSmartList2"><li>Pour le composant <b class="cBold">tSQLiteOutput</b>, dans le champ <b class="cBold">Database </b>de l&#39;onglet <b class="cBold">Basic settings</b>, sélectionnez le chemin d&#39;accès à la base de donnée de sortie. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2368828"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLite4.png" id="wp2368825" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2368835"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table</b>, renseignez le nom de la table à alimenter avec les données sélectionnées. </li></div>
+<a name="wp2748405"> </a><div class="pSmartList2"><li>A partir des listes déroulantes <b class="cBold">Action on table</b> et <b class="cBold">Action on Data</b>, sélectionnez les actions à effectuer sur la table et sur les données. Dans le cas présent, les actions sont, respectivement, <em class="cEmphasis">Drop and create </em>et <em class="cEmphasis">Insert</em>. </li></div>
+<a name="wp2368856"> </a><div class="pSmartList2"><li>Synchronisez le schéma avec le schéma d&#39;entrée. </li></div>
+<a name="wp2329535"> </a><div class="pSmartList2"><li>Sélectionnez l&#39;encodage puis définissez la limite de commit. </li></div>
+<a name="wp2329540"> </a><div class="pSmartList2"><li>Enregistrez le Job puis exécutez-le en appuyant sur <b class="cBold">F6</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2329547"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSQLite5.png" id="wp2329544" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2329553"> </a><p class="pIndented1">
+Les données sélectionnées sont renvoyées vers le fichier SQLite défini.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSQLiteInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSQLiteOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

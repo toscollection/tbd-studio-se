@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:14">
+    <title>Scenario: Counting the occurrences of different ages </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMemorizeRows_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMsgBox_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3461448"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3461455"> </a><h2 class="pHeading2">
+Scenario: Counting the occurrences of different ages 
+</h2>
+<a name="wp3461459"> </a><p class="pIndented1">
+This scenario counts how many different ages there are within a group of 12 customers. In this scenario, the customer data is generated at random.
+</p>
+<a name="wp3461466"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows1.png" id="wp3461463" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3461470"> </a><p class="pIndented1">
+This Job uses 5 components which are:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461478"> </a><div class="pSmartList2"><li><b class="cBold">tRowGenerator</b>: it generates 12 rows of customer data containing IDs, names and ages of the 12 customers.</li></div>
+<a name="wp3461486"> </a><div class="pSmartList2"><li><b class="cBold">tSortRow</b>: it sorts the 12 rows according to the age data.</li></div>
+<a name="wp3461492"> </a><div class="pSmartList2"><li><b class="cBold">tMemorizeRows</b>: it temporarily memorizes a specific number of incoming data rows at any give time and indexes the memorized data rows.</li></div>
+<a name="wp3461499"> </a><div class="pSmartList2"><li><b class="cBold">tJavaFlex</b>: it compares the age values of the data memorized by the preceding component, counts the occurrences of different ages and displays these ages in the <b class="cBold">Run</b> view.</li></div>
+<a name="wp3461511"> </a><div class="pSmartList2"><li><b class="cBold">tJava</b>: it displays the number of occurrences of different ages.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461515"> </a><p class="pIndented1">
+To replicate this scenario, proceed as follows:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461535"> </a><div class="pSmartList2"><li>Drop <b class="cBold">tRowGenerator</b>, <b class="cBold">tSortRow</b>, <b class="cBold">tMemorizeRows</b>, <b class="cBold">tJavaFlex</b> and <b class="cBold">tJava</b> on the design workspace.</li></div>
+<a name="wp3461542"> </a><div class="pSmartList2"><li>Right-click <b class="cBold">tRowGenerator</b><br />In the contextual menu, select the <b class="cBold">Row &gt; Main</b> link.</li></div>
+<a name="wp3461553"> </a><div class="pSmartList2"><li>Click <b class="cBold">tSortRow</b> to link these two components.</li></div>
+<a name="wp3461567"> </a><div class="pSmartList2"><li>Do the same to link together <b class="cBold">tSortRow</b>, <b class="cBold">tMemorizeRows</b> and <b class="cBold">tJavaFlex</b> using the <b class="cBold">Row &gt; Main</b> link.</li></div>
+<a name="wp3461575"> </a><div class="pSmartList2"><li>Right-click <b class="cBold">tRowGenerator</b><br />In the contextual menu, select the <b class="cBold">Trigger &gt; On Subjob Ok</b> link.</li></div>
+<a name="wp3461586"> </a><div class="pSmartList2"><li>Click <b class="cBold">tJava</b> to link these two components.</li></div>
+<a name="wp3461594"> </a><div class="pSmartList2"><li>Double click the <b class="cBold">tRowGenerator</b> component to open the its editor.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461601"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows2.png" id="wp3461598" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461608"> </a><div class="pSmartList2"><li>In this editor, click the plus button three times to add three columns and name them as:<em class="cEmphasis"> id, name, age</em>.</li></div>
+<a name="wp3461626"> </a><div class="pSmartList2"><li>In the <b class="cBold">Type</b> column, select <b class="cBold">Integer</b> for <em class="cEmphasis">id</em> and <em class="cEmphasis">age</em>.</li></div>
+<a name="wp3461639"> </a><div class="pSmartList2"><li>In the <b class="cBold">Length</b> column, enter <em class="cEmphasis">50</em> for <em class="cEmphasis">name</em>.</li></div>
+<a name="wp3461661"> </a><div class="pSmartList2"><li>In the <b class="cBold">Functions</b> column, select <b class="cBold">random</b> for <em class="cEmphasis">id</em> and <em class="cEmphasis">age</em>, then select <b class="cBold">getFirstName</b> for <em class="cEmphasis">name</em>.</li></div>
+<a name="wp3461668"> </a><div class="pSmartList2"><li>In the field of <b class="cBold">Number of Rows for RowGenerator</b>, type in 12.</li></div>
+<a name="wp3461680"> </a><div class="pSmartList2"><li>In the <b class="cBold">Column</b> column, click <em class="cEmphasis">age</em> to open its corresponding <b class="cBold">Function parameters</b> view in the lower part of this editor.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461691"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows3.png" id="wp3461686" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461802"> </a><div class="pSmartList2"><li>In the <b class="cBold">Value</b> column of the <b class="cBold">Function parameters</b> view, type in the minimum age and maximum age that will be generated for the 12 customers. In this example, they are 10 and 25.</li></div>
+<a name="wp3461873"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to save the configuration.</li></div>
+<a name="wp3461890"> </a><div class="pSmartList2"><li>In the dialog box that pops up, click <b class="cBold">OK</b> to propagate the change to the other components.</li></div>
+<a name="wp3461910"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tSortRow</b> to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461930"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows4.png" id="wp3461944" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461958"> </a><div class="pSmartList2"><li>In the <b class="cBold">Criteria</b> table, click the plus button to add one row.</li></div>
+<a name="wp3461975"> </a><div class="pSmartList2"><li>In the <b class="cBold">Schema column</b> column, select the data column you want to base the sort on. In this example, select <em class="cEmphasis">age</em> as it is the ages that should be compared and counted.</li></div>
+<a name="wp3462006"> </a><div class="pSmartList2"><li>In the <b class="cBold">Sort num or alpha</b> column, select the type of the sort. In this example, as <em class="cEmphasis">age</em> is integer, select <b class="cBold">num</b>, that is numerical, for this sort.</li></div>
+<a name="wp3462045"> </a><div class="pSmartList2"><li>In the <b class="cBold">Order asc or desc</b> column, select <b class="cBold">desc</b> as the sort order for this scenario.</li></div>
+<a name="wp3462075"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tMemorizeRows</b> to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3462101"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows5.png" id="wp3462118" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3462130"> </a><div class="pSmartList2"><li>In the <b class="cBold">Row count to memorize</b> field, type in the maximum number of rows to be memorized at any given time. As you need to compare ages of two customers for each time, enter <em class="cEmphasis">2</em>. Thus this component memorizes two rows at maximum at any given moment and always indexes the newly incoming row as 0 and the previously incoming row as 1.</li></div>
+<a name="wp3462154"> </a><div class="pSmartList2"><li>In the <b class="cBold">Memorize</b> column of the <b class="cBold">Columns to memorize</b> table, select the check box(es) to determine the column(s) to be memorized. In this example, select the check box corresponding to <em class="cEmphasis">age</em>.</li></div>
+<a name="wp3462525"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tJavaFlex</b> to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3462532"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows6.png" id="wp3462529" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3462837"> </a><div class="pSmartList2"><li>In the <b class="cBold">Start code</b> area, enter the Java code that will be called during the initialization phase. In this example, type in <code class="cCode">int count=0;</code> in order to declare a variable <em class="cEmphasis">count</em> and assign the value <em class="cEmphasis">0</em> to it.</li></div>
+<a name="wp3462853"> </a><div class="pSmartList2"><li>In the <b class="cBold">Main code</b> area, enter the Java code to be applied for each row in the data flow. In this scenario, type in <br /><code class="cCode">if(age_tMemorizeRows_1[1]!=age_tMemorizeRows_1[0]) {<br />	count++;<br />}<br />System.out.println(age_tMemorizeRows_1[0]);<br /></code>This code compares two ages memorized by <b class="cBold">tMemorizeRows</b> each time and count one change every time when the ages are found different. Then this code displays the ages that have been indexed as 0 by <b class="cBold">tMemorizeRows</b>.</li></div>
+<a name="wp3462869"> </a><div class="pSmartList2"><li>In the <b class="cBold">End code</b> area, enter the Java code that will be called during the closing phase. In this example, type in <code class="cCode">globalMap.put(&quot;count&quot;, count);</code> to output the count result.</li></div>
+<a name="wp3463161"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tJava</b> to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3463194"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows7.png" id="wp3463202" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3463214"> </a><div class="pSmartList2"><li>In the <b class="cBold">Code</b> area, type in the code <code class="cCode">System.out.println(&quot;Different ages : &quot;+globalMap.get(&quot;count&quot;)); </code>to retrieve the count result.</li></div>
+<a name="wp3463253"> </a><div class="pSmartList2"><li>Press<b class="cBold"> F6</b> to run the Job. Then the result displays in the console of the <b class="cBold">Run</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3463292"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMemorizeRows8.png" id="wp3463300" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3463483"> </a><p class="pIndented1">
+In the console, you can read that there are 10 different ages within the group of 12 customers.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMemorizeRows_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMsgBox_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

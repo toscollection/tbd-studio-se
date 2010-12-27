@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:17">
+    <title>Related scenario: Iterating on a list and retrieving the values</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tForeach_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tInfiniteLoop_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3461368"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3461375"> </a><h2 class="pHeading2">
+Related scenario: Iterating on a list and retrieving the values
+</h2>
+<a name="wp3461381"> </a><p class="pIndented1">
+This scenario describes a two component Job in which a list is created and iterated upon in a <b class="cBold">tForEach</b> component. The values are then retrieved in a <b class="cBold">tJava</b> component.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461436"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tForeach</b> and a <b class="cBold">tJava</b> component onto the design workspace:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461460"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tForeach_scenario_components.png" id="wp3461480" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461483"> </a><div class="pSmartList2"><li>Link <b class="cBold">tForeach</b> to <b class="cBold">tJava</b> using a <b class="cBold">Row &gt; Iterate</b> connection.</li></div>
+<a name="wp3461540"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tForEach</b> to open its <b class="cBold">Basic settings</b> view:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461497"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tForeach_scenario_basic_settings.png" id="wp3461560" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461563"> </a><div class="pSmartList2"><li>Click the <img src="../Images/plus_button.png" id="wp3461594" border="0" hspace="0" vspace="0"/> button to add as many rows to the <b class="cBold">Values</b> list as required.</li></div>
+<a name="wp3461607"> </a><div class="pSmartList2"><li>Click on the <b class="cBold">Value</b> fields to enter the list values, between double quotation marks.</li></div>
+<a name="wp3461768"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tJava</b> to open its <b class="cBold">Basic settings</b> view:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461775"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tForeach_scenario_tJava_basic_settings.png" id="wp3461772" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3461862"> </a><div class="pSmartList2"><li>Enter the following Java code in the <b class="cBold">Code</b> area: System.out.println(globalMap.get(&quot;tForeach_1_CURRENT_VALUE&quot;)+&quot;_out&quot;);</li></div>
+<a name="wp3461917"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6</b> to run it<br />The <b class="cBold">tJava</b> run view displays the list values retrieved from <b class="cBold">tForeach</b>, each one suffixed with _out:<br /></li></div>
+</ul></div>
+</ul></div>
+<a name="wp3461791"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tforeach_scenario_tjava_run_view.png" id="wp3461946" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tForeach_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tInfiniteLoop_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

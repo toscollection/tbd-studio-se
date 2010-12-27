@@ -1,0 +1,408 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tVerticaOutputBulkExec</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tVerticaOutputBulk_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVerticaOutputBulkExec_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2718239"> </a><h2 class="pHeading1">
+tVerticaOutputBulkExec
+</h2>
+<a name="wp2718248"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tVerticaOutputBulkExec_icon32_white.png" id="wp2718243" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2718255"> </a><h2 class="pHeading2">
+tVerticaOutputBulkExec Properties 
+</h2>
+<a name="wp2718561"> </a><p class="pIndented1">
+The <b class="cBold">tVerticaOutputBulk</b> and <b class="cBold">tVerticaBulkExec</b> components are generally used together as parts of a two step process. In the first step, an output file is generated. In the second step, this file is used in the INSERT operation used to feed a database. These two steps are fused together in the <b class="cBold">tVerticaOutputBulkExec</b> component.
+</p>
+<a name="wp3575697"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2718263table2718258">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718263"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2718265"> </a><div class="pCellBody">
+Databases/Vertica
+</div>
+</td>
+    <td><a name="wp2718273"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2718270" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718278"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2722590"> </a><div class="pCellBody">
+<b class="cBold">tVerticaOutputBulkExec</b> executes the Insert action on the data provided.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718290"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2722596"> </a><div class="pCellBody">
+As a dedicated component, it allows gains in performance during Insert operations to a Vertica database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718305"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2718310"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property Type</em>
+</div>
+</td>
+    <td><a name="wp2722615"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718314"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718316"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2722622"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718323"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718325"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3601996"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3598145"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3598147"> </a><div class="pCellHeading">
+<em class="cEmphasis">DB Version</em>
+</div>
+</td>
+    <td><a name="wp3598149"> </a><div class="pCellBody">
+Select the version of Vertica you are using from the list.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718332"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718337"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2722632"> </a><div class="pCellBody">
+Database server IP address.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718341"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718346"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2722635"> </a><div class="pCellBody">
+Listening port number of DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718350"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718355"> </a><div class="pCellHeading">
+<em class="cEmphasis">DB Name</em>
+</div>
+</td>
+    <td><a name="wp2722638"> </a><div class="pCellBody">
+Name of the database
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718359"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718364"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2722641"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718371"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718376"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2722710"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time and that the table must exist for the insert operation to succeed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718380"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718385"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2722723"> </a><div class="pCellBody">
+On the table defined, you can perform one of the following operations:<br /><b class="cBold">None</b>: No operation is carried out.<br /><b class="cBold">Drop and create a table</b>: The table is removed and created again.<br /><b class="cBold">Create a table</b>: The table does not exist and gets created.<br /><b class="cBold">Create a table if not exists</b>: The table is created if it does not exist.<br /><b class="cBold">Clear a table</b>: The table content is deleted.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718404"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718411"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2722755"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718416"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718418"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2722762"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718431"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718433"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2722776"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job designs. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718446"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718451"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2722797"> </a><div class="pCellBody">
+Name of the file to be processed. <br />Related topic:<em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718461"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718466"> </a><div class="pCellHeading">
+<em class="cEmphasis">Append</em>
+</div>
+</td>
+    <td><a name="wp2722819"> </a><div class="pCellBody">
+Select this check box to add the new rows at the end of the file
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718473"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2718475"> </a><div class="pCellBody">
+<em class="cEmphasis">Write to ROS (Read Optimized Store)</em>
+</div>
+</td>
+    <td><a name="wp2718477"> </a><div class="pCellBody">
+Select this check box to store the data in a physical storage area, in order to optimize the reading, as the data is compressed and pre-sorted.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756262"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718482"> </a><div class="pCellBody">
+<em class="cEmphasis">Exit job if no row was loaded</em>
+</div>
+</td>
+    <td><a name="wp2722825"> </a><div class="pCellBody">
+The Job automatically stops if no row has been loaded. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718488"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718493"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field Separator</em>
+</div>
+</td>
+    <td><a name="wp2722828"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718498"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718500"> </a><div class="pCellBody">
+<em class="cEmphasis">Null string</em>
+</div>
+</td>
+    <td><a name="wp2722831"> </a><div class="pCellBody">
+String displayed to indicate that the value is null. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718506"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718511"> </a><div class="pCellHeading">
+<em class="cEmphasis">Include header</em>
+</div>
+</td>
+    <td><a name="wp2722837"> </a><div class="pCellBody">
+Select this check box to include the column header to the file. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718516"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718522"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2722844"> </a><div class="pCellBody">
+Select the encoding from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718531"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2718537"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2722847"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2718545"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2722852"> </a><div class="pCellBody">
+This component is mainly used when no particular transformation is required on the data to be loaded onto the database. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2718554"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2718556"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tVerticaOutputBulk_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVerticaOutputBulkExec_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

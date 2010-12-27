@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:42">
+    <title>Scenario: Displaying the content of an SPSS .sav file</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSPSSInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSPSSOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2946333"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2946341"> </a><h2 class="pHeading2">
+Scenario: Displaying the content of an SPSS .sav file
+</h2>
+<a name="wp2946344"> </a><p class="pIndented1">
+The following scenario creates a two-component Job, which aims at reading each row of a .sav file and displaying the output on the log console.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2946359"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tSPSSInput</b> component and a <b class="cBold">tLogRow</b> component from the <b class="cBold">Palette</b> onto the design workspace.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2946368"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSPSSInput.png" id="wp2946365" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2946380"> </a><div class="pSmartList2"><li>Right-click on <b class="cBold">tPSSInput</b> and connect it to <b class="cBold">tLogRow</b> using a <b class="cBold">Main Row</b> link.</li></div>
+<a name="wp2946391"> </a><div class="pSmartList2"><li>Click <b class="cBold">tSPSSInput</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2946398"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSPSSInput1.png" id="wp2946395" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2946406"> </a><div class="pSmartList2"><li> Click the three-dot button next to the <b class="cBold">Filename</b> field and browse to the SPSS .sav file you want to read.</li></div>
+<a name="wp2946413"> </a><div class="pSmartList2"><li>Click the three-dot button next to <b class="cBold">Sync schema</b>. A message opens up prompting you to accept retrieving the schema from the defined SPSS file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2946422"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSPSSInput2.png" id="wp2946419" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2946431"> </a><div class="pSmartList2"><li>Click <b class="cBold">Yes</b> to close the message and proceed to the next step.</li></div>
+<a name="wp2946437"> </a><div class="pSmartList2"><li>If required, click the three-dot button next to <b class="cBold">Edit schema</b> to view the pre-defined data structure of the source SPSS file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2946447"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSPSSInput4.png" id="wp2946443" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2946457"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp2946467"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6 </b>to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2946471"> </a><p class="pIndented1">
+The SPSS file is read row by row and the extracted fields are displayed on the log console.
+</p>
+<a name="wp2946478"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSPSSInput5.png" id="wp2946475" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2946482"> </a><p class="pIndented1">
+To carry out translation on the stored values, complete the following:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2946494"> </a><div class="pSmartList2"><li>In the <b class="cBold">Basic settings</b> view, select the <b class="cBold">Translate label </b>check box.</li></div>
+<a name="wp2946500"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync Schema</b> a second time to retrieve the schema after translation. <br />A message opens up prompting you to accept retrieving the schema from the defined SPSS file.</li></div>
+<a name="wp2946510"> </a><div class="pSmartList2"><li>Click <b class="cBold">Yes</b> to close the message and proceed to the next step.<br />A second message opens up prompting you to accept propagating the changes.</li></div>
+<a name="wp2946519"> </a><div class="pSmartList2"><li>Click <b class="cBold">Yes</b> to close the message and proceed to the next step.</li></div>
+<a name="wp2946529"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6 </b>to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2946532"> </a><p class="pIndented1">
+The SPSS file is read row by row and the extracted fields are displayed on the log console after translating the stored values.
+</p>
+<a name="wp2946544"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSPSSInput6.png" id="wp2946538" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSPSSInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSPSSOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

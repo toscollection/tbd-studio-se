@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>Scénario&#160;: Chercher le nom d&#39;un Etat via une méthode XMLRPC</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tXMLRPCInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="LogsandErrors_group_intro.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1431541"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1431551"> </a><h2 class="pHeading2">
+Scénario&#160;: Chercher le nom d&#39;un Etat via une méthode XMLRPC
+</h2>
+<a name="wp1445636"> </a><p class="pIndented1">
+Ce scénario décrit un Job à deux composants utilisant une méthode RPC et affichant le résultat dans la console.
+</p>
+<a name="wp1431891"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tXMLRPC1.png" id="wp1431896" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1431908"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants <b class="cBold">tXMLRPCInput</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1560757"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b>, paramétrez les propriétés du composant <b class="cBold">tXMLRPCInput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1560764"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tXMLRPC2.png" id="wp1560761" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1560776"> </a><div class="pSmartList2"><li>Dans la liste déroulante <b class="cBold">Schema type</b>, sélectionnez l&#39;option<b class="cBold"> Built-in</b>.</li></div>
+<a name="wp1560779"> </a><div class="pSmartList2"><li>Configurez un schéma contenant une unique colonne puisque seul un paramètre est attendu en sortie&#160;: <em class="cEmphasis">StateName</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1560791"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tXMLRPC3.png" id="wp1560788" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1560802"> </a><div class="pSmartList2"><li>Dans le champ<b class="cBold"> Server url</b>, renseignez l&#39;adresse URL du serveur. Pour cet exemple, utilisez&#160;: <em class="cEmphasis">http://phpxmlrpc.sourceforge.net/server.php</em></li></div>
+<a name="wp1432108"> </a><div class="pSmartList2"><li>Aucune information d&#39;authentification n&#39;est nécessaire pour cet exemple.</li></div>
+<a name="wp1432123"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Method</b>, renseignez la méhode à appeler, ici&#160;: <em class="cEmphasis">examples.getStateName</em></li></div>
+<a name="wp1432256"> </a><div class="pSmartList2"><li>Pour cet exemple, la classe retournée n&#39;est pas obligatoire. Ainsi, dans le champ <b class="cBold">return class</b>, laissez les paramètres par défaut.</li></div>
+<a name="wp1432266"> </a><div class="pSmartList2"><li>Puis, dans le tableau <b class="cBold">Parameters</b>, configurez les paramètres nécessaires à la méthode appelée. La colonne <b class="cBold">Name</b> n&#39;est pas utilisée dans le code mais la valeur doit correspondre à la syntaxe attendue par la méthode. Dans cet exemple, saisissez <em class="cEmphasis">State Nr</em> dans le champ <b class="cBold">Name</b> et dans le champ <b class="cBold">Value</b>, choisissez un numéro au hasard, ici&#160;: <em class="cEmphasis">42</em>.</li></div>
+<a name="wp1432274"> </a><div class="pSmartList2"><li>La classe n&#39;a pas beaucoup d&#39;impact sur cette méthode démo mais pourrait en avoir sur une autre méthode. Ainsi, laissez les paramètres par défaut.</li></div>
+<a name="wp1432323"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b> du composant <b class="cBold">tLogRow</b>, cochez la case <b class="cBold">Print schema column name in front of each value</b>.</li></div>
+<a name="wp1432361"> </a><div class="pSmartList2"><li>Enregistrez le Job puis exécutez-le, en appuyant sur <b class="cBold">F6</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1432376"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tXMLRPC4.png" id="wp1432387" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1432395"> </a><p class="pIndented1">
+Le résultat obtenu en sortie en utilisant la méthode RPC <code class="cCode">GetStateName</code> et correspondant au quarante deuxième Etat des Etats Unis est donc <em class="cEmphasis">South Dakota</em>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tXMLRPCInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="LogsandErrors_group_intro.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

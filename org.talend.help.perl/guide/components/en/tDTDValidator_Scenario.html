@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:45">
+    <title>Scenario: Validating xml files</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDTDValidator_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1326879"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1357735"> </a><h2 class="pHeading2">
+Scenario: Validating xml files
+</h2>
+<a name="wp1327806"> </a><p class="pIndented1">
+This scenario describes a Job that validates several files from a folder and outputs the log information for the invalid files into a delimited file.
+</p>
+<a name="wp1326890"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator1.png" id="wp1326887" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1326904"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> to the design workspace: <b class="cBold">tFileList</b>, <b class="cBold">tDTDValidator</b>, <b class="cBold">tMap</b>, <b class="cBold">tFileOutputDelimited</b>.</li></div>
+<a name="wp1326923"> </a><div class="pSmartList2"><li>Connect the <b class="cBold">tFileList</b> to the <b class="cBold">tDTDValidator</b> with an <b class="cBold">Iterate </b>link and the remaining component using a <b class="cBold">main </b>row.</li></div>
+<a name="wp1326932"> </a><div class="pSmartList2"><li>Set the <b class="cBold">tFileList</b> component properties, to fetch an XML file from a folder.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1326939"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator2.png" id="wp1326936" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1326950"> </a><div class="pSmartList2"><li>Change the <b class="cBold">Filemask</b> to <em class="cEmphasis">*.xml</em>. Mind the quotes depending on the Perl or Java version you are using.</li></div>
+<a name="wp1511037"> </a><div class="pSmartList2"><li>Clear the <b class="cBold">Case Sensitive</b> check box.</li></div>
+<a name="wp1511046"> </a><div class="pSmartList2"><li>In the <b class="cBold">tDTDValidate</b> <b class="cBold">Component</b> view, the schema is read-only as it contains standard log information related to the validation process.</li></div>
+<a name="wp1511055"> </a><div class="pSmartList2"><li>Set the <b class="cBold">DTD file</b> to be used as reference.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1511062"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator3.png" id="wp1511059" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1511069"> </a><div class="pSmartList2"><li>Press <b class="cBold">Ctrl+Space bar</b> to access the variable list. In the XML file field, select the current filepath global variable:  $_globals{tFileList_1}{CURRENT_FILEPATH} (in Perl)</li></div>
+<a name="wp1326995"> </a><div class="pSmartList2"><li>In the various messages to display in the <b class="cBold">Run</b> tab console, use the jobName to recall the job name tag. Recall the filename using the relevant global variable: $_globals{tFileList_1}{CURRENT_FILE}. Mind the Perl or Java operators such as the dot or the plus sign to build your message.</li></div>
+<a name="wp1327003"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Print to Console</b> check box.</li></div>
+<a name="wp1327009"> </a><div class="pSmartList2"><li>In the <b class="cBold">tMap</b> component, drag and drop the information data from the standard schema that you want to pass on to the output file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1327018"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator4.png" id="wp1327015" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1327023"> </a><div class="pSmartList2"><li>Once the Output schema is defined as required, add a filter condition to only select the log information data when the XML file is invalid.</li></div>
+<a name="wp1327027"> </a><div class="pSmartList2"><li>Follow the best practice by typing first the wanted value for the variable, then the operator based on the type of data filtered then the variable that should meet the requirement. In this case (in Java and Perl): 0 ==  $row1[validate]  </li></div>
+<a name="wp1327037"> </a><div class="pSmartList2"><li>Then connect (if not already done) the <b class="cBold">tMap</b> to the <b class="cBold">tFileOutputDelimited</b> component using a main row. Name it as relevant, in this example: <em class="cEmphasis">errorsOnly</em>.</li></div>
+<a name="wp1327050"> </a><div class="pSmartList2"><li>In the <b class="cBold">tFileOutputDelimited</b> <b class="cBold">Basic settings</b>, Define the destination filepath, the field delimiters and the encoding.</li></div>
+<a name="wp1327061"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to run it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1327122"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator5.png" id="wp1327128" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1327137"> </a><p class="pIndented1">
+On the <b class="cBold">Run</b> console the messages defined display for each of the invalid files. At the same time the output file is filled with log data.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDTDValidator_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

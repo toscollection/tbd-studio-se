@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:32">
+    <title>tSalesforceGetServerTimestamp</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceGetDeleted_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceGetServerTimestamp_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2743342"> </a><h2 class="pHeading1">
+tSalesforceGetServerTimestamp
+</h2>
+<a name="wp2708449"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tSalesforceGetServerTimestamp_icon32_white.png" id="wp2708444" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2708456"> </a><h2 class="pHeading2">
+tSalesforceGetServerTimestamp properties
+</h2>
+<a name="wp2708598"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2932338table2708459">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932338"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2932340"> </a><div class="pCellBody">
+Business 
+</div>
+</td>
+    <td><a name="wp2932348"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2932345" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932353"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932358"> </a><div class="pCellBody">
+<b class="cBold">tSalesforceGetServerTimestamp</b> retrieves the current date of the Salesforce server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932365"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932367"> </a><div class="pCellBody">
+This component retrieves the current date of the Salesforce server presented in a timestamp format.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2956936"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2956942"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2956946"> </a><div class="pCellBody">
+Select this check box to use an established connection from <b class="cBold">tSalesforceConnection</b>. Once you select it, the <b class="cBold">Component list</b> field appear allowing you to choose the <b class="cBold">tSalesforceConnection</b> component to be used.<br />For more information on <b class="cBold">tSalesforceConnection</b>, see section <a href="tSalesforceConnection_Prop.html"><em class="cEmphasis">tSalesforceConnection</em></a>.<br />
+</div>
+<a name="wp3449748"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3449745" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, you can use <b class="cBold">Dynamic settings</b> to share the intended connection. In this case, make sure that the connection name is unique and distinctive. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932374"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932378"> </a><div class="pCellHeading">
+<em class="cEmphasis">Salesforce Webservice URL</em>
+</div>
+</td>
+    <td><a name="wp2932381"> </a><div class="pCellBody">
+Type in the webservice URL to connect to the Salesforce DB.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932383"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932388"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2932393"> </a><div class="pCellBody">
+Type in the Webservice user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2956749"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2956755"> </a><div class="pCellHeading">
+<em class="cEmphasis">Timeout (milliseconds)</em>
+</div>
+</td>
+    <td><a name="wp2956759"> </a><div class="pCellBody">
+Type in the intended number of query timeout in Salesforce.com.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2956993"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2957000"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2957003"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. <br />Click <b class="cBold">Edit Schema</b> to make changes to the schema. Note that if you make changes, the schema automatically becomes built-in.<br />Click <b class="cBold">Sync columns</b> to retrieve the schema from the previous component connected in the Job.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932398"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2932403"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use Socks Proxy</em>
+</div>
+</td>
+    <td><a name="wp2932405"> </a><div class="pCellBody">
+Select this check box if you want to use a proxy server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932407"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932411"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use Soap Compression</em>
+</div>
+</td>
+    <td><a name="wp2932414"> </a><div class="pCellBody">
+Select this check box to activate the SOAP compression.
+</div>
+<a name="wp2932420"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2932418" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+The compression of the SOAP messages optimizes system performance.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932423"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932428"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2932430"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932435"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932437"> </a><div class="pCellBody">
+You can use this component as an output component. <b class="cBold">tSalesforceGetServerTimestamp</b> requires an input component.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932447"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932449"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceGetDeleted_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceGetServerTimestamp_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

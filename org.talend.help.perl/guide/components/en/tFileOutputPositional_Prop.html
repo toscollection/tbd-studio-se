@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:40">
+    <title>tFileOutputPositional</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputMSXML_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputPositional_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2941695"> </a><h2 class="pHeading1">
+tFileOutputPositional
+</h2>
+<a name="wp2932752"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFileOutputPositional_icon32.png" id="wp2932748" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2932759"> </a><h2 class="pHeading2">
+tFileOutputPositional Properties
+</h2>
+<a name="wp2933021"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2932767table2932762">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932767"> </a><div class="pCellBody">
+<b class="cBold">Component Family</b>
+</div>
+</td>
+    <td><a name="wp2932769"> </a><div class="pCellBody">
+File/Output
+</div>
+</td>
+    <td><a name="wp2932778"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-07-66-027.jpg" height="59" width="112" id="wp2932774" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932783"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932788"> </a><div class="pCellBody">
+<b class="cBold">tFileOutputPositional</b> writes a file row by row according to the length and the format of the f ields or columns in a row.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932795"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932797"> </a><div class="pCellBody">
+It writes a file row by row, according to the data structure (schema) coming from the input flow.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932804"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2934037"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2934040"> </a><div class="pCellBody">
+Either Built-in or Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932813"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2934043"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2934050"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932822"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2934053"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3477412"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file where the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932831"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932836"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2932840"> </a><div class="pCellBody">
+Name or path to the file to be processed and or the variable to be used. <br /><br />Related topic: <em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932849"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2933931"> </a><div class="pCellHeading">
+<em style="font-style: italic" class="cEmphasis">Schema </em><span style="font-style: normal">and </span><em style="font-style: italic" class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2933934"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932861"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2933937"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2933944"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: You create and store the schema locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932879"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2933954"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2933961"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: You have already created the schema and stored it in the Repository. You can reuse it in various projects and job designs. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932897"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932902"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row separator</em>
+</div>
+</td>
+    <td><a name="wp2932904"> </a><div class="pCellBody">
+String (ex: &quot;\n&quot;on Unix) to distinguish rows in the output file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932906"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932911"> </a><div class="pCellHeading">
+<em class="cEmphasis">Append</em>
+</div>
+</td>
+    <td><a name="wp2932913"> </a><div class="pCellBody">
+Select this check box to add the new rows at the end of the file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932915"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932920"> </a><div class="pCellHeading">
+<em class="cEmphasis">Include header</em>
+</div>
+</td>
+    <td><a name="wp2932922"> </a><div class="pCellBody">
+Select this check box to include the column header to the file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2955393"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2955429"> </a><div class="pCellHeading">
+<em class="cEmphasis">Compress as zip file</em>
+</div>
+</td>
+    <td><a name="wp2955432"> </a><div class="pCellBody">
+Select this check box to compress the output file in zip format.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932924"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932929"> </a><div class="pCellHeading">
+<em class="cEmphasis">Formats</em>
+</div>
+</td>
+    <td><a name="wp2934172"> </a><div class="pCellBody">
+Customize the positional file data format and fill in the columns in the <span style="font-weight: bold">Formats</span> table.<br /><b class="cBold">Column</b>: Select the column you want to customize.<br /><b class="cBold">Size</b>: Enter the column size.<br /><b class="cBold">Padding char</b>: Type in between quotes the padding characters used. A space by default.<br /><b class="cBold">Alignment</b>: Select the appropriate alignment parameter.<br /><b class="cBold">Keep</b>: If the data in the column or in the field are too long, select the part you want to keep.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932939"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2932944"> </a><div class="pCellHeading">
+<em class="cEmphasis">Advanced separator(for numbers)</em>
+</div>
+</td>
+    <td><a name="wp2932946"> </a><div class="pCellBody">
+Select this check box to modify the separators used for numbers.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932948"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932952"> </a><div class="pCellHeading">
+<em class="cEmphasis">Create directory if not exists</em>
+</div>
+</td>
+    <td><a name="wp2932955"> </a><div class="pCellBody">
+This check box is selected by default. It creates a directory to hold the output table if it does not exist.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932957"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932961"> </a><div class="pCellHeading">
+<em class="cEmphasis">Custom the flush buffer size</em>
+</div>
+</td>
+    <td><a name="wp2932964"> </a><div class="pCellBody">
+Select this check box to define the number of lines to write before emptying the buffer.<br /><b class="cBold">Row Number</b>: set the number of lines to write.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3477456"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3477463"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output in row mode</em>
+</div>
+</td>
+    <td><a name="wp3477466"> </a><div class="pCellBody">
+Writes in row mode.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932978"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2934246"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding Type</em>
+</div>
+</td>
+    <td><a name="wp2934253"> </a><div class="pCellBody">
+Select the encoding type from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932993"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2934262"> </a><div class="pCellHeading">
+<em class="cEmphasis">Don&#39;t generate empty file</em>
+</div>
+</td>
+    <td><a name="wp2934266"> </a><div class="pCellBody">
+Select this check box if you do not want to generate empty files.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2933002"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2934273"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2934276"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2933014"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2933016"> </a><div class="pCellBody">
+Use this component to read a file and separate the fields using the specified separator.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputMSXML_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputPositional_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

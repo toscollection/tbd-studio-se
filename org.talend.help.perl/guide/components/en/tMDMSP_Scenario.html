@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:39">
+    <title>Scenario: Executing a stored procedure in the MDM hub</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMSP_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMViewSearch_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3472145"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3472153"> </a><h2 class="pHeading2">
+Scenario: Executing a stored procedure in the MDM hub
+</h2>
+<a name="wp3472156"> </a><p class="pIndented1">
+The following job is intended for calculating the total price of each kind of products recorded on your MDM Web UI. 
+</p>
+<a name="wp3472164"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP1.png" id="wp3472161" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3472167"> </a><p class="pIndented1">
+This Job will generate parameters used to execute a stored procedure in the MDM hub, then extract the desired data from the returned XML-format result and present the extracted data in the studio.
+</p>
+<a name="wp3472172"> </a><p class="pIndented1">
+The products of which the prices are to be treated are listed on your MDM Web UI.
+</p>
+<a name="wp3472179"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMSP2.png" id="wp3472176" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3472185"> </a><p class="pIndented1">
+The stored procedure to be executed can be found in <b class="cBold">Stored Procedure</b> node of the MDM server&#39;s tree view and reads as follows:
+</p>
+<a name="wp3472193"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP6.png" id="wp3472190" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3472199"> </a><p class="pIndented1">
+For more information on a stored procedure in the MDM server, see section <em class="cEmphasis">Stored Procedures</em> in the <b class="cBold">Talend Master Data Management</b> Administrator Guide.
+</p>
+<a name="wp3472210"> </a><p class="pIndented1">
+To realize this Job, proceed as follows:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3472218"> </a><div class="pSmartList2"><li>Drag and drop the following components used in this example: <b class="cBold">tFixedFlowInput</b>, <b class="cBold">tMDMSP</b>, <b class="cBold">tExtractXMLField</b>, <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3472235"> </a><div class="pSmartList2"><li>Connect the components using the <b class="cBold">Row Main </b>link.</li></div>
+<a name="wp3472241"> </a><div class="pSmartList2"><li>The <b class="cBold">tFixedFlowInput</b> is used to generate the price range of your interest for this calculation. In this example, define 10 as the minimum and 17 as the maximum in order to cover all of the products.</li></div>
+<a name="wp3472252"> </a><div class="pSmartList2"><li>Double-click on <b class="cBold">tFixedFlowInput</b> to open its <b class="cBold">Component</b> view.</li></div>
+<a name="wp3472264"> </a><div class="pSmartList2"><li>On the <b class="cBold">Component</b> view, click the <b class="cBold">[...]</b> button next to <b class="cBold">Edit schema</b> to open the schema editor of this component.</li></div>
+<a name="wp3472274"> </a><div class="pSmartList2"><li>In the schema editor, add the two parameters <em class="cEmphasis">min</em> and <em class="cEmphasis">max</em> that are used to define the price range.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3472283"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP3.png" id="wp3472280" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3472292"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate this editing.</li></div>
+<a name="wp3472307"> </a><div class="pSmartList2"><li>On the <b class="cBold">Values</b> table in the <b class="cBold">Mode</b> area of the <b class="cBold">Component</b> view, the two parameters <em class="cEmphasis">min</em> and <em class="cEmphasis">max</em> that you have defined in the schema editor of this component display.</li></div>
+<a name="wp3472326"> </a><div class="pSmartList2"><li>In the <b class="cBold">Value</b> column of the <b class="cBold">Values</b> table, enter 10 for the <em class="cEmphasis">min</em> parameter and 17 for the <em class="cEmphasis">max</em> parameter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3472335"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP4.png" id="wp3472332" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3472348"> </a><div class="pSmartList2"><li>Double-click on <b class="cBold">tMDMSP</b> to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3472355"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP5.png" id="wp3472352" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3472366"> </a><div class="pSmartList2"><li>In the <b class="cBold">URL</b> field of the <b class="cBold">Component</b> view, type in the MDM server address, in this example, <em class="cEmphasis">http://localhost:8080/talend/TalendPort</em>.</li></div>
+<a name="wp3472382"> </a><div class="pSmartList2"><li>In <b class="cBold">Username</b> and <b class="cBold">Password</b>, enter the authentication information, in this example, <em class="cEmphasis">admin</em> and <em class="cEmphasis">talend</em>.</li></div>
+<a name="wp3472395"> </a><div class="pSmartList2"><li>In <b class="cBold">Data Container</b> and <b class="cBold">Procedure Name</b>, enter the exact names of the data container <em class="cEmphasis">Product</em> and of the stored procedure <em class="cEmphasis">PriceAddition</em>.</li></div>
+<a name="wp3472411"> </a><div class="pSmartList2"><li>Under the <b class="cBold">Parameters (in order)</b> table, click the plus button two times to add two rows in this table.</li></div>
+<a name="wp3472418"> </a><div class="pSmartList2"><li>In the <b class="cBold">Parameters (in order)</b> table, click each of both rows you have added and from the drop-down list, select the <em class="cEmphasis">min</em> parameter for one and the <em class="cEmphasis">max</em> parameter for the other.</li></div>
+<a name="wp3472436"> </a><div class="pSmartList2"><li>Double-click on <b class="cBold">tExtractXMLField</b> to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3472443"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP7.png" id="wp3472440" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3472457"> </a><div class="pSmartList2"><li>On the <b class="cBold">Component</b> view, click the <b class="cBold">[...]</b> button next to <b class="cBold">Edit schema</b> to open the schema editor of this component.</li></div>
+<a name="wp3472461"> </a><div class="pSmartList2"><li>In the schema editor, add two columns to define the structure of the outcoming data. These two columns are <em class="cEmphasis">name</em> and <em class="cEmphasis">sum</em>. They represent respectively the name and the total price of each kind of product recorded in the MDM Web UI.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3472476"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP8.png" id="wp3472473" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3472487"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate the configuration and the two columns display in the <b class="cBold">Mapping</b> table of the <b class="cBold">Component</b> view.</li></div>
+<a name="wp3472497"> </a><div class="pSmartList2"><li>In the <b class="cBold">Loop XPath query</b> field, type in the node of the XML tree, which the loop is based on. In this example, the node is <em class="cEmphasis">/result</em> as you can read in the procedure code: <code class="cCode">return &lt;result&gt;&lt;Name&gt;{$d}&lt;/Name&gt;&lt;Sum&gt;{sum($product/Price)}&lt;/Sum&gt;&lt;/result&gt;</code>.  </li></div>
+<a name="wp3472513"> </a><div class="pSmartList2"><li>In <b class="cBold">XPath query</b> of the <b class="cBold">Mapping</b> table, enter the exact node name on which the loop is applied. They are <em class="cEmphasis">/result/Name</em> used to extract the product names and <em class="cEmphasis">/result/Sum</em> used to extract the total prices.</li></div>
+<a name="wp3472531"> </a><div class="pSmartList2"><li>Eventually, double-click <b class="cBold">tLogRow</b> to open its <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3472538"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP9.png" id="wp3472535" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3472544"> </a><div class="pSmartList2"><li>Synchronize the schema with the preceding component.</li></div>
+<a name="wp3472551"> </a><div class="pSmartList2"><li>And select the <b class="cBold">Print values in cells of a table</b> check box for reading convenience.</li></div>
+<a name="wp3472558"> </a><div class="pSmartList2"><li>Then press <b class="cBold">F6</b> to execute the Job.</li></div>
+<a name="wp3472566"> </a><div class="pSmartList2"><li>See the outcoming data in the console of the <b class="cBold">Run</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3472573"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMDMSP10.png" id="wp3472570" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3472576"> </a><p class="pIndented1">
+The output lists the four kinds of products recorded in the MDM Web UI and the total price for each of them.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMSP_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMViewSearch_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

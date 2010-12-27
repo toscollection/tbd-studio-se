@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>tVerticaOutputBulk</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tVerticaOutput_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVerticaOutputBulk_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3037724"> </a><h2 class="pHeading1">
+tVerticaOutputBulk
+</h2>
+<a name="wp3037740"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tVerticaOutputBulk_icon32_white.png" id="wp2715301" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2715318"> </a><h2 class="pHeading2">
+Propriétés du tVerticaOutputBulk
+</h2>
+<a name="wp2715330"> </a><p class="pIndented1">
+Les composants <b class="cBold">tVerticaOutputBulk</b> et <b class="cBold">tVerticaBulkExec</b> sont généralement utilisés ensemble pour d&#39;une part générer en sortie le fichier qui sera d&#39;autre part utilisé comme paramètre dans l&#39;exécution de la requête SQL énoncée. Cette exécution en deux étapes est unifiée dans le composant <b class="cBold">tVerticaOutputBulkExec</b>, détaillé dans une section séparée. L&#39;intérêt de proposer deux composants séparés réside dans le fait que cela permet de procéder à des transformations avant le chargement des données dans la base de données.
+</p>
+<a name="wp2715623"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2715347table2715339">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715347"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2715350"> </a><div class="pCellBody">
+Databases/Vertica
+</div>
+</td>
+    <td><a name="wp2715361"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp2715357" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715369"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2715372"> </a><div class="pCellBody">
+Ecrit un fichier composé de colonnes et basé sur le délimiteur défini et sur les standards Vertica.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715383"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2715386"> </a><div class="pCellBody">
+Prépare le fichier à utiliser comme paramètre dans la requête INSERT servant à alimenter une base de données Vertica.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715397"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2715404"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2715407"> </a><div class="pCellBody">
+Peut être Built-in ou Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715411"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715414"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715421"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715425"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715428"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715435"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Sélectionnez le fichier de propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715439"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715446"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2715449"> </a><div class="pCellBody">
+Nom du fichier à traiter. <br />Voir également&#160;: <em class="cEmphasis">Définir les variables à partir de la vue Component</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715460"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715467"> </a><div class="pCellHeading">
+<em class="cEmphasis">Append</em>
+</div>
+</td>
+    <td><a name="wp2715470"> </a><div class="pCellBody">
+Cochez cette option pour ajouter des nouvelles lignes à la fin du fichier.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715474"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715484"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2715488"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le <span style="font-weight: bold">Repository</span>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715492"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715495"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715502"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé ponctuellement pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715513"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715516"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715523"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le <span style="font-weight: bold">Repository</span>. Ainsi, il peut être réutilisable dans divers projets et Job designs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715534"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2715541"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row separator</em>
+</div>
+</td>
+    <td><a name="wp2715544"> </a><div class="pCellBody">
+Chaîne (ex&#160;: &quot;\n&quot; sous Unix) séparant les lignes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715548"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715555"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp2715558"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière séparant les champs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715562"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715569"> </a><div class="pCellHeading">
+<em class="cEmphasis">Include header</em>
+</div>
+</td>
+    <td><a name="wp2715572"> </a><div class="pCellBody">
+Cochez cette case pour inclure l&#39;en-tête des colonnes dans le fichier.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715576"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715583"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2715586"> </a><div class="pCellBody">
+Sélectionnez l&#39;encodage à partir de la liste ou sélectionnez <b class="cBold">Custom</b> et définissez-le manuellement. Ce champ est obligatoire pour la manipulation des données de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2715590"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2715597"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><span style="font-style: italic">Catcher Statistics</span>
+</div>
+</td>
+    <td><a name="wp2715600"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2715608"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2715615"> </a><div class="pCellBody">
+Ce composant est généralement utilisé avec le composant <b class="cBold">tVerticaBulkExec</b>. Ensemble, ils offrent un gain de performance important pour l&#39;alimentation d&#39;une base de données Vertica.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tVerticaOutput_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVerticaOutputBulk_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

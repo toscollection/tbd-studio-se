@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>Scénario&#160;1&#160;: Créer un flux RSS et stocker les fichiers sur un serveur FTP  </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRSSOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSCPClose_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2504779"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2504786"> </a><h2 class="pHeading2">
+Scénario&#160;1&#160;: Créer un flux RSS et stocker les fichiers sur un serveur FTP  
+</h2>
+<a name="wp2506403"> </a><p class="pIndented1">
+Ce scénario Java a pour but de&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2506409"> </a><div class="pSmartList2"><li>créer un flux RSS pour des fichiers que vous souhaitez partager avec d&#39;autres personnes, et </li></div>
+<a name="wp2506414"> </a><div class="pSmartList2"><li>stocker l&#39;ensemble des fichiers sur un serveur FTP.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2506417"> </a><p class="pIndented1">
+Ce scénario permet d&#39;écrire un fichier XML de flux RSS à partir d&#39;une table MySQL contenant des informations concernant des livres. Il ajoute également des liens vers les fichiers stockés sur un serveur FTP au cas où les utilisateurs voudraient avoir accès aux fichiers dans leur intégralité. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2506424"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, cliquez-déposez les composants suivants dans l&#39;éditeur graphique&#160;: le<b class="cBold"> tMysqlInput</b>, le <b class="cBold">tRSSOutput</b> et le <b class="cBold">tFTPPut</b>.</li></div>
+<a name="wp2504833"> </a><div class="pSmartList2"><li>Cliquez droit sur le <b class="cBold">tMysqlInput</b> et connectez-le au <b class="cBold">tRSSOutput</b> à l&#39;aide d&#39;un lien de type <b class="cBold">Row Main</b>.</li></div>
+<a name="wp2504847"> </a><div class="pSmartList2"><li>Cliquez droit sur le <b class="cBold">tMysqlInput</b> et connectez-le au <b class="cBold">tFTPPut</b> à l&#39;aide d&#39;un lien de type  <b class="cBold">OnSubjobOk</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2504854"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput.png" id="wp2504851" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2504863"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, sélectionnez le <b class="cBold">tMysqlInput</b>.</li></div>
+<a name="wp2506777"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tMysqlInput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2506789"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput1.png" id="wp2506786" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2506800"> </a><div class="pSmartList2"><li>Configurez le champ <b class="cBold">Property type </b>en mode <b class="cBold">Repository</b> puis cliquez sur le bouton <b class="cBold">[...]</b> pour sélectionner la base de données adéquate dans la liste. Les détails de connexion ainsi que le schéma sont remplis automatiquement. </li></div>
+<a name="wp2506807"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table Name</b>, saisissez le nom de votre table ou cliquez sur le bouton <b class="cBold">[...]</b> et sélectionnez le nom de la table à partir de la liste. Dans ce scénario, la table Mysql de données saisies s&#39;appelle &quot;rss_talend&quot; et le schéma comporte quatre colonnes, <em class="cEmphasis">TITLE</em>, <em class="cEmphasis">Description</em>, <em class="cEmphasis">PUBDATE</em>, et <em class="cEmphasis">LINK</em>. </li></div>
+<a name="wp2506823"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Query</b>, saisissez la requête de base de données en faisant particulièrement attention à ce que l&#39;ordre des champs corresponde au schéma défini, ou cliquez sur <b class="cBold">Guess Query</b>.</li></div>
+<a name="wp2504929"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, sélectionnez le composant <b class="cBold">tRSSOutput</b>.</li></div>
+<a name="wp2504940"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tRSSOutput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2504947"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput2.png" id="wp2504944" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2504955"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File name</b>, utilisez le nom de fichier et son chemin d&#39;accès définis par défaut ou parcourez vos dossiers pour définir votre propre fichier XML de sortie. </li></div>
+<a name="wp2506948"> </a><div class="pSmartList2"><li>Sélectionnez le type d&#39;encodage à partir de la liste <b class="cBold">Encoding Type</b>.</li></div>
+<a name="wp3599861"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, sélectionnez <b class="cBold">RSS</b>.</li></div>
+<a name="wp2504969"> </a><div class="pSmartList2"><li>Dans le panneau <b class="cBold">Channel</b>, saisissez un titre, une description, une date de publication et un lien définissant l&#39;ensemble de vos données saisies. </li></div>
+<a name="wp2504979"> </a><div class="pSmartList2"><li>Sélectionnez le type de schéma dans la liste <b class="cBold">Schema Type</b> puis cliquez sur <b class="cBold">Edit Schema</b> pour le modifier si nécessaire. </li></div>
+<a name="wp2504990"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2504985" border="0" hspace="0" vspace="0"/><br />
+Vous pouvez également cliquer sur <b class="cBold">Sync Column</b> pour récupérer le schéma généré par le composant précédent. 
+</p>
+<a name="wp2506969"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour en exécuter la première partie.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2505008"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput5.png" id="wp2505005" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2505015"> </a><p class="pIndented1">
+Le composant <b class="cBold">tRSSOutput</b> a créé en sortie un flux RSS au format XML pour les fichiers définis. 
+</p>
+<a name="wp2505019"> </a><p class="pIndented1">
+Pour stocker l&#39;intégralité des fichiers sur un serveur FTP&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2505028"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, sélectionnez le <b class="cBold">FTPPut</b>.</li></div>
+<a name="wp2505039"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tFTPPut</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2505046"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput4.png" id="wp2505043" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2505055"> </a><div class="pSmartList2"><li>Saisissez le nom du serveur et le numéro de port dans les champs correspondants. </li></div>
+<a name="wp2505065"> </a><div class="pSmartList2"><li>Renseignez vos détails de connexion dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>.</li></div>
+<a name="wp2505072"> </a><div class="pSmartList2"><li>Parcourez vos dossier jusqu&#39;au répertoire local ou tapez manuellement le chemin d&#39;accès dans le champ <b class="cBold">Local directory</b>.</li></div>
+<a name="wp2505076"> </a><div class="pSmartList2"><li>Entrez les détails du serveur de répertoire distant. </li></div>
+<a name="wp2505083"> </a><div class="pSmartList2"><li>Sélectionnez le mode de transfert à partir de la liste <b class="cBold">Transfer mode</b>.</li></div>
+<a name="wp2505089"> </a><div class="pSmartList2"><li>Dans le panneau <b class="cBold">Files</b>, cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter des lignes puis remplissez les masques de fichiers de tous les fichiers à copier sur le répertoire distant. Dans ce scénario, les fichiers à enregistrer sur le serveur FTP sont tous des fichiers texte. </li></div>
+<a name="wp2505098"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2776473"> </a><p class="pIndented1">
+Les fichiers définis sont copiés sur le serveur distant. 
+</p>
+<a name="wp2776479"> </a><h2 class="pHeading2">
+Scénario&#160;2&#160;: Créer un flux RSS contenant des métadonnées  
+</h2>
+<a name="wp2776482"> </a><p class="pIndented1">
+Ce scénario Java à deux composants a pour but de créer un flux RSS contenant des métadonnées et de rediriger les informations obtenues dans un fichier XML de flux RSS en sortie. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2776491"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, cliquez-déposez les composants <b class="cBold">tRSSInput </b>et <b class="cBold">tRSSOutput </b>dans l&#39;éditeur graphique.</li></div>
+<a name="wp2776501"> </a><div class="pSmartList2"><li>Cliquez droit sur le <b class="cBold">tRSSInput</b> et connectez-le au <b class="cBold">tRSSOutput</b> à l&#39;aide d&#39;un lien de type <b class="cBold">Row Main</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2776513"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput6.png" id="wp2776510" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2776522"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, sélectionnez le <b class="cBold">tRSSInput</b>.</li></div>
+<a name="wp2776531"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tRSSInput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2776543"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput7.png" id="wp2776540" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3600158"> </a><div class="pSmartList2"><li>Définissez le type du schéma comme <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3600167"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3600162" border="0" hspace="0" vspace="0"/><br />
+Si votre schéma est déjà stocké localement dans le <b class="cBold">Repository</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> dans le champ <b class="cBold">Schema</b>, puis cliquez sur le bouton<b class="cBold"> [...]</b> à côté du champ <b class="cBold">Edit Schema</b> pour afficher une boîte de dialogue dans lasquelle vous pouvez choisir les métadonnées appropriées. Pour plus d&#39;informations concerenant les métadonnées, consultez&#160;<em class="cEmphasis">Gestion des métadonnées</em> dans le <b class="cBold">Guide Utilisateur </b><b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp3600286"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> situé à côté du champ <b class="cBold">Edit Schema </b>pour vérifier les paramètres du schéma si nécessaire. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3600216"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSInput1.png" id="wp3600213" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3600231"> </a><p class="pIndented1">
+Le schéma du <b class="cBold">tRSSInput</b> est composé de quatre colonnes, <em class="cEmphasis">TITLE</em>, <em class="cEmphasis">DESCRIPTION</em>, <em class="cEmphasis">PUBDATE</em>, et <em class="cEmphasis">LINK</em> et il est en lecture seule. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3600325"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue.</li></div>
+<a name="wp2776619"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, double-cliquez sur le composant <b class="cBold">tRSSOutput</b> pour ouvrir sa vue <b class="cBold">Component</b> et définir sa configuration de base (<b class="cBold">Basic settings</b>).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2776631"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput8.png" id="wp2776628" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2776639"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File name</b>, utilisez le nom de fichier de sortie et son chemin d&#39;accès définis par défaut ou parcourez vos dossiers pour définir votre propre fichier XML de sortie. </li></div>
+<a name="wp2776647"> </a><div class="pSmartList2"><li>Sélectionnez le type d&#39;encodage à partir de la liste <b class="cBold">Encoding Type</b>.</li></div>
+<a name="wp3600452"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, sélectionnez <b class="cBold">RSS</b>.</li></div>
+<a name="wp2776653"> </a><div class="pSmartList2"><li>Dans le panneau <b class="cBold">Channel</b>, saisissez un titre, une description, une date de publication et un lien définissant l&#39;ensemble de vos données saisies. </li></div>
+<a name="wp2776660"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Optional Channel Element</b>, définissez les métadonnées de votre flux RSS. Dans ce scénario, le flux comprend deux métadonnées&#160;: <em class="cEmphasis">copyright</em>, à laquelle est associée la valeur <em class="cEmphasis">tos</em>, et <em class="cEmphasis">language</em>, à laquelle est associée la valeur <em class="cEmphasis">en_us</em>. </li></div>
+<a name="wp2776682"> </a><div class="pSmartList2"><li>Sélectionnez le type de schéma dans la liste <b class="cBold">Schema Type</b> puis cliquez sur <b class="cBold">Edit Schema</b> pour le modifier si nécessaire. </li></div>
+<a name="wp2776693"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2776688" border="0" hspace="0" vspace="0"/><br />
+Vous pouvez également cliquer sur <b class="cBold">Sync Column</b> pour récupérer le schéma généré par le composant précédent. 
+</p>
+<a name="wp2776704"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2776711"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput9.png" id="wp2776708" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2776810"> </a><p class="pIndented1">
+Les fichiers définis sont copiés dans le fichier XML de sortie et les métadonnées apparaissent sous le noeud <em class="cEmphasis">&lt;channel&gt;</em>, en dessous des informations de base du flux RSS. 
+</p>
+<a name="wp3600536"> </a><h2 class="pHeading2">
+Scénario 3&#160;: Créer un fichier XML de flux ATOM
+</h2>
+<a name="wp3600539"> </a><p class="pIndented1">
+Ce scénario Java décrit un Job à deux composants, qui génère des données et les écrit dans un fichier XML de flux ATOM.  
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3600548"> </a><div class="pSmartList2"><li>Déposez les composants suivants de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique&#160;: un <b class="cBold">tFixedFlowInput</b> du groupe <b class="cBold">Misc</b> et un <b class="cBold">tRSSOutput</b> du groupe <b class="cBold">Internet</b>.</li></div>
+<a name="wp3600574"> </a><div class="pSmartList2"><li>Cliquez-droit sur le <b class="cBold">tFixedFlowInput</b> et connectez-le au <b class="cBold">tRSSOutput</b> à l&#39;aide d&#39;un lien <b class="cBold">Row Main</b>.</li></div>
+<a name="wp3600580"> </a><div class="pSmartList2"><li>Une fenêtre pop-up s&#39;affiche et vous demande si vous souhaitez passer le schéma du <b class="cBold">tRSSOutput</b> au <b class="cBold">tFixedFlowInput</b>, cliquez sur <b class="cBold">Yes</b> (Oui). </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3600595"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput3_1.png" id="wp3600592" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3600603"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation graphique, double-cliquez sur le <b class="cBold">tFixedFlowInput</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses <b class="cBold">Basic settings</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3600615"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput3_2.png" id="wp3600612" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3600632"> </a><div class="pSmartList2"><li>Laissez le type de <b class="cBold">Schema</b> en <b class="cBold">Built-in</b>. Cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour afficher le schéma importé du composant de sortie.</li></div>
+<a name="wp3600643"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Number of rows</b>, laissez le paramètre par défaut, <b class="cBold">1</b>, pour ne générer qu&#39;une ligne de données.</li></div>
+<a name="wp3601133"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, laissez sélectionnée l&#39;option <b class="cBold">Use Single Table</b> et remplissez le tableau <b class="cBold">Values</b>. Notez que le champ <b class="cBold">Column</b> du tableau <b class="cBold">Values</b> est rempli par les colonnes du schéma défini dans le composant.</li></div>
+<a name="wp3601232"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Value</b> du tableau <b class="cBold">Values</b>, saisissez les données que vous souhaitez envoyer au composant suivant.</li></div>
+<a name="wp3600678"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tRSSOutput</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses <b class="cBold">Basic settings</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3600690"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput3_3.png" id="wp3600687" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3600701"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">File Name</b> afin de définir le répertoire et le nom du fichier XML de sortie.</li></div>
+<a name="wp3600712"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, sélectionnez <b class="cBold">ATOM</b> pour générer un fichier XML de flux ATOM.</li></div>
+<a name="wp3600718"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Feed</b>, saisissez un titre, un lien, un ID, la date de mise à jour, et le nom de l&#39;auteur, afin de définir vos données comme un tout.</li></div>
+<a name="wp3600728"> </a><div class="pSmartList2"><li>Sélectionnez le type de votre schéma, dans la liste <b class="cBold">Schema Type</b> puis cliquez sur le bouton <b class="cBold">[...]</b> du champ <b class="cBold">Edit Schema</b> afin d&#39;afficher le schéma et de le modifier si nécessaire. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3600737"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput3_4.png" id="wp3600734" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3600743"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3600741" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Comme le format du flux ATOM est strict, des informations par défaut sont requises afin de créer le fichier XML.  Le schéma du <b class="cBold">tRSSOutput</b> comprend donc des colonnes par défaut contenant ces informations. Ces colonnes par défaut sont grisées pour indiquer qu&#39;elles ne doivent pas être modifiées. Si vous choisissez de modifier le schéma du composant, le fichier XML ATOM créé ne sera pas valide. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3600757"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3600764"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRSSOutput3_5.png" id="wp3600761" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3600772"> </a><p class="pIndented1">
+Le composant <b class="cBold">tRSSOutput</b> crée un flux de sortie ATOM au format XML. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRSSOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSCPClose_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:40">
+    <title>Scenario: Writing a JSON structured file</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputJSON_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputLDIF_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3453530"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3453539"> </a><h2 class="pHeading2">
+Scenario: Writing a JSON structured file
+</h2>
+<a name="wp3453545"> </a><p class="pIndented1">
+This is a 2 component scenario in which a<b class="cBold"> tRowGenerator</b> component generates random data which a <b class="cBold">tFileOutputJSON</b> component then writes to a JSON structured output file. 
+</p>
+<a name="wp3453556"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputJSON1.png" id="wp3453553" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3453567"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tRowGenerator</b> and a <b class="cBold">tFileOutputJSON</b> component onto the workspace from the <b class="cBold">Palette</b>.</li></div>
+<a name="wp3453578"> </a><div class="pSmartList2"><li>Link the components using a <b class="cBold">Row &gt; Main</b> connection.</li></div>
+<a name="wp3453590"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tRowGenerator</b> to define its<b class="cBold"> Basic Settings</b> properties in the <b class="cBold">Component</b> view.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3453599"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputJSON2.png" id="wp3453596" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3453607"> </a><div class="pSmartList2"><li>If the schema you require is already stored under the Db Connections node in the Repository, select Repository in the Schema field and choose the metadata from the list.</li></div>
+<a name="wp3453626"> </a><div class="pSmartList2"><li>Otherwise, click <b class="cBold">[...]</b> next to <b class="cBold">Edit Schema</b> to display the corresponding dialog box and define the schema.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3453635"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputJSON3.png" id="wp3453632" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3453644"> </a><div class="pSmartList2"><li>Click <b class="cBold">[+]</b> to add the number of columns desired.</li></div>
+<a name="wp3453651"> </a><div class="pSmartList2"><li>Under <b class="cBold">Columns</b> type in the column names.</li></div>
+<a name="wp3453658"> </a><div class="pSmartList2"><li>Under <b class="cBold">Type</b>, select the data type from the list.</li></div>
+<a name="wp3453665"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK </b>to close the dialog box.</li></div>
+<a name="wp3453676"> </a><div class="pSmartList2"><li>Click <b class="cBold">[+]</b> next to <b class="cBold">RowGenerator Editor</b> to open the corresponding dialog box.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3453683"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputJSON4.png" id="wp3453680" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3453691"> </a><div class="pSmartList2"><li>Under <b class="cBold">Functions</b>, select pre-defined functions for the columns, if required, or select <b class="cBold">[...]</b> to set customized function parameters in the Function parameters tab.</li></div>
+<a name="wp3453696"> </a><div class="pSmartList2"><li>Enter the number of rows to be generated in the corresponding field.</li></div>
+<a name="wp3453703"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp3454334"> </a><div class="pSmartList2"><li>Click <b class="cBold">tFileOutPutJSON</b> to set its <b class="cBold">Basic Settings</b> properties in the <b class="cBold">Component</b> view. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3454341"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputJSON5.png" id="wp3454338" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3454349"> </a><div class="pSmartList2"><li>Click <b class="cBold">[...]</b> to browse to where you want the output JSON file to be generated and enter the file name.</li></div>
+<a name="wp3454353"> </a><div class="pSmartList2"><li>Enter a name for the data block to be generated in the corresponding field, between double quotation marks.</li></div>
+<a name="wp3454364"> </a><div class="pSmartList2"><li>Select <b class="cBold">Built-In </b>as the <b class="cBold">Schema</b> type.</li></div>
+<a name="wp3454371"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync Columns</b> to retrieve the schema from the preceding component. </li></div>
+<a name="wp3454665"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to run the Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3454672"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputJSON6.png" id="wp3454669" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3454678"> </a><p class="pIndented1">
+The data from the input schema is written in a JSON structured data block in the output file.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputJSON_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputLDIF_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

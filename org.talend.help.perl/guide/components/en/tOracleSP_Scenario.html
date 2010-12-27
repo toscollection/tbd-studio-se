@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>Scenario: Checking number format using a stored procedure</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleSP_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleTableList_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1449255"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1449258"> </a><h2 class="pHeading2">
+Scenario: Checking number format using a stored procedure
+</h2>
+<a name="wp1413014"> </a><p class="pIndented1">
+The following job aims at connecting to an Oracle Database containing Social Security Numbers and their holders&#39; name, calling a stored procedure that checks the SSN format of against a standard ###-##-#### format. Then the verification output results, 1 for valid format and 0 for wrong format get displayed onto the execution console. 
+</p>
+<a name="wp1410908"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP1.png" id="wp1410913" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1410925"> </a><div class="pSmartList2"><li>Drag and drop the following components from the <b class="cBold">Palette</b>: <b class="cBold">tOracleConnection</b>, <b class="cBold">tOracleInput</b>, <b class="cBold">tOracleSP</b> and <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1495081"> </a><div class="pSmartList2"><li>Link the <b class="cBold">tOracleConnection</b> to the <b class="cBold">tOracleInput</b> using a <b class="cBold">Then Run</b> connection as no data is handled here. </li></div>
+<a name="wp1495088"> </a><div class="pSmartList2"><li>And connect the other components using a <b class="cBold">Row Main</b> link as rows are to be passed on as parameter to the SP component and to the console.</li></div>
+<a name="wp1495095"> </a><div class="pSmartList2"><li>In the <b class="cBold">tOracleConnection</b>, define the details of connection to the relevant Database. You will then be able to reuse this information in all other DB-related components.</li></div>
+<a name="wp1495104"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tOracleInput</b> and define its properties. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1411112"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP3.png" id="wp1411151" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1411899"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Use an existing connection</b> check box and select the <b class="cBold">tOracleConnection</b> component in the list in order to reuse the connection details that you already set.</li></div>
+<a name="wp1411903"> </a><div class="pSmartList2"><li>Select <b class="cBold">Repository</b> as <b class="cBold">Property type</b> as the Oracle schema is defined in the DB Oracle connection entry of the Repository. If you haven&#39;t recorded the Oracle DB details in the <b class="cBold">Repository</b>, then fill in the Schema name manually.</li></div>
+<a name="wp1411311"> </a><div class="pSmartList2"><li>Then select <b class="cBold">Repository</b> as <b class="cBold">Schema</b>, and retrieve the relevant schema corresponding to your Oracle DB table.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1411962"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP2.png" id="wp1412007" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1411997"> </a><div class="pSmartList2"><li>In this example, the SSN table has a four-column schema that includes <em class="cEmphasis">ID</em>, <em class="cEmphasis">NAME</em>, <em class="cEmphasis">CITY</em> and <em class="cEmphasis">SSNUMBER</em>.</li></div>
+<a name="wp1412024"> </a><div class="pSmartList2"><li>In the <b class="cBold">Query</b> field, type in the following Select query or select it in the list, if you stored it in the Repository.<br /><code class="cCode">select ID, NAME, CITY, SSNUMBER from SSN</code>  </li></div>
+<a name="wp1411984"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tOracleSP</b> and define its <b class="cBold">Basic settings</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1411951"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP4.png" id="wp1411487" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1411918"> </a><div class="pSmartList2"><li>Like for the <b class="cBold">tOracleInput</b> component, select <b class="cBold">Repository</b> in the <b class="cBold">Property type</b> field and select the <b class="cBold">Use an existing connection</b> check box, then select the relevant entries in the respective list.</li></div>
+<a name="wp1412628"> </a><div class="pSmartList2"><li>The schema used for the <b class="cBold">tOracleSP</b> slightly differs from the input schema. Indeed, an extra column (<em class="cEmphasis">SSN_Valid</em>) is added to the Input schema. This column will hold the format validity status (<em class="cEmphasis">1</em> or <em class="cEmphasis">0</em>) produced by the procedure. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1412646"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP5.png" id="wp1412643" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1412658"> </a><div class="pSmartList2"><li>In the <b class="cBold">SP Name</b> field, type in the exact name of the stored procedure (or function) as called in the Database. In this use case, the stored procedure name is <em class="cEmphasis">is_ssn</em>.</li></div>
+<a name="wp1413076"> </a><div class="pSmartList2"><li>The basic function used in this particular example is as follows:<br /><code class="cCode">CREATE OR REPLACE FUNCTION is_ssn(string_in VARCHAR2) RETURN PLS_INTEGER<br />IS<br />-- validating ###-##-#### format<br />BEGIN<br />  IF TRANSLATE(string_in, &#39;0123456789A&#39;, &#39;AAAAAAAAAAB&#39;) =<br />     &#39;AAA-AA-AAAA&#39; THEN<br />    RETURN 1;<br />  END IF;<br />  RETURN 0;<br />END is_ssn;<br />/</code></li></div>
+<a name="wp1412665"> </a><div class="pSmartList2"><li>As a return value is expected in this use case, the procedure acts as a function, so select the <b class="cBold">Is function</b> check box. </li></div>
+<a name="wp1412675"> </a><div class="pSmartList2"><li>The only return value expected is based on the <em class="cEmphasis">ssn_valid</em> column, hence select the relevant list entry.</li></div>
+<a name="wp1412682"> </a><div class="pSmartList2"><li>In the <b class="cBold">Parameters</b> area, define the input and output parameters used in the procedure. In this use case, only the <em class="cEmphasis">SSNumber</em> column from the schema is used in the procedure.</li></div>
+<a name="wp1412692"> </a><div class="pSmartList2"><li>Click the plus sign to add a line to the table and select the relevant column (<em class="cEmphasis">SSNumber</em>) and type (<em class="cEmphasis">IN</em>).</li></div>
+<a name="wp1412973"> </a><div class="pSmartList2"><li>Then select the tLogRow component and click Sync Column to make sure the schema is passed on from the preceding <b class="cBold">tOracleSP</b> component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1412950"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP6.png" id="wp1412947" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1412953"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Print values in cells of a table</b> check box to facilitate the output reading.</li></div>
+<a name="wp1412912"> </a><div class="pSmartList2"><li>Then save your job and press <b class="cBold">F6</b> to run it. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1412938"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleSP7.png" id="wp1413005" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2769303"> </a><p class="pIndented1">
+On the console, you can read the output results. All input schema columns are displayed eventhough they are not used as parameters in the stored procedure.
+</p>
+<a name="wp2769307"> </a><p class="pIndented1">
+The final column shows the expected return value, i.e. whether the SS Number checked is valid or not.
+</p>
+<a name="wp2769443"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2769436" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Check the <a href="tParseRecordSet_Prop.html">tParseRecordSet</a> component if you want to analyze a set of records from a database table or DB query and return single records.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleSP_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleTableList_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

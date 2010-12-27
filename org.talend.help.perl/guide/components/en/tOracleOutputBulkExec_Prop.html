@@ -1,0 +1,582 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tOracleOutputBulkExec</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleOutputBulk_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleOutputBulkExec_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2737507"> </a><h2 class="pHeading1">
+tOracleOutputBulkExec
+</h2>
+<a name="wp2737516"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tOracleOutputBulkExec_icon32_white.png" id="wp2737511" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2737523"> </a><h2 class="pHeading2">
+tOracleOutputBulkExec properties
+</h2>
+<a name="wp3573597"> </a><p class="pIndented1">
+The <b class="cBold">tOracleOutputBulk</b> and <b class="cBold">tOracleBulkExec</b> components are used together in a two step process. In the first step, an output file is generated. In the second step, this file is used in the INSERT operation used to feed a database. These two steps are fused together in the <b class="cBold">tOracleOutputBulkExec</b> component.
+</p>
+<a name="wp3573241"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2737531table2737526">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737531"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2737533"> </a><div class="pCellBody">
+Databases/Oracle
+</div>
+</td>
+    <td><a name="wp2737541"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2737538" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737546"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2737548"> </a><div class="pCellBody">
+Executes the Insert action on the data provided.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737555"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2737557"> </a><div class="pCellBody">
+As a dedicated component, it allows gains in performance during Insert operations to an Oracle database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737564"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2737569"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2737571"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737573"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737575"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737580"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737582"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737584"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3600643"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737591"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737595"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2737598"> </a><div class="pCellBody">
+Select this check box and click the relevant <b class="cBold">tOracleConnection </b>component on the <b class="cBold">Component list</b> to reuse the connection details you already defined.<br />
+</div>
+<a name="wp3451288"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3451285" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737603"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737605"> </a><div class="pCellBody">
+<em class="cEmphasis">Connection type</em>
+</div>
+</td>
+    <td><a name="wp2737607"> </a><div class="pCellBody">
+List of available drivers
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737609"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737614"> </a><div class="pCellHeading">
+<em class="cEmphasis">DB Version</em>
+</div>
+</td>
+    <td><a name="wp2737616"> </a><div class="pCellBody">
+Select the Oracle version in use
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737618"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737623"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2737625"> </a><div class="pCellBody">
+Database server IP address
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737627"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737632"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2737634"> </a><div class="pCellBody">
+Listening port number of DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737636"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737641"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2737643"> </a><div class="pCellBody">
+Name of the database
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737645"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737650"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em>
+</div>
+</td>
+    <td><a name="wp2737652"> </a><div class="pCellBody">
+Name of the schema
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737654"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737659"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2737664"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737666"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737671"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2737673"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time and that the table must exist for the insert operation to succeed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737675"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737680"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2737682"> </a><div class="pCellBody">
+On the table defined, you can perform one of the following operations:<br /><b class="cBold">None</b>: No operations is carried out.<br /><b class="cBold">Drop and create the table</b>: The table is removed and created again.<br /><b class="cBold">Create a table</b>: The table does not exist and gets created.<br /><b class="cBold">Create table if doesn&#39;t exist</b>: The table is created if does not exist.<br /><b class="cBold">Clear a table</b>: The table content is deleted.<br /><b class="cBold">Truncate table</b>: The table content is deleted. You do not have the possibility to rollback the operation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737702"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737707"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2737709"> </a><div class="pCellBody">
+Name of the file to be processed. <br />Related topic:<em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2738588"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2738595"> </a><div class="pCellHeading">
+<em class="cEmphasis">Create directory if not exists</em>
+</div>
+</td>
+    <td><a name="wp2738626"> </a><div class="pCellBody">
+This check box is selected by default. It creates a directory to hold the output table if required.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2738565"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2738572"> </a><div class="pCellHeading">
+<em class="cEmphasis">Append</em>
+</div>
+</td>
+    <td><a name="wp2738616"> </a><div class="pCellBody">
+Select this check box to add the new rows at the end of the file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737717"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737722"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on data</em>
+</div>
+</td>
+    <td><a name="wp2737724"> </a><div class="pCellBody">
+On the data of the table defined, you can perform:<br /><b class="cBold">Insert</b>: Add new entries to the table. If duplicates are found, job stops.<br /><b class="cBold">Update</b>: Make changes to existing entries<br /><b class="cBold">Insert or update</b>: Add entries or update existing ones.<br /><b class="cBold">Update or insert</b>: Update existing entries or create it if non existing<br /><b class="cBold">Truncate</b>: Remove all entries from table.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737741"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737746"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp2737748"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737750"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737755"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2737757"> </a><div class="pCellBody">
+Select the encoding from the list or select Custom and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737762"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2737769"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<em class="cEmphasis">Advanced separator (for number)</em>
+</div>
+</td>
+    <td><a name="wp2737772"> </a><div class="pCellBody">
+Select this check box to change data separators for numbers:<br /><b class="cBold">Thousands separator</b>: define separators you want to use for thousands.<br /><b class="cBold">Decimal separator</b>: define separators you want to use for decimals. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737780"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737782"> </a><div class="pCellBody">
+<em class="cEmphasis">Use existing control file</em>
+</div>
+</td>
+    <td><a name="wp2737784"> </a><div class="pCellBody">
+Select this check box and browse to the .ctl control file you want to use. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737789"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737794"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp2737796"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737798"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737803"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row separator</em>
+</div>
+</td>
+    <td><a name="wp2737805"> </a><div class="pCellBody">
+String (ex: &quot;\n&quot;on Unix) to separate rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737807"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737809"> </a><div class="pCellBody">
+<em class="cEmphasis">Specify .ctl file&#39;s INTO TABLE clause manually</em>
+</div>
+</td>
+    <td><a name="wp2737811"> </a><div class="pCellBody">
+Select this check box to enter manually the INTO TABLE clause of the control file directly into the code. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737813"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737817"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use schema&#39;s Date Pattern to load Date field</em>
+</div>
+</td>
+    <td><a name="wp2737820"> </a><div class="pCellBody">
+Select this check box to use the date model indicated in the schema for dates. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737822"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737827"> </a><div class="pCellHeading">
+<em class="cEmphasis">Specify field condition</em>
+</div>
+</td>
+    <td><a name="wp2737829"> </a><div class="pCellBody">
+Select this check box to define a condition for loading data. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737831"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737836"> </a><div class="pCellHeading">
+<em class="cEmphasis">Preserve blanks</em>
+</div>
+</td>
+    <td><a name="wp2737838"> </a><div class="pCellBody">
+Select this check box to preserve blank spaces. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737840"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737845"> </a><div class="pCellHeading">
+<em class="cEmphasis">Trailing null columns</em>
+</div>
+</td>
+    <td><a name="wp2737847"> </a><div class="pCellBody">
+Select this check box to load data with all empty columns. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737849"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737854"> </a><div class="pCellHeading">
+<em class="cEmphasis">Load options</em>
+</div>
+</td>
+    <td><a name="wp3420203"> </a><div class="pCellBody">
+Click <b class="cBold">+</b> to add data loading options:<br /><b class="cBold">Parameter</b>: select a loading parameter from the list.<br /><b class="cBold">Value</b>: enter a value for the parameter selected.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737864"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737869"> </a><div class="pCellHeading">
+<em class="cEmphasis">NLS Language</em>
+</div>
+</td>
+    <td><a name="wp2737871"> </a><div class="pCellBody">
+From the drop-down list, select the language for your data if the data is not in Unicode. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737873"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737877"> </a><div class="pCellHeading">
+<em class="cEmphasis">Set Parameter NLS_TERRITORY</em>
+</div>
+</td>
+    <td><a name="wp2737883"> </a><div class="pCellBody">
+Select this check box to modify the conventions used for date and time formats. The default value is that of the operating system. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737885"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737890"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2737895"> </a><div class="pCellBody">
+Select the encoding from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737897"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737902"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output</em>
+</div>
+</td>
+    <td><a name="wp2737904"> </a><div class="pCellBody">
+Select the type of output for the standard output of the Oracle database:<br /><b class="cBold">to console</b>,<br /><b class="cBold">to global variable</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737912"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737916"> </a><div class="pCellHeading">
+<em class="cEmphasis">Convert columns and table names to uppercase</em>
+</div>
+</td>
+    <td><a name="wp2737919"> </a><div class="pCellBody">
+Select this check box to put columns and table names in upper case. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737921"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2737926"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2737928"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2737933"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2737935"> </a><div class="pCellBody">
+This component is mainly used when no particular transformation is required on the data to be loaded onto the database. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2737942"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2737944"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleOutputBulk_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleOutputBulkExec_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

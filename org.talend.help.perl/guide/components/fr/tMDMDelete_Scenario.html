@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:52">
+    <title>Scénario&#160;: Supprimer des données maître d&#39;un hub MDM</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMDelete_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMInput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3505864"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3505871"> </a><h2 class="pHeading2">
+Scénario&#160;: Supprimer des données maître d&#39;un hub MDM
+</h2>
+<a name="wp3505874"> </a><p class="pIndented1">
+Ce scénario décrit un Job à deux composants supprimant les enregistrements de données spécifiés du référentiel XML MDM. 
+</p>
+<a name="wp3505882"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMDelete1.png" id="wp3505879" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3505890"> </a><div class="pSmartList2"><li>Glissez-déposez de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique un composant <b class="cBold">tMDMInput</b> et un composant <b class="cBold">tMDMDelete</b>, de la famille <b class="cBold">Talend MDM</b>.</li></div>
+<a name="wp3505910"> </a><div class="pSmartList2"><li>Connectez les deux composants à l&#39;aide d&#39;un lien <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp3505919"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMDMInput</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3505928"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMDelete2.png" id="wp3505925" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3505939"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Built-in</b> pour renseigner les champs manuellement. Si vous avez stocké votre connexion MDM dans les métadonnées du Repository, sélectionnez <b class="cBold">Repository</b> dans la liste, et les champs seront automatiquement remplis.</li></div>
+<a name="wp3505955"> </a><div class="pSmartList2"><li>Dans la liste<b class="cBold"> Schema Type</b>, sélectionnez <b class="cBold">Built-in</b> et cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b>, afin d&#39;ouvrir une boîte de dialogue dans laquelle vous pourrez dfinir la structure des données maître que vous souhaitez lire dans le hub MDM.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3505967"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMDelete3.png" id="wp3505964" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3505972"> </a><div class="pSmartList2"><li>Les données maître sont collectées dans un schéma composé de quatre colonnes de type <b class="cBold">String</b>: <em class="cEmphasis">Id</em>, <em class="cEmphasis">Name</em>, <em class="cEmphasis">City</em> et <em class="cEmphasis">State</em>. Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue et procéder à l&#39;étape suivante.</li></div>
+<a name="wp3505997"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">URL</b>, saisissez entre guillemets l&#39;URL du serveur MDM&#160;: <em class="cEmphasis">&quot;http://localhost:8080/talend/TalendPort&quot;</em>.</li></div>
+<a name="wp3506010"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez votre identifiant et votre mot de passe de connexion au serveur MDM.</li></div>
+<a name="wp3506017"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Version</b>, saisissez entre guillemets le nom de la version des données maître à laquelle vous souhaitez accéder. Laissez ce champ vide afin d&#39;afficher la version des données maître par défaut.</li></div>
+<a name="wp3506024"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Entity</b>, saisissez entre guillemets le nom de l&#39;entité métier contenant les enregistrements de données que vous souhaitez lire. Ici, travaillez avec l&#39;entité <em class="cEmphasis">Agency</em>.</li></div>
+<a name="wp3506034"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Data Container</b>, saisissez entre guillemets le nom du conteneur de données contenant les données maître que vous voulez lire. Ici, utilisez le conteneur <em class="cEmphasis">DStar</em>.</li></div>
+<a name="wp3506049"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3506043" border="0" hspace="0" vspace="0"/><br />
+La case <b class="cBold">Use multiple conditions</b> est cochée par défaut.
+</p>
+<a name="wp3506057"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Operations</b>, définissez les conditions de filtre des données maître que vous souhaitez supprimer&#160;:<br />-cliquez sur le bouton <b class="cBold">[+]</b> afin d&#39;ajouter une nouvelle ligne.<br />Dans la colonne <b class="cBold">Xpath</b>, saisissez entre guillemets le chemin Xpath et la balise du noeud XML sur lequel vous souhaitez appliquer le filtre. Ici, travaillez avec l&#39;entité <b class="cBold">Agency</b>, saisissez <em class="cEmphasis">&quot;Agency/Id&quot;</em>.<br />Dans la colonne <b class="cBold">Function</b>, sélectionnez la fonction que vous souhaitez utiliser. Dans ce scénario, utilisez la fonction <em class="cEmphasis">Starts With</em>.<br />Dans la colonne <b class="cBold">Value</b>, saisissez la valeur de votre filtre. Ici, l&#39;objectif est de filtrer les données maître dont l&#39;ID commence par <em class="cEmphasis">&quot;TA&quot;</em>. </li></div>
+<a name="wp3506091"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b>, cliquez sur l&#39;onglet <b class="cBold">Advanced settings</b> afin de configurer les paramètres avancés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506100"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMDelete4.png" id="wp3506097" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3506108"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Loop XPath query</b>, saisissez entre guillemets la structure et le nom du noeud XML sur lequel exécuter la boucle.</li></div>
+<a name="wp3506118"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mapping</b> et dans la colonne <b class="cBold">XPath query</b>, saisissez entre guillemets le nom de la balise XML sur laquelle vous souhaitez collecter les données maître, à côté de la colonne de sortie correspondante.</li></div>
+<a name="wp3506125"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation graphique, cliquez sur le composant <b class="cBold">tMDMDelete</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506137"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMDelete5.png" id="wp3506134" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3506151"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Built-in</b> et cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit Schema</b>, afin de décrire la structure des données maître du hub MDM.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506163"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMDelete6.png" id="wp3506160" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3506174"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[+]</b>, à droite, afin d&#39;ajouter une colonne de type <b class="cBold">String</b>. Nommez-la <em class="cEmphasis">xmlOutput</em>. Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp3506187"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">URL</b>, saisissez l&#39;URL requise pour vous connecter au serveur MDM, par exemple&#160;: <em class="cEmphasis">&quot;http://localhost:8080/talend/TalendPort&quot;</em>.</li></div>
+<a name="wp3506200"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez les informations d&#39;authentification requises afin de vous connecter au serveur.</li></div>
+<a name="wp3506207"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Version</b>, saisissez entre guillemets le nom de la version des données maître à laquelle vous souhaitez accéder. Laissez le champ vide si vous souhaitez accéder à la version par défaut.</li></div>
+<a name="wp3506214"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Entity</b>, saisissez le nom de l&#39;entité métier contenant les données maître que vous souhaitez supprimer. Ici, travaillez avec l&#39;entité <em class="cEmphasis">Agency</em>.</li></div>
+<a name="wp3506224"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Data Container</b>, saisissez le nom du conteneur de données contenant les donnéess à supprimer. Ici, utilisez le conteneur <em class="cEmphasis">DStar</em>.</li></div>
+<a name="wp3506237"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Keys</b>, cliquez sur le bouton <b class="cBold">[+]</b> afin d&#39;ajouter une nouvelle ligne. Dans la colonne <b class="cBold">Keys</b>, sélectionnez la colonne contenant la clé de l&#39;entité <em class="cEmphasis">Agency</em>. Ici, la clé de l&#39;entité <em class="cEmphasis">Agency</em> est dans le champ <em class="cEmphasis">Id</em>. </li></div>
+<a name="wp3506257"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3506255" border="0" hspace="0" vspace="0"/><br />
+Si l&#39;entité possède des clés multiples, ajoutez autant de lignes que nécessaire pour les clés, et sélectionnez-les dans l&#39;ordre séquentiel.
+</p>
+<a name="wp3506266"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Logical delete</b> si vous ne voulez pas supprimer définitivement les données maître. Elles seront envoyées dans la <b class="cBold">Corbeille</b>. Une fois dans la <b class="cBold">Corbeille</b>, les données maître peuvent être supprimées définitivement, ou bien restaurées. Si vous laissez cette case décochée, les données maître seront supprimées définitivement.</li></div>
+<a name="wp3506279"> </a><div class="pSmartList2"><li>Remplissez le champ <b class="cBold">Recycle bin path</b>. Ici, vous avez laissé le chemin d&#39;accès à la Corbeille par défaut, mais si votre chemin d&#39;accès à la Corbeille est différent de celui par défaut, spécifiez-le.</li></div>
+<a name="wp3506291"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">Ctrl+S</b> pour sauvegarder votre Job, puis sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506297"> </a><p class="pIndented1">
+Les données dont l&#39;ID commence par &quot;TA&quot; ont été supprimées et envoyées dans la Corbeille MDM. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMDelete_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMInput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

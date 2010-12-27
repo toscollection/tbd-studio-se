@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:35">
+    <title>Scénario&#160;: Trier les entrées d&#39;un fichier volumineux</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFSSort_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFSTransform_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1713160"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1713168"> </a><h2 class="pHeading2">
+Scénario&#160;: Trier les entrées d&#39;un fichier volumineux
+</h2>
+<a name="wp1713171"> </a><p class="pIndented1">
+Ce scénario a été créé en Java et décrit un Job triant, en quelques minutes, un très gros volume de données (10 000 000 lignes) d&#39;un fichier volumineux en fonction de deux critères.
+</p>
+<a name="wp1713178"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp1713176" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Assurez-vous d&#39;avoir bien enregistré localement le fichier exécutable correspondant à votre système d&#39;exploitation afin de pouvoir indiquer son chemin d&#39;accès dans <b class="cBold">Talend Integration Suite Studio</b>.
+</p>
+<a name="wp1713185"> </a><p class="pIndented1">
+Dans ce scénario, vous avez déjà centralisé le schéma du fichier d&#39;entrée dans le <b class="cBold">Repository</b>. Pour plus d&#39;informations concernant la création et l&#39;utilisation de métadonnées de schémas dans le <b class="cBold">Repository</b>, consultez les sections <em class="cEmphasis">Configurer un schéma File Delimited</em> et <em class="cEmphasis">Déposer des composants à partir du répertoire Metadata</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Integration Suite Studio</b>.
+</p>
+<a name="wp1713203"> </a><p class="pIndented1">
+Le fichier d&#39;entrée contient 10&#160;colonnes&#160;: <em class="cEmphasis">id, surname, firstname, zipcode, city, dateofbirth, streetname, streetnr, statecode,</em> et <em class="cEmphasis">state</em>.
+</p>
+<a name="wp1713215"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFSSort1.png" id="wp1713212" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1713226"> </a><div class="pSmartList2"><li>Dans le <b class="cBold">Repository</b>, développez le noeud <b class="cBold">Metadata</b> et le noeud de la métadonnée que vous venez de créer contenant les schémas d&#39;entrée et glissez ce noeud dans le Job designer.<br />La boîte de dialogue <b class="cBold">[Components]</b> apparaît.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1713238"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFSSort2.png" id="wp1713235" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1713249"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tFSSort</b> dans la liste et cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue.<br />Le composant <b class="cBold">tFSSort</b> apparaît dans le Job designer.</li></div>
+<a name="wp1717644"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tFSSort</b> pour paramétrer ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1713274"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFSSort.png" id="wp1713271" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1713280"> </a><p class="pIndented1">
+Tous les champs de propriétés du <b class="cBold">tFSSort</b> sont automatiquement renseignés. Si vous n&#39;avez pas défini le schéma d&#39;entrée dans les métadonnées du Repository, renseignez manuellement ces informations après avoir sélectionné le mode <b class="cBold">Built-in</b> dans les listes <b class="cBold">Schema Type</b> et <b class="cBold">Property Type</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1713293"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Output File Name</b>, indiquez le nom et le chemin d&#39;accès au fichier de sortie contenant les données triées.</li></div>
+<a name="wp1713299"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Criteria</b>, cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter des colonnes à la liste, puis sélectionnez les colonnes du schéma sur lesquels vous souhaitez baser votre tri.<br />Dans ce scénario, l&#39;objectif est de trier les données en fonction des colonnes <em class="cEmphasis">city</em> et <em class="cEmphasis">surname</em> et de trier les données par ordre alphabétique ascendant.</li></div>
+<a name="wp1717476"> </a><div class="pSmartList2"><li>Dans les colonnes <b class="cBold">Sort type</b>, cliquez dans la cellule et sélectionnez <b class="cBold">alpha</b> pour indiquer que vous souhaitez trier les données par ordre alphabétique</li></div>
+<a name="wp1717394"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Order type</b>, cliquez dans la cellule et sélectionnez <b class="cBold">asc</b> pour indiquer que les données seront triées par ordre ascendant.</li></div>
+<a name="wp1714344"> </a><div class="pSmartList2"><li>Cliquez sur l&#39;onglet <b class="cBold">Advanced settings</b> pour paramétrer les propriétés avancées du composant et cochez la case <b class="cBold">Assign FileScale Path</b> et dans le champ <b class="cBold">FileScale Path</b>, indiquez le chemin d&#39;accès au fichier exécutable correspondant à votre système d&#39;exploitation.</li></div>
+<a name="wp1713317"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1713740"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFSSort3.png" id="wp1713753" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1713748"> </a><p class="pIndented1">
+Une barre de progression apparaît sous le composant <b class="cBold">tFSSort</b> dans le Job designer pour montrer le pourcentage de progression de l&#39;opération de tri. Cette barre de progression vous montrera la rapidité de l&#39;exécution de l&#39;opération de tri sur un très grand volume de données.
+</p>
+<a name="wp1717714"> </a><p class="pIndented1">
+Lorsque le pourcentage de progression atteint les 100%, les données triées en fonction des colonnes  <em class="cEmphasis">city</em> et <em class="cEmphasis">surname</em> sont écrites dans le fichier de sortie spécifié.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFSSort_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFSTransform_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

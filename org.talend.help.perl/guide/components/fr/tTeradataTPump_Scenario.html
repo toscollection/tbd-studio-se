@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Insérer des données dans une table d&#39;une base de données Teradata</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tTeradataTPump_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVectorWiseCommit_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2904794"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3565554"> </a><h2 class="pHeading2">
+Scénario&#160;: Insérer des données dans une table d&#39;une base de données Teradata
+</h2>
+<a name="wp3565560"> </a><p class="pIndented1">
+Dans ce scénario, l&#39;objectif est de créer un Job utilisant le composant <b class="cBold">tTeradataTPump</b> pour insérer des données clients dans une table d&#39;une base de données Teradata et retourner la valeur de retour lorsqu&#39;une erreur se produit.
+</p>
+<a name="wp3565565"> </a><p class="pIndented1">
+Trois composants sont utilisés pour implémenter cette tâche&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3565574"> </a><div class="pSmartList2"><li><b class="cBold">tRowGenerator</b>&#160;: génère autant de lignes que nécessaire, en utilisant au hasard des données clients prises dans une liste.</li></div>
+<a name="wp3565581"> </a><div class="pSmartList2"><li><b class="cBold">tFileOutputDelimited&#160;</b>: écrit les données clients dans un fichier délimité.</li></div>
+<a name="wp3573536"> </a><div class="pSmartList2"><li><b class="cBold">tTeradataTPump</b>&#160;: insère les données clients dans la table de la base de données Teradata en mode Tpump.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3573545"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tTeradataTpump1.png" id="wp3573542" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3573553"> </a><div class="pSmartList2"><li>Déposez les composants suivants de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique&#160;: <b class="cBold">tRowGenerator</b>, <b class="cBold">tFileOutputDelimited</b>, <b class="cBold">tTeradataTPump</b>.</li></div>
+<a name="wp3573619"> </a><div class="pSmartList2"><li>Liez le <b class="cBold">tRowGenerator</b> au <b class="cBold">tFileOutputDelimited</b> à l&#39;aide d&#39;un lien <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp3573661"> </a><div class="pSmartList2"><li>Liez le <b class="cBold">tRowGenerator</b> au <b class="cBold">tTeradataTPump</b> à l&#39;aide d&#39;un lien <b class="cBold">Trigger</b> &gt; <b class="cBold">OnSubjobOk</b>.</li></div>
+<a name="wp3573573"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tRowGenerator</b> pour ouvrir la fenêtre <b class="cBold">RowGenerator Editor</b>.</li></div>
+<a name="wp3573579"> </a><div class="pSmartList2"><li>Dans la fenêtre <b class="cBold">tRowGenerator Editor</b>, définissez les données à générer. Pour ce Job, le schéma se compose de deux colonnes&#160;: <em class="cEmphasis">ID</em> et <em class="cEmphasis">Name</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3565645"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tTeradataTpump2.png" id="wp3565642" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3565651"> </a><div class="pSmartList2"><li> Dans le champ <b class="cBold">Number of</b><b class="cBold"> Rows for RowGenerator</b>, saisissez le nombre de lignes à générer, 100 dans cet exemple.</li></div>
+<a name="wp3573727"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tFileOutputDelimited</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+<a name="wp3573769"> </a><div class="pSmartList2"><li>A côté du champ <b class="cBold">File Name</b>, parcourez votre répertoire jusqu&#39;au fichier de sortie, ou saisissez un nom pour le fichier à créer. </li></div>
+<a name="wp3565657"> </a><div class="pSmartList2"><li>Entre guillemets doubles, saisissez les séparateurs à utiliser, à côté des champs <b class="cBold">Row Separator</b> et <b class="cBold">Field Separator</b>, par exemple <em class="cEmphasis">\n</em> et un point-virgule.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3565669"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tTeradataTpump3.png" id="wp3565666" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3565677"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Edit schema</b> et vérifiez que le schéma est retrouvé à partir du schéma d&#39;entrée. Au besoin, cliquez sur <b class="cBold">Sync Columns</b>.</li></div>
+<a name="wp3565687"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tTeradataTPump</b> afin d&#39;ouvrir sa vue <b class="cBold">Component</b>.</li></div>
+<a name="wp3566630"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>, définissez les paramètres du composant <b class="cBold">tTeradataTPump</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3566642"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tTeradataTpump4.png" id="wp3566639" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3566652"> </a><div class="pSmartList2"><li>Saisissez le nom de la base de données dans le champ <b class="cBold">Database name</b>, votre identifiant de connexion à la base de données dans le champ <b class="cBold">User name</b>, et votre mot de passe dans le champ <b class="cBold">Password</b>.</li></div>
+<a name="wp3566660"> </a><div class="pSmartList2"><li>Spécifiez la table dans laquelle insérer les données clients. Dans ce scénario, la table est&#160;<em class="cEmphasis">mytable</em>.</li></div>
+<a name="wp3566672"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Script generated folder</b>, <b class="cBold">Load file</b> et <b class="cBold">Error file</b>, spécifiez le répertoire respectivement au dossier dans lequel vous stockez les fichiers de scripts générés.</li></div>
+<a name="wp3566865"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Load File</b>, spécifiez le fichier contenant les données clients à insérer.</li></div>
+<a name="wp3566879"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Error file</b>, spécifiez le fichier contenant les informations concernant les erreurs.</li></div>
+<a name="wp3565754"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Action on data</b>, sélectionnez l&#39;option <b class="cBold">Insert</b>.</li></div>
+<a name="wp3565763"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job.</li></div>
+<a name="wp3565772"> </a><div class="pSmartList2"><li>La console de la vue <b class="cBold">Run</b> s&#39;affiche ainsi&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3565780"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tTeradataTpump5.png" id="wp3565776" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3565794"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tTeradataTPump</b> pour retourner à sa vue <b class="cBold">Component</b>.</li></div>
+<a name="wp3565805"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Advanced settings</b>, cochez la case <b class="cBold">Return tpump error</b> et saisissez le code de retour à partir duquel retourner une erreur dans la console. Dans cet exemple, saisissez le chiffre <em class="cEmphasis">4</em> et utilisez les valeurs par défaut pour les autres paramètres.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3565818"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tTeradataTpump6.png" id="wp3565815" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3565828"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job.</li></div>
+<a name="wp3568443"> </a><div class="pSmartList2"><li>La console de la vue <b class="cBold">Run</b> s&#39;affiche ainsi&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3568450"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tTeradataTpump7.png" id="wp3568447" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3568456"> </a><p class="pIndented1">
+Une erreur se produit et le <code class="cCode">TPump </code>retourne le code de retour, de 12. Si vous avez besoin d&#39;informations détaillées concernant les informations détaillées de l&#39;erreur, vous pouvez ouvrir le  ficheir de log stocké dans le répertoire spécifié dans le champd <b class="cBold">Error file</b> et dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tTeradataTPump_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVectorWiseCommit_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

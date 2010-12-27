@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>tMomOutput</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMomMessageIdList_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMomOutput_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2513668"> </a><h2 class="pHeading1">
+tMomOutput
+</h2>
+<a name="wp1503435"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tMomOutput_icon32_white.png" id="wp1503432" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1425409"> </a><h2 class="pHeading2">
+Propriétés du tMomOutput
+</h2>
+<a name="wp1448760"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1425437table1425429">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1425437"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp1425440"> </a><div class="pCellBody">
+Internet 
+</div>
+</td>
+    <td><a name="wp1425451"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp1425447" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1425459"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1425462"> </a><div class="pCellBody">
+Dépose un message sur la file d&#39;attente d&#39;un système Middleware orienté message afin qu&#39;il soit récupéré de manière asynchrone.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1425473"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1425480"> </a><div class="pCellBody">
+Le <b class="cBold">tMomOutput</b> permet de mettre en place des communications asynchrones via un serveur MOM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1425491"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp1425498"> </a><div class="pCellHeading">
+<em class="cEmphasis">MQ Server</em>
+</div>
+</td>
+    <td><a name="wp1425501"> </a><div class="pCellBody">
+Sélectionnez dans la liste le serveur MOM à utiliser. En fonction du serveur sélectionné, les paramètres diffèrent légèrement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1425505"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1425512"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host/Port</em>
+</div>
+</td>
+    <td><a name="wp1425515"> </a><div class="pCellBody">
+Renseignez le nom de l&#39;hôte ou l&#39;adresse IP du serveur MOM dans le champ Host, ainsi que le Port.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1425519"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1425529"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp1425533"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant.<br />Lors de l&#39;utilisation du composant <b class="cBold">tMomOutput</b>, le schéma est en lecture seule mais changera en fonction du schéma d&#39;entrée. Le serveur attend uniquement un schéma à une colonne pour contenir les <b class="cBold">Messages</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1425567"> </a><div class="pCellBody">
+<b class="cBold">JBoss Messaging</b>
+</div>
+</td>
+    <td><a name="wp1425574"> </a><div class="pCellHeading">
+<em class="cEmphasis">To</em>
+</div>
+</td>
+    <td><a name="wp1425577"> </a><div class="pCellBody">
+Saisissez la destination du message, telle qu&#39;elle est attendue par le serveur&#160;; le type est le nom du dossier cible doivent être indiqués, par exemple&#160;: queue/A ou topic/testtopic<br />Notez que ce champ est sensible à la casse.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1425581"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1425588"> </a><div class="pCellHeading">
+<em class="cEmphasis">Message Type</em>
+</div>
+</td>
+    <td><a name="wp1425599"> </a><div class="pCellBody">
+Sélectionnez le type de message&#160;: <b class="cBold">topic</b> ou <b class="cBold">queue</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1425603"> </a><div class="pCellBody">
+<b class="cBold">Websphere</b>
+</div>
+</td>
+    <td><a name="wp1425610"> </a><div class="pCellHeading">
+<em class="cEmphasis">Channel</em>
+</div>
+</td>
+    <td><a name="wp1425613"> </a><div class="pCellBody">
+La valeur par défaut est Channel.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1425617"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2819547"> </a><div class="pCellHeading">
+<em class="cEmphasis">Queue Manager</em>
+</div>
+</td>
+    <td><a name="wp2819550"> </a><div class="pCellBody">
+Renseignez le gestionnaire de file(s) d&#39;attente.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1425631"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2819557"> </a><div class="pCellHeading">
+<em class="cEmphasis">Message Queue</em>
+</div>
+</td>
+    <td><a name="wp2819560"> </a><div class="pCellBody">
+Saisissez le nom de la file d&#39;attente.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1425649"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1425652"> </a><div class="pCellBody">
+Ce composant nécessite un composant d&#39;entrée ou un composant intermédiaire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1425663"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1425666"> </a><div class="pCellBody">
+Assurez-vous que le serveur JBoss ou Websphere correspondant soit bien lancé.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMomMessageIdList_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMomOutput_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

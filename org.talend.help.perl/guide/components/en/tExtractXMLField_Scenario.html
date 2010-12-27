@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:45">
+    <title>Scenario 1: Extracting XML data from a field in a database table</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputXML_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2266457"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2266466"> </a><h2 class="pHeading2">
+Scenario 1: Extracting XML data from a field in a database table
+</h2>
+<a name="wp2266470"> </a><p class="pIndented1">
+This three-component Java scenario allows to read the XML structure included in the fields of a database table and then extracts the data.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2270913"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tMysqlInput</b>, <b class="cBold">tExtractXMLField</b>, and <b class="cBold">tFileOutputDelimited</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2270947"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField1.png" id="wp2267261" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2271793"> </a><div class="pSmartList2"><li>Connect the three components using <b class="cBold">Main</b> links.</li></div>
+<a name="wp2272824"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tMysqlInput</b> to display its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2272831"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField2.png" id="wp2272828" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2278785"> </a><div class="pSmartList2"><li>If you have already stored the input schema in the <b class="cBold">Repository</b> tree view, select <b class="cBold">Repository</b> first from the <b class="cBold">Property Type</b> list and then from the <b class="cBold">Schema</b> list to display the <b class="cBold">[Repository Content]</b> dialog box where you can select the relevant metadata. <br />For more information about storing schema metadata in the <b class="cBold">Repository</b> tree view, see <em class="cEmphasis">Setting up a DB connection</em> and <em class="cEmphasis">How to drop components from the Metadata node</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.</li></div>
+<a name="wp2272875"> </a><div class="pSmartList2"><li>If you have not stored the input schema locally, select <b class="cBold">Built-in</b> in the <b class="cBold">Property Type</b> and <b class="cBold">Schema</b> fields and enter the database connection and the data structure information manually. For more information about <b class="cBold">tMysqlInput</b> properties, see <a href="tMysqlInput_Prop.html"><em class="cEmphasis">tMysqlInput</em></a>.</li></div>
+<a name="wp2272894"> </a><div class="pSmartList2"><li>In the <b class="cBold">Table Name</b> field, enter the name of the table holding the XML data, <em class="cEmphasis">customerdetails</em> in this example.</li></div>
+<a name="wp2271857"> </a><div class="pSmartList2"><li>Click <b class="cBold">Guess Query</b> to display the query corresponding to your schema.</li></div>
+<a name="wp2271863"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tExtractXMLField</b> to display its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2271878"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField3.png" id="wp2271875" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2271888"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property type</b> list, select <b class="cBold">Repository</b> if you have already stored the description of your file in the <b class="cBold">Repository</b> tree view. The fields that follow are filled in automatically with the stored data.</li></div>
+<a name="wp2268679"> </a><div class="pSmartList2"><li>If not, select <b class="cBold">Built-in</b> and fill in the fields that follow manually. </li></div>
+<a name="wp2268752"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to retrieve the schema from the preceding component. You can click the three-dot button next to <b class="cBold">Edit schema</b> to view/modify the schema.<br /><b class="cBold">Column</b> in the <b class="cBold">Mapping</b> table will be automatically populated with the defined schema.</li></div>
+<a name="wp2269262"> </a><div class="pSmartList2"><li>In the <b class="cBold">Xml field</b> list, select the column from which you want to extract the XML data. In this example, the filed holding the XML data is called <em class="cEmphasis">CustomerDetails</em>.</li></div>
+<a name="wp2269269"> </a><div class="pSmartList2"><li>In the <b class="cBold">Loop XPath query</b> field, enter the node of the XML tree on which to loop to retrieve data.</li></div>
+<a name="wp2269279"> </a><div class="pSmartList2"><li>In the <b class="cBold">Xpath query </b>column, enter between inverted commas the node of the XML field holding the data you want to extract, <em class="cEmphasis">CustomerName</em> in this example.</li></div>
+<a name="wp2269289"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileOutputDelimited</b> to display its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2269304"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField4.png" id="wp2269301" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2269313"> </a><div class="pSmartList2"><li>In the <b class="cBold">File Name</b> field, define or browse to the path of the output file you want to write the extracted data in.</li></div>
+<a name="wp2269319"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to retrieve the schema from the preceding component. If needed, click the three-dot button next to <b class="cBold">Edit schema</b> to view the schema.</li></div>
+<a name="wp2272338"> </a><div class="pSmartList2"><li>Save your Job and click <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2272345"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField5.png" id="wp2272342" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2272348"> </a><p class="pBodyRelative">
+<b class="cBold">tExtractXMLField</b> read and extracted the clients names under the node <code class="cCode">CustomerName</code> of the <em class="cEmphasis">CustomerDetails</em> field of the defined database table.
+</p>
+<a name="wp2755292"> </a><h2 class="pHeading2">
+Scenario 2: Extracting correct and erroneous data from an XML field in a delimited file
+</h2>
+<a name="wp2757051"> </a><p class="pIndented1">
+This Java scenario describes a four-component Job that reads an XML structure from a delimited file, outputs the main data and rejects the erroneous data.
+</p>
+<a name="wp2755306"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField6.png" id="wp2755302" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2755790"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> to the design workspace: <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tExtractXMLField</b>, <b class="cBold">tFileOutputDelimited</b> and <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2755825"> </a><div class="pSmartList2"><li>Connect the first three components using <b class="cBold">Row Main</b> links.</li></div>
+<a name="wp2757155"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tExtractXMLField</b> to <b class="cBold">tLogRow</b> using a <b class="cBold">Row Reject</b> link.</li></div>
+<a name="wp2755831"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputDelimited</b> to open its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2755846"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField7.png" id="wp2755843" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2757474"> </a><div class="pSmartList2"><li>Select <b class="cBold">Built-in</b> in the <b class="cBold">Schema</b> list and fill in the file metadata manually in the corresponding fields.</li></div>
+<a name="wp2757499"> </a><div class="pSmartList2"><li>Click the three-dot button next to <b class="cBold">Edit schema</b> to display a dialog box where you can define the structure of your data. </li></div>
+<a name="wp2757510"> </a><div class="pSmartList2"><li>Click the plus button to add as many columns as needed to your data structure. In this example, we have one column in the schema: <em class="cEmphasis">xmlStr</em>.</li></div>
+<a name="wp2757528"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate your changes and close the dialog box.</li></div>
+<a name="wp2758088"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2758080" border="0" hspace="0" vspace="0"/><br />
+If you have already stored the schema in the <b class="cBold">Metadata</b> folder under <b class="cBold">File delimited</b>, select <b class="cBold">Repository</b> from the <b class="cBold">Schema</b> list and click the three-dot button next to the field to display the <b class="cBold">[Repository Content]</b> dialog box where you can select the relevant schema from the list. Click <b class="cBold">Ok </b>to close the dialog box and have the fields automatically filled in with the schema metadata.<br />For more information about storing schema metadata in the Repository tree view, see <em class="cEmphasis">Setting up a File Delimited schema</em> and <em class="cEmphasis">How to drop components from the Metadata node</em> in <b class="cBold">Talend Integration Suite Studio</b> User Guide.
+</p>
+<a name="wp2758235"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property type</b> list, select:<br />-<b class="cBold">Repository</b> if you have already stored the metadata of your input file in the Repository, the fields that follow are automatically filled in with the stored information, or<br />-select <b class="cBold">Built-in</b> and fill in the fields that follow manually. <br />For this example, we use the <b class="cBold">Built-in</b> mode.</li></div>
+<a name="wp2758281"> </a><div class="pSmartList2"><li>In the <b class="cBold">File Name</b> field, click the three-dot button and browse to the input delimited file you want to process,<em class="cEmphasis"> CustomerDetails_Error</em> in this example.<br />This delimited file holds a number of simple XML lines separated by double carriage return.</li></div>
+<a name="wp2758150"> </a><div class="pSmartList2"><li>Set the row and field separators used in the input file in the corresponding fields, double carriage return for the first and nothing for the second in this example. </li></div>
+<a name="wp2757877"> </a><div class="pSmartList2"><li>If needed, set <b class="cBold">Header</b>, <b class="cBold">Footer</b> and <b class="cBold">Limit</b>. None is used in this example.</li></div>
+<a name="wp2757896"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tExtractXMLField</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2757816"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/use_case_textractxmlfield8.png" id="wp2756461" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2758392"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property type</b> list, select:<br />-<b class="cBold">Repository</b> if you have already stored the metadata of your file in the Repository, the fields that follow are automatically filled in with the stored information, or<br />-select <b class="cBold">Built-in</b> and fill in the fields that follow manually. <br />For this example, we use the <b class="cBold">Built-in</b> mode. </li></div>
+<a name="wp2759069"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to retrieve the schema from the preceding component. You can click the three-dot button next to <b class="cBold">Edit schema</b> to view/modify the schema.<br /><b class="cBold">Column</b> in the <b class="cBold">Mapping</b> table will be automatically populated with the defined schema.</li></div>
+<a name="wp2758528"> </a><div class="pSmartList2"><li>In the <b class="cBold">Xml field</b> list, select the column from which you want to extract the XML data. In this example, the filed holding the XML data is called <em class="cEmphasis">xmlStr</em>.</li></div>
+<a name="wp2758541"> </a><div class="pSmartList2"><li>In the <b class="cBold">Loop XPath query</b> field, enter the node of the XML tree on which to loop to retrieve data.</li></div>
+<a name="wp2756532"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tFileOutputDelimited</b> to open its <b class="cBold">Basic settings</b> view and display the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2756547"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tExtractXMLField9.png" id="wp2756544" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2756555"> </a><div class="pSmartList2"><li>Set <b class="cBold">Property Type</b> to <b class="cBold">Built-in</b>.</li></div>
+<a name="wp2758734"> </a><div class="pSmartList2"><li>In the <b class="cBold">File Name</b> field, define or browse to the output file you want to write the correct data in, <em class="cEmphasis">CustomerNames_right.csv</em> in this example.</li></div>
+<a name="wp2756565"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to retrieve the schema of the preceding component. You can click the three-dot button next to <b class="cBold">Edit schema</b> to view/modify the schema.</li></div>
+<a name="wp2756864"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tLogRow</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+<a name="wp2756903"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync Columns</b> to retrieve the schema of the preceding component. For more information on this component, see <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>. </li></div>
+<a name="wp2756927"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2756934"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/use_case_textractxmlfield10.png" id="wp2756931" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2759288"> </a><p class="pBodyRelative">
+<b class="cBold">tExtractXMLField</b> reads and extracts in the output delimited file, <em class="cEmphasis">CustomerNames_right</em>, the client information for which the XML structure is correct, and displays as well erroneous data on the console of the <b class="cBold">Run</b> view.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputXML_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

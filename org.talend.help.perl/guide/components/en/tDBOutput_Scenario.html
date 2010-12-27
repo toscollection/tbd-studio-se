@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>Scenario: Displaying DB output </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDBOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDBSQLRow_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3627724"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3627732"> </a><h2 class="pHeading2">
+Scenario: Displaying DB output 
+</h2>
+<a name="wp3627735"> </a><p class="pIndented1">
+This following scenario is a three-component Job aiming at creating a new table in the database defined and filling it with data. The <b class="cBold">tFileInputdelimited</b> passes on the Input flow to the <b class="cBold">tDBoutput</b> component. As the content of a DB is not viewable as such, a <b class="cBold">tLogRow</b> component is used to display the main flow on the <b class="cBold">Run </b>console.
+</p>
+<a name="wp3627755"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDBOutput1.png" id="wp3627752" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3627764"> </a><div class="pSmartList2"><li>Drop the three components required for this Job from the <b class="cBold">Palette</b> to the design workspace.</li></div>
+<a name="wp3627773"> </a><div class="pSmartList2"><li>On the <b class="cBold">Basic settings</b> tab of <b class="cBold">tFileInputDelimited</b>, define the input flow parameters. In this use case, the file contains cars&#39; owner id, makes, color and registration references organized as follows: semi-colon as field separator, carriage return as row separator. The input file contains a header row to be considered in the schema. If this file is already described in your metadata, you can retrieve the properties by selecting the relevant repository entry list.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3627782"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDBOutput2.png" id="wp3627779" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3627793"> </a><div class="pSmartList2"><li>And also, if your schema is already loaded in the Repository, select <b class="cBold">Repository</b> as <b class="cBold">Schema</b> and choose the relevant metadata entry in the list. If you haven&#39;t defined the schema already, define the data structure in the built-in schema you edit.</li></div>
+<a name="wp3627798"> </a><div class="pSmartList2"><li>Restrict the extraction to 10 lines, for this example.</li></div>
+<a name="wp3627804"> </a><div class="pSmartList2"><li>Then define the <b class="cBold">tDBOutput</b> component to configure the output flow. Select the database to connect to. Note that you can store all the database connection details in different context variables. For more information about how to create and use context variables <em class="cEmphasis">How to centralize contexts and variables</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3627822"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDBOutput3.png" id="wp3627819" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3627831"> </a><div class="pSmartList2"><li>Fill in the table name in the <b class="cBold">Table</b> field. Then select the operations to be performed:</li></div>
+<a name="wp3627840"> </a><div class="pSmartList2"><li>As <b class="cBold">Action on table</b>, select <b class="cBold">Drop and create table</b> in the list. This allows you to overwrite the possible existing table with the new selected data. Alternatively you can insert only extra rows into an existing table, but note that duplicate management is not supported natively. See <a href="tUniqRow_Prop.html#wp1449711"><em class="cEmphasis">tUniqRow Properties</em></a> for further information.</li></div>
+<a name="wp3627853"> </a><div class="pSmartList2"><li>As <b class="cBold">Action on data</b>, select <b class="cBold">Insert</b>. The data flow incoming as input will be thus added to the selected table.</li></div>
+<a name="wp3627863"> </a><div class="pSmartList2"><li>To view the output flow easily, connect the <b class="cBold">DBOuput</b> component to an <b class="cBold">tLogRow</b> component. Define the field separator as a pipe symbol. Press <b class="cBold">F6</b> to execute the Job.</li></div>
+<a name="wp3627873"> </a><div class="pSmartList2"><li>As the processing can take some time to reach the <b class="cBold">tLogRow</b> component, we recommend you to enable the <b class="cBold">Statistics</b> functionality on the<b class="cBold"> Run</b> console.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3627888"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDBOutput4.png" id="wp3627885" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3627897"> </a><p class="pIndented1">
+Related topic: <a href="tMysqlOutput_Prop.html#wp3616845"><em class="cEmphasis">tMysqlOutput properties</em></a>
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDBOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDBSQLRow_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

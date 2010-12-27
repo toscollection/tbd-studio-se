@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:17">
+    <title>Scenario: Job execution in a loop</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLoop_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParallelize_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1207861"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1295105"> </a><h2 class="pHeading2">
+Scenario: Job execution in a loop
+</h2>
+<a name="wp1287717"> </a><p class="pIndented1">
+This scenario describes a Job composed of a parent Job and a child Job. The parent Job implements a loop which executes n times a child Job, with a pause between each execution.
+</p>
+<a name="wp1208473"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFor1.png" id="wp1208478" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1208496"> </a><div class="pSmartList2"><li>In the parent Job, drop a <b class="cBold">tLoop</b>, a <b class="cBold">tRunJob</b> and a <b class="cBold">tSleep</b> component from the <b class="cBold">Palette</b> to the design workspace.</li></div>
+<a name="wp1208539"> </a><div class="pSmartList2"><li>Connect the <b class="cBold">tLoop</b> to the <b class="cBold">tRunJob</b> using an <b class="cBold">Iterate</b> connection.</li></div>
+<a name="wp1541353"> </a><div class="pSmartList2"><li>Then connect the <b class="cBold">tRunJob</b> to a <b class="cBold">tSleep</b> component using a <b class="cBold">Row</b> connection.</li></div>
+<a name="wp1541362"> </a><div class="pSmartList2"><li>On the child Job, drop the following components: <b class="cBold">tPOP</b>, <b class="cBold">tFileInputMail</b> and <b class="cBold">tLogRow</b> the same way.</li></div>
+<a name="wp1208626"> </a><div class="pSmartList2"><li>On the <b class="cBold">Basic settings</b> panel of the <b class="cBold">tLoop</b> component, type in the instance number to start from (<em class="cEmphasis">1</em>), the instance number to finish with (<em class="cEmphasis">5</em>) and the step (<em class="cEmphasis">1</em>)</li></div>
+<a name="wp1208678"> </a><div class="pSmartList2"><li>On the <b class="cBold">Basic settings</b> panel of the <b class="cBold">tRunJob</b> component, select the child Job in the list of stored Jobs offered. In this example: <em class="cEmphasis">popinputmail</em></li></div>
+<a name="wp1208743"> </a><div class="pSmartList2"><li>Select the context if relevant. In this use case, the context is <em class="cEmphasis">default</em> with no variables stored.</li></div>
+<a name="wp1208770"> </a><div class="pSmartList2"><li>In the <b class="cBold">tSleep</b> <b class="cBold">Basic settings</b> panel, type in the time-off value in second. In this example, type in <em class="cEmphasis">3 seconds</em> in the <b class="cBold">Pause</b> field.</li></div>
+<a name="wp1208914"> </a><div class="pSmartList2"><li>Then in the child Job, define the connection parameters to the pop server, on the <b class="cBold">Basic settings</b> panel. </li></div>
+<a name="wp2930303"> </a><div class="pSmartList2"><li>In the <b class="cBold">tFileInputMail</b> <b class="cBold">Basic settings</b> panel, select a global variable as <b class="cBold">File Name</b>, to collect the current file in the directory defined in the <b class="cBold">tPOP</b> component. Press <b class="cBold">Ctrl+Space bar</b> to access the variable list. In this example, the variable to be used is: <code class="cCode">$_globals{tPOP_1}{CURRENT_FILEPATH}</code> (for Perl)<br /><code class="cCode">((String)globalMap.get(&quot;tPOP_1_CURRENT_FILEPATH&quot;))</code> (for Java)</li></div>
+<a name="wp1593474"> </a><div class="pSmartList2"><li>Define the <b class="cBold">Schema</b>, for it to include the mail element to be processed, such as <em class="cEmphasis">author</em>, <em class="cEmphasis">topic</em>, <em class="cEmphasis">delivery date</em> and <em class="cEmphasis">number of lines</em>.</li></div>
+<a name="wp1593490"> </a><div class="pSmartList2"><li>In the <b class="cBold">Mail Parts</b> table, type in the corresponding <b class="cBold">Mail part</b> for each column defined in the schema. ex: <em class="cEmphasis">author</em> comes from the <em class="cEmphasis">From</em> part of the email file.</li></div>
+<a name="wp1593629"> </a><div class="pSmartList2"><li>Then connect the <b class="cBold">tFileInputMail</b> to a <b class="cBold">tLogRow</b> to check out the execution result on the <b class="cBold">Run</b> view.</li></div>
+<a name="wp1593520"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to run the Job.</li></div>
+</ul></div>
+</ul></div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLoop_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParallelize_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

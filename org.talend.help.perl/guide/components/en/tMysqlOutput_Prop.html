@@ -1,0 +1,576 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tMysqlOutput</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlLastInsertId_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlOutput_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2750652"> </a><h2 class="pHeading1">
+tMysqlOutput
+</h2>
+<a name="wp3648795"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tMysqlOutput_icon32_white.png" id="wp2750656" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3616837"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3616834" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<br />The Dynamic Schema feature is only functional in <b class="cBold">Talend Integration Suite Studio</b>.<br />
+</div>
+<a name="wp3616845"> </a><h2 class="pHeading2">
+tMysqlOutput properties
+</h2>
+<a name="wp2751086"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2980398table2750672">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980398"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2980400"> </a><div class="pCellBody">
+Databases/MySQL
+</div>
+</td>
+    <td><a name="wp2980409"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-05-266-0030.jpg" height="59" width="112" id="wp2980405" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980414"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2980419"> </a><div class="pCellBody">
+<b class="cBold">tMysqlOutput</b> writes, updates, makes changes or suppresses entries in a database. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980426"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2980431"> </a><div class="pCellBody">
+<b class="cBold">tMysqlOutput</b> executes the action defined on the table and/or on the data contained in the table, based on the flow incoming from the preceding component in the job. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980438"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2980443"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2980445"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980447"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980449"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980454"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980456"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980458"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3600176"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3387638"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3387453"> </a><div class="pCellHeading">
+<em class="cEmphasis">DB Version</em>
+</div>
+</td>
+    <td><a name="wp3387456"> </a><div class="pCellBody">
+Select the MySQL version you are using.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980465"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980473"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Save_Icon.png" id="wp2980470" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+    <td><a name="wp2980475"> </a><div class="pCellBody">
+Click this icon to open a database connection wizard and store the database connection parameters you set in the component <b class="cBold">Basic settings </b>view.<br />For more information about setting up and storing database connection parameters, see <em class="cEmphasis">Setting up a DB connection</em> in the Talend Integration Suite Studio <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980489"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980493"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2980496"> </a><div class="pCellBody">
+Select this check box when using a configured <b class="cBold">tMysqlConnection</b> component.<br />
+</div>
+<a name="wp3450866"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3450863" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980501"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980506"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2980508"> </a><div class="pCellBody">
+Database server IP address.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980510"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980515"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2980517"> </a><div class="pCellBody">
+Listening port number of DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980519"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980524"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2980526"> </a><div class="pCellBody">
+Name of the database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980528"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980533"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2980538"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980540"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980545"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2980547"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980549"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980554"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2980556"> </a><div class="pCellBody">
+On the table defined, you can perform one of the following operations:<br /><b class="cBold">None</b>: No operation is carried out.<br /><b class="cBold">Drop and create a table</b>: The table is removed and created again.<br /><b class="cBold">Create a table</b>: The table does not exist and gets created.<br /><b class="cBold">Create a table if not exists</b>: The table is created if it does not exist.<br /><b class="cBold">Drop a table if exists and create</b>: The table is removed if it already exists and created again.<br /><b class="cBold">Clear a table</b>: The table content is deleted.<b class="cBold"><br />Truncate table</b>: The table content is quickly deleted. However, you will not be able to rollback the operation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980582"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980587"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on data</em>
+</div>
+</td>
+    <td><a name="wp3318984"> </a><div class="pCellBody">
+On the data of the table defined, you can perform:<br /><b class="cBold">Insert</b>: Add new entries to the table. If duplicates are found, the job stops.<br /><b class="cBold">Update</b>: Make changes to existing entries.<br /><b class="cBold">Insert or update</b>: Add entries or update existing ones.<br /><b class="cBold">Update or insert</b>: Update existing entries or creates them if they do not exist.<br /><b class="cBold">Delete</b>: Remove entries corresponding to the input flow.<br /><b class="cBold">Insert or update on duplicate key or unique index</b>: Add entries if the inserted value does not exist or update entries if the inserted value already exists and there is a risk of violating a unique index or primary key. <br /><b class="cBold">Insert Ignore</b>: Add only new rows to prevent duplicate key errors.
+</div>
+<a name="wp3319001"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3318907" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+You must specify at least one column as a primary key on which the <b class="cBold">Update</b> and <b class="cBold">Delete</b> operations are based. You can do that by clicking <b class="cBold">Edit Schema </b>and selecting the check box(es) next to the column(s) you want to set as primary key(s). For an advanced use, click the <b class="cBold">Advanced settings</b> view where you can simultaneously define primary keys for the update and delete operations. To do that: Select the <b class="cBold">Use field options</b> check box and then in the <b class="cBold">Key in update</b> column, select the check boxes next to the column name on which you want to base the update operation. Do the same in the <b class="cBold">Key in delete</b> column for the deletion operation.
+</div>
+<a name="wp3610116"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/Components-05-266-0034.jpg" height="47" width="47" align="left" id="wp3610113" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+The dynamic schema feature can be used in the following modes: <b class="cBold">Insert</b>; <b class="cBold">Update</b>; <b class="cBold">Insert or update</b>; <b class="cBold">Update or insert</b>; <b class="cBold">Delete</b>.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980616"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980623"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3609440"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields to be processed and passed on to the next component. The schema is either built-in or stored remotely in the Repository. <br />
+</div>
+<a name="wp3609295"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/Components-05-266-0035.jpg" height="47" width="47" align="left" id="wp3609444" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+This component offers the advantage of the dynamic schema feature. This allows you to retrieve unknown columns from source files or to copy batches of columns from a source without mapping each column individually. For further information about dynamic schemas, see <em class="cEmphasis">Dynamic schema</em> in the<b class="cBold"> Talend Integration Suite Studio</b> User Guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980628"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980630"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980635"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema is created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> in the Talend Integration Suite Studio <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980646"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980648"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980653"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused. Related topic: <em class="cEmphasis">How to set a repository schema</em> of Talend Integration Suite Studio <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3387715"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980669"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp2980671"> </a><div class="pCellBody">
+This check box is selected by default. Clear the check box to skip the row in error and complete the process for error-free rows. If needed, you can retrieve the rows in error via a <b class="cBold">Row</b> &gt; <b class="cBold">Rejects</b> link.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980684"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3387730"> </a><div class="pCellHeading">
+<em class="cEmphasis">Additional JDBC parameters</em>
+</div>
+</td>
+    <td><a name="wp2980691"> </a><div class="pCellBody">
+Specify additional connection properties for the DB connection you are creating. This option is not available if you have selected the <b class="cBold">Use an existing connection</b> check box in the <b class="cBold">Basic settings</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3387745"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980698"> </a><div class="pCellHeading">
+<em class="cEmphasis">Extend Insert</em>
+</div>
+</td>
+    <td><a name="wp3609731"> </a><div class="pCellBody">
+Select this check box to carry out a bulk insert of a defined set of lines instead of inserting lines one by one. The gain in system performance is considerable.<br /><br /><b class="cBold">Number of rows per insert</b>: enter the number of rows to be inserted per operation. Note that the higher the value specidied, the lower performance levels shall be due to the increase in memory demands.
+</div>
+<a name="wp3609744"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/Components-05-266-0036.jpg" height="47" width="47" align="left" id="wp3609738" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+This option is not compatible with the <b class="cBold">Reject</b> link. You should therefore clear the checkbox if you are using a<b class="cBold"> Row &gt; Rejects</b> link with this component.
+</p>
+<a name="wp3609726"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3609752" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+If you are using this component with <b class="cBold">tMysqlLastInsertID</b>, ensure that the <b class="cBold">Extend Insert</b> check box in <b class="cBold">Advanced Settings </b>is not selected. <b class="cBold">Extend Insert</b> allows for batch loading, however, if the check box is selected, only the ID of the last line of the last batch will be returned.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980739"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980744"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2980746"> </a><div class="pCellBody">
+Select the encoding type from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980751"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980756"> </a><div class="pCellHeading">
+<em class="cEmphasis">Commit every</em>
+</div>
+</td>
+    <td><a name="wp2980758"> </a><div class="pCellBody">
+Number of rows to be included in the batch before it is committed to the DB. This option ensures transaction quality (but not rollback) and, above all, a higher performance level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980760"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980765"> </a><div class="pCellHeading">
+<em class="cEmphasis">Additional Columns</em>
+</div>
+</td>
+    <td><a name="wp2980767"> </a><div class="pCellBody">
+This option is not available if you have just created the DB table (even if you delete it beforehand). This option allows you to call SQL functions to perform actions on columns, provided that these are not insert, update or delete actions, or actions that require pre-processing. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980769"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980771"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980776"> </a><div class="pCellBody">
+<b class="cBold">Name:</b> Type in the name of the schema column to be altered or inserted.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980778"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980780"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980785"> </a><div class="pCellBody">
+<b class="cBold">SQL expression:</b> Type in the SQL statement to be executed in order to alter or insert the data in the corrsponding column.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980787"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980789"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980803"> </a><div class="pCellBody">
+<b class="cBold">Position:</b> Select <b class="cBold">Before</b>, <b class="cBold">Replace</b> or <b class="cBold">After</b>, depending on the action to be performed on the reference column.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2980805"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980807"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980812"> </a><div class="pCellBody">
+<b class="cBold">Reference column:</b> Type in a reference column that<b class="cBold"> tMySqlOutput</b> can use to locate or replace the new column, or the column to be modified.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980817"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980822"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use field option</em>s
+</div>
+</td>
+    <td><a name="wp2980824"> </a><div class="pCellBody">
+Select this check box to customize a request, particularly if multiple actions are being carried out on the data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3387760"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980943"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use Hint Options</em>
+</div>
+</td>
+    <td><a name="wp2980945"> </a><div class="pCellBody">
+Select this check box to activate the hint configuration area which helps you optimize a query&#39;s execution. In this area, parameters are:<br />- <b class="cBold">HINT</b>: specify the hint you need, using the syntax<code class="cCode"> /*+ */.<br /></code>- <b class="cBold">POSITION</b>: specify where you put the hint in a SQL statement.<br />- <b class="cBold">SQL STMT</b>: select the SQL statement you need to use.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3387780"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980831"> </a><div class="pCellHeading">
+<em class="cEmphasis">Enable debug mode</em>
+</div>
+</td>
+    <td><a name="wp2980833"> </a><div class="pCellBody">
+Select this check box to display each step involved in the process of writing data in the database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3387795"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2981287"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use duplicate key update mode insert</em>
+</div>
+</td>
+    <td><a name="wp3577818"> </a><div class="pCellBody">
+Updates the values of the columns specified, in the event of duplicate primary keys.:<br /><b class="cBold">Column</b>: Between double quotation marks, enter the name of the column to be updated.<br /><b class="cBold">Value</b>: Enter the action you want to carry out on the column.<br />
+</div>
+<a name="wp2981299"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3577822" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+To use this option you must first of all select the<b class="cBold"> Insert </b>mode in the <b class="cBold">Action on data</b> list found in the <b class="cBold">Basic Settings </b>view.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980835"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2980843"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2980845"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3579880"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3579886"> </a><div class="pCellHeading">
+<em class="cEmphasis">Enable parallel execution</em>
+</div>
+</td>
+    <td><a name="wp3579890"> </a><div class="pCellBody">
+Select this check box to perform high-speed data processing, by treating multiple data flows simultaneously. <br />In the <b class="cBold">Number of parallel executions</b> field, either:<br /> - Enter the number of parallel executions desired.<br /> - Press <b class="cBold">Ctrl + Space</b> and select the appropriate context variable from the list.<br /><br />For further information, see <em class="cEmphasis">How to parallelize data flows</em> in the Talend Integration Suite Studio <b class="cBold">User Guide</b>.
+</div>
+<a name="wp3579921"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3579914" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+The <b class="cBold">Action on table</b> field is not available with the parallelization function. Therefore, you must use a <b class="cBold">tCreateTable</b> component if you want to create a table.
+</div>
+<a name="wp3582105"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3582102" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+When parallel execution is enabled, it is not possible to use global variables to retrieve return values in a SubJob.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2980868"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2980870"> </a><div class="pCellBody">
+This component offers the flexibility benefit of the DB query and covers all of the SQL queries possible.<br />This component must be used as an output component. It allows you to carry out actions on a table or on the data of a table in a MySQL database. It also allows you to create a reject flow using a <b class="cBold">Row &gt; Rejects</b> link to filter data in error. For an example of <b class="cBold">tMySqlOutput</b> in use, see <a href="tMysqlOutput_Scenario.html#wp2939075"><em class="cEmphasis">Scenario&#160;3: Retrieve data in error with a Reject link</em></a>.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlLastInsertId_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlOutput_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:57">
+    <title>Scénario&#160;: Valider un fichier XML</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDTDValidator_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1660772"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1660780"> </a><h2 class="pHeading2">
+Scénario&#160;: Valider un fichier XML
+</h2>
+<a name="wp1660783"> </a><p class="pIndented1">
+Ce scénario décrit un Job permettant de valider plusieurs fichiers d&#39;un répertoire et de transmettre les informations de validation des fichiers non valides dans un fichier délimité.
+</p>
+<a name="wp1660791"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator1.png" id="wp1660788" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1660805"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants de la <b class="cBold">Palette&#160;</b>: <b class="cBold">tFileList</b>, <b class="cBold">tDTDValidator</b>, <b class="cBold">tMap</b>, <b class="cBold">tFileOutputDelimited</b>.</li></div>
+<a name="wp1661950"> </a><div class="pSmartList2"><li>Connectez le <b class="cBold">tFileList</b> et le <b class="cBold">tDTDValidator</b> avec un lien <b class="cBold">Iterate</b> et les composants restants avec des liens Row <b class="cBold">main</b>.</li></div>
+<a name="wp1660833"> </a><div class="pSmartList2"><li>Paramétrez les propriétés du composant tFileList afin qu&#39;il récupère les fichiers XML du répertoire.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1660840"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator2.png" id="wp1660837" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1660851"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Filemask</b>, saisissez le masque <em class="cEmphasis">*.xml</em> entre guillemets simples en Perl et guillemets doubles.</li></div>
+<a name="wp1660859"> </a><div class="pSmartList2"><li>Décochez la case <b class="cBold">Case Sensitive</b>.</li></div>
+<a name="wp1660868"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b> du composant <b class="cBold">tDTDValidate</b>, le schéma est en lecture seule puisqu&#39;il contient des informations de validation standard.</li></div>
+<a name="wp1662206"> </a><div class="pSmartList2"><li>Paramétrez les propriétés du fichier DTD à utiliser comme référence, dans le champ <b class="cBold">DTD file</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1662216"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator3.png" id="wp1662213" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1662223"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Xml file</b>, appuyez sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste des variables globales et sélectionnez la variable permettant de récupérer le chemin d&#39;accès des fichiers&#160;: <code class="cCode">$_globals{tFileList_1}{CURRENT_FILEPATH}</code> (en Perl)</li></div>
+<a name="wp1662227"> </a><div class="pSmartList2"><li>Dans les divers messages à afficher dans la console <b class="cBold">Run</b>, utilisez JobName pour afficher le libellé du Job. Rappelez aussi le nom du fichier grâce à la variable&#160;: $_globals{tFileList_1}{CURRENT_FILE}. Saisissez votre message en tenant compte du langage utilisé pour le Job, Perl ou Java, notamment pour l&#39;utilisation du point ou du plus.</li></div>
+<a name="wp1662235"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Print to Console</b>.</li></div>
+<a name="wp1662457"> </a><div class="pSmartList2"><li>Dans le composant <b class="cBold">tMap</b>, glissez-déposez les informations de validation du schéma standard que vous souhaitez passer au fichier de sortie.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1662466"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator4.png" id="wp1662463" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1662470"> </a><div class="pSmartList2"><li>Une fois que le schéma de sortie est défini, ajoutez un filtre de condition pour ne sélectionner que les informations lorsque le fichier XML n&#39;est pas valide.</li></div>
+<a name="wp1662474"> </a><div class="pSmartList2"><li>Saisissez d&#39;abord la valeur souhaitée pour cette variable, l&#39;opérateur en fonction du type de données filtrées puis la variable devant correspondre à cette condition, ici (en Java et en Perl)&#160;: <code class="cCode">0 == $row1[validate]</code></li></div>
+<a name="wp1662612"> </a><div class="pSmartList2"><li>Puis (si cela n&#39;est pas déjà effectué) connectez le <b class="cBold">tMap</b> au <b class="cBold">tFileOutputDelimited</b> via un lien main row. Nommez-le <em class="cEmphasis">errorsOnly</em>.</li></div>
+<a name="wp1660951"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tFileOutputDelimited</b>, paramétrez le chemin d&#39;accès de destination du fichier délimité, les séparateurs de champs et l&#39;encodage.</li></div>
+<a name="wp1662776"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1662783"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tDTDValidator5.png" id="wp1662780" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2267725"> </a><p class="pIndented1">
+Dans la console de la vue <b class="cBold">Run</b>, les messages définis apparaissent pour chaque fichier invalide. Au même moment, le fichier de sortie est alimenté avec les informations de validation.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDTDValidator_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExtractXMLField_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;: Ecrire des données dans un fichier délimité</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputDelimited_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputEBCDIC_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2779294"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2779301"> </a><h2 class="pHeading2">
+Scénario&#160;: Ecrire des données dans un fichier délimité
+</h2>
+<a name="wp2779304"> </a><p class="pIndented1">
+Ce scénario est constitué de trois composants et a pour objectif d&#39;extraire certaines données d&#39;un fichier contenant des informations sur les clients (<em class="cEmphasis">customers</em>) puis de les écrire dans un fichier délimité en sortie. Dans l&#39;exemple suivant, vous avez enregistré les informations de connexion et les métadonnées dans le <b class="cBold">Repository </b><u class="cUnderline">afin de faciliter leur réutilisation</u>. Pour plus d&#39;informations sur comment centraliser les données de connexion et autres métadonnées d&#39;un fichier dans le <b class="cBold">Repository</b>, see&#160;<em class="cEmphasis">Configurer un schéma File Delimited.</em>.
+</p>
+<a name="wp2779312"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited9.png" id="wp2779309" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2779326"> </a><div class="pSmartList2"><li>Dans le <b class="cBold">Repository</b>, ouvrez le noeud<b class="cBold"> File Delimited</b> de la catégorie <b class="cBold">Metadata</b>. Cliquez sur la métadonnée <em class="cEmphasis">customers</em>, et déposez-le dans l&#39;espace de modélisation graphique. Une boîte de dialogue s&#39;ouvre et vous demande quel type de composant vous voulez déposer.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2779338"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited1.png" id="wp2779335" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2779350"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">tFileInputDelimited</b> puis sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2779358"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant afin d&#39;afficher la vue <b class="cBold">Component</b>, afin de paramétrer les informations de connexion et définir le schéma des données d&#39;entrée. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2779365"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited2.png" id="wp2779362" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2780751"> </a><div class="pSmartList2"><li>Si vous sélectionnez <b class="cBold">Repository</b> dans la liste <b class="cBold">Property Type</b>, les champs suivants seront automatiquement renseignés à partir des informations centralisées dans le <b class="cBold">Repository</b>. Si vous sélectionnez le mode <b class="cBold">Built-In</b>, renseignez les champs manuellement.</li></div>
+<a name="wp2780764"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> correspondant au champ <b class="cBold">File Name</b>. Dans la boîte de dialogue de sélection, parcourez le système de fichiers et sélectionnez le fichier d&#39;entrée, dans cet exemple: <em class="cEmphasis">customer.csv</em>.</li></div>
+<a name="wp2781030"> </a><div class="pSmartList2"><li>Dans les champs<b class="cBold"> Row </b>et <b class="cBold">Field Separators</b>, saisissez respectivement le séparateur de lignes &quot;<em class="cEmphasis">\n</em>&quot; et le séparateur de champs &quot;<em class="cEmphasis">;</em>&quot;.</li></div>
+<a name="wp2781098"> </a><div class="pSmartList2"><li>Si votre fichier contient des en-têtes ou des pieds-de-page, indiquez le nombre de lignes concernées dans les champs <b class="cBold">Header</b> et <b class="cBold">Footer</b>.</li></div>
+<a name="wp2781111"> </a><div class="pSmartList2"><li>Si vous avez sélectionné le mode <b class="cBold">Repository</b>, le schéma du fichier sera automatiquement renseigné. En mode <b class="cBold">Built-in</b>, cliquez sur <b class="cBold">Edit Schema</b> afin de décrire les données d&#39;entrée, et ainsi définir le schéma traité. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2781126"> </a><p class="pIndented1">
+Le schéma du fichier <em class="cEmphasis">Customers</em> se présente comme suit&#160;:
+</p>
+<a name="wp2779438"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited4.png" id="wp2779435" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2781227"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2781239"> </a><div class="pSmartList2"><li>Dans la <b class="cBold">Palette</b>, ouvrez la famille <b class="cBold">Processing</b> et sélectionnez le composant <b class="cBold">tMap</b>. Glissez-le dans l&#39;espace de modélisation graphique. </li></div>
+<a name="wp2781249"> </a><div class="pSmartList2"><li>Reliez le composant d&#39;entrée <em class="cEmphasis">customers</em> au composant <b class="cBold">tMap</b>. Pour ce faire, cliquez-droit sur <em class="cEmphasis">Customers</em>, et, dans le menu déroulant, sélectionnez <b class="cBold">Row</b>, puis<b class="cBold"> Main</b>. Cliquez sur le <b class="cBold">tMap</b> pour créer le lien.</li></div>
+<a name="wp2787239"> </a><div class="pSmartList2"><li>Double-cliquez ensuite sur le <b class="cBold">tMap </b>afin d&#39;ouvrir son éditeur.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2787246"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited7.png" id="wp2787243" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2787343"> </a><div class="pSmartList2"><li>Dans cet éditeur, créez une nouvelle table, à droite. Cliquez sur le bouton <b class="cBold">plus</b> vert <img src="../Images/Use_Case_tFileOutputDelimited12.png" id="wp2787367" border="0" hspace="0" vspace="0"/> en haut à droite, et renseignez le nom de la table ainsi créée (<em class="cEmphasis">row2 </em>par exemple) dans la boîte de dialogue <b class="cBold">[Add a new output table]</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2779520"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited6.png" id="wp2779517" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2779529"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2779544"> </a><div class="pSmartList2"><li>Dans la table de gauche (<em class="cEmphasis">row1</em>), sélectionnez les trois premières lignes (<em class="cEmphasis">Id</em>, <em class="cEmphasis">CustomerName</em> et <em class="cEmphasis">CustomerAddress</em>) en appuyant sur <b class="cBold">Ctrl</b>, puis glissez-les dans la table de droite.</li></div>
+<a name="wp2781465"> </a><div class="pSmartList2"><li>Dans le <b class="cBold">Schema editor</b> en bas de l&#39;éditeur, changez le <b class="cBold">Type</b> de la ligne <b class="cBold">RegisterTime</b>, dans la table de droite, et passez-le en chaîne de caractères, <b class="cBold">String</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2779572"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited8.png" id="wp2779569" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2779581"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour enregistrer les modifications et fermer l&#39;éditeur.</li></div>
+<a name="wp2779590"> </a><div class="pSmartList2"><li>Dans la <b class="cBold">Palette</b>, ouvez la famille <b class="cBold">File,</b> puis la catégorie <b class="cBold">Output</b>, puis glissez le composant <b class="cBold">tFileOutputDelimited</b> dans l&#39;espace de modélisation graphique.</li></div>
+<a name="wp2779603"> </a><div class="pSmartList2"><li>Reliez ensuite le <b class="cBold">tMap</b> au composant <b class="cBold">tFileOutputDelimited</b>. Pour cela, cliquez-droit sur le composant <b class="cBold">tMap</b>, et, dans le menu déroulant, sélectionnez <b class="cBold">Row,</b> puis <b class="cBold">row2</b>. Cliquez sur le <b class="cBold">tFileOutputDelimited</b> pour créer le lien.</li></div>
+<a name="wp2779627"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant<b class="cBold"> tFileOutputDelimited</b> pour ouvrir la vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2779634"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited10.png" id="wp2779631" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2779645"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Property Type</b>, sélectionnez le mode <b class="cBold">Built-in</b> et renseignez les champs suivants manuellement.</li></div>
+<a name="wp2779655"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> correspondant au champ <b class="cBold">File Name</b>. Dans la boîte de dialogue de sélection, indiquez le répertoire de destination et le nom de votre fichier.</li></div>
+<a name="wp2779668"> </a><div class="pSmartList2"><li>Pour les champs <b class="cBold">Row</b> et <b class="cBold">Field Separator</b><b class="cBold">s</b>, saisissez respectivement le séparateur de lignes &quot;<em class="cEmphasis">\n</em>&quot; et le séparateur de champs &quot;<em class="cEmphasis">;</em>&quot;. Ils seront utilisés dans le fichier de sortie pour délimiter les valeurs et les lignes.</li></div>
+<a name="wp2779682"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Include Header</b> si vous souhaitez récupérer le libellé des colonnes.</li></div>
+<a name="wp2779688"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Edit schema</b> et assurez-vous que le schéma est correctement récupéré du schéma d&#39;entrée. Si nécessaire, cliquez sur <b class="cBold">Sync Columns</b> pour récupérer le schéma du composant précédent. </li></div>
+<a name="wp2779700"> </a><div class="pSmartList2"><li>Pour exécuter le job, appuyez sur <b class="cBold">F6</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2779707"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputDelimited11.png" id="wp2779704" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2779722"> </a><p class="pIndented1">
+Le fichier créé est délimité par des points-virgules, il ne contient que les colonnes <em class="cEmphasis">Id</em>, <em class="cEmphasis">CustomerName</em> et <em class="cEmphasis">CustomerAddress</em>.
+</p>
+<a name="wp3483076"> </a><p class="pIndented1">
+Pour un exemple d&#39;utilisation du schéma dynamique dans le <b class="cBold">tFileOutputDelimited</b>, consultez&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3483091"> </a><div class="pSmartList2"><li><a href="tMysqlOutput_Scenario.html#wp3662803"><em class="cEmphasis">Scénario 4&#160;: Ecrire des colonnes dynamiques d&#39;un fichier source vers une base de données MySQL</em></a></li></div>
+</ul></div>
+</ul></div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputDelimited_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputEBCDIC_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

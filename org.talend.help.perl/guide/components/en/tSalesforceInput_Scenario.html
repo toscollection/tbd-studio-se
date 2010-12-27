@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:32">
+    <title>Scenario: Using queries to extract data from a Salesforce database</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3457825"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3457830"> </a><h2 class="pHeading2">
+Scenario: Using queries to extract data from a Salesforce database
+</h2>
+<a name="wp3457835"> </a><p class="pIndented1">
+This scenario describes a four component Job used to extract specific sets of data from parent and child objects in a Salesforce database.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3457847"> </a><div class="pSmartList2"><li>Drop two <b class="cBold">tSalesforceInput </b>components and two <b class="cBold">tLogRow</b> components onto the workspace. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3457859"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tSalesforceInputScenario1.png" id="wp3457856" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3457876"> </a><div class="pSmartList2"><li>Connect each <b class="cBold">tSalesforceInput</b> component to a <b class="cBold">tLogRow</b> component using a <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> link for each connection.</li></div>
+<a name="wp3457890"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tSalesforceInput_1</b> to <b class="cBold">tSalesforceInput_2 </b>using an <b class="cBold">OnSubjobOk</b> link.</li></div>
+<a name="wp3457904"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tSalesforceInput_1</b> to set its <b class="cBold">Basic Settings</b> in the <b class="cBold">Component</b> tab. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3457911"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tSalesforce_1_Properties.png" id="wp3457908" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3457923"> </a><div class="pSmartList2"><li>As the <b class="cBold">Property Type</b>, select <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3457929"> </a><div class="pSmartList2"><li>Enter the <b class="cBold">Salesforce WebService URL</b> of the database you want to connect to in the corresponding field.</li></div>
+<a name="wp3457940"> </a><div class="pSmartList2"><li>Enter your authentication information in the corresponding <b class="cBold">Username</b> and <b class="cBold">Password</b> fields.</li></div>
+<a name="wp3457950"> </a><div class="pSmartList2"><li>Enter the desired query <b class="cBold">Timeout (milliseconds</b><b class="cBold">) </b>limit.</li></div>
+<a name="wp3457957"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Module</b> (salesforce object) you want to query.</li></div>
+<a name="wp3457966"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Manual input of SOQL Query</b> check box to enter your <b class="cBold">Query</b> in the corresponding field. </li></div>
+<a name="wp3457972"> </a><div class="pSmartList2"><li>Enter your query or relationship query, respecting the SOQL syntax required.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3457981"> </a><p class="pIndented1">
+In this example, the <em class="cEmphasis">IsWon</em> and <em class="cEmphasis">FiscalYear</em> columns in the query are located in the <b class="cBold">Opportunity</b> module specified. The <em class="cEmphasis">Name</em> column is in a linked module called <em class="cEmphasis">Account</em>. To return a column from a linked module the correct syntax is to enter the name of the linked module,  followed by the period character, then the name of the column of interest. Hence, the query required in this example is: <code class="cCode">&quot;SELECT IsWon, FiscalYear, Account.Name FROM Opportunity&quot;</code>.
+</p>
+<a name="wp3460637"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3460620" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+To retrieve a column from a linked module, it is necessary to define the column in a particular manner in the<b class="cBold"> Edit schema</b> view. The correct syntax is: <code class="cCode">NameofCurrentModule_NameofLinkedModule_NameofColumnofInterest</code>. Hence, in this example, the column must be named: <em class="cEmphasis">Opportunity_Account_Name</em>. If this syntax is not respected then the data from the linked table will not be returned.<br />
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3460605"> </a><div class="pSmartList2"><li>Select <b class="cBold">Built-In</b> as the <b class="cBold">Schema</b> and click <b class="cBold">[...]</b> next to <b class="cBold">Edit schema</b> to open the schema editor.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3458031"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tSalesforceInput_Schema_Editor1.png" id="wp3458028" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3459563"> </a><div class="pSmartList2"><li>Edit the schema as required using the <b class="cBold">[+]</b> and <b class="cBold">[x]</b> buttons.</li></div>
+<a name="wp3459566"> </a><div class="pSmartList2"><li>Add a new column for the fields taken from the <em class="cEmphasis">Name</em> column in the <em class="cEmphasis">Account</em> module.</li></div>
+<a name="wp3458044"> </a><div class="pSmartList2"><li>Name this column <em class="cEmphasis">Opportunity_Account_Name</em>.</li></div>
+<a name="wp3458051"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to save the changes and close the schema editor.</li></div>
+<a name="wp3458062"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tSalesforceInput_2</b> to set its <b class="cBold">Basic settings</b> in the <b class="cBold">Component</b> tab. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3458069"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tSalesforceInput_2_Properties.png" id="wp3458066" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3459505"> </a><div class="pSmartList2"><li>As the <b class="cBold">Property Type</b>, select <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3458087"> </a><div class="pSmartList2"><li>Enter the <b class="cBold">Salesforce WebService URL</b> of the database you want to connect to in the corresponding field.</li></div>
+<a name="wp3458098"> </a><div class="pSmartList2"><li>Enter your authentication information in the corresponding <b class="cBold">Username</b> and <b class="cBold">Password</b> fields.</li></div>
+<a name="wp3458108"> </a><div class="pSmartList2"><li>Enter the desired query <b class="cBold">Timeout (milliseconds</b><b class="cBold">) </b>limit.</li></div>
+<a name="wp3458115"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Module</b> (salesforce object) you want to query.</li></div>
+<a name="wp3458124"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Manual input of SOQL Query</b> check box to enter your <b class="cBold">Query</b> in the corresponding field. </li></div>
+<a name="wp3458130"> </a><div class="pSmartList2"><li>Enter your query or relationship query, respecting the SOQL syntax required.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3458136"> </a><p class="pIndented1">
+In this example we want to extract the <em class="cEmphasis">Id</em> and <em class="cEmphasis">CaseNumber</em> fields from the <em class="cEmphasis">Case</em> module as well as the <em class="cEmphasis">Name</em> fields from the <em class="cEmphasis">Account</em> module. The query is therefore: <code class="cCode">&quot;SELECT Id, CaseNumber, Account.Name FROM Case&quot;</code>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3459135"> </a><div class="pSmartList2"><li>Select <b class="cBold">Built-In</b> as the <b class="cBold">Schema</b> and click <b class="cBold">[...]</b> next to <b class="cBold">Edit schema</b> to open the schema editor.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3459152"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tSalesforceInput_Schema_Editor2.png" id="wp3459172" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3459641"> </a><div class="pSmartList2"><li>Edit the schema as required using the <b class="cBold">[+]</b> and <b class="cBold">[x]</b> buttons.</li></div>
+<a name="wp3459644"> </a><div class="pSmartList2"><li>Add a new column for the fields taken from the <em class="cEmphasis">Name</em> column in the <em class="cEmphasis">Account</em> module.</li></div>
+<a name="wp3459228"> </a><div class="pSmartList2"><li>Name this column <em class="cEmphasis">Case_Account_Name</em>.</li></div>
+<a name="wp3459237"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to save the changes and close the schema editor.</li></div>
+<a name="wp3459285"> </a><div class="pSmartList2"><li>Click each <b class="cBold">tLogRow</b> component and set their <b class="cBold">Basic settings</b> as desired. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3459254"> </a><p class="pIndented1">
+In this example there is no need to modify the <b class="cBold">tLogRow</b> settings.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3459315"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to run the Job.<br />The results are displayed in the <b class="cBold">Run</b> tab:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3459325"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tSalesforceInput_RunTab.png" id="wp3459339" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

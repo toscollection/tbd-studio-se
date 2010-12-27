@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:48">
+    <title>Scenario: Checking the format of an e-mail addressl</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLibraryLoad_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPerl_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2931399"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2931405"> </a><h2 class="pHeading2">
+Scenario: Checking the format of an e-mail addressl
+</h2>
+<a name="wp2931752"> </a><p class="pIndented1">
+This scenario uses two components, a <b class="cBold">tLibraryLoad</b> and a <b class="cBold">tJava</b>. The goal of this scenario is to check the format of an e-mail address and verify whether the format is valid or not. 
+</p>
+<a name="wp2931505"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLibraryLoad1.png" id="wp2930256" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2930271"> </a><div class="pSmartList2"><li>In the <b class="cBold">Palette</b>, open the <b class="cBold">Custom_Code</b> folder, and slide a <b class="cBold">tLibraryLoad</b> and <b class="cBold">tJava </b>component onto the workspace.</li></div>
+<a name="wp2930297"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tLibraryLoad</b> to <b class="cBold">tJava</b> using a <b class="cBold">Trigger</b> &gt; <b class="cBold">OnSubjobOk</b> link.</li></div>
+<a name="wp2930308"> </a><div class="pSmartList2"><li>Double click on <b class="cBold">tLibraryLoad</b> to display its <b class="cBold">Basic settings</b>. From the <b class="cBold">Library</b> list, select <em class="cEmphasis">jakarta-oro-2.0.8.jar</em>.</li></div>
+<a name="wp2930327"> </a><div class="pSmartList2"><li>In the <b class="cBold">Import</b> field of the <b class="cBold">Advanced settings</b> tab, type <em class="cEmphasis">import org.apache.oro.text.regex.*;</em></li></div>
+</ul></div>
+</ul></div>
+<a name="wp2930338"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLibraryLoad2.png" id="wp2930335" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2930352"> </a><div class="pSmartList2"><li>Double click on <b class="cBold">tJava</b> to display its <b class="cBold">Component</b> view. </li></div>
+<a name="wp2930359"> </a><div class="pSmartList2"><li>In the <b class="cBold">Basic settings</b> tab, enter your code, as in the screenshot below. The code allows you to check whether the character string pertains to an e-mail address, based on the regular expression: <code class="cCode">&quot;^[\\w_.-]+@[\\w_.-]+\\.[\\w]+$&quot;</code>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2930373"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLibraryLoad3.png" id="wp2930369" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2930384"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to save and run the Job. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2930391"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLibraryLoad4.png" id="wp2930388" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2930400"> </a><p class="pIndented1">
+The <b class="cBold">Console</b> displayes the boolean <em class="cEmphasis">false</em>. Hence, the e-mail address is not valid as the format is incorrect. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLibraryLoad_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPerl_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

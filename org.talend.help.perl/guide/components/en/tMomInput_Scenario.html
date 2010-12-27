@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:55">
+    <title>Scenario: asynchronous communication via a MOM server</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMomInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMomMessageIdList_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1423917"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1425361"> </a><h2 class="pHeading2">
+Scenario: asynchronous communication via a MOM server
+</h2>
+<a name="wp1425376"> </a><p class="pIndented1">
+This scenario is made of two Jobs. The first Job posts messages on a JBoss server queue and the second Job fetches the message from the server.
+</p>
+<a name="wp1424021"> </a><p class="pIndented1">
+In the first Job, a string message is created using a <b class="cBold">tRowGenerator</b> and put on a JBoss server using a <b class="cBold">tMomOutput</b>. An intermediary <b class="cBold">tLogRow</b> component displays the flow being passed.
+</p>
+<a name="wp1423964"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMomInput1.png" id="wp1423969" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1423981"> </a><div class="pSmartList2"><li>Drop the three components required for the first Job from the <b class="cBold">Palette</b> onto the design workspace and right-click to connect them using a <b class="cBold">Main </b>row link.</li></div>
+<a name="wp1424005"> </a><div class="pSmartList2"><li>Double-click on <b class="cBold">tRowGenerator</b> to set the schema to be randomly generated.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1424060"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMomInput2.png" id="wp1424065" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1424080"> </a><div class="pSmartList2"><li>Set just one column called <em class="cEmphasis">message</em>. This is the message to be put on the MOM queue.</li></div>
+<a name="wp1424122"> </a><div class="pSmartList2"><li>This column is of <b class="cBold">String</b> type and is nullable. To produce the data, use a preset function which concatenates randomly chosen ascii characters to form a 6-char string. This function is <code class="cCode">getAsciiRandomString</code>. (Java version). Click the Preview button to view a random sample of data generated.</li></div>
+<a name="wp1424182"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Number of rows to be generated</b> to <em class="cEmphasis">10</em>.</li></div>
+<a name="wp1424204"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate.</li></div>
+<a name="wp1424508"> </a><div class="pSmartList2"><li>The <b class="cBold">tLogRow</b> is only used to display a intermediary state of the data to be handled. In this example, it doesn&#39;t require any specific configuration.</li></div>
+<a name="wp1424254"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tMomOutput </b>component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1424282"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMomInput3.png" id="wp1424296" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1424310"> </a><div class="pSmartList2"><li>In this case, the<b class="cBold"> MQ server</b> to be used is <b class="cBold">JBoss</b>.</li></div>
+<a name="wp1424334"> </a><div class="pSmartList2"><li>In the <b class="cBold">Host</b> and <b class="cBold">Port</b> fields, fill in the relevant connection information.</li></div>
+<a name="wp1424383"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Message type</b> from the list. The message can be of <b class="cBold">Queue</b> or <b class="cBold">Topic</b> type. In this example, select the <b class="cBold">Queue </b>type from the list. </li></div>
+<a name="wp1424358"> </a><div class="pSmartList2"><li>In the <b class="cBold">To</b> field, type in the message source information strictly respecting the syntax expected by the server. This should match the Message Type you selected, such as: <code class="cCode">queue/A</code>.  </li></div>
+<a name="wp1654307"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp1654304" border="0" hspace="0" vspace="0"/><br />
+<br />The message name is case-sensitive, therefore <code class="cCode">queue/A </code>and <code class="cCode">Queue/A</code> are different.
+</p>
+<a name="wp1424481"> </a><div class="pSmartList2"><li>Then click <b class="cBold">Sync Columns</b> to pass on the schema from the preceding component. The schema being read-only, it cannot be changed. The data posted onto the MQ comes from the first schema column encountered.</li></div>
+<a name="wp2946996"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to execute the Job and view the data flow being passed on in the console, thanks to the <b class="cBold">tLogRow</b> component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1425211"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMomInput6.png" id="wp1425285" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1425280"> </a><p class="pIndented1">
+Then set the second Job in order to fetch the queuing messages from the MOM server.
+</p>
+<a name="wp1425214"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMomInput4.png" id="wp1424806" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1425202"> </a><div class="pSmartList2"><li>Drop the <b class="cBold">tMomInput</b> component and a <b class="cBold">tLogRow</b> from the <b class="cBold">Palette</b> to the design workspace.</li></div>
+<a name="wp1424920"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tMomInput</b> to set the parameters.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1424934"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMomInput5.png" id="wp1424942" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1424954"> </a><div class="pSmartList2"><li>Select the <b class="cBold">MQ server</b> from the list. In this example, a JBoss messaging server is used. </li></div>
+<a name="wp1424971"> </a><div class="pSmartList2"><li>Set the server <b class="cBold">Host</b> and <b class="cBold">Port</b> information.</li></div>
+<a name="wp1425010"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Message From</b> and the <b class="cBold">Message Type</b> to match the source and type expected by the messaging server.</li></div>
+<a name="wp1425048"> </a><div class="pSmartList2"><li>The <b class="cBold">Schema</b> is read-only and is made of two columns: <b class="cBold">From</b> and <b class="cBold">Message</b>.</li></div>
+<a name="wp1425085"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Keep listening</b> check box and set the verification frequency to <em class="cEmphasis">5 </em>seconds.</li></div>
+<a name="wp1654361"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp1654358" border="0" hspace="0" vspace="0"/><br />
+<br />When using the <b class="cBold">Keep Listening</b> option, you&#39;ll need to kill the Job to end it.
+</p>
+<a name="wp1425237"> </a><div class="pSmartList2"><li>No need to change any default setting from the <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1425254"> </a><div class="pSmartList2"><li>Save the Job and run it (when launching for the first time or if you killed it on a previous run).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1425293"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMomInput7.png" id="wp1425301" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1425309"> </a><p class="pIndented1">
+The messages fetched on the server are displayed on the console.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMomInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMomMessageIdList_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

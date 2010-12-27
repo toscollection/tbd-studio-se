@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Effectuer une opération d&#39;itération sur des tables et en effacer le contenu grâce à un modèle SQL défini par l&#39;utilisateur (SQL Template) </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlTableList_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tNetezzaBulkExec_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2318623"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2318629"> </a><h2 class="pHeading2">
+Scénario&#160;: Effectuer une opération d&#39;itération sur des tables et en effacer le contenu grâce à un modèle SQL défini par l&#39;utilisateur (SQL Template) 
+</h2>
+<a name="wp2318634"> </a><p class="pIndented1">
+Le scénario Java suivant décrit un Job à trois composants qui permet d&#39;effectuer une opération d&#39;itération, dans les tables spécifiées d&#39;une base de données MySQL, en utilisant une clause de type WHERE. Le Job permet ensuite d&#39;effacer le contenu de ces tables directement sur le SGBD grâce à un modèle SQL (SQL Template) défini par l&#39;utilisateur.
+</p>
+<a name="wp2318638"> </a><p class="pIndented1">
+Pour une utilisation avancée, commencez par créer une connexion à la base de données qui contient les tables que vous voulez vider de leur contenu. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318650"> </a><div class="pSmartList2"><li>Dans la vue en arborescence du <b class="cBold">Repository</b>, développez le noeud <b class="cBold">Metadata</b> puis cliquez droit sur <b class="cBold">DB Connections</b> pour créer une connexion à la base de données de travail et stocker les informations de connexion en local. <br />Pour plus d&#39;informations sur les métadonnées (metadata), consultez le chapitre <em class="cEmphasis">Centraliser les métadonnées</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>.<br />Sinon, déposez un composant <b class="cBold">tMySQLConnection</b> dans l&#39;éditeur graphique et renseignez les paramètres de connexion manuellement. </li></div>
+<a name="wp2318666"> </a><div class="pSmartList2"><li>A partir du <span style="font-weight: bold">Repository</span>, déposez dans l&#39;éditeur graphique la connexion que vous venez de créer. <br />La boîte de dialogue <b class="cBold">[Components]</b> s&#39;affiche à l&#39;écran.</li></div>
+<a name="wp2318682"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tMySQLConnection</b> puis cliquez sur <b class="cBold">OK</b>.<br />Le composant <b class="cBold">tMySQLConnection</b> apparait alors dans l&#39;éditeur graphique et les paramètres de connexion, accessibles depuis la vue Basic settings, sont automatiquement renseignés. </li></div>
+<a name="wp2318695"> </a><div class="pSmartList2"><li>A partir de la Palette, cliquez-déposez les composants <b class="cBold">tMysqlTableList</b> et <b class="cBold">tELT</b> dans l&#39;éditeur graphique. </li></div>
+<a name="wp2318705"> </a><div class="pSmartList2"><li>Reliez les composants <b class="cBold">tMysqlConnection </b>et <b class="cBold">tMysqlTableList </b>à l&#39;aide d&#39;un lien Trigger de type <b class="cBold">OnSubJobOk</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318717"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate.png" id="wp2318714" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318732"> </a><div class="pSmartList2"><li>Reliez les composants <b class="cBold">tMysqlTableList </b>et <b class="cBold">tELT </b>à l&#39;aide d&#39;un lien de type <b class="cBold">Iterate</b>.</li></div>
+<a name="wp2318741"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tMysqlConnection</b> pour afficher la vue <b class="cBold">Basic settings </b>du composant si vous voulez en vérifier les paramètres de connexion. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318750"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate1.png" id="wp2318747" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2318757"> </a><p class="pIndented1">
+Dans cet exemple, on veut se connecter à une base de données MySQL appelée <em class="cEmphasis">examples</em>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318765"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, double-cliquez sur le composant <b class="cBold">tMysqlTableList</b> pour en afficher les paramètres de bases et les définir (vue <b class="cBold">Basic settings</b>).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318780"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate2.png" id="wp2318777" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318788"> </a><div class="pSmartList2"><li>Sélectionnez la connexion MySQL appropriée à partir de la liste déroulante <b class="cBold">Component list</b>, dans le cas où vous utilisez plus d&#39;une connexion. </li></div>
+<a name="wp2318792"> </a><div class="pSmartList2"><li>Renseignez la clause de type WHERE dans le champ approprié, en veillant à utiliser la bonne syntaxe, pour effectuer une itération sur la ou les tables dont vous voulez effacer le contenu.<br />Dans ce scénario, on veut opérer l&#39;itération sur toutes les tables dont le nom commence par &quot;ex&quot;.</li></div>
+<a name="wp2318802"> </a><div class="pSmartList2"><li>Dans l&#39;éditeur graphique, double-cliquez sur le composant <b class="cBold">tELT</b> pour en afficher les paramètres de base et les définir (vue <b class="cBold">Basic settings</b>).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318817"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate3.png" id="wp2318814" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318825"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Database Name</b>, renseignez le nom de la base de données où se trouvent les tables sur lesquelles vous voulez travailler. </li></div>
+<a name="wp2318832"> </a><div class="pSmartList2"><li>Sélectionnez la connexion MySQL appropriée à partir de la liste déroulante <b class="cBold">Component list</b>, dans le cas où vous utilisez plus d&#39;une connexion. </li></div>
+<a name="wp2318842"> </a><div class="pSmartList2"><li>Cliquez dans le champ <b class="cBold">Table name</b> et appuyez sur <b class="cBold">Ctrl+Espace </b>pour atteindre la liste générale des variables.</li></div>
+<a name="wp2318846"> </a><div class="pSmartList2"><li>A partir de cette liste de variables, sélectionnez <em class="cEmphasis">((String)globalMap.get(&quot;tMysqlTableList_1_CURRENT_TABLE&quot;))</em>.</li></div>
+<a name="wp2318858"> </a><p class="pBodyRelative">
+<b class="cBold">Comment créer votre propre modèle SQL (SQL Template)&#160;:</b>
+</p>
+<a name="wp2318868"> </a><div class="pSmartList2"><li>Dans la vue en arborescence du <b class="cBold">Repository</b>, développez successivement les noeuds <b class="cBold">SQL Templates</b> et <b class="cBold">MySQL</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318881"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate4.png" id="wp2318878" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318892"> </a><div class="pSmartList2"><li>Cliquez-droit sur le noeud <b class="cBold">UserDefined</b> et sélectionnez l&#39;option <b class="cBold">Create SQLTemplate</b> à partir de la liste.<br />L&#39;assistant <b class="cBold">New SQLTemplate </b>s&#39;affiche à l&#39;écran.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318904"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate5.png" id="wp2318901" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318909"> </a><div class="pSmartList2"><li>Saisissez un nom pour le nouveau modèle (SQL template) et remplissez les autres champs si nécessaire, puis cliquez sur <b class="cBold">Finish</b> pour fermer l&#39;assistant.<br />L&#39;éditeur de modèle SQL s&#39;affiche dans l&#39;éditeur graphique.</li></div>
+<a name="wp2318916"> </a><div class="pSmartList2"><li>Supprimez le code existant et saisissez le code permettant d&#39;exécuter l&#39;action voulue, c&#39;est-à-dire, ici, effacer le contenu de toutes les tables dont les noms commencent par &quot;ex&quot;.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318925"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate6.png" id="wp2318922" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2340220"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2340217" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Dans un code SQL template, il est impératif d&#39;utiliser le nom exact de la variable, en association avec le paramètre désignant le nom de la table (&quot;__TABLE-NAME__&quot; dans cet exemple). <br />Pour afficher le nom de la variable utilisée, positionnez votre curseur sur le champ <b class="cBold">Table Name </b>de la vue Basic Settings du composant <b class="cBold">tELT</b>. 
+</p>
+<a name="wp2318942"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate7.png" id="wp2318939" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318952"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">Ctrl+S</b> pour sauvegarder le nouveau modèle que vous venez de définir.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318955"> </a><p class="pIndented1">
+La prochaine étape consiste à ajouter ce nouveau modèle SQL template à la liste de modèles du même type dans le composant <b class="cBold">tELT</b>.
+</p>
+<a name="wp2318966"> </a><p class="pBodyRelative">
+<b class="cBold">Comment ajouter votre propre modèle SQL à la liste de modèles du même type&#160;:</b>
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318980"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component </b>du composant <b class="cBold">tELT</b>, cliquez sur l&#39;onglet <b class="cBold">SQL Templates</b> pour afficher la liste de modèles <b class="cBold">SQLTemplate List</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318992"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate8.png" id="wp2318989" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2319001"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Add</b> et ajoutez deux lignes de modèles SQL template.</li></div>
+<a name="wp2319004"> </a><div class="pSmartList2"><li>Cliquez sur la première ligne pour afficher un menu déroulante puis cliquez sur la flèche de ce menu pour dérouler la liste des modèles.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2319013"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMySQLTableList_SQLTemplate9.png" id="wp2319010" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2319019"> </a><div class="pSmartList2"><li>Dans la liste, sélectionnez le modèle SQL template que vous venez de créer. </li></div>
+<a name="wp2319027"> </a><div class="pSmartList2"><li>Assurez-vous que le modèle de la seconde ligne est bien en mode <b class="cBold">Commit</b>.</li></div>
+<a name="wp2319037"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2319043"> </a><p class="pIndented1">
+Toutes les tables de la base de données MySQL <code class="cCode">examples</code> dont le nom commence par &quot;ex&quot; sont alors vidées de leur contenu.
+</p>
+<a name="wp2319052"> </a><h2 class="pHeading2">
+Scénario associé
+</h2>
+<a name="wp2319057"> </a><p class="pIndented1">
+Pour un scénario associé, consultez le <a href="tMysqlColumnList_Scenario.html#wp2313274"><em class="cEmphasis">Scénario&#160;: Itérer une table de base de données et lister le nom des colonnes de la table</em></a>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlTableList_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tNetezzaBulkExec_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

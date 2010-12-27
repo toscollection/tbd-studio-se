@@ -1,0 +1,261 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:29">
+    <title>Scénario&#160;: Appliquer des règles métier à un flux d&#39;entrée afin de filtrer les données correspondantes</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBRMS_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tConvertType_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3673938"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3673943"> </a><h2 class="pHeading2">
+Scénario&#160;: Appliquer des règles métier à un flux d&#39;entrée afin de filtrer les données correspondantes
+</h2>
+<a name="wp3673951"> </a><p class="pIndented1">
+Ce scénario décrit un Job à cinq composants dans lequel le <b class="cBold">tBRMS</b> applique des règles métier Drools Guvnor à un flux d&#39;entrée, afin que les données correspondantes puissent être récupérées en sortie. Dans ce cas, les règles sont appliquées aux données d&#39;entrée concernant des personnes demandant un prêt. La sortie montrera si les personnes peuvent avoir accès au prêt ou pas. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3673960"> </a><div class="pSmartList2"><li>Déposez les composants suivants de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique&#160;: <b class="cBold">tFileInputExcel</b>, <b class="cBold">tMap</b>, <b class="cBold">tBRMS</b>, <b class="cBold">tExtractXMLField</b>, et <b class="cBold">tLogRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3673984"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tBRMS_Components.png" id="wp3673981" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3673999"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tFileInputExcel</b> au <b class="cBold">tMap</b> à l&#39;aide d&#39;un lien <b class="cBold">Row &gt; Main</b>.</li></div>
+<a name="wp3674012"> </a><div class="pSmartList2"><li>Relie le <b class="cBold">tMap</b> au <b class="cBold">tBRMS</b> à l&#39;aide d&#39;un lien <b class="cBold">Row &gt; *New Output* (Main)</b>.</li></div>
+<a name="wp3674027"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tBRMS</b> au <b class="cBold">tExtractXMLField</b> à l&#39;aide d&#39;un lien <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> puis utilisez un autre lien <b class="cBold">Row &gt; Main</b> afin de connecter le <b class="cBold">tExtractXMLField</b> au <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3674048"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tFileInputExcel</b> afin d&#39;ouvrir sa vue <b class="cBold">Basic settings</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674055"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tFileInputExcel_BasicSettings.png" id="wp3674052" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674066"> </a><div class="pSmartList2"><li>A côté du champ <b class="cBold">File name/Stream</b>, cliquez sur le bouton<b class="cBold"> [...]</b> afin de parcourir votre répertoire et sélectionner le fichier Excel contenant les données d&#39;entrée. </li></div>
+<a name="wp3674082"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Sheet list</b>, cliquez sur le bouton <img src="../Images/plus_button.png" id="wp3674076" border="0" hspace="0" vspace="0"/> afin d&#39;ajouter une nouvelle ligne <b class="cBold">Sheet</b> dans le tableau.</li></div>
+<a name="wp3674089"> </a><div class="pSmartList2"><li>Saisissez le nom de la feuille (<b class="cBold">Sheet</b>) contenant les données d&#39;entrée, entre guillemets doubles.</li></div>
+<a name="wp3674097"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Header</b>, saisissez le numéro de la ligne contenant le nom des colonnes.</li></div>
+<a name="wp3674107"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tMap</b> afin d&#39;ouvrir le <b class="cBold">Map Editor</b>:</li></div>
+<a name="wp3674119"> </a><div class="pSmartList2"><li>En haut à droite du <b class="cBold">Map Editor</b>, cliquez sur le bouton  <img src="../Images/plus_button.png" id="wp3674116" border="0" hspace="0" vspace="0"/> afin d&#39;ajouter un schéma de sortie.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674128"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tMap_NewOutput.png" id="wp3674125" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674139"> </a><div class="pSmartList2"><li>Saisissez un nom pour le nouveau schéma dans le champ <b class="cBold">New output</b> puis cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674148"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tMap_Mapped.png" id="wp3674145" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674156"> </a><div class="pSmartList2"><li>Mappez les colonnes et définissez les paramètres selon vos besoins, puis cliquez sur <b class="cBold">Ok</b> pour fermer le <b class="cBold">Map Editor</b>.</li></div>
+<a name="wp3674168"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/Components-13-07-048.jpg" height="50" width="50" align="left" id="wp3674165" border="0" hspace="0" vspace="0"/><br />
+Pour plus d&#39; informations concernant le mapping des schémas et la définition de leurs paramètres, consultez&#160;<em class="cEmphasis">Mapping de flux de données</em> dans le <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp3674191"> </a><div class="pSmartList2"><li>Cliquez sur le <b class="cBold">tBRMS</b> afin d&#39;ouvrir sa vue <b class="cBold">Basic settings</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674198"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/tBRMS_Basic_settings.png" id="wp3674195" border="0" hspace="0" vspace="0"/>
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674210"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3674219"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour ouvrir l&#39;éditeur du schéma.<br />Le schéma d&#39;entrée à gauche est automatiquement récupéré du <b class="cBold">tMap</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674231"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tBRMS_Schemas.png" id="wp3674228" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674242"> </a><div class="pSmartList2"><li>Dans la zone de sortie à droite, cliquez sur le bouton <img src="../Images/plus_button.png" id="wp3674239" border="0" hspace="0" vspace="0"/> pour ajouter une nouvelle colonne qui permettra d&#39;écrire les données de sortie dans un fichier XML.</li></div>
+<a name="wp3674250"> </a><div class="pSmartList2"><li>Saisissez un nom pour la colonne et définissez le <b class="cBold">Type</b> comme String.</li></div>
+<a name="wp3674256"> </a><div class="pSmartList2"><li>A côté du champ <b class="cBold">XML Field</b>, sélectionnez le nom de la colonne XML ajoutée au schéma de sortie.</li></div>
+<a name="wp3674264"> </a><div class="pSmartList2"><li>Saisissez l&#39;URL de Guvnor dans le champ <b class="cBold">Guvnor URL</b>.</li></div>
+<a name="wp3674273"> </a><div class="pSmartList2"><li>Saisissez le nom du <b class="cBold">Guvnor Package</b> et le nom de la classe dans le champ <b class="cBold">Class Name</b> correspondant à la règle métier que vous souhaitez appliquer aux données d&#39;entrée.</li></div>
+<a name="wp3674283"> </a><div class="pSmartList2"><li>A côté du champ <b class="cBold">Module List</b>, cliquez sur le bouton <b class="cBold">[...]</b> afin d&#39;ouvrir la boîte de dialogue <b class="cBold">Deploy Jar</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674295"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tBRMS_DeployJar.png" id="wp3674292" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674303"> </a><div class="pSmartList2"><li>Saisissez l&#39;<b class="cBold">URL</b> ainsi que vos informations d&#39;authentification dans les champs correspondants.</li></div>
+<a name="wp3674312"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> afin de parcourir les fichiers Jar dans la boîte de dialogue <b class="cBold">Select Jar</b><b class="cBold">file</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674325"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/BRMS_Select_Jarfile.png" id="wp3674322" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674330"> </a><div class="pSmartList2"><li>Développez les noeuds à parcourir et sélectionnez le fichier Jar contenant les règles adéquates, puis cliquez sur <b class="cBold">OK</b> afin de fermer la boîte de dialogue.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674342"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/BRMS_Deploy_Jar2.png" id="wp3674339" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674347"> </a><div class="pSmartList2"><li>Dans la liste à côté du fichier Jar sélectionné, choisissez le nom de la classe correspondant puis cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue.<br />Un programme <b class="cBold">Talend</b> transforme la bibliothèque des règles métier de façon à pouvoir l&#39;utiliser dans un Job et crée un fichier XSD à la racine de votre Studio.</li></div>
+<a name="wp3674365"> </a><div class="pSmartList2"><li>Cliquez sur l&#39;onglet <b class="cBold">Advanced Settings</b> afin de définir des paramètres supplémentaires.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674372"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/BRMS_Advanced_settings.png" id="wp3674369" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674383"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">XML mapping</b>, cliquez sur le bouton <b class="cBold">[...]</b> pour configurer l&#39;arborescence XML.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674392"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree.png" id="wp3674389" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674402"> </a><div class="pSmartList2"><li>Cliquez-droit sur la première ligne de la zone <b class="cBold">Link target</b> puis sélectionnez <b class="cBold">Import XML Tree</b>.</li></div>
+<a name="wp3674408"> </a><div class="pSmartList2"><li>Parcourez votre répertoire et sélectionnez le fichier XSD à la racine de votre Studio.</li></div>
+<a name="wp3674416"> </a><div class="pSmartList2"><li>Le schéma XML Tree est rempli automatiquement&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674423"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree2.png" id="wp3674420" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674431"> </a><div class="pSmartList2"><li>Déposez toutes les colonnes adéquates à partir de <b class="cBold">Schema list</b> dans les champs des colonnes correpondantes dans le schéma <b class="cBold">Link target</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674443"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree_attribute.png" id="wp3674440" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674450"> </a><div class="pSmartList2"><li>Dans la boîte de dialogue qui apparaît, sélectionnez l&#39;option <b class="cBold">Create as attribute of target node</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674460"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/brms_xml_tree3.png" id="wp3674457" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674472"> </a><div class="pSmartList2"><li>Cliquez-droit sur le champ <b class="cBold">reason</b> et sélectionnez <b class="cBold">Set As Loop Element</b> dans la liste.</li></div>
+<a name="wp3674479"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue.</li></div>
+<a name="wp3674489"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tExtractXMLField</b> afin d&#39;ouvrir sa vue<b class="cBold"> Basic settings</b>.</li></div>
+<a name="wp3674497"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Edit schema</b> pour ouvrir l&#39;éditeur du schéma.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674504"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tExtractXMLField_Output_schema.png" id="wp3674501" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674509"> </a><div class="pSmartList2"><li>Dans le schéma de sortie, à droite de l&#39;éditeur, ajoutez et configurez les colonnes exactement comme elles apparaissent dans le schéma d&#39;entrée du <b class="cBold">tBRMS</b>.</li></div>
+<a name="wp3674520"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer l&#39;éditeur.</li></div>
+<a name="wp3674529"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Loop XPath query</b>, saisissez le nom du tag racine<b class="cBold"> XML Tree</b>, tel qu&#39;il apparaît dans l&#39;éditeur <b class="cBold">Configure XML Tree </b>du composant <b class="cBold">tBRMS</b>, c&#39;est-à-dire précédé d&#39;un slash et entouré de guillemets doubles, par exemple&#160;: &quot;/loanSimulator&quot;.</li></div>
+<a name="wp3674542"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">XPath query</b>, à côté des colonnes correspondantes, saisissez entre guillemets doubles le nom des champs tels qu&#39;ils apparaissent dans les champs <b class="cBold">XML Tree</b>, dans la zone <b class="cBold">Link Target</b> de l&#39;éditeur <b class="cBold">Configure XML tree</b> du composant <b class="cBold">tBRMS</b>.</li></div>
+<a name="wp3674566"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tLogRow</b> afin d&#39;ouvrir sa vue <b class="cBold">Basic settings</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674573"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tLogRow_BasicSettings.png" id="wp3674570" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3674585"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, sélectionnez l&#39;option <b class="cBold">Table (print values in cells of a table)</b>.</li></div>
+<a name="wp3674591"> </a><div class="pSmartList2"><li>Sauvegardez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.<br />Les résultats sont écrits dans une table de sortie dans la vue <b class="cBold">Run</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3674603"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/tbrms_scenario_result.png" id="wp3674600" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3674609"> </a><p class="pIndented1">
+La règle métier a été appliquée aux données d&#39;entrée et le tableau des résultats indique quelles personnes ont été rejetées. La colonne <b class="cBold">name</b> indique la raison pour laquelle la personne ne pourra obtenir de prêt.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBRMS_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tConvertType_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

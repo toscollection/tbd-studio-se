@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;1&#160;: Afficher le contenu d&#39;un fichier délimité</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputDelimited_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputEBCDIC_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3481283"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3481291"> </a><h2 class="pHeading2">
+Scénario&#160;1&#160;: Afficher le contenu d&#39;un fichier délimité
+</h2>
+<a name="wp3481294"> </a><p class="pIndented1">
+Le scénario suivant est un Job de deux composants ayant pour objectif de lire les lignes d&#39;un fichier, de sélectionner des données délimitées et d&#39;afficher la sortie dans la console de la vue <b class="cBold">Run</b>.
+</p>
+<a name="wp3481305"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/UseCase_tFileInputDelimited1.png" id="wp3481302" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481313"> </a><div class="pSmartList2"><li>Cliquez et déposez un composant <b class="cBold">tFileInputDelimited</b> de la Palette dans l&#39;espace de modélisation.</li></div>
+<a name="wp3481321"> </a><div class="pSmartList2"><li>De la même manière, cliquez et déposez un composant <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3481333"> </a><div class="pSmartList2"><li>Cliquez-droit sur le composant <b class="cBold">tFileInputDelimited</b> et sélectionnez <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> dans le menu contextuel. Puis glissez ce lien vers le <b class="cBold">tLogRow</b> et relâchez lorsque le symbole de prise de courant apparaît.</li></div>
+<a name="wp3481343"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tFileInputDelimited</b> à nouveau et définissez ses propriétés dans l&#39;onglet <b class="cBold">Basic Settings</b>&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481355"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/UseCase_tFileInputDelimited.png" id="wp3481352" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481364"> </a><div class="pSmartList2"><li>Renseignez le chemin d&#39;accès au fichier dans le champ <b class="cBold">File Name</b>. Ce champ est obligatoire.</li></div>
+<a name="wp3481370"> </a><div class="pSmartList2"><li>Définissez le séparateur de lignes dans le champ <b class="cBold">Row separator</b> afin d&#39;identifier la fin d&#39;une ligne. Puis définissez le séparateur de champs dans <b class="cBold">Field separator</b> pour délimiter les champs composant une ligne.</li></div>
+<a name="wp3481383"> </a><div class="pSmartList2"><li>Dans ce scénario, l&#39;en-tête (<b class="cBold">Header</b>) et le pied de page (<b class="cBold">Footer</b>) n&#39;ont pas besoin d&#39;être définis. Et la limite de lignes lues (<b class="cBold">Limit</b> ) est de 50 pour cet exemple.</li></div>
+<a name="wp3481399"> </a><div class="pSmartList2"><li>Sélectionnez soit local (<b class="cBold">Built-in</b>) soit distant (<b class="cBold">Repository</b>) comme <b class="cBold">Schema</b> pour définir les données qui passent par le composant <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3481411"> </a><div class="pSmartList2"><li>Vous pouvez charger et/ou éditer le schéma à l&#39;aide de la fonction <b class="cBold">Edit Schema</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481422"> </a><p class="pIndented1">
+Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> et <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481436"> </a><div class="pSmartList2"><li>Assurez-vous que la case <b class="cBold">Skip empty rows</b> est cochée afin d&#39;ignorer les lignes vierges.</li></div>
+<a name="wp3481439"> </a><div class="pSmartList2"><li>Saisissez l&#39;encodage utilisé dans le fichier d&#39;entrée. Ce paramètre permet d&#39;assurer l&#39;homogénéité de l&#39;encodage dans tous les fichiers d&#39;entrée et de sortie.</li></div>
+<a name="wp3481446"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tLogRow</b> et définissez le séparateur de champs de la sortie affichée. Voir également&#160;: <a href="tLogRow_Prop.html#wp1552782"><em class="cEmphasis">Propriétés du tLogRow</em></a>.</li></div>
+<a name="wp3481456"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Print schema column name in front of each value</b> pour récupérer le libellé des colonnes dans la sortie affichée.</li></div>
+<a name="wp3481468"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Run</b>, puis cliquez sur <b class="cBold">Run</b> pour exécuter le Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481471"> </a><p class="pIndented1">
+Le fichier est lu ligne par ligne et les champs extraits sont affichés dans la console, tel que défini dans les propriétés du composant (dans l&#39;onglet <b class="cBold">Basic settings</b>).
+</p>
+<a name="wp3481482"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/UseCase_tFileInputDelimited3.png" id="wp3481479" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3481487"> </a><p class="pIndented1">
+La console affiche l&#39;en-tête suivi des données lues par le Job.
+</p>
+<a name="wp3481494"> </a><h2 class="pHeading2">
+Scénario&#160;2&#160;: Lire les données d&#39;un fichier distant en mode stream
+</h2>
+<a name="wp3481497"> </a><p class="pIndented1">
+Le scénario suivant illustre un Job à quatre composants ayant pour objectif de récupérer les données d&#39;un fichier volumineux quasiment aussitôt qu&#39;elles ne sont lues afin d&#39;éviter l&#39;attente du téléchargement de l&#39;ensemble du fichier de données, et les affichent dans la console de la vue <b class="cBold">Run</b>. 
+</p>
+<a name="wp3481508"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputDelimited2_1.png" id="wp3481505" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481519"> </a><div class="pSmartList2"><li>Déposez les composants suivants dans l&#39;espace de modélisation&#160;: <b class="cBold">tFileFetch</b>, <b class="cBold">tSleep</b>, <b class="cBold">tFileInputDelimited</b>, et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3481538"> </a><div class="pSmartList2"><li>Reliez les composants <b class="cBold">tSleep</b> et <b class="cBold">tFileInputDelimited</b> via un lien de type <b class="cBold">Trigger</b> &gt; <b class="cBold">OnComponentOk</b> et reliez les composants <b class="cBold">tFileInputDelimited</b> et <b class="cBold">tLogRow</b> via un lien de type <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp3481563"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tFileFetch</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481575"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputDelimited2_2.png" id="wp3481572" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481583"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Protocol</b>, sélectionnez le type de protocole vous permettant d&#39;accéder au serveur sur lequel est stocké votre fichier de données.</li></div>
+<a name="wp3481591"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">URI</b>, saisissez l&#39;URI d&#39;accès au serveur sur lequel est stocké votre fichier.</li></div>
+<a name="wp3481597"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use cache to save the resource</b> pour mettre les données de votre fichier en mémoire cache. Cette option permet d&#39;utiliser le mode stream pour transférer les données du fichier.</li></div>
+<a name="wp3481604"> </a><div class="pSmartList2"><li>A partir de l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tSleep</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+<a name="wp3481623"> </a><div class="pSmartList2"><li>Par défaut, le champ <b class="cBold">Pause</b> du composant <b class="cBold">tSleep</b> correspond à <em class="cEmphasis">1</em> seconde. Laissez ce paramètre par défaut. Il met le deuxième Job en pause afin de laisser le temps au premier Job contenant le <b class="cBold">tFileFetch</b> de lire les données du fichier. </li></div>
+<a name="wp3481633"> </a><div class="pSmartList2"><li>A partir de l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tFileInputDelimited</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481648"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputDelimited2_3.png" id="wp3481645" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481656"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File name/Stream</b>&#160;:<br />- Effacez le contenu par défaut.<br />- Faites un <b class="cBold">Ctrl+Espace</b> pour faire apparaître la liste des variables disponibles à partir de ce composant.<br />- Sélectionnez la variable <em class="cEmphasis">tFileFetch_1_INPUT_STREAM</em> dans la liste d&#39;auto-complétion, la varaible suivante apparaît dans le champ <b class="cBold">Filename</b>&#160;: <code class="cCode">((java.io.InputStream)globalMap.get(&quot;tFileFetch_1_INPUT_STREAM&quot;))</code>.</li></div>
+<a name="wp3481681"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Built-in</b> et cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour décrire la structure des données du fichier que vous souhaitez récupérer. Le fichier <em class="cEmphasis">US_Employees</em> est composé de six colonnes&#160;: <em class="cEmphasis">ID</em>, <em class="cEmphasis">Employee</em>, <em class="cEmphasis">Age</em>, <em class="cEmphasis">Address</em>, <em class="cEmphasis">State</em>, <em class="cEmphasis">EntryDate</em>.  </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481714"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputDelimited2_4.png" id="wp3481711" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481722"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter les six colonnes et paramétrez-les comme indiqué sur la capture d&#39;écran ci-dessus. Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp3481732"> </a><div class="pSmartList2"><li>A partir de l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tLogRow</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+<a name="wp3481745"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Edit schema</b> et assurez-vous que le schéma est récupéré du composant précédent. Sinon, cliquez sur <b class="cBold">Sync Columns</b> pour le récupérer.</li></div>
+<a name="wp3481760"> </a><div class="pSmartList2"><li>A partir de l&#39;espace de modélisation, cliquez sur la vue <b class="cBold">Job</b> et sur l&#39;onglet <b class="cBold">Extra</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481767"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputDelimited2_5.png" id="wp3481764" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481775"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Multi thread execution</b> afin d&#39;exécuter les deux Jobs en parallèle, sachant que le deuxième Job a un retard d&#39;une seconde par rapport au premier comme défini dans le <b class="cBold">tSleep</b>. Cette option permet donc de récupérer les données grâce au <b class="cBold">tFileDelimited</b> quasiment dès leur lecture par le <b class="cBold">tFileFetch</b>.</li></div>
+<a name="wp3481793"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3481800"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputDelimited2_6.png" id="wp3481797" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3481804"> </a><p class="pIndented1">
+Les données sont affichées dans la console dès leur lecture.
+</p>
+<a name="wp3481811"> </a><p class="pIndented1">
+Pour un exemple d&#39;utilisation du schéma dynamique dans le <b class="cBold">tFileInputDelimited</b>, consultez&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3481820"> </a><div class="pSmartList2"><li><a href="tMysqlOutput_Scenario.html#wp3662803"><em class="cEmphasis">Scénario 4&#160;: Ecrire des colonnes dynamiques d&#39;un fichier source vers une base de données MySQL</em></a></li></div>
+</ul></div>
+</ul></div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputDelimited_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputEBCDIC_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

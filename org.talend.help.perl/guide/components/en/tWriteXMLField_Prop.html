@@ -1,0 +1,306 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:45">
+    <title>tWriteXMLField</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputXML_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tWriteXMLField_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2275796"> </a><h2 class="pHeading1">
+tWriteXMLField
+</h2>
+<a name="wp2275805"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tWriteXMLField_icon32_white.png" id="wp2275800" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2275812"> </a><h2 class="pHeading2">
+tWriteXMLField properties
+</h2>
+<a name="wp2275960"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2275820table2275815">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2275820"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2275822"> </a><div class="pCellBody">
+XML
+</div>
+</td>
+    <td><a name="wp2275831"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-16-12-04.jpg" height="59" width="112" id="wp2275827" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2275836"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2275841"> </a><div class="pCellBody">
+<b class="cBold">tWriteXMLField</b> outputs data to defined fields of the output XML file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2275848"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2275853"> </a><div class="pCellBody">
+<b class="cBold">tWriteXMLField </b>reads an input XML file and extracts the structure to insert it in defined fields of the output file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2275860"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2275865"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output Column</em>
+</div>
+</td>
+    <td><a name="wp2275867"> </a><div class="pCellBody">
+Select the destination field in the output component where you want to write the XML structure.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2275869"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2275874"> </a><div class="pCellHeading">
+<em class="cEmphasis">Configure Xml Tree</em>
+</div>
+</td>
+    <td><a name="wp2275876"> </a><div class="pCellBody">
+Opens the interface that supports the creation of the XML structure you want to write in a field. For more information about the interface, see <a href="tAdvancedFileOutputXML_Prop.html#wp1542108"><em class="cEmphasis">Defining the XML tree</em></a>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2275881"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2275888"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2275891"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2275893"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2275895"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2278391"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: You create the schema and store it locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> User Guide.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2275908"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2275910"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2278499"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: You already created the schema and stored it in the Repository, hence can be reused in various projects and job flowcharts. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> User Guide.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2275923"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2275928"> </a><div class="pCellHeading">
+<em class="cEmphasis">Sync columns</em>
+</div>
+</td>
+    <td><a name="wp2275930"> </a><div class="pCellBody">
+Click to synchronize the output file schema with the input file schema. The Sync function only displays once the Row connection is linked with the output component.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2275932"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2275937"> </a><div class="pCellHeading">
+<em class="cEmphasis">Group by</em>
+</div>
+</td>
+    <td><a name="wp2275939"> </a><div class="pCellBody">
+Define the aggregation set, the columns you want to use to regroup the data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2749654"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2749659"> </a><div class="pCellHeading">
+<em class="cEmphasis">Remove the xml declaration</em>
+</div>
+</td>
+    <td><a name="wp2749662"> </a><div class="pCellBody">
+Select this check box if you do not want to include the XML header.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2749664"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2749668"> </a><div class="pCellHeading">
+<em class="cEmphasis">Create empty element if needed</em>
+</div>
+</td>
+    <td><a name="wp2749671"> </a><div class="pCellBody">
+This check box is selected by default. If the <b class="cBold">Related Column</b> in the interface that supports the creation of the XML structure has null values, or if no column is associated with the XML node, this option creates an open/close tag in the expected place.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2749673"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2749678"> </a><div class="pCellHeading">
+<em class="cEmphasis">Create associated XSD file</em>
+</div>
+</td>
+    <td><a name="wp2749895"> </a><div class="pCellBody">
+If one of the XML elements is defined as a Namespace element, this option will create the corresponding XSD file. 
+</div>
+<a name="wp2749909"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2749903" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+To use this option, you must select the <b class="cBold">Dom4J </b>generation mode.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2749684"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2749689"> </a><div class="pCellHeading">
+<em class="cEmphasis">Advanced separator (for number)</em>
+</div>
+</td>
+    <td><a name="wp2749692"> </a><div class="pCellBody">
+Select this check box if you want to modify the separators used by default for numbers.<br /><b class="cBold">Thousands separator</b>: enter between brackets the separators to use for thousands.<br /><b class="cBold">Decimal separator</b>: enter between brackets the separators to use for decimals.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2749701"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2749706"> </a><div class="pCellHeading">
+<em class="cEmphasis">Generation mode</em>
+</div>
+</td>
+    <td><a name="wp2749709"> </a><div class="pCellBody">
+Select in the list the faster or slower generation mode according to the available memory in your system:<br /><b class="cBold">Fast but memory-consuming - Dom4J</b>,<br /><b class="cBold">Slow with no memory consumed</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2749711"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2749716"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding Type</em>
+</div>
+</td>
+    <td><a name="wp2749813"> </a><div class="pCellBody">
+Select the encoding type in the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory when working with databases. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2749721"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2749727"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2749840"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2275944"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2275946"> </a><div class="pCellBody">
+This component can be used as intermediate step in a data flow.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2275953"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2275955"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputXML_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tWriteXMLField_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

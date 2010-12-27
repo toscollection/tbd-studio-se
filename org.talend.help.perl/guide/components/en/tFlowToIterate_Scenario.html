@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:17">
+    <title>Scenario: Transforming data flow to a list</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFlowToIterate_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tForeach_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1566763"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1567364"> </a><h2 class="pHeading2">
+Scenario: Transforming data flow to a list
+</h2>
+<a name="wp1567367"> </a><p class="pIndented1">
+The following scenario describes a Job that reads a list of files from a defined input file<em class="cEmphasis">, </em>iterates on each of the files, selects input data and displays the output on the <b class="cBold">Run </b>log console.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1567386"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tFileInputDelimited</b> (x2), <b class="cBold">tFlowToIterate</b>, and <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1567471"> </a><div class="pSmartList2"><li>Via a right-click on each of the components, connect the first <b class="cBold">tFileInputdelimited</b> to <b class="cBold">tFlowToIterate</b> using a <b class="cBold">Row Main</b> link, <b class="cBold">tFlowToIterate</b> to the second <b class="cBold">tFileInputdelimited</b> using an <b class="cBold">Iterate </b>link, and the second <b class="cBold">tFileInputdelimited</b> to <b class="cBold">tLogRow</b> using a <b class="cBold">Row Main</b> link.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1569636"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFlowToIterate1.png" id="wp1569658" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1569653"> </a><div class="pSmartList2"><li>In the design workspace, select the first <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp1571199"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to display the relevant view where you can define the basic settings for <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp1585997"> </a><div class="pSmartList2"><li> In the <b class="cBold">Basic settings </b>view, click the three-dot <b class="cBold">[...]</b> button next to the <b class="cBold">File Name </b>field to select the path to the input file. </li></div>
+<a name="wp1654351"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp1654348" border="0" hspace="0" vspace="0"/><br />
+<br />The <b class="cBold">File Name</b> field is mandatory.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp1586030"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFlowToIterate2.png" id="wp1570690" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1586162"> </a><p class="pIndented1">
+The input file used in this scenario is called <em class="cEmphasis">Customers.</em> It is a text file that holds three other simple text files: <em class="cEmphasis">Name</em>, <em class="cEmphasis">E-mail </em>and <em class="cEmphasis">Address</em>. The first text file, <em class="cEmphasis">Name</em>, is made of one column holding customers&#39; names. The second text file, <em class="cEmphasis">E-mail</em>, is made of one column holding customers&#39; e-mail addresses. The third text file, <em class="cEmphasis">Address</em>, is made of one column holding customers&#39; postal addresses.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1586050"> </a><div class="pSmartList2"><li>Fill in all other fields as needed. For more information, see <a href="tFileInputDelimited_Prop.html#wp3478746"><em class="cEmphasis">tFileInputDelimited properties</em></a>. In this scenario, the header and the footer are not set and there is no limit for the number of processed rows</li></div>
+<a name="wp1570781"> </a><div class="pSmartList2"><li>Click <b class="cBold">Edit schema </b>to describe the data structure of this input file. In this scenario, the schema is made of one column, <em class="cEmphasis">FileName.</em></li></div>
+</ul></div>
+</ul></div>
+<a name="wp1570524"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFlowToIterate7.png" id="wp1570800" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1570795"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tFlowToIterate</b>.</li></div>
+<a name="wp1571216"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for <b class="cBold">tFlowToIterate</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1566975"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFlowToIterate3.png" id="wp1570817" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1570812"> </a><div class="pSmartList2"><li>If needed, select the <b class="cBold">Use the default (key, value) in global variables</b> check box to use the default value of the global variable.</li></div>
+<a name="wp1570472"> </a><div class="pSmartList2"><li>Click the plus button to add new parameter lines and define your variables. </li></div>
+<a name="wp1571037"> </a><div class="pSmartList2"><li>Click in the <b class="cBold">key </b>cell to modify the variable name as desired.</li></div>
+<a name="wp1654307"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp1654304" border="0" hspace="0" vspace="0"/><br />
+You can press <b class="cBold">Ctrl+Space </b>in the <b class="cBold">key </b>cell to access the list of global and user-specific variables.
+</p>
+<a name="wp1571051"> </a><div class="pSmartList2"><li>In the design workspace, select the second <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp1585467"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for the second <b class="cBold">tFileInputDelimited</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1585474"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFlowToIterate4.png" id="wp1585471" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1585482"> </a><div class="pSmartList2"><li>In the <b class="cBold">File Name </b>field, enter the file name using the variable containing the name of the file. You must use the correct syntax according to the language used, Perl or Java. In Perl, the relevant syntax is <em class="cEmphasis">.$_globals{tFlowToIterate}{`Name_of_File}.</em>In java, the relevant syntax is <em class="cEmphasis">+globalMap.get(&quot;file&quot;)</em>.</li></div>
+<a name="wp1585487"> </a><div class="pSmartList2"><li>Fill in all other fields as needed. For more information, see <a href="tFileInputDelimited_Prop.html#wp3478746"><em class="cEmphasis">tFileInputDelimited properties</em></a>.</li></div>
+<a name="wp1585496"> </a><div class="pSmartList2"><li>In the design workspace, select the last component, <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1571261"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for <b class="cBold">tLogRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1567049"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFlowToIterate6.png" id="wp1569929" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1569912"> </a><div class="pSmartList2"><li>Define your settings as needed. For more information, see <a href="tLogRow_Prop.html#wp1448725"><em class="cEmphasis">tLogRow properties</em></a>.</li></div>
+<a name="wp1569942"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6 </b>to execute it</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1585640"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFlowToIterate5.png" id="wp1586578" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1586573"> </a><p class="pIndented1">
+Customers&#39; names, customers&#39; e-mails, and customers&#39; postal addresses display on the console preceded by the schema column name.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFlowToIterate_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tForeach_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

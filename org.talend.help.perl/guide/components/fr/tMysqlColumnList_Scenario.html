@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Itérer une table de base de données et lister le nom des colonnes de la table</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlColumnList_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlCommit_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2313268"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2313274"> </a><h2 class="pHeading2">
+Scénario&#160;: Itérer une table de base de données et lister le nom des colonnes de la table
+</h2>
+<a name="wp2313279"> </a><p class="pIndented1">
+Le scénario Java suivant permet de créer un Job à cinq composants. Ce Job permet d&#39;itérer une table donnée à partir d&#39;une base de données MySQL en utilisant la commande Where et de lister tous les libellés des colonnes de la table.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2313285"> </a><div class="pSmartList2"><li>Dans la palette, cliquez sur chacun des composants suivants et déposez-les dans l&#39;espace de modélisation&#160;: <b class="cBold">tMysqlConnection</b>, <b class="cBold">tMysqlTableList</b>, <b class="cBold">tMysqlColumnList</b>, <b class="cBold">tFixedFlowInput</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2313314"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tMysqlConnection </b>au <b class="cBold">tMysqlTableList </b>par le biais d&#39;un lien <b class="cBold">OnSubJobOk</b>.</li></div>
+<a name="wp2313326"> </a><div class="pSmartList2"><li>Reliez les composants <b class="cBold">tMysqlTableList</b>, <b class="cBold">tMysqlColumnList</b> et <b class="cBold">tFixedFlowInput </b>à l&#39;aide de liens <b class="cBold">Iterate</b>.</li></div>
+<a name="wp2313344"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tFixedFlowInput</b> au <b class="cBold">tLogRow </b>par le biais d&#39;un lien <b class="cBold">Row Main</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2313351"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlTableList.png" id="wp2313348" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2313359"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tMysqlConnection</b> et cliquez sur la vue <b class="cBold">Component</b> pour définir les paramètres de base.</li></div>
+<a name="wp2313369"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b>, entrez manuellement les propriétés de connexion à la base de données ou sélectionnez-les à partir de la liste des variables de contexte&#160;: appuyez simultanément sur les touches <b class="cBold">Ctrl+Espace</b> puis cliquez sur le champ correspondant si vous avez stocké les informations en local sous le noeud <b class="cBold">DB Connections</b> du répertoire <b class="cBold">Metadata</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2313385"> </a><p class="pIndented1">
+Pour plus d&#39;informations sur les métadonnées, veuillez consulter la section <em class="cEmphasis">Centraliser les métadonnées</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp2313397"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlTableList1.png" id="wp2313394" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2313404"> </a><p class="pIndented1">
+Dans cet exemple, on veut se connecter à une base de données MySQL appelée <em class="cEmphasis">customers</em>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3036781"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tMysqlTableList</b> et cliquez sur la vue <b class="cBold">Component</b> pour définir ses paramètres de base.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3036796"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlTableList2.png" id="wp3036793" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3036803"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Component list</b>, sélectionnez le composant de connexion MySQL adéquat si vous utilisez plus d&#39;une connexion.</li></div>
+<a name="wp3036807"> </a><div class="pSmartList2"><li>Renseignez la condition Where en utilisant la bonne syntaxe dans le champ correspondant pour itérer les noms de la ou des tables que vous voulez lister dans la console.<br />Dans ce scénario, on veut itérer la table appelée <em class="cEmphasis">customer</em>.</li></div>
+<a name="wp2313449"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tMysqlColumnList</b> et cliquez sur la vue <b class="cBold">Component</b> pour paramétrer ses propriétés de base.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2313461"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlTableList3.png" id="wp2313458" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2313469"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Component list</b>, sélectionnez le composant de connexion MySQL adéquat si vous utilisez plus d&#39;une connexion.</li></div>
+<a name="wp2313476"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table name</b>, saisissez le nom de la table dont vous souhaitez lister les libellés de colonnes.<br />Dans ce scénario, l&#39;objectif est de lister les libellés des colonnes de la table <em class="cEmphasis">customer</em>.</li></div>
+<a name="wp2313486"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tFixedFlowInput</b> et cliquez sur la vue <b class="cBold">Component</b> pour paramétrer ses propriétés de base.</li></div>
+<a name="wp2313499"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Schema</b>, sélectionnez l&#39;option <b class="cBold">Built-In</b> et cliquez sur le bouton <b class="cBold">[...] </b>à côté du champ <b class="cBold">Edit Schema </b>pour définir les données que vous souhaitez utiliser en entrée. Dans ce scénario, le schéma est composé de deux colonnes&#160;: la première <em class="cEmphasis">TableName</em> correspond au nom de la table MySQL et la deuxième <em class="cEmphasis">ColumnName</em> correspond aux libellés des colonnes.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2313520"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlTableList5.png" id="wp2313517" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2313528"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue et une nouvelle boîte de dialogue apparaît vous demandant si vous souhaitez propager ces modifications, acceptez en cliquant sur <b class="cBold">Yes</b>. Les colonnes définies apparaissent dans le champ <b class="cBold">Values</b> de la vue <b class="cBold">Basic settings</b>.</li></div>
+<a name="wp2313547"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Values</b>, cliquez sur chacune des cellules de la colonne <b class="cBold">Value</b> pour définir le contenu des colonnes de la table MySQL et appuyez sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste des variables globales.</li></div>
+<a name="wp2313554"> </a><div class="pSmartList2"><li>Dans la liste des variables globales, selectionnez&#160;: <em class="cEmphasis">((String)globalMap.get(&quot;tMysqlTableList_1_CURRENT_TABLE&quot;))</em> pour la colonne <em class="cEmphasis">TableName</em> et <br /><em class="cEmphasis">((String)globalMap.get(&quot;tMysqlColumnList_1_COLUMN_NAME&quot;))</em> pour la colonne <em class="cEmphasis">ColumnName</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2313575"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlTableList4.png" id="wp2313572" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2313584"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2313593"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> et paramétrez les propriétés de base du <b class="cBold">tLogRow</b> en fonction de vos besoins.</li></div>
+<a name="wp2313602"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2313609"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlTableList6.png" id="wp2313606" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2313615"> </a><p class="pIndented1">
+Le nom de la table MySQL et le libellé de ses colonnes sont affichés dans la console.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlColumnList_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlCommit_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

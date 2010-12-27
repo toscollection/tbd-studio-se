@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:29">
+    <title>Scénario&#160;: Filtrer une liste de noms et faire une recherche dans la liste</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFilterRow_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMap_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2814463"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2814468"> </a><h2 class="pHeading2">
+Scénario&#160;: Filtrer une liste de noms et faire une recherche dans la liste
+</h2>
+<a name="wp2814473"> </a><p class="pIndented1">
+Le scénario suivant permet de filtrer une liste de prénoms en fonction du genre des noms. Il effectue ensuite une liste des prénoms commençant par <em class="cEmphasis">rom</em> en utilisant une expression régulière. 
+</p>
+<a name="wp2814484"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFilterRow1.png" id="wp2814481" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2814492"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, cliquez-déposez les composants suivants dans l&#39;éditeur graphique&#160;: le <b class="cBold">tFileInputDelimited</b>, le <b class="cBold">tFilterRow</b> et le <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2814514"> </a><div class="pSmartList2"><li>Connectez le <b class="cBold">tFileInputDelimited</b> au <b class="cBold">tFilterRow</b> à l&#39;aide d&#39;un lien <b class="cBold">Row Main</b> comme ci-dessus. Ensuite, connectez le <b class="cBold">tFilterRow</b> au <b class="cBold">tLogRow</b>, à l&#39;aide d&#39;un lien <b class="cBold">Row Filter</b>. </li></div>
+<a name="wp2814531"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, cliquez sur le composant <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp2814540"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tFileInputDelimited</b>.<br />Dans ce Job, les propriétés et le schéma sont en mode <b class="cBold">Built-in</b>. Les informations ne seront donc pas récupérées à partir des données stockées dans le <b class="cBold">Repository</b>.</li></div>
+<a name="wp2814559"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...] </b>à côté du champ <b class="cBold">File Name </b>pour définir le chemin d&#39;accès au fichier d&#39;entrée. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2814568"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFilterRow2.png" id="wp2814565" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2814579"> </a><div class="pSmartList2"><li>Renseignez les séparateurs de lignes (<b class="cBold">Row Separator</b>) et de champs (<b class="cBold">Field Separator</b>). Le séparateur de lignes est constitué d&#39;un retour chariot et le séparateur de champs d&#39;une tabulation.</li></div>
+<a name="wp2814589"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> du champ <b class="cBold">Edit schema </b>pour définir la structure des données du fichier d&#39;entrée. Dans ce scénario, le schéma est composé de quatre colonnes&#160;: <em class="cEmphasis">firstname</em>, <em class="cEmphasis">gender</em>, <em class="cEmphasis">language</em> et <em class="cEmphasis">frequency</em>. Dans la colonne <b class="cBold">Type</b>, sélectionnez <b class="cBold">String</b> pour les quatre lignes.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2814616"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFilterRow3.1.png" id="wp2814613" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2814624"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour valider et fermer l&#39;éditeur. Une boîte de dialogue s&#39;ouvre et vous demande si vous voulez propager les changements. Cliquez sur <b class="cBold">Yes</b> (oui).</li></div>
+<a name="wp2814634"> </a><div class="pSmartList2"><li>A partir de l&#39;onglet <b class="cBold">Advanced settings</b>, sélectionnez dans la liste le type d&#39;encodage (<b class="cBold">Encoding type</b>) à utiliser en fonction de votre fichier. </li></div>
+<a name="wp2814648"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, cliquez sur le composant <b class="cBold">tFilterRow</b>.</li></div>
+<a name="wp2814657"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour définir la configuration de base (<b class="cBold">Basic settings</b>) du <b class="cBold">tFilterRow</b>.</li></div>
+<a name="wp2814669"> </a><div class="pSmartList2"><li>Sélectionnez l&#39;option <b class="cBold">And</b> comme opérateur logique (<b class="cBold">Logical operator used to combine conditions</b>) dans ce scénario pour combiner les deux types de conditions (simple et avancé).</li></div>
+<a name="wp2814677"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Conditions</b>, renseignez les paramètres de filtrage par rapport à la colonne <em class="cEmphasis">gender</em>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2814689"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFilterRow4.png" id="wp2814686" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2814703"> </a><div class="pSmartList2"><li>Sélectionnez l&#39;option <b class="cBold">gender </b>dans la colonne <b class="cBold">InputColumn</b><b class="cBold">,</b> <b class="cBold">Match</b> dans la colonne <b class="cBold">Function</b>, <b class="cBold">== </b>dans la colonne <b class="cBold">Operator</b>.</li></div>
+<a name="wp2814725"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Value</b>, entrez la valeur <em class="cEmphasis">m</em> entre guillemets pour filtrer uniquement les noms masculins. </li></div>
+<a name="wp2814732"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use advanced mode</b> pour implémenter une recherche sur les noms commençant par la syllabe puis entrez l&#39;expression régulière Java suivante qui comprend le nom de la colonne dans laquelle effectuer la recherche&#160;: input_row.firstname.matches(&quot;^rom.*&quot;) </li></div>
+<a name="wp2814743"> </a><div class="pSmartList2"><li>Le composant <b class="cBold">tLogRow</b> ne requiert aucun paramétrage particulier pour ce Job. </li></div>
+<a name="wp2814751"> </a><div class="pSmartList2"><li>Enregistrez le Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2814758"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFilterRow5.png" id="wp2814755" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2814767"> </a><p class="pIndented1">
+Seuls les prénoms masculins commençant par la syllabe <em class="cEmphasis">rom</em> sont listés dans la console. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFilterRow_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMap_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:17">
+    <title>Scénario&#160;: Itération sur des fichiers et fusion de contenu</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tUnite_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tWaitForFile_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2934681"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2934688"> </a><h2 class="pHeading2">
+Scénario&#160;: Itération sur des fichiers et fusion de contenu
+</h2>
+<a name="wp2934691"> </a><p class="pIndented1">
+Le Job suivant effectue une itération sur une liste de fichiers puis fusionne leur contenu et affiche le contenu final des deux colonnes dans la console.
+</p>
+<a name="wp2934699"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tUnite1.png" id="wp2934696" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2934707"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants dans l&#39;espace de modélisation&#160;: <b class="cBold">tFileList</b>, <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tUnite</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2934729"> </a><div class="pSmartList2"><li>Connectez le composant <b class="cBold">tFileList</b> au <b class="cBold">tFileInputDelimited</b> à l&#39;aide d&#39;un lien <b class="cBold">Iterate</b> et connectez les autres composants à l&#39;aide de liens <b class="cBold">Row main</b>.</li></div>
+<a name="wp2934742"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tFileList</b>, sélectionnez le répertoire dans lequel les fichiers à fusionner sont stockés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2934751"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tUnite2.png" id="wp2934748" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2934769"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Case Sensitive</b>, sélectionnez <b class="cBold">Yes</b> (Oui) si vous souhaitez tenir compte de la casse, ou <b class="cBold">No</b> (Non) si vous ne vous voulez pas la prendre en compte. Pour cet exemple, sélectionnez <b class="cBold">Yes</b>.</li></div>
+<a name="wp2935470"> </a><div class="pSmartList2"><li>Les fichiers sont très basiques et contiennent une liste de pays et leur score respectif.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2934782"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tUnite5.png" id="wp2934779" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2934794"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tFileInputDelimited</b> et affichez son onglet <b class="cBold">Basic settings.</b></li></div>
+<a name="wp2934797"> </a><div class="pSmartList2"><li>Dans cet exemple, les paramètres de connexion des fichiers d&#39;entrée ne sont pas stockés dans les métadonnées du <b class="cBold">Repository</b>. Ainsi, sélectionnez l&#39;option <b class="cBold">Built-In </b>dans le champ <b class="cBold">Property type</b> et paramétrez les propriétés manuellement.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2934815"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tUnite3.png" id="wp2934812" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2934826"> </a><div class="pSmartList2"><li>Pour renseigner le champ <b class="cBold">File Name</b>, appuyez sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste des variables. Pour traiter tous les fichiers du répertoire défini dans le composant <b class="cBold">tFileList</b>, sélectionnez <code class="cCode">tFileList.CURRENT_FILEPATH</code> dans la liste des variables globales.</li></div>
+<a name="wp2934842"> </a><div class="pSmartList2"><li>Conservez les paramètres par défaut des champs <b class="cBold">Row</b> et <b class="cBold">Field separators</b>, ainsi que des autres champs.</li></div>
+<a name="wp2934849"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Edit Schema</b> et définissez manuellement le schéma à deux colonnes pour qu&#39;il corresponde au contenu des fichiers d&#39;entrée.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2934858"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tUnite4.png" id="wp2934855" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2934869"> </a><div class="pSmartList2"><li>Pour cet exemple, les deux colonnes sont <em class="cEmphasis">Country</em> et <em class="cEmphasis">Points</em>. Elles peuvent toutes les deux prendre une valeur nulle, ainsi cochez les cases de la colonne <b class="cBold">Nullable</b>.</li></div>
+<a name="wp2935507"> </a><div class="pSmartList2"><li>La colonne <em class="cEmphasis">Country</em> sera de type String, et la colonne <em class="cEmphasis">Points</em> sera de type Integer.</li></div>
+<a name="wp2934879"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour valider les paramètres, puis acceptez la propagation du schéma dans le reste du Job.</li></div>
+<a name="wp2934889"> </a><div class="pSmartList2"><li>Puis sélectionnez le composant <b class="cBold">tUnite</b> et affichez la vue <b class="cBold">Component</b>. Notez que le schéma de sortie reflète exactement celui d&#39;entrée et qu&#39;il est en lecture seule.</li></div>
+<a name="wp2934901"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b> du composant <b class="cBold">tLogRow</b>, cochez la case <b class="cBold">Print values in cells of the table</b> pour afficher correctement les valeurs de sortie.</li></div>
+<a name="wp2934908"> </a><div class="pSmartList2"><li>Enregistrez le Job et exécutez-le.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2934915"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tUnite6.png" id="wp2934912" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2934921"> </a><p class="pIndented1">
+La console affiche les données des différents fichiers, fusionnées dans une seule table.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tUnite_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tWaitForFile_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

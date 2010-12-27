@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario&#160;: Supprimer des données de l&#39;objet Account</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutputBulk_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2211021"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2211028"> </a><h2 class="pHeading2">
+Scénario&#160;: Supprimer des données de l&#39;objet Account
+</h2>
+<a name="wp2504135"> </a><p class="pIndented1">
+Ce scénario décrit un Job à deux composants permettant de supprimer une entrée de l&#39;objet Account.
+</p>
+<a name="wp2504143"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutput1.png" id="wp2504153" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2504221"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants <b class="cBold">tSalesforceInput</b> et <b class="cBold">tSalesforceOutput</b> de la <b class="cBold">Palette</b> dans le Job Designer.</li></div>
+<a name="wp2504235"> </a><div class="pSmartList2"><li>Reliez-les via un lien de type <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp2504246"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tSalesforceInput</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2504256"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutput2.png" id="wp2504273" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2504276"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Repository</b> si vous avez stocké la connexion au serveur Salesforce dans les métadonnées du Repository. Les autres champs seront renseignés automatiquement. Si vous n&#39;avez pas stocké la connexion dans les métadonnées, sélectionnez <b class="cBold">Built-in</b> dans la liste et renseignez les champs manuellement.</li></div>
+<a name="wp2504437"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Salesforce WebService URL</b>, laissez l&#39;URL du service Web Salesforce par défaut ou saisissez l&#39;URL à laquelle vous souhaitez accéder.</li></div>
+<a name="wp2504465"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez votre identifiant et votre mot de passe de connexion au service Web.</li></div>
+<a name="wp2504575"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Module</b>, sélectionnez l&#39;objet auquel vous souhaitez accéder. Dans ce scénario, l&#39;objectif est d&#39;accéder à l&#39;objet <b class="cBold">Account</b>.</li></div>
+<a name="wp2504588"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Repository</b> puis cliquez sur le bouton<b class="cBold"> [...] </b>pour sélectionner le schéma du repository que vous souhaitez utiliser pour le composant. Si vous n&#39;avez pas enregistré le schéma dans les métadonnées du repository, sélectionnez <b class="cBold">Built-in</b> dans la liste <b class="cBold">Schema</b> et cliquez sur le bouton <b class="cBold">[...]</b> à coté du champ <b class="cBold">Edit schema</b> et paramétrer le schéma manuellement.</li></div>
+<a name="wp2504607"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Query Condition</b>, saisissez la requête que vous souhaitez appliquer. Pour ce scénario, l&#39;objectif est de récupérer le ou les clients dont le nom est <em class="cEmphasis">sForce</em>., ainsi, saisissez la requête&#160;: <code class="cCode">&quot;name=&#39;sForce&#39;&quot;</code>.</li></div>
+<a name="wp2504729"> </a><div class="pSmartList2"><li>Pour une requête plus avancée, cochez la case <b class="cBold">Manual input of SOQL query</b> et saisissez-la manuellement. </li></div>
+<a name="wp2505017"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tSalesforceOutput</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2505029"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutput3.png" id="wp2505026" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2505036"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Salesforce WebService URL</b>, laissez l&#39;URL du service Web Salesforce par défaut ou saisissez l&#39;URL à laquelle vous souhaitez accéder.</li></div>
+<a name="wp2505046"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez votre identifiant et votre mot de passe de connexion au service Web.</li></div>
+<a name="wp2505112"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Action</b>, sélectionnez l&#39;action que vous souhaitez effectuer. Ici, sélectionnez <b class="cBold">Delete</b> pour supprimer le compte <em class="cEmphasis">sForce</em> sélectionné dans le composant précédent.  </li></div>
+<a name="wp2505053"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Module</b>, sélectionnez l&#39;objet auquel vous souhaitez accéder. Dans ce scénario, l&#39;objectif est d&#39;accéder à l&#39;objet <b class="cBold">Account</b>.</li></div>
+<a name="wp2504963"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent.</li></div>
+<a name="wp2505259"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2504893"> </a><p class="pIndented1">
+Consultez le contenu de l&#39;objet <b class="cBold">Account</b> et vérifiez que le compte <em class="cEmphasis">sForce</em> a été supprimé du serveur.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutputBulk_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

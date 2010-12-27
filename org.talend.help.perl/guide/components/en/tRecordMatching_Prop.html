@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>tRecordMatching</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tQASBatchAddressRow_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRecordMatching_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3540141"> </a><h2 class="pHeading1">
+tRecordMatching
+</h2>
+<a name="wp3540150"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tRecordMatching_icon32.png" id="wp3540145" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3540159"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3540154" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+This component is available in the <b class="cBold">Palette</b> of the studio on the condition that you have subscribed to the relevant edition of <b class="cBold">Talend Data Quality</b>.
+</div>
+<a name="wp3540170"> </a><h2 class="pHeading2">
+tRecordMatching properties
+</h2>
+<a name="wp3540426"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3540178table3540173">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540178"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp3540180"> </a><div class="pCellBody">
+Data Quality
+</div>
+</td>
+    <td><a name="wp3540188"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp3540185" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540193"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3540198"> </a><div class="pCellBody">
+<b class="cBold">tRecordMatching </b>joins two tables by doing a fuzzy match on several columns using a wide variety of comparison algorithms. It compares columns from the main flow with reference columns from the lookup flow and outputs the match data, the possible match data and the rejected data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540205"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3540207"> </a><div class="pCellBody">
+Helps ensuring the data quality of any source data against a reference data source.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540214"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3540221"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3540224"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540226"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540228"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540233"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: You create and store the schema locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540244"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540246"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540251"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: You have already created and stored the schema in the Repository. You can reuse it in other projects and job designs. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540262"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540266"> </a><div class="pCellHeading">
+<em class="cEmphasis">Replace output column with lookup columnn if matches or possible matches</em>
+</div>
+</td>
+    <td><a name="wp3540269"> </a><div class="pCellBody">
+Select this check box to replace the output column with the lookup column in case of match or possible match values.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540274"> </a><div class="pCellHeading">
+<em class="cEmphasis">Key definition</em>
+</div>
+</td>
+    <td><a name="wp3540279"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input key attribute</em>
+</div>
+</td>
+    <td><a name="wp3540281"> </a><div class="pCellBody">
+Select the column(s) from the main flow that needs to be checked against the reference (lookup) key column.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540283"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540288"> </a><div class="pCellHeading">
+<em class="cEmphasis">Lookup key attribute</em>
+</div>
+</td>
+    <td><a name="wp3540290"> </a><div class="pCellBody">
+Select the lookup key columns that you will use as a reference against which to compare the columns from the input flow.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540292"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540297"> </a><div class="pCellHeading">
+<em class="cEmphasis">Matching type</em>
+</div>
+</td>
+    <td><a name="wp3540299"> </a><div class="pCellBody">
+Select the relevant matching algorithm from the list:<br /><b class="cBold">Exact Match</b>: matches each processed entry to all possible reference entries with exactly the same value.<br /><b class="cBold">Levenshtein</b>: Based on the edit distance theory. It calculates the number of insertion, deletion or substitution required for an entry to match the reference entry. <br /><b class="cBold">Metaphone</b>: Based on a phonetic algorithm for indexing entries by their pronunciation. It first loads the phonetics of all entries of the lookup reference and checks all entries of the main flow against the entries of the reference flow.<br /><b class="cBold">Double Metaphone</b>: a new version of the Metaphone phonetic algorithm, that produces more accurate results than the original algorithm. It can return both a primary and a secondary code for a string. This accounts for some ambiguous cases as well as for multiple variants of surnames with common ancestry.<br /><b class="cBold">Exact - ignore case</b>: matches each processed entry to all possible reference entries with exactly the same value while ignoring the value case.<br /><b class="cBold">Soundex</b>: matches processed entries according to a standard English phonetic algorithm.<br /><b class="cBold">Soundex FR</b>: matches processed entries according to a standard French phonetic algorithm.<br /><b class="cBold">Jaro</b>: matches processed entries according to spelling deviations.<br /><b class="cBold">q-grams</b>: matches processed entries by dividing strings into letter blocks of length <code class="cCode">q</code> in order to create a number of <code class="cCode">q </code>length grams. The matching result is given as the number of q-gram matches over possible q-grams.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540334"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540339"> </a><div class="pCellHeading">
+<em class="cEmphasis">Confidence weight</em>
+</div>
+</td>
+    <td><a name="wp3540341"> </a><div class="pCellBody">
+Set a numerical weight for each attribute (column) of the key definition. The values can be anything &gt;= 0.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540346"> </a><div class="pCellHeading">
+<em class="cEmphasis">Blocking Definition</em>
+</div>
+</td>
+    <td><a name="wp3540351"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input Column</em>
+</div>
+</td>
+    <td><a name="wp3540353"> </a><div class="pCellBody">
+If required, select the column(s) from the input flow according to which you want to partition the processed data in blocks, this is usually referred to as &quot;blocking&quot;. <br />Blocking reduces the number of pairs of records that needs to be examined. In blocking, input data is partitioned into exhaustive blocks designed to increase the proportion of matches observed while decreasing the number of pairs to compare. Comparisons are restricted to record pairs within each block.
+</div>
+<a name="wp3540359"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3540357" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Using blocking column(s) is very useful when you are processing very big data.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540365"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3540370"> </a><div class="pCellHeading">
+<em class="cEmphasis">Matching Algorithm</em>
+</div>
+</td>
+    <td><a name="wp3540372"> </a><div class="pCellBody">
+Select an algorithm from the list - only one is available for the time being.<br /><b class="cBold">Simple VSR Matcher</b>: This algorithm is based on a Vector Space Retrieval method that specifies how two records may match.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540377"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540381"> </a><div class="pCellHeading">
+<em class="cEmphasis">Possible match interval</em>
+</div>
+</td>
+    <td><a name="wp3540384"> </a><div class="pCellBody">
+Enter a minimum and a maximum values:<br /><b class="cBold">minimum</b>: set the minimum record distance allowed to match the reference (0 &lt;= minimum). <b class="cBold">maximum</b>: set the maximum distance allowed to match the reference (maximum &lt;=1).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540392"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3540402"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher</em> <em class="cEmphasis">Statistics</em>
+</div>
+</td>
+    <td><a name="wp3540405"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3540410"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3540412"> </a><div class="pCellBody">
+This component is not startable and it requires two input components and one or more output components.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3540419"> </a><div class="pCellBody">
+<b class="cBold">Limitation/prerequisite</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3540421"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tQASBatchAddressRow_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRecordMatching_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

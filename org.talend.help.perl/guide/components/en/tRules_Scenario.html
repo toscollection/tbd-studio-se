@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:29">
+    <title>Scenario: Extracting client data according to business rules</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRules_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSampleRow_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2947402"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2947412"> </a><h2 class="pHeading2">
+Scenario: Extracting client data according to business rules
+</h2>
+<a name="wp2947420"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2947417" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+<br />For this example, you need to have a Drools file of  .xls or .drl format that holds the relevant business rules.
+</p>
+<a name="wp2947426"> </a><p class="pIndented1">
+In this example, the business rules are defined in an Excel file: 
+</p>
+<a name="wp2947435"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules0.png" id="wp2947431" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2947440"> </a><p class="pIndented1">
+This file defines the rules to be applied on the client data: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2947451"> </a><div class="pSmartList2"><li>the <b class="cBold">RuleAGE</b> rule retrieves all clients whose age is between 30 and 39 and writes them to the first output flow.</li></div>
+<a name="wp2947460"> </a><div class="pSmartList2"><li>the <b class="cBold">RuleREGION</b> rule retrieves all clients who live in the EMEA region and writes them to the second output flow.</li></div>
+<a name="wp2947470"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp2947467" border="0" hspace="0" vspace="0"/><br />
+When you use an Excel Drools file, make sure that all occurrences of project and job names correspond to the project and job in which you are going to use the business rules.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp2947475"> </a><p class="pIndented1">
+This Java scenario is a four-component Job that aims at reading client data and retrieving only the clients that match the business rules defined in a Drools file.
+</p>
+<a name="wp2947485"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules1.png" id="wp2947481" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2947496"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> to the design workspace: <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tRules</b> and <b class="cBold">tLogRow</b> (x2).</li></div>
+<a name="wp2947521"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputDelimited</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2947532"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules2.png" id="wp2947528" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2947548"> </a><div class="pSmartList2"><li>In the <span style="font-weight: bold">Property type</span> list, select <b class="cBold">Built-in</b> and fill in the fields that follow.</li></div>
+<a name="wp2947556"> </a><div class="pSmartList2"><li>Click the three-dot button next to the <b class="cBold">File Name</b> field and browse to the source file and set its path and name. The source file used in this example is called <em class="cEmphasis">client</em> and it holds client data.</li></div>
+<a name="wp2947565"> </a><div class="pSmartList2"><li>Set row and field separators, header, footer and limit, if any, in the corresponding fields.</li></div>
+<a name="wp2947582"> </a><div class="pSmartList2"><li>In the <b class="cBold">Schema</b> list, select <b class="cBold">Built-in</b> and click <b class="cBold">Edit schema</b> to open a dialog box where you can define the schema of the input file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2947593"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules3.png" id="wp2947589" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2947614"> </a><p class="pIndented1">
+In this example, our source file holds four columns:<em class="cEmphasis"> id</em>, <em class="cEmphasis">name</em>, <em class="cEmphasis">age</em> and <em class="cEmphasis">region</em>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2947626"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate your changes and close the dialog box.</li></div>
+<a name="wp2947638"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tRules</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2947649"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules4.png" id="wp2947645" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2947664"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property type</b> list, select <b class="cBold">Repository</b> if you have stored the file that holds the business rules in the <b class="cBold">Metadata</b> node of the <b class="cBold">Repository</b> tree view. If not, select <b class="cBold">Built-in</b> and fill in the fields that follow manually.<br />For more information on how to create and store business rules, see <em class="cEmphasis">Setting up JBoss Rules (Drools)</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.</li></div>
+<a name="wp2947696"> </a><div class="pSmartList2"><li>In the <b class="cBold">Outputs</b> table, click the plus button to add two lines that will represent two different output flows, each using one of the two business rules defined in the Drools file.</li></div>
+<a name="wp2947705"> </a><div class="pSmartList2"><li>Click in the first line of the <b class="cBold">Schema</b> column to display a three-dot button that you need to click in order to open a dialog box where you can set a name for the output schema.</li></div>
+<a name="wp2947714"> </a><div class="pSmartList2"><li>Enter the name you want to give to this output schema, <em class="cEmphasis">rule_region</em> in this example, and then click <b class="cBold">OK</b> to close the first dialog box and open a second one where you can define the output schema.</li></div>
+<a name="wp2947723"> </a><div class="pSmartList2"><li>In the second dialog box, define your output schema. In this example, we want to recuperate the input schema. Click <b class="cBold">OK</b> to close the second dialog box.</li></div>
+<a name="wp2947744"> </a><div class="pSmartList2"><li>Do the same in the second line of the <b class="cBold">Schema</b> column. Give<em class="cEmphasis"> rule_age</em> as name for this second output schema and then recuperate the input schema in the open dialog box.</li></div>
+<a name="wp2947753"> </a><div class="pSmartList2"><li>Click in the first line of the <b class="cBold">Rule</b> column to display a three-dot button that you need to click to open the <b class="cBold">[</b><b class="cBold">Rule]</b> dialog box.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2947772"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules6.png" id="wp2947768" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2947779"> </a><div class="pSmartList2"><li>Select the option check box that corresponds to your needs:<br />- <b class="cBold">View Rules</b>: to open the business rule file in read-only mode, or <br />- <b class="cBold">Select a rule from repository</b>: to select the relevant predefined rule from the business rules file stored in the <b class="cBold">Repository</b> tree view.</li></div>
+<a name="wp2947800"> </a><div class="pSmartList2"><li>In the <b class="cBold">Rule</b> list, select the rule you want to apply to the first output schema, <em class="cEmphasis">rule_region</em>, and then click <b class="cBold">OK</b> to validate the operation and close the dialog box. <br />The selected rule displays in the <b class="cBold">Rules</b> column.</li></div>
+<a name="wp2947825"> </a><div class="pSmartList2"><li>Do the same for the second output schema, <em class="cEmphasis">rule_age</em> and then click <b class="cBold">OK</b> to validate the operation and close the dialog box. <br />The selected rule displays in the <b class="cBold">Rules</b> column.<br />In this example, we want to apply <b class="cBold">RuleREGION</b> to the first output schema and <b class="cBold">RuleAGE</b> to the second output schema.</li></div>
+<a name="wp2947846"> </a><div class="pSmartList2"><li>In the design workspace, double-click each of the <b class="cBold">tLogRow</b> components to define its properties. For more information, see <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp2947861"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2947870"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules5.png" id="wp2947866" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2947878"> </a><p class="pIndented1">
+The <b class="cBold">Run</b> console displays the two output flows: the first listing all clients whose age is between 30 and 39, and the second listing all clients who live in the EMEA region.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRules_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSampleRow_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

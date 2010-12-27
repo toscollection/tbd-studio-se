@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:48">
+    <title>Scénario&#160;: Echo `Hello World!&#39;</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSystem_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="TalendMDM_group_intro.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1552238"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1552245"> </a><h2 class="pHeading2">
+Scénario&#160;: Echo `Hello World!&#39;
+</h2>
+<a name="wp1552249"> </a><p class="pIndented1">
+Ce scénario est constitué d&#39;un Job à deux composants permettant d&#39;afficher un message dans la console de la vue <b class="cBold">Run</b>.
+</p>
+<a name="wp2751879"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSystem4.png" id="wp2751875" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2751882"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, déposez les composants <b class="cBold">tSystem</b> et <b class="cBold">tJava</b> dans l&#39;espace graphique.</li></div>
+<a name="wp1552270"> </a><div class="pSmartList2"><li>Cliquez-droit sur le composant <b class="cBold">tSystem</b> et sélectionnez un lien de type <b class="cBold">OnSubjobOk </b>pour relier ces deux composants. Lorsque vous exécutez le Job, le premier composant déclenchera le deuxième.</li></div>
+<a name="wp1552282"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tSystem</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> et configurer ses paramètres de base. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1552289"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSystem1.png" id="wp1552286" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1552295"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Command</b>, saisissez la commande <code class="cCode">echo</code> suivie de la chaîne de caractères à afficher&#160;: <code class="cCode">&quot;cmd /c echo HELLO WORLD&quot;</code></li></div>
+<a name="wp1554158"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Standard Output</b>, sélectionnez l&#39;option <b class="cBold">to a global variable</b> pour envoyer la sortie dans une variable globale.</li></div>
+<a name="wp2751984"> </a><div class="pSmartList2"><li>Laissez les autres champs par défaut. </li></div>
+<a name="wp2752054"> </a><div class="pSmartList2"><li>Sélectionnez ensuite le composant <b class="cBold">tJava</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2752061"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSystem2.png" id="wp2752058" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2752069"> </a><div class="pSmartList2"><li>Saisissez la commande Java permettant d&#39;afficher la variable de sortie du <b class="cBold">tSystem</b> dans la console&#160;: System.out.println(&quot;Hello World!&quot;);</li></div>
+<a name="wp2752440"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2752447"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSystem3.png" id="wp2752444" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1552347"> </a><p class="pIndented1">
+Le Job exécute une commande <code class="cCode">echo</code> et affiche la sortie dans la console de log de la vue <b class="cBold">Run</b> grâce à la fonction <code class="cCode">println</code> de la commande Java du composant <b class="cBold">tJava</b>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSystem_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="TalendMDM_group_intro.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

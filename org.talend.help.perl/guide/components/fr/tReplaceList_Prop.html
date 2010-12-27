@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:23">
+    <title>tReplaceList</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRecordMatching_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tReplaceList_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3489190"> </a><h2 class="pHeading1">
+tReplaceList
+</h2>
+<a name="wp1687825"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tReplaceList_icon32_white.png" id="wp1687821" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1687832"> </a><h2 class="pHeading2">
+Propriétés du tReplaceList
+</h2>
+<a name="wp1687980"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1687840table1687835">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1687840"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp1687842"> </a><div class="pCellBody">
+Data Quality
+</div>
+</td>
+    <td><a name="wp1687851"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-04-59-002.jpg" height="57" width="109" id="wp1687847" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1687856"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1687858"> </a><div class="pCellBody">
+Le <b class="cBold">tReplaceList</b> effectue un rechercher/remplacer dans les colonnes d&#39;entrée spécifiées en fonction des données de référence (lookup).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1687865"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1687867"> </a><div class="pCellBody">
+Ce composant permet de nettoyer tous les fichiers avant un traitement futur.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1687879"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2877124"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3492922"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le Repository. <br />Deux colonnes en lecture seule, <b class="cBold">Value</b> et <b class="cBold">Match</b> sont automatiquement ajoutés au schéma de sortie.
+</div>
+<a name="wp3492966"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3492960" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Le type de données défini dans les schémas doit être cohérent, c&#39;est-à-dire qu&#39;un entier ne peut être remplacé que par un entier en utilisant un entier comme champ de référence. Une valeur d&#39;un type ne peut être remplacée par une valeur d&#39;un autre type.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1687886"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1687888"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1732075"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé ponctuellement pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1687901"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1687903"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1732172"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1687916"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1687920"> </a><div class="pCellHeading">
+<em class="cEmphasis">Lookup search column</em>
+</div>
+</td>
+    <td><a name="wp1687923"> </a><div class="pCellBody">
+Saisissez le numéro de la colonne sur laquelle effectuer la recherche dans le schéma de lookup.<br /><b class="cBold">0&#160;</b>: la première colonne lue<br /><b class="cBold">1</b>&#160;: la deuxième colonne lue<br /><b class="cBold">n</b>&#160;: numéro de la colonne dans le schéma lu.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1687934"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1702742"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp1702736" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Afin de s&#39;assurer que les valeurs cherchées sont uniques, assurez-vous que la colonne soit définie comme clé dans votre schéma de lookup.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1687943"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1687947"> </a><div class="pCellHeading">
+<em class="cEmphasis">Lookup replacement column</em>
+</div>
+</td>
+    <td><a name="wp1687950"> </a><div class="pCellBody">
+Saisissez le numéro de la colonne dans laquelle les valeurs de remplacement sont stockées.<br /><b class="cBold">0</b>&#160;: la première colonne lue<br /><b class="cBold">1</b>&#160;: la deuxième colonne lue<br /><b class="cBold">n</b>&#160;: numéro de la colonne dans le schéma lu
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1687961"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1687966"> </a><div class="pCellHeading">
+<em class="cEmphasis">Column options</em>
+</div>
+</td>
+    <td><a name="wp1687968"> </a><div class="pCellBody">
+Sélectionnez les colonnes du flux principal dans lequel le remplacement est effectué.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1687973"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1687975"> </a><div class="pCellBody">
+Ce composant est un composant intermédiaire, il nécessite un composant d&#39;entrée et un composant de sortie.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRecordMatching_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tReplaceList_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tGreenplumOutputBulk</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tGreenplumOutput_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tGreenplumOutputBulk_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2962219"> </a><h2 class="pHeading1">
+tGreenplumOutputBulk
+</h2>
+<a name="wp2962231"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tGreenplumOutputBulk_icon32_white.png" id="wp2962224" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2962241"> </a><h2 class="pHeading2">
+tGreenplumOutputBulk properties
+</h2>
+<a name="wp2962253"> </a><p class="pIndented1">
+The <b class="cBold">tGreenplumOutputBulk</b> and <b class="cBold">tGreenplumBulkExec</b> components are used together in a two step process. In the first step, an output file is generated. In the second step, this file is used in the INSERT operation used to feed a database. These two steps are fused together in the <b class="cBold">tGreenplumOutputBulkExec</b> component, detailed in a separate section. The advantage of using a two step process is that it makes it possible to transform data before it is loaded in the database.
+</p>
+<a name="wp2962562"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2962270table2962262">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962270"> </a><div class="pCellBody">
+<b class="cBold">Component famil</b>y
+</div>
+</td>
+    <td><a name="wp2962273"> </a><div class="pCellBody">
+Databases/Greenplum
+</div>
+</td>
+    <td><a name="wp2962284"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2962280" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962292"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2962295"> </a><div class="pCellBody">
+Writes a file with columns based on the defined delimiter and the Greenplum standards 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962306"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2962309"> </a><div class="pCellBody">
+Prepares the file to be used as parameter in the INSERT query to feed the Greenplum database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962320"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2962327"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2962330"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962334"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962337"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962344"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962348"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962351"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3598982"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962362"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962369"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2962372"> </a><div class="pCellBody">
+Name of the file to be processed. <br />Related topic: <em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962387"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962394"> </a><div class="pCellHeading">
+<em class="cEmphasis">Append</em>
+</div>
+</td>
+    <td><a name="wp2962397"> </a><div class="pCellBody">
+Select this check box to add the new rows at the end of the records
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962401"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962411"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2962415"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or stored remotely in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962419"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962422"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962429"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962444"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962447"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962454"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job designs. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962473"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2962480"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row separator</em>
+</div>
+</td>
+    <td><a name="wp2962483"> </a><div class="pCellBody">
+String (ex: &quot;\n&quot;on Unix) to distinguish rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962487"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962494"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp2962497"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962501"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962508"> </a><div class="pCellHeading">
+<em class="cEmphasis">Include header</em>
+</div>
+</td>
+    <td><a name="wp2962511"> </a><div class="pCellBody">
+Select this check to include the column header. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962515"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962522"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2962525"> </a><div class="pCellBody">
+Select the encoding from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2962529"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2962536"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStaCatcher statistics</em>
+</div>
+</td>
+    <td><a name="wp2962539"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2962547"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2962554"> </a><div class="pCellBody">
+This component is to be used along with <b class="cBold">tGreenplumBulkExec</b> component. Used together they offer gains in performance while feeding a Greenplum database.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tGreenplumOutput_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tGreenplumOutputBulk_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

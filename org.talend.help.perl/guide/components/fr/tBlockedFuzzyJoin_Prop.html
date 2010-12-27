@@ -1,0 +1,272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:23">
+    <title>tBlockedFuzzyJoin</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAddCRCRow_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tBlockedFuzzyJoin_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3475858"> </a><h2 class="pHeading1">
+tBlockedFuzzyJoin
+</h2>
+<a name="wp3475870"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFuzzyJoin_icon32_white.png" id="wp3475863" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3475882"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3475875" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Ce composant est disponible dans la <b class="cBold">Palette </b>du studio uniquement si vous avez souscrit à l&#39;édition correspondante de <b class="cBold">Talend Data Quality</b>.
+</div>
+<a name="wp3475896"> </a><h2 class="pHeading2">
+Propriétés du tBlockedFuzzyJoin
+</h2>
+<a name="wp3476227"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3475908table3475900">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3475908"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp3475911"> </a><div class="pCellBody">
+Data Quality
+</div>
+</td>
+    <td><a name="wp3475922"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp3475918" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3475930"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3475937"> </a><div class="pCellBody">
+Le <b class="cBold">tBlockedFuzzyJoin</b> effectue une jointure entre deux tables en faisant une correpondance floue sur plusieurs colonnes. Il compare les colonnes du flux principal par rapport aux colonnes du flux de référence et écrit en sortie les données correspondantes, les données pouvant correspondre, et les données rejetées. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3475948"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3475951"> </a><div class="pCellBody">
+Améliore la qualité des données de toute source, en les à une source de données de référence.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3475962"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3475972"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3475976"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3475980"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3475983"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3475990"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé ponctuellement pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3476005"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476008"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476015"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisable dans divers projets et Job designs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3476030"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476036"> </a><div class="pCellHeading">
+<em class="cEmphasis">Replace output column with lookup column if matches or possible matches</em>
+</div>
+</td>
+    <td><a name="wp3476040"> </a><div class="pCellBody">
+Cochez cette case afin de remplacer la colonne de sortie par la colonne de référence en cas de correspondance ou de correspondance possible..
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3476048"> </a><div class="pCellHeading">
+<em class="cEmphasis">Key definition</em>
+</div>
+</td>
+    <td><a name="wp3476055"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input key attribute</em>
+</div>
+</td>
+    <td><a name="wp3476058"> </a><div class="pCellBody">
+Sélectionnez la ou les colonne(s) du flux principal qui doivent être vérifiées par rapport à la colonne clé de référence (lookup).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3476062"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476069"> </a><div class="pCellHeading">
+<em class="cEmphasis">Lookup key attribute</em>
+</div>
+</td>
+    <td><a name="wp3476072"> </a><div class="pCellBody">
+Sélectionnez les colonnes clé de référence (lookup) que vous utiliserez comme référence, afin de les comparer aux colonnes du flux d&#39;entrée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3476076"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476083"> </a><div class="pCellHeading">
+<em class="cEmphasis">Matching type</em>
+</div>
+</td>
+    <td><a name="wp3476086"> </a><div class="pCellBody">
+Sélectionnez l&#39;algorithme de correspondance dans la liste&#160;:<br /><b class="cBold">Exact Match&#160;</b>: associe chaque entrée traitée à toutes les entrées possibles de référence qui ont exactement la même valeur.<br /><b class="cBold">Levenshtein&#160;</b>: cette option se base sur la théorie de la distance d&#39;édition. Elle calcule le nombre d&#39;insertions, suppressions ou substitutions nécessaires pour qu&#39;une entrée corresponde à l&#39;entrée de référence.<br /><b class="cBold">Metaphone&#160;</b>: Cette option se base sur un algorithme phonétique afin d&#39;indexer les entrées selon leur prononciation. Elle charge d&#39;abord la phonétique de toutes les entrées du flux lookup de référence, puis vérifie toutes les entrées du flux principal par rapport aux entrées du flux de référence.<br /><b class="cBold">Double Metaphone&#160;</b>: une nouvelle version de l&#39;algorithme phonétique Métaphone, qui produit des résultats plus précis que l&#39;algorithme originel. Il peut retourner un code primaire et un code secondaire pour une chaîne de caractères. Cela est utile dans des cas ambigus, mais également pour de multiples variantes de noms de famille aux origines communes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3476106"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476113"> </a><div class="pCellHeading">
+<em class="cEmphasis">Case sensitive</em>
+</div>
+</td>
+    <td><a name="wp3476116"> </a><div class="pCellBody">
+Cochez cette case pour prendre en compte la casse.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3476120"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476127"> </a><div class="pCellHeading">
+<em class="cEmphasis">Min. distance</em>
+</div>
+</td>
+    <td><a name="wp3476134"> </a><div class="pCellBody">
+Uniquement pour <b class="cBold">Levenshtein</b>. Paramétrez le nombre minimal de changements permis afin de correspondre à la référence. Si vous saisissez 0, seules les correspondances parfaites (<b class="cBold">Exact Match</b>) seront retournées.
+</div>
+<a name="wp3476146"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3476143" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Vous pouvez créer et stocker des variables de contexte pour les distances minimale et maximale, et faire en sorte que votre Job fasse une boucle sur ces valeurs, en commençant  par la valeur maximale inférieure de correspondance et terminant par la valeur maximale supérieure afin de correspondre au plus grand nombre de lignes possible. Vous pouvez appuyer sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste des variables et sélectionner les nouvelles variables de contexte. Pour plus d&#39;informations à propos des variables de contexte, consultez <em class="cEmphasis">Définition des Contextes et des Variables, page 126</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3476166"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3476173"> </a><div class="pCellHeading">
+<em class="cEmphasis">Max. distance</em>
+</div>
+</td>
+    <td><a name="wp3476180"> </a><div class="pCellBody">
+Uniquement pour <b class="cBold">Levenshtein</b>. Paramétrez le nombre maximal de changements permis afin de correspondre à la référence.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3476188"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3476191"> </a><div class="pCellBody">
+tStatCatcher Statistics 
+</div>
+</td>
+    <td><a name="wp3476194"> </a><div class="pCellBody">
+Cochez cette case pour collecter les métadonnées de process du Job, aussi bien au niveau du Job qu&#39;au niveau de chaque composant. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3476202"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3476205"> </a><div class="pCellBody">
+Ce composant est une étape intermédiaire. Cela requiert un flux entrant et une sortie.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3476216"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3476219"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAddCRCRow_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tBlockedFuzzyJoin_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

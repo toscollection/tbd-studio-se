@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:03:50">
+    <title>Scénario&#160;: Mettre à jour les lignes d&#39;une base Oracle</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTOracleMap_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTOracleOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2968187"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2968195"> </a><h2 class="pHeading2">
+Scénario&#160;: Mettre à jour les lignes d&#39;une base Oracle
+</h2>
+<a name="wp2968198"> </a><p class="pIndented1">
+Le scénario suivant est basé sur le Job décrit dans la section des composants ELT MySQL, <a href="tELTMysqlMap_Scenario.html#wp2966959"><em class="cEmphasis">Scénario&#160;1&#160;: Agréger les colonnes d&#39;une table et appliquer un filtre</em></a>. L&#39;action sur les données Update étant disponible en base Oracle, le scénario suivant décrit un Job qui met à jour une sélection de lignes provenant de la table <em class="cEmphasis">results</em>, puis ajoute l&#39;information <em class="cEmphasis">model</em> (modèle) à la colonne <em class="cEmphasis">make</em> (marque) de la table <em class="cEmphasis">cars</em> (véhicules).
+</p>
+<a name="wp2968221"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracle1-1.png" id="wp2968218" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968228"> </a><div class="pSmartList2"><li>Configurez les trois composants d&#39;entrée tel que décrit dans <a href="tELTMysqlMap_Scenario.html#wp2966959"><em class="cEmphasis">Scénario&#160;1&#160;: Agréger les colonnes d&#39;une table et appliquer un filtre</em></a>. </li></div>
+<a name="wp2968233"> </a><div class="pSmartList2"><li>Lors de cette étape de connexion des composants d&#39;entrée ELT, assurez-vous que le nom des liens correspond exactement aux noms des tables de la base de données car ils seront utilisés comme paramètres dans la requête SQL générée grâce au mapper ELT.</li></div>
+<a name="wp2968237"> </a><div class="pSmartList2"><li>Enlevez la clause utilisée pour filtrer les colonnes de sortie (si vous partez du scénario MySql indiqué en introduction).</li></div>
+<a name="wp2968241"> </a><div class="pSmartList2"><li>Ajoutez une nouvelle ligne de filtre à la table de sortie pour établir une relation entre tables d&#39;entrée (<em class="cEmphasis">owners</em>) et de sortie (<em class="cEmphasis">results</em>)&#160;: owners.ID_OWNER=results.ID_OWNER </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968256"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracle1-2.png" id="wp2968253" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968261"> </a><div class="pSmartList2"><li>Puisque notre but est de mettre à jour la table, enlevez toutes les colonnes de la table de sortie qui ne sont pas concernées par cette mise à jour (<b class="cBold">Update</b>).</li></div>
+<a name="wp2968274"> </a><div class="pSmartList2"><li>Puis mettez à jour la colonne <em class="cEmphasis">Make</em> (marque) en ajoutant la mention <em class="cEmphasis">C-Class</em> précédée d&#39;une double barre verticale.</li></div>
+<a name="wp2968281"> </a><div class="pSmartList2"><li>Ajoutez également la mention <em class="cEmphasis">Sold by</em> (Vendu par) devant le nom du revendeur dans la colonne <em class="cEmphasis">reseller name</em> (nom revendeur) de la table <em class="cEmphasis">resellers</em>.</li></div>
+<a name="wp2968296"> </a><div class="pSmartList2"><li>Vérifiez la requête Select générée dans l&#39;onglet <b class="cBold">Generated SQL select query</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968303"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracle1-3.png" id="wp2968300" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968311"> </a><div class="pSmartList2"><li>Cliquez <b class="cBold">OK</b> pour valider la configuration et fermer le mapper ELT. Veillez à ce que les informations de connexion à la base Oracle soient correctes dans l&#39;onglet <b class="cBold">Basic Settings</b> du composant <b class="cBold">tELTOracleMap</b>.</li></div>
+<a name="wp2968324"> </a><div class="pSmartList2"><li>Puis sélectionnez le composant <b class="cBold">tELTOracleOutput</b> afin de définir les actions à effectuer sur les données dans le champ <b class="cBold">Action on data</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968336"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracle1-4.png" id="wp2968333" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2968344"> </a><div class="pSmartList2"><li>Aucune action n&#39;est requise sur la table, mais par contre sélectionnez <b class="cBold">Update</b> dans le champ <b class="cBold">Action on data</b>.</li></div>
+<a name="wp2968354"> </a><div class="pSmartList2"><li>Cliquez <b class="cBold">Edit schema</b> pour vérifier que le schéma correspond à celui de la table de sortie configuré dans le Mapper ELT.</li></div>
+<a name="wp2968363"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Where clause</b>, entrez la clause supplémentaire suivante&#160;: <code class="cCode">results.MAKE= `Mercedes&#39;</code>.</li></div>
+<a name="wp2968374"> </a><div class="pSmartList2"><li>Puis appuyez sur <b class="cBold">F6</b> pour exécuter le Job puis vérifiez la table <em class="cEmphasis">results</em> dans un client de base de données.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2968383"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracle1-5.png" id="wp2968380" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2968387"> </a><p class="pIndented1">
+Le Job a donc exécuté la requête SQL générée et effectué les mises à jour des lignes concernées.
+</p>
+<a name="wp2968396"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tELTOracle1-6.png" id="wp2968391" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTOracleMap_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTOracleOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

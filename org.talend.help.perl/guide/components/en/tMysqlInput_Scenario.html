@@ -1,0 +1,204 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>Scenario: Writing dynamic columns from a MySQL database to an output file</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlLastInsertId_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3608336"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3608406"> </a><h2 class="pHeading2">
+Scenario: Writing dynamic columns from a MySQL database to an output file
+</h2>
+<a name="wp3608409"> </a><p class="pIndented1">
+In this scenario we will read dynamic columns from a MySQL database, map them and then write them to a table in a local output file. By defining a dynamic column alongside known column names, we can retrieve all of the columns from the database table, including the unknown columns.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608424"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tMysqlInput</b>, a <b class="cBold">tMap</b> and a <b class="cBold">tFileOutputDelimited</b> component onto the workspace.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3608434"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_Component_Connections.png" id="wp3608430" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608449"> </a><div class="pSmartList2"><li>Link <b class="cBold">tMysqlInput</b> to <b class="cBold">tMap</b> using a <b class="cBold">Row &gt; Main</b> connection.</li></div>
+<a name="wp3608461"> </a><div class="pSmartList2"><li>Link <b class="cBold">tMap</b> to <b class="cBold">tFileOutputDelimited</b> using a <b class="cBold">Row &gt; *New Output* (Main)</b> connection.</li></div>
+<a name="wp3608476"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tMysqlInput</b> to open its <b class="cBold">Basic Settings</b> view in the <b class="cBold">Component</b> tab.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3608483"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties.png" id="wp3608480" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3608493"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3608487" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+<br />The dynamic schema feature is only supported in <b class="cBold">Built-In</b> mode.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608506"> </a><div class="pSmartList2"><li>Select <b class="cBold">Built-in</b> as the <b class="cBold">Property Type</b>.</li></div>
+<a name="wp3608513"> </a><div class="pSmartList2"><li>Select the <b class="cBold">DB Version</b> from the corresponding list.</li></div>
+<a name="wp3608520"> </a><div class="pSmartList2"><li>Next to <b class="cBold">Host</b>, enter the database server IP address.</li></div>
+<a name="wp3608527"> </a><div class="pSmartList2"><li>Next to <b class="cBold">Port</b>, enter the listening port number of the database server.</li></div>
+<a name="wp3608537"> </a><div class="pSmartList2"><li>Enter your authentication data in the <b class="cBold">Username</b> and <b class="cBold">Password</b> fields.</li></div>
+<a name="wp3608549"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Schema type</b> as<b class="cBold"> Built-in</b> and click <b class="cBold">Edit schema</b> to define the dynamic schema.<br />The schema editor opens:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3608558"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties_Edit_Schema.png" id="wp3608555" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608570"> </a><div class="pSmartList2"><li>Click the <img src="../Images/plus_button.png" id="wp3608566" border="0" hspace="0" vspace="0"/> button to add a row to the schema.</li></div>
+<a name="wp3608579"> </a><div class="pSmartList2"><li>Under <b class="cBold">Column</b> and<b class="cBold"> Db Column</b>, click in the fields to enter the corresponding column names. </li></div>
+<a name="wp3608583"> </a><div class="pSmartList2"><li>Click the field under <b class="cBold">Type</b> to define the type of data.<br />Click the arrow and select <b class="cBold">Dynamic</b> from the list.</li></div>
+<a name="wp3608600"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp3608592" border="0" hspace="0" vspace="0"/><br />
+<br />Under <b class="cBold">Type</b>, the dynamic column type must be set as <b class="cBold">Dynamic</b>.
+</p>
+<a name="wp3608610"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the schema editor.</li></div>
+<a name="wp3608619"> </a><div class="pSmartList2"><li>Next to the <b class="cBold">Table Name</b> field, click the<b class="cBold"> [...]</b> button to select the database table of interest.<br />A dialog box displays a tree diagram of all the tables in the selected database:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3608628"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties_choose_table.png" id="wp3608625" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608637"> </a><div class="pSmartList2"><li>Click the table of interest and then click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp3608647"> </a><div class="pSmartList2"><li>Set the<b class="cBold"> Query Type</b> as <b class="cBold">Built-In</b>. </li></div>
+<a name="wp3608653"> </a><div class="pSmartList2"><li>In the <b class="cBold">Query</b> box, enter the query required to retrieve all of the columns from the table.</li></div>
+<a name="wp3608664"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp3608659" border="0" hspace="0" vspace="0"/><br />
+In the SELECT statement it is necessary to use the <b class="cBold">*</b> wildcard character, to retrieve all of the columns from the selected table.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3608672"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties_Query.png" id="wp3608669" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608687"> </a><div class="pSmartList2"><li>Click <b class="cBold">tMap</b> to open its <b class="cBold">Basic Settings</b> view in the <b class="cBold">Component</b> tab. </li></div>
+<a name="wp3608698"> </a><div class="pSmartList2"><li>Click <b class="cBold">[...]</b> next to <b class="cBold">Map Editor</b> to map the column from the source file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3608705"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_schema_S2_tMap_Edit1.png" id="wp3608702" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608710"> </a><div class="pSmartList2"><li>Drop the column defined as dynamic from the input schema on the left onto the output schema on the right.<br />The column dropped on the output schema retains its original values.</li></div>
+<a name="wp3608718"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp3608716" border="0" hspace="0" vspace="0"/><br />
+The dynamic column must be mapped on a one to one basis and cannot undergo any transformations. It cannot be used in a filter expression or in a variables section. It cannot be renamed in the output table and cannot be used as a join condition.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3608726"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_schema_S2_tMap_Edit2.png" id="wp3608723" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608738"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the <b class="cBold">Map Editor</b>.</li></div>
+<a name="wp3608749"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileOutputDelimited</b> to set its <b class="cBold">Basic Settings</b> in the <b class="cBold">Component</b> tab.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3608756"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tFileoutputDelimited_Basic_Properties.png" id="wp3608753" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3608767"> </a><div class="pSmartList2"><li>Next to the <b class="cBold">File Name</b> field, click the <b class="cBold">[...]</b> button to browse your directory to where you want to save the output file, then enter a name for the file.</li></div>
+<a name="wp3608774"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Include Header</b> check box to retrieve the column names as well as the data.</li></div>
+<a name="wp3608781"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6</b> to run it.<br />The output file is written with all the column names and corresponding data, retrieved from the database via the dynamic schema:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3608790"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_Output_File.png" id="wp3608787" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3608799"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3608794" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+The Job can also be run in the <b class="cBold">Traces Debug</b> mode, which allows you to view the rows as they are written to the output file, in the workspace.<br />
+</p>
+<a name="wp3610773"> </a><p class="pIndented1">
+For further information about defining and mapping dynamic schemas, see <em class="cEmphasis">Dynamic schema</em> in the <b class="cBold">Talend Integration Suite Studio</b> User Guide.
+</p>
+<a name="wp3639221"> </a><p class="pIndented1">
+For related scenarios, see:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3639194"> </a><div class="pSmartList2"><li><a href="tContextLoad_Scenario.html#wp1404591"><em class="cEmphasis">Scenario: Dynamic context use in MySQL DB insert</em></a>.</li></div>
+<a name="wp3639184"> </a><div class="pSmartList2"><li><a href="tDBInput_Scenario.html#wp3626926"><em class="cEmphasis">Scenario 1: Displaying selected data from DB table</em></a>.</li></div>
+<a name="wp3615197"> </a><div class="pSmartList2"><li><a href="tDBInput_Scenario.html#wp3627076"><em class="cEmphasis">Scenario 2: Using StoreSQLQuery variable</em></a>.</li></div>
+<a name="wp3639205"> </a><div class="pSmartList2"><li><a href="tMysqlOutput_Scenario.html#wp3605213"><em class="cEmphasis">Scenario 4: Writing dynamic columns from a source file to a MySQL database</em></a>.</li></div>
+</ul></div>
+</ul></div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlLastInsertId_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

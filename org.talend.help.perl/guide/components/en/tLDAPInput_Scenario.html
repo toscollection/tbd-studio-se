@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>Scenario: Displaying LDAP directory&#39;s filtered content</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLDAPInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLDAPOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3370937"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3370948"> </a><h2 class="pHeading2">
+Scenario: Displaying LDAP directory&#39;s filtered content
+</h2>
+<a name="wp3370953"> </a><p class="pIndented1">
+The Job described below simply filters the LDAP directory and displays the result on the console.
+</p>
+<a name="wp3370962"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLDAPInput1.png" id="wp3370958" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3370981"> </a><div class="pSmartList2"><li>Drop the <b class="cBold">tLDAPInput</b> component along with a <b class="cBold">tLogRow</b> from the <b class="cBold">Palette</b> to the design workspace.</li></div>
+<a name="wp3370991"> </a><div class="pSmartList2"><li>Set the <b class="cBold">tLDAPInput</b> properties.</li></div>
+<a name="wp3371003"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Property type </b>on <b class="cBold">Repository</b> if you stored the LDAP connection details in the <b class="cBold">Metadata Manager </b>in the <b class="cBold">Repository</b>. Then select the relevant entry on the list. </li></div>
+<a name="wp3371028"> </a><div class="pSmartList2"><li>In <b class="cBold">Built-In</b> mode, fill in the <b class="cBold">Host</b> and <b class="cBold">Port</b> information manually. Host can be the IP address of the LDAP directory server or its DNS name.</li></div>
+<a name="wp3371039"> </a><div class="pSmartList2"><li>No particular <b class="cBold">Base DN </b>is to be set.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3371048"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLDAPInput2.png" id="wp3371044" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3371063"> </a><div class="pSmartList2"><li>Then select the relevant <b class="cBold">Protocol</b> on the list. In this example: a simple <b class="cBold">LDAP</b> protocol is used.</li></div>
+<a name="wp3371072"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Authentication</b> check box and fill in the login information if required to read the directory. In this use case, no authentication is needed.</li></div>
+<a name="wp3371081"> </a><div class="pSmartList2"><li>In the <b class="cBold">Filter</b> area, type in the command, the data selection is based on. In this example, the filter is: <code class="cCode">(&amp;(objectClass=inetorgperson)&amp;(uid=PIERRE DUPONT))</code>. </li></div>
+<a name="wp3371094"> </a><div class="pSmartList2"><li>Fill in <b class="cBold">Multi-valued field separator </b>with a comma as some fields may hold more than one value, separated by a comma. </li></div>
+<a name="wp3371104"> </a><div class="pSmartList2"><li>As we don&#39;t know if some aliases are used in the LDAP directory, select <b class="cBold">Always </b>on the list.</li></div>
+<a name="wp3371117"> </a><div class="pSmartList2"><li>Set <b class="cBold">Ignore</b> as <b class="cBold">Referral handling</b>.</li></div>
+<a name="wp3371127"> </a><div class="pSmartList2"><li>Set the limit to <b class="cBold">100</b> for this use case.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3371136"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLDAPInput3.png" id="wp3371132" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3371147"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Schema</b> as required by your LDAP directory. In this example, the schema is made of 6 columns including the <code class="cCode">objectClass</code> and <code class="cCode">uid</code> columns which get filtered on.</li></div>
+<a name="wp3371166"> </a><div class="pSmartList2"><li>In the <b class="cBold">tLogRow</b> component, no particular setting is required.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3371175"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tLDAPInput4.png" id="wp3371171" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3371183"> </a><p class="pIndented1">
+Only one entry of the directory corresponds to the filter criteria given in the <b class="cBold">tLDAPInput</b> component.
+</p>
+<a name="wp3634740"> </a><p class="pIndented1">
+For an example of the use of dynamic schemas in Input components, see <a href="tMysqlInput_Scenario.html#wp3608406"><em class="cEmphasis">Scenario: Writing dynamic columns from a MySQL database to an output file</em></a>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLDAPInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLDAPOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

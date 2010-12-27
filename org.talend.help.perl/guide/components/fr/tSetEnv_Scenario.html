@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:48">
+    <title>Scénario&#160;: Modifier la variable Date lors de l&#39;exécution d&#39;un Job </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSetEnv_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSSH_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1731626"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1731636"> </a><h2 class="pHeading2">
+Scénario&#160;: Modifier la variable <em class="cEmphasis">Date</em> lors de l&#39;exécution d&#39;un Job 
+</h2>
+<a name="wp1731639"> </a><p class="pIndented1">
+Le scénario suivant est un Job qui permet de lire une colonne dans une base de données Oracle, de récupérer la date courante à partir de cette colonne en utilisant une requête de base de données de créer une nouvelle variable grâce au <b class="cBold">tSetEnv</b> pour modifier le format de la date puis d&#39;afficher la date modifiée dans la console. 
+</p>
+<a name="wp1731650"> </a><p class="pIndented1">
+Pour modifier le format de la date en utilisant une nouvelle variable créée par le <b class="cBold">tSetEnv&#160;</b>:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1732067"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, cliquez-déposez les composants <b class="cBold">tSetEnv</b>, <b class="cBold">tOracleInput</b> et <b class="cBold">tLogRow</b> dans l&#39;éditeur graphique.</li></div>
+<a name="wp1731684"> </a><div class="pSmartList2"><li>Connectez le <b class="cBold">tSetEnv</b> au <b class="cBold">tOracleInput</b> à l&#39;aide d&#39;un lien <b class="cBold">OnSubjobOk</b>.</li></div>
+<a name="wp1731698"> </a><div class="pSmartList2"><li>Connectez le <b class="cBold">tOracleInput</b> au <b class="cBold">tLogRow </b>à l&#39;aide d&#39;un lien <b class="cBold">Row Main</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1731705"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-01.png" id="wp1731702" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1731717"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tSetEnv</b> dans l&#39;éditeur graphique puis cliquez sur la vue <b class="cBold">Component</b>.</li></div>
+<a name="wp1731769"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b>, cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter une ligne de paramètres et définissez votre nouvelle variable. </li></div>
+<a name="wp1731776"> </a><div class="pSmartList2"><li>Cliquez dans la cellule <b class="cBold">name </b>puis renseignez la syntaxe de la variable concernant la date. Dans cet exemple, on utilise <code class="cCode">NLS_DATE_FORMAT.</code></li></div>
+<a name="wp1731786"> </a><div class="pSmartList2"><li>Cliquez dans la cellule <b class="cBold">value </b>puis renseignez la valeur désirée pour votre nouvelle variable de date. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1731795"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-02.png" id="wp1731792" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1731801"> </a><p class="pIndented1">
+Dans cet exemple, on veut transformer le format de date <code class="cCode">DD-MMM-YY</code> prédéfini par le système en <code class="cCode">YYYY-MM-DD</code>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1731817"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tOracleInput</b> puis cliquez sur l&#39;onglet <b class="cBold">Component</b> .</li></div>
+<a name="wp1731826"> </a><div class="pSmartList2"><li>Paramétrez la configuration de base (<b class="cBold">Basic settings</b>) du composant <b class="cBold">tOracleInput</b>. Pour plus d&#39;informations, consultez le composant <a href="tOracleInput_Prop.html"><em class="cEmphasis">tOracleInput</em></a>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1731838"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv3.png" id="wp1731835" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1731841"> </a><p class="pIndented1">
+Dans cet exemple, on effectue une requête sur une base Oracle pour extraire les données contenues dans la colonne the &quot;REGISTERDATE&quot; de la table &quot;NEW_CUSTOMERS_MLE&quot;.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1731854"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tLogRow</b> puis cliquez sur la vue <b class="cBold">Component</b>.</li></div>
+<a name="wp1731860"> </a><div class="pSmartList2"><li>Renseignez la configuration de base (<b class="cBold">Basic settings</b>) du composant <b class="cBold">tLogRow</b>. Pour plus d&#39;informations, consultez le composant <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp1731872"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1731879"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-05.png" id="wp1731876" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1731886"> </a><p class="pIndented1">
+La date s&#39;affiche dans la console au format <code class="cCode">YYYY-MM-DD</code> modifié par le composant <b class="cBold">tSetEnv. </b>
+</p>
+<a name="wp1731890"> </a><p class="pIndented1">
+Pour afficher la date au format pré-défini par le système en utilisant ce Job&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1731898"> </a><div class="pSmartList2"><li>Dans l&#39;espace graphique, cliquez-droit sur le composant <b class="cBold">tSetEnv </b>et sélectionnez l&#39;option <b class="cBold">Deactivate tSetEnv_1</b> à partir de la liste déroulante.</li></div>
+<a name="wp1731910"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1731917"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSetEnv-07.png" id="wp1731914" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1731926"> </a><p class="pIndented1">
+ La date s&#39;affiche dans la console au format <code class="cCode">DD-MMM-YY</code> pré-défini par le système.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSetEnv_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSSH_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

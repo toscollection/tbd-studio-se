@@ -1,0 +1,429 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>tGreenplumBulkExec</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFireBirdRow_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tGreenplumBulkExec_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2881767"> </a><h2 class="pHeading1">
+tGreenplumBulkExec
+</h2>
+<a name="wp2881777"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tGreenplumBulkExec_icon32_white.png" id="wp2881772" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2881788"> </a><h2 class="pHeading2">
+Propriétés du tGreenplumBulkExec
+</h2>
+<a name="wp2881800"> </a><p class="pIndented1">
+Les composants <b class="cBold">tGreenplumOutputBulk</b> et <b class="cBold">tGreenplumBulkExec</b> sont généralement utilisés ensemble pour d&#39;une part générer en sortie le fichier qui sera d&#39;autre part utilisé comme paramètre dans l&#39;exécution de la requête SQL énoncée. Cette exécution en deux étapes est unifiée dans le composant <b class="cBold">tGreenplumOutputBulkExec</b>, détaillé dans une section séparée. L&#39;intérêt de proposer deux composants séparés réside dans le fait que cela permet de procéder à des transformations avant le changement des données dans la base de données.
+</p>
+<a name="wp2882256"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2883588table2881809">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883588"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2883590"> </a><div class="pCellBody">
+Databases/Greenplum
+</div>
+</td>
+    <td><a name="wp2883599"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp2883595" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883604"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2883609"> </a><div class="pCellBody">
+Le composant <b class="cBold">tGreenplumBulkExec</b> effectue une action d&#39;Insert sur les données fournies.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883616"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2883621"> </a><div class="pCellBody">
+Le <b class="cBold">tGreenplumBulkExec</b> est un composant dédié qui permet un gain de performance pendant les opérations d&#39;Insert dans une base de données Greenplum.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883628"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2883633"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2883635"> </a><div class="pCellBody">
+Peut être Built-in ou Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883637"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883639"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883644"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883646"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883648"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883653"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Sélectionnez le fichier de propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883655"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883659"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2883662"> </a><div class="pCellBody">
+Cochez cette case lorsque vous utilisez le composant <b class="cBold">tGreenplumConnection</b>.<br />
+</div>
+<a name="wp3465700"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3465697" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Lorsqu&#39;un Job contient un Job parent et un Job enfant, la liste <b class="cBold">Component List</b> présente uniquement les composants de connexion du Job du même niveau. Si vous souhaitez utiliser une connexion existant dans un autre niveau, vérifiez que les composants de connexion disponibles partagent la même connexion.<br />Pour plus d&#39;informations concernant le partage d&#39;une connexion à travers différents niveaux de Jobs, consultez <b class="cBold">Use or register a shared DB connection</b> dans tous les composants de base de données que vous utilisez.
+</p>
+<a name="wp3465725"> </a><div class="pCellBody">
+Sinon, vous pouvez également désactiver le composant de connexion et utiliser les <b class="cBold">Dynamic settings</b> du composant, afin de paramétrer manuellement la connexion. Dans ce cas, vérifiez que le nom de la connexion est unique et distinct tout au long des deux niveaux de Jobs. Pour plus d&#39;informations concernant les paramètres dynamiques (<b class="cBold">Dynamic settings</b>), consultez le <b class="cBold">Guide Utilisateur</b> de votre Studio. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883667"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883672"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2883674"> </a><div class="pCellBody">
+Adresse IP du serveur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883676"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883681"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2883683"> </a><div class="pCellBody">
+Numéro du port d&#39;écoute du serveur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883685"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883690"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2883692"> </a><div class="pCellBody">
+Nom de la base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883694"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883699"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em>
+</div>
+</td>
+    <td><a name="wp2883701"> </a><div class="pCellBody">
+Nom du schéma.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883703"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883708"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2883713"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2950411"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2950416"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2950418"> </a><div class="pCellBody">
+Nom de la table à écrire. Notez qu&#39;une seule table peut être écrite à la fois et la table doit exister pour que l&#39;opération d&#39;Insert soit autorisée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883715"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883720"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2883722"> </a><div class="pCellBody">
+Vous pouvez effectuer l&#39;une des opérations suivantes sur les données de la table sélectionnée&#160;: <br /><b class="cBold">None&#160;</b>: n&#39;effectuer aucune opération de table. <br /><b class="cBold">Drop and create the table</b>&#160;: supprimer la table puis en créer une nouvelle. <br /><b class="cBold">Create a table&#160;</b>: créer une table qui n&#39;existe pas encore. <br /><b class="cBold">Create table if doesn&#39;t exist</b>&#160;: créer la table si nécessaire. <br /><b class="cBold">Clear a table&#160;</b>: supprimer le contenu de la table. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883748"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883753"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2883755"> </a><div class="pCellBody">
+Nom du fichier à traiter. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883763"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883770"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2883773"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (Built-in) soit distant dans le <span style="font-weight: bold">Repository</span>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883941"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2883951"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on data</em>
+</div>
+</td>
+    <td><a name="wp2883907"> </a><div class="pCellBody">
+Sélectionnez l&#39;opération que vous voulez effectuer&#160;: <br /><b class="cBold">Bulk insert</b><br /><b class="cBold">Bulk update<br /></b>Les informations demandées seront différentes en fonction de l&#39;action choisie. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885685"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885688"> </a><div class="pCellHeading">
+<em class="cEmphasis">Copy the OID for each row</em>
+</div>
+</td>
+    <td><a name="wp2885691"> </a><div class="pCellBody">
+Récupère les identifiants d&#39;objet pour chaque ligne.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2885731"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885734"> </a><div class="pCellHeading">
+<em class="cEmphasis">Contains a header line with the names of each column in the file</em>
+</div>
+</td>
+    <td><a name="wp2885737"> </a><div class="pCellBody">
+Spécifiez que la table contient des lignes d&#39;en-tête.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2884107"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884114"> </a><div class="pCellHeading">
+<em class="cEmphasis">File type</em>
+</div>
+</td>
+    <td><a name="wp2884117"> </a><div class="pCellBody">
+Sélectionnez le type de fichiers à traiter. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2884122"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884125"> </a><div class="pCellBody">
+<em class="cEmphasis">Null string</em>
+</div>
+</td>
+    <td><a name="wp2884128"> </a><div class="pCellBody">
+Chaîne de caractères affichée pour signifier que la valeur est nulle.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883787"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883792"> </a><div class="pCellHeading">
+<em class="cEmphasis">Fields terminated by</em>
+</div>
+</td>
+    <td><a name="wp2883794"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière séparant les champs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883796"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883801"> </a><div class="pCellHeading">
+<em class="cEmphasis">Escaped char</em>
+</div>
+</td>
+    <td><a name="wp2883803"> </a><div class="pCellBody">
+Caractère d&#39;échappement de la ligne. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883805"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883810"> </a><div class="pCellBody">
+Text enclosure
+</div>
+</td>
+    <td><a name="wp2883812"> </a><div class="pCellBody">
+Caractères utilisés pour entourer le texte.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2885771"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885774"> </a><div class="pCellHeading">
+<em class="cEmphasis">Force not null for columns</em>
+</div>
+</td>
+    <td><a name="wp2885858"> </a><div class="pCellBody">
+Définissez la nullabilité des colonnes<br /><b class="cBold">Force not null</b>&#160;: Cochez la case correspondant à la colonne (<b class="cBold">Column</b>) que vous souhaitez définir comme n&#39;étant pas nulle.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883844"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2883849"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2883851"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2883856"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2883858"> </a><div class="pCellBody">
+Ce composant est généralement utilisé avec un composant <b class="cBold">tGreenplumOutputBulk</b>. Ensemble, ils offrent un gain de performance important pour l&#39;alimentation d&#39;une base de données Greenplum.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2883868"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2883870"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFireBirdRow_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tGreenplumBulkExec_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

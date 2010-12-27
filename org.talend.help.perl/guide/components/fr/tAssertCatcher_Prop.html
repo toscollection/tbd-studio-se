@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:59">
+    <title>tAssertCatcher</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAssert_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAssertCatcher_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2939385"> </a><h2 class="pHeading1">
+tAssertCatcher
+</h2>
+<a name="wp2754912"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tAssertCatcher_icon32_white.png" id="wp2754907" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2754919"> </a><h2 class="pHeading2">
+Propriétés du tAssertCatcher
+</h2>
+<a name="wp2755761"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2754927table2754922">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754927"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2754929"> </a><div class="pCellBody">
+Logs &amp; Errors
+</div>
+</td>
+    <td><a name="wp2754938"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-10-04-11.jpg" height="59" width="112" id="wp2754934" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754943"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2754945"> </a><div class="pCellBody">
+A partir de son schéma prédéfini, le <b class="cBold">tAssertCatcher</b> retrouve les informations des statuts d&#39;exécution, des exécutions des Jobs et du <b class="cBold">tAssert</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754955"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2754957"> </a><div class="pCellBody">
+Génère un flux de données consolidant les informations de statut d&#39;une exécution de Job, et transfère les données dans les fichiers de sortie définis.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754964"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2754969"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em>
+</div>
+</td>
+    <td><a name="wp2754971"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit les champs à traiter et à passer au composant suivant. Pour ce composant, le schéma est en lecture seule puisqu&#39;il regroupe les informations de log standard, notamment&#160;:
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754973"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754975"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754980"> </a><div class="pCellBody">
+<b class="cBold">Moment&#160;</b>: Date et heure de traitement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754982"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754984"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754989"> </a><div class="pCellBody">
+<b class="cBold">Pid&#160;</b>: ID traités.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754991"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754993"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754998"> </a><div class="pCellBody">
+<b class="cBold">Project&#160;</b>: Projet auquel appartiennent les Jobs analysés.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2755000"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755002"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755007"> </a><div class="pCellBody">
+<b class="cBold">Job&#160;</b>: Nom du Job analysé.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2755009"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755011"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755016"> </a><div class="pCellBody">
+<b class="cBold">Language&#160;:</b> Langage utilisé par le Job. Cela peut être Java ou Perl.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2755018"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755020"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755022"> </a><div class="pCellBody">
+<b class="cBold">Origin&#160;</b>: Origine de l&#39;assertion de statut. Elle peut provenir de différents composants <b class="cBold">tAssert</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2755027"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755029"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755034"> </a><div class="pCellBody">
+<b class="cBold">Status&#160;</b>: Jugements retrouvés à partir du<b class="cBold"> tAssert</b>. Ils peuvent être&#160;:<br />- <b class="cBold">Ok</b>&#160;: si l&#39;instruction conditionnelle du <b class="cBold">tAssert</b> est évaluée comme vraie (<em class="cEmphasis">true</em>) à l&#39;exécution.<br />- <b class="cBold">Failed</b>&#160;: si l&#39;instruction conditionnelle du <b class="cBold">tAssert</b> est évaluée comme fausse (<em class="cEmphasis">false)</em>, ou si des erreurs surviennent à l&#39;exécution. Les résultats du Job testé ne correspondent pas à ce qui était attendu, ou une erreur est survenue lors de l&#39;exécution.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2755691"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755693"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755698"> </a><div class="pCellBody">
+<b class="cBold">Substatus&#160;</b>: Explications détaillées à propos des assertions de statut. Les explications peuvent être&#160;:<br />- <b class="cBold">Test logically failed</b>&#160;: le Job analysé ne produit pas le résultat attendu.<br />- <b class="cBold">Execution Error</b>&#160;: une erreur d&#39;exécution est survenue lors de l&#39;exécution.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2755700"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755702"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755707"> </a><div class="pCellBody">
+<b class="cBold">Description&#160;</b>: La description textuelle que vous avez saisie dans le <b class="cBold">tAssert</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2755712"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755719"> </a><div class="pCellHeading">
+<em class="cEmphasis">Catch Java Exception</em>
+</div>
+</td>
+    <td><a name="wp2755722"> </a><div class="pCellBody">
+Cette case, une fois cochée, vous permet de capturer les erreurs d&#39;exception Java.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2755725"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2755731"> </a><div class="pCellHeading">
+<em class="cEmphasis">Catch tAssert</em>
+</div>
+</td>
+    <td><a name="wp2755737"> </a><div class="pCellBody">
+Cette case vous permet de capturer les assertions du <b class="cBold">tAssert</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2755742"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2755744"> </a><div class="pCellBody">
+Ce composant est un composant de début de Job secondaire qui retrouve les informations de statut d&#39;exécution à partir de différentes sources. Il génère un flux de données afin de transférer les informations au composant suivant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2755751"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2755756"> </a><div class="pCellBody">
+Ce composant doit être utilisé avec le composant <b class="cBold">tAssert</b>.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAssert_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAssertCatcher_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

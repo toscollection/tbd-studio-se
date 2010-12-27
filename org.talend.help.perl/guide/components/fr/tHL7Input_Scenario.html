@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario&#160;: Retrouver des informations concernant les patients et les événements à partir d&#39;un fichier HL7</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tHL7Input_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tHL7Output_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2946628"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2946633"> </a><h2 class="pHeading2">
+Scénario&#160;: Retrouver des informations concernant les patients et les événements à partir d&#39;un fichier HL7
+</h2>
+<a name="wp2946638"> </a><p class="pIndented1">
+Ce scénario décrit un Job de quatre composants, dont le but est de retrouver des informations concernant des patients et des événements à partir d&#39;un fichier HL7. 
+</p>
+<a name="wp2946728"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tHL71.png" id="wp2946724" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2946781"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, glissez-déposez un composant <b class="cBold">tHL7Input</b>, et trois <b class="cBold">tLogRow</b> dans l&#39;espace de modélisation graphique.</li></div>
+<a name="wp2947013"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tHL7Input</b> afin d&#39;ouvrir son éditeur.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2947044"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tHL72.png" id="wp2947040" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2947093"> </a><div class="pSmartList2"><li>Dans le champ<b class="cBold"> File path</b>, cliquez sur <b class="cBold">[Browse...]</b>, parcourez votre répertoire, et sélectionnez votre fichier HL7.</li></div>
+<a name="wp2949401"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">File Setting</b>, saisissez le caractère de début de votre segment (<b class="cBold">Start character</b>), et le caractère de fin de votre segment (<b class="cBold">End character</b>).</li></div>
+<a name="wp2947389"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Schema View</b>, dans la liste <b class="cBold">Segment(As Schema)</b>, sélectionnez <b class="cBold">MSH</b>.</li></div>
+<a name="wp2948763"> </a><div class="pSmartList2"><li>Glissez-déposez les segments <em class="cEmphasis">MSH-3(1)[HD]</em> et <em class="cEmphasis">MSH-7(1)[TS</em><em class="cEmphasis">]</em> de la zone <b class="cBold">Message View</b> dans la zone <b class="cBold">Schema View</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2948775"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tHL73.png" id="wp2948772" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2948790"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Schema View</b>, dans la liste <b class="cBold">Segment(As Schema)</b>, sélectionnez <b class="cBold">EVN</b>.</li></div>
+<a name="wp2949495"> </a><div class="pSmartList2"><li>Glissez déposez les segments <em class="cEmphasis">EVN-1(1)-1-1[ID]</em> et <em class="cEmphasis">EVN-2(1)-1-1[ST</em><em class="cEmphasis">]</em> de la zone <b class="cBold">Message View</b> dans la zone <b class="cBold">Schema View</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2948855"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tHL74.png" id="wp2948852" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2948870"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Schema View</b>, dans la liste <b class="cBold">Segment(As Schema)</b>, sélectionnez <b class="cBold">PID</b>.</li></div>
+<a name="wp2948879"> </a><div class="pSmartList2"><li>Glissez-déposez les segments suivants de la zone <b class="cBold">Message View</b> dans la zone <b class="cBold">Schema View&#160;</b>: <em class="cEmphasis">PID-1(1)-1-1[SI]</em>, <em class="cEmphasis">PID-5(1)-1-1[ST]</em>,<em class="cEmphasis"> PID-5(1)-2-1[ST]</em>, <em class="cEmphasis">PID-5(1)-3-1[ST]</em>, <em class="cEmphasis">PID-5(1)-4-1[ST]</em>, <em class="cEmphasis">PID-5(1)-5-1[ST]</em>, <em class="cEmphasis">PID-5(1)-7-1[ID]</em>.</li></div>
+<a name="wp3486504"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_smalles.png" align="left" id="wp3486499" border="0" hspace="0" vspace="0"/><br />
+S&#39;il est disponible, utilisez le bouton <b class="cBold">Auto map!</b> situé en bas à gauche de la fenêtre, il permet d&#39;effectuer l&#39;opération de mapping automatiquement.
+</p>
+<a name="wp3486508"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Ok</b> afin de fermer l&#39;éditeur.</li></div>
+<a name="wp3486464"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tHL7Input</b> aux trois <b class="cBold">tLogRow</b>, en utilisant respectivement les liens <b class="cBold">MSH</b>, <b class="cBold">EVN</b> et <b class="cBold">PID</b>.</li></div>
+<a name="wp3486486"> </a><div class="pSmartList2"><li>Sauvegardez votre Job, et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3486427"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tHL75.png" id="wp2948939" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2948948"> </a><p class="pIndented1">
+La console affiche les trois tables des <b class="cBold">tLogRow</b>, qui retournent différents types d&#39;informations. La première montre l&#39;en-tête du message et sa date. La seconde retourne les informations concernant le patient. La troisième affiche l&#39;ID de l&#39;événement ainsi que sa date.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tHL7Input_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tHL7Output_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

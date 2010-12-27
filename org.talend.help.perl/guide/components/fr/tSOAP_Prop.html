@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>tSOAP</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSocketOutput_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSOAP_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3601725"> </a><h2 class="pHeading1">
+tSOAP
+</h2>
+<a name="wp3601735"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tSOAP_icon32.png" id="wp3601730" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3601744"> </a><h2 class="pHeading2">
+Propriétés du tSOAP
+</h2>
+<a name="wp3604691"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3601752table3601747">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3601752"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp3601754"> </a><div class="pCellBody">
+Internet 
+</div>
+</td>
+    <td><a name="wp3601762"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp3601759" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3601768"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3601773"> </a><div class="pCellBody">
+Le composant <b class="cBold">tSOAP</b> envoie le message SOAP défini avec les paramètres donnés au Service Web invoqué et retourne la valeur comme définie, à partir des paramètres donnés.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3601780"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3601782"> </a><div class="pCellBody">
+Ce composant appelle une méthode via un Service Web afin de récupérer les valeurs des paramètres définiese dans l&#39;éditeur du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3601789"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3601796"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3601800"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le <b class="cBold">Repository</b>. <br />Cliquez sur <b class="cBold">Edit Schema</b> pour apporter des modifications au schéma. Notez que si vous effectuez des modifications, le schéma devient automatiquement built-in. <br />Cliquez sur <b class="cBold">Sync columns</b> afin de récupérer le schéma du composant précédent dans le Job.
+</div>
+<a name="wp3604419"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3604416" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Le schéma de ce composant est en lecture seule, et contient trois colonnes&#160;: <em class="cEmphasis">Header</em>, <em class="cEmphasis">Body</em>, <em class="cEmphasis">Fault</em>.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3605161"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3605163"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3605168"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3605179"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3605181"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3605186"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le <b class="cBold">Repository</b>. Ainsi, il peut être réutilisé. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3604519"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604524"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use NTLM</em>
+</div>
+</td>
+    <td><a name="wp3604526"> </a><div class="pCellBody">
+Cochez cette case si vous utilisez un protocole d&#39;authentification NTLM.<br /><b class="cBold">Domain</b>&#160;: Nom de domaine du client.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3604531"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604536"> </a><div class="pCellHeading">
+<em class="cEmphasis">Need authentication</em>
+</div>
+</td>
+    <td><a name="wp3604538"> </a><div class="pCellBody">
+Cochez la case d&#39;authentification et renseignez le nom de l&#39;utilisateur dans le champ <b class="cBold">Username</b> et son mot de passe dans le champ <b class="cBold">Password</b>, si cela est nécessaire pour accéder au service.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3604541"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3605327"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use http proxy</em>
+</div>
+</td>
+    <td><a name="wp3605330"> </a><div class="pCellBody">
+Cochez cette case si vous vous connectez derrière un proxy et renseignez les informations correspondantes. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3604554"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3605337"> </a><div class="pCellHeading">
+<em class="cEmphasis">Trust server with SSL</em>
+</div>
+</td>
+    <td><a name="wp3605340"> </a><div class="pCellBody">
+Cochez cette case pour authentifier le serveur auprès du client via un protocole SSL et renseignez les champs correspondants.<br /><b class="cBold">TrustStore file</b>&#160;: saisissez le chemin d&#39;accès et le nom du fichier TrustStore contenant la liste des certificats approuvés par le client.<br /><b class="cBold">TrustStore password</b>&#160;: saisissez le mot de passe utilisé pour vérifier l&#39;intégrité des données TrustStore.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3604569"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604571"> </a><div class="pCellBody">
+<em class="cEmphasis">ENDPOINT</em>
+</div>
+</td>
+    <td><a name="wp3604573"> </a><div class="pCellBody">
+Saisissez l&#39;URL du serveur Web invoqué.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3604575"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604580"> </a><div class="pCellHeading">
+<em class="cEmphasis">SOAP action</em>
+</div>
+</td>
+    <td><a name="wp3604582"> </a><div class="pCellBody">
+Saisissez l&#39;URL de l&#39;en-tête HTTP SOAPAction à utiliser pour identifier le but de la requête HTTP SOAP.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3604584"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604589"> </a><div class="pCellHeading">
+<em class="cEmphasis">SOAP version</em>
+</div>
+</td>
+    <td><a name="wp3604591"> </a><div class="pCellBody">
+Sélectionnez la version du système SOAP que vous utilisez.<br />
+</div>
+<a name="wp3604597"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3604595" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+L&#39;enveloppe SOAP requise varie selon les versions.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3604600"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604605"> </a><div class="pCellHeading">
+<em class="cEmphasis">SOAP message</em>
+</div>
+</td>
+    <td><a name="wp3604607"> </a><div class="pCellBody">
+Saisissez le message SOAP à envoyer au Service Web invoqué. Les variables globales et de contexte peuvent être utilisées lorsque vous écrivez un message SOAP.<br />Pour plus d&#39;informations  concernant les variables de contexte, consultez&#160;<em class="cEmphasis">Variables, page 228</em> du <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3604621"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3604625"> </a><div class="pCellHeading">
+<em class="cEmphasis">Temporary folder (for wsdl2java)</em>
+</div>
+</td>
+    <td><a name="wp3604628"> </a><div class="pCellBody">
+Définissez (ou parcourez votre répertoire jusqu&#39;à) un dossier temporaire configuré où stocker les fichiers WSDL.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3604630"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604632"> </a><div class="pCellBody">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3604634"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3604639"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3604641"> </a><div class="pCellBody">
+Ce composant peut être utilisé en tant que composant d&#39;entrée ou intermédiaire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3604648"> </a><div class="pCellBody">
+<b class="cBold">Connections</b>
+</div>
+</td>
+    <td><a name="wp3604650"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3604652"> </a><div class="pCellBody">
+Liens de sortie (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row&#160;</b>: Main, Iterate.<br /><b class="cBold">Trigger&#160;</b>: Run if, On Component Ok, On Component Error.<br /><br />Liens d&#39;entrée (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row</b>&#160;: Main, Iterate<br /><b class="cBold">Trigger&#160;</b>: Run if, On Component Ok, On Component Error.<br />Pour plus d&#39;informations concernant les connexions, consultez&#160;<em class="cEmphasis">Types de connexion</em> dans le <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3604684"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3604686"> </a><div class="pCellBody">
+N/A
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSocketOutput_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSOAP_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

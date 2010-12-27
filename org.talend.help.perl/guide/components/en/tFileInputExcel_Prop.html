@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:40">
+    <title>tFileInputExcel </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputEBCDIC_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputExcel_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2756584"> </a><h2 class="pHeading1">
+tFileInputExcel 
+</h2>
+<a name="wp2756593"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFileInputExcel_icon32.png" id="wp2756588" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2756601"> </a><h2 class="pHeading2">
+tFileInputExcel properties 
+</h2>
+<a name="wp2756945"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2756609table2756604">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756609"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2756611"> </a><div class="pCellBody">
+File/Input
+</div>
+</td>
+    <td><a name="wp2756620"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-07-23-019.jpg" height="59" width="112" id="wp2756616" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756625"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2756630"> </a><div class="pCellBody">
+<b class="cBold">tFileInputExcel</b> reads an Excel file (.xls or .xlsx) and extracts data line by line.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756637"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2756639"> </a><div class="pCellBody">
+<b class="cBold">tFileInputExcel </b>opens a file and reads it row by row to split data up into fields using regular expressions. Then sends fields as defined in the schema to the next component in the job via a <b class="cBold">Row</b> link.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2757081"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2757088"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2757099"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2757103"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757106"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757113"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2757117"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757120"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3477240"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file where the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756676"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756684"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Save_Icon.png" id="wp2756681" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+    <td><a name="wp2757259"> </a><div class="pCellBody">
+Click this icon to open a connection wizard and store the Excel file connection parameters you set in the component <b class="cBold">Basic settings </b>view.<br />For more information about setting up and storing file connection parameters, see <em class="cEmphasis">Setting up a File XML schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756700"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756705"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name/Stream</em>
+</div>
+</td>
+    <td><a name="wp2757299"> </a><div class="pCellBody">
+<b class="cBold">File name</b>: Name of the file and/or the variable to be processed.<br /><b class="cBold">Stream</b>: Data flow to be processed. The data must be added to the flow in order to be collected by <b class="cBold">tFileInputExcel</b> via the <em class="cEmphasis">INPUT_STREAM</em> variable in the auto-completion list (<b class="cBold">Ctrl+Space</b>).<br /><br />Related topic: <em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756718"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756723"> </a><div class="pCellHeading">
+<em class="cEmphasis">All sheets</em>
+</div>
+</td>
+    <td><a name="wp2756725"> </a><div class="pCellBody">
+Select this check box to process all sheets of the Excel file. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756727"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756732"> </a><div class="pCellHeading">
+<em class="cEmphasis">Sheet list</em>
+</div>
+</td>
+    <td><a name="wp2756740"> </a><div class="pCellBody">
+Click the plus button to add as many lines as needed to the list of the excel sheets to be processed:<br /><b class="cBold">Sheet (name or position)</b>: enter the name or position of the excel sheet to be processed. <br /><b class="cBold">Use Regex</b>: select this check box if you want to use a regular expression to filter the sheets to process. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756748"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756753"> </a><div class="pCellHeading">
+<em class="cEmphasis">Header</em>
+</div>
+</td>
+    <td><a name="wp2756755"> </a><div class="pCellBody">
+Number of records to be skipped in the beginning of the file. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756757"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756762"> </a><div class="pCellHeading">
+<em class="cEmphasis">Footer</em>
+</div>
+</td>
+    <td><a name="wp2756764"> </a><div class="pCellBody">
+Number of records to be skipped at the end of the file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756766"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756771"> </a><div class="pCellHeading">
+<em class="cEmphasis">Limit</em>
+</div>
+</td>
+    <td><a name="wp2756773"> </a><div class="pCellBody">
+Maximum number of lines to be processed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756775"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756777"> </a><div class="pCellBody">
+<em class="cEmphasis">Affect each sheet(header&amp;footer)</em>
+</div>
+</td>
+    <td><a name="wp2756779"> </a><div class="pCellBody">
+Select this check box if you want to apply the parameters set in the <b class="cBold">Header</b> and <b class="cBold">Footer</b> fields to all excel sheets to be processed. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756787"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756792"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp2757350"> </a><div class="pCellBody">
+Select this check box to stop the execution of the Job when an error occurs. Clear the check box to skip the row on error and complete the process for error-free rows. If needed, you can collect the rows on error using a <b class="cBold">Row</b> &gt; <b class="cBold">Reject</b> link.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756796"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756803"> </a><div class="pCellHeading">
+<em class="cEmphasis">First column</em> and <em class="cEmphasis">Last column</em>
+</div>
+</td>
+    <td><a name="wp2756806"> </a><div class="pCellBody">
+Define the range of the columns to be processed through setting the first and last columns in the <b style="font-weight: bold" class="cBold">First column</b><span style="font-weight: normal"> </span>and <b style="font-weight: bold" class="cBold">Last column</b> fields respectively. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2757385"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757395"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema Type</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2757399"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. <br />Click <b class="cBold">Edit Schema</b> to make changes to the schema. Note that if you make changes, the schema automatically becomes built-in.<br />Click <b class="cBold">Sync columns</b> to retrieve the schema from the previous component connected in the Job.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2757411"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757414"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757421"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2757432"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757435"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2757442"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job flowcharts. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756869"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2756874"> </a><div class="pCellHeading">
+<em class="cEmphasis">Advanced separator</em>
+</div>
+</td>
+    <td><a name="wp2757464"> </a><div class="pCellBody">
+Select this check box to change the used data separators.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756878"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756883"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding Type</em>
+</div>
+</td>
+    <td><a name="wp2757476"> </a><div class="pCellBody">
+Select the encoding from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756890"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756894"> </a><div class="pCellHeading">
+<em class="cEmphasis">Read real values for numbers</em>
+</div>
+</td>
+    <td><a name="wp2756897"> </a><div class="pCellBody">
+Select this check box to read numbers in real values. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756899"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756903"> </a><div class="pCellHeading">
+<em class="cEmphasis">Stop to read on empty rows</em>
+</div>
+</td>
+    <td><a name="wp2756906"> </a><div class="pCellBody">
+Select this check box to ignore empty lines.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756908"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756912"> </a><div class="pCellHeading">
+<em class="cEmphasis">Don&#39;t validate the cells</em>
+</div>
+</td>
+    <td><a name="wp2756915"> </a><div class="pCellBody">
+Select this check box to in order not to validate data. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756917"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756922"> </a><div class="pCellHeading">
+<em class="cEmphasis">Ignore the warning</em>
+</div>
+</td>
+    <td><a name="wp2756924"> </a><div class="pCellBody">
+Select this check box to ignore all warnings generated to indicate errors in the Excel file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2756926"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2756931"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><span style="font-style: italic">Catcher Statistics</span>
+</div>
+</td>
+    <td><a name="wp2757500"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2756938"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2951607"> </a><div class="pCellBody">
+Use this component to read an Excel file and to output the data separately depending on the schemas identified in the file. You can use a <b class="cBold">Row &gt; Reject</b> link to filter the data which doesn&#39;t correspond to the type defined.  For an example of how to use these two links, see <a href="tExtractXMLField_Scenario.html#wp2755292"><em class="cEmphasis">Scenario 2: Extracting correct and erroneous data from an XML field in a delimited file</em></a>.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputEBCDIC_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputExcel_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

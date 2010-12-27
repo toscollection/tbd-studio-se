@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>tDBInput </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDB2SP_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDBInput_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3723790"> </a><h2 class="pHeading1">
+tDBInput 
+</h2>
+<a name="wp3723799"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tDBInput_icon32.png" id="wp3723794" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3723805"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3723803" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<br />La fonction de schéma dynamique fonctionne uniquement dans <b class="cBold">Talend Integration Suite Studio</b>.
+</div>
+<a name="wp3723817"> </a><h2 class="pHeading2">
+Propriétés du tDBInput
+</h2>
+<a name="wp3724083"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3723825table3723820">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3723825"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp3723827"> </a><div class="pCellBody">
+Databases/DB Generic
+</div>
+</td>
+    <td><a name="wp3723836"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-05-056-0041.jpg" height="59" width="112" id="wp3723832" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3723841"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3723846"> </a><div class="pCellBody">
+<b class="cBold">Le composant tDBInput</b> lit une base de données et en extrait des champs à l&#39;aide de requêtes. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3723853"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3723858"> </a><div class="pCellBody">
+Le <b class="cBold">tDBInput</b> exécute une requête en base de données selon un ordre strict qui doit correspondre à celui défini dans le schéma. La liste des champs récupérée est ensuite transmise au composant suivant via une connexion de flux (Main row). 
+</div>
+<a name="wp3723864"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3723862" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Préférez toujours un composant Input spécifique au composant générique
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3723872"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3723877"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp3723879"> </a><div class="pCellBody">
+Peut être Built-in ou Repository
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3723881"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723883"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723888"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3723890"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723892"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723897"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Sélectionnez le fichier dans lequel sont stockées les propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3723899"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723907"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Save_Icon.png" id="wp3723904" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+    <td><a name="wp3723909"> </a><div class="pCellBody">
+Cliquez sur cette icône pour ouvrir l&#39;assistant de configuration de connexion à la base de données et enregistrer les paramètres de connexion que vous avez définis dans la vue <b class="cBold">Basic settings </b>du composant. <br />Pour plus d&#39;informations sur comment définir et stocker des paramètres de connexion de base de données, consultez la section <em class="cEmphasis">Configurer une connexion DB</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3723920"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723925"> </a><div class="pCellHeading">
+<em class="cEmphasis">Connection type</em>
+</div>
+</td>
+    <td><a name="wp3723927"> </a><div class="pCellBody">
+Liste déroulante des pilotes disponibles.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3723929"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723934"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp3723936"> </a><div class="pCellBody">
+Nom de la base de données
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3723938"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723943"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp3723948"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3723950"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723957"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3723960"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le <b class="cBold">Repository</b>.<br />
+</div>
+<a name="wp3723969"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3723967" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Ce composant offre la fonction de schéma dynamique. Cela vous permet de récupérer des colonnes inconnues de fichiers source ou de copier des lots de colonnes d&#39;une source sans avoir à mapper chaque colonne individuellement. Pour plus d&#39;informations concernant les schémas dynamiques, consultez&#160;.<em class="cEmphasis">Schéma dynamique</em> du <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Integration Suite Studio</b>.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3723981"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723983"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723988"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma sera créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3723996"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3723998"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3724003"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le <b class="cBold">Repository</b>. Ainsi, il peut être réutilisé. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3724014"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3724019"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query</em>
+</div>
+</td>
+    <td><a name="wp3724021"> </a><div class="pCellBody">
+Saisissez votre requête de base de données en faisant attention à ce que l&#39;ordre des champs corresponde à celui défini dans le schéma. 
+</div>
+<a name="wp3724027"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3724025" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Si vous utilisez la fonction de schéma dynamique, la requête SELECT doit inclure le caractère *, afin de récupérer toutes les colonnes de la table sélectionnée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3724034"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3724039"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp3724041"> </a><div class="pCellBody">
+Sélectionnez l&#39;encodage à partir de la liste ou sélectionnez <b class="cBold">Custom</b> et définissez-le manuellement. Ce champ est obligatoire pour la manipulation des données des bases de données. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3724046"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3724050"> </a><div class="pCellHeading">
+<em class="cEmphasis">Trim all the String/Char columns</em>
+</div>
+</td>
+    <td><a name="wp3724053"> </a><div class="pCellBody">
+Cochez cette case pour supprimer les espaces en début et en fin de champ dans toutes les colonnes contenant des chaînes de caractères. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3724055"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3724060"> </a><div class="pCellHeading">
+<em class="cEmphasis">Trim column</em>
+</div>
+</td>
+    <td><a name="wp3724062"> </a><div class="pCellBody">
+Supprimez les espaces en début et en fin de champ dans les colonnes sélectionnées. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3724064"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3724069"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><span style="font-style: italic">Catcher Statistics</span>
+</div>
+</td>
+    <td><a name="wp3724071"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3724076"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3724078"> </a><div class="pCellBody">
+Ce composant offre la flexibilité des requêtes sur les bases de données et couvre toutes les possibilités des requêtes SQL grâce à une connexion générique ODBC. 
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDB2SP_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDBInput_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

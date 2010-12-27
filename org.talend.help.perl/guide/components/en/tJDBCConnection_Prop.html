@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tJDBCConnection</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tJDBCCommit_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tJDBCConnection_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1559915"> </a><h2 class="pHeading1">
+tJDBCConnection
+</h2>
+<a name="wp1559925"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tJDBCConnection_white.png" id="wp1559920" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1559935"> </a><h2 class="pHeading2">
+tJDBCConnection Properties
+</h2>
+<a name="wp1559947"> </a><p class="pIndented1">
+This component is closely related to <b class="cBold">tJDBCCommit</b> and <b class="cBold">tJDBCRollback</b>. It usually doesn&#39;t make much sense to use one of JDBC components without using the <b class="cBold">tJDBCConnection</b> component to open a connection for the current transaction.
+</p>
+<a name="wp1560196"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1559964table1559956">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1559964"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp1559967"> </a><div class="pCellBody">
+Databases/JDBC
+</div>
+</td>
+    <td><a name="wp1561033"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp1561029" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1559987"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1559990"> </a><div class="pCellBody">
+Opens a connection to the database for a current transaction.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1560001"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1560004"> </a><div class="pCellBody">
+This component allows you to commit all of the Job data to an output database in just a single transaction, once the data has been validated.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1560015"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp1560022"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1560025"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1560057"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1560064"> </a><div class="pCellHeading">
+<em class="cEmphasis">JDBC URL</em>
+</div>
+</td>
+    <td><a name="wp1560067"> </a><div class="pCellBody">
+Enter the JDBC URL  to connect to the desired DB. For example, enter: <em class="cEmphasis">jdbc:mysql://IP address/database name</em> to connect to a mysql database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1560071"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1560078"> </a><div class="pCellHeading">
+<em class="cEmphasis">Driver JAR</em>
+</div>
+</td>
+    <td><a name="wp1560081"> </a><div class="pCellBody">
+Click the plus button under the table to add  lines of the count of your need for the purpose of loading several JARs. Then on each line, click the three dot button to open the <b class="cBold">Select Module</b> wizard from which you can select a driver JAR of your interest for each line.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1560085"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1560092"> </a><div class="pCellHeading">
+<em class="cEmphasis">Driver Class</em>
+</div>
+</td>
+    <td><a name="wp1560095"> </a><div class="pCellBody">
+Enter the driver class related o your connection. For example, enter <em class="cEmphasis">com.mysql.jdbc.Driver</em> as a driver class to connect to a mysql database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1560127"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1560134"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp1560141"> </a><div class="pCellBody">
+Enter your DB authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1560145"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1560152"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp1560155"> </a><div class="pCellBody">
+Select the encoding type from the list or select Custom and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2368440"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2368446"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use or register a shared DB Connection</em>
+</div>
+</td>
+    <td><a name="wp2368450"> </a><div class="pCellBody">
+Select this check box to share your connection or fetch a connection shared by a parent or child Job. This allows  you to share one single DB connection among several DB connection components from different Job levels that can be either parent or child. <br /><b class="cBold">Shared DB Connection Name:</b> set or type in the shared connection name.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3415520"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3415523"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use Auto-Commit</em>
+</div>
+</td>
+    <td><a name="wp3415526"> </a><div class="pCellBody">
+Select this check box to display the <b class="cBold">Auto Commit </b>check box. Select it to activate auto commit mode.<br />Once you clear the <b class="cBold">Use Auto-Commit</b> check box, the auto-commit statement will be removed from the codes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3415603"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3415606"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3415609"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3390137"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3551502"> </a><div class="pCellHeading">
+<em class="cEmphasis">Enable parallel execution</em>
+</div>
+</td>
+    <td><a name="wp3525355"> </a><div class="pCellBody">
+Select this check box to perform high-speed data processing, that is treating multiple data flows simultaneously. <br />For more information, see <em class="cEmphasis">How to parallelize data flows</em> of Talend Integration Suite Studio <b class="cBold">User Guide</b>.
+</div>
+<a name="wp3551551"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3551536" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+The <b class="cBold">Action on table</b> field is not available with the parallelization function. Therefore, you must use a <b class="cBold">tCreateTable</b> component if you want to create a table.<br />
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1560163"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1560166"> </a><div class="pCellBody">
+This component is to be used along with JDBC components, especially with the <b class="cBold">tJDBCCommit</b> and <b class="cBold">tJDBCRollback</b> components.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1560185"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1560188"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tJDBCCommit_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tJDBCConnection_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

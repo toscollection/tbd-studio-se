@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Récupérer les ID des dernières entrées ajoutées</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlLastInsertId_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3617654"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3617662"> </a><h2 class="pHeading2">
+Scénario&#160;: Récupérer les ID des dernières entrées ajoutées
+</h2>
+<a name="wp3617665"> </a><p class="pIndented1">
+Le scénario Java suivant permet d&#39;ouvrir une connexion à une base de données MySQL, d&#39;y écrire des données spécifiées et enfin de récupérer les derniers ID ajoutés à la connexion existante. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3617671"> </a><div class="pSmartList2"><li>Cliquez sur chacun des composants suivants et déposez-les dans l&#39;éditeur graphique&#160;: <b class="cBold">tMySqlConnection</b>, <b class="cBold">tMySqlCommit</b>, <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tMySqlOutput</b>, <b class="cBold">tMysqlLastInsertId</b>, et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp3617706"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tMySqlConnection</b> au <b class="cBold">tFileInputDelimited </b>à l&#39;aide d&#39;un lien <b class="cBold">OnSubJobOk</b>.</li></div>
+<a name="wp3617719"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tFileInputDelimited </b>au <b class="cBold">tMySqlCommit</b> à l&#39;aide d&#39;un lien <b class="cBold">OnSubJobOk</b>.</li></div>
+<a name="wp3617725"> </a><div class="pSmartList2"><li>Reliez les trois derniers composants au <b class="cBold">tFileInputDelimited</b> et entre eux à l&#39;aide de liens <b class="cBold">Row Main</b>, comme suit&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3617737"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId.png" id="wp3617734" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3617746"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tMysqlConnection</b> en cliquant dessus à partir de l&#39;éditeur graphique.</li></div>
+<a name="wp3617753"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (Basic settings).</li></div>
+<a name="wp3617759"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b>, entrez les paramètres de connexion manuellement ou sélectionnez-les à partir d&#39;une liste de variables de contexte, si vous les avez stockées localement sous le noeud <b class="cBold">DB connections</b> de la partie <b class="cBold">Metadata</b> (Métadonnées) du <b class="cBold">Repository</b>. Vous accéderez à cette liste en cliquant dans le champ à renseigner puis en appuyant sur <b class="cBold">Ctrl+Espace</b>. Pour plus d&#39;information sur les Métadonnées, consultez le chapitre <em class="cEmphasis">Centraliser les métadonnées</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3617786"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId1.png" id="wp3617783" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3617794"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tMysqlCommit</b> en cliquant dessus à partir de l&#39;éditeur graphique, puis cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (Basic settings). </li></div>
+<a name="wp3617807"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Component list</b>, sélectionnez le composant <b class="cBold">tMysqlConnection</b> approprié si vous effectuez un Job à plusieurs connexions.</li></div>
+<a name="wp3617818"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tFileInputDelimited</b> en cliquant dessus à partir de l&#39;éditeur graphique.</li></div>
+<a name="wp3617826"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (Basic settings).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3617833"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId2.png" id="wp3617830" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3617845"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez l&#39;option <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3617851"> </a><div class="pSmartList2"><li>Renseignez le chemin d&#39;accès au fichier à traiter dans le champ <b class="cBold">File Name</b>. Dans cet exemple, le nom du fichier est <em class="cEmphasis">Customers</em>.</li></div>
+<a name="wp3617861"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Row separator</b>, définissez le séparateur de lignes permettant d&#39;identifier les fins de ligne. De même, pour <b class="cBold">Field separator</b>, définissez le séparateur de champs permettant de délimiter les différents champs pour chaque ligne.</li></div>
+<a name="wp3617868"> </a><div class="pSmartList2"><li>Définissez, si nécessaire, le nombre de lignes d&#39;en-tête et de pied-de-page à ignorer, ainsi que le nombre maximum de lignes que vous souhaitez traiter. Dans cet exemple, le fichier comporte une ligne d&#39;en-tête. </li></div>
+<a name="wp3617881"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez l&#39;option <b class="cBold">Built-In</b>, puis cliquez sur les trois points <b class="cBold">[...]</b> à côté de la mention <b class="cBold">Edit Schema </b>pour définir les données à passer au composant suivant. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3617894"> </a><p class="pIndented1">
+Sujets associés&#160;: consultez les chapitres <em class="cEmphasis">Paramétrer un schéma built-in</em> et <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp3617906"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId3.png" id="wp3617903" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3617915"> </a><p class="pIndented1">
+Dans ce scénario, le schéma se compose de deux colonnes, <em class="cEmphasis">name</em> et <em class="cEmphasis">age</em>. La première colonne comprend le nom des employés et la seconde comporte leurs âges respectifs. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3617925"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tMysqlOutput</b> en cliquant dessus à partir de l&#39;éditeur graphique.</li></div>
+<a name="wp3617933"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (<b class="cBold">Basic settings</b>).</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3617940"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId4.png" id="wp3617937" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3617949"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Use an existing connection</b>.</li></div>
+<a name="wp3617955"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table</b>, renseignez le nom de la table dans laquelle vous voulez écrire la liste des employés. Dans cet exemple, il s&#39;agit de la table <em class="cEmphasis">employee</em>. </li></div>
+<a name="wp3617968"> </a><div class="pSmartList2"><li>Sélectionnez les actions à effectuer dans les champs <b class="cBold">Action on table </b>et <b class="cBold">Action on data</b>, à partir des listes proposées. Dans cet exemple, on ne veut effectuer aucune action sur la table elle-même mais exécuter une action <em class="cEmphasis">Insert</em> sur les données. </li></div>
+<a name="wp3617983"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez l&#39;option <b class="cBold">Built-In</b> puis cliquez sur le bouton <b class="cBold">Sync columns</b> pour synchroniser les colonnes par rapport au composant précédent. Dans cet exemple, le schéma à reproduire dans la table de la base de données MySQL se compose des deux colonnes <em class="cEmphasis">name</em> et<em class="cEmphasis"> age</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3617999"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId5.png" id="wp3617996" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3618008"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tMySqlLastInsertId</b> en cliquant dessus à partir de l&#39;éditeur graphique. </li></div>
+<a name="wp3618016"> </a><div class="pSmartList2"><li>Cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (Basic settings). </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3618023"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId6.png" id="wp3618020" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3618034"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Component list</b>, sélectionnez le composant <b class="cBold">tMysqlConnection</b> approprié si vous effectuez un Job à plusieurs connexions. </li></div>
+<a name="wp3618046"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez l&#39;option <b class="cBold">Built-In</b> puis cliquez sur le bouton <b class="cBold">Sync columns</b> pour synchroniser les colonnes par rapport au composant précédent. Dans le schéma de sortie du <b class="cBold">tMySqlLastInsertId</b>, vous pouvez voir la colonne last_insert_id qui indique les dernières ID ajoutées à la connexion existante. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3618059"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId7.png" id="wp3618056" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3618067"> </a><div class="pSmartList2"><li>Sélectionnez le <b class="cBold">tLogRow</b> en cliquant dessus à partir de l&#39;éditeur graphique, puis cliquez sur la vue <b class="cBold">Component</b> pour en définir la configuration de base (Basic settings). Pour plus d&#39;informations, consultez le <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp3618082"> </a><div class="pSmartList2"><li>Sauvegardez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3618089"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlLastInsertId8.png" id="wp3618086" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3618095"> </a><p class="pIndented1">
+Le composant <b class="cBold">tMysqlLastInsertId </b>affiche les dernières ID ajoutées pour chaque ligne de la connexion existante. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlLastInsertId_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

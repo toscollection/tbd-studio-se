@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:14">
+    <title>tContextLoad</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tContextDump_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tContextLoad_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1438820"> </a><h2 class="pHeading1">
+tContextLoad
+</h2>
+<a name="wp1446835"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tContextLoad.png" id="wp1446832" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1447163"> </a><h2 class="pHeading2">
+tContextLoad properties
+</h2>
+<a name="wp1404580"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1404473table1404468">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404473"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp1404475"> </a><div class="pCellBody">
+Misc
+</div>
+</td>
+    <td><a name="wp1404484"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-11-10-07.jpg" height="59" width="112" id="wp1404480" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404489"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1404494"> </a><div class="pCellBody">
+<b class="cBold">tContextLoad</b> modifies dynamically the values of the active context.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404501"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1404506"> </a><div class="pCellBody">
+<b class="cBold">tContextLoad</b> can be used to load a context from a flow. <br />This component performs also two controls. It warns when the parameters defined in the incoming flow are not defined in the context, and the other way around, it also warns when a context value is not initialized in the incoming flow.<br />But note that this does not block the processing.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404513"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp1404518"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp1404523"> </a><div class="pCellBody">
+In <b class="cBold">tContextLoad</b>, the schema must be made of two columns, including the parameter name and the parameter value to be loaded.<br />A schema is a row description, i.e., it defines the fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. <br />Click <b class="cBold">Edit Schema</b> to make changes to the schema. Note that if you make changes, the schema automatically becomes built-in.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404525"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404527"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2082641"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404537"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404539"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2082732"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job flowcharts. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2753899"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2753903"> </a><div class="pCellHeading">
+<em class="cEmphasis">If a variable loaded, but not in the context</em>
+</div>
+</td>
+    <td><a name="wp2753906"> </a><div class="pCellBody">
+If a variable is loaded but does not appear in the context, select how the notification must be displayed. In the shape of an <b class="cBold">Error</b>, a <b class="cBold">warning</b> ou an information (<b class="cBold">info</b>).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2753917"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2753921"> </a><div class="pCellHeading">
+<em class="cEmphasis">If a variable in the context, but not loaded</em>
+</div>
+</td>
+    <td><a name="wp2753924"> </a><div class="pCellBody">
+If a variable appears in the context but is not loaded, select how the notification must be displayed. In the shape of an <b class="cBold">Error</b>, a <b class="cBold">warning</b> ou an information (<b class="cBold">info</b>)
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404549"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404554"> </a><div class="pCellHeading">
+<em class="cEmphasis">Print operations</em>
+</div>
+</td>
+    <td><a name="wp1404556"> </a><div class="pCellBody">
+Select this check box to display the context parameters set in the <b class="cBold">Run</b> view.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754086"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754091"> </a><div class="pCellHeading">
+<em class="cEmphasis">Disable errors</em>
+</div>
+</td>
+    <td><a name="wp2754093"> </a><div class="pCellBody">
+Select this check box to prevent the error from displaying.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754095"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754100"> </a><div class="pCellHeading">
+<em class="cEmphasis">Disable warnings</em>
+</div>
+</td>
+    <td><a name="wp2754102"> </a><div class="pCellBody">
+Select this check box to prevent the warning from displaying.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754104"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754109"> </a><div class="pCellHeading">
+<em class="cEmphasis">Disable infos</em>
+</div>
+</td>
+    <td><a name="wp2754111"> </a><div class="pCellBody">
+Select this check box to prevent the information from displaying.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754209"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754212"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp2754215"> </a><div class="pCellBody">
+This check box is selected by default. Clear the check box to skip the row on error and complete the process for error-free rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754187"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2754197"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2754201"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404564"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1404566"> </a><div class="pCellBody">
+This component relies on the data flow to load the context values to be used, therefore it requires a preceding input component and thus cannot be a start component. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404573"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1404575"> </a><div class="pCellBody">
+<b class="cBold">tContextLoad</b> does not create any non-defined variable in the default context.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tContextDump_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tContextLoad_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

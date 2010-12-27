@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>tFuzzyJoin</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFindRegexlibExpressions_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFuzzyJoin_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3490479"> </a><h2 class="pHeading1">
+tFuzzyJoin
+</h2>
+<a name="wp3490491"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFuzzyJoin_icon32_white.png" id="wp3490484" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3490503"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3490496" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+This component is available in the <b class="cBold">Palette</b> of the studio on the condition that you have subscribed to the relevant edition of <b class="cBold">Talend Data Quality</b>.
+</div>
+<a name="wp3490517"> </a><h2 class="pHeading2">
+tFuzzyJoin properties
+</h2>
+<a name="wp3490870"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3490529table3490521">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490529"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp3490532"> </a><div class="pCellBody">
+Data Quality
+</div>
+</td>
+    <td><a name="wp3490543"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp3490539" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490551"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3490558"> </a><div class="pCellBody">
+<b class="cBold">tFuzzyJoin </b>joins two tables by doing a fuzzy match on several columns. It compares columns from the main flow with reference columns from the lookup flow and outputs the main flow data and/or the rejected data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490569"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3490572"> </a><div class="pCellBody">
+Helps ensuring the data quality of any source data against a reference data source.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490583"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3490593"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3490597"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490601"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490604"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490611"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: You create and store the schema locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490626"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490629"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490636"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: You have already created and stored the schema in the Repository. You can reuse it in other projects and job designs. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490651"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490657"> </a><div class="pCellHeading">
+<em class="cEmphasis">Include lookup columns in output</em>
+</div>
+</td>
+    <td><a name="wp3490661"> </a><div class="pCellBody">
+Select this check box to include the lookup columns you define in the output flow.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490665"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490672"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input key attribute</em>
+</div>
+</td>
+    <td><a name="wp3490675"> </a><div class="pCellBody">
+Select the column(s) from the main flow that needs to be checked against the reference (lookup) key column.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490679"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490686"> </a><div class="pCellHeading">
+<em class="cEmphasis">Lookup key attribute</em>
+</div>
+</td>
+    <td><a name="wp3490689"> </a><div class="pCellBody">
+Select the lookup key columns that you will use as a reference against which to compare the columns from the input flow.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490693"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490700"> </a><div class="pCellHeading">
+<em class="cEmphasis">Matching type</em>
+</div>
+</td>
+    <td><a name="wp3490703"> </a><div class="pCellBody">
+Select the relevant matching algorithm from the list:<br /><b class="cBold">Exact Match</b>: matches each processed entry to all possible reference entries with exactly the same value.<br /><b class="cBold">Levenshtein</b>: Based on the edit distance theory. It calculates the number of insertion, deletion or substitution required for an entry to match the reference entry. <br /><b class="cBold">Metaphone</b>: Based on a phonetic algorithm for indexing entries by their pronunciation. It first loads the phonetics of all entries of the lookup reference and checks all entries of the main flow against the entries of the reference flow.<br /><b class="cBold">Double Metaphone</b>: a new version of the Metaphone phonetic algorithm, that produces more accurate results than the original algorithm. It can return both a primary and a secondary code for a string. This accounts for some ambiguous cases as well as for multiple variants of surnames with common ancestry.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490723"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490730"> </a><div class="pCellHeading">
+<em class="cEmphasis">Case sensitive</em>
+</div>
+</td>
+    <td><a name="wp3490733"> </a><div class="pCellBody">
+Select this check box to consider the letter case.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490737"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490744"> </a><div class="pCellHeading">
+<em class="cEmphasis">Min. distance</em>
+</div>
+</td>
+    <td><a name="wp3490751"> </a><div class="pCellBody">
+Only for <b class="cBold">Levenshtein</b>. Set the minimum number of changes allowed to match the reference. If set to 0, only perfect matches(<b class="cBold">Exact Match</b>) are returned.
+</div>
+<a name="wp3490763"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3490760" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+You can create and store context variables for the minimum and maximum distances in order to start from a low max number to match rows and go up to higher max number to match more possible rows. You can press <b class="cBold">Ctrl+Space</b> to access the variable list and select the new context variables. For more information about context variables, see <em class="cEmphasis">How to centralize contexts and variables</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490783"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490790"> </a><div class="pCellHeading">
+<em class="cEmphasis">Max. distance</em>
+</div>
+</td>
+    <td><a name="wp3490797"> </a><div class="pCellBody">
+Only for <b class="cBold">Levenshtein</b>. Set the maximum number of changes allowed to match the reference.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490801"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3490807"> </a><div class="pCellHeading">
+<em class="cEmphasis">Inner join (with reject output)</em>
+</div>
+</td>
+    <td><a name="wp3490811"> </a><div class="pCellBody">
+Select this check box to join the two tables first and gather the rejected data from the main flow.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490819"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3490833"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher</em> <em class="cEmphasis">Statistics</em>
+</div>
+</td>
+    <td><a name="wp3490837"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3490845"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3490848"> </a><div class="pCellBody">
+This component is not startable and it requires two input components and one or more output components.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3490859"> </a><div class="pCellBody">
+<b class="cBold">Limitation/prerequisite</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3490862"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFindRegexlibExpressions_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFuzzyJoin_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

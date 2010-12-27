@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:52">
+    <title>tMDMDelete</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMBulkLoad_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMDelete_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3515545"> </a><h2 class="pHeading1">
+tMDMDelete
+</h2>
+<a name="wp3505631"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tMDMDelete_icon32_white.png" id="wp3505627" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3505651"> </a><h2 class="pHeading2">
+Propriétés du tMDMDelete
+</h2>
+<a name="wp3505860"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3505659table3505654">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505659"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp3505661"> </a><div class="pCellBody">
+Talend MDM
+</div>
+</td>
+    <td><a name="wp3505669"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp3505666" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505674"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3505679"> </a><div class="pCellBody">
+Le composant <b class="cBold">tMDMDelete</b> supprime des enregistrements de données d&#39;entités spécifiques du hub MDM (référentiel XML).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505686"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3505688"> </a><div class="pCellBody">
+Ce composant efface des données maître du hub MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505695"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3505703"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3505705"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le <b class="cBold">Repository</b>.<br />Cliquez sur <b class="cBold">Edit Schema</b> pour modifier le schéma.<br />
+</div>
+<a name="wp3505717"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3505715" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Si vous modifiez le schéma, il redevient automatiquement built-in.
+</p>
+<a name="wp3505719"> </a><div class="pCellBody">
+<br />Cliquez sur le bouton <b class="cBold">Sync columns</b> afin de récupérer le schéma du composant précédent.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505724"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505726"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505731"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Le schéma sera créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505742"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505744"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505749"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé dans divers projets et Jobs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505760"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505765"> </a><div class="pCellHeading">
+<em class="cEmphasis">URL</em>
+</div>
+</td>
+    <td><a name="wp3505767"> </a><div class="pCellBody">
+Saisissez l&#39;URL d&#39;accès au serveur MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505769"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505777"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp3505779"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur du serveur MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505781"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505786"> </a><div class="pCellHeading">
+<em class="cEmphasis">Version</em>
+</div>
+</td>
+    <td><a name="wp3505788"> </a><div class="pCellBody">
+Saisissez le nom de la version des données maître à laquelle vous souhaitez vous connecter, en fonction de vos droits utilisateur.<br />Laissez ce champ vide pour afficher la version par défaut des données maître.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505790"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505795"> </a><div class="pCellHeading">
+<em class="cEmphasis">Entity</em>
+</div>
+</td>
+    <td><a name="wp3505797"> </a><div class="pCellBody">
+Saisissez le nom de l&#39;entité contenant les données que vous souhaitez effacer.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505799"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505804"> </a><div class="pCellHeading">
+<em class="cEmphasis">Data Container</em>
+</div>
+</td>
+    <td><a name="wp3505806"> </a><div class="pCellBody">
+Saisissez le nom du conteneur de données contenant les données que vous souhaitez effacer.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505808"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505813"> </a><div class="pCellHeading">
+<em class="cEmphasis">Keys</em>
+</div>
+</td>
+    <td><a name="wp3505815"> </a><div class="pCellBody">
+Spécifiez le(s) champ(s) (dans l&#39;ordre de la séquence) composant la clé lorsque l&#39;entité possède une clé multiple.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505817"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505822"> </a><div class="pCellHeading">
+<em class="cEmphasis">Logical delete</em>
+</div>
+</td>
+    <td><a name="wp3505824"> </a><div class="pCellBody">
+Cochez cette case afin d&#39;envoyer les données maître dans la Corbeille, et renseignez le chemin d&#39;accès à la Corbeille (<b class="cBold">Recycle bin path</b>). Une fois dans la Corbeille, les données maître peuvent être supprimées définitivement ou restaurées. Si vous laissez la case décochée, les données maître seront supprimées définitivement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505829"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3505834"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp3505836"> </a><div class="pCellBody">
+Cochez cette case afin d&#39;arrêter le Job en cas d&#39;erreur.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3505841"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3505846"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3505848"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3505853"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3505855"> </a><div class="pCellBody">
+Utilisez ce composant pour écrire un fichier et séparer les champs à l&#39;aide d&#39;un séparateur spécifique.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMBulkLoad_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMDelete_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

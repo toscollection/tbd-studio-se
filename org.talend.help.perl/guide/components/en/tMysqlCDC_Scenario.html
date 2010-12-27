@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>Scenario 1: Populating a data warehouse</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlCDC_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlClose_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3545722"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3545732"> </a><h2 class="pHeading2">
+Scenario 1: Populating a data warehouse
+</h2>
+<a name="wp3545736"> </a><p class="pIndented1">
+The following Java scenario creates a three-component Job that populates a data warehouse. A <b class="cBold">tMysqlInput</b> component reads your customer data stored in the Customer base. A <b class="cBold">tMap</b> component allows you to modify this data and the modifications are transmitted to the <em class="cEmphasis">Leadfact</em> table in the CRM database through a <b class="cBold">tMysqlOutput</b> component.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3545764"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tMysqlInput</b>, <b class="cBold">tMap</b>, and <b class="cBold">tMysqlOutput</b>.</li></div>
+<a name="wp3545787"> </a><div class="pSmartList2"><li>Connect the three components using <b class="cBold">Row Main </b>links.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3545796"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM1.png" id="wp3545792" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3545807"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tMysqlInput</b> and click the <b class="cBold">Component</b> tab to define its basic settings. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3545822"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM2.png" id="wp3545818" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3545837"> </a><div class="pSmartList2"><li>Set <b class="cBold">Property Type</b> to <b class="cBold">Repository</b> and then select the connection to the Customer database that holds the information about your clients. The connection details will display automatically in the corresponding fields.</li></div>
+<a name="wp3545851"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3545844" border="0" hspace="0" vspace="0"/><br />
+If you have not stored the DB connection details in the <b class="cBold">Metadata</b> entry in the Repository, select <b class="cBold">Built-in </b>in the property type list and set the connection details manually.
+</p>
+<a name="wp3545871"> </a><div class="pSmartList2"><li>Set <b class="cBold">Schema</b> to <b class="cBold">Repository</b> and click the three-dot button to select the schema of the Customer database stored in the <b class="cBold">Metadata</b> entry.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3545888"> </a><p class="pIndented1">
+Related topics: <em class="cEmphasis">How to set a built-in schema</em> and <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3545908"> </a><div class="pSmartList2"><li>In the <b class="cBold">Table Name</b> field, enter the name of the table holding the information you want to modify, in this example: <em class="cEmphasis">customers</em>. </li></div>
+<a name="wp3545922"> </a><div class="pSmartList2"><li>Click <b class="cBold">Guess Query</b> to retrieve all data from your table.</li></div>
+<a name="wp3545934"> </a><div class="pSmartList2"><li>Double-click the <b class="cBold">tMap</b> component to open the <b class="cBold">Map Editor</b>. Notice that the Input area is already filled with the metadata of the input component. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3545945"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM3.png" id="wp3545941" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3545956"> </a><div class="pSmartList2"><li>Drag the fields in the input zone to the fields in the <em class="cEmphasis">Leadfact </em>table in the output zone. For more information regarding data mapping<em class="cEmphasis">How to map data flows</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.</li></div>
+<a name="wp3545982"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate the operation.</li></div>
+<a name="wp3545993"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tMySqlOutput</b> and click the <b class="cBold">Component</b> tab to define its basic settings.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3546008"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_CRM4.png" id="wp3546004" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3546023"> </a><div class="pSmartList2"><li>Set <b class="cBold">Property Type</b> to <b class="cBold">Repository</b> and then select the connection to the CRM data warehouse. The connection details will display automatically in the corresponding fields</li></div>
+<a name="wp3546033"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3546030" border="0" hspace="0" vspace="0"/><br />
+If you have not stored the CRM data warehouse connection details in the <b class="cBold">Metadata</b> entry in the Repository, select <b class="cBold">Built-in </b>in the property type list and set the connection details manually.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3546053"> </a><p class="pIndented1">
+Related topics: <em class="cEmphasis">How to set a built-in schema</em> and <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3546073"> </a><div class="pSmartList2"><li>In the <b class="cBold">Table Name</b> field, enter the name of the table you want to populate with modified data, in this example: <em class="cEmphasis">leadfact</em>. </li></div>
+<a name="wp3546090"> </a><div class="pSmartList2"><li>Save your job and press <b class="cBold">F6</b> to create and populate the table <em class="cEmphasis">Leadfact </em>in the CRM data warehouse.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3546105"> </a><h2 class="pHeading2">
+Scenario 2: Retrieving modified data using CDC
+</h2>
+<a name="wp3546110"> </a><p class="pIndented1">
+This scenario is based on the preceding one. It continuously populates and modifies the data stored in the CRM warehouse, and retrieves and saves, every night, these modifications in a dedicated table using the CDC function. These modifications could be then extracted by the various concerned departments.
+</p>
+<a name="wp3546119"> </a><h3 class="pHeading3">
+Step&#160;1: Configuring CDC
+</h3>
+<a name="wp3546123"> </a><p class="pIndented2">
+Before being able to retrieve modified data from the CRM data warehouse, you must:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546132"> </a><div class="pSmartList3"><li>first set up the DB connection dedicated to CDC,</li></div>
+<a name="wp3546136"> </a><div class="pSmartList3"><li>second, set up a DB connection to the source data and identify the table to catch,</li></div>
+<a name="wp3546143"> </a><div class="pSmartList3"><li>finally, set the connection between the CDC and the data.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546148"> </a><p class="pIndented2">
+To do that:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546163"> </a><div class="pSmartList3"><li>In the <b class="cBold">Repository</b> tree view and under <b class="cBold">Metadata</b>, create a connection to your database dedicated to CDC, in this scenario <em class="cEmphasis">CDC_connection</em>.</li></div>
+<a name="wp3546180"> </a><div class="pSmartList3"><li>In the <b class="cBold">Repository</b> tree view and under <b class="cBold">Metadata</b>, create a connection to the source data warehouse and identify the table to catch, in this scenario <em class="cEmphasis">CRM_connection</em>.</li></div>
+<a name="wp3546197"> </a><div class="pSmartList3"><li>Right-click the <em class="cEmphasis">CRM</em> connection and select <b class="cBold">Retrieve schema</b> from the drop-down menu to retrieve the schema of the table to catch.</li></div>
+<a name="wp3546214"> </a><div class="pSmartList3"><li>Right-click <b class="cBold">CDC Foundation</b> of <em class="cEmphasis">CRM</em> and select <b class="cBold">Create CDC</b> in the drop-down menu.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546225"> </a><p class="pIndented2">
+The <b class="cBold">[Create Change Data Capture] </b>dialog box displays
+</p>
+<a name="wp3546234"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_Create_Sub1.png" id="wp3546230" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546250"> </a><div class="pSmartList3"><li>In the <b class="cBold">Set link Connection</b> field, select <em class="cEmphasis">CDC_connection</em>.</li></div>
+<a name="wp3546261"> </a><div class="pSmartList3"><li>Click <b class="cBold">Create Subscriber</b>. The <b class="cBold">[Create Subscriber and Execute SQL Script]</b> dialog box displays.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546273"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_Create_Sub2.png" id="wp3546269" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546289"> </a><div class="pSmartList3"><li>Click <b class="cBold">Execute</b> and then <b class="cBold">Close</b>.</li></div>
+<a name="wp3546299"> </a><div class="pSmartList3"><li>Click <b class="cBold">Finish</b> to validate the creation of the subscriber table.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546308"> </a><p class="pIndented2">
+In the <b class="cBold">CDC Foundation</b> folder, the relevant subscriber table displays.
+</p>
+<a name="wp3546312"> </a><p class="pIndented2">
+You must specify which table the subscriber wants to subscribe to and then activate the subscription. To do that:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546327"> </a><div class="pSmartList3"><li>Right-click the <em class="cEmphasis">Leafact</em> schema in the source CRM and select <b class="cBold">Add CDC</b> in the drop-down list. The <b class="cBold">[Create Subscriber and Execute SQL Script]</b> dialog box displays.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546343"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_Create_Sub3.png" id="wp3546339" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546362"> </a><div class="pSmartList3"><li>In the <b class="cBold">Events to catch</b> check boxes, select <b class="cBold">Insert</b>, <b class="cBold">Update</b> and <b class="cBold">Delete</b> to catch inserted, updated or deleted data.</li></div>
+<a name="wp3546375"> </a><div class="pSmartList3"><li>In the <b class="cBold">Subscriber Name</b> field, enter the name of the subscriber that will have access to the modifications, in this scenario <em class="cEmphasis">Sub_Mktg</em> for the Marketing department.</li></div>
+<a name="wp3546394"> </a><div class="pSmartList3"><li>Click <b class="cBold">Execute</b> and then <b class="cBold">Close</b> to validate the subscription.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546402"> </a><p class="pIndented2">
+In the <b class="cBold">CDC Foundation</b> folder, the two created tables display and the schema node of the catched table is marked with a green CDC symbol.
+</p>
+<a name="wp3546412"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC_arbo.png" id="wp3546408" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3546424"> </a><p class="pIndented2">
+Create the new subscribers <em class="cEmphasis">Sub_Finance</em> and <em class="cEmphasis">Sub_Sales </em>for the Treasury and Sales departments respectively.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546440"> </a><div class="pSmartList3"><li>Right-click <em class="cEmphasis">Leadfact</em> and select <b class="cBold">Edit CDC Subscribers</b> from the drop-down list. The <b class="cBold">[Edit CDC]</b> dialog box displays.</li></div>
+<a name="wp3546458"> </a><div class="pSmartList3"><li>Click <b class="cBold">Add</b>. The <b class="cBold">Input subscriber name</b> dialog box display.</li></div>
+<a name="wp3546466"> </a><div class="pSmartList3"><li>Enter the name of the subscriber, in this scenario <em class="cEmphasis">Sub_Finance</em> and <em class="cEmphasis">Sub_Sales</em>.</li></div>
+<a name="wp3546486"> </a><div class="pSmartList3"><li>Click <b class="cBold">Execute</b> and then <b class="cBold">Close</b> to validate the creation operation.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546494"> </a><h3 class="pHeading3">
+Step&#160;2: Modifying the CRM data
+</h3>
+<a name="wp3546498"> </a><p class="pIndented2">
+Modify the data of your customers in your CRM, for example, convert all customer names to upper case.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546510"> </a><div class="pSmartList3"><li>Double-click the <b class="cBold">tMap</b> component and enter <code class="cCode">row1.CustomerName.toUpperCase()</code>in front of the <b class="cBold">CustomerName</b> column to convert all customer names to upper case.</li></div>
+<a name="wp3546528"> </a><div class="pSmartList3"><li>Click <b class="cBold">Ok</b>.</li></div>
+<a name="wp3546537"> </a><div class="pSmartList3"><li>Double-click the <b class="cBold">tMysqlOutput</b> component.</li></div>
+<a name="wp3546550"> </a><div class="pSmartList3"><li>In the <b class="cBold">Action on table</b> field, select <b class="cBold">None</b>.</li></div>
+<a name="wp3546562"> </a><div class="pSmartList3"><li>In the <b class="cBold">Action on data</b> field, select <b class="cBold">Insert or update</b> to insert or update table data.</li></div>
+<a name="wp3546573"> </a><div class="pSmartList3"><li>Save your job and press <b class="cBold">F6</b> to execute the job.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546581"> </a><p class="pIndented2">
+To view all changes done on data, right-click the <em class="cEmphasis">Leadfact</em> table and select <b class="cBold">View All Changes</b> to open the relevant dialog box.
+</p>
+<a name="wp3546595"> </a><h3 class="pHeading3">
+Step&#160;3: Extracting change data
+</h3>
+<a name="wp3546599"> </a><p class="pIndented2">
+After setting up the CDC environment, you can now design a job using the Mysql CDC component to incrementally extract the change data from the <em class="cEmphasis">Leadfact</em> table. To do that:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546623"> </a><div class="pSmartList3"><li>From the <b class="cBold">Palette</b>, drop the <b class="cBold">tMysqlCDC</b> and <b class="cBold">tLogRow</b> components to the design workspace.</li></div>
+<a name="wp3546634"> </a><div class="pSmartList3"><li>Link the two components using a <b class="cBold">Row Main</b> link.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546643"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC1.png" id="wp3546639" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546656"> </a><div class="pSmartList3"><li>Double-click the <b class="cBold">tMysqlCDC</b> component to define its properties.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546665"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC2.png" id="wp3546661" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546680"> </a><div class="pSmartList3"><li>Set <b class="cBold">Property Type</b> to <b class="cBold">Repository</b> and then select the select the schema corresponding to your Mysql DB table, <em class="cEmphasis">CDC_connection</em> in this scenario. The connection details will display automatically in the corresponding fields</li></div>
+<a name="wp3546694"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3546691" border="0" hspace="0" vspace="0"/><br />
+If you have not stored the CRM data warehouse connection details in the <b class="cBold">Metadata</b> entry in the Repository, select <b class="cBold">Built-in </b>in the property type list and set the connection details manually.
+</p>
+<a name="wp3546718"> </a><div class="pSmartList3"><li>In the <b class="cBold">Schema using CDC</b> field, select <b class="cBold">Repository</b> and then select the schema of the <em class="cEmphasis">Leadfact</em> table stored in the <b class="cBold">Metadata</b> entry.</li></div>
+<a name="wp3546735"> </a><div class="pSmartList3"><li>In the <b class="cBold">Table using CDC</b> field, enter the name of the table captured by the CDC, in this scenario <em class="cEmphasis">Leadfact</em>.</li></div>
+<a name="wp3546748"> </a><div class="pSmartList3"><li>In the <b class="cBold">Subscriber</b> field, enter the name of the subscriber that will extract modified data, <em class="cEmphasis">Sub_Mktg,</em> <em class="cEmphasis">Sub_Sales</em>, and <em class="cEmphasis">Sub_Finance</em> for the Marketing, Sales and Treasury Departments respectively.</li></div>
+<a name="wp3546769"> </a><div class="pSmartList3"><li>In the <b class="cBold">Events to catch</b> field, select the check boxes corresponding to the type of the modified data the subscriber will extract. In this scenario, select the three check boxes for the three subscribers.</li></div>
+<a name="wp3546780"> </a><div class="pSmartList3"><li>Double-click the <b class="cBold">tLogRow</b> component to set is properties.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546789"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC3.png" id="wp3546785" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<div class="pSmartList3"><ul class="pSmartList3">
+<a name="wp3546800"> </a><div class="pSmartList3"><li>Click the <b class="cBold">Sync columns</b> button to retrieve the schema from the preceding component.</li></div>
+<a name="wp3546811"> </a><div class="pSmartList3"><li>Save your job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+</ul></div>
+<a name="wp3546820"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlCDC4.png" id="wp3546816" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3546824"> </a><p class="pIndented2">
+The customer names are converted to upper case and the modification type displays here is <em class="cEmphasis">U</em> to stand for <b class="cBold">Update</b>.
+</p>
+<a name="wp3546837"> </a><p class="pIndented2">
+Once these modifications are extracted, they are no more available in the modified table. To verify their extraction, right-click the <em class="cEmphasis">Leadfact</em> table catched by the CDC and then select <b class="cBold">Views All Changes</b>. The extracted changes do not display anymore.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlCDC_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlClose_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

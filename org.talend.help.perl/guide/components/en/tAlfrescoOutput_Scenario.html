@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:32">
+    <title>Scenario: Creating documents on an Alfresco server</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAlfrescoOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tBonitaDeploy_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2706776"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2706783"> </a><h2 class="pHeading2">
+Scenario: Creating documents on an Alfresco server
+</h2>
+<a name="wp2706786"> </a><p class="pIndented1">
+This Java scenario describes a two-component Job which aims at creating two document files with the related metadata in an Alfresco server, the java-based Enterprise Control Management system.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2706804"> </a><div class="pSmartList2"><li>Drop the <b class="cBold">tFileInputDelimited</b> and <b class="cBold">tAlfrescoOutput</b> components from the <b class="cBold">Palette</b> onto the design workspace. </li></div>
+<a name="wp2706813"> </a><div class="pSmartList2"><li>Connect the two components together using a <b class="cBold">Row Main </b>link.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2706820"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput.png" id="wp2706817" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2706832"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tFileInputDelimited</b> to display its basic settings<b class="cBold">.</b> </li></div>
+<a name="wp2706838"> </a><div class="pSmartList2"><li>Set the <b class="cBold">File Name</b> path and all related properties. Note that if you have already stored your input schemas locally in the <b class="cBold">Repository</b>, you can simply drop the relevant file item from the <b class="cBold">Metadata</b> folder onto the design workspace and the delimited file settings will automatically display in the relevant fields in the component <b class="cBold">Basic settings</b> view. <br />For more information about metadata, see <em class="cEmphasis">Setting up a File Delimited schema</em> in <b class="cBold">Talend Integration Suite Studio</b> User Guide.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2706862"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput1.png" id="wp2706859" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2706865"> </a><p class="pIndented1">
+In this scenario, the delimited file provides the metadata and path of two documents we want to create in the Alfresco server. The input schema for the documents consists of four columns: <code class="cCode">file_name, destination_folder name, source_path, </code>and <code class="cCode">author</code>.
+</p>
+<a name="wp2706879"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput2.png" id="wp2706876" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2706883"> </a><p class="pIndented1">
+And therefore the input schema of the delimited file will be as the following:
+</p>
+<a name="wp2706890"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput3.png" id="wp2706887" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2706903"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tAlfrescoOutput</b> to display its basic settings<b class="cBold">.</b> </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2706910"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput4.png" id="wp2706907" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2706918"> </a><div class="pSmartList2"><li>In the <b class="cBold">Alfresco Server</b> area, enter the Alfresco server URL and user authentication information in the corresponding fields.</li></div>
+<a name="wp2706925"> </a><div class="pSmartList2"><li>In the <b class="cBold">TargetLocation</b> area, either type in the base name where to put the document in the server, or Select the <b class="cBold">Map...</b> check box and then in the <b class="cBold">Column</b> list, select the target location column, <code class="cCode">destination_folder_name</code> in this scenario.</li></div>
+<a name="wp2706942"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2706940" border="0" hspace="0" vspace="0"/><br />
+When you type in the base name, make sure to use the double backslash (\\) escape character.
+</p>
+<a name="wp2706952"> </a><div class="pSmartList2"><li>In the <b class="cBold">Document Mode</b> list, select the mode you want to use for the created documents.</li></div>
+<a name="wp2706958"> </a><div class="pSmartList2"><li>In the <b class="cBold">Container Mode</b> list, select the mode you want to use for the destination folder in Alfresco.</li></div>
+<a name="wp2706970"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Define Document Type</b> three-dot button to open the <b class="cBold">tAlfrescoOutput</b> editor.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2706977"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput5.png" id="wp2706974" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2706985"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Add</b> button to browse and select the xml file that holds the metadata according to which you want to save the documents in Alfresco.<br />All available aspects in the selected model file display in the <b class="cBold">Available Aspects </b>list.</li></div>
+<a name="wp2706996"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2706994" border="0" hspace="0" vspace="0"/><br />
+You can browse for this model folder locally or on the network. After defining the aspects to use for the document to be created in Alfresco, this model folder is not needed any more.
+</p>
+<a name="wp2707005"> </a><div class="pSmartList2"><li>If needed, select in the <b class="cBold">Available Aspects </b>list the aspect(s) to be included in the metadata to write in the Alfresco server. In this scenario we want the author name to be part of the metadata registered in Alfresco.</li></div>
+<a name="wp2707009"> </a><div class="pSmartList2"><li>Click the drop-down arrow at the top of the editor to select from the list the type to give to the created document in Alfresco, <code class="cCode">Content</code> in this scenario. <br />All the defined aspects used to select the metadata to write in the Alfresco server display in the <b class="cBold">Property Mapping</b> list in the <b class="cBold">Basic Settings </b>view of <b class="cBold">tAlfrescoOutput</b>, three aspects in this scenario, two basic for the <code class="cCode">Content</code> type (<code class="cCode">content</code> and <code class="cCode">name</code>) and an additional one (<code class="cCode">author</code>).</li></div>
+<a name="wp2707041"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to auto propagate all the columns of the delimited file.</li></div>
+<a name="wp2707052"> </a><div class="pSmartList2"><li>If needed, click <b class="cBold">Edit schema</b> to view the output data structure of <b class="cBold">tAlfrescoOutput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2707059"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput6.png" id="wp2707056" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2707067"> </a><div class="pSmartList2"><li>Click the three-dot button next to the <b class="cBold">Result Log File Name</b> field and browse to the file where you want to save any logs after job execution.</li></div>
+<a name="wp2707076"> </a><div class="pSmartList2"><li>Save your Job, and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2707083"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput7.png" id="wp2707080" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2707087"> </a><p class="pIndented1">
+The two documents are created in Alfresco using the metadata provided in the input schemas.
+</p>
+<a name="wp2707096"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAlfrescoOutput8.png" id="wp2707091" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAlfrescoOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tBonitaDeploy_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

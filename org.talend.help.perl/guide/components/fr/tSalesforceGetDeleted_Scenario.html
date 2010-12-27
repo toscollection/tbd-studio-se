@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario&#160;: Récupérer les données supprimées du serveur Salesforce</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceGetDeleted_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceGetServerTimestamp_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2836785"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2836790"> </a><h2 class="pHeading2">
+Scénario&#160;: Récupérer les données supprimées du serveur Salesforce
+</h2>
+<a name="wp2836795"> </a><p class="pIndented1">
+Ce scénario décrit un Job à deux composants permettant de récupérer les données supprimées du serveur Salesforce, dans les 5&#160;derniers jours. 
+</p>
+<a name="wp2836803"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceGetDeleted1.png" id="wp2836800" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2836814"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants <b class="cBold">tSalesforceGetDeleted</b> et <b class="cBold">tLogRow</b> de la Palette dans le Job Designer.</li></div>
+<a name="wp2836825"> </a><div class="pSmartList2"><li>Reliez-les via un lien de type <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp2836833"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tSalesforceGetDeleted</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés&#160;: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2836846"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceGetDeleted2.png" id="wp2836843" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2836854"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Salesforce WebService URL</b>, laissez l&#39;URL du service Web Salesforce par défaut ou saisissez l&#39;URL à laquelle vous souhaitez accéder.</li></div>
+<a name="wp2836864"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez votre identifiant et votre mot de passe de connexion au service Web.</li></div>
+<a name="wp2836871"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Module</b>, sélectionnez l&#39;objet auquel vous souhaitez accéder. Dans ce scénario, l&#39;objectif est d&#39;accéder à l&#39;objet <b class="cBold">Account</b>.</li></div>
+<a name="wp2836884"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Repository</b> puis cliquez sur le bouton <b class="cBold">[...] </b>pour sélectionner le schéma du repository que vous souhaitez utiliser pour le composant. Si vous n&#39;avez pas enregistré le schéma dans les métadonnées du repository, sélectionnez <b class="cBold">Built-in</b> dans la liste <b class="cBold">Schema</b> et cliquez sur le bouton<b class="cBold"> [...]</b> à coté du champ <b class="cBold">Edit schema</b> et paramétrer le schéma manuellement.</li></div>
+<a name="wp2836903"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Start Date</b> et <b class="cBold">End Date</b>, saisissez la date de début et de fin de recherche des données supprimées en utilisant le format de date suivant&#160;: &quot;<em class="cEmphasis">yyyy-MM-dd HH:mm:ss</em>&quot;. Vous ne pouvez effectuer la recherche que sur les 30&#160;derniers jours. Dans ce scénario, l&#39;objectif est de chercher les données supprimées dans les cinq derniers jours.</li></div>
+<a name="wp2836916"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tLogRow</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés&#160;:</li></div>
+<a name="wp2836927"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent.</li></div>
+<a name="wp2836936"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, sélectionnez l&#39;option <b class="cBold">Vertical</b> pour faire apparaître le résultat dans sous forme de tableau dans la console. </li></div>
+<a name="wp2836945"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2836952"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceGetDeleted3.png" id="wp2836949" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2836958"> </a><p class="pIndented1">
+La console affiche les données supprimées récupérées par le composant <b class="cBold">tSalesforceGetDeleted</b> sous forme de tableau. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceGetDeleted_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceGetServerTimestamp_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

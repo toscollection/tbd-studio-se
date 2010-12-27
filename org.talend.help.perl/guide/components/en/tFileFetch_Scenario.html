@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:55">
+    <title>Related scenario 1: Fetching data through HTTP</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileFetch_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="Components09-04.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2939192"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2939199"> </a><h2 class="pHeading2">
+Related scenario 1: Fetching data through HTTP
+</h2>
+<a name="wp2939202"> </a><p class="pIndented1">
+This scenario describes a three-component Job which retrieves data from an HTTP website and select data that will be stored in a delimited file. 
+</p>
+<a name="wp2939210"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileFetch1.png" id="wp2939207" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2939224"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tFileFetch</b>, a <b class="cBold">tFileInputRegex</b> and a <b class="cBold">tFileOutputDelimited</b> onto your design workspace and connect them as preceding.</li></div>
+<a name="wp2939234"> </a><div class="pSmartList2"><li>In the <b class="cBold">tFileFetch</b> <b class="cBold">Basic settings</b> panel, select the protocol you want to use from the list. Here, we use the HTTP protocol.</li></div>
+<a name="wp2939239"> </a><div class="pSmartList2"><li>Type in the URI where the file to be fetched can be retrieved from.</li></div>
+<a name="wp2939246"> </a><div class="pSmartList2"><li>In the <b class="cBold">Destination directory</b> field, browse to the folder where the fetched file is to be stored. </li></div>
+<a name="wp2939252"> </a><div class="pSmartList2"><li>In the <b class="cBold">Filename</b> field, type in a new name for the file if you want it to be changed. In this example, <em class="cEmphasis">filefetch.txt</em>.</li></div>
+<a name="wp2939265"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tFileInputRegex</b>, set the <b class="cBold">File name</b> so that it corresponds to the file fetched earlier.</li></div>
+<a name="wp2939272"> </a><div class="pSmartList2"><li>Using a regular expression, in the <b class="cBold">Regex </b>field, select the relevant data from the fetched file. In this example: &lt;td(?: class=&quot;leftalign&quot;)?&gt; \s* (t\w+) \s* &lt;/td&gt; </li></div>
+<a name="wp2939280"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp2939278" border="0" hspace="0" vspace="0"/><br />
+Ensure that you use the correct Regex syntax, depending on the generation language in use as the syntax is different in Java <em style="font-style: italic" class="cEmphasis">and</em><span style="font-style: normal"> </span><em style="font-style: italic" class="cEmphasis">Perl</em>. Enter the Regex between double or single quotes accordingly.
+</p>
+<a name="wp2939296"> </a><div class="pSmartList2"><li>Define the <b class="cBold">header</b>, <b class="cBold">footer</b> and <b class="cBold">limit</b> if need be. In this case, we&#39;ll ignore these fields.</li></div>
+<a name="wp2939300"> </a><div class="pSmartList2"><li>Define also the schema describing the flow to be passed on to the final output.</li></div>
+<a name="wp2939303"> </a><div class="pSmartList2"><li>The schema should be automatically propagated to the final output, but to be sure, check the schema in the <b class="cBold">Basic settings</b> panel of the <b class="cBold">tFileOutputDelimited </b>component.</li></div>
+<a name="wp2939319"> </a><div class="pSmartList2"><li>Then press <b class="cBold">F6</b> to run the Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2939325"> </a><h2 class="pHeading2">
+Related scenario 2: Reading the data from a remote file in streaming mode
+</h2>
+<a name="wp2939331"> </a><p class="pIndented1">
+For an example of transferring data in streaming mode, see <a href="tFileFetch_Scenario.html#wp2939325"><em class="cEmphasis">Related scenario 2: Reading the data from a remote file in streaming mode</em></a>
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileFetch_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="Components09-04.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

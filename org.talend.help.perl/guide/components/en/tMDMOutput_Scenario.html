@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:39">
+    <title>Scenario: Writing master data in an MDM hub</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMReceive_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2958339"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2958346"> </a><h2 class="pHeading2">
+Scenario: Writing master data in an MDM hub
+</h2>
+<a name="wp2958349"> </a><p class="pIndented1">
+This scenario describes a two-component Job that generates a data record, transforms it into XML and loads it into the defined business entity in the MDM server. This Job also generates the primary key for the data record that has been loaded.
+</p>
+<a name="wp2958357"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput1.png" id="wp2958354" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2958372"> </a><p class="pIndented1">
+In this example, we want to load a new agency in the <em class="cEmphasis">Agency</em> business entity. This new agency should have a name, a country and a region.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2959412"> </a><div class="pSmartList2"><li>From the <b class="cBold">Palette</b>, drop <b class="cBold">tFixedFlowInput</b> and <b class="cBold">tMDMOutput</b> onto the design workspace</li></div>
+<a name="wp2958379"> </a><div class="pSmartList2"><li>Connect the components using a <b class="cBold">Row Main</b> link.</li></div>
+<a name="wp2958391"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFixedFlowInput</b> to view its <b class="cBold">Basic settings</b>, in the <b class="cBold">Component</b> tab and set the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958400"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput2.png" id="wp2958397" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958414"> </a><div class="pSmartList2"><li>In the <b class="cBold">Schema</b> list, select <b class="cBold">Built-In</b> and click the three-dot button next to <b class="cBold">Edit schema</b> to open a dialog box in which you can define the structure of the master data you want to write on the MDM server.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958423"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput3.png" id="wp2958420" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958434"> </a><div class="pSmartList2"><li>Click the plus button and add three columns of the type <b class="cBold">String</b>. Name the columns: <em class="cEmphasis">Name</em>, <em class="cEmphasis">Country</em>, <em class="cEmphasis">Region</em>.</li></div>
+<a name="wp2958448"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate your changes and proceed to the next step.</li></div>
+<a name="wp2958455"> </a><div class="pSmartList2"><li>In the <b class="cBold">Number of rows</b> field, enter the number of rows you want to generate.</li></div>
+<a name="wp2958465"> </a><div class="pSmartList2"><li>In the <b class="cBold">Mode</b> zone, select the <b class="cBold">Use Single Table</b> option to generate just one table.</li></div>
+<a name="wp2958471"> </a><div class="pSmartList2"><li>In the <b class="cBold">Value</b> fields, enter between inverted commas the values which correspond to each of the schema columns.</li></div>
+<a name="wp2958481"> </a><div class="pSmartList2"><li>In the design workspace, click <b class="cBold">tMDMOutput</b> to open its <b class="cBold">Basic settings</b> view and set the properties. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958490"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput8.png" id="wp2958487" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958501"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property Type</b> list, select <b class="cBold">Built-In</b> and complete the fields manually. If you have saved the MDM connection information under <b class="cBold">Metadata</b> in the repository, select <b class="cBold">Repository </b>from the list and the fields which follow will be completed automatically. </li></div>
+<a name="wp2958519"> </a><div class="pSmartList2"><li>In the <b class="cBold">Schema</b> list, select <b class="cBold">Built-In</b> and click on the three dot button next to the <b class="cBold">Edit Schema</b> field to describe the structure of the master data you want to load on the MDM server.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958529"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput4.png" id="wp2958526" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958537"> </a><div class="pSmartList2"><li>Click the plus button to the right to add two output columns of the type <b class="cBold">String</b>. Name the first <em class="cEmphasis">xmlOutput</em> and the second <em class="cEmphasis">returnkey</em>. The output schema in this component will insert the full XML content and extract the primary key of the inserted data.</li></div>
+<a name="wp2958550"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate the changes and proceed to the next step.<br />The <b class="cBold">XML Field</b> list in the <b class="cBold">Basic settings</b> view is automatically filled in with the output column(s) that you have created.</li></div>
+<a name="wp2958564"> </a><div class="pSmartList2"><li>In the <b class="cBold">URL</b> field, enter the URL of the MDM server.</li></div>
+<a name="wp2958573"> </a><div class="pSmartList2"><li>In the <b class="cBold">Username</b> and <b class="cBold">Password</b> fields, enter the authentication information required to connect to the MDM server.</li></div>
+<a name="wp2958580"> </a><div class="pSmartList2"><li>In the <b class="cBold">Version</b> field, enter between inverted commas the name of the master data version you want to access. Leave the field blank to access the default version.</li></div>
+<a name="wp2958587"> </a><div class="pSmartList2"><li>In the <b class="cBold">Data Model</b> field, enter between inverted commas the name of the data model against which you want to validate the master data you want to write.</li></div>
+<a name="wp2958594"> </a><div class="pSmartList2"><li>In the <b class="cBold">Data Container</b>, enter between inverted commas the name of the data container into which the master data should be written.</li></div>
+<a name="wp2958604"> </a><div class="pSmartList2"><li>In the <b class="cBold">Component</b> view, click <b class="cBold">Advanced settings</b> to set the advanced parameters for the <b class="cBold">tMDMOutput</b> component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958616"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput10.png" id="wp2958613" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958624"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Extended Output</b> check box if you want to commit master data in batches. You can specify the number of lines per batch in the <b class="cBold">Rows to commit</b> field.</li></div>
+<a name="wp2958639"> </a><div class="pSmartList2"><li>Click the three-dot button next to <b class="cBold">Configure Xml Tree</b> to open the <b class="cBold">tMDMOutput</b> editor. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958646"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput6.png" id="wp2958643" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958660"> </a><div class="pSmartList2"><li>In the <b class="cBold">Link target</b> area to the right, click in the <b class="cBold">Xml Tree</b> field and then replace <b class="cBold">rootTag</b> with the name of the business entity in which you want to insert the data record, <em class="cEmphasis">Agency</em> in this example.</li></div>
+<a name="wp2958673"> </a><div class="pSmartList2"><li>In the <b class="cBold">Linker source</b> area, select your three schema columns and drop them on the <b class="cBold">Agency</b> node.<br />The <b class="cBold">[Selection]</b> dialog box displays.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958685"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput7.png" id="wp2958682" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958693"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Create as sub-element of target node</b> option so that the three columns are linked to the three XML sub-elements of the <b class="cBold">Agency</b> node and then click <b class="cBold">OK</b> to close the dialog box.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2958708"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput5.png" id="wp2958705" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2958716"> </a><div class="pSmartList2"><li>Right-click the element in the <b class="cBold">Link Target</b> area you want to set as a loop element and select <b class="cBold">Set as Loop Element</b> from the contextual menu. In this example, we want <b class="cBold">Country</b> to be the iterating object. </li></div>
+<a name="wp2958730"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate your changes and close the dialog box.</li></div>
+<a name="wp2958738"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to run it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2959380"> </a><p class="pIndented1">
+The new data record is inserted in the <em class="cEmphasis">Agency</em> business entity in the <em class="cEmphasis">Location </em>data container on the MDM server. This data records holds, as we defined in the schema, the agency name, the agency country and the agency region. The primary key for the inserted data records is also generated and retrieved.
+</p>
+<a name="wp2959384"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMOutput9.png" id="wp2958742" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMReceive_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

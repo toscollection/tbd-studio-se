@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:45">
+    <title>Scenario: Creating an XML file using a loop</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAdvancedFileOutputXML_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDTDValidator_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1543701"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1543707"> </a><h2 class="pHeading2">
+Scenario: Creating an XML file using a loop
+</h2>
+<a name="wp1543710"> </a><p class="pIndented1">
+The following scenario describes the creation of an XML file from a sorted flat file gathering a video collection.
+</p>
+<a name="wp1543718"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAdvancedFileOutputXML1.png" id="wp1543715" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1543727"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tFileInputDelimited</b> and a <b class="cBold">tAdvancedFileOutputXML</b> from the <b class="cBold">Palette</b> onto the design workspace.</li></div>
+<a name="wp1543909"> </a><div class="pSmartList2"><li>Alternatively, if you configured a description for the input delimited file in the <b class="cBold">Metadata</b> area of the <b class="cBold">Repository</b>, then you can directly drag &amp; drop the metadata entry onto the editor, to set up automatically the input flow.</li></div>
+<a name="wp1543806"> </a><div class="pSmartList2"><li> Right-click on the input component and drag a row main link towards the <b class="cBold">tAdvancedFileOutputXML</b> component to implement a connection.</li></div>
+<a name="wp1543878"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tFileInputDelimited</b> component and display the <b class="cBold">Component settings</b> tab located in the tab system at the bottom of the Studio.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1544031"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAdvancedFileOutputXML2.png" id="wp1544045" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1544074"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Property type</b>, according to whether you stored the file description in the Repository or not. If you dragged &amp; dropped the component directly from the Metadata, no changes to the setting should be needed.</li></div>
+<a name="wp1544121"> </a><div class="pSmartList2"><li>If you didn&#39;t setup the file description in the <b class="cBold">Repository</b>, then select <b class="cBold">Built-in</b> and manually fill out the fields displayed on the <b class="cBold">Basic settings</b> vertical tab. </li></div>
+<a name="wp1544098"> </a><div class="pSmartList2"><li>The input file contains the following type of columns separated by semi-colons: <em class="cEmphasis">id</em>, <em class="cEmphasis">name</em>, <em class="cEmphasis">category</em>, <em class="cEmphasis">year</em>, <em class="cEmphasis">language</em>, <em class="cEmphasis">director</em> and <em class="cEmphasis">cast</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1544084"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAdvancedFileOutputXML3.png" id="wp1544089" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1544246"> </a><div class="pSmartList2"><li>In this simple use case, the <b class="cBold">Cast</b> field gathers different values and the id increments when changing movie.</li></div>
+<a name="wp1544259"> </a><div class="pSmartList2"><li>If needed, define the <b class="cBold">tFileDelimitedInput </b>schema according to the file structure.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1544310"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAdvancedFileOutputXML4.png" id="wp1544859" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1544854"> </a><div class="pSmartList2"><li>Once you checked that the schema of the input file meets your expectation, click on <b class="cBold">OK</b> to validate.</li></div>
+<a name="wp1544348"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tAdvancedFileOutputXML</b> component and click on the <b class="cBold">Component settings</b> tab to configure the basic settings as well as the mapping. Note that a double-click on the component will open directly the mapping interface.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1544379"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAdvancedFileOutputXML5.png" id="wp1544422" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1544434"> </a><div class="pSmartList2"><li>In the <b class="cBold">File Name</b> field, browse to the file to be written if it exists or type in the path and file name that needs to be created for the output.</li></div>
+<a name="wp1544447"> </a><div class="pSmartList2"><li>By default, the schema (file description) is automatically propagated from the input flow. But you can edit it if you need. </li></div>
+<a name="wp1544476"> </a><div class="pSmartList2"><li>Then click on the three-dot button or double-click on the <b class="cBold">tAdvancedFileOutputXML</b> component on the design workspace to open the dedicated mapping editor. </li></div>
+<a name="wp1544496"> </a><div class="pSmartList2"><li>To the left of the interface, are listed the columns from the input file description.</li></div>
+<a name="wp1544631"> </a><div class="pSmartList2"><li>To the right of the interface, set the XML tree panel to reflect the expected XML structure output.</li></div>
+<a name="wp1544635"> </a><div class="pSmartList2"><li>You can create the structure node by node. For more information about the manual creation of an XML tree<a href="tAdvancedFileOutputXML_Prop.html#wp1542108">, see&#160;<em class="cEmphasis">Defining the XML tree.</em></a> </li></div>
+<a name="wp1544646"> </a><div class="pSmartList2"><li>In this example, an XML template is used to populate the XML tree automatically. </li></div>
+<a name="wp1544791"> </a><div class="pSmartList2"><li>Right-click on the <b class="cBold">root tag</b> displaying by default and select <b class="cBold">Import XML tree</b> at the end of the contextual menu options.</li></div>
+<a name="wp1544808"> </a><div class="pSmartList2"><li>Browse to the XML file to be imported and click <b class="cBold">OK </b>to validate the import operation.</li></div>
+<a name="wp2933872"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2933870" border="0" hspace="0" vspace="0"/><br />
+You can import the XML structure from XSML, XSD and STS files.<br />
+</p>
+<a name="wp2934133"> </a><div class="pSmartList2"><li>Then drag &amp; drop each column name from the <b class="cBold">Schema List</b> to the matching (or relevant) <b class="cBold">XML tree</b> elements as described in <a href="tAdvancedFileOutputXML_Prop.html#wp2935032"><em class="cEmphasis">Mapping XML data</em></a>.</li></div>
+<a name="wp2934166"> </a><div class="pSmartList2"><li>The mapping is shown as blue links between the left and right panels.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2934053"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAdvancedFileOutputXML6.png" id="wp1544983" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1545009"> </a><div class="pSmartList2"><li>Finally, define the node status where the loop should take place. In this use case, the <em class="cEmphasis">Cast</em> being the changing element on which the iteration should operate, this element will be the loop element.</li></div>
+<a name="wp1545012"> </a><div class="pSmartList2"><li>Right-click on the Cast element on the XML tree, and select <b class="cBold">Set as loop element</b>.</li></div>
+<a name="wp1545076"> </a><div class="pSmartList2"><li>To group by movie, this use case needs also a group element to be defined.</li></div>
+<a name="wp1545088"> </a><div class="pSmartList2"><li>Right-click on the Movie parent node of the XML tree, and select <b class="cBold">Set as group element</b>.</li></div>
+<a name="wp1545112"> </a><div class="pSmartList2"><li>The newly defined node status show on the corresponding element lines.</li></div>
+<a name="wp1545133"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to validate the configuration.</li></div>
+<a name="wp2749533"> </a><div class="pSmartList2"><li>Press <b class="cBold">F6</b> to execute the Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1545169"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tAdvancedFileOutputXML7.png" id="wp1545174" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1545182"> </a><p class="pIndented1">
+The output XML file shows the structure as defined.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAdvancedFileOutputXML_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDTDValidator_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

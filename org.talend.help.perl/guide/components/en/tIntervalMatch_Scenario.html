@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>Scenario: Identifying Ip country (Perl and Java)</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tIntervalMatch_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLastRegexlibExpressions_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1523265"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1524185"> </a><h2 class="pHeading2">
+Scenario: Identifying Ip country (Perl and Java)
+</h2>
+<a name="wp1526222"> </a><p class="pIndented1">
+The following scenario describes a Job designed in parallel in both languages, Perl and Java. In this Job, a incoming main flow provides 2 columns: <em class="cEmphasis">Documents</em> and <em class="cEmphasis">IP</em> dummy values. A second file used as lookup flow in Java and reference range file in Perl contains a list of sorted IP ranges and their corresponding country. This Job aims at retrieving each document&#39;s country from their IP value, in other words, creating a Join between the main flow and the lookup flow.
+</p>
+<a name="wp1524263"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tIntervalMatch2.png" id="wp1524359" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1524750"> </a><p class="pIndented1">
+In <b class="cBold">Perl</b>, the Job requires one <b class="cBold">tFileInputDelimited</b>, a <b class="cBold">tIntervalMatch</b> and a <b class="cBold">tLogRow</b>.
+</p>
+<a name="wp1524757"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tIntervalMatch1.png" id="wp1524754" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1524773"> </a><p class="pIndented1">
+In <b class="cBold">Java</b>, the Job requires one extra <b class="cBold">tFileInputDelimited</b>, a <b class="cBold">tIntervalMatch</b> and a <b class="cBold">tLogRow</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1524778"> </a><div class="pSmartList2"><li>Drop the components onto the design workspace.</li></div>
+<a name="wp1524547"> </a><div class="pSmartList2"><li>Set the basic settings of the <b class="cBold">tFileInputDelimited</b> component. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1524642"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tIntervalMatch3.png" id="wp1524647" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1524660"> </a><div class="pSmartList2"><li>The schema is made of two columns, respectively <em class="cEmphasis">Document</em> and <em class="cEmphasis">IP</em></li></div>
+<a name="wp1524686"> </a><div class="pSmartList2"><li>(Java only) Set the <b class="cBold">Type</b> column on <b class="cBold">String</b> for the <em class="cEmphasis">Document</em> column and <b class="cBold">Integer</b> for the <em class="cEmphasis">IP</em> column.</li></div>
+<a name="wp1524820"> </a><div class="pSmartList2"><li>(Java only) Set now the second <b class="cBold">tFileInputDelimited</b> properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1524834"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tIntervalMatch4.png" id="wp1524842" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1524858"> </a><div class="pSmartList2"><li>(Java only) Don&#39;t forget to define the <b class="cBold">Type </b>of data.</li></div>
+<a name="wp1525048"> </a><div class="pSmartList2"><li>(Both Java and Perl) Propagate the schema from the incoming main flow to the <b class="cBold">tIntervalMatch</b> component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1524900"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tIntervalMatch6.png" id="wp1525066" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1525117"> </a><div class="pSmartList2"><li>(Both Java and Perl) Note that the output schema from the <b class="cBold">tIntervalMatch</b> component is read-only and is made of the input schema plus an extra Lookup column which will output the requested lookup data.</li></div>
+<a name="wp1525185"> </a><div class="pSmartList2"><li>Set the other properties of the <b class="cBold">tIntervalMatch</b> component.</li></div>
+<a name="wp1525202"> </a><div class="pSmartList2"><li>(Perl only), the lookup file is defined directly in the setting of the <b class="cBold">tIntervalMatch</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1525106"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tIntervalMatch5.png" id="wp1524908" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1525151"> </a><div class="pSmartList2"><li>(Perl only) In <b class="cBold">File Name </b>field, set the path to the lookup file. Set the Row and Field separator of the lookup file.</li></div>
+<a name="wp1525221"> </a><div class="pSmartList2"><li>(Perl only) In <b class="cBold">Lookup column index</b> field, set the inferior bound of the data range. This corresponds to the position of the column containing the min value of the range (0 for the first column).</li></div>
+<a name="wp1525452"> </a><div class="pSmartList2"><li>(Perl only) No need to set the lookup values to be returned as all values from the lookup will be outputted.</li></div>
+<a name="wp1525323"> </a><div class="pSmartList2"><li>(Java only) Set the tIntervalMatch other properties such as the min and max column corresponding to the range bounds.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1525353"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tIntervalMatch7.png" id="wp1525364" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1525413"> </a><div class="pSmartList2"><li>(Java only) In the <b class="cBold">Column Lookup</b> field, select the column where are the values to be returned. </li></div>
+<a name="wp1525416"> </a><div class="pSmartList2"><li>(Both Java and Perl) In the <b class="cBold">Search column</b> field, select the main flow column containing the values to be matched to the range values.</li></div>
+<a name="wp1525484"> </a><div class="pSmartList2"><li>(Both Java and Perl) The <b class="cBold">tLogRow</b> component does not require any specific setting for this Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1525507"> </a><p class="pIndented1">
+Both Perl and Java Jobs output the same result with slight differences in the way they display. 
+</p>
+<a name="wp1525515"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Components-04-18-134.jpg" height="206" width="674" id="wp1525520" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1525539"> </a><p class="pIndented1">
+The Perl results include the range values whereas the Java output only includes the requested return value (country).
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tIntervalMatch_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLastRegexlibExpressions_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

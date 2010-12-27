@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:32">
+    <title>Scenario: Inserting bulk data into your Salesforce.com</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceOutputBulkExec_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSAPCommit_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2962776"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2962794"> </a><h2 class="pHeading2">
+Scenario: Inserting bulk data into your Salesforce.com
+</h2>
+<a name="wp2962802"> </a><p class="pIndented1">
+This scenario describes a four-component Job that submits bulk data into Salesforce.com, executs your intended actions on the data, and ends up with displaying the Job execution results for your reference.
+</p>
+<a name="wp2962817"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulkExec1.png" id="wp2962813" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2962826"> </a><p class="pIndented1">
+Before starting this scenario, you need to prepare the input file which offers the data to be processed by the Job. In this use case, this file is <em class="cEmphasis">sforcebulk.txt</em>, containing some customer information. 
+</p>
+<a name="wp2962836"> </a><p class="pIndented1">
+Then to create and execute this Job, operate as follows:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2962859"> </a><div class="pSmartList2"><li>Drop <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tSalesforceOutputBulkExec</b>, and <b class="cBold">tLogRow</b> from the <b class="cBold">Palette</b> onto the workspace of your studio.</li></div>
+<a name="wp2962896"> </a><div class="pSmartList2"><li>Use <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> link to connect <b class="cBold">tFileInputDelimited</b> to <b class="cBold">tSalesforceOutputBulkExec</b>.</li></div>
+<a name="wp2962929"> </a><div class="pSmartList2"><li>Use <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> and <b class="cBold">Row</b> &gt; <b class="cBold">Reject</b> to connect <b class="cBold">tSalesforceOutputBulkExec</b> respectively to the two <b class="cBold">tLogRow</b> components.</li></div>
+<a name="wp2962967"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputDelimited</b> to display its <b class="cBold">Basic settings</b>  view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2962978"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk1.png" id="wp2962974" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2962993"> </a><div class="pSmartList2"><li>From the <b class="cBold">Property Type</b> list, select <b class="cBold">Repository</b> if you have already stored the connection to the salesforce server in the <b class="cBold">Metadata</b> node of the <b class="cBold">Repository</b> tree view. The property fields that follow are automatically filled in. If you have not defined the server connection locally in the Repository, fill in the details manually after selecting <b class="cBold">Built-in</b> from the <b class="cBold">Property Type</b> list.<br />For more information about metadata, see <em class="cEmphasis">Managing Metadata</em>.</li></div>
+<a name="wp2963030"> </a><div class="pSmartList2"><li>Next to the <b class="cBold">File name/Stream</b> field, click the <img src="../Images/DotButton.png" id="wp2963026" border="0" hspace="0" vspace="0"/> button to browse to the input file you prepared for the scenario, for example, <em class="cEmphasis">sforcebulk.txt</em>.</li></div>
+<a name="wp2963047"> </a><div class="pSmartList2"><li>From the <b class="cBold">Schema</b> list, select <b class="cBold">Repository</b> and then click the three-dot button to open a dialog box where you can select the repository schema you want to use for this component. If you have not defined your schema locally in the metadata, select <b class="cBold">Built-in</b> from the <b class="cBold">Schema</b> list and then click the three-dot button next to the <b class="cBold">Edit schema</b> field to open the dialog box where you can set the schema manually. In this scenario, the schema is made of four columns: <em class="cEmphasis">Name</em>, <em class="cEmphasis">ParentId</em>, <em class="cEmphasis">Phone</em> and <em class="cEmphasis">Fax</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2963070"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk_schema.png" id="wp2963066" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2963081"> </a><div class="pSmartList2"><li>According to your input file to be used by the Job, set the other fields like <b class="cBold">Row Separator</b>, <b class="cBold">Field Separator</b>...</li></div>
+<a name="wp2963815"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tSalesforceOutputBulkExec</b> to display its <b class="cBold">Basic settings</b>  view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2963206"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulkExec2.png" id="wp2963202" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2963214"> </a><div class="pSmartList2"><li>In <b class="cBold">Salesforce WebService URL</b> field, use the by-default URL of the Salesforce Web service or enter the URL you want to access.</li></div>
+<a name="wp2963227"> </a><div class="pSmartList2"><li>In the <b class="cBold">Username</b> and <b class="cBold">Password</b> fields, enter your login and password for the Web service.</li></div>
+<a name="wp2963892"> </a><div class="pSmartList2"><li>In the <b class="cBold">Bulk file path</b> field, browse to the directory where you store the bulk <em class="cEmphasis">.csv</em> data to be processed.</li></div>
+<a name="wp2964229"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2964222" border="0" hspace="0" vspace="0"/><br />
+<br />The bulk file here to be processed must be in<em class="cEmphasis"> .csv</em> format.
+</p>
+<a name="wp2964237"> </a><div class="pSmartList2"><li>From the <b class="cBold">Action</b> list, select the action you want to carry out on the prepared bulk data. In this use case, <b class="cBold">insert</b>.</li></div>
+<a name="wp2964166"> </a><div class="pSmartList2"><li>From the <b class="cBold">Module</b> list, select the object you want to access, <b class="cBold">Account</b> in this example.</li></div>
+<a name="wp2964175"> </a><div class="pSmartList2"><li>From the <b class="cBold">Schema</b> list, select <b class="cBold">Repository</b> and then click the three-dot button to open a dialog box where you can select the repository schema you want to use for this component. If you have not defined your schema locally in the metadata, select <b class="cBold">Built-in</b> from the <b class="cBold">Schema</b> list and then click the three-dot button next to the <b class="cBold">Edit schema</b> field to open the dialog box where you can set the schema manually. In this example, edit it conforming to the schema defined previously.</li></div>
+<a name="wp2964194"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tLogRow_1</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2964199"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk4.png" id="wp2963314" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2963330"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to retrieve the schema from the preceding component.</li></div>
+<a name="wp2963339"> </a><div class="pSmartList2"><li>Select <b class="cBold">Table</b> mode to display the execution result.</li></div>
+<a name="wp2963348"> </a><div class="pSmartList2"><li>Do the same with <b class="cBold">tLogRow_2</b>.</li></div>
+<a name="wp2963358"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2963367"> </a><p class="pIndented1">
+On the console of the <b class="cBold">Run</b> view, you can check the execution result.
+</p>
+<a name="wp2963376"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulkExec3.png" id="wp2963372" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2963385"> </a><p class="pIndented1">
+In the <b class="cBold">tLogRow_1</b> table, you can read the data inserted into your Salesforce.com.
+</p>
+<a name="wp2963397"> </a><p class="pIndented1">
+In the <b class="cBold">tLogRow_2</b> table, you can read the rejected data due to the incompatibility with the <b class="cBold">Account</b> objects you have accessed.
+</p>
+<a name="wp2963404"> </a><p class="pIndented1">
+If you want to transform the input data before submitting them, you need to use <b class="cBold">tSalesforceOutputBulk</b> and <b class="cBold">tSalesforceBulkExec</b> in cooperation to achieve this purpose. For further information on the use of the two components, see <a href="tSalesforceOutputBulk_Scenario.html#wp2961175"><em class="cEmphasis">Scenario: Inserting transformed bulk data into your Salesforce.com</em></a>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceOutputBulkExec_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSAPCommit_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>Scenario: Truncating and inserting file data into Oracle DB</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleBulkExec_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleCDC_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2728307"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2728315"> </a><h2 class="pHeading2">
+Scenario: Truncating and inserting file data into Oracle DB
+</h2>
+<a name="wp2728318"> </a><p class="pIndented1">
+This scenario describes how to truncate the content of an Oracle DB and load an input file content. The related job is composed of three components that respectively creates the content, output this content into a file to be loaded onto the Oracle database after the DB table has been truncated.
+</p>
+<a name="wp2728326"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleBulkExec1.png" id="wp2728323" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728337"> </a><div class="pSmartList2"><li>Drop the following components: <b class="cBold">tOracleInput</b>, <b class="cBold">tFileOutputDelimited</b>, <b class="cBold">tOracleBulkExec</b> from the <b class="cBold">Palette</b> to the design workspace</li></div>
+<a name="wp2728354"> </a><div class="pSmartList2"><li>Connect the <b class="cBold">tOracleInput</b> with the <b class="cBold">tFileOutputDelimited</b> using a <b class="cBold">row main</b> link. </li></div>
+<a name="wp2728367"> </a><div class="pSmartList2"><li>And connect the <b class="cBold">tOracleInput</b> to the <b class="cBold">tOracleBulkExec</b> using a <b class="cBold">OnSubjobOk </b>trigger  link.</li></div>
+<a name="wp2728370"> </a><div class="pSmartList2"><li>Define the Oracle connection details. We recommend you to store the DB connection details in the Metadata repository in order to retrieve them easily at any time in any job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2728379"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleBulkExec2.png" id="wp2728376" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728387"> </a><div class="pSmartList2"><li>Define the schema, if it isn&#39;t stored either in the <b class="cBold">Repository</b>. In this example, the schema is as follows: <em class="cEmphasis">ID_Contract</em>, <em class="cEmphasis">ID_Client</em>, <em class="cEmphasis">Contract_type</em>, <em class="cEmphasis">Contract_Value</em>.</li></div>
+<a name="wp2728407"> </a><div class="pSmartList2"><li>Change the default encoding to <em class="cEmphasis">AL32UTF8</em> encoding type.</li></div>
+<a name="wp2728416"> </a><div class="pSmartList2"><li>Define the <b class="cBold">tFileOutputDelimited</b> component parameters, including output <b class="cBold">File Name</b>, <b class="cBold">Row separator</b> and <b class="cBold">Fields delimiter</b>.</li></div>
+<a name="wp2728430"> </a><div class="pSmartList2"><li>Set also the <b class="cBold">Encoding</b> to the Oracle encoding type as above.</li></div>
+<a name="wp2728438"> </a><div class="pSmartList2"><li>Then double-click on the <b class="cBold">tOracleBulkExec</b> to define the DB feeding properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2728445"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleBulkExec3.png" id="wp2728442" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728456"> </a><div class="pSmartList2"><li>In the <b class="cBold">Property Type</b>, select <b class="cBold">Repository</b> mode if you stored the database connection details under the <b class="cBold">Metadata</b> node of the <b class="cBold">Repository</b> or select <b class="cBold">Built-in</b> mode to define them manually. In this scenario, we use the <b class="cBold">Built-in</b> mode.</li></div>
+<a name="wp2728484"> </a><div class="pSmartList2"><li>Thus, set the connection parameters in the following fields: <b class="cBold">Host</b>, <b class="cBold">Port</b>, <b class="cBold">Database</b>, <b class="cBold">Schema</b>, <b class="cBold">Username</b>, and <b class="cBold">Password</b>.</li></div>
+<a name="wp2728500"> </a><div class="pSmartList2"><li>Fill in the name of the <b class="cBold">Table</b> to be fed and the <b class="cBold">Action on data</b> to be carried out, in this use case: <b class="cBold">insert</b>. </li></div>
+<a name="wp2728518"> </a><div class="pSmartList2"><li>In the <b class="cBold">Schema</b> field, select <b class="cBold">Built-in</b> mode, and click <b class="cBold">[...]</b> button next to the <b class="cBold">Edit schema</b> field to describe the structure of the data to be passed on to the next component.</li></div>
+<a name="wp2728528"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Advanced settings</b> view to configure the advanced settings of the component. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2728535"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tOracleBulkExec4.png" id="wp2728532" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2728540"> </a><div class="pSmartList2"><li>Select the Use an existing control file check box if you want to use a control file (.ctl) storing the status of the physical structure of the database. Or, fill in the following fields manually: <b class="cBold">Record format</b>, <b class="cBold">Specify .ctl file&#39;s INTO TABLE clause manually</b>, <b class="cBold">Field terminated by</b>, <b class="cBold">Use field enclosure</b>, <b class="cBold">Use schema&#39;s Date Pattern to load Date field</b>, <b class="cBold">Specify field condition</b>, <b class="cBold">Preserve blanks</b>, <b class="cBold">Trailing null columns</b>, <b class="cBold">Load options</b>, <b class="cBold">NLS Language</b> et <b class="cBold">Set Parameter NLS_TERRITORY</b> according to your database.</li></div>
+<a name="wp2728581"> </a><div class="pSmartList2"><li>Define the <b class="cBold">Encoding</b> as in preceding steps.</li></div>
+<a name="wp2728590"> </a><div class="pSmartList2"><li>For this scenario, in the <b class="cBold">Output</b> field, select <b class="cBold">to console</b> to output the standard output f the database to the console.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2728601"> </a><p class="pIndented1">
+Press <b class="cBold">F6</b> to run the job. The log output displays in the <b class="cBold">Run</b> tab and the table is fed with the parameter file data. 
+</p>
+<a name="wp2729123"> </a><p class="pIndented1">
+Related topic: <a href="tMysqlOutputBulkExec_Scenario.html#wp2974480"><em class="cEmphasis">Scenario: Inserting data in MySQL database</em></a>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleBulkExec_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tOracleCDC_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

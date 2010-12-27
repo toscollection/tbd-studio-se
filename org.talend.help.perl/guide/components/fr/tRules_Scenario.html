@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:29">
+    <title>Scénario&#160;: Extraire des informations client en fonction de règles métier</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRules_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSampleRow_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2949985"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2949992"> </a><h2 class="pHeading2">
+Scénario&#160;: Extraire des informations client en fonction de règles métier
+</h2>
+<a name="wp2950003"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2950000" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Vous devez posséder un fichier de règles métier Drools au format .xls ou .drl pour la réalisation de ce scénario.
+</p>
+<a name="wp2950009"> </a><p class="pIndented1">
+Dans ce scénario, les règles Drools sont définies dans un fichier Excel&#160;: 
+</p>
+<a name="wp2950018"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules0.png" id="wp2950014" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2950023"> </a><p class="pIndented1">
+Le fichier Excel définit les règles qui seront ensuite appliquées aux données client&#160;: 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2950034"> </a><div class="pSmartList2"><li>la règle <b class="cBold">RuleAGE</b> récupère les informations des clients ayant entre 30 et 39&#160;ans, et les transmet dans un premier flux de sortie.</li></div>
+<a name="wp2950043"> </a><div class="pSmartList2"><li>la règle <b class="cBold">RuleREGION</b> récupère les informations des clients de la région EMEA et les transmet dans un deuxième flux de sortie.</li></div>
+<a name="wp2950053"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp2950050" border="0" hspace="0" vspace="0"/><br />
+Lorsque vous utilisez un fichier de règles Drools au format Excel, assurez-vous que toutes les occurrences des noms du projet et du Job du fichier Excel correspondent au nom du projet et du Job dans lesquels sont utilisés les règles.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp2950058"> </a><p class="pIndented1">
+Ce scénario est un Job de quatre composants ayant pour objectif de lire un fichier contenant des informations client et d&#39;en extraire certains clients en fonction de règles métier préalablement définies dans le fichier de règles Drools.
+</p>
+<a name="wp2950068"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules1.png" id="wp2950064" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2950075"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants dans l&#39;espace de modélisation&#160;: un composant <b class="cBold">tFileInputDelimited</b>, un composant<b class="cBold"> tRules</b>, et deux composants <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2950092"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tFileInputDelimited</b> pour afficher la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2950111"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules2.png" id="wp2950107" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2950126"> </a><div class="pSmartList2"><li>Dans la liste <span style="font-weight: bold">Property type</span>, sélectionnez le mode <b class="cBold">Built-in</b> et renseignez les champs suivants manuellement.</li></div>
+<a name="wp2950135"> </a><div class="pSmartList2"><li>Cliquez sur le bouton [...] à coté du champ <b class="cBold">File Name</b> pour indiquer le chemin d&#39;accès au fichier d&#39;entrée. Le fichier source utilisé dans cet exemple s&#39;appelle <em class="cEmphasis">client</em> et contient des informations sur les clients.</li></div>
+<a name="wp2950164"> </a><div class="pSmartList2"><li>Configurez les champs <b class="cBold">Row</b> et <b class="cBold">Field separator</b>, <b class="cBold">Header</b>, <b class="cBold">Footer</b> et <b class="cBold">Limit</b>, si nécessaire. Pour plus d&#39;informations concernant le composant <b class="cBold">tFileInputdelimited</b><a href="tFileInputDelimited_Prop.html">, see&#160;<em class="cEmphasis">tFileInputDelimited.</em></a></li></div>
+<a name="wp2950189"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Built-in</b> et cliquez sur le bouton <b class="cBold">Edit schema</b> pour définir le schéma du fichier comme suit&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2950200"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules3.png" id="wp2950196" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2950216"> </a><p class="pIndented1">
+Dans cet exemple, notre fichier source est composé de quatre colonnes&#160;: <em class="cEmphasis">id</em>, <em class="cEmphasis">name</em>, <em class="cEmphasis">age</em> et <em class="cEmphasis">region</em>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2950233"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour valider vos changements et fermer la boîte de dialogue.</li></div>
+<a name="wp2950241"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tRules</b> pour afficher la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2950256"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules4.png" id="wp2950252" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2950271"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property type</b>, sélectionnez <b class="cBold">Repository</b> si vous avez créé une connexion à votre fichier de règles dans les métadonnées du <b class="cBold">Repository</b>. Si vous n&#39;avez pas créé de connexion au fichier de règles dans le <b class="cBold">Repository</b>, sélectionnez <b class="cBold">Built-in</b> dans la liste <b class="cBold">Property type</b> et renseignez les champs suivants manuellement.<br />Pour plus d&#39;informations concernant la création d&#39;une connexion au fichier de règles, consultez la section <em class="cEmphasis">Configurer une connexion JBoss Rules (Drools)</em> du Guide Utilisateur de <b class="cBold">Talend Open Studio</b>.</li></div>
+<a name="wp2950303"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Outputs</b>, ajoutez deux lignes de sortie pour créer deux flux de sortie différents utilisant deux règles de gestion métier différentes prédéfinies dans le fichier de règles.</li></div>
+<a name="wp2950316"> </a><div class="pSmartList2"><li>Cliquez dans le champ <b class="cBold">Schema</b> de la première ligne et cliquez sur le bouton <b class="cBold">[...]</b> qui apparaît.</li></div>
+<a name="wp2950321"> </a><div class="pSmartList2"><li>Dans la boîte de dialogue qui apparaît, renseignez le nom du schéma à transmettre au flux de sortie. Dans ce scénario, appelez ce schéma <em class="cEmphasis">rule_region</em>. Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2950334"> </a><div class="pSmartList2"><li>Dans la deuxième boîte de dialogue, paramétrez le schéma de sortie. Dans ce scénario, récupérez le schéma d&#39;entrée. Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp2950351"> </a><div class="pSmartList2"><li>Cliquez dans le champ <b class="cBold">Rule</b> de la première ligne et cliquez sur le bouton <b class="cBold">[...]</b>. La boîte de dialogue <b class="cBold">[Rule]</b> s&#39;ouvre.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2950366"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules6.png" id="wp2950362" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2950373"> </a><div class="pSmartList2"><li>Dans la boîte de dialogue, choisissez l&#39;action à effectuer&#160;:<br />- <b class="cBold">View Rules</b> pour ouvrir le fichier de règles en lecture seule, ou<br />- <b class="cBold">Select a rule from repository</b> pour sélectionner une règle du fichier stocké dans le <b class="cBold">Repository</b>.</li></div>
+<a name="wp2950390"> </a><div class="pSmartList2"><li>Dans la liste Rule, sélectionnez la règle que vous souhaitez appliquer au premier schema de sortie, <b class="cBold">RuleREGION</b>, et cliquez sur <b class="cBold">OK</b>.<br />La règle sélectionnée apparaît dans la colonne <b class="cBold">Rules</b>.</li></div>
+<a name="wp2950411"> </a><div class="pSmartList2"><li>Configurez la deuxième ligne de la même manière, en nommant le schéma <em class="cEmphasis">rule_age</em> et en sélectionnant la règle  <b class="cBold">RuleAGE</b>.</li></div>
+<a name="wp2950424"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, double-cliquez sur chaque composant <b class="cBold">tLogRow</b> pour paramétrer leurs propriétés dans la vue <b class="cBold">Component</b>. Pour plus d&#39;informations<a href="tLogRow_Prop.html">, see&#160;<em class="cEmphasis">tLogRow.</em></a></li></div>
+<a name="wp2950443"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2950452"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRules5.png" id="wp2950448" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2950460"> </a><p class="pIndented1">
+La console <b class="cBold">Run</b> affiche les deux flux de sortie&#160;: celui contenant les informations sur les clients ayant entre 30 et 39&#160;ans, et celui contenant les clients de la région EMEA.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRules_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSampleRow_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

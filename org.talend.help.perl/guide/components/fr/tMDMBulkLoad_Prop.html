@@ -1,0 +1,336 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:52">
+    <title>tMDMBulkLoad</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="TalendMDM_group_intro.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMBulkLoad_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3514626"> </a><h2 class="pHeading1">
+tMDMBulkLoad
+</h2>
+<a name="wp3585316"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tMDMBulkLoad.png" id="wp3514631" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3514663"> </a><h2 class="pHeading2">
+Propriétés du tMDMBulkLoad
+</h2>
+<a name="wp3514972"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3514675table3514667">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3514675"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp3514678"> </a><div class="pCellBody">
+Talend MDM
+</div>
+</td>
+    <td><a name="wp3514689"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp3514685" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3514697"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3514704"> </a><div class="pCellBody">
+Le composant <b class="cBold">tMDMBulkLoad</b> écrit en masse des données maître structurées XML dans le hub MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3514715"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3514718"> </a><div class="pCellBody">
+Ce composant utilise le mode bulk pour écrire des données, de façon à ce que de gros lots de données ou des données très complexes puissent être chargé(e)s rapidement sur le serveur MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3514729"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3514740"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3514743"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le <b class="cBold">Repository</b>.<br />Cliquez sur <b class="cBold">Edit Schema</b> pour modifier le schéma.<br />
+</div>
+<a name="wp3514759"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3514756" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Si vous modifiez le schéma, il redevient automatiquement built-in.
+</p>
+<a name="wp3514761"> </a><div class="pCellBody">
+<br />Cliquez sur le bouton <b class="cBold">Sync columns</b> afin de récupérer le schéma du composant précédent.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3514769"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514772"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514779"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Le schéma sera créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de Talend Open Studio. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3514794"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514797"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514804"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé dans divers projets et Jobs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de Talend Open Studio. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3515747"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3515750"> </a><div class="pCellHeading">
+<em class="cEmphasis">XML Field</em>
+</div>
+</td>
+    <td><a name="wp3515753"> </a><div class="pCellBody">
+Sélectionnez le nom de la colonne dans laquelle vous souhaitez écrire les données XML.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3514819"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514826"> </a><div class="pCellHeading">
+<em class="cEmphasis">URL</em>
+</div>
+</td>
+    <td><a name="wp3514829"> </a><div class="pCellBody">
+Saisissez l&#39;URL d&#39;accès au serveur MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3514833"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514844"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp3514847"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur du serveur MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3514851"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514858"> </a><div class="pCellHeading">
+<em class="cEmphasis">Version</em>
+</div>
+</td>
+    <td><a name="wp3514861"> </a><div class="pCellBody">
+Saisissez le nom de la version des données maître à laquelle vous souhaitez vous connecter, en fonction de vos droits utilisateur.<br />Laissez ce champ vide pour afficher la version par défaut des données maître.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3515808"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3515811"> </a><div class="pCellHeading">
+<em class="cEmphasis">Data model</em>
+</div>
+</td>
+    <td><a name="wp3515814"> </a><div class="pCellBody">
+Saisissez le nom du modèle de données par rapport auquel vous souhaitez valider les données à écrire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3515863"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3515868"> </a><div class="pCellHeading">
+<em class="cEmphasis">Data Container</em>
+</div>
+</td>
+    <td><a name="wp3515870"> </a><div class="pCellBody">
+Saisissez le nom du conteneur de données contenant les données que vous souhaitez écrire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3514865"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3514872"> </a><div class="pCellHeading">
+<em class="cEmphasis">Entity</em>
+</div>
+</td>
+    <td><a name="wp3514875"> </a><div class="pCellBody">
+Saisissez le nom de l&#39;entité contenant les données que vous souhaitez effacer.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3515880"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3515883"> </a><div class="pCellBody">
+<em class="cEmphasis">Validate</em>
+</div>
+</td>
+    <td><a name="wp3516045"> </a><div class="pCellBody">
+Cochez cette case afin de valider les données que vous souhaitez écrire sur le serveur MDM, par rapport à des règles de validation définies pour le modèle de données courant.<br />Pour plus d&#39;informations concernant la définition des règles de validation, consultez le Guide <b class="cBold">Talend Master Data Management Administrator Guide </b>(en anglais).
+</div>
+<a name="wp3516071"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3516065" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Si vous préférez un chargement plus rapide, ne cochez pas cette case.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3515908"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3515911"> </a><div class="pCellHeading">
+<em class="cEmphasis">Generate ID</em>
+</div>
+</td>
+    <td><a name="wp3515914"> </a><div class="pCellBody">
+Cochez cette case pour générer un identifiant aux données écrites.
+</div>
+<a name="wp3516088"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3516085" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Si vous préférez un chargement plus rapide, ne cochez pas cette case.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3515936"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3515939"> </a><div class="pCellHeading">
+<em class="cEmphasis">Commit size</em>
+</div>
+</td>
+    <td><a name="wp3515942"> </a><div class="pCellBody">
+Saisissez le nombre de lignes de chaque lot à écrire sur le serveur MDM.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3514943"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3514950"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3514953"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3516103"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3516106"> </a><div class="pCellHeading">
+<em class="cEmphasis">Enable parallel execution</em>
+</div>
+</td>
+    <td><a name="wp3516109"> </a><div class="pCellBody">
+Cochez cette case permet de traiter plusieurs flux de données simultanément. Cela permet de traiter les données plus rapidement.<br />Pour plus d&#39;informations, consultez <em class="cEmphasis">Paralléliser les flux de données</em> du <span style="font-weight: bold">Guide Utilisateur</span> Talend Open Studio.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3572878"> </a><div class="pCellBody">
+<b class="cBold">Connections</b>
+</div>
+</td>
+    <td><a name="wp3572881"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3572884"> </a><div class="pCellBody">
+Liens de sortie (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row</b>&#160;: Main.<br /><b class="cBold">Trigger</b>&#160;: Run If, OnComponentOk, OnComponentError, OnSubjobOk, OnSubjobError.<br /><br />Liens d&#39;entrée (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row</b>&#160;: Main.<br /><b class="cBold">Trigger</b>&#160;: Run If, OnComponentOk, OnComponentError, OnSubjobOk, OnSubjobError.<br /><br />Pour plus d&#39;informations concernant les connexions, consultez&#160;<em class="cEmphasis">Types de connexion</em> dans le <b class="cBold">Guide Utilisateur</b> Talend Open Studio.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3514961"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3514964"> </a><div class="pCellBody">
+Ce composant nécessite toujours un flux d&#39;entrée afin de stucturer des données en XML. Si vos données ne sont pas encore structurées XML, vous devez utiliser des composants tels que le <b class="cBold">tWriteXMLField</b> afin de transformer ces données en XML. Pour plus d&#39;informations concernant le <b class="cBold">tWriteXMLField</b>, consultez&#160;<a href="tWriteXMLField_Prop.html"><em class="cEmphasis">tWriteXMLField</em></a>.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="TalendMDM_group_intro.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMBulkLoad_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

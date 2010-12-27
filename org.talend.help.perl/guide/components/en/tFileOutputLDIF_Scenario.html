@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:40">
+    <title>Scenario: Writing DB data into an LDIF-type file</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputLDIF_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputMSDelimited_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3453975"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3453983"> </a><h2 class="pHeading2">
+Scenario: Writing DB data into an LDIF-type file
+</h2>
+<a name="wp3453986"> </a><p class="pIndented1">
+This scenario describes a two component Job which aims at extracting data from a database table and writing this data into a new output LDIF file.
+</p>
+<a name="wp3453994"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputLDIF1.png" id="wp3453991" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3454008"> </a><div class="pSmartList2"><li>Drop a <b class="cBold">tMysqlInput</b> and a <b class="cBold">tFileOutputLDIF</b> component from the <b class="cBold">Palette</b> to the design area. Connect them together using a <b class="cBold">Row &gt; Main</b> link.</li></div>
+<a name="wp3454023"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tMysqlInput</b> component, and go to the <b class="cBold">Component</b> panel then select the <b class="cBold">Basic settings</b> tab.</li></div>
+<a name="wp3454031"> </a><div class="pSmartList2"><li>If you stored the DB connection details in a <b class="cBold">Metadata</b> entry in the Repository, set the <b class="cBold">Property type</b> as well as the <b class="cBold">Schema type</b> on <b class="cBold">Repository</b> and select the relevant metadata entry. All other fields are filled in automatically, and retrieve the metadata-stored parameters. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3454049"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputLDIF2.png" id="wp3454046" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3454063"> </a><div class="pSmartList2"><li>Alternatively select <b class="cBold">Built-in</b> as the <b class="cBold">Property type</b> and <b class="cBold">Schema</b> type and fill in the DB connection and schema fields manually.</li></div>
+<a name="wp3454074"> </a><div class="pSmartList2"><li>Then double-click on <b class="cBold">tFileOutpuLDIF</b> and define the <b class="cBold">Basic settings</b>.</li></div>
+<a name="wp3454077"> </a><div class="pSmartList2"><li>Browse to the folder where you store the Output file. In this use case, a new LDIF file is to be created. Thus type in the name of this new file.</li></div>
+<a name="wp3454084"> </a><div class="pSmartList2"><li>In the <b class="cBold">Wrap</b> field, enter the number of characters held on one line. The text coming afterwards will get wrapped onto the next line.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3454093"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputLDIF3.png" id="wp3454090" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3454104"> </a><div class="pSmartList2"><li>Select <b class="cBold">Add</b> as <b class="cBold">Change Type</b> as the newly created file is by definition empty. In case of modification type of Change, you&#39;ll need to define the nature of the modification you want to make to the file.</li></div>
+<a name="wp3454117"> </a><div class="pSmartList2"><li>As the <b class="cBold">Schema</b> type, select <b class="cBold">Built-in</b> and use the <b class="cBold">Sync Columns</b> button to retrieve the input schema definition.</li></div>
+<a name="wp3454123"> </a><div class="pSmartList2"><li>Press F6 to short run the Job.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3454130"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileOutputLDIF4.png" id="wp3454127" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3454133"> </a><p class="pIndented1">
+The LDIF file created contains the data from the DB table and the type of change made to the file, in this use case, addition.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileOutputLDIF_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileOutputMSDelimited_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

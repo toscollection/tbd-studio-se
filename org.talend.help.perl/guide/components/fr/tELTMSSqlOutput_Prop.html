@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:03:50">
+    <title>tELTMSSqlOutput</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTMSSqlMap_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTMSSqlOutput_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2971750"> </a><h2 class="pHeading1">
+tELTMSSqlOutput
+</h2>
+<a name="wp2971760"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tELTMSSqlOutput_icon32_white.png" id="wp2971755" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2971770"> </a><h2 class="pHeading2">
+Propriétés de tELTMSSqlOutput
+</h2>
+<a name="wp2971786"> </a><p class="pIndented1">
+Les composants <b class="cBold">tELTMSSqlInput</b>, <b class="cBold">tELTMSSqlOutput</b>, et <b class="cBold">tELTMSSqlMap</b> sont très proches dans leurs conditions de fonctionnement. En effet, ces trois composants sont conçus pour manipuler des schémas de données d&#39;une base MSSql afin de générer des commandes Insert, y compris des clauses, qui devront être exécutées dans la table de sortie définie.
+</p>
+<a name="wp2972000"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2971799table2971791">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2971799"> </a><div class="pCellBody">
+<b class="cBold">Famille du composant</b>
+</div>
+</td>
+    <td><a name="wp2971802"> </a><div class="pCellBody">
+ELT
+</div>
+</td>
+    <td><a name="wp2971814"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp2971809" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2971822"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2971825"> </a><div class="pCellBody">
+Effectue l&#39;action sur la table telle que spécifiée et insère les données selon le schéma de sortie défini dans le Mapper ELT.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2971836"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2971839"> </a><div class="pCellBody">
+Exécute la requête Insert dans la base de données MSSql.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2972172"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2971879"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on data</em>
+</div>
+</td>
+    <td><a name="wp2971882"> </a><div class="pCellBody">
+Sur les données de la table définie, vous pouvez effectuer les opérations suivantes&#160;:<br /><b class="cBold">Insert&#160;</b>: Ajoute de nouvelles lignes à la table. Si des doublons sont identifiés, le Job s&#39;arrête.<br />Note&#160;: dans les composants ELT MSSql, seule l&#39;opération Insert est disponible.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2971890"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2971900"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2971904"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités. Le schéma est soit local (built-in) soit distant dans le Repository. Cliquez sur <b class="cBold">Edit Schema</b> pour modifier le schéma. Notez que si vous modifiez le schéma, il devient automatiquement built-in.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2971912"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2971915"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2971922"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Le schéma sera créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2971933"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2971936"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2971943"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé dans divers projets et Jobs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2972197"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2972223"> </a><div class="pCellHeading">
+<em class="cEmphasis">Default Table Name</em>
+</div>
+</td>
+    <td><a name="wp2972226"> </a><div class="pCellBody">
+Saisissez le nom de la table par défaut, entre guillemets doubles.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2971954"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2972233"> </a><div class="pCellHeading">
+<em class="cEmphasis">Default Schema Name</em>
+</div>
+</td>
+    <td><a name="wp2972236"> </a><div class="pCellBody">
+Saisissez le nom du schéma par défaut, entre guillemets doubles.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3465769"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3465793"> </a><div class="pCellBody">
+<em class="cEmphasis">Use different table name</em>
+</div>
+</td>
+    <td><a name="wp3465796"> </a><div class="pCellBody">
+Cochez cette case afin de définir le nom d&#39;une table de sortie différente, entre guillemets doubles, dans le champ <b class="cBold">Table name</b> qui apparaît.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2972271"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2972278"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2972281"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2971972"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2971979"> </a><div class="pCellBody">
+L&#39;utilisation du composant <b class="cBold">tELTMSSqlOutput</b> est étroitement liée à celle des composants <b class="cBold">tELTMSSqlInput</b> et <b class="cBold">tELTMSSqlMap</b>. Notez que le lien de sortie (output) à utiliser avec ces deux composants doit respecter strictement la syntaxe du nom de la table. 
+</div>
+<a name="wp2971991"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2971988" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Les composants ELT ne traitent pas le flux de données lui-même mais uniquement les informations du schéma.
+</p>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTMSSqlMap_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTMSSqlOutput_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

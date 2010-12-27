@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="04/02/10 19:15:03">
+    <title>tMergeFields</title>
+  </head>
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLaunchDQReports_Scenario.html"><img id="LongDescNotReq1" src="../en/images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMergeFields_Scenario.html"><img id="LongDescNotReq2" src="../en/images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+    <!--img src="../en/images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+    <blockquote>
+<a name="wp2891889"> </a><h2 class="pHeading1">
+tMergeFields
+</h2>
+<a name="wp2891897"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../en/images/tMergeRow_icon32_white.png" id="wp2891893" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<a name="wp2892620"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../en/images/warning_small.png" align="left" id="wp2892615" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+This component is available in the <b class="cBold">Palette</b> of the studio on the condition that you have subscribed to the relevant edition of <b class="cBold">Talend Data Quality</b>.
+</div>
+<a name="wp2892627"> </a><h2 class="pHeading2">
+tMergeFields Properties
+</h2>
+<a name="wp2892469"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2896385table2892372">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2896385"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2896387"> </a><div class="pCellBody">
+Data Quality
+</div>
+</td>
+    <td><a name="wp2896395"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../en/images/java_iconfn.png" id="wp2896392" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2896400"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2896405"> </a><div class="pCellBody">
+<b class="cBold">tMergeFields</b> receives a flow and merges it based on one or more columns. The aggregation key and the relevant result of operations (such as min, max, sum etc) are provided for each output line.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2896412"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2896417"> </a><div class="pCellBody">
+<b class="cBold">tMergeFields</b> centralizes data from various and heterogeneous sources. It helps to create a master copy of data for MDM. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2896424"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2896429"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2896434"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2896436"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2896438"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2896443"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <em class="cEmphasis">Setting a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2896454"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2896456"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2896461"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job designs. Related topic: <em class="cEmphasis">Setting a Repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2896495"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2896502"> </a><div class="pCellHeading">
+<em class="cEmphasis">Key</em>
+</div>
+</td>
+    <td><a name="wp2898740"> </a><div class="pCellBody">
+Define the merge sets, the values of which will be used for calculations.<br /><b class="cBold">Output column</b>: Select the column name from the list that reflects the schema structure you defined. You can add as many output columns as you wish to make more precise aggregations.<br /><b class="cBold">Input column</b>: Match each input column name with your output columns, in case the output column of the aggregation set needs to be different.
+</div>
+<a name="wp2898800"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../en/images/warning_small.png" align="left" id="wp2898778" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+The columns in the Key table must NOT appear in the Operations table. If you want all the columns of the output schema to be filled in, they must appear either in the Key table or in the Operations table.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2896519"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2896526"> </a><div class="pCellHeading">
+<em class="cEmphasis">Operations</em>
+</div>
+</td>
+    <td><a name="wp2896839"> </a><div class="pCellBody">
+<b class="cBold">Output column</b>: Select from the list the output column that will result from the selected merge operation.<br /><b class="cBold">Function</b>: Select from the list the type of the merge operation to perform. The list includes count, min, max, avg, sum, first, last, list, list(objects), count(distinct), standard deviation, max length and replace.<br /><b class="cBold">Input column</b>: Select from the list the input column from which the values are selected for the merge operation.<br /><b class="cBold">Weight column</b>: Select from the list the column you want to use as a weight value for the merge operation.<br /><b class="cBold">Ignore null values</b>: Select the check boxes corresponding to the names of the columns for which you want the NULL value to be ignored.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2896475"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2896477"> </a><div class="pCellBody">
+This component is not startable and requires an input component and an output component.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+</p>
+    </blockquote>
+    <hr>
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="../en/images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLaunchDQReports_Scenario.html"><img id="LongDescNotReq3" src="../en/images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMergeFields_Scenario.html"><img id="LongDescNotReq4" src="../en/images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

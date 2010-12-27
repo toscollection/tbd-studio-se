@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:12">
+    <title>Scénario&#160;: Insérer des données de masse transformées dans votre Salesforce.com</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceOutputBulk_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutputBulkExec_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2953139"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2953775"> </a><h2 class="pHeading2">
+Scénario&#160;: Insérer des données de masse transformées dans votre Salesforce.com
+</h2>
+<a name="wp2953781"> </a><p class="pIndented1">
+Ce scénario décrit un Job à six composants qui transforme des données <em class="cEmphasis">.csv</em> appropriées à un traitement de masse, les charge dans Salesforce.com et affiche ensuite les résultats de l&#39;exécution du Job dans la console.
+</p>
+<a name="wp2953793"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk.png" id="wp2953790" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2953796"> </a><p class="pIndented1">
+Ce Job est réalisé en deux étapes&#160;: préparer les données en les transformant, puis traiter les données transformées. 
+</p>
+<a name="wp2953800"> </a><p class="pIndented1">
+Avant de commencer ce scénario, vous devez préparer le fichier original comprenant les données devant être traitées par le Job. Dans cet exemple d&#39;utilisation, le fichier est <em class="cEmphasis">sforcebulk.txt</em>, il contient des informations relatives aux clients. 
+</p>
+<a name="wp2962497"> </a><p class="pIndented1">
+Afin de créer et exécuter ce Job, procédez comme suit&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961547"> </a><div class="pSmartList2"><li>Glissez-déposez de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique les composants <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tMap</b>, <b class="cBold">tSalesforceOutputBulk</b>, <b class="cBold">tSalesforceBulkExec</b> et deux <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2961575"> </a><div class="pSmartList2"><li>Utilisez un lien <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> afin de connecter le <b class="cBold">tFileInputDelimited</b> au <b class="cBold">tMap</b>, et le lien <b class="cBold">Row</b> &gt; <b class="cBold">out1</b> du <b class="cBold">tMap</b> au <b class="cBold">tSalesforceOutputBulk</b>.</li></div>
+<a name="wp2961600"> </a><div class="pSmartList2"><li>Utilisez un lien <b class="cBold">Row</b> &gt; <b class="cBold">Main</b> et un lien <b class="cBold">Row</b> &gt; <b class="cBold">Reject</b> pour connecter le <b class="cBold">tSalesforceBulkExec</b> aux deux <b class="cBold">tLogRow</b> respectivement.</li></div>
+<a name="wp2961616"> </a><div class="pSmartList2"><li>Utilisez un lien <b class="cBold">Trigger</b> &gt; <b class="cBold">OnSubjobOk</b> afin de connecter le composant  <b class="cBold">tFileInputDelimited</b> au <b class="cBold">tSalesforceBulkExec</b>.</li></div>
+<a name="wp2961629"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tFileInputDelimited</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2961638"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk1.png" id="wp2961635" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961650"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Repository</b> si vous avez déjà stocké votre connexion Salesforce sous le noeud <b class="cBold">Metadata</b> dans la vue <b class="cBold">Repository</b>. Les propriétés sont automatiquement remplies. Si vous n&#39;avez pas défini le serveur de connexion localement dans le Repository, renseignez les informations manuellement, après avoir sélectionné <b class="cBold">Built-in</b> dans la liste <b class="cBold">Property Type</b>.<br />Pour plus d&#39;informations à propos des métadonnées, consultez le chapitre <em class="cEmphasis">Gestion des métadonnées</em>.</li></div>
+<a name="wp2962860"> </a><div class="pSmartList2"><li>A côté du champ <b class="cBold">File name/Stream</b>, cliquez sur le bouton <img src="../Images/DotButton.png" id="wp2961679" border="0" hspace="0" vspace="0"/> afin de parcourir votre répertoire jusqu&#39;à votre fichier, dans cet exemple <em class="cEmphasis">sforcebulk.txt</em>.</li></div>
+<a name="wp2961698"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Repository</b>, puis cliquez sur le bouton <b class="cBold">[...]</b> afin d&#39;ouvrir la boîte de dialogue dans laquelle vous pourrez sélectionner le schéma du Repository à utiliser pour ce composant. Si vous n&#39;avez pas défini localement votre fichier dans les métadonnées, sélectionnez <b class="cBold">Built-in</b> dans la liste <b class="cBold">Schema</b>, puis cliquez sur le bouton [...]à côté du champ <b class="cBold">Edit schema</b>, afin d&#39;ouvrir une boîte de dialogue dans laquelle vous pourrez définir le schéma manuellement. Dans ce scénario, le schéma se compose de quatre colonnes&#160;: <em class="cEmphasis">Name</em>, <em class="cEmphasis">ParentId</em>, <em class="cEmphasis">Phone</em> et <em class="cEmphasis">Fax</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2961716"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk_schema.png" id="wp2961713" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961724"> </a><div class="pSmartList2"><li>Selon votre fichier d&#39;entrée, paramétrez les autres champs, comme <b class="cBold">Row Separator</b>, <b class="cBold">Field Separator</b>...</li></div>
+<a name="wp2961735"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMap</b> afin d&#39;ouvrir son éditeur et définir la transformation.</li></div>
+<a name="wp2961741"> </a><div class="pSmartList2"><li>Glissez-déposez toutes les colonnes de la table d&#39;entrée dans la table de sortie.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2961748"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk_tMap.png" id="wp2961745" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961788"> </a><div class="pSmartList2"><li>Ajoutez <code class="cCode">.toUpperCase()</code> à la fin de la colonne <em class="cEmphasis">Name</em>.</li></div>
+<a name="wp2961816"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> afin de valider la transformation.</li></div>
+<a name="wp2961825"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tSalesforceOutputBulk</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2961834"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk2.png" id="wp2961831" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961842"> </a><div class="pSmartList2"><li>Dans le champ<b class="cBold"> File Name</b>, parcourez votre répertoire jusqu&#39;à l&#39;emplacement où vous souhaitez stocker les données <em class="cEmphasis">.csv</em> générées pour un traitement de masse.</li></div>
+<a name="wp2961853"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> afin d&#39;importer le schéma du composant précédent.</li></div>
+<a name="wp2961862"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tSalesforceBulkExect</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2961871"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk3.png" id="wp2961868" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961877"> </a><div class="pSmartList2"><li>Utilisez l&#39;URL par défaut du service Web Salesforce, ou saisissez l&#39;URL à laquelle vous souhaitez accéder.</li></div>
+<a name="wp2961888"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez votre identifiant et votre mot de passe de connexion au service Web.</li></div>
+<a name="wp2961897"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Bulk file path</b>, parcourez votre répertoire jusqu&#39;à l&#39;emplacement où est stocké le fichier <em class="cEmphasis">.csv</em> généré par le <b class="cBold">tSalesforceOutputBulk</b>.</li></div>
+<a name="wp2961907"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Action</b>, sélectionnez l&#39;action que vous voulez effectuer sur les données de masse. Dans cet exemple, sélectionnez <b class="cBold">insert</b>.</li></div>
+<a name="wp2961923"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Module</b>, sélectionnez l&#39;élément auquel vous souhaitez accéder, <b class="cBold">Account</b> dans cet exemple.</li></div>
+<a name="wp2961932"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Repository</b> et cliquez sur le bouton <b class="cBold">[...]</b> afin d&#39;ouvrir une boîte de dialogue dans laquelle vous pourrez sélectionner le schéma du Repository à utiliser pour ce composant. Si vous n&#39;avez pas défini votre schéma localement dans les métadonnées, sélectionnez <b class="cBold">Built-in</b> dans la liste <b class="cBold">Schema</b>, puis cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b>, afin d&#39;ouvrir une boîte de dialogue dans laquelle vous pourrez définir votre schéma manuellement. Dans cet exemple, définissez-le comme le schéma précédent.</li></div>
+<a name="wp2961951"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tLogRow_1</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2961960"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk4.png" id="wp2961957" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961970"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> afin de récupérer le schéma du composant précédent.</li></div>
+<a name="wp2961977"> </a><div class="pSmartList2"><li>Sélectionnez le mode <b class="cBold">Table</b> afin d&#39;afficher les résultats d&#39;exécution dans un tableau.</li></div>
+<a name="wp2961984"> </a><div class="pSmartList2"><li>Répétez l&#39;opération avec le <b class="cBold">tLogRow_2</b>.</li></div>
+<a name="wp2961993"> </a><div class="pSmartList2"><li>Sauvegardez votre Job, et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2962000"> </a><p class="pIndented1">
+Dans la console de la vue <b class="cBold">Run</b>, vous pouvez vérifier les résultats d&#39;exécution.
+</p>
+<a name="wp2963593"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tSalesforceOutputBulk5.png" id="wp2962004" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2962014"> </a><p class="pIndented1">
+Dans le tableau du <b class="cBold">tLogRow_1</b>, vous pouvez lire les données insérées dans votre Salesforce.com.
+</p>
+<a name="wp2962023"> </a><p class="pIndented1">
+Dans le tableau du <b class="cBold">tLogRow_2</b>, vous pouvez lire les données rejetées à cause d&#39;une incompatibilité avec les éléments <b class="cBold">Account</b> auxquels vous avez accédé.
+</p>
+<a name="wp2966936"> </a><p class="pIndented1">
+Tous les noms de clients sont écrits en majuscules.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSalesforceOutputBulk_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSalesforceOutputBulkExec_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

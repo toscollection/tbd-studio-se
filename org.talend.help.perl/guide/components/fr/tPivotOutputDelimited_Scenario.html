@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;: Utiliser une colonne pivot pour agréger des données</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPivotOutputDelimited_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="File%20Scale_group_intro.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1660482"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1660489"> </a><h2 class="pHeading2">
+Scénario&#160;: Utiliser une colonne pivot pour agréger des données
+</h2>
+<a name="wp1660492"> </a><p class="pIndented1">
+Le scénario suivant décrit un Job qui agrège des données d&#39;un fichier d&#39;entrée délimité à l&#39;aide d&#39;une colonne pivot.
+</p>
+<a name="wp1660500"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPivotOutputFile1.png" id="wp1660497" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1660505"> </a><div class="pSmartList2"><li>Cliquez sur les composants suivant et déposez-les dans l&#39;espace de modélisation&#160;: <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tPivotToColumnsDelimited</b>.</li></div>
+<a name="wp1660521"> </a><div class="pSmartList2"><li>Le fichier à utiliser en entrée est composé de 3&#160;colonnes&#160;: <em class="cEmphasis">ID</em>, <em class="cEmphasis">Question</em> et les réponses correspondantes&#160;: <em class="cEmphasis">Answer</em></li></div>
+</ul></div>
+</ul></div>
+<a name="wp1660533"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPivotOutputFile2.png" id="wp1660530" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1660542"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, sélectionnez le composant <b class="cBold">tFileInputDelimited</b>.</li></div>
+<a name="wp1660553"> </a><div class="pSmartList2"><li>Définissez ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1660560"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPivotOutputFile3.png" id="wp1660557" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1660569"> </a><div class="pSmartList2"><li>Sélectionnez le fichier d&#39;entrée pour renseigner le champ<b class="cBold"> File Name</b>.</li></div>
+<a name="wp1660578"> </a><div class="pSmartList2"><li>Définissez les séparateurs de lignes (<b class="cBold">Row</b>) et de champs (<b class="cBold">Field</b>), respectivement&#160;: retour chariot et point virgule, dans cet exemple.</li></div>
+<a name="wp1660583"> </a><div class="pSmartList2"><li>Le fichier contient un en-tête, ainsi définissez-le.</li></div>
+<a name="wp1660596"> </a><div class="pSmartList2"><li>Paramétrez le schéma avec les trois colonnes&#160;: <em class="cEmphasis">ID</em>, <em class="cEmphasis">Questions</em>, <em class="cEmphasis">Answers</em>.</li></div>
+<a name="wp1660602"> </a><div class="pSmartList2"><li>Puis sélectionnez le composant <b class="cBold">tPivotToColumnsDelimited</b> et paramétrez ses propriétés dans l&#39;onglet <b class="cBold">Basic Settings</b> de la vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1660617"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPivotOutputFile4.png" id="wp1660614" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1660625"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Pivot column</b>, sélectionnez la colonne pivot dans le schéma d&#39;entrée. La colonne pivot est généralement celle présentant le plus de doublons (valeurs d&#39;agrégation pivot).</li></div>
+<a name="wp1660632"> </a><div class="pSmartList2"><li>Dans le champ<b class="cBold"> Aggregation column</b>, sélectionnez la colonne à agréger dans le schéma d&#39;entrée.</li></div>
+<a name="wp1660639"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Aggregation function</b>, sélectionnez la fonction à effectuer lorsque des doublons sont trouvés.</li></div>
+<a name="wp1660649"> </a><div class="pSmartList2"><li>Dans la table <b class="cBold">Group by</b>, ajoutez une entrée dans la colonne <b class="cBold">Input column</b>, qui sera utilisée pour regrouper la colonne agrégée.</li></div>
+<a name="wp1660656"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, indiquez le chemin d&#39;accès et le nom du fichier de sortie. Et dans les champs <b class="cBold">Row</b> et <b class="cBold">Field separator</b>, paramétrez les séparateurs pour les lignes et données de sortie ayant été agrégées.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1660670"> </a><p class="pIndented1">
+Puis, appuyez sur <b class="cBold">F6</b> pour exécuter le Job. Le fichier de sortie affiche les données qui viennent d&#39;être agrégées.
+</p>
+<a name="wp1660680"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPivotOutputFile5.png" id="wp1660675" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPivotOutputDelimited_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="File%20Scale_group_intro.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

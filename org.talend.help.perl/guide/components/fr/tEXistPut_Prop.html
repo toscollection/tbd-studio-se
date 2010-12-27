@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>tEXistPut</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEXistList_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tEXistPut_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3458252"> </a><h2 class="pHeading1">
+tEXistPut
+</h2>
+<a name="wp3458261"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tEXistPut_icon32_white.png" id="wp3458256" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3458268"> </a><h2 class="pHeading2">
+Propriétés du tEXistPut
+</h2>
+<a name="wp3458423"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3458276table3458271">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3458276"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp3458278"> </a><div class="pCellBody">
+Databases/eXist
+</div>
+</td>
+    <td><a name="wp3458287"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp3458283" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3458292"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3458294"> </a><div class="pCellBody">
+Ce composant charge des ressources dans un serveur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3458301"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3458306"> </a><div class="pCellBody">
+Le <b class="cBold">tEXistPut</b> charge des fichiers spécifiés d&#39;un répertoire local défini sur un serveur distant de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3458313"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3458498"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection/Component List</em>
+</div>
+</td>
+    <td><a name="wp3458502"> </a><div class="pCellBody">
+Cochez cette case et sélectionnez le composant <b class="cBold">tEXistConnection</b> adéquat à partir de la liste <b class="cBold">Component List</b> pour réutiliser les paramètres d&#39;une connexion que vous avez déjà définis.
+</div>
+<a name="wp3465469"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3465466" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Lorsqu&#39;un Job contient un Job parent et un Job enfant, la liste <b class="cBold">Component List</b> présente uniquement les composants de connexion du Job du même niveau. Si vous souhaitez utiliser une connexion existant dans un autre niveau, vérifiez que les composants de connexion disponibles partagent la même connexion.<br />Pour plus d&#39;informations concernant le partage d&#39;une connexion à travers différents niveaux de Jobs, consultez <b class="cBold">Use or register a shared DB connection</b> dans tous les composants de base de données que vous utilisez.
+</p>
+<a name="wp3465494"> </a><div class="pCellBody">
+Sinon, vous pouvez également désactiver le composant de connexion et utiliser les <b class="cBold">Dynamic settings</b> du composant, afin de paramétrer manuellement la connexion. Dans ce cas, vérifiez que le nom de la connexion est unique et distinct tout au long des deux niveaux de Jobs. Pour plus d&#39;informations concernant les paramètres dynamiques (<b class="cBold">Dynamic settings</b>), consultez le <b class="cBold">Guide Utilisateur</b> de votre Studio. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3458326"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3458509"> </a><div class="pCellBody">
+<em class="cEmphasis">URI</em>
+</div>
+</td>
+    <td><a name="wp3458512"> </a><div class="pCellBody">
+URI de la base de données à laquelle vous souhaitez vous connecter.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3458332"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3458519"> </a><div class="pCellHeading">
+<em class="cEmphasis">Collection</em>
+</div>
+</td>
+    <td><a name="wp3458522"> </a><div class="pCellBody">
+Saisissez le chemin d&#39;accès à la collection à laquelle vous souhaitez accéder, sur le serveur de la base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3458341"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3458527"> </a><div class="pCellBody">
+<em class="cEmphasis">Driver</em>
+</div>
+</td>
+    <td><a name="wp3458530"> </a><div class="pCellBody">
+Ce champ est automatiquement rempli. Par défaut, le nom du pilote standard s&#39;affiche.
+</div>
+<a name="wp3458538"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3458535" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Les utilisateurs peuvent spécifier un pilote différent, selon leurs besoins.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3458355"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3458542"> </a><div class="pCellBody">
+<em class="cEmphasis">Username et Password</em>
+</div>
+</td>
+    <td><a name="wp3458545"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3458370"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3458375"> </a><div class="pCellHeading">
+<em class="cEmphasis">Local directory</em>
+</div>
+</td>
+    <td><a name="wp3458377"> </a><div class="pCellBody">
+Chemin d&#39;accès au fichier de destination.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3458380"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3458385"> </a><div class="pCellHeading">
+<em class="cEmphasis">Files</em>
+</div>
+</td>
+    <td><a name="wp3458387"> </a><div class="pCellBody">
+Cliquez sur le bouton <b class="cBold">[+]</b> afin d&#39;ajouter les lignes que vous souhaitez utiliser comme filtres&#160;:<br /><b class="cBold">Filemask</b>&#160;: saisissez le nom du fichier ou le masque de fichier, en utilisant des caractères de remplacement (*) ou des expressions régulières.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3458395"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3458399"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3458402"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3458407"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3458409"> </a><div class="pCellBody">
+<a href="http://exist.sourceforge.net/xquery.html">Ce composant est utilisé en tant que sous-job ou comme composant de sortie.<br />La base de données eXist est un système de gestion de base de données open source, construit à l&#39;aide de la technologie XML. Elle stocke des données XML selon le modèle de données XML et offre une fonction efficace de traitement de la requête XQuery, basée sur l&#39;index.<br />Pour plus d&#39;informations concernant XQuery, consultez&#160;:<br />http://exist.sourceforge.net/xquery.html (en anglais).<br />Pour plus d&#39;informations concernant les extensions de XQuery Update, consultez&#160;:<br />http://exist.sourceforge.net/update_ext.html</a>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3458416"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3458418"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEXistList_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tEXistPut_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

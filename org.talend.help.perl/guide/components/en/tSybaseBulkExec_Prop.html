@@ -1,0 +1,439 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tSybaseBulkExec</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSQLiteRow_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSybaseBulkExec_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1617059"> </a><h2 class="pHeading1">
+tSybaseBulkExec
+</h2>
+<a name="wp1617067"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tSybaseBulkExec_icon32_white.png" id="wp1617063" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1617074"> </a><h2 class="pHeading2">
+tSybaseBulkExec Properties
+</h2>
+<a name="wp1617243"> </a><p class="pIndented1">
+The <b class="cBold">tSybaseOutputBulk</b> and <b class="cBold">tSybaseBulkExec</b> components are generally used together as parts of a two step process. In the first step, an output file is generated. In the second step, this file is used in the INSERT operation used to feed a database. These two steps are fused together in the <b class="cBold">tSybaseOutputBulkExec</b> component, detailed in a separate section. The advantage of using two separate components is that the data can be transformed before it is loaded in the database.
+</p>
+<a name="wp3574995"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2488569table1617077">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488569"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2488571"> </a><div class="pCellBody">
+Databases
+</div>
+</td>
+    <td><a name="wp2488580"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-05-415-0046.jpg" height="59" width="112" id="wp2488576" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488585"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2488587"> </a><div class="pCellBody">
+Executes the Insert action on the data provided.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488594"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2488596"> </a><div class="pCellBody">
+As a dedicated component, it allows gains in performance during Insert operations to a Sybase database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488603"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2488608"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2488616"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488618"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488620"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488625"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488627"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488629"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3601399"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488636"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488640"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2488643"> </a><div class="pCellBody">
+Select this check box and click the relevant <b class="cBold">tSybaseConnection </b>component on the <b class="cBold">Component list</b> to reuse the connection details you already defined.<br />
+</div>
+<a name="wp3452050"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3452047" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488648"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488653"> </a><div class="pCellHeading">
+<em class="cEmphasis">Server</em>
+</div>
+</td>
+    <td><a name="wp2488655"> </a><div class="pCellBody">
+Database server IP address
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2652401"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2652409"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<em class="cEmphasis">Port </em>
+</div>
+</td>
+    <td><a name="wp2652411"> </a><div class="pCellBody">
+Listening port number of DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2652372"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2652379"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2652382"> </a><div class="pCellBody">
+Database name
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488657"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488662"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2488667"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488669"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488671"> </a><div class="pCellHeading">
+<em class="cEmphasis">Bcp Utility</em>
+</div>
+</td>
+    <td><a name="wp2488673"> </a><div class="pCellBody">
+Name of the utility to be used to copy data over to the Sybase server. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2652388"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2652395"> </a><div class="pCellHeading">
+<em class="cEmphasis">Server</em>
+</div>
+</td>
+    <td><a name="wp2652398"> </a><div class="pCellBody">
+IP address of the database server for the Bcp utility connection.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488675"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488677"> </a><div class="pCellHeading">
+<em class="cEmphasis">Batch size</em>
+</div>
+</td>
+    <td><a name="wp2488679"> </a><div class="pCellBody">
+Number of lines in each processed batch.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488681"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488686"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2488688"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time and that the table must exist for the insert operation to succeed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488690"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488695"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2652450"> </a><div class="pCellBody">
+On the table defined, you can perform one of the following operations:<br /><b class="cBold">None</b>: No operation is carried out.<br /><b class="cBold">Drop and create a table</b>: The table is removed and created again.<br /><b class="cBold">Create a table</b>: The table does not exist and gets created.<br /><b class="cBold">Create a table if not exists</b>: The table is created if it does not exist.<br /><b class="cBold">Clear a table</b>: The table content is deleted.<br /><b class="cBold">Truncate table</b>: The table content is deleted. You do not have the possibility to rollback the operation. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488714"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488719"> </a><div class="pCellHeading">
+<em class="cEmphasis">File Name</em>
+</div>
+</td>
+    <td><a name="wp2657901"> </a><div class="pCellBody">
+Name of the file to be processed. <br />Related topic:<em class="cEmphasis">How to define variables from the Component view</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488729"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488736"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2488739"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields to be processed and passed on to the next component. The schema is either built-in or stored remotely in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488741"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488743"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2655615"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: You create and store the schema locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488756"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488758"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2656990"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: You have already created and stored the schema in the Repository, hence can be reused. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488771"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2488776"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on data</em>
+</div>
+</td>
+    <td><a name="wp2488920"> </a><div class="pCellBody">
+On the data of the table defined, you can perform:<br /><b class="cBold">Bulk Insert</b>: Add multiple entries to the table. If duplicates are found, job stops.<br /><b class="cBold">Bulk Update</b>: Make simultaneous changes to multiple entries.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488795"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488800"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field Terminator</em>
+</div>
+</td>
+    <td><a name="wp2488802"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488804"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488809"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row Terminator</em>
+</div>
+</td>
+    <td><a name="wp2488811"> </a><div class="pCellBody">
+String (ex: &quot;\n&quot; in Unix) to separate lines.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488813"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488815"> </a><div class="pCellHeading">
+<em class="cEmphasis">Head row</em>
+</div>
+</td>
+    <td><a name="wp2488817"> </a><div class="pCellBody">
+Number of head lines to be ignored in the beginning of a file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488819"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2488824"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2488826"> </a><div class="pCellBody">
+Select the encoding from the list or select <b class="cBold">Custom </b>and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2730467"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2730474"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output</em>
+</div>
+</td>
+    <td><a name="wp2730477"> </a><div class="pCellBody">
+Select the type of output for the standard output of the Sybase database:<br /><b class="cBold">to console</b>,<br /><b class="cBold">to global variable</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2730494"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2730496"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStataCatcher statistics</em>
+</div>
+</td>
+    <td><a name="wp2730533"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2488843"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2488845"> </a><div class="pCellBody">
+This component is mainly used when no particular transformation is required on the data to be loaded onto the database. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2488852"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2488854"> </a><div class="pCellBody">
+As opposed to the Oracle dedicated bulk component, no action on data is possible using this Sybase dedicated component.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSQLiteRow_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSybaseBulkExec_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

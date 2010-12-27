@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tPostgresPlusOutputBulkExec</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPostgresPlusOutputBulk_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPostgresPlusOutputBulkExec_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2884823"> </a><h2 class="pHeading1">
+tPostgresPlusOutputBulkExec
+</h2>
+<a name="wp2884833"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tPostgresPlusOutputBulkExec_icon32_white.png" id="wp2884828" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3577448"> </a><h2 class="pHeading2">
+tPostgresPlusOutputBulkExec properties
+</h2>
+<a name="wp3577463"> </a><p class="pIndented1">
+The <b class="cBold">tPostgresplusOutputBulk</b> and <b class="cBold">tPostgresplusBulkExec</b> components are generally used together as part of a two step process. In the first step, an output file is generated. In the second step, this file is used in the INSERT operation used to feed a database. These two steps are fused together in the <b class="cBold">tPostgresPlusOutputBulkExec</b> component.
+</p>
+<a name="wp3574268"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2884855table2884847">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2884855"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2884858"> </a><div class="pCellBody">
+Databases/PostgresPlus
+</div>
+</td>
+    <td><a name="wp2884869"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2884865" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2884877"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2884880"> </a><div class="pCellBody">
+Executes the Insert action on the data provided.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2884891"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2884894"> </a><div class="pCellBody">
+As a dedicated component, it allows gains in performance during Insert operations to a PostgresPlus database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2884905"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2884912"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2884915"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2884919"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884922"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884929"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2884933"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884936"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3601012"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2884947"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884954"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2884957"> </a><div class="pCellBody">
+Database server IP address
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2884961"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884968"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2884971"> </a><div class="pCellBody">
+Listening port number of DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2884975"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884982"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2884985"> </a><div class="pCellBody">
+Name of the database
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885235"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885242"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em>
+</div>
+</td>
+    <td><a name="wp2885245"> </a><div class="pCellBody">
+Exact name of the schema
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2884989"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2884996"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2885003"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885007"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885014"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2885017"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time and that the table must exist for the insert operation to succeed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2885254"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885261"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2885264"> </a><div class="pCellBody">
+On the table defined, you can perform one of the following operations:<br /><b class="cBold">None</b>: No operation is carried out.<br /><b class="cBold">Drop and create a table</b>: The table is removed and created again.<br /><b class="cBold">Create a table</b>: The table does not exist and gets created.<br /><b class="cBold">Create a table if not exists</b>: The table is created if it does not exist.<br /><b class="cBold">Clear a table</b>: The table content is deleted.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885328"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885338"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2885342"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2885406"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2885413"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action</em>
+</div>
+</td>
+    <td><a name="wp2885416"> </a><div class="pCellBody">
+Select the action to be carried out<br /><b class="cBold">Bulk insert</b><br /><b class="cBold">Bulk update<br /></b>Depending on the action selected, the required information varies. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885442"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885449"> </a><div class="pCellHeading">
+<em class="cEmphasis">File type</em>
+</div>
+</td>
+    <td><a name="wp2885452"> </a><div class="pCellBody">
+Select the type of file being handled.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2885463"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885466"> </a><div class="pCellBody">
+<em class="cEmphasis">Null string</em>
+</div>
+</td>
+    <td><a name="wp2885469"> </a><div class="pCellBody">
+String displayed to indicate that the value is null. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885489"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885494"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row separator</em>
+</div>
+</td>
+    <td><a name="wp2885496"> </a><div class="pCellBody">
+String (ex: &quot;\n&quot;on Unix)  to distinguish rows.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2885388"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885395"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field terminated by</em>
+</div>
+</td>
+    <td><a name="wp2885398"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885502"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885509"> </a><div class="pCellHeading">
+<em class="cEmphasis">Text enclosure</em>
+</div>
+</td>
+    <td><a name="wp2885512"> </a><div class="pCellBody">
+Character used to enclose text.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2885374"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2885381"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2885384"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2885074"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2885077"> </a><div class="pCellBody">
+This component is mainly used when no particular tranformation is required on the data to be loaded onto the database. 
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPostgresPlusOutputBulk_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPostgresPlusOutputBulkExec_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

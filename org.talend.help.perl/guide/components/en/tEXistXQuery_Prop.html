@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tEXistXQuery</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEXistPut_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tEXistXQuery_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3454995"> </a><h2 class="pHeading1">
+tEXistXQuery
+</h2>
+<a name="wp3455004"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tEXistXQuery_icon32_white.png" id="wp3454999" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3455011"> </a><h2 class="pHeading2">
+tEXistXQuery properties
+</h2>
+<a name="wp3455156"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3455019table3455014">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3455019"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp3455021"> </a><div class="pCellBody">
+Databases/eXist
+</div>
+</td>
+    <td><a name="wp3455030"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp3455026" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3455035"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3455037"> </a><div class="pCellBody">
+This component uses local files containing XPath queries to query XML files stored on remote databases.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3455044"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3455049"> </a><div class="pCellBody">
+<b class="cBold">tEXistXQuery</b> queries XML files located on remote databases and outputs the results to an XML file stored locally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3455056"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3455060"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection/Component List</em>
+</div>
+</td>
+    <td><a name="wp3455063"> </a><div class="pCellBody">
+Select this check box and click the relevant <b class="cBold">tEXistConnection</b> component on the Component list to reuse the connection details you already defined.<br />
+</div>
+<a name="wp3489173"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3489170" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3455068"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3455073"> </a><div class="pCellHeading">
+<em class="cEmphasis">URI</em>
+</div>
+</td>
+    <td><a name="wp3455075"> </a><div class="pCellBody">
+URI of the database you want to connect to.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3455077"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3455082"> </a><div class="pCellHeading">
+<em class="cEmphasis">Collection</em>
+</div>
+</td>
+    <td><a name="wp3455084"> </a><div class="pCellBody">
+Enter the path to the XML file location on the database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3456705"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3456708"> </a><div class="pCellBody">
+<em class="cEmphasis">Driver</em>
+</div>
+</td>
+    <td><a name="wp3456711"> </a><div class="pCellBody">
+This field is automatically populated with the standard driver.
+</div>
+<a name="wp3456719"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3456716" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Users can enter a different driver, depending on their needs.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3455095"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3455103"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp3455108"> </a><div class="pCellBody">
+DB server authentication information.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3455110"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3455115"> </a><div class="pCellHeading">
+<em class="cEmphasis">XQuery Input File</em>
+</div>
+</td>
+    <td><a name="wp3455117"> </a><div class="pCellBody">
+Browse to the  local file containing the query to be executed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3455119"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3455121"> </a><div class="pCellBody">
+<em class="cEmphasis">Local Output</em>
+</div>
+</td>
+    <td><a name="wp3455123"> </a><div class="pCellBody">
+Browse to the directory in which the query results should be saved. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3455128"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3455132"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3455135"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3455140"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3455142"> </a><div class="pCellBody">
+<a href="http://exist.sourceforge.net/xquery.html">This component is typically used as a single component Job but can also be used as part of a more complex Job.<br />eXist-db is an open source database management system built using XML technology. It stores XML data according to the XML data model and features efficient, index-based XQuery processing.<br />For further information about XQuery, see http://exist.sourceforge.net/xquery.html.<br />For further information about the XQuery update extension, see<br /></a><a href="http://exist.sourceforge.net/update_ext.html">http://exist.sourceforge.net/update_ext.html.</a>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3455149"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3455151"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEXistPut_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tEXistXQuery_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

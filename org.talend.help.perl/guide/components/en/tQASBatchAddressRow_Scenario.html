@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>Scenario: Editing addresses against a DLL library and giving the verification status</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tQASBatchAddressRow_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRecordMatching_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3539825"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3539830"> </a><h2 class="pHeading2">
+Scenario: Editing addresses against a DLL library and giving the verification status
+</h2>
+<a name="wp3539839"> </a><p class="pIndented1">
+Below is a three-component java scenario created in <b class="cBold">Talend Integration Suite Studio</b>.
+</p>
+<a name="wp3539843"> </a><p class="pIndented1">
+This Job:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3539849"> </a><div class="pSmartList2"><li>generates random address information,</li></div>
+<a name="wp3539855"> </a><div class="pSmartList2"><li>uses the <b class="cBold">tQASBatchAddressRow</b> component to analyze the output columns and display the correct formatted address along with their verification status on the console,</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3539861"> </a><p class="pIndented1">
+Complete the following to design and execute the above scenario:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3539869"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tFixedFlowInput</b>, <b class="cBold">tQASBatchAddressRow</b> and <b class="cBold">tLogRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3539887"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow.png" id="wp3539884" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3539896"> </a><div class="pSmartList2"><li>Connect the component together using <b class="cBold">Main</b> links.</li></div>
+<a name="wp3541731"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFixedFlowInput</b> to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3541740"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow2.png" id="wp3541737" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3541751"> </a><div class="pSmartList2"><li>From the <b class="cBold">Schema</b> list, set the schema type to <b class="cBold">Built-In</b> and click the three-dot button next to <b class="cBold">Edit Schema</b><br />A dialog box displays.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3541780"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow3.png" id="wp3541823" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3541818"> </a><div class="pSmartList2"><li>Click the plus button to add as many lines as needed for the input schema you want to create from internal variables. <br />In this example, the schema is made of one column: <em class="cEmphasis">addr</em>.</li></div>
+<a name="wp3539954"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box.<br />The defined columns display in the <b class="cBold">Values</b> table of the component basic settings view.</li></div>
+<a name="wp3539967"> </a><div class="pSmartList2"><li>In the <b class="cBold">Mode</b> area, select the <b class="cBold">Use Inline Table</b> option.<br />The <b class="cBold">Value</b> table displays as <b class="cBold">Inline Table</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3539982"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow4.png" id="wp3539979" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3539987"> </a><div class="pSmartList2"><li>Click the plus button to add as many line as needed and then click in each of the lines to define the data for the input column, three address rows in this example.</li></div>
+<a name="wp3539997"> </a><div class="pSmartList2"><li>Double-click the <b class="cBold">tQASBatchAddressRow</b> component to display its <b class="cBold">Basic settings</b> and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3540006"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow5.png" id="wp3540003" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3540020"> </a><div class="pSmartList2"><li>Select <b class="cBold">Built-in</b> from the <b class="cBold">Schema</b> list and click <b class="cBold">Edit schema</b>, if required, to view the input and output data flow. The output schema should include the <em class="cEmphasis">addr </em>column.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3540032"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow6.png" id="wp3540029" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3540038"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3540036" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+The output schema of any of the QuickAddress components depends on the selected country in the <b class="cBold">Country</b> list since every country has different address norms.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3540051"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp3540058"> </a><div class="pSmartList2"><li>Select from the <b class="cBold">Country</b> list the country corresponding to your input addresses.</li></div>
+<a name="wp3540064"> </a><div class="pSmartList2"><li>Select from the <b class="cBold">Choose the address column </b>list the address column you want to analyze, <em class="cEmphasis">addr</em> in this example.</li></div>
+<a name="wp3540074"> </a><div class="pSmartList2"><li>Click the three-dot button next to the <b class="cBold">Specify the configuration file</b> field and browse to the DLL file installed locally.<br />The path to the DLL file is set in the field.</li></div>
+<a name="wp3540084"> </a><div class="pSmartList2"><li>Double-click the <b class="cBold">tLogRow</b> component to display its <b class="cBold">Basic settings</b> view and define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3540093"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow7.png" id="wp3540090" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3540102"> </a><div class="pSmartList2"><li>If required, click <b class="cBold">Sync columns</b> to retrieve the schema from <b class="cBold">tQASBatchAddressRow</b>.</li></div>
+<a name="wp3540110"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it and display the result on the console.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3540117"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tQASBatchAddressRow8.png" id="wp3540114" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3541398"> </a><p class="pIndented1">
+In the above result, the <b class="cBold">tQASBatchAddressRow</b> reads the input rows, corrects and formats the addresses, gives the result in the <em class="cEmphasis">ADDRESS</em> and <em class="cEmphasis">ZIP_CODE_CITY</em> columns, and gives the verification status in the <em class="cEmphasis">STATUS</em> row. For further information on the status column, check the corresponding documentation at <span style="font-style: normal"><a href="http://www.qas.com"></a></span><span style="font-style: italic">http://www.qas.com</span>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tQASBatchAddressRow_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRecordMatching_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

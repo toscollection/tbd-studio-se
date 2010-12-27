@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:10">
+    <title>Scénario&#160;: Récupérer les données mises en tampon (Java)</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBufferInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tBufferOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1734752"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1734759"> </a><h2 class="pHeading2">
+Scénario&#160;: Récupérer les données mises en tampon (Java)
+</h2>
+<a name="wp1734762"> </a><p class="pIndented1">
+Ce scénario décrit un Job qui récupère les données mises en mémoire tampon lors de l&#39;exécution d&#39;un premier sous-job et les affiche dans la console standard.
+</p>
+<a name="wp1734776"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferInput1.png" id="wp1734773" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1734788"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants&#160;: <b class="cBold">tFileInputDelimited</b> et <b class="cBold">tBufferOutput</b>.</li></div>
+<a name="wp1734797"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tFileInputDelimited</b> et dans l&#39;onglet <b class="cBold">Basic Settings</b> de la vue <b class="cBold">Component</b>, paramétrez les propriétés d&#39;accés au fichier d&#39;entrée.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1734809"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput2.png" id="wp1734806" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1734817"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, paramétrez le chemin d&#39;accès au fichier délimité contenant les données à mettre en tampon.</li></div>
+<a name="wp1734827"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Row</b> et <b class="cBold">Field separators</b>, renseignez respectivement les séparateurs de lignes et de champs.</li></div>
+<a name="wp1734835"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Header</b>, renseignez les informations sur un éventuel en-tête.</li></div>
+<a name="wp1734843"> </a><div class="pSmartList2"><li>Cliquez sur le bouton [...] à coté du champ <b class="cBold">Schema type</b> pour décrire la structure du fichier&#160;</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1734850"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput3.png" id="wp1734847" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1734862"> </a><div class="pSmartList2"><li>Décrivez le <b class="cBold">Schéma</b> des données à passer au composant <b class="cBold">tBufferOutput</b>.</li></div>
+<a name="wp1734870"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tBufferOutput</b> et paramétrez ses propriétés dans l&#39;onglet <b class="cBold">Basic Settings</b> de la vue <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1734883"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput4.png" id="wp1734880" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1734888"> </a><div class="pSmartList2"><li>Généralement le schéma du composant d&#39;entrée alimente automatiquement le schéma du composant <b class="cBold">tBufferOutput</b>. Mais vous pouvez aussi configurer une partie du schéma à mettre en tampon si vous le souhaitez.</li></div>
+<a name="wp1734901"> </a><div class="pSmartList2"><li>Déposez les composants <b class="cBold">tBufferInput</b> et <b class="cBold">tLogRow</b> en dessous du sous-job que vous venez de créer.</li></div>
+<a name="wp1734914"> </a><div class="pSmartList2"><li>Reliez le composant <b class="cBold">tFileInputDelimited</b> au <b class="cBold">tBufferInput</b> via un lien de type <b class="cBold">Trigger</b> &gt; <b class="cBold">OnSubjobOk</b> et reliez le composant <b class="cBold">tBufferInput</b> au <b class="cBold">tLogRow</b> via un lien de type <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp1734936"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tBufferInput</b> pour paramétrer ses propriétés dans la vue <b class="cBold">Component</b>.</li></div>
+<a name="wp1734949"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b>, cliquez sur le bouton [...] à coté du champ <b class="cBold">Schema</b> pour décrire la structure du fichier. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1734958"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferInput2.png" id="wp1734955" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1734970"> </a><div class="pSmartList2"><li>Utilisez la même description de fichier que celle définie pour le composant <b class="cBold">tFileInputDelimited</b> et cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp1734973"> </a><div class="pSmartList2"><li>Le schéma du composant <b class="cBold">tBufferInput</b> alimente automatiquement le schéma du composant <b class="cBold">tLogRow</b>. Sinon double-cliquez sur le <b class="cBold">tLogRow</b> pour afficher ses propriétés dans la vue <b class="cBold">Component</b> et cliquez sur le bouton <b class="cBold">Sync columns</b>.</li></div>
+<a name="wp1734981"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1735106"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferInput3.png" id="wp1735103" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1735168"> </a><p class="pIndented1">
+La console affiche les données qui ont été récupérés de la mémoire tampon. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBufferInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tBufferOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>tVectorWiseRow</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tVectorWiseRollback_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVectorWiseRow_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3580678"> </a><h2 class="pHeading1">
+tVectorWiseRow
+</h2>
+<a name="wp3580690"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tVectorWiseRow_icon32_white.png" id="wp3580683" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3580700"> </a><h2 class="pHeading2">
+Propriétés du tVectorWiseRow
+</h2>
+<a name="wp3581224"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3580708table3580704">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580708"> </a><div class="pCellBody">
+Famille de composant
+</div>
+</td>
+    <td><a name="wp3580711"> </a><div class="pCellBody">
+Databases/VectorWise
+</div>
+</td>
+    <td><a name="wp3580722"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp3580718" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580730"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3580737"> </a><div class="pCellBody">
+Le <b class="cBold">tVectorWiseRow</b> est le composant spécifique à ce type de base de données. Il exécute des requêtes SQL déclarées sur la base de données spécifiée. Le suffixe Row signifie que le composant met en place un flux dans le Job bien que ce composant ne produise pas de données en sortie.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580748"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3580755"> </a><div class="pCellBody">
+Selon la nature de la requête et de la base de données, <b class="cBold">tVectorWiseRow</b> agit sur la structure même de la base de données ou sur les données (mais sans les manipuler). Le SQLBuilder peut vous aider à rapidement et aisément écrire vos requêtes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580766"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3580773"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp3580776"> </a><div class="pCellBody">
+Peut être Built-in ou Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580780"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580783"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580790"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580794"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580797"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580804"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Sélectionnez le fichier de propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580808"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580814"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp3580818"> </a><div class="pCellBody">
+Cochez cette case et sélectionnez le composant <b class="cBold">tVectorWiseConnection</b> adéquat à partir de la liste Component pour réutiliser les paramètres d&#39;une connexion que vous avez déjà définis.<br />
+</div>
+<a name="wp3580830"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3580827" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Lorsqu&#39;un Job contient un Job parent et un Job enfant, la liste <b class="cBold">Component List</b> présente uniquement les composants de connexion du Job du même niveau. Si vous souhaitez utiliser une connexion existant dans un autre niveau, vérifiez que les composants de connexion disponibles partagent la même connexion.<br />Pour plus d&#39;informations concernant le partage d&#39;une connexion à travers différents niveaux de Jobs, consultez <b class="cBold">Use or register a shared DB connection</b> dans tous les composants de base de données que vous utilisez.
+</p>
+<a name="wp3580840"> </a><div class="pCellBody">
+Sinon, vous pouvez également désactiver le composant de connexion et utiliser les <b class="cBold">Dynamic settings</b> du composant, afin de paramétrer manuellement la connexion. Dans ce cas, vérifiez que le nom de la connexion est unique et distinct tout au long des deux niveaux de Jobs. Pour plus d&#39;informations concernant les paramètres dynamiques (<b class="cBold">Dynamic settings</b>), consultez le <b class="cBold">Guide Utilisateur</b> de votre Studio. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580856"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580863"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp3580866"> </a><div class="pCellBody">
+Adresse IP du serveur de base de données. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580870"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580877"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp3580880"> </a><div class="pCellBody">
+Numéro du port d&#39;écoute du serveur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580884"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580891"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp3580894"> </a><div class="pCellBody">
+Nom de la base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580898"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580905"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp3580912"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580916"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580926"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3580930"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le <span style="font-weight: bold">Repository</span>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580934"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580937"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580944"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Le schéma est créé et conservé ponctuellement pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580959"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580962"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580969"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Le schéma existe déjà et est stocké dans le <span style="font-weight: bold">Repository</span>. Ainsi, il peut être réutilisé. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur </b>de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3580984"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3580991"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table Name</em>
+</div>
+</td>
+    <td><a name="wp3580994"> </a><div class="pCellBody">
+Nom de la table à traiter.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3580998"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581005"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query type</em>
+</div>
+</td>
+    <td><a name="wp3581008"> </a><div class="pCellBody">
+Peut être Built-in ou Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3581012"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581015"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581022"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Saisissez manuellement votre requête ou construisez-la à l&#39;aide de SQLBuilder.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3581026"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581029"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581036"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Sélectionnez la requête appropriée dans le <span style="font-weight: bold">Repository</span>. Le champ <span style="font-weight: bold">Query</span> est renseigné automatiquement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3581374"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581377"> </a><div class="pCellBody">
+Guess Query
+</div>
+</td>
+    <td><a name="wp3581380"> </a><div class="pCellBody">
+Cliquez sur le bouton <b class="cBold">Guess Query</b> pour générer la requête correspondant au schéma de votre table dans le champ <b class="cBold">Query</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3581040"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581047"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query</em>
+</div>
+</td>
+    <td><a name="wp3581050"> </a><div class="pCellBody">
+Saisissez votre requête de base de données en faisant attention à ce que l&#39;ordre des champs corresponde à celui défini dans le schéma.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3581054"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581061"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp3581064"> </a><div class="pCellBody">
+Cette case est cochée par défaut et stoppe le Job en cas d&#39;erreur. Décochez cette case pour terminer le traitement avec les lignes sans erreurs, et ignorer les lignes en erreur. Vous pouvez récupérer les lignes en erreur, si vous le souhaitez. Pour cela, utilisez un lien <b class="cBold">Row</b> &gt; <b class="cBold">Rejects</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3581479"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3581118"> </a><div class="pCellHeading">
+<em class="cEmphasis">Propagate QUERY&#39;s recordset</em>
+</div>
+</td>
+    <td><a name="wp3581122"> </a><div class="pCellBody">
+Cochez cette case pour insérer les résultats de la requête dans une colonne du flux en cours. Sélectionnez cette colonne dans la liste <b class="cBold">use column</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3581130"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581136"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use PreparedStatement</em>
+</div>
+</td>
+    <td><a name="wp3581140"> </a><div class="pCellBody">
+Cochez cette case pour utiliser une instance PreparedStatement afin de requêter votre base de données. Dans le tableau <b class="cBold">Set PreparedStatement Parameter</b>, définissez les valeurs des paramètres représentés par des &quot;?&quot; dans l&#39;instruction SQL définie dans le champ <b class="cBold">Query</b> de l&#39;onglet <b class="cBold">Basic settings</b>.<br /><b class="cBold">Parameter Index</b>&#160;: Saisissez la position du paramètre dans l&#39;instruction SQL.<br /><b class="cBold">Parameter Type</b>&#160;: Saisissez le type du paramètre.<br /><b class="cBold">Parameter Value</b>&#160;: Saisissez la valeur du paramètre.<br />
+</div>
+<a name="wp3581172"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3581169" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Cette option est très utile si vous devez effectuer de nombreuses fois la même requête. Elle permet un gain de performance.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3581530"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581626"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp3581629"> </a><div class="pCellBody">
+Sélectionnez l&#39;encodage à partir de la liste ou sélectionnez <b class="cBold">Custom</b> et définissez-le manuellement. Ce champ est obligatoire pour la manipulation des données des bases de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3581177"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581184"> </a><div class="pCellHeading">
+<em class="cEmphasis">Commit every</em>
+</div>
+</td>
+    <td><a name="wp3581187"> </a><div class="pCellBody">
+Nombre de lignes à inclure dans le lot avant de commencer l&#39;écriture dans la base. Cette option garantit la qualité de la transaction (cependant pas de rollback) et surtout une meilleure performance d&#39;exécution.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3581191"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3581202"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3581205"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3581213"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3581216"> </a><div class="pCellBody">
+Ce composant offre la flexibilité des requêtes sur les bases de données et couvre toutes les possibilités de requêtes SQL.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tVectorWiseRollback_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tVectorWiseRow_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

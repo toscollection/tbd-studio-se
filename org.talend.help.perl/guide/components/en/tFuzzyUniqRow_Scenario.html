@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>Scenario: Comparing four columns using different matching methods and collecting encountered duplicates</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFuzzyUniqRow_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tGenKey_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3491903"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3491910"> </a><h2 class="pHeading2">
+Scenario: Comparing four columns using different matching methods and collecting encountered duplicates
+</h2>
+<a name="wp3491917"> </a><p class="pIndented1">
+This java scenario describes a four-component job aiming at collecting in two separate files all unique entries and all duplicate entries from few defined processed columns based on the Levenshtein and Double Metaphone matching types.
+</p>
+<a name="wp3491923"> </a><p class="pIndented1">
+The input file in this example looks like the following:
+</p>
+<a name="wp3491932"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow4.png" id="wp3491928" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3491951"> </a><div class="pSmartList2"><li>Drop <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tFuzzyUniqRow</b>, and two <b class="cBold">tFileOutputExcel</b> components from the <b class="cBold">Palette</b> onto the design workspace.</li></div>
+<a name="wp3491972"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tFileInputDelimited</b> to <b class="cBold">tFuzzyUniqRow</b> using the <b class="cBold">Main</b> link, <b class="cBold">tFuzzyUniqRow</b> to the <b class="cBold">tFileOutputExcel</b> components using the <b class="cBold">Uniques</b> link with one and the <b class="cBold">Duplicates</b> link with the other. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp3491999"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow.png" id="wp3491995" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3492014"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputDelimited</b> to open its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3492025"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow1.png" id="wp3492021" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3492037"> </a><div class="pSmartList2"><li>Set property type to <b class="cBold">Built-In</b>.</li></div>
+<a name="wp3492045"> </a><div class="pSmartList2"><li>Click the three-dot button next to the <b class="cBold">File Name</b> field to browse to the file holding the input data.</li></div>
+<a name="wp3492050"> </a><div class="pSmartList2"><li>Define in the corresponding fields the row separator allowing to identify the end of a row and the field separator used to delimit fields in a row.</li></div>
+<a name="wp3492067"> </a><div class="pSmartList2"><li>If needed, set <b class="cBold">Header</b>, <b class="cBold">Footer</b>, and <b class="cBold">Limit</b>.<br />For this scenario, set <b class="cBold">Header</b> to 1. Footer and limit for the number of processed rows are not set. </li></div>
+<a name="wp3492080"> </a><div class="pSmartList2"><li>Click <b class="cBold">Edit schema</b> to open a dialog box where you can describe the data structure of the source delimited file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3492091"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow2.png" id="wp3492087" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3492098"> </a><p class="pIndented1">
+In this scenario, the source schema is made of the following columns: <em class="cEmphasis">ID, Status, FirstName, Email, City, Initial, ZipCode,</em> and <em class="cEmphasis">Header</em>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3492119"> </a><div class="pSmartList2"><li>Double click <b class="cBold">tFuzzyUniqRow</b> to display its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+<a name="wp3492128"> </a><div class="pSmartList2"><li>In the <b class="cBold">Key Attribute</b> column, select the check boxes next to the columns you want to check using the defined matching method, <em class="cEmphasis">Firstname</em>, <em class="cEmphasis">Email</em>, <em class="cEmphasis">City</em>, and <em class="cEmphasis">ZipCode</em> in this example.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3492155"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow3.png" id="wp3492151" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3492166"> </a><div class="pSmartList2"><li>In the <b class="cBold">Matching Type</b> column, set the matching methods you want to use on each of the selected columns.<br />In this example, <em class="cEmphasis">Leveshtein</em> is to be used as the matching method for the <em class="cEmphasis">FirstName, Email, </em>and <em class="cEmphasis">ZipCode</em> columns, <em class="cEmphasis">Double Metaphone</em> is to be used as the matching method for the <em class="cEmphasis">City</em> column.</li></div>
+<a name="wp3492195"> </a><div class="pSmartList2"><li>Then set the minimum and maximum distances for the <em class="cEmphasis">Levenshtein</em> method. In this method, the distance is the number of character changes (insertion, deletion or substitution) that needs to be carried out in order for the entry to fully match the reference. In this example, we want the min. distance to be 0 and the max. distance to be 2. This will output all entries in the <em class="cEmphasis">FirstName, Email, </em>and <em class="cEmphasis">ZipCode</em> columns that exactly match or that have maximum two character changes. There is no minimum nor maximum distance to set for <em class="cEmphasis">Double Metaphone</em> because this matching method is based on phonetic discrepancies in the input data.</li></div>
+<a name="wp3492220"> </a><div class="pSmartList2"><li>Double click the first <b class="cBold">tFileOutputExcel</b> to display its <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3492231"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow5.png" id="wp3492227" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3492238"> </a><div class="pSmartList2"><li>Set the destination file name as well as the <span style="font-weight: bold">Sheet name</span> and select the <span style="font-weight: bold">Include header </span>check box.</li></div>
+<a name="wp3492248"> </a><div class="pSmartList2"><li> Do the same for the second <b class="cBold">tFileOutputExcel</b>.</li></div>
+<a name="wp3492258"> </a><div class="pSmartList2"><li> Save your Job and click <b class="cBold">F6</b> to execute it.</li></div>
+<a name="wp3492270"> </a><p class="pBodyRelative">
+<b class="cBold">tFuzzyUniqRow</b> uses the <em class="cEmphasis">Levenshtein</em> method to compare each of the three defined columns separately, it uses the <em class="cEmphasis">Double Metaphone</em> method to compare data in the <em class="cEmphasis">City</em> column, and finally passes the unique and duplicate rows to the defined output files. In our example, the first two rows match, hence the second row will go in the &quot;duplicates&quot; output. 
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3492288"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow6.png" id="wp3492284" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3492293"> </a><p class="pIndented1">
+The third row is unique and will go in the &quot;uniques&quot; output.
+</p>
+<a name="wp3492304"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyUniqRow7.png" id="wp3492298" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFuzzyUniqRow_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tGenKey_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

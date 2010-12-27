@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>Scénario&#160;: Récupérer une sélection d&#39;e-mails à partir d&#39;un compte de messagerie </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPOP_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRSSInput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2553395"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2704863"> </a><h2 class="pHeading2">
+Scénario&#160;: Récupérer une sélection d&#39;e-mails à partir d&#39;un compte de messagerie 
+</h2>
+<a name="wp2704868"> </a><p class="pIndented1">
+Ce scénario Java à un seul composant a pour but de récupérer un nombre prédéfini d&#39;e-mails à partir d&#39;un compte de messagerie.  
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2704876"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, cliquez-déposez un composant <b class="cBold">tPOP</b> dans l&#39;éditeur graphique, </li></div>
+<a name="wp2751486"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tPOP</b> pour afficher la vue <b class="cBold">Basic settings</b> et paramétrer le composant.</li></div>
+<a name="wp2555748"> </a><div class="pSmartList2"><li>Renseignez les informations de connexion au serveur de messagerie&#160;: le nom de l&#39;hôte ou son adresse IP entre guillemets dans le champ <b class="cBold">Host</b> et le numéro de port dans le champ <b class="cBold">Port</b>. </li></div>
+<a name="wp2704936"> </a><div class="pSmartList2"><li>Saisissez ensuite les informations d&#39;authentification de votre compte de messagerie. Dans le champ <b class="cBold">Username</b>, saisissez entre guillemets votre identifiant et dans le champ <b class="cBold">Password</b>, saisissez votre mot de passe. Dans cet exemple, le serveur de messagerie s&#39;appelle <em class="cEmphasis">Free</em>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2554152"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPOP1.png" id="wp2554148" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2555678"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Output directory</b>, sélectionnez manuellement le chemin d&#39;accès ou cliquez sur <b class="cBold">[...]</b> pour sélectionner le dossier de destination des e-mails récupérés sur le serveur.  </li></div>
+<a name="wp2554589"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Filename pattern</b>, définissez la syntaxe de nommage des fichiers de destination ou appuyez sur <b class="cBold">Ctrl+Espace</b> pour afficher la liste des modèles prédéfinis. Dans cet exemple, la syntaxe est la suivante&#160;:<br /><code class="cCode">TalendDate.getDate(&quot;yyyyMMdd-hhmmss&quot;) + &quot;_&quot; + (counter_tPOP_1 + 1) + &quot;.txt&quot;</code><br />Les fichiers de destination, enregistrés au format texte, sont définis par leur date, heure et ordre de collecte. </li></div>
+<a name="wp2705062"> </a><div class="pSmartList2"><li>Décochez la case <b class="cBold">Retrieve all emails?</b> pour ne récupérer qu&#39;un nombre défini d&#39;e-mails. Dans cet exemple, 10 messages sont récupérés. </li></div>
+<a name="wp2705079"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Delete emails from server</b> pour supprimer les e-mails du serveur une fois qu&#39;ils ont été récupérés en local. </li></div>
+<a name="wp2554853"> </a><div class="pSmartList2"><li>Sélectionnez un type de protocole à partir de la liste déroulante <b class="cBold">Choose the protocol</b>. Le choix du protocole dépend de celui utilisé par votre fournisseur de messagerie. Certains fournisseurs comme <em class="cEmphasis">Gmail</em> utilisent les deux protocoles. Dans cet exemple, le protocole sélectionné est <em class="cEmphasis">pop3</em>.  </li></div>
+<a name="wp2751819"> </a><div class="pSmartList2"><li>Enregistrez le Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2751826"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tPOP2.png" id="wp2751823" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2751829"> </a><p class="pIndented1">
+Le composant <b class="cBold">tPOP</b> a ainsi récupéré les 10 derniers messages du compte de messagerie spécifié.
+</p>
+<a name="wp2751967"> </a><p class="pIndented1">
+Pour chaque e-mail récupéré, un fichier .txt a été créé dans le dossier <em class="cEmphasis">tPOP</em>. Chaque fichier contient les métadonnées d&#39;envoi du message (expéditeur, destinataire, objet du message) ainsi que les données propres au message. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPOP_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tRSSInput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

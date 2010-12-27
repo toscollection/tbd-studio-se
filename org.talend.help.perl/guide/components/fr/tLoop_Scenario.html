@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:17">
+    <title>Scénario&#160;: Exécuter un Job à partir d&#39;une boucle</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLoop_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParallelize_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2932153"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2932161"> </a><h2 class="pHeading2">
+Scénario&#160;: Exécuter un Job à partir d&#39;une boucle
+</h2>
+<a name="wp2932164"> </a><p class="pIndented1">
+Ce scénario décrit un Job constitué d&#39;un Job parent et d&#39;un Job enfant. Le Job parent exécute une boucle qui permet d&#39;exécuter un Job enfant n nombre de fois, avec une pause entre chaque exécution.
+</p>
+<a name="wp2932172"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFor1.png" id="wp2932169" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2932186"> </a><div class="pSmartList2"><li>Dans le Job parent, cliquez et déposez les composants <b class="cBold">tLoop</b>, <b class="cBold">tRunJob</b> et <b class="cBold">tSleep</b> dans l&#39;espace de modélisation.</li></div>
+<a name="wp2932200"> </a><div class="pSmartList2"><li>Connectez le composant <b class="cBold">tLoop</b> au <b class="cBold">tRunJob</b> à l&#39;aide d&#39;une connexion de type <b class="cBold">Iterate</b>.</li></div>
+<a name="wp2932213"> </a><div class="pSmartList2"><li>Puis connectez le <b class="cBold">tRunJob</b> au <b class="cBold">tSleep</b> à l&#39;aide d&#39;une connexion de type <b class="cBold">Row</b>.</li></div>
+<a name="wp2932222"> </a><div class="pSmartList2"><li>Dans le Job enfant, cliquez et déposez les composants suivants&#160;: <b class="cBold">tPOP</b>, <b class="cBold">tFileInputMail</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2932235"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tLoop</b>, saisissez le numéro de l&#39;instance sur lequel commencer (<em class="cEmphasis">1</em>), le numéro de l&#39;instance sur lequel finir (<em class="cEmphasis">5</em>) et l&#39;écart à utiliser (<em class="cEmphasis">1</em>).</li></div>
+<a name="wp2932254"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tRunJob</b>, sélectionnez le Job enfant dans la liste des Jobs proposés, pour cet exemple&#160;: <em class="cEmphasis">popinputmail</em>.</li></div>
+<a name="wp2932261"> </a><div class="pSmartList2"><li>Sélectionnez le contexte, si nécessaire. Pour cet exemple, le contexte est celui par défaut (<em class="cEmphasis">default</em>) ne contenant aucune variable.</li></div>
+<a name="wp2932274"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tSleep</b>, saisissez la durée de la pause en secondes dans le champ <b class="cBold">Pause</b>. Pour cet exemple, la pause est de <em class="cEmphasis">3 seconds</em>.</li></div>
+<a name="wp2932287"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du Job enfant, définissez les paramètres de connexion au serveur pop.</li></div>
+<a name="wp2932300"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tFileInputMail</b>, sélectionnez une variable globale dans le champ <b class="cBold">File Name</b>, pour collecter le fichier courant dans le répertoire défini dans le composant <b class="cBold">tPOP</b>. Appuyez sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste des variables. Pour cet exemple, la variable à utiliser est&#160;: <code class="cCode">$_globals{tPOP_1}{CURRENT_FILEPATH}</code> (pour Perl)<br /><code class="cCode">((String)globalMap.get(&quot;tPOP_1_CURRENT_FILEPATH&quot;))</code> (pour Java)</li></div>
+<a name="wp2932322"> </a><div class="pSmartList2"><li>Définissez le <b class="cBold">Schema</b> pour qu&#39;il inclue l&#39;élément du mail à traiter. Les champs du schéma sont les suivants&#160;: <em class="cEmphasis">author</em>, <em class="cEmphasis">topic</em>, <em class="cEmphasis">delivery date</em> et <em class="cEmphasis">number of lines</em>.</li></div>
+<a name="wp2932344"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Mail part</b> de la table <b class="cBold">Mail Parts</b>, saisissez le champ de l&#39;e-mail correspondant à chaque colonne définie dans le schéma. Par exemple&#160;: <em class="cEmphasis">author</em> provient du champ <em class="cEmphasis">From</em> du fichier e-mail.</li></div>
+<a name="wp2932361"> </a><div class="pSmartList2"><li>Puis connectez les composants <b class="cBold">tFileInputMail</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2932374"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job, et vérifiez les résultats de l&#39;exécution dans la vue <b class="cBold">Run</b>.</li></div>
+</ul></div>
+</ul></div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLoop_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParallelize_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

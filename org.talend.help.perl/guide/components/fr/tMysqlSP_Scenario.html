@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Trouver le libellé State à l&#39;aide d&#39;une procédure stockée</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlSP_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlTableList_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2318222"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2318230"> </a><h2 class="pHeading2">
+Scénario&#160;: Trouver le libellé State à l&#39;aide d&#39;une procédure stockée
+</h2>
+<a name="wp2318233"> </a><p class="pIndented1">
+Le Job suivant a pour but de trouver les libellés State en fonction des ID impairs de la colonne State d&#39;une table MySQL à deux colonnes à l&#39;aide d&#39;une procédure stockée.
+</p>
+<a name="wp2318241"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP1.png" id="wp2318238" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318246"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants dans l&#39;espace de modélisation&#160;: <b class="cBold">tRowGenerator</b>, <b class="cBold">tMysqlSP</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2318263"> </a><div class="pSmartList2"><li>Connectez les composants à l&#39;aide d&#39;une connexion de type <b class="cBold">Row Main</b>.</li></div>
+<a name="wp2318269"> </a><div class="pSmartList2"><li>Le <b class="cBold">tRowGenerator</b> est utilisé pour générer des ID impairs. Double-cliquez sur le composant pour lancer l&#39;éditeur.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318278"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP2.png" id="wp2318275" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318284"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[+]</b> pour ajouter une colonne au schéma à générer.</li></div>
+<a name="wp2318293"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Key</b> pour définir l&#39;entrée comme étant une clé primaire et définissez le <b class="cBold">Type</b> en <b class="cBold">Int</b> (entier).</li></div>
+<a name="wp2318304"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Length</b>, la longueur est de 2&#160;chiffres au maximum.</li></div>
+<a name="wp2318310"> </a><div class="pSmartList2"><li>Utilisez la fonction préétablie appelée <b class="cBold">sequence</b> mais modifiez les paramètres dans la partie inférieure de la fenêtre.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318319"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP2.png" id="wp2318316" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318336"> </a><div class="pSmartList2"><li>Modifiez la valeur (<b class="cBold">Value</b>) de <b class="cBold">step</b>&#160;: de <em class="cEmphasis">1 </em>à <em class="cEmphasis">2 </em>pour cet exemple. Mais la valeur de départ (start value) reste <em class="cEmphasis">1</em>.</li></div>
+<a name="wp2318349"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Number of generated rows</b>, définissez le nombre de lignes à générer à <em class="cEmphasis">25</em>, afin que tous les ID impairs de State (il y a 50&#160;Etats) soient générés.</li></div>
+<a name="wp2318357"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour valider la configuration.</li></div>
+<a name="wp2318365"> </a><div class="pSmartList2"><li>Puis sélectionnez le composant <b class="cBold">tMysqlSP</b> et paramétrez ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318372"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP3.png" id="wp2318369" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318383"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Property type</b>, sélectionnez l&#39;option <b class="cBold">Repository</b> puis sélectionnez l&#39;entrée correspondante dans la liste. Les informations de connexion sont remplies automatiquement.</li></div>
+<a name="wp2318388"> </a><div class="pSmartList2"><li>Sinon, paramétrez les informations de connexion manuellement.</li></div>
+<a name="wp2318395"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Sync Column</b> pour récupérer le schéma généré du composant précédent.</li></div>
+<a name="wp2318401"> </a><div class="pSmartList2"><li>Puis cliquez sur <b class="cBold">Edit Schema</b> et ajoutez une colonne supplémentaire contenant les libellés des Etats (State) à obtenir en sortie, en plus de l&#39;ID.</li></div>
+<a name="wp2318406"> </a><div class="pSmartList2"><li>Sélectionnez le type d&#39;encodage dans la liste.</li></div>
+<a name="wp2318412"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">SP Name</b>, saisissez le nom de la procédure comme il a été défini dans la base de données (ici, <em class="cEmphasis">getstate</em>). La procédure à exécuter correspond à&#160;:<br /><code class="cCode">DROP PROCEDURE IF EXISTS `talend`.`getstate` $$<br />CREATE DEFINER=`root`@`localhost` PROCEDURE `getstate`(IN pid INT, OUT pstate VARCHAR(50))<br />BEGIN<br /> SELECT LabelState INTO pstate FROM us_states WHERE idState = pid;<br />END $$</code></li></div>
+<a name="wp2318426"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Parameters</b>, cliquez sur le bouton (+) pour ajouter une ligne à la table.</li></div>
+<a name="wp2318441"> </a><div class="pSmartList2"><li>Définissez le champ <b class="cBold">Column</b> en <em class="cEmphasis">ID</em>, et le champ <b class="cBold">Type</b> en <em class="cEmphasis">IN</em>, ainsi il sera considéré comme paramètre d&#39;entrée dans la procédure.</li></div>
+<a name="wp2318454"> </a><div class="pSmartList2"><li>Ajoutez une deuxième ligne et définissez le champ <b class="cBold">Column</b> en <em class="cEmphasis">State</em> et le champ <b class="cBold">Type</b> en <em class="cEmphasis">Out</em>, ainsi il sera considéré comme le paramètre de sortie a retournée.</li></div>
+<a name="wp2318466"> </a><div class="pSmartList2"><li>Et enfin, paramétrez les propriétés du composant <b class="cBold">tLogRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318473"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP4.png" id="wp2318470" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2318480"> </a><div class="pSmartList2"><li>Synchronisez le schéma avec celui du composant précédent en cliquant sur le bouton <b class="cBold">Sync columns</b>.</li></div>
+<a name="wp2318489"> </a><div class="pSmartList2"><li>Et cochez la case <b class="cBold">Print values in cells of a table</b> pour un meilleur confort de lecture.</li></div>
+<a name="wp2318494"> </a><div class="pSmartList2"><li>Puis enregistrez votre Job et exécutez-le.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2318501"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMysqlSP5.png" id="wp2318498" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2318507"> </a><p class="pIndented1">
+La sortie affiche les différents Etats (State) avec leur ID impair comme défini dans la procédure.
+</p>
+<a name="wp2758081"> </a><p class="pIndented1">
+Consultez également le composant <a href="tParseRecordSet_Prop.html"><em class="cEmphasis">tParseRecordSet</em></a> si vous voulez analyser un ensemble d&#39;enregistrements d&#39;une table de données ou d&#39;une requête SQL.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlSP_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlTableList_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

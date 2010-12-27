@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tDB2Connection</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDB2Commit_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDB2Connection_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2876514"> </a><h2 class="pHeading1">
+tDB2Connection
+</h2>
+<a name="wp2876530"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tDB2Connection_icon32_white.png" id="wp2875795" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2875807"> </a><h2 class="pHeading2">
+tDB2Connection properties
+</h2>
+<a name="wp2875816"> </a><p class="pIndented1">
+This component is closely related to <b class="cBold">tDB2Commit</b> and <b class="cBold">tDB2Rollback</b>. It usually does not make much sense to use one of these without using a <b class="cBold">tDB2Connection</b> to open a connection for the current transaction.
+</p>
+<a name="wp2875965"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2875828table2875823">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2875828"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2875830"> </a><div class="pCellBody">
+Databases/DB2
+</div>
+</td>
+    <td><a name="wp2875839"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-05-042-0205.jpg" height="59" width="112" id="wp2875835" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2875844"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2875849"> </a><div class="pCellBody">
+<b class="cBold">tDB2Connection</b> opens a connection to the database for a current transaction.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2875856"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2875858"> </a><div class="pCellBody">
+This component allows you to commit all of the Job data to an output database in just a single transaction, once the data has been validated.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2875865"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2875870"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2875878"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2875880"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2875882"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2875887"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2875889"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2875891"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3598568"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2877484"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2877491"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host name</em>
+</div>
+</td>
+    <td><a name="wp2877494"> </a><div class="pCellBody">
+Database server IP address.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2877470"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2877477"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2877480"> </a><div class="pCellBody">
+Listening port number of DB server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2877456"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2877463"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2877466"> </a><div class="pCellBody">
+Name of the database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2877442"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2877449"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table Schema</em>
+</div>
+</td>
+    <td><a name="wp2877452"> </a><div class="pCellBody">
+Name of the schema.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2877424"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2877431"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2877438"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2875907"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2875911"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use or register a shared DB Connection</em>
+</div>
+</td>
+    <td><a name="wp2875914"> </a><div class="pCellBody">
+Select this check box to share your connection or fetch a connection shared by a parent or child Job. This allows  you to share one single DB connection among several DB connection components from different Job levels that can be either parent or child. <br /><b class="cBold">Shared DB Connection Name:</b> set or type in the shared connection name.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2875922"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2875927"> </a><div class="pCellHeading">
+<em class="cEmphasis">Auto commit</em>
+</div>
+</td>
+    <td><a name="wp2875929"> </a><div class="pCellBody">
+Select this check box to automatically commit a transaction when it is completed. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2875931"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2875936"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2875938"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a Job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2875943"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2875945"> </a><div class="pCellBody">
+This component is to be used along with DB2 components, especially with <b class="cBold">tDB2Commit</b> and <b class="cBold">tDB2Rollback</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2875958"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2875960"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tDB2Commit_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tDB2Connection_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

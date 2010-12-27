@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:23">
+    <title>Scénario&#160;: Faire une correspondance floue entre deux colonnes et écrire les données rejetées</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFuzzyJoin_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFuzzyMatch_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3478172"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3478179"> </a><h2 class="pHeading2">
+Scénario&#160;: Faire une correspondance floue entre deux colonnes et écrire les données rejetées
+</h2>
+<a name="wp3478186"> </a><p class="pIndented1">
+Ce scénario Java décrit un Job à cinq composants dont le but est&#160;: en premier lieu, de vérifier la distance d&#39;édition entre la colonne <em class="cEmphasis">IdClient</em> d&#39;un fichier d&#39;entrée, par rapport aux données du fichier de référence d&#39;entrée, et, ensuite, de vérifier tous les e-mails par prononciation dans la colonne <em class="cEmphasis">Email</em>, par rapport aux données du fichier d&#39;entrée de référence. Les sorties de ces deux types de correspondances sont écrits dans des fichiers distincts.
+</p>
+<a name="wp3478199"> </a><p class="pIndented1">
+Dans ce scénario, vous avez déjà stocké les schémas d&#39;entrée et les fichiers de référence dans le <b class="cBold">Repository</b>. Pour plus d&#39;informations à propos du stockage de métadonnées dans l&#39;arborescence du <b class="cBold">Repository</b>, consultez le <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3478230"> </a><div class="pSmartList2"><li>Dans l&#39;arborescence du <b class="cBold">Repository</b>, développez le noeud <b class="cBold">Metadata</b> ainsi que le noeud des fichiers (File) où vous avez stocké les schémas d&#39;entrée, et glissez la métadonnée correspondante dans l&#39;espace de modélisation graphique.<br />La boîte de dialogue <b class="cBold">[Components]</b> s&#39;ouvre.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3478245"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyJoin.png" id="wp3478241" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3478260"> </a><div class="pSmartList2"><li>Sélectionnez <b class="cBold">tFileInputDelimited </b>dans la liste et cliquez sur <b class="cBold">OK</b> afin de fermer la boîte de dialogue.<br />Le composant <b class="cBold">tFileInputDelimited</b> apparaît dans l&#39;espace de modélisation. Le fichier d&#39;entrée utilisé dans ce scénario est appelé <em class="cEmphasis">ClientSample</em>. Il contient douze colonnes, y compris les deux colonnes <em class="cEmphasis">IdCient</em> et <em class="cEmphasis">Email</em> sur lesquelles vous voulez appliquer la correspondance floue.</li></div>
+<a name="wp3478281"> </a><div class="pSmartList2"><li>Répétez l&#39;opération pour le deuxième fichier d&#39;entrée que vous souhaitez utiliser comme référence, <em class="cEmphasis">ClientSample_Update </em>dans ce scénario.</li></div>
+<a name="wp3478294"> </a><div class="pSmartList2"><li>Glissez les composants suivants de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique&#160;: <b class="cBold">tFuzzyJoin</b>, <b class="cBold">tFileOutputExcel</b>, et <b class="cBold">tFileOutputDelimited</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3478317"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyJoin1.png" id="wp3478313" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3478331"> </a><div class="pSmartList2"><li>Connectez les fichiers principal et de référence au <b class="cBold">tFuzzyJoin</b> à l&#39;aide de liens <b class="cBold">Main Row</b>. Le lien principal entre le fichier de référence et le <b class="cBold">tFuzzyJoin</b>  s&#39;affiche comme un lien <em class="cEmphasis">Lookup</em> (de référence) dans l&#39;espace de modélisation.</li></div>
+<a name="wp3478357"> </a><div class="pSmartList2"><li>Connectez le <b class="cBold">tFuzzyJoin</b> au <b class="cBold">tFileOutputExcel</b> à l&#39;aide d&#39;un lien <b class="cBold">Main</b>, et le <b class="cBold">tFuzzyJoin</b> au <b class="cBold">tFileOutputDelimited</b> avec un lien <b class="cBold">Inner join reject</b>.</li></div>
+<a name="wp3478374"> </a><div class="pSmartList2"><li>Au besoin, double-cliquez sur les fichiers d&#39;entrée principal et de référence afin d&#39;afficher leur vue <b class="cBold">Basic settings</b>. Toutes les propriétés sont automatiquement renseignées. Si vous ne définissez pas vos fichiers d&#39;entrée dans le <b class="cBold">Repository</b>, remplissez les champs manuellement, après avoir sélectionné <b class="cBold">Built-in</b> dans le champ <b class="cBold">Property Type</b>.</li></div>
+<a name="wp3478403"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tFuzzyJoin</b> afin d&#39;afficher sa vue <b class="cBold">Basic settings</b> et définir des propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3478414"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyJoin3.png" id="wp3478410" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3478425"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Edit schema</b> pour ouvrir une boîte de dialogue qui affiche la structure des données des fichiers d&#39;entrée, et définir les donnéese que vous voulez passer aux composants de sortie, deux colonnes dans ce scénario, <em class="cEmphasis">IdClient</em> et <em class="cEmphasis">Email</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3478444"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyJoin4.png" id="wp3478440" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3478456"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue.</li></div>
+<a name="wp3478472"> </a><div class="pSmartList2"><li>Sous le tableau <b class="cBold">Key definition</b> de la vue <b class="cBold">Basic settings</b> du <b class="cBold">tFuzzyJoin</b>, cliquez sur le bouton <b class="cBold">[+]</b> afin d&#39;ajouter deux colonnes à la liste, puis sélectionnez les colonnes d&#39;entrée et de sortie sur lesquelles vous voulez appliquer la correspondance floue, depuis les listes <b class="cBold">Input key attribute</b> et <b class="cBold">Lookup key attribute</b>, respectivement <em class="cEmphasis">IdClient</em> and <em class="cEmphasis">Email</em> dans cet exemple.</li></div>
+<a name="wp3478501"> </a><div class="pSmartList2"><li>Cliquez sur la première cellule de la colonne <b class="cBold">Matching type</b>, et sélectionnez dans la liste la méthode à utiliser afin de vérifier les données entrant, par rapport aux données de référence. Dans ce scénario, <em class="cEmphasis">Levenshtein</em> est le type de correspondance devant être utilisé.</li></div>
+<a name="wp3478510"> </a><div class="pSmartList2"><li>Paramétrez ensuite les distances minimale et maximale. Dans cette méthode, la distance est le nombre de modifications devant être apporté aux caractères (insertion, suppression ou substitution) afin de correspondre entièrement aux références. Dans cet exemple, l&#39;objectif est de faire en sorte que la distance minimale soit égale à 0 et que la distance maximale soit égale à 2. Cela conduira à l&#39;écriture des toutes les entrées dans <em class="cEmphasis">IdClient</em> qui correspondent exactement ou qui ont, au maximum, deux caractères modifiés.</li></div>
+<a name="wp3478524"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3478521" border="0" hspace="0" vspace="0"/><br />
+Vous pouvez créer et stocker des variables de contexte pour les distances minimale et maximale, et faire en sorte que votre Job fasse une boucle sur ces valeurs, en commençant  par la valeur maximale inférieure de correspondance et terminant par la valeur maximale supérieure afin de correspondre au plus grand nombre de lignes possible. Vous pouvez appuyer sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste des variables et sélectionner les nouvelles variables de contexte. Pour plus d&#39;informations à propos des variables de contexte, consultez <em class="cEmphasis">Définition des Contextes et des Variables, page 126</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>
+</p>
+<a name="wp3478547"> </a><div class="pSmartList2"><li>Paramétrez le type de correspondance pour la seconde colonne qui sera vérifiée, <em class="cEmphasis">Metaphone</em> dans cet exemple. Il n&#39;y a ni distance minimale, ni distance maximale à paramétrer, car cette méthode de correspondance est basée sur les divergences phonétiques entre les données d&#39;entrée et de référence.</li></div>
+<a name="wp3478560"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Inner join (with reject output)</b> pour définir l&#39;une des sorties comme table des rejets de la jointure interne.</li></div>
+<a name="wp3478573"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tFileOutputExcel</b> afin d&#39;afficher sa vue <b class="cBold">Basic settings</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3478584"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyJoin5.png" id="wp3478580" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3478591"> </a><div class="pSmartList2"><li>Paramétrez le répertoire de destination ainsi que le nom de la feuille (<span style="font-weight: bold">Sheet name</span>), et cochez la case <b class="cBold">Include header</b>.</li></div>
+<a name="wp3478608"> </a><div class="pSmartList2"><li> Double-cliquez sur le <b class="cBold">tFileOutputDelimited</b> afin d&#39;afficher sa vue <b class="cBold">Basic settings </b>et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3478619"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFuzzyJoin6.png" id="wp3478615" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3478626"> </a><div class="pSmartList2"><li>Paramétrez le répertoire de destination ainsi que les séparateurs de lignes et de champs, puis cochez la case <span style="font-weight: bold">Include header</span>.</li></div>
+<a name="wp3478637"> </a><div class="pSmartList2"><li>Sauvegardez votre Job, et cliquez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3478645"> </a><p class="pIndented1">
+La sortie de la correspondance Levenshtein de la colonne <em class="cEmphasis">IdClient</em> est écrite dans le fichier Excel défini, et la sortie de la correspondance du métaphone de la colonne <em class="cEmphasis">Email</em> est écrite dans le fichier delimité défini.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFuzzyJoin_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFuzzyMatch_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

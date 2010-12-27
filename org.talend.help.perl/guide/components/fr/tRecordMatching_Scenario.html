@@ -1,0 +1,200 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:23">
+    <title>Scénario&#160;: Correspondance d&#39;entrées utilisant les algorithmes Q-grams et Levenshtein</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRecordMatching_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tReplaceList_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3488532"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3488539"> </a><h2 class="pHeading2">
+Scénario&#160;: Correspondance d&#39;entrées utilisant les algorithmes Q-grams et Levenshtein
+</h2>
+<a name="wp3488547"> </a><p class="pIndented1">
+Ce scénario Java décrit un Job à six composants ayant pour but de&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488558"> </a><div class="pSmartList2"><li> faire correspondre les entrées de la colonne <em class="cEmphasis">name</em> à celles du fichier d&#39;entrée de référence en divisant les chaînes de caractères en blocs de longueur q, où q est de trois, afin de créer un certain nombre de q-grammes. Le résultat de correspondance est donné comme le nombre de correspondances entre les q-grammes d&#39;entrée et de référence, divisé par le nombre de q-grammes possibles,</li></div>
+<a name="wp3488567"> </a><div class="pSmartList2"><li>faire correspondre la distance d&#39;édition entre les entrées de la colonne <em class="cEmphasis">email</em> du fichier d&#39;entrée et celles du fichier d&#39;entrée de référence.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3488573"> </a><p class="pIndented1">
+Les sorties de ces deux types de correspondances sont écrites dans trois fichiers de sortie&#160;: le premier pour les valeurs de correspondance, le deuxième pour les valeurs de correspondance possible, et le troisième pour les valeurs n&#39;ayant aucune correspondance dans le fichier de référence. 
+</p>
+<a name="wp3488578"> </a><p class="pIndented1">
+Dans ce scénario, vous avez déjà stocké les schémas principaux et de référence dans le <b class="cBold">Repository</b>. Pour plus d&#39;informations concernant le stockage des métadonnées de schémas dans le <b class="cBold">Repository</b>, consultez <em class="cEmphasis">Configurer une connexion DB</em> du <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</p>
+<a name="wp3488614"> </a><p class="pIndented1">
+La table d&#39;entrée principale contient sept colonnes&#160;: <em class="cEmphasis">code</em>, <em class="cEmphasis">name</em>, <em class="cEmphasis">address</em>, <em class="cEmphasis">zipcode</em>, <em class="cEmphasis">city</em>, <em class="cEmphasis">email</em> et <em class="cEmphasis">col7</em>. Vous allez effectuer une correspondance floue sur deux colonnes&#160;: <em class="cEmphasis">name</em> et <em class="cEmphasis">email</em>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488650"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Repository</b>, développez les noeuds <b class="cBold">Metadata</b> - <b class="cBold">DB Connections</b> où vous avez stocké les schémas principaux d&#39;entrée, et glissez le fichier correspondant dans l&#39;espace de modélisation graphique.<br />La boîte de dialogue <b class="cBold">[Components]</b> s&#39;affiche, avec le composant correspondant sélectionné par défaut.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3488665"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRecordMatching.png" id="wp3488661" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488680"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> afin de déposer un composant <b class="cBold">tMysqlInput</b> dans l&#39;espace de modélisation graphique. La table d&#39;entrée utilisée dans ce scénario est appelée <em class="cEmphasis">person</em>. Elle contient plusieurs colonnes, y compris les deux colonnes <em class="cEmphasis">name</em> et <em class="cEmphasis">email</em> sur lesquelles vous voulez effectuer la correspondance floue.</li></div>
+<a name="wp3488697"> </a><div class="pSmartList2"><li>Répétez l&#39;opération pour la seconde table d&#39;entrée que vous souhaitez utiliser comme référence, <em class="cEmphasis">customer </em>dans ce scénario.</li></div>
+<a name="wp3488710"> </a><div class="pSmartList2"><li>Déposez un composant <b class="cBold">tRecordMatching</b> de la <b class="cBold">Palette</b> dans l&#39;espace de modélisation graphique, ainsi que trois <b class="cBold">tLogRow</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3488725"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRecordMatching1.png" id="wp3488721" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488736"> </a><div class="pSmartList2"><li>Connectez les composants d&#39;entrée principal et de référence au <b class="cBold">tRecordMatching</b> à l&#39;aide de liens <b class="cBold">Main</b>. Le lien entre la table d&#39;entrée de référence et le <b class="cBold">tRecordMatching</b> s&#39;affiche comme <b class="cBold">Lookup</b> dans l&#39;espace de modélisation graphique.</li></div>
+<a name="wp3488761"> </a><div class="pSmartList2"><li>Connectez le <b class="cBold">tRecordMatching</b> aux trois composants <b class="cBold">tLogRow</b> à l&#39;aide des liens <b class="cBold">Matches</b>, <b class="cBold">Possible Matches</b> et <b class="cBold">Non Matches</b>.</li></div>
+<a name="wp3488778"> </a><div class="pSmartList2"><li>Double-cliquez sur les composants de base de données d&#39;entrée (principal et de référence) afin d&#39;afficher leur vue <b class="cBold">Component</b>.<br />La capture d&#39;écran ci-dessous illustre les propriétés de la table d&#39;entrée <em class="cEmphasis">person</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3488801"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRecordMatching2.png" id="wp3488797" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3488810"> </a><p class="pIndented1">
+La capture d&#39;écran ci-dessous montre les propriétés de la table d&#39;entrée <em class="cEmphasis">customer</em>.
+</p>
+<a name="wp3488819"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRecordMatching3.png" id="wp3488815" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3488827"> </a><p class="pIndented1">
+Les champs des propriétés des deux composants <b class="cBold">tMysqlInput</b> sont automatiquement remplis. Si vous n&#39;avez pas défini localement vos schémas d&#39;entrée dans le Repository, renseignez manuellement les informations, après avoir sélectionné le mode <b class="cBold">Built-in</b> dans les champs <b class="cBold">Schema</b> et <b class="cBold">Property Type</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488855"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tRecordMatching</b> afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3488866"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRecordMatching4.png" id="wp3488862" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488877"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Edit schema</b> afin d&#39;ouvrir une boîte de dialogue. Vous pouvez définir les données que vous souhaitez passer aux composants de sortie.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3488888"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tRecordMatching5.png" id="wp3488884" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3488896"> </a><p class="pIndented1">
+Dans cet exemple, l&#39;objectif est de passer au composant <b class="cBold">tRecordMatching</b> les colonnes <em class="cEmphasis">name</em> et <em class="cEmphasis">email</em> du premier composant <b class="cBold">tMysqlInput</b>, ainsi que les colonnes <em class="cEmphasis">ref_name</em> et <em class="cEmphasis">ref_</em><em class="cEmphasis">email</em> du second composant <b class="cBold">tMysqlInput</b>.
+</p>
+<a name="wp3488941"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3488930" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Les colonnes <em class="cEmphasis">MATCHING_DISTANCE</em> et <em class="cEmphasis">MATCHING_WEIGHT</em> du schéma de sortie sont définies par défaut.
+</p>
+<a name="wp3488958"> </a><p class="pIndented1">
+La valeur de la colonne <em class="cEmphasis">MATCHING_WEIGHT</em> est toujours comprise entre <em class="cEmphasis">0</em> et<em class="cEmphasis"> 1</em>. C&#39;est une distance globale entre les ensembles de colonnes (définis pour correspondre par les colonnes).
+</p>
+<a name="wp3488967"> </a><p class="pIndented1">
+La colonne <em class="cEmphasis">MATCHING_DISTANCE</em> affichera une distance pour chaque colonne sur laquelle a été utilisé un algorithme. Les résultats seront séparés pas une barre verticale.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3488980"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> afin de fermer la boîte de dialogue et procéder à l&#39;étape suivante.</li></div>
+<a name="wp3488992"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Key Definition</b> de la vue <b class="cBold">Basic settings</b> du composant <b class="cBold">tRecordMatching</b>, cliquez sur le bouton <b class="cBold">[+]</b> afin d&#39;ajouter deux colonnes à la liste.</li></div>
+<a name="wp3489005"> </a><div class="pSmartList2"><li>Sélectionnez les colonnes d&#39;entrée et de sortie sur lesquelles vous voulez effectuer la correspondance floue, à partir des colonnes <b class="cBold">Input key attribute</b> et <b class="cBold">Lookup key attribute</b> respectivement.<br />Dans cet exemple, sélectionnez les colonnes <em class="cEmphasis">name</em> et <em class="cEmphasis">email </em>comme attributs d&#39;entrée, et les colonnes <em class="cEmphasis">ref-name</em> et <em class="cEmphasis">ref_email</em> comme attributs de référence.</li></div>
+<a name="wp3489042"> </a><div class="pSmartList2"><li>Cliquez sur la colonne <b class="cBold">Matching type</b> et sélectionnez <b class="cBold">q-gram</b> dans la liste, la méthode devant être utilisée sur la première colonne, afin de vérifier les données d&#39;entrée, par rapport aux données de référence.</li></div>
+<a name="wp3489051"> </a><div class="pSmartList2"><li>Définissez le type de correspondance de la seconde colonne, <b class="cBold">Levenshtein</b> dans cet exemple.</li></div>
+<a name="wp3489061"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp3489058" border="0" hspace="0" vspace="0"/><br />
+Les valeurs minimale et maximale de correspondance possible sont définies dans la vue <b class="cBold">Advanced settings</b>. Vous pouvez modifier les valeurs par défaut.
+</p>
+<a name="wp3489077"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Confidence Weight</b>, définissez un poids pour chacune des colonnes utilisées comme attributs de clé.</li></div>
+<a name="wp3489090"> </a><div class="pSmartList2"><li>Double-cliquez sur le premier <b class="cBold">tLogRow </b>afin d&#39;afficher sa vue <b class="cBold">Component</b> et définir ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489101"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBlockedFuzzyJoin5.png" id="wp3489097" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3489116"> </a><div class="pSmartList2"><li>Dans la zone <b class="cBold">Mode</b>, sélectionnez <b class="cBold">Table</b>, afin d&#39;afficher le fichier source et les résultats du <b class="cBold">tRecordMatching</b> ensemble, pour pouvoir les comparer.</li></div>
+<a name="wp3489130"> </a><div class="pSmartList2"><li>Répétez l&#39;opération pour les deux autres composants<b class="cBold"> tLogRow</b>.</li></div>
+<a name="wp3489140"> </a><div class="pSmartList2"><li>Sauvegardez votre Job et appuyez sur <b class="cBold">F6</b> afin de l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3489144"> </a><p class="pIndented1">
+Trois tables de sortie sont affichées dans la console. La première montre les entrées qui correspondent, la deuxième retourne les entrées pouvant correspondre, et la dernière affiche les entrées qui ne correspondent pas, selon la méthode de correspondance utilisée dans les colonnes définies.
+</p>
+<a name="wp3489150"> </a><p class="pIndented1">
+La capture d&#39;écran ci-dessous illustre les extractions des trois tables de sortie.
+</p>
+<a name="wp3489162"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Components-04-58-230.jpg" height="681" width="1050" id="wp3489155" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3489166"> </a><p class="pIndented1">
+La première table liste tous les noms et adresses e-mails pouvant correspondre à des entrées de la table de référence. La distance de correspondance et le poids de correspondance sont équivalents à &quot;1.0&quot;. 
+</p>
+<a name="wp3489171"> </a><p class="pIndented1">
+La seconde table liste tous les noms et adresses e-mail pouvant avoir une correspondance dans la table de référence. La colonne de distance de correspondance affiche les distances pour les colonnes <em class="cEmphasis">name</em> et <em class="cEmphasis">email</em>.
+</p>
+<a name="wp3489184"> </a><p class="pIndented1">
+La troisième table liste tous les noms et les adresses e-mail n&#39;ayant aucune correspondance dans la table de référence.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tRecordMatching_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tReplaceList_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

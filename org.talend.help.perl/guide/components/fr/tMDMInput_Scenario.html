@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:52">
+    <title>Scénario&#160;: Lire les données maître d&#39;un hub MDM</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3506650"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3506658"> </a><h2 class="pHeading2">
+Scénario&#160;: Lire les données maître d&#39;un hub MDM
+</h2>
+<a name="wp3506661"> </a><p class="pIndented1">
+Ce scénario décrit un Job à deux composants qui lit les données maître dans un serveur MDM et les affiche dans la console de log.
+</p>
+<a name="wp3506669"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMInput1.png" id="wp3506666" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3506683"> </a><div class="pSmartList2"><li>A partir de la <b class="cBold">Palette</b>, glissez les composants <b class="cBold">tMDMInput</b> de la famille <b class="cBold">Talend MDM</b>, et <b class="cBold">tLogRow</b> de la famille <b class="cBold">Logs &amp; Errors</b> dans l&#39;espace de modélisation.</li></div>
+<a name="wp3506697"> </a><div class="pSmartList2"><li>Reliez-les via un lien de type <b class="cBold">Row Main</b>.</li></div>
+<a name="wp3506706"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tMDMInput</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506718"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMInput2.png" id="wp3506715" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3506729"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Built-In</b> et renseignez les champs manuellement. Si vous avez stocké les informations de connexion au MDM dans les métadonnées du Repository, sélectionnez <b class="cBold">Repository</b> dans la liste et les champs suivants seront renseignés automatiquement.</li></div>
+<a name="wp3506745"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema</b>, sélectionnez <b class="cBold">Built-In</b> et cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour décrire la structure des données maître que vous souhaitez lire sur le serveur MDM.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506757"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMInput3.png" id="wp3506754" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3506765"> </a><div class="pSmartList2"><li>Les données maître sont récupérées dans un schéma à trois colonnes de type <b class="cBold">String</b>&#160;: <em class="cEmphasis">ISO2Code</em>, <em class="cEmphasis">Name</em>, <em class="cEmphasis">Currency</em>. Cliquez sur <b class="cBold">OK</b>.</li></div>
+<a name="wp3506785"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">URL</b>, saisissez entre guillemets l&#39;URL de connexion au serveur MDM.</li></div>
+<a name="wp3506794"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez l&#39;identifiant et le mot de passe de connexion au serveur MDM.</li></div>
+<a name="wp3506801"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Version</b>, saisissez entre guillemets le nom de la version des données maître à laquelle vous avez souhaitez accéder. Laissez le champ vide pour afficher la version par défaut.</li></div>
+<a name="wp3506808"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Entity</b>, saisissez entre guillemets le nom de l&#39;entité métier contenant les données maître que vous souhaitez lire.</li></div>
+<a name="wp3506815"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Data Container</b>, saisissez entre guillemets le nom du conteneur de données contenant les données maître que vous souhaitez lire.</li></div>
+<a name="wp3506825"> </a><div class="pSmartList2"><li>Dans la vue <b class="cBold">Component</b>, cliquez sur l&#39;onglet <b class="cBold">Advanced settings</b> pour paramétrer les propriétés avancées du composant.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506834"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMInput4.png" id="wp3506831" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3506842"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Loop XPath query</b>, saisissez entre guillemets l&#39;arborescence et le nom du noeud XML sur lequel effectuer la boucle.</li></div>
+<a name="wp3506849"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Mapping</b>, les colonnes du schéma du composant apparaissent sous la colonne Column. Saisissez entre guillemets le nom de la balise XML dans laquelle récupérer les données maître dans le champ <b class="cBold">XPath query</b> correspondant à la colonne du schéma de sortie.</li></div>
+<a name="wp3506862"> </a><div class="pSmartList2"><li>Dans l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tLogRow</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+<a name="wp3506875"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">Edit schema</b> et assurez-vous que le schéma est récupéré du composant précédent. Sinon, cliquez sur <b class="cBold">Sync Columns</b> pour récupérer le schéma du composant.</li></div>
+<a name="wp3506887"> </a><div class="pSmartList2"><li>Enregistrez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3506894"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMDMInput6.png" id="wp3506891" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3506903"> </a><p class="pIndented1">
+La liste des différents pays, ansi que leur code et devise est retournée dans la console de la vue <b class="cBold">Run</b>.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMDMInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMDMOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

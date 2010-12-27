@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:29">
+    <title>Scenario: Replacing empty fields by NULL fields (fields of unknown value) </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEmptyToNull_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExternalSortRow_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2526128"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2526133"> </a><h2 class="pHeading2">
+Scenario: Replacing empty fields by NULL fields (fields of unknown value) 
+</h2>
+<a name="wp2526138"> </a><p class="pIndented1">
+This Perl scenario describes a three-component Job that makes it possible to replace input fields without character strings by undefined fields in order to generate Null values (unknown values) in the output fields. 
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2526147"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tEmptyToNull</b> and <b class="cBold">tMysqlOutput</b>.</li></div>
+<a name="wp2526165"> </a><div class="pSmartList2"><li>Connect the three components using <b class="cBold">Row Main</b> links.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2526172"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull1.png" id="wp2526169" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2526181"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tFileInputDelimited</b> to display its <b class="cBold">Basic settings</b> view where you can define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2526202"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull2.png" id="wp2526199" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2526213"> </a><div class="pSmartList2"><li>From the <b class="cBold">Property Type</b> list, select:<br />-<b class="cBold">Repository</b>  if you have already stored the metadata of your input file in the Repository, the fields that follow are filled in with the stored information automatically, or<br />-select <b class="cBold">Built-In</b> and fill in the fields that follow manually.<br />For this example, we use the <b class="cBold">Built-In</b> mode.</li></div>
+<a name="wp2526232"> </a><div class="pSmartList2"><li>Click the three-dot button next to the <b class="cBold">File Name</b> field and browse to the input file. In this example, our source file is <em class="cEmphasis">name_list</em> and it holds four columns: <em class="cEmphasis">id</em>, <em class="cEmphasis">first name</em>, <em class="cEmphasis">last name </em>and <em class="cEmphasis">login</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2526250"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull3.png" id="wp2526247" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2526260"> </a><div class="pSmartList2"><li>In the <b class="cBold">Basic settings</b> view of <b class="cBold">tFileInputDelimited</b>, define in the corresponding fields the row and field separators used in the source file.</li></div>
+<a name="wp2527692"> </a><div class="pSmartList2"><li>If needed, set <b class="cBold">Header</b>, <b class="cBold">Footer</b> and <b class="cBold">Limit</b>.  <br />In this example, set <b class="cBold">Header</b> to 1 since the first row that holds columns&#39; names is to be ignored. <b class="cBold">Footer</b> and <b class="cBold">Limit</b> for the number of processed rows are not set.</li></div>
+<a name="wp2526286"> </a><div class="pSmartList2"><li>In the <b class="cBold">Schema</b> field, set schema to <b class="cBold">Built in</b> then click the three-dot button next to the <b class="cBold">Edit Schema </b>field to define the data to be passed to the following component. In this example, the source schema consists of four columns: <em class="cEmphasis">id</em>, <em class="cEmphasis">first_name</em>, <em class="cEmphasis">last_name </em>and <em class="cEmphasis">login</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2526304"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull4.png" id="wp2526301" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2526312"> </a><div class="pSmartList2"><li>In the design workspace, double-click <b class="cBold">tMysqlOutput</b> to open its <b class="cBold">Basic Settings</b> view where you can define the component properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2526327"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull5.png" id="wp2526324" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2527816"> </a><div class="pSmartList2"><li>Click <b class="cBold">Sync columns</b> to retrieve the schema of the preceding component.</li></div>
+<a name="wp2527979"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2527977" border="0" hspace="0" vspace="0"/><br />
+<br />You can click the three-dot button next to <b class="cBold">Edit schema</b> to check the retrieved schema.
+</p>
+<a name="wp2527990"> </a><div class="pSmartList2"><li>From the <b class="cBold">Property Type</b> list, select:<br />-<b class="cBold">Repository</b> if you have already stored the metadata of your database connection in the Repository, the fields that follow are filled in with the stored information automatically, or<br />-select <b class="cBold">Built-In</b> and fill in the connection information manually.<br />For more information about <b class="cBold">tMysqlOutput</b> properties, see <a href="tMysqlOutput_Prop.html"><em class="cEmphasis">tMysqlOutput</em></a>.</li></div>
+<a name="wp2528006"> </a><div class="pSmartList2"><li>In the <b class="cBold">Table</b> field, enter the name of the table that will hold the data extracted from the source delimited file.</li></div>
+<a name="wp2526392"> </a><div class="pSmartList2"><li>From the <b class="cBold">Action on table</b> list, select the operation you want to carry out on the defined table. In this example, we select <b class="cBold">Create table</b> to create the defined table.</li></div>
+<a name="wp2526402"> </a><div class="pSmartList2"><li>From the <b class="cBold">Action on data</b> list, select the operation you want to carry out on the data. In this example, we select <b class="cBold">Insert</b>.</li></div>
+<a name="wp2526414"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp2526421"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_EmptyToNull6.png" id="wp2526418" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2528065"> </a><p class="pIndented1">
+Through your data explorer, you can check that the output database table <em class="cEmphasis">namelist</em> is created with the defined columns and that the empty fields in the source file have been replaced by the NULL values (unknown values). 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tEmptyToNull_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tExternalSortRow_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

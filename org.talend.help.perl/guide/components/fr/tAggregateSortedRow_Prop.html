@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:29">
+    <title>tAggregateSortedRow</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAggregateRow_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAggregateSortedRow_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1734417"> </a><h2 class="pHeading1">
+tAggregateSortedRow
+</h2>
+<a name="wp1734426"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tAggregateSortedRow_white.png" id="wp1734421" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1734433"> </a><h2 class="pHeading2">
+Propriétés du tAggregateSortedRow
+</h2>
+<a name="wp1734602"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1734441table1734436">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734441"> </a><div class="pCellBody">
+<b class="cBold">Famille du composant</b>
+</div>
+</td>
+    <td><a name="wp1734443"> </a><div class="pCellBody">
+Processing
+</div>
+</td>
+    <td><a name="wp1734452"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-13-04-018.jpg" height="59" width="112" id="wp1734448" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1734457"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1734462"> </a><div class="pCellBody">
+Le composant <b class="cBold">tAggregateSortedRow</b> reçoit un flux de données triées sur lequel il effectue une agrégation basée sur une ou plusieurs colonnes. La clé d&#39;agrégation et les résultats pertinents des opérations (min, max, sum, etc.) sont dispensés pour chaque ligne de sortie. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734469"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2501659"> </a><div class="pCellBody">
+Le <b class="cBold">tAggregateSortedRow</b> vous permet de récupérer un échantillon de métriques reposant sur des valeurs ou des calculs. Etant donné que les données du flux d&#39;entrée sont supposées être déjà triées, les performances n&#39;en sont que plus optimisées. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1734478"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp1734483"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2501689"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le Repository. <br />Cliquez sur <b class="cBold">Edit Schema </b>pour modifier le schéma. Notez que lorsque vous modifiez le schéma, il se met automatiquement en built-in.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734490"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734492"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2512815"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1734505"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734507"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2513120"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé dans divers projets et Job designs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734520"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734525"> </a><div class="pCellHeading">
+<em class="cEmphasis">Group by</em>
+</div>
+</td>
+    <td><a name="wp2501757"> </a><div class="pCellBody">
+Définit les ensembles d&#39;agrégation, dont les valeurs sont utilisées pour les calculs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1734529"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734531"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2501784"> </a><div class="pCellBody">
+<b class="cBold">Output Column</b>&#160;: Sélectionnez le libellé de colonne dans la liste fournie, basée sur la structure de schéma que vous avez définie. Vous pouvez ajouter autant de colonnes de sortie que vous le souhaitez afin d&#39;affiner les agrégations.<br />Ex&#160;: Sélectionnez <em class="cEmphasis">Country</em> (Pays) pour calculer la moyenne des valeurs pour chaque pays ou sélectionnez <em class="cEmphasis">Country</em> et <em class="cEmphasis">Region</em> pour comparer les résultats des régions d&#39;un pays par rapport aux régions d&#39;un autre pays.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734538"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734540"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2501810"> </a><div class="pCellBody">
+<b class="cBold">Input Column&#160;</b>: Faites la correspondance entre les libellés des colonnes d&#39;entrée avec ceux des colonnes de sortie, dans le cas où vous souhaitez que les libellés du schéma de sortie soient différents du schéma d&#39;entrée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1734547"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734552"> </a><div class="pCellHeading">
+<em class="cEmphasis">Operations</em>
+</div>
+</td>
+    <td><a name="wp2501813"> </a><div class="pCellBody">
+Sélectionnez le type d&#39;opération à effectuer ainsi que la valeur à utiliser pour le calcul et le champ de sortie.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734556"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734558"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734563"> </a><div class="pCellBody">
+<b class="cBold">Output Column&#160;</b>: Sélectionnez le champ de destination à partir de la liste déroulante. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1734565"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734567"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734572"> </a><div class="pCellBody">
+<b class="cBold">Function&#160;</b>: Choisissez  l&#39;opérateur parmi&#160;: count, min, max, avg, first, last.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734574"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734576"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1734581"> </a><div class="pCellBody">
+<b class="cBold">Input column position&#160;</b>: Sélectionnez la colonne d&#39;entrée à partir de laquelle les valeurs sont récupérées avant d&#39;être agrégées. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2525914"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2525917"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2525920"> </a><div class="pCellBody">
+<b class="cBold">Ignore null values</b>&#160;: Cochez cette case devant le nom de toutes les colonnes pour lesquelles vous voulez que les valeurs nulles soient ignorées. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1734586"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2501829"> </a><div class="pCellBody">
+Ce composant traite des flux de données, il nécessite donc des composants d&#39;entrée et sortie. Il est donc défini en tant que composant intermédiaire. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1734595"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1734597"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tAggregateRow_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAggregateSortedRow_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

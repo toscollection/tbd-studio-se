@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:29">
+    <title>tAggregateRow  </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="Processing_group_intro.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAggregateRow_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1508286"> </a><h2 class="pHeading1">
+tAggregateRow  
+</h2>
+<a name="wp1446741"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tAggregateRow.png" id="wp1446738" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1446879"> </a><h2 class="pHeading2">
+tAggregateRow properties
+</h2>
+<a name="wp1404348"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1404095table1404090">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404095"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp1404097"> </a><div class="pCellBody">
+Processing
+</div>
+</td>
+    <td><a name="wp1404106"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-13-02-019.jpg" height="59" width="112" id="wp1404102" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404111"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1404116"> </a><div class="pCellBody">
+<b class="cBold">tAggregateRow</b> receives a flow and aggregates it based on one or more columns. For each output line, are provided the aggregation key and the relevant result of set operations (min, max, sum...).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404123"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1404125"> </a><div class="pCellBody">
+Helps to provide a set of metrics based on values or calculations. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404132"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp1404137"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp1404142"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. <br />Click <b class="cBold">Edit Schema</b> to make changes to the schema. Note that if you make changes, the schema automatically becomes built-in.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404144"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404146"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2514559"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema will be created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404156"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404158"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2514842"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused in various projects and job flowcharts. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404168"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404173"> </a><div class="pCellHeading">
+<em class="cEmphasis">Group by</em>
+</div>
+</td>
+    <td><a name="wp1404175"> </a><div class="pCellBody">
+Define the aggregation sets, the values of which will be used for calculations.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404177"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404179"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404184"> </a><div class="pCellBody">
+<b class="cBold">Output Column</b>: Select the column label in the list offered based on the schema structure you defined. You can add as many output columns as you wish to make more precise aggregations. <br />Ex: Select Country to calculate an average of values for each country of a list or select Country and Region if you want to compare one country&#39;s regions with another country&#39; regions.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404186"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404188"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404193"> </a><div class="pCellBody">
+<b class="cBold">Input Column</b>: Match the input column label with your output columns, in case the output label of the aggregation set needs to be different.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404195"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404200"> </a><div class="pCellHeading">
+<em class="cEmphasis">Operations</em>
+</div>
+</td>
+    <td><a name="wp1404202"> </a><div class="pCellBody">
+Select the type of operation along with the value to use for the calculation and the output field.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404204"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404206"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404211"> </a><div class="pCellBody">
+<b class="cBold">Output Column</b>: Select the destination field in the list.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1404213"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404215"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404220"> </a><div class="pCellBody">
+<b class="cBold">Function</b>: Select the operator among: count, min, max, avg, sum, first, last, list, list(objects), count(distinct), standard deviation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404222"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404224"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1404229"> </a><div class="pCellBody">
+<b class="cBold">Input column</b>: Select the input column from which the values are taken to be aggregated.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2530440"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2530443"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2530450"> </a><div class="pCellBody">
+<b class="cBold">Ignore null values</b>: Select the check boxes corresponding to the names of the columns for which you want the NULL value to be ignored.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2939837"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2939841"> </a><div class="pCellHeading">
+<em class="cEmphasis">Delimiter(only for list operation)</em>
+</div>
+</td>
+    <td><a name="wp2939844"> </a><div class="pCellBody">
+Enter the delimiter you want to use to separate the different operations.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2939850"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2939854"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use financial precision, this is the max precision for &quot;sum&quot; and &quot;avg&quot; operations, checked option heaps more memory and slower than unchecked.</em>
+</div>
+</td>
+    <td><a name="wp2939857"> </a><div class="pCellBody">
+Select this check box to use a financial precision. This is a max precision but consumes more memory and slows the processing.
+</div>
+<a name="wp2939863"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2939861" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+We advise you to use the BigDecimal type for the output in order to obtain  precise results.<br />
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2939869"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2939873"> </a><div class="pCellHeading">
+<em class="cEmphasis">Check type overflow (slower)</em>
+</div>
+</td>
+    <td><a name="wp2939876"> </a><div class="pCellBody">
+Checks the type of data to ensure that the job doesn&#39;t crash.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2939945"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2939949"> </a><div class="pCellHeading">
+<em class="cEmphasis">Check ULP (Unit in the Last Place), ensure that a value will be incremented or decremented correctly, only float and double types. (slower) </em>
+</div>
+</td>
+    <td><a name="wp2939952"> </a><div class="pCellBody">
+Select this check box to ensure the most precise results possible for the Float and Double types.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2939887"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2939891"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2939894"> </a><div class="pCellBody">
+Check this box to collect the log data at component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2939901"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2939904"> </a><div class="pCellBody">
+This component handles flow of data therefore it requires input and output, hence is defined as an intermediary step. Usually the use of <b class="cBold">tAggregateRow</b> is combined with the <b class="cBold">tSortRow</b> component
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1404249"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1404251"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="Processing_group_intro.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAggregateRow_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

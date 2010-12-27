@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:32">
+    <title>Scenario: Writing data in a Microsoft CRM database and putting conditions on columns to extract specified rows</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMicrosoftCRMInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMicrosoftCRMOutput_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2720338"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2720344"> </a><h2 class="pHeading2">
+Scenario: Writing data in a Microsoft CRM database and putting conditions on columns to extract specified rows
+</h2>
+<a name="wp2720349"> </a><p class="pIndented1">
+This scenario describes a four-component Job which aims at writing the data included in a delimited input file in a custom entity in a MicrosoftCRM database. It then extracts specified rows to an output file using the conditions set on certain input columns.
+</p>
+<a name="wp2720356"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2720354" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+If you want to write in a CustomEntity in Microsoft CRM database, make sure to name the columns in accordance with the naming rule set by Microsoft, that is &quot;name_columnname&quot; all in lower case.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720365"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> to the design workspace: <b class="cBold">tFileInputdelimited</b>, <b class="cBold">tFileOutputDelimited</b>, <b class="cBold">tMicrosoftCRMInput</b>, and <b class="cBold">tMicrosoftCRMOutput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720386"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM.png" id="wp2720383" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720401"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tFileInputDelimited</b> to <b class="cBold">tMicrosoftCRMOutput</b> using a <b class="cBold">Row Main</b> connection.</li></div>
+<a name="wp2720414"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tMicrosoftCRMIntput</b> to <b class="cBold">tFileOutputDelimited</b> using a <b class="cBold">Row Main</b> connection.</li></div>
+<a name="wp2720427"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tFileInputDelimited</b> to <b class="cBold">tMicrosoftCRMInput</b> using <b class="cBold">OnSubjobOk</b> connection.</li></div>
+<a name="wp2720436"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileInputDelimited</b> to display its <b class="cBold">Basic settings</b> view and define its properties</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720445"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM1.png" id="wp2720442" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720456"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Property Type</b> to <b class="cBold">Repository</b> if you have stored the input file properties centrally in the <b class="cBold">Metadata</b> node in the <b class="cBold">Repository</b> tree view. Otherwise, select <b class="cBold">Built-In</b> and fill the fields that follow manually. In this example, property is set to <b class="cBold">Built-In</b>.</li></div>
+<a name="wp2720475"> </a><div class="pSmartList2"><li>Click the three-dot button next to the <b class="cBold">File Name/Input Stream</b> field and browse to the delimited file that holds the input data. The input file in this example contains the following columns: <em class="cEmphasis">new_id</em>, <em class="cEmphasis">new_status</em>, <em class="cEmphasis">new_firstname</em>, <em class="cEmphasis">new_email</em>, <em class="cEmphasis">new_city</em>, <em class="cEmphasis">new_initial</em> and <em class="cEmphasis">new_zipcode</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720505"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM2.png" id="wp2720502" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720516"> </a><div class="pSmartList2"><li>In the <b class="cBold">Basic settings</b> view, define the <b class="cBold">Row Separator</b> allowing to identify the end of a row. Then define the <b class="cBold">Field Separator</b> used to delimit fields in a row.</li></div>
+<a name="wp2720523"> </a><div class="pSmartList2"><li>If needed, define the header, footer and limit number of processed rows in the corresponding fields. In this example, the header, footer and limits are not set.</li></div>
+<a name="wp2720530"> </a><div class="pSmartList2"><li>Click <b class="cBold">Edit schema</b> to open a dialog box where you can define the input schema you want to write in Microsoft CRM database.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720539"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM3.png" id="wp2720536" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720548"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp2720557"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tMicrosoftCRMOutput</b> to display the component <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720566"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM4.png" id="wp2720563" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720571"> </a><div class="pSmartList2"><li>Enter the Microsoft Web Service URL as well as the user name and password in the corresponding fields.</li></div>
+<a name="wp2720578"> </a><div class="pSmartList2"><li>In the <b class="cBold">OrganizeName</b> field, enter the name that is given the right to access the Microsoft CRM database.</li></div>
+<a name="wp2720585"> </a><div class="pSmartList2"><li>In the <b class="cBold">Domain field</b>, enter the domain name of the server on which Microsoft CRM is hosted, and then enter the host IP address and the listening port number in the corresponding fields.</li></div>
+<a name="wp2720592"> </a><div class="pSmartList2"><li>In the <b class="cBold">Action</b> list, select the operation you want to carry on. In this example, we want to insert data in a custom entity in Microsoft CRM.</li></div>
+<a name="wp2720600"> </a><div class="pSmartList2"><li>In the <b class="cBold">Time out</b> field, set the amount of time (in seconds) after which the Job will time out.</li></div>
+<a name="wp2720611"> </a><div class="pSmartList2"><li>In the <b class="cBold">Entity </b>list, select one among those offered. In this example, <em class="cEmphasis">CustomEntity</em> is selected.</li></div>
+<a name="wp2720623"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/bulb_small.png" align="left" id="wp2720615" border="0" hspace="0" vspace="0"/><br />
+If CustomEntity is selected, a Custom Entity Name field displays where you need to enter a name for the custom entity.
+</p>
+<a name="wp2720634"> </a><div class="pSmartList2"><li>The <b class="cBold">Schema</b> is then automatically set according to the entity selected. If needed, click <b class="cBold">Edit schema</b> to display a dialog box where you can modify this schema and remove the columns that you do not need in the output. </li></div>
+<a name="wp2720644"> </a><div class="pSmartList2"><li>Click Sync columns to retrieve the schema from the preceding component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720651"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM5.png" id="wp2720648" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720662"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tMicrosoftCRMInput</b> to display the component <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720671"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM6.png" id="wp2720668" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720682"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Property Type</b> to <b class="cBold">Repository</b> if you have stored the input file properties centrally in the <b class="cBold">Metadata</b> node in the <b class="cBold">Repository</b> tree view. Otherwise, select <b class="cBold">Built-In</b> and fill the fields that follow manually. In this example, property is set to <b class="cBold">Built-In</b>.</li></div>
+<a name="wp2720698"> </a><div class="pSmartList2"><li>Enter the Microsoft Web Service URL as well as the user name and password in the corresponding fields.</li></div>
+<a name="wp2720705"> </a><div class="pSmartList2"><li>In the <b class="cBold">OrganizeName</b> field, enter the name that is given the right to access the Microsoft CRM database.</li></div>
+<a name="wp2720712"> </a><div class="pSmartList2"><li>In the <b class="cBold">Domain field</b>, enter the domain name of the server on which Microsoft CRM is hosted, and then enter the host IP address and the listening port number in the corresponding fields.</li></div>
+<a name="wp2720720"> </a><div class="pSmartList2"><li>In the <b class="cBold">Time out</b> field, set the amount of time (in seconds) after which the Job will time out.</li></div>
+<a name="wp2720726"> </a><div class="pSmartList2"><li>In the <b class="cBold">Entity </b>list, select the one among those offered you want to connect to. In this example, <em class="cEmphasis">CustomEntity</em> is selected.</li></div>
+<a name="wp2720736"> </a><div class="pSmartList2"><li>The <b class="cBold">Schema</b> is then automatically set according to the entity selected. But you can modify it according to your needs. In this example, you should set the schema manually since you want to access a custom entity. Copy the seven-column schema from <b class="cBold">tMicrosoftCRMOutput</b> and paste it in the schema dialog box in <b class="cBold">tMicrosoftCRMInput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720751"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM7.png" id="wp2720748" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720762"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box. You will be prompted to propagate changes. Click <b class="cBold">Yes</b> in the popup message.</li></div>
+<a name="wp2720775"> </a><div class="pSmartList2"><li>In the <b class="cBold">Basic settings</b> view, select <b class="cBold">And</b> or <b class="cBold">Or</b> as the logical operator you want to use to combine the conditions you set on the input columns. In this example, we want to set two conditions on two different input columns and we use <b class="cBold">And</b> as the logical operator.</li></div>
+<a name="wp2720785"> </a><div class="pSmartList2"><li>In the <b class="cBold">Condition</b> area, click the plus button to add as many lines as needed and then click in each line in the <b class="cBold">Input column</b> list and select the column you want to set condition on. In this example, we want to set conditions on two columns, <em class="cEmphasis">new-city</em> and <em class="cEmphasis">new_id</em>. We want to extract all customer rows whose city is equal to &quot;New York&quot; and whose id is greater than 2.</li></div>
+<a name="wp2720801"> </a><div class="pSmartList2"><li>Click in each line in the <b class="cBold">Operator</b> list and select the operator to bind the input column with its value, in this example <b class="cBold">Equal </b>is selected for <em class="cEmphasis">new_city</em> and <b class="cBold">Greater Than</b> for <em class="cEmphasis">new_id</em>.</li></div>
+<a name="wp2720826"> </a><div class="pSmartList2"><li>Click in each line in the <b class="cBold">Value</b> list and set the column value, <code class="cCode">New York</code> for <em class="cEmphasis">new_city</em> and <code class="cCode">2</code> for <em class="cEmphasis">new_id</em> in this example. You can use a fixed or a context value in this filed.</li></div>
+<a name="wp2720839"> </a><div class="pSmartList2"><li>Double-click <b class="cBold">tFileOutputdelimited</b> to display the component <b class="cBold">Basic settings</b> view and define its properties.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720848"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM8.png" id="wp2720845" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2720862"> </a><div class="pSmartList2"><li>Set <b class="cBold">Property Type</b> to <b class="cBold">Built-In</b> and then click the three-dot button next to the <b class="cBold">File Name</b> field and browse to the output file.</li></div>
+<a name="wp2720867"> </a><div class="pSmartList2"><li>Set row and field separators in the corresponding fields.</li></div>
+<a name="wp2720874"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Append</b> check box if you want to add the new rows at the end of the records.</li></div>
+<a name="wp2720881"> </a><div class="pSmartList2"><li>Select the <b class="cBold">Include Header</b> check box if the output file includes a header.</li></div>
+<a name="wp2720888"> </a><div class="pSmartList2"><li>Click Sync columns to retrieve the schema from the preceding component.</li></div>
+<a name="wp2720896"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2720903"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tMicrosoftCRM9.png" id="wp2720900" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2720906"> </a><p class="pIndented1">
+Only customers who live in New York city and those whose &quot;id&quot; is greater than 2 are listed in the output file you stored locally.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMicrosoftCRMInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMicrosoftCRMOutput_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

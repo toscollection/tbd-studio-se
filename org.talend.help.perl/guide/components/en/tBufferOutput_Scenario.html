@@ -1,0 +1,354 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:14">
+    <title>Scenario1: Buffering data (Java)</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBufferOutput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tContextDump_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1531269"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1552253"> </a><h2 class="pHeading2">
+Scenario1: Buffering data (Java)
+</h2>
+<a name="wp1552256"> </a><p class="pIndented1">
+This scenario describes an intentionally basic Job that bufferizes data in a child job while a parent Job simply displays the bufferized data onto the standard output console. For an example of how to use <b class="cBold">tBufferOutput</b> to access output data directly on the Web application server, see <a href="tBufferOutput_Scenario.html#wp1592471"><em class="cEmphasis">Scenario 2: Buffering output data on the webapp server</em></a>.
+</p>
+<a name="wp1552267"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput1.png" id="wp1552264" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1552274"> </a><div class="pSmartList2"><li>Create two Jobs: a first Job (<em class="cEmphasis">BufferFatherJob</em>) runs the second Job and displays its content onto the <b class="cBold">Run </b>console. The second Job (<em class="cEmphasis">BufferChildJob</em>) stores the defined data into a buffer memory.</li></div>
+<a name="wp1531649"> </a><div class="pSmartList2"><li>On the first Job, drop the following components: <b class="cBold">tRunJob</b> and <b class="cBold">tLogRow</b> from the <b class="cBold">Palette</b> to the design workspace.</li></div>
+<a name="wp1531657"> </a><div class="pSmartList2"><li>On the second Job, drop the following components: <b class="cBold">tFileInputDelimited</b> and <b class="cBold">tBufferOutput </b>the same way.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1531784"> </a><p class="pIndented1">
+Let&#39;s set the parameters of the second Job first:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2749785"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tFileInputDelimited</b> and on the <b class="cBold">Basic Settings</b> tab of the <b class="cBold">Component</b> view, set the access parameters to the input file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2749768"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput2.png" id="wp1531789" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1531806"> </a><div class="pSmartList2"><li>In <b class="cBold">File Name</b>, browse to the delimited file whose data are to be bufferized. </li></div>
+<a name="wp1531824"> </a><div class="pSmartList2"><li>Define the <b class="cBold">Row</b> and <b class="cBold">Field separators</b>, as well as the <b class="cBold">Header</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1531862"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput3.png" id="wp1531900" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1531895"> </a><div class="pSmartList2"><li>Describe the <b class="cBold">Schema </b>of the data to be passed on to the <b class="cBold">tBufferOutput </b>component.</li></div>
+<a name="wp1531874"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tBufferOutput</b> component and set the parameters on the <b class="cBold">Basic Settings </b>tab of the <b class="cBold">Component</b> view. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1531912"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput4.png" id="wp1531917" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1531929"> </a><div class="pSmartList2"><li>Generally the schema is propagated from the input component and automatically fed into the <b class="cBold">tBufferOutput</b> schema. But you could also set part of the schema to be bufferized if you want to.</li></div>
+<a name="wp1532014"> </a><div class="pSmartList2"><li>Now on the other Job (<em class="cEmphasis">BufferFatherJob</em>) Design, define the parameters of the <b class="cBold">tRunJob </b>component.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1532049"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput5.png" id="wp1532054" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1532066"> </a><div class="pSmartList2"><li>Edit the Schema if relevant and select the column to be displayed. The schema can be identical to the bufferized schema or different.</li></div>
+<a name="wp1532078"> </a><div class="pSmartList2"><li>You could also define context parameters to be used for this particular execution. To keep it simple, the default context with no particular setting is used for this use case. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1592456"> </a><p class="pIndented1">
+Press <b class="cBold">F6 </b>to execute the parent Job. The <b class="cBold">tRunJob</b> looks after executing the child Job and returns the data onto the standard console: 
+</p>
+<a name="wp1592465"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput6.png" id="wp1592461" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1592471"> </a><h2 class="pHeading2">
+Scenario 2: Buffering output data on the webapp server
+</h2>
+<a name="wp1592474"> </a><p class="pIndented1">
+This scenario describes a Job that is called as a Webservice and stores the output data in a buffer directly on the server of the Web application. This scenario creates first a Webservice oriented Job with context variables, and next exports the Job as a Webservice.
+</p>
+<a name="wp1590031"> </a><p class="pBodyRelative">
+<b class="cBold">Creating a Webservice-oriented Job with context variables:</b>
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1590035"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tFixedFlowInput</b> and <b class="cBold">tBufferOutput</b>.</li></div>
+<a name="wp1552855"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tFixedFlowInput</b> to <b class="cBold">tBufferOutput</b> using a <b class="cBold">Row Main</b> link.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1552859"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput7.png" id="wp1552898" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1567633"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tFixedFlowInput</b>.</li></div>
+<a name="wp1567643"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for <b class="cBold">tFixedFlowInput</b>.</li></div>
+<a name="wp1587645"> </a><div class="pSmartList2"><li> Set the <b class="cBold">Schema Type</b> to <b class="cBold">Built-In</b> and click the three-dot <b class="cBold">[...]</b> button next to <b class="cBold">Edit Schema </b>to describe the data structure you want to create from internal variables. In this scenario, the schema is made of three columns, <em class="cEmphasis">now</em>, <em class="cEmphasis">firstname</em>, and <em class="cEmphasis">lastname</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1587681"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput9.png" id="wp1587710" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1587705"> </a><div class="pSmartList2"><li>Click the plus button to add the three parameter lines and define your variables.</li></div>
+<a name="wp1588831"> </a><div class="pSmartList2"><li>Click <b class="cBold">OK</b> to close the dialog box and accept propagating the changes when prompted by the system. The three defined columns display in the <b class="cBold">Values</b> panel of the <b class="cBold">Basic settings</b> view of <b class="cBold">tFixedFlowInput</b>. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1588849"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput8.png" id="wp1588846" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1588860"> </a><div class="pSmartList2"><li>Click in the <b class="cBold">Value</b> cell of each of the first two defined columns and press <b class="cBold">Ctrl+Space </b>to access the global variable list.</li></div>
+<a name="wp1588878"> </a><div class="pSmartList2"><li>From the global variable list, select <em class="cEmphasis">TalendDate.getCurrentDate()</em> and <em class="cEmphasis">talendDatagenerator.getFirstName</em>, for the <em class="cEmphasis">now</em> and <em class="cEmphasis">firstname</em> columns respectively.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2756249"> </a><p class="pIndented1">
+For this scenario, we want to define two context variables: <em class="cEmphasis">nb_lines</em> and <em class="cEmphasis">lastname</em>. In the first we set the number of lines to be generated, and in the second we set the last name to display in the output list. The <b class="cBold">tFixedFlowInput </b>component will generate the number of lines set in the context variable with the three columns: <em class="cEmphasis">now</em>, <em class="cEmphasis">firstname</em> and <em class="cEmphasis">lastname</em>. For more information about how to create and use context variables, see <em class="cEmphasis">How to use variables in the Contexts view</em> of the <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</p>
+<a name="wp1588969"> </a><p class="pIndented1">
+To define the two context variables:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1589038"> </a><div class="pSmartList2"><li>Select <b class="cBold">tFixedFlowInput </b>and click the <b class="cBold">Contexts</b> tab.</li></div>
+<a name="wp1595598"> </a><div class="pSmartList2"><li>In the <b class="cBold">Variables </b>view, click the plus button to add two parameter lines and define them.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1595605"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput10.png" id="wp1595602" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1595613"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Values as table</b> tab and define the first parameter to set the number of lines to be generated and the second to set the last name to be displayed.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1595622"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput11.png" id="wp1595619" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1595636"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component </b>tab to go back to the <b class="cBold">Basic settings</b> view of <b class="cBold">tFixedFlowInput</b>.</li></div>
+<a name="wp1590784"> </a><div class="pSmartList2"><li>Click in the <b class="cBold">Value</b> cell of <em class="cEmphasis">lastname</em> column and press <b class="cBold">Ctrl+Space </b>to access the global variable list.</li></div>
+<a name="wp1590544"> </a><div class="pSmartList2"><li>From the global variable list, select <em class="cEmphasis">context.lastname</em>, the context variable you created for the last name column. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1590551"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput12.png" id="wp1590548" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2756471"> </a><p class="pBodyRelative">
+<b class="cBold">Exporting your Job as a Webservice:</b>
+</p>
+<a name="wp1590843"> </a><p class="pIndented1">
+Before exporting your Job as a Web service, see <em class="cEmphasis">Exporting job scripts</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b> for more information.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1591716"> </a><div class="pSmartList2"><li>In the <b class="cBold">Repository</b> tree view, right-click on the above created Job and select <b class="cBold">Export Job Scripts</b>. The <b class="cBold">[Export Job Scripts] </b>dialog box displays.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1590925"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput13.png" id="wp1591084" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1591099"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Browse...</b> button to select a directory to archive your Job in.</li></div>
+<a name="wp1591105"> </a><div class="pSmartList2"><li>In the <b class="cBold">Export type</b> panel, select the export type you want to use in the Tomcat webapp directory (WAR in this example) and click <b class="cBold">Finish</b>. The <b class="cBold">[Export Job Scripts]</b> dialog box disappears.</li></div>
+<a name="wp1591495"> </a><div class="pSmartList2"><li>Copy the War folder and paste it in a Tomcat webapp directory.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1595925"> </a><h2 class="pHeading2">
+Scenario 3: Calling a Job with context variables from a browser 
+</h2>
+<a name="wp1595928"> </a><p class="pIndented1">
+This scenario describes how to call the Job you created in scenario 2 from your browser with/without modifying the values of the context variables.
+</p>
+<a name="wp1595932"> </a><p class="pIndented1">
+Type the following URL into your browser: <span style="font-style: italic">http://localhost:8080//export_job/services/export_job3?method=runJob</span> where &quot;export_job&quot; is the name of the webapp directory deployed in Tomcat and &quot;export_job3&quot; is the name of the Job.
+</p>
+<a name="wp1595943"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput14.png" id="wp1595940" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1595950"> </a><p class="pIndented1">
+Click <b class="cBold">Enter</b> to execute your Job from your browser.
+</p>
+<a name="wp1593724"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput15.png" id="wp1593720" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1593729"> </a><p class="pIndented1">
+The Job uses the default values of the context variables: <em class="cEmphasis">nb_lines</em> and <em class="cEmphasis">lastname</em>, that is it generates three lines with the current date, first name and Ford as a last name.
+</p>
+<a name="wp1594925"> </a><p class="pIndented1">
+You can modify the values of the context variables directly from your browser. To call the Job from your browser and modify the values of the two context variables, type the following URL:
+</p>
+<a name="wp1594931"> </a><div style="color: #000000; font-size: 11pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 36pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<em class="cEmphasis">http://localhost:8080//export_job/services/export_job3?method=runJob&amp;arg1=--context_param%20lastname=MASSY&amp;arg2=--context_param%20nb_lines=2.</em>
+</div>
+<a name="wp1594936"> </a><p class="pIndented1">
+%20 stands for a blank space in the URL language. In the first argument &quot;arg1&quot;, you set the value of the context variable to display &quot;MASSY&quot; as last name. In the second argument &quot;arg2&quot;, you set the value of the context variable to &quot;2&quot; to generate only two lines.
+</p>
+<a name="wp1594945"> </a><p class="pIndented1">
+Click <b class="cBold">Enter</b> to execute your Job from your browser.
+</p>
+<a name="wp1594952"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tBufferOutput16.png" id="wp1594949" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1594958"> </a><p class="pIndented1">
+The Job generates two lines with MASSY as last name.
+</p>
+<a name="wp1596077"> </a><h2 class="pHeading2">
+Scenario 4: Calling a Job exported as Webservice in another Job
+</h2>
+<a name="wp1596081"> </a><p class="pIndented1">
+This scenario describes a Job that calls another Job exported as a Webservice using the <b class="cBold">tWebServiceInput</b>. This scenario will call the Job created in scenario 2.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1596098"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tWebServiceInput</b> and <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1597039"> </a><div class="pSmartList2"><li>Connect <b class="cBold">tWebserviceInput</b> to <b class="cBold">tLogRow</b> using a <b class="cBold">Row Main</b> link.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1597046"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_CallWebJob1.png" id="wp1597043" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1597216"> </a><div class="pSmartList2"><li>In the design workspace, select <b class="cBold">tWebServiceInput</b>.</li></div>
+<a name="wp1597238"> </a><div class="pSmartList2"><li>Click the <b class="cBold">Component</b> tab to define the basic settings for <b class="cBold">tWebServiceInput</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1597249"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_CallWebJob6.png" id="wp1597269" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1597436"> </a><div class="pSmartList2"><li> Set the <b class="cBold">Schema Type</b> to <b class="cBold">Built-In</b> and click the three-dot <b class="cBold">[...]</b> button next to <b class="cBold">Edit Schema </b>to describe the data structure you want to call from the exported Job. In this scenario, the schema is made of three columns, <em class="cEmphasis">now</em>, <em class="cEmphasis">firstname</em>, and <em class="cEmphasis">lastname</em>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1597454"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_CallWebJob5.png" id="wp1597451" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1597462"> </a><div class="pSmartList2"><li>Click the plus button to add the three parameter lines and define your variables.Click <b class="cBold">OK</b> to close the dialog box.</li></div>
+<a name="wp1597475"> </a><div class="pSmartList2"><li>In the <b class="cBold">WSDL</b> field of the <b class="cBold">Basic settings</b> view of <b class="cBold">tWebServiceInput</b>, enter the URL <span style="font-style: italic">http://localhost:8080/export_job/services/export_job3?WSDL</span> where &quot;export_job&quot; is the name od the webapp directory where the Job to call is stored and &quot;export_job3&quot; is the name of the Job itself. </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1597491"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_CallWebJob2.png" id="wp1597530" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1597542"> </a><div class="pSmartList2"><li>In the <b class="cBold">Method name </b>field, enter <em class="cEmphasis">runJob</em>.</li></div>
+<a name="wp1597546"> </a><div class="pSmartList2"><li>In the <b class="cBold">Parameters</b> panel, Click the plus button to add two parameter lines to define your context variables.</li></div>
+<a name="wp1596265"> </a><div class="pSmartList2"><li>Click in the first <b class="cBold">Value</b> cell to enter the parameter to set the number of generated lines using the following syntax: <em class="cEmphasis">--context_param nb_line=3.</em></li></div>
+<a name="wp1598301"> </a><div class="pSmartList2"><li>Click in the second <b class="cBold">Value</b> cell to enter the parameter to set the last name to display using the following syntax: <em class="cEmphasis">--context_param lastname=Ford.</em></li></div>
+<a name="wp1599361"> </a><div class="pSmartList2"><li>Select <b class="cBold">tLogRow</b> and click the <b class="cBold">Component</b> tab to display the component view.</li></div>
+<a name="wp1599370"> </a><div class="pSmartList2"><li>Set the <b class="cBold">Basic settings </b>for the <b class="cBold">tLogRow </b>component to display the output data in a tabular mode. For more information, see <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp1598315"> </a><div class="pSmartList2"><li>Save your Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1599338"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_CallWebJob4.png" id="wp1598512" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1598826"> </a><p class="pIndented1">
+The system generates three columns with the current date, first name, and last name and displays them onto the log console in a tabular mode.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tBufferOutput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tContextDump_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

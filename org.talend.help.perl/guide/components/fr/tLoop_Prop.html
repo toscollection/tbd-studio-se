@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:05:17">
+    <title>tLoop</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tIterateToFlow_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLoop_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2931980"> </a><h2 class="pHeading1">
+tLoop
+</h2>
+<a name="wp2931988"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFor.png" id="wp2931984" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2931995"> </a><h2 class="pHeading2">
+Propriétés du tLoop
+</h2>
+<a name="wp2932149"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2932003table2931998">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932003"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2932005"> </a><div class="pCellBody">
+Orchestration
+</div>
+</td>
+    <td><a name="wp2932014"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-12-11-02.jpg" height="59" width="112" id="wp2932010" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932019"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932024"> </a><div class="pCellBody">
+Le composant <b class="cBold">tLoop</b> fait une boucle sur l&#39;exécution d&#39;une tâche.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932031"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932036"> </a><div class="pCellBody">
+Le <b class="cBold">tLoop</b> permet d&#39;exécuter automatiquement une tâche ou un Job dans une boucle.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932043"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2932048"> </a><div class="pCellHeading">
+<em class="cEmphasis">Loop Type</em>
+</div>
+</td>
+    <td><a name="wp2932053"> </a><div class="pCellBody">
+Sélectionnez le type de boucle à effectuer&#160;: <b class="cBold">For</b> ou <b class="cBold">While</b>.<br /><b class="cBold">For&#160;</b>: La tâche ou le Job est exécuté(e) pour le nombre de boucle défini.<br /><b class="cBold">While&#160;</b>: La tâche ou le Job est exécuté(e) jusqu&#39;à ce que la condition soit rencontrée.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932070"> </a><div class="pCellBody">
+<b class="cBold">For</b>
+</div>
+</td>
+    <td><a name="wp2932075"> </a><div class="pCellHeading">
+<em class="cEmphasis">From</em>
+</div>
+</td>
+    <td><a name="wp2932077"> </a><div class="pCellBody">
+Saisissez le numéro de la première instance sur laquelle la boucle doit commencer. Si vous sélectionnez l&#39;instance numéro 2 comme instance de départ et que vous prenez un écart de 2, cela signifie que la boucle se fera sur tous les nombres pairs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932079"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932084"> </a><div class="pCellHeading">
+<em class="cEmphasis">To</em>
+</div>
+</td>
+    <td><a name="wp2932086"> </a><div class="pCellBody">
+Saisissez la dernière instance sur laquelle la boucle doit passer.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932088"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932093"> </a><div class="pCellHeading">
+<em class="cEmphasis">Step</em>
+</div>
+</td>
+    <td><a name="wp2932095"> </a><div class="pCellBody">
+Saisissez l&#39;écart entre deux instances avec lequel la boucle doit s&#39;effectuer. Un écart de 2 signifie que la boucle passe toutes les deux instances.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932100"> </a><div class="pCellBody">
+<b class="cBold">While</b>
+</div>
+</td>
+    <td><a name="wp2932105"> </a><div class="pCellHeading">
+<em class="cEmphasis">Declaration</em>
+</div>
+</td>
+    <td><a name="wp2932107"> </a><div class="pCellBody">
+Saisissez une expression déclenchant la boucle.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932109"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932114"> </a><div class="pCellHeading">
+<em class="cEmphasis">Condition</em>
+</div>
+</td>
+    <td><a name="wp2932116"> </a><div class="pCellBody">
+Saisissez la condition devant être rencontrée pour que la boucle s&#39;arrête.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932118"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2932123"> </a><div class="pCellHeading">
+<em class="cEmphasis">Iteration</em>
+</div>
+</td>
+    <td><a name="wp2932125"> </a><div class="pCellBody">
+Saisissez l&#39;expression décrivant l&#39;opération à effectuer à chaque boucle.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932477"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2932483"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2932487"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2932130"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932135"> </a><div class="pCellBody">
+Le composant <b class="cBold">tLoop</b> est un composant de début et requiert une connexion de type Iterate au composant suivant.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3466386"> </a><div class="pCellBody">
+<b class="cBold">Global Variables</b>
+</div>
+</td>
+    <td><a name="wp3466389"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3466400"> </a><div class="pCellBody">
+<b class="cBold">Current</b> <b class="cBold">value</b>&#160;: indique la valeur actuelle. Disponible comme variable <b class="cBold">Flow</b>.<br />    Retourne un entier.<br /><br /><b class="cBold">Current iteration</b>&#160;: indique le nombre d&#39;itérations. Disponible comme variable <b class="cBold">Flow</b>.<br />    Retourne un entier.<br /><br />Pour plus d&#39;informations concernant les variables, consultez&#160;<em class="cEmphasis">Utiliser les variables dans un Job, page 130</em> dans le <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3466419"> </a><div class="pCellBody">
+<b class="cBold">Connections</b>
+</div>
+</td>
+    <td><a name="wp3466422"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3466425"> </a><div class="pCellBody">
+Liens de sortie (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row</b>&#160;: Iterate.<br /><b class="cBold">Trigger</b>&#160;: OnSubjobOk, OnSubjobError, Run if, OnComponentOk, OnComponentError.<br /><br />Liens d&#39;entrée (d&#39;un composant à un autre)&#160;:<br /><b class="cBold">Row</b>&#160;: Iterate.<br /><b class="cBold">Trigger</b>&#160;: OnSubjobOk, OnSubjobError, Run if, OnComponentOk, OnComponentError, Synchronize, Parallelize. <br /><br />Pour plus d&#39;informations concernant les liens, consultez&#160;<em class="cEmphasis">Types de connexion</em>, dans le <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2932142"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2932144"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tIterateToFlow_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tLoop_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

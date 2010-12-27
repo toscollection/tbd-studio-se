@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Perl
+Bundle-SymbolicName: org.talend.help.perl;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.talend.help.perl.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.talend.commons.ui,
+ org.eclipse.help.webapp,
+ org.talend.core.runtime
+Bundle-Localization: plugin
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: .Talend SA.

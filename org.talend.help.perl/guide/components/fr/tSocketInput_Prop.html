@@ -1,0 +1,427 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:38">
+    <title>tSocketInput</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSendMail_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSocketInput_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1555935"> </a><h2 class="pHeading1">
+tSocketInput
+</h2>
+<a name="wp1527194"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tSocketInput_icon32_white.png" id="wp1527191" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1527841"> </a><h2 class="pHeading2">
+Propriétés du tSocketInput
+</h2>
+<a name="wp1528292"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1528346table1527845">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528346"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp1528348"> </a><div class="pCellBody">
+Internet
+</div>
+</td>
+    <td><a name="wp1528357"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-09-63-067.jpg" height="59" width="112" id="wp1528353" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528362"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1528367"> </a><div class="pCellBody">
+Le composant <b class="cBold">tSocketInput</b> ouvre un port de socket et permet d&#39;écouter les données envoyées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528374"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1528376"> </a><div class="pCellBody">
+Le <b class="cBold">tSocketInput</b> est un composant d&#39;écoute, permettant de transmettre des données via un port défini.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528383"> </a><div class="pCellBody">
+<b class="cBold">JAVA Basic settings</b>
+</div>
+</td>
+    <td><a name="wp1528388"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host name</em>
+</div>
+</td>
+    <td><a name="wp1528393"> </a><div class="pCellBody">
+Nom ou adresse IP du serveur Hôte.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528395"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528397"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp1528402"> </a><div class="pCellBody">
+Port d&#39;écoute à ouvrir.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1529296"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529299"> </a><div class="pCellHeading">
+<em class="cEmphasis">Timeout</em>
+</div>
+</td>
+    <td><a name="wp1529302"> </a><div class="pCellBody">
+Nombre de secondes avant fermeture du socket du port d&#39;écoute.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528407"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528409"> </a><div class="pCellHeading">
+<em class="cEmphasis">Uncompress</em>
+</div>
+</td>
+    <td><a name="wp1528414"> </a><div class="pCellBody">
+Cochez cette case pour extraire les données si nécessaire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528656"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528663"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp1528666"> </a><div class="pCellBody">
+Cette case est cochée par défaut et stoppe le Job en cas d&#39;erreur. Décochez cette case pour terminer le traitement avec les lignes sans erreurs, et ignorer les lignes en erreur. Vous pouvez récupérer les lignes en erreur, si vous le souhaitez. Pour cela, utilisez un lien <b class="cBold">Row</b> &gt; <b class="cBold">Rejects</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528707"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528714"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp1528717"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière séparant les champs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528721"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528728"> </a><div class="pCellHeading">
+<em class="cEmphasis">Row separator</em>
+</div>
+</td>
+    <td><a name="wp1528731"> </a><div class="pCellBody">
+Chaîne (ex&#160;: &quot;\n&quot;sous Unix) utilisée pour séparer les lignes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528735"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528738"> </a><div class="pCellHeading">
+<em class="cEmphasis">Escape Char</em>
+</div>
+</td>
+    <td><a name="wp1528741"> </a><div class="pCellBody">
+Caractère de la ligne à éviter.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528749"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528752"> </a><div class="pCellHeading">
+<em class="cEmphasis">Text enclosure</em>
+</div>
+</td>
+    <td><a name="wp1528755"> </a><div class="pCellBody">
+Caractères utilisés pour entourer le texte.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528526"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528533"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp1528540"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le <b class="cBold">Repository</b>.<br />Cliquez sur <b class="cBold">Edit Schema</b> pour modifier le schéma. Notez que si vous modifiez le schéma, il devient automatiquement built-in.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528544"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528547"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2374007"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma sera créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528562"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528565"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2374068"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé dans divers projets et Jobs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528802"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1528809"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp1528812"> </a><div class="pCellBody">
+Sélectionnez l&#39;encodage à partir de la liste ou sélectionnez <b class="cBold">Custom</b> et définissez-le manuellement. Ce champ est obligatoire pour la manipulation des données des bases de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1528471"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1528473"> </a><div class="pCellBody">
+Ce composant ouvre un point d&#39;accès au poste de travail ou au serveur. Ce composant est un composant de début de Job et s&#39;arrête uniquement après expiration.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1528480"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1528482"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+<a name="wp1528059"> </a><p class="pIndented1">
+Les propriétés Perl étant légérement différentes des propriétés Java, elles sont décrites dans le tableau suivant&#160;:
+</p>
+<a name="wp1528252"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp1529020table1528064">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1529020"> </a><div class="pCellBody">
+<b class="cBold">PERL basic settings</b>
+</div>
+</td>
+    <td><a name="wp1529025"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema type</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp1556607"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le Repository.<br />Cliquez sur Edit Schema pour modifier le schéma. Notez que si vous modifiez le schéma, il devient automatiquement built-in.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1529032"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529034"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2374026"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma sera créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1529044"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529046"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2374086"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisé dans divers projets et Jobs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1529165"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529172"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host name</em>
+</div>
+</td>
+    <td><a name="wp1529175"> </a><div class="pCellBody">
+Nom ou adresse IP du serveur Hôte
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1529179"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529186"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp1529189"> </a><div class="pCellBody">
+Port d&#39;écoute à ouvrir.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1529065"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529070"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp1529072"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière séparant les champs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1529074"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529079"> </a><div class="pCellHeading">
+<em class="cEmphasis">End of Line separator</em>
+</div>
+</td>
+    <td><a name="wp1529081"> </a><div class="pCellBody">
+Chaîne (ex&#160;: &quot;\n&quot; sous Unix) utilisée pour séparer les lignes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1529083"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529087"> </a><div class="pCellHeading">
+<em class="cEmphasis">End of data</em>
+</div>
+</td>
+    <td><a name="wp1529093"> </a><div class="pCellBody">
+Caractère, chaîne ou expression régulière indiquant la fin de la section de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp1529095"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp1529100"> </a><div class="pCellHeading">
+<em class="cEmphasis">Opening message</em> /<em class="cEmphasis">Message</em> /<em class="cEmphasis">Acknowledge message</em> <br />/<em class="cEmphasis">Closing message</em>
+</div>
+</td>
+    <td><a name="wp1529102"> </a><div class="pCellBody">
+Description du message, si nécessaire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp1529107"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp1529109"> </a><div class="pCellBody">
+Ce composant ouvre un point d&#39;accès à un poste de travail ou à un serveur. Ce composant débute un Job et ne s&#39;arrête qu&#39;après avoir reçu un message de fermeture.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tSendMail_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSocketInput_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

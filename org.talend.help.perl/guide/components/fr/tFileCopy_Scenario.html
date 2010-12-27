@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;: Récupérer un fichier de la corbeille</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileCopy_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileDelete_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1690800"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1690807"> </a><h2 class="pHeading2">
+Scénario&#160;: Récupérer un fichier de la corbeille
+</h2>
+<a name="wp1690810"> </a><p class="pIndented1">
+Ce scénario décrit un Job faisant une boucle sur une liste de fichiers, copie chaque fichier du répertoire source vers le répertoire cible. Puis il supprime les fichiers copiés du répertoire source.
+</p>
+<a name="wp1690818"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileCopy1.png" id="wp1690815" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1690830"> </a><div class="pSmartList2"><li>Cliquez-déposez les composants <b class="cBold">tFileList</b> et <b class="cBold">tFileCopy</b>.</li></div>
+<a name="wp1690837"> </a><div class="pSmartList2"><li>Reliez-les à l&#39;aide d&#39;une connexion <b class="cBold">Iterate</b>.</li></div>
+<a name="wp1693356"> </a><div class="pSmartList2"><li>Dans l&#39;onglet <b class="cBold">Basic settings</b> du composant <b class="cBold">tFileList</b>, spécifiez le répertoire sur lequel sera effectuée la boucle.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1690855"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileCopy2.png" id="wp1690852" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1693447"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Filemask</b>, paramétrez le masque du fichier en <em class="cEmphasis">&quot;*.txt&quot;</em> pour ne tenir compte que des fichiers avec cette extension. Dans cet exemple, la casse n&#39;est pas prise en compte, ainsi dans la liste déroulante <b class="cBold">Case Sensitive</b>, sélectionnez l&#39;option <b class="cBold">No</b>.</li></div>
+<a name="wp1693684"> </a><div class="pSmartList2"><li>Puis sélectionnez le composant <b class="cBold">tFileCopy</b> et paramétrez ses propriétés dans l&#39;onglet <b class="cBold">Basic settings</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1693694"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileCopy3.png" id="wp1693691" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1693699"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, appuyez sur <b class="cBold">Ctrl+Espace</b> pour accéder à la liste des variables.</li></div>
+<a name="wp1693705"> </a><div class="pSmartList2"><li>Sélectionnez la variable globale <code class="cCode">((String)globalMap.get(&quot;tFileList_1_CURRENT_FILEPATH&quot;))</code> si vous travaillez en Java, ou <code class="cCode">$_globals{tFileList_1}{CURRENT_FILEPATH}</code> si vous travaillez en Perl. De cette manière, tous les fichiers du répertoire source peuvent être traités.</li></div>
+<a name="wp1690908"> </a><div class="pSmartList2"><li>Cochez la case<b class="cBold"> Remove Source file</b> pour supprimer le fichier ayant été copié.</li></div>
+<a name="wp1690914"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Replace existing file</b> pour écraser tout fichier déjà existant dans le répertoire de destination.</li></div>
+<a name="wp1690923"> </a><div class="pSmartList2"><li>Enregistrez le Job et appuyez sur <b class="cBold">F6</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1690929"> </a><p class="pIndented1">
+Les fichiers sont copiés dans le répertoire de destination et supprimés du répertoire source.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileCopy_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileDelete_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

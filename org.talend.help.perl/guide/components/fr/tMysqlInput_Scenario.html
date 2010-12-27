@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Ecrire des colonnes dynamiques d&#39;une base de données MySQL vers un fichier de sortie</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlInput_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlLastInsertId_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3857907"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3857913"> </a><h2 class="pHeading2">
+Scénario&#160;: Ecrire des colonnes dynamiques d&#39;une base de données MySQL vers un fichier de sortie
+</h2>
+<a name="wp3857918"> </a><p class="pIndented1">
+Dans ce scénario, vous allez lire des colonnes dynamiques d&#39;une base de données MySQL, les mapper puis les écrire dans une table, dans un fichier de sortie local. En définissant une colonne dynamique et les noms connus des colonnes, vous pouvez retrouver toutes les colonnes de la table de la base de données, y compris les colonnes inconnues.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3857930"> </a><div class="pSmartList2"><li>Déposez un composant <b class="cBold">tMysqlInput</b>, un composant <b class="cBold">tMap</b> et un composant <b class="cBold">tFileOutputDelimited</b> dans l&#39;espace de modélisation graphique.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3857942"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_Component_Connections.png" id="wp3857939" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3857960"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tMysqlInput</b> au <b class="cBold">tMap</b> à l&#39;aide d&#39;un lien <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp3857976"> </a><div class="pSmartList2"><li>Reliez le <b class="cBold">tMap</b> au <b class="cBold">tFileOutputDelimited</b> à l&#39;aide d&#39;un lien <b class="cBold">Row</b> &gt; <b class="cBold">*New Output* (Main)</b>.</li></div>
+<a name="wp3857985"> </a><div class="pSmartList2"><li>Double-cliquez sur le <b class="cBold">tMysqlInput</b> afin d&#39;ouvrir sa vue <b class="cBold">Basic Settings</b> dans l&#39;onglet <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3857997"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties.png" id="wp3857994" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3858003"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3858001" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+<br />La fonction de schéma dynamique n&#39;est supportée qu&#39;en mode <b class="cBold">Built-In</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858019"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Property Type</b>, sélectionnez <b class="cBold">Built-in</b>.</li></div>
+<a name="wp3858026"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">DB Version</b>, sélectionnez la version de la base de données que vous utilisez.</li></div>
+<a name="wp3858033"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Host</b>, saisissez l&#39;adresse IP du serveur de la base de données.</li></div>
+<a name="wp3858040"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Port</b>, saisissez le numéro du port d&#39;écoute du serveur de la base de données.</li></div>
+<a name="wp3858049"> </a><div class="pSmartList2"><li>Dans les champs <b class="cBold">Username</b> et <b class="cBold">Password</b>, saisissez respectivement votre identifiant et votre mot de passe de connexion au serveur de la base de données.</li></div>
+<a name="wp3858062"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Schema type</b>, sélectionnez<b class="cBold"> Built-in</b> puis cliquez sur <b class="cBold">Edit schema</b> afin de définir le schéma dynamique.<br />L&#39;éditeur du schéma s&#39;ouvre&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3858071"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties_Edit_Schema.png" id="wp3858068" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858083"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <img src="../Images/plus_button.png" id="wp3858079" border="0" hspace="0" vspace="0"/> pour ajouter une ligne au schéma.</li></div>
+<a name="wp3858092"> </a><div class="pSmartList2"><li>Dans les colonnes <b class="cBold">Column</b> et<b class="cBold"> Db Column</b>, cliquez dans les champs afin de saisir le nom des colonnes correspondantes. </li></div>
+<a name="wp3858099"> </a><div class="pSmartList2"><li>Cliquez sur la liste <b class="cBold">Type</b> pour définir le type des données.<br />Cliquez sur la flèche et sélectionnez <b class="cBold">Dynamic</b> dans la liste.</li></div>
+<a name="wp3858110"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp3858108" border="0" hspace="0" vspace="0"/><br />
+<br />Dans la liste <b class="cBold">Type</b>, le type de la colonne dynamique doit être défini comme <b class="cBold">Dynamic</b>.
+</p>
+<a name="wp3858126"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer l&#39;éditeur du schéma.</li></div>
+<a name="wp3858135"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table Name</b>, cliquez sur le bouton<b class="cBold"> [...]</b> afin de sélectionner la table souhaitée de la base de données.<br />Une boîte de dialogue affiche une arborescence de toutes les tables de la base de données sélectionnée&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3858144"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties_choose_table.png" id="wp3858141" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858153"> </a><div class="pSmartList2"><li>Cliquez sur la table souhaitée, puis cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue.</li></div>
+<a name="wp3858163"> </a><div class="pSmartList2"><li>Définissez le type de requête, dans la liste<b class="cBold"> Query Type</b>, comme <b class="cBold">Built-In</b>. </li></div>
+<a name="wp3858169"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Query</b>, saisissez la requête permettant de récupérer toutes les colonnes de la table.</li></div>
+<a name="wp3858177"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp3858175" border="0" hspace="0" vspace="0"/><br />
+Dans l&#39;instruction SELECT, il est nécessaire d&#39;utiliser le caractère *, pour récupérer toutes les colonnes de la table sélectionnée.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3858185"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tMysqlInput_Basic_Properties_Query.png" id="wp3858182" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858200"> </a><div class="pSmartList2"><li>Cliquez sur le <b class="cBold">tMap</b> afin d&#39;ouvrir sa vue <b class="cBold">Basic Settings</b> dans l&#39;onglet <b class="cBold">Component</b>. </li></div>
+<a name="wp3858209"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Map Editor</b> pour mapper la colonne du fichier source.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3858218"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_schema_S2_tMap_Edit1.png" id="wp3858215" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858223"> </a><div class="pSmartList2"><li>Déposez la colonne définie comme dynamique du schéma d&#39;entrée, à gauche, dans le schéma de sortie, à droite.<br />La colonne déposée dans le schéma de sortie contient ses valeurs d&#39;origine.</li></div>
+<a name="wp3858231"> </a><p class="pBodyRelative">
+<br />
+<img src="../Images/warning_small.png" align="left" id="wp3858229" border="0" hspace="0" vspace="0"/><br />
+La colonne dynamique doit être mappée seule et ne peut subir de transformation. Elle ne peut être utilisée dans une expression de filtre ou dans des variables. Elle ne peut être renommée dans la table de sortie et ne peut être utilisée comme condition de jointure.
+</p>
+</ul></div>
+</ul></div>
+<a name="wp3858239"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_schema_S2_tMap_Edit2.png" id="wp3858236" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858251"> </a><div class="pSmartList2"><li>Cliquez sur <b class="cBold">OK</b> pour fermer l&#39;éditeur <b class="cBold">Map Editor</b>.</li></div>
+<a name="wp3858260"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tFileOutputDelimited</b> afin de définir ses <b class="cBold">Basic Settings</b> dans l&#39;onglet <b class="cBold">Component</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3858272"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_tFileoutputDelimited_Basic_Properties.png" id="wp3858269" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858283"> </a><div class="pSmartList2"><li>A côté du champ <b class="cBold">File Name</b>, cliquez sur le bouton <b class="cBold">[...]</b> afin de parcourir votre répertoire jusqu&#39;à l&#39;endroit où vous souhaitez sauvegarder votre fichier de sortie, puis saisissez un nom pour le fichier.</li></div>
+<a name="wp3858291"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Include Header</b> pour récupérer le nom des colonnes ainsi que les données.</li></div>
+<a name="wp3858297"> </a><div class="pSmartList2"><li>Sauvegardez votre Job et appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter.<br />Le fichier de sortie contient le nom de toutes les colonnes et les données correspondantes, récupérés de la base de données via le schéma dynamique&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3858306"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/dynamic_Schema_S2_Output_File.png" id="wp3858303" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3858315"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3858310" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Le Job peut également être exécuté en mode <b class="cBold">Traces Debug</b>, qui vous permet de voir les lignes telles qu&#39;elles sont écrites dans le fichier de sortie, dans l&#39;espace de modélisation graphique.
+</p>
+<a name="wp3858319"> </a><p class="pIndented1">
+Pour plus d&#39;informations concernant la définition et le mapping des schémas dynamiques, consultez la section&#160;<em class="cEmphasis">Schéma dynamique</em> du <b class="cBold">Guide Utilisateur</b> <b class="cBold">Talend Integration Suite Studio</b>.
+</p>
+<a name="wp3858334"> </a><p class="pIndented1">
+Pour un exemple d&#39;écriture de colonnes dynamiques dans une base de données, consultez&#160;<a href="tMysqlOutput_Scenario.html#wp3662803"><em class="cEmphasis">Scénario 4&#160;: Ecrire des colonnes dynamiques d&#39;un fichier source vers une base de données MySQL</em></a>.
+</p>
+<a name="wp3858343"> </a><p class="pIndented1">
+Pour des scénarios associés, consultez&#160;:
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3858350"> </a><div class="pSmartList2"><li><a href="tContextLoad_Scenario.html#wp1558892"><em class="cEmphasis">Scénario&#160;: Utiliser un contexte dynamique lors d&#39;un insert dans une base de données MySQL</em></a>.</li></div>
+<a name="wp3858369"> </a><div class="pSmartList2"><li><a href="tDBInput_Scenario.html#wp3724095"><em class="cEmphasis">Scénario&#160;1&#160;: Afficher les données sélectionnées à partir d&#39;une table</em></a>.</li></div>
+<a name="wp3858379"> </a><div class="pSmartList2"><li><a href="tDBInput_Scenario.html#wp3724252"><em class="cEmphasis">Scénario&#160;2&#160;: Utiliser la variable StoreSQLQuery</em></a>.</li></div>
+<a name="wp3859358"> </a><div class="pSmartList2"><li><a href="tMysqlOutput_Scenario.html#wp3662803"><em class="cEmphasis">Scénario 4&#160;: Ecrire des colonnes dynamiques d&#39;un fichier source vers une base de données MySQL</em></a>.</li></div>
+</ul></div>
+</ul></div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlInput_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlLastInsertId_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

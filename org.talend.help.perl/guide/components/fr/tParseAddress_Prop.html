@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:23">
+    <title>tParseAddress</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleValidRows_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParseAddress_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3483916"> </a><h2 class="pHeading1">
+tParseAddress
+</h2>
+<a name="wp2769727"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tParseAddress_icon32_white.png" id="wp2769720" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2769737"> </a><h2 class="pHeading2">
+Propriétés du tParseAddress
+</h2>
+<a name="wp2769939"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2770782table2769741">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2770782"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2770784"> </a><div class="pCellBody">
+Data Quality
+</div>
+</td>
+    <td><a name="wp2770792"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/perl_icon.png" id="wp2770789" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2770797"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2770799"> </a><div class="pCellBody">
+Ce composant analyse les adresses dans une colonne définie du schéma et les découpe par types de champs.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2770806"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2770808"> </a><div class="pCellBody">
+Découper les données en différentes colonnes pour trier les différentes parties afin d&#39;améliorer la qualité des données traitées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2770815"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2770827"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2770829"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (built-in) soit distant dans le Repository.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2770831"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770833"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770838"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé ponctuellement pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2770849"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770851"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770856"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisable dans divers projets et Job designs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2770930"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770933"> </a><div class="pCellHeading">
+<em class="cEmphasis">Column to parse</em>
+</div>
+</td>
+    <td><a name="wp2770936"> </a><div class="pCellBody">
+Sélectionnez la colonne dont vous souhaitez analyser et décomposer les données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2770954"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770957"> </a><div class="pCellHeading">
+<em class="cEmphasis">Country</em>
+</div>
+</td>
+    <td><a name="wp2770960"> </a><div class="pCellBody">
+Sélectionnez le pays d&#39;où proviennent les clients.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2770870"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2770872"> </a><div class="pCellHeading">
+<em class="cEmphasis">Correct case</em>
+</div>
+</td>
+    <td><a name="wp2770875"> </a><div class="pCellBody">
+Cochez cette case pour que le composant corrige la casse, c&#39;est-à-dire qu&#39;il mette, au besoin, une majuscule en début de nom, et le reste en minuscules.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2770985"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770988"> </a><div class="pCellHeading">
+<em class="cEmphasis">Auto clean</em>
+</div>
+</td>
+    <td><a name="wp2770991"> </a><div class="pCellBody">
+Cochez cette case pour commencer par supprimer les caractères non alphanumériques avant d&#39;essayer de décomposer les adresses.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2771011"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2771014"> </a><div class="pCellHeading">
+<em class="cEmphasis">Abbreviate subcountry</em>
+</div>
+</td>
+    <td><a name="wp2771017"> </a><div class="pCellBody">
+Cochez cette case pour abréger automatiquement le nom des régions ou provinces. Si le nom est déjà sous sa forme abrégé, il ne sera pas modifié.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2771035"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2771038"> </a><div class="pCellHeading">
+<em class="cEmphasis">Allow only abbreviated subcountry</em>
+</div>
+</td>
+    <td><a name="wp2771041"> </a><div class="pCellBody">
+Cochez cette case pour n&#39;autoriser que les noms de régions ou provinces abrégés. Le traitement des données sera plus rapide et vérifiera que l&#39;adresse correspond bien aux standards postaux.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2770878"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2770880"> </a><div class="pCellBody">
+tStatCatcher Statistics 
+</div>
+</td>
+    <td><a name="wp2770882"> </a><div class="pCellBody">
+Cochez cette case pour collecter les métadonnées de process du Job, aussi bien au niveau du Job qu&#39;au niveau de chaque composant. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2770888"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2770891"> </a><div class="pCellBody">
+Ce composant est une étape intermédiaire. Cela requiert un flux entrant et une sortie.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2770898"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2770900"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tOracleValidRows_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tParseAddress_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

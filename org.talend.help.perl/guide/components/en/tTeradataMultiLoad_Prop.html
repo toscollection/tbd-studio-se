@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:26:00">
+    <title>tTeradataMultiLoad</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tTeradataInput_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tTeradataMultiLoad_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2947383"> </a><h2 class="pHeading1">
+tTeradataMultiLoad
+</h2>
+<a name="wp2947395"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tTeradataMultiLoad_icon32_white.png" id="wp2947388" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2947405"> </a><h2 class="pHeading2">
+tTeradataMultiLoad Properties
+</h2>
+<a name="wp2947802"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2947417table2947409">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947417"> </a><div class="pCellBody">
+<b class="cBold">Component Family</b>
+</div>
+</td>
+    <td><a name="wp2947420"> </a><div class="pCellBody">
+Databases/Teradata 
+</div>
+</td>
+    <td><a name="wp2947431"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2947427" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947439"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2947450"> </a><div class="pCellBody">
+<b class="cBold">tTeradataMultiLoad </b>reads a database and extracts fields using queries.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947457"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2947464"> </a><div class="pCellBody">
+<b class="cBold">tTeradataMultiLoad</b> executes a database query according to a strict order which must be the same as the one in the schema. The retrieve list of fields is then transfered to the next component, using a connexion flow (<b class="cBold">Main row</b>).  
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947479"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2947486"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2947489"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947493"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947496"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947503"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947507"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947510"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3601769"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file in which the properties are stored. The fields that follow are completed automatically using the data retrieved.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947521"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947528"> </a><div class="pCellHeading">
+<em class="cEmphasis">Execution platform</em>
+</div>
+</td>
+    <td><a name="wp2947531"> </a><div class="pCellBody">
+Select the Operating System type you use.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947535"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947546"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em> <em class="cEmphasis">name</em>
+</div>
+</td>
+    <td><a name="wp2947549"> </a><div class="pCellBody">
+Database name.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947553"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947560"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2947567"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947571"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947578"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2947581"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947585"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947595"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2947599"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields to be processed and passed on to the next component. The schema is either built-in or stored remotely in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947603"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947606"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947613"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema is created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947628"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947631"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947638"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947653"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947659"> </a><div class="pCellHeading">
+<em class="cEmphasis">Script generated folder</em>
+</div>
+</td>
+    <td><a name="wp2947663"> </a><div class="pCellBody">
+Browse your directory and select the destination of the file which will be created.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947667"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947674"> </a><div class="pCellBody">
+<em class="cEmphasis">Action to data</em>
+</div>
+</td>
+    <td><a name="wp2947896"> </a><div class="pCellBody">
+On the data of the table defined, you can perform:<br /><b class="cBold">Insert</b>: Add new entries to the table. If duplicates are found, job stops.<br /><b class="cBold">Update</b>: Make changes to existing entries<br /><b class="cBold">Insert or update</b>: Add entries or update existing ones.<br /><b class="cBold">Delete</b>: Remove entries corresponding to the input flow.
+</div>
+<a name="wp2947924"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2947921" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+It is necessary to specify at least one column as a primary key on which the Update and Delete operations are based. You can do that by clicking <b class="cBold">Edit Schema</b> and selecting the check box(es) next to the column(s) you want to set as primary key(s).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947681"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947688"> </a><div class="pCellBody">
+<em class="cEmphasis">Where condition in case Delete</em>
+</div>
+</td>
+    <td><a name="wp2947691"> </a><div class="pCellBody">
+Type in a condition, which, once verified, will delete the row.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947695"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947974"> </a><div class="pCellHeading">
+<em class="cEmphasis">Load file</em>
+</div>
+</td>
+    <td><a name="wp2947977"> </a><div class="pCellBody">
+Browse your directory and select the file from which you want to load data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947709"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947984"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em>
+</div>
+</td>
+    <td><a name="wp2947987"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947734"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947994"> </a><div class="pCellHeading">
+<em class="cEmphasis">Error file</em>
+</div>
+</td>
+    <td><a name="wp2947997"> </a><div class="pCellBody">
+Browse your directory and select the destination of the file where the error messages will be recorded.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3552981"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3552988"> </a><div class="pCellHeading">
+<em class="cEmphasis">Define Log table</em>
+</div>
+</td>
+    <td><a name="wp3552991"> </a><div class="pCellBody">
+This check box is selected to define a log table you want to use in place of the default one that is the database table you defined in <b class="cBold">Basic settings</b>. The syntax required to define the log table is <em class="cEmphasis">databasename.logtablename</em>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3553003"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3553010"> </a><div class="pCellHeading">
+<em class="cEmphasis">BEGIN LOAD</em>
+</div>
+</td>
+    <td><a name="wp3553013"> </a><div class="pCellBody">
+This field allows you to define your BEGIN LOAD command to initiate or restart a load task. You can specify the number of sessions to use and any other parameters needed to execute the task.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3553017"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3553024"> </a><div class="pCellHeading">
+<em class="cEmphasis">Return mload error</em>
+</div>
+</td>
+    <td><a name="wp3553027"> </a><div class="pCellBody">
+Select this check box to specify the exit code number to indicate the point at which an error message should display in the console.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3640893"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3640896"> </a><div class="pCellHeading">
+<em class="cEmphasis">Define character set</em>
+</div>
+</td>
+    <td><a name="wp3640899"> </a><div class="pCellBody">
+Specify the character encoding you need use for your system
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2947769"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2947780"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2947783"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2947791"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2947794"> </a><div class="pCellBody">
+This component offers the flexibility of the DB query and covers all possible SQL queries.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tTeradataInput_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tTeradataMultiLoad_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

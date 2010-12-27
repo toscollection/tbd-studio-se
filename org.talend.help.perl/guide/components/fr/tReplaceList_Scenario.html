@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:23">
+    <title>Scénario&#160;: Remplacement à partir d&#39;un fichier de référence</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tReplaceList_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSchemaComplianceCheck_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1687984"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1687992"> </a><h2 class="pHeading2">
+Scénario&#160;: Remplacement à partir d&#39;un fichier de référence
+</h2>
+<a name="wp1687995"> </a><p class="pIndented1">
+Le Job suivant effectue un rechercher/remplacer sur une liste d&#39;Etats avec leur code correspondant. Les codes correspondant sont extraits d&#39;un fichier de référence placé en flux Lookup dans le Job. Le flux principal est dupliqué et les deux sorties sont affichées dans la console, pour constater l&#39;état du flux principal avant et après remplacement.
+</p>
+<a name="wp1688003"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList1.png" id="wp1688000" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1688014"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants de la <b class="cBold">Palette&#160;</b>: <b class="cBold">tMysqlInput</b>, <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tReplicate</b>, <b class="cBold">tReplaceList</b> et <b class="cBold">tLogRow</b> (x2). Notez que si vos schémas d&#39;entrée sont déjà centralisés sur le Repository, vous pouvez, d&#39;un simple cliquer-déposer, les faire passer du noeud correspondant du répertoire Metadata du Repository vers l&#39;espace de modélisation. Cela permettra de récupérer automatiquement les propriétés des composants d&#39;entrée. Pour plus d&#39;informations, consultez <em class="cEmphasis">Déposer des composants à partir du répertoire Metadata</em> du Guide utilisateur de Talend Open Studio. </li></div>
+<a name="wp1690569"> </a><div class="pSmartList2"><li>Connectez les composants à l&#39;aide de liens <b class="cBold">Main Row</b> via un clic-droit sur chaque composant. Notez que le lien de type main row provenant du flux de référence (<b class="cBold">tFileInputDelimited</b>) se nomme lookup row.</li></div>
+<a name="wp1688048"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tMysqlInput</b> et définissez les paramètres du flux d&#39;entrée.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1688055"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList3.png" id="wp1688052" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1688066"> </a><div class="pSmartList2"><li>Le schéma d&#39;entrée est composé de deux colonnes&#160;: <em class="cEmphasis">Names</em>, <em class="cEmphasis">States</em>. La colonne States regroupe le nom des Etats des Etats-Unis qui seront remplacés par leur code respectif.</li></div>
+<a name="wp1691763"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Query</b>, assurez-vous que la colonne <em class="cEmphasis">State</em> est incluse dans la déclaration <code class="cCode">Select</code>. Dans cet exemple, toutes les colonnes sont sélectionnées.</li></div>
+<a name="wp1691773"> </a><div class="pSmartList2"><li>Vérifiez les paramètres du composant <b class="cBold">tReplicate</b>. Le schéma est simplement divisé en deux flux identiques, mais aucun changement n&#39;a été effectué sur le schéma.</li></div>
+<a name="wp1691780"> </a><div class="pSmartList2"><li>Puis double-cliquez sur le composant <b class="cBold">tFileInputDelimited</b>, pour paramétrer le fichier de référence.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1691789"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList4.png" id="wp1691786" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1691802"> </a><div class="pSmartList2"><li>Le fichier comporte deux colonnes&#160;: <em class="cEmphasis">Postal</em> et <em class="cEmphasis">State</em>. <em class="cEmphasis">Postal</em> correspond au code postal de l&#39;Etat de la colonne <em class="cEmphasis">State</em> correspondante.</li></div>
+<a name="wp1691180"> </a><div class="pSmartList2"><li>Les champs sont délimités par des point-virgules et les lignes par des retours charriot.</li></div>
+<a name="wp1691185"> </a><div class="pSmartList2"><li>Modifiez le schéma du flux lookup.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1691192"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList5.png" id="wp1691189" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1691199"> </a><div class="pSmartList2"><li>Assurez-vous que la colonne lookup sur laquelle est effectuée la recherche (dans cet exemple&#160;: <em class="cEmphasis">State</em>) est définie comme clé, pour s&#39;assurer que les données cherchées sont uniques.</li></div>
+<a name="wp1688152"> </a><div class="pSmartList2"><li>Sélectionnez le composant <b class="cBold">tReplaceList</b> et paramétrez l&#39;opération à effectuer.</li></div>
+<a name="wp1688157"> </a><div class="pSmartList2"><li>Le schéma est récupéré à partir du composant précédent dans le flux principal.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1688164"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList2.png" id="wp1688161" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1688172"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Lookup search index</b>, renseignez la position de la colonne sur laquelle est effectuée la recherche. Dans cet exemple, <em class="cEmphasis">State</em> est la deuxième colonne du fichier d&#39;entrée lookup. Ainsi, saisissez&#160;<b class="cBold">1</b> dans ce champ.</li></div>
+<a name="wp1688185"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Lookup replacement index</b>, renseignez le numéro de la colonne contenant les valeurs de remplacement, dans cet exemple&#160;: <em class="cEmphasis">Postal</em> pour le code postal de l&#39;Etat.</li></div>
+<a name="wp1688198"> </a><div class="pSmartList2"><li>Dans le tableau <b class="cBold">Column options</b>, sélectionnez la colonne <em class="cEmphasis">States</em> puisque dans cet exemple le nom des Etats doit être remplacé par leur code correspondant.</li></div>
+<a name="wp1688208"> </a><div class="pSmartList2"><li>Pour les deux composants <b class="cBold">tLogRow</b>, cochez la case <b class="cBold">Print values in table cells</b> pour que les sorties soient plus claires.</li></div>
+<a name="wp1692450"> </a><div class="pSmartList2"><li>Enregistrez le Job et exécutez-le.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1692457"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList6.png" id="wp1692454" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1692460"> </a><p class="pIndented1">
+Le premier flux de sortie affiche la colonne States avec les noms des Etats puisqu&#39;il provient du flux d&#39;entrée principal.
+</p>
+<a name="wp3002013"> </a><p class="pIndented1">
+Le deuxième flux affiche la colonne States après que le nom des Etats aient été remplacés par leur codes postaux respectifs.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tReplaceList_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSchemaComplianceCheck_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

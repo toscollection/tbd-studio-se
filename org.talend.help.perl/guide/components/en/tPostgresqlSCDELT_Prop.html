@@ -1,0 +1,401 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:42">
+    <title>tPostgresqlSCDELT</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPostgresqlSCD_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPostgresqlSCDELT_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2944985"> </a><h2 class="pHeading1">
+tPostgresqlSCDELT
+</h2>
+<a name="wp2944994"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tPostgresqlSCDELT_icon32_white.png" id="wp2944989" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2945001"> </a><h2 class="pHeading2">
+tPostgresqlSCDELT Properties
+</h2>
+<a name="wp2945341"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2945009table2945004">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945009"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2945011"> </a><div class="pCellBody">
+Databases/Postgresql
+</div>
+</td>
+    <td><a name="wp2945020"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-02-32-31.jpg" height="59" width="116" id="wp2945016" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945025"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2945030"> </a><div class="pCellBody">
+<b class="cBold">tPostgresqlSCDELT</b> reflects and tracks changes in a dedicated Postgresql SCD table.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945037"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2945042"> </a><div class="pCellBody">
+<b class="cBold">tPostgresqlSCDELT</b> addresses Slowly Changing Dimension needs through SQL queries (server-side processing mode), and logs the changes into a dedicated DB2 SCD table.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945049"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2945054"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2945062"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945064"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945066"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945071"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally. Enter properties manually.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945073"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945075"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945080"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file where Properties are stored. The fields that come after are pre-filled in using the fetched data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945082"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945086"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2945089"> </a><div class="pCellBody">
+Select this check box and click the relevant <b class="cBold">tPostgresqlConnection </b>component on the <b class="cBold">Component List</b> to reuse the connection details you already defined.<br />
+</div>
+<a name="wp3450064"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3450061" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using, in <a href="Databases_group_intro.html"><em class="cEmphasis">Databases components</em></a>.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945097"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945102"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2945104"> </a><div class="pCellBody">
+The IP address of the database server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945106"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945111"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2945113"> </a><div class="pCellBody">
+Listening port number of database server.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945115"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945120"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2945122"> </a><div class="pCellBody">
+Name of the database
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945124"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945129"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> and <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2945134"> </a><div class="pCellBody">
+User authentication data for a dedicated database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945136"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945141"> </a><div class="pCellHeading">
+<em class="cEmphasis">Source table</em>
+</div>
+</td>
+    <td><a name="wp2945143"> </a><div class="pCellBody">
+Name of the input DB2 SCD table.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945145"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945150"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table</em>
+</div>
+</td>
+    <td><a name="wp2945152"> </a><div class="pCellBody">
+Name of the table to be written. Note that only one table can be written at a time
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945154"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945159"> </a><div class="pCellHeading">
+<em class="cEmphasis">Action on table</em>
+</div>
+</td>
+    <td><a name="wp2945161"> </a><div class="pCellBody">
+Select to perform one of the following operations on the table defined:<br /><b class="cBold">None</b>: No action carried out on the table.<br /><b class="cBold">Drop and create table</b>: The table is removed and created again<br /><b class="cBold">Create table</b>: A new table gets created.<br /><b class="cBold">Create table if not exists</b>: A table gets created if it does not exist.<br /><b class="cBold">Clear table</b>: The table content is deleted. You have the possibility to rollback the operation.<br /><b class="cBold">Truncate table</b>: The table content is deleted. You don not have the possibility to rollback the operation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945181"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945188"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> and <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2945191"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields to be processed and passed on to the next component. The schema is either built-in or remotely stored in the Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945193"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945195"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945200"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: The schema is created and stored locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945212"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945214"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945219"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: The schema already exists and is stored in the Repository, hence can be reused. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945231"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945236"> </a><div class="pCellHeading">
+<em class="cEmphasis">Surrogate Key</em>
+</div>
+</td>
+    <td><a name="wp2945238"> </a><div class="pCellBody">
+Select the surrogate key column from the list.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945240"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945245"> </a><div class="pCellHeading">
+<em class="cEmphasis">Creation</em>
+</div>
+</td>
+    <td><a name="wp2945247"> </a><div class="pCellBody">
+Select the method to be used for the surrogate key generation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945249"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945254"> </a><div class="pCellHeading">
+<em class="cEmphasis">Source Key</em>s
+</div>
+</td>
+    <td><a name="wp2945256"> </a><div class="pCellBody">
+Select one or more columns to be used as keys, to ensure the unicity of incoming data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945258"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945263"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use SCD Type 1 fields</em>
+</div>
+</td>
+    <td><a name="wp2945265"> </a><div class="pCellBody">
+Use type 1 if tracking changes is not necessary. SCD Type 1 should be used for typos corrections for example. Select the columns of the schema that will be checked for changes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945267"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945272"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use SCD Type 2 fields</em>
+</div>
+</td>
+    <td><a name="wp2945274"> </a><div class="pCellBody">
+Use type 2 if changes need to be tracked down. SCD Type 2 should be used to trace updates for example. Select the columns of the schema that will be checked for changes.<br /><b class="cBold">Start date</b>: Adds a column to your SCD schema to hold the start date value. You can select one of the input schema columns as Start Date in the SCD table.<br /><b class="cBold">End Date</b>: Adds a column to your SCD schema to hold the end date value for the record. When the record is currently active, the End Date column shows a null value, or you can select <b class="cBold">Fixed Year value</b> and fill it in with a fictive year to avoid having a null value in the End Date field.<br /><b class="cBold">Log Active Status</b>: Adds a column to your SCD schema to hold the <b class="cBold">true</b> or <b class="cBold">false</b> status value. This column helps to easily spot the active record.<br /><b class="cBold">Log versions</b>: Adds a column to your SCD schema to hold the version number of the record.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945301"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2945306"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding Type</em>
+</div>
+</td>
+    <td><a name="wp2945308"> </a><div class="pCellBody">
+Select the encoding type from the list or select <b class="cBold">Custom</b> and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945313"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945318"> </a><div class="pCellHeading">
+<em class="cEmphasis">Enable debug mode</em>
+</div>
+</td>
+    <td><a name="wp2945320"> </a><div class="pCellBody">
+Select this check box to display each step during processing entries in a database.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2945322"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2945327"> </a><div class="pCellBody">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2945329"> </a><div class="pCellBody">
+Select this check box to collect log data at the component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2945334"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2945336"> </a><div class="pCellBody">
+This component is used as an output component. It requires an input component and Row main link as input.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tPostgresqlSCD_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tPostgresqlSCDELT_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:02">
+    <title>Scénario&#160;: Extraire des champs clés d&#39;un email</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputMail_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputMSDelimited_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3431223"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3431229"> </a><h2 class="pHeading2">
+Scénario&#160;: Extraire des champs clés d&#39;un email
+</h2>
+<a name="wp1697951"> </a><p class="pIndented1">
+Ce scénario est constitué de deux composants et a pour objectif d&#39;extraire certains champs clés et d&#39;en afficher les valeurs dans la console <b class="cBold">Run</b>.
+</p>
+<a name="wp1697962"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputMail1.png" id="wp1697959" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1697974"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants <b class="cBold">tFileInputMail</b> et <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp2761036"> </a><div class="pSmartList2"><li>Reliez les composants à l&#39;aide d&#39;un lien de type<b class="cBold"> Row Main</b>. </li></div>
+<a name="wp1697982"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tFileInputMail</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et configurer les paramètres de base&#160;:</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1697989"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputMail2.png" id="wp1697986" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1697993"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">File Name</b>, sélectionnez le fichier email à traiter. Renseignez manuellement le chemin d&#39;accès ou cliquez sur le bouton <b class="cBold">[...]</b> pour parcourir vos dossiers jusqu&#39;au fichier choisi. </li></div>
+<a name="wp2761116"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">[...]</b> à côté du champ <b class="cBold">Edit schema</b> pour ouvrir la boîte de dialogue permettant de définir le schéma à afficher en sortie. </li></div>
+<a name="wp2761125"> </a><div class="pSmartList2"><li>Définissez votre schéma en incluant toutes les colonnes que vous souhaitez retrouver dans le flux de sortie. Dans cet exemple, le schéma comporte quatre colonnes&#160; <em class="cEmphasis">Date</em>, <em class="cEmphasis">Author</em>, <em class="cEmphasis">Object</em> et <em class="cEmphasis">Status</em>. </li></div>
+<a name="wp1696824"> </a><div class="pSmartList2"><li>Une fois défini, cliquez sur <b class="cBold">OK</b> pour fermer la boîte de dialogue et propager le schéma dans le tableau <b class="cBold">Mail parts.</b></li></div>
+<a name="wp1696830"> </a><div class="pSmartList2"><li>Dans la colonne <b class="cBold">Mail part</b> du tableau, saisissez les clés standards des parties header (en -tête) et body (corps de message) qui seront utilisées pour retrouver les valeurs à envoyer en sortie.</li></div>
+<a name="wp2761276"> </a><div class="pSmartList2"><li>Cochez la case <b class="cBold">Multi Value</b> pour chacune des clés standards pouvant se retrouver plus d&#39;une fois dans votre fichier d&#39;entrée. Définissez si besoin un séparateur pour les valeurs de ces clés dans le champ <b class="cBold">Separator</b>. </li></div>
+<a name="wp2761286"> </a><div class="pSmartList2"><li>Double-cliquez sur le composant <b class="cBold">tLogRow</b> pour afficher l&#39;onglet <b class="cBold">Basic settings</b> de la vue <b class="cBold">Component</b> et configurer les paramètres de base. </li></div>
+<a name="wp2761296"> </a><div class="pSmartList2"><li>Définissez le composant <b class="cBold">tLogRow</b> afin que les valeurs affichées soient séparées par un retour chariot. Sous Windows, saisissez <em class="cEmphasis">\n</em> entre guillemets doubles. Pour plus d&#39;informations sur le composant <b class="cBold">tLogRow</b>, consultez le chapitre <a href="tLogRow_Prop.html"><em class="cEmphasis">tLogRow</em></a>.</li></div>
+<a name="wp2761489"> </a><div class="pSmartList2"><li>Enregistrez votre Job puis appuyez sur <b class="cBold">F6</b> pour l&#39;exécuter et afficher le flux de sortie dans la console de la vue <b class="cBold">Run&#160;Job</b>.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2761501"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tFileInputMail3.png" id="wp2761498" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2761507"> </a><p class="pIndented1">
+Les valeurs clés d&#39;en-tête sont extraites comme spécifié dans le tableau <b class="cBold">Mail parts</b>. En effet, la date de réception, l&#39;auteur, le sujet ainsi que les différents statuts contenus dans l&#39;email sont affichés.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tFileInputMail_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFileInputMSDelimited_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

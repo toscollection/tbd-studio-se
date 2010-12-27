@@ -1,0 +1,389 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:52">
+    <title>tFSAggregate </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="File%20Scale_group_intro.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFSAggregate_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2840701"> </a><h2 class="pHeading1">
+tFSAggregate 
+</h2>
+<a name="wp2840710"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tFSAggregate_icon32.png" id="wp2840705" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2841172"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp2841167" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+This component is available in the <b class="cBold">Palette</b> of the studio on the condition that you have suscribed to <b class="cBold">Talend Integration Suite MP</b>x.
+</div>
+<a name="wp2841179"> </a><h2 class="pHeading2">
+tFSAggregate properties
+</h2>
+<a name="wp2841039"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2840725table2840720">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840725"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2840727"> </a><div class="pCellBody">
+FileScale
+</div>
+</td>
+    <td><a name="wp2840735"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2840732" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840740"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2840745"> </a><div class="pCellBody">
+<b class="cBold">tFSAggregate</b> performs an aggregation based on one or more columns. For each output line, an aggregation key is provided, as well as the result of the corresponding aggregation operation (count, avg or sum). <br />This component has high speed capabilities for aggregating large scale files.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840752"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2840757"> </a><div class="pCellBody">
+<b class="cBold">tFSAggregate</b> helps setting metrics and statistics based on values or calculations from one or several large scale files.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840770"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2840777"> </a><div style="color: #000000; font-size: 10pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 8pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<em class="cEmphasis">Schema type and Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2840783"> </a><div class="pCellBody">
+A schema is a row description, i.e., it defines the number of fields that will be processed and passed on to the next component. The schema is either built-in or remote in the Repository. <br />Click <b class="cBold">Edit Schema </b>to make changes to the schema. 
+</div>
+<a name="wp2840792"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2840790" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+ If you make changes to the schema, it automatically becomes built-in.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840795"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840797"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840802"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: You have already created the schema and stored it in the Repository. You can reuse it in various projects and job flowcharts. Related topic: <em class="cEmphasis">How to set a repository schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840810"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840812"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840817"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: You create and store the schema locally for this component only. Related topic: <em class="cEmphasis">How to set a built-in schema</em> of <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840828"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840833"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2840841"> </a><div class="pCellBody">
+Either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840843"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840845"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840850"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>: No property data stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840852"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840854"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840859"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>: Select the repository file where Properties are stored. The fields that follow are pre-filled in using the fetched data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840864"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840869"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input File Name</em>
+</div>
+</td>
+    <td><a name="wp2840871"> </a><div class="pCellBody">
+Name of the file holding the data you want to collect.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840876"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840881"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output File Name</em>
+</div>
+</td>
+    <td><a name="wp2840883"> </a><div class="pCellBody">
+Name of the file where you want to write the collected data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840885"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840890"> </a><div class="pCellHeading">
+<em class="cEmphasis">Record separator</em> (char)
+</div>
+</td>
+    <td><a name="wp2840892"> </a><div class="pCellBody">
+Character, string or regular expression to separate records (lines).
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840894"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840899"> </a><div class="pCellHeading">
+<em class="cEmphasis">Field separator</em> (char)
+</div>
+</td>
+    <td><a name="wp2840901"> </a><div class="pCellBody">
+Character, string or regular expression to separate fields in a record.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840903"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840908"> </a><div class="pCellHeading">
+<em class="cEmphasis">Header</em>
+</div>
+</td>
+    <td><a name="wp2840910"> </a><div class="pCellBody">
+Number of records to be skipped in the beginning of the file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840912"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840917"> </a><div class="pCellHeading">
+<em class="cEmphasis">Footer</em>
+</div>
+</td>
+    <td><a name="wp2840919"> </a><div class="pCellBody">
+Number of records to be skipped at the end of the file.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840921"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840926"> </a><div class="pCellHeading">
+<em class="cEmphasis">Group by</em>
+</div>
+</td>
+    <td><a name="wp2840931"> </a><div class="pCellBody">
+<b class="cBold">Column</b>: List of the columns of the input file.<br /><b class="cBold">Key Attribute</b>: Select the check box next to the name of the column(s) you want to use to regroup data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840936"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840941"> </a><div class="pCellHeading">
+<em class="cEmphasis">Operations</em>
+</div>
+</td>
+    <td><a name="wp2840946"> </a><div class="pCellBody">
+<b class="cBold">Additional Output Column</b>: Enter the name you want to use for the column containing the results of the aggregation operation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840948"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840950"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840955"> </a><div class="pCellBody">
+<b class="cBold">Function</b>: Select the type of the aggregation operation to perform:<br /><b class="cBold">count</b>: calculates the number of lines,<br /><b class="cBold">avg</b>: calculates the average,<br /><b class="cBold">sum</b>: calculates the sum.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840966"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840968"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840973"> </a><div class="pCellBody">
+<b class="cBold">Input Column</b>: Select the input column from which the values are collected for the aggregation operation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2840978"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2840982"> </a><div class="pCellHeading">
+<em class="cEmphasis">Generate FSLang File</em>
+</div>
+</td>
+    <td><a name="wp2840985"> </a><div class="pCellBody">
+Select this check box to generate the FSLang file corresponding to your Job and click the three-dot button next to the <b class="cBold">FSLang File Name</b> field to specify its path and its name.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2840990"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2840994"> </a><div class="pCellHeading">
+<em class="cEmphasis">Assign FileScale Path</em>
+</div>
+</td>
+    <td><a name="wp2840997"> </a><div class="pCellBody">
+Select this check box and then click the three-dot button next to the <b class="cBold">FileScale Path</b> field to select the FileScale program executive file required to execute the component.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2841002"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2841006"> </a><div class="pCellHeading">
+<em class="cEmphasis">Specify Number of Process Child</em>
+</div>
+</td>
+    <td><a name="wp2841009"> </a><div class="pCellBody">
+Select this check box and enter the number of child processes to use for carrying out the aggregation.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2841011"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2841015"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2841018"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at each component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2841023"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2841025"> </a><div class="pCellBody">
+This component handles files therefore it does not require input and output data flows. It is used to aggregate data from large scale files.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2841032"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2841034"> </a><div class="pCellBody">
+Limitation is imposed by limits of physical memory and Central Processing Unit architectures. For example, total length of processed files cannot exceed file system limit for LargeFile support (maximum of signed 64 bits value).
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="File%20Scale_group_intro.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tFSAggregate_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

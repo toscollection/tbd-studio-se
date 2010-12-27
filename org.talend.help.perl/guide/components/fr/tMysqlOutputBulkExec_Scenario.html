@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>Scénario&#160;: Insérer des données dans une base MySQL</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlOutputBulkExec_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlRollback_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2316893"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2316901"> </a><h2 class="pHeading2">
+Scénario&#160;: Insérer des données dans une base MySQL
+</h2>
+<a name="wp2961884"> </a><p class="pIndented1">
+Ce scénario est un Job à deux composants qui effectue le même type d&#39;opération d&#39;alimentation que les composants <a href="tMysqlOutputBulk_Prop.html"><em class="cEmphasis">tMysqlOutputBulk</em></a> et <a href="tMysqlBulkExec_Prop.html"><em class="cEmphasis">tMysqlBulkExec</em></a>, mais sans transformation de données.
+</p>
+<a name="wp2961898"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMysqlOBE1.png" id="wp2961895" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2961983"> </a><div class="pSmartList2"><li>Cliquez et déposez les composants suivants&#160;: <b class="cBold">tRowGenerator</b> et <b class="cBold">tMysqlOutputBulkExec</b>.</li></div>
+<a name="wp2961990"> </a><div class="pSmartList2"><li>Connectez les composants via un lien de type <b class="cBold">Row</b> &gt; <b class="cBold">Main</b>.</li></div>
+<a name="wp2961995"> </a><div class="pSmartList2"><li>Paramétrez le <b class="cBold">tRowGenerator</b> de la même manière que dans le <a href="tMysqlOutputBulk_Scenario.html#wp2739103"><em class="cEmphasis">Scénario&#160;: Insérer des données transformées dans une base MySQL</em></a>. Le schéma est constitué de plusieurs colonnes notamment&#160;: <em class="cEmphasis">ID</em>, <em class="cEmphasis">First Name</em>, <em class="cEmphasis">Last Name</em>, <em class="cEmphasis">Address</em> et <em class="cEmphasis">City</em>.</li></div>
+<a name="wp2962074"> </a><div class="pSmartList2"><li>A partir de l&#39;espace de modélisation, double-cliquez sur le composant <b class="cBold">tMysqlOutputBulkExec</b> pour afficher la vue <b class="cBold">Component</b> et paramétrer ses propriétés.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2962173"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMysqlOBE2.png" id="wp2962170" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2962176"> </a><div class="pSmartList2"><li>Paramétrez la connexion à la base de données si nécessaire, en suivant les recommandations du <a href="tMysqlOutputBulk_Scenario.html#wp2739103"><em class="cEmphasis">Scénario&#160;: Insérer des données transformées dans une base MySQL</em></a>, concernant la conservation des informations de connexion dans la partie <b class="cBold">Metadata</b> du <b class="cBold">Repository</b>. Pour cela, sélectionnez <b class="cBold">Repository</b> dans le champ <b class="cBold">Property Type</b> et sélectionnez la connexion adéquate dans le champ adjacent. Les champs suivants seront renseignés automatiquement.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2962475"> </a><p class="pIndented1">
+Pour plus d&#39;informations, consultez les sections <em class="cEmphasis">Paramétrer un schéma built-in</em> et <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide Utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</p>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2962507"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Action on table</b>, sélectionnez l&#39;option <b class="cBold">None</b> puisque vous souhaitez insérer les données dans une table déjà existante.</li></div>
+<a name="wp2962572"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Table</b>, saisissez le nom de la table à alimenter, ici, <em class="cEmphasis">clients</em>.</li></div>
+<a name="wp2962482"> </a><div class="pSmartList2"><li>Dans le champ <b class="cBold">Local filename</b>, indiquez le chemin d&#39;accès et le nom du fichier contenant les données à charger dans la table, ici, <em class="cEmphasis">clients.txt</em>.</li></div>
+<a name="wp2962662"> </a><div class="pSmartList2"><li>Cliquez sur le bouton <b class="cBold">Sync columns</b> pour récupérer le schéma du composant précédent.</li></div>
+<a name="wp2962703"> </a><div class="pSmartList2"><li>Cliquez sur l&#39;onglet <b class="cBold">Advanced settings</b> pour paramétrer les propriétés avancées du composant.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2962459"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_case_tMysqlOBE3.png" id="wp2962714" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp2962717"> </a><div class="pSmartList2"><li>Dans la liste <b class="cBold">Action on data</b>, sélectionnez l&#39;option <b class="cBold">Insert records in table</b> pour insérer ces nouvelles données dans la table.</li></div>
+<a name="wp2962750"> </a><div class="pSmartList2"><li>Appuyez sur <b class="cBold">F6</b> pour exécuter le Job</li></div>
+</ul></div>
+</ul></div>
+<a name="wp2316996"> </a><p class="pIndented1">
+Le résultat devrait être relativement identique à celui obtenu dans le <a href="tMysqlOutputBulk_Scenario.html#wp2739103"><em class="cEmphasis">Scénario&#160;: Insérer des données transformées dans une base MySQL</em></a>. Cependant les données elles-mêmes peuvent différer légèrement puisque les données sont regénérées de façon aléatoire à chaque exécution.
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tMysqlOutputBulkExec_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMysqlRollback_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

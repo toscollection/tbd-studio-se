@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:30:34">
+    <title>tELTSybaseMap</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTSybaseInput_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTSybaseMap_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2969832"> </a><h2 class="pHeading1">
+tELTSybaseMap
+</h2>
+<a name="wp2969840"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tELTSybaseMap_icon32_white.png" id="wp2969836" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2969847"> </a><h2 class="pHeading2">
+tELTSybaseMap properties
+</h2>
+<a name="wp2969850"> </a><p class="pIndented1">
+The three ELT Sybase components are closely related in terms of their operating conditions. These components should be used to handle Sybase DB schemas to generate Insert statements, including clauses, which are to be executed in the DB output table defined.
+</p>
+<a name="wp2970047"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2969856table2969854">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2969856"> </a><div class="pCellBody">
+<b class="cBold">Component family</b>
+</div>
+</td>
+    <td><a name="wp2969858"> </a><div class="pCellBody">
+ELT
+</div>
+</td>
+    <td><a name="wp2969866"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icongg.png" id="wp2969863" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2969871"> </a><div class="pCellBody">
+<b class="cBold">Function</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2969873"> </a><div class="pCellBody">
+Allows you construct a graphical build of the SQL statement using the table provided as input.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2969880"> </a><div class="pCellBody">
+<b class="cBold">Purpose</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2969882"> </a><div class="pCellBody">
+Uses the tables provided as input to feed the parameters required to execute the SQL statement. The statement can include inner or outer joins to be implemented between tables or between a table and its aliases 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2969889"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2969893"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use an existing connection</em>
+</div>
+</td>
+    <td><a name="wp2969896"> </a><div class="pCellBody">
+Select this check box and select the appropriate <b class="cBold">tSybaseConnection</b> component from the <b class="cBold">Component</b> list if you want to re-use connection parameters that you have already defined.<br />
+</div>
+<a name="wp3449797"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3449794" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+When a Job contains the parent Job and the child Job, <b class="cBold">Component list</b> presents only the connection components in the same Job level, so if you need to use an existing connection from the other level, make sure that the available connection components are sharing the intended connection.<br />For more information on how to share a DB connection across Job levels, see <b class="cBold">Use or register a shared DB connection</b> in any database connection component corresponding to the database you are using, in <a href="Databases_group_intro.html"><em class="cEmphasis">Databases components</em></a>.<br />Otherwise, you can as well deactivate the connection components and use <b class="cBold">Dynamic settings</b> of the component to specify the intended connection manually. In this case, make sure the connection name is unique and distinctive all over through the two  Job levels. For more information about <b class="cBold">Dynamic settings</b>, see your studio user guide.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2969904"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969908"> </a><div class="pCellHeading">
+<em class="cEmphasis">ELT Sybase Map Editor</em>
+</div>
+</td>
+    <td><a name="wp2969911"> </a><div class="pCellBody">
+The ELT Map editor allows you to define the output schema and make a graphical build of the SQL statement to be executed.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2969913"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969918"> </a><div class="pCellHeading">
+<em class="cEmphasis">Style link</em>
+</div>
+</td>
+    <td><a name="wp2969920"> </a><div class="pCellBody">
+Select the way in which links are displayed. Select  <b class="cBold">Line</b>, for optimal performance. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2969925"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969930"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2969938"> </a><div class="pCellBody">
+Can be either <b class="cBold">Built-in</b> or <b class="cBold">Repository</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2969940"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969942"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969947"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: No property data is stored centrally.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2969949"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969951"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969956"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Select the Repository file where the component properties are stored. The following fields are pre-filled using collected data
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2969958"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969963"> </a><div class="pCellHeading">
+<em class="cEmphasis">Host</em>
+</div>
+</td>
+    <td><a name="wp2969965"> </a><div class="pCellBody">
+Database server IP address
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2969967"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969972"> </a><div class="pCellHeading">
+<em class="cEmphasis">Port</em>
+</div>
+</td>
+    <td><a name="wp2969974"> </a><div class="pCellBody">
+Listening port number of DB server
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2969976"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969981"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2969983"> </a><div class="pCellBody">
+Name of the database
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2969985"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2969990"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2969995"> </a><div class="pCellBody">
+DB user authentication data.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2969997"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2970005"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em> <em class="cEmphasis">Type</em>
+</div>
+</td>
+    <td><a name="wp2970007"> </a><div class="pCellBody">
+Select the encoding type from the list or select Custom and define it manually. This field is compulsory for DB data handling.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2970012"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2970017"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp2970019"> </a><div class="pCellBody">
+Select this check box to gather the job processing metadata at a job level as well as at component level.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2970024"> </a><div class="pCellBody">
+<b class="cBold">Usage</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2970032"> </a><div class="pCellBody">
+<b class="cBold">tELTSybaseMap</b> is intended for use with <b class="cBold">tELTSybaseInput</b> and <b class="cBold">tELTSybaseOutput</b>. Note that the Output link to be used with these components must correspond strictly to the syntax of the table name. 
+</div>
+<a name="wp2970041"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp2970039" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+The ELT components only handle schema information. They do not handle actual data flow.
+</p>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tELTSybaseInput_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tELTSybaseMap_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

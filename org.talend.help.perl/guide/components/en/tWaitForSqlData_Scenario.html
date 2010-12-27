@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:17">
+    <title>Scenario: Waiting for insertion of rows in a table </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWaitForSqlData_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="Processing_group_intro.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1535838"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1535849"> </a><h2 class="pHeading2">
+Scenario: Waiting for insertion of rows in a table 
+</h2>
+<a name="wp1536426"> </a><p class="pIndented1">
+This scenario describes a Job reading a DB table and waiting for data to be put in this table in order for a subjob to be executed. When the condition of the data insertion in the table is met, then the subjob performs a Select* on the table and simply displays the content of the inserted data onto the standard console. This use case is presented in Perl, but there are no difference in setting if you implement it in Java.
+</p>
+<a name="wp1536474"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForSqldata1.png" id="wp1536479" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1536491"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette</b> onto the design workspace: <b class="cBold">tMySqlConnection</b>, <b class="cBold">tWaitForSqlData</b>, <b class="cBold">tMysqlInput</b>, <b class="cBold">tLogRow</b>.</li></div>
+<a name="wp1536701"> </a><div class="pSmartList2"><li>Connect the <b class="cBold">tMysqlConnection</b> component to the <b class="cBold">tWaitforSqlData</b> using an <b class="cBold">OnSubjobOK</b> link, available on the right-click menu.</li></div>
+<a name="wp1536741"> </a><div class="pSmartList2"><li>Then connect the <b class="cBold">tWaitForSqlData</b> component to the subjob using an <b class="cBold">Iterate</b> link as no actual data is transferred in this part. Indeed, simply a loop is implemented by the <b class="cBold">tWaitForSqlData</b> until the condition is met.</li></div>
+<a name="wp1536791"> </a><div class="pSmartList2"><li>On the subjob to be executed if the condition is met, a <b class="cBold">tMysqlInput</b> is connected to the standard console component, <b class="cBold">tLogRow</b>. As the connection passes on data, use a Row main link. </li></div>
+<a name="wp1536547"> </a><div class="pSmartList2"><li>Now, set the connection to the table to check at regular intervals. On the <b class="cBold">Basic Settings </b>view of the <b class="cBold">tMySqlConnection</b> <b class="cBold">Component</b> tab, set the DB connection properties</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1536570"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForSqldata2.png" id="wp1536578" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1536618"> </a><div class="pSmartList2"><li>Fill out the <b class="cBold">Host</b>, <b class="cBold">Port</b>, <b class="cBold">Database</b>, <b class="cBold">Username</b>, <b class="cBold">Password</b> fields to open the connection to the Database table. </li></div>
+<a name="wp1536665"> </a><div class="pSmartList2"><li>Select the relevant <b class="cBold">Encoding</b> if needed.</li></div>
+<a name="wp1537124"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tWaitForSqlData</b> component, and on the <b class="cBold">Basic Setting</b> view of the <b class="cBold">Component </b>tab, set its properties.</li></div>
+<a name="wp1537380"> </a><div class="pSmartList2"><li>In the <b class="cBold">Wait at each iteration </b>field, set the time in seconds you want to wait before the next iteration starts.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1537136"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForSqldata3.png" id="wp1537133" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1537144"> </a><div class="pSmartList2"><li>In the <b class="cBold">Max iterations </b>field, fill out the number of iterations max you want to have before the whole Job is forced to end.</li></div>
+<a name="wp1537158"> </a><div class="pSmartList2"><li>The <b class="cBold">tWaitForSqlData</b> component requires a connection to be open in order to loop on the defined number of iteration. Select the relevant connection (if several) in the <b class="cBold">Component List</b> combo box.</li></div>
+<a name="wp1537169"> </a><div class="pSmartList2"><li>In the <b class="cBold">Table to scan </b>field, type in the name of the table in the DB to scan.In this example: <em class="cEmphasis">test_datatypes</em>.</li></div>
+<a name="wp1537178"> </a><div class="pSmartList2"><li>In the <b class="cBold">Trigger action when rowcount is </b>and <b class="cBold">Value </b>fields, select the condition to be met, for the subjob to be triggered. In this use case, the number of rows in the scanned table should <em class="cEmphasis">be greater or equal to 1</em>. </li></div>
+<a name="wp1537188"> </a><div class="pSmartList2"><li>In the <b class="cBold">Then</b> field, select the action to be carried out when the condition is met before the number of iteration defined is reached. In this use case, as soon as the condition is met, the loop should be ended.</li></div>
+<a name="wp1537355"> </a><div class="pSmartList2"><li>Then set the subjob to be executed when the condition set is met. In this use case, the subjob simply selects the data from the scanned table and displays it on the console. </li></div>
+<a name="wp1537365"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tMySqlInput</b> component, and on the <b class="cBold">Basic Setting</b> view of the <b class="cBold">Component</b> tab, set the connection to the table.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1537399"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForSqldata4.png" id="wp1537404" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1537420"> </a><div class="pSmartList2"><li>If the connection is set in the Repository, select the relevant entry on the list. Or alternatively, select the <b class="cBold">Use an existing connection </b>check box and select the relevant connection component on the list.</li></div>
+<a name="wp1537447"> </a><div class="pSmartList2"><li>In this use case, the schema corresponding to the table structure is stored in the <b class="cBold">Repository</b>.</li></div>
+<a name="wp1537485"> </a><div class="pSmartList2"><li>Fill out the <b class="cBold">Table Name</b> field with the table the data is extracted from, <em class="cEmphasis">Test_datatypes</em>.</li></div>
+<a name="wp1537517"> </a><div class="pSmartList2"><li>Then in the <b class="cBold">Query</b> field, type in the Select statement to extract the content from the table.</li></div>
+<a name="wp1537568"> </a><div class="pSmartList2"><li>No particular setting is required in the <b class="cBold">tLogRow</b> component for this use case.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp1537611"> </a><p class="pIndented1">
+Then before executing the Job, make sure the table to scan (<em class="cEmphasis">test_datatypes</em>) is empty, in order for the condition (greater or equal to 1) to be met. Then execute the Job by pressing the <b class="cBold">F6</b> key on your keyboard. Before the end of the iterating loop, feed the test_datatypes table with one or more rows in order to meet the condition. 
+</p>
+<a name="wp1537712"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForSqldata6.png" id="wp1537740" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1537732"> </a><p class="pIndented1">
+The Job ends when this table insert is detected during the loop, and the table content is thus displayed on the console.  
+</p>
+<a name="wp1537748"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForSqldata5.png" id="wp1537756" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWaitForSqlData_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="Processing_group_intro.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

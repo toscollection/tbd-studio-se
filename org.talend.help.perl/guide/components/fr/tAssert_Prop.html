@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:04:59">
+    <title>tAssert</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="LogsandErrors_group_intro.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAssert_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2752024"> </a><h2 class="pHeading1">
+tAssert
+</h2>
+<a name="wp2752518"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tAssert_icon32_white.png" id="wp2752030" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2752528"> </a><h2 class="pHeading2">
+Propriétés du tAssert
+</h2>
+<a name="wp2752539"> </a><p class="pIndented1">
+Le composant <b class="cBold">tAssert</b> est étroitement lié au <b class="cBold">tAssertCatcher </b>pour tester une exécution de Job. Il génère une assertion booléenne à partir d&#39;une instruction conditionnelle, dans le but d&#39;alimenter le statut d&#39;exécution présenté par le <b class="cBold">tAssertCatcher</b>.
+</p>
+<a name="wp2754732"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2754616table2754608">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754616"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2754619"> </a><div class="pCellBody">
+Logs &amp; Errors 
+</div>
+</td>
+    <td><a name="wp2754631"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/Components-10-02-10.jpg" height="59" width="112" id="wp2754626" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754639"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2754645"> </a><div class="pCellBody">
+Envoie le message de statut du Job au <b class="cBold">tAssertCatcher</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754656"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2754659"> </a><div class="pCellBody">
+Génère l&#39;assertion booléenne relative à l&#39;analyse du Job.<br />Le statut peut être&#160;:<br /><b class="cBold">Ok</b>&#160;: l&#39;exécution du Job a réussi.<br /><b class="cBold">Fail</b>&#160;: l&#39;exécution a échoué. Les résultats du Job testé ne correspondent pas à ce qui était attendu, ou une erreur est survenue lors de l&#39;exécution.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754669"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2754676"> </a><div class="pCellHeading">
+<em class="cEmphasis">Description</em>
+</div>
+</td>
+    <td><a name="wp2762963"> </a><div class="pCellBody">
+Saisissez votre message descriptif afin d&#39;identifier l&#39;assertion du <b class="cBold">tAssert</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754683"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2754690"> </a><div class="pCellHeading">
+<em class="cEmphasis">Expression</em>
+</div>
+</td>
+    <td><a name="wp2754693"> </a><div class="pCellBody">
+Saisissez l&#39;instruction conditionnelle sur laquelle baser votre assertion.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2754701"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2754704"> </a><div class="pCellBody">
+Ce composant suit l&#39;action à laquelle est liée directement la condition assertive. Il peut être utilisé comme composant intermédiaire ou final du Job principal, ou bien en tant que composant de début, intermédiaire ou de fin du Job secondaire.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2754715"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2754721"> </a><div class="pCellBody">
+L&#39;évaluation du <b class="cBold">tAssert</b> est capturée par le <b class="cBold">tAssertCatcher</b>.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="LogsandErrors_group_intro.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tAssert_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

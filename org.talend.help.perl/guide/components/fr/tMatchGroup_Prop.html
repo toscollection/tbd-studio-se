@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:23">
+    <title>tMatchGroup</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLaunchDQReports_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMatchGroup_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3534330"> </a><h2 class="pHeading1">
+tMatchGroup
+</h2>
+<a name="wp3534339"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tGroup_icon32_white.png" id="wp3534334" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3534348"> </a><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/warning_small.png" align="left" id="wp3534343" border="0" hspace="0" vspace="0"/></table></div><div style="color: #000000; font-size: 10pt; font-style: italic; font-variant: normal; font-weight: normal; margin-bottom: 12pt; margin-left: 18pt; margin-right: 0pt; margin-top: 12pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+Ce composant est disponible dans la <b class="cBold">Palette</b> du studio uniquement si vous avez souscrit à l&#39;édition correspondante de <b class="cBold">Talend Data Quality</b>.
+</div>
+<a name="wp3534360"> </a><h2 class="pHeading2">
+Propriétés du tMatchGroup
+</h2>
+<a name="wp3534634"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp3535397table3534363">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535397"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp3535399"> </a><div class="pCellBody">
+Data Quality
+</div>
+</td>
+    <td><a name="wp3535407"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp3535404" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535412"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3535417"> </a><div class="pCellBody">
+Le <b class="cBold">tMatchGroup </b>compare des colonnes du flux d&#39;entrée en utilisant une méthode de correspondance définie et regroupe les doublons rencontrés.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535424"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3535426"> </a><div class="pCellBody">
+Ce composant vous permet d&#39;assurer la qualité de vos données provenant de n&#39;importe quelle source.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535433"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp3535440"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp3535443"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (<b class="cBold">Built-in</b>) soit distant dans le <b class="cBold">Repository</b>. <br />Cliquez sur <b class="cBold">Edit Schema</b> pour modifier le schéma. Le schéma de sortie de ce composant contient les champs suivants&#160;:<br /><em class="cEmphasis">GID&#160;</em>: représente l&#39;identifiant du groupe.<br /><em class="cEmphasis">GRP_SIZE&#160;</em>: compte le nombre d&#39;enregistrements dans le groupe, ce nombre est calculé uniquement sur l&#39;enregistrement maître.<br /><em class="cEmphasis">MASTER&#160;</em>: identifie l&#39;enregistrement utilisé dans les comparaisons de correspondance. Il y a au moins un enregistrement maître par groupe.<br />Chaque enregistrement d&#39;entrée sera comparé à enregistrement maître. S&#39;il y a correspondance, il sera dans le groupe.<br /><em class="cEmphasis">SCORE&#160;</em>: mesure la distance entre l&#39;enregistrement d&#39;entrée et l&#39;enregistrement maître selon l&#39;algorithme de correspondance utilisé.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535466"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535468"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535473"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé ponctuellement pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535484"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535486"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535491"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Le schéma existe déjà et est stocké dans le Repository. Ainsi, il peut être réutilisable dans divers projets et Job designs. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <b class="cBold">Guide utilisateur</b> de <b class="cBold">Talend Open Studio</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535505"> </a><div class="pCellHeading">
+<em class="cEmphasis">Key Definition</em>
+</div>
+</td>
+    <td><a name="wp3535510"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input Key Attribute</em>
+</div>
+</td>
+    <td><a name="wp3535512"> </a><div class="pCellBody">
+Sélectionnez la (les) colonne(s) du flux d&#39;entrée sur lequel vous souhaitez appliquer un algorithme de correspondance.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535514"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535519"> </a><div class="pCellHeading">
+<em class="cEmphasis">Matching Type</em>
+</div>
+</td>
+    <td><a name="wp3535696"> </a><div class="pCellBody">
+Sélectionnez l&#39;algorithme de correspondance dans la liste&#160;:<br /><b class="cBold">Exact Match&#160;</b>: associe chaque entrée traitée à toutes les entrées possibles de référence qui ont exactement la même valeur.<br /><b class="cBold">Exact - ignore case</b>&#160;: fait correspondre chaque entrée traitée à toutes les entrées de référence possibles ayant les mêmes valeurs, en ignorant la valeur de la casse.<br /><b class="cBold">Soundex&#160;</b>: algorithme phonétique utile pour la comparaison de prénoms, selon la prononciation britannique.<br /><b class="cBold">Levenshtein&#160;</b>: cette option se base sur la théorie de la distance d&#39;édition. Elle calcule le nombre d&#39;insertions, suppressions ou substitutions nécessaires pour qu&#39;une entrée corresponde à l&#39;entrée de référence.<br /><b class="cBold">Metaphone&#160;</b>: Cette option se base sur un algorithme phonétique afin d&#39;indexer les entrées selon leur prononciation. Elle charge d&#39;abord la phonétique de toutes les entrées du flux lookup de référence, puis vérifie toutes les entrées du flux principal par rapport aux entrées du flux de référence.<br /><b class="cBold">Double Metaphone&#160;</b>: une nouvelle version de l&#39;algorithme phonétique Métaphone, qui produit des résultats plus précis que l&#39;algorithme originel. Il peut retourner un code primaire et un code secondaire pour une chaîne de caractères. Cela est utile dans des cas ambigus, mais également pour de multiples variantes de noms de famille aux origines communes.<br /><b class="cBold">Soundex FR</b>&#160;: algorithme phonétique utile pour la comparaison de prénoms, selon la prononciation française.<br /><b class="cBold">Jaro-Winkler</b>&#160;; fait correspondre les entrées traitées selon des erreurs d&#39;orthographe.<br /><b class="cBold">q-grams</b>&#160;: fait correspondre les entrées traitées en divisant les chaînes de caractères en blocs de lettres de longueur q, afin de créer un nombre de longueurs q-grammes. Le résultat de correspondance est donné comme le nombre de correspondances entre les q-grammes d&#39;entrée et de référence, divisé par le nombre de q-grammes possibles.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535547"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535552"> </a><div class="pCellHeading">
+<em class="cEmphasis">Confidence Weight</em>
+</div>
+</td>
+    <td><a name="wp3535554"> </a><div class="pCellBody">
+Définissez un poids numérique pour chaque attribut (colonne) de la définition de clé. Les valeurs doivent être supérieures à 0.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535559"> </a><div class="pCellHeading">
+<em class="cEmphasis">Blocking Definition</em>
+</div>
+</td>
+    <td><a name="wp3535564"> </a><div class="pCellHeading">
+<em class="cEmphasis">Input Column</em>
+</div>
+</td>
+    <td><a name="wp3535566"> </a><div class="pCellBody">
+Au besoin, sélectionnez la (les) colonne(s) de flux d&#39;entrée selon laquelle (lesquelles) vous souhaitez partitionner les données traitées en blocs, ce qui est habituellement appelé &quot;blocking&quot;. <br />La création de blocs (ou de groupes) réduit le nombre de paires d&#39;enregistrements nécessitant examen. Lors de la création de blocs, les données d&#39;entrée sont partitionnées en blocs exhaustifs créés pour augmenter la proportion de correspondances observées lors de la réduction du nombre de paires à comparer. Les comparaisons sont limitées aux paires d&#39;enregistrements dans chaque bloc.
+</div>
+<a name="wp3535788"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3535781" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Utiliser des colonnes de bloc est très utile lorsque vous traitez des données très volumineuses.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535575"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp3535583"> </a><div class="pCellHeading">
+<em class="cEmphasis">Matching Algorithm</em>
+</div>
+</td>
+    <td><a name="wp3535585"> </a><div class="pCellBody">
+Sélectionnez dans la liste un algorithme - un seul est disponible pour le moment. <br /><b class="cBold">Simple VSR Matcher&#160;</b>: Cet algorithme est basé sur une méthode de Modèle Vectoriel (Vector Space Retrieval) qui spécifie comment deux enregistrements peuvent correspondre.<br /><b class="cBold">Match Interval</b>&#160;: Saisissez la probabilité de correspondance. Deux enregistrements de données correspondent lorsque la probabilité est supérieure à la valeur définie 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535596"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535600"> </a><div class="pCellHeading">
+<em class="cEmphasis">Sort the output data by GID</em>
+</div>
+</td>
+    <td><a name="wp3535606"> </a><div class="pCellBody">
+Cochez cette case afin de regrouper les données de sortie par l&#39;ID du groupe.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3539013"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3539016"> </a><div class="pCellHeading">
+<em class="cEmphasis">Output distance details</em>
+</div>
+</td>
+    <td><a name="wp3539019"> </a><div class="pCellBody">
+Cochez cette case pour ajouter une colonne fixe de sortie <em class="cEmphasis">MATCHING_DISTANCES</em> donnant le détail de la distance entre chaque colonne.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535611"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535619"> </a><div class="pCellHeading">
+<em class="cEmphasis">Store on disk</em>
+</div>
+</td>
+    <td><a name="wp3535621"> </a><div class="pCellBody">
+Cochez cette case si vous souhaitez stocker les blocs de données traitées sur le disque, afin d&#39;optimiser les performances de votre système.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535626"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3535636"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStat</em><em class="cEmphasis">Catcher</em> <em class="cEmphasis">Statistics</em>
+</div>
+</td>
+    <td><a name="wp3535639"> </a><div class="pCellBody">
+Cochez cette case pour collecter les métadonnées de process du Job, aussi bien au niveau du Job qu&#39;au niveau de chaque composant. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3535644"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3535646"> </a><div class="pCellBody">
+Ce composant est un composant intermédiaire. Il requiert un flux d&#39;entrée et un flux de sortie.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3535653"> </a><div class="pCellBody">
+<b class="cBold">Limitation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp3535655"> </a><div class="pCellBody">
+n/a
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tLaunchDQReports_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tMatchGroup_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

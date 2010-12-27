@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:25:50">
+    <title>Scenario: Replacement from a reference file</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tReplaceList_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSchemaComplianceCheck_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp3012320"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3012328"> </a><h2 class="pHeading2">
+Scenario: Replacement from a reference file
+</h2>
+<a name="wp3012331"> </a><p class="pIndented1">
+The following Job searches and replaces a list of countries with their corresponding codes. The relevant codes are taken from a reference file placed as lookup flow in the Job. The main flow is replicated and both outputs are displayed on the console, in order to show the main flow before and after replacement. 
+</p>
+<a name="wp3012339"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList1.png" id="wp3012336" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3012350"> </a><div class="pSmartList2"><li>Drop the following components from the <b class="cBold">Palette </b>to the design workspace: <b class="cBold">tMysqlInput</b>, <b class="cBold">tFileInputDelimited</b>, <b class="cBold">tReplicate</b>, <b class="cBold">tReplaceList</b> and <b class="cBold">tLogRow</b> (x2). Note that if your input schemas are stored in the Repository, you can simply drag and drop the relevant node from the Repository&#39;s Metadata Manager onto the design workspace to retrieve automatically the input components&#39; setting. For more information, see <em class="cEmphasis">How to drop components from the Metadata node</em> in <b class="cBold">Talend Integration Suite Studio</b> <b class="cBold">User Guide</b>.</li></div>
+<a name="wp3012378"> </a><div class="pSmartList2"><li>Connect the components using<b class="cBold"> Main Row</b> connections via a right-click on each component. Notice that the main row coming from the reference flow (<b class="cBold">tFileInputDelimited</b>) is called a lookup row.</li></div>
+<a name="wp3012390"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tMysqlInput</b> component and set the input flow parameters.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3012397"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList3.png" id="wp3012394" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3012408"> </a><div class="pSmartList2"><li>The input schema is made of two columns: <em class="cEmphasis">Names</em>, <em class="cEmphasis">States</em>. The column States gathered the name of the United States of America which are to be replaced by their respective code. </li></div>
+<a name="wp3012421"> </a><div class="pSmartList2"><li>In the <b class="cBold">Query</b> field, make sure the <em class="cEmphasis">State</em> column is included in the <code class="cCode">Select </code>statement. In this use case, all columns are selected.</li></div>
+<a name="wp3012428"> </a><div class="pSmartList2"><li>Check the <b class="cBold">tReplicate</b> component setting. The schema is simply duplicated into two identical flows, but no change to the schema can be made.</li></div>
+<a name="wp3012437"> </a><div class="pSmartList2"><li>Then double-click on the <b class="cBold">tFileInputDelimited</b> component, to set the reference file.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3012444"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList4.png" id="wp3012441" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3012458"> </a><div class="pSmartList2"><li>The file includes two columns: <em class="cEmphasis">Postal</em>, <em class="cEmphasis">State</em> where <em class="cEmphasis">Postal</em> provides the zipcode corresponding to the name given in the respective row of the <em class="cEmphasis">State </em>column.</li></div>
+<a name="wp3012466"> </a><div class="pSmartList2"><li>The fields are delimited by semicolons and rows are separated by carriage returns.</li></div>
+<a name="wp3012471"> </a><div class="pSmartList2"><li>Edit the lookup flow schema.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3012478"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList5.png" id="wp3012475" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3012486"> </a><div class="pSmartList2"><li>Make sure the lookup search column (in this use case: <em class="cEmphasis">State</em>) is a key, in order to ensure the uniqueness of the values being searched.</li></div>
+<a name="wp3012494"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tReplaceList</b> and set the operation to carry out. </li></div>
+<a name="wp3012499"> </a><div class="pSmartList2"><li>The schema is retrieved from the previous component of the main flow.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3012506"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList2.png" id="wp3012503" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp3012514"> </a><div class="pSmartList2"><li>In <b class="cBold">Lookup search index</b> field, type in the position index of the column being searched. In this use case, <em class="cEmphasis">State</em> is the second column of the lookup input file, therefore type in <b class="cBold">1</b> in this field. </li></div>
+<a name="wp3012527"> </a><div class="pSmartList2"><li>In <b class="cBold">Lookup replacement index</b> field, fill in the position number of the column containing the replacement values, in this example: <em class="cEmphasis">Postal</em> for the State codes.</li></div>
+<a name="wp3012540"> </a><div class="pSmartList2"><li>In the <b class="cBold">Column options</b> table, select the <em class="cEmphasis">States</em> column as in this use case, the State names are to be replaced with their corresponding code.</li></div>
+<a name="wp3012550"> </a><div class="pSmartList2"><li>In both <b class="cBold">tLogRow</b> components, select the <b class="cBold">Print values in table cells</b> check box for a better readability of the outputs.</li></div>
+<a name="wp3012559"> </a><div class="pSmartList2"><li>Save the Job and press <b class="cBold">F6</b> to execute it.</li></div>
+</ul></div>
+</ul></div>
+<a name="wp3012566"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tReplaceList6.png" id="wp3012563" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp3012569"> </a><p class="pIndented1">
+The first flow output shows the State column with full state names as it comes from the main input flow.
+</p>
+<a name="wp3012573"> </a><p class="pIndented1">
+The second flow output shows the States column after the State column names have been replaced with their respective codes. 
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tReplaceList_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tSchemaComplianceCheck_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

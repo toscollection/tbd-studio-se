@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 19:31:17">
+    <title>Scenario: Waiting for a file to be removed </title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWaitForFile_Prop.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tWaitForSocket_Prop.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp1538873"> </a><div style="color: #000000; font-size: 12pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1538880"> </a><h2 class="pHeading2">
+Scenario: Waiting for a file to be removed 
+</h2>
+<a name="wp1538883"> </a><p class="pIndented1">
+This scenario describes a Job scanning a directory and waiting for a file to be removed from this directory, in order for a subjob to be executed. When the condition of file removal is met, then the subjob simply displays a message box showing the file being removed. 
+</p>
+<a name="wp1539356"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForFile1.png" id="wp1539361" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1539377"> </a><div class="pSmartList2"><li>This use case only requires two components from the <b class="cBold">Palette</b>: <b class="cBold">tWaitForFile</b> and <b class="cBold">tMsgbox</b></li></div>
+<a name="wp1539403"> </a><div class="pSmartList2"><li>Click and place these components on the design workspace and connect them using an <b class="cBold">Iterate</b> link to implement the loop.</li></div>
+<a name="wp1539427"> </a><div class="pSmartList2"><li>Then select the <b class="cBold">tWaitForFile</b> component, and on the <b class="cBold">Basic Settings</b> view of the <b class="cBold">Component</b> tab, set the condition and loop properties: </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1539449"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForFile2.png" id="wp1539460" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1539490"> </a><div class="pSmartList2"><li>In the <b class="cBold">Time (in seconds) between iteration </b>field, set the time in seconds you want to wait before the next iteration starts. In this example, the directory will be scanned every <em class="cEmphasis">5</em>&#160;seconds.</li></div>
+<a name="wp1539514"> </a><div class="pSmartList2"><li>In the <b class="cBold">Max. number of iterations (infinite loop if empty) </b>field, fill out the number of iterations max you want to have before the whole Job is forced to end. In this example, the directory will be scanned a maximum of 5 times.</li></div>
+<a name="wp1539536"> </a><div class="pSmartList2"><li>In the <b class="cBold">Directory to scan </b>field, type in the path to the folder to scan.</li></div>
+<a name="wp1539553"> </a><div class="pSmartList2"><li>In the <b class="cBold">Trigger action when </b>field, select the condition to be met, for the subjob to be triggered. In this use case, the condition is a file is deleted (or moved) from the directory. </li></div>
+<a name="wp1539566"> </a><div class="pSmartList2"><li>In the <b class="cBold">Then</b> field, select the action to be carried out when the condition is met before the number of iteration defined is reached. In this use case, as soon as the condition is met, the loop should be ended.</li></div>
+<a name="wp1539571"> </a><div class="pSmartList2"><li>Then set the subjob to be executed when the condition set is met. In this use case, the subjob simply displays a message box. </li></div>
+<a name="wp1539588"> </a><div class="pSmartList2"><li>Select the <b class="cBold">tMsgBox</b> component, and on the <b class="cBold">Basic Setting</b> view of the <b class="cBold">Component</b> tab, set the message to be displayed.</li></div>
+<a name="wp1539874"> </a><div class="pSmartList2"><li>Fill out the <b class="cBold">Title</b> and <b class="cBold">Message</b> fields. </li></div>
+<a name="wp1539900"> </a><div class="pSmartList2"><li>Select the type of <b class="cBold">Buttons</b> and the <b class="cBold">Icon</b></li></div>
+</ul></div>
+</ul></div>
+<a name="wp1539734"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForFile3.png" id="wp1539739" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<div class="pSmartList1"><ul class="pSmartList1">
+<div class="pSmartList2"><ul class="pSmartList2">
+<a name="wp1539774"> </a><div class="pSmartList2"><li>In the <b class="cBold">Message</b> field, you can write any type of message you want to display and use global variables available in the auto-completion list via <b class="cBold">Ctrl+Space</b> combination. </li></div>
+<a name="wp1539970"> </a><div class="pSmartList2"><li>For example, in Perl, the message used for this use case is: <code class="cCode">&quot;Deleted File: $_globals{tWaitForFile_1}{DELETED_FILE}, on Iteration : $_globals{tWaitForFile_1}{CURRENT_ITERATION}\n&quot;</code> </li></div>
+<a name="wp1540042"> </a><div class="pSmartList2"><li>The equivalent Java message is: <code class="cCode">&quot;Deleted file: &quot;+((String)globalMap.get(&quot;tWaitForFile_1_DELETED_FILE&quot;))+&quot; on iteration Nr:&quot;+((Integer)globalMap.get(&quot;tWaitForFile_1_CURRENT_ITERATION&quot;))</code> </li></div>
+</ul></div>
+</ul></div>
+<a name="wp1539791"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForFile4.png" id="wp1539799" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp1540056"> </a><p class="pIndented1">
+Then execute the Job via the <b class="cBold">F6</b> key. While the loop is executing, remove a file from the location defined. The message pops up and shows the defined message.
+</p>
+<a name="wp1540080"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="center"><img src="../Images/Use_Case_tWaitForFile5.png" id="wp1540085" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tWaitForFile_Prop.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tWaitForSocket_Prop.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN" "http://www.w3.org/MarkUp/Wilbur/HTML32.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <meta name="GENERATOR" content="Quadralay WebWorks Publisher Standard Edition 8.0.5337.0">
+    <meta name="TEMPLATEBASE" content="Dynamic HTML">
+    <meta name="LASTUPDATED" content="10/04/10 20:00:44">
+    <title>tJavaDBRow</title>
+  </head>
+
+  <body link="#3366CC" vlink="#9999CC" text="#000000" alink="#0000CC" bgcolor="#FFFFFF">
+
+    <!--table width="220" border="0" align="right" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tJavaDBOutput_Scenario.html"><img id="LongDescNotReq1" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tJavaDBRow_Scenario.html"><img id="LongDescNotReq2" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+
+    <!--img src="images/wwplogo.gif" width="122" height="63" alt="Put your logo here!">
+    <hr align="left"-->
+
+    <blockquote>
+<a name="wp2305588"> </a><h2 class="pHeading1">
+tJavaDBRow
+</h2>
+<a name="wp2305597"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+</div>
+<div align="left"><img src="../Images/tUndefDBSQLRow.png" id="wp2305592" border="0" hspace="0" vspace="0"/></div><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+
+</div>
+<a name="wp2305604"> </a><h2 class="pHeading2">
+Propriétés du tJavaDBRow
+</h2>
+<a name="wp2305829"> </a><p class="pBodyRelative">
+</p>
+<div align="center">
+<table border="1" id="wp2305609table2305607">
+  <caption></caption>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305609"> </a><div class="pCellBody">
+<b class="cBold">Famille de composant</b>
+</div>
+</td>
+    <td><a name="wp2305611"> </a><div class="pCellBody">
+Databases/JavaDB
+</div>
+</td>
+    <td><a name="wp2305619"> </a><div style="color: #000000; font-size: 2pt; font-style: normal; font-variant: normal; font-weight: normal; margin-bottom: 0pt; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; text-align: left; text-decoration: none; text-indent: 0pt; text-transform: none">
+<img src="../Images/java_icon.png" id="wp2305616" border="0" hspace="0" vspace="0"/>
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305624"> </a><div class="pCellBody">
+<b class="cBold">Fonction</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2305629"> </a><div class="pCellBody">
+<b class="cBold">tJavaDBRow</b> est le composant spécifique à ce type de base de données. Il exécute des requêtes SQL déclarées sur la base de données spécifiée. Le suffixe Row signifie que le composant met en place un flux dans le Job bien que ce composant ne produise pas de données en sortie.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305636"> </a><div class="pCellBody">
+<b class="cBold">Objectif</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2305641"> </a><div class="pCellBody">
+Selon la nature de la requête et de la base de données, <b class="cBold">tJavaDBRow</b> agit sur la structure même de la base de données ou sur les données (mais sans les manipuler). Le SQLBuilder peut vous aider à rapidement et aisément écrire vos requêtes.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305648"> </a><div class="pCellBody">
+<b class="cBold">Basic settings</b>
+</div>
+</td>
+    <td><a name="wp2305653"> </a><div class="pCellHeading">
+<em class="cEmphasis">Property type</em>
+</div>
+</td>
+    <td><a name="wp2305655"> </a><div class="pCellBody">
+Peut être Built-in ou Repository
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305657"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305659"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305664"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Propriétés utilisées ponctuellement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305666"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305668"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305673"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Sélectionnez le fichier dans lequel sont stockées les propriétés du composant. Les champs suivants sont alors pré-remplis à l&#39;aide des données collectées.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305675"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305680"> </a><div class="pCellHeading">
+<em class="cEmphasis">Framework Type</em>
+</div>
+</td>
+    <td><a name="wp2305682"> </a><div class="pCellBody">
+Sélectionnez dans la liste un framework pour votre base de données Java. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305684"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305689"> </a><div class="pCellHeading">
+<em class="cEmphasis">Database</em>
+</div>
+</td>
+    <td><a name="wp2305691"> </a><div class="pCellBody">
+Nom de la base de données. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305693"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305698"> </a><div class="pCellHeading">
+<em class="cEmphasis">DB root path</em>
+</div>
+</td>
+    <td><a name="wp2305700"> </a><div class="pCellBody">
+Parcourez vos fichiers jusqu&#39;à la racine de votre base de données. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305702"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305707"> </a><div class="pCellHeading">
+<em class="cEmphasis">Username</em> et <em class="cEmphasis">Password</em>
+</div>
+</td>
+    <td><a name="wp2305712"> </a><div class="pCellBody">
+Informations d&#39;authentification de l&#39;utilisateur de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305714"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305721"> </a><div class="pCellHeading">
+<em class="cEmphasis">Schema</em> et <em class="cEmphasis">Edit Schema</em>
+</div>
+</td>
+    <td><a name="wp2305724"> </a><div class="pCellBody">
+Un schéma est une description de lignes, i.e., il définit le nombre de champs qui sont traités et passés au composant suivant. Le schéma est soit local (Built-in) soit distant dans le <span style="font-weight: bold">Repository</span>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305726"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305728"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2590540"> </a><div class="pCellBody">
+<b class="cBold">Built-in</b>&#160;: Le schéma est créé et conservé pour ce composant seulement. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma built-in</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305741"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305743"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2592271"> </a><div class="pCellBody">
+<b class="cBold">Repository&#160;</b>: Le schéma existe déjà et est stocké dans le <span style="font-weight: bold">Repository</span>. Ainsi, il peut être réutilisé. Voir également&#160;: <em class="cEmphasis">Paramétrer un schéma du Repository</em> du <span style="font-weight: bold">Guide Utilisateur</span> de <b class="cBold">Talend Open Studio</b>. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3013563"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3013566"> </a><div class="pCellHeading">
+<em class="cEmphasis">Table Name</em>
+</div>
+</td>
+    <td><a name="wp3013569"> </a><div class="pCellBody">
+Nom de la table à traiter.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305756"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305761"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query type</em>
+</div>
+</td>
+    <td><a name="wp2305763"> </a><div class="pCellBody">
+Peut être Built-in ou Repository. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305765"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305767"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305772"> </a><div class="pCellBody">
+<b class="cBold">Built-in&#160;</b>: Saisissez manuellement votre requête ou construisez-la à l&#39;aide de SQLBuilder.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305774"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305776"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305781"> </a><div class="pCellBody">
+<b class="cBold">Repository</b>&#160;: Sélectionnez la requête appropriée dans le <span style="font-weight: bold">Repository</span>. Le champ <span style="font-weight: bold">Query</span> est renseigné automatiquement.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305783"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305788"> </a><div class="pCellHeading">
+<em class="cEmphasis">Query</em>
+</div>
+</td>
+    <td><a name="wp2305790"> </a><div class="pCellBody">
+Saisissez votre requête en faisant particulièrement attention à l&#39;ordre des champs afin qu&#39;ils correspondent à la définition du schéma.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3013672"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3013677"> </a><div class="pCellHeading">
+<em class="cEmphasis">Die on error</em>
+</div>
+</td>
+    <td><a name="wp3013679"> </a><div class="pCellBody">
+Cette case est cochée par défaut et stoppe le Job en cas d&#39;erreur. Décochez cette case pour terminer le traitement avec les lignes sans erreurs, et ignorer les lignes en erreur. Vous pouvez récupérer les lignes en erreur, si vous le souhaitez. Pour cela, utilisez un lien <b class="cBold">Row</b> &gt; <b class="cBold">Rejects</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2334058"> </a><div class="pCellBody">
+<b class="cBold">Advanced settings</b>
+</div>
+</td>
+    <td><a name="wp2334064"> </a><div class="pCellHeading">
+<em class="cEmphasis">Propagate QUERY&#39;s recordset</em>
+</div>
+</td>
+    <td><a name="wp2978428"> </a><div class="pCellBody">
+Cochez cette case pour insérer les résultats de la requête dans une colonne du flux en cours. Sélectionnez cette colonne dans la liste <b class="cBold">use column</b>.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3013481"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3013513"> </a><div class="pCellHeading">
+<em class="cEmphasis">Use PreparedStatement</em>
+</div>
+</td>
+    <td><a name="wp3013517"> </a><div class="pCellBody">
+Cochez cette case pour utiliser une instance PreparedStatement afin de requêter votre base de données. Dans le tableau <b class="cBold">Set PreparedStatement Parameter</b>, définissez les valeurs des paramètres représentés par des &quot;?&quot; dans l&#39;instruction SQL définie dans le champ <b class="cBold">Query</b> de l&#39;onglet <b class="cBold">Basic settings</b>.<br /><b class="cBold">Parameter Index</b>&#160;: Saisissez la position du paramètre dans l&#39;instruction SQL.<br /><b class="cBold">Parameter Type</b>&#160;: Saisissez le type du paramètre.<br /><b class="cBold">Parameter Value</b>&#160;: Saisissez la valeur du paramètre.<br />
+</div>
+<a name="wp3013549"> </a><p class="pBodyRelative">
+</p>
+<div><table border="0" cellpadding="0" cellspacing="0" align="left"><img src="../Images/bulb_small.png" align="left" id="wp3013546" border="0" hspace="0" vspace="0"/></table></div><p class="pBodyRelative">
+Cette option est très utile si vous devez effectuer de nombreuses fois la même requête. Elle permet un gain de performance.
+</p>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp2305798"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp2305803"> </a><div class="pCellHeading">
+<em class="cEmphasis">Encoding</em>
+</div>
+</td>
+    <td><a name="wp2305805"> </a><div class="pCellBody">
+Sélectionnez l&#39;encodage à partir de la liste ou sélectionnez <b class="cBold">Custom</b> et définissez-le manuellement. Ce champ est obligatoire pour la manipulation des données de base de données.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp3013638"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3013643"> </a><div class="pCellHeading">
+<em class="cEmphasis">Commit every</em>
+</div>
+</td>
+    <td><a name="wp3013645"> </a><div class="pCellBody">
+Nombre de lignes à inclure dans le lot avant de commencer l&#39;écriture dans la base. Cette option garantit la qualité de la transaction (cependant pas de rollback) et surtout une meilleure performance d&#39;exécution.
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#FFFFFF">    <td><a name="wp3013698"> </a><div class="pCellBody">
+&#160;
+</div>
+</td>
+    <td><a name="wp3013741"> </a><div class="pCellHeading">
+<em class="cEmphasis">tStatCatcher Statistics</em>
+</div>
+</td>
+    <td><a name="wp3013744"> </a><div class="pCellBody">
+Cochez cette case pour collecter les données de log au niveau du composant. 
+</div>
+</td>
+</tr>
+  <tr align="left" bgcolor="#CCCCCC">    <td><a name="wp2305822"> </a><div class="pCellBody">
+<b class="cBold">Utilisation</b>
+</div>
+</td>
+    <td colspan="2" rowspan="1"><a name="wp2305824"> </a><div class="pCellBody">
+Ce composant offre la flexibilité des requêtes sur les bases de données et couvre toutes les possibilités de requêtes SQL.
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p class="pBodyRelative">
+
+</p>
+    </blockquote>
+    <hr>
+
+    <!--table align="right" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="right"><font size="1">
+          <a href="http://www.webworks.com"><img src="images/webworks.gif" width="150" height="20" border="0"></a><br>
+            Quadralay Corporation<br>
+            http://www.webworks.com<br>
+            Voice: (512) 719-3399<br>
+            Fax: (512) 719-3606<br>
+          <a href="mailto:sales@webworks.com">sales@webworks.com</a><br>
+        </font></td>
+      </tr>
+    </table-->
+
+    <!--table width="220" border="0" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td>
+<a accesskey="4" href="tJavaDBOutput_Scenario.html"><img id="LongDescNotReq3" src="images/prev.gif" border="0" alt="Previous" /></a><a accesskey="5" href="tJavaDBRow_Scenario.html"><img id="LongDescNotReq4" src="images/next.gif" border="0" alt="Next" /></a>
+        </td>
+      </tr>
+    </table-->
+  </body>
+</html>
