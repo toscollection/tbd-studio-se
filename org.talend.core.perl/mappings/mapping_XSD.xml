@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--  http://xmlbeans.apache.org/docs/2.0.0/guide/conXMLBeansSupportBuiltInSchemaTypes.html -->
+<mapping>
+	<dbms product="XSD" id="xsd_id" label="Mapping for XSD files" default="true">
+		<dbTypes>
+			<dbType type="xs:string" defaultLength="255" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:byte" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:boolean" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:anyType" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:double" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:base64Binary" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:hexBinary" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:float" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:short" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:unsignedByte" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:integer" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:negativeInteger" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:nonNegativeInteger" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:nonPositiveInteger" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:positiveInteger" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:duration" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:unsignedInt" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:unsignedLong" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:unsignedShort" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:int" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:long" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:date" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:dateTime" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:time" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:decimal" ignoreLen="true" ignorePre="true"/>
+			<dbType type="xs:QName" ignoreLen="true" ignorePre="true"/>
+		</dbTypes>
+		<language name="perl">
+			<talendToDbTypes>
+				<talendType type="int">
+				</talendType>
+				<talendType type="decimal">
+				</talendType>
+				<talendType type="boolean">
+				</talendType>
+				<talendType type="string">
+				</talendType>
+				<talendType type="date">
+				</talendType>
+				<talendType type="datetime">
+				</talendType>
+			</talendToDbTypes>
+			<dbToTalendTypes><!-- Adviced mappings  -->
+				<dbType type="xs:boolean">
+					<talendType type="boolean" default="true" />
+				</dbType>
+				<dbType type="xs:byte">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="xs:decimal">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="xs:string">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="xs:double">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="xs:float">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="xs:short">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:unsignedByte">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:int">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:unsignedInt">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:unsignedLong">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:unsignedShort">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:long">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:integer">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:negativeInteger">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:nonNegativeInteger">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:nonPositiveInteger">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:positiveInteger">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="xs:base64Binary">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="xs:hexBinary">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="xs:QName">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="xs:duration">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="xs:anyType">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="xs:date">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="xs:dateTime">
+					<talendType type="datetime" default="true" />
+				</dbType>
+				<dbType type="xs:time">
+					<talendType type="datetime" default="true" />
+				</dbType>
+			</dbToTalendTypes>
+		</language>
+	</dbms>
+
+</mapping>

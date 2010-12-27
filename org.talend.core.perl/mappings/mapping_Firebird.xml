@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<mapping>
+	<dbms product="FIREBIRD" id="firebird_id" label="Mapping Firebird"
+		default="true">
+		<dbTypes>
+			<dbType type="BLOB" defaultLength="20" defaultPrecision="10" />
+			<dbType type="CHAR" defaultLength="10" ignorePre="true" />
+			<dbType type="CHAR VARYING" ignorePre="true" />
+			<dbType type="DATE" ignoreLen="true" ignorePre="true" />
+			<dbType type="DECIMAL" defaultLength="10" defaultPrecision="5" />
+			<dbType type="DOUBLE PRECISION" ignoreLen="true" ignorePre="true" />
+			<dbType type="FLOAT" defaultLength="10" ignorePre="true" />
+			<dbType type="INTEGER" ignoreLen="true" ignorePre="true" /> 
+			<dbType type="NCHAR" defaultLength="10" ignorePre="true" />
+			<dbType type="NCHAR VARYING" defaultLength="10" ignorePre="true" />
+			<dbType type="NUMERIC" defaultLength="10" defaultPrecision="5"/>
+			<dbType type="SMALLINT" ignoreLen="true" ignorePre="true" />
+			<dbType type="TIME" ignoreLen="true" ignorePre="true" />
+			<dbType type="VARCHAR" default="true" defaultLength="200" ignorePre="true"/>	
+		</dbTypes>
+
+		<language name="perl">
+			<talendToDbTypes>
+				<talendType type="int">	
+					<dbType type="INTEGER" default="true" />	
+					<dbType type="SMALLINT"/>
+				</talendType>
+				<talendType type="decimal">
+					<dbType type="DECIMAL" default="true" />
+					<dbType type="FLOAT" />	
+					<dbType type="DOUBLE PRECISION"/>	
+				</talendType>
+				<talendType type="boolean">		
+				</talendType>
+				<talendType type="string">
+					<dbType type="VARCHAR" default="true" />
+					<dbType type="NCHAR" />		
+					<dbType type="NCHAR VARYING"/>
+					<dbType type="CHAR"/>
+					<dbType type="CHAR VARYING"/>				
+				</talendType>
+				<talendType type="datetime">
+					<dbType type="DATE" default="true" />
+					<dbType type="TIME"/>
+				</talendType>
+				<talendType type="date">
+					<dbType type="DATE" default="true" />
+				</talendType>
+			</talendToDbTypes>
+			<dbToTalendTypes>
+				<dbType type="BLOB">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="CHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="CHAR VARYING">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="DATE">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="DECIMAL">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="DOUBLE PRECISION">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="FLOAT">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="INTEGER">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="NCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="NCHAR VARYING">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="NUMERIC">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="SMALLINT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="TIME">
+					<talendType type="datetime" default="true" />
+				</dbType>
+				<dbType type="VARCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+			</dbToTalendTypes>
+		</language>
+	</dbms>
+
+</mapping>

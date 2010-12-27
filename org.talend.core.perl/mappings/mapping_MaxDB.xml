@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<mapping>
+	<dbms product="MAXDB" id="maxdb_id" label="Mapping MaxDB" default="true">
+		<dbTypes>
+			<dbType type="BOOLEAN" ignoreLen="true" ignorePre="true"/>
+			<dbType type="CHAR" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="CHARACTER" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="VARCHAR" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="NCHAR" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="NVARCHAR" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="FIXED" preBeforelen="true" ignoreLen="false" ignorePre="false" defaultPrecision="5" defaultLength="2"/>
+			<dbType type="NUMERIC" preBeforelen="true" ignoreLen="false" ignorePre="false" defaultPrecision="5" defaultLength="2"/>
+			<dbType type="DEC" preBeforelen="true" ignoreLen="false" ignorePre="false" defaultPrecision="5" defaultLength="2"/>
+			<dbType type="DECIMAL" preBeforelen="true" ignoreLen="false" ignorePre="false" defaultPrecision="5" defaultLength="2"/>
+			<dbType type="FLOAT" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="REAL" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="SERIAL" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="BINARY" ignoreLen="true" ignorePre="false" defaultPrecision="5"/>
+			<dbType type="DOUBLE PRECISION" ignoreLen="true" ignorePre="true"/>
+			<dbType type="SMALLINT" ignoreLen="true" ignorePre="true"/>
+			<dbType type="INT" ignoreLen="true" ignorePre="true"/>
+			<dbType type="INTEGER" ignoreLen="true" ignorePre="true"/>
+			<dbType type="DATE" ignoreLen="true" ignorePre="true"/>
+			<dbType type="TIME" ignoreLen="true" ignorePre="true"/>
+			<dbType type="TIMESTAMP" ignoreLen="true" ignorePre="true"/>
+			<dbType type="CLOB" ignoreLen="true" ignorePre="true"/>
+			<dbType type="LONG VARCHAR" ignoreLen="true" ignorePre="true"/>
+			<dbType type="LONG ASCII" ignoreLen="true" ignorePre="true"/>
+			<dbType type="CLOB UNICODE" ignoreLen="true" ignorePre="true"/>			
+			<dbType type="LONG UNICODE" ignoreLen="true" ignorePre="true"/>
+			<dbType type="NCLOB" ignoreLen="true" ignorePre="true"/>
+			<dbType type="BLOB" ignoreLen="true" ignorePre="true"/>
+			<dbType type="LONG BYTE" ignoreLen="true" ignorePre="true"/>
+		</dbTypes>
+
+		<language name="perl">
+			<talendToDbTypes>
+				<talendType type="int">	
+					<dbType type="INT" default="true"/>
+					<dbType type="INTEGER"/>
+					<dbType type="BINARY"/>
+					<dbType type="SMALLINT"/>
+				</talendType>
+				<talendType type="decimal">
+					<dbType type="DECIMAL" default="true"/>
+					<dbType type="DEC"/>
+					<dbType type="FIXED"/>
+					<dbType type="NUMERIC"/>
+					<dbType type="FLOAT"/>
+					<dbType type="REAL"/>
+					<dbType type="SERIAL"/>
+					<dbType type="DOUBLE PRECISION"/>		
+				</talendType>
+				<talendType type="boolean">
+					<dbType type="BOOLEAN" default="true"/>		
+				</talendType>
+				<talendType type="string">
+					<dbType type="CHAR"/>
+					<dbType type="CHARACTER"/>
+					<dbType type="NCHAR"/>
+					<dbType type="VARCHAR" default="true"/>
+					<dbType type="NVARCHAR"/>									
+					<dbType type="CLOB"/>
+					<dbType type="LONG VARCHAR"/>
+					<dbType type="LONG ASCII"/>
+					<dbType type="CLOB UNICODE"/>
+					<dbType type="LONG UNICODE"/>
+					<dbType type="NCLOB"/>
+					<dbType type="BLOB"/>
+					<dbType type="LONG BYTE"/>				
+				</talendType>
+				<talendType type="datetime">
+					<dbType type="DATE"/>
+					<dbType type="TIME"/>
+					<dbType type="TIMESTAMP" default="true"/>
+				</talendType>
+				<talendType type="date">
+					<dbType type="DATE" default="true"/>
+					<dbType type="TIME"/>
+					<dbType type="TIMESTAMP"/>
+				</talendType>
+			</talendToDbTypes>
+			<dbToTalendTypes>
+				<dbType type="BOOLEAN">
+					<talendType type="boolean" default="true"/>
+				</dbType>
+				<dbType type="CHAR">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="CHARACTER">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="VARCHAR">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="NCHAR">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="NVARCHAR">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="FIXED">
+					<talendType type="decimal" default="true"/>
+				</dbType>
+				<dbType type="NUMERIC">
+					<talendType type="decimal" default="true"/>
+				</dbType>								
+				<dbType type="DEC">
+					<talendType type="decimal" default="true"/>
+				</dbType>
+				<dbType type="DECIMAL">
+					<talendType type="decimal" default="true"/>
+				</dbType>
+				<dbType type="FLOAT">
+					<talendType type="decimal" default="true"/>
+				</dbType>
+				<dbType type="REAL">
+					<talendType type="decimal" default="true"/>
+				</dbType>
+				<dbType type="SERIAL">
+					<talendType type="decimal" default="true"/>
+				</dbType>
+				<dbType type="BINARY">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="DOUBLE PRECISION">
+					<talendType type="decimal" default="true"/>
+				</dbType>
+				<dbType type="SMALLINT">
+					<talendType type="int" default="true"/>
+				</dbType>
+				<dbType type="INT">
+					<talendType type="int" default="true"/>
+				</dbType>
+				<dbType type="INTEGER">
+					<talendType type="int" default="true"/>
+				</dbType>																																																																				
+				<dbType type="DATE">
+					<talendType type="date" default="true"/>
+					<talendType type="datetime"/>
+				</dbType>
+				<dbType type="TIME">
+					<talendType type="datetime" default="true"/>
+					<talendType type="date"/>
+				</dbType>
+				<dbType type="TIMESTAMP">
+					<talendType type="datetime" default="true"/>
+					<talendType type="date"/>
+				</dbType>								
+				<dbType type="CLOB">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="LONG VARCHAR">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="LONG ASCII">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="CLOB UNICODE">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="LONG UNICODE">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="NCLOB">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="BLOB">
+					<talendType type="string" default="true"/>
+				</dbType>
+				<dbType type="LONG BYTE">
+					<talendType type="string" default="true"/>
+				</dbType>
+			</dbToTalendTypes>
+		</language>
+	</dbms>
+
+</mapping>

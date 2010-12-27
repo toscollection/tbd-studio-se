@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<mapping>
+	<dbms product="HIVE" id="hive_id" label="Mapping Hive" default="true">
+	
+		<dbTypes>
+			<dbType type="SMALLINT" ignoreLen="true" ignorePre="true"/>
+			<dbType type="FLOAT" ignoreLen="true" ignorePre="true"/>
+			<dbType type="NUMBER" ignoreLen="true" ignorePre="true"/>
+			<dbType type="DOUBLE" ignoreLen="true" ignorePre="true"/>
+			<dbType type="BIGINT" ignoreLen="true" ignorePre="true"/>
+			<dbType type="INT" ignoreLen="true" ignorePre="true"/>
+			<dbType type="TINYINT" ignoreLen="true" ignorePre="true"/>
+			<dbType type="STRING" ignoreLen="true" ignorePre="true"/>
+			<dbType type="BOOLEAN" ignoreLen="true" ignorePre="true"/>
+		</dbTypes>
+	</dbms>
+
+	<language name="perl">
+		<talendToDbTypes>
+			<talendType type="id_Boolean">
+				<dbType type="BOOLEAN"/>
+			</talendType>
+			<dbType type="id_String">
+					<dbType type="STRING"/>
+			</dbType>
+			<dbType type="id_Number">
+					<dbType type="NUMBER"/>
+			</dbType>
+			<dbType type="id_Double">
+					<dbType type="DOUBLE"/>
+			</dbType>
+			<dbType type="id_Bigint">
+					<dbType type="BIGINT"/>
+			</dbType>
+			<dbType type="id_Int">
+					<dbType type="INT"/>
+			</dbType>
+			<dbType type="id_Short">
+					<dbType type="SHORT"/>
+			</dbType>
+			<dbType type="id_Tinyint">
+					<dbType type="TINYINT"/>
+			</dbType>
+			<dbType type="id_Float">
+					<dbType type="FLOAT"/>
+			</dbType>
+		</talendToDbTypes>
+		
+		<!-- Adviced mappings  -->
+		<talendToDbTypes>
+			
+			<dbType type="STRING">
+					<talendType type="id_String" default="true" />
+			</dbType>
+			<dbType type="BOOLEAN">
+					<talendType type="id_Boolean" default="true" />
+			</dbType>
+			<dbType type="NUMBER">
+					<talendType type="id_Number" default="true" />
+			</dbType>
+			<dbType type="DOUBLE">
+					<talendType type="id_Double" default="true" />
+			</dbType>
+			<dbType type="BIGINT">
+					<talendType type="id_Bigint" default="true" />
+			</dbType>
+			<dbType type="INT">
+					<talendType type="id_Int" default="true" />
+			</dbType>
+			<dbType type="SMALLINT">
+					<talendType type="id_Short" default="true" />
+			</dbType>
+			<dbType type="TINYINT">
+					<talendType type="id_Tinyint" default="true" />
+			</dbType>
+			<dbType type="FLOAT">
+					<talendType type="id_Float" default="true" />
+			</dbType>
+			
+		</talendToDbTypes>
+	</language>
+	
+</mapping>

@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<mapping>
+	<dbms product="INFORMIX" id="informix_id" label="Mapping Informix"
+		default="true">
+		<dbTypes>
+			<dbType type="BYTE" ignoreLen="true" ignorePre="true" />
+			<dbType type="BOOLEAN" ignoreLen="true" ignorePre="true" />
+			<dbType type="BLOB" ignorePre="true" />
+			<dbType type="CLOB" ignorePre="true" />
+			<dbType type="CHAR" defaultLength="50" ignorePre="true" />
+			<dbType type="CHARACTER VARYING" ignorePre="true"/>
+			<dbType type="DATE" ignoreLen="true" ignorePre="true" />
+			<dbType type="DATETIME" ignoreLen="true" ignorePre="true" />
+			<dbType type="DATETIME YEAR TO FRACTION" ignoreLen="true" ignorePre="true" />
+			<dbType type="DECIMAL" defaultLength="20" defaultPrecision="10" />
+			<dbType type="FLOAT" ignoreLen="true" ignorePre="true" />
+			<dbType type="INTEGER" ignoreLen="true" ignorePre="true" />
+			<dbType type="INT8" ignoreLen="true" ignorePre="true" />
+			<dbType type="INT" ignoreLen="true" ignorePre="true" />
+			<dbType type="LVARCHAR" ignoreLen="true" ignorePre="true" />
+			<dbType type="MONEY" ignoreLen="true" ignorePre="true" />
+			<dbType type="NCHAR" defaultLength="50" ignorePre="true" />
+			<dbType type="NVARCHAR" ignorePre="true" />
+			<dbType type="SERIAL"/>
+			<dbType type="SERIAL8" />
+			<dbType type="SMALLFLOAT" ignoreLen="true" ignorePre="true" />
+			<dbType type="SMALLINT" ignoreLen="true" ignorePre="true" />
+			<dbType type="VARCHAR" default="true" defaultLength="200" ignorePre="true"/>
+			<dbType type="TEXT" ignoreLen="true" ignorePre="true" />
+		</dbTypes>
+
+		<language name="perl">
+			<talendToDbTypes>
+				<talendType type="int">	
+					<dbType type="INTEGER" default="true" />	
+					<dbType type="BYTE"/>
+					<dbType type="INT8"/>
+					<dbType type="SERIAL"/>
+					<dbType type="SERIAL8"/>
+					<dbType type="SMALLINT"/>
+				</talendType>
+				<talendType type="decimal">
+					<dbType type="DECIMAL" default="true" />
+					<dbType type="FLOAT" />	
+					<dbType type="SMALLFLOAT"/>
+				</talendType>
+				<talendType type="boolean">
+					<dbType type="BOOLEAN" default="true" />		
+				</talendType>
+				<talendType type="string">
+					<dbType type="VARCHAR" default="true" />
+					<dbType type="BLOB" />		
+					<dbType type="CLOB"/>
+					<dbType type="CHAR"/>
+					<dbType type="CHARACTER VARYING"/>
+					<dbType type="NCHAR"/>
+					<dbType type="NVARCHAR"/>
+					<dbType type="TEXT"/>		
+				</talendType>
+				<talendType type="datetime">
+					<dbType type="DATETIME YEAR TO FRACTION" default="true" />
+					<dbType type="DATE" />	
+				</talendType>
+				<talendType type="date">
+					<dbType type="DATE" default="true" />
+					<dbType type="DATETIME YEAR TO FRACTION" default="true" />
+				</talendType>
+			</talendToDbTypes>
+			<dbToTalendTypes>
+				<dbType type="BYTE">
+					<talendType type="int" default="true"/>
+				</dbType>
+				<dbType type="BOOLEAN">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="BLOB">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="CLOB">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="CHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="CHARACTER VARYING">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="DATE">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="DATETIME YEAR TO FRACTION">
+					<talendType type="datetime" default="true" />
+				</dbType>
+				<dbType type="DECIMAL">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="FLOAT">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="INT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="INTEGER">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="INT8">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="LVARCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="MONEY">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="NCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="NVARCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="SERIAL">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="SERIAL8">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="SMALLFLOAT">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="SMALLINT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="VARCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="TEXT">
+					<talendType type="string" default="true" />
+				</dbType>
+			</dbToTalendTypes>
+		</language>
+	</dbms>
+
+</mapping>

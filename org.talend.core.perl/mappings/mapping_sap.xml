@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!-- Similar as db system, but this mapping file is use for SAP -->
+<mapping>
+	<dbms product="SAP" id="sap_id" label="Mapping SAP" default="true">
+		<dbTypes>
+			<dbType type="CHAR" ignoreLen="true" ignorePre="true" />
+			<dbType type="DATE" ignorePre="true" />
+			<dbType type="BYTE" defaultLength="1" ignorePre="true" />
+			<dbType type="FLOAT" ignorePre="true" defaultPrecision="10" />
+			<dbType type="INT" />
+			<dbType type="INT1" ignoreLen="true" ignorePre="true" />
+			<dbType type="INT2" defaultLength="20" />
+			<dbType type="TIME" ignoreLen="true" ignorePre="true" />
+			<dbType type="NUM" ignorePre="true" />
+			<dbType type="STRING" ignorePre="true" />
+			<dbType type="XSTRING" defaultLength="20" />
+			<dbType type="ITAB" ignoreLen="true" ignorePre="true" />
+			<dbType type="ITEM" ignoreLen="true" ignorePre="true" />
+			<dbType type="BCD" ignoreLen="true" ignorePre="true" />
+			<dbType type="STRUCTURE" ignoreLen="true" ignorePre="true" />
+			<dbType type="TABLE" ignoreLen="true" ignorePre="true" />
+			<dbType type="INVALID" ignoreLen="true" ignorePre="true" />
+			<dbType type="EXCEPTION" ignoreLen="true" ignorePre="true" />
+		</dbTypes>
+		<language name="perl">
+			<talendToDbTypes>
+				<talendType type="boolean">
+					<dbType type="BYTE" defautle="true" />
+				</talendType>
+				<talendType type="int">
+					<dbType type="INT" default="true" />
+					<dbType type="NUM" />
+					<dbType type="INT1" />
+					<dbType type="INT2" />
+				</talendType>
+				<talendType type="decimal">
+					<dbType type="FLOAT" defautle="true" />
+				</talendType>
+				<talendType type="string">
+					<dbType type="STRING" default="true" />
+					<dbType type="XSTRING" />
+					<dbType type="BCD" />
+					<dbType type="ITAB" />
+					<dbType type="ITEM" />
+					<dbType type="STRUCTURE" />
+					<dbType type="TABLE" />
+					<dbType type="INVALID" />
+					<dbType type="EXCEPTION" />					
+				</talendType>
+				<talendType type="datetime">
+					<dbType type="DATE" default="true" />
+					<dbType type="TIME" />
+				</talendType>
+				<talendType type="date">
+					<dbType type="DATE" default="true" />
+					<dbType type="TIME" />
+				</talendType>
+			</talendToDbTypes>
+			<dbToTalendTypes>
+				<dbType type="INT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="CHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="DATE">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="FLOAT">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="INT1">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="NUM">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="STRING">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="XSTRING">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="INT2">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="BYTE">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="TIME">
+					<talendType type="datetime" default="true" />
+				</dbType>
+				<dbType type="TABLE">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="ITEM">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="ITAB">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="BCD">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="INVALID">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="EXCEPTION">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="STRUCTURE">
+					<talendType type="string" default="true" />
+				</dbType>
+			</dbToTalendTypes>
+		</language>
+	</dbms>
+</mapping>

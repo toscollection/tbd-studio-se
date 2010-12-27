@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<mapping>
+	<dbms product="SQL_SERVER" id="id_MSSQL" label="Mapping MSSQL"
+		default="true">
+		<dbTypes>
+			<dbType type="BIGINT" ignoreLen="true" ignorePre="true" />
+			<dbType type="BIGINT IDENTITY" />
+			<dbType type="BINARY" ignoreLen="true" ignorePre="true" />
+			<dbType type="BIT" ignoreLen="true" ignorePre="true" />
+			<dbType type="CHAR" defaultLength="50" ignorePre="true" />
+			<dbType type="DATE" ignoreLen="true" ignorePre="true" />
+			<dbType type="DATETIME" ignoreLen="true" ignorePre="true" />
+			<dbType type="DATETIME2" ignoreLen="true" defaultPrecision="7" />
+			<dbType type="DATETIMEOFFSET" ignoreLen="true" defaultPrecision="7" />
+			<dbType type="DECIMAL" defaultLength="20" defaultPrecision="10" />
+			<dbType type="DECIMAL IDENTITY" defaultLength="20"
+				defaultPrecision="10" />
+			<dbType type="FLOAT" ignorePre="true" />
+			<dbType type="IMAGE" ignoreLen="true" ignorePre="true" />
+			<dbType type="INT" ignoreLen="true" ignorePre="true" />
+			<dbType type="INT IDENTITY" />
+			<dbType type="MONEY" ignoreLen="true" ignorePre="true" />
+			<dbType type="NCHAR" defaultLength="100" ignorePre="true" />
+			<dbType type="NTEXT" ignoreLen="true" ignorePre="true" />
+			<dbType type="NUMERIC" defaultLength="20" defaultPrecision="10" />
+			<dbType type="NUMERIC IDENTITY" defaultLength="20"
+				defaultPrecision="10" ignorePre="true" />
+			<dbType type="NVARCHAR" defaultLength="200" ignorePre="true" />
+			<dbType type="REAL" ignoreLen="true" ignorePre="true" />
+			<dbType type="SMALLDATETIME" ignoreLen="true" ignorePre="true" />
+			<dbType type="SMALLINT" ignoreLen="true" ignorePre="true" />
+			<dbType type="SMALLINT IDENTITY" />
+			<dbType type="SMALLMONEY" ignoreLen="true" ignorePre="true" />
+			<dbType type="SQL_VARIANT" ignoreLen="true" ignorePre="true" />
+			<dbType type="TEXT" ignoreLen="true" ignorePre="true" />
+			<dbType type="TIME" ignoreLen="true" defaultPrecision="7" />
+			<dbType type="TIMESTAMP" ignoreLen="true" ignorePre="true" />
+			<dbType type="TINYINT" ignoreLen="true" ignorePre="true" />
+			<dbType type="TINYINT IDENTITY" />
+			<dbType type="UNIQUEIDENTIFIER" ignoreLen="true" ignorePre="true" />
+			<dbType type="VARBINARY" ignorePre="true" />
+			<dbType type="VARCHAR" default="true" defaultLength="200"
+				ignorePre="true" />
+		</dbTypes>
+		<language name="perl">
+			<talendToDbTypes>
+				<talendType type="int">
+					<dbType type="NUMERIC" default="true" />
+					<dbType type="NUMERIC IDENTITY" />
+					<dbType type="BIT" />
+					<dbType type="INT" />
+					<dbType type="INT IDENTITY" />
+					<dbType type="SMALLINT" />
+					<dbType type="SMALLINT IDENTITY" />
+					<dbType type="TINYINT" />
+					<dbType type="TINYINT IDENTITY" />
+				</talendType>
+				<talendType type="decimal">
+					<dbType type="DECIMAL" default="true" />
+					<dbType type="DECIMAL IDENTITY" />
+					<dbType type="FLOAT" />
+					<dbType type="REAL" />
+				</talendType>
+				<talendType type="boolean">
+					<dbType type="BIT" />
+				</talendType>
+				<talendType type="string">
+					<dbType type="VARCHAR" default="true" />
+					<dbType type="NTEXT" />
+					<dbType type="NVARCHAR" />
+					<dbType type="TEXT" />
+				</talendType>
+				<talendType type="date">
+					<dbType type="DATETIME" default="true" />
+					<dbType type="SMALLDATETIME" />
+				</talendType>
+				<talendType type="datetime">
+					<dbType type="DATETIME" default="true" />
+					<dbType type="SMALLDATETIME" />
+				</talendType>
+			</talendToDbTypes>
+			<dbToTalendTypes><!-- Adviced mappings  -->
+				<dbType type="BIGINT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="BIGINT IDENTITY">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="BINARY">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="BIT">
+					<talendType type="int" default="true" />
+					<talendType type="boolean" />
+				</dbType>
+				<dbType type="CHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="DATETIME">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="DECIMAL">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="DECIMAL IDENTITY">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="FLOAT">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="INT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="INT IDENTITY">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="IMAGE">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="MONEY">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="NCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="NTEXT">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="NUMERIC">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="NUMERIC IDENTITY">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="NVARCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="REAL">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="SMALLDATETIME">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="SMALLINT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="SMALLINT IDENTITY">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="SMALLMONEY">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="SQL_VARIANT">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="TEXT">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="TIMESTAMP">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="TINYINT">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="TINYINT IDENTITY">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="UNIQUEIDENTIFIER">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="VARCHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="VARBINARY">
+					<talendType type="string" default="true" />
+				</dbType>
+			</dbToTalendTypes>
+		</language>
+	</dbms>
+</mapping>

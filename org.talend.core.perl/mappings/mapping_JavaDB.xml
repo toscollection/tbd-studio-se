@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<mapping>
+	<dbms product="JAVADB" id="javadb_id" label="Mapping JavaDB"
+		default="true">
+		<dbTypes>
+			<dbType type="BIGINT" ignoreLen="true" ignorePre="true" />
+			<dbType type="BLOB" ignorePre="true" />
+			<dbType type="CHAR" defaultLength="50" ignorePre="true"/>
+			<dbType type="CHAR FOR BIT DATA" defaultLength="1" ignorePre="true"/>
+			<dbType type="CLOB"  ignorePre="true"/>
+			<dbType type="DOUBLE PRECISION" />
+			<dbType type="DATE" ignoreLen="true" ignorePre="true" />
+			<dbType type="DECIMAL" defaultLength="20" defaultPrecision="10"/>
+			<dbType type="FLOAT" defaultLength="53" ignorePre="true"/>
+			<dbType type="INTEGER" ignoreLen="true" ignorePre="true" />
+			<dbType type="LONG VARCHAR" ignorePre="true"/>
+			<dbType type="LONG VARCHAR FOR BIT DATA" ignorePre="true" />
+			<dbType type="NUMERIC" defaultLength="20" defaultPrecision="10"/>
+			<dbType type="REAL" />
+			<dbType type="SMALLINT" ignoreLen="true" ignorePre="true" />
+			<dbType type="TIME" ignoreLen="true" ignorePre="true" />
+			<dbType type="TIMESTAMP" ignoreLen="true" ignorePre="true" />
+			<dbType type="VARCHAR" default="true" defaultLength="200" ignorePre="true"/>
+			<dbType type="VARCHAR FOR BIT DATA" ignorePre="true" />
+			<dbType type="XML" ignoreLen="true" ignorePre="true" />
+		</dbTypes>
+
+		<language name="perl">
+			<talendToDbTypes>
+				<talendType type="int">	
+					<dbType type="INTEGER" default="true" />	
+					<dbType type="BIGINT"/>
+					<dbType type="SMALLINT"/>
+				</talendType>
+				<talendType type="decimal">
+					<dbType type="DECIMAL" default="true" />
+					<dbType type="FLOAT" />	
+					<dbType type="REAL"/>
+					<dbType type="DOUBLE PRECISION"/>
+					<dbType type="NUMERIC"/>		
+				</talendType>
+				<talendType type="boolean">		
+				</talendType>
+				<talendType type="string">
+					<dbType type="VARCHAR" default="true" />
+					<dbType type="VARCHAR FOR BIT DATA" />		
+					<dbType type="LONG VARCHAR"/>
+					<dbType type="LONG VARCHAR FOR BIT DATA"/>
+					<dbType type="BLOB"/>
+					<dbType type="CLOB"/>
+					<dbType type="XML"/>				
+				</talendType>
+				<talendType type="datetime">
+					<dbType type="TIME" default="true" />
+					<dbType type="DATE" />	
+					<dbType type="TIMESTAMP"/>
+				</talendType>
+				<talendType type="date">
+					<dbType type="DATE" default="true" />
+					<dbType type="TIME"/>
+					<dbType type="TIMESTAMP"/>
+				</talendType>
+			</talendToDbTypes>
+			<dbToTalendTypes>
+				<dbType type="BIGINT">
+					<talendType type="int" default="true"/>
+				</dbType>
+				<dbType type="BLOB">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="CHAR">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="CHAR FOR BIT DATA">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="CLOB">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="DOUBLE PRECISION">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="DATE">
+					<talendType type="date" default="true" />
+				</dbType>
+				<dbType type="DECIMAL">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="FLOAT">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="INTEGER">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="LONG VARCHAR">
+					<talendType type="decimal" default="true" />
+				</dbType>
+				<dbType type="LONG VARCHAR FOR BIT DATA">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="NUMERIC">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="REAL">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="SMALLINT">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="TIME">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="TIMESTAMP">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="VARCHAR">
+					<talendType type="int" default="true" />
+				</dbType>
+				<dbType type="VARCHAR FOR BIT DATA">
+					<talendType type="string" default="true" />
+				</dbType>
+				<dbType type="XML">
+					<talendType type="string" default="true" />
+				</dbType>
+			</dbToTalendTypes>
+		</language>
+	</dbms>
+
+</mapping>
