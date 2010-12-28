@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ASCII"?>
+<talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default">
+  <context confirmationNeeded="false" name="Default"/>
+  <node componentName="tRowGenerator" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="64" posY="64">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRowGenerator_1"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.102 (ALPHA)"/>
+    <elementParameter field="CLOSED_LIST" name="LOG" value=""/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA_TYPE" value="BUILT_IN"/>
+    <elementParameter field="TECHNICAL" name="REPOSITORY_SCHEMA_TYPE" value=""/>
+    <elementParameter field="SCHEMA_TYPE" name="SCHEMA" value=""/>
+    <elementParameter field="TEXT" name="NB_ROWS" value="'10'"/>
+    <elementParameter field="TABLE" name="VALUES">
+      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="ARRAY" value="sub{$i++}"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="name"/>
+      <elementValue elementRef="ARRAY" value="sub{'label '.$i}"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="quantity"/>
+      <elementValue elementRef="ARRAY" value="1..1000"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="flag"/>
+      <elementValue elementRef="ARRAY" value="0,1"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="creation"/>
+      <elementValue elementRef="ARRAY" value="sub{getDate('CCYY-MM-DD')}"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="delivery"/>
+      <elementValue elementRef="ARRAY" value="sub{getRandomDate('2006-12-01',getDate('CCYY-MM-DD'))}"/>
+    </elementParameter>
+    <elementParameter field="TEXT" name="ENCODING" value="'ISO-8859-15'"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__"/>
+    <elementParameter field="TEXT" name="HINT" value="__UNIQUE_NAME__"/>
+    <elementParameter field="CHECK" name="SHOW_HINT" value="true"/>
+    <elementParameter field="MEMO" name="COMMENT" value=""/>
+    <metadata comment="" name="tRowGenerator_1">
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+      <column comment="" key="false" length="4" name="quantity" nullable="false" precision="0" type="int"/>
+      <column comment="" key="false" length="1" name="flag" nullable="false" precision="0" type="int"/>
+      <column comment="" key="false" length="10" name="creation" nullable="false" precision="0" type="date"/>
+      <column comment="" key="false" length="10" name="delivery" nullable="false" precision="0" type="date"/>
+    </metadata>
+  </node>
+  <node componentName="tLogRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="288" posY="64">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLogRow_1"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.101 (ALPHA)"/>
+    <elementParameter field="CLOSED_LIST" name="LOG" value=""/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="'|'"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__"/>
+    <elementParameter field="TEXT" name="HINT" value="__UNIQUE_NAME__"/>
+    <elementParameter field="CHECK" name="SHOW_HINT" value="true"/>
+    <elementParameter field="MEMO" name="COMMENT" value=""/>
+    <metadata name="tLogRow_1">
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+      <column comment="" key="false" length="4" name="quantity" nullable="false" precision="0" type="int"/>
+      <column comment="" key="false" length="1" name="flag" nullable="false" precision="0" type="int"/>
+      <column comment="" key="false" length="10" name="creation" nullable="false" precision="0" type="date"/>
+      <column comment="" key="false" length="10" name="delivery" nullable="false" precision="0" type="date"/>
+    </metadata>
+  </node>
+  <connection connectorName="FLOW" label="row1" lineStyle="0" metaname="tRowGenerator_1" offsetLabelX="0" offsetLabelY="0" source="tRowGenerator_1" target="tLogRow_1"/>
+</talendfile:ProcessType>

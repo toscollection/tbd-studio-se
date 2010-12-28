@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ASCII"?>
+<talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default">
+  <context confirmationNeeded="false" name="Default">
+    <contextParameter comment="" name="filepath" prompt="filepath?" promptNeeded="false" repositoryContextId="_HEzosOHuEduNisVfhUFdpg" type="Directory" value="'C:/temp/talend_files'"/>
+    <contextParameter comment="" name="root" prompt="root?" promptNeeded="false" repositoryContextId="_HEzosOHuEduNisVfhUFdpg" type="string" value="'C:/temp'"/>
+  </context>
+  <parameters>
+    <elementParameter field="DIRECTORY" name="COMP_DEFAULT_FILE_DIR" value="C:\temp\TOS-All-r23793-V3.1.0RC3\TOS-All-r23793-V3.1.0RC3\workspace" contextMode="false"/>
+    <elementParameter field="CHECK" name="displaySubjobs" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="AUTHOR" value="plegall@talend.com" contextMode="false"/>
+    <elementParameter field="TEXT" name="STATUS" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="NAME" value="tWaitForFile" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.1" contextMode="false"/>
+    <elementParameter field="TEXT" name="PURPOSE" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="DESCRIPTION" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCREEN_OFFSET_Y" value="32" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_OPTIONS" value="none" contextMode="false"/>
+    <elementParameter field="CHECK" name="IMPLICITCONTEXT_USE_PROJECT_SETTINGS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="STATANDLOG_USE_PROJECT_SETTINGS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="MULTI_THREAD_EXECATION" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="IMPLICIT_TCONTEXTLOAD" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="FROM_FILE_FLAG_IMPLICIT_CONTEXT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="FROM_DATABASE_FLAG_IMPLICIT_CONTEXT" value="false" contextMode="false"/>
+    <elementParameter field="FILE" name="IMPLICIT_TCONTEXTLOAD_FILE" value="'C:/TOS-Win32-r20205-V3.0.2/workspace/in.csv'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="';'" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_TYPE_IMPLICIT_CONTEXT" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION_IMPLICIT_CONTEXT" value="ojdbc14-10g.jar" contextMode="false"/>
+    <elementParameter field="TEXT" name="HOST_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PORT_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="DBNAME_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="USER_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PASS_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="FILE" name="DBFILE_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="DBTABLE_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="QUERY_CONDITION_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="CHECK" name="PRINT_OPERATIONS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="DISABLE_WARNINGS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_STATCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_LOGCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_METERCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_CONSOLE_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_FILES_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="FILE_PATH" value="'C:/TOS-Win32-r20205-V3.0.2/workspace/.metadata'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_STATS" value="'stats_file.txt'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_LOGS" value="'logs_file.txt'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_METTER" value="'meter_file.txt'" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_DATABASE_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_TYPE" value="tDBOutput" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="ojdbc14-10g.jar" contextMode="false"/>
+    <elementParameter field="TEXT" name="HOST" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PORT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="DBNAME" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PROPERTIES" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="USER" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PASS" value="''" contextMode="false"/>
+    <elementParameter field="FILE" name="DBFILE" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_STATS" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_LOGS" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_METER" value="''" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_RUNTIME_ERRORS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_USER_ERRORS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_USER_WARNING" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_REALTIME_STATS" value="false" contextMode="false"/>
+  </parameters>
+  <node componentName="tWaitForFile" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="160" posY="192">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tWaitForFile_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="WAIT" value="1" contextMode="false"/>
+    <elementParameter field="TEXT" name="MAX_ITERATIONS" value="" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="DIRECTORY" value="$_context{filepath}.'/out'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILEMASK" value="'*.txt'" contextMode="false"/>
+    <elementParameter field="CHECK" name="INCLUDE_SUBDIR" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="CASE_SENSITIVE" value="true" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="ACTION_ON" value="filecreated" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="THEN" value="exitloop" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+  </node>
+  <node componentName="tMsgBox" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="352" posY="192">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMsgBox_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="TITLE" value="'Talend Open Studio'" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="BUTTONS" value="0" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="ICON" value="Win32::MB_ICONINFORMATION" contextMode="false"/>
+    <elementParameter field="MEMO" name="MESSAGE" value="'The file '.$_globals{tWaitForFile_1}{CREATED_FILE}.' are created.'" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata connector="FLOW" name="tMsgBox_1"/>
+  </node>
+  <node componentName="tFileDelete" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="160" posY="96">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileDelete_1" contextMode="false"/>
+    <elementParameter field="CHECK" name="START" value="true" contextMode="false"/>
+    <elementParameter field="FILE" name="FILENAME" value="$_context{filepath}.'/out/tWaitingFile.txt'" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="CHECK" name="INFORMATION" value="false" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata connector="FLOW" name="tFileDelete_1"/>
+  </node>
+  <connection connectorName="ITERATE" label="Iterate" lineStyle="7" metaname="tWaitForFile_1" offsetLabelX="0" offsetLabelY="0" source="tWaitForFile_1" target="tMsgBox_1">
+    <elementParameter field="CHECK" name="ENABLE_PARALLEL" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="NUMBER_PARALLEL" value="2" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+  </connection>
+  <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tFileDelete_1" offsetLabelX="0" offsetLabelY="0" source="tFileDelete_1" target="tWaitForFile_1">
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+  </connection>
+  <note opaque="true" posX="96" posY="-32" sizeHeight="97" sizeWidth="321" text="Run this job&#xD;&#xA;Run the job File\management\tFileTouch&#xD;&#xA;See the result">
+    <elementParameter field="COLOR" name="NOTE_COLOR" value="255;255;203" contextMode="false"/>
+    <elementParameter field="COLOR" name="NOTETXT_COLOR" value="0;0;0" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_LEFT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_RIGHT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_CENTER" value="true" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTELABEL_CENTER" value="true" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_TOP" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_BOTTOM" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="NOTE_FONT" value="Time New Roman" contextMode="false"/>
+    <elementParameter field="TEXT" name="FONT_SIZE" value="10" contextMode="false"/>
+    <elementParameter field="CHECK" name="FONT_BOLD" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="FONT_ITALIC" value="false" contextMode="false"/>
+    <elementParameter field="COLOR" name="NOTE_LINECOLOR" value="237;201;122" contextMode="false"/>
+  </note>
+  <subjob>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tWaitForFile_1" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="160;190;240" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="220;220;250" contextMode="false"/>
+  </subjob>
+  <subjob>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tFileDelete_1" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="160;190;240" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="220;220;250" contextMode="false"/>
+  </subjob>
+</talendfile:ProcessType>

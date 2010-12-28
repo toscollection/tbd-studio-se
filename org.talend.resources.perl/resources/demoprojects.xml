@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projects>
+	<!--<project name="TALENDDEMOSJAVA" language="java" demoProjectFileType="folder" demoFilePath="resources/demoprojects/java/TALENDDEMOSJAVA" descriptionFilePath="resources/demoprojects/java/demojava.html"/> -->
+	<project name="TALENDDEMOSPERL" language="perl" demoProjectFileType="folder" demoFilePath="resources/demoprojects/perl/TALENDDEMOSPERL" descriptionFilePath="resources/demoprojects/perl/demoperl.html"/>
+	<!-- <project name="TALENDDEMOSPERL" language="perl" demoProjectFileType="archive" demoFilePath="resources/demoprojects/perl/TALENDDEMOSPERL.zip" descriptionFilePath="resources/demoprojects/perl/demoperl.html"/> -->
+</projects>

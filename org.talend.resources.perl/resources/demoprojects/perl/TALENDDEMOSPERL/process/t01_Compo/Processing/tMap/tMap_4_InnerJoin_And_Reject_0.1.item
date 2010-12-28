@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="ASCII"?>
+<talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default">
+  <context confirmationNeeded="false" name="Default"/>
+  <parameters>
+    <elementParameter field="DIRECTORY" name="COMP_DEFAULT_FILE_DIR" value="C:\TOS-Win32-r20205-V3.0.2\workspace" contextMode="false"/>
+    <elementParameter field="CHECK" name="displaySubjobs" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="AUTHOR" value="jdelobel@talend.com" contextMode="false"/>
+    <elementParameter field="TEXT" name="STATUS" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="NAME" value="tMap_4_InnerJoin_And_Reject" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.1" contextMode="false"/>
+    <elementParameter field="TEXT" name="PURPOSE" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="DESCRIPTION" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="32" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCREEN_OFFSET_Y" value="32" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_OPTIONS" value="none" contextMode="false"/>
+    <elementParameter field="CHECK" name="MULTI_THREAD_EXECATION" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="IMPLICIT_TCONTEXTLOAD" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="FROM_FILE_FLAG_IMPLICIT_CONTEXT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="FROM_DATABASE_FLAG_IMPLICIT_CONTEXT" value="false" contextMode="false"/>
+    <elementParameter field="FILE" name="IMPLICIT_TCONTEXTLOAD_FILE" value="'C:/TOS-Win32-r20205-V3.0.2/workspace/in.csv'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="';'" contextMode="false"/>
+    <elementParameter field="PROPERTY_TYPE" name="PROPERTY_TYPE_IMPLICIT_CONTEXT" value="" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE_IMPLICIT_CONTEXT:PROPERTY_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE_IMPLICIT_CONTEXT:REPOSITORY_PROPERTY_TYPE" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_TYPE_IMPLICIT_CONTEXT" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION_IMPLICIT_CONTEXT" value="ojdbc14-10g.jar" contextMode="false"/>
+    <elementParameter field="TEXT" name="HOST_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PORT_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="DBNAME_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="USER_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PASS_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="FILE" name="DBFILE_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="DBTABLE_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="QUERY_CONDITION_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="CHECK" name="PRINT_OPERATIONS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="DISABLE_WARNINGS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_STATCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_LOGCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_METERCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_CONSOLE_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_FILES_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="FILE_PATH" value="'C:/TOS-Win32-r20205-V3.0.2/workspace/.metadata'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_STATS" value="'stats_file.txt'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_LOGS" value="'logs_file.txt'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_METTER" value="'meter_file.txt'" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_DATABASE_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="PROPERTY_TYPE" name="PROPERTY_TYPE" value="" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE:PROPERTY_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE:REPOSITORY_PROPERTY_TYPE" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_TYPE" value="tDBOutput" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="ojdbc14-10g.jar" contextMode="false"/>
+    <elementParameter field="TEXT" name="HOST" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PORT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="DBNAME" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PROPERTIES" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="USER" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PASS" value="''" contextMode="false"/>
+    <elementParameter field="FILE" name="DBFILE" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_STATS" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_LOGS" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_METER" value="''" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_RUNTIME_ERRORS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_USER_ERRORS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_USER_WARNING" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_REALTIME_STATS" value="false" contextMode="false"/>
+  </parameters>
+  <node componentName="tRowGenerator" componentVersion="0.102" offsetLabelX="0" offsetLabelY="2" posX="64" posY="160">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRowGenerator_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="COMPONENT_NAME" value="tRowGenerator" contextMode="false"/>
+    <elementParameter field="TEXT" name="TRANSLATED_COMPONENT_NAME" value="tRowGenerator" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.102 (ALPHA)" contextMode="false"/>
+    <elementParameter field="TEXT" name="FAMILY" value="Misc" contextMode="false"/>
+    <elementParameter field="CHECK" name="START" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="STARTABLE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="DUMMY" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="HELP" value="org.talend.help.tRowGenerator" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="CURRENT_OS" value="Windows XP" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="IREPORT_PATH" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE_COLOR" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="REPOSITORY_ALLOW_AUTO_SWITCH" value="false" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:SCHEMA_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:REPOSITORY_SCHEMA_TYPE" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="NB_ROWS" value="10" contextMode="false"/>
+    <elementParameter field="TABLE" name="VALUES" contextMode="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="ARRAY" value="1..30"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="name"/>
+      <elementValue elementRef="ARRAY" value="sub{'label '.$i}"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="quantity"/>
+      <elementValue elementRef="ARRAY" value="1..1000"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="flag"/>
+      <elementValue elementRef="ARRAY" value="0,1"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="creation"/>
+      <elementValue elementRef="ARRAY" value="sub{getDate('CCYY-MM-DD')}"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="delivery"/>
+      <elementValue elementRef="ARRAY" value="sub{getRandomDate('2006-12-01',getDate('CCYY-MM-DD'))}"/>
+    </elementParameter>
+    <elementParameter field="EXTERNAL" name="MAP" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="0 &lt;= id &lt;= 9 &lt;br> __VALUES__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata comment="" connector="FLOW" name="tRowGenerator_1">
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+      <column comment="" key="false" length="4" name="quantity" nullable="false" precision="0" type="int"/>
+      <column comment="" key="false" length="1" name="flag" nullable="false" precision="0" type="int"/>
+      <column comment="" key="false" length="10" name="creation" nullable="false" precision="0" type="date"/>
+      <column comment="" key="false" length="10" name="delivery" nullable="false" precision="0" type="date"/>
+    </metadata>
+  </node>
+  <node componentName="tLogRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="448" posY="160">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLogRow_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="COMPONENT_NAME" value="tLogRow" contextMode="false"/>
+    <elementParameter field="TEXT" name="TRANSLATED_COMPONENT_NAME" value="tLogRow" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.101 (ALPHA)" contextMode="false"/>
+    <elementParameter field="TEXT" name="FAMILY" value="Logs &amp; Errors" contextMode="false"/>
+    <elementParameter field="CHECK" name="STARTABLE" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="DUMMY" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="HELP" value="org.talend.help.tLogRow" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="CURRENT_OS" value="Windows XP" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="IREPORT_PATH" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE_COLOR" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="REPOSITORY_ALLOW_AUTO_SWITCH" value="false" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:SCHEMA_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:REPOSITORY_SCHEMA_TYPE" value="" contextMode="false"/>
+    <elementParameter field="RADIO" name="BASIC_MODE" value="true" contextMode="false"/>
+    <elementParameter field="RADIO" name="TABLE_PRINT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="VERTICAL" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="'|'" contextMode="false"/>
+    <elementParameter field="CHECK" name="PRINT_UNIQUE_NAME" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="PRINT_COLNAMES" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="USE_FIXED_LENGTH" value="false" contextMode="false"/>
+    <elementParameter field="TABLE" name="LENGTHS" contextMode="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="OutputName"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="name"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="id_1"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="name_1"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+    </elementParameter>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="ISO-8859-15" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata connector="FLOW" name="tLogRow_1">
+      <column comment="" defaultValue="" key="false" name="OutputName" nullable="true" pattern="" sourceType="" type="string"/>
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+      <column comment="" key="true" length="11" name="id_1" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name_1" nullable="false" precision="0" type="string"/>
+    </metadata>
+  </node>
+  <node binaryData="" stringData="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xA;&lt;external-mapper-data>&lt;ui-properties shell-maximized=&quot;true&quot;>&lt;weights-main-sash-form>700&lt;/weights-main-sash-form>&lt;weights-main-sash-form>300&lt;/weights-main-sash-form>&lt;weights-datas-flow-view-sash-form>330&lt;/weights-datas-flow-view-sash-form>&lt;weights-datas-flow-view-sash-form>330&lt;/weights-datas-flow-view-sash-form>&lt;weights-datas-flow-view-sash-form>340&lt;/weights-datas-flow-view-sash-form>&lt;/ui-properties>&lt;vars-tables xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; persistent=&quot;false&quot; minimized=&quot;true&quot; activate-expression-filter=&quot;false&quot; reject-inner-join=&quot;false&quot; inner-join=&quot;false&quot; reject=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTable&quot;>&lt;name>Var&lt;/name>&lt;size-state>INTERMEDIATE&lt;/size-state>&lt;/vars-tables>&lt;output-tables xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; persistent=&quot;false&quot; minimized=&quot;false&quot; activate-expression-filter=&quot;false&quot; reject-inner-join=&quot;false&quot; inner-join=&quot;false&quot; reject=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTable&quot;>&lt;name>Output_OK&lt;/name>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>OutputName&lt;/name>&lt;type>string&lt;/type>&lt;expression>&amp;apos;Inner Join OK&amp;apos; &lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>id&lt;/name>&lt;type>int&lt;/type>&lt;expression>$row1[id]&lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>name&lt;/name>&lt;type>string&lt;/type>&lt;expression>$row1[name]&lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>id_1&lt;/name>&lt;type>int&lt;/type>&lt;expression>$References[id]&lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>name_1&lt;/name>&lt;type>string&lt;/type>&lt;expression>$References[name]&lt;/expression>&lt;/metadata-table-entries>&lt;size-state>INTERMEDIATE&lt;/size-state>&lt;/output-tables>&lt;output-tables xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; persistent=&quot;false&quot; minimized=&quot;false&quot; activate-expression-filter=&quot;false&quot; reject-inner-join=&quot;true&quot; inner-join=&quot;false&quot; reject=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTable&quot;>&lt;name>Output_InnerJoinReject&lt;/name>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>OutputName&lt;/name>&lt;type>string&lt;/type>&lt;expression>&amp;apos;Inner Join Reject&amp;apos;&lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>id&lt;/name>&lt;type>int&lt;/type>&lt;expression>$row1[id] &lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>name&lt;/name>&lt;type>string&lt;/type>&lt;expression>$row1[name] &lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>id_1&lt;/name>&lt;type>int&lt;/type>&lt;expression>$References[id] &lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>name_1&lt;/name>&lt;type>string&lt;/type>&lt;expression>$References[name] &lt;/expression>&lt;/metadata-table-entries>&lt;size-state>INTERMEDIATE&lt;/size-state>&lt;/output-tables>&lt;input-tables xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; persistent=&quot;false&quot; minimized=&quot;false&quot; activate-expression-filter=&quot;false&quot; reject-inner-join=&quot;false&quot; inner-join=&quot;false&quot; reject=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTable&quot;>&lt;name>row1&lt;/name>&lt;matching-mode>ALL_ROWS&lt;/matching-mode>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>id&lt;/name>&lt;type>int&lt;/type>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>name&lt;/name>&lt;type>string&lt;/type>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>quantity&lt;/name>&lt;type>int&lt;/type>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>flag&lt;/name>&lt;type>int&lt;/type>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>creation&lt;/name>&lt;type>date&lt;/type>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>delivery&lt;/name>&lt;type>date&lt;/type>&lt;/metadata-table-entries>&lt;size-state>INTERMEDIATE&lt;/size-state>&lt;/input-tables>&lt;input-tables xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; persistent=&quot;false&quot; minimized=&quot;false&quot; activate-expression-filter=&quot;false&quot; reject-inner-join=&quot;false&quot; inner-join=&quot;true&quot; reject=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTable&quot;>&lt;name>References&lt;/name>&lt;matching-mode>UNIQUE_MATCH&lt;/matching-mode>&lt;metadata-table-entries nullable=&quot;true&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>id&lt;/name>&lt;type>int&lt;/type>&lt;expression>$row1[id]&lt;/expression>&lt;/metadata-table-entries>&lt;metadata-table-entries nullable=&quot;false&quot; xsi:type=&quot;java:org.talend.designer.mapper.external.data.ExternalMapperTableEntry&quot;>&lt;name>name&lt;/name>&lt;type>string&lt;/type>&lt;/metadata-table-entries>&lt;size-state>INTERMEDIATE&lt;/size-state>&lt;/input-tables>&lt;/external-mapper-data>" componentName="tMap" componentVersion="0.103" offsetLabelX="0" offsetLabelY="0" posX="256" posY="160">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMap_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="COMPONENT_NAME" value="tMap" contextMode="false"/>
+    <elementParameter field="TEXT" name="TRANSLATED_COMPONENT_NAME" value="tMap" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.103 (ALPHA)" contextMode="false"/>
+    <elementParameter field="TEXT" name="FAMILY" value="Processing" contextMode="false"/>
+    <elementParameter field="CHECK" name="STARTABLE" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="DUMMY" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="HELP" value="org.talend.help.tMap" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="CURRENT_OS" value="Windows XP" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="IREPORT_PATH" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE_COLOR" value="" contextMode="false"/>
+    <elementParameter field="EXTERNAL" name="MAP" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="LINK_STYLE" value="AUTO" contextMode="false"/>
+    <elementParameter field="IMAGE" name="PREVIEW" value="_oZogcO4GEd2TmIFJp2jMfg-tMap_1-PREVIEW.bmp" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata connector="FLOW" name="Output_OK">
+      <column comment="" defaultValue="" key="false" name="OutputName" nullable="true" pattern="" sourceType="" type="string"/>
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+      <column comment="" key="true" length="11" name="id_1" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name_1" nullable="false" precision="0" type="string"/>
+    </metadata>
+    <metadata connector="FLOW" name="Output_InnerJoinReject">
+      <column comment="" defaultValue="" key="false" name="OutputName" nullable="true" pattern="" sourceType="" type="string"/>
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+      <column comment="" key="true" length="11" name="id_1" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name_1" nullable="false" precision="0" type="string"/>
+    </metadata>
+  </node>
+  <node componentName="tRowGenerator" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="256" posY="32">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRowGenerator_2" contextMode="false"/>
+    <elementParameter field="TEXT" name="COMPONENT_NAME" value="tRowGenerator" contextMode="false"/>
+    <elementParameter field="TEXT" name="TRANSLATED_COMPONENT_NAME" value="tRowGenerator" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.102 (ALPHA)" contextMode="false"/>
+    <elementParameter field="TEXT" name="FAMILY" value="Misc" contextMode="false"/>
+    <elementParameter field="CHECK" name="START" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="STARTABLE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="DUMMY" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="HELP" value="org.talend.help.tRowGenerator" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="CURRENT_OS" value="Windows XP" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="IREPORT_PATH" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE_COLOR" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="REPOSITORY_ALLOW_AUTO_SWITCH" value="false" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:SCHEMA_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:REPOSITORY_SCHEMA_TYPE" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="NB_ROWS" value="20" contextMode="false"/>
+    <elementParameter field="TABLE" name="VALUES" contextMode="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="ARRAY" value="sub{$i++}"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="name"/>
+      <elementValue elementRef="ARRAY" value="sub{'Lookup label '.(5+$i++)}  "/>
+    </elementParameter>
+    <elementParameter field="EXTERNAL" name="MAP" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="5 &lt;= id &lt;= 14 &lt;br> __VALUES__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata comment="" connector="FLOW" name="tRowGenerator_2">
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+    </metadata>
+  </node>
+  <node componentName="tLogRow" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="448" posY="256">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tLogRow_2" contextMode="false"/>
+    <elementParameter field="TEXT" name="COMPONENT_NAME" value="tLogRow" contextMode="false"/>
+    <elementParameter field="TEXT" name="TRANSLATED_COMPONENT_NAME" value="tLogRow" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.101 (ALPHA)" contextMode="false"/>
+    <elementParameter field="TEXT" name="FAMILY" value="Logs &amp; Errors" contextMode="false"/>
+    <elementParameter field="CHECK" name="STARTABLE" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="DUMMY" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="HELP" value="org.talend.help.tLogRow" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="CURRENT_OS" value="Windows XP" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="IREPORT_PATH" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE_COLOR" value="" contextMode="false"/>
+    <elementParameter field="CHECK" name="REPOSITORY_ALLOW_AUTO_SWITCH" value="true" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:SCHEMA_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="SCHEMA:REPOSITORY_SCHEMA_TYPE" value="" contextMode="false"/>
+    <elementParameter field="RADIO" name="BASIC_MODE" value="true" contextMode="false"/>
+    <elementParameter field="RADIO" name="TABLE_PRINT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="VERTICAL" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="'|'" contextMode="false"/>
+    <elementParameter field="CHECK" name="PRINT_UNIQUE_NAME" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="PRINT_COLNAMES" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="USE_FIXED_LENGTH" value="false" contextMode="false"/>
+    <elementParameter field="TABLE" name="LENGTHS" contextMode="false">
+      <elementValue elementRef="SCHEMA_COLUMN" value="OutputName"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="id"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="name"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="id_1"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+      <elementValue elementRef="SCHEMA_COLUMN" value="name_1"/>
+      <elementValue elementRef="LENGTH" value="10"/>
+    </elementParameter>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="ISO-8859-15" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="&lt;b>__UNIQUE_NAME__&lt;/b>&lt;br>__COMMENT__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata connector="FLOW" name="tLogRow_2">
+      <column comment="" defaultValue="" key="false" name="OutputName" nullable="true" pattern="" sourceType="" type="string"/>
+      <column comment="" key="true" length="11" name="id" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name" nullable="false" precision="0" type="string"/>
+      <column comment="" key="true" length="11" name="id_1" nullable="true" precision="0" type="int"/>
+      <column comment="" key="false" length="30" name="name_1" nullable="false" precision="0" type="string"/>
+    </metadata>
+  </node>
+  <connection connectorName="FLOW" label="row1" lineStyle="0" metaname="tRowGenerator_1" offsetLabelX="0" offsetLabelY="0" source="tRowGenerator_1" target="tMap_1">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="USEROWLABEL" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="METTERLABEL" value="&quot;MyLabel&quot;" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="ABSOLUTE" value="Absolute" contextMode="false"/>
+    <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
+    <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+  </connection>
+  <connection connectorName="FLOW" label="Output_OK" lineStyle="0" metaname="Output_OK" offsetLabelX="0" offsetLabelY="0" outputId="1" source="tMap_1" target="tLogRow_1">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="USEROWLABEL" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="METTERLABEL" value="&quot;MyLabel&quot;" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="ABSOLUTE" value="Absolute" contextMode="false"/>
+    <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
+    <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+  </connection>
+  <connection connectorName="FLOW" label="Output_InnerJoinReject" lineStyle="0" metaname="Output_InnerJoinReject" offsetLabelX="0" offsetLabelY="0" outputId="2" source="tMap_1" target="tLogRow_2">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="USEROWLABEL" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="METTERLABEL" value="&quot;MyLabel&quot;" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="ABSOLUTE" value="Absolute" contextMode="false"/>
+    <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
+    <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+  </connection>
+  <connection connectorName="FLOW" label="References" lineStyle="8" metaname="tRowGenerator_2" offsetLabelX="0" offsetLabelY="0" source="tRowGenerator_2" target="tMap_1">
+    <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="USEROWLABEL" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="METTERLABEL" value="&quot;MyLabel&quot;" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="ABSOLUTE" value="Absolute" contextMode="false"/>
+    <elementParameter field="CONNECTION_LIST" name="CONNECTIONS" value="" contextMode="false"/>
+    <elementParameter field="TABLE" name="THRESHLODS" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+  </connection>
+  <subjob>
+    <elementParameter field="CHECK" name="COLLAPSED" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRowGenerator_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE" value="" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="160;190;240" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="220;220;250" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="SUBJOB_DISPLAYED" value="true" contextMode="false"/>
+  </subjob>
+</talendfile:ProcessType>

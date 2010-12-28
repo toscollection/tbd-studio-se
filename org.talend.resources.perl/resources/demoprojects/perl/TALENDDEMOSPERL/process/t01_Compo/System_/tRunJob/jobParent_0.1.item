@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="ASCII"?>
+<talendfile:ProcessType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" defaultContext="Default">
+  <context confirmationNeeded="false" name="Default"/>
+  <parameters>
+    <elementParameter field="DIRECTORY" name="COMP_DEFAULT_FILE_DIR" value="C:\TOS-Win32-r20205-V3.0.2\workspace" contextMode="false"/>
+    <elementParameter field="CHECK" name="displaySubjobs" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="AUTHOR" value="jdelobel@talend.com" contextMode="false"/>
+    <elementParameter field="TEXT" name="STATUS" value="TEST" contextMode="false"/>
+    <elementParameter field="TEXT" name="NAME" value="jobParent" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.1" contextMode="false"/>
+    <elementParameter field="TEXT" name="PURPOSE" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="DESCRIPTION" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCREEN_OFFSET_X" value="0" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCREEN_OFFSET_Y" value="0" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_OPTIONS" value="none" contextMode="false"/>
+    <elementParameter field="CHECK" name="MULTI_THREAD_EXECATION" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="IMPLICIT_TCONTEXTLOAD" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="FROM_FILE_FLAG_IMPLICIT_CONTEXT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="FROM_DATABASE_FLAG_IMPLICIT_CONTEXT" value="false" contextMode="false"/>
+    <elementParameter field="FILE" name="IMPLICIT_TCONTEXTLOAD_FILE" value="'C:/TOS-Win32-r20205-V3.0.2/workspace/in.csv'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="';'" contextMode="false"/>
+    <elementParameter field="PROPERTY_TYPE" name="PROPERTY_TYPE_IMPLICIT_CONTEXT" value="" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE_IMPLICIT_CONTEXT:PROPERTY_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE_IMPLICIT_CONTEXT:REPOSITORY_PROPERTY_TYPE" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_TYPE_IMPLICIT_CONTEXT" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION_IMPLICIT_CONTEXT" value="ojdbc14-10g.jar" contextMode="false"/>
+    <elementParameter field="TEXT" name="HOST_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PORT_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="DBNAME_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="USER_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PASS_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="FILE" name="DBFILE_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="DBTABLE_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="QUERY_CONDITION_IMPLICIT_CONTEXT" value="''" contextMode="false"/>
+    <elementParameter field="CHECK" name="PRINT_OPERATIONS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="DISABLE_WARNINGS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_STATCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_LOGCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_METERCATCHER_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_CONSOLE_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_FILES_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="FILE_PATH" value="'C:/TOS-Win32-r20205-V3.0.2/workspace/.metadata'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_STATS" value="'stats_file.txt'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_LOGS" value="'logs_file.txt'" contextMode="false"/>
+    <elementParameter field="TEXT" name="FILENAME_METTER" value="'meter_file.txt'" contextMode="false"/>
+    <elementParameter field="CHECK" name="ON_DATABASE_FLAG" value="false" contextMode="false"/>
+    <elementParameter field="PROPERTY_TYPE" name="PROPERTY_TYPE" value="" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE:PROPERTY_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROPERTY_TYPE:REPOSITORY_PROPERTY_TYPE" value="" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_TYPE" value="tDBOutput" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="DB_VERSION" value="ojdbc14-10g.jar" contextMode="false"/>
+    <elementParameter field="TEXT" name="HOST" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PORT" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="DBNAME" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PROPERTIES" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="SCHEMA_DB" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="USER" value="''" contextMode="false"/>
+    <elementParameter field="TEXT" name="PASS" value="''" contextMode="false"/>
+    <elementParameter field="FILE" name="DBFILE" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_STATS" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_LOGS" value="''" contextMode="false"/>
+    <elementParameter field="DBTABLE" name="TABLE_METER" value="''" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_RUNTIME_ERRORS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_USER_ERRORS" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_USER_WARNING" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="CATCH_REALTIME_STATS" value="false" contextMode="false"/>
+  </parameters>
+  <node componentName="tRunJob" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="384" posY="192">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="COMPONENT_NAME" value="tRunJob" contextMode="false"/>
+    <elementParameter field="TEXT" name="TRANSLATED_COMPONENT_NAME" value="tRunJob" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.101 (ALPHA)" contextMode="false"/>
+    <elementParameter field="TEXT" name="FAMILY" value="System|Orchestration" contextMode="false"/>
+    <elementParameter field="CHECK" name="START" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="STARTABLE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="DUMMY" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="HELP" value="org.talend.help.tRunJob" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="CURRENT_OS" value="Windows XP" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="IREPORT_PATH" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE_COLOR" value="" contextMode="false"/>
+    <elementParameter field="PROCESS_TYPE" name="PROCESS" value="jobChildren" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_PROCESS" value="_qvq0oOktEd2P5aI02jZh9Q" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_VERSION" value="Latest" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="PROCESS:PROCESS_TYPE_CONTEXT" value="Developpement" contextMode="false"/>
+    <elementParameter field="CHECK" name="DIE_ON_CHILD_ERROR" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="TRANSMIT_WHOLE_CONTEXT" value="false" contextMode="false"/>
+    <elementParameter field="TABLE" name="CONTEXTPARAMS" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="NOT_SYNCHRONIZED_SCHEMA:SCHEMA_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="NOT_SYNCHRONIZED_SCHEMA:REPOSITORY_SCHEMA_TYPE" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="run jobChildren" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata connector="FLOW" name="tRunJob_1"/>
+  </node>
+  <node componentName="tMsgBox" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="128" posY="192">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMsgBox_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="COMPONENT_NAME" value="tMsgBox" contextMode="false"/>
+    <elementParameter field="TEXT" name="TRANSLATED_COMPONENT_NAME" value="tMsgBox" contextMode="false"/>
+    <elementParameter field="TEXT" name="VERSION" value="0.101 (ALPHA)" contextMode="false"/>
+    <elementParameter field="TEXT" name="FAMILY" value="Misc" contextMode="false"/>
+    <elementParameter field="CHECK" name="START" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="STARTABLE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="DUMMY" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="TSTATCATCHER_STATS" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="HELP" value="org.talend.help.tMsgBox" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="true" contextMode="false"/>
+    <elementParameter field="TEXT" name="CURRENT_OS" value="Windows XP" contextMode="false"/>
+    <elementParameter field="DIRECTORY" name="IREPORT_PATH" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE_COLOR" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="TITLE" value="'Talend Open Studio'" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="BUTTONS" value="0" contextMode="false"/>
+    <elementParameter field="CLOSED_LIST" name="ICON" value="Win32::MB_ICONINFORMATION" contextMode="false"/>
+    <elementParameter field="MEMO" name="MESSAGE" value="&quot;############################################\nNote the PID of jobParent: &quot;.$$.&#xD;&#xA;&quot; (the PID of jobChildren will be different)\n############################################&quot;" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="NOT_SYNCHRONIZED_SCHEMA:SCHEMA_TYPE" value="BUILT_IN" contextMode="false"/>
+    <elementParameter field="TECHNICAL" name="NOT_SYNCHRONIZED_SCHEMA:REPOSITORY_SCHEMA_TYPE" value="" contextMode="false"/>
+    <elementParameter field="TEXT" name="LABEL" value="__UNIQUE_NAME__" contextMode="false"/>
+    <elementParameter field="TEXT" name="HINT" value="__MESSAGE__" contextMode="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row" contextMode="false"/>
+    <elementParameter field="MEMO" name="COMMENT" value="" contextMode="false"/>
+    <metadata connector="FLOW" name="tMsgBox_1"/>
+  </node>
+  <connection connectorName="SUBJOB_OK" label="OnSubjobOk" lineStyle="1" metaname="tMsgBox_1" offsetLabelX="0" offsetLabelY="0" source="tMsgBox_1" target="tRunJob_1">
+    <elementParameter field="CHECK" name="ACTIVATE" value="true" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+  </connection>
+  <note opaque="true" posX="32" posY="0" sizeHeight="129" sizeWidth="449" text="The tRunJob executes the job called in the component's properties,&#xD;&#xA;in the frame of the context defined on this component with the value of the&#xD;&#xA;called job. &#xD;&#xA;&#xD;&#xA;This job display a msgbox and launch another job (jobChildren)">
+    <elementParameter field="COLOR" name="NOTE_COLOR" value="255;255;203" contextMode="false"/>
+    <elementParameter field="COLOR" name="NOTETXT_COLOR" value="0;0;0" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_LEFT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_RIGHT" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_CENTER" value="true" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTELABEL_CENTER" value="true" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_TOP" value="false" contextMode="false"/>
+    <elementParameter field="RADIO" name="NOTETXT_BOTTOM" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="NOTE_FONT" value="Time New Roman" contextMode="false"/>
+    <elementParameter field="TEXT" name="FONT_SIZE" value="10" contextMode="false"/>
+    <elementParameter field="CHECK" name="FONT_BOLD" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="FONT_ITALIC" value="false" contextMode="false"/>
+    <elementParameter field="COLOR" name="NOTE_LINECOLOR" value="237;201;122" contextMode="false"/>
+  </note>
+  <subjob>
+    <elementParameter field="CHECK" name="COLLAPSED" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tRunJob_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE" value="" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="160;190;240" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="220;220;250" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="SUBJOB_DISPLAYED" value="true" contextMode="false"/>
+  </subjob>
+  <subjob>
+    <elementParameter field="CHECK" name="COLLAPSED" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="SHOW_SUBJOB_TITLE" value="false" contextMode="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="tMsgBox_1" contextMode="false"/>
+    <elementParameter field="TEXT" name="SUBJOB_TITLE" value="" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_TITLE_COLOR" value="160;190;240" contextMode="false"/>
+    <elementParameter field="COLOR" name="SUBJOB_COLOR" value="220;220;250" contextMode="false"/>
+    <elementParameter field="CHECK" name="UPDATE_COMPONENTS" value="false" contextMode="false"/>
+    <elementParameter field="CHECK" name="SUBJOB_DISPLAYED" value="true" contextMode="false"/>
+  </subjob>
+</talendfile:ProcessType>

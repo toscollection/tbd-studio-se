@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<TalendMetadata:DatabaseConnection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendMetadata="http://www.talend.org" DatabaseType="MySQL" URL="jdbc:mysql://10.42.10.66:3306/plegall?" dbVersionString="" Port="3306" Username="root" Password="rpFp6Jr5y/Q=" ServerName="10.42.10.66" DatasourceName="" FileFieldName="" Schema="" SID="plegall" SqlSynthax="Syntaxe SQL" DbmsId="mysql_id" ProductId="MYSQL" StandardSQL="true">
+  <queries/>
+</TalendMetadata:DatabaseConnection>

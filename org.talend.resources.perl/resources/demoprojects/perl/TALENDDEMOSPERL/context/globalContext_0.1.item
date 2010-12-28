@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<talendfile:ContextType xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" confirmationNeeded="false" name="Demo">
+  <contextParameter comment="" name="sampleString" prompt="sampleString:" promptNeeded="true" type="string" value="'this is a sample'"/>
+  <contextParameter comment="" name="root" prompt="root?" promptNeeded="false" type="string" value="'C:/temp'"/>
+  <contextParameter comment="" name="Date_Sys" prompt="Date_Sys?" promptNeeded="false" type="date" value="26-10-1970"/>
+  <contextParameter comment="" name="NbLines" prompt="NbLines?" promptNeeded="true" type="int" value="100"/>
+  <contextParameter comment="" name="filepath" prompt="filepath?" promptNeeded="false" type="Directory" value="'C:/temp/talend_files'"/>
+</talendfile:ContextType>
