@@ -21,6 +21,10 @@
       <update label="TIS Talend update site for stables" url="http://www.talend.com/tisprof/updatesite/stable/"/>
    </url>
 
+   <includes
+         id="org.epic_feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.talend.designer.core.perl"
          download-size="0"
@@ -44,6 +48,27 @@
 
    <plugin
          id="org.talend.resources.perl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.epic.debug"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.epic.perleditor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.epic.regexp"
          download-size="0"
          install-size="0"
          version="0.0.0"
