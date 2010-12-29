@@ -24,7 +24,6 @@ public class HelpPerlService implements IHelpPerlService {
      * 
      * @see org.talend.core.service.IHelpPerlService#helpPress()
      */
-    @Override
     public void helpPress() {
         // TODO Auto-generated method stub
         OpenPerlHelpAction perlHelpAction = new OpenPerlHelpAction();
