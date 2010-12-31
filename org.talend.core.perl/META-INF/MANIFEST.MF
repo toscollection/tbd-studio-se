@@ -24,7 +24,6 @@ Require-Bundle: org.talend.model,
  org.eclipse.jdt.launching,
  org.apache.log4j,
  org.talend.libraries.apache,
- org.talend.libraries,
  org.talend.libraries.javacsv,
  org.talend.core
 Bundle-Vendor: .Talend SA.
