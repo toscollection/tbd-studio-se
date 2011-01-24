@@ -34,6 +34,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.progress.WorkbenchJob;
 import org.epic.perleditor.editors.PerlEditor;
+import org.talend.commons.exception.LoginException;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
@@ -142,6 +143,8 @@ public class StandAloneTalendPerlEditor extends PerlEditor implements IUIRefresh
             repFactory.unlock(item);
         } catch (PersistenceException e) {
             // e.printStackTrace();
+            ExceptionHandler.process(e);
+        } catch (LoginException e) {
             ExceptionHandler.process(e);
         }
         RepositoryNode repositoryNode = rEditorInput.getRepositoryNode();
