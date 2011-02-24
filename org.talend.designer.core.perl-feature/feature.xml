@@ -73,6 +73,7 @@
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="org.eclipse.team.core"/>
       <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.expressions"/>
    </requires>
 
    <plugin
@@ -116,6 +117,12 @@
 
    <plugin
          id="org.epic.regexp"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.librariesmanager.perl"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
