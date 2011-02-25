@@ -1,0 +1,5 @@
+-- This template is suitable to make aggregate caculates(group by operations) on 
+a  table
+--(c) 2008 Talend Inc.
+
+<% SQLPattern.include("CreateWorkTable") %>
