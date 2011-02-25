@@ -131,6 +131,12 @@ public class PerlLibrariesService extends AbstractLibrariesService {
     public void syncLibraries(IProgressMonitor... monitorWrap) {
         File target = new File(getLibrariesPath());
         try {
+            if (Activator.BUNDLE.getEntry("resources/perl/") == null) {
+                log.debug("bundle name:" + Activator.BUNDLE.getSymbolicName());
+                log.debug("/resources/perl/:" + Activator.BUNDLE.getEntry("/resources/perl/"));
+                return;
+            }
+
             // 1. Talend libraries:
             File source = new File(FileLocator.resolve(Activator.BUNDLE.getEntry("resources/perl/")).getFile()); //$NON-NLS-1$
             FilesUtils.copyFolder(source, target, false, FilesUtils.getExcludeSystemFilesFilter(), null, true, monitorWrap);
