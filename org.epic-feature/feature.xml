@@ -59,7 +59,7 @@ are also available.
       <import plugin="org.eclipse.core.filesystem" version="1.0.0" match="compatible"/>
       <import plugin="org.eclipse.help" version="3.2.0" match="compatible"/>
       <import plugin="org.eclipse.jface.text" version="3.2.0" match="compatible"/>
-      <import plugin="org.eclipse.equinox.p2.engine" version="1.0.100" match="compatible"/>
+      <import plugin="org.eclipse.equinox.p2.engine" version="1.0.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.equinox.p2.metadata" version="1.0.0" match="compatible"/>
       <import plugin="org.eclipse.equinox.p2.core" version="1.0.100" match="compatible"/>
       <import plugin="org.eclipse.compare.core" version="3.5.0" match="compatible"/>
