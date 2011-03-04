@@ -20,7 +20,8 @@ Require-Bundle: javax.xml.rpc,
  org.talend.designer.core,
  org.talend.core.runtime,
  org.talend.model,
- org.eclipse.ui.workbench
+ org.eclipse.ui.workbench,
+ org.talend.commons
 Bundle-ActivationPolicy: lazy
 Export-Package: org.talend.designer.components.ecosystem,
  org.talend.designer.components.ecosystem.jobs,

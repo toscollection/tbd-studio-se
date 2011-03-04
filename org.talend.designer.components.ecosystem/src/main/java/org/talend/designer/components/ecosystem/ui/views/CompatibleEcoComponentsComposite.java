@@ -55,8 +55,8 @@ import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.ws.WindowSystem;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
-import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
-import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
+import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorNotModifiable.LAYOUT_MODE;
+import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorNotModifiable.SORT;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
 import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
@@ -198,8 +198,8 @@ public class CompatibleEcoComponentsComposite extends AbstractEcoComponentsCompo
         // install revision column
         // createTableColumn(EcosystemConstants.INSTALLED_REVISION_TITLE, true,
         // false, 110, INSTALLED_REVISION_ACCESSOR);
-        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(EcosystemConstants
-                .getDescriptionTitleLable(), true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
+        TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
+                EcosystemConstants.getDescriptionTitleLable(), true, false, 1300, DESCRIPTION_ACCESSOR); // descriptionColumn
         // descriptionColumn.setMinimumWidth(1300);
         fTableViewerCreator.setDefaultSort(fNameColumn, SORT.ASC);
 

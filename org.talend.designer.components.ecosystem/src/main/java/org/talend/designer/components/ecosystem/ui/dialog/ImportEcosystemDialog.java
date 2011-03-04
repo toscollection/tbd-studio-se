@@ -46,8 +46,8 @@ import org.talend.commons.ui.runtime.image.EImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
-import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.LAYOUT_MODE;
-import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.SORT;
+import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorNotModifiable.LAYOUT_MODE;
+import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorNotModifiable.SORT;
 import org.talend.designer.components.ecosystem.EcosystemPlugin;
 import org.talend.designer.components.ecosystem.EcosystemUtils;
 import org.talend.designer.components.ecosystem.i18n.Messages;
@@ -248,8 +248,8 @@ public class ImportEcosystemDialog extends Dialog {
             createTableColumn(
                     Messages.getString("ImportEcosystemDialog.LATEST_REVISION"), true, false, 110, LATEST_REVISION_ACCESSOR); //$NON-NLS-1$
             // this column is extension description column
-            TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(Messages
-                    .getString("ImportEcosystemDialog.EXTENSION_DESCRIPTION"), //$NON-NLS-1$
+            TableViewerCreatorColumn<ComponentExtension, String> descriptionColumn = createTableColumn(
+                    Messages.getString("ImportEcosystemDialog.EXTENSION_DESCRIPTION"), //$NON-NLS-1$
                     true, false, 1300, DESCRIPTION_ACCESSOR);
 
             fTableViewerCreator.setDefaultSort(fNameColumn, SORT.ASC);
@@ -452,8 +452,8 @@ public class ImportEcosystemDialog extends Dialog {
                     Display.getDefault().syncExec(new Runnable() {
 
                         public void run() {
-                            compatible = ComponentSearcher.getAvailableComponentExtensions(version, EcosystemUtils
-                                    .getCurrentLanguage(), type);
+                            compatible = ComponentSearcher.getAvailableComponentExtensions(version,
+                                    EcosystemUtils.getCurrentLanguage(), type);
                             updateTable(compatible);
                         }
                     });
