@@ -8,7 +8,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.talend.commons.ui,
  org.eclipse.help.webapp,
- org.talend.core.runtime
+ org.talend.core.runtime,
+ org.talend.commons.runtime
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: .Talend SA.
