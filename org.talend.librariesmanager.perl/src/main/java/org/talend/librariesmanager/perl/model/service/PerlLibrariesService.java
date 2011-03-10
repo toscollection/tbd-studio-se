@@ -307,4 +307,25 @@ public class PerlLibrariesService extends AbstractLibrariesService {
 
     }
 
+    /*
+     * (non-Jsdoc)
+     * 
+     * @see org.talend.core.model.general.ILibrariesService#getTalendBeansFolder()
+     */
+    public List<URL> getTalendBeansFolder() throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /*
+     * (non-Jsdoc)
+     * 
+     * @see org.talend.librariesmanager.model.service.AbstractLibrariesService#getBeanTemplate()
+     */
+    @Override
+    public URL getBeanTemplate() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }
