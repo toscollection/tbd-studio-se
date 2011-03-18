@@ -12,29 +12,34 @@
 // ============================================================================
 package org.talend.repositorynode.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.repository.IExtendRepositoryNode;
+import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.model.StableRepositoryNode;
 
 /**
  * DOC hywang class global comment. Detailled comment
  */
 public class ExampleExtendRepositoryNode implements IExtendRepositoryNode {
 
-    public String getNodeLabel() {
-        return "Extend";
-    }
-
-    public String getNodeType() {
-        return "Extend";
-    }
-
     public IImage getNodeImage() {
         return ECoreImage.DEFAULT_WIZ;
     }
 
     public int getOrdinal() {
-        return 6;
+        return 26;
+    }
+
+    @Override
+    public Object[] getChildren() {
+        List<RepositoryNode> children = new ArrayList<RepositoryNode>();
+        RepositoryNode generatedFolder = new StableRepositoryNode(null, "folder", ECoreImage.FOLDER_CLOSE_ICON);
+        children.add(generatedFolder);
+        return children.toArray(new RepositoryNode[0]);
     }
 
 }

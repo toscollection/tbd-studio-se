@@ -4,7 +4,12 @@
    <extension
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode
-            class="org.talend.repositorynode.test.ExampleExtendRepositoryNode">
+            class="org.talend.repositorynode.test.ExampleExtendRepositoryNode"
+            folder="metadata/extend"
+            label="extend"
+            parentLabel="Metadata"
+            products="DI"
+            type="Extend">
       </repositoryNode>
    </extension>
 
