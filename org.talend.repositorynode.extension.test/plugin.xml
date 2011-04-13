@@ -8,6 +8,7 @@
             folder="metadata/extend"
             label="extend"
             parentLabel="Metadata"
+            parentNodeType="Metadata"
             products="DI"
             type="Extend">
       </repositoryNode>
