@@ -15,7 +15,7 @@
             contributorClass="org.epic.perleditor.editors.PerlActionContributor"
             extensions="pl, ipl, pm, cgi, epl"
             icon="icons/epic.gif"
-            id="org.talend.designer.core.perl.ui.editor.StandAloneTalendPerlEditor"
+            id="org.talend.designer.core.ui.editor.StandAloneTalendPerlEditor"
             name="Epic Perl Editor">
       </editor>
    </extension>
