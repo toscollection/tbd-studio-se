@@ -26,6 +26,9 @@ import org.apache.axis.encoding.Base64;
 import org.apache.axis.transport.http.HTTPConstants;
 import org.apache.commons.logging.Log;
 
+/**
+ * @deprecated
+ */
 public class EcosystemSocketFactory implements SocketFactory {
 
     /** Field log */

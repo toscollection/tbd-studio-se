@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.axis.components.net.BooleanHolder;
 import org.apache.axis.components.net.TransportClientProperties;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.map.MultiValueMap;
@@ -111,8 +110,8 @@ public class EcosystemUtils {
      * @return
      */
     public static String getCurrentTosVersion(boolean normalize) {
-        String version = (String) CorePlugin.getDefault().getBundle().getHeaders().get(
-                org.osgi.framework.Constants.BUNDLE_VERSION);
+        String version = (String) CorePlugin.getDefault().getBundle().getHeaders()
+                .get(org.osgi.framework.Constants.BUNDLE_VERSION);
         if (normalize) {
             version = normalizeVersion(version);
         }
@@ -221,17 +220,6 @@ public class EcosystemUtils {
     }
 
     public static String sendGetRequest(String urlAddress) throws Exception {
-
-        String property = System.getProperty("axis.socketFactory");//$NON-NLS-1$
-        Class<?> forName = Class.forName(property);
-        Object newInstance = forName.newInstance();
-
-        EcosystemSocketFactory ecosystemSocketFactory = (EcosystemSocketFactory) newInstance;
-        StringBuffer stringBuffer = new StringBuffer();
-        BooleanHolder booleanHolder = new BooleanHolder(true);
-
-        ecosystemSocketFactory.create("", -1, stringBuffer, booleanHolder);//$NON-NLS-1$
-
         HttpClient httpclient = new HttpClient();
         GetMethod getMethod = new GetMethod(urlAddress);
         TransportClientProperties tcp = TransportClientPropertiesFactory.create("http");
@@ -412,7 +400,7 @@ public class EcosystemUtils {
         // IContributionItem[] items = view.getViewSite().getActionBars()
         // .getToolBarManager().getItems();
         // for (IContributionItem item : items) {
-        //		
+        //
         // if (item.getId().equals(RefreshComponenentsAction.ID)
         // && item instanceof PluginActionContributionItem) {
         // action = ((ActionContributionItem) item).getAction();
