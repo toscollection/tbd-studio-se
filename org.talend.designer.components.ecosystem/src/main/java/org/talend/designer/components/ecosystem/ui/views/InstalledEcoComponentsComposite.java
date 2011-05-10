@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.designer.components.ecosystem.ui.views;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -334,11 +335,21 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
         for (final TableItem item : table.getItems()) {
             TableEditor editor = new TableEditor(table);
             removeEditors.add(editor);
+            boolean sourceExisted = true;
+            boolean canDeleted = false;
+            final ComponentExtension compExtension = (ComponentExtension) item.getData();
+            if (compExtension.getInstalledLocation() == null || !new File(compExtension.getInstalledLocation()).exists()) {
+                sourceExisted = false;
+            }
+            if (sourceExisted && compExtension.getInstalledRevision() != null) {
+                canDeleted = true;
+            }
+
             final Button button = new Button(table, SWT.FLAT);
-            button.setImage(StatusImageProvider.getRemoveImage((ComponentExtension) item.getData()));
+            button.setImage(StatusImageProvider.getRemoveImage(canDeleted));
             button.setToolTipText(Messages.getString("InstalledEcoComponentsComposite.removeComponent")); //$NON-NLS-1$
             button.setData(item);
-            if (button.getImage() == StatusImageProvider.REMOVE_ICON) {
+            if (canDeleted) {
                 button.addSelectionListener(new SelectionAdapter() {
 
                     /*
@@ -350,7 +361,7 @@ public class InstalledEcoComponentsComposite extends AbstractEcoComponentsCompos
                     @Override
                     public void widgetSelected(SelectionEvent e) {
                         button.setEnabled(false);
-                        ComponentExtension component = (ComponentExtension) item.getData();
+                        ComponentExtension component = compExtension;
 
                         onRemoveButtonClick(button, component);
                     }

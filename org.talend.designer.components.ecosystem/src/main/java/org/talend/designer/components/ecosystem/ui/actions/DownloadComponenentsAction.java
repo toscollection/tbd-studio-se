@@ -44,6 +44,8 @@ import org.talend.core.GlobalServiceRegister;
 import org.talend.core.language.ECodeLanguage;
 import org.talend.core.language.LanguageManager;
 import org.talend.core.model.components.ComponentUtilities;
+import org.talend.core.model.components.IComponent;
+import org.talend.core.model.components.IComponentsFactory;
 import org.talend.designer.codegen.ICodeGeneratorService;
 import org.talend.designer.components.ecosystem.EcosystemComponentsProvider;
 import org.talend.designer.components.ecosystem.EcosystemConstants;
@@ -54,10 +56,10 @@ import org.talend.designer.components.ecosystem.jobs.ComponentInstaller;
 import org.talend.designer.components.ecosystem.jobs.DownloadListener;
 import org.talend.designer.components.ecosystem.model.ComponentExtension;
 import org.talend.designer.components.ecosystem.ui.views.EcosystemView;
-import org.talend.designer.core.model.components.EmfComponent;
 import org.talend.designer.core.model.components.manager.ComponentManager;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.AbstractTalendEditor;
+import org.talend.repository.model.ComponentsFactoryProvider;
 
 /**
  * View action for downloading components.
@@ -177,10 +179,14 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
             try {
                 // prop.load(new FileInputStream(files[0]));
                 // gcui:get component name and family name from xml file.
-                EmfComponent emfComponent = new EmfComponent(files[0].getAbsolutePath(), files[0].getParentFile().getName(),
-                        "component", ComponentManager.getInstance(), false);
-                String name = emfComponent.getName();
-                String family = emfComponent.getOriginalFamilyName();
+                IComponentsFactory componentsFactory = ComponentsFactoryProvider.getInstance();
+                final IComponent emfcomponent = componentsFactory.get(files[0].getParentFile().getName());
+                String name = null;
+                String family = null;
+                if (emfcomponent != null) {
+                    name = emfcomponent.getName();
+                    family = emfcomponent.getOriginalFamilyName();
+                }
                 // String name = component.getName();
                 //String name = prop.getProperty("NAME"); //$NON-NLS-1$
                 //String family = prop.getProperty("FAMILY"); //$NON-NLS-1$

@@ -304,7 +304,7 @@ public class EcosystemUtils {
     public static void reloadComponents() {
         // reload from folder, see ComponentsFactory and UserComponentsProvider
         IComponentsFactory componentsFactory = ComponentsFactoryProvider.getInstance();
-        componentsFactory.reset();
+        componentsFactory.resetCache();
         // update the palette view, the position of the new component is
         // determined by the FAMILY value in the
         // component's property file
@@ -313,7 +313,7 @@ public class EcosystemUtils {
 
     public static void deleteComponent(ComponentExtension component) {
         File installFolder = new File(component.getInstalledLocation());
-        if (installFolder != null) {
+        if (installFolder != null && installFolder.exists()) {
             FilesUtils.removeFolder(installFolder, true);
         }
 

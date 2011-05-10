@@ -67,8 +67,8 @@ public class StatusImageProvider implements IColumnImageProvider<ComponentExtens
         }
     }
 
-    public static Image getRemoveImage(ComponentExtension extension) {
-        if (extension.getInstalledRevision() != null) {
+    public static Image getRemoveImage(boolean canDeleted) {
+        if (canDeleted) {
             return REMOVE_ICON;
         } else {
             return REMOVE_UNAVAILABLE_ICON;
