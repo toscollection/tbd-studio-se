@@ -128,6 +128,10 @@ public class PerlProcessor extends Processor {
         initCodePath(context);
     }
 
+    public void generateCode(boolean statistics, boolean trace, boolean perlProperties, boolean exportAsOSGI) throws ProcessorException {
+        // Should never be called.
+        generateCode(statistics, trace, perlProperties);
+    }
     public void generateCode(boolean statistics, boolean trace, boolean perlProperties) throws ProcessorException {
         super.generateCode(statistics, trace, perlProperties);
         try {
