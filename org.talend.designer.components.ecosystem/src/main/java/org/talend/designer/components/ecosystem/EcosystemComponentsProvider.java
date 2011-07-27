@@ -15,10 +15,20 @@ package org.talend.designer.components.ecosystem;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Bundle;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
+import org.talend.core.GlobalServiceRegister;
 import org.talend.core.model.components.AbstractComponentsProvider;
+import org.talend.core.model.components.ComponentUtilities;
+import org.talend.core.model.components.IComponentsFactory;
+import org.talend.core.ui.branding.IBrandingService;
 
 /**
  * Components provider for ecosystem.
@@ -123,6 +133,42 @@ public class EcosystemComponentsProvider extends AbstractComponentsProvider {
     @Override
     protected File getExternalComponentsLocation() {
         return EcosystemUtils.getComponentFolder();
+    }
+
+    @Override
+    public String getComponentsLocation() {
+        return new Path(IComponentsFactory.COMPONENTS_INNER_FOLDER).append(IComponentsFactory.EXTERNAL_COMPONENTS_INNER_FOLDER)
+                .append(ComponentUtilities.getExtFolder(getFolderName())).toString();
+    }
+
+    @Override
+    public File getInstallationFolder() throws IOException {
+        String componentsPath = IComponentsFactory.COMPONENTS_LOCATION;
+        IBrandingService breaningService = (IBrandingService) GlobalServiceRegister.getDefault().getService(
+                IBrandingService.class);
+        if (breaningService.isPoweredOnlyCamel()) {
+            componentsPath = IComponentsFactory.CAMEL_COMPONENTS_LOCATION;
+        }
+        Bundle b = Platform.getBundle(componentsPath);
+
+        File installationFolder = null;
+        IPath nullPath = new Path(""); //$NON-NLS-1$
+        URL url = FileLocator.find(b, nullPath, null);
+        URL fileUrl = FileLocator.toFileURL(url);
+        File bundleFolder = new File(fileUrl.getPath());
+
+        IPath path = new Path(IComponentsFactory.COMPONENTS_INNER_FOLDER)
+                .append(IComponentsFactory.EXTERNAL_COMPONENTS_INNER_FOLDER);
+        path = path.append(ComponentUtilities.getExtFolder(getFolderName()));
+
+        installationFolder = new File(bundleFolder, path.toOSString());
+
+        return installationFolder;
+    }
+
+    @Override
+    public boolean isUseLocalProvider() {
+        return true;
     }
 
 }
