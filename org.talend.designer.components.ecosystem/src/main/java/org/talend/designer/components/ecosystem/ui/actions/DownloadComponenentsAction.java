@@ -40,6 +40,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.core.CorePlugin;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.language.ECodeLanguage;
 import org.talend.core.language.LanguageManager;
@@ -127,8 +128,12 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
         // activate aection again after job finished
         action.setEnabled(true);
         if (fExtensionDownloaded > 0) {
-            fView.refresh(); // refresh table
             EcosystemUtils.reloadComponents(); // refresh palette
+
+            // update needed modules.
+            CorePlugin.getDefault().getLibrariesService().resetModulesNeeded();
+
+            fView.refresh(); // refresh table
 
             // see feature 0005050: confirmation popup once the component is installed
             confirmInstallation();
@@ -324,6 +329,9 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                         // update extesion status
                         extension.setInstalledRevision(extension.getLatestRevision());
                         extension.setInstalledLocation(installedLocation.getAbsolutePath());
+
+                        updateOBR(installedLocation, monitor);
+
                         monitor.done();
                         extensionDownloadCompleted(extension);
                     } else {
@@ -340,6 +348,12 @@ public class DownloadComponenentsAction implements IViewActionDelegate {
                 // localZipFile.delete();
             } catch (Exception e) {
                 ExceptionHandler.process(e);
+            }
+        }
+
+        private void updateOBR(File source, IProgressMonitor monitor) {
+            if (LanguageManager.getCurrentLanguage().equals(ECodeLanguage.JAVA)) {
+                CorePlugin.getDefault().getRepositoryBundleService().deploy(source.toURI(), monitor);
             }
         }
 
