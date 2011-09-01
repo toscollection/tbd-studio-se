@@ -12,8 +12,25 @@
 
     <packaging>pom</packaging>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <modules>
-	<module>org.talend.utils</module>
+        <module>org.talend.utils</module>
     </modules>
+
+	<distributionManagement>
+		<repository>
+			<id>tos-releases</id>
+			<name>TOS releases Repository</name>
+			<url>${tos.releases.repo.url}</url>
+		</repository>
+		<snapshotRepository>
+			<id>tos-snapshots</id>
+			<name>TOS snapshots Repository</name>
+			<url>${tos.snapshots.repo.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 </project>
