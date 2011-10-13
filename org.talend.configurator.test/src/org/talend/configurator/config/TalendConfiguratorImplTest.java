@@ -1,4 +1,4 @@
-//============================================================================
+// ============================================================================
 //
 // Talend Community Edition
 //
@@ -11,14 +11,14 @@
 //
 // This library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 // Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
-//============================================================================
+// ============================================================================
 package org.talend.configurator.config;
 
 import java.io.File;
@@ -44,118 +44,102 @@ import static org.junit.Assert.assertTrue;
  * 
  */
 public class TalendConfiguratorImplTest {
-	URI installLocationURI = EquinoxUtils.getInstallLocationURI(Activator
-			.getDefault().getContext());
-	File licenceFile = new File(URIUtil.toFile(installLocationURI),
-			Utils.decode("6C6963656E7365"));//$NON-NLS-1$
-	Bundle bundle = FrameworkUtil.getBundle(getClass());
-	File datelicFile = bundle.getBundleContext().getDataFile(
-			TalendConfiguratorImpl.LAST_LICENCE_DATE_FILE_NAME);
 
-	@Before
-	public void preTest() {
-		if (licenceFile.exists()) {
-			assertTrue(licenceFile.delete());
-		}// else licenceFile does not exit so no need to remove
+    URI installLocationURI = EquinoxUtils.getInstallLocationURI(Activator.getDefault().getContext());
 
-		if (datelicFile.exists()) {
-			assertTrue(datelicFile.delete());
-		}
-	}
+    File licenceFile = new File(URIUtil.toFile(installLocationURI), Utils.decode("6C6963656E7365"));//$NON-NLS-1$
 
-	/**
-	 * Test method for
-	 * {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()}
-	 * .
-	 * 
-	 * @throws IOException
-	 */
-	@Test
-	public void testHasLicenceFileChanged_NoLicence() throws IOException {
-		TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(
-				bundle.getBundleContext(), bundle);
-		assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
-		assertTrue(datelicFile.exists());
-	}
+    Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-	/**
-	 * Test method for
-	 * {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()}
-	 * .
-	 * 
-	 * @throws IOException
-	 */
-	@Test
-	public void testHasLicenceFileChanged_NewLicence() throws IOException {
-		licenceFile.createNewFile();
-		TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(
-				bundle.getBundleContext(), bundle);
-		assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
-		assertTrue(datelicFile.exists());
-	}
+    File datelicFile = bundle.getBundleContext().getDataFile(TalendConfiguratorImpl.LAST_LICENCE_DATE_FILE_NAME);
 
-	/**
-	 * Test method for
-	 * {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()}
-	 * .
-	 * 
-	 * @throws IOException
-	 */
-	@Test
-	public void testHasLicenceFileChanged_LicenceRemoved() throws IOException {
-		licenceFile.createNewFile();
-		TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(
-				bundle.getBundleContext(), bundle);
-		assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
-		assertTrue(datelicFile.exists());
-		// delete the licence
-		assertTrue(licenceFile.delete());
-		assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
-	}
+    @Before
+    public void preTest() {
+        if (licenceFile.exists()) {
+            assertTrue(licenceFile.delete());
+        }// else licenceFile does not exit so no need to remove
 
-	/**
-	 * Test method for
-	 * {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()}
-	 * .
-	 * 
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	@Test
-	public void testHasLicenceFileChanged_NewerLicence() throws IOException,
-			InterruptedException {
-		licenceFile.createNewFile();
-		TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(
-				bundle.getBundleContext(), bundle);
-		assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
-		assertTrue(datelicFile.exists());
-		// wait for one second to be sure date of modification has changed caus
-		// can be too quick.
-		synchronized (talendConfiguratorImpl) {
-			talendConfiguratorImpl.wait(1000);
-		}
-		// delete and recreate licence file to make it newer
-		assertTrue(licenceFile.delete());
-		licenceFile.createNewFile();
-		assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
-	}
+        if (datelicFile.exists()) {
+            assertTrue(datelicFile.delete());
+        }
+    }
 
-	/**
-	 * Test method for
-	 * {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()}
-	 * .
-	 * 
-	 * @throws IOException
-	 */
-	@Test
-	public void testHasLicenceFileChanged_LicenceHasNotChanged()
-			throws IOException {
-		licenceFile.createNewFile();
-		TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(
-				bundle.getBundleContext(), bundle);
-		assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
-		assertTrue(datelicFile.exists());
-		assertFalse(talendConfiguratorImpl.hasLicenceFileChanged());
-	}
+    /**
+     * Test method for {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()} .
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testHasLicenceFileChanged_NoLicence() throws IOException {
+        TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(bundle.getBundleContext(), bundle);
+        assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
+        assertTrue(datelicFile.exists());
+    }
+
+    /**
+     * Test method for {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()} .
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testHasLicenceFileChanged_NewLicence() throws IOException {
+        licenceFile.createNewFile();
+        TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(bundle.getBundleContext(), bundle);
+        assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
+        assertTrue(datelicFile.exists());
+    }
+
+    /**
+     * Test method for {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()} .
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testHasLicenceFileChanged_LicenceRemoved() throws IOException {
+        licenceFile.createNewFile();
+        TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(bundle.getBundleContext(), bundle);
+        assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
+        assertTrue(datelicFile.exists());
+        // delete the licence
+        assertTrue(licenceFile.delete());
+        assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
+    }
+
+    /**
+     * Test method for {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()} .
+     * 
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Test
+    public void testHasLicenceFileChanged_NewerLicence() throws IOException, InterruptedException {
+        licenceFile.createNewFile();
+        TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(bundle.getBundleContext(), bundle);
+        assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
+        assertTrue(datelicFile.exists());
+        // wait for one second to be sure date of modification has changed caus
+        // can be too quick.
+        synchronized (talendConfiguratorImpl) {
+            talendConfiguratorImpl.wait(1000);
+        }
+        // delete and recreate licence file to make it newer
+        assertTrue(licenceFile.delete());
+        licenceFile.createNewFile();
+        assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
+    }
+
+    /**
+     * Test method for {@link org.talend.configurator.config.TalendConfiguratorImpl#hasLicenceFileChanged()} .
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testHasLicenceFileChanged_LicenceHasNotChanged() throws IOException {
+        licenceFile.createNewFile();
+        TalendConfiguratorImpl talendConfiguratorImpl = new TalendConfiguratorImpl(bundle.getBundleContext(), bundle);
+        assertTrue(talendConfiguratorImpl.hasLicenceFileChanged());
+        assertTrue(datelicFile.exists());
+        assertFalse(talendConfiguratorImpl.hasLicenceFileChanged());
+    }
 
 }
