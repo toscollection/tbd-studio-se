@@ -1,1 +1,0 @@
-$| = 1; my $tmp = select(STDERR); $| = 1; select($tmp);

@@ -1,3 +1,0 @@
-String var = "toto";
-
-System.out.println(v);
