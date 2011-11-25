@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Hbaseprovider
+Bundle-SymbolicName: org.talend.repository.hbaseprovider;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.talend.repository.hbaseprovider.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.talend.core.repository,
+ org.talend.metadata.managment,
+ org.talend.model,
+ org.talend.metadata.managment.ui,
+ org.talend.common.ui.runtime,
+ org.talend.core.runtime,
+ org.talend.libraries.apache,
+ org.talend.libraries.hadoop
+Bundle-ActivationPolicy: lazy

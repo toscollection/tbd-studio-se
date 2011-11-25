@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.talend.core.repository.metadata_provider">
+      <DBMetadataProvider
+            class="org.talend.repository.hbaseprovider.provider.HBaseMetadataProvider"
+            dbType="HBase"
+            supportJDBC="false">
+      </DBMetadataProvider>
+   </extension>
+
+</plugin>
