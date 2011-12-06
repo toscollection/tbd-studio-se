@@ -404,6 +404,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
     public void fillConnection(DatabaseConnection connection) {
         Catalog defaultCatalog = CatalogHelper.createCatalog(getDefaultCatalogName());
         ConnectionHelper.addPackage(defaultCatalog, connection);
+        connection.setSID(getDefaultCatalogName());
     }
 
     public String getDefaultCatalogName() {
