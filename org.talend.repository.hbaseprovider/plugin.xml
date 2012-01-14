@@ -9,5 +9,21 @@
             supportJDBC="false">
       </DBMetadataProvider>
    </extension>
+   <extension
+         point="org.talend.core.runtime.repositoryComponent_provider">
+      <RepositoryComponent
+            input="tHBaseInput"
+            name="HBASE"
+            output="tHBaseOutput"
+            type="HBASE"
+            withSchema="true">
+         <Item
+               clazz="org.talend.core.model.properties.DatabaseConnectionItem">
+         </Item>
+         <DBType
+               type="HBASE">
+         </DBType>
+      </RepositoryComponent>
+   </extension>
 
 </plugin>
