@@ -222,6 +222,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
             public void modifyText(ModifyEvent e) {
                 pathValue = pathText.getText();
                 checkRunBtnValid();
+                executeJobCompController.doModifyPathAction();
             }
         });
     }

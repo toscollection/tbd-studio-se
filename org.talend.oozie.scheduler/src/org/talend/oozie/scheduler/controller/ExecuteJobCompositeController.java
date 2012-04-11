@@ -451,7 +451,11 @@ public class ExecuteJobCompositeController {
     }
 
     public void doModifyPathAction() {
-
+        if (multiPageTalendEditor != null) {
+            String path = executeJobComposite.getPathValue();
+            IProcess2 process = multiPageTalendEditor.getProcess();
+            process.getElementParameter("HADOOP_APP_PATH").setValue(path);
+        }
     }
 
     private void updateOoziePreferencePageValues() {
