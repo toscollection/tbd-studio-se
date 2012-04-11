@@ -69,15 +69,14 @@ public class ExecuteJobCompositeController {
 
     public ExecuteJobCompositeController(ExecuteJobComposite executeJobComposite) {
         this.executeJobComposite = executeJobComposite;
-        init();
     }
 
     protected void init() {
-        if (multiPageTalendEditor != null) {
-            IProcess2 process = multiPageTalendEditor.getProcess();
-            String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
-            executeJobComposite.setPathValue(appPath); // "/user/hdp/etl/talend/MarvinJob_0.1");
-        }
+        // if (multiPageTalendEditor != null) {
+        // IProcess2 process = multiPageTalendEditor.getProcess();
+        // String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
+        // executeJobComposite.setPathValue(appPath); // "/user/hdp/etl/talend/MarvinJob_0.1");
+        // }
     }
 
     /**
@@ -508,6 +507,11 @@ public class ExecuteJobCompositeController {
 
     public void setMultiPageTalendEditor(AbstractMultiPageTalendEditor multiPageTalendEditor) {
         this.multiPageTalendEditor = multiPageTalendEditor;
+        if (multiPageTalendEditor != null) {
+            IProcess2 process = multiPageTalendEditor.getProcess();
+            String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
+            executeJobComposite.setPathValue(appPath); // "/user/hdp/etl/talend/MarvinJob_0.1");
+        }
     }
 
 }

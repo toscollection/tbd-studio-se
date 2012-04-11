@@ -9,7 +9,16 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IEditorPart;
@@ -23,6 +32,7 @@ import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.views.properties.EElementType;
 import org.talend.designer.runprocess.RunProcessContext;
 import org.talend.designer.runprocess.RunProcessPlugin;
+import org.talend.designer.runprocess.ui.ProcessContextComposite;
 import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.OozieMonitoringComposite;
@@ -43,18 +53,31 @@ public class OozieSchedulerView extends ViewPart {
 
     private AbstractMultiPageTalendEditor part;
 
+    private SashForm sash;
+
+    private Composite parent;
+
+    private Button moveButton;
+
+    private ProcessContextComposite contextComposite;
+
     public OozieSchedulerView() {
         tabFactory = new HorizontalTabFactory();
     }
 
     @Override
     public void createPartControl(Composite parent) {
+        this.parent = parent;
         parent.setLayout(new FillLayout());
-        Composite left = new Composite(parent, SWT.NONE);
 
-        left.setLayout(new FillLayout());
+        sash = new SashForm(parent, SWT.HORIZONTAL | SWT.SMOOTH);
+        sash.setLayoutData(new GridData(GridData.FILL_BOTH));
+        sash.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+        GridLayout layout = new GridLayout();
+        sash.setLayout(layout);
 
-        tabFactory.initComposite(left, false);
+        createLeftContents(sash);
+        createRightContents(sash);
 
         tabFactory.getTabComposite().layout();
         tabFactory.getTabbedPropertyComposite().getComposite().dispose();
@@ -91,6 +114,74 @@ public class OozieSchedulerView extends ViewPart {
         // IBrandingService.class);
     }
 
+    protected void createLeftContents(Composite parent) {
+        Composite left = new Composite(parent, SWT.NONE);
+        left.setLayout(new FillLayout());
+
+        tabFactory.initComposite(left, false);
+    }
+
+    protected void createCenterContents(Composite parent) {
+        FormData layouDatag = new FormData();
+        layouDatag.left = new FormAttachment(0, 0);
+        layouDatag.width = 32;
+        layouDatag.top = new FormAttachment(0, 0);
+        layouDatag.bottom = new FormAttachment(100, 0);
+
+        final Composite buttonComposite = new Composite(parent, SWT.ERROR);
+        buttonComposite.setLayoutData(layouDatag);
+        buttonComposite.setLayout(new GridLayout());
+
+        moveButton = new Button(buttonComposite, SWT.PUSH);
+        moveButton.setText(">>"); //$NON-NLS-1$
+        moveButton.setToolTipText(Messages.getString("ProcessComposite.hideContext"));
+        final GridData layoutData = new GridData();
+        layoutData.verticalAlignment = GridData.CENTER;
+        layoutData.horizontalAlignment = GridData.CENTER;
+        layoutData.grabExcessHorizontalSpace = true;
+        layoutData.grabExcessVerticalSpace = true;
+        moveButton.setLayoutData(layoutData);
+        regMoveButtonListener();
+    }
+
+    protected void createRightContents(Composite parent) {
+        Composite right = new Composite(sash, SWT.NONE);
+        right.setLayout(new FormLayout());
+
+        createCenterContents(right);
+
+        sash.setSashWidth(5);
+        sash.setWeights(new int[] { 18, 5 });
+
+        Composite cotextCom = new Composite(right, SWT.NONE);
+        FormData layouDatag = new FormData();
+        layouDatag.left = new FormAttachment(0, 32);
+        layouDatag.right = new FormAttachment(100, 0);
+        layouDatag.top = new FormAttachment(0, 0);
+        layouDatag.bottom = new FormAttachment(100, 0);
+        cotextCom.setLayoutData(layouDatag);
+        cotextCom.setLayout(new GridLayout());
+        contextComposite = new ProcessContextComposite(cotextCom, SWT.NONE);
+        contextComposite.setBackground(right.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+    }
+
+    private void regMoveButtonListener() {
+        moveButton.addSelectionListener(new SelectionAdapter() {
+
+            public void widgetSelected(final SelectionEvent e) {
+                if (moveButton.getText().equals(">>")) { //$NON-NLS-1$
+                    sash.setWeights(new int[] { 23, 1 });
+                    moveButton.setToolTipText(Messages.getString("ProcessComposite.showContext"));
+                    moveButton.setText("<<");
+                } else if (moveButton.getText().equals("<<")) { //$NON-NLS-1$
+                    sash.setWeights(new int[] { 18, 5 });
+                    moveButton.setToolTipText(Messages.getString("ProcessComposite.hideContext"));//$NON-NLS-1$
+                    moveButton.setText(">>");
+                }
+            }
+        });
+    }
+
     public void createDynamicComposite(Composite parent, Element element, EComponentCategory category) {
         // jcomposite = this.processViewHelper.getProcessComposite(parent.getShell());
         if (category == EComponentCategory.SCHEDULE_4_HADOOP_EXECUTE_JOB) {
@@ -110,7 +201,15 @@ public class OozieSchedulerView extends ViewPart {
 
     public void refresh() {
         getPart();
-        executeJobComposite.setMultiPageTalendEditor(part);
+        if (part != null) {
+            executeJobComposite.setMultiPageTalendEditor(part);
+
+        } else {
+            tabFactory.setTitle(Messages.getString("Title_name"), null);
+
+        }
+        // setPartName("PartName");
+        // tabFactory.setTitle("Hello Marvin", null);
     }
 
     private void getPart() {

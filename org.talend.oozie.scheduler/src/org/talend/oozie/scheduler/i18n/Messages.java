@@ -15,7 +15,7 @@ package org.talend.oozie.scheduler.i18n;
 import java.util.ResourceBundle;
 
 import org.talend.commons.i18n.MessagesCore;
-import org.talend.oozie.scheduler.Activator;
+import org.talend.oozie.scheduler.OozieSchedulerPlugin;
 
 /**
  */
@@ -23,7 +23,7 @@ public class Messages extends MessagesCore {
 
     private static final String BUNDLE_NAME = "messages"; //$NON-NLS-1$
 
-    private static final String PLUGIN_ID = Activator.PLUGIN_ID; //$NON-NLS-1$
+    private static final String PLUGIN_ID = OozieSchedulerPlugin.PLUGIN_ID; //$NON-NLS-1$
 
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);
 

@@ -22,12 +22,15 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
 import org.talend.core.model.properties.ConnectionItem;
@@ -36,6 +39,7 @@ import org.talend.designer.core.IMultiPageTalendEditor;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
 import org.talend.oozie.scheduler.i18n.Messages;
+import org.talend.oozie.scheduler.utils.EOozieSchedulerImages;
 
 /**
  * Created by Marvin Wang on Mar. 30, 2012 for Execute Job tab composite.
@@ -61,7 +65,6 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     private AbstractMultiPageTalendEditor multiPageTalendEditor;
 
     /**
-     * DOC Marvin ExecuteJobComposite constructor comment.
      * 
      * @param parent
      * @param style
@@ -97,22 +100,29 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         // Schedule button
         scheduleBtn = new Button(parent, SWT.NONE);
         scheduleBtn.setText(Messages.getString("Button_Schedule"));
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(scheduleBtn);
+        scheduleBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_SCHEDULE));
+        GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(computeBtnTxtSize(scheduleBtn).x + 50, 30)
+                .applyTo(scheduleBtn);
 
         // Run button
         runBtn = new Button(parent, SWT.NONE);
         runBtn.setText(Messages.getString("Button_Run"));
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(runBtn);
+        runBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_RUN));
+        GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(computeBtnTxtSize(runBtn).x + 70, 30)
+                .applyTo(runBtn);
 
         // Kill button
         killBtn = new Button(parent, SWT.NONE);
         killBtn.setText(Messages.getString("Button_Kill"));
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(killBtn);
+        killBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_KILL));
+        GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(computeBtnTxtSize(killBtn).x + 70, 30)
+                .align(SWT.BEGINNING, SWT.CENTER).applyTo(killBtn);
 
         // Setting button
         settingBtn = new Button(parent, SWT.PUSH);
         settingBtn.setText(Messages.getString("Button_Setting"));
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(settingBtn);
+        GridDataFactory.fillDefaults().grab(false, false).indent(50, 10).hint(computeBtnTxtSize(settingBtn).x + 50, 30)
+                .align(SWT.END, SWT.CENTER).applyTo(settingBtn);
 
         registerBtnListeners();
         checkBtnValid();
@@ -121,17 +131,19 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     private void createCenterContents(Composite parent) {
         Label pathLbl = new Label(parent, SWT.NONE);
         pathLbl.setText(Messages.getString("Label_Path"));
+        GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).align(SWT.BEGINNING, SWT.CENTER)
+                .applyTo(pathLbl);
 
         pathText = new Text(parent, SWT.BORDER);
         pathText.setText(pathValue == null ? "" : pathValue);
-        GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(pathText);
+        GridDataFactory.fillDefaults().span(2, 1).grab(true, false).indent(-50, 10).applyTo(pathText);
 
         regPathTextListener();
     }
 
     private void createBottomContents(Composite parent) {
         outputTxt = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-        GridDataFactory.fillDefaults().span(4, 2).grab(true, true).applyTo(outputTxt);
+        GridDataFactory.fillDefaults().span(4, 2).indent(SWT.DEFAULT, 10).grab(true, true).applyTo(outputTxt);
     }
 
     /**
@@ -212,6 +224,20 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
                 checkRunBtnValid();
             }
         });
+    }
+
+    private Point computeBtnTxtSize(Button btn) {
+        GC gc = new GC(btn.getDisplay());
+        final Point p = gc.textExtent(btn.getText());
+        gc.dispose();
+        return p;
+    }
+
+    private Point computeTextTxtSize(Label label) {
+        GC gc = new GC(label.getDisplay());
+        final Point p = gc.textExtent(label.getText());
+        gc.dispose();
+        return p;
     }
 
     public String getPathValue() {
@@ -375,6 +401,14 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     public AbstractMultiPageTalendEditor getMultiPageTalendEditor() {
         return this.multiPageTalendEditor;
+    }
+
+    public ExecuteJobCompositeController getExecuteJobCompController() {
+        return this.executeJobCompController;
+    }
+
+    public void setExecuteJobCompController(ExecuteJobCompositeController executeJobCompController) {
+        this.executeJobCompController = executeJobCompController;
     }
 
 }

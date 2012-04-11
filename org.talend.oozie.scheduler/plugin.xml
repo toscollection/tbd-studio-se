@@ -6,6 +6,7 @@
       <view
             category="org.talend.core.root"
             class="org.talend.oozie.scheduler.views.OozieSchedulerView"
+            icon="icons/oozie_schedule.gif"
             id="org.talend.oozie.scheduler.views.OozieSchedulerView"
             name="Oozie Scheduler"
             restorable="true">

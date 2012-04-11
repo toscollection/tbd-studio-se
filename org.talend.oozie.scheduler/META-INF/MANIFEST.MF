@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Talend Oozie Scheduler
 Bundle-SymbolicName: org.talend.oozie.scheduler;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.talend.oozie.scheduler.Activator
+Bundle-Activator: org.talend.oozie.scheduler.OozieSchedulerPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.talend.core;bundle-version="2.2.0",
