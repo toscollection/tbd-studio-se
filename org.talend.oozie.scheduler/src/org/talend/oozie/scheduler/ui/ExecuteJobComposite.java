@@ -271,15 +271,16 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         }
         return "";
     }
-    
+
     public CommandStack getCommandStack() {
-        return multiPageTalendEditor == null ? null : (CommandStack) (multiPageTalendEditor.getTalendEditor().getAdapter(CommandStack.class));
+        return multiPageTalendEditor == null ? null : (CommandStack) (multiPageTalendEditor.getTalendEditor()
+                .getAdapter(CommandStack.class));
     }
 
     public void setPathValue(String pathValue) {
         if (multiPageTalendEditor != null && !pathValue.equals(getPathValue())) {
             IProcess2 process = multiPageTalendEditor.getProcess();
-            getCommandStack().execute(new PropertyChangeCommand(process,"HADOOP_APP_PATH", pathValue));
+            getCommandStack().execute(new PropertyChangeCommand(process, "HADOOP_APP_PATH", pathValue));
         }
     }
 
@@ -313,15 +314,17 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         checkScheduleBtnValid();
         checkRunBtnValid();
         checkKillBtnValid();
-        if (multiPageTalendEditor != null) {
-            pathText.setEnabled(true);
-            pathText.setText(getPathValue());
-            outputTxt.setEnabled(true);
-        } else {
-            pathText.setEnabled(false);
-            pathText.setText("");
-            outputTxt.setText("");
-            outputTxt.setEnabled(false);
+        if (!pathText.isDisposed() && !outputTxt.isDisposed()) {
+            if (multiPageTalendEditor != null) {
+                pathText.setEnabled(true);
+                pathText.setText(getPathValue());
+                outputTxt.setEnabled(true);
+            } else {
+                pathText.setEnabled(false);
+                pathText.setText("");
+                outputTxt.setText("");
+                outputTxt.setEnabled(false);
+            }
         }
     }
 
@@ -354,8 +357,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
      */
     @Override
     public IMultiPageTalendEditor getPart() {
-        // TODO Auto-generated method stub
-        return null;
+        return multiPageTalendEditor;
     }
 
     /*
@@ -431,8 +433,9 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
      */
     @Override
     public void refresh() {
-        // TODO Auto-generated method stub
-
+        if (!isDisposed()) {
+            getParent().layout();
+        }
     }
 
     /*
@@ -445,10 +448,6 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     @Override
     public String getRepositoryAliasName(ConnectionItem connectionItem) {
         return null;
-    }
-
-    public AbstractMultiPageTalendEditor getMultiPageTalendEditor() {
-        return this.multiPageTalendEditor;
     }
 
     public ExecuteJobCompositeController getExecuteJobCompController() {

@@ -31,8 +31,6 @@ import org.talend.core.properties.tab.TalendPropertyTabDescriptor;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.ActiveProcessTracker;
 import org.talend.designer.core.ui.views.properties.EElementType;
-import org.talend.designer.runprocess.RunProcessContext;
-import org.talend.designer.runprocess.RunProcessPlugin;
 import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.OozieMonitoringComposite;
@@ -61,7 +59,7 @@ public class OozieSchedulerView extends ViewPart {
     private Button moveButton;
 
     private ProcessContextComposite contextComposite;
-    
+
     private OozieJobTrackerListener oozieJobTrackerListener = new OozieJobTrackerListener();
 
     public OozieSchedulerView() {
@@ -108,14 +106,10 @@ public class OozieSchedulerView extends ViewPart {
                     createDynamicComposite(tabFactory.getTabComposite(), (Element) descriptor.getData(), descriptor.getCategory());
                     selectedPrimary = false;
                 }
+                refresh();
             }
         });
         setElement();
-
-        // IHandlerService handlerService = (IHandlerService) getSite().getService(IHandlerService.class);
-        // IHandler handler1;
-        // IBrandingService brandingService = (IBrandingService) GlobalServiceRegister.getDefault().getService(
-        // IBrandingService.class);
     }
 
     protected void createLeftContents(Composite parent) {
@@ -138,7 +132,7 @@ public class OozieSchedulerView extends ViewPart {
 
         moveButton = new Button(buttonComposite, SWT.PUSH);
         moveButton.setText(">>"); //$NON-NLS-1$
-        moveButton.setToolTipText(Messages.getString("ProcessComposite.hideContext"));
+        moveButton.setToolTipText("Hide contexts");
         final GridData layoutData = new GridData();
         layoutData.verticalAlignment = GridData.CENTER;
         layoutData.horizontalAlignment = GridData.CENTER;
@@ -206,15 +200,25 @@ public class OozieSchedulerView extends ViewPart {
     public void refresh() {
         getPart();
         if (part != null) {
-            executeJobComposite.setMultiPageTalendEditor(part);
-            tabFactory.setTitle("Job "+part.getProcess().getLabel(), null);
-            this.setPartName("Oozie Scheduler (Job "+part.getProcess().getLabel()+")");
+            if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
+                executeJobComposite.setMultiPageTalendEditor(part);
+            }
+            tabFactory.setTitle("Job " + part.getProcess().getLabel(), null);
+            this.setPartName("Oozie Scheduler (Job " + part.getProcess().getLabel() + ")");
             contextComposite.setProcess(part.getProcess());
+            if (monitoringComposite != null && !monitoringComposite.isDisposed()) {
+                monitoringComposite.setProcess(part.getProcess());
+            }
         } else {
-            executeJobComposite.setMultiPageTalendEditor(null);
+            if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
+                executeJobComposite.setMultiPageTalendEditor(null);
+            }
             tabFactory.setTitle(Messages.getString("Title_name"), null);
             this.setPartName("Oozie Scheduler");
             contextComposite.setProcess(null);
+            if (monitoringComposite != null && !monitoringComposite.isDisposed()) {
+                monitoringComposite.setProcess(null);
+            }
         }
         // setPartName("PartName");
         // tabFactory.setTitle("Hello Marvin", null);
@@ -227,51 +231,6 @@ public class OozieSchedulerView extends ViewPart {
         } else {
             part = null;
         }
-    }
-
-    public void refresh11() {
-        RunProcessContext activeContext = RunProcessPlugin.getDefault().getRunProcessContextManager().getActiveContext();
-        boolean disableAll = false;
-        if (activeContext != null) {
-            disableAll = activeContext.getProcess().disableRunJobView();
-        }
-        // this.processContext = activeContext;
-        // rubjobManager.setProcessContext(processContext);
-        // if (contextComposite.isDisposed()) {
-        // return;
-        // }
-        // contextComposite.setProcess(((activeContext != null) && !disableAll ? activeContext.getProcess() : null));
-        // clearPerfAction.setProcess(activeContext != null ? activeContext.getProcess() : null);
-        // if (dc == processComposite) {
-        // processComposite.setProcessContext(activeContext);
-        // }
-        // rubjobManager.setSelectContext(contextComposite.getSelectedContext());
-        // if (dc == debugTisProcessComposite) {
-        // debugTisProcessComposite.setProcessContext(activeContext);
-        // debugTisProcessComposite.setContextComposite(this.contextComposite);
-        // }
-        // if (dc == advanceComposite) {
-        // advanceComposite.setProcessContext(activeContext);
-        // }
-        // if (dc == targetComposite)
-        // targetComposite.setProcessContext(activeContext);
-        if (activeContext != null) {
-            String jobName = Messages.getString("ProcessView.jobName"); //$NON-NLS-1$
-            if (activeContext.getProcess().disableRunJobView()) { // ?? joblet
-                jobName = "Joblet"; //$NON-NLS-1$
-            }
-            jobName = jobName + " " + activeContext.getProcess().getLabel(); //$NON-NLS-1$
-            setTitleToolTip(jobName);
-            setPartName(Messages.getString("ProcessView.title", jobName)); //$NON-NLS-1$
-            // processNameLab.setText(jobName);
-            tabFactory.setTitle(jobName, null);
-        } else {
-            setPartName(Messages.getString("ProcessView.titleEmpty")); //$NON-NLS-1$
-            //processNameLab.setText(Messages.getString("ProcessView.subtitleEmpty")); //$NON-NLS-1$
-            tabFactory.setTitle(Messages.getString("ProcessView.subtitleEmpty"), null);
-        }
-
-        // processNameLab.getParent().layout(true, true);
     }
 
     private void setElement() {

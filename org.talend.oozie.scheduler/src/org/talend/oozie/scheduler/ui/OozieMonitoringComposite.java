@@ -19,9 +19,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
+import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
@@ -29,6 +32,10 @@ import org.talend.designer.core.IMultiPageTalendEditor;
 /**
  */
 public class OozieMonitoringComposite extends ScrolledComposite implements IDynamicProperty {
+
+    Browser browser;
+
+    IProcess2 process;
 
     /**
      * 
@@ -40,14 +47,18 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
         parent.setLayout(new FillLayout());
         setExpandHorizontal(true);
         setExpandVertical(true);
-        this.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+        this.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
         Composite comp = new Composite(this, SWT.NONE);
+        setContent(comp);
         createContents(comp);
         this.setMinSize(comp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
     }
 
     protected void createContents(Composite parent) {
-        Browser browser = new Browser(parent, SWT.NONE);
+        GridLayout gridLayout = new GridLayout(1, false);
+        parent.setLayout(gridLayout);
+        browser = new Browser(parent, SWT.NONE);
+        browser.setLayoutData(new GridData(GridData.FILL_BOTH));
     }
 
     /*
@@ -154,8 +165,16 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
      */
     @Override
     public void refresh() {
-        // TODO Auto-generated method stub
-
+        if (!isDisposed()) {
+            getParent().layout();
+        }
+        if (!browser.isDisposed()) {
+            if (process != null) {
+                browser.setUrl("http://www.baidu.com");
+            } else {
+                browser.setUrl("");
+            }
+        }
     }
 
     /*
@@ -168,6 +187,14 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
     public String getRepositoryAliasName(ConnectionItem connectionItem) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public IProcess2 getProcess() {
+        return process;
+    }
+
+    public void setProcess(IProcess2 process) {
+        this.process = process;
     }
 
 }
