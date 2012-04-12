@@ -22,10 +22,12 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.talend.core.CorePlugin;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
 
@@ -170,7 +172,11 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
         }
         if (!browser.isDisposed()) {
             if (process != null) {
-                browser.setUrl("http://www.baidu.com");
+                String url = CorePlugin.getDefault().getPreferenceStore()
+                        .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
+                if (url != null) {
+                    browser.setUrl(url);
+                }
             } else {
                 browser.setUrl("");
             }

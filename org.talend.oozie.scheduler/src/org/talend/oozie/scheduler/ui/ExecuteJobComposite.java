@@ -39,6 +39,7 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
+import org.talend.oozie.scheduler.constants.WidgetStatusType;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
 import org.talend.oozie.scheduler.i18n.Messages;
@@ -60,6 +61,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     private Text pathText;// Path text
 
     private Text outputTxt;// Output logs/status
+
+    private String pathValue;// The value of Path Text
 
     private ExecuteJobCompositeController executeJobCompController;
 
@@ -158,42 +161,79 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     }
 
     protected void checkBtnValid() {
-        checkScheduleBtnValid();
-        checkRunBtnValid();
-        checkKillBtnValid();
+        checkScheduleBtnEnabled();
+        checkRunBtnEnabled();
+        checkKillBtnEnabled();
     }
 
-    protected void checkScheduleBtnValid() {
+    protected void checkScheduleBtnEnabled() {
         if (scheduleBtn.isDisposed()) {
             return;
         }
         if (multiPageTalendEditor == null) {
             scheduleBtn.setEnabled(false);
         } else {
-            boolean valid = executeJobCompController.isRunBtnValid();
+            boolean valid = executeJobCompController.isRunBtnEnabled();
             scheduleBtn.setEnabled(valid);
         }
+        // boolean enabled = executeJobCompController.isScheduleBtnEnabled();
+        // scheduleBtn.setEnabled(enabled);
     }
 
-    protected void checkRunBtnValid() {
+    protected void checkRunBtnEnabled() {
         if (runBtn.isDisposed()) {
             return;
         }
         if (multiPageTalendEditor == null) {
             runBtn.setEnabled(false);
         } else {
-            boolean valid = executeJobCompController.isRunBtnValid();
+            boolean valid = executeJobCompController.isRunBtnEnabled();
             runBtn.setEnabled(valid);
         }
+        // boolean enabled = executeJobCompController.isScheduleBtnEnabled();
+        // runBtn.setEnabled(enabled);
     }
 
-    protected void checkKillBtnValid() {
+    protected void checkKillBtnEnabled() {
         if (killBtn.isDisposed()) {
             return;
         }
         if (multiPageTalendEditor == null) {
             killBtn.setEnabled(false);
         }
+        // boolean isKillBtnEnabled = executeJobCompController.isKillBtnEnabled();
+        // killBtn.setEnabled(isKillBtnEnabled);
+    }
+
+    public void updateWidgetStatus(WidgetStatusType type) {
+        switch (type) {
+        case ALL_ENABLE:
+            runBtn.setEnabled(true);
+            scheduleBtn.setEnabled(true);
+            killBtn.setEnabled(true);
+            settingBtn.setEnabled(true);
+            pathText.setEnabled(true);
+            outputTxt.setEnabled(true);
+            break;
+        case ALL_NO_ENABLE:
+            runBtn.setEnabled(false);
+            scheduleBtn.setEnabled(false);
+            killBtn.setEnabled(false);
+            settingBtn.setEnabled(false);
+            pathText.setEnabled(false);
+            outputTxt.setEnabled(false);
+            break;
+        case NOT_ALL_ENABLE:
+            checkScheduleBtnEnabled();
+            checkRunBtnEnabled();
+            checkKillBtnEnabled();
+            break;
+        }
+
+    }
+
+    public void checkWidgetsStatus() {
+        executeJobCompController.checkWidgetsStatus();
     }
 
     protected void regScheduleBtnListener() {
@@ -241,9 +281,10 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
             @Override
             public void modifyText(ModifyEvent e) {
+                // pathValue = pathText.getText();
                 setPathValue(pathText.getText());
-                checkRunBtnValid();
-                checkScheduleBtnValid();
+                checkRunBtnEnabled();
+                checkScheduleBtnEnabled();
                 executeJobCompController.doModifyPathAction();
             }
         });
@@ -311,21 +352,27 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     public void setMultiPageTalendEditor(AbstractMultiPageTalendEditor multiPageTalendEditor) {
         this.multiPageTalendEditor = multiPageTalendEditor;
         executeJobCompController.setMultiPageTalendEditor(multiPageTalendEditor);
-        checkScheduleBtnValid();
-        checkRunBtnValid();
-        checkKillBtnValid();
+        checkScheduleBtnEnabled();
+        checkRunBtnEnabled();
+        checkKillBtnEnabled();
         if (!pathText.isDisposed() && !outputTxt.isDisposed()) {
             if (multiPageTalendEditor != null) {
                 pathText.setEnabled(true);
                 pathText.setText(getPathValue());
                 outputTxt.setEnabled(true);
+                settingBtn.setEnabled(true);
             } else {
                 pathText.setEnabled(false);
                 pathText.setText("");
                 outputTxt.setText("");
                 outputTxt.setEnabled(false);
+                settingBtn.setEnabled(true);
             }
         }
+    }
+
+    public void initValues() {
+        executeJobCompController.init();
     }
 
     /*

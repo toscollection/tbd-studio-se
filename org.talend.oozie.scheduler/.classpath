@@ -46,7 +46,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-logging-api-1.0.4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hadoop-core-1.0.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/oozie-client-3.0.2.jar" sourcepath="/org.talend.oozie.integration/lib/yahoo-oozie-3.0.2-0.zip"/>
+	<classpathentry exported="true" kind="lib" path="lib/oozie-client-3.0.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.talend.oozie.integration.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>

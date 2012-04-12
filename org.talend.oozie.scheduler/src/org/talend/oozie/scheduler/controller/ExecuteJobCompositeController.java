@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.oozie.scheduler.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -23,16 +24,25 @@ import org.apache.hadoop.fs.Path;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.apache.oozie.client.WorkflowJob;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Assert;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.CorePlugin;
 import org.talend.core.model.process.IProcess2;
+import org.talend.core.model.utils.JavaResourcesHelper;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
+import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
+import org.talend.designer.runprocess.ProcessorException;
 import org.talend.oozie.scheduler.constants.JobSubmissionType;
 import org.talend.oozie.scheduler.constants.OutputMessages;
 import org.talend.oozie.scheduler.constants.SchedulerForHadoopConstants;
+import org.talend.oozie.scheduler.constants.WidgetStatusType;
 import org.talend.oozie.scheduler.i18n.Messages;
+import org.talend.oozie.scheduler.jobdeployer.OozieJobDeployer;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.OozieShcedulerSettingDialog;
 import org.talend.oozie.scheduler.ui.SchedulingDialog;
@@ -42,6 +52,7 @@ import com.hortonworks.etl.talend.JobContext;
 import com.hortonworks.etl.talend.JobContext.Timeunit;
 import com.hortonworks.etl.talend.JobSubmissionException;
 import com.hortonworks.etl.talend.oozie.JavaAction;
+import com.hortonworks.etl.talend.oozie.RemoteJobSubmission;
 import com.hortonworks.etl.talend.oozie.ScheduledJobSubmission;
 import com.hortonworks.etl.talend.oozie.Workflow;
 
@@ -61,7 +72,7 @@ public class ExecuteJobCompositeController {
 
     private OozieClient oozieClient;
 
-    private String jobIdFromOozie;
+    private String jobIdInOozie;
 
     private AbstractMultiPageTalendEditor multiPageTalendEditor;
 
@@ -71,7 +82,11 @@ public class ExecuteJobCompositeController {
         this.executeJobComposite = executeJobComposite;
     }
 
-    protected void init() {
+    public void init() {
+        if (multiPageTalendEditor != null) {
+            IProcess2 process = multiPageTalendEditor.getProcess();
+            jobIdInOozie = (String) process.getElementParameter("JOBID_FOR_OOZIE").getValue();
+        }
     }
 
     /**
@@ -85,8 +100,8 @@ public class ExecuteJobCompositeController {
         if (Window.OK == schedulingDialog.open()) {
             JobContext jobContext = initJobCotextForOozie(JobSubmissionType.SCHEDULED);
             OozieClient oozieClient = new OozieClient(getOozieFromPreference());
-            jobIdFromOozie = doScheduleJob(jobContext);
-            outputScheduleJobLogs(oozieClient, jobIdFromOozie);
+            jobIdInOozie = doScheduleJob(jobContext);
+            outputScheduleJobLogs(oozieClient, jobIdInOozie);
         }
     }
 
@@ -102,13 +117,19 @@ public class ExecuteJobCompositeController {
             public void run() {
                 ScheduledJobSubmission scheduledJobSubmission = new ScheduledJobSubmission();
                 try {
-                    jobIdFromOozie = scheduledJobSubmission.submit(jobContext);
+                    jobIdInOozie = scheduledJobSubmission.submit(jobContext);
                 } catch (JobSubmissionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
+                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
         }.run();
-        return jobIdFromOozie;
+        return jobIdInOozie;
     }
 
     private void outputScheduleJobLogs(final OozieClient oozieClient, final String jobIdFromOozie) {
@@ -143,51 +164,92 @@ public class ExecuteJobCompositeController {
      * When clicking the "Run" button, this action will be invoked.
      */
     public void doRunAction() {
-        JobContext jobContext = initJobCotextForOozie(JobSubmissionType.REMOTE);
-        JavaAction action = setupJavaAction(jobContext);
         try {
-            deployWorkFlow(jobContext, action);
-            oozieClient = new OozieClient(getOozieFromPreference());
-            jobIdFromOozie = runOozieClient(oozieClient);
-            outputLogs(jobIdFromOozie);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (OozieClientException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
+            OozieJobDeployer.deployJob(multiPageTalendEditor.getProcess(), new NullProgressMonitor());
+            JobContext jobContext = initJobCotextForOozie(JobSubmissionType.REMOTE);
+            // JavaAction action = setupJavaAction(jobContext);
+            OozieClient oozieClient = new OozieClient(getOozieFromPreference());
+            jobIdInOozie = doRunJob(jobContext);
+            outputLogs(oozieClient, jobIdInOozie);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        // deployWorkFlow(jobContext, null);
+        // RemoteJobSubmission remoteJobSubmission = new RemoteJobSubmission();
+        // jobIdInOozie = remoteJobSubmission.submit(jobContext);
+        // System.out.println("remoteJobHandle = " + jobIdInOozie);
+        // oozieClient = new OozieClient(getOozieFromPreference());
+        // runOozieClient(oozieClient);
+        // outputLogs(jobIdInOozie);
+        // checkWidgetsStatus();
+    }
+
+    private String doRunJob(final JobContext jobContext) {
+        new Runnable() {
+
+            @Override
+            public void run() {
+                RemoteJobSubmission remoteJobSubmission = new RemoteJobSubmission();
+                try {
+                    try {
+                        jobIdInOozie = remoteJobSubmission.submit(jobContext);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+                } catch (JobSubmissionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.run();
+        return jobIdInOozie;
+    }
+
+    public CommandStack getCommandStack() {
+        return multiPageTalendEditor == null ? null : (CommandStack) (multiPageTalendEditor.getTalendEditor()
+                .getAdapter(CommandStack.class));
+    }
+
+    protected void updateJobIdInOozieForJob(String jobIdFromOozie) {
+        if (multiPageTalendEditor != null) {
+            IProcess2 process = multiPageTalendEditor.getProcess();
+            getCommandStack().execute(
+                    new PropertyChangeCommand(process, "JOBID_FOR_OOZIE", jobIdFromOozie == null ? "" : jobIdFromOozie));
+        }
+    }
+
+    protected String getJobIdInOozie() {
+        if (multiPageTalendEditor != null) {
+            IProcess2 process = multiPageTalendEditor.getProcess();
+            jobIdInOozie = (String) process.getElementParameter("JOBID_FOR_OOZIE").getValue();
+        }
+        return jobIdInOozie;
     }
 
     private String runOozieClient(final OozieClient oozieClient) throws OozieClientException {
         oozieClient.setDebugMode(1);
         // create a workflow job configuration and set the workflow application path
         final Properties configuration = oozieClient.createConfiguration();
-        configuration.setProperty(OozieClient.APP_PATH, getNameNodeFromPreference() + getAppPathFromPreference());
+        IProcess2 process = multiPageTalendEditor.getProcess();
+        String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
+
+        configuration.setProperty(OozieClient.APP_PATH,
+                new org.eclipse.core.runtime.Path(getNameNodeFromPreference()).append(appPath).toPortableString());
         configuration.setProperty(OozieClient.USER_NAME, "hdp");
         // submit and start the workflow job
-        new Runnable() {
 
-            @Override
-            public void run() {
+        // try {
+        // jobIdInOozie = oozieClient.run(configuration);
+        // System.out.println("Workflow job submitted: " + jobIdInOozie);
+        // } catch (OozieClientException e) {
+        // e.printStackTrace();
+        // }
 
-                try {
-                    jobIdFromOozie = oozieClient.run(configuration);
-                    System.out.println("Workflow job submitted: " + jobIdFromOozie);
-                } catch (OozieClientException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }.run();
-
-        return jobIdFromOozie;
+        return jobIdInOozie;
     }
 
-    private void outputLogs(final String jobIdFromOozie) {
+    private void outputLogs(final OozieClient oozieClient, final String jobIdFromOozie) {
         new Thread() {
 
             public void run() {
@@ -200,9 +262,14 @@ public class ExecuteJobCompositeController {
                         updateOutputTextContents(output.toString());
                         Thread.sleep(1000 * 2);
                     }
+                    updateJobIdInOozieForJob(null);
                     output.append(Messages.getString("MSG_output_complete", new Object[] { jobIdFromOozie,
                             oozieClient.getJobInfo(jobIdFromOozie).getStatus() }));
                     output.append(OutputMessages.LINE_BREAK_CHAR);
+                    output.append("output logs:");
+                    output.append(OutputMessages.LINE_BREAK_CHAR);
+                    output.append(oozieClient.getJobLog(jobIdFromOozie));
+                    updateOutputTextContents(output.toString());
                 } catch (OozieClientException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -219,13 +286,15 @@ public class ExecuteJobCompositeController {
     private JobContext initJobCotextForOozie(JobSubmissionType jobSubType) {
         JobContext jobContext = new JobContext();
         // Job name.
-        // String jobName1 = multiPageTalendEditor.getProcess().getLabel();
-        String jobName = "MavinJob";
+        String jobName = multiPageTalendEditor.getProcess().getLabel();
+        // String jobName = "MavinJob";
         jobContext.setJobName(jobName);
 
         // Job path on HDFS
         String path = executeJobComposite.getPathValue();
-        jobContext.setJobPathOnHDFS(path);
+        IProcess2 process = multiPageTalendEditor.getProcess();
+        String name = JavaResourcesHelper.getJobFolderName(process.getLabel(), process.getVersion()) + "." + process.getLabel();
+        jobContext.setJobPathOnHDFS(path + "/" + name);
 
         // Oozie end point
         String oozieEPValue = getOozieFromPreference();
@@ -301,20 +370,21 @@ public class ExecuteJobCompositeController {
 
     private void serializeWorkflowToHDFS(Workflow workflow, JobContext context) throws IOException, InterruptedException,
             URISyntaxException {
-        org.apache.hadoop.conf.Configuration configuration = new org.apache.hadoop.conf.Configuration();
-        configuration.set("fs.default.name", context.getNameNodeEndPoint());
-        FileSystem fs = FileSystem.get(new java.net.URI(configuration.get("fs.default.name")), configuration, "Marvin");
-
-        Path wfFile = new Path(context.getJobPathOnHDFS() + "/workflow.xml");
-        FSDataOutputStream outputStream = null;
-        try {
-            outputStream = fs.create(wfFile);
-            outputStream.writeBytes(workflow.toXMLString());
-        } finally {
-            if (outputStream != null) {
-                outputStream.close();
-            }
-        }
+        // org.apache.hadoop.conf.Configuration configuration = new org.apache.hadoop.conf.Configuration();
+        // String nameNodeEPValue = context.getNameNodeEndPoint();
+        // configuration.set("fs.default.name", nameNodeEPValue);
+        // FileSystem fs = FileSystem.get(new java.net.URI(configuration.get("fs.default.name")), configuration, "hdp");
+        //
+        // Path wfFile = new Path(context.getJobPathOnHDFS() + "/workflow.xml");
+        // FSDataOutputStream outputStream = null;
+        // try {
+        // outputStream = fs.create(wfFile);
+        // outputStream.writeBytes(workflow.toXMLString());
+        // } finally {
+        // if (outputStream != null) {
+        // outputStream.close();
+        // }
+        // }
     }
 
     private Timeunit getTimeUnitValue() {
@@ -375,8 +445,8 @@ public class ExecuteJobCompositeController {
 
     private String getTOSJobFQCNValue() {
         IProcess2 process = multiPageTalendEditor.getProcess();
-        // TODO need to get the main class
-        return JOB_FQ_CN_NAME;
+        return JavaResourcesHelper.getCurrentProjectName() + "."
+                + JavaResourcesHelper.getJobFolderName(process.getLabel(), process.getVersion()) + "." + process.getLabel();
     }
 
     /**
@@ -400,15 +470,19 @@ public class ExecuteJobCompositeController {
     public void doKillAction() {
         try {
             oozieClient = new OozieClient(getOozieFromPreference());
-            oozieClient.kill("0000024-120409234656482-oozie-oozi-C");
             StringBuffer output = new StringBuffer("");
-            if (oozieClient.getJobInfo(jobIdFromOozie).getStatus() == WorkflowJob.Status.RUNNING) {
+            if (oozieClient.getJobInfo(jobIdInOozie).getStatus() == WorkflowJob.Status.RUNNING) {
                 output.append(executeJobComposite.getOutputTxt().getText());
-                oozieClient.kill(jobIdFromOozie);
+                oozieClient.kill(jobIdInOozie);
+                updateJobIdInOozieForJob(null);
 
                 output.append(Messages.getString("MSG_output_kill"));
                 output.append(OutputMessages.LINE_BREAK_CHAR);
-            } else if (oozieClient.getJobInfo(jobIdFromOozie).getStatus() == WorkflowJob.Status.SUCCEEDED) {
+                executeJobComposite.getKillBtn().setEnabled(true);
+            } else if (oozieClient.getJobInfo(jobIdInOozie).getStatus() == WorkflowJob.Status.SUCCEEDED) {
+                executeJobComposite.getRunBtn().setEnabled(true);
+                executeJobComposite.getKillBtn().setEnabled(false);
+                // todo add schedule
             }
         } catch (OozieClientException e) {
             e.printStackTrace();
@@ -425,7 +499,7 @@ public class ExecuteJobCompositeController {
         initPreferenceSettingForJob(settingDialog);
         if (Window.OK == settingDialog.open()) {
             // TODO To check other widget status
-            executeJobComposite.getRunBtn().setEnabled(isRunBtnValid());
+            executeJobComposite.getRunBtn().setEnabled(isRunBtnEnabled());
 
             // To update the values of Oozie preference page
             updateOoziePreferencePageValues();
@@ -451,6 +525,7 @@ public class ExecuteJobCompositeController {
             IProcess2 process = multiPageTalendEditor.getProcess();
             process.getElementParameter("HADOOP_APP_PATH").setValue(path);
         }
+        checkWidgetsStatus();
     }
 
     private void updateOoziePreferencePageValues() {
@@ -472,13 +547,30 @@ public class ExecuteJobCompositeController {
      * 
      * @return
      */
-    public boolean isRunBtnValid() {
+    public boolean isRunBtnEnabled() {
         boolean isRunBtnValid = false;
         String pathValue = executeJobComposite.getPathValue();
-        if (pathValue != null && !"".equals(pathValue) && isSettingDoneFromPreferencePage())
+        if (pathValue != null && !"".equals(pathValue) && isSettingDoneFromPreferencePage() && "".equals(jobIdInOozie))
             isRunBtnValid = true;
 
         return isRunBtnValid;
+    }
+
+    public boolean isScheduleBtnEnabled() {
+        boolean isEnabled = false;
+        String pathValue = executeJobComposite.getPathValue();
+        if (pathValue != null && !"".equals(pathValue) && isSettingDoneFromPreferencePage() && "".equals(jobIdInOozie))
+            isEnabled = true;
+        return isEnabled;
+    }
+
+    public boolean isKillBtnEnabled() {
+        boolean isKillBtnEnabled = false;
+        boolean isRunBtnEnabled = isRunBtnEnabled();
+        boolean isScheduleBtnEnabled = isScheduleBtnEnabled();
+        if (!isRunBtnEnabled || !isScheduleBtnEnabled)
+            isKillBtnEnabled = true;
+        return isKillBtnEnabled;
     }
 
     /**
@@ -510,6 +602,14 @@ public class ExecuteJobCompositeController {
             IProcess2 process = multiPageTalendEditor.getProcess();
             String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
             executeJobComposite.setPathValue(appPath); // "/user/hdp/etl/talend/MarvinJob_0.1");
+        }
+    }
+
+    public void checkWidgetsStatus() {
+        if (multiPageTalendEditor == null) {
+            executeJobComposite.updateWidgetStatus(WidgetStatusType.ALL_NO_ENABLE);
+        } else {
+            executeJobComposite.updateWidgetStatus(WidgetStatusType.NOT_ALL_ENABLE);
         }
     }
 

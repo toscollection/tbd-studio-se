@@ -25,6 +25,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.ViewPart;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
+import org.talend.core.model.process.IProcess2;
 import org.talend.core.properties.tab.HorizontalTabFactory;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.core.properties.tab.TalendPropertyTabDescriptor;
@@ -200,28 +201,30 @@ public class OozieSchedulerView extends ViewPart {
     public void refresh() {
         getPart();
         if (part != null) {
+            IProcess2 process = part.getProcess();
+            String label = process.getLabel();
             if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
                 executeJobComposite.setMultiPageTalendEditor(part);
+                executeJobComposite.initValues();
             }
-            tabFactory.setTitle("Job " + part.getProcess().getLabel(), null);
-            this.setPartName("Oozie Scheduler (Job " + part.getProcess().getLabel() + ")");
-            contextComposite.setProcess(part.getProcess());
+            tabFactory.setTitle(Messages.getString("Title_name_job", label), null);
+            setPartName(Messages.getString("Part_name_job", label));
+            contextComposite.setProcess(process);
             if (monitoringComposite != null && !monitoringComposite.isDisposed()) {
-                monitoringComposite.setProcess(part.getProcess());
+                monitoringComposite.setProcess(process);
             }
         } else {
             if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
                 executeJobComposite.setMultiPageTalendEditor(null);
             }
-            tabFactory.setTitle(Messages.getString("Title_name"), null);
-            this.setPartName("Oozie Scheduler");
+            tabFactory.setTitle(Messages.getString("Title_name_nojob"), null);
+            setPartName(Messages.getString("Part_name_nojob"));
             contextComposite.setProcess(null);
             if (monitoringComposite != null && !monitoringComposite.isDisposed()) {
                 monitoringComposite.setProcess(null);
             }
         }
-        // setPartName("PartName");
-        // tabFactory.setTitle("Hello Marvin", null);
+        // executeJobComposite.checkWidgetsStatus();
     }
 
     private void getPart() {
