@@ -15,6 +15,7 @@ package org.talend.oozie.scheduler.ui;
 import java.util.Map;
 
 import org.apache.commons.collections.BidiMap;
+import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -33,10 +34,12 @@ import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
+import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
+import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
 import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.utils.EOozieSchedulerImages;
@@ -57,8 +60,6 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     private Text pathText;// Path text
 
     private Text outputTxt;// Output logs/status
-
-    private String pathValue;// The value of Path Text
 
     private ExecuteJobCompositeController executeJobCompController;
 
@@ -135,7 +136,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
                 .applyTo(pathLbl);
 
         pathText = new Text(parent, SWT.BORDER);
-        pathText.setText(pathValue == null ? "" : pathValue);
+        pathText.setText(getPathValue() == null ? "" : getPathValue());
         GridDataFactory.fillDefaults().span(2, 1).grab(true, false).indent(-50, 10).applyTo(pathText);
 
         regPathTextListener();
@@ -163,16 +164,36 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     }
 
     protected void checkScheduleBtnValid() {
-
+        if (scheduleBtn.isDisposed()) {
+            return;
+        }
+        if (multiPageTalendEditor == null) {
+            scheduleBtn.setEnabled(false);
+        } else {
+            boolean valid = executeJobCompController.isRunBtnValid();
+            scheduleBtn.setEnabled(valid);
+        }
     }
 
     protected void checkRunBtnValid() {
-        boolean valid = executeJobCompController.isRunBtnValid();
-        runBtn.setEnabled(valid);
+        if (runBtn.isDisposed()) {
+            return;
+        }
+        if (multiPageTalendEditor == null) {
+            runBtn.setEnabled(false);
+        } else {
+            boolean valid = executeJobCompController.isRunBtnValid();
+            runBtn.setEnabled(valid);
+        }
     }
 
     protected void checkKillBtnValid() {
-
+        if (killBtn.isDisposed()) {
+            return;
+        }
+        if (multiPageTalendEditor == null) {
+            killBtn.setEnabled(false);
+        }
     }
 
     protected void regScheduleBtnListener() {
@@ -220,8 +241,9 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
             @Override
             public void modifyText(ModifyEvent e) {
-                pathValue = pathText.getText();
+                setPathValue(pathText.getText());
                 checkRunBtnValid();
+                checkScheduleBtnValid();
                 executeJobCompController.doModifyPathAction();
             }
         });
@@ -242,11 +264,23 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     }
 
     public String getPathValue() {
-        return this.pathValue;
+        if (multiPageTalendEditor != null) {
+            IProcess2 process = multiPageTalendEditor.getProcess();
+            String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
+            return appPath;
+        }
+        return "";
+    }
+    
+    public CommandStack getCommandStack() {
+        return multiPageTalendEditor == null ? null : (CommandStack) (multiPageTalendEditor.getTalendEditor().getAdapter(CommandStack.class));
     }
 
     public void setPathValue(String pathValue) {
-        this.pathValue = pathValue;
+        if (multiPageTalendEditor != null && !pathValue.equals(getPathValue())) {
+            IProcess2 process = multiPageTalendEditor.getProcess();
+            getCommandStack().execute(new PropertyChangeCommand(process,"HADOOP_APP_PATH", pathValue));
+        }
     }
 
     public Button getRunBtn() {
@@ -276,6 +310,19 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     public void setMultiPageTalendEditor(AbstractMultiPageTalendEditor multiPageTalendEditor) {
         this.multiPageTalendEditor = multiPageTalendEditor;
         executeJobCompController.setMultiPageTalendEditor(multiPageTalendEditor);
+        checkScheduleBtnValid();
+        checkRunBtnValid();
+        checkKillBtnValid();
+        if (multiPageTalendEditor != null) {
+            pathText.setEnabled(true);
+            pathText.setText(getPathValue());
+            outputTxt.setEnabled(true);
+        } else {
+            pathText.setEnabled(false);
+            pathText.setText("");
+            outputTxt.setText("");
+            outputTxt.setEnabled(false);
+        }
     }
 
     /*

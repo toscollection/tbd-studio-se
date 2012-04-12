@@ -122,7 +122,6 @@ public class ProcessContextComposite extends Composite {
 
         // Add listeners
         rubjobManager = ProcessManager.getInstance();
-        contextComboViewer.addSelectionChangedListener(contextComboListener);
     }
 
     ISelectionChangedListener contextComboListener = new ISelectionChangedListener() {
@@ -180,6 +179,7 @@ public class ProcessContextComposite extends Composite {
             };
 
             this.process.getContextManager().addContextListener(contextListener);
+            contextComboViewer.addSelectionChangedListener(contextComboListener);
         } else {
             if (this.process == null) {
                 // there is no process already
@@ -190,6 +190,7 @@ public class ProcessContextComposite extends Composite {
                 this.process = null;
             }
             contextComboViewer.getControl().setEnabled(false);
+            contextComboViewer.removeSelectionChangedListener(contextComboListener);
             contextComboViewer.setInput(null);
             contextTableViewer.setInput(null);
         }

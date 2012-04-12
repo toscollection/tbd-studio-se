@@ -29,13 +29,14 @@ import org.talend.core.properties.tab.HorizontalTabFactory;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.core.properties.tab.TalendPropertyTabDescriptor;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
+import org.talend.designer.core.ui.ActiveProcessTracker;
 import org.talend.designer.core.ui.views.properties.EElementType;
 import org.talend.designer.runprocess.RunProcessContext;
 import org.talend.designer.runprocess.RunProcessPlugin;
-import org.talend.designer.runprocess.ui.ProcessContextComposite;
 import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.OozieMonitoringComposite;
+import org.talend.oozie.scheduler.ui.ProcessContextComposite;
 
 public class OozieSchedulerView extends ViewPart {
 
@@ -60,8 +61,11 @@ public class OozieSchedulerView extends ViewPart {
     private Button moveButton;
 
     private ProcessContextComposite contextComposite;
+    
+    private OozieJobTrackerListener oozieJobTrackerListener = new OozieJobTrackerListener();
 
     public OozieSchedulerView() {
+        ActiveProcessTracker.addJobTrackerListener(oozieJobTrackerListener);
         tabFactory = new HorizontalTabFactory();
     }
 
@@ -203,10 +207,14 @@ public class OozieSchedulerView extends ViewPart {
         getPart();
         if (part != null) {
             executeJobComposite.setMultiPageTalendEditor(part);
-
+            tabFactory.setTitle("Job "+part.getProcess().getLabel(), null);
+            this.setPartName("Oozie Scheduler (Job "+part.getProcess().getLabel()+")");
+            contextComposite.setProcess(part.getProcess());
         } else {
+            executeJobComposite.setMultiPageTalendEditor(null);
             tabFactory.setTitle(Messages.getString("Title_name"), null);
-
+            this.setPartName("Oozie Scheduler");
+            contextComposite.setProcess(null);
         }
         // setPartName("PartName");
         // tabFactory.setTitle("Hello Marvin", null);
@@ -325,6 +333,12 @@ public class OozieSchedulerView extends ViewPart {
 
     @Override
     public void setFocus() {
+        this.parent.setFocus();
+    }
 
+    @Override
+    public void dispose() {
+        ActiveProcessTracker.removeJobTrackerListener(oozieJobTrackerListener);
+        super.dispose();
     }
 }

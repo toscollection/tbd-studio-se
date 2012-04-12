@@ -72,11 +72,6 @@ public class ExecuteJobCompositeController {
     }
 
     protected void init() {
-        // if (multiPageTalendEditor != null) {
-        // IProcess2 process = multiPageTalendEditor.getProcess();
-        // String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
-        // executeJobComposite.setPathValue(appPath); // "/user/hdp/etl/talend/MarvinJob_0.1");
-        // }
     }
 
     /**
