@@ -129,7 +129,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
                 .align(SWT.END, SWT.CENTER).applyTo(settingBtn);
 
         registerBtnListeners();
-        checkBtnValid();
+        checkBtnsEnabled();
     }
 
     private void createCenterContents(Composite parent) {
@@ -160,27 +160,25 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         regSettingBtnListener();
     }
 
-    protected void checkBtnValid() {
+    public void checkBtnsEnabled() {
         checkScheduleBtnEnabled();
         checkRunBtnEnabled();
         checkKillBtnEnabled();
     }
 
-    protected void checkScheduleBtnEnabled() {
+    public void checkScheduleBtnEnabled() {
         if (scheduleBtn.isDisposed()) {
             return;
         }
         if (multiPageTalendEditor == null) {
             scheduleBtn.setEnabled(false);
         } else {
-            boolean valid = executeJobCompController.isRunBtnEnabled();
+            boolean valid = executeJobCompController.isScheduleBtnEnabled();
             scheduleBtn.setEnabled(valid);
         }
-        // boolean enabled = executeJobCompController.isScheduleBtnEnabled();
-        // scheduleBtn.setEnabled(enabled);
     }
 
-    protected void checkRunBtnEnabled() {
+    public void checkRunBtnEnabled() {
         if (runBtn.isDisposed()) {
             return;
         }
@@ -194,15 +192,26 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         // runBtn.setEnabled(enabled);
     }
 
-    protected void checkKillBtnEnabled() {
+    public void checkKillBtnEnabled() {
+        boolean runBtnEnabled = executeJobCompController.isRunBtnEnabled();
+        boolean scheduleBtnEnabled = executeJobCompController.isScheduleBtnEnabled();
         if (killBtn.isDisposed()) {
             return;
         }
         if (multiPageTalendEditor == null) {
             killBtn.setEnabled(false);
-        }
+        } else if (runBtnEnabled || scheduleBtnEnabled)
+            killBtn.setEnabled(true);
         // boolean isKillBtnEnabled = executeJobCompController.isKillBtnEnabled();
         // killBtn.setEnabled(isKillBtnEnabled);
+    }
+
+    protected void checkSettingBtnEnabled() {
+        if (settingBtn.isDisposed()) {
+            return;
+        } else
+            settingBtn.setEnabled(true);
+
     }
 
     public void updateWidgetStatus(WidgetStatusType type) {
@@ -227,6 +236,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
             checkScheduleBtnEnabled();
             checkRunBtnEnabled();
             checkKillBtnEnabled();
+            checkScheduleBtnEnabled();
             break;
         }
 
@@ -355,18 +365,17 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         checkScheduleBtnEnabled();
         checkRunBtnEnabled();
         checkKillBtnEnabled();
+        checkSettingBtnEnabled();
         if (!pathText.isDisposed() && !outputTxt.isDisposed()) {
             if (multiPageTalendEditor != null) {
                 pathText.setEnabled(true);
                 pathText.setText(getPathValue());
                 outputTxt.setEnabled(true);
-                settingBtn.setEnabled(true);
             } else {
                 pathText.setEnabled(false);
                 pathText.setText("");
                 outputTxt.setText("");
                 outputTxt.setEnabled(false);
-                settingBtn.setEnabled(true);
             }
         }
     }

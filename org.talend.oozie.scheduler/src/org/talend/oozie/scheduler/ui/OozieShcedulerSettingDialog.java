@@ -35,11 +35,15 @@ public class OozieShcedulerSettingDialog extends Dialog {
 
     private Text oozieEndPointTxt;// "Oozie End Point" Text widget
 
+    private Text userNameTxt;// "User Name" Text widget for hadoop
+
     private String nameNodeEndPointValue;// The value of "Name Node End Point" Text widget
 
     private String jobTrackerEndPointValue;// The value of "Job Tracker End Point" Text widget
 
     private String oozieEndPointValue;// The value of "Oozie End Point" Text widget
+
+    private String userNameValue;// The value of "User Name" Text widget
 
     /**
      * @param parentShell
@@ -82,6 +86,15 @@ public class OozieShcedulerSettingDialog extends Dialog {
         oozieEndPointTxt = new Text(comp, SWT.BORDER);
         oozieEndPointTxt.setText(oozieEndPointValue == null ? "" : oozieEndPointValue);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(oozieEndPointTxt);
+
+        // UserName for hadoop
+        Label userNameLbl = new Label(comp, SWT.NONE);
+        userNameLbl.setText(Messages.getString("Label_userName_for_hadoop"));
+
+        userNameTxt = new Text(comp, SWT.BORDER);
+        userNameTxt.setText(userNameValue == null ? "" : userNameValue);
+        GridDataFactory.fillDefaults().grab(true, false).applyTo(userNameTxt);
+
         return parent;
     }
 
@@ -102,6 +115,7 @@ public class OozieShcedulerSettingDialog extends Dialog {
         nameNodeEndPointValue = nameNodeEndPointTxt.getText();
         jobTrackerEndPointValue = jobTrackerEndPointTxt.getText();
         oozieEndPointValue = oozieEndPointTxt.getText();
+        userNameValue = userNameTxt.getText();
     }
 
     /**
@@ -110,7 +124,7 @@ public class OozieShcedulerSettingDialog extends Dialog {
     protected Point getInitialSize() {
         Point result = super.getInitialSize();
         result.x = 500;
-        result.y = 170;
+        result.y = 220;
         return result;
     }
 
@@ -137,4 +151,13 @@ public class OozieShcedulerSettingDialog extends Dialog {
     public void setOozieEndPointValue(String oozieEndPointValue) {
         this.oozieEndPointValue = oozieEndPointValue;
     }
+
+    public String getUserNameValue() {
+        return this.userNameValue;
+    }
+
+    public void setUserNameValue(String userNameValue) {
+        this.userNameValue = userNameValue;
+    }
+
 }

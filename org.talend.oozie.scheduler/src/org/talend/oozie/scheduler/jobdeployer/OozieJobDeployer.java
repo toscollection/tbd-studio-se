@@ -13,6 +13,7 @@
 package org.talend.oozie.scheduler.jobdeployer;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
@@ -69,15 +70,8 @@ public class OozieJobDeployer {
         return tempFolder;
     }
 
-    private static void uploadProcess(IProcess2 process, String tempFolder) throws Exception {
-        int tos_count_tHDFSPut_1 = 0;
-
-        int nb_file_tHDFSPut_1 = 0;
-        int nb_success_tHDFSPut_1 = 0;
-
+    private static void uploadProcess(IProcess2 process, String unzipDir) throws Exception {
         String appPathOnHDFSParent = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
-        String jobFolderName = JavaResourcesHelper.getJobFolderName(process.getLabel(), process.getVersion()) + "."
-                + process.getLabel();
 
         org.apache.hadoop.fs.FileSystem fs = null;
 
@@ -88,89 +82,44 @@ public class OozieJobDeployer {
                 CorePlugin.getDefault().getPreferenceStore()
                         .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT));
 
-        String userName = "hdp";
+        String userName = CorePlugin.getDefault().getPreferenceStore()
+                .getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
         if (userName == null || "".equals(userName)) {
             fs = org.apache.hadoop.fs.FileSystem.get(conf_tHDFSPut_1);
         } else {
             fs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_tHDFSPut_1.get("fs.default.name")), conf_tHDFSPut_1,
                     userName);
         }
+
         // /user/hdp/etl/talend/MarvinJob_0.1/MarvinJob
-        fs.mkdirs(new org.apache.hadoop.fs.Path(appPathOnHDFSParent));
-        java.util.List<String> msg_tHDFSPut_1 = new java.util.ArrayList<String>();
-        java.util.List<java.util.Map<String, String>> list_tHDFSPut_1 = new java.util.ArrayList<java.util.Map<String, String>>();
-        java.util.Map<String, String> map_tHDFSPut_1_0 = new java.util.HashMap<String, String>();
-        map_tHDFSPut_1_0.put("*.*", "");
-        list_tHDFSPut_1.add(map_tHDFSPut_1_0);
-        String localdir = tempFolder;
-        for (java.util.Map<String, String> map_tHDFSPut_1 : list_tHDFSPut_1) {
+        fs.mkdirs(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"));
 
-            java.util.Set<String> keySet_tHDFSPut_1 = map_tHDFSPut_1.keySet();
-            for (String key_tHDFSPut_1 : keySet_tHDFSPut_1) {
-                String tempdir_tHDFSPut_1 = localdir;
-                String filemask_tHDFSPut_1 = key_tHDFSPut_1;
-                String dir_tHDFSPut_1 = null;
-                String mask_tHDFSPut_1 = filemask_tHDFSPut_1.replaceAll("\\\\", "/");
-                int i_tHDFSPut_1 = mask_tHDFSPut_1.lastIndexOf('/');
-                if (i_tHDFSPut_1 != -1) {
-                    dir_tHDFSPut_1 = mask_tHDFSPut_1.substring(0, i_tHDFSPut_1);
-                    mask_tHDFSPut_1 = mask_tHDFSPut_1.substring(i_tHDFSPut_1 + 1);
+        File unzipDirFile = new File(unzipDir);
+        File[] files = unzipDirFile.listFiles(new FileFilter() {
+
+            @Override
+            public boolean accept(File file) {
+                if (file != null && file.isDirectory()) {
+                    return true;
                 }
-                if (dir_tHDFSPut_1 != null && !"".equals(dir_tHDFSPut_1))
-                    tempdir_tHDFSPut_1 = tempdir_tHDFSPut_1 + "/" + dir_tHDFSPut_1;
-                mask_tHDFSPut_1 = mask_tHDFSPut_1.replaceAll("\\.", "\\\\.").replaceAll("\\*", ".*");
-                final String finalMask_tHDFSPut_1 = mask_tHDFSPut_1;
-                java.io.File[] listings_tHDFSPut_1 = null;
-                java.io.File file_tHDFSPut_1 = new java.io.File(tempdir_tHDFSPut_1);
-                if (file_tHDFSPut_1.isDirectory()) {
-                    listings_tHDFSPut_1 = file_tHDFSPut_1.listFiles(new java.io.FileFilter() {
+                return false;
+            }
+        });
 
-                        public boolean accept(java.io.File pathname) {
-                            boolean result = false;
-                            if (pathname != null && pathname.isFile()) {
-                                result = java.util.regex.Pattern.compile(finalMask_tHDFSPut_1).matcher(pathname.getName()).find();
-                            }
-                            return true;
-                        }
-                    });
-                }
-                if (listings_tHDFSPut_1 == null || listings_tHDFSPut_1.length <= 0) {
-                    System.err.println("No match file(" + key_tHDFSPut_1 + ") exist!");
-                } else {
-                    String localFilePath_tHDFSPut_1 = "";
-                    String hdfsFilePath_tHDFSPut_1 = "";
-                    for (int m_tHDFSPut_1 = 0; m_tHDFSPut_1 < listings_tHDFSPut_1.length; m_tHDFSPut_1++) {
-                        String listFileName = listings_tHDFSPut_1[m_tHDFSPut_1].getName();
-                        // listFileName.matches(mask_tHDFSPut_1)
-                        if (true) {
-                            localFilePath_tHDFSPut_1 = listings_tHDFSPut_1[m_tHDFSPut_1].getAbsolutePath();
-                            // hdfsFilePath_tHDFSPut_1 = "/user/hdp/etl/talend/MarvinJob_0.1/MarvinJob" + "/"
-                            // + map_tHDFSPut_1.get(key_tHDFSPut_1);
-                            // hdfsFilePath_tHDFSPut_1 = appPathOnHDFSParent + "/" + jobFolderName + "/"
-                            // + map_tHDFSPut_1.get(key_tHDFSPut_1);
-                            hdfsFilePath_tHDFSPut_1 = appPathOnHDFSParent + "/" + jobFolderName + "/" + listFileName;
-                            try {
-                                fs.copyFromLocalFile(false, true, new org.apache.hadoop.fs.Path(localFilePath_tHDFSPut_1),
-                                        new org.apache.hadoop.fs.Path(hdfsFilePath_tHDFSPut_1));
-                                // add info to list will return
-                                msg_tHDFSPut_1.add("file: " + listings_tHDFSPut_1[m_tHDFSPut_1].getAbsolutePath() + ", size: "
-                                        + listings_tHDFSPut_1[m_tHDFSPut_1].length() + " bytes upload successfully");
-
-                                nb_success_tHDFSPut_1++;
-                            } catch (java.io.IOException e) {
-
-                                throw (e);
-
-                            }
-                            nb_file_tHDFSPut_1++;
-                        }
+        if (files != null && files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                File[] tempFiles = file.listFiles();
+                if (tempFiles != null && tempFiles.length > 0) {
+                    for (int j = 0; j < tempFiles.length; j++) {
+                        File tempFile = tempFiles[j];
+                        org.apache.hadoop.fs.Path srcPath = new org.apache.hadoop.fs.Path(tempFile.getAbsolutePath());
+                        org.apache.hadoop.fs.Path distpath = new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib");
+                        fs.copyFromLocalFile(false, true, srcPath, distpath);
                     }
                 }
             }
-
-            tos_count_tHDFSPut_1++;
         }
-
     }
 
     private static void deleteProcess(String zipFile) throws IOException, InterruptedException, URISyntaxException {
