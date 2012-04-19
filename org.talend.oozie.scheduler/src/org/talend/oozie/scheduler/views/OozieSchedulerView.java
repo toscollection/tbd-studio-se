@@ -205,7 +205,6 @@ public class OozieSchedulerView extends ViewPart {
             String label = process.getLabel();
             if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
                 executeJobComposite.setMultiPageTalendEditor(part);
-                executeJobComposite.initValues();
             }
             tabFactory.setTitle(Messages.getString("Title_name_job", label), null);
             setPartName(Messages.getString("Part_name_job", label));

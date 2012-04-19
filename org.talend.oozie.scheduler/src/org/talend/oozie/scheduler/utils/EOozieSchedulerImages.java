@@ -22,7 +22,8 @@ public enum EOozieSchedulerImages implements IImage {
     IMG_RUN("/icons/oozie_run.gif"),
     IMG_SCHEDULE("/icons/oozie_schedule.gif"),
     IMG_KILL("/icons/oozie_kill.gif"),
-    IMG_SETTING("");
+    IMG_MONITOING("/icons/oozie_monitoring.gif"),
+    IMG_SETTING("/icons/oozie_setting.gif");
 
     private String path;
 

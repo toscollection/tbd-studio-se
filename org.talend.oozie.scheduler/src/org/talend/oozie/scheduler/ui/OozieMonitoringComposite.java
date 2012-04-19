@@ -183,6 +183,10 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
         }
     }
 
+    public void dispose() {
+        super.dispose();
+    }
+
     /*
      * (non-Javadoc)
      * 

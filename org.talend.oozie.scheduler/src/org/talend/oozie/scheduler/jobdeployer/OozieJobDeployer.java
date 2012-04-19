@@ -26,11 +26,11 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.talend.core.CorePlugin;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ProcessItem;
-import org.talend.core.model.utils.JavaResourcesHelper;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.runprocess.IProcessor;
 import org.talend.designer.runprocess.ProcessorException;
 import org.talend.designer.runprocess.ProcessorUtilities;
+import org.talend.oozie.scheduler.exceptions.OozieJobDeployException;
 import org.talend.repository.documentation.ArchiveFileExportOperationFullPath;
 import org.talend.repository.documentation.ExportFileResource;
 import org.talend.repository.ui.utils.ZipToFile;
@@ -43,41 +43,51 @@ import org.talend.repository.ui.wizards.exportjob.scriptsmanager.JobScriptsManag
  */
 public class OozieJobDeployer {
 
-    public static void deployJob(IProcess2 process, IProgressMonitor progressMonitor) throws Exception {
-        String archive = buildExportZip(process, progressMonitor);
+    public static void deployJob(IProcess2 process, IProgressMonitor progressMonitor) throws OozieJobDeployException {
+        String archive;
+        try {
+            archive = buildExportZip(process, progressMonitor);
+        } catch (ProcessorException e) {
+            throw new OozieJobDeployException("Can not build a zip file!", e);
+        }
         unzipAndUploadProcess(process, archive);
     }
 
     /**
      * 
      * @param archive
+     * @throws OozieJobDeployException
      * @throws Exception
      */
-    private static void unzipAndUploadProcess(IProcess2 process, String archiveZipFileStr) throws Exception {
+    private static void unzipAndUploadProcess(IProcess2 process, String archiveZipFileStr) throws OozieJobDeployException {
         String tempUnzipFolder = unzipProcess(process, archiveZipFileStr);
         uploadProcess(process, tempUnzipFolder);
         deleteProcess(tempUnzipFolder);
     }
 
-    private static String unzipProcess(IProcess2 process, String archiveZipFileStr) throws Exception {
+    private static String unzipProcess(IProcess2 process, String archiveZipFileStr) throws OozieJobDeployException {
         String jobName = process.getLabel();
         String tempFolder = null;
         if (archiveZipFileStr != null && !"".equals(archiveZipFileStr)) {
             File file = new File(archiveZipFileStr);
             tempFolder = file.getParentFile().getPath() + File.separator + jobName;
-            ZipToFile.unZipFile(archiveZipFileStr, tempFolder);
+            try {
+                ZipToFile.unZipFile(archiveZipFileStr, tempFolder);
+            } catch (Exception e) {
+                throw new OozieJobDeployException("Can not unzip a file!", e);
+            }
         }
         return tempFolder;
     }
 
-    private static void uploadProcess(IProcess2 process, String unzipDir) throws Exception {
+    private static void uploadProcess(IProcess2 process, String unzipDir) throws OozieJobDeployException {
         String appPathOnHDFSParent = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
 
         org.apache.hadoop.fs.FileSystem fs = null;
 
-        org.apache.hadoop.conf.Configuration conf_tHDFSPut_1 = new org.apache.hadoop.conf.Configuration();
+        org.apache.hadoop.conf.Configuration config = new org.apache.hadoop.conf.Configuration();
 
-        conf_tHDFSPut_1.set(
+        config.set(
                 "fs.default.name",
                 CorePlugin.getDefault().getPreferenceStore()
                         .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT));
@@ -85,14 +95,29 @@ public class OozieJobDeployer {
         String userName = CorePlugin.getDefault().getPreferenceStore()
                 .getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
         if (userName == null || "".equals(userName)) {
-            fs = org.apache.hadoop.fs.FileSystem.get(conf_tHDFSPut_1);
+            try {
+                fs = org.apache.hadoop.fs.FileSystem.get(config);
+            } catch (IOException e) {
+                throw new OozieJobDeployException("Can not acess Hadoop File System with default name!", e);
+            }
         } else {
-            fs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_tHDFSPut_1.get("fs.default.name")), conf_tHDFSPut_1,
-                    userName);
+            try {
+                fs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(config.get("fs.default.name")), config, userName);
+            } catch (IOException e) {
+                throw new OozieJobDeployException("Can not access Hadoop File System with default name!", e);
+            } catch (InterruptedException e) {
+                throw new OozieJobDeployException("Can not access Hadoop File System!", e);
+            } catch (URISyntaxException e) {
+                throw new OozieJobDeployException("The name node end point is not valid!", e);
+            }
         }
 
         // /user/hdp/etl/talend/MarvinJob_0.1/MarvinJob
-        fs.mkdirs(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"));
+        try {
+            fs.mkdirs(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"));
+        } catch (IOException e) {
+            throw new OozieJobDeployException("Can not make a directory in HDFS!", e);
+        }
 
         File unzipDirFile = new File(unzipDir);
         File[] files = unzipDirFile.listFiles(new FileFilter() {
@@ -115,14 +140,18 @@ public class OozieJobDeployer {
                         File tempFile = tempFiles[j];
                         org.apache.hadoop.fs.Path srcPath = new org.apache.hadoop.fs.Path(tempFile.getAbsolutePath());
                         org.apache.hadoop.fs.Path distpath = new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib");
-                        fs.copyFromLocalFile(false, true, srcPath, distpath);
+                        try {
+                            fs.copyFromLocalFile(false, true, srcPath, distpath);
+                        } catch (IOException e) {
+                            throw new OozieJobDeployException("The local file can not upload to Hadoop HDFS!", e);
+                        }
                     }
                 }
             }
         }
     }
 
-    private static void deleteProcess(String zipFile) throws IOException, InterruptedException, URISyntaxException {
+    private static void deleteProcess(String zipFile) {
         new File(zipFile).delete();
     }
 

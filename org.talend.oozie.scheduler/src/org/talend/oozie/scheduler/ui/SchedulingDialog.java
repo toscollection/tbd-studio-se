@@ -15,8 +15,11 @@ package org.talend.oozie.scheduler.ui;
 import java.util.Date;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -46,6 +49,8 @@ public class SchedulingDialog extends Dialog {
     private Text startTimeTxt;
 
     private Text endTimeTxt;
+
+    private Text frequencyTxt;
 
     private Date startDate;
 
@@ -83,7 +88,7 @@ public class SchedulingDialog extends Dialog {
         frequencyLbl.setText(Messages.getString("Label_Frequency"));
         GridDataFactory.fillDefaults().grab(false, false).applyTo(frequencyLbl);
 
-        Text frequencyTxt = new Text(comp, SWT.BORDER);
+        frequencyTxt = new Text(comp, SWT.BORDER);
         frequencyTxt.setText(frequencyValue == null ? "1" : frequencyValue);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(frequencyTxt);
 
@@ -130,10 +135,27 @@ public class SchedulingDialog extends Dialog {
         return parent;
     }
 
+    protected Control createButtonBar(Composite parent) {
+        Control control = super.createButtonBar(parent);
+        getOKButton().setEnabled(false);
+        return control;
+    }
+
     protected void registerAllListeners() {
+        regFrequencyTxtListener();
         regTimeUnitComboListener();
         regStartTimeBtnListener();
         regEndTimeBtnListener();
+    }
+
+    private void regFrequencyTxtListener() {
+        frequencyTxt.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                controller.doFrequencyAction();
+            }
+        });
     }
 
     /**
@@ -170,20 +192,19 @@ public class SchedulingDialog extends Dialog {
     }
 
     protected void okPressed() {
-        doOkAction();
         super.okPressed();
     }
 
-    protected void doOkAction() {
-        controller.doOKAction();
-    }
-
     protected void canclePressed() {
-        doCancleAction();
         super.cancelPressed();
     }
 
-    protected void doCancleAction() {
+    public Button getOKButton() {
+        return this.getButton(IDialogConstants.OK_ID);
+    }
+
+    public Button getCancleButton() {
+        return this.getButton(IDialogConstants.CANCEL_ID);
     }
 
     /**
@@ -266,6 +287,14 @@ public class SchedulingDialog extends Dialog {
 
     public void setSelectedTimeUnitIndex(int selectedTimeUnitIndex) {
         this.selectedTimeUnitIndex = selectedTimeUnitIndex;
+    }
+
+    public Text getFrequencyTxt() {
+        return this.frequencyTxt;
+    }
+
+    public void setFrequencyTxt(Text frequencyTxt) {
+        this.frequencyTxt = frequencyTxt;
     }
 
 }
