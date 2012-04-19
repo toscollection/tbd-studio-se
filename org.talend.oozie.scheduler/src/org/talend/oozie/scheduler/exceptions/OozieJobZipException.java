@@ -12,10 +12,14 @@
 // ============================================================================
 package org.talend.oozie.scheduler.exceptions;
 
-
 /**
- * DOC Marvin  class global comment. Detailled comment
+ * DOC Marvin class global comment. Detailled comment
  */
 public class OozieJobZipException extends OozieJobException {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -9094272877464230653L;
 
 }

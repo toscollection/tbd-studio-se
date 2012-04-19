@@ -16,6 +16,11 @@ package org.talend.oozie.scheduler.exceptions;
  */
 public class OozieJobException extends Exception {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1890985084024816156L;
+
     public OozieJobException() {
         super();
     }

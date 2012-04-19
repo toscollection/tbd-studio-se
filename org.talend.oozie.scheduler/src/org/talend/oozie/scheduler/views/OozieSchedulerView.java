@@ -250,7 +250,7 @@ public class OozieSchedulerView extends ViewPart {
                 return null;
             }
 
-            public Iterator iterator() {
+            public Iterator<?> iterator() {
                 return null;
             }
 
@@ -262,7 +262,7 @@ public class OozieSchedulerView extends ViewPart {
                 return null;
             }
 
-            public List toList() {
+            public List<TalendPropertyTabDescriptor> toList() {
                 List<TalendPropertyTabDescriptor> d = new ArrayList<TalendPropertyTabDescriptor>();
 
                 if (descriptors.size() > 0) {
@@ -288,7 +288,7 @@ public class OozieSchedulerView extends ViewPart {
 
     private EComponentCategory[] getCategories() {
         EComponentCategory[] categories = EElementType.SCHEDULE_4_HADOOP.getCategories();
-        final List<EComponentCategory> list = new ArrayList<EComponentCategory>(Arrays.asList(categories));
+        new ArrayList<EComponentCategory>(Arrays.asList(categories));
         return categories;
     }
 

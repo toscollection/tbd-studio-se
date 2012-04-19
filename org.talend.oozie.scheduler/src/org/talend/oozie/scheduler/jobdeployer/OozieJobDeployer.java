@@ -182,8 +182,8 @@ public class OozieJobDeployer {
         JobScriptsManager jobScriptsManager = JobScriptsManagerFactory.createManagerInstance(exportChoiceMap, processItem
                 .getProcess().getDefaultContext(), JobScriptsManager.ALL_ENVIRONMENTS, IProcessor.NO_STATISTICS,
                 IProcessor.NO_TRACES, JobExportType.POJO);
-
-        List<ExportFileResource> exportResources = jobScriptsManager.getExportResources(exportFileResources, null);
+        String codeOptions = null;
+        List<ExportFileResource> exportResources = jobScriptsManager.getExportResources(exportFileResources, codeOptions);
 
         if (progressMonitor.isCanceled()) {
             throw new ProcessorException(new InterruptedException());

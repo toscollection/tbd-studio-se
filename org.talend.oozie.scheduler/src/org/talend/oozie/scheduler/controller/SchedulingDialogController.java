@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.swt.tableviewer.celleditor.DateDialog;
 import org.talend.oozie.scheduler.ui.SchedulingDialog;
 import org.talend.oozie.scheduler.utils.OozieSchedulerDateUtils;
@@ -135,7 +134,4 @@ public class SchedulingDialogController {
         schedulingDialog.getOKButton().setEnabled(checkIfAllValidOrNot());
     }
 
-    private void initJobContext() {
-
-    }
 }

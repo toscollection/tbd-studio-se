@@ -26,11 +26,17 @@ public class OutputMessages {
 
     public static final String MSG_OUTPUT_DEPLOY_FAILED = Messages.getString("MSG_output_deployment_failed");
 
-    public static final String MSG_OUTPUT_RUNNING = Messages.getString("MSG_output_running");
+    public static final String MSG_OUTPUT_RUNNING = Messages.getString("MSG_output_job_running");
 
-    public static final String MSG_OUTPUT_KILL = Messages.getString("MSG_output_kill");
+    public static final String MSG_OUTPUT_JOB_KILL = Messages.getString("MSG_output_job_kill");
+
+    public static final String MSG_OUTPUT_JOB_FAILD = Messages.getString("MSG_output_job_fail");
 
     public static final String MSG_OUTPUT_JOB_COMPLETE = Messages.getString("MSG_output_job_complete");
+
+    public static final String MSG_OUTPUT_JOB_PREPARE = Messages.getString("MSG_output_job_prepare");
+
+    public static final String MSG_OUTPUT_JOB_SUSPENDED = Messages.getString("MSG_output_job_suspended");
 
     public static final String LINE_BREAK_CHAR = "\n";
 
