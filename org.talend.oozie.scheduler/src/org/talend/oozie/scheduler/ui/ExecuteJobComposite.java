@@ -43,6 +43,7 @@ import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
 import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.utils.EOozieSchedulerImages;
+import org.talend.oozie.scheduler.utils.OozieSchedulerCommonUtils;
 
 /**
  * Created by Marvin Wang on Mar. 30, 2012 for Execute Job tab composite.
@@ -63,6 +64,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     private Text outputTxt;// Output logs/status
 
+    @SuppressWarnings("unused")
     private String pathValue;// The value of Path Text
 
     private ExecuteJobCompositeController executeJobCompController;
@@ -150,7 +152,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         monitoringBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_MONITOING));
         GridDataFactory.fillDefaults().grab(false, false).indent(50, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 30)
                 .align(SWT.END, SWT.CENTER).applyTo(monitoringBtn);
-        monitoringBtn.setVisible(false);
+        monitoringBtn.setVisible(OozieSchedulerCommonUtils.isWindowsOS());
 
         regPathTextListener();
         regMonitoringBtnListener();

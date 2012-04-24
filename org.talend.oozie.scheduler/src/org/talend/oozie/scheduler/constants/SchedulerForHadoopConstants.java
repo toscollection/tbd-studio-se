@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.oozie.scheduler.constants;
 
+import org.talend.oozie.scheduler.i18n.Messages;
+
 /**
  */
 public class SchedulerForHadoopConstants {
@@ -40,4 +42,6 @@ public class SchedulerForHadoopConstants {
     public static final String TOS_JOB_FQCN = "tosJobFQCN";
 
     public static final String WF_APP_PATH = "wfAppPath";
+
+    public static final String OS_WINDOWS_PREFIX = Messages.getString("OS_windows_name_prefix");
 }

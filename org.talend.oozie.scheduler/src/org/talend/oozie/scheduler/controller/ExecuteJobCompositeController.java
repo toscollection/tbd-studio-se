@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.gef.commands.CommandStack;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
@@ -54,6 +55,7 @@ import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.OozieShcedulerSettingDialog;
 import org.talend.oozie.scheduler.ui.SchedulingDialog;
 import org.talend.oozie.scheduler.utils.OozieSchedulerStringUtils;
+import org.talend.repository.ui.wizards.documentation.LinkUtils;
 
 import com.hortonworks.etl.talend.JobContext;
 import com.hortonworks.etl.talend.JobContext.Timeunit;
@@ -800,15 +802,21 @@ public class ExecuteJobCompositeController {
      * When clicking the button named "Monitoring", this method will be invoked.
      */
     public void doMonitoringBtnAction() {
-        try {
-            IWorkbenchBrowserSupport support = PlatformUI.getWorkbench().getBrowserSupport();
+        String oozieURL = getOozieFromPreference();
+        if (oozieURL == null || "".equals(oozieURL) || !LinkUtils.isRemoteFile(oozieURL)) {
+            MessageDialog.openWarning(executeJobComposite.getShell(), OutputMessages.MSG_WARNING_URL_TITLE,
+                    OutputMessages.MSG_WARNING_URL_NOTVALID);
+        } else {
+            try {
+                IWorkbenchBrowserSupport support = PlatformUI.getWorkbench().getBrowserSupport();
 
-            IWebBrowser browser = support.getExternalBrowser();
-            // Open SWT brower in Eclipse.
-            // IWebBrowser browser = support.createBrowser("id");
-            browser.openURL(new URL(getOozieFromPreference()));
-        } catch (PartInitException e) {
-        } catch (MalformedURLException e) {
+                IWebBrowser browser = support.getExternalBrowser();
+                // Open SWT brower in Eclipse.
+                // IWebBrowser browser = support.createBrowser("id");
+                browser.openURL(new URL(oozieURL));
+            } catch (PartInitException e) {
+            } catch (MalformedURLException e) {
+            }
         }
     }
 

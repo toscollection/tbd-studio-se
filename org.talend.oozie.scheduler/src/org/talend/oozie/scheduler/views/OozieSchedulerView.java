@@ -36,6 +36,7 @@ import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.OozieMonitoringComposite;
 import org.talend.oozie.scheduler.ui.ProcessContextComposite;
+import org.talend.oozie.scheduler.utils.OozieSchedulerCommonUtils;
 
 public class OozieSchedulerView extends ViewPart {
 
@@ -286,8 +287,17 @@ public class OozieSchedulerView extends ViewPart {
         });
     }
 
+    /**
+     * For windows OS shows the "execute" tab, other OSs show two tab, "execute" and "monitoring".
+     * 
+     * @return
+     */
     private EComponentCategory[] getCategories() {
-        EComponentCategory[] categories = EElementType.SCHEDULE_4_HADOOP.getCategories();
+        EComponentCategory[] categories = null;
+        if (OozieSchedulerCommonUtils.isWindowsOS())
+            categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();
+        else
+            categories = EElementType.SCHEDULE_4_HADOOP.getCategories();
         new ArrayList<EComponentCategory>(Arrays.asList(categories));
         return categories;
     }

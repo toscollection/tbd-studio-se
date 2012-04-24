@@ -40,4 +40,7 @@ public class OutputMessages {
 
     public static final String LINE_BREAK_CHAR = "\n";
 
+    public static final String MSG_WARNING_URL_NOTVALID = Messages.getString("MSG_warning_invalid_url");
+
+    public static final String MSG_WARNING_URL_TITLE = Messages.getString("MSG_warning_url_title");
 }

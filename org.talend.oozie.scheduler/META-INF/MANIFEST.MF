@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui,
  org.talend.model,
  org.eclipse.gef,
  org.eclipse.ui.views.properties.tabbed,
- org.talend.repository
+ org.talend.repository,
+ org.talend.metadata.managment.ui
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/hadoop-core-1.0.2.jar,
