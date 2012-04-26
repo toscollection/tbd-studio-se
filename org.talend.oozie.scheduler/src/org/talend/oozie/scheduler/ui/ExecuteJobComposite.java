@@ -287,11 +287,11 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     public void setMultiPageTalendEditor(AbstractMultiPageTalendEditor multiPageTalendEditor) {
         this.multiPageTalendEditor = multiPageTalendEditor;
-        if (multiPageTalendEditor == null)
-            executeJobCompController.clearAllTraces();
+        // if (multiPageTalendEditor == null)
+        // executeJobCompController.clearAllTraces();
         executeJobCompController.setMultiPageTalendEditor(multiPageTalendEditor);
-        executeJobCompController.updateAllEnabledOrNot();
         executeJobCompController.initValues();
+        executeJobCompController.updateAllEnabledOrNot();
         // if (!pathText.isDisposed() && !outputTxt.isDisposed()) {
         // if (multiPageTalendEditor != null) {
         // pathText.setEnabled(true);
