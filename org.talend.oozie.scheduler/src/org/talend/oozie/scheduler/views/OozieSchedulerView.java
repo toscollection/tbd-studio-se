@@ -238,6 +238,8 @@ public class OozieSchedulerView extends ViewPart {
 
     private void setElement() {
         EComponentCategory[] categories = getCategories();
+        // Note: the below is just for testing on windows, caz Monitoring tab only shows in Linux.
+        // EComponentCategory[] categories = getCategories_copy();
         final List<TalendPropertyTabDescriptor> descriptors = new ArrayList<TalendPropertyTabDescriptor>();
         for (EComponentCategory category : categories) {
             TalendPropertyTabDescriptor d = new TalendPropertyTabDescriptor(category);
@@ -295,9 +297,16 @@ public class OozieSchedulerView extends ViewPart {
     private EComponentCategory[] getCategories() {
         EComponentCategory[] categories = null;
         if (OozieSchedulerCommonUtils.isWindowsOS())
-            categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();
+            categories = EElementType.SCHEDULE_4_HADOOP_WINDOWS.getCategories();
         else
-            categories = EElementType.SCHEDULE_4_HADOOP.getCategories();
+            categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();
+        new ArrayList<EComponentCategory>(Arrays.asList(categories));
+        return categories;
+    }
+
+    private EComponentCategory[] getCategories_copy() {
+        EComponentCategory[] categories = null;
+        categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();
         new ArrayList<EComponentCategory>(Arrays.asList(categories));
         return categories;
     }
@@ -311,5 +320,21 @@ public class OozieSchedulerView extends ViewPart {
     public void dispose() {
         ActiveProcessTracker.removeJobTrackerListener(oozieJobTrackerListener);
         super.dispose();
+    }
+
+    public ExecuteJobComposite getExecuteJobComposite() {
+        return this.executeJobComposite;
+    }
+
+    public void setExecuteJobComposite(ExecuteJobComposite executeJobComposite) {
+        this.executeJobComposite = executeJobComposite;
+    }
+
+    public OozieMonitoringComposite getMonitoringComposite() {
+        return this.monitoringComposite;
+    }
+
+    public void setMonitoringComposite(OozieMonitoringComposite monitoringComposite) {
+        this.monitoringComposite = monitoringComposite;
     }
 }

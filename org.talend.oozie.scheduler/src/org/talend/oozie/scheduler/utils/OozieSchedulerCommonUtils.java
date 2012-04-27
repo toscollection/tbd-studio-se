@@ -14,7 +14,10 @@ package org.talend.oozie.scheduler.utils;
 
 import java.util.regex.Pattern;
 
+import org.talend.oozie.scheduler.constants.OozieJobProcessStatus;
 import org.talend.oozie.scheduler.constants.SchedulerForHadoopConstants;
+
+import com.hortonworks.etl.talend.JobSubmission;
 
 /**
  * Created by Marvin Wang on Apr. 24, 2012
@@ -39,5 +42,24 @@ public class OozieSchedulerCommonUtils {
         Pattern.matches("^(http|ftp|file)://.* ", URL);
 
         return isValid;
+    }
+
+    public static OozieJobProcessStatus convertToOozieJobProcessStatus(JobSubmission.Status status) {
+        switch (status) {
+        case PREP:
+            return OozieJobProcessStatus.PREP;
+        case RUNNING:
+            return OozieJobProcessStatus.RUNNING;
+        case SUCCEEDED:
+            return OozieJobProcessStatus.SUCCEEDED;
+        case KILLED:
+            return OozieJobProcessStatus.KILLED;
+        case FAILED:
+            return OozieJobProcessStatus.FAILED;
+        case SUSPENDED:
+            return OozieJobProcessStatus.SUSPENDED;
+        default:
+            return OozieJobProcessStatus.INIT;
+        }
     }
 }

@@ -14,6 +14,7 @@ package org.talend.oozie.scheduler.utils;
 
 import java.text.FieldPosition;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -33,5 +34,11 @@ public class OozieSchedulerDateUtils {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         sdf.format(date, result, new FieldPosition(0));
         return result.toString();
+    }
+
+    public static String fetchCurrentDate() {
+        Date currDate = Calendar.getInstance().getTime();
+
+        return convertDateToString(currDate);
     }
 }

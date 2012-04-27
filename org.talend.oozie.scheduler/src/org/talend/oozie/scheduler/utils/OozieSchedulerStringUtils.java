@@ -41,4 +41,16 @@ public class OozieSchedulerStringUtils {
         }
     }
 
+    /**
+     * @param dateStr
+     * @return
+     */
+    public static String formatDateLog(String dateStr) {
+        StringBuffer sb = new StringBuffer("");
+        sb.append("[");
+        sb.append(dateStr);
+        sb.append("]");
+        return sb.toString();
+    }
+
 }

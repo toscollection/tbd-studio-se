@@ -23,6 +23,8 @@ import org.talend.designer.core.ui.IJobTrackerListener;
  */
 public class OozieJobTrackerListener implements IJobTrackerListener {
 
+    private static IProcess2 process;
+
     /*
      * (non-Javadoc)
      * 
@@ -30,6 +32,8 @@ public class OozieJobTrackerListener implements IJobTrackerListener {
      */
     @Override
     public void focusOnJob(IProcess2 process) {
+        this.process = process;
+        // System.out.println("Job:" + process);
         IWorkbenchWindow ww = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
         if (ww != null && ww.getActivePage() != null) {
             IViewPart viewPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
@@ -47,6 +51,8 @@ public class OozieJobTrackerListener implements IJobTrackerListener {
      */
     @Override
     public void allJobClosed() {
+        process = null;
+        // System.out.println("Job:" + process);
         IWorkbenchWindow ww = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
         if (ww != null && ww.getActivePage() != null) {
             IViewPart viewPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
@@ -55,6 +61,10 @@ public class OozieJobTrackerListener implements IJobTrackerListener {
                 ((OozieSchedulerView) viewPart).refresh();
             }
         }
+    }
+
+    public static IProcess2 getProcess() {
+        return process;
     }
 
 }
