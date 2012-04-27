@@ -1,0 +1,78 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument		
+		org.talend.core.model.metadata.IMetadataTable 
+    		org.talend.core.model.metadata.IMetadataColumn   	
+		java.util.List
+    		java.util.Map
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	boolean stat = codeGenArgument.isStatistics();
+	
+	IMetadataTable metadata = null;
+	List<IMetadataColumn> columns = null;
+	List<IMetadataTable> metadatas = node.getMetadataList();
+	if ((metadatas!=null)&&(metadatas.size()>0)) {
+    	metadata = metadatas.get(0);
+    	if (metadata!=null) {
+    		columns = metadata.getListColumns();
+    	}
+	}
+	
+	String previous_node="";
+	String start_node="";
+
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		previous_node = node.getIncomingConnections().get(0).getSource().getUniqueName();
+		start_node = node.getDesignSubjobStartNode().getUniqueName();
+	}
+	
+	List<Map<String, String>> criterias = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SORT_KEY__");
+	
+	boolean useParallel = "true".equals(ElementParameterParser.getValue(node, "__INCREASE_PARALLELISM__"));
+	String reduce_number = ElementParameterParser.getValue(node, "__REDUCE_NUMBER__");
+%>
+
+	StringBuilder sb_<%=cid%> = new StringBuilder();
+<%
+	if(criterias != null && criterias.size()>0) {
+%>
+		sb_<%=cid%>.append("<%=cid%>_RESULT = ORDER <%=previous_node%>_RESULT BY ");
+		
+<%
+		boolean isFirst = true;
+		for(Map<String, String> criteria : criterias) {
+			if(!isFirst) {
+%>
+				sb_<%=cid%>.append(",");
+<%
+			}
+			isFirst=false;
+%>
+			sb_<%=cid%>.append("<%=criteria.get("INPUT_COLUMN")%> <%=criteria.get("ORDER")%>");
+<%
+		}
+
+		if(useParallel) {
+%>
+			sb_<%=cid%>.append(" PARALLEL <%=reduce_number%>");
+<%
+		}
+		
+%>		
+		sb_<%=cid%>.append(";");
+		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+<%
+	}
+%>
+		
+		
+		

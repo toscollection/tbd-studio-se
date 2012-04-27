@@ -1,0 +1,103 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.List
+		java.util.Map
+	"
+%>
+
+	<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();	
+	String cid = node.getUniqueName();
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+	String localdir = ElementParameterParser.getValue(node, "__LOCALDIR__");	
+	String remotedir = ElementParameterParser.getValue(node, "__REMOTEDIR__");
+    List<Map<String, String>> files = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FILES__");	
+	
+	String user = "";
+	%>
+	
+	int nb_file_<%=cid%> = 0;
+	int nb_success_<%=cid%> = 0;
+	
+	String username_<%=cid%> = "";
+	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
+	
+	<%if(!useExistingConnection){
+		String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+		String host = ElementParameterParser.getValue(node, "__HOST__");
+		String port = ElementParameterParser.getValue(node, "__PORT__");
+		user = ElementParameterParser.getValue(node, "__USERNAME__");
+		%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+		<%if(hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){%>
+			conf_<%=cid%>.set("fs.default.name", "maprfs://"+<%=host%>+":"+String.valueOf(<%=port%>)+"/");
+		<%}else{%>
+			conf_<%=cid%>.set("fs.default.name", "hdfs://"+<%=host%>+":"+String.valueOf(<%=port%>));
+		<%}
+		if(hadoopVersion.startsWith("hadoop-0.20.2-core.jar") || hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){
+			String group = ElementParameterParser.getValue(node, "__GROUP__");
+			%>
+			conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
+			fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+		<%
+		}else{
+		%>
+			username_<%=cid%> = <%=user%>;
+			if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+			}else{
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("fs.default.name")),conf_<%=cid%>,username_<%=cid%>);
+			}	
+		<%
+		}
+	}else{
+		String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
+		%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("conn_<%=connectionSid%>");
+		<%
+		List<? extends INode> nodes = node.getProcess().getGraphicalNodes();
+	    for(INode targetNode : nodes){
+	    	if (targetNode.getUniqueName().equals(connectionSid)) {
+		      	String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+		      	if(hadoopVersion.startsWith("hadoop-0.20.2-core.jar") || hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){
+			   	%>
+					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);					
+				<%
+			  	}else{
+			  	%>
+			  		username_<%=cid%> = <%=ElementParameterParser.getValue(targetNode, "__USERNAME__")%>;
+					if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+					}else{
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("fs.default.name")),conf_<%=cid%>,username_<%=cid%>);
+					}
+			  	<%
+			  	}
+		      	break;
+		    }
+	    }
+	}%>
+	
+	fs_<%=cid%>.mkdirs(new org.apache.hadoop.fs.Path(<%=remotedir%>));
+	java.util.List<String> msg_<%=cid%> = new java.util.ArrayList<String>();
+    java.util.List<java.util.Map<String,String>> list_<%=cid %> = new java.util.ArrayList<java.util.Map<String,String>>();	
+	<%
+    for (int i=0; i<files.size(); i++) {
+    	Map<String, String> line = files.get(i);
+		%>    
+		java.util.Map<String,String> map_<%=cid %>_<%=i %> = new java.util.HashMap<String,String>();
+		map_<%=cid %>_<%=i %>.put(<%= line.get("FILEMASK") %>,<%= line.get("NEWNAME") %>);		
+	 	list_<%=cid %>.add(map_<%=cid %>_<%=i %>);       
+	<%
+	}
+	%>	
+
+	String localdir_<%=cid %>  = <%=localdir%>;	
+	for (java.util.Map<String, String> map_<%=cid %> : list_<%=cid %>) 
+	{
+

@@ -1,0 +1,304 @@
+<COMPONENT>
+  <HEADER
+    PLATEFORM="ALL"
+    SERIAL=""
+    VERSION="0.102"
+    STATUS="ALPHA"
+    COMPATIBILITY="ALL"
+    AUTHOR="Talend"
+    RELEASE_DATE="20070314A"
+    STARTABLE="true"
+    DATA_AUTO_PROPAGATE="false"
+    HAS_CONDITIONAL_OUTPUTS="true"
+  >
+    <SIGNATURE/>
+  </HEADER>
+
+  <FAMILIES>
+    <FAMILY>Databases/Hive</FAMILY>
+	<FAMILY>Big Data/Hive</FAMILY>
+  </FAMILIES>
+
+  <DOCUMENTATION>
+    <URL/>
+  </DOCUMENTATION>
+
+  <CONNECTORS>
+    <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>
+    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
+    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+    <CONNECTOR CTYPE="COMPONENT_OK"/>
+    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
+    <CONNECTOR CTYPE="RUN_IF"/>
+  </CONNECTORS>
+
+  <PARAMETERS>
+    <PARAMETER
+      NAME="PROPERTY"
+      FIELD="PROPERTY_TYPE"
+      NUM_ROW="1"
+      REPOSITORY_VALUE="DATABASE:HIVE"
+      SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+    />
+
+    <PARAMETER
+      NAME="USE_EXISTING_CONNECTION"
+      FIELD="CHECK"
+      NUM_ROW="20"
+    >
+      <DEFAULT>false</DEFAULT>
+    </PARAMETER> 
+    
+    <PARAMETER
+      NAME="CONNECTION"
+      FIELD="COMPONENT_LIST"
+      FILTER="tHiveConnection"
+      NUM_ROW="20"
+      SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
+      DYNAMIC_SETTINGS="true"
+    />     
+
+	<PARAMETER NAME="HIVE_VERSION" FIELD="CLOSED_LIST" NUM_ROW="25" REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+		<ITEMS DEFAULT="HDP_1_0">
+			<ITEM NAME="HDP_1_0" VALUE="HDP_1_0" />
+			<ITEM NAME="APACHE_0_20_203" VALUE="APACHE_0_20_203" />
+			<ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" />
+		</ITEMS>
+	</PARAMETER>
+	<PARAMETER NAME="CONNECTION_MODE" FIELD="CLOSED_LIST" NUM_ROW="26" REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION=='false'">
+		<ITEMS DEFAULT="EMBEDDED">
+			<ITEM NAME="EMBEDDED" VALUE="EMBEDDED" NOT_SHOW_IF="HIVE_VERSION=='APACHE_0_20_203'"/>
+			<ITEM NAME="STANDALONE" VALUE="STANDALONE" NOT_SHOW_IF="HIVE_VERSION=='HDP_1_0'"/>
+		</ITEMS>
+	</PARAMETER>
+	
+    <PARAMETER
+      NAME="HOST"
+      FIELD="TEXT"
+      NUM_ROW="30"
+      REPOSITORY_VALUE="SERVER_NAME"
+      REQUIRED="true"
+      SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+    >
+      <DEFAULT>"localhost"</DEFAULT>
+    </PARAMETER>
+
+    <PARAMETER
+      NAME="PORT"
+      FIELD="TEXT"
+      NUM_ROW="30"
+      REPOSITORY_VALUE="PORT"
+      REQUIRED="true"
+      SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+    >
+      <DEFAULT>"10000"</DEFAULT>
+    </PARAMETER>
+
+    <PARAMETER
+      NAME="DBNAME"
+      FIELD="TEXT"
+      NUM_ROW="40"
+      REPOSITORY_VALUE="SID"
+      REQUIRED="true"
+      SHOW_IF="(USE_EXISTING_CONNECTION == 'false' AND CONNECTION_MODE=='STANDALONE')"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+
+    <PARAMETER
+      NAME="TYPE"
+      FIELD="TEXT"
+      NUM_ROW="40"
+      SHOW="false"
+      REPOSITORY_VALUE="TYPE"
+    >
+      <DEFAULT>Hive</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER
+      NAME="USER"
+      FIELD="TEXT"
+      NUM_ROW="50"
+      REPOSITORY_VALUE="USERNAME"
+      REQUIRED="true"
+      SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+
+    <PARAMETER
+      NAME="PASS"
+      FIELD="TEXT"
+      NUM_ROW="50"
+      REPOSITORY_VALUE="PASSWORD"
+      REQUIRED="true"
+      SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+
+    <PARAMETER
+      NAME="SCHEMA"
+      FIELD="SCHEMA_TYPE"
+      NUM_ROW="60"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+    
+	<PARAMETER
+      NAME="TABLE"
+      FIELD="DBTABLE"
+      NUM_ROW="65"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER
+      NAME="QUERYSTORE"
+      FIELD="QUERYSTORE_TYPE"
+      NUM_ROW="70"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+
+	<PARAMETER
+      NAME="GUESS_SCHEMA"
+      FIELD="GUESS_SCHEMA"
+      NUM_ROW="70"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+
+    <PARAMETER
+      NAME="QUERY"
+      FIELD="MEMO_SQL"
+      NUM_ROW="90"
+    >
+      <DEFAULT>"select id, name from employee"</DEFAULT>
+    </PARAMETER>
+
+  </PARAMETERS>
+  
+  <ADVANCED_PARAMETERS>
+    
+
+<!--
+	<PARAMETER
+      NAME="USE_PREPAREDSTATEMENT"
+      FIELD="CHECK"
+      NUM_ROW="6"
+      SHOW="false"
+    >
+      <DEFAULT>false</DEFAULT>
+    </PARAMETER>
+    
+	<PARAMETER
+      NAME="SET_PREPAREDSTATEMENT_PARAMETERS"
+      FIELD="TABLE"
+      REQUIRED="false"
+      NUM_ROW="7"
+      NB_LINES="3"
+      SHOW_IF="(USE_PREPAREDSTATEMENT == 'true')"
+    >
+      <ITEMS>
+        <ITEM NAME="PARAMETER_INDEX" VALUE="" />
+		<ITEM NAME="PARAMETER_TYPE" VALUE="String" FIELD="CLOSED_LIST">
+			<ITEMS DEFAULT="String">
+        		<ITEM NAME="BigDecimal"  	VALUE="BigDecimal"/>
+        		<ITEM NAME="Blob"  			VALUE="Blob"/>
+        		<ITEM NAME="Boolean"  		VALUE="Boolean"/>
+        		<ITEM NAME="Byte"  			VALUE="Byte"/>
+        		<ITEM NAME="Bytes"  		VALUE="Bytes"/>
+        		<ITEM NAME="Clob"  			VALUE="Clob"/>
+        		<ITEM NAME="Date" 			VALUE="Date"/>
+        		<ITEM NAME="Double"			VALUE="Double"/>
+        		<ITEM NAME="Float" 			VALUE="Float"/>
+        		<ITEM NAME="Int" 			VALUE="Int"/>
+        		<ITEM NAME="Long" 			VALUE="Long"/>
+        		<ITEM NAME="Object" 		VALUE="Object"/>
+        		<ITEM NAME="Short" 			VALUE="Short"/>
+        		<ITEM NAME="String" 		VALUE="String"/>
+        		<ITEM NAME="Time" 			VALUE="Time"/>
+        		<ITEM NAME="Null" 			VALUE="Null"/>
+        	</ITEMS>
+		</ITEM>
+        <ITEM NAME="PARAMETER_VALUE" VALUE="" />
+      </ITEMS>
+    </PARAMETER>
+-->
+	<PARAMETER
+      NAME="ENCODING"
+      FIELD="ENCODING_TYPE"
+      NUM_ROW="9"
+      REQUIRED="true"
+      SHOW="false"
+    >
+      <DEFAULT>"ISO-8859-15"</DEFAULT>
+    </PARAMETER>
+        
+    <PARAMETER 
+		NAME="TRIM_ALL_COLUMN" 
+		FIELD="CHECK" 
+		NUM_ROW="30">
+		<DEFAULT>false</DEFAULT>
+	</PARAMETER>
+	
+	<PARAMETER 
+		NAME="TRIM_COLUMN" 
+		FIELD="TABLE" 
+		NUM_ROW="40"
+		NB_LINES="5" 
+		SHOW_IF="TRIM_ALL_COLUMN == 'false'">
+		<ITEMS BASED_ON_SCHEMA="true">
+			<ITEM NAME="TRIM" FIELD="CHECK"></ITEM>
+		</ITEMS>
+	</PARAMETER>		
+  </ADVANCED_PARAMETERS>
+
+  <CODEGENERATION>
+		<IMPORTS>
+			<IMPORT NAME="Driver-Hadoop-0.20.203" MODULE="hadoop-core-0.20.203.0.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Commons-Log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Hive-Exec-0.7.1" MODULE="hive-exec-0.7.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Hive-Jdbc-0.7.1" MODULE="hive-jdbc-0.7.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Hive-Metastore-0.7.1" MODULE="hive-metastore-0.7.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Hive-Service-0.7.1" MODULE="hive-service-0.7.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-LibFb303" MODULE="libfb303.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Commons-Logging-1.1.1" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Commons-Logging-API-1.0.4" MODULE="commons-logging-api-1.0.4.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false')" />
+			
+			<IMPORT NAME="hive-exec-0.8.1.jar" MODULE="hive-exec-0.8.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-jdbc-0.8.1.jar" MODULE="hive-jdbc-0.8.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-metastore-0.8.1.jar" MODULE="hive-metastore-0.8.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-service-0.8.1.jar" MODULE="hive-service-0.8.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libfb303_new.jar" MODULE="libfb303_new.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libthrift.jar" MODULE="libthrift.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="log4j-1.2.15.jar" MODULE="log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hadoop-core-1.0.0.jar" MODULE="hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			
+			<IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="datanucleus-connectionpool-2.0.3.jar" MODULE="datanucleus-connectionpool-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="datanucleus-enhancer-2.0.3.jar" MODULE="datanucleus-enhancer-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="derby-10.4.2.0.jar" MODULE="derby-10.4.2.0.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="hive-builtins-0.4.0.jar" MODULE="hive-builtins-0.4.0.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="datanucleus-core-2.0.3.jar" MODULE="datanucleus-core-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="datanucleus-rdbms-2.0.3.jar" MODULE="datanucleus-rdbms-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+     	</IMPORTS>
+  </CODEGENERATION>
+
+  <RETURNS>
+   	<RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER"/>
+    <RETURN NAME="QUERY" TYPE="id_String" AVAILABILITY="FLOW"/>
+  </RETURNS>
+</COMPONENT>

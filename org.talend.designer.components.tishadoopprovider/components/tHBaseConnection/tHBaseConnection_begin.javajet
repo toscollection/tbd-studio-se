@@ -1,0 +1,33 @@
+<%@ jet
+	imports="
+	java.util.List
+	java.util.Map
+	org.talend.core.model.process.ElementParameterParser	
+	org.talend.core.model.process.INode
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+	"
+%>
+<%	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
+	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+%>
+    org.apache.hadoop.conf.Configuration config<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
+	config<%=cid%>.clear();
+	config<%=cid%>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
+	config<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
+	config<%=cid%>.set("hbase.cluster.distributed","true"); 
+<%
+	List<Map<String, String>> properties =
+        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
+   for(int i=0;i<properties.size();i++){
+   		Map<String, String> map = properties.get(i);
+   		String property = map.get("PROPERTY");
+   		String value= map.get("VALUE");
+%>
+		config<%=cid%>.set(<%=property%>,<%=value%>);
+<%
+   }
+%>
+	globalMap.put("conn_<%=cid%>",config<%=cid%>);
