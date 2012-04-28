@@ -349,18 +349,38 @@ public class ExecuteJobCompositeController {
                             return status;
                         } catch (InterruptedException e) {
                             updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            output.append(outputCurrentDate());
+                            output.append(e.getMessage());
+                            output.append(OutputMessages.LINE_BREAK_CHAR);
+                            updateOutputTextContents(output.toString(), jobContext.getJobName());
                             ExceptionHandler.process(e);
                         } catch (JobSubmissionException e) {
                             updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            output.append(outputCurrentDate());
+                            output.append(e.getMessage());
+                            output.append(OutputMessages.LINE_BREAK_CHAR);
+                            updateOutputTextContents(output.toString(), jobContext.getJobName());
                             ExceptionHandler.process(e);
                         } catch (OozieClientException e) {
                             updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            output.append(outputCurrentDate());
+                            output.append(e.getMessage());
+                            output.append(OutputMessages.LINE_BREAK_CHAR);
+                            updateOutputTextContents(output.toString(), jobContext.getJobName());
                             ExceptionHandler.process(e);
                         } catch (URISyntaxException e) {
                             updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            output.append(outputCurrentDate());
+                            output.append(e.getMessage());
+                            output.append(OutputMessages.LINE_BREAK_CHAR);
+                            updateOutputTextContents(output.toString(), jobContext.getJobName());
                             ExceptionHandler.process(e);
                         } catch (OozieJobDeployException e) {
                             updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            output.append(outputCurrentDate());
+                            output.append(e.getMessage());
+                            output.append(OutputMessages.LINE_BREAK_CHAR);
+                            updateOutputTextContents(output.toString(), jobContext.getJobName());
                             ExceptionHandler.process(e);
                         }
                         return Status.OK_STATUS;
@@ -910,7 +930,7 @@ public class ExecuteJobCompositeController {
                     }
                 } catch (JobSubmissionException e) {
                     isRunBtnEnabled = true;
-                    e.printStackTrace();
+                    ExceptionHandler.process(e);
                 }
             } else
                 isRunBtnEnabled = true;
@@ -947,7 +967,7 @@ public class ExecuteJobCompositeController {
                     }
                 } catch (JobSubmissionException e) {
                     isScheduleBtnEnabled = true;
-                    e.printStackTrace();
+                    ExceptionHandler.process(e);
                 }
             } else
                 isScheduleBtnEnabled = true;
@@ -973,7 +993,7 @@ public class ExecuteJobCompositeController {
                 }
             } catch (JobSubmissionException e) {
                 isKillBtnEnabled = true;
-                e.printStackTrace();
+                ExceptionHandler.process(e);
             }
         } else
             isKillBtnEnabled = false;
