@@ -23,9 +23,11 @@ import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.apache.oozie.client.WorkflowAction;
 import org.apache.oozie.client.WorkflowJob;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.gef.commands.CommandStack;
@@ -489,10 +491,12 @@ public class ExecuteJobCompositeController {
                                     OozieSchedulerView view = (OozieSchedulerView) viewRef[i].getView(true);
                                     executeJobComposite = view.getExecuteJobComposite();
                                     Text outputTxt = executeJobComposite.getOutputTxt();
-                                    outputTxt.setText("");
-                                    outputTxt.setText(output);
-                                    int lines = outputTxt.getLineCount();
-                                    outputTxt.setTopIndex(lines);
+                                    if (!outputTxt.isDisposed()) {
+                                        outputTxt.setText("");
+                                        outputTxt.setText(output);
+                                        int lines = outputTxt.getLineCount();
+                                        outputTxt.setTopIndex(lines);
+                                    }
                                 }
                             }
                         }
@@ -721,7 +725,8 @@ public class ExecuteJobCompositeController {
         jobContext.setJobTrackerEndPoint(jobTrackerEPValue);
 
         // APP path
-        // String wfAppPathValue = getAppPathFromPreference();
+        IPath appPath = new Path(nameNodeEPValue).append(path);
+        jobContext.set(OozieClient.APP_PATH, appPath.toString());
 
         // User Name for acessing hadoop
         String userNameValue = getUserNameForHadoopFromPreference();
@@ -807,12 +812,6 @@ public class ExecuteJobCompositeController {
         return oozieEPValue;
     }
 
-    @SuppressWarnings("unused")
-    private String getAppPathFromPreference() {
-        String path = CorePlugin.getDefault().getPreferenceStore().getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_PATH);
-        return path;
-    }
-
     private String getUserNameForHadoopFromPreference() {
         String userNameValue = CorePlugin.getDefault().getPreferenceStore()
                 .getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
@@ -833,9 +832,9 @@ public class ExecuteJobCompositeController {
         settingDialog = new OozieShcedulerSettingDialog(shell);
         initPreferenceSettingForJob(settingDialog);
         if (Window.OK == settingDialog.open()) {
-            updateAllEnabledOrNot();
             // To update the values of Oozie preference page
             updateOoziePreferencePageValues();
+            updateAllEnabledOrNot();
         }
     }
 

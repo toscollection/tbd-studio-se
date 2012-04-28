@@ -18,6 +18,8 @@ import com.hortonworks.etl.talend.JobContext.Timeunit;
  */
 public class OozieSchedulerStringUtils {
 
+    public static final String REGEX_PATH = "";
+
     public static Timeunit convertTimeUnit(int selectionIndex) {
         switch (selectionIndex) {
         case 0:
@@ -51,6 +53,17 @@ public class OozieSchedulerStringUtils {
         sb.append(dateStr);
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * 
+     * @param path
+     * @return
+     */
+    public static boolean isValidPath(String path) {
+        boolean isValid = false;
+
+        return isValid;
     }
 
 }
