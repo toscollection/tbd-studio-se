@@ -28,15 +28,15 @@ public class OozieSchedulerStringUtils {
             return Timeunit.HOUR;
         case 2:
             return Timeunit.DAY;
+            // case 3:
+            // return Timeunit.WEEK;
         case 3:
-            return Timeunit.WEEK;
-        case 4:
             return Timeunit.MONTH;
-        case 5:
+        case 4:
             return Timeunit.END_OF_DAY;
-        case 6:
+        case 5:
             return Timeunit.END_OF_MONTH;
-        case 7:
+        case 6:
             return Timeunit.NONE;
         default:
             return Timeunit.NONE;

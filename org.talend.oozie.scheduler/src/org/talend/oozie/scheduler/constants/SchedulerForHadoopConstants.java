@@ -33,7 +33,7 @@ public class SchedulerForHadoopConstants {
     public static final String TIME_UNIT_TYPE_ENDOFMONTH = "end of month";
 
     public static final String[] TIME_UNIT_VALUES = new String[] { TIME_UNIT_TYPE_MINUTE, TIME_UNIT_TYPE_HOUR,
-            TIME_UNIT_TYPE_DAY, TIME_UNIT_TYPE_WEEK, TIME_UNIT_TYPE_MONTH, TIME_UNIT_TYPE_ENDOFDAY, TIME_UNIT_TYPE_ENDOFMONTH };
+            TIME_UNIT_TYPE_DAY, TIME_UNIT_TYPE_MONTH, TIME_UNIT_TYPE_ENDOFDAY, TIME_UNIT_TYPE_ENDOFMONTH };
 
     public static final String NAME_NODE_URI = "nameNodeURI";
 
