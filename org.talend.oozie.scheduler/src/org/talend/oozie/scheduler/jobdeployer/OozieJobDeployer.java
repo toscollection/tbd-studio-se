@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -94,7 +95,7 @@ public class OozieJobDeployer {
 
         String userName = CorePlugin.getDefault().getPreferenceStore()
                 .getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
-        if (userName == null || "".equals(userName)) {
+        if (StringUtils.isEmpty(userName)) {
             try {
                 fs = org.apache.hadoop.fs.FileSystem.get(config);
             } catch (IOException e) {
@@ -104,16 +105,22 @@ public class OozieJobDeployer {
             try {
                 fs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(config.get("fs.default.name")), config, userName);
             } catch (IOException e) {
-                throw new OozieJobDeployException("Can not access Hadoop File System with default name!", e);
+                throw new OozieJobDeployException("Can not access Hadoop File System with user "+userName+"!", e);
             } catch (InterruptedException e) {
                 throw new OozieJobDeployException("Can not access Hadoop File System!", e);
             } catch (URISyntaxException e) {
                 throw new OozieJobDeployException("The name node end point is not valid!", e);
             }
         }
+        
 
         // /user/hdp/etl/talend/MarvinJob_0.1/MarvinJob
         try {
+            // if something has been uploaded already before in the same folder, delete the old content
+            if (fs.exists(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"))) {
+                fs.delete(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"), true);
+            }
+            
             fs.mkdirs(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"));
         } catch (IOException e) {
             throw new OozieJobDeployException("Can not make a directory in HDFS!", e);
@@ -161,9 +168,7 @@ public class OozieJobDeployer {
         exportChoiceMap.put(ExportChoice.needJobItem, false);
         exportChoiceMap.put(ExportChoice.needJobScript, true);
         exportChoiceMap.put(ExportChoice.needSourceCode, false);
-
-        // disable for now, to review later
-        exportChoiceMap.put(ExportChoice.needContext, false);
+        exportChoiceMap.put(ExportChoice.needContext, true);
 
         // IProcess2 process = findProcessFromRepository(processItem.getProperty().getId(),
         // processItem.getProperty().getVersion());

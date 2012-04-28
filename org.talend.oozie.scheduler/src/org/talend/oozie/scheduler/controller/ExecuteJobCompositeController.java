@@ -44,6 +44,7 @@ import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.CorePlugin;
+import org.talend.core.model.process.IContext;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.utils.JavaResourcesHelper;
 import org.talend.core.prefs.ITalendCorePrefConstants;
@@ -145,21 +146,26 @@ public class ExecuteJobCompositeController {
      * When clicking the "Schedule" button, this action will open a dialog to provide some configurations for
      * scheduling. If <code>Window.OK == Dialog.open</code>, will invoke the method.
      */
-    public void doScheduleAction() {
+    public void doScheduleAction(IContext context) {
         Shell shell = executeJobComposite.getShell();
         schedulingDialog = new SchedulingDialog(shell);
         initScheduling(schedulingDialog);
         if (Window.OK == schedulingDialog.open()) {
+            String jobName = null;
             try {
+                JobContext jobContext = initJobContextForOozie(JobSubmissionType.SCHEDULED, context);
+                jobName = jobContext.getJobName();
                 OozieJobDeployer.deployJob(OozieJobTrackerListener.getProcess(), new NullProgressMonitor());
-                JobContext jobContext = initJobCotextForOozie(JobSubmissionType.SCHEDULED);
-                // OozieClient oozieClient = new OozieClient(getOozieFromPreference());
-
                 updateAllEnabledOrNot(OozieJobProcessStatus.PREP, OozieJobTrackerListener.getProcess().getLabel());
                 doScheduleJob(jobContext);
-                // outputScheduleJobLogs(oozieClient, jobIdInOozie);
             } catch (Exception e) {
-                ExceptionHandler.process(e);
+                StringBuffer output = new StringBuffer();
+                output.append(e.getMessage());
+                output.append(OutputMessages.LINE_BREAK_CHAR);
+                output.append(e.getCause().getMessage());
+                output.append(OutputMessages.LINE_BREAK_CHAR);
+                updateOutputTextContents(output.toString(), jobName);
+
             }
         }
     }
@@ -306,15 +312,12 @@ public class ExecuteJobCompositeController {
      * When clicking the "Run" button, this action will be invoked.<br>
      * Workflow job state valid transitions: <li>--> PREP <li>PREP --> RUNNING | KILLED <li>RUNNING --> SUSPENDED |
      * SUCCEEDED | KILLED | FAILED <li>SUSPENDED --> RUNNING | KILLED
+     * 
+     * @param iContext
      */
-    public void doRunAction() {
+    public void doRunAction(IContext iContext) {
         try {
-            // OozieJobDeployer.deployJob(OozieJobTrackerListener.getProcess(), new NullProgressMonitor());
-            // JobContext jobContext = initJobCotextForOozie(JobSubmissionType.REMOTE);
-            // updateAllEnabledOrNot(JobSubmission.Status.RUNNING);
-            // jobIdInOozie = doRunJob(jobContext);
-            // outputLogs(oozieClient, jobIdInOozie);
-            JobContext jobContext = initJobCotextForOozie(JobSubmissionType.REMOTE);
+            JobContext jobContext = initJobContextForOozie(JobSubmissionType.REMOTE, iContext);
             String jobIdInOozie = CorePlugin.getDefault().getPreferenceStore().getString("oozie-" + jobContext.getJobName());
             if (jobIdInOozie != null)
                 // tracesForOozie.remove(jobIdInOozie);
@@ -360,6 +363,8 @@ public class ExecuteJobCompositeController {
                             updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
                             output.append(outputCurrentDate());
                             output.append(e.getMessage());
+                            output.append(OutputMessages.LINE_BREAK_CHAR);
+                            output.append(e.getCause().getMessage());
                             output.append(OutputMessages.LINE_BREAK_CHAR);
                             updateOutputTextContents(output.toString(), jobContext.getJobName());
                             ExceptionHandler.process(e);
@@ -408,7 +413,6 @@ public class ExecuteJobCompositeController {
     }
 
     private void deployJobOnHadoop(StringBuffer output, JobContext jobContext) throws OozieJobDeployException {
-        String jobIdInOozie = CorePlugin.getDefault().getPreferenceStore().getString("oozie-" + jobContext.getJobName());
         output.append(outputCurrentDate());
         output.append(OutputMessages.MSG_OUTPUT_DEPLOYING + OutputMessages.LINE_BREAK_CHAR);
         updateOutputTextContents(output.toString(), jobContext.getJobName());
@@ -697,10 +701,12 @@ public class ExecuteJobCompositeController {
      * 
      * @return
      */
-    private JobContext initJobCotextForOozie(JobSubmissionType jobSubType) {
+    private JobContext initJobContextForOozie(JobSubmissionType jobSubType, IContext context) {
         JobContext jobContext = new JobContext();
+
+        IProcess2 process = OozieJobTrackerListener.getProcess();
         // Job name.
-        String jobName = OozieJobTrackerListener.getProcess().getLabel();
+        String jobName = process.getLabel();
         // String jobName = "MavinJob";
         jobContext.setJobName(jobName);
 
@@ -731,10 +737,11 @@ public class ExecuteJobCompositeController {
         // User Name for acessing hadoop
         String userNameValue = getUserNameForHadoopFromPreference();
         jobContext.set(OozieClient.USER_NAME, userNameValue);
-
+        
         // TOS job
         String tosJobFQCN = getTOSJobFQCNValue();
         jobContext.setJobFQClassName(tosJobFQCN);
+        jobContext.setTosContextPath(context.getName());
 
         switch (jobSubType) {
         case LOCAL:

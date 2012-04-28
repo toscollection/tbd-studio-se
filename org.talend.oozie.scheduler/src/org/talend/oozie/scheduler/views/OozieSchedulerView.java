@@ -21,7 +21,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.ViewPart;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
@@ -29,7 +28,6 @@ import org.talend.core.model.process.IProcess2;
 import org.talend.core.properties.tab.HorizontalTabFactory;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.core.properties.tab.TalendPropertyTabDescriptor;
-import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.ActiveProcessTracker;
 import org.talend.designer.core.ui.views.properties.EElementType;
 import org.talend.oozie.scheduler.i18n.Messages;
@@ -203,6 +201,7 @@ public class OozieSchedulerView extends ViewPart {
             String label = process.getLabel();
             if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
                 executeJobComposite.initValues();
+                executeJobComposite.setContextComposite(contextComposite);
             }
             tabFactory.setTitle(Messages.getString("Title_name_job", label), null);
             setPartName(Messages.getString("Part_name_job", label));

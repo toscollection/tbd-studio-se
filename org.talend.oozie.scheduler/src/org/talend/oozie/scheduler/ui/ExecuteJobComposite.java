@@ -70,6 +70,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     private ExecuteJobCompositeController executeJobCompController;
 
+    private ProcessContextComposite contextComposite;
+
     /**
      * 
      * @param parent
@@ -176,7 +178,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         scheduleBtn.addSelectionListener(new SelectionAdapter() {
 
             public void widgetSelected(SelectionEvent e) {
-                executeJobCompController.doScheduleAction();
+                executeJobCompController.doScheduleAction(contextComposite.getSelectedContext());
             }
         });
     }
@@ -185,7 +187,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         runBtn.addSelectionListener(new SelectionAdapter() {
 
             public void widgetSelected(SelectionEvent e) {
-                executeJobCompController.doRunAction();
+                executeJobCompController.doRunAction(contextComposite.getSelectedContext());
             }
         });
     }
@@ -262,7 +264,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     public void setPathValue(String pathValue) {
         if (getEditor() != null && !pathValue.equals(getPathValue()) && !OozieJobTrackerListener.getProcess().isReadOnly()) {
             IProcess2 process = OozieJobTrackerListener.getProcess();
-            getCommandStack().execute(new PropertyChangeCommand(process, "HADOOP_APP_PATH", pathValue));
+            getCommandStack().execute(new PropertyChangeCommand(process, "HADOOP_APP_PATH", pathValue.trim()));
         }
     }
 
@@ -447,6 +449,10 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     public void setPathText(Text pathText) {
         this.pathText = pathText;
+    }
+
+    public void setContextComposite(ProcessContextComposite contextComposite) {
+        this.contextComposite = contextComposite;
     }
 
 }
