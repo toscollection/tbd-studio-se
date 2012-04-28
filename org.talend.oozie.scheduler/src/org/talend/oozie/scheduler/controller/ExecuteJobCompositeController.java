@@ -655,11 +655,15 @@ public class ExecuteJobCompositeController {
         }
     }
 
-    public CommandStack getCommandStack() {
+    private AbstractMultiPageTalendEditor getEditor() {
+        if (OozieJobTrackerListener.getProcess() == null) {
+            return null;
+        }
+        return (AbstractMultiPageTalendEditor) OozieJobTrackerListener.getProcess().getEditor();
+    }
 
-        return OozieJobTrackerListener.getProcess() == null ? null
-                : (CommandStack) (((AbstractMultiPageTalendEditor) OozieJobTrackerListener.getProcess().getEditor())
-                        .getTalendEditor().getAdapter(CommandStack.class));
+    public CommandStack getCommandStack() {
+        return getEditor() == null ? null : (CommandStack) (getEditor().getTalendEditor().getAdapter(CommandStack.class));
     }
 
     protected void updateJobIdInOozieForJob(final String jobIdFromOozie) {
@@ -852,12 +856,23 @@ public class ExecuteJobCompositeController {
 
     public void doModifyPathAction() {
         if (OozieJobTrackerListener.getProcess() != null) {
-            String path = executeJobComposite.getPathValue();
-            IProcess2 process = OozieJobTrackerListener.getProcess();
-            process.getElementParameter("HADOOP_APP_PATH").setValue(path);
+
+            if (isJobReadOnly()) {
+
+            } else {
+                String path = executeJobComposite.getPathValue();
+                IProcess2 process = OozieJobTrackerListener.getProcess();
+                process.getElementParameter("HADOOP_APP_PATH").setValue(path);
+            }
         }
         // checkWidgetsStatus();
         updateAllEnabledOrNot();
+    }
+
+    private boolean isJobReadOnly() {
+        boolean isReadOnly = false;
+        isReadOnly = OozieJobTrackerListener.getProcess().isReadOnly();
+        return isReadOnly;
     }
 
     /**
@@ -930,7 +945,7 @@ public class ExecuteJobCompositeController {
                     }
                 } catch (JobSubmissionException e) {
                     isRunBtnEnabled = true;
-                    ExceptionHandler.process(e);
+                    // ExceptionHandler.process(e);
                 }
             } else
                 isRunBtnEnabled = true;
@@ -967,7 +982,7 @@ public class ExecuteJobCompositeController {
                     }
                 } catch (JobSubmissionException e) {
                     isScheduleBtnEnabled = true;
-                    ExceptionHandler.process(e);
+                    // ExceptionHandler.process(e);
                 }
             } else
                 isScheduleBtnEnabled = true;
@@ -988,12 +1003,13 @@ public class ExecuteJobCompositeController {
                     break;
                 case SUCCEEDED:
                 case FAILED:
+                case KILLED:
                     isKillBtnEnabled = false;
                     break;
                 }
             } catch (JobSubmissionException e) {
-                isKillBtnEnabled = true;
-                ExceptionHandler.process(e);
+                isKillBtnEnabled = false;
+                // ExceptionHandler.process(e);
             }
         } else
             isKillBtnEnabled = false;
@@ -1099,15 +1115,6 @@ public class ExecuteJobCompositeController {
         JobSubmission.Status jobSubStatus = remoteJobSub.status(jobId, getOozieFromPreference());
 
         return jobSubStatus;
-    }
-
-    public void setMultiPageTalendEditor(AbstractMultiPageTalendEditor multiPageTalendEditor) {
-        // this.multiPageTalendEditor = multiPageTalendEditor;
-        IProcess2 process = OozieJobTrackerListener.getProcess();
-        if (process != null) {
-            String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
-            executeJobComposite.setPathValue(appPath); // "/user/hdp/etl/talend/MarvinJob_0.1");
-        }
     }
 
     /**

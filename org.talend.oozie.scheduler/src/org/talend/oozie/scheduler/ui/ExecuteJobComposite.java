@@ -44,6 +44,7 @@ import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
 import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.utils.EOozieSchedulerImages;
 import org.talend.oozie.scheduler.utils.OozieSchedulerCommonUtils;
+import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 
 /**
  * Created by Marvin Wang on Mar. 30, 2012 for Execute Job tab composite.
@@ -68,8 +69,6 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     private String pathValue;// The value of Path Text
 
     private ExecuteJobCompositeController executeJobCompController;
-
-    private AbstractMultiPageTalendEditor multiPageTalendEditor;
 
     /**
      * 
@@ -241,22 +240,28 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     }
 
     public String getPathValue() {
-        if (multiPageTalendEditor != null) {
-            IProcess2 process = multiPageTalendEditor.getProcess();
+        if (getEditor() != null) {
+            IProcess2 process = OozieJobTrackerListener.getProcess();
             String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
             return appPath;
         }
         return "";
     }
 
+    private AbstractMultiPageTalendEditor getEditor() {
+        if (OozieJobTrackerListener.getProcess() == null) {
+            return null;
+        }
+        return (AbstractMultiPageTalendEditor) OozieJobTrackerListener.getProcess().getEditor();
+    }
+
     public CommandStack getCommandStack() {
-        return multiPageTalendEditor == null ? null : (CommandStack) (multiPageTalendEditor.getTalendEditor()
-                .getAdapter(CommandStack.class));
+        return getEditor() == null ? null : (CommandStack) (getEditor().getAdapter(CommandStack.class));
     }
 
     public void setPathValue(String pathValue) {
-        if (multiPageTalendEditor != null && !pathValue.equals(getPathValue())) {
-            IProcess2 process = multiPageTalendEditor.getProcess();
+        if (getEditor() != null && !pathValue.equals(getPathValue()) && !OozieJobTrackerListener.getProcess().isReadOnly()) {
+            IProcess2 process = OozieJobTrackerListener.getProcess();
             getCommandStack().execute(new PropertyChangeCommand(process, "HADOOP_APP_PATH", pathValue));
         }
     }
@@ -285,25 +290,9 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         this.outputTxt = outputTxt;
     }
 
-    public void setMultiPageTalendEditor(AbstractMultiPageTalendEditor multiPageTalendEditor) {
-        this.multiPageTalendEditor = multiPageTalendEditor;
-        // if (multiPageTalendEditor == null)
-        // executeJobCompController.clearAllTraces();
-        executeJobCompController.setMultiPageTalendEditor(multiPageTalendEditor);
+    public void initValues() {
         executeJobCompController.initValues();
         executeJobCompController.updateAllEnabledOrNot();
-        // if (!pathText.isDisposed() && !outputTxt.isDisposed()) {
-        // if (multiPageTalendEditor != null) {
-        // pathText.setEnabled(true);
-        // pathText.setText(getPathValue());
-        // outputTxt.setEnabled(true);
-        // } else {
-        // pathText.setEnabled(false);
-        // pathText.setText("");
-        // outputTxt.setText("");
-        // outputTxt.setEnabled(false);
-        // }
-        // }
     }
 
     /*
@@ -335,7 +324,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
      */
     @Override
     public IMultiPageTalendEditor getPart() {
-        return multiPageTalendEditor;
+        return getEditor();
     }
 
     /*

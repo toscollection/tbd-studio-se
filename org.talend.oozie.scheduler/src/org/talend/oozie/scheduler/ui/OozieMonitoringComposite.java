@@ -30,14 +30,13 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
+import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 
 /**
  */
 public class OozieMonitoringComposite extends ScrolledComposite implements IDynamicProperty {
 
     Browser browser;
-
-    IProcess2 process;
 
     /**
      * 
@@ -171,7 +170,7 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
             getParent().layout();
         }
         if (!browser.isDisposed()) {
-            if (process != null) {
+            if (OozieJobTrackerListener.getProcess() != null) {
                 String url = CorePlugin.getDefault().getPreferenceStore()
                         .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
                 if (url != null) {
@@ -197,14 +196,6 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
     public String getRepositoryAliasName(ConnectionItem connectionItem) {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    public IProcess2 getProcess() {
-        return process;
-    }
-
-    public void setProcess(IProcess2 process) {
-        this.process = process;
     }
 
 }

@@ -52,8 +52,6 @@ public class OozieSchedulerView extends ViewPart {
 
     private IDynamicProperty dc = null;
 
-    private AbstractMultiPageTalendEditor part;
-
     private SashForm sash;
 
     private Composite parent;
@@ -200,39 +198,22 @@ public class OozieSchedulerView extends ViewPart {
     }
 
     public void refresh() {
-        getPart();
-        if (part != null) {
-            IProcess2 process = part.getProcess();
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        if (process != null) {
             String label = process.getLabel();
             if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
-                executeJobComposite.setMultiPageTalendEditor(part);
+                executeJobComposite.initValues();
             }
             tabFactory.setTitle(Messages.getString("Title_name_job", label), null);
             setPartName(Messages.getString("Part_name_job", label));
             contextComposite.setProcess(process);
-            if (monitoringComposite != null && !monitoringComposite.isDisposed()) {
-                monitoringComposite.setProcess(process);
-            }
         } else {
-            if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
-                executeJobComposite.setMultiPageTalendEditor(null);
-            }
             tabFactory.setTitle(Messages.getString("Title_name_nojob"), null);
             setPartName(Messages.getString("Part_name_nojob"));
-            contextComposite.setProcess(null);
-            if (monitoringComposite != null && !monitoringComposite.isDisposed()) {
-                monitoringComposite.setProcess(null);
+            if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
+                executeJobComposite.initValues();
             }
-        }
-        // executeJobComposite.checkWidgetsStatus();
-    }
-
-    private void getPart() {
-        final IEditorPart activeEditor = getSite().getPage().getActiveEditor();
-        if (activeEditor instanceof AbstractMultiPageTalendEditor) {
-            part = (AbstractMultiPageTalendEditor) activeEditor;
-        } else {
-            part = null;
+            contextComposite.setProcess(null);
         }
     }
 
@@ -300,13 +281,6 @@ public class OozieSchedulerView extends ViewPart {
             categories = EElementType.SCHEDULE_4_HADOOP_WINDOWS.getCategories();
         else
             categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();
-        new ArrayList<EComponentCategory>(Arrays.asList(categories));
-        return categories;
-    }
-
-    private EComponentCategory[] getCategories_copy() {
-        EComponentCategory[] categories = null;
-        categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();
         new ArrayList<EComponentCategory>(Arrays.asList(categories));
         return categories;
     }
