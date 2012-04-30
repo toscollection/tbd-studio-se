@@ -731,8 +731,10 @@ public class ExecuteJobCompositeController {
         jobContext.setJobTrackerEndPoint(jobTrackerEPValue);
 
         // APP path
-        IPath appPath = new Path(nameNodeEPValue).append(path);
-        jobContext.set(OozieClient.APP_PATH, appPath.toString());
+        // IPath appPath = new Path(nameNodeEPValue).append(path);
+        // mhirt : bug fix on linux Path changes // to /. FIXME : Do a better coding for 5.1.1
+        String appPath = (nameNodeEPValue!=null)?nameNodeEPValue.concat(path):path;
+        jobContext.set(OozieClient.APP_PATH, appPath);
 
         // User Name for acessing hadoop
         String userNameValue = getUserNameForHadoopFromPreference();
