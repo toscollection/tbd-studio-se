@@ -40,10 +40,10 @@ import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
+import org.talend.oozie.scheduler.constants.TOozieImages;
+import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
-import org.talend.oozie.scheduler.i18n.Messages;
-import org.talend.oozie.scheduler.utils.EOozieSchedulerImages;
-import org.talend.oozie.scheduler.utils.OozieSchedulerCommonUtils;
+import org.talend.oozie.scheduler.utils.TOozieCommonUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 
 /**
@@ -109,29 +109,29 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     private void createButtons(Composite parent) {
         // Schedule button
         scheduleBtn = new Button(parent, SWT.NONE);
-        scheduleBtn.setText(Messages.getString("Button_Schedule"));
-        scheduleBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_SCHEDULE));
+        scheduleBtn.setText(TOozieUIConstants.OOZIE_BTN_SCHEDULE);
+        scheduleBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_SCHEDULE));
         GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(computeBtnTxtSize(scheduleBtn).x + 50, 30)
                 .applyTo(scheduleBtn);
 
         // Run button
         runBtn = new Button(parent, SWT.NONE);
-        runBtn.setText(Messages.getString("Button_Run"));
-        runBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_RUN));
+        runBtn.setText(TOozieUIConstants.OOZIE_BTN_RUN);
+        runBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_RUN));
         GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(computeBtnTxtSize(runBtn).x + 70, 30)
                 .applyTo(runBtn);
 
         // Kill button
         killBtn = new Button(parent, SWT.NONE);
-        killBtn.setText(Messages.getString("Button_Kill"));
-        killBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_KILL));
+        killBtn.setText(TOozieUIConstants.OOZIE_BTN_KILL);
+        killBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_KILL));
         GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(computeBtnTxtSize(killBtn).x + 70, 30)
                 .align(SWT.BEGINNING, SWT.CENTER).applyTo(killBtn);
 
         // Setting button
         settingBtn = new Button(parent, SWT.NONE);
-        settingBtn.setText(Messages.getString("Button_Setting"));
-        settingBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_SETTING));
+        settingBtn.setText(TOozieUIConstants.OOZIE_BTN_SETTING);
+        settingBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_SETTING));
         GridDataFactory.fillDefaults().grab(false, false).indent(50, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 30)
                 .align(SWT.END, SWT.CENTER).applyTo(settingBtn);
 
@@ -140,7 +140,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     private void createCenterContents(Composite parent) {
         Label pathLbl = new Label(parent, SWT.NONE);
-        pathLbl.setText(Messages.getString("Label_Path"));
+        pathLbl.setText(TOozieUIConstants.OOZIE_LBL_PATH);
         GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).align(SWT.BEGINNING, SWT.CENTER)
                 .applyTo(pathLbl);
 
@@ -149,11 +149,11 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         GridDataFactory.fillDefaults().span(2, 1).grab(true, false).indent(-50, 10).hint(SWT.DEFAULT, 20).applyTo(pathText);
 
         monitoringBtn = new Button(parent, SWT.NONE);
-        monitoringBtn.setText(Messages.getString("Button_monitoring"));
-        monitoringBtn.setImage(ImageProvider.getImage(EOozieSchedulerImages.IMG_MONITOING));
+        monitoringBtn.setText(TOozieUIConstants.OOZIE_BTN_MONITOR);
+        monitoringBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_MONITOING));
         GridDataFactory.fillDefaults().grab(false, false).indent(50, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 30)
                 .align(SWT.END, SWT.CENTER).applyTo(monitoringBtn);
-        monitoringBtn.setVisible(OozieSchedulerCommonUtils.isWindowsOS());
+        monitoringBtn.setVisible(TOozieCommonUtils.isWindowsOS());
 
         regPathTextListener();
         regMonitoringBtnListener();

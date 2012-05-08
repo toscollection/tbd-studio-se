@@ -34,9 +34,9 @@ import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.OozieMonitoringComposite;
 import org.talend.oozie.scheduler.ui.ProcessContextComposite;
-import org.talend.oozie.scheduler.utils.OozieSchedulerCommonUtils;
+import org.talend.oozie.scheduler.utils.TOozieCommonUtils;
 
-public class OozieSchedulerView extends ViewPart {
+public class TOozieView extends ViewPart {
 
     private HorizontalTabFactory tabFactory;
 
@@ -60,7 +60,7 @@ public class OozieSchedulerView extends ViewPart {
 
     private OozieJobTrackerListener oozieJobTrackerListener = new OozieJobTrackerListener();
 
-    public OozieSchedulerView() {
+    public TOozieView() {
         ActiveProcessTracker.addJobTrackerListener(oozieJobTrackerListener);
         tabFactory = new HorizontalTabFactory();
     }
@@ -203,12 +203,12 @@ public class OozieSchedulerView extends ViewPart {
                 executeJobComposite.initValues();
                 executeJobComposite.setContextComposite(contextComposite);
             }
-            tabFactory.setTitle(Messages.getString("Title_name_job", label), null);
-            setPartName(Messages.getString("Part_name_job", label));
+            tabFactory.setTitle(Messages.getString("OozieSchedulerView_Part_title_job", label), null);
+            setPartName(Messages.getString("OozieSchedulerView_Part_name_job", label));
             contextComposite.setProcess(process);
         } else {
-            tabFactory.setTitle(Messages.getString("Title_name_nojob"), null);
-            setPartName(Messages.getString("Part_name_nojob"));
+            tabFactory.setTitle(Messages.getString("OozieSchedulerView_part_title_name_nojob"), null);
+            setPartName(Messages.getString("OozieSchedulerView_Part_name_nojob"));
             if (executeJobComposite != null && !executeJobComposite.isDisposed()) {
                 executeJobComposite.initValues();
             }
@@ -276,7 +276,7 @@ public class OozieSchedulerView extends ViewPart {
      */
     private EComponentCategory[] getCategories() {
         EComponentCategory[] categories = null;
-        if (OozieSchedulerCommonUtils.isWindowsOS())
+        if (TOozieCommonUtils.isWindowsOS())
             categories = EElementType.SCHEDULE_4_HADOOP_WINDOWS.getCategories();
         else
             categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();

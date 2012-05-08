@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.oozie.scheduler.controller;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,15 +20,16 @@ import java.util.regex.Pattern;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.talend.commons.ui.swt.tableviewer.celleditor.DateDialog;
-import org.talend.oozie.scheduler.ui.SchedulingDialog;
-import org.talend.oozie.scheduler.utils.OozieSchedulerDateUtils;
+import org.talend.oozie.scheduler.constants.TOozieUIConstants;
+import org.talend.oozie.scheduler.ui.TOozieSchedulerDialog;
+import org.talend.oozie.scheduler.utils.TOozieDateUtils;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for scheduling controller.
  */
 public class SchedulingDialogController {
 
-    private SchedulingDialog schedulingDialog;
+    private TOozieSchedulerDialog schedulingDialog;
 
     public static final String PATTERN = "[1-9][0-9]*";
 
@@ -37,7 +39,7 @@ public class SchedulingDialogController {
 
     /**
      */
-    public SchedulingDialogController(SchedulingDialog schedulingDialog) {
+    public SchedulingDialogController(TOozieSchedulerDialog schedulingDialog) {
         this.schedulingDialog = schedulingDialog;
     }
 
@@ -57,8 +59,8 @@ public class SchedulingDialogController {
 
     public boolean checkIfAllValidOrNot() {
         boolean okBtnIsEnabled = false;
-        boolean startTimeHasValue = checkStartTimeValue();
-        boolean endTimeHasValue = checkEndTimeValue();
+        boolean startTimeHasValue = hasStartTimeValue();
+        boolean endTimeHasValue = hasEndTimeValue();
         boolean frequencyValueIsValid = checkFrequencyValue();
         if (startTimeHasValue && endTimeHasValue && frequencyValueIsValid)
             okBtnIsEnabled = true;
@@ -67,24 +69,49 @@ public class SchedulingDialogController {
         return okBtnIsEnabled;
     }
 
-    protected boolean checkStartTimeValue() {
+    protected boolean hasEndTimeValue() {
         boolean hasValue = false;
-        String endTimeValue = schedulingDialog.getEndTimeTxt().getText();
-        if (endTimeValue != null && !"".equals(endTimeValue))
+        Date endTimeValue = schedulingDialog.getEndDate();
+        if (endTimeValue != null)
             hasValue = true;
         else
             hasValue = false;
         return hasValue;
     }
 
-    protected boolean checkEndTimeValue() {
+    protected boolean hasStartTimeValue() {
         boolean hasValue = false;
-        String startTimeValue = schedulingDialog.getStartTimeTxt().getText();
-        if (startTimeValue != null && !"".equals(startTimeValue))
+        Date startTimeValue = schedulingDialog.getStartDate();
+        if (startTimeValue != null)
             hasValue = true;
         else
             hasValue = false;
         return hasValue;
+    }
+
+    /**
+     * Check if "Start Time" text has time to display.
+     * 
+     * @return
+     */
+    private boolean hasStartTimeDisplay() {
+        boolean has = false;
+        String startTime = schedulingDialog.getStartTimeTxt().getText();
+        if (startTime != null && !"".equals(startTime))
+            has = true;
+        else
+            has = false;
+        return has;
+    }
+
+    private boolean hasEndTimeDisplay() {
+        boolean has = false;
+        String endTime = schedulingDialog.getEndTimeTxt().getText();
+        if (endTime != null && !"".equals(endTime))
+            has = true;
+        else
+            has = false;
+        return has;
     }
 
     protected boolean checkFrequencyValue() {
@@ -116,9 +143,35 @@ public class SchedulingDialogController {
         DateDialog dateDialog = new DateDialog(schedulingDialog.getShell());
         if (Window.OK == dateDialog.open()) {
             Date startDate = dateDialog.getDate();
-            schedulingDialog.setStartDate(startDate);
-            String dateString = OozieSchedulerDateUtils.convertDateToString(startDate);
+            String dateString = TOozieDateUtils.convertDateToString(startDate);
             schedulingDialog.getStartTimeTxt().setText(dateString);
+            if (hasEndTimeValue()) {
+                Date endDate = schedulingDialog.getEndDate();
+                if (!compareStartTimeToEndTime(startDate, endDate)) {
+                    schedulingDialog.setStartDate(null);
+                    MessageDialog.openError(schedulingDialog.getShell(), TOozieUIConstants.OOZIE_DLG_DATE_ERROR_TITLE,
+                            TOozieUIConstants.OOZIE_DLG_DATE_ERROR_START_GREATER_END);
+                } else {
+                    schedulingDialog.setStartDate(startDate);
+                    schedulingDialog.setEndDate(endDate);
+                }
+            } else if (hasEndTimeDisplay()) {
+                String endTimeStr = schedulingDialog.getEndTimeTxt().getText();
+                try {
+                    Date endDate = TOozieDateUtils.converStringToDate(endTimeStr);
+                    if (!compareStartTimeToEndTime(startDate, endDate)) {
+                        schedulingDialog.setStartDate(null);
+                        MessageDialog.openError(schedulingDialog.getShell(), TOozieUIConstants.OOZIE_DLG_DATE_ERROR_TITLE,
+                                TOozieUIConstants.OOZIE_DLG_DATE_ERROR_START_GREATER_END);
+                    } else {
+                        schedulingDialog.setStartDate(startDate);
+                        schedulingDialog.setEndDate(endDate);
+                    }
+                } catch (ParseException e) {
+                }
+            } else {
+                schedulingDialog.setStartDate(startDate);
+            }
         }
         schedulingDialog.getOKButton().setEnabled(checkIfAllValidOrNot());
     }
@@ -127,11 +180,46 @@ public class SchedulingDialogController {
         DateDialog dateDialog = new DateDialog(schedulingDialog.getShell());
         if (Window.OK == dateDialog.open()) {
             Date endDate = dateDialog.getDate();
-            schedulingDialog.setEndDate(endDate);
-            String dateString = OozieSchedulerDateUtils.convertDateToString(endDate);
+            String dateString = TOozieDateUtils.convertDateToString(endDate);
             schedulingDialog.getEndTimeTxt().setText(dateString);
+            if (hasStartTimeValue()) {
+                Date startDate = schedulingDialog.getStartDate();
+                if (!compareStartTimeToEndTime(startDate, endDate)) {
+                    schedulingDialog.setEndDate(null);
+                    MessageDialog.openError(schedulingDialog.getShell(), TOozieUIConstants.OOZIE_DLG_DATE_ERROR_TITLE,
+                            TOozieUIConstants.OOZIE_DLG_DATE_ERROR_END_LESS_START);
+                } else {
+                    schedulingDialog.setStartDate(startDate);
+                    schedulingDialog.setEndDate(endDate);
+                }
+            } else if (hasStartTimeDisplay()) {
+                String startTimeStr = schedulingDialog.getStartTimeTxt().getText();
+                try {
+                    Date startDate = TOozieDateUtils.converStringToDate(startTimeStr);
+                    if (!compareStartTimeToEndTime(startDate, endDate)) {
+                        schedulingDialog.setEndDate(null);
+                        MessageDialog.openError(schedulingDialog.getShell(), TOozieUIConstants.OOZIE_DLG_DATE_ERROR_TITLE,
+                                TOozieUIConstants.OOZIE_DLG_DATE_ERROR_START_GREATER_END);
+                    } else {
+                        schedulingDialog.setStartDate(startDate);
+                        schedulingDialog.setEndDate(endDate);
+                    }
+                } catch (ParseException e) {
+                }
+            } else {
+                schedulingDialog.setEndDate(endDate);
+            }
         }
         schedulingDialog.getOKButton().setEnabled(checkIfAllValidOrNot());
     }
 
+    /**
+     * 
+     * @return
+     */
+    private boolean compareStartTimeToEndTime(Date startTimeValue, Date endTimeValue) {
+        boolean invalid = false;
+        invalid = startTimeValue.after(endTimeValue);
+        return !invalid;
+    }
 }

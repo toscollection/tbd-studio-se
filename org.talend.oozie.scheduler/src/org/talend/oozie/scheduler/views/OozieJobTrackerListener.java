@@ -39,7 +39,7 @@ public class OozieJobTrackerListener implements IJobTrackerListener {
             IViewPart viewPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                     .findView("org.talend.oozie.scheduler.views.OozieSchedulerView");
             if (viewPart != null) {
-                ((OozieSchedulerView) viewPart).refresh();
+                ((TOozieView) viewPart).refresh();
             }
         }
     }
@@ -58,7 +58,7 @@ public class OozieJobTrackerListener implements IJobTrackerListener {
             IViewPart viewPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                     .findView("org.talend.oozie.scheduler.views.OozieSchedulerView");
             if (viewPart != null) {
-                ((OozieSchedulerView) viewPart).refresh();
+                ((TOozieView) viewPart).refresh();
             }
         }
     }

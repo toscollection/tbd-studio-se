@@ -22,12 +22,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.talend.oozie.scheduler.i18n.Messages;
+import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for Talend Oozie Scheduler setup dialog.
  */
-public class OozieShcedulerSettingDialog extends Dialog {
+public class TOozieSettingDialog extends Dialog {
 
     private Text nameNodeEndPointTxt;// "Name Node End Point" Text widget
 
@@ -48,9 +48,16 @@ public class OozieShcedulerSettingDialog extends Dialog {
     /**
      * @param parentShell
      */
-    public OozieShcedulerSettingDialog(Shell parentShell) {
+    public TOozieSettingDialog(Shell parentShell) {
         super(parentShell);
         setShellStyle(this.getShellStyle() | SWT.RESIZE);
+    }
+
+    @Override
+    protected void configureShell(Shell parentShell) {
+        super.configureShell(parentShell);
+        parentShell.setText(TOozieUIConstants.OOZIE_DLG_SETTING_TITLE);
+
     }
 
     /**
@@ -65,7 +72,7 @@ public class OozieShcedulerSettingDialog extends Dialog {
 
         // Name node end point
         Label nameNodeEPLbl = new Label(comp, SWT.NONE);
-        nameNodeEPLbl.setText(Messages.getString("Label_NameNodeEndPoint"));
+        nameNodeEPLbl.setText(TOozieUIConstants.OOZIE_LBL_NAME_NODE_EP);
 
         nameNodeEndPointTxt = new Text(comp, SWT.BORDER);
         nameNodeEndPointTxt.setText(nameNodeEndPointValue == null ? "" : nameNodeEndPointValue);
@@ -73,7 +80,7 @@ public class OozieShcedulerSettingDialog extends Dialog {
 
         // Job tracker end point
         Label jobTrackerEPLbl = new Label(comp, SWT.NONE);
-        jobTrackerEPLbl.setText(Messages.getString("Label_JobTrackerEndPoint"));
+        jobTrackerEPLbl.setText(TOozieUIConstants.OOZIE_LBL_JOB_TRACKER_EP);
 
         jobTrackerEndPointTxt = new Text(comp, SWT.BORDER);
         jobTrackerEndPointTxt.setText(jobTrackerEndPointValue == null ? "" : jobTrackerEndPointValue);
@@ -81,7 +88,7 @@ public class OozieShcedulerSettingDialog extends Dialog {
 
         // Oozie end point
         Label oozieEPLbl = new Label(comp, SWT.NONE);
-        oozieEPLbl.setText(Messages.getString("Label_OozieEndPoint"));
+        oozieEPLbl.setText(TOozieUIConstants.OOZIE_LBL_OOZIE_EP);
 
         oozieEndPointTxt = new Text(comp, SWT.BORDER);
         oozieEndPointTxt.setText(oozieEndPointValue == null ? "" : oozieEndPointValue);
@@ -89,7 +96,7 @@ public class OozieShcedulerSettingDialog extends Dialog {
 
         // UserName for hadoop
         Label userNameLbl = new Label(comp, SWT.NONE);
-        userNameLbl.setText(Messages.getString("Label_userName_for_hadoop"));
+        userNameLbl.setText(TOozieUIConstants.OOZIE_LBL_USERNAME);
 
         userNameTxt = new Text(comp, SWT.BORDER);
         userNameTxt.setText(userNameValue == null ? "" : userNameValue);

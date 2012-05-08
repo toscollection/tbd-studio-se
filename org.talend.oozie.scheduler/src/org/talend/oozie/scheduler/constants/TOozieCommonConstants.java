@@ -12,17 +12,15 @@
 // ============================================================================
 package org.talend.oozie.scheduler.constants;
 
-/**
- */
-public enum WidgetStatusType {
+import org.talend.oozie.scheduler.i18n.Messages;
 
-    /**
-     * 
-     */
-    ALL_ENABLE,
-    ALL_NO_ENABLE,
-    NOT_ALL_ENABLE,
-    JOB_RUNNING,
-    JOB_KILL,
-    JOB_SCHEDULE;
+/**
+ * Created by Marvin Wang on May 7, 2012.
+ */
+public class TOozieCommonConstants {
+
+    public static final String OOZIE_PREFIX_FOR_PREFERENCE = Messages
+            .getString("TOozieCommonConstants_oozie_prefix_for_preference");
+
+    public static final String OS_WINDOWS_PREFIX = Messages.getString("TOozieCommonConstants_OS_windows_name_prefix");
 }

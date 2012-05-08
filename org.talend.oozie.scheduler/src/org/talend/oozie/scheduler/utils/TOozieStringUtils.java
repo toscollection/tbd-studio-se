@@ -12,36 +12,13 @@
 // ============================================================================
 package org.talend.oozie.scheduler.utils;
 
-import com.hortonworks.etl.talend.JobContext.Timeunit;
+import org.talend.oozie.scheduler.constants.TOozieOutputMessages;
 
 /**
  */
-public class OozieSchedulerStringUtils {
+public class TOozieStringUtils {
 
     public static final String REGEX_PATH = "";
-
-    public static Timeunit convertTimeUnit(int selectionIndex) {
-        switch (selectionIndex) {
-        case 0:
-            return Timeunit.MINUTE;
-        case 1:
-            return Timeunit.HOUR;
-        case 2:
-            return Timeunit.DAY;
-            // case 3:
-            // return Timeunit.WEEK;
-        case 3:
-            return Timeunit.MONTH;
-        case 4:
-            return Timeunit.END_OF_DAY;
-        case 5:
-            return Timeunit.END_OF_MONTH;
-        case 6:
-            return Timeunit.NONE;
-        default:
-            return Timeunit.NONE;
-        }
-    }
 
     /**
      * @param dateStr
@@ -52,6 +29,21 @@ public class OozieSchedulerStringUtils {
         sb.append("[");
         sb.append(dateStr);
         sb.append("]");
+        return sb.toString();
+    }
+
+    /**
+     * Outputs log as a line beginning with date like "[yyyy-MM-dd HH:mm:ss]Starting job remote running..."
+     * 
+     * @param log
+     * @return
+     */
+    public static String outputLogWithPrefixDate(String log) {
+        StringBuffer sb = new StringBuffer("");
+        String currentDate = TOozieDateUtils.fetchCurrentDate();
+        sb.append(formatDateLog(currentDate));
+        sb.append(log == null ? "" : log);
+        sb.append(TOozieOutputMessages.MSG_OUTPUT_LINE_BREAK_CHAR);
         return sb.toString();
     }
 

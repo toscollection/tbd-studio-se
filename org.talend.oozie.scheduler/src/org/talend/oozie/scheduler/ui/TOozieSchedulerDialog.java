@@ -32,13 +32,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 import org.talend.oozie.scheduler.controller.SchedulingDialogController;
-import org.talend.oozie.scheduler.i18n.Messages;
 
 /**
- * Created by Marvin Wang on Mar.31, 2012 for
+ * Created by Marvin Wang on Mar.31, 2012 for scheduling a job to run on Hadoop.
  */
-public class SchedulingDialog extends Dialog {
+public class TOozieSchedulerDialog extends Dialog {
 
     private Button startTimeBtn;
 
@@ -69,11 +69,17 @@ public class SchedulingDialog extends Dialog {
     /**
      * @param parentShell
      */
-    public SchedulingDialog(Shell parentShell) {
+    public TOozieSchedulerDialog(Shell parentShell) {
         super(parentShell);
         setShellStyle(this.getShellStyle() | SWT.RESIZE);
-
         controller = new SchedulingDialogController(this);
+    }
+
+    @Override
+    protected void configureShell(Shell parentShell) {
+        super.configureShell(parentShell);
+        parentShell.setText(TOozieUIConstants.OOZIE_DLG_SCHEDULER_TITLE);
+
     }
 
     protected Control createDialogArea(Composite parent) {
@@ -85,7 +91,7 @@ public class SchedulingDialog extends Dialog {
 
         // Frequency
         Label frequencyLbl = new Label(comp, SWT.NONE);
-        frequencyLbl.setText(Messages.getString("Label_Frequency"));
+        frequencyLbl.setText(TOozieUIConstants.OOZIE_LBL_FREQUENCY);
         GridDataFactory.fillDefaults().grab(false, false).applyTo(frequencyLbl);
 
         frequencyTxt = new Text(comp, SWT.BORDER);
@@ -94,7 +100,7 @@ public class SchedulingDialog extends Dialog {
 
         // Time Unit
         Label timeUnitLbl = new Label(comp, SWT.NONE);
-        timeUnitLbl.setText(Messages.getString("Label_TimeUnit"));
+        timeUnitLbl.setText(TOozieUIConstants.OOZIE_LBL_TIMEUNIT);
         GridDataFactory.fillDefaults().grab(false, false).applyTo(timeUnitLbl);
 
         timeUnitCombo = new Combo(comp, SWT.READ_ONLY);
@@ -104,28 +110,28 @@ public class SchedulingDialog extends Dialog {
 
         // Start Time
         Label startTimeLbl = new Label(comp, SWT.NONE);
-        startTimeLbl.setText(Messages.getString("Label_StartTime"));
+        startTimeLbl.setText(TOozieUIConstants.OOZIE_LBL_START_TIME);
 
         startTimeTxt = new Text(comp, SWT.BORDER);
         startTimeTxt.setEditable(false);
         GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(startTimeTxt);
 
         startTimeBtn = new Button(comp, SWT.PUSH);
-        startTimeBtn.setText(Messages.getString("Button_StartTime"));
+        startTimeBtn.setText(TOozieUIConstants.OOZIE_BTN_START_TIME);
         GridData startTimeBtnGD = new GridData();
         startTimeBtnGD.grabExcessHorizontalSpace = false;
         GridDataFactory.createFrom(startTimeBtnGD).applyTo(startTimeBtn);
 
         // End Time
         Label endTimeLbl = new Label(comp, SWT.NONE);
-        endTimeLbl.setText(Messages.getString("Label_EndTime"));
+        endTimeLbl.setText(TOozieUIConstants.OOZIE_LBL_END_TIME);
 
         endTimeTxt = new Text(comp, SWT.BORDER);
         endTimeTxt.setEditable(false);
         GridDataFactory.fillDefaults().grab(true, false).span(2, 1).applyTo(endTimeTxt);
 
         endTimeBtn = new Button(comp, SWT.PUSH);
-        endTimeBtn.setText(Messages.getString("Button_EndTime"));
+        endTimeBtn.setText(TOozieUIConstants.OOZIE_BTN_END_TIME);
         GridData endTimeBtnGD = new GridData();
         endTimeBtnGD.grabExcessHorizontalSpace = false;
         GridDataFactory.createFrom(endTimeBtnGD).grab(false, false).applyTo(endTimeBtn);

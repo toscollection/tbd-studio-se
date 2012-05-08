@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.oozie.scheduler.utils;
+package org.talend.oozie.scheduler.constants;
 
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.oozie.scheduler.OozieSchedulerPlugin;
@@ -18,7 +18,7 @@ import org.talend.oozie.scheduler.OozieSchedulerPlugin;
 /**
  * DOC Marvin class global comment. Detailled comment
  */
-public enum EOozieSchedulerImages implements IImage {
+public enum TOozieImages implements IImage {
     IMG_RUN("/icons/oozie_run.gif"),
     IMG_SCHEDULE("/icons/oozie_schedule.gif"),
     IMG_KILL("/icons/oozie_kill.gif"),
@@ -27,7 +27,7 @@ public enum EOozieSchedulerImages implements IImage {
 
     private String path;
 
-    EOozieSchedulerImages(String path) {
+    TOozieImages(String path) {
         this.path = path;
     }
 
@@ -37,7 +37,7 @@ public enum EOozieSchedulerImages implements IImage {
      * @see org.talend.commons.ui.runtime.image.IImage#getLocation()
      */
     @Override
-    public Class getLocation() {
+    public Class<OozieSchedulerPlugin> getLocation() {
         return OozieSchedulerPlugin.class;
     }
 

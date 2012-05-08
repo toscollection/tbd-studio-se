@@ -13,19 +13,29 @@
 package org.talend.oozie.scheduler.utils;
 
 import java.text.FieldPosition;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  */
-public class OozieSchedulerDateUtils {
+public class TOozieDateUtils {
 
     public static final String TALEND_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     public static String convertDateToString(Date date) {
         String result = convertDateToString(date, TALEND_DATE_PATTERN);
         return result;
+    }
+
+    public static Date converStringToDate(String dateStr) throws ParseException {
+        return ConvertStringToDate(dateStr, TALEND_DATE_PATTERN);
+    }
+
+    public static Date ConvertStringToDate(String dateStr, String pattern) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.parse(dateStr);
     }
 
     public static String convertDateToString(Date date, String pattern) {
@@ -36,6 +46,11 @@ public class OozieSchedulerDateUtils {
         return result.toString();
     }
 
+    /**
+     * Fetches the current date as format "yyyy-MM-dd HH:mm:ss".
+     * 
+     * @return
+     */
     public static String fetchCurrentDate() {
         Date currDate = Calendar.getInstance().getTime();
 

@@ -16,21 +16,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * DOC Marvin class global comment. Detailled comment
+ * Created by Marvin Wang for managing the traces for jobs.
  */
-public class OozieJobTraceManager {
+public class TOozieJobTraceManager {
 
     private Map<String, String> traces;
 
-    private static OozieJobTraceManager instance;
+    private static TOozieJobTraceManager instance;
 
-    private OozieJobTraceManager() {
+    private TOozieJobTraceManager() {
         traces = new HashMap<String, String>();
     }
 
-    public static OozieJobTraceManager getInstance() {
+    public static TOozieJobTraceManager getInstance() {
         if (instance == null)
-            instance = new OozieJobTraceManager();
+            instance = new TOozieJobTraceManager();
         return instance;
     }
 
