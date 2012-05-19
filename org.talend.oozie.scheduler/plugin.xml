@@ -12,5 +12,14 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.talend.core.prefs"
+            class="org.talend.designer.core.ui.preferences.OozieSchedulerPreferencePage"
+            id="org.talend.designer.core.oozie.scheduler"
+            name="Oozie">
+      </page>
+   </extension>
 
 </plugin>
