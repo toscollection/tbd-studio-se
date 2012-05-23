@@ -32,6 +32,8 @@
 	String table = ElementParameterParser.getValue(node, "__TABLE_NAME__");
 	String partitionFilter = ElementParameterParser.getValue(node, "__PARTITION_KEYVALUE__");
 	
+	String thriftServer = ElementParameterParser.getValue(node, "__THRIFT_SERVER__");
+	
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	
 %>
@@ -52,6 +54,8 @@
 			} 
 		}
 %>
+		System.setProperty("hive.metastore.local", "false");
+		System.setProperty("hive.metastore.uris", <%=thriftServer%>);
 		sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' using org.apache.hcatalog.pig.<%=function%>('"+<%=partitionFilter%>+"'");
 <%
 		List<IMetadataTable> metadatas = node.getMetadataList();

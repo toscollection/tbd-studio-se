@@ -26,6 +26,9 @@
 			<TABLE READONLY="true">
 				<COLUMN NAME="datanucleus-core" TYPE="id_String" LENGTH="255" READONLY="true"/>
 				<COLUMN NAME="datanucleus-rdbms" TYPE="id_String" LENGTH="255" READONLY="true"/>
+				<COLUMN NAME="hcatalog" TYPE="id_String" LENGTH="255" READONLY="true"/>
+				<COLUMN NAME="hive-exec" TYPE="id_String" LENGTH="255" READONLY="true"/>
+				<COLUMN NAME="hive-metastore" TYPE="id_String" LENGTH="255" READONLY="true"/>
 	      </TABLE>
 		</PARAMETER>
 
@@ -46,6 +49,10 @@
 		</PARAMETER>
 		<PARAMETER NAME="FIELD_SEPARATOR_CHAR" FIELD="TEXT" NUM_ROW="35" REQUIRED="true" SHOW_IF="STORE == 'PIGSTORAGE'"> 
 			<DEFAULT>";"</DEFAULT> 
+		</PARAMETER>
+		<PARAMETER NAME="THRIFT_SERVER" FIELD="TEXT" NUM_ROW="39"
+			REQUIRED="true" SHOW_IF="STORE == 'HCATSTORER'" GROUP="HCAT_CONFIGURATION">
+			<DEFAULT>"thrift://localhost:9083"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="DATABASE_NAME" FIELD="TEXT" NUM_ROW="40" REQUIRED="true" SHOW_IF="STORE == 'HCATSTORER'" GROUP="HCAT_CONFIGURATION"> 
 			<DEFAULT>"default"</DEFAULT> 
@@ -70,6 +77,15 @@
 		<IMPORTS>
 			<IMPORT NAME="datanucleus-core-2.0.3" MODULE="datanucleus-core-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
 			<IMPORT NAME="datanucleus-rdbms-2.0.3" MODULE="datanucleus-rdbms-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="libfb303-0.7.0" MODULE="libfb303-0.7.0.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="hive-exec-0.4.0" MODULE="hive-exec-0.4.0.jar" REQUIRED="false"  REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="jdo2-api-2.3-ec" MODULE="jdo2-api-2.3-ec.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="hive-metastore-0.4.0" MODULE="hive-metastore-0.4.0.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="derby-10.4.2.0" MODULE="derby-10.4.2.0.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="datanucleus-connectionpool-2.0.3" MODULE="datanucleus-connectionpool-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="commons-dbcp-1.4" MODULE="commons-dbcp-1.4.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />
