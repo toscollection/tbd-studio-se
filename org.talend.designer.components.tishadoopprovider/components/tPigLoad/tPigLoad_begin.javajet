@@ -15,7 +15,10 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 	
+
+	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
 	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String inputFilename = ElementParameterParser.getValue(node, "__INPUT_FILENAME__");
 	String databaseName = ElementParameterParser.getValue(node, "__DATABASE_NAME__");
 	String tableName = ElementParameterParser.getValue(node, "__TABLE_NAME__");
@@ -55,6 +58,14 @@
 			if("HCatLoader".equals(function)) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
 %>
 				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
+<%
+			}
+			if(("HDP_1_0".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion)) && useKrb) {
+				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+				String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
+%>
+				props_<%=cid%>.put("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
+				props_<%=cid%>.put("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
 <%
 			}
 %>

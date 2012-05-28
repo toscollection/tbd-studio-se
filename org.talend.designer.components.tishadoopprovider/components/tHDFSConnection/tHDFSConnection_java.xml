@@ -43,12 +43,24 @@
 				<ITEM NAME="MapR" VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar" />
 			</ITEMS>
 	   	</PARAMETER>
+		<PARAMETER
+			NAME="USE_KRB"
+			FIELD="CHECK"
+			NUM_ROW="12"
+			SHOW_IF="(DB_VERSION=='HDP_1_0') OR (DB_VERSION=='APACHE_1_0_0')"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="NAMENODE_PRINCIPAL" FIELD="TEXT" REQUIRED="true" NUM_ROW="12" SHOW_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'">
+			<DEFAULT>"nn/_HOST@EXAMPLE.COM"</DEFAULT>
+		</PARAMETER>
 	  	<PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="20">
 	    	<DEFAULT IF="(DB_VERSION != 'MapR')">"hdfs://localhost:9000/"</DEFAULT>
 			<DEFAULT IF="(DB_VERSION == 'MapR')">"maprfs:///"</DEFAULT>
 	 	</PARAMETER>
 	  
-	  	<PARAMETER NAME="USERNAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="30">
+	  	<PARAMETER NAME="USERNAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" NOT_SHOW_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'">
       		<DEFAULT>"anonymous"</DEFAULT>
       	</PARAMETER>
       	<PARAMETER NAME="GROUP" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" SHOW_IF="(DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR')">
@@ -85,6 +97,7 @@
 	        <IMPORT NAME="maprfs-0.1" MODULE="maprfs-0.1.jar" REQUIRED="false" />
 	        <IMPORT NAME="zookeeper-3.3.2" MODULE="zookeeper-3.3.2.jar" REQUIRED="false" />
 	        <IMPORT NAME="hadoop-0.20.2-dev-core" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" />
+		<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'" />
 		</IMPORTS>
    	</CODEGENERATION>
 
