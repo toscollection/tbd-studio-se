@@ -30,14 +30,46 @@ import com.hortonworks.etl.talend.JobContext.Timeunit;
  */
 public enum TOozieTimeUnit {
 
-    MINUTE("minute", Timeunit.MINUTE),
-    HOUR("hour", Timeunit.HOUR),
-    DAY("day", Timeunit.DAY),
-    WEEK("week", Timeunit.WEEK),
-    MONTH("month", Timeunit.MONTH),
-    END_OF_DAY("end of day", Timeunit.END_OF_DAY),
-    END_OF_MONTH("end of month", Timeunit.END_OF_MONTH),
-    NONE("none", Timeunit.NONE);
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_MINUTE} and time unit is
+     * <code>Timeunit.MINUTE</code>.
+     */
+    MINUTE(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_MINUTE, Timeunit.MINUTE),
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_HOUR} and time unit is
+     * <code>Timeunit.HOUR</code>.
+     */
+    HOUR(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_HOUR, Timeunit.HOUR),
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_DAY} and time unit is
+     * <code>Timeunit.DAY</code>.
+     */
+    DAY(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_DAY, Timeunit.DAY),
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_WEEK} and time unit is
+     * <code>Timeunit.WEEK</code>.
+     */
+    WEEK(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_WEEK, Timeunit.WEEK),
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_MONTH} and time unit is
+     * <code>Timeunit.MONTH</code>.
+     */
+    MONTH(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_MONTH, Timeunit.MONTH),
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_DAY} and time unit is
+     * <code>Timeunit.END_OF_DAY</code>.
+     */
+    END_OF_DAY(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_DAY, Timeunit.END_OF_DAY),
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_MONTH} and time unit is
+     * <code>Timeunit.END_OF_MONTH</code>.
+     */
+    END_OF_MONTH(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_MONTH, Timeunit.END_OF_MONTH),
+    /**
+     * Display name refers to {@link TOozieCommonConstants#OOZIE_TIMEUNIT_DISPLAY_NAME_NONE} and time unit is
+     * <code>Timeunit.NONE</code>.
+     */
+    NONE(TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_NONE, Timeunit.NONE);
 
     private String displayName;
 

@@ -24,6 +24,12 @@ public class TOozieDateUtils {
 
     public static final String TALEND_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    /**
+     * Converts the given date to the specified string pattern "yyyy-MM-dd HH:mm:ss";
+     * 
+     * @param date
+     * @return
+     */
     public static String convertDateToString(Date date) {
         String result = convertDateToString(date, TALEND_DATE_PATTERN);
         return result;

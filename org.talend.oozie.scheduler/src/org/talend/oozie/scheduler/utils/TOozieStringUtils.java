@@ -21,8 +21,12 @@ public class TOozieStringUtils {
     public static final String REGEX_PATH = "";
 
     /**
+     * Formats the date string to the string that begins with "<code>[</code>" and ends with "<code>]</code>". The
+     * string of returning is like <code>[2012-5-24 11:39:22]</code>. If <code>dateStr</code> is <code>null</code>, then
+     * the returned string is <code>[null]</code>.
+     * 
      * @param dateStr
-     * @return
+     * @return a string.
      */
     public static String formatDateLog(String dateStr) {
         StringBuffer sb = new StringBuffer("");
@@ -33,10 +37,11 @@ public class TOozieStringUtils {
     }
 
     /**
-     * Outputs log as a line beginning with date like "[yyyy-MM-dd HH:mm:ss]Starting job remote running..."
+     * Outputs log as a line beginning with date like "[yyyy-MM-dd HH:mm:ss]Starting job remote running...". If
+     * <code>log</code> is <code>null</code>, it will be converted to empty string.
      * 
      * @param log
-     * @return
+     * @return a string
      */
     public static String outputLogWithPrefixDate(String log) {
         StringBuffer sb = new StringBuffer("");
@@ -52,6 +57,7 @@ public class TOozieStringUtils {
      * @param path
      * @return
      */
+    @Deprecated
     public static boolean isValidPath(String path) {
         boolean isValid = false;
 

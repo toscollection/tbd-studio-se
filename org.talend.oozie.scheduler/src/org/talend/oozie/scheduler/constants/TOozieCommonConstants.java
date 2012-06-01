@@ -23,4 +23,52 @@ public class TOozieCommonConstants {
             .getString("TOozieCommonConstants_oozie_prefix_for_preference");
 
     public static final String OS_WINDOWS_PREFIX = Messages.getString("TOozieCommonConstants_OS_windows_name_prefix");
+
+    /**
+     * Value is <code>minute</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_MINUTE = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_MINUTE");
+
+    /**
+     * Value is <code>hour</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_HOUR = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_HOUR");
+
+    /**
+     * Value is <code>day</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_DAY = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_DAY");
+
+    /**
+     * Value is <code>week</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_WEEK = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_WEEK");
+
+    /**
+     * Value is <code>month</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_MONTH = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_MONTH");
+
+    /**
+     * Value is <code>end of day</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_DAY = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_DAY");
+
+    /**
+     * Value is <code>end of month</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_MONTH = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_MONTH");
+
+    /**
+     * Value is <code>none</code> from <code>messages.properties<code> file.
+     */
+    public static final String OOZIE_TIMEUNIT_DISPLAY_NAME_NONE = Messages
+            .getString("TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_NONE");
 }

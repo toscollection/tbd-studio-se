@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.talend.oozie.scheduler.constants.OozieJobProcessStatus;
 import org.talend.oozie.scheduler.constants.TOozieCommonConstants;
 import org.talend.oozie.scheduler.constants.TOozieTimeUnit;
+import org.talend.oozie.scheduler.i18n.TOozieTestMessages;
 
 import com.hortonworks.etl.talend.JobContext.Timeunit;
 import com.hortonworks.etl.talend.JobSubmission;
@@ -42,9 +43,11 @@ public class TOozieCommonUtilsTest {
     public void testIsWindowsOS() {
         String osName = System.getProperty("os.name");
         if (osName.trim().startsWith(TOozieCommonConstants.OS_WINDOWS_PREFIX))
-            Assert.assertTrue("The current OS is windows, however, the method returns false!", TOozieCommonUtils.isWindowsOS());
+            Assert.assertTrue(TOozieTestMessages.getString("TOozieCommonUtilsTest.currentOS_is_windows"),
+                    TOozieCommonUtils.isWindowsOS());
         else
-            Assert.assertFalse("The current OS is not windows, however, the method return true!", TOozieCommonUtils.isWindowsOS());
+            Assert.assertFalse(TOozieTestMessages.getString("TOozieCommonUtilsTest.currOS_isnot_windows"),
+                    TOozieCommonUtils.isWindowsOS());
     }
 
     @Test
@@ -56,33 +59,50 @@ public class TOozieCommonUtilsTest {
         OozieJobProcessStatus failedStatus = TOozieCommonUtils.convertToOozieJobProcessStatus(JobSubmission.Status.FAILED);
         OozieJobProcessStatus suspendedStatus = TOozieCommonUtils.convertToOozieJobProcessStatus(JobSubmission.Status.SUSPENDED);
 
-        Assert.assertTrue("\"JobSubmission.Status.PREP\" should be converted to \"OozieJobProcessStatus.PREP\"!",
-                OozieJobProcessStatus.PREP == prepStatus);
-        Assert.assertTrue("\"JobSubmission.Status.RUNNING\" should be converted to \"OozieJobProcessStatus.RUNNING\"!",
+        Assert.assertTrue(
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.status_jobsub_to_oozie", new Object[] {
+                        JobSubmission.Status.PREP, OozieJobProcessStatus.PREP }), OozieJobProcessStatus.PREP == prepStatus);
+        Assert.assertTrue(
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.status_jobsub_to_oozie", new Object[] {
+                        JobSubmission.Status.RUNNING, OozieJobProcessStatus.RUNNING }),
                 OozieJobProcessStatus.RUNNING == runningStatus);
-        Assert.assertTrue("\"JobSubmission.Status.SUCCEEDED\" should be converted to \"OozieJobProcessStatus.SUCCEEDED\"!",
+        Assert.assertTrue(
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.status_jobsub_to_oozie", new Object[] {
+                        JobSubmission.Status.SUCCEEDED, OozieJobProcessStatus.SUCCEEDED }),
                 OozieJobProcessStatus.SUCCEEDED == succeededStatus);
-        Assert.assertTrue("\"JobSubmission.Status.KILLED\" should be converted to \"OozieJobProcessStatus.KILLED\"!",
+        Assert.assertTrue(
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.status_jobsub_to_oozie", new Object[] {
+                        JobSubmission.Status.KILLED, OozieJobProcessStatus.KILLED }),
                 OozieJobProcessStatus.KILLED == killedStatus);
-        Assert.assertTrue("\"JobSubmission.Status.FAILED\" should be converted to \"OozieJobProcessStatus.FAILED\"!",
+        Assert.assertTrue(
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.status_jobsub_to_oozie", new Object[] {
+                        JobSubmission.Status.FAILED, OozieJobProcessStatus.FAILED }),
                 OozieJobProcessStatus.FAILED == failedStatus);
-        Assert.assertTrue("\"JobSubmission.Status.SUSPENDED\" should be converted to \"OozieJobProcessStatus.SUSPENDED\"!",
+        Assert.assertTrue(
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.status_jobsub_to_oozie", new Object[] {
+                        JobSubmission.Status.SUSPENDED, OozieJobProcessStatus.SUSPENDED }),
                 OozieJobProcessStatus.SUSPENDED == suspendedStatus);
     }
 
     @Test
     public void testGetTimeUnitItems() {
         String[] timeUnitNames = TOozieCommonUtils.getTimeUnitItems();
-        String[] expectedTimeUnitNames = new String[] { TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_MINUTE,
-                TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_HOUR, TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_DAY,
-                TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_WEEK, TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_MONTH,
-                TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_DAY,
-                TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_MONTH,
-                TOozieCommonConstants.OOZIE_TIMEUNIT_DISPLAY_NAME_NONE };
-        Assert.assertNotNull("The items of time unit for display should not be null!", timeUnitNames);
+        String[] expectedTimeUnitNames = new String[] {
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_MINUTE"),// "minute".
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_HOUR"),// "hour".
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_DAY"),// "day".
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_WEEK"),// "week".
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_MONTH"),// "month".
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_DAY"), // "end of day".
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_END_OF_MONTH"), // "end of month".
+                TOozieTestMessages.getString("TOozieCommonUtilsTest.OOZIE_TIMEUNIT_DISPLAY_NAME_NONE") // "none".
+        };
+        Assert.assertNotNull(TOozieTestMessages.getString("TOozieCommonUtilsTest.items_not_null"), timeUnitNames);
+        Assert.assertEquals(TOozieTestMessages.getString("TOozieCommonUtilsTest.number_of_timeUnit", new Object[] { 8 }), 8,
+                timeUnitNames.length);
 
-        Assert.assertArrayEquals("The expected names of time unit is different from the actual names!", expectedTimeUnitNames,
-                timeUnitNames);
+        Assert.assertArrayEquals(TOozieTestMessages.getString("TOozieCommonUtilsTest.is_not_timeUnit_item"),
+                expectedTimeUnitNames, timeUnitNames);
     }
 
     @Test
@@ -101,11 +121,11 @@ public class TOozieCommonUtilsTest {
         for (int i = -1; i < lookupIndex; i++) {
             Timeunit acturalTU = TOozieCommonUtils.lookupTimeUnit(i);
             if (i < expectedsSize - 1 && i >= 0)
-                Assert.assertEquals("The expected TimeUnit is \' " + expecteds.get(i) + "\', but the actual is \' " + acturalTU
-                        + "\'!", expecteds.get(i), acturalTU);
+                Assert.assertEquals(TOozieTestMessages.getString("TOozieCommonUtilsTest.lookup_timeUnit"), expecteds.get(i),
+                        acturalTU);
             else
-                Assert.assertEquals("The expected TimeUnit is \' " + Timeunit.NONE + "\', but the actual is \' " + acturalTU
-                        + "\'!", Timeunit.NONE, acturalTU);
+                Assert.assertEquals(TOozieTestMessages.getString("TOozieCommonUtilsTest.lookup_timeUnit"), Timeunit.NONE,
+                        acturalTU);
 
         }
     }
