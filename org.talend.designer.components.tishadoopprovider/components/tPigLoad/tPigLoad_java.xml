@@ -152,7 +152,7 @@
 
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="apache-pig" MODULE="pig.jar" REQUIRED="false" REQUIRED_IF="LOCAL=='true'"/>
+			<IMPORT NAME="apache-pig" MODULE="pig-0.10.0.jar" REQUIRED="false" REQUIRED_IF="LOCAL=='true'"/>
 			
 			<IMPORT NAME="apache-pig-without-hadoop" MODULE="pig-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1'))"/>
 			<IMPORT NAME="hadoop-conf" MODULE="hadoop-conf.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND ((PIG_VERSION!='HDP_1_0' AND PIG_VERSION!='APACHE_1_0_0') OR USE_KRB=='false'))"/>
