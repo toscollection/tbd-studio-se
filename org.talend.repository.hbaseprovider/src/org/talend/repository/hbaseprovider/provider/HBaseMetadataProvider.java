@@ -57,12 +57,13 @@ import orgomg.cwm.resource.relational.Catalog;
  */
 public class HBaseMetadataProvider implements IDBMetadataProvider {
 
-    private static String CATALOG_NAME = "HBase"; //$NON-NLS-N$
+    private static String CATALOG_NAME = "HBase";
 
-    private static String COLUMN_FAMILY = "COLUMN FAMILY"; //$NON-NLS-N$
+    private static String COLUMN_FAMILY = "COLUMN FAMILY";
 
     private static Map<IMetadataConnection, HBaseAdmin> adminMap = new HashMap<IMetadataConnection, HBaseAdmin>();
 
+    @Override
     public ConnectionStatus testConnection(String dbType, String url, String username, String pwd, String schema, String server,
             String port, String driverClassName, String driverJarPath, String dbVersionString, String additionalParam) {
         ConnectionStatus connectionStatus = new ConnectionStatus();
@@ -79,15 +80,16 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         } catch (ZooKeeperConnectionException e) {
             ExceptionHandler.process(e);
             connectionStatus.setMessageException(e.getMessage());
-        } finally {
-            return connectionStatus;
         }
+        return connectionStatus;
     }
 
+    @Override
     public void updatePackage(IMetadataConnection metadataConnection) {
 
     }
 
+    @Override
     public List getTableNodeInfo(IMetadataConnection metadataConnection) {
         List<TableNode> tableNodes = new ArrayList<TableNode>();
         try {
@@ -117,6 +119,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         return tableNodes;
     }
 
+    @Override
     public AbstractMetadataExtractorViewProvider getMetadataViewProvider() {
         HBaseMetadataViewProvider provider = new HBaseMetadataViewProvider();
         return provider;
@@ -124,15 +127,18 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
 
     class HBaseMetadataViewProvider extends SelectorTreeViewerProvider {
 
+        @Override
         public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 
         }
 
+        @Override
         public Object[] getElements(Object inputElement) {
             List list = (List) inputElement;
             return list.toArray();
         }
 
+        @Override
         public Object[] getChildren(Object parentElement) {
             TableNode tableNode = (TableNode) parentElement;
             List<TableNode> child = tableNode.getChildren();
@@ -174,7 +180,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                             columnFamilyNode.setParent(tableNode);
                             columnFamilyNode.setType(TableNode.COLUMN_FAMILY);
                             columnFamilyNode.setValue(columnFamilyToAdd);
-                            columnFamilyNode.setItemType(COLUMN_FAMILY); //$NON-NLS-N$
+                            columnFamilyNode.setItemType(COLUMN_FAMILY);
                             columnFamilyNode.setTable(tableNode.getTable());
                             columnFamilyNode.setMetadataConn(metadataConnection);
                             tableNode.getChildren().add(columnFamilyNode);
@@ -250,11 +256,13 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             return children.toArray();
         }
 
+        @Override
         public Object getParent(Object element) {
             TableNode tableNode = (TableNode) element;
             return tableNode.getParent();
         }
 
+        @Override
         public boolean hasChildren(Object element) {
             TableNode tableNode = (TableNode) element;
             int type = tableNode.getType();
@@ -264,10 +272,12 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             return !tableNode.getChildren().isEmpty();
         }
 
+        @Override
         public Image getColumnImage(Object element, int columnIndex) {
             return null;
         }
 
+        @Override
         public String getColumnText(Object element, int columnIndex) {
             TableNode tableNode = (TableNode) element;
             int type = tableNode.getType();
@@ -296,11 +306,13 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
     /**
      * returns the node type which will access a runnable when click the node.
      * **/
+    @Override
     public int getRunnableAccessNodeType() {
         return TableNode.COLUMN;
     }
 
     /** run method in Runnable will execute this **/
+    @Override
     public void executeInRunnable(IMetadataConnection metadataConnection, Object currentNode, DatabaseConnection dbconn) {
         HBaseAdmin hAdmin = getAdmin(metadataConnection);
         Configuration config = null;
@@ -377,7 +389,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                                                 }
                                             }
                                             if (!findTable) {
-                                                PackageHelper.addMetadataTable((MetadataTable) metadataTable, catalogToWrite);
+                                                PackageHelper.addMetadataTable(metadataTable, catalogToWrite);
                                             }
 
                                         }
@@ -397,20 +409,24 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         }
     }
 
+    @Override
     public Map getConnectionMap() {
         return adminMap;
     }
 
+    @Override
     public void fillConnection(DatabaseConnection connection) {
         Catalog defaultCatalog = CatalogHelper.createCatalog(getDefaultCatalogName());
         ConnectionHelper.addPackage(defaultCatalog, connection);
         connection.setSID(getDefaultCatalogName());
     }
 
+    @Override
     public String getDefaultCatalogName() {
         return CATALOG_NAME;
     }
 
+    @Override
     public void deleteMetadataFromConnection(Object node, DatabaseConnection connection) {
         TableNode columnNode = null;
         if (node == null) {
@@ -459,6 +475,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         }
     }
 
+    @Override
     public boolean isMetadataExsit(Object node, DatabaseConnection connection) {
         TableNode columnNode = null;
         if (node == null) {
@@ -511,6 +528,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         return false;
     }
 
+    @Override
     public List<TdColumn> returnMetadataColumnsFromTable(String tableName, IMetadataConnection metadataConnection) {
         List<TdColumn> toReturn = new ArrayList<TdColumn>();
         try {
@@ -541,7 +559,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                                     column.setLabel(columnName);
                                     column.setName(columnName);
                                     // hbase no type ,just byte[],need to cast the type ourself
-                                    column.setTalendType("id_String"); //$NON-NLS-N$
+                                    column.setTalendType("id_String");
                                     TaggedValue tv = TaggedValueHelper.createTaggedValue(COLUMN_FAMILY,
                                             metadataConnection.getSchema());
                                     column.getTaggedValue().add(tv);
@@ -578,6 +596,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         return hAdmin;
     }
 
+    @Override
     public List<String> returnTablesFormConnection(IMetadataConnection metadataConnection) {
         List<String> toReturn = new ArrayList<String>();
         try {
@@ -593,10 +612,12 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         return toReturn;
     }
 
+    @Override
     public boolean isSupportGuessSchema() {
         return false;
     }
 
+    @Override
     public boolean isSupportRetrieveSchema() {
         return true;
     }
