@@ -1,0 +1,30 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+	" 
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String dbhost = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
+    String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+%>
+	com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+	com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+<%
+	if (authentication){
+%>
+    db_<%=cid%>.authenticate(<%=dbuser%>, <%=dbpass%>.toCharArray());
+<%
+	}
+%>
+	globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
+	globalMap.put("db_<%=cid%>", db_<%=cid%>);

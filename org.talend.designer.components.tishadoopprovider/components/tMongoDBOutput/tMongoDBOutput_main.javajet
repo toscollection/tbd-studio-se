@@ -1,0 +1,118 @@
+<%@ jet
+	imports="
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.EConnectionType
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.metadata.IMetadataTable
+	    org.talend.core.model.process.IConnectionCategory
+	    
+		java.util.List
+"
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+	IConnection inConn = null;
+	IMetadataTable metadata = null;
+	
+	if(inConns!=null && inConns.size()> 0) {
+		inConn = inConns.get(0);
+		metadata = inConn.getMetadataTable();
+	}
+	
+	if (metadata!=null) {    
+		List< ? extends IConnection> conns = node.getIncomingConnections();
+		for (IConnection conn : conns) {
+			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				List<IMetadataColumn> columnList = metadata.getListColumns();
+				int sizeColumns = columnList.size();
+%>
+				
+				com.mongodb.WriteResult resultMessage_<%=cid%>=null;
+				updateObjectUtil_<%=cid%>.setObject(new com.mongodb.BasicDBObject());
+<%
+				if(!"INSERT".equalsIgnoreCase(dataAction)){
+%>
+				queryObjectUtil_<%=cid%>.setObject(new com.mongodb.BasicDBObject());
+				int countKey_<%=cid%>=0;
+<%
+				}
+				for (int i = 0; i < sizeColumns; i++) {
+					IMetadataColumn column = columnList.get(i);
+					if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
+%>
+						queryObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getLabel() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+						countKey_<%=cid%>++;
+<%
+					}
+%>
+					
+      				updateObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getLabel() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+<%
+  				}
+%>
+				com.mongodb.BasicDBObject updateObj_<%=cid%> = updateObjectUtil_<%=cid%>.getObject();
+<%
+				if ("INSERT".equalsIgnoreCase(dataAction)) {
+%>
+					resultMessage_<%=cid%>=coll_<%=cid%>.insert(updateObj_<%=cid%>);
+<%
+				}else {
+%>
+					if(countKey_<%=cid%> <=0){
+<%
+					if(dieOnError){
+%>
+						throw new Exception("Must have at least one key in schema");
+<%
+					}else{
+%>
+						System.err.println("Must have at least one key in schema");
+<%
+					}
+%>
+					}
+					com.mongodb.BasicDBObject queryObj_<%=cid%> = queryObjectUtil_<%=cid%>.getObject();
+<%
+					if("UPDATE".equalsIgnoreCase(dataAction)){	
+%>	
+					resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,updateObj_<%=cid%>);
+<%
+					}else if("UPSERT".equalsIgnoreCase(dataAction)){
+%>	
+					resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,updateObj_<%=cid%>,true,false);
+<%
+					}else if("DELETE".equalsIgnoreCase(dataAction)){
+%>	
+					resultMessage_<%=cid%>=coll_<%=cid%>.remove(queryObj_<%=cid%>);
+<%
+					}
+				}
+%>	
+				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
+<%
+					if(dieOnError){
+%>
+					throw new Exception(resultMessage_<%=cid%>.getError());
+<%
+					}else{
+%>
+					System.err.println(resultMessage_<%=cid%>.getError());
+<%
+					}
+%>
+				}
+				nb_line_<%=cid %> ++;
+<%
+			}
+		}
+	}
+%>
