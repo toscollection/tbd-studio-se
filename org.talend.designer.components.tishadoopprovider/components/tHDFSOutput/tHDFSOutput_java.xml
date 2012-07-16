@@ -52,17 +52,25 @@
 	      SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 	      DYNAMIC_SETTINGS="true"
 	    />
-	    <PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-			<ITEMS DEFAULT="HDP_1_0">
-				<ITEM NAME="HDP_1_0" VALUE="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hdp-dummy.jar" />
-				<ITEM NAME="APACHE_1_0_0" VALUE="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" />
-				<ITEM NAME="APACHE_0_20_204" VALUE="hadoop-core-0.20.204.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" />
-				<ITEM NAME="Cloudera_0.20_CDH3U1" VALUE="hadoop-0.20.2-cdh3u1-core.jar;commons-logging-1.0.4.jar" />
-				<ITEM NAME="Cloudera_CDH4" VALUE="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.15.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar" />
-				<ITEM NAME="APACHE_0_20_2" VALUE="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar" />
-				<ITEM NAME="MapR" VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar" />
+    	<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+  			<ITEMS DEFAULT="HORTONWORKS">
+				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
+				<ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
+				<ITEM NAME="MAPR" VALUE="MAPR"/>
+				<ITEM NAME="APACHE" VALUE="APACHE"/>
 			</ITEMS>
-		</PARAMETER>
+  		</PARAMETER>
+		<PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+			<ITEMS DEFAULT="HDP_1_0">
+				<ITEM NAME="HDP_1_0" VALUE="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hdp-dummy.jar" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+				<ITEM NAME="APACHE_1_0_0" VALUE="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" SHOW_IF="DISTRIBUTION=='APACHE'"/>
+				<ITEM NAME="APACHE_0_20_204" VALUE="hadoop-core-0.20.204.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" SHOW_IF="DISTRIBUTION=='APACHE'" />
+				<ITEM NAME="Cloudera_0.20_CDH3U1" VALUE="hadoop-0.20.2-cdh3u1-core.jar;commons-logging-1.0.4.jar" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+				<ITEM NAME="Cloudera_CDH4" VALUE="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.15.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+				<ITEM NAME="APACHE_0_20_2" VALUE="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar" SHOW_IF="DISTRIBUTION=='APACHE'" />
+				<ITEM NAME="MapR" VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar" SHOW_IF="DISTRIBUTION=='MAPR'" />
+			</ITEMS>
+	   	</PARAMETER>
 
 		<PARAMETER
 			NAME="USE_KRB"
