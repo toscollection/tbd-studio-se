@@ -40,19 +40,27 @@
       			IConnection out = outputs.get(0);
       			firstConnName = out.getName();
     }
+%>
+			int nb_line_<%=cid %> = 0;
+<%
   	if(metadatas != null && metadatas.size() > 0){
       	IMetadataTable metadata = metadatas.get(0);
       	if(metadata != null){
+%>
+			com.mongodb.Mongo mongo_<%=cid%>=null;
+			com.mongodb.DB db_<%=cid%>=null;
+<%
       		if (useExistingConnection){
       			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 %>
-				com.mongodb.Mongo mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
-				com.mongodb.DB db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
+				mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
+				db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
 <%
 			}else{
 %>
-				com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
-				com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+			try{
+				mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 <%
 				if (authentication){
 %>
@@ -135,7 +143,6 @@
 <%
 			}
 %>
-				int nb_line_<%=cid %> = 0;
 				while (cursor_<%=cid%>.hasNext()){
 <%
           	columnList = metadata.getListColumns();

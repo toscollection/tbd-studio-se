@@ -3,8 +3,6 @@
 		org.talend.core.model.process.INode 
 		org.talend.core.model.process.ElementParameterParser 
 		org.talend.core.model.metadata.IMetadataTable 
-		org.talend.core.model.metadata.IMetadataColumn 
-		org.talend.core.model.process.IConnection
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		java.util.List
 		java.util.Map
@@ -27,7 +25,9 @@
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     
     List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
-    
+%>
+			int nb_line_<%=cid %> = 0;
+<%
     List<IMetadataTable> metadatas = node.getMetadataList();
   	if(metadatas != null && metadatas.size() > 0){
       	IMetadataTable metadata = metadatas.get(0);
@@ -88,6 +88,8 @@
 			DBObjectUtil_<%=cid%> updateObjectUtil_<%=cid%>=new DBObjectUtil_<%=cid%>();
 			DBObjectUtil_<%=cid%> queryObjectUtil_<%=cid%>=new DBObjectUtil_<%=cid%>();
 			java.util.Map<String, String> pathMap_<%=cid%>=new java.util.HashMap<String, String>();
+			com.mongodb.Mongo mongo_<%=cid%>=null;
+			com.mongodb.DB db_<%=cid%> =null;
 <%
 			for (int i=0;i<mapping.size();i++) {
 				String path = mapping.get(i).get("PARENT_NODE_PATH");
@@ -102,13 +104,14 @@
       		if (useExistingConnection){
       			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 %>
-				com.mongodb.Mongo mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
-				com.mongodb.DB db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
+				mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
+				db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
 <%
 			}else{
 %>
-				com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
-				com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+			try{
+				mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 <%
 				if (authentication){
 %>
@@ -131,4 +134,3 @@
     	}
     }
 %>
-			int nb_line_<%=cid %> = 0;
