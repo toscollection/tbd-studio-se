@@ -58,6 +58,7 @@
 				<ITEM NAME="APACHE_1_0_0" VALUE="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" />
 				<ITEM NAME="APACHE_0_20_204" VALUE="hadoop-core-0.20.204.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" />
 				<ITEM NAME="Cloudera_0.20_CDH3U1" VALUE="hadoop-0.20.2-cdh3u1-core.jar;commons-logging-1.0.4.jar" />
+				<ITEM NAME="Cloudera_CDH4" VALUE="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.15.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar" />
 				<ITEM NAME="APACHE_0_20_2" VALUE="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar" />
 				<ITEM NAME="MapR" VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar" />
 			</ITEMS>
@@ -122,6 +123,16 @@
 			
 			<IMPORT NAME="cloudera-hadoop" MODULE="hadoop-0.20.2-cdh3u1-core.jar" REQUIRED="false" />
 	        <IMPORT NAME="cloudera-commons-logging" MODULE="commons-logging-1.0.4.jar" REQUIRED="false" />
+	        
+         	<IMPORT NAME="hadoop-hdfs-cdh4.0.1" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar" REQUIRED="false" />
+	        <IMPORT NAME="hadoop-common-cdh4.0.1" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" REQUIRED="false" />
+	        <IMPORT NAME="hadoop-auth-cdh4.0.1" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED="false" />
+	        <IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" REQUIRED="false" />
+	        <IMPORT NAME="guava-11.0.2" MODULE="guava-11.0.2.jar" REQUIRED="false" />
+	        <IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED="false" />
+	        <IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" REQUIRED="false" />
+	        <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" />
+	        <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED="false" />
 	        
 	        <IMPORT NAME="apache-hadoop-0-20-2" MODULE="hadoop-0.20.2-core.jar" REQUIRED="false" />
 	        
