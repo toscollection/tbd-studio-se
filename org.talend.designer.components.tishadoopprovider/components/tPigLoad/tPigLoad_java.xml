@@ -175,9 +175,7 @@
 			<IMPORT NAME="hadoop-auth-cdh4.0.1" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="hadoop-common-cdh4.0.1" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="hadoop-hdfs-cdh4.0.1" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="hadoop-mapreduce-client-common-2.0.0-cdh4.0.1" MODULE="hadoop-mapreduce-client-common-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="hadoop-mapreduce-client-core-2.0.0-cdh4.0.1" MODULE="hadoop-mapreduce-client-core-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="hadoop-mapreduce-client-jobclient-2.0.0-cdh4.0.1" MODULE="hadoop-mapreduce-client-jobclient-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="hadoop-mr1-cdh4.0.1" MODULE="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="pig-0.9.2-cdh4.0.1-withouthadoop" MODULE="pig-0.9.2-cdh4.0.1-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
