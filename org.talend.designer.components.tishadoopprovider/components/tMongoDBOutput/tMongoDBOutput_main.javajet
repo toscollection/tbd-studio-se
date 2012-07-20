@@ -49,13 +49,13 @@
 					IMetadataColumn column = columnList.get(i);
 					if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
 %>
-						queryObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getLabel() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+						queryObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
 						countKey_<%=cid%>++;
 <%
 					}
 %>
 					
-      				updateObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getLabel() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+      				updateObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
 <%
   				}
 %>
