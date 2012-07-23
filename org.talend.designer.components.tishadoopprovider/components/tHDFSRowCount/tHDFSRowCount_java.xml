@@ -23,7 +23,7 @@
   	</DOCUMENTATION>
 
   	<CONNECTORS>
-	    <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>
+	    <CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="1"/>
 	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
 	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
 	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
@@ -93,45 +93,29 @@
 	      	<DEFAULT>"supergroup"</DEFAULT>
 	    </PARAMETER>
 		
-	    <PARAMETER
-	      NAME="SCHEMA"
-	      FIELD="SCHEMA_TYPE"
-	      REQUIRED="true"
-	      NUM_ROW="40"
-	    >
-				
-		<TABLE READONLY="true" IF="MD5=='true'">
-	      	<COLUMN NAME="abs_path"     TYPE="id_String"  LENGTH="255" />
-	      	<COLUMN NAME="dirname"      TYPE="id_String"  LENGTH="255" />
-	      	<COLUMN NAME="basename"     TYPE="id_String"  LENGTH="255" />
-	      	<COLUMN NAME="mode_string"  TYPE="id_String"  LENGTH="10" />
-	      	<COLUMN NAME="size"         TYPE="id_Long" 	  LENGTH="20" />
-	      	<COLUMN NAME="mtime"        TYPE="id_Long" 	  LENGTH="20" />
-	      	<COLUMN NAME="mtime_string" TYPE="id_String"  LENGTH="20" />
-			<COLUMN NAME="md5"			TYPE="id_String"  LENGTH="32"/>
-		</TABLE>
-		<TABLE READONLY="true" IF="MD5=='false'">
-	      	<COLUMN NAME="abs_path"     TYPE="id_String"  LENGTH="255" />
-	      	<COLUMN NAME="dirname"      TYPE="id_String"  LENGTH="255" />
-	      	<COLUMN NAME="basename"     TYPE="id_String"  LENGTH="255" />
-	      	<COLUMN NAME="mode_string"  TYPE="id_String"  LENGTH="10" />
-	      	<COLUMN NAME="size"         TYPE="id_Long" 	  LENGTH="20" />
-	      	<COLUMN NAME="mtime"        TYPE="id_Long" 	  LENGTH="20" />
-	      	<COLUMN NAME="mtime_string" TYPE="id_String"  LENGTH="20" />
-			</TABLE>	
-		</PARAMETER>
-		
 		<PARAMETER
 	      NAME="FILENAME"
+	      FIELD="TEXT"
+	      NUM_ROW="40"
+	      REQUIRED="true"
+	    >
+	      <DEFAULT>""</DEFAULT>
+	    </PARAMETER>
+	
+	    <PARAMETER
+	      NAME="ROWSEPARATOR"
 	      FIELD="TEXT"
 	      NUM_ROW="50"
 	      REQUIRED="true"
 	    >
-      		<DEFAULT>""</DEFAULT>
+	      <DEFAULT>"\n"</DEFAULT>
 	    </PARAMETER>
-	    
-	    <PARAMETER NAME="MD5" FIELD="CHECK" REQUIRED="true" NUM_ROW="60">
-			<DEFAULT>false</DEFAULT>
+	    <PARAMETER NAME="IGNORE_EMPTY_ROW" FIELD="CHECK" NUM_ROW="60" REQUIRED="true">
+	      <DEFAULT>false</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="70"
+		  REQUIRED="true">
+		  <DEFAULT>"ISO-8859-15"</DEFAULT>
 		</PARAMETER>
   	</PARAMETERS>
    
@@ -173,9 +157,13 @@
 	        <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED="false" />
 	        <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" />
 	        <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'" />
+	        
+	        <IMPORT NAME="Java_Excel" MODULE="jxl.jar" REQUIRED="true" />
 		</IMPORTS>
    	</CODEGENERATION>
 
-   	<RETURNS/>
+   	<RETURNS>
+  		<RETURN NAME="COUNT" TYPE="id_Integer" AVAILABILITY="FLOW"/>
+  	</RETURNS>
 
 </COMPONENT>
