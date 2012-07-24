@@ -27,6 +27,8 @@
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     String collection = ElementParameterParser.getValue(node,"__COLLECTION__");
     String query = ElementParameterParser.getValue(node,"__QUERY__");
+    query = query.replaceAll("\n","");
+    query = query.replaceAll("\r","");
   	String limit = ElementParameterParser.getValue(node,"__LIMIT__");
   	
   	List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
@@ -135,7 +137,7 @@
         				order=1;
         			}
 %>
-		  		orderBy_<%=cid%>.put("<%=line.get("COLNAME")%>",<%=order%>);
+		  		orderBy_<%=cid%>.put(<%=line.get("COLNAME")%>,<%=order%>);
 <%
 				}
 %>

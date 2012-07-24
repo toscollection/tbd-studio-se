@@ -22,7 +22,7 @@
 <%
 	if (authentication){
 %>
-    db_<%=cid%>.authenticate(<%=dbuser%>, <%=dbpass%>.toCharArray());
+    db_<%=cid%>.authenticate(<%=dbuser%>, new String(<%=dbpass%>).toCharArray());
 <%
 	}
 %>

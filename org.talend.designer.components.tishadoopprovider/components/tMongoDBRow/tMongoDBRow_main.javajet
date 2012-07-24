@@ -23,6 +23,8 @@
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     boolean isExecuteCommand = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__EXECUTE_COMMAND__"));
     String function = ElementParameterParser.getValue(node,"__FUNCTION__");
+    function = function.replaceAll("\n"," ");
+    function = function.replaceAll("\r"," ");
   	String command = ElementParameterParser.getValue(node,"__COMMAND__");
   	List<Map<String, String>> parameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FUNCTION_PARAMETERS__");
   	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
