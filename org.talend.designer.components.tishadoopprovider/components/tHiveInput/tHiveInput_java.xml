@@ -62,6 +62,7 @@
 		<ITEMS DEFAULT="HORTONWORKS">
 			<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
 			<ITEM NAME="APACHE" VALUE="APACHE"/>
+			<ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
 		</ITEMS>
 	</PARAMETER>
 	<PARAMETER NAME="HIVE_VERSION" FIELD="CLOSED_LIST" NUM_ROW="25" REQUIRED="true" GROUP="VERSION" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
@@ -69,6 +70,7 @@
 			<ITEM NAME="HDP_1_0" VALUE="HDP_1_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 			<ITEM NAME="APACHE_0_20_203" VALUE="APACHE_0_20_203" SHOW_IF="DISTRIBUTION=='APACHE'"/>
 			<ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
+			<ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 		</ITEMS>
 	</PARAMETER>
 	<PARAMETER NAME="CONNECTION_MODE" FIELD="CLOSED_LIST" NUM_ROW="26" REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION=='false'">
@@ -299,6 +301,34 @@
 			<IMPORT NAME="datanucleus-rdbms-2.0.3.jar" MODULE="datanucleus-rdbms-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
 			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
 			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0')"/>
+			
+			<IMPORT NAME="hive-exec-0.8.1-cdh4.0.1.jar" MODULE="hive-exec-0.8.1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-jdbc-0.8.1-cdh4.0.1.jar" MODULE="hive-jdbc-0.8.1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-metastore-0.8.1-cdh4.0.1.jar" MODULE="hive-metastore-0.8.1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-service-0.8.1-cdh4.0.1.jar" MODULE="hive-service-0.8.1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libfb303.jar" MODULE="libfb303.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libthrift.jar" MODULE="libthrift.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hadoop-common-2.0.0-cdh4.0.1.jar" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" MODULE="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hadoop-auth-2.0.0-cdh4.0.1.jar" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			
+			<IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="datanucleus-connectionpool-2.0.3.jar" MODULE="datanucleus-connectionpool-2.0.3.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="datanucleus-enhancer-2.0.3.jar" MODULE="datanucleus-enhancer-2.0.3.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="derby-10.4.2.0.jar" MODULE="derby-10.4.2.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="hive-builtins-0.8.1-cdh4.0.1.jar" MODULE="hive-builtins-0.8.1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="datanucleus-core-2.0.3.jar" MODULE="datanucleus-core-2.0.3.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="datanucleus-rdbms-2.0.3.jar" MODULE="datanucleus-rdbms-2.0.3.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
+			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='Cloudera_CDH4'"/>
      	</IMPORTS>
   </CODEGENERATION>
 
