@@ -47,6 +47,7 @@
 			
 			if(count_<%=cid%>!=1) {
 				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail:file not exist or not unique match for current filemask");
+				System.err.println("Info : file not exist or not unique match for current filemask");
 				continue;
 			}
 			
@@ -64,6 +65,7 @@
 		    				nb_file_<%=cid%>++;
 		    			} else {
 		    				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail.");
+		    				System.err.println("Info : File rename fail");
 		    			}
 		    		}
 		    		<%if(overwrite){%>
@@ -85,6 +87,7 @@
 		    				nb_file_<%=cid%>++;
 		    			} else {
 		    				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail.");
+		    				System.err.println("Info : File rename fail");
 		    			}
 		    		}
 		    		<%}%>
