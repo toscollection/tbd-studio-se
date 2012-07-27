@@ -27,15 +27,11 @@
 		String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 		boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 		String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
-		String host = ElementParameterParser.getValue(node, "__HOST__");
-		String port = ElementParameterParser.getValue(node, "__PORT__");
+		String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 		%>
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
-		<%if(hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){%>
-			conf_<%=cid%>.set("fs.default.name", "maprfs://"+<%=host%>+":"+String.valueOf(<%=port%>)+"/");
-		<%}else{%>
-			conf_<%=cid%>.set("fs.default.name", "hdfs://"+<%=host%>+":"+String.valueOf(<%=port%>));
-		<%}
+		conf_<%=cid%>.set("fs.default.name", <%=fsDefaultName%>);
+<%
 		if(!(hadoopVersion.startsWith("hadoop-core-1.0.0.jar") && useKrb)) {
 			user = ElementParameterParser.getValue(node, "__USERNAME__");
 		} else {
