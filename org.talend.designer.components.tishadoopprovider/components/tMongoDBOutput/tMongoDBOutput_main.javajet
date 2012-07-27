@@ -49,7 +49,7 @@
 					IMetadataColumn column = columnList.get(i);
 					if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
 %>
-						queryObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+						queryObjectUtil_<%=cid%>.putkeyNode(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
 						countKey_<%=cid%>++;
 <%
 					}

@@ -75,6 +75,14 @@
 						return basicDBObject;
 					}
 				}
+				
+				public void putkeyNode(String parentNode, String curentName, Object value){
+					if (parentNode == null || "".equals(parentNode)) {
+						put(parentNode, curentName, value);
+					}else{
+						put("", parentNode+"."+curentName, value);
+					}
+				}
 			
 				public com.mongodb.BasicDBObject getObject() {
 					return this.object;
