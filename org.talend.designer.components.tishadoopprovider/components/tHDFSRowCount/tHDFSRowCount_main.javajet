@@ -111,47 +111,13 @@
 	}
 	%>
 	
-	String filename_<%=cid%> = <%=filename%>;
-	int emptyLineCount_<%=cid%> = 0;
-	org.apache.hadoop.fs.Path file_<%=cid%> = new org.apache.hadoop.fs.Path(filename_<%=cid%>);
-	org.apache.hadoop.fs.FSDataInputStream fsdis_<%=cid%> = fs_<%=cid%>.open(file_<%=cid%>);
+	  String filename_<%=cid%> = <%=filename%>;
+	  int emptyLineCount_<%=cid%> = 0;
+	  org.apache.hadoop.fs.Path file_<%=cid%> = new org.apache.hadoop.fs.Path(filename_<%=cid%>);
+	  org.apache.hadoop.fs.FSDataInputStream fsdis_<%=cid%> = fs_<%=cid%>.open(file_<%=cid%>);
 	
-	if (filename_<%=cid%>.toLowerCase().endsWith(".xlsx")) throw new RuntimeException("not support excel 2007");  
-	int lineCount_<%=cid %> = 0;
-	if (filename_<%=cid%>.toLowerCase().endsWith(".xls")){
-	  final jxl.WorkbookSettings wbs_<%=cid%> = new jxl.WorkbookSettings();
-	  wbs_<%=cid%>.setEncoding(<%=encoding%>);
-	  final jxl.Workbook wb_<%=cid%> = jxl.Workbook.getWorkbook(
-	      new java.io.BufferedInputStream(fsdis_<%=cid%>), wbs_<%=cid%>);
-	
-	  java.util.List<jxl.Sheet> sheets_<%=cid%> = new java.util.ArrayList<jxl.Sheet>();;
-	  sheets_<%=cid%> = java.util.Arrays.<jxl.Sheet> asList(wb_<%=cid%>.getSheets());
+	  int lineCount_<%=cid %> = 0;
 	  
-	  if (sheets_<%=cid%>.size() <= 0){
-	    wb_<%=cid%>.close();
-	    throw new RuntimeException("Special sheets not exist!");
-	  } 
-	 
-	  for (jxl.Sheet sheet_<%=cid%> : sheets_<%=cid%>) {
-	    int one_sheet_rows = sheet_<%=cid%>.getRows();
-	    lineCount_<%=cid %> += one_sheet_rows;
-	  
-	    for (int i_<%=cid%> = 0; i_<%=cid%> < one_sheet_rows; i_<%=cid%>++){
-	      jxl.Cell[] sheet_row = sheet_<%=cid%>.getRow(i_<%=cid%>);
-	    
-	      boolean bIsEmptyRow = true;
-	      for (jxl.Cell cell: sheet_row){
-	        if (cell.getContents() != null){
-	          bIsEmptyRow = false;
-	          break;
-	        }
-	      }
-	      emptyLineCount_<%=cid%> += bIsEmptyRow ? 1 : 0;
-	    }
-	  }  
-	  wb_<%=cid%>.close();
-	  
-	} else{
 	  java.io.BufferedReader br_<%=cid %> = new java.io.BufferedReader(new java.io.InputStreamReader(fsdis_<%=cid%>, <%=encoding%>));			
 	  String rowSeparator_<%=cid %> = <%=rowSeparator %>;
 	  byte[] bytes_<%=cid %> = rowSeparator_<%=cid %>.getBytes();
@@ -194,7 +160,6 @@
 	    }          
 	  }
 	  br_<%=cid %>.close();
-	} 
 	<%
   	if (ignoreEmptyRow){
 	%>

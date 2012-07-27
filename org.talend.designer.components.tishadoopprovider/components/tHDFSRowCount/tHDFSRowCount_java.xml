@@ -23,7 +23,7 @@
   	</DOCUMENTATION>
 
   	<CONNECTORS>
-	    <CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="1"/>
+	    <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="0"/>
 	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
 	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
 	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
@@ -159,7 +159,6 @@
 	        <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" />
 	        <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'" />
 	        
-	        <IMPORT NAME="Java_Excel" MODULE="jxl.jar" REQUIRED="true" />
 		</IMPORTS>
    	</CODEGENERATION>
 
