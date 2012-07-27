@@ -54,9 +54,10 @@
 			String parent_<%=cid%> = fromParent_<%=cid%>.toString();
 			String fromFile_<%=cid %> = parent_<%=cid%> + (parent_<%=cid%>.endsWith("/") ? "" : "/") + uniqueName_<%=cid%>;
     		String toFile_<%=cid%> = (<%=remotedir%> + "/" + map_<%=cid %>.get(key_<%=cid %>)).replaceAll("\\\\","/");
+    		org.apache.hadoop.fs.Path toPath_<%=cid%> = new org.apache.hadoop.fs.Path(toFile_<%=cid%>);
+    		toFile_<%=cid%> = toPath_<%=cid%>.toString();
     		if (!fromFile_<%=cid%>.equals(toFile_<%=cid%>)){
     			org.apache.hadoop.fs.Path fromPath_<%=cid%> = new org.apache.hadoop.fs.Path(fromFile_<%=cid%>);
-    			org.apache.hadoop.fs.Path toPath_<%=cid%> = new org.apache.hadoop.fs.Path(toFile_<%=cid%>);
     			try {
 		    		if(!fs_<%=cid%>.exists(toPath_<%=cid%>)) {
 		    			boolean success_<%=cid%> = fs_<%=cid%>.rename(fromPath_<%=cid%>,toPath_<%=cid%>);
