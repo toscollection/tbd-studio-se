@@ -78,32 +78,55 @@
 		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
 		
 		sb_<%=cid%> = new StringBuilder();
-		sb_<%=cid%>.append("<%=cid%>_JOIN_RESULT = JOIN <%=previous_node%>_RESULT BY ");
+		sb_<%=cid%>.append("<%=cid%>_JOIN_RESULT = JOIN <%=previous_node%>_RESULT BY (");
 <%
-		for(Map<String, String> line : joinKeyColumns){
+		for(int i=0;i<joinKeyColumns.size();i++){
+			Map<String, String> line = joinKeyColumns.get(i);
 %>
 			sb_<%=cid%>.append("<%=line.get("INPUT_COLUMN")%>");
 <%
-			if("left-outer-join".equals(joinMode)) {
+			if(i!=joinKeyColumns.size()-1){
 %>
-				sb_<%=cid%>.append(" LEFT");
+			sb_<%=cid%>.append(",");
 <%
 			}
-			if("right-outer-join".equals(joinMode)) {
+		}
 %>
-				sb_<%=cid%>.append(" RIGHT");
+		sb_<%=cid%>.append(")");
 <%
-			}
-			if("full-outer-join".equals(joinMode)) {
+		if("left-outer-join".equals(joinMode)) {
 %>
-				sb_<%=cid%>.append(" FULL");
-<%
-			}
-%>
-			sb_<%=cid%>.append(", <%=cid%>_LOOKUP BY " + "<%=line.get("LOOKUP_COLUMN")%>");
+			sb_<%=cid%>.append(" LEFT");
 <%
 		}
+		if("right-outer-join".equals(joinMode)) {
+%>
+			sb_<%=cid%>.append(" RIGHT");
+<%
+		}
+		if("full-outer-join".equals(joinMode)) {
+%>
+			sb_<%=cid%>.append(" FULL");
+<%
+		}
+%>
+		sb_<%=cid%>.append(", <%=cid%>_LOOKUP BY (");
+<%
+		for(int i=0;i<joinKeyColumns.size();i++){
+			Map<String, String> line = joinKeyColumns.get(i);
+%>
+			sb_<%=cid%>.append("<%=line.get("LOOKUP_COLUMN")%>");
+<%
+			if(i!=joinKeyColumns.size()-1){
+%>
+			sb_<%=cid%>.append(",");
+<%
+			}
+		}
 		
+%>
+		sb_<%=cid%>.append(")");
+<%
 		if(optimize) {
 %>
 			sb_<%=cid%>.append(" USING '<%=using%>'");
