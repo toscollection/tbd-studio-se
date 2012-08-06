@@ -41,8 +41,63 @@
 	List<? extends IConnection> outConns = node.getOutgoingConnections(EConnectionType.FLOW_MAIN);
 	IConnection outConn = null;
 	IMetadataTable metadata = null;
+	
+	boolean useKerberos = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	String krb_realm = ElementParameterParser.getValue(node, "__KRB_REALM__");
+	String krb_princ = ElementParameterParser.getValue(node, "__KRB_PRINC__");
+	String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+	
+	if(useKerberos) {
+%>
+		class KerberosPolicyConfig_<%=cid%> extends javax.security.auth.login.Configuration {
+			private java.util.Map<String, String> properties;
+
+			public KerberosPolicyConfig_<%=cid%>() {
+				properties = java.util.Collections
+						.<String, String> emptyMap();
+			}
+
+			public KerberosPolicyConfig_<%=cid%>(
+					java.util.Map<String, String> properties) {
+				this.properties = properties;
+			}
+
+			public javax.security.auth.login.AppConfigurationEntry[] getAppConfigurationEntry(
+					String name) {
+				return new javax.security.auth.login.AppConfigurationEntry[] { new javax.security.auth.login.AppConfigurationEntry(
+						com.sun.security.auth.module.Krb5LoginModule.class
+								.getName(),
+						javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,
+						properties) };
+			}
+		}
+
+		org.apache.cxf.jaxrs.security.KerberosAuthOutInterceptor kbInterceptor_<%=cid%> = new org.apache.cxf.jaxrs.security.KerberosAuthOutInterceptor();
+
+		org.apache.cxf.configuration.security.AuthorizationPolicy policy_<%=cid%> = new org.apache.cxf.configuration.security.AuthorizationPolicy();
+		policy_<%=cid%>.setAuthorizationType(org.apache.cxf.transport.http.auth.HttpAuthHeader.AUTH_TYPE_NEGOTIATE);
+
+		kbInterceptor_<%=cid%>.setPolicy(policy_<%=cid%>);
+		java.util.Map<String, String> properties_<%=cid%> = new java.util.HashMap<String, String>();
+		kbInterceptor_<%=cid%>.setServicePrincipalName(<%=krb_princ%>);
+		kbInterceptor_<%=cid%>.setRealm(<%=krb_realm%>);
+		properties_<%=cid%>.put("useTicketCache", "true");
+		properties_<%=cid%>.put("refreshKrb5Config", "true");
+		properties_<%=cid%>.put("renewTGT", "true");
+		kbInterceptor_<%=cid%>.setLoginConfig(new KerberosPolicyConfig_<%=cid%>(properties_<%=cid%>));
+<%
+	}	
 %>	
 	org.apache.cxf.jaxrs.client.WebClient client_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templetonHost%> + ":" + <%=templetonPort%> + "?user.name=" + <%=user%>);
+
+<%
+	if(useKerberos) {
+%>
+		org.apache.cxf.jaxrs.client.WebClient.getConfig(client_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
+<%
+	}
+%>
+	
 	String pathEndpoint_<%=cid%> = "templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%> + "/partition/" + <%=partition%>;
 	String location_<%=cid%> = "";
 	<%@ include file="../templates/HCatalog/RestResponse.javajet"%>
@@ -117,6 +172,15 @@
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 		conf_<%=cid%>.set("fs.default.name", namenode_<%=cid%>);
 <%
+		if(useKerberos) {
+%>
+			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+		} else {
+%>
+			username_<%=cid%> = <%=user%>;
+<%
+		}
 		if(hadoopProps.size() > 0){
 			for(Map<String, String> item : hadoopProps){
 %>
@@ -125,7 +189,6 @@
 			} 
 		}
 %>
-		username_<%=cid%> = <%=user%>;
 		if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
 			fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 		}else{

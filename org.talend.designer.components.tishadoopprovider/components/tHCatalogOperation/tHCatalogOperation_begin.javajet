@@ -63,6 +63,10 @@
 	
 	List<Map<String, String>> templetonProperties = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__TEMPLETON_PROPERTIES__");
 	
+	boolean useKerberos = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	String krb_realm = ElementParameterParser.getValue(node, "__KRB_REALM__");
+	String krb_princ = ElementParameterParser.getValue(node, "__KRB_PRINC__");
+	
 	boolean drop=false;
 	boolean dropIfExist=false;
 	boolean create=false;
@@ -92,7 +96,48 @@
 	try {
 <%
 		parserResult.declareVariable(node);
-%>		
+		if(useKerberos) {
+%>
+			class KerberosPolicyConfig_<%=cid%> extends javax.security.auth.login.Configuration {
+				private java.util.Map<String, String> properties;
+
+				public KerberosPolicyConfig_<%=cid%>() {
+					properties = java.util.Collections
+							.<String, String> emptyMap();
+				}
+
+				public KerberosPolicyConfig_<%=cid%>(
+						java.util.Map<String, String> properties) {
+					this.properties = properties;
+				}
+
+				public javax.security.auth.login.AppConfigurationEntry[] getAppConfigurationEntry(
+						String name) {
+					return new javax.security.auth.login.AppConfigurationEntry[] { new javax.security.auth.login.AppConfigurationEntry(
+							com.sun.security.auth.module.Krb5LoginModule.class
+									.getName(),
+							javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag.REQUIRED,
+							properties) };
+				}
+			}
+
+			org.apache.cxf.jaxrs.security.KerberosAuthOutInterceptor kbInterceptor_<%=cid%> = new org.apache.cxf.jaxrs.security.KerberosAuthOutInterceptor();
+
+			org.apache.cxf.configuration.security.AuthorizationPolicy policy_<%=cid%> = new org.apache.cxf.configuration.security.AuthorizationPolicy();
+			policy_<%=cid%>.setAuthorizationType(org.apache.cxf.transport.http.auth.HttpAuthHeader.AUTH_TYPE_NEGOTIATE);
+
+			kbInterceptor_<%=cid%>.setPolicy(policy_<%=cid%>);
+			java.util.Map<String, String> properties_<%=cid%> = new java.util.HashMap<String, String>();
+			kbInterceptor_<%=cid%>.setServicePrincipalName(<%=krb_princ%>);
+			kbInterceptor_<%=cid%>.setRealm(<%=krb_realm%>);
+			properties_<%=cid%>.put("useTicketCache", "true");
+			properties_<%=cid%>.put("refreshKrb5Config", "true");
+			properties_<%=cid%>.put("renewTGT", "true");
+			kbInterceptor_<%=cid%>.setLoginConfig(new KerberosPolicyConfig_<%=cid%>(properties_<%=cid%>));
+<%
+		}
+%>
+
 <%
 		if("OP_DATABASE".equals(operationOn)) {
 		
@@ -114,6 +159,15 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_drop_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
+				
+<%
+				if(useKerberos) {
+%>
+					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_drop_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
+<%
+				}
+%>
+				
 				client_drop_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%>);
 				client_drop_<%=cid%>.accept("application/json");
 		
@@ -145,6 +199,15 @@
 				jsonRow_<%=cid%>.put("comment", <%=dbDescription%>);
 				jsonRow_<%=cid%>.put("location", <%=dbLocation%>);
 				org.apache.cxf.jaxrs.client.WebClient client_create_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
+									
+<%
+				if(useKerberos) {
+%>
+					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_create_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
+<%
+				}
+%>
+				
 				client_create_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%>);
 				client_create_<%=cid%>.type("application/json").accept("application/json");
 				
@@ -175,6 +238,15 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_drop_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
+
+<%
+				if(useKerberos) {
+%>
+					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_drop_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
+<%
+				}
+%>
+				
 				client_drop_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%>);
 				client_drop_<%=cid%>.accept("application/json");
 				
@@ -301,6 +373,15 @@
 %>
 				
 				org.apache.cxf.jaxrs.client.WebClient client_create_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
+
+<%
+				if(useKerberos) {
+%>
+					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_create_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
+<%
+				}
+%>
+				
 				client_create_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%>);
 				client_create_<%=cid%>.type("application/json").accept("application/json");
 				
@@ -330,6 +411,15 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_drop_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
+
+<%
+				if(useKerberos) {
+%>
+					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_drop_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
+<%
+				}
+%>				
+
 				client_drop_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%> +"/table/" + <%=table%> + "/partition/" + <%=partition%>);
 				client_drop_<%=cid%>.accept("application/json");
 				
@@ -351,6 +441,15 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_create_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
+				
+<%
+				if(useKerberos) {
+%>
+					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_create_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
+<%
+				}
+%>
+				
 				client_create_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%>+"/table/" + <%=table%> + "/partition/" + <%=partition%>);
 				client_create_<%=cid%>.type("application/json").accept("application/json");
 				
