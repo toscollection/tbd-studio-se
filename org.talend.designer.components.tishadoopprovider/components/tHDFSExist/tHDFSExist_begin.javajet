@@ -73,7 +73,7 @@
 		%>
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("conn_<%=connectionSid%>");
 		<%
-		List<? extends INode> nodes = node.getProcess().getGraphicalNodes();
+		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
 	    for(INode targetNode : nodes){
 	    	if (targetNode.getUniqueName().equals(connectionSid)) {
 		      	String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
