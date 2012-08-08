@@ -19,15 +19,12 @@
 
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	DbMapComponent node = (DbMapComponent) codeGenArgument.getArgument();
-	boolean stats = codeGenArgument.isStatistics(); 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
     org.talend.designer.dbmap.language.generation.GenericDbGenerationManager gm = new org.talend.designer.dbmap.language.generation.GenericDbGenerationManager();
     String uniqueNameComponent = null;
-    IDbLanguage currentLanguage = gm.getLanguage();
 
-    List<IConnection> connections = (List<IConnection>) node.getIncomingConnections();
     List<IConnection> outputConnections = (List<IConnection>) node.getOutgoingConnections();
     ExternalDbMapData data = (ExternalDbMapData) node.getExternalData();
     uniqueNameComponent = node.getUniqueName();
