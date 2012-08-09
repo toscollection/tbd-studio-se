@@ -77,7 +77,7 @@
 				}
 				
 				public void putkeyNode(String parentNode, String curentName, Object value){
-					if (parentNode == null || "".equals(parentNode)) {
+					if (parentNode == null || "".equals(parentNode) || ".".equals(parentNode)) {
 						put(parentNode, curentName, value);
 					}else{
 						put("", parentNode+"."+curentName, value);

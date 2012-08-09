@@ -141,7 +141,7 @@
 			FIELD="TABLE" 
 			REQUIRED="false"
 			NUM_ROW="40" 
-			NB_LINES="2"
+			NB_LINES="5"
 		>
 			<ITEMS>
 				<ITEM NAME="COLNAME" FIELD="TEXT" VALUE=""/>

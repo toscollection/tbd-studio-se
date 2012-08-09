@@ -79,22 +79,25 @@
 <%
 					}
 %>
-					}
-					com.mongodb.BasicDBObject queryObj_<%=cid%> = queryObjectUtil_<%=cid%>.getObject();
+					}else{
+						com.mongodb.BasicDBObject queryObj_<%=cid%> = queryObjectUtil_<%=cid%>.getObject();
 <%
 					if("UPDATE".equalsIgnoreCase(dataAction)){	
 %>	
-					resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,updateObj_<%=cid%>);
+						resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,updateObj_<%=cid%>);
 <%
 					}else if("UPSERT".equalsIgnoreCase(dataAction)){
 %>	
-					resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,updateObj_<%=cid%>,true,false);
+						resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,updateObj_<%=cid%>,true,false);
 <%
 					}else if("DELETE".equalsIgnoreCase(dataAction)){
 %>	
-					resultMessage_<%=cid%>=coll_<%=cid%>.remove(queryObj_<%=cid%>);
+						resultMessage_<%=cid%>=coll_<%=cid%>.remove(queryObj_<%=cid%>);
 <%
 					}
+%>
+					}
+<%
 				}
 %>	
 				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
