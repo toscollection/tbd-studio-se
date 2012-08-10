@@ -181,6 +181,7 @@
 			<IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			
 			<IMPORT NAME="automaton" MODULE="automaton.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
 			<IMPORT NAME="pig-0.9.0-core" MODULE="pig-0.9.0-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
