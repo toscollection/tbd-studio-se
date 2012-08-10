@@ -306,7 +306,7 @@
 			<IMPORT NAME="hive-jdbc-0.8.1-cdh4.0.1.jar" MODULE="hive-jdbc-0.8.1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-metastore-0.8.1-cdh4.0.1.jar" MODULE="hive-metastore-0.8.1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-service-0.8.1-cdh4.0.1.jar" MODULE="hive-service-0.8.1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="libfb303.jar" MODULE="libfb303.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libfb303_new.jar" MODULE="libfb303_new.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="libthrift.jar" MODULE="libthrift.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
