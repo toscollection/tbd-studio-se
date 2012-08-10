@@ -41,6 +41,11 @@
 	String where = ElementParameterParser.getValue(node,"__WHERE__");
 	where = where.substring(1, where.length()-1);
 	where = "\"\\\""+where+"\\\"\"";
+	
+	boolean useQuery = "true".equals(ElementParameterParser.getValue(node,"__USE_QUERY__"));
+	String query = ElementParameterParser.getValue(node,"__QUERY__");
+	query = query.replaceAll("\n"," ");
+	query = query.replaceAll("\r"," ");
 %>
 
 <%
@@ -64,9 +69,12 @@ sColumns += "\\\"";
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
 
-String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", <%=password%>
-<%if(useColumns){%>, "--columns", "<%=sColumns%>"<%}%>
-<%if(useWhere){%>, "--where", <%=where%><%}%>
+String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "--connect", <%=connection%>, "--username", <%=username%>, "--password", <%=password%>
+<%if(useQuery){%>, "--query", <%=query%><%} else {%>
+	, "--table", <%=table%>
+    <%if(useColumns){%>, "--columns", "<%=sColumns%>"<%}%>
+    <%if(useWhere){%>, "--where", <%=where%><%}%>
+<%}%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
 <%if(append){%>, "--append"<%}%>
 <%if(direct){%>, "--direct"<%}%>
