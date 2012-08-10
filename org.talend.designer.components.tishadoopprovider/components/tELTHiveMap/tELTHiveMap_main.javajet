@@ -54,7 +54,7 @@
 
 			globalMap.put(
 				"<%=uniqueNameComponent %>"+"QUERY" + "<%= connection.getUniqueName() %>",
-				<%= sqlQuery.replaceAll("[\r\n]", " ") %>
+				<%= sqlQuery.replaceAll("INNER JOIN","JOIN").replaceAll("[\r\n]", " ") %>
 			);
 			globalMap.put(
 					"<%=uniqueNameComponent %>"+"QUERY_COLUMNS_NAME" + "<%= connection.getUniqueName() %>",
