@@ -49,6 +49,19 @@
 	</PARAMETERS>
 
 	<ADVANCED_PARAMETERS>
+		<PARAMETER NAME="TABLE_IS_PARTITION" FIELD="CHECK" NUM_ROW="10">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="FIELD_PARTITION" FIELD="TABLE" REQUIRED="true"
+                NUM_ROW="20" NB_LINES="5" SHOW_IF="TABLE_IS_PARTITION =='true'">
+                <ITEMS>
+                    <ITEM NAME="COLUMN_NAME" VALUE="" />
+                    <ITEM NAME="COLUMN_VALUE" VALUE="" />
+                </ITEMS>
+        </PARAMETER>
+        
+        
 	</ADVANCED_PARAMETERS>
 
 	<CODEGENERATION>
