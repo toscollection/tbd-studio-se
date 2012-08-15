@@ -6,7 +6,6 @@
 	org.talend.core.model.process.IConnection
 	org.talend.designer.dbmap.external.data.ExternalDbMapData
 	org.talend.designer.dbmap.external.data.ExternalDbMapTable
-	org.talend.designer.dbmap.language.IDbLanguage
 	org.talend.designer.dbmap.DbMapComponent
 	java.util.HashMap
 	java.util.Map
@@ -22,7 +21,7 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-    org.talend.designer.dbmap.language.generation.GenericDbGenerationManager gm = new org.talend.designer.dbmap.language.generation.GenericDbGenerationManager();
+    org.talend.designer.dbmap.language.hive.HiveGenerationManager gm = new org.talend.designer.dbmap.language.hive.HiveGenerationManager();
     String uniqueNameComponent = null;
 
     List<IConnection> outputConnections = (List<IConnection>) node.getOutgoingConnections();
@@ -54,7 +53,7 @@
 
 			globalMap.put(
 				"<%=uniqueNameComponent %>"+"QUERY" + "<%= connection.getUniqueName() %>",
-				<%= sqlQuery.replaceAll("INNER JOIN","JOIN").replaceAll("[\r\n]", " ") %>
+				<%= sqlQuery.replaceAll("[\r\n]", " ") %>
 			);
 			globalMap.put(
 					"<%=uniqueNameComponent %>"+"QUERY_COLUMNS_NAME" + "<%= connection.getUniqueName() %>",
