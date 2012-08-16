@@ -23,7 +23,7 @@ imports="
 	INode previousNode = null;
 
 	%>
-	String select_query = null;	
+	String select_query_<%=cid %> = null;	
 	String tableName_<%=cid%> = null;
 	<%
 	List<IConnection> connections = (List<IConnection>) node.getIncomingConnections();
@@ -35,7 +35,7 @@ imports="
 		uniqueNameConnection = connection.getUniqueName();
 		
 		%>
-		select_query = (String) globalMap.get("<%=previousComponentName%>"+"QUERY"+"<%=uniqueNameConnection%>");
+		select_query_<%=cid %> = (String) globalMap.get("<%=previousComponentName%>"+"QUERY"+"<%=uniqueNameConnection%>");
 		
 		<%
 	}
@@ -44,29 +44,24 @@ imports="
 		tableName_<%=cid%> = <%="\""+dbtable +"\""%>;
 	<%
 	
-	String tableName = ElementParameterParser.getValue(node,"__TABLE__");
-	
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
 
-	boolean tableIsPartition = ("true").equals(ElementParameterParser.getValue(node, "__TABLE_IS_PARTITION__"));
 	List<Map<String, String>> fieldPartitions = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FIELD_PARTITION__");
-	
-        String dbhost = null;
-        String dbport = null;
-        String dbname = null;
-        String dbuser = null;
-        String dbpwd = null;
-	    boolean useExistingConn = false;
-        if(previousNode != null) {
-	        dbhost = ElementParameterParser.getValue(previousNode, "__HOST__");
-	        dbport = ElementParameterParser.getValue(previousNode, "__PORT__");
-	        dbname = ElementParameterParser.getValue(previousNode, "__DBNAME__");
-	        dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
-	        dbpwd = ElementParameterParser.getValue(previousNode, "__PASS__");
-	    	useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
-        }
 
-
+    String dbhost = null;
+    String dbport = null;
+    String dbname = null;
+    String dbuser = null;
+    String dbpwd = null;
+    boolean useExistingConn = false;
+    if(previousNode != null) {
+        dbhost = ElementParameterParser.getValue(previousNode, "__HOST__");
+        dbport = ElementParameterParser.getValue(previousNode, "__PORT__");
+        dbname = ElementParameterParser.getValue(previousNode, "__DBNAME__");
+        dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
+        dbpwd = ElementParameterParser.getValue(previousNode, "__PASS__");
+    	useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
+    }
 %>
 
 java.sql.Connection conn_<%=cid%> = null;
@@ -129,18 +124,19 @@ java.sql.PreparedStatement pstmt_<%=cid %> =null;
 	String startPartition = " PARTITION(";
 	String endPartition = ")";
 	String bodyPartition = "";
-	if(tableIsPartition){
-		String columnName = null;
-		String columnValue = null;
-		int count = 1;
-		for(Map<String, String> line:fieldPartitions){// search in the configuration table
-			columnName = line.get("COLUMN_NAME");
-			columnValue = line.get("COLUMN_VALUE");	
-			bodyPartition = bodyPartition + columnName;
-			if(columnValue!=null && !"".equals(columnValue)){
-				bodyPartition = bodyPartition + "=";
-				bodyPartition = bodyPartition + columnValue;
+	if(fieldPartitions != null) {
+		String columnName = "";
+		String columnValue = "";
+		for(Map<String, String> line : fieldPartitions ) {// search in the configuration table
+			if (line.get("COLUMN_NAME") != null) {
+				columnName = line.get("COLUMN_NAME");
 			}
+			if (line.get("COLUMN_VALUE") != null) {
+				columnValue = line.get("COLUMN_VALUE");
+			}
+			bodyPartition = bodyPartition + columnName;
+			bodyPartition = bodyPartition + "=";
+			bodyPartition = bodyPartition + columnValue;
 			bodyPartition = bodyPartition + ",";
 		}
         if(bodyPartition!=null && !"".equals(bodyPartition)){
@@ -155,18 +151,17 @@ java.sql.PreparedStatement pstmt_<%=cid %> =null;
 if(columnList != null && columnList.size()>0){
 	if(("INSERT").equals(dataAction)){
 %>	
-	String insertQuery = "INSERT INTO TABLE "+tableName_<%=cid%> + <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query;
-	pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement(insertQuery);
+	String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query_<%=cid %>;
+	pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement(insertQuery_<%=cid %>);
 <%
 	}else if (("OVERWRITE").equals(dataAction)){
 %>
-	String overwriteQuery = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query;
-	pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement(overwriteQuery);
+	String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query_<%=cid %>;
+	pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement(overwriteQuery_<%=cid %>);
 
 <%
-}
+	}
 %>
-int nb_line_<%=cid%> = 0;
 int nb_line_overwrite_<%=cid%> = 0;
 int nb_line_inserted_<%=cid%> = 0;
 <%
@@ -183,44 +178,24 @@ int nb_line_inserted_<%=cid%> = 0;
 		IConnection conn = conns.get(0);
 		incomingConnName = conn.getName();
 	}
-	
-	metadatas = node.getMetadataList();
-	
-	if(metadatas != null && metadatas.size()>0){
-		IMetadataTable metadata = metadatas.get(0);
-		if(metadata != null){
-			columnList = metadata.getListColumns();
-		}
-	}
 
 if(incomingConnName != null && columnList != null){
 	if(("INSERT").equals(dataAction)){
 	%>
 
-System.out.println("Inserting with : \n" + insertQuery + "\n");
+System.out.println("Inserting with : \n" + insertQuery_<%=cid %> + "\n");
 nb_line_inserted_<%=cid%> = pstmt_<%=cid %>.executeUpdate();
 System.out.println("--> " + nb_line_inserted_<%=cid%> + " rows inserted. \n");
 
 	<%
 	}else if(("OVERWRITE").equals(dataAction)){
-
 	%>
-System.out.println("Overwriting with : \n" + overwriteQuery +"\n");
+System.out.println("Overwriting with : \n" + overwriteQuery_<%=cid %> +"\n");
 nb_line_overwrite_<%=cid%> = pstmt_<%=cid %>.executeUpdate();
 	System.out.println("--> " + nb_line_overwrite_<%=cid%> + " rows overwrited. \n");
 	<%
 	}
 }
-
-
-
-
-
-
-
-
-
-
 
 
 // END
@@ -239,6 +214,5 @@ if(!useExistingConn) {
 }
 %>
 
-globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
 globalMap.put("<%=cid %>_NB_LINE_OVERWRITE",nb_line_overwrite_<%=cid%>);
 globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
