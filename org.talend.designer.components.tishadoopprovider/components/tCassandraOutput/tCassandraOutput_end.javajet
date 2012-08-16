@@ -10,14 +10,28 @@
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    boolean dieOnError = ("true").equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 %>
 		if (batchCounter_<%=cid%> != 0) {
 			mutator_<%=cid%>.execute();
 		}
+	}catch (Exception e_<%=cid%>){
+<%
+	if(dieOnError) {
+%>
+        throw(e_<%=cid%>);
+<%
+	}else {
+%>
+		System.err.println(e_<%=cid%>.getMessage());
+<%
+	}
+%>    
+	}
 <%
 	if (!useExistingConnection){
 %>
-	}finally{
+	finally{
 		if(cluster_<%=cid%>!=null){
 			cluster_<%=cid%>.getConnectionManager().shutdown();
 		}

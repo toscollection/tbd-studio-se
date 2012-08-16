@@ -54,7 +54,6 @@
       			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 %>
 		cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
-		keyspace_<%=cid%> = (me.prettyprint.hector.api.Keyspace) globalMap.get("keyspace_<%=connection%>");
 <%
 			}else{
 %>

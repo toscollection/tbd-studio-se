@@ -22,9 +22,7 @@
     String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
     boolean incKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_KEY__"));
     String actionOnData = ElementParameterParser.getValue(node,"__ACTION_ON_DATA__");
-%>
-	String key_<%=cid%>;
-<%    
+	
 	if (node.getIncomingConnections() != null) {
 		Map<JavaType,String> typeMap=new java.util.HashMap<JavaType,String>();
 		typeMap.put(JavaTypesManager.BOOLEAN,"BooleanSerializer");
@@ -43,7 +41,7 @@
 			if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 				IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
 %>
-			key_<%=cid%> = <%=conName%>.<%=keyColumn%> != null ? <%=conName%>.<%=keyColumn%>.toString() : null;
+			String key_<%=cid%> = <%=conName%>.<%=keyColumn%> != null ? <%=conName%>.<%=keyColumn%>.toString() : null;
 			if (key_<%=cid%> != null) {
 <%
     			for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
@@ -53,14 +51,15 @@
 %>
 							mutator_<%=cid%>.addInsertion(key_<%=cid%>, <%=columnFamily%>,
 								me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
-									me.prettyprint.cassandra.serializers.StringSerializer.get(),me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get()));
+									servializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get()));
 <%
              			}
-             		}if("DELETE".equals(actionOnData)){
-%>
-						mutator_<%=cid%>.addDeletion(key_<%=cid%>, <%=columnFamily%>);
-<%             		
              		}
+           		}
+           		if("DELETE".equals(actionOnData)){
+%>
+				mutator_<%=cid%>.addDeletion(key_<%=cid%>, <%=columnFamily%>);				
+<%
            		}
 %>
            }
