@@ -41,7 +41,7 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		
-		<PARAMETER NAME="FIELD_PARTITION" FIELD="TABLE" REQUIRED="true"
+		<PARAMETER NAME="FIELD_PARTITION" FIELD="TABLE"
                 NUM_ROW="20" NB_LINES="5" >
                 <ITEMS>
                     <ITEM NAME="COLUMN_NAME" VALUE="" />

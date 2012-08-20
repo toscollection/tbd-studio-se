@@ -117,7 +117,7 @@ if(metadatas !=null && metadatas.size()>0){
 }
 %>
 
-java.sql.PreparedStatement pstmt_<%=cid %> =null;
+java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 
 <%
 	StringBuffer partitionSql = new StringBuffer();
@@ -125,23 +125,24 @@ java.sql.PreparedStatement pstmt_<%=cid %> =null;
 	String endPartition = ")";
 	String bodyPartition = "";
 	if(fieldPartitions != null) {
-		String columnName = "";
-		String columnValue = "";
+		String columnName = null;
+		String columnValue = null;
+		int count = 0 ;
 		for(Map<String, String> line : fieldPartitions ) {// search in the configuration table
-			if (line.get("COLUMN_NAME") != null) {
-				columnName = line.get("COLUMN_NAME");
-			}
-			if (line.get("COLUMN_VALUE") != null) {
-				columnValue = line.get("COLUMN_VALUE");
-			}
-			bodyPartition = bodyPartition + columnName;
-			bodyPartition = bodyPartition + "=";
-			bodyPartition = bodyPartition + columnValue;
-			bodyPartition = bodyPartition + ",";
+		     columnName = line.get("COLUMN_NAME");
+		     columnValue = line.get("COLUMN_VALUE");  
+			if (columnName!=null && !"".equals(columnName)) {
+			    count++;
+    			bodyPartition = bodyPartition + columnName;
+    			if (columnValue!=null && !"".equals(columnValue)) {
+    			    bodyPartition = bodyPartition + "=";
+    			    bodyPartition = bodyPartition + columnValue;
+    			}
+    			if(count < fieldPartitions.size()){
+			        bodyPartition = bodyPartition + ",";
+			    }
+    		}
 		}
-        if(bodyPartition!=null && !"".equals(bodyPartition)){
-            bodyPartition = bodyPartition.substring(0,bodyPartition.length()-1);
-        }
 	}
 	partitionSql.append(startPartition).append(bodyPartition).append(endPartition);
 %>
@@ -152,12 +153,12 @@ if(columnList != null && columnList.size()>0){
 	if(("INSERT").equals(dataAction)){
 %>	
 	String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query_<%=cid %>;
-	pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement(insertQuery_<%=cid %>);
+	stmt_<%=cid %>.execute(insertQuery_<%=cid %>);
 <%
 	}else if (("OVERWRITE").equals(dataAction)){
 %>
 	String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query_<%=cid %>;
-	pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement(overwriteQuery_<%=cid %>);
+	stmt_<%=cid %>.execute(overwriteQuery_<%=cid %>);
 
 <%
 	}
@@ -184,14 +185,14 @@ if(incomingConnName != null && columnList != null){
 	%>
 
 System.out.println("Inserting with : \n" + insertQuery_<%=cid %> + "\n");
-nb_line_inserted_<%=cid%> = pstmt_<%=cid %>.executeUpdate();
+nb_line_inserted_<%=cid%> = stmt_<%=cid %>.executeUpdate();
 System.out.println("--> " + nb_line_inserted_<%=cid%> + " rows inserted. \n");
 
 	<%
 	}else if(("OVERWRITE").equals(dataAction)){
 	%>
 System.out.println("Overwriting with : \n" + overwriteQuery_<%=cid %> +"\n");
-nb_line_overwrite_<%=cid%> = pstmt_<%=cid %>.executeUpdate();
+nb_line_overwrite_<%=cid%> = stmt_<%=cid %>.executeUpdate();
 	System.out.println("--> " + nb_line_overwrite_<%=cid%> + " rows overwrited. \n");
 	<%
 	}
@@ -201,8 +202,7 @@ nb_line_overwrite_<%=cid%> = pstmt_<%=cid %>.executeUpdate();
 // END
 
 %>
-
-pstmt_<%=cid %>.close();
+stmt_<%=cid %>.close();
 
 <%
 if(!useExistingConn) {
