@@ -1,0 +1,449 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2012 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package org.talend.repository.hdfs.ui.metadata;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.talend.commons.exception.PersistenceException;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.utils.data.text.IndiceHelper;
+import org.talend.commons.utils.encoding.CharsetToolkit;
+import org.talend.core.ICoreService;
+import org.talend.core.language.ECodeLanguage;
+import org.talend.core.language.LanguageManager;
+import org.talend.core.model.general.Project;
+import org.talend.core.model.metadata.MetadataTalendType;
+import org.talend.core.model.metadata.MetadataToolHelper;
+import org.talend.core.model.metadata.builder.connection.ConnectionFactory;
+import org.talend.core.model.metadata.builder.connection.MetadataColumn;
+import org.talend.core.model.metadata.builder.connection.MetadataTable;
+import org.talend.core.model.metadata.types.JavaDataTypeHelper;
+import org.talend.core.model.metadata.types.JavaTypesManager;
+import org.talend.core.model.metadata.types.PerlDataTypeHelper;
+import org.talend.core.model.metadata.types.PerlTypesManager;
+import org.talend.core.prefs.ui.MetadataTypeLengthConstants;
+import org.talend.core.repository.model.ResourceModelUtils;
+import org.talend.core.runtime.CoreRuntimePlugin;
+import org.talend.core.utils.CsvArray;
+import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
+import org.talend.designer.hdfsbrowse.model.HDFSFile;
+import org.talend.designer.hdfsbrowse.model.IHDFSNode;
+import org.talend.repository.ProjectManager;
+import org.talend.repository.hdfs.model.EHDFSFieldSeparator;
+import org.talend.repository.hdfs.model.EHDFSRowSeparator;
+import org.talend.repository.hdfs.server.HadoopServerManager;
+import org.talend.repository.hdfs.util.HDFSConstants;
+import org.talend.repository.model.hdfs.HDFSConnection;
+import org.talend.repository.preview.ProcessDescription;
+import org.talend.repository.ui.swt.preview.ShadowProcessPreview;
+import org.talend.repository.ui.utils.ShadowProcessHelper;
+
+/**
+ * DOC ycbai class global comment. Detailled comment
+ */
+public class ExtractMetaDataFromHDFS {
+
+    public final static String DEFAULT_FIELD_SEPARATOR = EHDFSFieldSeparator.SEMICOLON.getName();
+
+    public final static String DEFAULT_ROW_SEPARATOR = EHDFSRowSeparator.BR.getName();
+
+    public final static String DEFAULT_ROW_SEPARATOR_MAC = EHDFSRowSeparator.BR_MAC.getName();
+
+    private final static int DEFAULT_READ_LINE_NUM = 50;
+
+    private final static String DEFAULT_SHADOW_TYPE = "FILE_DELIMITED"; //$NON-NLS-1$
+
+    private final static String DEFAULT_FILE_SERVER = "Localhost 127.0.0.1"; //$NON-NLS-1$
+
+    private static final String DEFAULT_COLUMN_LABEL = "Column"; //$NON-NLS-1$
+
+    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node) throws IOException,
+            CoreException {
+        List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
+        if (connection == null || node == null || node.getType() != EHadoopFileTypes.FILE) {
+            return columns;
+        }
+
+        HDFSFile file = (HDFSFile) node;
+        InputStream inputStream = file.open();
+
+        return extractColumns(connection, inputStream, file.getTable().getName());
+    }
+
+    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, MetadataTable metadataTable)
+            throws CoreException, IOException, InterruptedException, URISyntaxException {
+        List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
+        if (connection == null || metadataTable == null) {
+            return columns;
+        }
+        EMap<String, String> additionalProperties = metadataTable.getAdditionalProperties();
+        String hdfsPath = additionalProperties.get(HDFSConstants.HDFS_PATH);
+        if (StringUtils.isEmpty(hdfsPath)) {
+            return columns;
+        }
+        Path path = new Path(hdfsPath);
+        FileSystem dfs = HadoopServerManager.getInstance().getDFS(connection);
+        InputStream inputStream = dfs.open(path);
+
+        return extractColumns(connection, inputStream, metadataTable.getLabel());
+    }
+
+    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, InputStream inputStream,
+            String tmpFileName) throws CoreException, IOException {
+        List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
+        if (connection == null || inputStream == null || tmpFileName == null) {
+            return columns;
+        }
+        File tmpFile = createTmpFile(inputStream, tmpFileName);
+        CsvArray csvArray = ShadowProcessHelper
+                .getCsvArray(getProcessDescription(connection, tmpFile), DEFAULT_SHADOW_TYPE, true);
+        return guessSchemaFromArray(csvArray, false, 1);
+    }
+
+    private static synchronized ProcessDescription getProcessDescription(HDFSConnection connection, File tmpFile)
+            throws IOException {
+        // TODO: will support to change these default separators in the future...
+        connection.setRowSeparator(DEFAULT_ROW_SEPARATOR);
+        connection.setFieldSeparator(DEFAULT_FIELD_SEPARATOR);
+
+        ProcessDescription processDescription = new ProcessDescription();
+        Charset guessedCharset = CharsetToolkit.guessEncoding(tmpFile, 4096);
+        processDescription.setEncoding(TalendQuoteUtils.addQuotesIfNotExist(guessedCharset.displayName()));
+        processDescription.setFieldSeparator(TalendQuoteUtils.addQuotesIfNotExist(connection.getFieldSeparator()));
+        processDescription.setRowSeparator(TalendQuoteUtils.addQuotesIfNotExist(connection.getRowSeparator()));
+        processDescription.setFilepath(TalendQuoteUtils.addQuotesIfNotExist(formatFilePath(tmpFile.getAbsolutePath())));
+        processDescription.setFooterRow(0);
+        processDescription.setHeaderRow(-1);
+        processDescription.setCSVOption(false);
+        processDescription.setLimitRows(DEFAULT_READ_LINE_NUM);
+        processDescription.setPattern(TalendQuoteUtils.addQuotesIfNotExist(DEFAULT_FIELD_SEPARATOR));
+        processDescription.setRemoveEmptyRow(false);
+        processDescription.setServer(TalendQuoteUtils.addQuotesIfNotExist(DEFAULT_FILE_SERVER));
+        processDescription.setSplitRecord(false);
+
+        return processDescription;
+    }
+
+    private static File createTmpFile(InputStream inputStream, String fileName) {
+        return createTmpFile(inputStream, fileName, DEFAULT_READ_LINE_NUM);
+    }
+
+    /**
+     * DOC ycbai Comment method "createTmpFile".
+     * 
+     * Create a temporary file which contents are readed from the inputStream.
+     * 
+     * @param inputStream the inputStream to read
+     * @param fileName the name of temporary file
+     * @param maxLineNum the max quantity lines to read. If is "-1" means not limit the quantity.
+     * @return
+     */
+    private static File createTmpFile(InputStream inputStream, String fileName, int maxLineNum) {
+        int maxLines = maxLineNum;
+        if (maxLines == -1) {
+
+        }
+        Project project = ProjectManager.getInstance().getCurrentProject();
+        IProject fsProject = null;
+        try {
+            fsProject = ResourceModelUtils.getProject(project);
+        } catch (PersistenceException e2) {
+            ExceptionHandler.process(e2);
+        }
+        if (fsProject == null) {
+            return null;
+        }
+        File tmpParentFile = new File(fsProject.getLocationURI().getPath() + File.separator + "temp" + File.separator + "hdfs"); //$NON-NLS-1$ //$NON-NLS-2$
+        File tmpfile = new File(tmpParentFile, fileName);
+        BufferedReader reader = null;
+        Writer writer = null;
+        try {
+            if (!tmpParentFile.exists()) {
+                tmpParentFile.mkdirs();
+            }
+            if (tmpfile.exists()) {
+                tmpfile.delete();
+            }
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+            String strLine = reader.readLine();
+            int totalLines = 0;
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpfile)));
+            while (strLine != null && (maxLineNum == -1 || totalLines < maxLineNum)) {
+                totalLines++;
+                strLine = reader.readLine();
+                if (strLine != null) {
+                    writer.append(strLine);
+                    writer.append("\r\n"); //$NON-NLS-1$
+                }
+            }
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        } finally {
+            try {
+                inputStream.close();
+                reader.close();
+                writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return tmpfile;
+    }
+
+    private static String formatFilePath(String path) {
+        if (path == null) {
+            return "";
+        }
+        return path.replace("\\", "/"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    public List<String> getSupportedFieldSeparatorStyles() {
+        return EHDFSFieldSeparator.getAllFieldSeparators();
+    }
+
+    public List<String> getSupportedRowSeparatorStyles() {
+        return EHDFSRowSeparator.getAllRowSeparators();
+    }
+
+    public static List<MetadataColumn> guessSchemaFromArray(final CsvArray csvArray, boolean isFirstLineCaption, int header) {
+        List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
+        List<String> exisColumnNames = new ArrayList<String>();
+
+        if (csvArray == null) {
+            return columns;
+        } else {
+
+            List<String[]> csvRows = csvArray.getRows();
+
+            if (csvRows.isEmpty()) {
+                return columns;
+            }
+            String[] fields = csvRows.get(0);
+            // int numberOfCol = fields.size();
+
+            Integer numberOfCol = getRightFirstRow(csvRows);
+
+            // define the label to the metadata width the content of the first
+            // row
+            int firstRowToExtractMetadata = header;
+
+            // the first rows is used to define the label of any metadata
+            String[] label = new String[numberOfCol.intValue()];
+            for (int i = 0; i < numberOfCol; i++) {
+                label[i] = DEFAULT_COLUMN_LABEL + i;
+                if (isFirstLineCaption) {
+                    if (numberOfCol <= fields.length) {// if current field size
+                        // is greater than or
+                        // equals bigest column
+                        // size
+                        if (fields[i] != null && !("").equals(fields[i])) { //$NON-NLS-1$
+                            label[i] = fields[i].trim().replaceAll(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
+                            label[i] = MetadataToolHelper.validateColumnName(label[i], i);
+                        } else {
+                            label[i] = DEFAULT_COLUMN_LABEL + i;
+                        }
+                    } else {// current field size is less than bigest column
+                        // size
+                        if (i < fields.length) {
+                            if (fields[i] != null && !("").equals(fields[i])) { //$NON-NLS-1$
+                                label[i] = fields[i].trim().replaceAll(" ", "_"); //$NON-NLS-1$ //$NON-NLS-2$
+                            } else {
+                                label[i] = DEFAULT_COLUMN_LABEL + " " + i; //$NON-NLS-1$ 
+                            }
+                        } else {
+                            label[i] = DEFAULT_COLUMN_LABEL + " " + i; //$NON-NLS-1$ 
+                        }
+                    }
+                }
+            }
+            // fix bug 5694: column names check in FileDelimited wizard fails to
+            // rename duplicate column name
+            ShadowProcessPreview.fixDuplicateNames(label);
+
+            for (int i = 0; i < numberOfCol.intValue(); i++) {
+                // define the first currentType and assimile it to globalType
+                String globalType = null;
+                int lengthValue = 0;
+                int precisionValue = 0;
+
+                int current = firstRowToExtractMetadata;
+                while (globalType == null) {
+                    if (LanguageManager.getCurrentLanguage() == ECodeLanguage.JAVA) {
+                        // see the feature 6296,qli comment
+                        if (current == csvRows.size()) {
+                            globalType = "id_String";//$NON-NLS-1$
+                            continue;
+                        } else if (i >= csvRows.get(current).length) {
+                            globalType = "id_String"; //$NON-NLS-1$
+                        } else {
+                            globalType = JavaDataTypeHelper.getTalendTypeOfValue(csvRows.get(current)[i]);
+                            current++;
+                        }
+                    } else {
+                        if (current == csvRows.size()) {
+                            globalType = "String"; //$NON-NLS-1$
+                            continue;
+                        }
+                        if (i >= csvRows.get(current).length) {
+                            globalType = "String"; //$NON-NLS-1$
+                        } else {
+                            globalType = PerlDataTypeHelper.getTalendTypeOfValue(csvRows.get(current)[i]);
+                            current++;
+                        }
+                    }
+                }
+
+                // for another lines
+                for (int f = firstRowToExtractMetadata; f < csvRows.size(); f++) {
+                    fields = csvRows.get(f);
+                    if (fields.length > i) {
+                        String value = fields[i];
+                        if (!value.equals("")) { //$NON-NLS-1$
+                            if (LanguageManager.getCurrentLanguage() == ECodeLanguage.JAVA) {
+                                if (!JavaDataTypeHelper.getTalendTypeOfValue(value).equals(globalType)) {
+                                    globalType = JavaDataTypeHelper.getCommonType(globalType,
+                                            JavaDataTypeHelper.getTalendTypeOfValue(value));
+                                }
+                            } else {
+                                if (!PerlDataTypeHelper.getTalendTypeOfValue(value).equals(globalType)) {
+                                    globalType = PerlDataTypeHelper.getCommonType(globalType,
+                                            PerlDataTypeHelper.getTalendTypeOfValue(value));
+                                }
+                            }
+                            if (lengthValue < value.length()) {
+                                lengthValue = value.length();
+                            }
+                            int positionDecimal = 0;
+                            if (value.indexOf(',') > -1) {
+                                positionDecimal = value.lastIndexOf(',');
+                                precisionValue = lengthValue - positionDecimal;
+                            } else if (value.indexOf('.') > -1) {
+                                positionDecimal = value.lastIndexOf('.');
+                                precisionValue = lengthValue - positionDecimal;
+                            }
+                        } else {
+                            ICoreService coreService = CoreRuntimePlugin.getInstance().getCoreService();
+
+                            IPreferenceStore preferenceStore = coreService.getPreferenceStore();
+                            if (preferenceStore != null) {
+                                if (LanguageManager.getCurrentLanguage() == ECodeLanguage.JAVA) {
+                                    if (preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE) != null
+                                            && !preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE).equals(
+                                                    "")) { //$NON-NLS-1$
+                                        globalType = preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE);
+                                        if (preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH) != null
+                                                && !preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH)
+                                                        .equals("")) { //$NON-NLS-1$
+                                            lengthValue = Integer.parseInt(preferenceStore
+                                                    .getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH));
+                                        }
+                                    }
+                                } else {
+                                    if (preferenceStore.getString(MetadataTypeLengthConstants.PERL_VALUE_DEFAULT_TYPE) != null
+                                            && !preferenceStore.getString(MetadataTypeLengthConstants.PERL_VALUE_DEFAULT_TYPE)
+                                                    .equals("")) { //$NON-NLS-1$
+                                        globalType = preferenceStore
+                                                .getString(MetadataTypeLengthConstants.PERL_VALUE_DEFAULT_TYPE);
+                                        if (preferenceStore.getString(MetadataTypeLengthConstants.PERL_VALUE_DEFAULT_LENGTH) != null
+                                                && !preferenceStore.getString(
+                                                        MetadataTypeLengthConstants.PERL_VALUE_DEFAULT_LENGTH).equals("")) { //$NON-NLS-1$
+                                            lengthValue = Integer.parseInt(preferenceStore
+                                                    .getString(MetadataTypeLengthConstants.PERL_VALUE_DEFAULT_LENGTH));
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+                // see the feature 6296,qli comment
+                if (csvRows.size() <= 1 && firstRowToExtractMetadata == 1) {
+                    lengthValue = 255;
+                }
+
+                // define the metadataColumn to field i
+                MetadataColumn metadataColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
+                metadataColumn.setPattern("\"dd-MM-yyyy\""); //$NON-NLS-1$
+                // Convert javaType to TalendType
+                String talendType = null;
+                if (LanguageManager.getCurrentLanguage() == ECodeLanguage.JAVA) {
+                    talendType = globalType;
+                    if (globalType.equals(JavaTypesManager.FLOAT.getId()) || globalType.equals(JavaTypesManager.DOUBLE.getId())) {
+                        metadataColumn.setPrecision(precisionValue);
+                    } else {
+                        metadataColumn.setPrecision(0);
+                    }
+                } else {
+                    talendType = PerlTypesManager.getNewTypeName(MetadataTalendType.loadTalendType(globalType,
+                            "TALENDDEFAULT", false)); //$NON-NLS-1$
+                    if (globalType.equals("FLOAT") || globalType.equals("DOUBLE")) { //$NON-NLS-1$ //$NON-NLS-2$
+                        metadataColumn.setPrecision(precisionValue);
+                    } else {
+                        metadataColumn.setPrecision(0);
+                    }
+                }
+                metadataColumn.setTalendType(talendType);
+                metadataColumn.setLength(lengthValue);
+                String columnLabel = IndiceHelper.getIndexedLabel(label[i], exisColumnNames);
+                metadataColumn.setLabel(columnLabel);
+                if (!exisColumnNames.contains(columnLabel)) {
+                    exisColumnNames.add(columnLabel);
+                }
+                columns.add(i, metadataColumn);
+            }
+        }
+        return columns;
+    }
+
+    private static Integer getRightFirstRow(List<String[]> csvRows) {
+
+        Integer numbersOfColumns = null;
+        int parserLine = csvRows.size();
+        if (parserLine > 50) {
+            parserLine = 50;
+        }
+        for (int i = 0; i < parserLine; i++) {
+            if (csvRows.get(i) != null) {
+                String[] nbRow = csvRows.get(i);
+                // List<XmlField> nbRowFields = nbRow.getFields();
+                if (numbersOfColumns == null || nbRow.length >= numbersOfColumns) {
+                    numbersOfColumns = nbRow.length;
+                }
+            }
+        }
+        return numbersOfColumns;
+    }
+
+}
