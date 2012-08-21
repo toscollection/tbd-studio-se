@@ -32,6 +32,8 @@ public class FileSelectorTreeViewerProvider extends AbstractMetadataExtractorVie
 
     private final static IHDFSNode[] EMPTY_CONTENT = new IHDFSNode[0];
 
+    private final static String ROOT_PATH = "/"; //$NON-NLS-1$
+
     private static Logger log = Logger.getLogger(HDFSFolder.class);
 
     private TreeViewer viewer;
@@ -40,7 +42,8 @@ public class FileSelectorTreeViewerProvider extends AbstractMetadataExtractorVie
         if (inputElement instanceof HDFSConnectionBean) {
             try {
                 HDFSPath root = new HDFSFolder(this, (HDFSConnectionBean) inputElement);
-                root.setValue("/"); //$NON-NLS-1$
+                root.setValue(ROOT_PATH);
+                root.setRelativePath(ROOT_PATH);
                 return new Object[] { root };
             } catch (Exception e) {
                 log.error(e);
@@ -87,7 +90,7 @@ public class FileSelectorTreeViewerProvider extends AbstractMetadataExtractorVie
         case 0:
             return StringUtils.trimToEmpty(content.getValue());
         case 1:
-            return StringUtils.trimToEmpty(type.getName());
+            return StringUtils.trimToEmpty(type.getValue());
         default:
             return "";
         }

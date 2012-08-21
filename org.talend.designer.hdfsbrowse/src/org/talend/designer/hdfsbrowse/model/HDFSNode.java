@@ -28,6 +28,8 @@ import orgomg.cwm.resource.relational.Table;
  */
 public class HDFSNode implements IHDFSNode {
 
+    protected static final String PATH_SEPARATOR = "/"; //$NON-NLS-1$
+
     protected ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
 
     private String value;
@@ -38,7 +40,9 @@ public class HDFSNode implements IHDFSNode {
 
     private IHDFSNode parent;
 
-    private Path path = new Path("/");
+    private Path path = new Path(PATH_SEPARATOR);
+
+    private String relativePath;
 
     private List<IHDFSNode> children = new ArrayList<IHDFSNode>();
 
@@ -116,7 +120,14 @@ public class HDFSNode implements IHDFSNode {
         this.hasFetchedChildren = false;
     }
 
-    public void refresh() {
+    public String getRelativePath() {
+        return this.relativePath;
     }
 
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath;
+    }
+
+    public void refresh() {
+    }
 }

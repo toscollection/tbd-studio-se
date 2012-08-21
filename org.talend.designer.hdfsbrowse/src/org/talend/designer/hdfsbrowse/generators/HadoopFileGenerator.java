@@ -2,8 +2,8 @@ package org.talend.designer.hdfsbrowse.generators;
 
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.ui.editor.properties.controllers.AbstractElementPropertySectionController;
-import org.talend.designer.core.ui.editor.properties.controllers.TextController;
 import org.talend.designer.core.ui.editor.properties.controllers.generator.IControllerGenerator;
+import org.talend.designer.hdfsbrowse.controllers.HadoopFileController;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -18,7 +18,7 @@ public class HadoopFileGenerator implements IControllerGenerator {
      * @see org.talend.designer.core.ui.editor.properties.controllers.generator.IControllerGenerator#generate()
      */
     public AbstractElementPropertySectionController generate() {
-        return new TextController(dp);
+        return new HadoopFileController(dp);
     }
 
     /*

@@ -28,24 +28,24 @@ public enum EHadoopFileTypes {
 
     ;
 
-    private String name;
+    private String value;
 
-    EHadoopFileTypes(String name) {
-        this.name = name;
+    EHadoopFileTypes(String value) {
+        this.value = value;
     }
 
-    public String getName() {
-        return this.name;
+    public String getValue() {
+        return this.value;
     }
 
-    public static List<String> getAllFileTypeNames() {
-        List<String> names = new ArrayList<String>();
+    public static List<String> getAllFileTypeValues() {
+        List<String> vals = new ArrayList<String>();
         EHadoopFileTypes[] values = values();
         for (EHadoopFileTypes type : values) {
-            names.add(type.getName());
+            vals.add(type.getValue());
         }
 
-        return names;
+        return vals;
     }
 
 }

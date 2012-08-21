@@ -19,6 +19,7 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
 import org.talend.designer.hdfsbrowse.util.HadoopServerUtil;
 
@@ -57,32 +58,44 @@ public abstract class HDFSPath extends HDFSNode {
 
     @Override
     public String toString() {
-        if ("/".equals(getPath())) {
+        if (PATH_SEPARATOR.equals(getPath())) { //$NON-NLS-1$
             return connection.getNameNodeURI();
         } else {
             return getPath().getName();
         }
     }
 
-    public String getPathString() {
+    protected String getPathString() {
         if (getPath() != null) {
             return getPath().toString();
         }
         return ""; //$NON-NLS-1$
     }
 
-    public String getPathName() {
+    protected String getPathName() {
         return getPathName(getPath());
     }
 
-    public String getPathName(Path path) {
+    protected String getPathName(Path path) {
         if (path != null && path.getName() != null) {
             return path.getName();
         }
         return ""; //$NON-NLS-1$
     }
 
-    public String trimFileExtention(String fileName) {
+    protected String getRelativePath(String absPath) {
+        String nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(connection.getNameNodeURI());
+        if (absPath.startsWith(nameNodeURI)) {
+            absPath = absPath.substring(absPath.indexOf(nameNodeURI) + nameNodeURI.length());
+        }
+        if (!absPath.startsWith(PATH_SEPARATOR)) {
+            absPath = PATH_SEPARATOR + absPath;
+        }
+
+        return absPath;
+    }
+
+    protected String trimFileExtention(String fileName) {
         if (fileName.indexOf(".") != -1) { //$NON-NLS-1$
             fileName = fileName.substring(0, fileName.lastIndexOf(".")); //$NON-NLS-1$
         }

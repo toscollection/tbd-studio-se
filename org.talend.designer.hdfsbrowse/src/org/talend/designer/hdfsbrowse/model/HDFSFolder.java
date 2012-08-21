@@ -55,12 +55,13 @@ public class HDFSFolder extends HDFSPath {
             Path statusPath = status.getPath();
             String pathName = getPathName(statusPath);
             if (status.isDir()) {
-                content = new HDFSFolder(this, status.getPath());
+                content = new HDFSFolder(this, statusPath);
             } else {
-                content = new HDFSFile(this, status.getPath());
+                content = new HDFSFile(this, statusPath);
                 content.setTable(createTable(trimFileExtention(pathName)));
             }
             content.setValue(pathName);
+            content.setRelativePath(getRelativePath(content.getPathString()));
             addChild(content);
         }
     }
@@ -101,7 +102,7 @@ public class HDFSFolder extends HDFSPath {
 
     @Override
     public String toString() {
-        return String.format("%s (%s)", super.toString(), this.getChildren().size());
+        return String.format("%s (%s)", super.toString(), this.getChildren().size()); //$NON-NLS-1$
     }
 
     @Override

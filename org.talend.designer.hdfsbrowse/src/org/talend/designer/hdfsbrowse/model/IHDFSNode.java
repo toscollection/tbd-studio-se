@@ -54,6 +54,10 @@ public interface IHDFSNode {
 
     public void setPath(Path path);
 
+    public String getRelativePath();
+
+    public void setRelativePath(String relativePath);
+
     public Image getImage();
 
     public void forceFetchChildren();
