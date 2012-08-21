@@ -25,6 +25,7 @@
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     
     List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
+    boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
 %>
 			int nb_line_<%=cid %> = 0;
 <%
@@ -118,7 +119,26 @@
 			}else{
 %>
 			try{
+<%
+ 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+   			if(useReplicaSet){
+%>
+				List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+<%
+				for(Map<String,String> replicaAddr:replicaAddrs){
+%>
+				addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+<%
+				}
+%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+<%
+			}else{
+%>
 				mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+<%
+			}
+%>
 				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 <%
 				if (authentication){

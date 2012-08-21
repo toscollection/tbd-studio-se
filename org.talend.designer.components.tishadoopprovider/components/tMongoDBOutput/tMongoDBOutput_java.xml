@@ -31,7 +31,7 @@
 		<PARAMETER 
 			NAME="USE_EXISTING_CONNECTION" 
 			FIELD="CHECK"
-			NUM_ROW="4"
+			NUM_ROW="2"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>false</DEFAULT>
@@ -40,16 +40,37 @@
 			NAME="CONNECTION" 
 			FIELD="COMPONENT_LIST" 
 			FILTER="tMongoDBConnection"
-			NUM_ROW="4" 
+			NUM_ROW="2" 
 			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" 
 			GROUP="CONNECTION"
 		/>
+		<PARAMETER 
+            FIELD="CHECK" 
+            NAME="USE_REPLICA_SET" 
+            NUM_ROW="3" 
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+            GROUP="CONNECTION">
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            NAME="REPLICA_SET" 
+            FIELD="TABLE" 
+            REQUIRED="true" 
+            NUM_ROW="4" 
+            NB_LINES="5" 
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='true')"
+            GROUP="CONNECTION">
+            <ITEMS>
+                <ITEM NAME="REPLICA_HOST" FIELD="TEXT" />
+                <ITEM NAME="REPLICA_PORT" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="HOST" 
 			NUM_ROW="5" 
 			REQUIRED="true" 
-			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
@@ -58,7 +79,7 @@
 			FIELD="TEXT" 
 			NAME="PORT" 
 			NUM_ROW="5"
-			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>27017</DEFAULT>

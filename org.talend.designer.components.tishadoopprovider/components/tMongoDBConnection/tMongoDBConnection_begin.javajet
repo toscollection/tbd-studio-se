@@ -3,6 +3,9 @@
 		org.talend.core.model.process.INode 
 		org.talend.core.model.process.ElementParameterParser 
 		org.talend.designer.codegen.config.CodeGeneratorArgument
+		
+		java.util.Map
+		java.util.List
 	" 
 %>
 <%
@@ -15,9 +18,27 @@
     String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
     String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
     boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+    if(useReplicaSet){
+%>
+	List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+<%
+		for(Map<String,String> replicaAddr:replicaAddrs){
+%>
+	addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+<%
+		}
+%>
+	com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+<%
+	}else{
 %>
 	com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+<%
+	}
+%>
 	com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 <%
 	if (authentication){
