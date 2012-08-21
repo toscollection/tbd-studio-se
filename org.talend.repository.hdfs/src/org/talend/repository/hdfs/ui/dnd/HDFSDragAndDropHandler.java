@@ -33,6 +33,7 @@ import org.talend.core.model.utils.IComponentName;
 import org.talend.core.model.utils.IDragAndDropServiceHandler;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
 import org.talend.repository.hdfs.node.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.util.EHadoopVersion4Drivers;
 import org.talend.repository.hdfs.util.HDFSConstants;
@@ -53,8 +54,6 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
     private static final String INPUT = "tHDFSInput"; //$NON-NLS-1$
 
     private static final String OUTPUT = "tHDFSOutput"; //$NON-NLS-1$
-
-    private static final String SEPERATOR = "/"; //$NON-NLS-1$
 
     @Override
     public boolean canHandle(Connection connection) {
@@ -91,25 +90,13 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
                     EMap<String, String> properties = metaTable.getAdditionalProperties();
                     String hdfsPath = properties.get(HDFSConstants.HDFS_PATH);
                     if (StringUtils.isNotEmpty(hdfsPath)) {
-                        return TalendQuoteUtils.addQuotesIfNotExist(trimFileNamePath(connection, hdfsPath));
+                        return TalendQuoteUtils.addQuotesIfNotExist(hdfsPath);
                     }
                 }
             }
         }
 
         return null;
-    }
-
-    private String trimFileNamePath(HDFSConnection connection, String path) {
-        String nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(connection.getNameNodeURI());
-        if (path.startsWith(nameNodeURI)) {
-            path = path.substring(path.indexOf(nameNodeURI) + nameNodeURI.length());
-        }
-        if (!path.startsWith(SEPERATOR)) {
-            path = SEPERATOR + path;
-        }
-
-        return path;
     }
 
     @Override

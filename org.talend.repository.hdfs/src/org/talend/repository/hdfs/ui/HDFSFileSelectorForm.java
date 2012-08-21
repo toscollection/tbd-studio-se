@@ -881,7 +881,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     }
                     hdfsTable.setSourceName(lableName);
                     hdfsTable.setId(factory.getNextId());
-                    hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPathString());
+                    hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getRelativePath());
 
                     Iterator<MetadataColumn> iterate = metadataColumns.iterator();
                     while (iterate.hasNext()) {

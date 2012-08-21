@@ -8,7 +8,7 @@
             class="org.talend.repository.hdfs.node.HDFSExtendNode"
             folder="metadata/hdfs"
             isResouce="true"
-            label="HDFS"
+            label="%HDFS"
             products="DI"
             type="HDFS">
       </repositoryNode>

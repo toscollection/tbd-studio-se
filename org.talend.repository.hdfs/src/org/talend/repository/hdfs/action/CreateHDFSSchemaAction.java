@@ -142,7 +142,7 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
             HadoopServerManager.getInstance().getDFS(connection, true);
         } catch (Exception e) {
             String mainMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.mainMsg"); //$NON-NLS-1$
-            String detailMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.detailMsg",
+            String detailMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.detailMsg", //$NON-NLS-1$
                     connection.getNameNodeURI());
             new ErrorDialogWidthDetailArea(Display.getCurrent().getActiveShell(), Activator.PLUGIN_ID, mainMsg, detailMsg);
             return false;

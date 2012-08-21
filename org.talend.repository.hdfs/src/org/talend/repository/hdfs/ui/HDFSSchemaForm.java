@@ -88,8 +88,6 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
     private static final int WIDTH_GRIDDATA_PIXEL = 800;
 
-    private static final String RETRIEVE_SCHEMA_TOOLTIP = "Push this button to get a detailed schema..";
-
     private MetadataTable metadataTable;
 
     private MetadataEmfTableEditor metadataEditor;
