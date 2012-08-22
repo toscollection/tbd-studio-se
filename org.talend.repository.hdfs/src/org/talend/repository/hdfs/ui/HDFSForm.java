@@ -305,7 +305,7 @@ public class HDFSForm extends AbstractHDFSForm {
         EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(dfVersion);
         kerberosBtn.setEnabled(isSupportSecurity(version4Drivers));
         groupText.setEnabled(isSupportGroup(version4Drivers));
-        principalText.setEnabled(kerberosBtn.getSelection());
+        principalText.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
         userNameText.setEnabled(!kerberosBtn.getSelection());
         if (!kerberosBtn.isEnabled()) {
             kerberosBtn.setSelection(false);
