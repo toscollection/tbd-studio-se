@@ -6,6 +6,9 @@
        	STATUS="ALPHA"
 		COMPATIBILITY="ALL"
        	AUTHOR="Talend"
+       	SCHEMA_AUTO_PROPAGATE="true"
+        DATA_AUTO_PROPAGATE="false"
+       	EXTENSION="org.talend.designer.fileoutputxml"
  		RELEASE_DATE="20070210A"
     	STARTABLE="false"
   	>
@@ -55,7 +58,7 @@
         <PARAMETER 
             NAME="REPLICA_SET" 
             FIELD="TABLE" 
-            REQUIRED="true" 
+            REQUIRED_IF="(USE_REPLICA_SET=='true')" 
             NUM_ROW="4" 
             NB_LINES="5" 
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='true')"
@@ -160,7 +163,9 @@
 			FIELD="TABLE" 
 			REQUIRED="true"
 			NUM_ROW="30" 
-			NB_LINES="5" >
+			NB_LINES="5"
+            SHOW_IF="(IS_VIRTUAL_COMPONENT == 'false')"
+		>
 			<ITEMS BASED_ON_SCHEMA="true">
 				<ITEM NAME="PARENT_NODE_PATH" FIELD="TEXT" />
 			</ITEMS>
@@ -172,8 +177,163 @@
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 	</PARAMETERS>
-	<ADVANCED_PARAMETERS />
+	<ADVANCED_PARAMETERS>
+        <PARAMETER 
+            NAME="IS_VIRTUAL_COMPONENT" 
+            FIELD="CHECK" 
+            NUM_ROW="5" 
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+	        NAME="ROOT" 
+	        FIELD="TABLE" 
+	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+            NUM_ROW="10" 
+            NB_LINES="3" 
+            SHOW="false"
+        >
+            <ITEMS>
+                <ITEM NAME="PATH" FIELD="TEXT" />
+                <ITEM NAME="COLUMN" FIELD="TEXT" />
+                <ITEM NAME="VALUE" FIELD="TEXT" />
+                <ITEM NAME="ATTRIBUTE" FIELD="TEXT" />
+                <ITEM NAME="ORDER" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER 
+	        NAME="GROUP" 
+	        FIELD="TABLE" 
+	        REQUIRED="false"
+	        NUM_ROW="20" 
+	        NB_LINES="5" 
+	        SHOW="false"
+        >
+            <ITEMS>
+                <ITEM NAME="PATH" FIELD="TEXT" />
+                <ITEM NAME="COLUMN" FIELD="TEXT" />
+                <ITEM NAME="VALUE" FIELD="TEXT" />
+                <ITEM NAME="ATTRIBUTE" FIELD="TEXT" />
+                <ITEM NAME="ORDER" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER 
+	        NAME="LOOP" 
+	        FIELD="TABLE" 
+	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+            NUM_ROW="30" 
+            SHOW="false"
+        >
+            <ITEMS>
+                <ITEM NAME="PATH" FIELD="TEXT" />
+                <ITEM NAME="COLUMN" FIELD="TEXT" />
+                <ITEM NAME="VALUE" FIELD="TEXT" />
+                <ITEM NAME="ATTRIBUTE" FIELD="TEXT" />
+                <ITEM NAME="ORDER" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER 
+	        NAME="MAP" 
+	        FIELD="EXTERNAL" 
+	        NUM_ROW="40"
+	        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+	        GROUP="JSON_CONFIGURATION"
+	    >
+            <DEFAULT />
+        </PARAMETER>
+
+        <PARAMETER 
+	        NAME="GROUPBYS" 
+	        FIELD="TABLE" 
+	        NUM_ROW="60"
+	        NB_LINES="3"
+	        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+	        GROUP="JSON_CONFIGURATION"
+	    >
+            <ITEMS>
+                <ITEM NAME="INPUT_COLUMN" FIELD="PREV_COLUMN_LIST" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER 
+	        NAME="REMOVE_ROOT" 
+	        FIELD="CHECK" 
+	        NUM_ROW="70"
+	        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+	        GROUP="JSON_CONFIGURATION"
+        >
+            <DEFAULT>true</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            FIELD="TEXT" 
+            NAME="DATA_NODE" 
+            REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')" 
+            NUM_ROW="75"
+            SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') AND (DATA_ACTION !='INSERT') AND (DATA_ACTION !='DELETE')"
+            GROUP="JSON_CONFIGURATION" 
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            FIELD="TEXT" 
+            NAME="QUERY_NODE" 
+            REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')" 
+            NUM_ROW="75"
+            SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') AND (DATA_ACTION !='INSERT') AND (DATA_ACTION !='DELETE')"
+            GROUP="JSON_CONFIGURATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+	        NAME="COMPACT_FORMAT" 
+	        FIELD="CHECK" 
+	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')" 
+	        NUM_ROW="80" 
+	        SHOW="false"
+	        GROUP="JSON_CONFIGURATION"
+        >
+            <DEFAULT>true</DEFAULT>
+        </PARAMETER>
+	</ADVANCED_PARAMETERS>
+	
 	<CODEGENERATION>
+        <TEMPLATES INPUT="In" OUTPUT="Out">
+            <TEMPLATE NAME="In" COMPONENT="tWriteXMLFieldOut">
+                <LINK_TO NAME="Out" CTYPE="COMPONENT_OK" />
+            </TEMPLATE>
+
+            <TEMPLATE NAME="Out" COMPONENT="tMongoDBWriteConf" />
+
+            <TEMPLATE_PARAM SOURCE="self.GROUPBYS" TARGET="In.GROUPBYS" />
+
+            <TEMPLATE_PARAM SOURCE="self.ROOT" TARGET="In.ROOT" />
+            <TEMPLATE_PARAM SOURCE="self.GROUP" TARGET="In.GROUP" />
+            <TEMPLATE_PARAM SOURCE="self.LOOP" TARGET="In.LOOP" />     
+            <TEMPLATE_PARAM SOURCE="self.COMPACT_FORMAT" TARGET="In.COMPACT_FORMAT" />
+            <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="In.SCHEMA" />
+            
+            <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="Out.SCHEMA" />
+            <TEMPLATE_PARAM SOURCE="self.USE_EXISTING_CONNECTION" TARGET="Out.USE_EXISTING_CONNECTION" />
+            <TEMPLATE_PARAM SOURCE="self.CONNECTION" TARGET="Out.CONNECTION" />
+            <TEMPLATE_PARAM SOURCE="self.USE_REPLICA_SET" TARGET="Out.USE_REPLICA_SET" />
+            <TEMPLATE_PARAM SOURCE="self.REPLICA_SET" TARGET="Out.REPLICA_SET" />
+            <TEMPLATE_PARAM SOURCE="self.HOST" TARGET="Out.HOST" />
+            <TEMPLATE_PARAM SOURCE="self.PORT" TARGET="Out.PORT" />
+            <TEMPLATE_PARAM SOURCE="self.DATABASE" TARGET="Out.DATABASE" />
+            <TEMPLATE_PARAM SOURCE="self.REQUIRED_AUTHENTICATION" TARGET="Out.REQUIRED_AUTHENTICATION" />
+            <TEMPLATE_PARAM SOURCE="self.USERNAME" TARGET="Out.USERNAME" />
+            <TEMPLATE_PARAM SOURCE="self.PASSWORD" TARGET="Out.PASSWORD" />
+            <TEMPLATE_PARAM SOURCE="self.COLLECTION" TARGET="Out.COLLECTION" />
+            <TEMPLATE_PARAM SOURCE="self.DROP_COLLECTION_CREATE" TARGET="Out.DROP_COLLECTION_CREATE" />
+            <TEMPLATE_PARAM SOURCE="self.DATA_ACTION" TARGET="Out.DATA_ACTION" />
+            <TEMPLATE_PARAM SOURCE="self.DATA_NODE" TARGET="Out.DATA_NODE" />
+            <TEMPLATE_PARAM SOURCE="self.QUERY_NODE" TARGET="Out.QUERY_NODE" />
+            <TEMPLATE_PARAM SOURCE="self.REMOVE_ROOT" TARGET="Out.REMOVE_ROOT" />   
+            <TEMPLATE_PARAM SOURCE="self.DIE_ON_ERROR" TARGET="Out.DIE_ON_ERROR" />
+       
+        </TEMPLATES>
 		<IMPORTS>
 			<IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" REQUIRED="true" />
 		</IMPORTS>

@@ -1,0 +1,106 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection   
+		java.util.List
+		java.util.Map
+	" 
+%>
+
+<% 
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+  	String cid = node.getUniqueName();
+
+    String dbhost   = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
+    String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    String collection=ElementParameterParser.getValue(node, "__COLLECTION__");
+    boolean dropExistCollection="true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DROP_COLLECTION_CREATE__"));
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
+    boolean removeRoot="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOVE_ROOT__"));
+%>
+			int nb_line_<%=cid %> = 0;
+<%
+    List<IMetadataTable> metadatas = node.getMetadataList();
+  	if(metadatas != null && metadatas.size() > 0){
+      	IMetadataTable metadata = metadatas.get(0);
+      	if(metadata != null){
+%>
+			com.mongodb.Mongo mongo_<%=cid%>=null;
+			com.mongodb.DB db_<%=cid%> =null;
+<%
+      		if (useExistingConnection){
+      			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+%>
+				mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
+				db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
+<%
+			}else{
+%>
+			try{
+<%
+ 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+   			if(useReplicaSet){
+%>
+				List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+<%
+				for(Map<String,String> replicaAddr:replicaAddrs){
+%>
+				addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+<%
+				}
+%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+<%
+			}else{
+%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+<%
+			}
+%>
+				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+<%
+				if (authentication){
+%>
+    			db_<%=cid%>.authenticate(<%=dbuser%>, <%=dbpass%>.toCharArray());
+<%
+				}
+			}
+%>
+<%
+			if(dropExistCollection){
+%>
+				if(db_<%=cid%>.collectionExists(<%=collection%>)){
+					db_<%=cid%>.getCollection(<%=collection%>).drop();
+				}
+<%
+			}
+%>
+				com.mongodb.DBCollection coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
+				
+				net.sf.json.xml.XMLSerializer xmlSerializer_<%=cid%> = new net.sf.json.xml.XMLSerializer(); 
+			    xmlSerializer_<%=cid%>.clearNamespaces();
+			    xmlSerializer_<%=cid%>.setSkipNamespaces(true);
+			    xmlSerializer_<%=cid%>.setForceTopLevelObject(<%=(removeRoot?false:true)%>);
+				java.util.Queue<String> queue_<%=cid%> = (java.util.Queue<String>) globalMap.get("queue_<%=cid%>");
+				
+				String str_<%=cid %> = null;
+				
+				while(true) {
+					if (!queue_<%=cid%>.isEmpty()) {
+						str_<%=cid %> = queue_<%=cid %>.poll();
+						//Convert XML to JSON
+				        net.sf.json.JSON json_<%=cid%> = xmlSerializer_<%=cid%>.read(str_<%=cid %>);
+						nb_line_<%=cid%>++;
+<%
+    	}
+    }
+%>
