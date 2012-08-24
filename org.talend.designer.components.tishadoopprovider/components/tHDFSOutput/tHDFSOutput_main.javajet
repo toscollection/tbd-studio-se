@@ -9,6 +9,7 @@
     org.talend.core.model.metadata.types.JavaTypesManager
     org.talend.core.model.metadata.types.JavaType
 	org.talend.core.model.process.IConnectionCategory
+	org.talend.core.model.process.ElementParameterParser
 	java.util.Map 
     java.util.List 
 	"
@@ -18,6 +19,10 @@
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
+	
+	String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
+	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
+	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
@@ -54,7 +59,7 @@
 <%
 										} else if(javaType == JavaTypesManager.BYTE_ARRAY){
 %>
-											java.nio.charset.Charset.forName("UTF-8").decode(java.nio.ByteBuffer.wrap(<%=conn.getName() %>.<%=column.getLabel() %>)).toString()
+											java.nio.charset.Charset.forName(<%=encoding%>).decode(java.nio.ByteBuffer.wrap(<%=conn.getName() %>.<%=column.getLabel() %>)).toString()
 <%
 										} else {
 %>
@@ -66,12 +71,12 @@
 <%
 										if(i != sizeColumns - 1) {
 %>					
-					sb_<%=cid %>.append(";");
+					sb_<%=cid %>.append(<%=fieldSeparator%>);
 <%
 										}
 				}
 %>
-				sb_<%=cid %>.append("\n");
+				sb_<%=cid %>.append(<%=rowSeparator%>);
 				out<%=cid %>.write(sb_<%=cid %>.toString());
 <%
 			}

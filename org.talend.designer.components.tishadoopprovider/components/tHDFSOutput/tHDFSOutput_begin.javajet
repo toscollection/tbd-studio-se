@@ -31,6 +31,8 @@
 	//boolean fileAction = "true".equals(ElementParameterParser.getValue(node, "__FILE_ACTION__"));
 	String fileAction = ElementParameterParser.getValue(node, "__FILE_ACTION__");
 	
+	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
+	
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -134,7 +136,7 @@
 		<%}else{//Create and Overwrite%>
 			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.create(path_<%=cid%>, <%="CREATE".equals(fileAction)?false:true%>);
 		<%}%>
-		out<%=cid%>=new java.io.BufferedWriter(new java.io.OutputStreamWriter(fsDataOutputStream_<%=cid%>));
+		out<%=cid%>=new java.io.BufferedWriter(new java.io.OutputStreamWriter(fsDataOutputStream_<%=cid%>,<%=encoding%>));
 	<%
 	}
 	%>

@@ -20,6 +20,10 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 	
+	String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
+	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
+	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
+	
 	String templetonHost = ElementParameterParser.getValue(node, "__TEMPLETON_HOST__");
 	String templetonPort = ElementParameterParser.getValue(node, "__TEMPLETON_PORT__");
 	String database = ElementParameterParser.getValue(node, "__DATABASE_NAME__");
@@ -199,12 +203,8 @@
 		for(int i_<%=cid%>=0; i_<%=cid%><fileStatus.length; i_<%=cid%>++) {
 			org.apache.hadoop.fs.Path path_<%=cid%> = fileStatus[i_<%=cid%>].getPath();
 			org.apache.hadoop.fs.FSDataInputStream fsDataInputStream_<%=cid%> = fs_<%=cid%>.open(path_<%=cid%>);
-			java.io.BufferedReader br_<%=cid%> = null;
-			String line_<%=cid %>="";
-			
-			br_<%=cid%>=new java.io.BufferedReader(new java.io.InputStreamReader(fsDataInputStream_<%=cid%>));
-			while ((line_<%=cid %> = br_<%=cid %>.readLine()) != null) {
-				String[] fields_<%=cid %> = line_<%=cid %>.split(";");
+			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>, <%=encoding %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
+			while (fid_<%=cid %>.nextRecord()) {
 <%
 	}
 %>
