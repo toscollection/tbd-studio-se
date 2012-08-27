@@ -67,6 +67,7 @@
 				<ITEM NAME="Cloudera_CDH4" VALUE="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.15.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 				<ITEM NAME="APACHE_0_20_2" VALUE="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="MapR" VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MapR2" VALUE="hadoop-0.20.2-dev-core-mapr2.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			</ITEMS>
 	   	</PARAMETER>
 		<PARAMETER
@@ -84,15 +85,15 @@
 		</PARAMETER>
 	    
 		<PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="15" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" GROUP="CONN">
-		  	<DEFAULT IF="(DB_VERSION != 'MapR')">"hdfs://localhost:9000/"</DEFAULT>
-			<DEFAULT IF="(DB_VERSION == 'MapR')">"maprfs:///"</DEFAULT>
+		  	<DEFAULT IF="(DB_VERSION != 'MapR') AND (DB_VERSION != 'MapR2')">"hdfs://localhost:9000/"</DEFAULT>
+			<DEFAULT IF="(DB_VERSION == 'MapR') OR (DB_VERSION == 'MapR2')">"maprfs:///"</DEFAULT>
 		</PARAMETER>
 	
 		<PARAMETER NAME="USERNAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="20" NOT_SHOW_IF="((DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true') OR USE_EXISTING_CONNECTION == 'true'" GROUP="CONN">
 	      	<DEFAULT>"anonymous"</DEFAULT>
 	    </PARAMETER>
 	    
-	    <PARAMETER NAME="GROUP" FIELD="TEXT" REQUIRED="true" NUM_ROW="20" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR'))" GROUP="CONN">
+	    <PARAMETER NAME="GROUP" FIELD="TEXT" REQUIRED="true" NUM_ROW="20" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR') or (DB_VERSION == 'MapR2'))" GROUP="CONN">
 	      	<DEFAULT>"supergroup"</DEFAULT>
 	    </PARAMETER>
 		
@@ -156,6 +157,8 @@
 	        <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED="false" />
 	        <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" />
 	        <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'" />
+			
+			<IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED="false" />
 			
 			<IMPORT NAME="jetty-util" MODULE="jetty-util-6.1.26.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4')" />
 			<IMPORT NAME="jersey-core" MODULE="jersey-core-1.8.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4')" />

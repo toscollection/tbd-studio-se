@@ -67,6 +67,9 @@
 				<ITEM NAME="MapR"
 					VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar"
 					SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MapR2"
+                    VALUE="hadoop-0.20.2-dev-core-mapr2.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar"
+                    SHOW_IF="DISTRIBUTION=='MAPR'" />
 			</ITEMS>
 		</PARAMETER>
 		<PARAMETER NAME="USE_KRB" FIELD="CHECK" NUM_ROW="12"
@@ -84,8 +87,8 @@
 		<PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" REQUIRED="true"
 			NUM_ROW="20" SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 			GROUP="CONN">
-			<DEFAULT IF="(DB_VERSION != 'MapR')">"hdfs://localhost:9000/"</DEFAULT>
-			<DEFAULT IF="(DB_VERSION == 'MapR')">"maprfs:///"</DEFAULT>
+			<DEFAULT IF="(DB_VERSION != 'MapR') AND (DB_VERSION != 'MapR2')">"hdfs://localhost:9000/"</DEFAULT>
+			<DEFAULT IF="(DB_VERSION == 'MapR') OR (DB_VERSION == 'MapR2')">"maprfs:///"</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="USERNAME" FIELD="TEXT" REQUIRED="true"
@@ -96,7 +99,7 @@
 		</PARAMETER>
 		<PARAMETER NAME="GROUP" FIELD="TEXT" REQUIRED="true"
 			NUM_ROW="30"
-			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR'))"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR') or (DB_VERSION == 'MapR2'))"
 			GROUP="CONN">
 			<DEFAULT>"supergroup"</DEFAULT>
 		</PARAMETER>
@@ -195,7 +198,8 @@
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'" />
 				
-				
+			<IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED="false" />
+			
 			<IMPORT NAME="jetty-util" MODULE="jetty-util-6.1.26.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4')" />
 			<IMPORT NAME="jersey-core" MODULE="jersey-core-1.8.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4')" />
 			<IMPORT NAME="commons-io" MODULE="commons-io-2.4.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4')" />	
