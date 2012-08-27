@@ -68,7 +68,7 @@
 					VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar"
 					SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MapR2"
-                    VALUE="hadoop-0.20.2-dev-core-mapr2.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar"
+                    VALUE="MapR2"
                     SHOW_IF="DISTRIBUTION=='MAPR'" />
 			</ITEMS>
 		</PARAMETER>
@@ -198,7 +198,10 @@
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'" />
 				
-			<IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED="false" />
+			<IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
 			
 			<IMPORT NAME="jetty-util" MODULE="jetty-util-6.1.26.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4')" />
 			<IMPORT NAME="jersey-core" MODULE="jersey-core-1.8.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4')" />
