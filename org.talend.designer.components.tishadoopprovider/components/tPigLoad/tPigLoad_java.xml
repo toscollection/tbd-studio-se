@@ -192,12 +192,12 @@
 			<IMPORT NAME="zookeeper-3.3.2" MODULE="zookeeper-3.3.2.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
 			<IMPORT NAME="hadoop-0.20.2-dev-core" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
 			
-			<IMPORT NAME="automaton" MODULE="automaton.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
+			<IMPORT NAME="automaton.jar" MODULE="automaton.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="pig-0.10.0-mapr2" MODULE="pig-0.10.0-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="pigperf-mapr2" MODULE="pigperf-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="sdsuLibJKD12-mapr2" MODULE="sdsuLibJKD12-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
-            <IMPORT NAME="maprfs-0.1" MODULE="maprfs-0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
-            <IMPORT NAME="zookeeper-3.3.2" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
+            <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
 			
 			<IMPORT NAME="pig-0.9.2-withouthadoop" MODULE="pig-0.9.2-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
