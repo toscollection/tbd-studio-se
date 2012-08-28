@@ -175,7 +175,7 @@
 	<CODEGENERATION>
 		<IMPORTS>
 			<IMPORT NAME="json-simple" MODULE="json_simple-1.1.jar" REQUIRED="true"/>
-      		<IMPORT NAME="cxf-2.6.2-SNAPSHOT" MODULE="cxf-2.6.2-SNAPSHOT.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'" />    
+			<IMPORT NAME="cxf-2.6.2" MODULE="cxf-2.6.2.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'" />    
 			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'" />    
 			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'" />    
 			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'" />    
