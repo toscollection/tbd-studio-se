@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/neethi-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hadoop-conf-kerberos.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/json_simple-1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/cxf-2.6.2-SNAPSHOT.jar" sourcepath="/Sources/lib/apache-cxf-2.6.2-src.zip"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
