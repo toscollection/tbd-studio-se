@@ -2,6 +2,7 @@ package org.talend.repository.hdfs.node;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -13,10 +14,15 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.metadata.MetadataManager;
+import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.AbstractRepositoryContentHandler;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.repository.utils.RepositoryNodeManager;
 import org.talend.core.repository.utils.XmiResourceManager;
+import org.talend.cwm.helper.ConnectionHelper;
+import org.talend.cwm.helper.SubItemHelper;
 import org.talend.repository.hdfs.util.EHDFSImage;
 import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.IRepositoryNode.EProperties;
@@ -135,7 +141,32 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return null;
     }
 
-    public boolean isCreateTableNode() {
+    @Override
+    public void addNode(ERepositoryObjectType type, RepositoryNode parentNode, IRepositoryViewObject repositoryObject,
+            RepositoryNode node) {
+        if (type == HDFSRepositoryNodeType.HDFS) {
+            HDFSConnection connection = (HDFSConnection) ((HDFSConnectionItem) repositoryObject.getProperty().getItem())
+                    .getConnection();
+            Set<MetadataTable> tableset = ConnectionHelper.getTables(connection);
+            for (MetadataTable metadataTable : tableset) {
+                if (!SubItemHelper.isDeleted(metadataTable)) {
+                    RepositoryNode tableNode = RepositoryNodeManager.createMetatableNode(node, repositoryObject, metadataTable);
+                    node.getChildren().add(tableNode);
+                    if (metadataTable.getColumns().size() > 0) {
+                        RepositoryNodeManager.createColumns(tableNode, repositoryObject, metadataTable);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public ERepositoryObjectType getHandleType() {
+        return HDFSRepositoryNodeType.HDFS;
+    }
+
+    @Override
+    public boolean hasSchemas() {
         return true;
     }
 

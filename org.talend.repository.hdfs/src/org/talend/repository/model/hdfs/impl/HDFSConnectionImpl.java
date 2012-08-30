@@ -108,7 +108,7 @@ public class HDFSConnectionImpl extends ConnectionImpl implements HDFSConnection
      * @generated
      * @ordered
      */
-    protected static final String NAME_NODE_URI_EDEFAULT = null;
+    protected static final String NAME_NODE_URI_EDEFAULT = "hdfs://localhost:9000/";
 
     /**
      * The cached value of the '{@link #getNameNodeURI() <em>Name Node URI</em>}' attribute.
@@ -148,7 +148,7 @@ public class HDFSConnectionImpl extends ConnectionImpl implements HDFSConnection
      * @generated
      * @ordered
      */
-    protected static final String PRINCIPAL_EDEFAULT = null;
+    protected static final String PRINCIPAL_EDEFAULT = "nn/_HOST@EXAMPLE.COM";
 
     /**
      * The cached value of the '{@link #getPrincipal() <em>Principal</em>}' attribute.
@@ -168,7 +168,7 @@ public class HDFSConnectionImpl extends ConnectionImpl implements HDFSConnection
      * @generated
      * @ordered
      */
-    protected static final String USER_NAME_EDEFAULT = null;
+    protected static final String USER_NAME_EDEFAULT = "anonymous";
 
     /**
      * The cached value of the '{@link #getUserName() <em>User Name</em>}' attribute.

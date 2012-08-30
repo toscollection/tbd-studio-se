@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: HDFS Repository Plug-in
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.talend.repository.hdfs;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.talend.repository.hdfs.Activator
@@ -21,5 +21,5 @@ Require-Bundle: org.eclipse.ui,
  org.talend.libraries.apache
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Vendor: .Talend SA.
+Bundle-Vendor: %providerName
 Bundle-ClassPath: .

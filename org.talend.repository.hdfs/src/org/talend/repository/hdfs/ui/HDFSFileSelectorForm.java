@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -802,8 +801,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
     }
 
     class RetrieveColumnRunnable implements Runnable {
-
-        final ReentrantLock runLock = new ReentrantLock();
 
         TreeItem treeItem;
 

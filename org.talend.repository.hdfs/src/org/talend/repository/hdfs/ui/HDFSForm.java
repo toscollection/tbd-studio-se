@@ -33,9 +33,9 @@ import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.designer.hdfsbrowse.util.EHadoopDistributions;
+import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.repository.hdfs.i18n.Messages;
-import org.talend.repository.hdfs.util.EHadoopDistributions;
-import org.talend.repository.hdfs.util.EHadoopVersion4Drivers;
 import org.talend.repository.model.hdfs.HDFSConnection;
 
 /**

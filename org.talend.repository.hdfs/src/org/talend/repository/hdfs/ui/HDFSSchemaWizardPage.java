@@ -12,17 +12,12 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
-import java.util.List;
-
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
-import org.talend.core.model.metadata.builder.database.TableNode;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.ui.swt.utils.AbstractForm;
-import org.talend.repository.ui.wizards.metadata.table.database.SelectorTableWizardPage;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -68,17 +63,6 @@ public class HDFSSchemaWizardPage extends WizardPage {
         };
         schemaForm.setListener(listener);
         setControl(schemaForm);
-    }
-
-    public IWizardPage getPreviousPage() {
-        IWizardPage perviousPage = super.getPreviousPage();
-        if (perviousPage instanceof SelectorTableWizardPage) {
-            List<TableNode> nodeList = ((SelectorTableWizardPage) perviousPage).getTableNodeList();
-            if (nodeList != null && nodeList.isEmpty()) {
-                ((SelectorTableWizardPage) perviousPage).initControlData();
-            }
-        }
-        return perviousPage;
     }
 
 }

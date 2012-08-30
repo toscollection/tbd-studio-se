@@ -131,7 +131,9 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
             } else {
                 return;
             }
-            if (checkHDFSConnection((HDFSConnection) item.getConnection())) {
+            if (!creation) {
+                openHDFSSchemaWizard(item, metadataTable, false, creation);
+            } else if (checkHDFSConnection((HDFSConnection) item.getConnection())) {
                 openHDFSSchemaWizard(item, metadataTable, false, creation);
             }
         }

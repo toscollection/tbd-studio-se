@@ -114,6 +114,7 @@ public interface HDFSConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>Name Node URI</b></em>' attribute.
+     * The default value is <code>"hdfs://localhost:9000/"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name Node URI</em>' attribute isn't clear,
@@ -123,7 +124,7 @@ public interface HDFSConnection extends Connection {
      * @return the value of the '<em>Name Node URI</em>' attribute.
      * @see #setNameNodeURI(String)
      * @see org.talend.repository.model.hdfs.HDFSPackage#getHDFSConnection_NameNodeURI()
-     * @model
+     * @model default="hdfs://localhost:9000/"
      * @generated
      */
     String getNameNodeURI();
@@ -166,6 +167,7 @@ public interface HDFSConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>Principal</b></em>' attribute.
+     * The default value is <code>"nn/_HOST@EXAMPLE.COM"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Principal</em>' attribute isn't clear,
@@ -175,7 +177,7 @@ public interface HDFSConnection extends Connection {
      * @return the value of the '<em>Principal</em>' attribute.
      * @see #setPrincipal(String)
      * @see org.talend.repository.model.hdfs.HDFSPackage#getHDFSConnection_Principal()
-     * @model
+     * @model default="nn/_HOST@EXAMPLE.COM"
      * @generated
      */
     String getPrincipal();
@@ -192,6 +194,7 @@ public interface HDFSConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>User Name</b></em>' attribute.
+     * The default value is <code>"anonymous"</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>User Name</em>' attribute isn't clear,
@@ -201,7 +204,7 @@ public interface HDFSConnection extends Connection {
      * @return the value of the '<em>User Name</em>' attribute.
      * @see #setUserName(String)
      * @see org.talend.repository.model.hdfs.HDFSPackage#getHDFSConnection_UserName()
-     * @model
+     * @model default="anonymous"
      * @generated
      */
     String getUserName();
