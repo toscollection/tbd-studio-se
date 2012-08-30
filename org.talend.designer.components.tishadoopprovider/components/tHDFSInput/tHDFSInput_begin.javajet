@@ -32,6 +32,7 @@
 	
 	String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
+	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
 	List<? extends IConnection> outConns = node.getOutgoingConnections(EConnectionType.FLOW_MAIN);
@@ -129,7 +130,7 @@
 		org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
 		org.apache.hadoop.fs.FSDataInputStream fsDataInputStream_<%=cid%> = fs_<%=cid%>.open(path_<%=cid%>);
 		
-		org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>, <%=encoding %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
+		org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
 		while (fid_<%=cid %>.nextRecord()) {
 <%
 	}

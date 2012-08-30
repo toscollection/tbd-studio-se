@@ -22,6 +22,7 @@
 	
 	String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
+	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
@@ -59,7 +60,7 @@
 <%
 										} else if(javaType == JavaTypesManager.BYTE_ARRAY){
 %>
-											java.nio.charset.Charset.forName(<%=encoding%>).decode(java.nio.ByteBuffer.wrap(<%=conn.getName() %>.<%=column.getLabel() %>)).toString()
+											java.nio.charset.Charset.forName(<%=(customEncoding?encoding:"utf8Charset")%>).decode(java.nio.ByteBuffer.wrap(<%=conn.getName() %>.<%=column.getLabel() %>)).toString()
 <%
 										} else {
 %>
