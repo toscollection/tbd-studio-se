@@ -22,8 +22,8 @@
 %>
 				} // while
 				
-				if(br_<%=cid %> !=null ) {
-					br_<%=cid %>.close();
+				if(fid_<%=cid %> !=null ) {
+					fid_<%=cid %>.close();
 				}
 <%
 			}

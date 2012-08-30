@@ -91,6 +91,22 @@
 		<PARAMETER NAME="FILENAME" FIELD="TEXT" NUM_ROW="40" REQUIRED="true">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
+		
+		<PARAMETER NAME="ROWSEPARATOR" FIELD="TEXT" NUM_ROW="50" REQUIRED="true">
+            <DEFAULT>"\n"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="FIELDSEPARATOR" FIELD="TEXT" NUM_ROW="50" REQUIRED="true">
+            <DEFAULT>";"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="CUSTOM_ENCODING" FIELD="CHECK" NUM_ROW="55" REQUIRED="true">
+          <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="60" REQUIRED="true" SHOW_IF="CUSTOM_ENCODING == 'true'">
+            <DEFAULT>"ISO-8859-15"</DEFAULT>
+        </PARAMETER>
   	</PARAMETERS>
    
    
@@ -124,6 +140,8 @@
 			
 			<IMPORT NAME="jetty-util" MODULE="jetty-util-6.1.26.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0')" />
 			<IMPORT NAME="jersey-core" MODULE="jersey-core-1.8.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0')" />
+			
+			<IMPORT NAME="Talen File Enhanced" MODULE="talend_file_enhanced_20070724.jar" REQUIRED="true" />
 		</IMPORTS>
    	</CODEGENERATION>
 

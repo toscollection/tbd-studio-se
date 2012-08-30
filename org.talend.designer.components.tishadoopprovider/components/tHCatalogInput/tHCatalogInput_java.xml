@@ -101,6 +101,40 @@
 	</PARAMETERS>
    
 	<ADVANCED_PARAMETERS>
+		<PARAMETER 
+			NAME="ROWSEPARATOR" 
+			FIELD="TEXT" 
+			NUM_ROW="1" 
+			REQUIRED="true"
+		>
+            <DEFAULT>"\n"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER 
+	        NAME="FIELDSEPARATOR" 
+	        FIELD="TEXT" 
+	        NUM_ROW="1" 
+	        REQUIRED="true"
+        >
+            <DEFAULT>";"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+	        NAME="CUSTOM_ENCODING" 
+	        FIELD="CHECK" 
+	        NUM_ROW="3" 
+	        REQUIRED="true"
+        >
+          <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+	        NAME="ENCODING" 
+	        FIELD="ENCODING_TYPE" 
+	        NUM_ROW="5" 
+	        REQUIRED="true" 
+	        SHOW_IF="CUSTOM_ENCODING == 'true'"
+        >
+            <DEFAULT>"ISO-8859-15"</DEFAULT>
+        </PARAMETER>
 		<PARAMETER NAME="HADOOP_ADVANCED_PROPERTIES" FIELD="TABLE" REQUIRED="false" NUM_ROW="1" NB_LINES="3" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
 			<ITEMS>
 				<ITEM NAME="PROPERTY" />
@@ -149,6 +183,8 @@
 			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'"/>
 			<IMPORT NAME="commons-configuration" MODULE="commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'"/>
 			<IMPORT NAME="commons-lang" MODULE="commons-lang-2.4.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'"/>
+			
+			<IMPORT NAME="Talen File Enhanced" MODULE="talend_file_enhanced_20070724.jar" REQUIRED="true" /> 
     	</IMPORTS>
 	</CODEGENERATION>
    <RETURNS/>
