@@ -30,24 +30,24 @@ public enum ELinuxAuthority {
 
     ;
 
-    private String name;
+    private String value;
 
-    ELinuxAuthority(String name) {
-        this.name = name;
+    ELinuxAuthority(String value) {
+        this.value = value;
     }
 
-    public String getName() {
-        return this.name;
+    public String getValue() {
+        return this.value;
     }
 
-    public static List<String> getAuthorityNames() {
-        List<String> names = new ArrayList<String>();
+    public static List<String> getAuthorities() {
+        List<String> authorities = new ArrayList<String>();
         ELinuxAuthority[] values = values();
         for (ELinuxAuthority authority : values) {
-            names.add(authority.getName());
+            authorities.add(authority.getValue());
         }
 
-        return names;
+        return authorities;
     }
 
 }

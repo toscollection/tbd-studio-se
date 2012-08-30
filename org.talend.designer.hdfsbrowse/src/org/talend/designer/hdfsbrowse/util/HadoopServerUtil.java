@@ -118,7 +118,8 @@ public class HadoopServerUtil {
         if (permission == null) {
             return hasAuthority;
         }
-        String owner = status.getOwner();
+        userName = TalendQuoteUtils.addQuotesIfNotExist(userName);
+        String owner = TalendQuoteUtils.addQuotesIfNotExist(status.getOwner());
         FsAction userAction = permission.getUserAction();
         FsAction groupAction = permission.getGroupAction();
         FsAction otherAction = permission.getOtherAction();
