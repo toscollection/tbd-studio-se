@@ -34,6 +34,10 @@ public enum EHDFSRepositoryToComponent {
 
     FILENAME("FILENAME", "FILENAME"), //$NON-NLS-1$ //$NON-NLS-2$
 
+    ROWSEPARATOR("ROWSEPARATOR", "ROWSEPARATOR"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    FIELDSEPARATOR("FIELDSEPARATOR", "FIELDSEPARATOR"), //$NON-NLS-1$ //$NON-NLS-2$
+
     ;
 
     public final String repositoryValue;
