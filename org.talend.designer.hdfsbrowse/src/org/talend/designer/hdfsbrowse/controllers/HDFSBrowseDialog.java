@@ -137,7 +137,9 @@ public class HDFSBrowseDialog extends Dialog {
             isValid = false;
         } else {
             IHDFSNode node = (IHDFSNode) selection.getFirstElement();
-            if (node.getType() != type) {
+            if (type == EHadoopFileTypes.RESOURCE) {
+                isValid = true;
+            } else if (node.getType() != type) {
                 isValid = false;
             }
         }

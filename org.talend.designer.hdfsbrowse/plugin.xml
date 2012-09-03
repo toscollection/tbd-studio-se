@@ -13,6 +13,11 @@
             mapping="DIRECTORY_HADOOP"
             name="Directory Hadoop">
       </generator>
+      <generator
+            class="org.talend.designer.hdfsbrowse.generators.HadoopResourceGenerator"
+            mapping="BOTH_HADOOP"
+            name="Both Hadoop">
+      </generator>
    </extension>
 
 </plugin>

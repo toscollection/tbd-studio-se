@@ -18,22 +18,22 @@ import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public class HadoopFileController extends AbstractHDFSBrowseController {
+public class HadoopResourceController extends AbstractHDFSBrowseController {
 
-    private static final String FILE_HADOOP = "FILE_HADOOP"; //$NON-NLS-1$
+    private static final String BOTH_HADOOP = "BOTH_HADOOP"; //$NON-NLS-1$
 
-    public HadoopFileController(IDynamicProperty dp) {
+    public HadoopResourceController(IDynamicProperty dp) {
         super(dp);
     }
 
     @Override
     protected String getControllerName() {
-        return FILE_HADOOP;
+        return BOTH_HADOOP;
     }
 
     @Override
     protected EHadoopFileTypes getHDFSType() {
-        return EHadoopFileTypes.FILE;
+        return EHadoopFileTypes.RESOURCE;
     }
 
 }

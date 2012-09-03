@@ -26,6 +26,8 @@ public enum EHadoopFileTypes {
 
     FILE("File"),
 
+    RESOURCE("Resource"), // Represent all the resources in HDFS.
+
     ;
 
     private String value;

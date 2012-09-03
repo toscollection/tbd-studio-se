@@ -12,16 +12,8 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.controllers;
 
-import org.eclipse.gef.commands.Command;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Text;
 import org.talend.core.properties.tab.IDynamicProperty;
-import org.talend.core.utils.TalendQuoteUtils;
-import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
-import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -34,27 +26,14 @@ public class HadoopDirectoryController extends AbstractHDFSBrowseController {
         super(dp);
     }
 
-    public Command createCommand(SelectionEvent event) {
-        HDFSBrowseDialog dial = new HDFSBrowseDialog(composite.getShell(), EHadoopFileTypes.FOLDER, getHDFSConnectionBean());
-        Button btn = (Button) event.getSource();
-        String propertyName = (String) btn.getData(PARAMETER_NAME);
-        Text filePathText = (Text) hashCurControls.get(propertyName);
-        if (dial.open() == Window.OK) {
-            IHDFSNode result = dial.getResult();
-            String path = result.getRelativePath();
-            path = TalendQuoteUtils.addQuotesIfNotExist(path);
-            if (!elem.getPropertyValue(propertyName).equals(path)) {
-                filePathText.setText(path);
-                return new PropertyChangeCommand(elem, propertyName, path);
-            }
-
-        }
-        return null;
-    }
-
     @Override
     protected String getControllerName() {
         return DIRECTORY_HADOOP;
+    }
+
+    @Override
+    protected EHadoopFileTypes getHDFSType() {
+        return EHadoopFileTypes.FOLDER;
     }
 
 }

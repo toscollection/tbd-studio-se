@@ -19,6 +19,7 @@ import org.eclipse.jface.fieldassist.DecoratedField;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.TextControlCreator;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.events.SelectionEvent;
@@ -38,12 +39,16 @@ import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.CorePlugin;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.properties.tab.IDynamicProperty;
+import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.designer.core.ui.editor.nodes.Node;
 import org.talend.designer.core.ui.editor.properties.controllers.AbstractElementPropertySectionController;
 import org.talend.designer.core.ui.editor.properties.controllers.creator.SelectAllTextControlCreator;
 import org.talend.designer.hdfsbrowse.Activator;
 import org.talend.designer.hdfsbrowse.i18n.Messages;
+import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
 import org.talend.designer.hdfsbrowse.util.HadoopServerUtil;
 
@@ -58,7 +63,25 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         super(dp);
     }
 
-    protected abstract Command createCommand(SelectionEvent event);
+    protected Command createCommand(SelectionEvent event) {
+        HDFSBrowseDialog dial = new HDFSBrowseDialog(composite.getShell(), getHDFSType(), getHDFSConnectionBean());
+        Button btn = (Button) event.getSource();
+        String propertyName = (String) btn.getData(PARAMETER_NAME);
+        Text filePathText = (Text) hashCurControls.get(propertyName);
+        if (dial.open() == Window.OK) {
+            IHDFSNode result = dial.getResult();
+            String path = result.getRelativePath();
+            path = TalendQuoteUtils.addQuotesIfNotExist(path);
+            if (!elem.getPropertyValue(propertyName).equals(path)) {
+                filePathText.setText(path);
+                return new PropertyChangeCommand(elem, propertyName, path);
+            }
+
+        }
+        return null;
+    }
+
+    protected abstract EHadoopFileTypes getHDFSType();
 
     protected abstract String getControllerName();
 
