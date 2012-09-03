@@ -28,14 +28,18 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
+import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
 import org.talend.designer.hdfsbrowse.util.EHadoopDistributions;
 import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.repository.hdfs.i18n.Messages;
+import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
 import org.talend.repository.model.hdfs.HDFSConnection;
 
 /**
@@ -65,6 +69,14 @@ public class HDFSForm extends AbstractHDFSForm {
 
     private LabelledText groupText;
 
+    private LabelledCombo rowSeparatorCombo;
+
+    private LabelledCombo fieldSeparatorCombo;
+
+    private Text rowSeparatorText;
+
+    private Text fieldSeparatorText;
+
     public HDFSForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
         super(parent, SWT.NONE, existingNames);
         this.connectionItem = connectionItem;
@@ -92,6 +104,30 @@ public class HDFSForm extends AbstractHDFSForm {
         principalText.setText(getConnection().getPrincipal());
         userNameText.setText(getConnection().getUserName());
         groupText.setText(getConnection().getGroup());
+        String rowSeparatorVal = getConnection().getRowSeparator();
+        if (!StringUtils.isEmpty(rowSeparatorVal)) {
+            rowSeparatorText.setText(rowSeparatorVal);
+        } else {
+            rowSeparatorVal = ExtractMetaDataFromHDFS.DEFAULT_ROW_SEPARATOR;
+            rowSeparatorText.setText(rowSeparatorVal);
+            getConnection().setRowSeparator(rowSeparatorVal);
+        }
+        EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorVal, false);
+        if (rowSeparator != null) {
+            rowSeparatorCombo.setText(rowSeparator.getDisplayName());
+        }
+        String fieldSeparatorVal = getConnection().getFieldSeparator();
+        if (!StringUtils.isEmpty(fieldSeparatorVal)) {
+            fieldSeparatorText.setText(fieldSeparatorVal);
+        } else {
+            fieldSeparatorVal = ExtractMetaDataFromHDFS.DEFAULT_FIELD_SEPARATOR;
+            fieldSeparatorText.setText(fieldSeparatorVal);
+            getConnection().setFieldSeparator(fieldSeparatorVal);
+        }
+        EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorVal, false);
+        if (fieldSeparator != null) {
+            fieldSeparatorCombo.setText(fieldSeparator.getDisplayName());
+        }
 
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -112,6 +148,7 @@ public class HDFSForm extends AbstractHDFSForm {
     protected void addFields() {
         addDistributionFields();
         addConnectionFields();
+        addSeparatorFields();
         addCheckFields();
     }
 
@@ -181,6 +218,40 @@ public class HDFSForm extends AbstractHDFSForm {
         principalText = new LabelledText(connectionPartComposite, Messages.getString("HDFSForm.text.principal"), 1); //$NON-NLS-1$
         userNameText = new LabelledText(connectionPartComposite, Messages.getString("HDFSForm.text.userName"), 1); //$NON-NLS-1$
         groupText = new LabelledText(connectionPartComposite, Messages.getString("HDFSForm.text.group"), 1); //$NON-NLS-1$
+    }
+
+    private void addSeparatorFields() {
+        Group separatorGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.separatorSettings"), 60); //$NON-NLS-1$
+
+        ScrolledComposite separatorComposite = new ScrolledComposite(separatorGroup, SWT.V_SCROLL | SWT.H_SCROLL);
+        separatorComposite.setExpandHorizontal(true);
+        separatorComposite.setExpandVertical(true);
+        separatorComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+        Composite separatorGroupComposite = Form.startNewGridLayout(separatorComposite, 6);
+        GridLayout separatorGroupCompLayout = (GridLayout) separatorGroupComposite.getLayout();
+        separatorGroupCompLayout.marginHeight = 0;
+        separatorGroupCompLayout.marginTop = 0;
+        separatorGroupCompLayout.marginBottom = 0;
+        separatorGroupCompLayout.marginLeft = 0;
+        separatorGroupCompLayout.marginRight = 0;
+        separatorGroupCompLayout.marginWidth = 0;
+        separatorComposite.setContent(separatorGroupComposite);
+
+        rowSeparatorCombo = new LabelledCombo(separatorGroupComposite, Messages.getString("HDFSForm.rowSeparator"), //$NON-NLS-1$
+                Messages.getString("HDFSForm.rowSeparator.tooltip"), EHDFSRowSeparator.getAllRowSeparators(true) //$NON-NLS-1$
+                        .toArray(new String[0]), 1, true);
+        rowSeparatorCombo.setVisibleItemCount(VISIBLE_DISTRIBUTION_COUNT);
+        rowSeparatorText = new Text(separatorGroupComposite, SWT.BORDER);
+        rowSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        fieldSeparatorCombo = new LabelledCombo(
+                separatorGroupComposite,
+                Messages.getString("HDFSForm.fieldSeparator"), //$NON-NLS-1$
+                Messages.getString("HDFSForm.fieldSeparator.tooltip"), EHDFSFieldSeparator.getAllFieldSeparators(true).toArray(new String[0]), 1, true); //$NON-NLS-1$
+        fieldSeparatorCombo.setVisibleItemCount(VISIBLE_VERSION_COUNT);
+        fieldSeparatorText = new Text(separatorGroupComposite, SWT.BORDER);
+        fieldSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     }
 
     private void addCheckFields() {
@@ -287,6 +358,60 @@ public class HDFSForm extends AbstractHDFSForm {
                 checkFieldsValue();
             }
         });
+
+        rowSeparatorCombo.addModifyListener(new ModifyListener() {
+
+            public void modifyText(final ModifyEvent e) {
+                String separatorDisplay = rowSeparatorCombo.getText();
+                EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(separatorDisplay, true);
+                if (rowSeparator != null) {
+                    rowSeparatorText.setText(rowSeparator.getValue());
+                    rowSeparatorText.forceFocus();
+                    rowSeparatorText.selectAll();
+                }
+            }
+        });
+
+        fieldSeparatorCombo.addModifyListener(new ModifyListener() {
+
+            public void modifyText(final ModifyEvent e) {
+                String separatorDisplay = fieldSeparatorCombo.getText();
+                EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(separatorDisplay, true);
+                if (fieldSeparator != null) {
+                    fieldSeparatorText.setText(fieldSeparator.getValue());
+                    fieldSeparatorText.forceFocus();
+                    fieldSeparatorText.selectAll();
+                }
+            }
+        });
+
+        rowSeparatorText.addModifyListener(new ModifyListener() {
+
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setRowSeparator(rowSeparatorText.getText());
+                checkFieldsValue();
+                EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorText.getText(), false);
+                if (rowSeparator == null) {
+                    rowSeparatorCombo.deselectAll();
+                } else {
+                    rowSeparatorCombo.setText(rowSeparator.getDisplayName());
+                }
+            }
+        });
+
+        fieldSeparatorText.addModifyListener(new ModifyListener() {
+
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setFieldSeparator(fieldSeparatorText.getText());
+                checkFieldsValue();
+                EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorText.getText(), false);
+                if (fieldSeparator == null) {
+                    fieldSeparatorCombo.deselectAll();
+                } else {
+                    fieldSeparatorCombo.setText(fieldSeparator.getDisplayName());
+                }
+            }
+        });
     }
 
     private void updateVersionCombo(String distribution) {
@@ -375,6 +500,16 @@ public class HDFSForm extends AbstractHDFSForm {
                 updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.group")); //$NON-NLS-1$
                 return false;
             }
+        }
+
+        if (!validText(rowSeparatorText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.rowSeparator")); //$NON-NLS-1$
+            return false;
+        }
+
+        if (!validText(fieldSeparatorText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.fieldSeparator")); //$NON-NLS-1$
+            return false;
         }
 
         checkConnectionBtn.setEnabled(true);

@@ -58,9 +58,9 @@ import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
+import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
+import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
 import org.talend.repository.ProjectManager;
-import org.talend.repository.hdfs.model.EHDFSFieldSeparator;
-import org.talend.repository.hdfs.model.EHDFSRowSeparator;
 import org.talend.repository.hdfs.server.HadoopServerManager;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.model.hdfs.HDFSConnection;
@@ -73,11 +73,9 @@ import org.talend.repository.ui.utils.ShadowProcessHelper;
  */
 public class ExtractMetaDataFromHDFS {
 
-    public final static String DEFAULT_FIELD_SEPARATOR = EHDFSFieldSeparator.SEMICOLON.getName();
+    public final static String DEFAULT_FIELD_SEPARATOR = EHDFSFieldSeparator.getDefaultSeparator().getValue();
 
-    public final static String DEFAULT_ROW_SEPARATOR = EHDFSRowSeparator.BR.getName();
-
-    public final static String DEFAULT_ROW_SEPARATOR_MAC = EHDFSRowSeparator.BR_MAC.getName();
+    public final static String DEFAULT_ROW_SEPARATOR = EHDFSRowSeparator.getDefaultSeparator().getValue();
 
     private final static int DEFAULT_READ_LINE_NUM = 50;
 
@@ -132,10 +130,6 @@ public class ExtractMetaDataFromHDFS {
 
     private static synchronized ProcessDescription getProcessDescription(HDFSConnection connection, File tmpFile)
             throws IOException {
-        // TODO: will support to change these default separators in the future...
-        connection.setRowSeparator(DEFAULT_ROW_SEPARATOR);
-        connection.setFieldSeparator(DEFAULT_FIELD_SEPARATOR);
-
         ProcessDescription processDescription = new ProcessDescription();
         Charset guessedCharset = CharsetToolkit.guessEncoding(tmpFile, 4096);
         processDescription.setEncoding(TalendQuoteUtils.addQuotesIfNotExist(guessedCharset.displayName()));
@@ -146,7 +140,7 @@ public class ExtractMetaDataFromHDFS {
         processDescription.setHeaderRow(-1);
         processDescription.setCSVOption(false);
         processDescription.setLimitRows(DEFAULT_READ_LINE_NUM);
-        processDescription.setPattern(TalendQuoteUtils.addQuotesIfNotExist(DEFAULT_FIELD_SEPARATOR));
+        processDescription.setPattern(TalendQuoteUtils.addQuotesIfNotExist(connection.getFieldSeparator()));
         processDescription.setRemoveEmptyRow(false);
         processDescription.setServer(TalendQuoteUtils.addQuotesIfNotExist(DEFAULT_FILE_SERVER));
         processDescription.setSplitRecord(false);
@@ -226,14 +220,6 @@ public class ExtractMetaDataFromHDFS {
             return "";
         }
         return path.replace("\\", "/"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    public List<String> getSupportedFieldSeparatorStyles() {
-        return EHDFSFieldSeparator.getAllFieldSeparators();
-    }
-
-    public List<String> getSupportedRowSeparatorStyles() {
-        return EHDFSRowSeparator.getAllRowSeparators();
     }
 
     public static List<MetadataColumn> guessSchemaFromArray(final CsvArray csvArray, boolean isFirstLineCaption, int header) {

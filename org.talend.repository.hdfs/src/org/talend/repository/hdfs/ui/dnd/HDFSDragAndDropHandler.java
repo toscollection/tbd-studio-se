@@ -94,6 +94,10 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
                     }
                 }
             }
+        } else if (EHDFSRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
+        } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
         }
 
         return null;
@@ -213,6 +217,18 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
                     EHDFSRepositoryToComponent.GROUP.getParameterName());
             if (value != null) {
                 connection.setGroup(value);
+            }
+        } else if (EHDFSRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(repositoryValue)) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+                    EHDFSRepositoryToComponent.ROWSEPARATOR.getParameterName());
+            if (value != null) {
+                connection.setRowSeparator(value);
+            }
+        } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(repositoryValue)) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+                    EHDFSRepositoryToComponent.FIELDSEPARATOR.getParameterName());
+            if (value != null) {
+                connection.setFieldSeparator(value);
             }
         }
     }

@@ -12,9 +12,15 @@
 // ============================================================================
 package org.talend.repository.hdfs.action;
 
+import java.lang.reflect.InvocationTargetException;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
@@ -139,18 +145,42 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
         }
     }
 
-    private boolean checkHDFSConnection(HDFSConnection connection) {
+    private boolean checkHDFSConnection(final HDFSConnection connection) {
+        final boolean[] result = new boolean[] { true };
+        IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
+
+            public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                monitor.beginTask(Messages.getString("CreateHDFSSchemaAction.checkConnection"), IProgressMonitor.UNKNOWN);
+                try {
+                    HadoopServerManager.getInstance().getDFS(connection, true);
+                } catch (Exception e) {
+                    PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            String mainMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.mainMsg"); //$NON-NLS-1$
+                            String detailMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.detailMsg", //$NON-NLS-1$
+                                    connection.getNameNodeURI());
+                            new ErrorDialogWidthDetailArea(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+                                    Activator.PLUGIN_ID, mainMsg, detailMsg);
+                            result[0] = false;
+                            return;
+                        }
+                    });
+                } finally {
+                    monitor.done();
+                }
+            }
+        };
+        ProgressMonitorDialog dialog = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell());
         try {
-            HadoopServerManager.getInstance().getDFS(connection, true);
+            dialog.run(true, true, runnableWithProgress);
         } catch (Exception e) {
-            String mainMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.mainMsg"); //$NON-NLS-1$
-            String detailMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.detailMsg", //$NON-NLS-1$
-                    connection.getNameNodeURI());
-            new ErrorDialogWidthDetailArea(Display.getCurrent().getActiveShell(), Activator.PLUGIN_ID, mainMsg, detailMsg);
-            return false;
+            result[0] = false;
+            ExceptionHandler.process(e);
         }
 
-        return true;
+        return result[0];
     }
 
     private void openHDFSSchemaWizard(final HDFSConnectionItem item, final MetadataTable metadataTable,
