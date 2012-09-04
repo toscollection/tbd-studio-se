@@ -46,6 +46,9 @@
 	String query = ElementParameterParser.getValue(node,"__QUERY__");
 	query = query.replaceAll("\n"," ");
 	query = query.replaceAll("\r"," ");
+	
+	boolean useSplit = "true".equals(ElementParameterParser.getValue(node,"__USE_SPLIT__"));
+	String split = ElementParameterParser.getValue(node,"__SPLIT__");
 %>
 
 <%
@@ -79,10 +82,11 @@ String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "--connect", <%=connec
 <%if(append){%>, "--append"<%}%>
 <%if(direct){%>, "--direct"<%}%>
 <%if(compress){%>, "--compress"<%}%>
-<%if(useTarget){%>, "--target-dir", <%=target%><%}%>
+<%if(useTarget || useQuery){%>, "--target-dir", <%=target%><%}%>
 <%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
 <%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
 <%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
+<%if(useSplit){%>, "--split-by", <%=split%><%}%>
 <%
 boolean isNull=false; 
 if(additionalList != null){ 
