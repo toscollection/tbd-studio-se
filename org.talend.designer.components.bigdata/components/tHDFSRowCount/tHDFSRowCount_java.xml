@@ -108,6 +108,7 @@
 	
 	    <PARAMETER
 	      NAME="ROWSEPARATOR"
+	      REPOSITORY_VALUE="ROWSEPARATOR"
 	      FIELD="TEXT"
 	      NUM_ROW="50"
 	      REQUIRED="true"
