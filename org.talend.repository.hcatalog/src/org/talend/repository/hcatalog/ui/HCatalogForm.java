@@ -143,9 +143,10 @@ public class HCatalogForm extends AbstractHCatalogForm {
         disGroupCompLayout.marginWidth = 0;
         distributionComposite.setContent(distributionGroupComposite);
 
-        distributionCombo = new LabelledCombo(distributionGroupComposite, Messages.getString("HCatalogForm.distribution"), //$NON-NLS-1$
-                Messages.getString("HCatalogForm.distribution.tooltip"), EHadoopDistributions.getAllDistributionDisplayNames() //$NON-NLS-1$
-                        .toArray(new String[0]), 1, true);
+        distributionCombo = new LabelledCombo(
+                distributionGroupComposite,
+                Messages.getString("HCatalogForm.distribution"), //$NON-NLS-1$
+                Messages.getString("HCatalogForm.distribution.tooltip"), new String[] { EHadoopDistributions.HORTONWORKS.getDisplayName() }, 1, true); //$NON-NLS-1$
         distributionCombo.setVisibleItemCount(VISIBLE_DISTRIBUTION_COUNT);
         versionCombo = new LabelledCombo(distributionGroupComposite, Messages.getString("HCatalogForm.version"), //$NON-NLS-1$
                 Messages.getString("HCatalogForm.version.tooltip"), new String[0], 1, true); //$NON-NLS-1$
