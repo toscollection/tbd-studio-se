@@ -95,7 +95,7 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
 									throw new java.io.IOException("The disk space is not enough,please check it!");
 								}
 	            			<%}%>
-            			    csvWriter_<%=cid%>.writeRecord(row_<%=cid%>);	
+            			    csvWriter_<%=cid%>.writeNext(row_<%=cid%>);	
 	            			<%if(checkDiskSpace){%>
         			    		csvWriter_<%=cid%>.flush();
 	            			<%}%>
