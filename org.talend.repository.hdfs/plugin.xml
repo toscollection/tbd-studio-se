@@ -70,7 +70,8 @@
             </and>
          </triggerPoints>
          <actionProvider
-               class="org.talend.repository.metadata.action.MetedataNodeActionProvier">
+               class="org.talend.repository.metadata.action.MetedataNodeActionProvier"
+               id="org.talend.repository.hdfs.action.provider.id">
             <enablement>
                <and>
                   <instanceof

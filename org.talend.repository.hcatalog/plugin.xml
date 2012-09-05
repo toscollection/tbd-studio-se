@@ -77,7 +77,8 @@
             </and>
          </triggerPoints>
          <actionProvider
-               class="org.talend.repository.metadata.action.MetedataNodeActionProvier">
+               class="org.talend.repository.metadata.action.MetedataNodeActionProvier"
+               id="org.talend.hcatalog.action.provider.id">
             <enablement>
                <and>
                   <instanceof
