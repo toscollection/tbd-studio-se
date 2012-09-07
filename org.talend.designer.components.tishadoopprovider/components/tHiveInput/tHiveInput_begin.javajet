@@ -35,6 +35,7 @@ imports="
 %>
 				System.setProperty("hive.metastore.local", "false");
 				System.setProperty("hive.metastore.uris", "thrift://" + <%=dbhost%> + ":" + <%=dbport%>);
+				System.setProperty("hive.metastore.execute.setugi", "true");
 				String url_<%=cid%> = "jdbc:hive://";
 <%
 			} else {
