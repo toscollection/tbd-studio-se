@@ -24,6 +24,14 @@ imports="
 			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 			
+			boolean setTempPath = "true".equals(ElementParameterParser.getValue(node, "__SET_TEMP_PATH__"));
+			if(setTempPath) {
+				String tempPath = ElementParameterParser.getValue(node, "__TEMP_PATH__");
+%>
+				System.setProperty("java.io.tmpdir", <%=tempPath%>);
+<%
+			}
+			
 			if(("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode))) {
 %>
 				if(true) {
@@ -52,6 +60,6 @@ imports="
 	}//end class
 	
 	dbInputBeginUtil = new DBInputBeginUtil();
-	%>
+%>
 	System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/AbstractDBInputBegin.javajet"%>
