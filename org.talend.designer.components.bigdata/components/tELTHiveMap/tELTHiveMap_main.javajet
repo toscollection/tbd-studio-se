@@ -6,6 +6,7 @@
 	org.talend.core.model.process.IConnection
 	org.talend.designer.dbmap.external.data.ExternalDbMapData
 	org.talend.designer.dbmap.external.data.ExternalDbMapTable
+	org.talend.core.model.process.ElementParameterParser
 	org.talend.designer.dbmap.DbMapComponent
 	java.util.HashMap
 	java.util.Map
@@ -27,6 +28,14 @@
     List<IConnection> outputConnections = (List<IConnection>) node.getOutgoingConnections();
     ExternalDbMapData data = (ExternalDbMapData) node.getExternalData();
     uniqueNameComponent = node.getUniqueName();
+    
+	boolean setTempPath = "true".equals(ElementParameterParser.getValue(node, "__SET_TEMP_PATH__")); 
+	if(setTempPath) { 
+		String tempPath = ElementParameterParser.getValue(node, "__TEMP_PATH__"); 
+	%> 
+		System.setProperty("java.io.tmpdir", <%=tempPath%>); 
+	<% 
+	} 
 
     List<ExternalDbMapTable> outputTables = data.getOutputTables();
 
