@@ -89,12 +89,34 @@
 		if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily) || "CREATE_IF_NOT_EXISTS".equals(actionOnColumnFamily)){
 %>
 			try {
+<%
+			if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
+%>
+				cluster_<%=cid%>.dropColumnFamily(<%=keySpace%>,<%=columnFamily%>, true);
+<%
+			}else{
+%>
 				me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
 				cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
 				cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
-			} catch (Exception e) {
+<%
+ 			}
+%>
+			} catch (Exception e_<%=cid%>) {
+<%
+			if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
+%>
+			}finally{
+				me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
+				cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
+				cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
 			}
 <%
+			}else{
+%>
+			}
+<%
+			}
 		}
 		if("CREATE".equals(actionOnColumnFamily) || "DROP_CREATE".equals(actionOnColumnFamily)){
 %>
