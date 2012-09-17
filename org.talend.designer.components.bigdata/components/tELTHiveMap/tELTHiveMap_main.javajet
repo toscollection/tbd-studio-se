@@ -35,8 +35,34 @@
 	%> 
 		System.setProperty("java.io.tmpdir", <%=tempPath%>); 
 	<% 
-	} 
+	}
 
+	boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
+	boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+
+	if(hadoopProps.size() > 0){
+		for(Map<String, String> item : hadoopProps){
+%>
+		System.setProperty(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<%
+		} 
+	}
+			
+	if(setMapredJT) {
+		String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
+%>
+		System.setProperty("mapred.job.tracker", <%=mapredJT%>);
+<%
+	}
+		
+	if(setNamenode) {
+		String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+%>
+		System.setProperty("fs.default.name", <%=namenode%>);
+<%
+	}			
+	
     List<ExternalDbMapTable> outputTables = data.getOutputTables();
 
     Map<String, IConnection> nameToOutputConnection = new HashMap<String, IConnection>();
