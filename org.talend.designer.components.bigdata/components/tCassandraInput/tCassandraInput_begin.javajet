@@ -174,7 +174,7 @@
 <%
 				}else{
 %>
-			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.rderedRows<String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedRows<String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
 <%
 				}
 %>
