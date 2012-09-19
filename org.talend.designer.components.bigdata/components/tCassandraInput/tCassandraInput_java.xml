@@ -145,43 +145,90 @@
             NUM_ROW="21" 
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'true')" 
         />
-		<PARAMETER 
+        <PARAMETER 
+            FIELD="CHECK" 
+            NAME="SPECIFY_KEYS" 
+            NUM_ROW="23"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
             FIELD="TEXT" 
             NAME="ROW_KEYS" 
-            NUM_ROW="24"
+            NUM_ROW="25"
+            SHOW_IF="(SPECIFY_KEYS == 'true')"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 		<PARAMETER 
             FIELD="TEXT" 
-            NAME="SUPER_COLUMN_KEYS" 
+            NAME="KEY_START" 
             NUM_ROW="25"
-            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')" 
+            SHOW_IF="(SPECIFY_KEYS == 'false')"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            FIELD="TEXT" 
+            NAME="KEY_END" 
+            NUM_ROW="25"
+            SHOW_IF="(SPECIFY_KEYS == 'false')"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+		<PARAMETER 
+            FIELD="TEXT" 
+            NAME="KEY_LIMIT"
+            NUM_ROW="26"
+            GROUP="QUERY_CONFIGURATION"
+            SHOW_IF="(SPECIFY_KEYS == 'false')"
+        >
+            <DEFAULT>1000</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            FIELD="CHECK" 
+            NAME="SPECIFY_COLUMNS" 
+            NUM_ROW="28"
+            GROUP="QUERY_CONFIGURATION" 
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            FIELD="TEXT" 
+            NAME="COLUMNS" 
+            NUM_ROW="29"
+            SHOW_IF="(SPECIFY_COLUMNS == 'true')" 
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
-			NAME="KEY_START" 
+			NAME="COLUMN_START" 
 			NUM_ROW="30"
+			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
 		    GROUP="QUERY_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
-			NAME="KEY_END" 
+			NAME="COLUMN_END" 
 			NUM_ROW="30"
+			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
             GROUP="QUERY_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
-			NAME="COUNT" 
+			NAME="COLUMN_LIMIT" 
 			NUM_ROW="32"
+			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
             GROUP="QUERY_CONFIGURATION"
 		>
 			<DEFAULT>1000</DEFAULT>

@@ -31,10 +31,16 @@
     String superKeyColumn = ElementParameterParser.getValue(node,"__SUPER_KEY_COLUMN__");
     boolean incSuperKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_SUPER_KEY__"));
     String rowKeys=ElementParameterParser.getValue(node,"__ROW_KEYS__");
-    String superColumnKeys=ElementParameterParser.getValue(node,"__SUPER_COLUMN_KEYS__");
- 	String start = ElementParameterParser.getValue(node,"__KEY_START__");
- 	String end = ElementParameterParser.getValue(node,"__KEY_END__");
- 	String count = ElementParameterParser.getValue(node,"__COUNT__");
+    String searchColumns=ElementParameterParser.getValue(node,"__COLUMNS__");
+ 	String keyStart = ElementParameterParser.getValue(node,"__KEY_START__");
+ 	String keyEnd = ElementParameterParser.getValue(node,"__KEY_END__");
+ 	String keyLimit= ElementParameterParser.getValue(node,"__KEY_LIMIT__");
+ 	String columnStart = ElementParameterParser.getValue(node,"__COLUMN_START__");
+ 	String columnEnd = ElementParameterParser.getValue(node,"__COLUMN_END__");
+ 	String columnLimit = ElementParameterParser.getValue(node,"__COLUMN_LIMIT__");
+ 	
+ 	boolean isSpecifyKeys = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__SPECIFY_KEYS__"));
+ 	boolean isSpecifyColumns = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__SPECIFY_COLUMNS__"));
  	
  	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
     
@@ -112,30 +118,66 @@
 		        	}
 					columns.append("\""+column.getOriginalDbColumnName()+"\"");
 	             }
+				if(isSpecifyKeys){
 %>
 			me.prettyprint.hector.api.query.MultigetSliceQuery<String, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSliceQuery(
 				keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
+<%
+				}else{
+%>
+			me.prettyprint.hector.api.query.RangeSlicesQuery<String, String, String> sliceQuery_<%=cid%> =
+				me.prettyprint.hector.api.factory.HFactory.createRangeSlicesQuery(keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
+<%
+				}
+%>
 			sliceQuery_<%=cid%>.setColumnNames(<%=columns.toString()%>);
 <%
 			}else{
+				if(isSpecifyKeys){
 %>
 			me.prettyprint.hector.api.query.MultigetSuperSliceQuery<String, String, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSuperSliceQuery(
 				keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);
 <%
+				}else{
+%>
+		me.prettyprint.hector.api.query.RangeSuperSlicesQuery<String, String, String, String> sliceQuery_<%=cid%> = 
+				me.prettyprint.hector.api.factory.HFactory.createRangeSuperSlicesQuery(keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);	
+<%
+				}
 			}
 %>
 			sliceQuery_<%=cid%>.setColumnFamily(<%=columnFamily%>);
-			sliceQuery_<%=cid%>.setKeys(<%=rowKeys%>);
-	        sliceQuery_<%=cid%>.setRange(<%=start%>, <%=end%>, false, <%=count%>);
-<%
-			if("SUPER".equals(columnFamilyType) && superColumnKeys!=null && !"".equals(superColumnKeys) && !"\"\"".equals(superColumnKeys)){
+<%			
+			if(isSpecifyKeys){
 %>
-			sliceQuery_<%=cid%>.setColumnNames(<%=superColumnKeys%>);
+			sliceQuery_<%=cid%>.setKeys(<%=rowKeys%>);
+<%
+			}else{
+%>
+			sliceQuery_<%=cid%>.setKeys(<%=keyStart%>,<%=keyEnd%>);
+			sliceQuery_<%=cid%>.setRowCount(<%=keyLimit%>);
+<%
+			}
+			if(isSpecifyColumns){
+%>
+			sliceQuery_<%=cid%>.setColumnNames(<%=searchColumns%>);
+<%
+			}else{
+%>
+			sliceQuery_<%=cid%>.setRange(<%=columnStart%>, <%=columnEnd%>, false, <%=columnLimit%>);
 <%
 			}
 			if("STANDARD".equals(columnFamilyType)){
+				if(isSpecifyKeys){
 %>
 			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.Rows<String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+<%
+				}else{
+%>
+			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.rderedRows<String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+<%
+				}
+%>
 			java.util.Iterator rows_<%=cid%> = result_<%=cid%>.get().iterator();
 			while (rows_<%=cid%>.hasNext()) {
 				nb_line_<%=cid %>++;
@@ -143,8 +185,16 @@
 				me.prettyprint.hector.api.beans.ColumnSlice slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
 <%
 			}else{
+				if(isSpecifyKeys){
 %>
 			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.SuperRows<String,String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+<%
+				}else{
+%>
+			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedSuperRows<String,String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+<%
+				}
+%>
 			java.util.Iterator superRows_<%=cid%> = result_<%=cid%>.get().iterator();
 			while (superRows_<%=cid%>.hasNext()) {
 				nb_line_<%=cid %>++;
