@@ -50,9 +50,7 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
 		}
 %>
 		if(escapeChar_<%=cid %>=='\\'){
-		
 		}else if(escapeChar_<%=cid %> == textEnclosure_<%=cid %>){
-			
 		}else {
 			throw new RuntimeException("The escape mode only support the '\\' or double text enclosure.");
 		}
@@ -63,8 +61,13 @@ if ((metadatas!=null)&&(metadatas.size()>0)) {
 		<%}%>
 				
 		com.talend.csv.CSVWriter csvWriter_<%=cid%> = new com.talend.csv.CSVWriter(new java.io.BufferedWriter(new java.io.OutputStreamWriter(
-       		new java.io.FileOutputStream(file_<%=cid %>, <%=isAppend %>), <%=encoding %>)), fieldSeparator_<%=cid %>.charAt(0),textEnclosure_<%=cid %>,escapeChar_<%=cid %>,rowSeparator_<%=cid %>);
+        new java.io.FileOutputStream(file_<%=cid %>, <%=isAppend %>), <%=encoding %>)));
+        csvWriter_<%=cid%>.setSeparator(fieldSeparator_<%=cid %>.charAt(0));
         
+        csvWriter_<%=cid %>.setLineEnd(rowSeparator_<%=cid %>);              	
+        csvWriter_<%=cid %>.setEscapeChar(escapeChar_<%=cid %>);      		
+      	csvWriter_<%=cid %>.setQuoteChar(textEnclosure_<%=cid %>); 
+      	csvWriter_<%=cid %>.setQuoteStatus(com.talend.csv.CSVWriter.QuoteStatus.FORCE);        
 <%
 		if(checkDiskSpace){
 %>
