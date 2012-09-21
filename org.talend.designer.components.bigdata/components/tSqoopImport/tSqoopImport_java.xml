@@ -103,34 +103,34 @@
         </PARAMETER>
         
         <PARAMETER NAME="QUERY_LABEL" FIELD="LABEL" NUM_ROW="16" SHOW_IF="USE_QUERY=='true'" GROUP="QUERY_MODE">
-                <DEFAULT>Must specify target dir.If parallel,"split by" is necessary.If not parallel, need to set "number of mappers" to 1 for query</DEFAULT>
+                <DEFAULT>When importing a free-form query, you must specify a destination directory. If you want to import the results of a query in parallel, you must select a splitting column with --split-by</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="USE_TARGET" FIELD="CHECK" NUM_ROW="17">
+        <PARAMETER NAME="USE_TARGET" FIELD="CHECK" NUM_ROW="17" SHOW_IF="USE_QUERY=='false'">
                 <DEFAULT>false</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="TARGET" FIELD="TEXT" NUM_ROW="17" SHOW_IF="(USE_TARGET=='true') or (USE_QUERY=='true')">
+        <PARAMETER NAME="TARGET" FIELD="TEXT" NUM_ROW="18" SHOW_IF="(USE_TARGET=='true') or (USE_QUERY=='true')">
                 <DEFAULT>"/home/user/target"</DEFAULT>
         </PARAMETER>
         
-         <PARAMETER NAME="USE_SPLIT" FIELD="CHECK" NUM_ROW="18">
+         <PARAMETER NAME="USE_SPLIT" FIELD="CHECK" NUM_ROW="20">
                 <DEFAULT>false</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="SPLIT" FIELD="TEXT" NUM_ROW="18" SHOW_IF="USE_SPLIT=='true'">
+        <PARAMETER NAME="SPLIT" FIELD="TEXT" NUM_ROW="20" SHOW_IF="USE_SPLIT=='true'">
                 <DEFAULT>""</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="19">
+        <PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="25">
                 <DEFAULT>false</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="MAPPERS" FIELD="TEXT" NUM_ROW="19" SHOW_IF="USE_MAPPERS=='true'">
+        <PARAMETER NAME="MAPPERS" FIELD="TEXT" NUM_ROW="25" SHOW_IF="USE_MAPPERS=='true'">
                 <DEFAULT>"2"</DEFAULT>
         </PARAMETER>
         
-	    <PARAMETER NAME="ADDITIONAL" FIELD="TABLE" NUM_ROW="20" NB_LINES="5">
+	    <PARAMETER NAME="ADDITIONAL" FIELD="TABLE" NUM_ROW="30" NB_LINES="5">
 	      <ITEMS>
 	        <ITEM NAME="ADDITIONAL_ARGUMENT" FIELD="CLOSED_LIST" >
 	          <ITEMS DEFAULT="--driver">
