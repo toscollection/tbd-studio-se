@@ -420,6 +420,8 @@
 			<IMPORT NAME="datanucleus-rdbms-2.0.3.jar" MODULE="datanucleus-rdbms-2.0.3.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>	
 			<!-- ############## -->
      	</IMPORTS>
   </CODEGENERATION>
