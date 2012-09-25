@@ -45,6 +45,16 @@
 	      	<DEFAULT>false</DEFAULT>
 	    </PARAMETER>    
 	
+	<PARAMETER
+      NAME="DESTINATION"
+      FIELD="TEXT"
+      NUM_ROW="2"
+      REQUIRED="true"
+      SHOW_IF="false"
+    >
+      <DEFAULT>tHCatalogOutput_1</DEFAULT>
+    </PARAMETER>
+    
 	    <PARAMETER
 	      NAME="CONNECTION"
 	      FIELD="COMPONENT_LIST"
