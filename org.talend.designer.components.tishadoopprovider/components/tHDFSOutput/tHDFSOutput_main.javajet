@@ -79,7 +79,7 @@
 					String origin = ElementParameterParser.getValue(node, "__DESTINATION__");
 					String con_name = org.talend.core.model.utils.NodeUtil.getPrivateConnClassName(conn);
 %>
-				<%=origin+"_"+con_name %>list.add(<%=conn.getName() %>);
+				<%=con_name%>_list_<%=origin%>.add(<%=conn.getName() %>);
 <%
 				}
 %>
