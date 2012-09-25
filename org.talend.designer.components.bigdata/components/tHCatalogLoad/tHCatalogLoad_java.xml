@@ -40,7 +40,7 @@
       REQUIRED="true"
       SHOW_IF="false"
     >
-      <DEFAULT>tHCatalogOutput_1</DEFAULT>
+      <DEFAULT></DEFAULT>
     </PARAMETER>
 	
 		<PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" SHOW="true" NUM_ROW="1" REPOSITORY_VALUE="HCATALOG" />

@@ -52,7 +52,7 @@
       REQUIRED="true"
       SHOW_IF="false"
     >
-      <DEFAULT>tHCatalogOutput_1</DEFAULT>
+      <DEFAULT></DEFAULT>
     </PARAMETER>
     
 	    <PARAMETER

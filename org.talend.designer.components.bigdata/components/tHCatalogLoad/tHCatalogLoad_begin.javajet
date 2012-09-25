@@ -129,7 +129,7 @@ if(node.isVirtualGenerateNode()){
 		    if (metadataTableOutput!=null) { 
 				if (outConns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 %>
-		for(<%=con_name%>Struct row_<%=cid%>:<%=cid+"_"+con_name%>list){
+		for(<%=con_name%>Struct row_<%=cid%>:<%=con_name%>_list_<%=cid%>){
 <%
 				}
 			}

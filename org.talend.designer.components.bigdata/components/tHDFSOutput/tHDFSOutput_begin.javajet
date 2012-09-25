@@ -144,7 +144,7 @@
 			cid = origin;
 			String con_name = org.talend.core.model.utils.NodeUtil.getPrivateConnClassName(inConn);
 %>
-			List<<%=con_name%>Struct> <%=cid+"_"+con_name%>list= new java.util.ArrayList<<%=con_name%>Struct>();
+			List<<%=con_name%>Struct> <%=con_name%>_list_<%=cid%>= new java.util.ArrayList<<%=con_name%>Struct>();
 <%
 		}
 	}
