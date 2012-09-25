@@ -1,10 +1,12 @@
 <%@ jet
 	imports="
 	java.util.List
-	java.util.Map
 	org.talend.core.model.process.ElementParameterParser	
 	org.talend.core.model.process.INode
 	org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.IConnection
+	org.talend.core.model.process.IConnectionCategory
+	org.talend.core.model.metadata.IMetadataTable
 	"
 %>
 <%
@@ -24,8 +26,6 @@
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	boolean activateLog = "true".equals(ElementParameterParser.getValue(node, "__ACTIVATE_LOG__"));
 	
-	String stdout = ElementParameterParser.getValue(node, "__STDOUT__");
-	String stderr = ElementParameterParser.getValue(node, "__STDERR__");
 	
 	
 	
@@ -62,3 +62,27 @@
 		}
 %>
 	}
+<%
+if(node.isVirtualGenerateNode()){
+	List<? extends IConnection> outConns = node.getOutgoingSortedConnections();
+	if(outConns.size()>0){
+		INode previousNode = node.getIncomingConnections().get(0).getSource();
+		List<? extends IConnection> inConns  = previousNode.getIncomingConnections();
+		IConnection inConn = inConns.get(0);
+		String origin = ElementParameterParser.getValue(node, "__DESTINATION__");
+		cid = origin;
+		String con_name = org.talend.core.model.utils.NodeUtil.getPrivateConnClassName(inConn);
+		List<IMetadataTable> mestadataTableListOut = node.getMetadataList();
+		if (mestadataTableListOut!=null && mestadataTableListOut.size()>0) {
+		    IMetadataTable metadataTableOutput = mestadataTableListOut.get(0);
+		    if (metadataTableOutput!=null) { 
+				if (outConns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+%>
+		for(<%=con_name%>Struct row_<%=cid%>:<%=cid+"_"+con_name%>list){
+<%
+				}
+			}
+		}
+	}
+}
+%>

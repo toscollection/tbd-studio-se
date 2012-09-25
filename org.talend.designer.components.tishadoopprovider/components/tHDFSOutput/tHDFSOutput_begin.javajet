@@ -3,12 +3,9 @@
     org.talend.core.model.process.INode 
     org.talend.core.model.process.EConnectionType
     org.talend.core.model.metadata.IMetadataTable 
-    org.talend.core.model.metadata.IMetadataColumn 
+    org.talend.core.model.process.IConnectionCategory
     org.talend.core.model.process.IConnection
     org.talend.designer.codegen.config.CodeGeneratorArgument
-    org.talend.core.model.metadata.types.JavaTypesManager
-    org.talend.core.model.metadata.types.JavaType
-	org.talend.core.model.process.IConnectionCategory
 	org.talend.core.model.process.ElementParameterParser
 	java.util.Map 
     java.util.List 
@@ -21,7 +18,6 @@
 	String cid = node.getUniqueName();
 	
 	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
-	String mapredJobTracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
 	
 	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
@@ -53,8 +49,6 @@
 		<%
 		if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
 			String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
-			String host = ElementParameterParser.getValue(node, "__HOST__");
-			String port = ElementParameterParser.getValue(node, "__PORT__");
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 			String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 			%>
@@ -143,3 +137,15 @@
 	%>
 
 	
+<%
+	if(node.isVirtualGenerateNode() && metadata!=null){
+		if (inConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+			String origin = ElementParameterParser.getValue(node, "__DESTINATION__");
+			cid = origin;
+			String con_name = org.talend.core.model.utils.NodeUtil.getPrivateConnClassName(inConn);
+%>
+			List<<%=con_name%>Struct> <%=cid+"_"+con_name%>list= new java.util.ArrayList<<%=con_name%>Struct>();
+<%
+		}
+	}
+%>
