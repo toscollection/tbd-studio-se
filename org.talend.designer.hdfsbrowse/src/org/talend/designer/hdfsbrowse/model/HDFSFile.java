@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Path;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
@@ -29,8 +30,16 @@ import org.eclipse.ui.ISharedImages;
  */
 public class HDFSFile extends HDFSPath {
 
+    private long length;
+
     public HDFSFile(HDFSPath parent, Path path) {
         super(parent, path);
+        try {
+            FileStatus fs = getDFS().getFileStatus(path);
+            this.length = fs.getLen();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -71,6 +80,18 @@ public class HDFSFile extends HDFSPath {
     @Override
     public EHadoopFileTypes getType() {
         return EHadoopFileTypes.FILE;
+    }
+
+    public String getSize() {
+        final String[] units = { "b", "Kb", "Mb", "Gb", "Tb" };
+        int unit = 0;
+        double l = this.length;
+        while ((l >= 1024.0) && (unit < units.length)) {
+            unit += 1;
+            l /= 1024.0;
+        }
+
+        return String.format("%.1f %s", l, units[unit]); //$NON-NLS-1$
     }
 
 }

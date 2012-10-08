@@ -105,6 +105,11 @@ public class HDFSBrowseDialog extends Dialog {
         column2.setWidth(120);
         column2.setResizable(true);
 
+        TreeColumn column3 = new TreeColumn(tree, SWT.LEFT);
+        column3.setText(Messages.getString("HDFSBrowseDialog.column.size")); //$NON-NLS-1$
+        column3.setWidth(150);
+        column3.setResizable(true);
+
         FileSelectorTreeViewerProvider provider = new FileSelectorTreeViewerProvider();
         viewer.setContentProvider(provider);
         viewer.setLabelProvider(provider);
@@ -159,7 +164,7 @@ public class HDFSBrowseDialog extends Dialog {
     protected void configureShell(Shell newShell) {
         super.configureShell(newShell);
         newShell.setText(Messages.getString("HDFSBrowseDialog.title")); //$NON-NLS-1$ 
-        newShell.setSize(500, 500);
+        newShell.setSize(650, 500);
     }
 
     protected void initializeBounds() {

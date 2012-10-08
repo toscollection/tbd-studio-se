@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Display;
 import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.designer.hdfsbrowse.model.HDFSFile;
 import org.talend.designer.hdfsbrowse.model.HDFSFolder;
 import org.talend.designer.hdfsbrowse.model.HDFSPath;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
@@ -31,6 +32,8 @@ import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 public class FileSelectorTreeViewerProvider extends AbstractMetadataExtractorViewProvider {
 
     private final static IHDFSNode[] EMPTY_CONTENT = new IHDFSNode[0];
+
+    private final static String EMPTY_STRING = ""; //$NON-NLS-1$
 
     private final static String ROOT_PATH = "/"; //$NON-NLS-1$
 
@@ -91,8 +94,15 @@ public class FileSelectorTreeViewerProvider extends AbstractMetadataExtractorVie
             return StringUtils.trimToEmpty(content.getValue());
         case 1:
             return StringUtils.trimToEmpty(type.getValue());
+        case 2:
+            if (content instanceof HDFSFile) {
+                HDFSFile file = (HDFSFile) content;
+                return StringUtils.trimToEmpty(file.getSize());
+            } else {
+                return EMPTY_STRING;
+            }
         default:
-            return "";
+            return EMPTY_STRING;
         }
     }
 
