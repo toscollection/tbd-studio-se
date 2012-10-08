@@ -234,26 +234,31 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             }
         });
 
-        int columnWidth1 = 300;
-        int columnWidth2 = 140;
-        int columnWidth3 = 125;
-        int columnWidth4 = 140;
+        int columnWidth1 = 250;
+        int columnWidth2 = 100;
+        int columnWidth3 = 110;
+        int columnWidth4 = 130;
+        int columnWidth5 = 140;
 
-        TreeColumn tableName = new TreeColumn(schemaTree, SWT.NONE);
-        tableName.setText(Messages.getString("HDFSFileSelectorForm.schemaTree.nameColumn")); //$NON-NLS-1$
-        tableName.setWidth(columnWidth1);
+        TreeColumn fileName = new TreeColumn(schemaTree, SWT.LEFT);
+        fileName.setText(Messages.getString("HDFSFileSelectorForm.schemaTree.nameColumn")); //$NON-NLS-1$
+        fileName.setWidth(columnWidth1);
 
-        TreeColumn tableType = new TreeColumn(schemaTree, SWT.NONE);
-        tableType.setText(Messages.getString("HDFSFileSelectorForm.schemaTree.typeColumn")); //$NON-NLS-1$
-        tableType.setWidth(columnWidth2);
+        TreeColumn fileType = new TreeColumn(schemaTree, SWT.LEFT);
+        fileType.setText(Messages.getString("HDFSFileSelectorForm.schemaTree.typeColumn")); //$NON-NLS-1$
+        fileType.setWidth(columnWidth2);
 
-        TreeColumn nbColumns = new TreeColumn(schemaTree, SWT.RIGHT);
+        TreeColumn fileSize = new TreeColumn(schemaTree, SWT.LEFT);
+        fileSize.setText(Messages.getString("HDFSFileSelectorForm.schemaTree.sizeColumn")); //$NON-NLS-1$
+        fileSize.setWidth(columnWidth3);
+
+        TreeColumn nbColumns = new TreeColumn(schemaTree, SWT.LEFT);
         nbColumns.setText(Messages.getString("HDFSFileSelectorForm.schemaTree.numberColumn")); //$NON-NLS-1$
-        nbColumns.setWidth(columnWidth3);
+        nbColumns.setWidth(columnWidth4);
 
-        TreeColumn creationStatus = new TreeColumn(schemaTree, SWT.RIGHT);
+        TreeColumn creationStatus = new TreeColumn(schemaTree, SWT.LEFT);
         creationStatus.setText(Messages.getString("HDFSFileSelectorForm.schemaTree.statusColumn")); //$NON-NLS-1$
-        creationStatus.setWidth(columnWidth4);
+        creationStatus.setWidth(columnWidth5);
 
         AbstractMetadataExtractorViewProvider viewProvider = new FileSelectorTreeViewerProvider();
         schemaTreeViewer.setLabelProvider(viewProvider);
@@ -278,16 +283,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         buttonSize = gc.stringExtent(displayStr);
         checkConnectionBtn = new UtilsButton(buttonsGroup, displayStr, buttonSize.x + 12, HEIGHT_BUTTON_PIXEL);
         gc.dispose();
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.swt.widgets.Control#setVisible(boolean)
-     */
-    @Override
-    public void setVisible(boolean visible) {
-        super.setVisible(visible);
     }
 
     protected void addUtilsButtonListeners() {
@@ -431,8 +426,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                             if (existTable != null) {
                                 refreshExistItem(existTable, treeItem);
                             } else {
-                                treeItem.setText(2, EMPTY_STRING);
-                                treeItem.setText(3, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
+                                treeItem.setText(3, EMPTY_STRING);
+                                treeItem.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
                                 countPending++;
                                 parentWizardPage.setPageComplete(false);
                                 refreshTable(treeItem, -1);
@@ -512,7 +507,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         clearTreeItem(existItem);
                         existItem.setChecked(false);
                     }
-                    item.setText(3, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
+                    item.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
                     countPending++;
                     parentWizardPage.setPageComplete(false);
                     refreshTable(item, -1);
@@ -588,8 +583,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                 if (deleteFromConnection) {
                     deleteTable(item);
                 }
-                item.setText(2, EMPTY_STRING);
                 item.setText(3, EMPTY_STRING);
+                item.setText(4, EMPTY_STRING);
             }
             RetrieveColumnRunnable runnable = threadExecutor.getRunnable(item);
             if (runnable != null) {
@@ -659,7 +654,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     if (existTable != null) {
                         refreshExistItem(existTable, item);
                     } else {
-                        item.setText(3, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
+                        item.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
                         countPending++;
                         parentWizardPage.setPageComplete(false);
                         refreshTable(item, -1);
@@ -719,8 +714,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         Integer num = tableColumnNums.get(item.getText(0));
                         if (num != null) {
                             // get column num from previous result
-                            item.setText(2, num.toString());
-                            item.setText(3, Messages.getString("HDFSFileSelectorForm.title.success")); //$NON-NLS-1$
+                            item.setText(3, num.toString());
+                            item.setText(4, Messages.getString("HDFSFileSelectorForm.title.success")); //$NON-NLS-1$
                         } else {
                             // retrieve column num again
                             refreshTable(item, -1);
@@ -919,8 +914,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             }
 
             if (checkConnectionIsDone) {
-                treeItem.setText(2, EMPTY_STRING + metadataColumns.size()); //$NON-NLS-1$
-                treeItem.setText(3, Messages.getString("HDFSFileSelectorForm.title.success")); //$NON-NLS-1$
+                treeItem.setText(3, EMPTY_STRING + metadataColumns.size()); //$NON-NLS-1$
+                treeItem.setText(4, Messages.getString("HDFSFileSelectorForm.title.success")); //$NON-NLS-1$
                 countSuccess++;
                 tableColumnNums.put(treeItem.getText(0), metadataColumns.size());
             } else {
