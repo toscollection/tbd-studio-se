@@ -12,7 +12,7 @@
     
 	String host = ElementParameterParser.getValue(node,"__HOST__");
     String port = ElementParameterParser.getValue(node,"__PORT__");
-    String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
+    //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
     String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
@@ -46,7 +46,7 @@
 <%
 		}
 %>
-			cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster(<%=cluster%>,hosts_<%=cid%>,credentials_<%=cid%>);
+			cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
 <%
 	}
 %>

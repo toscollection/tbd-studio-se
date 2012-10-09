@@ -63,6 +63,7 @@
 		>
 			<DEFAULT>"9160"</DEFAULT>
 		</PARAMETER>
+		<!--
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="CLUSTER" 
@@ -71,14 +72,7 @@
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="KEY_SPACE" 
-			NUM_ROW="7"
-			GROUP="KEYSPACE_CONFIGURATION"
-		>
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
+		-->
 		<PARAMETER 
 			NAME="REQUIRED_AUTHENTICATION" 
 			FIELD="CHECK"
@@ -103,6 +97,14 @@
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
+		<PARAMETER 
+            FIELD="TEXT" 
+            NAME="KEY_SPACE" 
+            NUM_ROW="13"
+            GROUP="KEYSPACE_CONFIGURATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="COLUMN_FAMILY" 

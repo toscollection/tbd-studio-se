@@ -59,6 +59,7 @@
 		>
 			<DEFAULT>"9160"</DEFAULT>
 		</PARAMETER>
+		<!--
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="CLUSTER" 
@@ -67,10 +68,35 @@
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
+		-->
+		<PARAMETER 
+            NAME="REQUIRED_AUTHENTICATION" 
+            FIELD="CHECK"
+            NUM_ROW="10"
+            SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            FIELD="TEXT" 
+            NAME="USERNAME" 
+            NUM_ROW="11"
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER 
+            FIELD="TEXT" 
+            NAME="PASSWORD" 
+            NUM_ROW="11"
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="KEY_SPACE" 
-			NUM_ROW="7"
+			NUM_ROW="13"
 			GROUP="KEYSPACE_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
@@ -78,7 +104,7 @@
 		<PARAMETER
 			NAME="ACTION_ON_KEYSPACE"
 	     	FIELD="CLOSED_LIST"
-	      	NUM_ROW="7"
+	      	NUM_ROW="13"
 	      	GROUP="KEYSPACE_CONFIGURATION"
     	>
 		   	<ITEMS DEFAULT="NONE">
@@ -89,30 +115,6 @@
 		        <ITEM NAME="DROP_IF_EXISTS_AND_CREATE" VALUE="DROP_IF_EXISTS_AND_CREATE" />
 		    </ITEMS>
     	</PARAMETER>
-		<PARAMETER 
-			NAME="REQUIRED_AUTHENTICATION" 
-			FIELD="CHECK"
-			NUM_ROW="10"
-			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="USERNAME" 
-			NUM_ROW="11"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
-		>
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="PASSWORD" 
-			NUM_ROW="11"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
-		>
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="COLUMN_FAMILY" 
