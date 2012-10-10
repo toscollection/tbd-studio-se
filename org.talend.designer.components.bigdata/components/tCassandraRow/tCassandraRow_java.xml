@@ -50,6 +50,7 @@
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="HOST" 
+			REQUIRED="true" 
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
@@ -58,6 +59,7 @@
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="PORT" 
+			REQUIRED="true" 
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
@@ -84,6 +86,7 @@
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="USERNAME" 
+			REQUIRED="true" 
 			NUM_ROW="11"
 			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
 		>
@@ -92,6 +95,7 @@
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="PASSWORD" 
+			REQUIRED="true"
 			NUM_ROW="11"
 			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
 		>
@@ -100,6 +104,7 @@
 		<PARAMETER 
             FIELD="TEXT" 
             NAME="KEY_SPACE" 
+            REQUIRED="true" 
             NUM_ROW="13"
             GROUP="KEYSPACE_CONFIGURATION"
         >
@@ -108,6 +113,7 @@
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="COLUMN_FAMILY" 
+			REQUIRED="true" 
 			NUM_ROW="15"
 			GROUP="COLUMN_FAMILY_CONFIGURATION"
 		>
@@ -123,6 +129,7 @@
 		<PARAMETER
 	      NAME="QUERY"
 	      FIELD="MEMO"
+	      REQUIRED="true" 
 	      NUM_ROW="20"
     	>
       		<DEFAULT>"select id, name from employee"</DEFAULT>
