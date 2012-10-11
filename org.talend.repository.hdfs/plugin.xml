@@ -115,5 +115,12 @@
             class="org.talend.repository.hdfs.ui.dnd.HDFSDragAndDropHandler">
       </RepositoryHandler>
    </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.hdfs.HDFSProviderService"
+            serviceId="IHDFSProviderService">
+      </Service>
+   </extension>
 
 </plugin>
