@@ -49,7 +49,7 @@
       FIELD="TEXT"
       NUM_ROW="2"
       REQUIRED="true"
-      SHOW_IF="false"
+      SHOW="false"
     >
       <DEFAULT></DEFAULT>
     </PARAMETER>
