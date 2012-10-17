@@ -14,6 +14,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.IImage;
@@ -30,6 +33,7 @@ import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.SubItemHelper;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.hcatalog.metadata.ExtractMetaDataFromHCatalog;
+import org.talend.repository.hcatalog.ui.HCatalogWizard;
 import org.talend.repository.hcatalog.util.EHCatalogImage;
 import org.talend.repository.hcatalog.util.HCatalogConstants;
 import org.talend.repository.model.IRepositoryNode;
@@ -250,6 +254,16 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
             }
         }
         return false;
+    }
+
+    public IWizard newWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
+        if (node == null) {
+            return null;
+        }
+        if (workbench == null) {
+            workbench = PlatformUI.getWorkbench();
+        }
+        return new HCatalogWizard(workbench, creation, node, existingNames);
     }
 
 }

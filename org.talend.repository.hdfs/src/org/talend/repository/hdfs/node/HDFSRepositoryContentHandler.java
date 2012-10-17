@@ -11,6 +11,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.metadata.MetadataManager;
@@ -23,6 +26,7 @@ import org.talend.core.repository.utils.RepositoryNodeManager;
 import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.SubItemHelper;
+import org.talend.repository.hdfs.ui.HDFSWizard;
 import org.talend.repository.hdfs.util.EHDFSImage;
 import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.IRepositoryNode.EProperties;
@@ -213,6 +217,16 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
             }
         }
         return false;
+    }
+
+    public IWizard newWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
+        if (node == null) {
+            return null;
+        }
+        if (workbench == null) {
+            workbench = PlatformUI.getWorkbench();
+        }
+        return new HDFSWizard(workbench, creation, node, existingNames);
     }
 
 }
