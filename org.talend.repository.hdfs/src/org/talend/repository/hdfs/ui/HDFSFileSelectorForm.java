@@ -80,7 +80,6 @@ import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
 import org.talend.repository.hdfs.util.HDFSConstants;
-import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.hdfs.util.HDFSSchemaUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hdfs.HDFSConnection;
@@ -263,7 +262,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         AbstractMetadataExtractorViewProvider viewProvider = new FileSelectorTreeViewerProvider();
         schemaTreeViewer.setLabelProvider(viewProvider);
         schemaTreeViewer.setContentProvider(viewProvider);
-        schemaTreeViewer.setInput(HDFSModelUtil.convert2HDFSConnectionBean(getConnection()));
+        schemaTreeViewer.setInput(getConnectionBean());
 
         scrolledCompositeFileViewer.setContent(schemaTree);
         scrolledCompositeFileViewer.setMinSize(schemaTree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -873,7 +872,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     }
                     hdfsTable.setSourceName(lableName);
                     hdfsTable.setId(factory.getNextId());
-                    hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getRelativePath());
+                    hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
 
                     Iterator<MetadataColumn> iterate = metadataColumns.iterator();
                     while (iterate.hasNext()) {

@@ -17,7 +17,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.repository.ConnectionStatus;
-import org.talend.designer.hdfsbrowse.util.HadoopServerUtil;
+import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
@@ -61,8 +62,8 @@ public abstract class AbstractHDFSForm extends AbstractForm {
     }
 
     protected ConnectionStatus checkConnection(boolean displayDialog) {
-        ConnectionStatus connectionStatus = HadoopServerUtil.testConnection(HDFSModelUtil
-                .convert2HDFSConnectionBean(getConnection()));
+        HDFSConnectionBean connectionBean = getConnectionBean();
+        ConnectionStatus connectionStatus = HadoopOperationManager.getInstance().testConnection(connectionBean);
         hdfsSettingIsValide = connectionStatus.getResult();
         String connectException = connectionStatus.getMessageException();
 
@@ -90,6 +91,10 @@ public abstract class AbstractHDFSForm extends AbstractForm {
 
     protected HDFSConnection getConnection() {
         return (HDFSConnection) connectionItem.getConnection();
+    }
+
+    protected HDFSConnectionBean getConnectionBean() {
+        return HDFSModelUtil.convert2HDFSConnectionBean(getConnection());
     }
 
 }

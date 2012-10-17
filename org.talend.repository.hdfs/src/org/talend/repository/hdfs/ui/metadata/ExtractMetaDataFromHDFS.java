@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EMap;
@@ -55,14 +53,15 @@ import org.talend.core.repository.model.ResourceModelUtils;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.utils.CsvArray;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
 import org.talend.repository.ProjectManager;
-import org.talend.repository.hdfs.server.HadoopServerManager;
 import org.talend.repository.hdfs.util.HDFSConstants;
+import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.preview.ProcessDescription;
 import org.talend.repository.ui.swt.preview.ShadowProcessPreview;
@@ -86,20 +85,23 @@ public class ExtractMetaDataFromHDFS {
     private static final String DEFAULT_COLUMN_LABEL = "Column"; //$NON-NLS-1$
 
     public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node) throws IOException,
-            CoreException {
+            CoreException, InterruptedException, URISyntaxException, InstantiationException, IllegalAccessException,
+            ClassNotFoundException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || node == null || node.getType() != EHadoopFileTypes.FILE) {
             return columns;
         }
 
         HDFSFile file = (HDFSFile) node;
-        InputStream inputStream = file.open();
+        InputStream inputStream = HadoopOperationManager.getInstance().getFileContent(
+                HDFSModelUtil.convert2HDFSConnectionBean(connection), file.getPath());
 
         return extractColumns(connection, inputStream, file.getTable().getName());
     }
 
     public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, MetadataTable metadataTable)
-            throws CoreException, IOException, InterruptedException, URISyntaxException {
+            throws CoreException, IOException, InterruptedException, URISyntaxException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || metadataTable == null) {
             return columns;
@@ -109,9 +111,8 @@ public class ExtractMetaDataFromHDFS {
         if (StringUtils.isEmpty(hdfsPath)) {
             return columns;
         }
-        Path path = new Path(hdfsPath);
-        FileSystem dfs = HadoopServerManager.getInstance().getDFS(connection);
-        InputStream inputStream = dfs.open(path);
+        InputStream inputStream = HadoopOperationManager.getInstance().getFileContent(
+                HDFSModelUtil.convert2HDFSConnectionBean(connection), hdfsPath);
 
         return extractColumns(connection, inputStream, metadataTable.getLabel());
     }

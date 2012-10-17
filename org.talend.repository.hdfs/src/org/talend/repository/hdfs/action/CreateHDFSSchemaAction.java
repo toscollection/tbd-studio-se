@@ -29,12 +29,14 @@ import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.ui.actions.metadata.AbstractCreateAction;
 import org.talend.cwm.helper.TableHelper;
+import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.node.HDFSRepositoryNodeType;
-import org.talend.repository.hdfs.server.HadoopServerManager;
 import org.talend.repository.hdfs.ui.HDFSSchemaWizard;
+import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.ERepositoryStatus;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
@@ -152,7 +154,8 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
             public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                 monitor.beginTask(Messages.getString("CreateHDFSSchemaAction.checkConnection"), IProgressMonitor.UNKNOWN);
                 try {
-                    HadoopServerManager.getInstance().getDFS(connection, true);
+                    HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
+                    HadoopOperationManager.getInstance().connectDFS(connectionBean);
                 } catch (Exception e) {
                     PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 

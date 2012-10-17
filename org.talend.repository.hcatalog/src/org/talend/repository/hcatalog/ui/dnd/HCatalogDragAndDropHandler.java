@@ -138,21 +138,24 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
 
     @Override
     public IComponentName getCorrespondingComponentName(Item item, ERepositoryObjectType type) {
-        RepositoryComponentSetting setting = new RepositoryComponentSetting();
-        setting.setName(HCATALOG);
-        setting.setRepositoryType(HCATALOG);
-        setting.setWithSchema(true);
-        setting.setInputComponent(INPUT);
-        setting.setOutputComponent(OUTPUT);
-        List<Class<Item>> list = new ArrayList<Class<Item>>();
-        Class clazz = null;
-        try {
-            clazz = Class.forName(HCatalogConnectionItem.class.getName());
-        } catch (ClassNotFoundException e) {
-            ExceptionHandler.process(e);
+        RepositoryComponentSetting setting = null;
+        if (item instanceof HCatalogConnectionItem) {
+            setting = new RepositoryComponentSetting();
+            setting.setName(HCATALOG);
+            setting.setRepositoryType(HCATALOG);
+            setting.setWithSchema(true);
+            setting.setInputComponent(INPUT);
+            setting.setOutputComponent(OUTPUT);
+            List<Class<Item>> list = new ArrayList<Class<Item>>();
+            Class clazz = null;
+            try {
+                clazz = Class.forName(HCatalogConnectionItem.class.getName());
+            } catch (ClassNotFoundException e) {
+                ExceptionHandler.process(e);
+            }
+            list.add(clazz);
+            setting.setClasses(list.toArray(new Class[0]));
         }
-        list.add(clazz);
-        setting.setClasses(list.toArray(new Class[0]));
 
         return setting;
     }
