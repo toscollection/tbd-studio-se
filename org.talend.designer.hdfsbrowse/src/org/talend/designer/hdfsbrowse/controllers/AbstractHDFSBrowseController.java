@@ -44,13 +44,14 @@ import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.designer.core.ui.editor.nodes.Node;
 import org.talend.designer.core.ui.editor.properties.controllers.AbstractElementPropertySectionController;
 import org.talend.designer.core.ui.editor.properties.controllers.creator.SelectAllTextControlCreator;
-import org.talend.designer.hdfsbrowse.Activator;
+import org.talend.designer.hdfsbrowse.HDFSPlugin;
 import org.talend.designer.hdfsbrowse.i18n.Messages;
+import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
-import org.talend.designer.hdfsbrowse.util.HadoopServerUtil;
+import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -70,7 +71,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         Text filePathText = (Text) hashCurControls.get(propertyName);
         if (dial.open() == Window.OK) {
             IHDFSNode result = dial.getResult();
-            String path = result.getRelativePath();
+            String path = result.getPath();
             path = TalendQuoteUtils.addQuotesIfNotExist(path);
             if (!elem.getPropertyValue(propertyName).equals(path)) {
                 filePathText.setText(path);
@@ -87,6 +88,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
     protected HDFSConnectionBean getHDFSConnectionBean() {
         String distribution = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.DISTRIBUTION.getParameterName());
+        String drivers = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
         String nameNodeUri = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getParameterName());
         String userName = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.USERNAME.getParameterName());
         Boolean useKrb = (Boolean) elem.getPropertyValue(EHDFSRepositoryToComponent.USE_KRB.getParameterName());
@@ -95,6 +97,8 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
         HDFSConnectionBean connectionBean = new HDFSConnectionBean();
         connectionBean.setDistribution(distribution);
+        connectionBean.setDfVersion(EHadoopVersion4Drivers.getVersionByDriverStrs(drivers));
+        connectionBean.setDfDrivers(drivers);
         connectionBean.setNameNodeURI(nameNodeUri);
         connectionBean.setUserName(userName);
         connectionBean.setEnableKerberos(useKrb);
@@ -106,12 +110,12 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
     protected boolean checkHDFSConnection(HDFSConnectionBean connection) {
         try {
-            HadoopServerUtil.getDFS(connection);
+            HadoopOperationManager.getInstance().connectDFS(connection);
         } catch (Exception e) {
             String mainMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.mainMsg"); //$NON-NLS-1$
             String detailMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.detailMsg", //$NON-NLS-1$
                     connection.getNameNodeURI());
-            new ErrorDialogWidthDetailArea(Display.getCurrent().getActiveShell(), Activator.PLUGIN_ID, mainMsg, detailMsg);
+            new ErrorDialogWidthDetailArea(Display.getCurrent().getActiveShell(), HDFSPlugin.PLUGIN_ID, mainMsg, detailMsg);
             return false;
         }
 

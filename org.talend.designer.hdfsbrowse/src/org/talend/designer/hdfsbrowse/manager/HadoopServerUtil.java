@@ -10,19 +10,15 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.designer.hdfsbrowse.util;
+package org.talend.designer.hdfsbrowse.manager;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.permission.FsAction;
-import org.apache.hadoop.fs.permission.FsPermission;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.utils.data.reflection.ReflectionUtils;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.model.ELinuxAuthority;
@@ -45,8 +41,12 @@ public class HadoopServerUtil {
      * @throws IOException
      * @throws InterruptedException
      * @throws URISyntaxException
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
      */
-    public static FileSystem getDFS(HDFSConnectionBean connection) throws IOException, InterruptedException, URISyntaxException {
+    public static Object getDFS(HDFSConnectionBean connection) throws IOException, InterruptedException, URISyntaxException,
+            InstantiationException, IllegalAccessException, ClassNotFoundException {
         assert connection != null;
         String nameNodeURI = connection.getNameNodeURI();
         assert nameNodeURI != null;
@@ -59,54 +59,59 @@ public class HadoopServerUtil {
         String group = StringUtils.trimToNull(connection.getGroup());
         boolean enableKerberos = connection.isEnableKerberos();
 
-        FileSystem dfs = null;
-        Configuration conf = new Configuration();
-        EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
-        if (enableKerberos) {
-            assert principal != null;
-            userName = null;
-            // EHadoopConfProperties.JOB_UGI.set(conf, EMPTY_STRING);
-            EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, principal);
-        }
-        if (group != null) {
-            assert userName != null;
-            // EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, EMPTY_STRING);
-            EHadoopConfProperties.JOB_UGI.set(conf, userName + "," + group); //$NON-NLS-1$
-        }
-        if (userName == null) {
-            dfs = getDFS(conf);
-        } else {
-            dfs = getDFS(new URI(nameNodeURI), conf, userName);
+        Object dfs = null;
+        ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            ClassLoader classLoader = getClassLoader(connection);
+            Thread.currentThread().setContextClassLoader(classLoader);
+            Object conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance();
+            EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
+            if (enableKerberos) {
+                assert principal != null;
+                userName = null;
+                // EHadoopConfProperties.JOB_UGI.set(conf, EMPTY_STRING);
+                EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, principal);
+            }
+            if (group != null) {
+                assert userName != null;
+                // EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, EMPTY_STRING);
+                EHadoopConfProperties.JOB_UGI.set(conf, userName + "," + group); //$NON-NLS-1$
+            }
+            if (userName == null) {
+                dfs = getDFS(conf, classLoader);
+            } else {
+                dfs = getDFS(new URI(nameNodeURI), conf, userName, classLoader);
+            }
+        } finally {
+            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
 
         return dfs;
     }
 
-    public static FileSystem getDFS(Configuration conf) throws IOException {
-        return FileSystem.get(conf);
+    private static Object getDFS(Object conf, ClassLoader classLoader) throws IOException {
+        return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] { conf });
     }
 
-    public static FileSystem getDFS(URI uri, Configuration conf, String userName) throws IOException, InterruptedException {
-        return FileSystem.get(uri, conf, userName);
+    private static Object getDFS(URI uri, Object conf, String userName, ClassLoader classLoader) throws IOException,
+            InterruptedException {
+        return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] { uri,
+                conf, userName });
     }
 
-    public static void closeHDFSConnection() throws IOException {
-        FileSystem.closeAll();
-    }
-
-    public static boolean hasReadAuthority(FileStatus status, String userName) {
+    public static boolean hasReadAuthority(Object status, String userName) throws ClassNotFoundException {
         return hasAuthority(status, userName, ELinuxAuthority.READ);
     }
 
-    public static boolean hasWriteAuthority(FileStatus status, String userName) {
+    public static boolean hasWriteAuthority(Object status, String userName) throws ClassNotFoundException {
         return hasAuthority(status, userName, ELinuxAuthority.WRITE);
     }
 
-    public static boolean hasExcuteAuthority(FileStatus status, String userName) {
+    public static boolean hasExcuteAuthority(Object status, String userName) throws ClassNotFoundException {
         return hasAuthority(status, userName, ELinuxAuthority.EXCUTE);
     }
 
-    public static boolean hasAuthority(FileStatus status, String userName, ELinuxAuthority authority) {
+    public static boolean hasAuthority(Object status, String userName, ELinuxAuthority authority) throws ClassNotFoundException {
         boolean hasAuthority = false;
         if (status == null) {
             return hasAuthority;
@@ -114,15 +119,16 @@ public class HadoopServerUtil {
         if (authority == null) {
             authority = ELinuxAuthority.READ;
         }
-        FsPermission permission = status.getPermission();
+        Object permission = ReflectionUtils.invokeMethod(status, "getPermission", new Object[0]);
         if (permission == null) {
             return hasAuthority;
         }
         userName = TalendQuoteUtils.addQuotesIfNotExist(userName);
-        String owner = TalendQuoteUtils.addQuotesIfNotExist(status.getOwner());
-        FsAction userAction = permission.getUserAction();
-        FsAction groupAction = permission.getGroupAction();
-        FsAction otherAction = permission.getOtherAction();
+        String owner = (String) ReflectionUtils.invokeMethod(status, "getOwner", new Object[0]);
+        owner = TalendQuoteUtils.addQuotesIfNotExist(owner);
+        Object userAction = ReflectionUtils.invokeMethod(permission, "getUserAction", new Object[0]);
+        Object groupAction = ReflectionUtils.invokeMethod(permission, "getGroupAction", new Object[0]);
+        Object otherAction = ReflectionUtils.invokeMethod(permission, "getOtherAction", new Object[0]);
         switch (authority) {
         case READ:
             if (owner != null && owner.equals(userName)) {
@@ -146,61 +152,31 @@ public class HadoopServerUtil {
         return hasAuthority;
     }
 
-    private static boolean hasReadAuthority(FsAction action) {
-        boolean hasAuthority = false;
+    private static boolean hasReadAuthority(Object action) throws ClassNotFoundException {
         if (action == null) {
-            return hasAuthority;
+            return false;
         }
-        switch (action) {
-        case READ:
-        case READ_WRITE:
-        case READ_EXECUTE:
-        case ALL:
-            hasAuthority = true;
-            break;
-        default:
-            break;
-        }
-
-        return hasAuthority;
+        Object enumName = ((Enum) action).name();
+        return "READ".equals(enumName) || "READ".equals(enumName) || "READ_WRITE".equals(enumName)
+                || "READ_EXECUTE".equals(enumName) || "ALL".equals(enumName);
     }
 
-    private static boolean hasWriteAuthority(FsAction action) {
-        boolean hasAuthority = false;
+    private static boolean hasWriteAuthority(Object action) {
         if (action == null) {
-            return hasAuthority;
+            return false;
         }
-        switch (action) {
-        case WRITE:
-        case WRITE_EXECUTE:
-        case READ_WRITE:
-        case ALL:
-            hasAuthority = true;
-            break;
-        default:
-            break;
-        }
-
-        return hasAuthority;
+        Object enumName = ((Enum) action).name();
+        return "WRITE".equals(enumName) || "WRITE_EXECUTE".equals(enumName) || "READ_WRITE".equals(enumName)
+                || "ALL".equals(enumName);
     }
 
-    private static boolean hasExcuteAuthority(FsAction action) {
-        boolean hasAuthority = false;
+    private static boolean hasExcuteAuthority(Object action) {
         if (action == null) {
-            return hasAuthority;
+            return false;
         }
-        switch (action) {
-        case EXECUTE:
-        case READ_EXECUTE:
-        case WRITE_EXECUTE:
-        case ALL:
-            hasAuthority = true;
-            break;
-        default:
-            break;
-        }
-
-        return hasAuthority;
+        Object enumName = ((Enum) action).name();
+        return "EXECUTE".equals(enumName) || "READ_EXECUTE".equals(enumName) || "WRITE_EXECUTE".equals(enumName)
+                || "ALL".equals(enumName);
     }
 
     /**
@@ -213,9 +189,9 @@ public class HadoopServerUtil {
     public static ConnectionStatus testConnection(HDFSConnectionBean connection) {
         ConnectionStatus connectionStatus = new ConnectionStatus();
         connectionStatus.setResult(false);
-        FileSystem dfs = null;
+        Object dfs = null;
         try {
-            dfs = HadoopServerUtil.getDFS(connection);
+            dfs = getDFS(connection);
             if (dfs != null) {
                 connectionStatus.setResult(true);
                 connectionStatus.setMessageException("Connection successful");
@@ -229,13 +205,17 @@ public class HadoopServerUtil {
         } finally {
             if (dfs != null) {
                 try {
-                    dfs.close();
-                } catch (IOException e) {
+                    ReflectionUtils.invokeMethod(dfs, "close", new Object[0]);
+                } catch (Exception e) {
                 }
             }
         }
 
         return connectionStatus;
+    }
+
+    public static ClassLoader getClassLoader(HDFSConnectionBean connection) {
+        return HadoopClassLoaderFactory.getClassLoader(connection);
     }
 
 }

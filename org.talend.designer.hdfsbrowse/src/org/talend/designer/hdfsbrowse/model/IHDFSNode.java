@@ -15,7 +15,6 @@ package org.talend.designer.hdfsbrowse.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.hadoop.fs.Path;
 import org.eclipse.swt.graphics.Image;
 import orgomg.cwm.resource.relational.Table;
 
@@ -50,13 +49,9 @@ public interface IHDFSNode {
 
     public void setTable(Table table);
 
-    public Path getPath();
+    public String getPath();
 
-    public void setPath(Path path);
-
-    public String getRelativePath();
-
-    public void setRelativePath(String relativePath);
+    public void setPath(String path);
 
     public Image getImage();
 

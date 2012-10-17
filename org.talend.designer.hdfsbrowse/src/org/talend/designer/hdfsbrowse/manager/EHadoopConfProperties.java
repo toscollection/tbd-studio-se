@@ -11,12 +11,12 @@
 //
 // ============================================================================
 
-package org.talend.designer.hdfsbrowse.util;
+package org.talend.designer.hdfsbrowse.manager;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.hadoop.conf.Configuration;
+import org.talend.commons.utils.data.reflection.ReflectionUtils;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -78,13 +78,13 @@ public enum EHadoopConfProperties {
         EHadoopConfProperties.registerProperty(name, this);
     }
 
-    public String get(Configuration conf) {
-        return conf.get(name);
+    public String get(Object conf) {
+        return (String) ReflectionUtils.invokeMethod(conf, "get", new Object[] { name });
     }
 
-    public void set(Configuration conf, String value) {
+    public void set(Object conf, String value) {
         assert value != null;
-        conf.set(name, value);
+        ReflectionUtils.invokeMethod(conf, "set", new Object[] { name, value });
     }
 
     public String getName() {

@@ -13,15 +13,9 @@
 
 package org.talend.designer.hdfsbrowse.model;
 
-import java.io.IOException;
-
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.log4j.Logger;
-import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
-import org.talend.designer.hdfsbrowse.util.HadoopServerUtil;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -31,25 +25,31 @@ import org.talend.designer.hdfsbrowse.util.HadoopServerUtil;
  */
 public abstract class HDFSPath extends HDFSNode {
 
-    protected static Logger log = Logger.getLogger(HDFSPath.class.getName());
-
     protected FileSelectorTreeViewerProvider provider;
 
     protected HDFSConnectionBean connection;
 
-    private FileSystem dfs = null;
+    protected Object fileSystem;
+
+    protected ClassLoader classLoader;
 
     public HDFSPath(FileSelectorTreeViewerProvider provider, HDFSConnectionBean connection) {
         this.provider = provider;
         this.connection = connection;
+        try {
+            fileSystem = getOperationManager().getDFS(connection);
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+        classLoader = getOperationManager().getClassLoader(connection);
     }
 
-    protected HDFSPath(HDFSPath parent, Path path) {
+    protected HDFSPath(HDFSPath parent) {
         this.setParent(parent);
-        this.setPath(path);
         this.provider = parent.provider;
         this.connection = parent.connection;
-        this.dfs = parent.dfs;
+        fileSystem = parent.fileSystem;
+        classLoader = parent.classLoader;
     }
 
     protected void dispose() {
@@ -61,45 +61,8 @@ public abstract class HDFSPath extends HDFSNode {
         if (PATH_SEPARATOR.equals(getPath())) { //$NON-NLS-1$
             return connection.getNameNodeURI();
         } else {
-            return getPath().getName();
+            return getPath();
         }
-    }
-
-    protected String getPathString() {
-        if (getPath() != null) {
-            return getPath().toString();
-        }
-        return ""; //$NON-NLS-1$
-    }
-
-    protected String getPathName() {
-        return getPathName(getPath());
-    }
-
-    protected String getPathName(Path path) {
-        if (path != null && path.getName() != null) {
-            return path.getName();
-        }
-        return ""; //$NON-NLS-1$
-    }
-
-    protected String getRelativePath(String absPath) {
-        String nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(connection.getNameNodeURI());
-        if (absPath.startsWith(nameNodeURI)) {
-            absPath = absPath.substring(absPath.indexOf(nameNodeURI) + nameNodeURI.length());
-        }
-        if (!absPath.startsWith(PATH_SEPARATOR)) {
-            absPath = PATH_SEPARATOR + absPath;
-        }
-
-        return absPath;
-    }
-
-    protected String trimFileExtention(String fileName) {
-        if (fileName.indexOf(".") != -1) { //$NON-NLS-1$
-            fileName = fileName.substring(0, fileName.lastIndexOf(".")); //$NON-NLS-1$
-        }
-        return fileName;
     }
 
     public abstract void refresh();
@@ -111,26 +74,7 @@ public abstract class HDFSPath extends HDFSNode {
         provider.refresh(this);
     }
 
-    protected FileSystem getDFS() throws IOException {
-        if (this.dfs == null) {
-            try {
-                this.dfs = HadoopServerUtil.getDFS(connection);
-            } catch (Exception e) {
-                // ExceptionHandler.process(e);
-            }
-        }
-        return this.dfs;
+    public HadoopOperationManager getOperationManager() {
+        return HadoopOperationManager.getInstance();
     }
-
-    protected boolean canAccess(FileStatus status) {
-        if (status == null) {
-            return false;
-        }
-        String userName = null;
-        if (connection != null) {
-            userName = connection.getUserName();
-        }
-        return HadoopServerUtil.hasReadAuthority(status, userName);
-    }
-
 }

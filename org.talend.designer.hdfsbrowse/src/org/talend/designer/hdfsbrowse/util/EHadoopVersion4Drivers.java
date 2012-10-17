@@ -98,6 +98,20 @@ public enum EHadoopVersion4Drivers {
         return false;
     }
 
+    public static boolean support(String distribution, String version) {
+        if (distribution == null || version == null) {
+            return false;
+        }
+        for (EHadoopVersion4Drivers v4d : EHadoopVersion4Drivers.values()) {
+            if (v4d.supportDistribution(distribution)) {
+                if (version.equalsIgnoreCase(v4d.getVersionValue())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public static EHadoopVersion4Drivers indexOfByVersionDisplay(String displayName) {
         return indexOf(displayName, true);
     }

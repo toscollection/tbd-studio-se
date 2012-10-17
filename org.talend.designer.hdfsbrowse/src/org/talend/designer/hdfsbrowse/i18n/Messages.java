@@ -3,13 +3,13 @@ package org.talend.designer.hdfsbrowse.i18n;
 import java.util.ResourceBundle;
 
 import org.talend.commons.i18n.MessagesCore;
-import org.talend.designer.hdfsbrowse.Activator;
+import org.talend.designer.hdfsbrowse.HDFSPlugin;
 
 public class Messages extends MessagesCore {
 
     private static final String BUNDLE_NAME = "messages"; //$NON-NLS-1$
 
-    private static final String PLUGIN_ID = Activator.PLUGIN_ID;
+    private static final String PLUGIN_ID = HDFSPlugin.PLUGIN_ID;
 
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);
 

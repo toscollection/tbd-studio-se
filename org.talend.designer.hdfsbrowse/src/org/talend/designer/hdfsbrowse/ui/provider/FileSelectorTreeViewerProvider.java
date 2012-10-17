@@ -46,7 +46,7 @@ public class FileSelectorTreeViewerProvider extends AbstractMetadataExtractorVie
             try {
                 HDFSPath root = new HDFSFolder(this, (HDFSConnectionBean) inputElement);
                 root.setValue(ROOT_PATH);
-                root.setRelativePath(ROOT_PATH);
+                root.setPath(ROOT_PATH);
                 return new Object[] { root };
             } catch (Exception e) {
                 log.error(e);

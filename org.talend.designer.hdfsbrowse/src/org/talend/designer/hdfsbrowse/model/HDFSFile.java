@@ -15,10 +15,9 @@ package org.talend.designer.hdfsbrowse.model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.List;
 
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.Path;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 
@@ -30,25 +29,23 @@ import org.eclipse.ui.ISharedImages;
  */
 public class HDFSFile extends HDFSPath {
 
-    private long length;
-
-    public HDFSFile(HDFSPath parent, Path path) {
-        super(parent, path);
-        try {
-            FileStatus fs = getDFS().getFileStatus(path);
-            this.length = fs.getLen();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public HDFSFile(HDFSPath parent) {
+        super(parent);
     }
 
     /**
      * Download and view contents of a file
      * 
      * @return a InputStream for the file
+     * @throws URISyntaxException
+     * @throws InterruptedException
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InstantiationException
      */
-    public InputStream open() throws IOException {
-        return getDFS().open(getPath());
+    public InputStream open() throws IOException, InterruptedException, URISyntaxException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
+        return getOperationManager().getFileContent(fileSystem, classLoader, getPath());
     }
 
     public String toString() {
@@ -85,7 +82,12 @@ public class HDFSFile extends HDFSPath {
     public String getSize() {
         final String[] units = { "b", "Kb", "Mb", "Gb", "Tb" };
         int unit = 0;
-        double l = this.length;
+        double l;
+        try {
+            l = getOperationManager().getFileSize(fileSystem, classLoader, getPath());
+        } catch (Exception e) {
+            return "fail to get file size: " + e.getMessage();
+        }
         while ((l >= 1024.0) && (unit < units.length)) {
             unit += 1;
             l /= 1024.0;

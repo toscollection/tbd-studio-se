@@ -15,12 +15,9 @@ package org.talend.designer.hdfsbrowse.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.hadoop.fs.Path;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
-import org.talend.cwm.relational.RelationalFactory;
-import org.talend.cwm.relational.TdTable;
 import orgomg.cwm.resource.relational.Table;
 
 /**
@@ -40,9 +37,7 @@ public class HDFSNode implements IHDFSNode {
 
     private IHDFSNode parent;
 
-    private Path path = new Path(PATH_SEPARATOR);
-
-    private String relativePath;
+    private String path = PATH_SEPARATOR;
 
     private List<IHDFSNode> children = new ArrayList<IHDFSNode>();
 
@@ -100,32 +95,16 @@ public class HDFSNode implements IHDFSNode {
         this.children.addAll(children);
     }
 
-    protected TdTable createTable(String tableName) {
-        TdTable table = RelationalFactory.eINSTANCE.createTdTable();
-        table.setName(tableName);
-        table.setLabel(tableName);
-
-        return table;
-    }
-
-    public Path getPath() {
+    public String getPath() {
         return this.path;
     }
 
-    public void setPath(Path path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
     public void forceFetchChildren() {
         this.hasFetchedChildren = false;
-    }
-
-    public String getRelativePath() {
-        return this.relativePath;
-    }
-
-    public void setRelativePath(String relativePath) {
-        this.relativePath = relativePath;
     }
 
     public void refresh() {

@@ -14,14 +14,13 @@
 package org.talend.designer.hdfsbrowse.model;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
+import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
 
 /**
@@ -38,32 +37,13 @@ public class HDFSFolder extends HDFSPath {
         super(provider, connection);
     }
 
-    public HDFSFolder(HDFSPath parent, Path path) {
-        super(parent, path);
+    public HDFSFolder(HDFSPath parent) {
+        super(parent);
     }
 
-    protected void loadHDFSFolderChildren() throws IOException {
-        FileSystem dfs = getDFS();
-        if (dfs == null) {
-            return;
-        }
-        for (FileStatus status : dfs.listStatus(getPath())) {
-            if (!canAccess(status)) {
-                continue;
-            }
-            HDFSPath content = null;
-            Path statusPath = status.getPath();
-            String pathName = getPathName(statusPath);
-            if (status.isDir()) {
-                content = new HDFSFolder(this, statusPath);
-            } else {
-                content = new HDFSFile(this, statusPath);
-                content.setTable(createTable(trimFileExtention(pathName)));
-            }
-            content.setValue(pathName);
-            content.setRelativePath(getRelativePath(content.getPathString()));
-            addChild(content);
-        }
+    protected void loadHDFSFolderChildren() throws IOException, InterruptedException, URISyntaxException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException {
+        HadoopOperationManager.getInstance().loadHDFSFolderChildren(connection, fileSystem, classLoader, this, getPath());
     }
 
     public List<IHDFSNode> getChildren() {
@@ -72,8 +52,8 @@ public class HDFSFolder extends HDFSPath {
             try {
                 loadHDFSFolderChildren();
                 hasFetchedChildren = true;
-            } catch (IOException ioe) {
-                log.error(ioe);
+            } catch (Exception e) {
+                log.error(e);
             } finally {
                 provider.refresh(HDFSFolder.this);
             }
