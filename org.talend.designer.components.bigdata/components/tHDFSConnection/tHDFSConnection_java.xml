@@ -95,6 +95,7 @@
    	<CODEGENERATION>
 		<IMPORTS>
 			<IMPORT NAME="apache-hadoop" MODULE="hadoop-core-1.0.0.jar" REQUIRED="false" />
+			<IMPORT NAME="hdp-dummy" MODULE="hdp-dummy.jar" REQUIRED="false" />
 			
 			<IMPORT NAME="apache-hadoop" MODULE="hadoop-core-0.20.204.0.jar" REQUIRED="false" />
 			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" />
