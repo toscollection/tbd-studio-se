@@ -52,12 +52,11 @@
 			if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 				IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
 %>
-			String key_<%=cid%> = <%=conName%>.<%=keyColumn%> != null ? <%=conName%>.<%=keyColumn%>.toString() : null;
-			if (key_<%=cid%> != null) {
+			if (key<%=conName%>.<%=keyColumn%> != null) {
 <%
 			if("SUPER".equals(columnFamilyType)){
 %>
-				String superKey_<%=cid%> = <%=conName%>.<%=superKeyColumn%> != null ? <%=conName%>.<%=superKeyColumn%>.toString() : null;
+
 				java.util.List<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>> innerColumn_<%=cid%>=new 
 	    			java.util.ArrayList<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>>();
 <%
@@ -68,14 +67,16 @@
 					if (incKey || !column.getLabel().equals(keyColumn)) {
 						if("UPSERT".equals(actionOnData)){
 %>
-							mutator_<%=cid%>.addInsertion(key_<%=cid%>, <%=columnFamily%>,
+					if(<%=conName%>.<%=column.getLabel()%>!=null){
+							mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,
 								me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
 									servializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get()));
+					}
 <%
 						}else{
 							if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
 %>
-							mutator_<%=cid%>.addDeletion(key_<%=cid%>, <%=columnFamily%>,"<%=column.getOriginalDbColumnName()%>",servializer_<%=cid%>);
+							mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,"<%=column.getOriginalDbColumnName()%>",servializer_<%=cid%>);
 <%
 							}
 						}
@@ -84,14 +85,16 @@
 					if (!((!incKey && column.getLabel().equals(keyColumn))|| (!incSuperKey && column.getLabel().equals(superKeyColumn)))) {
 						if("UPSERT".equals(actionOnData)){
 %>
+					if(<%=conName%>.<%=column.getLabel()%>!=null){
 							me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
 								servializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get());
 							innerColumn_<%=cid%>.add( column_<%=column.getOriginalDbColumnName()%>);
+					}
 <%
 						}else{
 							if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
 %>
-							mutator_<%=cid%>.addSubDelete(key_<%=cid%>, <%=columnFamily%>,superKey_<%=cid%>,"<%=column.getOriginalDbColumnName()%>",servializer_<%=cid%>,servializer_<%=cid%>);
+							mutator_<%=cid%>.addSubDelete(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,<%=conName%>.<%=superKeyColumn%>,"<%=column.getOriginalDbColumnName()%>",sNameSerializer_<%=cid%>,servializer_<%=cid%>);
 <%
 							}
 						}
@@ -100,24 +103,24 @@
 			}
            	if("SUPER".equals(columnFamilyType) && "UPSERT".equals(actionOnData)){
 %>
-				mutator_<%=cid%>.addInsertion(key_<%=cid%>, <%=columnFamily%>,new me.prettyprint.cassandra.model.HSuperColumnImpl(superKey_<%=cid%>,innerColumn_<%=cid%>,
-					me.prettyprint.hector.api.factory.HFactory.createClock(),servializer_<%=cid%>,servializer_<%=cid%>,servializer_<%=cid%>));
+				mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,new me.prettyprint.cassandra.model.HSuperColumnImpl(<%=conName%>.<%=superKeyColumn%>,innerColumn_<%=cid%>,
+					me.prettyprint.hector.api.factory.HFactory.createClock(),sNameSerializer_<%=cid%>,servializer_<%=cid%>,servializer_<%=cid%>));
 <%
 			}
 			if("DELETE".equals(actionOnData)){
 				if(deleteRow || listDeleteCols.size()<1){
 					if("STANDARD".equals(columnFamilyType)){
 %>
-					mutator_<%=cid%>.addDeletion(key_<%=cid%>, <%=columnFamily%>);
+					mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>);
 <%             		
 					}else{
 						if(deleteRow && !delSuperColumn){
 %>
-						mutator_<%=cid%>.addDeletion(key_<%=cid%>, <%=columnFamily%>);
+						mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>);
 <%
 						}else{
 %>
-						mutator_<%=cid%>.addSuperDelete(key_<%=cid%>, <%=columnFamily%>,superKey_<%=cid%>,servializer_<%=cid%>);
+						mutator_<%=cid%>.addSuperDelete(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,<%=conName%>.<%=superKeyColumn%>,sNameSerializer_<%=cid%>);
 <%
 						}
 					}

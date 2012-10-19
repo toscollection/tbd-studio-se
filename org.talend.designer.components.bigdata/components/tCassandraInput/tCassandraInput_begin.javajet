@@ -208,70 +208,75 @@
 %>
 			me.prettyprint.hector.api.beans.HColumn<String,String> column_<%=cid%>=null;
 
-			String columnValue_<%=cid%>=null;
+			java.nio.ByteBuffer columnValue_<%=cid%>=null;
 <%
-			boolean generateFlag=true;//If not be select as a key or a key but not included in output columns
 			for (int i = 0; i < sizeColumns; i++) {
 				IMetadataColumn column = columnList.get(i);
 				String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
 				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
 				String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
 				if (incKey && column.getLabel().equals(keyColumn)) {
-					generateFlag=false;
 					if("STANDARD".equals(columnFamilyType)){
 %>
-				columnValue_<%=cid%>=row_<%=cid%>.getKey().toString();	
+				columnValue_<%=cid%>=java.nio.ByteBuffer.wrap(row_<%=cid%>.getKey().toString().getBytes());	
 <%
 					}else {
 %>
-				columnValue_<%=cid%>=superRow_<%=cid%>.getKey().toString();	
+				columnValue_<%=cid%>=java.nio.ByteBuffer.wrap(superRow_<%=cid%>.getKey().toString().getBytes());	
 <%
 					}
 				}else if("SUPER".equals(columnFamilyType) && incSuperKey && column.getLabel().equals(superKeyColumn)){
-					generateFlag=false;
 %>
-				columnValue_<%=cid%>=superColumn_<%=cid%>.getName().toString();
+				columnValue_<%=cid%>=superColumn_<%=cid%>.getNameByteBuffer();
 <%
 				}else{
 					if("STANDARD".equals(columnFamilyType)){
 %>
 					column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
-					columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValue());
+					columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());
 <%
 					}else{
 %>
 					column_<%=cid%>=superColumn_<%=cid%>.getSubColumnByName("<%=column.getOriginalDbColumnName()%>");
-					columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValue());
+					columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());
 <%
 					}
 				}
 %>
-<%
-				
-				if(generateFlag){
-%>
-				if(columnValue_<%=cid%>!=null && columnValue_<%=cid%>.length() > 0) {
+				if(columnValue_<%=cid%>!=null) {
 <%
 				if(javaType == JavaTypesManager.DATE) {
 %>
-					<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date(
-						me.prettyprint.cassandra.serializers.DateSerializer.get().fromBytes(columnValue_<%=cid%>.getBytes()), <%= patternValue %>);
-<%
-				} else if(javaType == JavaTypesManager.STRING){
-%>
-					<%=firstConnName %>.<%=column.getLabel() %> = columnValue_<%=cid%>;
+					Long dateValue_<%=cid%>=columnValue_<%=cid%>.getLong();
+					<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date(new java.util.Date(dateValue_<%=cid%>), <%= patternValue %>);
 <%
 				} else if(javaType == JavaTypesManager.FLOAT){
 %>
-					<%=firstConnName %>.<%=column.getLabel() %>=column_<%=cid%>.getValueBytes().getFloat();
+					<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getFloat();
+<%
+				} else if(javaType == JavaTypesManager.CHARACTER){
+%>
+					<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getChar();
+<%
+				} else if(javaType == JavaTypesManager.INTEGER){
+%>
+					<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getInt();
+<%
+				} else if(javaType == JavaTypesManager.SHORT){
+%>
+					<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getShort();
+<%
+				} else if(javaType == JavaTypesManager.LONG){
+%>
+					<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getLong();
 <%
 				} else if(javaType == JavaTypesManager.DOUBLE){
 %>
-					<%=firstConnName %>.<%=column.getLabel() %>=column_<%=cid%>.getValueBytes().getDouble();
+					<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getDouble();
 <%
 				} else {
 %>
-					<%=firstConnName %>.<%=column.getLabel() %> = me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get().fromBytes(columnValue_<%=cid%>.getBytes());
+					<%=firstConnName %>.<%=column.getLabel() %> = me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get().fromByteBuffer(columnValue_<%=cid%>);
 <%
 				}
 %>
@@ -279,22 +284,6 @@
 					<%=firstConnName %>.<%=column.getLabel() %> = <%=JavaTypesManager.getDefaultValueFromJavaType(typeToGenerate)%>;
 				}
 <%
-				}else{
-					generateFlag=true;
-					if(javaType == JavaTypesManager.DATE) {
-%>
-					<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date(columnValue_<%=cid%>, <%= patternValue %>);
-<%
-					} else if(javaType == JavaTypesManager.STRING){
-%>
-					<%=firstConnName %>.<%=column.getLabel() %> = columnValue_<%=cid%>;
-<%
-					} else {
-%>
-					<%=firstConnName %>.<%=column.getLabel() %> =ParserUtils.parseTo_<%= typeToGenerate %>(columnValue_<%=cid%>);
-<%
-					}
-				}
 			}
       	}
     }
