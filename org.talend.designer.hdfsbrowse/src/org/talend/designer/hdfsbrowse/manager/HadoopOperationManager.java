@@ -51,6 +51,9 @@ public class HadoopOperationManager {
         }
         Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { path });
         Object[] statusList = (Object[]) ReflectionUtils.invokeMethod(fileSystem, "listStatus", new Object[] { pathObj });
+        if (statusList == null) {
+            return;
+        }
         for (Object status : statusList) {
             if (!canAccess(connection, status)) {
                 continue;
