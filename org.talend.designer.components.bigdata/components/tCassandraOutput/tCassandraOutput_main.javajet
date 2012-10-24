@@ -52,7 +52,7 @@
 			if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 				IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
 %>
-			if (key<%=conName%>.<%=keyColumn%> != null) {
+			if (<%=conName%>.<%=keyColumn%> != null) {
 <%
 			if("SUPER".equals(columnFamilyType)){
 %>
