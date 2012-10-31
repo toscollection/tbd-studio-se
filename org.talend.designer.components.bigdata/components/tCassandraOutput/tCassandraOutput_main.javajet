@@ -44,7 +44,7 @@
 		typeMap.put(JavaTypesManager.INTEGER,"IntegerSerializer");
 		typeMap.put(JavaTypesManager.LONG,"LongSerializer");
 		typeMap.put(JavaTypesManager.OBJECT,"ObjectSerializer");
-		typeMap.put(JavaTypesManager.SHORT,"ShortSerializ");
+		typeMap.put(JavaTypesManager.SHORT,"ShortSerializer");
 		typeMap.put(JavaTypesManager.STRING,"StringSerializer");
 		typeMap.put(JavaTypesManager.CHARACTER,"CharSerializer");
 		for (IConnection incomingConn : node.getIncomingConnections()) {
@@ -70,13 +70,13 @@
 					if(<%=conName%>.<%=column.getLabel()%>!=null){
 							mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,
 								me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
-									servializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get()));
+									serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get()));
 					}
 <%
 						}else{
 							if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
 %>
-							mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,"<%=column.getOriginalDbColumnName()%>",servializer_<%=cid%>);
+							mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,"<%=column.getOriginalDbColumnName()%>",serializer_<%=cid%>);
 <%
 							}
 						}
@@ -87,14 +87,14 @@
 %>
 					if(<%=conName%>.<%=column.getLabel()%>!=null){
 							me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
-								servializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get());
+								serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get());
 							innerColumn_<%=cid%>.add( column_<%=column.getOriginalDbColumnName()%>);
 					}
 <%
 						}else{
 							if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
 %>
-							mutator_<%=cid%>.addSubDelete(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,<%=conName%>.<%=superKeyColumn%>,"<%=column.getOriginalDbColumnName()%>",sNameSerializer_<%=cid%>,servializer_<%=cid%>);
+							mutator_<%=cid%>.addSubDelete(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,<%=conName%>.<%=superKeyColumn%>,"<%=column.getOriginalDbColumnName()%>",sNameSerializer_<%=cid%>,serializer_<%=cid%>);
 <%
 							}
 						}
@@ -103,8 +103,10 @@
 			}
            	if("SUPER".equals(columnFamilyType) && "UPSERT".equals(actionOnData)){
 %>
+			if(<%=conName%>.<%=superKeyColumn%>!=null){
 				mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,new me.prettyprint.cassandra.model.HSuperColumnImpl(<%=conName%>.<%=superKeyColumn%>,innerColumn_<%=cid%>,
-					me.prettyprint.hector.api.factory.HFactory.createClock(),sNameSerializer_<%=cid%>,servializer_<%=cid%>,servializer_<%=cid%>));
+					me.prettyprint.hector.api.factory.HFactory.createClock(),sNameSerializer_<%=cid%>,serializer_<%=cid%>,serializer_<%=cid%>));
+			}
 <%
 			}
 			if("DELETE".equals(actionOnData)){

@@ -136,7 +136,9 @@
 			cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
 <%
 		}
-		
+%>
+			me.prettyprint.hector.api.mutation.Mutator mutator_<%=cid%> = null;
+<%
 		if (node.getIncomingConnections() != null) {
 			Map<JavaType,String> typeMap=new java.util.HashMap<JavaType,String>();
 			typeMap.put(JavaTypesManager.BOOLEAN,"BooleanSerializer");
@@ -147,13 +149,12 @@
 			typeMap.put(JavaTypesManager.INTEGER,"IntegerSerializer");
 			typeMap.put(JavaTypesManager.LONG,"LongSerializer");
 			typeMap.put(JavaTypesManager.OBJECT,"ObjectSerializer");
-			typeMap.put(JavaTypesManager.SHORT,"ShortSerializ");
+			typeMap.put(JavaTypesManager.SHORT,"ShortSerializer");
 			typeMap.put(JavaTypesManager.STRING,"StringSerializer");
 			typeMap.put(JavaTypesManager.CHARACTER,"CharSerializer");
 			boolean rowKeyFlag=false;
 			boolean superColFlag=false;
 			for (IConnection incomingConn : node.getIncomingConnections()) {
-				String conName = incomingConn.getName();
 				if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 					IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
 					for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
@@ -162,13 +163,13 @@
 	    					rowKeyFlag=true;
 	    					
 %>
-			me.prettyprint.hector.api.Serializer keySerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get();
+			me.prettyprint.hector.api.Serializer keySerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get();
 <%
 						}
 						if("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn)){
 						superColFlag=true;
 %>
-			me.prettyprint.hector.api.Serializer sNameSerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get();
+			me.prettyprint.hector.api.Serializer sNameSerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get();
 <%
 						}
 						if(("STANDARD".equals(columnFamilyType) && rowKeyFlag)||("SUPER".equals(columnFamilyType) && rowKeyFlag && superColFlag)){
@@ -176,9 +177,8 @@
 						}
 					}
 %>
-	     	me.prettyprint.cassandra.serializers.StringSerializer serializer_<%=cid%> = new me.prettyprint.cassandra.serializers.StringSerializer();
-	    	me.prettyprint.hector.api.mutation.Mutator mutator_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMutator(keyspace_<%=cid%>, keySerializer_<%=cid%>);
-	    	me.prettyprint.cassandra.serializers.StringSerializer servializer_<%=cid%>=me.prettyprint.cassandra.serializers.StringSerializer.get();
+	     	me.prettyprint.cassandra.serializers.StringSerializer serializer_<%=cid%> = me.prettyprint.cassandra.serializers.StringSerializer.get();
+	    	mutator_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMutator(keyspace_<%=cid%>, keySerializer_<%=cid%>);
 <%
 				}
 			}

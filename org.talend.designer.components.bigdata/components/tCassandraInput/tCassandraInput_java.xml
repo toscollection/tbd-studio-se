@@ -154,6 +154,46 @@
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'true')" 
         />
         <PARAMETER 
+        	FIELD="OPENED_LIST" 
+        	NAME="ROW_KEY_TYPE"  
+        	NUM_ROW="22" 
+        	REQUIRED="true" 
+        	SHOW_IF="(INC_KEY == 'false')" >
+    		<ITEMS DEFAULT="INTEGER">
+    			<ITEM NAME="INTEGER" VALUE="Integer" />
+    			<ITEM NAME="LONG" VALUE="Long" />
+    			<ITEM NAME="DOUBLE" VALUE="Double" />
+    			<ITEM NAME="FLOAT" VALUE="Float" />
+    			<ITEM NAME="CHARACTER" VALUE="Character" />
+    			<ITEM NAME="STRING" VALUE="String" />
+    			<ITEM NAME="DATE" VALUE="java.util.Date" />
+    			<ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
+    			<ITEM NAME="BOOLEAN" VALUE="Boolean" />
+    			<ITEM NAME="OBJECT" VALUE="Object" />
+    			<ITEM NAME="SHORT" VALUE="Short" />
+    		</ITEMS>
+    	</PARAMETER>
+    	<PARAMETER 
+        	FIELD="OPENED_LIST" 
+        	NAME="SUPER_COLUMN_TYPE"
+        	NUM_ROW="22" 
+        	REQUIRED="true"
+        	SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'false')">
+    		<ITEMS DEFAULT="STRING">
+    			<ITEM NAME="INTEGER" VALUE="Integer" />
+    			<ITEM NAME="LONG" VALUE="Long" />
+    			<ITEM NAME="DOUBLE" VALUE="Double" />
+    			<ITEM NAME="FLOAT" VALUE="Float" />
+    			<ITEM NAME="CHARACTER" VALUE="Character" />
+    			<ITEM NAME="STRING" VALUE="String" />
+    			<ITEM NAME="DATE" VALUE="java.util.Date" />
+    			<ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
+    			<ITEM NAME="BOOLEAN" VALUE="Boolean" />
+    			<ITEM NAME="OBJECT" VALUE="Object" />
+    			<ITEM NAME="SHORT" VALUE="Short" />
+    		</ITEMS>
+    	</PARAMETER>
+        <PARAMETER 
             FIELD="CHECK" 
             NAME="SPECIFY_KEYS" 
             NUM_ROW="23"
@@ -164,32 +204,32 @@
         <PARAMETER 
             FIELD="TEXT" 
             NAME="ROW_KEYS" 
-            REQUIRED="true"  
+            REQUIRED="false"  
             NUM_ROW="25"
             SHOW_IF="(SPECIFY_KEYS == 'true')"
             GROUP="QUERY_CONFIGURATION"
         >
-            <DEFAULT>""</DEFAULT>
+            <DEFAULT></DEFAULT>
         </PARAMETER>
 		<PARAMETER 
             FIELD="TEXT" 
             NAME="KEY_START" 
-            REQUIRED="true" 
+            REQUIRED="false" 
             NUM_ROW="25"
             SHOW_IF="(SPECIFY_KEYS == 'false')"
             GROUP="QUERY_CONFIGURATION"
         >
-            <DEFAULT>""</DEFAULT>
+            <DEFAULT></DEFAULT>
         </PARAMETER>
         <PARAMETER 
             FIELD="TEXT" 
             NAME="KEY_END" 
-            REQUIRED="true" 
+            REQUIRED="false" 
             NUM_ROW="25"
             SHOW_IF="(SPECIFY_KEYS == 'false')"
             GROUP="QUERY_CONFIGURATION"
         >
-            <DEFAULT>""</DEFAULT>
+            <DEFAULT></DEFAULT>
         </PARAMETER>
 		<PARAMETER 
             FIELD="TEXT" 
@@ -212,32 +252,32 @@
         <PARAMETER 
             FIELD="TEXT" 
             NAME="COLUMNS" 
-            REQUIRED="true"
+            REQUIRED="false"
             NUM_ROW="29"
             SHOW_IF="(SPECIFY_COLUMNS == 'true')" 
             GROUP="QUERY_CONFIGURATION"
         >
-            <DEFAULT>""</DEFAULT>
+            <DEFAULT></DEFAULT>
         </PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="COLUMN_START" 
-			REQUIRED="true" 
+			REQUIRED="false" 
 			NUM_ROW="30"
 			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
 		    GROUP="QUERY_CONFIGURATION"
 		>
-			<DEFAULT>""</DEFAULT>
+			<DEFAULT></DEFAULT>
 		</PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 
 			NAME="COLUMN_END" 
-			REQUIRED="true" 
+			REQUIRED="false" 
 			NUM_ROW="30"
 			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
             GROUP="QUERY_CONFIGURATION"
 		>
-			<DEFAULT>""</DEFAULT>
+			<DEFAULT></DEFAULT>
 		</PARAMETER>
 		<PARAMETER 
 			FIELD="TEXT" 

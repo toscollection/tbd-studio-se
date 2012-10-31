@@ -8,6 +8,7 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.metadata.types.JavaTypesManager
 		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.process.IConnectionCategory
 		java.util.List 
 		java.util.Map
 	" 
@@ -43,15 +44,13 @@
  	boolean isSpecifyColumns = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__SPECIFY_COLUMNS__"));
  	
  	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
+ 	String rowKeyType = ElementParameterParser.getValue(node,"__ROW_KEY_TYPE__");
+ 	String sNameType = ElementParameterParser.getValue(node,"__SUPER_COLUMN_TYPE__");
     
     List<IMetadataTable> metadatas = node.getMetadataList();
   	List<IMetadataColumn> columnList = null;
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
   	String firstConnName = "";
-  	if (outputs.size() > 0){
-      	IConnection out = outputs.get(0);
-      	firstConnName = out.getName();
-    }
 %>
 		int nb_line_<%=cid %> = 0;
 <%
@@ -60,18 +59,50 @@
       	columnList = metadata.getListColumns();
 		int sizeColumns = columnList.size();
       	if(metadata != null){
-     		Map<JavaType,String> typeMap=new java.util.HashMap<JavaType,String>();
-			typeMap.put(JavaTypesManager.BOOLEAN,"BooleanSerializer");
-			typeMap.put(JavaTypesManager.BYTE_ARRAY,"BytesArraySerializer");
-			typeMap.put(JavaTypesManager.DATE,"DateSerializer");
-			typeMap.put(JavaTypesManager.DOUBLE,"DoubleSerializer");
-			typeMap.put(JavaTypesManager.FLOAT,"FloatSerializer");
-			typeMap.put(JavaTypesManager.INTEGER,"IntegerSerializer");
-			typeMap.put(JavaTypesManager.LONG,"LongSerializer");
-			typeMap.put(JavaTypesManager.OBJECT,"ObjectSerializer");
-			typeMap.put(JavaTypesManager.SHORT,"ShortSerializ");
-			typeMap.put(JavaTypesManager.STRING,"StringSerializer");
-			typeMap.put(JavaTypesManager.CHARACTER,"CharSerializer");
+     		Map<String,String> typeMap=new java.util.HashMap<String,String>();
+			typeMap.put("Boolean","BooleanSerializer");
+			typeMap.put("byte[]","BytesArraySerializer");
+			typeMap.put("java.util.Date","DateSerializer");
+			typeMap.put("Double","DoubleSerializer");
+			typeMap.put("Float","FloatSerializer");
+			typeMap.put("Integer","IntegerSerializer");
+			typeMap.put("Long","LongSerializer");
+			typeMap.put("Object","ObjectSerializer");
+			typeMap.put("Short","ShortSerializer");
+			typeMap.put("String","StringSerializer");
+			typeMap.put("Character","CharSerializer");
+			if(incKey ||incSuperKey){
+				boolean rowKeyFlag=false;
+				boolean superColFlag=false;
+				for (IConnection outputConn : outputs) {
+					String conName = outputConn.getName();
+					if (outputConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+						IMetadataTable outputMetadataTable = outputConn.getMetadataTable();
+						for (IMetadataColumn column : outputMetadataTable.getListColumns()) {
+		    				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+		    				if(column.getLabel().equals(keyColumn)){
+		    					rowKeyFlag=true;
+		    					rowKeyType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
+							}
+							if("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn)){
+								superColFlag=true;
+								sNameType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
+							}
+							if(("STANDARD".equals(columnFamilyType) && rowKeyFlag)||("SUPER".equals(columnFamilyType) && rowKeyFlag && superColFlag)){
+							 break;
+							}
+						}
+					}
+				}
+			}
+%>
+			me.prettyprint.hector.api.Serializer keySerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(rowKeyType)==null?"ObjectSerializer":typeMap.get(rowKeyType)%>.get();
+<%
+			if("SUPER".equals(columnFamilyType)){
+%>
+			me.prettyprint.hector.api.Serializer sNameSerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(sNameType)==null?"ObjectSerializer":typeMap.get(sNameType)%>.get();
+<%
+			}
 %>
 		me.prettyprint.hector.api.Cluster cluster_<%=cid%> =null;
 		me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
@@ -120,13 +151,13 @@
 	             }
 				if(isSpecifyKeys){
 %>
-			me.prettyprint.hector.api.query.MultigetSliceQuery<String, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSliceQuery(
-				keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
+			me.prettyprint.hector.api.query.MultigetSliceQuery<<%=rowKeyType%>, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSliceQuery(
+				keyspace_<%=cid%> , keySerializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
 <%
 				}else{
 %>
-			me.prettyprint.hector.api.query.RangeSlicesQuery<String, String, String> sliceQuery_<%=cid%> =
-				me.prettyprint.hector.api.factory.HFactory.createRangeSlicesQuery(keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
+			me.prettyprint.hector.api.query.RangeSlicesQuery<<%=rowKeyType%>, String, String> sliceQuery_<%=cid%> =
+				me.prettyprint.hector.api.factory.HFactory.createRangeSlicesQuery(keyspace_<%=cid%> , keySerializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
 <%
 				}
 %>
@@ -135,13 +166,13 @@
 			}else{
 				if(isSpecifyKeys){
 %>
-			me.prettyprint.hector.api.query.MultigetSuperSliceQuery<String, String, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSuperSliceQuery(
-				keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);
+			me.prettyprint.hector.api.query.MultigetSuperSliceQuery<<%=rowKeyType%>, <%=sNameType%>, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSuperSliceQuery(
+				keyspace_<%=cid%> , keySerializer_<%=cid%>,sNameSerializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);
 <%
 				}else{
 %>
-		me.prettyprint.hector.api.query.RangeSuperSlicesQuery<String, String, String, String> sliceQuery_<%=cid%> = 
-				me.prettyprint.hector.api.factory.HFactory.createRangeSuperSlicesQuery(keyspace_<%=cid%> , serializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);	
+			me.prettyprint.hector.api.query.RangeSuperSlicesQuery<<%=rowKeyType%>, <%=sNameType%>, String, String> sliceQuery_<%=cid%> = 
+				me.prettyprint.hector.api.factory.HFactory.createRangeSuperSlicesQuery(keyspace_<%=cid%> , keySerializer_<%=cid%>,sNameSerializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);	
 <%
 				}
 			}
@@ -154,7 +185,7 @@
 <%
 			}else{
 %>
-			sliceQuery_<%=cid%>.setKeys(<%=keyStart%>,<%=keyEnd%>);
+			sliceQuery_<%=cid%>.setKeys(<%=("".equals(keyStart) || "\"\"".equals(keyStart)?"null":keyStart)%>,<%=("".equals(keyEnd) || "\"\"".equals(keyEnd)?"null":keyEnd)%>);
 			sliceQuery_<%=cid%>.setRowCount(<%=keyLimit%>);
 <%
 			}
@@ -164,17 +195,17 @@
 <%
 			}else{
 %>
-			sliceQuery_<%=cid%>.setRange(<%=columnStart%>, <%=columnEnd%>, false, <%=columnLimit%>);
+			sliceQuery_<%=cid%>.setRange(<%=("".equals(columnStart) || "\"\"".equals(columnStart)?"null":columnStart)%>,<%=("".equals(columnEnd) || "\"\"".equals(columnEnd)?"null":columnEnd)%>, false, <%=columnLimit%>);
 <%
 			}
 			if("STANDARD".equals(columnFamilyType)){
 				if(isSpecifyKeys){
 %>
-			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.Rows<String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.Rows<<%=rowKeyType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
 <%
 				}else{
 %>
-			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedRows<String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedRows<<%=rowKeyType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
 <%
 				}
 %>
@@ -187,11 +218,11 @@
 			}else{
 				if(isSpecifyKeys){
 %>
-			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.SuperRows<String,String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.SuperRows<<%=rowKeyType%>,<%=sNameType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
 <%
 				}else{
 %>
-			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedSuperRows<String,String,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+			me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedSuperRows<<%=rowKeyType%>,<%=sNameType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
 <%
 				}
 %>
@@ -210,6 +241,11 @@
 
 			java.nio.ByteBuffer columnValue_<%=cid%>=null;
 <%
+		if (outputs!=null && outputs.size() > 0){
+		    IConnection out = outputs.get(0);
+      		firstConnName = out.getName();
+		  if (out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				
 			for (int i = 0; i < sizeColumns; i++) {
 				IMetadataColumn column = columnList.get(i);
 				String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
@@ -218,30 +254,35 @@
 				if (incKey && column.getLabel().equals(keyColumn)) {
 					if("STANDARD".equals(columnFamilyType)){
 %>
-				columnValue_<%=cid%>=java.nio.ByteBuffer.wrap(row_<%=cid%>.getKey().toString().getBytes());	
+			if(row_<%=cid%>.getKey()!=null){
+				<%=firstConnName %>.<%=column.getLabel() %>=(<%=rowKeyType%>)row_<%=cid%>.getKey();
+			}	
 <%
 					}else {
 %>
-				columnValue_<%=cid%>=java.nio.ByteBuffer.wrap(superRow_<%=cid%>.getKey().toString().getBytes());	
+			if(superRow_<%=cid%>.getKey()!=null){
+				<%=firstConnName %>.<%=column.getLabel() %>=(<%=rowKeyType%>)superRow_<%=cid%>.getKey();
+			}
 <%
 					}
-				}else if("SUPER".equals(columnFamilyType) && incSuperKey && column.getLabel().equals(superKeyColumn)){
+				}else {
+					if("SUPER".equals(columnFamilyType) && incSuperKey && column.getLabel().equals(superKeyColumn)){
 %>
 				columnValue_<%=cid%>=superColumn_<%=cid%>.getNameByteBuffer();
 <%
-				}else{
-					if("STANDARD".equals(columnFamilyType)){
+					}else{
+						if("STANDARD".equals(columnFamilyType)){
 %>
 					column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
 					columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());
 <%
-					}else{
+						}else{
 %>
 					column_<%=cid%>=superColumn_<%=cid%>.getSubColumnByName("<%=column.getOriginalDbColumnName()%>");
 					columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());
 <%
+						}
 					}
-				}
 %>
 				if(columnValue_<%=cid%>!=null) {
 <%
@@ -275,8 +316,10 @@
 					<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getDouble();
 <%
 				} else {
+					String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
 %>
-					<%=firstConnName %>.<%=column.getLabel() %> = me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"StringSerializer":typeMap.get(javaType)%>.get().fromByteBuffer(columnValue_<%=cid%>);
+					<%=firstConnName %>.<%=column.getLabel() %> = <%if(typeMap.get(columnType)==null){%>(<%=columnType%>)<%}%>me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType)==null?"ObjectSerializer":
+						typeMap.get(columnType)%>.get().fromByteBuffer(columnValue_<%=cid%>);
 <%
 				}
 %>
@@ -284,6 +327,9 @@
 					<%=firstConnName %>.<%=column.getLabel() %> = <%=JavaTypesManager.getDefaultValueFromJavaType(typeToGenerate)%>;
 				}
 <%
+				}
+			   }
+		     }
 			}
       	}
     }
