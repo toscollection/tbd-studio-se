@@ -15,7 +15,6 @@
             input="tHBaseInput"
             name="HBASE"
             output="tHBaseOutput"
-            type="HBASE"
             withSchema="true">
          <Item
                clazz="org.talend.core.model.properties.DatabaseConnectionItem">
