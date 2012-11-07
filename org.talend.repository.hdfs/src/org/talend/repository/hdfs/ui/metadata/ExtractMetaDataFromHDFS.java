@@ -164,10 +164,6 @@ public class ExtractMetaDataFromHDFS {
      * @return
      */
     private static File createTmpFile(InputStream inputStream, String fileName, int maxLineNum) {
-        int maxLines = maxLineNum;
-        if (maxLines == -1) {
-
-        }
         Project project = ProjectManager.getInstance().getCurrentProject();
         IProject fsProject = null;
         try {
@@ -190,17 +186,17 @@ public class ExtractMetaDataFromHDFS {
                 tmpfile.delete();
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
-            String strLine = reader.readLine();
-            int totalLines = 0;
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tmpfile)));
-            while (strLine != null && (maxLineNum == -1 || totalLines < maxLineNum)) {
+            int totalLines = 0;
+            String strLine = null;
+            do {
                 totalLines++;
                 strLine = reader.readLine();
                 if (strLine != null) {
                     writer.append(strLine);
                     writer.append("\r\n"); //$NON-NLS-1$
                 }
-            }
+            } while (strLine != null && (maxLineNum == -1 || totalLines < maxLineNum));
         } catch (Exception e) {
             ExceptionHandler.process(e);
         } finally {
