@@ -21,10 +21,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IProject;
@@ -86,7 +88,8 @@ public class ExtractMetaDataFromHDFS {
 
     public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node) throws IOException,
             CoreException, InterruptedException, URISyntaxException, InstantiationException, IllegalAccessException,
-            ClassNotFoundException {
+            ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
+            InvocationTargetException, ExecutionException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || node == null || node.getType() != EHadoopFileTypes.FILE) {
             return columns;
@@ -101,7 +104,8 @@ public class ExtractMetaDataFromHDFS {
 
     public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, MetadataTable metadataTable)
             throws CoreException, IOException, InterruptedException, URISyntaxException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
+            InvocationTargetException, ExecutionException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || metadataTable == null) {
             return columns;

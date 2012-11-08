@@ -139,9 +139,12 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
             } else {
                 return;
             }
-            if (!creation) {
-                openHDFSSchemaWizard(item, metadataTable, false, creation);
-            } else if (checkHDFSConnection((HDFSConnection) item.getConnection())) {
+
+            boolean isOK = true;
+            if (creation) {
+                isOK = checkHDFSConnection((HDFSConnection) item.getConnection());
+            }
+            if (isOK) {
                 openHDFSSchemaWizard(item, metadataTable, false, creation);
             }
         }
@@ -153,10 +156,16 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
 
             public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                 monitor.beginTask(Messages.getString("CreateHDFSSchemaAction.checkConnection"), IProgressMonitor.UNKNOWN);
+                Object dfs = null;
                 try {
                     HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
-                    HadoopOperationManager.getInstance().connectDFS(connectionBean);
+                    dfs = HadoopOperationManager.getInstance().getDFS(connectionBean);
                 } catch (Exception e) {
+                    ExceptionHandler.process(e);
+                } finally {
+                    monitor.done();
+                }
+                if (dfs == null) {
                     PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
                         @Override
@@ -170,8 +179,6 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
                             return;
                         }
                     });
-                } finally {
-                    monitor.done();
                 }
             }
         };

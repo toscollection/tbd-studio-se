@@ -139,9 +139,12 @@ public class CreateHCatalogSchemaAction extends AbstractCreateAction {
             } else {
                 return;
             }
-            if (!creation) {
-                openHCatalogSchemaWizard(item, metadataTable, false, creation);
-            } else if (checkHCatalogConnection((HCatalogConnection) item.getConnection())) {
+
+            boolean isOK = true;
+            if (creation) {
+                isOK = checkHCatalogConnection((HCatalogConnection) item.getConnection());
+            }
+            if (isOK) {
                 openHCatalogSchemaWizard(item, metadataTable, false, creation);
             }
         }

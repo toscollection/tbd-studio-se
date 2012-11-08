@@ -503,7 +503,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
             if (doit) {
                 List<MetadataColumn> metadataColumns;
                 try {
-                    HadoopOperationManager.getInstance().connectDFS(getConnectionBean()); // reconnect the HDFS server.
+                    HadoopOperationManager.getInstance().getDFS(getConnectionBean()); // reconnect the HDFS server.
                     metadataColumns = ExtractMetaDataFromHDFS.extractColumns(getConnection(), metadataTable);
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
