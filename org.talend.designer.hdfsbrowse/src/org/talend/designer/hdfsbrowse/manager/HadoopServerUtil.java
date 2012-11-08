@@ -13,8 +13,16 @@
 package org.talend.designer.hdfsbrowse.manager;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
@@ -31,6 +39,8 @@ public class HadoopServerUtil {
 
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
+    public static final int timeout = 20; // the max time(second) which achieve DFS connection use.
+
     /**
      * DOC ycbai Comment method "getDFS".
      * 
@@ -44,9 +54,15 @@ public class HadoopServerUtil {
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
      * @throws InstantiationException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws IllegalArgumentException
+     * @throws SecurityException
+     * @throws ExecutionException
      */
-    public static Object getDFS(HDFSConnectionBean connection) throws IOException, InterruptedException, URISyntaxException,
-            InstantiationException, IllegalAccessException, ClassNotFoundException {
+    public static Object getDFS(HDFSConnectionBean connection) throws ExecutionException, InstantiationException,
+            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
+            InvocationTargetException, URISyntaxException, InterruptedException {
         assert connection != null;
         String nameNodeURI = connection.getNameNodeURI();
         assert nameNodeURI != null;
@@ -77,10 +93,20 @@ public class HadoopServerUtil {
                 // EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, EMPTY_STRING);
                 EHadoopConfProperties.JOB_UGI.set(conf, userName + "," + group); //$NON-NLS-1$
             }
+
+            Callable<Object> dfsCallable = null;
             if (userName == null) {
-                dfs = getDFS(conf, classLoader);
+                dfsCallable = getDFS(conf, classLoader);
             } else {
-                dfs = getDFS(new URI(nameNodeURI), conf, userName, classLoader);
+                dfsCallable = getDFS(new URI(nameNodeURI), conf, userName, classLoader);
+            }
+
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Future<Object> future = executor.submit(dfsCallable);
+            try {
+                dfs = future.get(timeout, TimeUnit.SECONDS);
+            } catch (TimeoutException e) {
+                future.cancel(true);
             }
         } finally {
             Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
@@ -89,29 +115,47 @@ public class HadoopServerUtil {
         return dfs;
     }
 
-    private static Object getDFS(Object conf, ClassLoader classLoader) throws IOException {
-        return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] { conf });
+    private static Callable<Object> getDFS(final Object conf, final ClassLoader classLoader) {
+        return new Callable<Object>() {
+
+            @Override
+            public Object call() throws Exception {
+                return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get",
+                        new Object[] { conf });
+            }
+        };
+
     }
 
-    private static Object getDFS(URI uri, Object conf, String userName, ClassLoader classLoader) throws IOException,
-            InterruptedException {
-        return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] { uri,
-                conf, userName });
+    private static Callable<Object> getDFS(final URI uri, final Object conf, final String userName, final ClassLoader classLoader) {
+        return new Callable<Object>() {
+
+            @Override
+            public Object call() throws Exception {
+                return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] {
+                        uri, conf, userName });
+            }
+        };
+
     }
 
-    public static boolean hasReadAuthority(Object status, String userName) throws ClassNotFoundException {
+    public static boolean hasReadAuthority(Object status, String userName) throws ClassNotFoundException, SecurityException,
+            IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         return hasAuthority(status, userName, ELinuxAuthority.READ);
     }
 
-    public static boolean hasWriteAuthority(Object status, String userName) throws ClassNotFoundException {
+    public static boolean hasWriteAuthority(Object status, String userName) throws ClassNotFoundException, SecurityException,
+            IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         return hasAuthority(status, userName, ELinuxAuthority.WRITE);
     }
 
-    public static boolean hasExcuteAuthority(Object status, String userName) throws ClassNotFoundException {
+    public static boolean hasExcuteAuthority(Object status, String userName) throws ClassNotFoundException, SecurityException,
+            IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         return hasAuthority(status, userName, ELinuxAuthority.EXCUTE);
     }
 
-    public static boolean hasAuthority(Object status, String userName, ELinuxAuthority authority) throws ClassNotFoundException {
+    public static boolean hasAuthority(Object status, String userName, ELinuxAuthority authority) throws ClassNotFoundException,
+            SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         boolean hasAuthority = false;
         if (status == null) {
             return hasAuthority;
@@ -189,6 +233,8 @@ public class HadoopServerUtil {
     public static ConnectionStatus testConnection(HDFSConnectionBean connection) {
         ConnectionStatus connectionStatus = new ConnectionStatus();
         connectionStatus.setResult(false);
+        String errorMsg = "Cannot connect to HDFS \"" + connection.getNameNodeURI()
+                + "\". Please check the connection parameters. ";
         Object dfs = null;
         try {
             dfs = getDFS(connection);
@@ -196,12 +242,11 @@ public class HadoopServerUtil {
                 connectionStatus.setResult(true);
                 connectionStatus.setMessageException("Connection successful");
             } else {
-                connectionStatus.setMessageException("Cannot connect to HDFS \"" + connection.getNameNodeURI()
-                        + "\". Please check the connection parameters. ");
+                connectionStatus.setMessageException(errorMsg);
             }
         } catch (Exception e) {
             ExceptionHandler.process(e);
-            connectionStatus.setMessageException(e.getMessage());
+            connectionStatus.setMessageException(errorMsg);
         } finally {
             if (dfs != null) {
                 try {

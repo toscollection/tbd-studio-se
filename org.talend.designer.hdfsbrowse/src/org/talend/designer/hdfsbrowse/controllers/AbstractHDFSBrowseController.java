@@ -13,12 +13,16 @@
 package org.talend.designer.hdfsbrowse.controllers;
 
 import java.beans.PropertyChangeEvent;
+import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.fieldassist.DecoratedField;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.fieldassist.TextControlCreator;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -31,9 +35,10 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
+import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.CorePlugin;
@@ -108,18 +113,46 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         return connectionBean;
     }
 
-    protected boolean checkHDFSConnection(HDFSConnectionBean connection) {
+    protected boolean checkHDFSConnection(final HDFSConnectionBean connection) {
+        final boolean[] result = new boolean[] { true };
+        IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
+
+            public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                monitor.beginTask(Messages.getString("AbstractHDFSBrowseController.checkConnection"), IProgressMonitor.UNKNOWN);
+                Object dfs = null;
+                try {
+                    dfs = HadoopOperationManager.getInstance().getDFS(connection);
+                } catch (Exception e) {
+                    ExceptionHandler.process(e);
+                } finally {
+                    monitor.done();
+                }
+                if (dfs == null) {
+                    PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            String mainMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.mainMsg"); //$NON-NLS-1$
+                            String detailMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.detailMsg", //$NON-NLS-1$
+                                    connection.getNameNodeURI());
+                            new ErrorDialogWidthDetailArea(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+                                    HDFSPlugin.PLUGIN_ID, mainMsg, detailMsg);
+                            result[0] = false;
+                            return;
+                        }
+                    });
+                }
+            }
+        };
+        ProgressMonitorDialog dialog = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell());
         try {
-            HadoopOperationManager.getInstance().connectDFS(connection);
+            dialog.run(true, true, runnableWithProgress);
         } catch (Exception e) {
-            String mainMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.mainMsg"); //$NON-NLS-1$
-            String detailMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.detailMsg", //$NON-NLS-1$
-                    connection.getNameNodeURI());
-            new ErrorDialogWidthDetailArea(Display.getCurrent().getActiveShell(), HDFSPlugin.PLUGIN_ID, mainMsg, detailMsg);
-            return false;
+            result[0] = false;
+            ExceptionHandler.process(e);
         }
 
-        return true;
+        return result[0];
     }
 
     @Override

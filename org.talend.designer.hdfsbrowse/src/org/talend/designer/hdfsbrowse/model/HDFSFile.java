@@ -15,6 +15,7 @@ package org.talend.designer.hdfsbrowse.model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -42,9 +43,14 @@ public class HDFSFile extends HDFSPath {
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
      * @throws InstantiationException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     * @throws IllegalArgumentException
+     * @throws SecurityException
      */
     public InputStream open() throws IOException, InterruptedException, URISyntaxException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
+            InvocationTargetException {
         return getOperationManager().getFileContent(fileSystem, classLoader, getPath());
     }
 

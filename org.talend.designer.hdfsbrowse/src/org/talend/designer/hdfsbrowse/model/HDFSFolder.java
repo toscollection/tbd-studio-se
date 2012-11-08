@@ -14,6 +14,7 @@
 package org.talend.designer.hdfsbrowse.model;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -42,7 +43,8 @@ public class HDFSFolder extends HDFSPath {
     }
 
     protected void loadHDFSFolderChildren() throws IOException, InterruptedException, URISyntaxException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
+            InvocationTargetException {
         HadoopOperationManager.getInstance().loadHDFSFolderChildren(connection, fileSystem, classLoader, this, getPath());
     }
 

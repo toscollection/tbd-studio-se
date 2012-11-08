@@ -13,6 +13,7 @@
 
 package org.talend.designer.hdfsbrowse.manager;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,11 +79,13 @@ public enum EHadoopConfProperties {
         EHadoopConfProperties.registerProperty(name, this);
     }
 
-    public String get(Object conf) {
+    public String get(Object conf) throws SecurityException, IllegalArgumentException, NoSuchMethodException,
+            IllegalAccessException, InvocationTargetException {
         return (String) ReflectionUtils.invokeMethod(conf, "get", new Object[] { name });
     }
 
-    public void set(Object conf, String value) {
+    public void set(Object conf, String value) throws SecurityException, IllegalArgumentException, NoSuchMethodException,
+            IllegalAccessException, InvocationTargetException {
         assert value != null;
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { name, value });
     }

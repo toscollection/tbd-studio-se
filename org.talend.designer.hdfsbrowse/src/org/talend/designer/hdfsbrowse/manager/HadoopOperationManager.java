@@ -14,8 +14,10 @@ package org.talend.designer.hdfsbrowse.manager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
 
 import org.talend.commons.utils.data.reflection.ReflectionUtils;
 import org.talend.core.repository.ConnectionStatus;
@@ -45,7 +47,8 @@ public class HadoopOperationManager {
 
     public void loadHDFSFolderChildren(HDFSConnectionBean connection, Object fileSystem, ClassLoader classLoader,
             HDFSPath parent, String path) throws IOException, InterruptedException, URISyntaxException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException {
+            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
+            InvocationTargetException {
         if (connection == null || fileSystem == null || classLoader == null || parent == null || path == null) {
             return;
         }
@@ -76,7 +79,8 @@ public class HadoopOperationManager {
     }
 
     public long getFileSize(Object fileSystem, ClassLoader classLoader, String filePath) throws InterruptedException,
-            URISyntaxException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+            URISyntaxException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException,
+            SecurityException, IllegalArgumentException, NoSuchMethodException, InvocationTargetException {
         long size = 0;
         Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { filePath });
         Object fileStatus = ReflectionUtils.invokeMethod(fileSystem, "getFileStatus", new Object[] { pathObj });
@@ -86,21 +90,24 @@ public class HadoopOperationManager {
     }
 
     public InputStream getFileContent(Object fileSystem, ClassLoader classLoader, String filePath) throws IOException,
-            InterruptedException, URISyntaxException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+            InterruptedException, URISyntaxException, InstantiationException, IllegalAccessException, ClassNotFoundException,
+            SecurityException, IllegalArgumentException, NoSuchMethodException, InvocationTargetException {
+        if (fileSystem == null) {
+            return null;
+        }
         Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { filePath });
         return (InputStream) ReflectionUtils.invokeMethod(fileSystem, "open", new Object[] { pathObj });
     }
 
     public InputStream getFileContent(HDFSConnectionBean connection, String filePath) throws IOException, InterruptedException,
-            URISyntaxException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+            URISyntaxException, InstantiationException, IllegalAccessException, ClassNotFoundException, SecurityException,
+            IllegalArgumentException, NoSuchMethodException, InvocationTargetException, ExecutionException {
         Object fileSystem = getDFS(connection);
+        if (fileSystem == null) {
+            return null;
+        }
         ClassLoader classLoader = getClassLoader(connection);
         return getFileContent(fileSystem, classLoader, filePath);
-    }
-
-    public void connectDFS(HDFSConnectionBean connection) throws IOException, InterruptedException, URISyntaxException,
-            InstantiationException, IllegalAccessException, ClassNotFoundException {
-        HadoopServerUtil.getDFS(connection);
     }
 
     public ConnectionStatus testConnection(HDFSConnectionBean connection) {
@@ -108,7 +115,8 @@ public class HadoopOperationManager {
     }
 
     public Object getDFS(HDFSConnectionBean connectionBean) throws IOException, InterruptedException, URISyntaxException,
-            InstantiationException, IllegalAccessException, ClassNotFoundException {
+            InstantiationException, IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException,
+            NoSuchMethodException, InvocationTargetException, ExecutionException {
         return HadoopServerUtil.getDFS(connectionBean);
     }
 
@@ -143,7 +151,8 @@ public class HadoopOperationManager {
         return table;
     }
 
-    private boolean canAccess(HDFSConnectionBean connection, Object status) throws ClassNotFoundException {
+    private boolean canAccess(HDFSConnectionBean connection, Object status) throws ClassNotFoundException, SecurityException,
+            IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (status == null) {
             return false;
         }
