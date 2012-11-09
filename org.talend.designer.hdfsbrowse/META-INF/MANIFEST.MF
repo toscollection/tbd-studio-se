@@ -14,7 +14,8 @@ Require-Bundle: org.eclipse.ui,
  org.talend.designer.core,
  org.talend.core.repository,
  org.talend.libraries.apache,
- org.talend.librariesmanager
+ org.talend.librariesmanager,
+ org.talend.libraries.dom4j-jaxen;bundle-version="1.6.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: .Talend SA.

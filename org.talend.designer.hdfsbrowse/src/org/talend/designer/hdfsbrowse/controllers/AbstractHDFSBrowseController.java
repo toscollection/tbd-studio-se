@@ -14,6 +14,8 @@ package org.talend.designer.hdfsbrowse.controllers;
 
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.commands.Command;
@@ -42,7 +44,10 @@ import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.CorePlugin;
+import org.talend.core.model.general.ModuleNeeded;
+import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.IElementParameter;
+import org.talend.core.model.process.INode;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
@@ -51,6 +56,8 @@ import org.talend.designer.core.ui.editor.properties.controllers.AbstractElement
 import org.talend.designer.core.ui.editor.properties.controllers.creator.SelectAllTextControlCreator;
 import org.talend.designer.hdfsbrowse.HDFSPlugin;
 import org.talend.designer.hdfsbrowse.i18n.Messages;
+import org.talend.designer.hdfsbrowse.manager.EHadoopParameter;
+import org.talend.designer.hdfsbrowse.manager.HadoopMappingManager;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
@@ -69,8 +76,8 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         super(dp);
     }
 
-    protected Command createCommand(SelectionEvent event) {
-        HDFSBrowseDialog dial = new HDFSBrowseDialog(composite.getShell(), getHDFSType(), getHDFSConnectionBean());
+    protected Command createCommand(SelectionEvent event, HDFSConnectionBean connection) {
+        HDFSBrowseDialog dial = new HDFSBrowseDialog(composite.getShell(), getHDFSType(), connection);
         Button btn = (Button) event.getSource();
         String propertyName = (String) btn.getData(PARAMETER_NAME);
         Text filePathText = (Text) hashCurControls.get(propertyName);
@@ -92,18 +99,48 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
     protected abstract String getControllerName();
 
     protected HDFSConnectionBean getHDFSConnectionBean() {
-        String distribution = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.DISTRIBUTION.getParameterName());
-        String drivers = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
-        String nameNodeUri = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getParameterName());
-        String userName = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.USERNAME.getParameterName());
-        Boolean useKrb = (Boolean) elem.getPropertyValue(EHDFSRepositoryToComponent.USE_KRB.getParameterName());
-        String principal = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getParameterName());
-        String group = (String) elem.getPropertyValue(EHDFSRepositoryToComponent.GROUP.getParameterName());
+        INode node = (INode) elem;
+        String useExistingConnection = ElementParameterParser.getValue(elem, "__USE_EXISTING_CONNECTION__"); //$NON-NLS-1$
+        if ("true".equalsIgnoreCase(useExistingConnection)) { //$NON-NLS-1$
+            String connectionName = ElementParameterParser.getValue(node, "__CONNECTION__"); //$NON-NLS-1$
+            List<? extends INode> nodes = node.getProcess().getGraphicalNodes();
+            for (INode iNode : nodes) {
+                if (iNode.getUniqueName().equals(connectionName)) {
+                    node = iNode;
+                    break;
+                }
+            }
+        }
+
+        String distribution = (String) getParameterValue(node, EHadoopParameter.DISTRIBUTION.getName());
+        String version = (String) getParameterValue(node, EHadoopParameter.VERSION.getName());
+        String nameNodeUri = (String) getParameterValue(node, EHadoopParameter.NAMENODE_URI.getName());
+        String userName = (String) getParameterValue(node, EHadoopParameter.USERNAME.getName());
+        Boolean useKrb = (Boolean) getParameterValue(node, EHadoopParameter.USE_KRB.getName());
+        String principal = (String) getParameterValue(node, EHadoopParameter.NAMENODE_PRINCIPAL.getName());
+        String group = (String) getParameterValue(node, EHadoopParameter.GROUP.getName());
 
         HDFSConnectionBean connectionBean = new HDFSConnectionBean();
         connectionBean.setDistribution(distribution);
-        connectionBean.setDfVersion(EHadoopVersion4Drivers.getVersionByDriverStrs(drivers));
-        connectionBean.setDfDrivers(drivers);
+        // to adapt the old system which "DB_VERSION" not record version but drivers.
+        String drivers = (String) node.getPropertyValue(EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
+        if (drivers != null) {
+            connectionBean.setDfVersion(EHadoopVersion4Drivers.getVersionByDriverStrs(drivers));
+            connectionBean.setDfDrivers(drivers);
+        } else {
+            connectionBean.setDfVersion(version);
+            StringBuffer driversBuffer = new StringBuffer();
+            List<ModuleNeeded> moduleList = node.getModulesNeeded();
+            for (ModuleNeeded module : moduleList) {
+                if (module.isRequired(node.getElementParameters())) {
+                    driversBuffer.append(module.getModuleName()).append(";"); //$NON-NLS-1$
+                }
+            }
+            if (driversBuffer.length() > 0) {
+                driversBuffer.deleteCharAt(driversBuffer.length() - 1);
+            }
+            connectionBean.setDfDrivers(driversBuffer.toString());
+        }
         connectionBean.setNameNodeURI(nameNodeUri);
         connectionBean.setUserName(userName);
         connectionBean.setEnableKerberos(useKrb);
@@ -113,12 +150,27 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         return connectionBean;
     }
 
+    private Object getParameterValue(INode node, String paramName) {
+        Map<String, List<String>> componentParamsMap = HadoopMappingManager.getInstance().getComponentParamsMap();
+        List<String> paramslist = componentParamsMap.get(paramName);
+        if (paramslist != null && paramslist.size() > 0) {
+            for (String param : paramslist) {
+                Object value = node.getPropertyValue(param);
+                if (value != null) {
+                    return value;
+                }
+            }
+        }
+
+        return null;
+    }
+
     protected boolean checkHDFSConnection(final HDFSConnectionBean connection) {
         final boolean[] result = new boolean[] { true };
         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
 
             public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-                monitor.beginTask(Messages.getString("AbstractHDFSBrowseController.checkConnection"), IProgressMonitor.UNKNOWN);
+                monitor.beginTask(Messages.getString("AbstractHDFSBrowseController.checkConnection"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 Object dfs = null;
                 try {
                     dfs = HadoopOperationManager.getInstance().getDFS(connection);
@@ -261,8 +313,9 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         }
 
         public void widgetSelected(SelectionEvent event) {
-            if (checkHDFSConnection(getHDFSConnectionBean())) {
-                Command command = createCommand(event);
+            HDFSConnectionBean connection = getHDFSConnectionBean();
+            if (checkHDFSConnection(connection)) {
+                Command command = createCommand(event, connection);
                 executeCommand(command);
             }
         }
