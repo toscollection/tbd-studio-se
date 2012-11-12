@@ -87,4 +87,8 @@ public class HortonBrandingService extends AbstractTalendBrandingService {
     public String getOptionName() {
         return "for Big Data";
     }
+
+    public String getUserManuals() {
+        return "BD";
+    }
 }
