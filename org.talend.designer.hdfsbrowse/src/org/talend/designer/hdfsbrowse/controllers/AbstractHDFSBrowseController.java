@@ -50,6 +50,7 @@ import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.core.model.process.DataNode;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.designer.core.ui.editor.nodes.Node;
 import org.talend.designer.core.ui.editor.properties.controllers.AbstractElementPropertySectionController;
@@ -103,7 +104,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         String useExistingConnection = ElementParameterParser.getValue(elem, "__USE_EXISTING_CONNECTION__"); //$NON-NLS-1$
         if ("true".equalsIgnoreCase(useExistingConnection)) { //$NON-NLS-1$
             String connectionName = ElementParameterParser.getValue(node, "__CONNECTION__"); //$NON-NLS-1$
-            List<? extends INode> nodes = node.getProcess().getGraphicalNodes();
+            List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
             for (INode iNode : nodes) {
                 if (iNode.getUniqueName().equals(connectionName)) {
                     node = iNode;
@@ -123,7 +124,17 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         HDFSConnectionBean connectionBean = new HDFSConnectionBean();
         connectionBean.setDistribution(distribution);
         // to adapt the old system which "DB_VERSION" not record version but drivers.
-        String drivers = (String) node.getPropertyValue(EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
+        String drivers = null;
+        String oldVersionParamName = EHDFSRepositoryToComponent.DB_VERSION.getParameterName();
+        if (node instanceof DataNode) {
+            DataNode dataNode = (DataNode) node;
+            IElementParameter parameter = dataNode.getElementParameter(oldVersionParamName);
+            if (parameter != null) {
+                drivers = (String) parameter.getValue();
+            }
+        } else {
+            drivers = (String) node.getPropertyValue(oldVersionParamName);
+        }
         if (drivers != null) {
             connectionBean.setDfVersion(EHadoopVersion4Drivers.getVersionByDriverStrs(drivers));
             connectionBean.setDfDrivers(drivers);
@@ -155,7 +166,16 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         List<String> paramslist = componentParamsMap.get(paramName);
         if (paramslist != null && paramslist.size() > 0) {
             for (String param : paramslist) {
-                Object value = node.getPropertyValue(param);
+                Object value = null;
+                if (node instanceof DataNode) {
+                    DataNode dataNode = (DataNode) node;
+                    IElementParameter parameter = dataNode.getElementParameter(param);
+                    if (parameter != null) {
+                        value = parameter.getValue();
+                    }
+                } else {
+                    value = node.getPropertyValue(param);
+                }
                 if (value != null) {
                     return value;
                 }
