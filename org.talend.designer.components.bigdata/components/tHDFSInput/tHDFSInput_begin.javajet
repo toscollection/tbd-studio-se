@@ -35,13 +35,15 @@
 	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
-	List<? extends IConnection> outConns = node.getOutgoingConnections(EConnectionType.FLOW_MAIN);
+	List<? extends IConnection> outConns = node.getOutgoingConnections();
 	IConnection outConn = null;
 	IMetadataTable metadata = null;
 	
 	if(outConns!=null && outConns.size()> 0) {
 		outConn = outConns.get(0);
-		metadata = outConn.getMetadataTable();
+		if(outConn!=null && outConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+			metadata = outConn.getMetadataTable();
+		}
 	}
 	
 	String user = null;
