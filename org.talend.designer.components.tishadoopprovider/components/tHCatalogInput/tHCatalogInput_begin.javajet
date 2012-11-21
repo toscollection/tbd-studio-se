@@ -43,7 +43,7 @@
 	String stdout = ElementParameterParser.getValue(node, "__STDOUT__");
 	String stderr = ElementParameterParser.getValue(node, "__STDERR__");
 	
-	List<? extends IConnection> outConns = node.getOutgoingConnections(EConnectionType.FLOW_MAIN);
+	List<? extends IConnection> outConns = node.getOutgoingConnections();
 	IConnection outConn = null;
 	IMetadataTable metadata = null;
 %>	
@@ -108,8 +108,10 @@
 <%
 	
 	if(outConns!=null && outConns.size()> 0) {
-		outConn = outConns.get(0);
-		metadata = outConn.getMetadataTable();
+			outConn = outConns.get(0);
+			if(outConn!=null && outConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+				metadata = outConn.getMetadataTable();
+			}
 	}
 	
 	if (metadata!=null) { 
@@ -137,9 +139,9 @@
 			fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("fs.default.name")),conf_<%=cid%>,username_<%=cid%>);
 		}	
 
-		org.apache.hadoop.fs.FileStatus [] fileStatus= fs_<%=cid%>.listStatus(new org.apache.hadoop.fs.Path(pathHDFS_<%=cid%>));
-		for(int i_<%=cid%>=0; i_<%=cid%><fileStatus.length; i_<%=cid%>++) {
-			org.apache.hadoop.fs.Path path_<%=cid%> = fileStatus[i_<%=cid%>].getPath();
+		org.apache.hadoop.fs.FileStatus [] fileStatus_<%=cid%>= fs_<%=cid%>.listStatus(new org.apache.hadoop.fs.Path(pathHDFS_<%=cid%>));
+		for(int i_<%=cid%>=0; i_<%=cid%><fileStatus_<%=cid%>.length; i_<%=cid%>++) {
+			org.apache.hadoop.fs.Path path_<%=cid%> = fileStatus_<%=cid%>[i_<%=cid%>].getPath();
 			org.apache.hadoop.fs.FSDataInputStream fsDataInputStream_<%=cid%> = fs_<%=cid%>.open(path_<%=cid%>);
 			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>, <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
 			while (fid_<%=cid %>.nextRecord()) {
