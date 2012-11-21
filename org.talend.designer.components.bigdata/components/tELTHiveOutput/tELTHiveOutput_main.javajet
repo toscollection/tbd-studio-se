@@ -40,8 +40,11 @@ imports="
 		<%
 	}
 	
+	String differenttable = ElementParameterParser.getValue(node, "__DIFFERENT_TABLE_NAME__");
+    boolean useDifferentTable = "true".equals(ElementParameterParser.getValue(node, "__USE_DIFFERENT_TABLE__"));
+    
 	%>
-		tableName_<%=cid%> = <%="\""+dbtable +"\""%>;
+		tableName_<%=cid%> = <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
 	<%
 	
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
