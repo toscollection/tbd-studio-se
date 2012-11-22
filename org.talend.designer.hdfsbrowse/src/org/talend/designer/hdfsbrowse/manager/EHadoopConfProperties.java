@@ -17,7 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.talend.commons.utils.data.reflection.ReflectionUtils;
+import org.talend.core.utils.ReflectionUtils;
 
 /**
  * DOC ycbai class global comment. Detailled comment

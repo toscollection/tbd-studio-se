@@ -19,8 +19,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.concurrent.ExecutionException;
 
-import org.talend.commons.utils.data.reflection.ReflectionUtils;
 import org.talend.core.repository.ConnectionStatus;
+import org.talend.core.utils.ReflectionUtils;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdTable;

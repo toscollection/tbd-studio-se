@@ -26,8 +26,8 @@ import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
-import org.talend.commons.utils.data.reflection.ReflectionUtils;
 import org.talend.core.repository.ConnectionStatus;
+import org.talend.core.utils.ReflectionUtils;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.model.ELinuxAuthority;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
