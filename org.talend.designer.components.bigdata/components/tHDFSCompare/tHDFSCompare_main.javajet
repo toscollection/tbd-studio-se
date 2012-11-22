@@ -33,6 +33,7 @@
 	String fileRef = ElementParameterParser.getValue(node, "__FILE_REF__");
 	String cmpMode = ElementParameterParser.getValue(node, "__COMPARISON_MODE__");
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
+
 	%>
 	String username_<%=cid%> = "";
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
@@ -52,7 +53,7 @@
 			<% 
 			} 
 		}
-		if(!(hadoopVersion.startsWith("hadoop-core-1.0.0.jar") && useKrb)) {
+		if(!((hadoopVersion.startsWith("hadoop-core-1.0.0.jar") || hadoopVersion.startsWith("hadoop-hdfs-2.0.0-cdh4.0.1.jar")) && useKrb)) {
 			user = ElementParameterParser.getValue(node, "__USERNAME__");
 		} else {
 %>
@@ -92,7 +93,7 @@
 			    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				<%
 			  	}else{
-					if(!(hadoopVersion.startsWith("hadoop-core-1.0.0.jar") && useKrb)) {
+					if(!((hadoopVersion.startsWith("hadoop-core-1.0.0.jar") || hadoopVersion.startsWith("hadoop-hdfs-2.0.0-cdh4.0.1.jar")) && useKrb)) {
 						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
 					} else {
 %>

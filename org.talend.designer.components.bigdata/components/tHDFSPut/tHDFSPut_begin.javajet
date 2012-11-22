@@ -36,7 +36,7 @@
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 		conf_<%=cid%>.set("fs.default.name", <%=fsDefaultName%>);
 <%
-		if(!(hadoopVersion.startsWith("hadoop-core-1.0.0.jar") && useKrb)) {
+		if(!((hadoopVersion.startsWith("hadoop-core-1.0.0.jar") || hadoopVersion.startsWith("hadoop-hdfs-2.0.0-cdh4.0.1.jar")) && useKrb)) {
 			user = ElementParameterParser.getValue(node, "__USERNAME__");
 		} else {
 %>
@@ -75,7 +75,7 @@
 					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				<%
 			  	}else{
-					if(!(hadoopVersion.startsWith("hadoop-core-1.0.0.jar") && useKrb)) {
+					if(!((hadoopVersion.startsWith("hadoop-core-1.0.0.jar") || hadoopVersion.startsWith("hadoop-hdfs-2.0.0-cdh4.0.1.jar")) && useKrb)) {
 						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
 					} else {
 %>

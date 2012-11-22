@@ -60,7 +60,7 @@
 				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
 <%
 			}
-			if(("HDP_1_0".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion)) && useKrb) {
+			if(("HDP_1_0".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "CLOUDERA_CDH4".equals(pigVersion)) && useKrb) {
 				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 				String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
 %>
