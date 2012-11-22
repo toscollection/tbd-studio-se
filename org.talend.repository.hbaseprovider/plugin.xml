@@ -24,5 +24,28 @@
          </DBType>
       </RepositoryComponent>
    </extension>
+   <extension
+         point="org.talend.core.runtime.classloader_provider">
+      <classloader
+            index="HBASE:APACHE:APACHE_0_20_204"
+            libraries="commons-lang3-3.0.jar;commons-logging-1.1.1.jar;hadoop-core-0.20.203.0.jar;hbase-0.90.1-cdh3u0.jar;log4j-1.2.16.jar;zookeeper-3.3.3-cdh3u0.jar;commons-lang-2.4.jar">
+      </classloader>
+      <classloader
+            index="HBASE:APACHE:APACHE_1_0_0"
+            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.15.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
+      </classloader>
+      <classloader
+            index="HBASE:HORTONWORKS:HDP_1_0"
+            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.15.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
+      </classloader>
+      <classloader
+            index="HBASE:CLOUDERA:Cloudera_CDH4"
+            libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;guava-11.0.2.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hbase-0.92.1-cdh4.0.1-security.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;zookeeper-3.4.3-cdh4.0.1.jar">
+      </classloader>
+      <classloader
+            index="HBASE:MAPR:MAPR2"
+            libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr2.jar;hbase-0.92.1.jar;log4j-1.2.16.jar;zookeeper-3.3.2.jar;guava-r09.jar">
+      </classloader>
+   </extension>
 
 </plugin>
