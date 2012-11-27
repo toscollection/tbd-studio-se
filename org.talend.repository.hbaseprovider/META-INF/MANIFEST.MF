@@ -15,3 +15,4 @@ Require-Bundle: org.eclipse.ui,
  org.talend.libraries.apache,
  org.talend.repository.metadata
 Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
