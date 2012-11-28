@@ -4,7 +4,6 @@
 		org.talend.core.model.process.ElementParameterParser 
 		org.talend.core.model.metadata.IMetadataTable 
 		org.talend.designer.codegen.config.CodeGeneratorArgument
-		org.talend.core.model.process.IConnection   
 		java.util.List
 		java.util.Map
 	" 

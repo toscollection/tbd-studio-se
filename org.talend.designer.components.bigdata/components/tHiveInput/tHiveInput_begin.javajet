@@ -7,9 +7,7 @@ imports="
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.process.IConnection
 		org.talend.core.model.process.IConnectionCategory
-		org.talend.core.model.metadata.builder.database.ExtractMetaDataUtils
 		org.talend.core.model.metadata.types.JavaTypesManager
-		org.talend.core.model.metadata.types.JavaType		
 		java.util.List
 		java.util.Map
 		"
