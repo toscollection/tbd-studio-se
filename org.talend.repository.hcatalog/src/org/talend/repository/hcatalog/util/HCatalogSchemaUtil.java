@@ -52,7 +52,7 @@ public class HCatalogSchemaUtil {
                     continue;
                 }
                 MetadataTable table = (MetadataTable) obj;
-                if (table.getLabel().equals(name)) {
+                if (table.getName().equals(name)) {
                     return table;
                 }
             }

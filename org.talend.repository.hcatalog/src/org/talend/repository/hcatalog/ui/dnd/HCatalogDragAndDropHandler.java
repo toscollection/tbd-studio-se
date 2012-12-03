@@ -12,6 +12,8 @@ import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.designerproperties.ComponentToRepositoryProperty;
+import org.talend.core.model.process.IElement;
+import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -71,9 +73,9 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
         } else if (EHCatalogRepositoryToComponent.DATABASE_NAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getDatabase()));
         } else if (EHCatalogRepositoryToComponent.TABLE_NAME.getRepositoryValue().equals(value)) {
-            if (table != null) {
-                return TalendQuoteUtils.addQuotesIfNotExist(table.getLabel());
-            }
+            // if (table != null) {
+            // return TalendQuoteUtils.addQuotesIfNotExist(table.getLabel());
+            // }
         } else if (EHCatalogRepositoryToComponent.PARTITION_NAME.getRepositoryValue().equals(value)) {
             // TODO: need to do it in the future.
             // if (table != null) {
@@ -213,6 +215,19 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
             return HCatalogRepositoryNodeType.HCATALOG;
         }
         return null;
+    }
+
+    @Override
+    public void handleTableRelevantParameters(IElement ele, IMetadataTable metadataTable) {
+        if (ele == null || metadataTable == null) {
+            return;
+        }
+        String tableName = metadataTable.getTableName();
+        IElementParameter tableNameParameter = ele.getElementParameter(EHCatalogRepositoryToComponent.TABLE_NAME
+                .getParameterName());
+        if (tableNameParameter != null) {
+            tableNameParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(tableName));
+        }
     }
 
 }

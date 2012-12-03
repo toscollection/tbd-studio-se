@@ -50,7 +50,7 @@ public class HDFSSchemaUtil {
                     continue;
                 }
                 MetadataTable table = (MetadataTable) obj;
-                if (table.getLabel().equals(name)) {
+                if (table.getName().equals(name)) {
                     return table;
                 }
             }

@@ -17,15 +17,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.emf.common.util.EMap;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.metadata.builder.connection.Connection;
-import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.designerproperties.ComponentToRepositoryProperty;
+import org.talend.core.model.process.IElement;
+import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -37,7 +37,6 @@ import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
 import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.repository.hdfs.node.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.util.HDFSConstants;
-import org.talend.repository.hdfs.util.HDFSSchemaUtil;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSConnectionItem;
@@ -84,16 +83,16 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getGroup()));
         } else if (EHDFSRepositoryToComponent.FILENAME.getRepositoryValue().equals(value)) {
-            if (table != null) {
-                MetadataTable metaTable = HDFSSchemaUtil.getTableByName(connection, table.getLabel());
-                if (metaTable != null) {
-                    EMap<String, String> properties = metaTable.getAdditionalProperties();
-                    String hdfsPath = properties.get(HDFSConstants.HDFS_PATH);
-                    if (StringUtils.isNotEmpty(hdfsPath)) {
-                        return TalendQuoteUtils.addQuotesIfNotExist(hdfsPath);
-                    }
-                }
-            }
+            // if (table != null) {
+            // MetadataTable metaTable = HDFSSchemaUtil.getTableByName(connection, table.getLabel());
+            // if (metaTable != null) {
+            // EMap<String, String> properties = metaTable.getAdditionalProperties();
+            // String hdfsPath = properties.get(HDFSConstants.HDFS_PATH);
+            // if (StringUtils.isNotEmpty(hdfsPath)) {
+            // return TalendQuoteUtils.addQuotesIfNotExist(hdfsPath);
+            // }
+            // }
+            // }
         } else if (EHDFSRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
         } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
@@ -242,6 +241,20 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
             return HDFSRepositoryNodeType.HDFS;
         }
         return null;
+    }
+
+    @Override
+    public void handleTableRelevantParameters(IElement ele, IMetadataTable metadataTable) {
+        if (ele == null || metadataTable == null) {
+            return;
+        }
+        IElementParameter fileNameParameter = ele.getElementParameter(EHDFSRepositoryToComponent.FILENAME.getParameterName());
+        if (fileNameParameter != null) {
+            String hdfsPath = metadataTable.getAdditionalProperties().get(HDFSConstants.HDFS_PATH);
+            if (hdfsPath != null) {
+                fileNameParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(hdfsPath));
+            }
+        }
     }
 
 }
