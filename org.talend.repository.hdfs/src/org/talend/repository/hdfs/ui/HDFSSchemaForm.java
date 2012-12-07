@@ -258,10 +258,10 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
         Composite compositeRetreiveSchemaButton = Form.startNewGridLayout(container, 1, false, SWT.BEGINNING, SWT.TOP);
         GC gc = new GC(compositeRetreiveSchemaButton);
-        String displayStr = Messages.getString("HDFSSchemaForm.button.retrieveSchema"); //$NON-NLS-1$
+        String displayStr = Messages.getString("HDFSSchemaForm.button.guessSchema"); //$NON-NLS-1$
         Point buttonSize = gc.stringExtent(displayStr);
         retreiveSchemaButton = new UtilsButton(compositeRetreiveSchemaButton, displayStr, buttonSize.x + 12, HEIGHT_BUTTON_PIXEL);
-        retreiveSchemaButton.setToolTipText(Messages.getString("HDFSSchemaForm.button.retrieveSchema.tooltip")); //$NON-NLS-1$
+        retreiveSchemaButton.setToolTipText(Messages.getString("HDFSSchemaForm.button.guessSchema.tooltip")); //$NON-NLS-1$
         gc.dispose();
 
         // Group MetaData
