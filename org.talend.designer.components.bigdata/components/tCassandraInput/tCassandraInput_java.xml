@@ -158,8 +158,8 @@
         	NAME="ROW_KEY_TYPE"  
         	NUM_ROW="22" 
         	REQUIRED="true" 
-        	SHOW_IF="(INC_KEY == 'false')" >
-    		<ITEMS DEFAULT="INTEGER">
+			 >
+    		<ITEMS DEFAULT="STRING">
     			<ITEM NAME="INTEGER" VALUE="Integer" />
     			<ITEM NAME="LONG" VALUE="Long" />
     			<ITEM NAME="DOUBLE" VALUE="Double" />
@@ -178,7 +178,7 @@
         	NAME="SUPER_COLUMN_TYPE"
         	NUM_ROW="22" 
         	REQUIRED="true"
-        	SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'false')">
+        	SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')">
     		<ITEMS DEFAULT="STRING">
     			<ITEM NAME="INTEGER" VALUE="Integer" />
     			<ITEM NAME="LONG" VALUE="Long" />
