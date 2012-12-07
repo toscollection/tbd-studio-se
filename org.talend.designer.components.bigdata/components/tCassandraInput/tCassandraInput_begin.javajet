@@ -71,30 +71,7 @@
 			typeMap.put("Short","ShortSerializer");
 			typeMap.put("String","StringSerializer");
 			typeMap.put("Character","CharSerializer");
-			if(incKey ||incSuperKey){
-				boolean rowKeyFlag=false;
-				boolean superColFlag=false;
-				for (IConnection outputConn : outputs) {
-					String conName = outputConn.getName();
-					if (outputConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-						IMetadataTable outputMetadataTable = outputConn.getMetadataTable();
-						for (IMetadataColumn column : outputMetadataTable.getListColumns()) {
-		    				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
-		    				if(column.getLabel().equals(keyColumn)){
-		    					rowKeyFlag=true;
-		    					rowKeyType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
-							}
-							if("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn)){
-								superColFlag=true;
-								sNameType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
-							}
-							if(("STANDARD".equals(columnFamilyType) && rowKeyFlag)||("SUPER".equals(columnFamilyType) && rowKeyFlag && superColFlag)){
-							 break;
-							}
-						}
-					}
-				}
-			}
+
 %>
 			me.prettyprint.hector.api.Serializer keySerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(rowKeyType)==null?"ObjectSerializer":typeMap.get(rowKeyType)%>.get();
 <%
@@ -255,13 +232,39 @@
 					if("STANDARD".equals(columnFamilyType)){
 %>
 			if(row_<%=cid%>.getKey()!=null){
-				<%=firstConnName %>.<%=column.getLabel() %>=(<%=rowKeyType%>)row_<%=cid%>.getKey();
+<%
+						if(javaType == JavaTypesManager.DATE) {
+%>
+				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date(String.valueOf(row_<%=cid%>.getKey()), <%= patternValue %>);
+<%
+						}else if(javaType == JavaTypesManager.BYTE_ARRAY) {
+%>
+				<%=firstConnName %>.<%=column.getLabel() %>=String.valueOf(row_<%=cid%>.getKey()).getBytes(utf8Charset);
+<%
+						} else {
+%>
+				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_<%=typeToGenerate%>(String.valueOf(row_<%=cid%>.getKey()));
+<%						}%>
 			}	
 <%
 					}else {
 %>
 			if(superRow_<%=cid%>.getKey()!=null){
-				<%=firstConnName %>.<%=column.getLabel() %>=(<%=rowKeyType%>)superRow_<%=cid%>.getKey();
+<%
+						if(javaType == JavaTypesManager.DATE) {
+%>
+				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date(String.valueOf(superRow_<%=cid%>.getKey()), <%= patternValue %>);
+<%
+						}else if(javaType == JavaTypesManager.BYTE_ARRAY) {
+%>
+				<%=firstConnName %>.<%=column.getLabel() %>=String.valueOf(superRow_<%=cid%>.getKey()).getBytes(utf8Charset);
+<%
+						} else {
+%>
+				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_<%=typeToGenerate%>(String.valueOf(superRow_<%=cid%>.getKey()));
+<%
+						}
+%>
 			}
 <%
 					}
