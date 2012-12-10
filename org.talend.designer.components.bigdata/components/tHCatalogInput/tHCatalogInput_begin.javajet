@@ -39,7 +39,6 @@
 	String stdout = ElementParameterParser.getValue(node, "__STDOUT__");
 	String stderr = ElementParameterParser.getValue(node, "__STDERR__");
 	
-	List<? extends IConnection> outConns = node.getOutgoingConnections();
 	IConnection outConn = null;
 	IMetadataTable metadata = null;
 	
@@ -157,15 +156,10 @@
 		namenode_<%=cid%> = location_<%=cid%>.substring(0, location_<%=cid%>.length()- pathHDFS_<%=cid%>.length());
 	}
 <%
-	
-	if(outConns!=null && outConns.size()> 0) {
-			outConn = outConns.get(0);
-			if(outConn!=null && outConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
-				metadata = outConn.getMetadataTable();
-			}
-	}
-	
-	if (metadata!=null) { 
+	List<IMetadataTable> metadatas = node.getMetadataList();
+	if ((metadatas!=null)&&(metadatas.size()>0)) {
+		metadata = metadatas.get(0);
+		if (metadata!=null) { 
 %>
 		String username_<%=cid%> = "";
 		org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
@@ -205,6 +199,7 @@
 			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>, <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
 			while (fid_<%=cid %>.nextRecord()) {
 <%
+		}
 	}
 %>
 
