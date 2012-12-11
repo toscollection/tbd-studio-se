@@ -122,45 +122,56 @@ if(metadatas !=null && metadatas.size()>0){
 
 java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 
-<%
 	StringBuffer partitionSql = new StringBuffer();
-	String startPartition = " PARTITION(";
-	String endPartition = ")";
+	String startPartition = "";
+	String endPartition = "";
 	String bodyPartition = "";
-	if(fieldPartitions != null) {
+<%
+	//For Bug TDI-24105,support context variables
+	if(fieldPartitions != null && !fieldPartitions.isEmpty()) {
 		String columnName = null;
 		String columnValue = null;
 		int count = 0 ;
+%>
+	startPartition = " PARTITION(";
+	endPartition = ")";
+<%
 		for(Map<String, String> line : fieldPartitions ) {// search in the configuration table
 		     columnName = line.get("COLUMN_NAME");
 		     columnValue = line.get("COLUMN_VALUE");  
 			if (columnName!=null && !"".equals(columnName)) {
 			    count++;
-    			bodyPartition = bodyPartition + columnName;
-    			if (columnValue!=null && !"".equals(columnValue)) {
-    			    bodyPartition = bodyPartition + "=";
-    			    bodyPartition = bodyPartition + columnValue;
-    			}
+%>
+    			bodyPartition = bodyPartition + <%=columnName%>;
+<%
+   				if (columnValue!=null && !"".equals(columnValue)) {
+%>
+   				    bodyPartition = bodyPartition + "=";
+   				    bodyPartition = bodyPartition + <%=columnValue%>;
+<%
+				}
     			if(count < fieldPartitions.size()){
+%>
 			        bodyPartition = bodyPartition + ",";
+<%
 			    }
-    		}
+			}
 		}
 	}
-	partitionSql.append(startPartition).append(bodyPartition).append(endPartition);
 %>
+	partitionSql.append(startPartition).append(bodyPartition).append(endPartition);
 	
 <%
 
 if(columnList != null && columnList.size()>0){
 	if(("INSERT").equals(dataAction)){
 %>	
-	String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query_<%=cid %>;
+	String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + partitionSql.toString() + " "+select_query_<%=cid %>;
 	stmt_<%=cid %>.execute(insertQuery_<%=cid %>);
 <%
 	}else if (("OVERWRITE").equals(dataAction)){
 %>
-	String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ <%if(bodyPartition!=null&& !"".equals(bodyPartition)){%> "<%=partitionSql.toString()%>" + <%}%> " "+select_query_<%=cid %>;
+	String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ partitionSql.toString() + " "+select_query_<%=cid %>;
 	stmt_<%=cid %>.execute(overwriteQuery_<%=cid %>);
 
 <%
