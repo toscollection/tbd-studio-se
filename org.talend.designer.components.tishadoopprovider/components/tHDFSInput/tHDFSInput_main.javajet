@@ -8,6 +8,7 @@
     org.talend.designer.codegen.config.CodeGeneratorArgument
 	org.talend.core.model.metadata.types.JavaTypesManager
 	org.talend.core.model.metadata.types.JavaType
+	org.talend.core.model.process.IConnectionCategory
 	
     java.util.List 
   " 
@@ -25,15 +26,17 @@ String firstConnName = "";
 if (conns!=null) {
 	if (conns.size()>0) {
 		IConnection conn = conns.get(0);
-		firstConnName = conn.getName();
+		if(conn!=null && conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+			firstConnName = conn.getName();
 %>
 <%=firstConnName %> = new <%=conn.getName() %>Struct();
 <%
-	}
+			}
+		}
 }
 
 List<IMetadataTable> metadatas = node.getMetadataList();
-if ((metadatas!=null)&&(metadatas.size()>0)) {
+if ((metadatas!=null)&&(metadatas.size()>0) && firstConnName.length()>0) {
 	IMetadataTable metadata = metadatas.get(0);
 	if (metadata!=null) {
 		List<IMetadataColumn> listColumns = metadata.getListColumns();
