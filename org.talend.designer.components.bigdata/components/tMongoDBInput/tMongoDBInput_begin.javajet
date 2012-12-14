@@ -8,6 +8,7 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.metadata.types.JavaTypesManager
 		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.process.IConnectionCategory
 		java.util.List 
     	java.util.Map		
 	" 
@@ -40,8 +41,10 @@
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
   	String firstConnName = "";
   	if (outputs.size() > 0){
-      			IConnection out = outputs.get(0);
-      			firstConnName = out.getName();
+		IConnection out = outputs.get(0);
+		if(out!=null && out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+			firstConnName = out.getName();
+		}
     }
 %>
 			int nb_line_<%=cid %> = 0;
@@ -172,6 +175,9 @@
 %>
 				com.mongodb.DBObject o_<%=cid%> = cursor_<%=cid%>.next();
 				nb_line_<%=cid %>++;
+<%
+			if(firstConnName.length()>0){
+%>
 				Object valueObj_<%=cid%>=null;
 <%
 				for (int i = 0; i < sizeColumns; i++) {
@@ -214,6 +220,7 @@
 <%
           			}
 				}
+			}
       	}
   	}
 %>

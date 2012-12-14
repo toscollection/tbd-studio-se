@@ -2,9 +2,7 @@
 	imports="
     org.talend.core.model.process.INode 
     org.talend.core.model.metadata.IMetadataTable 
-    org.talend.core.model.process.IConnection
     org.talend.designer.codegen.config.CodeGeneratorArgument
-	org.talend.core.model.process.IConnectionCategory
 	org.talend.core.model.process.ElementParameterParser
 	java.util.Map 
     java.util.List 
@@ -31,20 +29,13 @@
 	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
-	List<? extends IConnection> outConns = node.getOutgoingConnections();
-	IConnection outConn = null;
 	IMetadataTable metadata = null;
 	
-	if(outConns!=null && outConns.size()> 0) {
-		outConn = outConns.get(0);
-		if(outConn!=null && outConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
-			metadata = outConn.getMetadataTable();
-		}
-	}
-	
 	String user = null;
-	
-	if (metadata!=null) { 
+	List<IMetadataTable> metadatas = node.getMetadataList();
+	if ((metadatas!=null)&&(metadatas.size()>0)) {
+		metadata = metadatas.get(0);
+		if (metadata!=null) { 
 	%>
 		String username_<%=cid%> = "";
 		org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
@@ -131,6 +122,7 @@
 		org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
 		while (fid_<%=cid %>.nextRecord()) {
 <%
+		}
 	}
 %>
 
