@@ -32,13 +32,13 @@
 		<% 
 		} 
 	}
-	if(hadoopVersion.startsWith("hadoop-0.20.2-core.jar") || hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){
+	if(("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion)){
 		String group = ElementParameterParser.getValue(node, "__GROUP__");
 		%>
 		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
 	<%
 	}
-	if((hadoopVersion.startsWith("hadoop-core-1.0.0.jar") || hadoopVersion.startsWith("hadoop-hdfs-2.0.0-cdh4.0.1.jar")) && useKrb) {
+	if((("HDP_1_0").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb) {
 %>
 		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%

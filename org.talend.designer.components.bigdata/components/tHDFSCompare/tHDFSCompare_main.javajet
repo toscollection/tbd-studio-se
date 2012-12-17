@@ -48,14 +48,14 @@
 			<% 
 			} 
 		}
-		if(!((hadoopVersion.startsWith("hadoop-core-1.0.0.jar") || hadoopVersion.startsWith("hadoop-hdfs-2.0.0-cdh4.0.1.jar")) && useKrb)) {
+		if(!((("HDP_1_0").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
 			user = ElementParameterParser.getValue(node, "__USERNAME__");
 		} else {
 %>
 			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%
 		}
-		if(hadoopVersion.startsWith("hadoop-0.20.2-core.jar") || hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){
+		if(("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion)){
 			String group = ElementParameterParser.getValue(node, "__GROUP__");
 			%>
 			conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
@@ -83,12 +83,12 @@
 		      	String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
 			String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
-		      	if(hadoopVersion.startsWith("hadoop-0.20.2-core.jar") || hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){
+		      	if(("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion)){
 			    %>
 			    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				<%
 			  	}else{
-					if(!((hadoopVersion.startsWith("hadoop-core-1.0.0.jar") || hadoopVersion.startsWith("hadoop-hdfs-2.0.0-cdh4.0.1.jar")) && useKrb)) {
+					if(!((("HDP_1_0").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
 						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
 					} else {
 %>
