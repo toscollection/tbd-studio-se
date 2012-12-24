@@ -112,7 +112,6 @@
 				String crcMapPath = new java.io.File("../crcMap").getCanonicalPath();
 				
 				if (isNeedAddLibsPath(crcMapPath)) {
-					System.err.println("JE SUIS DEDANS");
 					java.util.Map<String, String> crcMap = null;
 					java.io.ObjectInputStream ois = new ObjectInputStream(new java.io.FileInputStream(crcMapPath));
 					crcMap = (java.util.Map<String, String>) ois.readObject();
