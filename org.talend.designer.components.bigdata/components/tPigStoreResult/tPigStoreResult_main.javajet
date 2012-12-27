@@ -6,6 +6,8 @@
 		java.util.List
 		java.util.Map
 		org.talend.core.model.metadata.IMetadataTable
+		org.talend.designer.runprocess.ProcessorUtilities
+		org.talend.designer.runprocess.ProcessorException
 		org.talend.core.model.metadata.types.Java2STLangTypesHelper
 		"
 %>
@@ -14,6 +16,7 @@
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
+	String processId = node.getProcess().getId();
 
 	String previous_node="";
 	String start_node="";
@@ -36,6 +39,128 @@
 	
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	
+	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
+	
+	boolean generateRegisterJarCode = ("HCatStorer".equals(function) && !defineJarsToRegister);
+	java.util.List<String> jarsToRegister = null;
+	java.util.List<String> jars = null;
+	
+	if(generateRegisterJarCode) {
+		String[] commandLine = new String[] {"<command>"};
+		try {
+			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
+		} catch (ProcessorException e) {
+			e.printStackTrace();
+		}
+
+		jarsToRegister = new java.util.ArrayList();
+		jarsToRegister.add("datanucleus-core");
+		jarsToRegister.add("datanucleus-rdbms");
+		jarsToRegister.add("hcatalog");
+		jarsToRegister.add("hive-exec");
+		jarsToRegister.add("hive-metastore");
+
+		for (int j = 0; j < commandLine.length; j++) {
+			if(commandLine[j].contains("jar")) {
+				jars = java.util.Arrays.asList(commandLine[j].split(";"));
+				break;
+			}
+		}
+	}
+	
+	if(generateRegisterJarCode) {
+%>
+		class GetJarsToRegister_<%=cid%> {
+			private String oozieClasspathLine;
+			private boolean isOozieRuntime;
+			
+			public GetJarsToRegister_<%=cid%>() {
+				try {
+					this.isOozieRuntime = setJarsToRegister("../../job.xml");
+				} catch (java.lang.Exception e) {
+					e.printStackTrace();
+				}
+			}
+		
+			public boolean setJarsToRegister(String filename) throws IOException, org.dom4j.DocumentException {
+				String jobXmlPath = new java.io.File(filename).getCanonicalPath();
+				if(isNeedAddLibsPath(jobXmlPath)) {
+					
+					org.dom4j.io.SAXReader reader_oozie = new org.dom4j.io.SAXReader();
+					org.dom4j.Document document_oozie = reader_oozie.read(jobXmlPath);
+					List list_oozie = document_oozie.selectNodes("/configuration/property");
+					for (java.util.Iterator iter_oozie = list_oozie.iterator(); iter_oozie.hasNext();) {
+						org.dom4j.Element element_oozie = (org.dom4j.Element) iter_oozie.next();
+						String name_oozie = element_oozie.elementText("name");
+						if(name_oozie.equals("mapred.cache.localFiles")) {
+							this.oozieClasspathLine = element_oozie.elementText("value");
+							return true;
+						}
+					}
+				}
+				return false;
+			}
+			
+			public String replaceJarPaths(String originalClassPathLine) throws Exception {
+				String classPathLine = "";
+				String crcMapPath = new java.io.File("../crcMap").getCanonicalPath();
+				
+				if (isNeedAddLibsPath(crcMapPath)) {
+					java.util.Map<String, String> crcMap = null;
+					java.io.ObjectInputStream ois = new ObjectInputStream(new java.io.FileInputStream(crcMapPath));
+					crcMap = (java.util.Map<String, String>) ois.readObject();
+					ois.close();
+					classPathLine = addLibsPath(originalClassPathLine, crcMap);
+				} else if(this.isOozieRuntime) {
+					if(this.oozieClasspathLine!=null) {
+						List<String> oozieJars = java.util.Arrays.asList(this.oozieClasspathLine.split(","));
+						for(int j=0; j<oozieJars.size(); j++) {
+							if(oozieJars.get(j).contains(originalClassPathLine.substring(originalClassPathLine.lastIndexOf("/")))) {
+								classPathLine = oozieJars.get(j);
+								break;
+							}
+						}
+					}
+				} else {
+					classPathLine = originalClassPathLine;
+				}
+				return classPathLine;
+			}
+		
+			private boolean isNeedAddLibsPath(String crcMapPath) {
+				if (!(new java.io.File(crcMapPath).exists())) {// when not use cache
+					return false;
+				}
+				return true;
+			}
+		
+		
+			private String addLibsPath(String line, java.util.Map<String, String> crcMap) {
+				for (java.util.Map.Entry<String, String> entry : crcMap.entrySet()) {
+					line = adaptLibPaths(line, entry);
+				}
+				return line;
+			}
+		
+			private String adaptLibPaths(String line, java.util.Map.Entry<String, String> entry) {
+				String jarName = entry.getValue();
+				String crc = entry.getKey();
+				String libStringFinder = "../lib/" + jarName;
+				if (line.contains(libStringFinder)) {
+					line = line.replace(libStringFinder, "../../../cache/lib/" + crc + "/" + jarName);
+				} else if (line.contains(":$ROOT_PATH/" + jarName + ":")) {
+					line = line.replace(":$ROOT_PATH/" + jarName + ":", ":$ROOT_PATH/../../../cache/lib/" + crc + "/" + jarName + ":");
+				} else if (line.contains(";" + jarName + ";")) {
+					line = line.replace(";" + jarName + ";", ";../../../cache/lib/" + crc + "/" + jarName + ";");
+				}
+				return line;
+			}
+		
+		}
+
+		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+<%
+	}	
 %>
 	<%if(rmResultDir && !("HCatStorer".equals(function))){%>
 		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
@@ -46,12 +171,27 @@
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 <%
 	if("HCatStorer".equals(function)) {
-		if(registerJar.size() > 0){
-			for(Map<String, String> item : registerJar){
+		if(generateRegisterJarCode) {
+			for(int i=0; i<jarsToRegister.size(); i++) {
+				String jarToRegister = jarsToRegister.get(i);
+				for(int j=0; j<jars.size(); j++) {
+					if(jars.get(j).contains(jarToRegister)) {
 %>
-				pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
+						pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+<%
+
+						break;
+					}
+				}
+			}
+		} else {
+			if(registerJar.size() > 0){
+				for(Map<String, String> item : registerJar){
+%>
+					pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
 <% 
-			} 
+				} 
+			}
 		}
 %>
 		System.setProperty("hive.metastore.local", "false");
