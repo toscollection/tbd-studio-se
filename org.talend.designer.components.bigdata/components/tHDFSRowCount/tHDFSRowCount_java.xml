@@ -101,7 +101,6 @@
 	      FIELD="FILE_HADOOP"
 	      NUM_ROW="40"
 	      REQUIRED="true"
-	      REPOSITORY_VALUE="FILENAME"
 	    >
 	      <DEFAULT>""</DEFAULT>
 	    </PARAMETER>
