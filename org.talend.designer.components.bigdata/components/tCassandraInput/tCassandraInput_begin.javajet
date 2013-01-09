@@ -235,7 +235,7 @@
 <%
 						if(javaType == JavaTypesManager.DATE) {
 %>
-				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date(String.valueOf(row_<%=cid%>.getKey()), <%= patternValue %>);
+				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date((java.util.Date)(row_<%=cid%>.getKey()), <%= patternValue %>);
 <%
 						}else if(javaType == JavaTypesManager.BYTE_ARRAY) {
 %>
@@ -253,7 +253,7 @@
 <%
 						if(javaType == JavaTypesManager.DATE) {
 %>
-				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date(String.valueOf(superRow_<%=cid%>.getKey()), <%= patternValue %>);
+				<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date((java.util.Date)(superRow_<%=cid%>.getKey()), <%= patternValue %>);
 <%
 						}else if(javaType == JavaTypesManager.BYTE_ARRAY) {
 %>
