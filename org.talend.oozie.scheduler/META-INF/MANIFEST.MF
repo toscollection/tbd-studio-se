@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.talend.repository,
  org.talend.metadata.managment.ui,
  org.talend.libraries.apache,
- org.talend.designer.hdfsbrowse;bundle-version="1.0.0"
+ org.talend.designer.hdfsbrowse
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/oozie-client-3.0.2.jar,
