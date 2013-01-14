@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.oozie.scheduler.constants;
 
-import com.hortonworks.etl.talend.JobContext.Timeunit;
+import org.talend.oozie.scheduler.jobsubmission.model.JobContext.Timeunit;
 
 /**
  * Created by Marvin Wang on May 6, 2012. The enum provides the time unit for Oozie Coordinator. All the time units are

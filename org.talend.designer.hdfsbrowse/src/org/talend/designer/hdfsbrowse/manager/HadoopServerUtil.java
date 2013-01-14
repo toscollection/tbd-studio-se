@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.manager;
 
+import java.io.BufferedInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
@@ -25,10 +29,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 import org.talend.designer.hdfsbrowse.model.ELinuxAuthority;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 
@@ -261,6 +268,81 @@ public class HadoopServerUtil {
 
     public static ClassLoader getClassLoader(HDFSConnectionBean connection) {
         return HadoopClassLoaderFactory.getClassLoader(connection);
+    }
+
+    public static void upload(File localFile, String dfsPath, Object fileSystem, ClassLoader classLoader)
+            throws HadoopServerException {
+        upload(localFile, dfsPath, fileSystem, classLoader, null);
+    }
+
+    /**
+     * DOC ycbai Comment method "upload".
+     * 
+     * Upload a local file to the distributed file system
+     * 
+     * @param localFile the file which you want to upload from local
+     * @param dfsPath the path on file system which you want to upload.
+     * @param fileSystem
+     * @param classLoader
+     * @param monitor
+     * @throws OozieJobDeployException
+     */
+    public static void upload(File localFile, String dfsPath, Object fileSystem, ClassLoader classLoader, IProgressMonitor monitor)
+            throws HadoopServerException {
+        if (classLoader == null) {
+            classLoader = HadoopServerUtil.class.getClassLoader();
+        }
+        if (monitor == null) {
+            monitor = new NullProgressMonitor();
+        }
+        monitor.setTaskName("Upload file " + dfsPath);
+
+        BufferedInputStream istream = null;
+        DataOutputStream ostream = null;
+        Object destPath = null;
+        try {
+            destPath = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { dfsPath }); //$NON-NLS-1$
+            if (localFile.isDirectory()) {
+                ReflectionUtils.invokeMethod(fileSystem, "mkdirs", new Object[] { destPath }); //$NON-NLS-1$
+                monitor.worked(1);
+                for (File child : localFile.listFiles()) {
+                    if (monitor.isCanceled())
+                        return;
+                    upload(child, dfsPath + "/" + child.getName(), fileSystem, classLoader, monitor); //$NON-NLS-1$
+                }
+            } else if (localFile.isFile()) {
+                istream = new BufferedInputStream(new FileInputStream(localFile));
+                ostream = (DataOutputStream) ReflectionUtils.invokeMethod(fileSystem, "create", new Object[] { destPath }); //$NON-NLS-1$
+
+                int bytes;
+                final int taskSize = 1024;
+                byte[] buffer = new byte[taskSize];
+
+                while ((bytes = istream.read(buffer)) >= 0) {
+                    if (monitor.isCanceled())
+                        return;
+                    ostream.write(buffer, 0, bytes);
+                    monitor.worked(1);
+                }
+            }
+        } catch (Exception e) {
+            throw new HadoopServerException(String.format("Unable to upload file %s to %s", localFile, destPath), e); //$NON-NLS-1$
+        } finally {
+            try {
+                if (istream != null)
+                    istream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // nothing we can do here
+            }
+            try {
+                if (ostream != null)
+                    ostream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // nothing we can do here
+            }
+        }
     }
 
 }

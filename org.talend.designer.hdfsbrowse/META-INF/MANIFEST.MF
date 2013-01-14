@@ -21,9 +21,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: .Talend SA.
 Bundle-Localization: plugin
 Export-Package: org.talend.designer.hdfsbrowse,
+ org.talend.designer.hdfsbrowse.exceptions,
  org.talend.designer.hdfsbrowse.generators,
  org.talend.designer.hdfsbrowse.manager,
  org.talend.designer.hdfsbrowse.model,
+ org.talend.designer.hdfsbrowse.reflection,
  org.talend.designer.hdfsbrowse.ui.provider,
  org.talend.designer.hdfsbrowse.util
 Bundle-ClassPath: .

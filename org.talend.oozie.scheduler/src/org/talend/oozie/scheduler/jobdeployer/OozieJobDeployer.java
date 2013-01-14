@@ -14,9 +14,7 @@ package org.talend.oozie.scheduler.jobdeployer;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +26,14 @@ import org.talend.core.CorePlugin;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ProcessItem;
 import org.talend.core.prefs.ITalendCorePrefConstants;
+import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
+import org.talend.designer.hdfsbrowse.reflection.HadoopClassConstants;
+import org.talend.designer.hdfsbrowse.reflection.HadoopReflection;
 import org.talend.designer.runprocess.IProcessor;
 import org.talend.designer.runprocess.ProcessorException;
 import org.talend.designer.runprocess.ProcessorUtilities;
 import org.talend.oozie.scheduler.exceptions.OozieJobDeployException;
+import org.talend.oozie.scheduler.utils.OozieClassLoaderFactory;
 import org.talend.repository.documentation.ArchiveFileExportOperationFullPath;
 import org.talend.repository.documentation.ExportFileResource;
 import org.talend.repository.ui.utils.ZipToFile;
@@ -83,78 +85,70 @@ public class OozieJobDeployer {
 
     private static void uploadProcess(IProcess2 process, String unzipDir) throws OozieJobDeployException {
         String appPathOnHDFSParent = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
-
-        org.apache.hadoop.fs.FileSystem fs = null;
-
-        org.apache.hadoop.conf.Configuration config = new org.apache.hadoop.conf.Configuration();
-
-        config.set(
-                "fs.default.name",
-                CorePlugin.getDefault().getPreferenceStore()
-                        .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT));
-
-        String userName = CorePlugin.getDefault().getPreferenceStore()
-                .getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
-        if (StringUtils.isEmpty(userName)) {
-            try {
-                fs = org.apache.hadoop.fs.FileSystem.get(config);
-            } catch (IOException e) {
-                throw new OozieJobDeployException("Can not acess Hadoop File System with default name!", e);
-            }
-        } else {
-            try {
-                fs = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(config.get("fs.default.name")), config, userName);
-            } catch (IOException e) {
-                throw new OozieJobDeployException("Can not access Hadoop File System with user "+userName+"!", e);
-            } catch (InterruptedException e) {
-                throw new OozieJobDeployException("Can not access Hadoop File System!", e);
-            } catch (URISyntaxException e) {
-                throw new OozieJobDeployException("The name node end point is not valid!", e);
-            }
-        }
-        
-
-        // /user/hdp/etl/talend/MarvinJob_0.1/MarvinJob
+        Object fs = null;
+        ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader classLoader = OozieClassLoaderFactory.getClassLoader();
+            Thread.currentThread().setContextClassLoader(classLoader);
+
+            Object config = HadoopReflection.newInstance(HadoopClassConstants.CONFIGURATION, classLoader);
+
+            HadoopReflection.invokeMethod(
+                    config,
+                    "set",
+                    new Object[] {
+                            "fs.default.name",
+                            CorePlugin.getDefault().getPreferenceStore()
+                                    .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) });
+
+            String userName = CorePlugin.getDefault().getPreferenceStore()
+                    .getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+            if (StringUtils.isEmpty(userName)) {
+                HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] { config }, classLoader);
+            } else {
+                String nnURI = (String) HadoopReflection.invokeMethod(config, "get", new Object[] { "fs.default.name" });
+                fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] {
+                        new java.net.URI(nnURI), config, userName }, classLoader);
+            }
+
+            // /user/hdp/etl/talend/MarvinJob_0.1/MarvinJob
             // if something has been uploaded already before in the same folder, delete the old content
-            if (fs.exists(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"))) {
-                fs.delete(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"), true);
+            Object libPath = HadoopReflection.newInstance(HadoopClassConstants.PATH,
+                    new Object[] { appPathOnHDFSParent + "/lib" }, classLoader);
+            if ((Boolean) HadoopReflection.invokeMethod(fs, "exists", new Object[] { libPath })) {
+                HadoopReflection.invokeMethod(fs, "delete", new Object[] { libPath });
             }
-            
-            fs.mkdirs(new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib"));
-        } catch (IOException e) {
-            throw new OozieJobDeployException("Can not make a directory in HDFS!", e);
-        }
+            HadoopReflection.invokeMethod(fs, "mkdirs", new Object[] { libPath });
 
-        File unzipDirFile = new File(unzipDir);
-        File[] files = unzipDirFile.listFiles(new FileFilter() {
+            File unzipDirFile = new File(unzipDir);
+            File[] files = unzipDirFile.listFiles(new FileFilter() {
 
-            @Override
-            public boolean accept(File file) {
-                if (file != null && file.isDirectory()) {
-                    return true;
+                @Override
+                public boolean accept(File file) {
+                    if (file != null && file.isDirectory()) {
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-        });
+            });
 
-        if (files != null && files.length > 0) {
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
-                File[] tempFiles = file.listFiles();
-                if (tempFiles != null && tempFiles.length > 0) {
-                    for (int j = 0; j < tempFiles.length; j++) {
-                        File tempFile = tempFiles[j];
-                        org.apache.hadoop.fs.Path srcPath = new org.apache.hadoop.fs.Path(tempFile.getAbsolutePath());
-                        org.apache.hadoop.fs.Path distpath = new org.apache.hadoop.fs.Path(appPathOnHDFSParent + "/lib");
-                        try {
-                            fs.copyFromLocalFile(false, true, srcPath, distpath);
-                        } catch (IOException e) {
-                            throw new OozieJobDeployException("The local file can not upload to Hadoop HDFS!", e);
+            if (files != null && files.length > 0) {
+                for (int i = 0; i < files.length; i++) {
+                    File file = files[i];
+                    File[] tempFiles = file.listFiles();
+                    if (tempFiles != null && tempFiles.length > 0) {
+                        for (int j = 0; j < tempFiles.length; j++) {
+                            File tempFile = tempFiles[j];
+                            String destPath = appPathOnHDFSParent + "/lib/" + tempFile.getName(); //$NON-NLS-1$
+                            HadoopServerUtil.upload(tempFile, destPath, fs, classLoader);
                         }
                     }
                 }
             }
+        } catch (Exception e) {
+            throw new OozieJobDeployException("The local file can not upload to Hadoop HDFS!", e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
     }
 
@@ -221,4 +215,5 @@ public class OozieJobDeployer {
         ProcessorUtilities.resetExportConfig();
         return archiveFilePath;
     }
+
 }

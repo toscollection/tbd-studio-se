@@ -55,6 +55,12 @@ import org.talend.oozie.scheduler.constants.TOozieOutputMessages;
 import org.talend.oozie.scheduler.exceptions.OozieJobDeployException;
 import org.talend.oozie.scheduler.exceptions.OozieJobException;
 import org.talend.oozie.scheduler.jobdeployer.OozieJobDeployer;
+import org.talend.oozie.scheduler.jobsubmission.RemoteJobSubmission;
+import org.talend.oozie.scheduler.jobsubmission.ScheduledJobSubmission;
+import org.talend.oozie.scheduler.jobsubmission.model.JobContext;
+import org.talend.oozie.scheduler.jobsubmission.model.JobSubmission;
+import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
+import org.talend.oozie.scheduler.jobsubmission.model.JobContext.Timeunit;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.TOozieSchedulerDialog;
 import org.talend.oozie.scheduler.ui.TOozieSettingDialog;
@@ -64,12 +70,6 @@ import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.oozie.scheduler.views.TOozieView;
 import org.talend.repository.ui.wizards.documentation.LinkUtils;
 
-import com.hortonworks.etl.talend.JobContext;
-import com.hortonworks.etl.talend.JobContext.Timeunit;
-import com.hortonworks.etl.talend.JobSubmission;
-import com.hortonworks.etl.talend.JobSubmissionException;
-import com.hortonworks.etl.talend.oozie.RemoteJobSubmission;
-import com.hortonworks.etl.talend.oozie.ScheduledJobSubmission;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for doing some action from the widgets of
@@ -159,7 +159,8 @@ public class ExecuteJobCompositeController {
 
             @Override
             public void run() {
-                Job runJob = new Job(jobContext.getJobName()) {
+                final String jobName = jobContext.getJobName();
+                Job runJob = new Job(jobName) {
 
                     @Override
                     protected IStatus run(IProgressMonitor monitor) {
@@ -167,7 +168,7 @@ public class ExecuteJobCompositeController {
                         monitor.beginTask("Scheduling job...", 100);
                         try {
                             monitor.worked(10);
-                            updateAllEnabledOrNot(OozieJobProcessStatus.DEPLOYING, jobContext.getJobName());
+                            updateAllEnabledOrNot(OozieJobProcessStatus.DEPLOYING, jobName);
                             deployJobOnHadoop(output, jobContext);
                             monitor.worked(30);
                             // updateAllEnabledOrNot(OozieJobProcessStatus.PREP,
@@ -179,14 +180,11 @@ public class ExecuteJobCompositeController {
 
                             output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_OUTPUT_RUNNING));
                             traceManager.putTrace(jobIdInOozie, output.toString());
-                            updateOutputTextContents(output.toString(), jobContext.getJobName());
-                            updateAllEnabledOrNot(OozieJobProcessStatus.RUNNING, jobContext.getJobName());
+                            updateOutputTextContents(output.toString(), jobName);
+                            updateAllEnabledOrNot(OozieJobProcessStatus.RUNNING, jobName);
 
-                            CorePlugin
-                                    .getDefault()
-                                    .getPreferenceStore()
-                                    .putValue(TOozieCommonConstants.OOZIE_PREFIX_FOR_PREFERENCE + jobContext.getJobName(),
-                                            jobIdInOozie);
+                            CorePlugin.getDefault().getPreferenceStore()
+                                    .putValue(TOozieCommonConstants.OOZIE_PREFIX_FOR_PREFERENCE + jobName, jobIdInOozie);
                             outputScheduleJobLogs(oozieClient, jobIdInOozie, jobContext, output);
                         } catch (JobSubmissionException e) {
                             ExceptionHandler.process(e);
@@ -197,7 +195,7 @@ public class ExecuteJobCompositeController {
                         } catch (OozieJobDeployException e) {
                             output.append(outputLogWithPrefixDate(e.getMessage()));
                             output.append(outputLogWithPrefixDate(e.getCause().getMessage()));
-                            updateOutputTextContents(output.toString(), jobContext.getJobName());
+                            updateOutputTextContents(output.toString(), jobName);
                         }
                         return Status.OK_STATUS;
                     }
@@ -210,6 +208,7 @@ public class ExecuteJobCompositeController {
 
     protected void checkJobStatus(String jobIdInOozie, JobSubmission jobSubmission, StringBuffer output, JobContext jobContext) {
         try {
+            final String jobName = jobContext.getJobName();
             switch (jobSubmission.status(jobIdInOozie, getOozieFromPreference())) {
             case RUNNING:
                 output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_OUTPUT_RUNNING));
@@ -217,14 +216,14 @@ public class ExecuteJobCompositeController {
             case SUCCEEDED:
                 output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_OUTPUT_JOB_COMPLETE));
                 traceManager.putTrace(jobIdInOozie, output.toString());
-                updateOutputTextContents(output.toString(), jobContext.getJobName());
+                updateOutputTextContents(output.toString(), jobName);
                 break;
             case KILLED:
                 output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_OUTPUT_JOB_KILL));
 
                 traceManager.putTrace(jobIdInOozie, output.toString());
                 afterDoKillAction(jobIdInOozie, output);
-                updateOutputTextContents(output.toString(), jobContext.getJobName());
+                updateOutputTextContents(output.toString(), jobName);
                 break;
             case FAILED:
                 output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_OUTPUT_JOB_FAILD));
@@ -250,6 +249,7 @@ public class ExecuteJobCompositeController {
     private void outputScheduleJobLogs(final OozieClient oozieClient, final String jobIdInOozie, final JobContext jobContext,
             StringBuffer output) {
         try {
+            final String jobName = jobContext.getJobName();
             // JobSubmission.Status status = scheduledJobSubmission.status(scheduledJobHandle,
             // jobContext.getOozieEndPoint());
             while (JobSubmission.Status.PREP == scheduledJobSubmission.status(jobIdInOozie, getOozieFromPreference())) {
@@ -257,7 +257,7 @@ public class ExecuteJobCompositeController {
                 // output.append(TOozieOutputMessages.LINE_BREAK_CHAR);
                 // output.append(oozieClient.getCoordJobInfo(jobIdInOozie));
                 // output.append(TOozieOutputMessages.LINE_BREAK_CHAR);
-                // updateOutputTextContents(output.toString(), jobContext.getJobName());
+                // updateOutputTextContents(output.toString(), jobName);
                 Thread.sleep(1000 * 2);
             }
 
@@ -266,7 +266,7 @@ public class ExecuteJobCompositeController {
                 // output.append(TOozieOutputMessages.LINE_BREAK_CHAR);
                 // output.append(oozieClient.getJobInfo(jobIdInOozie));
                 // output.append(TOozieOutputMessages.LINE_BREAK_CHAR);
-                // updateOutputTextContents(output.toString(), jobContext.getJobName());
+                // updateOutputTextContents(output.toString(), jobName);
                 Thread.sleep(1000 * 2);
             }
 
@@ -292,8 +292,8 @@ public class ExecuteJobCompositeController {
             // oozieClient.getJobInfo(jobIdFromOozie).getStatus() }));
             // output.append(TOozieOutputMessages.LINE_BREAK_CHAR);
             traceManager.putTrace(jobIdInOozie, output.toString());
-            updateAllEnabledOrNot(OozieJobProcessStatus.SUCCEEDED, jobContext.getJobName());
-            updateOutputTextContents(output.toString(), jobContext.getJobName());
+            updateAllEnabledOrNot(OozieJobProcessStatus.SUCCEEDED, jobName);
+            updateOutputTextContents(output.toString(), jobName);
         }
         // catch (OozieClientException e) {
         // ExceptionHandler.process(e);
@@ -318,7 +318,8 @@ public class ExecuteJobCompositeController {
         JobContext jobContext = initJobContextForOozie(JobSubmissionType.REMOTE, iContext);
         if (!isJobReadOnly())
             saveJobBeforeRun();
-        String jobIdInOozie = CorePlugin.getDefault().getPreferenceStore()
+        String jobIdInOozie = null;
+        jobIdInOozie = CorePlugin.getDefault().getPreferenceStore()
                 .getString(TOozieCommonConstants.OOZIE_PREFIX_FOR_PREFERENCE + jobContext.getJobName());
         if (jobIdInOozie != null)
             traceManager.removeTrace(jobIdInOozie);
@@ -330,7 +331,8 @@ public class ExecuteJobCompositeController {
         Display.getDefault().asyncExec(new Runnable() {
 
             public void run() {
-                Job runJob = new Job(jobContext.getJobName()) {
+                final String jobName = jobContext.getJobName();
+                Job runJob = new Job(jobName) {
 
                     @Override
                     protected IStatus run(IProgressMonitor monitor) {
@@ -342,7 +344,7 @@ public class ExecuteJobCompositeController {
                             monitor.worked(10);
 
                             monitor.subTask(TOozieOutputMessages.MSG_OUTPUT_DEPLOYING);
-                            updateAllEnabledOrNot(OozieJobProcessStatus.DEPLOYING, jobContext.getJobName());
+                            updateAllEnabledOrNot(OozieJobProcessStatus.DEPLOYING, jobName);
                             deployJobOnHadoop(output, jobContext);
                             monitor.worked(30);
 
@@ -350,12 +352,12 @@ public class ExecuteJobCompositeController {
 
                             return status;
                         } catch (InterruptedException e) {
-                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobName);
                             output.append(outputLogWithPrefixDate(e.getMessage()));
-                            updateOutputTextContents(output.toString(), jobContext.getJobName());
+                            updateOutputTextContents(output.toString(), jobName);
                             ExceptionHandler.process(e);
                         } catch (JobSubmissionException e) {
-                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobName);
                             output.append(outputLogWithPrefixDate(e.getMessage()));
                             output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_ERROR_ERROR_SETTINGS));
                             if (e.getCause() instanceof OozieClientException) {
@@ -364,18 +366,18 @@ public class ExecuteJobCompositeController {
                                         + ooException.getMessage()));
                             } else
                                 output.append(outputLogWithPrefixDate(e.getCause().getMessage()));
-                            updateOutputTextContents(output.toString(), jobContext.getJobName());
+                            updateOutputTextContents(output.toString(), jobName);
                         } catch (URISyntaxException e) {
-                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobName);
                             output.append(outputLogWithPrefixDate(e.getMessage()));
-                            updateOutputTextContents(output.toString(), jobContext.getJobName());
+                            updateOutputTextContents(output.toString(), jobName);
                         } catch (OozieJobDeployException e) {
-                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobContext.getJobName());
+                            updateAllEnabledOrNot(OozieJobProcessStatus.FAILED, jobName);
 
                             output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_OUTPUT_DEPLOY_FAILED));
                             output.append(outputLogWithPrefixDate(e.getMessage()));
                             output.append(outputLogWithPrefixDate(e.getCause().getMessage()));
-                            updateOutputTextContents(output.toString(), jobContext.getJobName());
+                            updateOutputTextContents(output.toString(), jobName);
                         }
                         return Status.OK_STATUS;
                     }
@@ -418,19 +420,21 @@ public class ExecuteJobCompositeController {
      */
     private IStatus runRemoteJob(IProgressMonitor monitor, JobContext jobContext, StringBuffer output)
             throws JobSubmissionException, InterruptedException, URISyntaxException {
+        String jobName = jobContext.getJobName();
+
         remoteJobSubmission = new RemoteJobSubmission();
         String jobIdInOozie = remoteJobSubmission.submit(jobContext);
         monitor.subTask(TOozieOutputMessages.MSG_OUTPUT_RUNNING);
 
         output.append(outputLogWithPrefixDate(TOozieOutputMessages.MSG_OUTPUT_RUNNING));
-        updateOutputTextContents(output.toString(), jobContext.getJobName());
-        updateAllEnabledOrNot(OozieJobProcessStatus.RUNNING, jobContext.getJobName());
+        updateOutputTextContents(output.toString(), jobName);
+        updateAllEnabledOrNot(OozieJobProcessStatus.RUNNING, jobName);
 
         CorePlugin.getDefault().getPreferenceStore()
-                .putValue(TOozieCommonConstants.OOZIE_PREFIX_FOR_PREFERENCE + jobContext.getJobName(), jobIdInOozie);
+                .putValue(TOozieCommonConstants.OOZIE_PREFIX_FOR_PREFERENCE + jobName, jobIdInOozie);
         if (monitor.isCanceled()) {
             output.append(">> The running job is canceled!");
-            updateOutputTextContents(output.toString(), jobContext.getJobName());
+            updateOutputTextContents(output.toString(), jobName);
             return Status.CANCEL_STATUS;
         }
         monitor.worked(10);
@@ -444,8 +448,9 @@ public class ExecuteJobCompositeController {
         }
         checkJobStatus(jobIdInOozie, remoteJobSubmission, output, jobContext);
         updateAllEnabledOrNot(TOozieCommonUtils.convertToOozieJobProcessStatus(remoteJobSubmission.status(jobIdInOozie,
-                getOozieFromPreference())), jobContext.getJobName());
+                getOozieFromPreference())), jobName);
         monitor.worked(50);
+
         return Status.OK_STATUS;
     }
 
