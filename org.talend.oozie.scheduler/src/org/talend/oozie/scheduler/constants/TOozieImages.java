@@ -23,7 +23,8 @@ public enum TOozieImages implements IImage {
     IMG_SCHEDULE("/icons/oozie_schedule.gif"),
     IMG_KILL("/icons/oozie_kill.gif"),
     IMG_MONITOING("/icons/oozie_monitoring.gif"),
-    IMG_SETTING("/icons/oozie_setting.gif");
+    IMG_SETTING("/icons/oozie_setting.gif"),
+    IMG_DOTS("/icons/oozie_dots.gif");
 
     private String path;
 

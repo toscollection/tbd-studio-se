@@ -61,6 +61,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     private Button monitoringBtn;// Monitoring button.
 
+    private Button btnEdit;// Edit button
+
     private Text pathText;// Path text
 
     private Text outputTxt;// Output logs/status
@@ -94,7 +96,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     }
 
     protected void createExecuteJobAreas(Composite parent) {
-        GridLayout gridLayout = new GridLayout(4, false);
+        GridLayout gridLayout = new GridLayout(5, false);
         parent.setLayout(gridLayout);
         createButtons(parent);
         createCenterContents(parent);
@@ -132,8 +134,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         settingBtn = new Button(parent, SWT.NONE);
         settingBtn.setText(TOozieUIConstants.OOZIE_BTN_SETTING);
         settingBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_SETTING));
-        GridDataFactory.fillDefaults().grab(false, false).indent(50, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 30)
-                .align(SWT.END, SWT.CENTER).applyTo(settingBtn);
+        GridDataFactory.fillDefaults().span(2, 1).grab(false, false).indent(50, 10)
+                .hint(computeBtnTxtSize(settingBtn).x + 60, 30).align(SWT.END, SWT.CENTER).applyTo(settingBtn);
 
         registerBtnListeners();
     }
@@ -148,20 +150,26 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         pathText.setText(getPathValue() == null ? "" : getPathValue());
         GridDataFactory.fillDefaults().span(2, 1).grab(true, false).indent(-50, 10).hint(SWT.DEFAULT, 20).applyTo(pathText);
 
+        btnEdit = new Button(parent, SWT.PUSH);
+        btnEdit.setImage(ImageProvider.getImage(TOozieImages.IMG_DOTS));
+        GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(SWT.DEFAULT, 30)
+                .align(SWT.BEGINNING, SWT.CENTER).applyTo(btnEdit);
+
         monitoringBtn = new Button(parent, SWT.NONE);
         monitoringBtn.setText(TOozieUIConstants.OOZIE_BTN_MONITOR);
         monitoringBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_MONITOING));
-        GridDataFactory.fillDefaults().grab(false, false).indent(50, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 30)
+        GridDataFactory.fillDefaults().grab(false, false).indent(30, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 30)
                 .align(SWT.END, SWT.CENTER).applyTo(monitoringBtn);
         monitoringBtn.setVisible(TOozieCommonUtils.isWindowsOS());
 
         regPathTextListener();
+        regBtnEditListener();
         regMonitoringBtnListener();
     }
 
     private void createBottomContents(Composite parent) {
         outputTxt = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-        GridDataFactory.fillDefaults().span(4, 2).indent(SWT.DEFAULT, 10).grab(true, true).applyTo(outputTxt);
+        GridDataFactory.fillDefaults().span(5, 2).indent(SWT.DEFAULT, 10).grab(true, true).applyTo(outputTxt);
     }
 
     /**
@@ -221,6 +229,15 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
             public void modifyText(ModifyEvent e) {
                 setPathValue(pathText.getText());
                 executeJobCompController.doModifyPathAction();
+            }
+        });
+    }
+
+    protected void regBtnEditListener() {
+        btnEdit.addSelectionListener(new SelectionAdapter() {
+
+            public void widgetSelected(SelectionEvent e) {
+                executeJobCompController.doSetPathAction();
             }
         });
     }
@@ -453,6 +470,10 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     public void setContextComposite(ProcessContextComposite contextComposite) {
         this.contextComposite = contextComposite;
+    }
+
+    public Button getBtnEdit() {
+        return this.btnEdit;
     }
 
 }

@@ -47,6 +47,12 @@ import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.utils.JavaResourcesHelper;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
+import org.talend.designer.hdfsbrowse.controllers.HDFSBrowseDialog;
+import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.designer.hdfsbrowse.model.IHDFSNode;
+import org.talend.designer.hdfsbrowse.util.EHadoopDistributions;
+import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.oozie.scheduler.actions.SaveJobBeforeRunAction;
 import org.talend.oozie.scheduler.constants.JobSubmissionType;
 import org.talend.oozie.scheduler.constants.OozieJobProcessStatus;
@@ -58,9 +64,9 @@ import org.talend.oozie.scheduler.jobdeployer.OozieJobDeployer;
 import org.talend.oozie.scheduler.jobsubmission.RemoteJobSubmission;
 import org.talend.oozie.scheduler.jobsubmission.ScheduledJobSubmission;
 import org.talend.oozie.scheduler.jobsubmission.model.JobContext;
+import org.talend.oozie.scheduler.jobsubmission.model.JobContext.Timeunit;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmission;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
-import org.talend.oozie.scheduler.jobsubmission.model.JobContext.Timeunit;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.TOozieSchedulerDialog;
 import org.talend.oozie.scheduler.ui.TOozieSettingDialog;
@@ -69,7 +75,6 @@ import org.talend.oozie.scheduler.utils.TOozieStringUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.oozie.scheduler.views.TOozieView;
 import org.talend.repository.ui.wizards.documentation.LinkUtils;
-
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for doing some action from the widgets of
@@ -871,6 +876,23 @@ public class ExecuteJobCompositeController {
     }
 
     /**
+     * when clicking the browser button,the HDFS browser dialog will be open.
+     */
+    public void doSetPathAction() {
+        HDFSConnectionBean connection = new HDFSConnectionBean();
+        connection.setDistribution(EHadoopDistributions.HORTONWORKS.getName());
+        connection.setDfVersion(EHadoopVersion4Drivers.HDP_1_0.getVersionValue());
+        connection.setNameNodeURI(getNameNodeFromPreference());
+        connection.setUserName(getUserNameForHadoopFromPreference());
+        HDFSBrowseDialog dial = new HDFSBrowseDialog(executeJobComposite.getShell(), EHadoopFileTypes.FOLDER, connection);
+        if (dial.open() == Window.OK) {
+            IHDFSNode result = dial.getResult();
+            String path = result.getPath();
+            executeJobComposite.getPathText().setText(path == null ? "" : path);
+        }
+    }
+
+    /**
      * When clicking the button named "Monitoring", this method will be invoked.
      */
     public void doMonitoringBtnAction() {
@@ -1020,6 +1042,7 @@ public class ExecuteJobCompositeController {
         updateKillBtnEnabledOrNot();
         updatePathTxtEnabledOrNot();
         updateOutputTxtEnabledOrNot();
+        updateBtnButtonEnabledOrNot();
     }
 
     protected void updateRunBtnEnabledOrNot() {
@@ -1073,6 +1096,18 @@ public class ExecuteJobCompositeController {
         } else {
             outputTxt.setEnabled(true);
         }
+    }
+
+    protected void updateBtnButtonEnabledOrNot() {
+        Button btnButton = executeJobComposite.getBtnEdit();
+        if (btnButton.isDisposed())
+            return;
+        if (OozieJobTrackerListener.getProcess() == null) {
+            btnButton.setEnabled(false);
+        } else {
+            btnButton.setEnabled(true);
+        }
+
     }
 
     public boolean isPathTxtEnabled() {
