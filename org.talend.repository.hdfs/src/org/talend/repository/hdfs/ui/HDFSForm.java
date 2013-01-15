@@ -434,6 +434,7 @@ public class HDFSForm extends AbstractHDFSForm {
         userNameText.setEnabled(!kerberosBtn.getSelection());
         if (!kerberosBtn.isEnabled()) {
             kerberosBtn.setSelection(false);
+            getConnection().setEnableKerberos(false);
             principalText.setText(EMPTY_STRING);
         }
         if (!groupText.getEnable()) {
