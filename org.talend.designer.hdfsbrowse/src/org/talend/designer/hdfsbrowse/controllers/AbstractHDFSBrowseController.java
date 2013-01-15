@@ -44,7 +44,6 @@ import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.CorePlugin;
-import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
@@ -63,8 +62,6 @@ import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
-import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
-import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -123,35 +120,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
         HDFSConnectionBean connectionBean = new HDFSConnectionBean();
         connectionBean.setDistribution(distribution);
-        // to adapt the old system which "DB_VERSION" not record version but drivers.
-        String drivers = null;
-        String oldVersionParamName = EHDFSRepositoryToComponent.DB_VERSION.getParameterName();
-        if (node instanceof DataNode) {
-            DataNode dataNode = (DataNode) node;
-            IElementParameter parameter = dataNode.getElementParameter(oldVersionParamName);
-            if (parameter != null) {
-                drivers = (String) parameter.getValue();
-            }
-        } else {
-            drivers = (String) node.getPropertyValue(oldVersionParamName);
-        }
-        if (drivers != null) {
-            connectionBean.setDfVersion(EHadoopVersion4Drivers.getVersionByDriverStrs(drivers));
-            connectionBean.setDfDrivers(drivers);
-        } else {
-            connectionBean.setDfVersion(version);
-            StringBuffer driversBuffer = new StringBuffer();
-            List<ModuleNeeded> moduleList = node.getModulesNeeded();
-            for (ModuleNeeded module : moduleList) {
-                if (module.isRequired(node.getElementParameters())) {
-                    driversBuffer.append(module.getModuleName()).append(";"); //$NON-NLS-1$
-                }
-            }
-            if (driversBuffer.length() > 0) {
-                driversBuffer.deleteCharAt(driversBuffer.length() - 1);
-            }
-            connectionBean.setDfDrivers(driversBuffer.toString());
-        }
+        connectionBean.setDfVersion(version);
         connectionBean.setNameNodeURI(nameNodeUri);
         connectionBean.setUserName(userName);
         connectionBean.setEnableKerberos(useKrb);
