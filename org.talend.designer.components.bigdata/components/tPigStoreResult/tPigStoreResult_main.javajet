@@ -37,15 +37,18 @@
 	
 	String thriftServer = ElementParameterParser.getValue(node, "__THRIFT_SERVER__");
 	
-	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
+	List<Map<String, String>> registerJarForHCatalog = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
+	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
-	boolean generateRegisterJarCode = ("HCatStorer".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = ("HCatStorer".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCode = registerJar.size() > 0;
+	
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
 	
-	if(generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
 			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
@@ -54,11 +57,21 @@
 		}
 
 		jarsToRegister = new java.util.ArrayList();
-		jarsToRegister.add("datanucleus-core");
-		jarsToRegister.add("datanucleus-rdbms");
-		jarsToRegister.add("hcatalog");
-		jarsToRegister.add("hive-exec");
-		jarsToRegister.add("hive-metastore");
+		
+		if(generateRegisterJarCode) {
+			for(Map<String, String> jar : registerJar){
+				jarsToRegister.add(jar.get("JAR_NAME"));
+			}
+		}
+		
+		if(generateRegisterJarCodeForHCatalog) {
+			jarsToRegister.add("datanucleus-core");
+			jarsToRegister.add("datanucleus-rdbms");
+			jarsToRegister.add("hcatalog");
+			jarsToRegister.add("hive-exec");
+			jarsToRegister.add("hive-metastore");
+		}
+
 
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {
@@ -68,7 +81,7 @@
 		}
 	}
 	
-	if(generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
 %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
@@ -169,24 +182,26 @@
 	<%}%>
 
 	StringBuilder sb_<%=cid%> = new StringBuilder();
-<%
-	if("HCatStorer".equals(function)) {
-		if(generateRegisterJarCode) {
-			for(int i=0; i<jarsToRegister.size(); i++) {
-				String jarToRegister = jarsToRegister.get(i);
-				for(int j=0; j<jars.size(); j++) {
-					if(jars.get(j).contains(jarToRegister)) {
+<%	
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+		for(int i=0; i<jarsToRegister.size(); i++) {
+			String jarToRegister = jarsToRegister.get(i);
+			for(int j=0; j<jars.size(); j++) {
+				if(jars.get(j).contains(jarToRegister)) {
 %>
-						pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+					pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
 <%
 
-						break;
-					}
+					break;
 				}
 			}
-		} else {
-			if(registerJar.size() > 0){
-				for(Map<String, String> item : registerJar){
+		}
+	}
+
+	if("HCatStorer".equals(function)) {
+		if(!generateRegisterJarCodeForHCatalog) {
+			if(registerJarForHCatalog.size() > 0){
+				for(Map<String, String> item : registerJarForHCatalog){
 %>
 					pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
 <% 
@@ -225,9 +240,16 @@
 		sb_<%=cid%>.append(");");
 <%
 	} else {
+		if("CustomStorer".equals(function)) {
+			String customStorer = ElementParameterParser.getValue(node, "__CUSTOM_STORER__");
 %>
-		sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=resultFile%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
+			sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=resultFile%>+"' using " + <%=customStorer%> + ";");
 <%
+		} else {
+%>
+			sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=resultFile%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
+<%
+		}
 	}
 %>
 

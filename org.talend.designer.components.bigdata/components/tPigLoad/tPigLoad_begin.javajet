@@ -34,16 +34,19 @@
 	List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADVANCED_PROPERTIES__");
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	
-	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
+	List<Map<String, String>> registerJarForHCatalog = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	List<Map<String, String>> partitionFilter = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__PARTITION_FILTER__");
 	
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
+	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
-	boolean generateRegisterJarCode = (!isLocal && "HDP_1_0".equals(pigVersion) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && "HDP_1_0".equals(pigVersion) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCode = registerJar.size() > 0;
+	
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
 
-	if(generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
 			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
@@ -52,12 +55,21 @@
 		}
 
 		jarsToRegister = new java.util.ArrayList();
-		jarsToRegister.add("hcatalog");
-		jarsToRegister.add("hive-exec");
-		jarsToRegister.add("hive-metastore");
-		jarsToRegister.add("jdo2-api");
-		jarsToRegister.add("libfb303");
-		jarsToRegister.add("libthrift");
+		
+		if(generateRegisterJarCode) {
+			for(Map<String, String> jar : registerJar){
+				jarsToRegister.add(jar.get("JAR_NAME"));
+			}
+		}
+		
+		if(generateRegisterJarCodeForHCatalog) {
+			jarsToRegister.add("hcatalog");
+			jarsToRegister.add("hive-exec");
+			jarsToRegister.add("hive-metastore");
+			jarsToRegister.add("jdo2-api");
+			jarsToRegister.add("libfb303");
+			jarsToRegister.add("libthrift");
+		}
 
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {
@@ -74,7 +86,7 @@
 		start_node = node.getDesignSubjobStartNode().getUniqueName();
 	}
 
-	if(generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
 %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
@@ -226,24 +238,26 @@
 
 		StringBuilder sb_<%=cid%> = new StringBuilder();
 
-<%
-		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
-			if(generateRegisterJarCode) {
-				for(int i=0; i<jarsToRegister.size(); i++) {
-					String jarToRegister = jarsToRegister.get(i);
-					for(int j=0; j<jars.size(); j++) {
-						if(jars.get(j).contains(jarToRegister)) {
+<%		
+		if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+			for(int i=0; i<jarsToRegister.size(); i++) {
+				String jarToRegister = jarsToRegister.get(i);
+				for(int j=0; j<jars.size(); j++) {
+					if(jars.get(j).contains(jarToRegister)) {
 %>
-							pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+						pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
 <%
 
-							break;
-						}
+						break;
 					}
 				}
-			} else {
-				if(registerJar.size() > 0){
-					for(Map<String, String> item : registerJar){
+			}
+		} 
+
+		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
+			if(!generateRegisterJarCodeForHCatalog) {
+				if(registerJarForHCatalog.size() > 0){
+					for(Map<String, String> item : registerJarForHCatalog){
 %>
 						pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
 <% 
@@ -257,28 +271,36 @@
 			sb_<%=cid%>.append("<%=cid%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using org.apache.hcatalog.pig.<%=function%>()");
 <%
 		} else {
+			if("CustomLoader".equals(function)) {
+				String customLoader = ElementParameterParser.getValue(node, "__CUSTOM_LOADER__");
 %>
-			sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
+				sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using " + <%=customLoader%>);
 <%
-			List<IMetadataTable> metadatas = node.getMetadataList();
-			IMetadataTable metadata = null;
-			if(metadatas != null && metadatas.size() > 0) {
-				metadata = metadatas.get(0);
-			}
-			if(metadata!=null) {
-				if(metadata.getListColumns() != null && metadata.getListColumns().size() > 0) {
+			} else {
 %>
-					sb_<%=cid%>.append(" AS (");
+				sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
 <%
-					for(int i=0; i<metadata.getListColumns().size(); i++) {
+			
+				List<IMetadataTable> metadatas = node.getMetadataList();
+				IMetadataTable metadata = null;
+				if(metadatas != null && metadatas.size() > 0) {
+					metadata = metadatas.get(0);
+				}
+				if(metadata!=null) {
+					if(metadata.getListColumns() != null && metadata.getListColumns().size() > 0) {
 %>
-						sb_<%=cid%>.append("<%=i!=0?", ":""%><%=metadata.getListColumns().get(i).getLabel()%>:<%=Java2STLangTypesHelper.getPigType(metadata, metadata.getListColumns().get(i).getLabel())%>");
+						sb_<%=cid%>.append(" AS (");
+<%
+						for(int i=0; i<metadata.getListColumns().size(); i++) {
+%>
+							sb_<%=cid%>.append("<%=i!=0?", ":""%><%=metadata.getListColumns().get(i).getLabel()%>:<%=Java2STLangTypesHelper.getPigType(metadata, metadata.getListColumns().get(i).getLabel())%>");
 <%
 
-					}
+						}
 %>
-					sb_<%=cid%>.append(")");
+						sb_<%=cid%>.append(")");
 <%
+					}
 				}
 			}
 		}
