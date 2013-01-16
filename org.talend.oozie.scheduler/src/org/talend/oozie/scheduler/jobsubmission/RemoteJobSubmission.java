@@ -41,9 +41,7 @@ public class RemoteJobSubmission extends AbstractOozieJobSubmission {
     }
 
     protected String doSubmit(JobContext jobContext) throws OozieClientException {
-        // FIXME: It should be use "jobContext.getDebug()" instead of "0" but dont know why cannot reflect "getInt"
-        // method of org.apache.hadoop.conf.Configuration
-        OozieClient oozieClient = createOozieClient(jobContext.getOozieEndPoint(), 0);
+        OozieClient oozieClient = createOozieClient(jobContext.getOozieEndPoint(), jobContext.getDebug());
 
         String userName = jobContext.get(OozieClient.USER_NAME);
         String appPath = jobContext.get(OozieClient.APP_PATH);
