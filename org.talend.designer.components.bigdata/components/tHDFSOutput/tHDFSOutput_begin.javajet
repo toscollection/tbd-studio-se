@@ -30,6 +30,9 @@
 	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
+	boolean compress = "true".equals(ElementParameterParser.getValue(node, "__COMPRESS__"));
+	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
+	
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -125,14 +128,32 @@
 		%>
 		org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
 		org.apache.hadoop.fs.FSDataOutputStream fsDataOutputStream_<%=cid%> = null;
-		java.io.Writer out<%=cid%> = null;
 		<%if("APPEND".equals(fileAction)){%>
 			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.append(path_<%=cid%>);
 		<%}else{//Create and Overwrite%>
 			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.create(path_<%=cid%>, <%="CREATE".equals(fileAction)?false:true%>);
 		<%}%>
-		out<%=cid%>=new java.io.BufferedWriter(new java.io.OutputStreamWriter(fsDataOutputStream_<%=cid%><%if(customEncoding){%>,<%=encoding%><%}%>));
+<%
+		if(!compress) {
+%>
+			java.io.Writer out<%=cid%> = null;
+			out<%=cid%>=new java.io.BufferedWriter(new java.io.OutputStreamWriter(fsDataOutputStream_<%=cid%><%if(customEncoding){%>,<%=encoding%><%}%>));
 	<%
+		} else {
+			if("GZIP".equals(compression)) {
+%>
+				org.apache.hadoop.io.compress.GzipCodec codec_<%=cid%> = new org.apache.hadoop.io.compress.GzipCodec();
+				codec_<%=cid%>.setConf(conf_<%=cid%>);
+<%
+			} else if("BZIP2".equals(compression)) {
+%>
+				org.apache.hadoop.io.compress.BZip2Codec codec_<%=cid%> = new org.apache.hadoop.io.compress.BZip2Codec(); 
+<%
+			}
+%>
+			org.apache.hadoop.io.compress.CompressionOutputStream out<%=cid%> = codec_<%=cid%>.createOutputStream(fsDataOutputStream_<%=cid%>);
+<%
+		}
 	}
 	%>
 

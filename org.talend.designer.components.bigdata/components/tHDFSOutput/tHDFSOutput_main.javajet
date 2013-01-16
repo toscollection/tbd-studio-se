@@ -24,6 +24,9 @@
 	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
+	boolean compress = "true".equals(ElementParameterParser.getValue(node, "__COMPRESS__"));
+	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
+	
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -84,8 +87,16 @@
 				}
 %>
 				sb_<%=cid %>.append(<%=rowSeparator%>);
+<%
+				if(!compress) {
+%>
 				out<%=cid %>.write(sb_<%=cid %>.toString());
 <%
+				} else {
+%>
+					out<%=cid%>.write(sb_<%=cid%>.toString().getBytes(<%=customEncoding?encoding:""%>));
+<%
+				}
 			}
 		}
 	}

@@ -29,6 +29,9 @@
 	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	
+	boolean uncompress = "true".equals(ElementParameterParser.getValue(node, "__UNCOMPRESS__"));
+	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
+	
 	IMetadataTable metadata = null;
 	
 	String user = null;
@@ -118,8 +121,28 @@
 		%>
 		org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
 		org.apache.hadoop.fs.FSDataInputStream fsDataInputStream_<%=cid%> = fs_<%=cid%>.open(path_<%=cid%>);
-		
+<%
+		if(!uncompress) {
+%>
 		org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
+<%
+		} else {
+			if("GZIP".equals(compression)) {
+%>
+				org.apache.hadoop.io.compress.GzipCodec codec_<%=cid%> = new org.apache.hadoop.io.compress.GzipCodec();
+				codec_<%=cid%>.setConf(conf_<%=cid%>);				
+<%
+			} else if("BZIP2".equals(compression)) {
+%>
+				org.apache.hadoop.io.compress.BZip2Codec codec_<%=cid%> = new org.apache.hadoop.io.compress.BZip2Codec(); 
+<%
+			}
+%>
+			org.apache.hadoop.io.compress.CompressionInputStream in<%=cid%> = codec_<%=cid%>.createInputStream(fsDataInputStream_<%=cid%>);
+			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(in<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
+<%
+		}
+%>
 		while (fid_<%=cid %>.nextRecord()) {
 <%
 		}
