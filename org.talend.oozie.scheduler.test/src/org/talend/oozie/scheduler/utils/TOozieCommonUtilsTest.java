@@ -22,9 +22,8 @@ import org.talend.oozie.scheduler.constants.OozieJobProcessStatus;
 import org.talend.oozie.scheduler.constants.TOozieCommonConstants;
 import org.talend.oozie.scheduler.constants.TOozieTimeUnit;
 import org.talend.oozie.scheduler.i18n.TOozieTestMessages;
-
-import com.hortonworks.etl.talend.JobContext.Timeunit;
-import com.hortonworks.etl.talend.JobSubmission;
+import org.talend.oozie.scheduler.jobsubmission.model.JobContext.Timeunit;
+import org.talend.oozie.scheduler.jobsubmission.model.JobSubmission;
 
 /**
  * Created by Marvin Wang on May 22, 2012 for JUnit test.

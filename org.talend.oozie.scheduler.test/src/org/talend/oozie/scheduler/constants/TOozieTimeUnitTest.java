@@ -16,9 +16,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.talend.oozie.scheduler.i18n.TOozieTestMessages;
+import org.talend.oozie.scheduler.jobsubmission.model.JobContext.Timeunit;
 import org.talend.oozie.scheduler.test.TOozieTestCommonConstants;
-
-import com.hortonworks.etl.talend.JobContext.Timeunit;
 
 /**
  * @author Marvin Wang
