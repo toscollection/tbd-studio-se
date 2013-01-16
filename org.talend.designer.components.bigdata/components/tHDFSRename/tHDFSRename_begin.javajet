@@ -32,7 +32,7 @@
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 		conf_<%=cid%>.set("fs.default.name", <%=fsDefaultName%>);
 <%
-		if(!((("HDP_1_0").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
+		if(!((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
 			user = ElementParameterParser.getValue(node, "__USERNAME__");
 		} else {
 %>
@@ -71,7 +71,7 @@
 					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				<%
 			  	}else{
-					if(!((("HDP_1_0").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
+					if(!((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
 						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
 					} else {
 %>

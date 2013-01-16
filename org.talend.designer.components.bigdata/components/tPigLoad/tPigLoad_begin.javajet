@@ -40,7 +40,7 @@
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && "HDP_1_0".equals(pigVersion) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && ("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;
@@ -197,7 +197,7 @@
 				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
 <%
 			}
-			if(("HDP_1_0".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "CLOUDERA_CDH4".equals(pigVersion)) && useKrb) {
+			if(("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "CLOUDERA_CDH4".equals(pigVersion)) && useKrb) {
 				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 				String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
 %>
