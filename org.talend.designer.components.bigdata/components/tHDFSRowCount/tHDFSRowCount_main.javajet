@@ -23,6 +23,9 @@
 	String rowSeparator = ElementParameterParser.getValue(node,"__ROWSEPARATOR__");
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
 	boolean ignoreEmptyRow = "true".equals(ElementParameterParser.getValue(node, "__IGNORE_EMPTY_ROW__"));
+	
+	boolean uncompress = "true".equals(ElementParameterParser.getValue(node, "__UNCOMPRESS__"));
+	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
 	%>
 	String username_<%=cid%> = "";
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
@@ -111,7 +114,30 @@
 	
 	  int lineCount_<%=cid %> = 0;
 	  
-	  java.io.BufferedReader br_<%=cid %> = new java.io.BufferedReader(new java.io.InputStreamReader(fsdis_<%=cid%>, <%=encoding%>));			
+	  <%
+	  if(!uncompress) {
+	  %>
+	  	java.io.BufferedReader br_<%=cid %> = new java.io.BufferedReader(new java.io.InputStreamReader(fsdis_<%=cid%>, <%=encoding%>));
+	  <%
+	  } else {
+	  	if("GZIP".equals(compression)) {
+	  %>
+	    org.apache.hadoop.io.compress.GzipCodec codec_<%=cid%> = new org.apache.hadoop.io.compress.GzipCodec();
+		codec_<%=cid%>.setConf(conf_<%=cid%>);	
+	  <%
+	  	} else if("BZIP2".equals(compression)) {
+	  %>
+	  	org.apache.hadoop.io.compress.BZip2Codec codec_<%=cid%> = new org.apache.hadoop.io.compress.BZip2Codec(); 
+	  <%
+	  	}
+	  %>
+	  	org.apache.hadoop.io.compress.CompressionInputStream in<%=cid%> = codec_<%=cid%>.createInputStream(fsdis_<%=cid%>);
+	  	java.io.BufferedReader br_<%=cid %> = new java.io.BufferedReader(new java.io.InputStreamReader(in<%=cid%>, <%=encoding%>));
+	  <%
+	  }
+	  %>
+	  
+	  			
 	  String rowSeparator_<%=cid %> = <%=rowSeparator %>;
 	  byte[] bytes_<%=cid %> = rowSeparator_<%=cid %>.getBytes();
 	  int index_<%=cid %> = 0, oneChar_<%=cid %> = 0, tipEmptyLineCount_<%=cid %> = 0; 
