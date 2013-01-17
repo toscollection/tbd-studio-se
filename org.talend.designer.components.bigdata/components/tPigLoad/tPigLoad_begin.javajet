@@ -37,6 +37,9 @@
 	List<Map<String, String>> registerJarForHCatalog = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	List<Map<String, String>> partitionFilter = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__PARTITION_FILTER__");
 	
+	boolean compress = "true".equals(ElementParameterParser.getValue(node, "__COMPRESS__"));
+	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
+	
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
@@ -221,7 +224,7 @@
 %>
 		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
 <%
-	if(advProps.size() > 0){
+	if((advProps.size() > 0) || compress){
 %>
 		StringBuilder script_<%=cid%>=new StringBuilder();
 <%
@@ -230,6 +233,21 @@
 		script_<%=cid%>.append("SET "+<%=item.get("PROPERTY") %>+" "+<%=item.get("VALUE") %>+";");
 <% 
 		} 
+		
+		if(compress) {
+%>
+		script_<%=cid%>.append("SET output.compression.enabled true;");
+<%
+			if("GZIP".equals(compression)) {
+%>
+		script_<%=cid%>.append("SET output.compression.codec org.apache.hadoop.io.compress.GzipCodec;");
+<%
+			} else if("BZIP2".equals(compression)) {
+%>
+		script_<%=cid%>.append("SET output.compression.codec org.apache.hadoop.io.compress.BZip2Codec;");
+<%		
+			}
+		}
 %>
 		pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
 <%
