@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -45,30 +44,29 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
 
     private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
+    @Override
     public boolean isProcess(Item item) {
-        if (item instanceof HDFSConnectionItem) {
+        if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
             return true;
         }
         return false;
     }
 
+    @Override
     public boolean isRepObjType(ERepositoryObjectType type) {
         return type == HDFSRepositoryNodeType.HDFS;
     }
 
+    @Override
     public Resource create(IProject project, Item item, int classifierID, IPath path) throws PersistenceException {
-        Resource itemResource = null;
-        ERepositoryObjectType type;
-        switch (classifierID) {
-        case HDFSPackage.HDFS_CONNECTION_ITEM:
-            if (item != null && item instanceof HDFSConnectionItem) {
-                type = HDFSRepositoryNodeType.HDFS;
-                itemResource = create(project, (HDFSConnectionItem) item, path, type);
-                return itemResource;
-            }
-        default:
+        if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
+            Resource itemResource = null;
+            ERepositoryObjectType type;
+            type = HDFSRepositoryNodeType.HDFS;
+            itemResource = create(project, (HDFSConnectionItem) item, path, type);
             return itemResource;
         }
+        return null;
     }
 
     private Resource create(IProject project, HDFSConnectionItem item, IPath path, ERepositoryObjectType type)
@@ -79,17 +77,12 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return itemResource;
     }
 
+    @Override
     public Resource save(Item item) throws PersistenceException {
-        Resource itemResource = null;
-        EClass eClass = item.eClass();
-        if (eClass.eContainer() == HDFSPackage.eINSTANCE) {
-            switch (eClass.getClassifierID()) {
-            case HDFSPackage.HDFS_CONNECTION_ITEM:
-                itemResource = save((HDFSConnectionItem) item);
-                return itemResource;
-            default:
-                return null;
-            }
+        if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
+            Resource itemResource = null;
+            itemResource = save((HDFSConnectionItem) item);
+            return itemResource;
         }
         return null;
     }
@@ -116,6 +109,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return itemResource;
     }
 
+    @Override
     public IImage getIcon(ERepositoryObjectType type) {
         if (type == HDFSRepositoryNodeType.HDFS) {
             return EHDFSImage.HDFS_RESOURCE_ICON;
@@ -123,6 +117,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return null;
     }
 
+    @Override
     public Item createNewItem(ERepositoryObjectType type) {
         Item item = null;
         if (type == HDFSRepositoryNodeType.HDFS) {
@@ -132,15 +127,10 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return item;
     }
 
+    @Override
     public ERepositoryObjectType getRepositoryObjectType(Item item) {
-        EClass eClass = item.eClass();
-        if (eClass.eContainer() == HDFSPackage.eINSTANCE) {
-            switch (eClass.getClassifierID()) {
-            case HDFSPackage.HDFS_CONNECTION_ITEM:
-                return HDFSRepositoryNodeType.HDFS;
-            default:
-                return null;
-            }
+        if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
+            return HDFSRepositoryNodeType.HDFS;
         }
         return null;
     }
@@ -174,6 +164,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return true;
     }
 
+    @Override
     public boolean hideAction(IRepositoryNode node, Class actionType) {
         boolean canHandle = false;
         ERepositoryObjectType nodeType = (ERepositoryObjectType) node.getProperties(EProperties.CONTENT_TYPE);
@@ -198,6 +189,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return false;
     }
 
+    @Override
     public boolean isOwnTable(IRepositoryNode node, Class type) {
         if (type != HDFSConnection.class) {
             return false;
@@ -219,6 +211,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         return false;
     }
 
+    @Override
     public IWizard newWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
         if (node == null) {
             return null;

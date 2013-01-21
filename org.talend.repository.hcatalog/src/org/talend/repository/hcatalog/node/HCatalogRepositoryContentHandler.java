@@ -9,7 +9,6 @@ import java.util.Set;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -54,30 +53,29 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
 
     private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
+    @Override
     public boolean isProcess(Item item) {
-        if (item instanceof HCatalogConnectionItem) {
+        if (item.eClass() == HCatalogPackage.Literals.HCATALOG_CONNECTION_ITEM) {
             return true;
         }
         return false;
     }
 
+    @Override
     public boolean isRepObjType(ERepositoryObjectType type) {
         return type == HCatalogRepositoryNodeType.HCATALOG;
     }
 
+    @Override
     public Resource create(IProject project, Item item, int classifierID, IPath path) throws PersistenceException {
-        Resource itemResource = null;
-        ERepositoryObjectType type;
-        switch (classifierID) {
-        case HCatalogPackage.HCATALOG_CONNECTION_ITEM:
-            if (item != null && item instanceof HCatalogConnectionItem) {
-                type = HCatalogRepositoryNodeType.HCATALOG;
-                itemResource = create(project, (HCatalogConnectionItem) item, path, type);
-                return itemResource;
-            }
-        default:
+        if (item.eClass() == HCatalogPackage.Literals.HCATALOG_CONNECTION_ITEM) {
+            Resource itemResource = null;
+            ERepositoryObjectType type;
+            type = HCatalogRepositoryNodeType.HCATALOG;
+            itemResource = create(project, (HCatalogConnectionItem) item, path, type);
             return itemResource;
         }
+        return null;
     }
 
     private Resource create(IProject project, HCatalogConnectionItem item, IPath path, ERepositoryObjectType type)
@@ -88,17 +86,12 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
         return itemResource;
     }
 
+    @Override
     public Resource save(Item item) throws PersistenceException {
-        Resource itemResource = null;
-        EClass eClass = item.eClass();
-        if (eClass.eContainer() == HCatalogPackage.eINSTANCE) {
-            switch (eClass.getClassifierID()) {
-            case HCatalogPackage.HCATALOG_CONNECTION_ITEM:
-                itemResource = save((HCatalogConnectionItem) item);
-                return itemResource;
-            default:
-                return null;
-            }
+        if (item.eClass() == HCatalogPackage.Literals.HCATALOG_CONNECTION_ITEM) {
+            Resource itemResource = null;
+            itemResource = save((HCatalogConnectionItem) item);
+            return itemResource;
         }
         return null;
     }
@@ -125,6 +118,7 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
         return itemResource;
     }
 
+    @Override
     public IImage getIcon(ERepositoryObjectType type) {
         if (type == HCatalogRepositoryNodeType.HCATALOG) {
             return EHCatalogImage.HCATALOG_RESOURCE_ICON;
@@ -132,6 +126,7 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
         return null;
     }
 
+    @Override
     public Item createNewItem(ERepositoryObjectType type) {
         Item item = null;
         if (type == HCatalogRepositoryNodeType.HCATALOG) {
@@ -141,15 +136,10 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
         return item;
     }
 
+    @Override
     public ERepositoryObjectType getRepositoryObjectType(Item item) {
-        EClass eClass = item.eClass();
-        if (eClass.eContainer() == HCatalogPackage.eINSTANCE) {
-            switch (eClass.getClassifierID()) {
-            case HCatalogPackage.HCATALOG_CONNECTION_ITEM:
-                return HCatalogRepositoryNodeType.HCATALOG;
-            default:
-                return null;
-            }
+        if (item.eClass() == HCatalogPackage.Literals.HCATALOG_CONNECTION_ITEM) {
+            return HCatalogRepositoryNodeType.HCATALOG;
         }
         return null;
     }
@@ -210,6 +200,7 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
         return true;
     }
 
+    @Override
     public boolean hideAction(IRepositoryNode node, Class actionType) {
         boolean canHandle = false;
         ERepositoryObjectType nodeType = (ERepositoryObjectType) node.getProperties(EProperties.CONTENT_TYPE);
@@ -235,6 +226,7 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
         return false;
     }
 
+    @Override
     public boolean isOwnTable(IRepositoryNode node, Class type) {
         if (type != HCatalogConnection.class) {
             return false;
@@ -256,6 +248,7 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
         return false;
     }
 
+    @Override
     public IWizard newWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
         if (node == null) {
             return null;
