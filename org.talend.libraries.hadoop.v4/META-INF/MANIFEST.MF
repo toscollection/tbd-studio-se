@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: V4
+Bundle-SymbolicName: org.talend.libraries.hadoop.v4
+Bundle-Version: 1.0.0.qualifier
