@@ -73,7 +73,7 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
 
         // This directory is just for DistributedCache. Maybe later it need to enhance, because for common java
         // application, it also add this argument.
-        action.addArgument(jobContext.get(OozieClient.APP_PATH) + "/lib/");
+        action.addArgument("--mr_libs_dir=" + jobContext.get(OozieClient.APP_PATH) + "/lib/");
 
         String tosContextPath = jobContext.getTosContextPath();
         if (tosContextPath != null) {
