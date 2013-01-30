@@ -18,6 +18,39 @@ imports="
 	<%
 	class DBInputBeginUtil extends DefaultDBInputUtil{
 	
+		public void afterUseNewConnection(INode node) {
+		
+        	String storeByHBase = ElementParameterParser.getValue(node, "__STORE_BY_HBASE__");
+        	String zookeeperQuorumForHBase = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
+        	String zookeeperClientPortForHBase = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+        	String defineRegisterJar = ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__");
+        	List<Map<String, String>> registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
+        	
+    		if("true".equalsIgnoreCase(storeByHBase)) {%>
+    			java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
+        		<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
+        			statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);
+        		<%}%>
+        		
+        		<%if(zookeeperClientPortForHBase!=null && !"".equals(zookeeperClientPortForHBase) && !"\"\"".equals(zookeeperClientPortForHBase)) {%>
+        			statement_<%=cid%>.execute("SET hbase.zookeeper.property.clientPort="+<%=zookeeperClientPortForHBase%>);
+        		<%}%>
+        		
+        		<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
+        			for(Map<String, String> jar : registerJarForHBase){
+        				String path = jar.get("JAR_PATH");
+        				if(path == null || "".equals(path) || "\"\"".equals(path)) {
+        					continue;
+        				}
+        		%>
+    				statement_<%=cid%>.execute("add jar "+<%=path%>);
+        		<%
+        			}
+        		}%>
+    			statement_<%=cid%>.close();
+<%		 	}
+	    }
+	
 		public void setURL(INode node) {
 			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
