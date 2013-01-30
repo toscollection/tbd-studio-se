@@ -22,9 +22,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public enum EHadoopVersion4Drivers {
 
-    HDP_1_0(new HadoopVersion4Drivers(EHadoopDistributions.HORTONWORKS, "Hortonworks Data Platform V1", "HDP_1_0", new String[] {
-            "hadoop-core-1.0.0.jar", "commons-logging-1.1.1.jar", "commons-configuration-1.6.jar", "commons-lang-2.4.jar",
-            "hdp-dummy.jar" })),
+    HDP_1_0(new HadoopVersion4Drivers(EHadoopDistributions.HORTONWORKS, "Hortonworks Data Platform V1.0.0", "HDP_1_0",
+            new String[] { "hadoop-core-1.0.0.jar", "commons-logging-1.1.1.jar", "commons-configuration-1.6.jar",
+                    "commons-lang-2.4.jar", "hadoop-conf-kerberos.jar", "jetty-util-6.1.26.jar", "jersey-core-1.8.jar" })),
+
+    HDP_1_2(new HadoopVersion4Drivers(EHadoopDistributions.HORTONWORKS, "Hortonworks Data Platform V1.2.0(Bimota)", "HDP_1_2",
+            new String[] { "hadoop-core-1.1.2.21.jar", "commons-logging-1.1.1.jar", "commons-configuration-1.6.jar",
+                    "commons-lang-2.4.jar", "hadoop-conf-kerberos.jar", "jetty-util-6.1.26.jar", "jersey-core-1.8.jar" })),
 
     APACHE_1_0_0(new HadoopVersion4Drivers(EHadoopDistributions.APACHE, "Apache 1.0.0", "APACHE_1_0_0", new String[] {
             "hadoop-core-1.0.0.jar", "commons-logging-1.1.1.jar", "commons-configuration-1.6.jar", "commons-lang-2.4.jar" })),
