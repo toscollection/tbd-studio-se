@@ -1,13 +1,13 @@
 <COMPONENT>
-	<HEADER 
-		AUTHOR="Talend" 
-		COMPATIBILITY="ALL" 
+	<HEADER
+		AUTHOR="Talend"
+		COMPATIBILITY="ALL"
 		DATA_AUTO_PROPAGATE="true"
-		PLATEFORM="ALL" 
+		PLATEFORM="ALL"
 		RELEASE_DATE="20080229A"
-		SERIAL="" 
-		STARTABLE="false" 
-		STATUS="ALPHA" 
+		SERIAL=""
+		STARTABLE="false"
+		STATUS="ALPHA"
 		VERSION="0.102"
 	>
 		<SIGNATURE />
@@ -29,77 +29,77 @@
 	    <CONNECTOR CTYPE="RUN_IF"/>
 	</CONNECTORS>
 	<PARAMETERS>
-		<PARAMETER 
-			NAME="USE_EXISTING_CONNECTION" 
+		<PARAMETER
+			NAME="USE_EXISTING_CONNECTION"
 			FIELD="CHECK"
 			NUM_ROW="2"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="CONNECTION" 
-			FIELD="COMPONENT_LIST" 
+		<PARAMETER
+			NAME="CONNECTION"
+			FIELD="COMPONENT_LIST"
 			FILTER="tCassandraConnection"
-			NUM_ROW="2" 
-			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" 
+			NUM_ROW="2"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 		/>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="HOST" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="HOST"
 			REQUIRED="true"
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="PORT" 
-			REQUIRED="true" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="PORT"
+			REQUIRED="true"
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
 			<DEFAULT>"9160"</DEFAULT>
 		</PARAMETER>
 		<!--
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="CLUSTER" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="CLUSTER"
 			NUM_ROW="6"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		-->
-		<PARAMETER 
-            NAME="REQUIRED_AUTHENTICATION" 
+		<PARAMETER
+            NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
             NUM_ROW="10"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-            FIELD="TEXT" 
-            NAME="USERNAME" 
-            REQUIRED="true" 
-            NUM_ROW="11"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
-        <PARAMETER 
-            FIELD="TEXT" 
-            NAME="PASSWORD" 
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="USERNAME"
             REQUIRED="true"
             NUM_ROW="11"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="KEY_SPACE" 
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="PASSWORD"
+            REQUIRED="true"
+            NUM_ROW="11"
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="KEY_SPACE"
 			REQUIRED="true"
 			NUM_ROW="13"
 			GROUP="KEYSPACE_CONFIGURATION"
@@ -120,9 +120,9 @@
 		        <ITEM NAME="DROP_IF_EXISTS_AND_CREATE" VALUE="DROP_IF_EXISTS_AND_CREATE" />
 		    </ITEMS>
     	</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="COLUMN_FAMILY" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COLUMN_FAMILY"
 			REQUIRED="true"
 			NUM_ROW="15"
 			GROUP="COLUMN_FAMILY_CONFIGURATION"
@@ -164,70 +164,70 @@
 		        <ITEM NAME="UPSERT" VALUE="UPSERT"/>
 		    </ITEMS>
     	</PARAMETER>
-    	<PARAMETER 
-			NAME="SCHEMA_FLOW" 
-			FIELD="SCHEMA_TYPE" 
+    	<PARAMETER
+			NAME="SCHEMA_FLOW"
+			FIELD="SCHEMA_TYPE"
 			NUM_ROW="17"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="COLUMN_LIST" 
+		<PARAMETER
+			FIELD="COLUMN_LIST"
 			NAME="KEY_COLUMN"
-			NUM_ROW="20" 
+			NUM_ROW="20"
 		/>
-		<PARAMETER 
-			FIELD="CHECK" 
-			NAME="INC_KEY" 
+		<PARAMETER
+			FIELD="CHECK"
+			NAME="INC_KEY"
 			NUM_ROW="20"
 		>
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-            FIELD="COLUMN_LIST" 
+		<PARAMETER
+            FIELD="COLUMN_LIST"
             NAME="SUPER_KEY_COLUMN"
             NUM_ROW="22"
             SHOW_IF="COLUMN_FAMILY_TYPE=='SUPER'"
         />
-        <PARAMETER 
-            FIELD="CHECK" 
-            NAME="INC_SUPER_KEY" 
+        <PARAMETER
+            FIELD="CHECK"
+            NAME="INC_SUPER_KEY"
             NUM_ROW="22"
             SHOW_IF="COLUMN_FAMILY_TYPE=='SUPER'"
         >
             <DEFAULT>true</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-            NAME="DELETE_ROW" 
-            FIELD="CHECK" 
+        <PARAMETER
+            NAME="DELETE_ROW"
+            FIELD="CHECK"
             NUM_ROW="30"
             SHOW_IF="(ACTION_ON_DATA=='DELETE')"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-         <PARAMETER 
-            NAME="DELETE_SUPER_COLUMN" 
-            FIELD="CHECK" 
+         <PARAMETER
+            NAME="DELETE_SUPER_COLUMN"
+            FIELD="CHECK"
             NUM_ROW="30"
             SHOW_IF="((COLUMN_FAMILY_TYPE=='SUPER') AND ACTION_ON_DATA=='DELETE') AND (DELETE_ROW=='true')"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-            NAME="DELETE_COLUMNS" 
-            FIELD="TABLE" 
+        <PARAMETER
+            NAME="DELETE_COLUMNS"
+            FIELD="TABLE"
             REQUIRED="false"
-            NUM_ROW="30" 
-            NB_LINES="5" 
+            NUM_ROW="30"
+            NB_LINES="5"
             SHOW_IF="(ACTION_ON_DATA=='DELETE') AND (DELETE_ROW=='false') "
         >
             <ITEMS>
                 <ITEM NAME="DELETE_COLUMN" FIELD="COLUMN_LIST" />
             </ITEMS>
         </PARAMETER>
-		<PARAMETER 
-			NAME="DIE_ON_ERROR" 
-			FIELD="CHECK" 
+		<PARAMETER
+			NAME="DIE_ON_ERROR"
+			FIELD="CHECK"
 			NUM_ROW="90"
 		>
 			<DEFAULT>false</DEFAULT>
@@ -246,17 +246,17 @@
 				REQUIRED="true" />
 			<IMPORT MODULE="apache-cassandra-thrift-1.1.2.jar" NAME="apache-cassandra-thrift-1.1.2"
 				REQUIRED="true" />
-			<IMPORT MODULE="slf4j-api-1.6.1.jar" NAME="slf4j-api-1.6.1"
+			<IMPORT MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" NAME="slf4j-api-1.6.1"
 				REQUIRED="true" />
-			<IMPORT MODULE="slf4j-log4j12-1.6.1.jar" NAME="slf4j-log4j12-1.6.1"
+			<IMPORT MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" NAME="slf4j-log4j12-1.6.1"
 				REQUIRED="true" />
-			<IMPORT MODULE="log4j-1.2.16.jar" NAME="log4j-1.2.16"
+			<IMPORT MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" NAME="log4j-1.2.16"
 				REQUIRED="true" />
 			<IMPORT MODULE="libthrift-0.7.0.jar" NAME="libthrift-0.7.0"
 				REQUIRED="true" />
 			<IMPORT MODULE="guava-12.0.1.jar" NAME="guava-12.0.1"
 				REQUIRED="true" />
-			<IMPORT MODULE="commons-lang-2.6.jar" NAME="commons-lang-2.6"
+			<IMPORT MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" NAME="commons-lang-2.6"
 				REQUIRED="true" />
 		</IMPORTS>
 	</CODEGENERATION>

@@ -4,7 +4,6 @@
     SERIAL=""
     VERSION="0.102"
     STATUS="ALPHA"
-    
     COMPATIBILITY="ALL"
     AUTHOR="Talend"
     RELEASE_DATE="20110729A"
@@ -12,16 +11,13 @@
   >
     <SIGNATURE/>
   </HEADER>
-
   <FAMILIES>
     <FAMILY>Databases/Cassandra</FAMILY>
 	<FAMILY>Big Data/Cassandra</FAMILY>
   </FAMILIES>
-
 	<DOCUMENTATION>
 		<URL />
 	</DOCUMENTATION>
-
 	<CONNECTORS>
 		<CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="0" />
 		<CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="1" />
@@ -31,7 +27,6 @@
 		<CONNECTOR CTYPE="COMPONENT_ERROR" />
 		<CONNECTOR CTYPE="RUN_IF" />
 	</CONNECTORS>
-
 	<PARAMETERS>
 		<PARAMETER FIELD="TEXT" NAME="HOST" REQUIRED="true"  NUM_ROW="1">
 			<DEFAULT>""</DEFAULT>
@@ -57,7 +52,6 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 	</PARAMETERS>
-
 	<CODEGENERATION>
 		<IMPORTS>
 			<IMPORT MODULE="hector-core-1.0-5.jar" NAME="hector-core-1.0-5"
@@ -66,11 +60,11 @@
 				REQUIRED="true" />
 			<IMPORT MODULE="apache-cassandra-thrift-1.1.2.jar" NAME="apache-cassandra-thrift-1.1.2"
 				REQUIRED="true" />
-			<IMPORT MODULE="slf4j-api-1.6.1.jar" NAME="slf4j-api-1.6.1"
+			<IMPORT MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" NAME="slf4j-api-1.6.1"
 				REQUIRED="true" />
-			<IMPORT MODULE="slf4j-log4j12-1.6.1.jar" NAME="slf4j-log4j12-1.6.1"
+			<IMPORT MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" NAME="slf4j-log4j12-1.6.1"
 				REQUIRED="true" />
-			<IMPORT MODULE="log4j-1.2.16.jar" NAME="log4j-1.2.16"
+			<IMPORT MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" NAME="log4j-1.2.16"
 				REQUIRED="true" />
 			<IMPORT MODULE="libthrift-0.7.0.jar" NAME="libthrift-0.7.0"
 				REQUIRED="true" />

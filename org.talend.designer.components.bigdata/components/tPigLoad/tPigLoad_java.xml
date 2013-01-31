@@ -4,16 +4,13 @@
 		STARTABLE="true" VISIBLE="false" TECHNICAL="false">
 		<SIGNATURE />
 	</HEADER>
-
   <FAMILIES>
     <FAMILY>Processing/Hadoop</FAMILY>
 	<FAMILY>Big Data/Pig</FAMILY>
   </FAMILIES>
-
 	<DOCUMENTATION>
 		<URL />
 	</DOCUMENTATION>
-
 	<CONNECTORS>
 		<CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="0" COLOR="086438"/>
         	<CONNECTOR NAME="PIGCOMBINE" CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1" COLOR="086438" BASE_SCHEMA="FLOW"/>
@@ -22,9 +19,7 @@
 	    	<CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" MAX_OUTPUT="1"/>
 	    	<CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1"/>
 	</CONNECTORS>
-
 	<PARAMETERS>
-
 		<PARAMETER NAME="MAIN_SCHEMA" FIELD="SCHEMA_TYPE" REQUIRED="true" NUM_ROW="1"/>
 		<PARAMETER NAME="COMBINE_SCHEMA" FIELD="SCHEMA_TYPE" REQUIRED="true" NUM_ROW="1" CONTEXT="PIGCOMBINE"/>
 		<PARAMETER NAME="JAR_SCHEMA" FIELD="SCHEMA_TYPE" REQUIRED="true" NUM_ROW="1" CONTEXT="REGISTERJAR" SHOW="false">
@@ -43,7 +38,6 @@
 		<PARAMETER NAME="MAPREDUCE" FIELD="RADIO" REQUIRED="true" NUM_ROW="6" GROUP="MODE">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
 		<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="CONFIGURATION" SHOW_IF="MAPREDUCE=='true'">
 			<ITEMS DEFAULT="HORTONWORKS">
 				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
@@ -84,36 +78,30 @@
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-
 		<PARAMETER NAME="NAMENODE_PRINCIPAL" FIELD="TEXT" REQUIRED="true" NUM_ROW="13" SHOW_IF="MAPREDUCE=='true' AND ((PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='CLOUDERA_CDH4')) AND USE_KRB=='true'"  GROUP="CONFIGURATION">
 			<DEFAULT>"nn/_HOST@EXAMPLE.COM"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="JOBTRACKER_PRINCIPAL" FIELD="TEXT" REQUIRED="true" NUM_ROW="14" SHOW_IF="MAPREDUCE=='true' AND ((PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='CLOUDERA_CDH4')) AND USE_KRB=='true'"  GROUP="CONFIGURATION">
 			<DEFAULT>"jt/_HOST@EXAMPLE.COM"</DEFAULT>
 		</PARAMETER>
-		
 		<PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" NUM_ROW="16"
 			REQUIRED="true" SHOW_IF="MAPREDUCE == 'true'" GROUP="CONFIGURATION">
 			<DEFAULT IF="(PIG_VERSION != 'MAPR') AND (PIG_VERSION != 'MAPR2')">"hdfs://localhost:8020"</DEFAULT>
 			<DEFAULT IF="(PIG_VERSION == 'MAPR') OR (PIG_VERSION == 'MAPR2')">"maprfs:///"</DEFAULT>
 		</PARAMETER>
-		
 		<PARAMETER NAME="MAPRED_JOB_TRACKER" FIELD="TEXT" NUM_ROW="17"
 			REQUIRED="true" SHOW_IF="MAPREDUCE == 'true'" GROUP="CONFIGURATION">
 			<DEFAULT IF="(PIG_VERSION != 'MAPR') AND (PIG_VERSION != 'MAPR2')">"localhost:8021"</DEFAULT>
 			<DEFAULT IF="(PIG_VERSION == 'MAPR') OR (PIG_VERSION == 'MAPR2')">"localhost:9001"</DEFAULT>
 		</PARAMETER>
-		
 		<PARAMETER NAME="THRIFT_SERVER" FIELD="TEXT" NUM_ROW="18"
 			REQUIRED="true" SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND LOAD=='HCATLOADER')" GROUP="CONFIGURATION">
 			<DEFAULT>"thrift://localhost:9933"</DEFAULT>
 		</PARAMETER>
-		
 		<PARAMETER NAME="INPUT_FILENAME" FIELD="TEXT" NUM_ROW="30"
 			REQUIRED="true" REPOSITORY_VALUE="FILE_PATH" NOT_SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND LOAD=='HCATLOADER')">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
 		<PARAMETER NAME="DATABASE_NAME" FIELD="TEXT" NUM_ROW="31"
 			REQUIRED="true" SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND LOAD=='HCATLOADER')" GROUP="HCAT_CONFIGURATION">
 			<DEFAULT>"default"</DEFAULT>
@@ -125,15 +113,13 @@
 		<PARAMETER NAME="PARTITION_FILTER" FIELD="TABLE" REQUIRED="false" NUM_ROW="34" NB_LINES="4" SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND LOAD=='HCATLOADER')" GROUP="HCAT_CONFIGURATION">
 			<ITEMS>
 				<ITEM FIELD="TEXT" NAME="PART_NAME"/>
-				<ITEM FIELD="TEXT" NAME="PART_VALUE"/> 
+				<ITEM FIELD="TEXT" NAME="PART_VALUE"/>
 			</ITEMS>
 		</PARAMETER>
-
 		<PARAMETER NAME="FIELD_SEPARATOR_CHAR" FIELD="TEXT" NUM_ROW="35"
 			REQUIRED="true" SHOW_IF="LOAD == 'PIGSTORAGE'">
 			<DEFAULT>";"</DEFAULT>
 		</PARAMETER>
-		
         <PARAMETER NAME="COMPRESS" FIELD="CHECK" NUM_ROW="75" REQUIRED="true" GROUP="COMPRESSION_GROUP">
           <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -142,14 +128,12 @@
                 <ITEM NAME="GZIP" VALUE="GZIP"/>
                 <ITEM NAME="BZIP2" VALUE="BZIP2"/>
             </ITEMS>
-        </PARAMETER>		
-
+        </PARAMETER>
 		<PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="90"
 			REQUIRED="true">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 	</PARAMETERS>
-	
 	<ADVANCED_PARAMETERS>
 		<PARAMETER NAME="HADOOP_ADVANCED_PROPERTIES" FIELD="TABLE" REQUIRED="false" NUM_ROW="1" NB_LINES="3" SHOW_IF="MAPREDUCE=='true'" GROUP="ADVANCED_CONFIGURATION">
 			  <ITEMS>
@@ -175,39 +159,34 @@
 		<DEFAULT>When filling in the Jar path information below, make sure that the JAR files are available on the execution server.</DEFAULT>
 	  </PARAMETER>
 	  <PARAMETER NAME="REGISTER_JAR" FIELD="TABLE" REQUIRED="false" NUM_ROW="20" NB_LINES="4" SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND LOAD=='HCATLOADER' AND DEFINE_REGISTER_JAR=='true')" GROUP="HCAT_CONFIGURATION" CONTEXT="REGISTERJAR">
-		<ITEMS BASED_ON_SCHEMA="true"> 
-			<ITEM FIELD="TEXT" NAME="JAR_PATH"/> 
+		<ITEMS BASED_ON_SCHEMA="true">
+			<ITEM FIELD="TEXT" NAME="JAR_PATH"/>
 		</ITEMS>
 	  </PARAMETER>
 	</ADVANCED_PARAMETERS>
-
 	<CODEGENERATION>
 		<IMPORTS>
 			<IMPORT NAME="apache-pig" MODULE="pig-0.10.0.jar" REQUIRED="false" REQUIRED_IF="LOCAL=='true'"/>
-
-			<IMPORT NAME="dom4j" MODULE="dom4j-1.6.1.jar" REQUIRED="true"/>
-			<IMPORT NAME="jaxen" MODULE="jaxen-1.1.1.jar" REQUIRED="true"/>
-			
+			<IMPORT NAME="dom4j" MODULE="dom4j-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.dom4j-jaxen/lib/dom4j-1.6.1.jar" REQUIRED="true"/>
+			<IMPORT NAME="jaxen" MODULE="jaxen-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/jaxen-1.1.1.jar" REQUIRED="true"/>
 			<IMPORT NAME="apache-pig-without-hadoop" MODULE="pig-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1'))"/>
 			<IMPORT NAME="hadoop-conf" MODULE="hadoop-conf.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND ((PIG_VERSION!='HDP_1_0' AND PIG_VERSION!='HDP_1_2' AND PIG_VERSION!='APACHE_1_0_0' AND PIG_VERSION!='CLOUDERA_CDH4') OR USE_KRB=='false'))"/>
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND ((PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='CLOUDERA_CDH4') AND USE_KRB=='true'))"/>
 			<IMPORT NAME="apache-hadoop" MODULE="hadoop-0.20.2-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='APACHE_0_20_2')"/>
 			<IMPORT NAME="cloudera-hadoop" MODULE="hadoop-0.20.2-cdh3u1-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_0.20_CDH3U1')"/>
-			
-			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="hadoop-auth-cdh4.0.1" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="hadoop-common-cdh4.0.1" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="hadoop-hdfs-cdh4.0.1" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="hadoop-mr1-cdh4.0.1" MODULE="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="pig-0.9.2-cdh4.0.1-withouthadoop" MODULE="pig-0.9.2-cdh4.0.1-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
+			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
 			<IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4')"/>
-			
 			<IMPORT NAME="automaton" MODULE="automaton.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
 			<IMPORT NAME="pig-0.9.0-core" MODULE="pig-0.9.0-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
 			<IMPORT NAME="pigperf" MODULE="pigperf.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
@@ -215,7 +194,6 @@
 			<IMPORT NAME="maprfs-0.1" MODULE="maprfs-0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
 			<IMPORT NAME="zookeeper-3.3.2" MODULE="zookeeper-3.3.2.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
 			<IMPORT NAME="hadoop-0.20.2-dev-core" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR')"/>
-			
 			<IMPORT NAME="automaton.jar" MODULE="automaton.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="pig-0.10.0-mapr2" MODULE="pig-0.10.0-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="pigperf-mapr2" MODULE="pigperf-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
@@ -223,31 +201,27 @@
             <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2')"/>
-			
 			<IMPORT NAME="pig-0.9.2-withouthadoop" MODULE="pig-0.9.2-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
-			<IMPORT NAME="hadoop-core-1.0.0" MODULE="hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
-			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
-			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
-			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
-			
+			<IMPORT NAME="hadoop-core-1.0.0" MODULE="hadoop-core-1.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
+			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
+			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
+			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
+			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0'))"/>
 			<IMPORT NAME="hcatalog-0.4.0" MODULE="hcatalog-0.4.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
-			<IMPORT NAME="hive-exec-0.9.0" MODULE="hive-exec-0.9.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
-			<IMPORT NAME="hive-metastore-0.9.0" MODULE="hive-metastore-0.9.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
+			<IMPORT NAME="hive-exec-0.9.0" MODULE="hive-exec-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/hive-exec-0.9.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
+			<IMPORT NAME="hive-metastore-0.9.0" MODULE="hive-metastore-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/hive-metastore-0.9.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
 			<IMPORT NAME="jdo2-api-2.3-ec" MODULE="jdo2-api-2.3-ec.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
 			<IMPORT NAME="libfb303-0.7.0" MODULE="libfb303-0.7.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
 			<IMPORT NAME="libthrift-0.7.0" MODULE="libthrift-0.7.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
-			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
-			
+			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_0' AND LOAD=='HCATLOADER')"/>
 			<!-- HDP_1_2 -->
 			<IMPORT NAME="pig-0.10.1.21-core.jar" MODULE="pig-0.10.1.21-core.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
             <IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/log4j-1.2.15.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2')"/>
-            
             <IMPORT NAME="hcatalog-core-0.5.0.21.jar" MODULE="hcatalog-core-0.5.0.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
             <IMPORT NAME="hcatalog-pig-adapter-0.5.0.21.jar" MODULE="hcatalog-pig-adapter-0.5.0.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
             <IMPORT NAME="hcatalog-server-extensions-0.5.0.21.jar" MODULE="hcatalog-server-extensions-0.5.0.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
@@ -256,9 +230,8 @@
             <IMPORT NAME="jdo2-api-2.3-ec" MODULE="jdo2-api-2.3-ec.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
             <IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
             <IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
-            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />
-	
 </COMPONENT>

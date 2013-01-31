@@ -1,11 +1,9 @@
 <COMPONENT>
-
   <HEADER
     PLATEFORM="ALL"
     SERIAL=""
     VERSION="0.102"
     STATUS="ALPHA"
-    
     COMPATIBILITY="ALL"
     AUTHOR="Talend"
     RELEASE_DATE="20070312A"
@@ -13,15 +11,12 @@
   >
     <SIGNATURE/>
   </HEADER>
-
   <FAMILIES>
     <FAMILY>Big Data/Google BigQuery</FAMILY>
   </FAMILIES>
-
   <DOCUMENTATION>
     <URL/>
   </DOCUMENTATION>
-
   <CONNECTORS>
     <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="0"/>
     <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
@@ -31,15 +26,13 @@
     <CONNECTOR CTYPE="COMPONENT_ERROR"/>
     <CONNECTOR CTYPE="RUN_IF"/>
   </CONNECTORS>
-
   <PARAMETERS>
     <PARAMETER
     	NAME="SCHEMA"
     	FIELD="SCHEMA_TYPE"
     	REQUIRED="true"
-    	NUM_ROW="1" 
+    	NUM_ROW="1"
     />
-   
     <PARAMETER
       NAME="CLIENT_ID"
       FIELD="TEXT"
@@ -49,7 +42,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
 	<PARAMETER
       NAME="CLIENT_SECRET"
       FIELD="TEXT"
@@ -59,7 +51,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
 	<PARAMETER
       NAME="PROJECT_ID"
       FIELD="TEXT"
@@ -69,7 +60,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
 	<PARAMETER
       NAME="AUTHORIZATION_CODE"
       FIELD="TEXT"
@@ -79,9 +69,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-
-    
-
     <PARAMETER
       NAME="DATASET"
       FIELD="TEXT"
@@ -98,11 +85,9 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-
     <PARAMETER NAME="CREATE_TABLE_IF_NOT_EXIST" FIELD="CHECK" NUM_ROW="50" REQUIRED="true">
 	<DEFAULT>true</DEFAULT>
     </PARAMETER>
-
     <PARAMETER
       NAME="ACTION_ON_DATA"
       FIELD="CLOSED_LIST"
@@ -115,11 +100,9 @@
 		<ITEM NAME="EMPTY" VALUE="EMPTY" />
 	</ITEMS>
     </PARAMETER>
-
     <PARAMETER NAME="BULK_FILE_ALREADY_EXIST" FIELD="CHECK" NUM_ROW="59" REQUIRED="true" GROUP="GS_CONF">
 	<DEFAULT>false</DEFAULT>
     </PARAMETER>
-
     <PARAMETER NAME="GS_ACCESS_KEY" FIELD="TEXT" NUM_ROW="60" REQUIRED="true" GROUP="GS_CONF" SHOW_IF="BULK_FILE_ALREADY_EXIST=='false'">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
@@ -154,22 +137,19 @@
 	<DEFAULT>false</DEFAULT>
     </PARAMETER>
    </PARAMETERS>
-   <ADVANCED_PARAMETERS>	
+   <ADVANCED_PARAMETERS>
    	<PARAMETER NAME="SET_FIELD_DELIMITER" FIELD="CHECK" REQUIRED="true" NUM_ROW="10" >
 		<DEFAULT>false</DEFAULT>
 	</PARAMETER>
-		
 	<PARAMETER NAME="FIELD_DELIMITER" FIELD="TEXT" REQUIRED="true" NUM_ROW="10"
 		SHOW_IF="(SET_FIELD_DELIMITER == 'true')">
 		<DEFAULT>","</DEFAULT>
-	</PARAMETER>		
-		
+	</PARAMETER>
 	<PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="20"
 		REQUIRED="true" REPOSITORY_VALUE="ENCODING">
 		<DEFAULT>"ISO-8859-15"</DEFAULT>
-	</PARAMETER>	
+	</PARAMETER>
    </ADVANCED_PARAMETERS>
-
    <CODEGENERATION>
      <IMPORTS>
 		<IMPORT NAME="google-api-client-1.8.0-beta.jar" MODULE="google-api-client-1.8.0-beta.jar" REQUIRED="true" />
@@ -178,17 +158,15 @@
 		<IMPORT NAME="google-http-client-1.8.3-beta.jar" MODULE="google-http-client-1.8.3-beta.jar" REQUIRED="true" />
 		<IMPORT NAME="google-oauth-client-1.8.0-beta.jar" MODULE="google-oauth-client-1.8.0-beta.jar" REQUIRED="true" />
 		<IMPORT NAME="guava-10.0.1.jar" MODULE="guava-10.0.1.jar" REQUIRED="true" />
-		<IMPORT NAME="jackson-core-asl-1.9.1.jar" MODULE="jackson-core-asl-1.9.1.jar" REQUIRED="true" />
+		<IMPORT NAME="jackson-core-asl-1.9.1.jar" MODULE="jackson-core-asl-1.9.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.9.1.jar" REQUIRED="true" />
 		<!-- REQUIRED FOR GOOGLE STORAGE -->
 		<IMPORT NAME="jets3t-0.9.0" MODULE="jets3t-0.9.0.jar" REQUIRED="true" />
-		<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" REQUIRED="true" />
+		<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar" REQUIRED="true" />
 		<IMPORT NAME="httpclient-4.1.2" MODULE="httpclient-4.1.2.jar" REQUIRED="true" />
 		<IMPORT NAME="httpcore-4.1.2" MODULE="httpcore-4.1.2.jar" REQUIRED="true" />
-		<IMPORT NAME="commons-codec-1.4" MODULE="commons-codec-1.4.jar" REQUIRED="true" />
-
+		<IMPORT NAME="commons-codec-1.4" MODULE="commons-codec-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar" REQUIRED="true" />
      </IMPORTS>
    </CODEGENERATION>
-
    <RETURNS>
    </RETURNS>
 </COMPONENT>

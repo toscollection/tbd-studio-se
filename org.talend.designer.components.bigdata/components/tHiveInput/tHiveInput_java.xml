@@ -13,16 +13,13 @@
   >
     <SIGNATURE/>
   </HEADER>
-
   <FAMILIES>
     <FAMILY>Databases/Hive</FAMILY>
 	<FAMILY>Big Data/Hive</FAMILY>
   </FAMILIES>
-
   <DOCUMENTATION>
     <URL/>
   </DOCUMENTATION>
-
   <CONNECTORS>
     <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>
     <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
@@ -32,7 +29,6 @@
     <CONNECTOR CTYPE="COMPONENT_ERROR"/>
     <CONNECTOR CTYPE="RUN_IF"/>
   </CONNECTORS>
-
   <PARAMETERS>
     <PARAMETER
       NAME="PROPERTY"
@@ -41,15 +37,13 @@
       REPOSITORY_VALUE="DATABASE:HIVE"
       SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
     />
-
     <PARAMETER
       NAME="USE_EXISTING_CONNECTION"
       FIELD="CHECK"
       NUM_ROW="20"
     >
       <DEFAULT>false</DEFAULT>
-    </PARAMETER> 
-    
+    </PARAMETER>
     <PARAMETER
       NAME="CONNECTION"
       FIELD="COMPONENT_LIST"
@@ -57,7 +51,7 @@
       NUM_ROW="20"
       SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
       DYNAMIC_SETTINGS="true"
-    />     
+    />
 	<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="25" REQUIRED="true" GROUP="VERSION" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" REPOSITORY_VALUE="DISTRIBUTION">
 		<ITEMS DEFAULT="HORTONWORKS">
 			<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
@@ -84,7 +78,6 @@
 			<ITEM NAME="STANDALONE" VALUE="STANDALONE" NOT_SHOW_IF="(HIVE_VERSION=='HDP_1_0' OR HIVE_VERSION=='HDP_1_2')"/>
 		</ITEMS>
 	</PARAMETER>
-	
     <PARAMETER
       NAME="HOST"
       FIELD="TEXT"
@@ -96,7 +89,6 @@
     >
       <DEFAULT>"localhost"</DEFAULT>
     </PARAMETER>
-
     <PARAMETER
       NAME="PORT"
       FIELD="TEXT"
@@ -108,7 +100,6 @@
     >
       <DEFAULT>"10000"</DEFAULT>
     </PARAMETER>
-
     <PARAMETER
       NAME="DBNAME"
       FIELD="TEXT"
@@ -120,7 +111,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-
     <PARAMETER
       NAME="TYPE"
       FIELD="TEXT"
@@ -131,7 +121,6 @@
     >
       <DEFAULT>Hive</DEFAULT>
     </PARAMETER>
-    
     <PARAMETER
       NAME="USER"
       FIELD="TEXT"
@@ -143,7 +132,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-
     <PARAMETER
       NAME="PASS"
       FIELD="TEXT"
@@ -155,7 +143,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-	
 	<PARAMETER
       NAME="SET_MAPRED_JT"
       FIELD="CHECK"
@@ -200,7 +187,6 @@
     >
       <DEFAULT>"hdfs://localhost:8020"</DEFAULT>
     </PARAMETER>
-
     <PARAMETER
       NAME="SCHEMA"
       FIELD="SCHEMA_TYPE"
@@ -208,7 +194,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
 	<PARAMETER
       NAME="TABLE"
       FIELD="DBTABLE"
@@ -216,7 +201,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
     <PARAMETER
       NAME="QUERYSTORE"
       FIELD="QUERYSTORE_TYPE"
@@ -224,7 +208,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-
 	<PARAMETER
       NAME="GUESS_SCHEMA"
       FIELD="GUESS_SCHEMA"
@@ -232,7 +215,6 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-
     <PARAMETER
       NAME="QUERY"
       FIELD="MEMO_SQL"
@@ -240,15 +222,12 @@
     >
       <DEFAULT>"select id, name from employee"</DEFAULT>
     </PARAMETER>
-
     <PARAMETER NAME="STORE_BY_HBASE" FIELD="CHECK" NUM_ROW="100" REQUIRED="true" GROUP="HBASE_GROUP" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
         <DEFAULT>false</DEFAULT>
     </PARAMETER>
-    
     <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="110" REQUIRED="true" GROUP="HBASE_GROUP" SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
         <DEFAULT>"localhost"</DEFAULT>
     </PARAMETER>
-    
     <PARAMETER
       NAME="ZOOKEEPER_CLIENT_PORT"
       FIELD="TEXT"
@@ -258,17 +237,14 @@
       SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
       <DEFAULT>"2181"</DEFAULT>
     </PARAMETER>
-    
     <PARAMETER NAME="DEFINE_REGISTER_JAR" FIELD="CHECK" REQUIRED="true" NUM_ROW="130" GROUP="HBASE_GROUP" SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
       <DEFAULT>false</DEFAULT>
     </PARAMETER>
-    
     <PARAMETER NAME="REGISTER_JAR_NOTE" FIELD="LABEL" NUM_ROW="140" SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') and (USE_EXISTING_CONNECTION == 'false')" GROUP="HBASE_GROUP">
       <DEFAULT>When filling in the Jar path information below, make sure that the JAR files are available on the server.</DEFAULT>
     </PARAMETER>
-    
     <PARAMETER NAME="REGISTER_JAR" FIELD="TABLE" REQUIRED="false" NUM_ROW="160" NB_LINES="4" SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') and (USE_EXISTING_CONNECTION == 'false')" GROUP="HBASE_GROUP">
-      <ITEMS> 
+      <ITEMS>
         <ITEM NAME="JAR_NAME" FIELD="CLOSED_LIST">
           <ITEMS DEFAULT="HIVE-HBASE-HANDLER">
             <ITEM NAME="HIVE-HBASE-HANDLER" VALUE="HIVE-HBASE-HANDLER"/>
@@ -277,39 +253,37 @@
             <ITEM NAME="PROTOBUF-JAVA" VALUE="PROTOBUF-JAVA"/>
           </ITEMS>
         </ITEM>
-        <ITEM NAME="JAR_PATH" FIELD="TEXT" />          
+        <ITEM NAME="JAR_PATH" FIELD="TEXT" />
       </ITEMS>
-    </PARAMETER>   
-
+    </PARAMETER>
   </PARAMETERS>
-  
   <ADVANCED_PARAMETERS>
-	<PARAMETER 
-		NAME="NOTE" 
-		FIELD="LABEL" 
-		NUM_ROW="1" 
-		GROUP="TEMP_PATH_GROUP" 
-	> 
-		<DEFAULT>If you are on Windows, add a '/' in front of the path you type in</DEFAULT> 
-	</PARAMETER> 
-	<PARAMETER 
-		NAME="SET_TEMP_PATH" 
-		FIELD="CHECK" 
-		NUM_ROW="3" 
-		REQUIRED="true" 
-		GROUP="TEMP_PATH_GROUP" 
-	>       
-	</PARAMETER> 
-	<PARAMETER 
-		NAME="TEMP_PATH" 
-		FIELD="DIRECTORY" 
-		NUM_ROW="3" 
-		REQUIRED="true" 
-		SHOW_IF="SET_TEMP_PATH == 'true'" 
-		GROUP="TEMP_PATH_GROUP" 
-	> 
-		<DEFAULT>""</DEFAULT> 
-	</PARAMETER> 
+	<PARAMETER
+		NAME="NOTE"
+		FIELD="LABEL"
+		NUM_ROW="1"
+		GROUP="TEMP_PATH_GROUP"
+	>
+		<DEFAULT>If you are on Windows, add a '/' in front of the path you type in</DEFAULT>
+	</PARAMETER>
+	<PARAMETER
+		NAME="SET_TEMP_PATH"
+		FIELD="CHECK"
+		NUM_ROW="3"
+		REQUIRED="true"
+		GROUP="TEMP_PATH_GROUP"
+	>
+	</PARAMETER>
+	<PARAMETER
+		NAME="TEMP_PATH"
+		FIELD="DIRECTORY"
+		NUM_ROW="3"
+		REQUIRED="true"
+		SHOW_IF="SET_TEMP_PATH == 'true'"
+		GROUP="TEMP_PATH_GROUP"
+	>
+		<DEFAULT>""</DEFAULT>
+	</PARAMETER>
 	<PARAMETER
       NAME="ENCODING"
       FIELD="ENCODING_TYPE"
@@ -319,19 +293,17 @@
     >
       <DEFAULT>"ISO-8859-15"</DEFAULT>
     </PARAMETER>
-        
-    <PARAMETER 
-		NAME="TRIM_ALL_COLUMN" 
-		FIELD="CHECK" 
+    <PARAMETER
+		NAME="TRIM_ALL_COLUMN"
+		FIELD="CHECK"
 		NUM_ROW="30">
 		<DEFAULT>false</DEFAULT>
 	</PARAMETER>
-	
-	<PARAMETER 
-		NAME="TRIM_COLUMN" 
-		FIELD="TABLE" 
+	<PARAMETER
+		NAME="TRIM_COLUMN"
+		FIELD="TABLE"
 		NUM_ROW="40"
-		NB_LINES="5" 
+		NB_LINES="5"
 		SHOW_IF="TRIM_ALL_COLUMN == 'false'">
 		<ITEMS BASED_ON_SCHEMA="true">
 			<ITEM NAME="TRIM" FIELD="CHECK"></ITEM>
@@ -342,47 +314,45 @@
 			<ITEM NAME="PROPERTY" />
 			<ITEM NAME="VALUE" />
 		</ITEMS>
-	</PARAMETER>		
+	</PARAMETER>
   </ADVANCED_PARAMETERS>
-
   <CODEGENERATION>
 		<IMPORTS>
 			<!-- APACHE 0.20.203 / CDH3 / MAPR -->
 			<IMPORT NAME="Driver-Hadoop-0.20.203" MODULE="hadoop-core-0.20.203.0.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="Driver-Commons-Log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Commons-Log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/log4j-1.2.15.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Hive-Exec-0.7.1" MODULE="hive-exec-0.7.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Hive-Jdbc-0.7.1" MODULE="hive-jdbc-0.7.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Hive-Metastore-0.7.1" MODULE="hive-metastore-0.7.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Hive-Service-0.7.1" MODULE="hive-service-0.7.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-LibFb303" MODULE="libfb303.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="Driver-slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="Driver-slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="Driver-Commons-Logging-1.1.1" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="Driver-Commons-Logging-API-1.0.4" MODULE="commons-logging-api-1.0.4.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
-            <!-- APACHE 0.20.203 & MAPR1 & CDH3 Hbase -->   
+			<IMPORT NAME="Driver-slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Commons-Logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Commons-Logging-API-1.0.4" MODULE="commons-logging-api-1.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-api-1.0.4.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- APACHE 0.20.203 & MAPR1 & CDH3 Hbase -->
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="hive-hbase-handler-0.7.1-cdh3u3.jar" MODULE="hive-hbase-handler-0.7.1-cdh3u3.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/> 
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<!-- ############## -->
-			
 			<!-- MAPR2 -->
 			<IMPORT NAME="hadoop-0.20.2-dev-core-mapr2.jar" MODULE="hadoop-0.20.2-dev-core-mapr2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="log4j-1.2.16" MODULE="log4j-1.2.16.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="log4j-1.2.16" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-exec-0.9.0-mapr2.jar" MODULE="hive-exec-0.9.0-mapr2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-jdbc-0.9.0-mapr2.jar" MODULE="hive-jdbc-0.9.0-mapr2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-metastore-0.9.0-mapr2.jar" MODULE="hive-metastore-0.9.0-mapr2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-service-0.9.0-mapr2.jar" MODULE="hive-service-0.9.0-mapr2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="libfb303_new" MODULE="libfb303_new.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libfb303_new" MODULE="libfb303_new.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/libfb303_new.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="libthrift" MODULE="libthrift.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="commons-logging-api-1.0.4.jar" MODULE="commons-logging-api-1.0.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.0.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="commons-logging-api-1.0.4.jar" MODULE="commons-logging-api-1.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-api-1.0.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="jdo2-api-2.3-ec" MODULE="jdo2-api-2.3-ec.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="antlr-runtime-3.0.1" MODULE="antlr-runtime-3.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="antlr-runtime-3.0.1" MODULE="antlr-runtime-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="datanucleus-connectionpool-2.0.3" MODULE="datanucleus-connectionpool-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="datanucleus-enhancer-2.0.3" MODULE="datanucleus-enhancer-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="datanucleus-core-2.0.3" MODULE="datanucleus-core-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
@@ -391,134 +361,128 @@
 			<IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-builtins-0.9.0-mapr2.jar" MODULE="hive-builtins-0.9.0-mapr2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="commons-dbcp-1.4" MODULE="commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
-            <!-- MAPR2 Hbase -->   
+			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="commons-dbcp-1.4" MODULE="commons-dbcp-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- MAPR2 Hbase -->
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>			
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<!-- ############## -->
-			
 			<!-- APACHE 1.0 -->
 			<IMPORT NAME="hive-exec-0.8.1.jar" MODULE="hive-exec-0.8.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-jdbc-0.8.1.jar" MODULE="hive-jdbc-0.8.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-metastore-0.8.1.jar" MODULE="hive-metastore-0.8.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-service-0.8.1.jar" MODULE="hive-service-0.8.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="libfb303_new.jar" MODULE="libfb303_new.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libfb303_new.jar" MODULE="libfb303_new.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/libfb303_new.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="libthrift.jar" MODULE="libthrift.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hadoop-core-1.0.0.jar" MODULE="hadoop-core-1.0.0.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="datanucleus-connectionpool-2.0.3.jar" MODULE="datanucleus-connectionpool-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="datanucleus-enhancer-2.0.3.jar" MODULE="datanucleus-enhancer-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="datanucleus-core-2.0.3.jar" MODULE="datanucleus-core-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="datanucleus-rdbms-2.0.3.jar" MODULE="datanucleus-rdbms-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="hive-builtins-0.4.0.jar" MODULE="hive-builtins-0.4.0.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <!-- APACHE 1.0 Hbase -->   
+            <!-- APACHE 1.0 Hbase -->
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>   			
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<!-- ############## -->
-			
 			<!-- HDP 1.0 -->
-			<IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="datanucleus-api-jdo-3.0.7.jar" MODULE="datanucleus-api-jdo-3.0.7.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="datanucleus-core-3.0.9.jar" MODULE="datanucleus-core-3.0.9.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="datanucleus-rdbms-3.0.8.jar" MODULE="datanucleus-rdbms-3.0.8.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="hadoop-core-1.0.3.jar" MODULE="hadoop-core-1.0.3.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="hive-builtins-0.9.0.jar" MODULE="hive-builtins-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="hive-exec-0.9.0.jar" MODULE="hive-exec-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="hive-jdbc-0.9.0.jar" MODULE="hive-jdbc-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="hive-metastore-0.9.0.jar" MODULE="hive-metastore-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="hive-service-0.9.0.jar" MODULE="hive-service-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="libfb303-0.7.0.jar" MODULE="libfb303-0.7.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-			<IMPORT NAME="libthrift-0.7.0.jar" MODULE="libthrift-0.7.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <!-- HDP 1.0 Hbase -->   
+			<IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.0.4.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="datanucleus-api-jdo-3.0.7.jar" MODULE="datanucleus-api-jdo-3.0.7.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="datanucleus-core-3.0.9.jar" MODULE="datanucleus-core-3.0.9.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="datanucleus-rdbms-3.0.8.jar" MODULE="datanucleus-rdbms-3.0.8.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hadoop-core-1.0.3.jar" MODULE="hadoop-core-1.0.3.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-builtins-0.9.0.jar" MODULE="hive-builtins-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-exec-0.9.0.jar" MODULE="hive-exec-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-jdbc-0.9.0.jar" MODULE="hive-jdbc-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-metastore-0.9.0.jar" MODULE="hive-metastore-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="hive-service-0.9.0.jar" MODULE="hive-service-0.9.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libfb303-0.7.0.jar" MODULE="libfb303-0.7.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libthrift-0.7.0.jar" MODULE="libthrift-0.7.0.jar" REQUIRED="false" REQUIRED_IF="HIVE_VERSION=='HDP_1_0' and (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- HDP 1.0 Hbase -->
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>			
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<!-- ############## -->
-			
 			<!-- APACHE 1.0 && HDP 1.0 -->
-			<IMPORT NAME="log4j-1.2.15.jar" MODULE="log4j-1.2.15.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="log4j-1.2.15.jar" MODULE="log4j-1.2.15.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/log4j-1.2.15.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="derby-10.4.2.0.jar" MODULE="derby-10.4.2.0.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<!-- ############## -->
-			
-			<!-- HDP 1.2 -->         
-            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="datanucleus-api-jdo-3.0.7.jar" MODULE="datanucleus-api-jdo-3.0.7.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="datanucleus-core-3.0.9.jar" MODULE="datanucleus-core-3.0.9.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="datanucleus-rdbms-3.0.8.jar" MODULE="datanucleus-rdbms-3.0.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="hive-builtins-0.10.0.21.jar" MODULE="hive-builtins-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="hive-exec-0.10.0.21.jar" MODULE="hive-exec-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="hive-jdbc-0.10.0.21.jar" MODULE="hive-jdbc-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="hive-metastore-0.10.0.21.jar" MODULE="hive-metastore-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="hive-service-0.10.0.21.jar" MODULE="hive-service-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" /> 
-            <IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<!-- HDP 1.2 -->
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.0.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="datanucleus-api-jdo-3.0.7.jar" MODULE="datanucleus-api-jdo-3.0.7.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="datanucleus-core-3.0.9.jar" MODULE="datanucleus-core-3.0.9.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="datanucleus-rdbms-3.0.8.jar" MODULE="datanucleus-rdbms-3.0.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hive-builtins-0.10.0.21.jar" MODULE="hive-builtins-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hive-exec-0.10.0.21.jar" MODULE="hive-exec-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hive-jdbc-0.10.0.21.jar" MODULE="hive-jdbc-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hive-metastore-0.10.0.21.jar" MODULE="hive-metastore-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hive-service-0.10.0.21.jar" MODULE="hive-service-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="derby-10.4.2.0.jar" MODULE="derby-10.4.2.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" BundleID="" />
-            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar"  REQUIRED_IF="HIVE_VERSION=='HDP_1_2'" />
-            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
-            <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <!-- HDP 1.2 Hbase -->   
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" BundleID="" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="HIVE_VERSION=='HDP_1_2'" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')"/>
+            <!-- HDP 1.2 Hbase -->
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="zookeeper-3.4.5.21.jar" MODULE="zookeeper-3.4.5.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="hive-hbase-handler-0.10.0.21.jar" MODULE="hive-hbase-handler-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>             
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <!-- ############## -->
-			
 			<!-- CDH 4 -->
 			<IMPORT NAME="hive-exec-0.8.1-cdh4.0.1.jar" MODULE="hive-exec-0.8.1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-jdbc-0.8.1-cdh4.0.1.jar" MODULE="hive-jdbc-0.8.1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-metastore-0.8.1-cdh4.0.1.jar" MODULE="hive-metastore-0.8.1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hive-service-0.8.1-cdh4.0.1.jar" MODULE="hive-service-0.8.1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="libfb303_new.jar" MODULE="libfb303_new.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="libfb303_new.jar" MODULE="libfb303_new.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/libfb303_new.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="libthrift.jar" MODULE="libthrift.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hadoop-common-2.0.0-cdh4.0.1.jar" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" MODULE="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hadoop-auth-2.0.0-cdh4.0.1.jar" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="hadoop-hdfs-2.0.0-cdh4.0.1.jar" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
-			
-			<IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-dbcp-1.4.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="datanucleus-connectionpool-2.0.3.jar" MODULE="datanucleus-connectionpool-2.0.3.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="datanucleus-enhancer-2.0.3.jar" MODULE="datanucleus-enhancer-2.0.3.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="derby-10.4.2.0.jar" MODULE="derby-10.4.2.0.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
@@ -527,19 +491,17 @@
 			<IMPORT NAME="datanucleus-core-2.0.3.jar" MODULE="datanucleus-core-2.0.3.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="datanucleus-rdbms-2.0.3.jar" MODULE="datanucleus-rdbms-2.0.3.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
-			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>	
-
-            <!-- CDH 4 Hbase -->   
+			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')"/>
+            <!-- CDH 4 Hbase -->
             <IMPORT NAME="zookeeper-3.4.3-cdh4.0.1.jar" MODULE="zookeeper-3.4.3-cdh4.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="hive-hbase-handler-0.8.1-cdh4.0.0.jar" MODULE="hive-hbase-handler-0.8.1-cdh4.0.0.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
             <IMPORT NAME="hbase-0.92.1-cdh4.0.1-security.jar" MODULE="hbase-0.92.1-cdh4.0.1-security.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
-            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>  			
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')"/>
 			<!-- ############## -->
      	</IMPORTS>
   </CODEGENERATION>
-
   <RETURNS>
    	<RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER"/>
     <RETURN NAME="QUERY" TYPE="id_String" AVAILABILITY="FLOW"/>
