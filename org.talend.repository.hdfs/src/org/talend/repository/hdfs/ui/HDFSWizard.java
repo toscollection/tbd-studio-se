@@ -124,6 +124,7 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
         this.isToolBar = isToolbar;
     }
 
+    @Override
     public void addPages() {
         setWindowTitle(Messages.getString("HDFSWizard.windowTitle")); //$NON-NLS-1$
         setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHDFSImage.HDFS_WIZ));
@@ -160,7 +161,6 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
         if (mainPage.isPageComplete()) {
             final IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
             String displayName = connectionProperty.getDisplayName();
-            connectionProperty.setLabel(displayName);
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
@@ -225,6 +225,7 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
      * 
      * @see org.talend.repository.ui.wizards.RepositoryWizard#getConnectionItem()
      */
+    @Override
     public ConnectionItem getConnectionItem() {
         return this.connectionItem;
     }
