@@ -52,7 +52,7 @@
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
 	
-	boolean generateRegisterJarCodeForHBase = "HBaseStorage".equals(function);
+	boolean generateRegisterJarCodeForHBase = !isLocal && "HBaseStorage".equals(function);
 
 	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
 		String[] commandLine = new String[] {"<command>"};
@@ -244,7 +244,7 @@
 %>
 		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
 <%
-	if((advProps.size() > 0) || compress || "HBaseStorage".equals(function)){
+	if((advProps.size() > 0) || compress || (isLocal && "HBaseStorage".equals(function))){
 %>
 		StringBuilder script_<%=cid%>=new StringBuilder();
 <%
@@ -269,7 +269,7 @@
 			}
 		}
 		
-		if("HBaseStorage".equals(function)) {
+		if(isLocal && "HBaseStorage".equals(function)) {
 %>
 		script_<%=cid%>.append("SET hbase.zookeeper.quorum ").append(<%=zookeeper_quorum%>).append(";");
 		script_<%=cid%>.append("SET hbase.zookeeper.property.clientPort ").append(<%=zookeeper_client_port%>).append(";");
