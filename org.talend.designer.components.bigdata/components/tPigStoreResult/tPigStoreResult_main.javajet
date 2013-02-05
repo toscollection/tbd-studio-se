@@ -4,6 +4,7 @@
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		java.util.List
+		java.util.ArrayList
 		java.util.Map
 		org.talend.core.model.metadata.IMetadataTable
 		org.talend.designer.runprocess.ProcessorUtilities
@@ -48,7 +49,9 @@
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
 	
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+	boolean generateRegisterJarCodeForHBase = "HBaseStorage".equals(function);
+	
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
 			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
@@ -71,7 +74,13 @@
 			jarsToRegister.add("hive-exec");
 			jarsToRegister.add("hive-metastore");
 		}
-
+		
+		if(generateRegisterJarCodeForHBase) {
+			jarsToRegister.add("protobuf-java");
+			jarsToRegister.add("hbase");
+			jarsToRegister.add("zookeeper");
+			jarsToRegister.add("guava");
+		}
 
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {
@@ -81,7 +90,7 @@
 		}
 	}
 	
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
 %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
@@ -175,7 +184,7 @@
 <%
 	}	
 %>
-	<%if(rmResultDir && !("HCatStorer".equals(function))){%>
+	<%if(rmResultDir && !("HCatStorer".equals(function)) && !("HBaseStorage".equals(function))){%>
 		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
             pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
         }
@@ -183,7 +192,7 @@
 
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 <%	
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
 		for(int i=0; i<jarsToRegister.size(); i++) {
 			String jarToRegister = jarsToRegister.get(i);
 			for(int j=0; j<jars.size(); j++) {
@@ -244,6 +253,124 @@
 			String customStorer = ElementParameterParser.getValue(node, "__CUSTOM_STORER__");
 %>
 			sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=resultFile%>+"' using " + <%=customStorer%> + ";");
+<%
+		} else if("HBaseStorage".equals(function)) {
+			String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
+			String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");			
+%>
+			StringBuilder script_<%=cid%>=new StringBuilder();
+			script_<%=cid%>.append("SET hbase.zookeeper.quorum "+<%=zookeeper_quorum%>+";");
+			script_<%=cid%>.append("SET hbase.zookeeper.property.clientPort "+<%=zookeeper_client_port%>+";");
+			pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
+<%
+			
+			String hbasetable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
+			String rowKeyColumn = ElementParameterParser.getValue(node, "__ROWKEY_COLUMN__");
+			boolean storeRowKeyToColumn = "true".equals(ElementParameterParser.getValue(node, "__CONTAIN_ROW_KEY_COLUMN_IN_HBASE_COLUMN__"));
+			
+			List<Integer> columnOrders = new ArrayList<Integer>();
+			int rowKeyIndex = 0;
+			
+			List<IMetadataTable> metadatas = node.getMetadataList();
+    		IMetadataTable metadata = null;
+    		if(metadatas != null && metadatas.size() > 0) {
+    			metadata = metadatas.get(0);
+    		}
+    		if(metadata!=null) {
+    			if(metadata.getListColumns() != null && metadata.getListColumns().size() > 0) {
+    				for(int i=0; i<metadata.getListColumns().size(); i++) {
+    					String columnName = metadata.getListColumns().get(i).getLabel();
+    					if(columnName!=null && columnName.equals(rowKeyColumn)) {
+    						rowKeyIndex = i;
+    						columnOrders.add(0,i);
+    						if(storeRowKeyToColumn) {
+    							columnOrders.add(i);
+    						}
+    					} else {
+    						columnOrders.add(i);
+    					}
+    					
+    				}
+    			}
+    		}
+    		
+    		if((rowKeyIndex == 0) && !storeRowKeyToColumn) {//the default action
+%>
+				sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO ");
+<%
+    		} else {
+%>
+				sb_<%=cid%>.append("<%=previous_node%>_TMP_RESULT = FOREACH <%=previous_node%>_RESULT GENERATE ");
+<%
+				for(int i=0;i<columnOrders.size();i++) {
+					Integer index = columnOrders.get(i);
+%>
+					sb_<%=cid%>.append("$<%=index%> as column<%=i%>");
+					
+<%
+					if(i<columnOrders.size()-1) {
+%>
+					sb_<%=cid%>.append(",");
+<%
+					}
+				}
+%>
+				sb_<%=cid%>.append(";");
+				sb_<%=cid%>.append("STORE <%=previous_node%>_TMP_RESULT INTO "); 
+<%
+    		}
+%>
+			sb_<%=cid%>.append("'hbase://").append(<%=hbasetable%>).append("' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('");;
+<%
+			List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
+			if(metadata!=null && mapping!=null) {
+				for(int i=0;i<mapping.size();i++){
+    				Map<String, String> map = mapping.get(i);
+        			String schema_column = map.get("SCHEMA_COLUMN");
+        			String family_column= map.get("FAMILY_COLUMN");
+        			if(!storeRowKeyToColumn && (schema_column!=null) && (schema_column.equals(rowKeyColumn))) {
+        				continue;
+        			}
+%>
+					sb_<%=cid%>.append(<%=family_column%>);
+<%
+					if(i < mapping.size()-1) {
+%>
+					sb_<%=cid%>.append(" ");
+<%
+					}
+    			}
+			}
+%>
+			sb_<%=cid%>.append("'");
+<%
+			List<Map<String, String>> hbasestorageParams = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__HBASESTORAGE_PARAMETER__");
+			if(hbasestorageParams!=null) {
+				for(int i=0;i<hbasestorageParams.size();i++) {
+					if(i == 0) {
+%>
+						sb_<%=cid%>.append(",'");
+<%					
+					}
+					Map<String, String> param = hbasestorageParams.get(i);
+					String name = param.get("PARAM_NAME");
+					String value = param.get("PARAM_VALUE");
+%>
+					sb_<%=cid%>.append("-<%=name%> ").append(<%=value%>);
+<%							
+					if(i < hbasestorageParams.size()-1) {
+%>
+					sb_<%=cid%>.append(" ");
+<%							
+					} else {
+%>
+					sb_<%=cid%>.append("'");
+<%					
+					}
+				}
+			}
+%>
+			sb_<%=cid%>.append(");");
 <%
 		} else {
 %>

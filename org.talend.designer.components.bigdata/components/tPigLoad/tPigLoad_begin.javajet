@@ -40,6 +40,9 @@
 	boolean compress = "true".equals(ElementParameterParser.getValue(node, "__COMPRESS__"));
 	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
 	
+	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
+	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");	
+	
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
@@ -48,8 +51,10 @@
 	
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
+	
+	boolean generateRegisterJarCodeForHBase = "HBaseStorage".equals(function);
 
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
 			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
@@ -73,6 +78,13 @@
 			jarsToRegister.add("libfb303");
 			jarsToRegister.add("libthrift");
 		}
+		
+		if(generateRegisterJarCodeForHBase) {
+			jarsToRegister.add("protobuf-java");
+			jarsToRegister.add("hbase");
+			jarsToRegister.add("zookeeper");
+			jarsToRegister.add("guava");
+		}
 
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {
@@ -89,7 +101,7 @@
 		start_node = node.getDesignSubjobStartNode().getUniqueName();
 	}
 
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
 %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
@@ -200,6 +212,14 @@
 				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
 <%
 			}
+			
+			if("HBaseStorage".equals(function)) {
+%>
+				props_<%=cid%>.put("hbase.zookeeper.quorum", <%=zookeeper_quorum%>);
+				props_<%=cid%>.put("hbase.zookeeper.property.clientPort", <%=zookeeper_client_port%>);
+<%
+			}
+			
 			if(("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "CLOUDERA_CDH4".equals(pigVersion)) && useKrb) {
 				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 				String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
@@ -224,7 +244,7 @@
 %>
 		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
 <%
-	if((advProps.size() > 0) || compress){
+	if((advProps.size() > 0) || compress || "HBaseStorage".equals(function)){
 %>
 		StringBuilder script_<%=cid%>=new StringBuilder();
 <%
@@ -248,6 +268,13 @@
 <%		
 			}
 		}
+		
+		if("HBaseStorage".equals(function)) {
+%>
+		script_<%=cid%>.append("SET hbase.zookeeper.quorum ").append(<%=zookeeper_quorum%>).append(";");
+		script_<%=cid%>.append("SET hbase.zookeeper.property.clientPort ").append(<%=zookeeper_client_port%>).append(";");
+<%
+		}
 %>
 		pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
 <%
@@ -257,7 +284,7 @@
 		StringBuilder sb_<%=cid%> = new StringBuilder();
 
 <%		
-		if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode) {
+		if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
 			for(int i=0; i<jarsToRegister.size(); i++) {
 				String jarToRegister = jarsToRegister.get(i);
 				for(int j=0; j<jars.size(); j++) {
@@ -295,15 +322,94 @@
 				sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using " + <%=customLoader%>);
 <%
 			} else {
-%>
-				sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
-<%
-			
 				List<IMetadataTable> metadatas = node.getMetadataList();
 				IMetadataTable metadata = null;
 				if(metadatas != null && metadatas.size() > 0) {
 					metadata = metadatas.get(0);
 				}
+				
+				if("HBaseStorage".equals(function)){
+					String hbasetable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
+					boolean loadkey = "true".equals(ElementParameterParser.getValue(node, "__LOAD_KEY__"));//if load key,the first column is hbase row key
+					List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
+%>
+					sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD 'hbase://").append(<%=hbasetable%>).append("' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('");
+					
+<%
+					if(metadata!=null && mapping!=null) {
+						for(int i=0;i<mapping.size();i++){
+							if(loadkey && (i == 0)) {
+								continue;
+							}
+                			Map<String, String> map = mapping.get(i);
+                			String schema_column = map.get("SCHEMA_COLUMN");
+                			String family_column= map.get("FAMILY_COLUMN");
+%>
+							sb_<%=cid%>.append(<%=family_column%>);
+<%
+							if(i < mapping.size()-1) {
+%>
+							sb_<%=cid%>.append(" ");
+<%
+							}
+            			}
+					}
+%>
+					sb_<%=cid%>.append("'");
+<%
+					List<Map<String, String>> hbasestorageParams = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__HBASESTORAGE_PARAMETER__");
+					
+					if(loadkey) {
+%>
+					sb_<%=cid%>.append(",'-loadKey true");
+<%
+					}
+					
+					if(hbasestorageParams!=null) {
+						for(int i=0;i<hbasestorageParams.size();i++) {
+							if(i == 0) {
+								if(!loadkey) {
+%>
+								sb_<%=cid%>.append(",'");
+<%							
+								} else {
+%>
+								sb_<%=cid%>.append(" ");
+<%
+								}
+							}
+							Map<String, String> param = hbasestorageParams.get(i);
+							String name = param.get("PARAM_NAME");
+							String value = param.get("PARAM_VALUE");
+%>
+							sb_<%=cid%>.append("-<%=name%> ").append(<%=value%>);
+<%							
+							if(i < hbasestorageParams.size()-1) {
+%>
+							sb_<%=cid%>.append(" ");
+<%							
+							} else if(!loadkey){
+%>
+							sb_<%=cid%>.append("'");
+<%							
+							}
+						}
+					}
+					
+					if(loadkey) {
+%>
+					sb_<%=cid%>.append("'");
+<%
+					}
+%>
+					sb_<%=cid%>.append(")");
+<%
+				} else {
+%>
+					sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
+<%
+				}
+			
 				if(metadata!=null) {
 					if(metadata.getListColumns() != null && metadata.getListColumns().size() > 0) {
 %>

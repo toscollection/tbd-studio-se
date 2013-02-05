@@ -64,6 +64,7 @@
 				<ITEM NAME="BINSTORAGE" VALUE="BinStorage" />
 				<ITEM NAME="TEXTLOADER" VALUE="TextLoader" />
 				<ITEM NAME="HCATLOADER" VALUE="HCatLoader" SHOW_IF="((PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND MAPREDUCE=='true')"/>
+				<ITEM NAME="HBASESTORAGE" VALUE="HBaseStorage"/>
 				<ITEM NAME="CUSTOM" VALUE="CustomLoader" />
 			</ITEMS>
 		</PARAMETER>
@@ -99,7 +100,7 @@
 			<DEFAULT>"thrift://localhost:9933"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="INPUT_FILENAME" FIELD="TEXT" NUM_ROW="30"
-			REQUIRED="true" REPOSITORY_VALUE="FILE_PATH" NOT_SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND LOAD=='HCATLOADER')">
+			REQUIRED="true" REPOSITORY_VALUE="FILE_PATH" NOT_SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2') AND LOAD=='HCATLOADER') OR (LOAD=='HBASESTORAGE')">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="DATABASE_NAME" FIELD="TEXT" NUM_ROW="31"
@@ -129,7 +130,31 @@
                 <ITEM NAME="BZIP2" VALUE="BZIP2"/>
             </ITEMS>
         </PARAMETER>
-		<PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="90"
+	    <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="120" SHOW_IF="(LOAD=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
+	        <DEFAULT>"localhost"</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER
+	      NAME="ZOOKEEPER_CLIENT_PORT"
+	      FIELD="TEXT"
+	      NUM_ROW="130"
+	      REQUIRED="true"
+	      SHOW_IF="(LOAD=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION"
+	    >
+	      <DEFAULT>"2181"</DEFAULT>
+	    </PARAMETER>
+        <PARAMETER NAME="HBASE_TABLE" FIELD="TEXT" NUM_ROW="140" SHOW_IF="(LOAD=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER NAME="LOAD_KEY" FIELD="CHECK" NUM_ROW="150" SHOW_IF="(LOAD=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>        
+        <PARAMETER NAME="MAPPING" FIELD="TABLE" REQUIRED="true"
+            NUM_ROW="160" NB_LINES="5" SHOW_IF="(LOAD=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
+            <ITEMS BASED_ON_SCHEMA="true" >
+                <ITEM NAME="FAMILY_COLUMN"/>
+            </ITEMS>
+        </PARAMETER>
+		<PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="200"
 			REQUIRED="true">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
@@ -163,6 +188,22 @@
 			<ITEM FIELD="TEXT" NAME="JAR_PATH"/>
 		</ITEMS>
 	  </PARAMETER>
+      <PARAMETER NAME="HBASESTORAGE_PARAMETER" FIELD="TABLE" REQUIRED="false" NUM_ROW="30" NB_LINES="4" SHOW_IF="(LOAD=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
+	      <ITEMS> 
+	        <ITEM NAME="PARAM_NAME" FIELD="CLOSED_LIST">
+	          <ITEMS DEFAULT="LIMIT">
+	            <ITEM NAME="GT" VALUE="gt"/>
+	            <ITEM NAME="GTE" VALUE="gte"/>
+	            <ITEM NAME="LT" VALUE="lt"/>
+	            <ITEM NAME="LTE" VALUE="lte"/>
+                <ITEM NAME="CACHING" VALUE="caching"/>
+                <ITEM NAME="LIMIT" VALUE="limit"/>
+                <ITEM NAME="CASTER" VALUE="caster"/>
+	          </ITEMS>
+	        </ITEM>
+	        <ITEM NAME="PARAM_VALUE" FIELD="TEXT" />          
+	      </ITEMS>
+      </PARAMETER>
 	</ADVANCED_PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
@@ -231,6 +272,49 @@
             <IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
             <IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
             <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER')"/>
+            
+            <!-- HBASE -->
+            <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="zookeeper-3.4.5.21.jar" MODULE="zookeeper-3.4.5.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE')"/>
+            
+            <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE')"/>
+             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE')"/>
+            
+            <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE')"/>
+            
+            <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE')"/>            
+            
+            <IMPORT NAME="hbase-0.92.1-cdh4.0.1-security.jar" MODULE="hbase-0.92.1-cdh4.0.1-security.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="zookeeper-3.4.3-cdh4.0.1.jar" MODULE="zookeeper-3.4.3-cdh4.0.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE')"/>
+                                            
+                        
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />
