@@ -1,0 +1,60 @@
+<%@ jet
+        imports="
+        org.talend.core.model.process.INode     
+        org.talend.core.model.process.ElementParameterParser 
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.metadata.types.JavaTypesManager
+        org.talend.core.model.metadata.types.JavaType
+        org.talend.core.model.metadata.IMetadataTable 
+        org.talend.core.model.metadata.IMetadataColumn 
+        org.talend.core.model.process.IConnection
+        org.talend.core.model.process.IConnectionCategory
+        java.util.List
+        java.util.Map
+        "
+%>
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+INode node = (INode)codeGenArgument.getArgument();
+
+String cid = node.getUniqueName();
+boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+String isjson = ElementParameterParser.getValue(node,"__IS_VIRTUAL_COMPONENT__");
+%>
+com.couchbase.client.CouchbaseClient client_<%=cid%> = null;
+<%
+if(useExistingConn){
+    String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+%>
+    client_<%=cid%> = (com.couchbase.client.CouchbaseClient)globalMap.get("conn_<%=connection%>");
+<%
+}else{
+    String dbname = ElementParameterParser.getValue(node, "__DBNAME__");
+    String username = ElementParameterParser.getValue(node, "__USER__");
+    String dbpwd = ElementParameterParser.getValue(node, "__PASS__");
+    List<Map<String, String>> URIList = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__URIS__");
+%>
+    java.util.ArrayList<java.net.URI> uris_<%=cid%> = new java.util.ArrayList<java.net.URI>();
+    <%
+        for(java.util.Map<String,String> map:URIList){
+    %>
+    uris_<%=cid%>.add(java.net.URI.create(<%=map.get("URI")%>));
+    <%
+        }
+    %>
+    try {
+        client_<%=cid%> = new com.couchbase.client.CouchbaseClient(uris_<%=cid%>, <%=dbname%>,<%if(username!=null && !"".equals(username)){%><%=username%>,<%}%> <%=dbpwd%>);
+    } catch (Exception ex_<%=cid%>) {
+        System.err.println("Error connecting to Couchbase: " + ex_<%=cid%>.getMessage());
+    }
+<%
+}
+%>
+int nb_line_<%=cid%> = 0;
+int nb_line_update_<%=cid%> = 0;
+int nb_line_inserted_<%=cid%> = 0;
+int nb_line_inserted_updated_<%=cid%> = 0;
+int nb_line_deleted_<%=cid%> = 0;
+int nb_line_rejected_<%=cid%> = 0;
+boolean whetherReject_<%=cid%> = false;

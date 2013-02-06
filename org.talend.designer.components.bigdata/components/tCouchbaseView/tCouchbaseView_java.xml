@@ -1,0 +1,136 @@
+<COMPONENT>
+
+  <HEADER
+    PLATEFORM="ALL"
+    SERIAL=""
+    VERSION="0.102"
+    STATUS="ALPHA"
+    COMPATIBILITY="ALL"
+    AUTHOR="Talend"
+    RELEASE_DATE="20130120A"
+    STARTABLE="true"
+    TECHNICAL="true"
+  >
+    <SIGNATURE/>
+  </HEADER>
+
+  <FAMILIES>
+    <FAMILY>Big Data/Couchbase</FAMILY>
+    <FAMILY>Databases/Couchbase</FAMILY>
+  </FAMILIES>
+
+  <DOCUMENTATION>
+    <URL/>
+  </DOCUMENTATION>
+  <CONNECTORS>
+      <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1" />
+      <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1" />
+      <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+      <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+      <CONNECTOR CTYPE="COMPONENT_OK" />
+      <CONNECTOR CTYPE="COMPONENT_ERROR" />
+      <CONNECTOR CTYPE="RUN_IF" />
+  </CONNECTORS>
+  <PARAMETERS>
+
+    <PARAMETER
+      NAME="PROPERTY"
+      FIELD="PROPERTY_TYPE"
+      SHOW="true"
+      NUM_ROW="1"
+    />
+    <PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
+            NUM_ROW="10">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+    <PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST" FILTER="tCouchbaseConnection"
+        NUM_ROW="10" SHOW_IF="USE_EXISTING_CONNECTION == 'true'"/>
+    
+    <PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="20"
+        SHOW_IF="(USE_EXISTING_CONNECTION == 'false')">
+        <ITEMS DEFAULT="COUCHBASE_2_0">
+            <ITEM NAME="COUCHBASE_2_0" VALUE="COUCHBASE_2_0" />
+        </ITEMS>
+    </PARAMETER>
+    
+    <PARAMETER
+      NAME="URIS"
+      FIELD="TABLE"
+      NUM_ROW="40"
+      REQUIRED="true"
+      SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+    >
+        <ITEMS>
+            <ITEM NAME="URI" FIELD="TEXT"></ITEM>
+        </ITEMS>
+    </PARAMETER>
+
+    <PARAMETER NAME="DBNAME" 
+      FIELD="TEXT" 
+      NUM_ROW="20"
+      SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+      REQUIRED="true">
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER
+      NAME="USER"
+      FIELD="TEXT"
+      NUM_ROW="30"
+      SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER
+      NAME="PASS"
+      FIELD="TEXT"
+      NUM_ROW="30"
+      REQUIRED="true"
+      SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER NAME="VIEW" 
+      FIELD="TEXT" 
+      NUM_ROW="50"
+      REQUIRED="true">
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+
+    <PARAMETER NAME="MAP" 
+      FIELD="MEMO_SQL" 
+      NUM_ROW="50"
+      REQUIRED="true">
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER NAME="REDUCE" 
+      FIELD="MEMO_SQL" 
+      NUM_ROW="50"
+      REQUIRED="true">
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+   
+  </PARAMETERS>
+	<ADVANCED_PARAMETERS>
+    
+	</ADVANCED_PARAMETERS>
+
+   <CODEGENERATION>
+    <IMPORTS>
+      <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
+      <IMPORT NAME="couchbase-client-1.1.0.jar"  MODULE="couchbase-client-1.1.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="httpcore-4.1.1.jar"  MODULE="httpcore-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="httpcore-nio-4.1.1.jar"  MODULE="httpcore-nio-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="jettison-1.1.jar"  MODULE="jettison-1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="netty-3.5.5.Final.jar"  MODULE="netty-3.5.5.Final.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="spymemcached-2.8.9.jar"  MODULE="spymemcached-2.8.9.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+    </IMPORTS>
+   </CODEGENERATION>
+
+   <RETURNS>
+    <RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER" />
+   </RETURNS>
+</COMPONENT>

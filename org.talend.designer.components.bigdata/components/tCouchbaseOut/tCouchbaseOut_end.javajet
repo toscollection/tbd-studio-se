@@ -1,0 +1,28 @@
+<%@ jet 
+imports="
+        org.talend.core.model.process.INode 
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.process.ElementParameterParser
+" 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
+
+if(!("true").equals(useExistingConn))
+{
+    %>
+    client_<%=cid%>.shutdown();
+    <%
+}
+%>
+
+globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+globalMap.put("<%=cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>);
+globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
+globalMap.put("<%=cid %>_NB_LINE_INSERTED_UPDATED",nb_line_inserted_updated_<%=cid%>);
+globalMap.put("<%=cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>);
+globalMap.put("<%=cid %>_NB_LINE_REJECTED",nb_line_rejected_<%=cid%>);
