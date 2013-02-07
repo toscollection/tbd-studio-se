@@ -153,9 +153,9 @@
 			<IMPORT NAME="datanucleus-core-2.0.3" MODULE="datanucleus-core-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
 			<IMPORT NAME="datanucleus-rdbms-2.0.3" MODULE="datanucleus-rdbms-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
 			<IMPORT NAME="libfb303-0.7.0" MODULE="libfb303-0.7.0.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
-			<IMPORT NAME="hive-exec-0.9.0" MODULE="hive-exec-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/hive-exec-0.9.0.jar" REQUIRED="false"  REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="hive-exec-0.9.0" MODULE="hive-exec-0.9.0_hdp.jar" REQUIRED="false"  REQUIRED_IF="(STORE=='HCATSTORER')"/>
 			<IMPORT NAME="jdo2-api-2.3-ec" MODULE="jdo2-api-2.3-ec.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
-			<IMPORT NAME="hive-metastore-0.9.0" MODULE="hive-metastore-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/hive-metastore-0.9.0.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
+			<IMPORT NAME="hive-metastore-0.9.0" MODULE="hive-metastore-0.9.0_hdp.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
 			<IMPORT NAME="derby-10.4.2.0" MODULE="derby-10.4.2.0.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
 			<IMPORT NAME="datanucleus-connectionpool-2.0.3" MODULE="datanucleus-connectionpool-2.0.3.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
 			<IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar" REQUIRED="false" REQUIRED_IF="(STORE=='HCATSTORER')"/>
