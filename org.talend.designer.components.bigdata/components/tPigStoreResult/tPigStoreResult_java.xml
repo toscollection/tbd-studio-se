@@ -81,8 +81,8 @@
                 <ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
             </ITEMS>
-        </PARAMETER>		
-		
+        </PARAMETER>
+
         <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="80" SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
             <DEFAULT>"localhost"</DEFAULT>
         </PARAMETER>
@@ -95,15 +95,15 @@
           SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION"
         >
           <DEFAULT>"2181"</DEFAULT>
-        </PARAMETER>		
-		
+        </PARAMETER>
+
         <PARAMETER NAME="HBASE_TABLE" FIELD="TEXT" NUM_ROW="100" SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="ROWKEY_COLUMN" FIELD="COLUMN_LIST" NUM_ROW="110" REQUIRED="true" SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION"/>
         <PARAMETER NAME="CONTAIN_ROW_KEY_COLUMN_IN_HBASE_COLUMN" FIELD="CHECK" REQUIRED="true" NUM_ROW="120" GROUP="HBASE_CONFIGURATION" SHOW_IF="(STORE == 'HBASESTORAGE')">
             <DEFAULT>false</DEFAULT>
-        </PARAMETER>        
+        </PARAMETER>
         <PARAMETER NAME="MAPPING" FIELD="TABLE" REQUIRED="true"
             NUM_ROW="130" NB_LINES="5" SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
             <ITEMS BASED_ON_SCHEMA="true" >
@@ -129,7 +129,7 @@
 			</ITEMS>
 		</PARAMETER>
       <PARAMETER NAME="HBASESTORAGE_PARAMETER" FIELD="TABLE" REQUIRED="false" NUM_ROW="60" NB_LINES="4" SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
-          <ITEMS> 
+          <ITEMS>
             <ITEM NAME="PARAM_NAME" FIELD="CLOSED_LIST">
               <ITEMS DEFAULT="CASTER">
                 <ITEM NAME="LOADKEY" VALUE="loadKey"/>
@@ -142,7 +142,7 @@
                 <ITEM NAME="CASTER" VALUE="caster"/>
               </ITEMS>
             </ITEM>
-            <ITEM NAME="PARAM_VALUE" FIELD="TEXT" />          
+            <ITEM NAME="PARAM_VALUE" FIELD="TEXT" />
 			</ITEMS>
 		</PARAMETER>
 	</ADVANCED_PARAMETERS>
@@ -165,44 +165,44 @@
             <!-- HBASE -->
             <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="zookeeper-3.4.5.21.jar" MODULE="zookeeper-3.4.5.21.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE')"/>
-            
+
             <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
              <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE')"/>
-            
+
             <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE')"/>
-            
+
             <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>            
-            
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE')"/>
+
             <IMPORT NAME="hbase-0.92.1-cdh4.0.1-security.jar" MODULE="hbase-0.92.1-cdh4.0.1-security.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="zookeeper-3.4.3-cdh4.0.1.jar" MODULE="zookeeper-3.4.3-cdh4.0.1.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/> 
-			
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE')"/>
+
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />

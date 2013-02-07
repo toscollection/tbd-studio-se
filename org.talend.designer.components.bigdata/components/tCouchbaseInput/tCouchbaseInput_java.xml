@@ -5,7 +5,7 @@
     SERIAL=""
     VERSION="0.102"
     STATUS="ALPHA"
-    
+
     COMPATIBILITY="ALL"
     AUTHOR="Talend"
     RELEASE_DATE="20130120A"
@@ -44,14 +44,14 @@
         </PARAMETER>
     <PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST" FILTER="tCouchbaseConnection"
         NUM_ROW="10" SHOW_IF="USE_EXISTING_CONNECTION == 'true'"/>
-    
+
     <PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="20"
         SHOW_IF="(USE_EXISTING_CONNECTION == 'false')">
         <ITEMS DEFAULT="COUCHBASE_2_0">
             <ITEM NAME="COUCHBASE_2_0" VALUE="COUCHBASE_2_0" />
         </ITEMS>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="URIS"
       FIELD="TABLE"
@@ -64,14 +64,14 @@
         </ITEMS>
     </PARAMETER>
 
-    <PARAMETER NAME="DBNAME" 
-      FIELD="TEXT" 
+    <PARAMETER NAME="DBNAME"
+      FIELD="TEXT"
       NUM_ROW="20"
       SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
       REQUIRED="true">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="USER"
       FIELD="TEXT"
@@ -80,7 +80,7 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="PASS"
       FIELD="TEXT"
@@ -90,26 +90,26 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
-    <PARAMETER NAME="FROMVIEW" 
-      FIELD="CHECK" 
+
+    <PARAMETER NAME="FROMVIEW"
+      FIELD="CHECK"
       NUM_ROW="45"
       REQUIRED="true">
     </PARAMETER>
-      
-    <PARAMETER NAME="DOC" 
-      FIELD="TEXT" 
+
+    <PARAMETER NAME="DOC"
+      FIELD="TEXT"
       NUM_ROW="50"
       GROUP="VIEWPARAMS"
-      SHOW_IF="FROMVIEW == 'true'" 
+      SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="true">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="DOC_ACTION"
       FIELD="CLOSED_LIST"
-      SHOW_IF="FROMVIEW == 'true'" 
+      SHOW_IF="FROMVIEW == 'true'"
       GROUP="VIEWPARAMS"
       NUM_ROW="50"
     >
@@ -119,16 +119,16 @@
         <ITEM NAME="DROP_CREATE" VALUE="DROP_CREATE"/>
       </ITEMS>
     </PARAMETER>
-    
-    <PARAMETER NAME="VIEW" 
-      FIELD="TEXT" 
+
+    <PARAMETER NAME="VIEW"
+      FIELD="TEXT"
       NUM_ROW="55"
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="true">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="VIEW_ACTION"
       FIELD="CLOSED_LIST"
@@ -141,9 +141,9 @@
         <ITEM NAME="CREATE" VALUE="CREATE"/>
       </ITEMS>
     </PARAMETER>
-    
-    <PARAMETER NAME="MAP" 
-      FIELD="MEMO" 
+
+    <PARAMETER NAME="MAP"
+      FIELD="MEMO"
       NUM_ROW="60"
       SHOW_IF="(VIEW_ACTION != 'NONE') and (FROMVIEW == 'true') "
       GROUP="VIEWPARAMS"
@@ -152,61 +152,61 @@
         "function (doc, meta) { emit(doc.name, meta.id); }"
       </DEFAULT>
     </PARAMETER>
-    
-    <PARAMETER NAME="REDUCE" 
-      FIELD="MEMO" 
+
+    <PARAMETER NAME="REDUCE"
+      FIELD="MEMO"
       NUM_ROW="60"
       SHOW_IF="(VIEW_ACTION != 'NONE') and (FROMVIEW == 'true') "
       GROUP="VIEWPARAMS"
       REQUIRED="true">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
-    <PARAMETER NAME="INCLUDE_DOCS" 
-      FIELD="CHECK" 
+
+    <PARAMETER NAME="INCLUDE_DOCS"
+      FIELD="CHECK"
       NUM_ROW="92"
       GROUP="VIEWPARAMS"
       SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'false')"
       REQUIRED="true">
     </PARAMETER>
-    
-    <PARAMETER NAME="INCLUSIVEEND" 
-      FIELD="CHECK" 
+
+    <PARAMETER NAME="INCLUSIVEEND"
+      FIELD="CHECK"
       NUM_ROW="92"
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="true">
     </PARAMETER>
-    
-    <PARAMETER NAME="ISJSON" 
-      FIELD="CHECK" 
+
+    <PARAMETER NAME="ISJSON"
+      FIELD="CHECK"
       NUM_ROW="92"
       SHOW_IF="FROMVIEW == 'false'"
       REQUIRED="true">
     </PARAMETER>
-    
-    <PARAMETER NAME="ISREDUCE" 
-      FIELD="CHECK" 
+
+    <PARAMETER NAME="ISREDUCE"
+      FIELD="CHECK"
       NUM_ROW="92"
       GROUP="VIEWPARAMS"
       SHOW_IF="(FROMVIEW == 'true') and (INCLUDE_DOCS == 'false')"
       REQUIRED="true">
     </PARAMETER>
-    
-    <PARAMETER NAME="DESCENDING" 
-      FIELD="CHECK" 
+
+    <PARAMETER NAME="DESCENDING"
+      FIELD="CHECK"
       NUM_ROW="92"
       GROUP="VIEWPARAMS"
-      SHOW_IF="FROMVIEW == 'true'" 
+      SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="true">
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="STALE"
       FIELD="CLOSED_LIST"
       NUM_ROW="94"
       GROUP="VIEWPARAMS"
-      SHOW_IF="FROMVIEW == 'true'" 
+      SHOW_IF="FROMVIEW == 'true'"
     >
       <ITEMS DEFAULT="OK">
         <ITEM NAME="OK"           VALUE="OK" />
@@ -214,9 +214,9 @@
         <ITEM NAME="UPDATE_AFTER" VALUE="UPDATE_AFTER"/>
       </ITEMS>
       </PARAMETER>
-    
-    <PARAMETER NAME="LIMIT" 
-      FIELD="INTEGER" 
+
+    <PARAMETER NAME="LIMIT"
+      FIELD="INTEGER"
       NUM_ROW="94"
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
@@ -224,69 +224,60 @@
       <DEFAULT>10</DEFAULT>
     </PARAMETER>
 
-    <PARAMETER NAME="USECOMPLEXKEY" 
-      FIELD="CHECK" 
+    <PARAMETER NAME="USECOMPLEXKEY"
+      FIELD="CHECK"
       NUM_ROW="90"
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
       >
     </PARAMETER>
 
-    <PARAMETER NAME="VIEWKEY" 
-      FIELD="TEXT" 
+    <PARAMETER NAME="VIEWKEY"
+      FIELD="TEXT"
       NUM_ROW="90"
       GROUP="VIEWPARAMS"
       SHOW_IF="(FROMVIEW == 'true') and (USECOMPLEXKEY == 'false')"
       REQUIRED="false">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
-    <PARAMETER NAME="KEY" 
-      FIELD="TEXT" 
+
+    <PARAMETER NAME="KEY"
+      FIELD="TEXT"
       NUM_ROW="90"
       SHOW_IF="(FROMVIEW == 'false')"
       REQUIRED="false">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
 
-    <PARAMETER NAME="COMPLEXKEY" 
-      FIELD="TEXT" 
+    <PARAMETER NAME="COMPLEXKEY"
+      FIELD="TEXT"
       NUM_ROW="90"
       GROUP="VIEWPARAMS"
       SHOW_IF="(FROMVIEW == 'true') and (USECOMPLEXKEY == 'true')"
       REQUIRED="true">
       <DEFAULT>new Object[]{"key1","key2","key3"}</DEFAULT>
     </PARAMETER>
-    
-    <PARAMETER NAME="STARTKEY" 
-      FIELD="TEXT" 
+
+    <PARAMETER NAME="STARTKEY"
+      FIELD="TEXT"
       NUM_ROW="70"
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="false">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
-    <PARAMETER NAME="ENDKEY" 
-      FIELD="TEXT" 
+
+    <PARAMETER NAME="ENDKEY"
+      FIELD="TEXT"
       NUM_ROW="70"
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="false">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
-    <PARAMETER NAME="STARTKEY_DOCID" 
-      FIELD="TEXT" 
-      NUM_ROW="80"
-      GROUP="VIEWPARAMS"
-      SHOW_IF="FROMVIEW == 'true'"
-      REQUIRED="false">
-      <DEFAULT>""</DEFAULT>
-    </PARAMETER>
-    
-    <PARAMETER NAME="ENDKEY_DOCID" 
-      FIELD="TEXT" 
+
+    <PARAMETER NAME="STARTKEY_DOCID"
+      FIELD="TEXT"
       NUM_ROW="80"
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
@@ -294,16 +285,25 @@
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
 
-     <PARAMETER NAME="GROUP" 
-      FIELD="CHECK" 
+    <PARAMETER NAME="ENDKEY_DOCID"
+      FIELD="TEXT"
+      NUM_ROW="80"
+      GROUP="VIEWPARAMS"
+      SHOW_IF="FROMVIEW == 'true'"
+      REQUIRED="false">
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+
+     <PARAMETER NAME="GROUP"
+      FIELD="CHECK"
       NUM_ROW="96"
       GROUP="VIEWPARAMS"
       SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'true')"
       REQUIRED="false">
     </PARAMETER>
 
-    <PARAMETER NAME="GROUP_LEVEL" 
-      FIELD="INTEGER" 
+    <PARAMETER NAME="GROUP_LEVEL"
+      FIELD="INTEGER"
       NUM_ROW="96"
       GROUP="VIEWPARAMS"
       SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'true') and (USEGROUP == 'true')"
@@ -343,7 +343,7 @@
     >
       <DEFAULT>"ISO-8859-15"</DEFAULT>
     </PARAMETER>
-   
+
     <PARAMETER
       NAME="IS_VIRTUAL_COMPONENT"
       FIELD="CHECK"
@@ -351,8 +351,8 @@
       SHOW_IF="((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true'))"
     >
       <DEFAULT>false</DEFAULT>
-    </PARAMETER>         
-    
+    </PARAMETER>
+
     <PARAMETER
       NAME="JSONFIELD"
       FIELD="CLOSED_LIST"
@@ -390,10 +390,10 @@
       </ITEMS>
     </PARAMETER>
 
-    <PARAMETER 
-      NAME="DIE_ON_ERROR" 
-      FIELD="CHECK" 
-      NUM_ROW="160" 
+    <PARAMETER
+      NAME="DIE_ON_ERROR"
+      FIELD="CHECK"
+      NUM_ROW="160"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
       SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))">
         <DEFAULT>false</DEFAULT>
@@ -403,17 +403,17 @@
             REQUIRED="true" SHOW="false" REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'">
         <DEFAULT>100</DEFAULT>
     </PARAMETER>
-    
+
   </PARAMETERS>
 	<ADVANCED_PARAMETERS>
 
-    <PARAMETER NAME="DEBUG" 
-      FIELD="CHECK" 
+    <PARAMETER NAME="DEBUG"
+      FIELD="CHECK"
       NUM_ROW="10"
       SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="true">
     </PARAMETER>
-    
+
 	</ADVANCED_PARAMETERS>
 
    <CODEGENERATION>
@@ -422,7 +422,7 @@
       <TEMPLATE NAME="In" COMPONENT="tCouchbaseIn">
         <LINK_TO NAME="Out" CTYPE="FLOW"/>
       </TEMPLATE>
-      
+
       <TEMPLATE NAME="Out" COMPONENT="tExtractJSONFields"/>
       <TEMPLATE_PARAM SOURCE="self.PROPERTY"   TARGET="In.PROPERTY" />
       <TEMPLATE_PARAM SOURCE="self.USE_EXISTING_CONNECTION"   TARGET="In.USE_EXISTING_CONNECTION" />
@@ -457,8 +457,8 @@
       <TEMPLATE_PARAM SOURCE="self.GROUP_LEVEL"  TARGET="In.GROUP_LEVEL" />
       <TEMPLATE_PARAM SOURCE="self.COMPLEXKEY"  TARGET="In.COMPLEXKEY" />
       <TEMPLATE_PARAM SOURCE="self.DEBUG"  TARGET="In.DEBUG" />
-      
-      
+
+
       <TEMPLATE_PARAM SOURCE="self.JSONFIELD"  TARGET="Out.JSONFIELD" />
       <TEMPLATE_PARAM SOURCE="self.LOOP_QUERY"  TARGET="Out.LOOP_QUERY" />
       <TEMPLATE_PARAM SOURCE="self.MAPPING"  TARGET="Out.MAPPING" />
@@ -466,7 +466,7 @@
       <TEMPLATE_PARAM SOURCE="self.SCHEMA_OPT_NUM"  TARGET="Out.SCHEMA_OPT_NUM" />
     </TEMPLATES>
     <IMPORTS>
-      <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
+      <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
       <IMPORT NAME="couchbase-client-1.1.0.jar"  MODULE="couchbase-client-1.1.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
       <IMPORT NAME="httpcore-4.1.1.jar"  MODULE="httpcore-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
       <IMPORT NAME="httpcore-nio-4.1.1.jar"  MODULE="httpcore-nio-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>

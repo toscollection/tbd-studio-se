@@ -26,7 +26,7 @@
   <CONNECTORS>
      <CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="1"/>
     <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="0"/>
-    <CONNECTOR NAME="REJECT" CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1" LINE_STYLE="2" COLOR="FF0000" BASE_SCHEMA="FLOW" 
+    <CONNECTOR NAME="REJECT" CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1" LINE_STYLE="2" COLOR="FF0000" BASE_SCHEMA="FLOW"
                 NOT_SHOW_IF="DIE_ON_ERROR == 'true'"/>
     <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
     <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
@@ -40,10 +40,10 @@
             NUM_ROW="10">
         <DEFAULT>false</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST" FILTER="tCouchbaseConnection"
         NUM_ROW="10" SHOW_IF="USE_EXISTING_CONNECTION == 'true'"/>
-    
+
     <PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="20"
         SHOW_IF="(USE_EXISTING_CONNECTION == 'false')">
         <ITEMS DEFAULT="COUCHBASE_2_0">
@@ -51,14 +51,14 @@
         </ITEMS>
     </PARAMETER>
 
-    <PARAMETER NAME="DBNAME" 
-      FIELD="TEXT" 
+    <PARAMETER NAME="DBNAME"
+      FIELD="TEXT"
       NUM_ROW="20"
       SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
       REQUIRED="true">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="USER"
       FIELD="TEXT"
@@ -67,7 +67,7 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="PASS"
       FIELD="TEXT"
@@ -77,7 +77,7 @@
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="URIS"
       FIELD="TABLE"
@@ -89,20 +89,20 @@
             <ITEM NAME="URI" FIELD="TEXT"></ITEM>
         </ITEMS>
     </PARAMETER>
-    
-    <PARAMETER NAME="IS_VIRTUAL_COMPONENT" 
-      FIELD="CHECK" 
+
+    <PARAMETER NAME="IS_VIRTUAL_COMPONENT"
+      FIELD="CHECK"
       NUM_ROW="50"
       REQUIRED="true">
     </PARAMETER>
-    
-    <PARAMETER NAME="EXPIRE" 
-      FIELD="INTEGER" 
+
+    <PARAMETER NAME="EXPIRE"
+      FIELD="INTEGER"
       NUM_ROW="60"
       REQUIRED="true">
       <DEFAULT>0</DEFAULT>
     </PARAMETER>
-    
+
      <PARAMETER
       NAME="DATA_ACTION"
       FIELD="CLOSED_LIST"
@@ -115,24 +115,24 @@
         <ITEM NAME="DELETE"           VALUE="delete"/>
       </ITEMS>
       </PARAMETER>
-       
-    <PARAMETER 
-        NAME="KEY" 
-        FIELD="PREV_COLUMN_LIST" 
+
+    <PARAMETER
+        NAME="KEY"
+        FIELD="PREV_COLUMN_LIST"
         REQUIRED="true"
         NUM_ROW="70"
     >
     </PARAMETER>
-    
-    <PARAMETER 
-        NAME="VALUE" 
-        FIELD="PREV_COLUMN_LIST" 
+
+    <PARAMETER
+        NAME="VALUE"
+        FIELD="PREV_COLUMN_LIST"
         REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'false'"
         SHOW_IF="IS_VIRTUAL_COMPONENT == 'false'"
         NUM_ROW="70"
     >
     </PARAMETER>
-      
+
     <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="80">
       <TABLE IF="IS_VIRTUAL_COMPONENT == 'true'" READONLY="false">
         <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
@@ -140,7 +140,7 @@
       <TABLE IF="IS_VIRTUAL_COMPONENT == 'false'" READONLY="false">
       </TABLE>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="SCHEMA_REJECT"
       FIELD="SCHEMA_TYPE"
@@ -152,7 +152,7 @@
         <COLUMN NAME="errorMessage" TYPE="id_String" LENGTH="255" READONLY="false" CUSTOM="true"/>
       </TABLE>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="DIE_ON_ERROR"
       FIELD="CHECK"
@@ -160,7 +160,7 @@
     >
       <DEFAULT>false</DEFAULT>
     </PARAMETER>
-    
+
     <PARAMETER
       NAME="ENCODING"
       FIELD="ENCODING_TYPE"
@@ -170,11 +170,11 @@
     >
       <DEFAULT>"ISO-8859-15"</DEFAULT>
     </PARAMETER>
-    
-  <!-- tWriteJSONField -->  
-    <PARAMETER 
-        NAME="JSONFIELD" 
-        FIELD="CLOSED_LIST" 
+
+  <!-- tWriteJSONField -->
+    <PARAMETER
+        NAME="JSONFIELD"
+        FIELD="CLOSED_LIST"
         REQUIRED="true"
         NUM_ROW="110"
         REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
@@ -184,7 +184,7 @@
             <ITEM NAME="jsonDoc" VALUE="jsonDoc" />
         </ITEMS>
     </PARAMETER>
-    
+
         <PARAMETER NAME="ROOT" FIELD="TABLE" REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
             NUM_ROW="120" NB_LINES="3" SHOW="false">
             <ITEMS>
@@ -218,9 +218,9 @@
             </ITEMS>
         </PARAMETER>
 
-        <PARAMETER 
-            NAME="MAP" 
-            FIELD="EXTERNAL" 
+        <PARAMETER
+            NAME="MAP"
+            FIELD="EXTERNAL"
             NUM_ROW="150"
             REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
             SHOW_IF="IS_VIRTUAL_COMPONENT == 'true'"
@@ -228,9 +228,9 @@
             <DEFAULT />
         </PARAMETER>
 
-        <PARAMETER 
-            NAME="GROUPBYS" 
-            FIELD="TABLE" 
+        <PARAMETER
+            NAME="GROUPBYS"
+            FIELD="TABLE"
             NUM_ROW="160"
             NB_LINES="3"
 	        REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
@@ -255,8 +255,8 @@
 
             <TEMPLATE NAME="Mid" COMPONENT="tWriteJSONFieldIn">
                 <LINK_TO NAME="Out" CTYPE="FLOW" />
-            </TEMPLATE> 
-            
+            </TEMPLATE>
+
             <TEMPLATE NAME="Out" COMPONENT="tCouchbaseOut" />
             <TEMPLATE_PARAM SOURCE="self.JSONFIELD" TARGET="Mid.JSONFIELD" />
             <TEMPLATE_PARAM SOURCE="self.JSONFIELD" TARGET="Out.JSONFIELD" />
@@ -267,7 +267,7 @@
             <TEMPLATE_PARAM SOURCE="self.GROUPBYS" TARGET="In.GROUPBYS" />
             <TEMPLATE_PARAM SOURCE="self.COMPACT_FORMAT" TARGET="In.COMPACT_FORMAT" />
 
-           
+
             <TEMPLATE_PARAM SOURCE="self.USE_EXISTING_CONNECTION" TARGET="Out.USE_EXISTING_CONNECTION" />
             <TEMPLATE_PARAM SOURCE="self.CONNECTION" TARGET="Out.CONNECTION" />
             <TEMPLATE_PARAM SOURCE="self.DB_VERSION" TARGET="Out.DB_VERSION" />
@@ -283,17 +283,17 @@
             <TEMPLATE_PARAM SOURCE="self.ENCODING" TARGET="Out.ENCODING" />
             <TEMPLATE_PARAM SOURCE="self.KEY" TARGET="Out.KEY" />
             <TEMPLATE_PARAM SOURCE="self.VALUE" TARGET="Out.VALUE" />
-            
+
             <TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="In.DESTINATION" />
             <TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="Out.DESTINATION" />
             <TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="Mid.DESTINATION" />
             <TEMPLATE_PARAM SOURCE="self.SCHEMA" TARGET="In.SCHEMA" />
             <TEMPLATE_PARAM SOURCE="self.SCHEMA" TARGET="Out.SCHEMA" />
             <TEMPLATE_PARAM SOURCE="self.SCHEMA" TARGET="Mid.SCHEMA" />
-            
+
         </TEMPLATES>
     <IMPORTS>
-      <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
+      <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
       <IMPORT NAME="couchbase-client-1.1.0.jar"  MODULE="couchbase-client-1.1.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
       <IMPORT NAME="httpcore-4.1.1.jar"  MODULE="httpcore-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
       <IMPORT NAME="httpcore-nio-4.1.1.jar"  MODULE="httpcore-nio-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
