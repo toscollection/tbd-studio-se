@@ -80,11 +80,11 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                                 String[] columns = new String[]{"Id","Key","Value","jsonDoc"};
                                 for(String columnName:columns){
                                     IMetadataColumn column = metadata.getColumn(columnName);
-                                    String talendType = column.getTalendType();
-                                    String typeToGenerate = JavaTypesManager.getTypeToGenerate(talendType, column.isNullable());
-                                    JavaType javaType = JavaTypesManager.getJavaTypeFromId(talendType);
-                                    String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
                                     if(column!=null){
+                                        String talendType = column.getTalendType();
+                                        String typeToGenerate = JavaTypesManager.getTypeToGenerate(talendType, column.isNullable());
+                                        JavaType javaType = JavaTypesManager.getJavaTypeFromId(talendType);
+                                        String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
                                         String method = columnName;
                                         if("jsonDoc".equals(columnName)){
                                             method = "Document";
@@ -173,7 +173,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 					        Object endkey = ElementParameterParser.getValue(node,"__ENDKEY__");
 					        String startkey_docid = ElementParameterParser.getValue(node,"__STARTKEY_DOCID__");
 					        String endkey_docid = ElementParameterParser.getValue(node,"__ENDKEY_DOCID__");
-					        String group = ElementParameterParser.getValue(node,"__USEGROUP__");
+					        String group = ElementParameterParser.getValue(node,"__GROUP__");
 					        String group_level = ElementParameterParser.getValue(node,"__GROUP_LEVEL__");
 					        String doc_action = ElementParameterParser.getValue(node,"__DOC_ACTION__");
 					        String view_action = ElementParameterParser.getValue(node,"__VIEW_ACTION__");

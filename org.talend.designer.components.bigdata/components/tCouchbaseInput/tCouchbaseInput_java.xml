@@ -15,6 +15,7 @@
   </HEADER>
 
   <FAMILIES>
+    <FAMILY>Big Data/Couchbase</FAMILY>
     <FAMILY>Databases/Couchbase</FAMILY>
   </FAMILIES>
 
@@ -306,7 +307,7 @@
       FIELD="INTEGER"
       NUM_ROW="96"
       GROUP="VIEWPARAMS"
-      SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'true') and (USEGROUP == 'true')"
+      SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'true') and (GROUP == 'true')"
       REQUIRED="false">
     </PARAMETER>
 
@@ -350,7 +351,7 @@
       NUM_ROW="130"
       SHOW_IF="((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true'))"
     >
-      <DEFAULT>false</DEFAULT>
+      <DEFAULT>true</DEFAULT>
     </PARAMETER>
 
     <PARAMETER
@@ -387,6 +388,7 @@
       <ITEMS>
         <ITEM NAME="SCHEMA_COLUMN" FIELD="COLUMN_LIST"/>
         <ITEM NAME="QUERY" REPOSITORY_ITEM="XML_QUERY" />
+        <ITEM NAME="NODECHECK" FIELD="CHECK" VALUE="false" SHOW_IF="false"/>
       </ITEMS>
     </PARAMETER>
 

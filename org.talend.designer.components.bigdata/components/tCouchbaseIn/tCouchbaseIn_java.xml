@@ -305,7 +305,7 @@
       FIELD="INTEGER"
       NUM_ROW="96"
       GROUP="VIEWPARAMS"
-      SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'true') and (USEGROUP == 'true')"
+      SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'true') and (GROUP == 'true')"
       REQUIRED="false">
     </PARAMETER>
 

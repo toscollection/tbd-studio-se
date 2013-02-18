@@ -7,13 +7,14 @@
     
     COMPATIBILITY="ALL"
     AUTHOR="Talend"
-    RELEASE_DATE="20100106A"
+    RELEASE_DATE="20130207"
     STARTABLE="true"
   >
     <SIGNATURE/>
   </HEADER>
 
   <FAMILIES>
+    <FAMILY>Big Data/Couchbase</FAMILY>
     <FAMILY>Databases/Couchbase</FAMILY>
   </FAMILIES>
 

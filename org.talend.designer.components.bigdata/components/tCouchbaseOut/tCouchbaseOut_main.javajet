@@ -6,14 +6,8 @@ imports="
     org.talend.core.model.process.IConnection
     org.talend.core.model.metadata.IMetadataTable
     org.talend.core.model.metadata.IMetadataColumn
-    org.talend.core.model.metadata.types.JavaTypesManager
-    org.talend.core.model.metadata.MappingTypeRetriever
-    org.talend.core.model.metadata.MetadataTalendType   
     org.talend.core.model.process.IConnectionCategory
     java.util.List
-    java.util.ArrayList
-    java.util.Map
-    java.util.HashMap
     "
 %>
 <%
@@ -22,25 +16,34 @@ CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
 String rejectConnName = null;
 List<? extends IConnection> rejectConns = node.getOutgoingConnections("REJECT");
+List<IMetadataColumn> rejectColumnList = null;
 if(rejectConns != null && rejectConns.size() > 0) {
     IConnection rejectConn = rejectConns.get(0);
-    rejectConnName = rejectConn.getName();
-}
-List<IMetadataColumn> rejectColumnList = null;
-IMetadataTable metadataTable = node.getMetadataFromConnector("REJECT");
-if(metadataTable != null) {
-    rejectColumnList = metadataTable.getListColumns();
+	if(rejectConn!=null){
+    	rejectConnName = rejectConn.getName();
+    	IMetadataTable metadataTable = rejectConn.getMetadataTable();
+    	if(metadataTable!=null){
+        	rejectColumnList = metadataTable.getListColumns();
+    	}
+  	}
 }
 List<? extends IConnection> outgoingConns = node.getOutgoingSortedConnections();
-for(IConnection conn : outgoingConns) {
-    if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-        %>        
-        <%=conn.getName() %> = null;            
-        <%          
+List<IMetadataColumn> columnList = null;
+
+for(IConnection tmpconn : outgoingConns) {
+  if (tmpconn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+    if(rejectConnName==null || !rejectConnName.equals(tmpconn.getName())){
+      IMetadataTable outputMetadata = tmpconn.getMetadataTable();
+      if(outputMetadata!=null){
+          columnList = outputMetadata.getListColumns();
+      }
     }
+  %>
+    <%=tmpconn.getName() %> = null;
+  <%
+  }
 }
 String cid = node.getUniqueName();
-boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
 String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 List<IMetadataTable> metadatas = node.getMetadataList();
@@ -49,8 +52,6 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
     IMetadataTable metadata = metadatas.get(0);
     if (metadata != null) {
         
-        String docName = ElementParameterParser.getValue(node, "__DOC__");
-        String viewName = ElementParameterParser.getValue(node, "__VIEW__");
         String expire = ElementParameterParser.getValue(node, "__EXPIRE__");
         String isjson = ElementParameterParser.getValue(node,"__IS_VIRTUAL_COMPONENT__");
         List< ? extends IConnection> conns = node.getIncomingConnections();
@@ -59,7 +60,6 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                 IConnection conn =conns.get(0);
                 String connName = conn.getName();
                 if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-                    List<IMetadataColumn> columnList = metadata.getListColumns();
                     int nbColumns = columnList.size();
                     if(nbColumns>0){
                         String key = ElementParameterParser.getValue(node,"__KEY__");

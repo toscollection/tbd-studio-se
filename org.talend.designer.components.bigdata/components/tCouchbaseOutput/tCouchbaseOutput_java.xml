@@ -17,6 +17,7 @@
   </HEADER>
 
   <FAMILIES>
+    <FAMILY>Big Data/Couchbase</FAMILY>
     <FAMILY>Databases/Couchbase</FAMILY>
   </FAMILIES>
 

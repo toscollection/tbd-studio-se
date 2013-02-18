@@ -3,12 +3,6 @@
         org.talend.core.model.process.INode     
         org.talend.core.model.process.ElementParameterParser 
         org.talend.designer.codegen.config.CodeGeneratorArgument
-        org.talend.core.model.metadata.types.JavaTypesManager
-        org.talend.core.model.metadata.types.JavaType
-        org.talend.core.model.metadata.IMetadataTable 
-        org.talend.core.model.metadata.IMetadataColumn 
-        org.talend.core.model.process.IConnection
-        org.talend.core.model.process.IConnectionCategory
         java.util.List
         java.util.Map
         "
@@ -20,7 +14,6 @@ INode node = (INode)codeGenArgument.getArgument();
 
 String cid = node.getUniqueName();
 boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-String isjson = ElementParameterParser.getValue(node,"__IS_VIRTUAL_COMPONENT__");
 %>
 com.couchbase.client.CouchbaseClient client_<%=cid%> = null;
 <%
