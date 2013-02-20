@@ -23,6 +23,7 @@
 	String actionOnData = ElementParameterParser.getValue(node, "__ACTION_ON_DATA__");
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 
+    String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
 
 %>
 	final String CLIENT_ID_<%=cid %> = <%=clientId %>;
@@ -43,9 +44,10 @@
 	com.google.api.services.bigquery.Bigquery bigqueryclient_<%=cid%> = null;
 
 	// Attempt to load existing refresh token
+	String tokenFile_<%=cid %> = <%=tokenFile%>;
 	java.util.Properties properties_<%=cid%> = new java.util.Properties();
 	try {
-		java.io.FileInputStream inputStream_<%=cid%> = new java.io.FileInputStream("token_<%=cid%>.properties");
+		java.io.FileInputStream inputStream_<%=cid%> = new java.io.FileInputStream(tokenFile_<%=cid %>);
 		properties_<%=cid%>.load(inputStream_<%=cid%>);
 		inputStream_<%=cid%>.close();
 	} catch (java.io.FileNotFoundException e_<%=cid%>) {
@@ -94,8 +96,11 @@
 			// Store the refresh token for future use.
 			java.util.Properties storeProperties_<%=cid%> = new java.util.Properties();
 			storeProperties_<%=cid%>.setProperty("refreshtoken", credential_<%=cid%>.getRefreshToken());
-			java.io.FileOutputStream outputStream_<%=cid%> = new java.io.FileOutputStream("token_<%=cid%>.properties");
+			java.io.FileOutputStream outputStream_<%=cid%> = new java.io.FileOutputStream(tokenFile_<%=cid %>);
 			storeProperties_<%=cid%>.store(outputStream_<%=cid%>,null);
+			if (outputStream_<%=cid%> != null) {
+			    outputStream_<%=cid%>.close();
+			}
 
 			bigqueryclient_<%=cid%> = com.google.api.services.bigquery.Bigquery.builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson.JacksonFactory()).setHttpRequestInitializer(credential_<%=cid%>).build();
 <%
