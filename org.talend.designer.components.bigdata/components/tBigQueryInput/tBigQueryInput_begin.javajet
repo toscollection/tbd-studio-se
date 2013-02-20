@@ -25,6 +25,7 @@
 	String authorizationCode = ElementParameterParser.getValue(node,"__AUTHORIZATION_CODE__");
 	String query = ElementParameterParser.getValue(node,"__QUERY__");
 
+    String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
 %>
 	final String CLIENT_ID_<%=cid %> = <%=clientId %>;
 	final String CLIENT_SECRET_<%=cid%> = "{\"web\": {\"client_id\": \""+<%=clientId%>+"\",\"client_secret\": \"" +<%=clientSecret%>+ "\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://accounts.google.com/o/oauth2/token\"}}";
@@ -44,9 +45,10 @@
 	com.google.api.services.bigquery.Bigquery bigqueryclient_<%=cid%> = null;
 
 	// Attempt to load existing refresh token
+    String tokenFile_<%=cid %> = <%=tokenFile%>;
 	java.util.Properties properties_<%=cid%> = new java.util.Properties();
 	try {
-		java.io.FileInputStream inputStream_<%=cid%> = new java.io.FileInputStream("token_<%=cid%>.properties");
+		java.io.FileInputStream inputStream_<%=cid%> = new java.io.FileInputStream(tokenFile_<%=cid %>);
 		properties_<%=cid%>.load(inputStream_<%=cid%>);
 		inputStream_<%=cid%>.close();
 	} catch (java.io.FileNotFoundException e_<%=cid%>) {
@@ -95,8 +97,11 @@
 			// Store the refresh token for future use.
 			java.util.Properties storeProperties_<%=cid%> = new java.util.Properties();
 			storeProperties_<%=cid%>.setProperty("refreshtoken", credential_<%=cid%>.getRefreshToken());
-			java.io.FileOutputStream outputStream_<%=cid%> = new java.io.FileOutputStream("token_<%=cid%>.properties");
+			java.io.FileOutputStream outputStream_<%=cid%> = new java.io.FileOutputStream(tokenFile_<%=cid %>);
 			storeProperties_<%=cid%>.store(outputStream_<%=cid%>,null);
+			if (outputStream_<%=cid%> != null) {
+			    outputStream_<%=cid%>.close();
+			}
 
 			bigqueryclient_<%=cid%> = com.google.api.services.bigquery.Bigquery.builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson.JacksonFactory()).setHttpRequestInitializer(credential_<%=cid%>).build();
 <%
@@ -124,14 +129,14 @@
 		jobId_<%=cid %> = insert_<%=cid %>.execute().getJobReference();
 	} catch (com.google.api.client.googleapis.json.GoogleJsonResponseException e) {
 		try {
-			java.io.File f_<%=cid%> = new java.io.File("token_<%=cid%>.properties");
+			java.io.File f_<%=cid%> = new java.io.File(tokenFile_<%=cid %>);
 			boolean isRemoved_<%=cid%> = f_<%=cid%>.delete();
 			if(isRemoved_<%=cid%>)
 				System.err.println("---> Unable to connect. This might come from the token expiration. Execute again the job with an empty authorization code.");
 			else
 				throw new java.lang.Exception();
 		} catch (java.lang.Exception ee) {
-			System.err.println("---> Unable to connect. This might come from the token expiration. Remove the file token_<%=cid%> Execute again the job with an empty authorization code.");
+			System.err.println("---> Unable to connect. This might come from the token expiration. Remove the file " + tokenFile_<%=cid %> + " Execute again the job with an empty authorization code.");
 		}
 										
 		throw e;
