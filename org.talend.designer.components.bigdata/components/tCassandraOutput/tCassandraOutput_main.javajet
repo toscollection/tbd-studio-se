@@ -51,9 +51,16 @@
 			String conName = incomingConn.getName();
 			if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 				IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
+				IMetadataColumn metaKeyColumn = inputMetadataTable.getColumn(keyColumn);
+				boolean isKeyColumnJavaPrimitive = false;
+				if (metaKeyColumn != null) {
+					isKeyColumnJavaPrimitive = JavaTypesManager.isJavaPrimitiveType(metaKeyColumn.getTalendType(), metaKeyColumn.isNullable());
+				}
+				if (!isKeyColumnJavaPrimitive) {
 %>
 			if (<%=conName%>.<%=keyColumn%> != null) {
 <%
+				}
 			if("SUPER".equals(columnFamilyType)){
 %>
 
@@ -63,15 +70,16 @@
 			}
     		for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
     			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+    			boolean isJavaPrimitiveType = JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable());
     			if("STANDARD".equals(columnFamilyType)){
 					if (incKey || !column.getLabel().equals(keyColumn)) {
 						if("UPSERT".equals(actionOnData)){
 %>
-					if(<%=conName%>.<%=column.getLabel()%>!=null){
+<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null) { <%}%>
 							mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,
 								me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
 									serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get()));
-					}
+<%if (!isJavaPrimitiveType) {%>} <%}%>
 <%
 						}else{
 							if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
@@ -85,11 +93,11 @@
 					if (!((!incKey && column.getLabel().equals(keyColumn))|| (!incSuperKey && column.getLabel().equals(superKeyColumn)))) {
 						if("UPSERT".equals(actionOnData)){
 %>
-					if(<%=conName%>.<%=column.getLabel()%>!=null){
+<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null){ <%}%>
 							me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
 								serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get());
 							innerColumn_<%=cid%>.add( column_<%=column.getOriginalDbColumnName()%>);
-					}
+<%if (!isJavaPrimitiveType) {%>} <%}%>
 <%
 						}else{
 							if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
@@ -102,11 +110,16 @@
 				}
 			}
            	if("SUPER".equals(columnFamilyType) && "UPSERT".equals(actionOnData)){
+				IMetadataColumn metaSuperKeyColumn = inputMetadataTable.getColumn(superKeyColumn);
+				boolean isSuperKeyColumnJavaPrimitive = false;
+				if (metaSuperKeyColumn != null) {
+					isSuperKeyColumnJavaPrimitive = JavaTypesManager.isJavaPrimitiveType(metaSuperKeyColumn.getTalendType(), metaSuperKeyColumn.isNullable());
+				}
 %>
-			if(<%=conName%>.<%=superKeyColumn%>!=null){
+<%if (!isSuperKeyColumnJavaPrimitive) {%>if(<%=conName%>.<%=superKeyColumn%>!=null){ <%}%>
 				mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,new me.prettyprint.cassandra.model.HSuperColumnImpl(<%=conName%>.<%=superKeyColumn%>,innerColumn_<%=cid%>,
 					me.prettyprint.hector.api.factory.HFactory.createClock(),sNameSerializer_<%=cid%>,serializer_<%=cid%>,serializer_<%=cid%>));
-			}
+<%if (!isSuperKeyColumnJavaPrimitive) {%>} <%}%>
 <%
 			}
 			if("DELETE".equals(actionOnData)){
@@ -129,7 +142,7 @@
 				}
              }
 %>
-			}
+<%if (!isKeyColumnJavaPrimitive) {%>} <%}%>
 			nb_line_<%=cid %>++;
 			if (batchCounter_<%=cid%>++ == <%=batchSize%>) {
 				mutator_<%=cid%>.execute();
