@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.talend.org/hadoopcluster"
+            class="org.talend.repository.model.hadoopcluster.HadoopClusterPackage"
+            genModel="model/hadoopcluster.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="hadoopcluster"
+            class="org.talend.repository.model.hadoopcluster.util.HadoopClusterResourceFactoryImpl"/>
+   </extension>
+   <extension
+         point="org.talend.core.repository.repository_node_provider">
+      <repositoryNode
+            alias="HC"
+            class="org.talend.repository.hadoopcluster.node.HadoopClusterExtendNode"
+            folder="metadata/hadoop/hadoopcluster"
+            isResouce="true"
+            label="%hadoopCluster"
+            products="DI"
+            type="HADOOPCLUSTER">
+      </repositoryNode>
+   </extension>
+   <extension
+         point="org.talend.core.repository.repository_content">
+      <RepositoryContent
+            class="org.talend.repository.hadoopcluster.ui.viewer.handler.HadoopClusterRepositoryContentHandler">
+      </RepositoryContent>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.talend.repository.hadoopcluster.tester.HadoopClusterMetadataNodeTester"
+            id="org.talend.repository.hadoopcluster.node.tester.hadoopcluster"
+            namespace="org.talend.repository.node.metadata"
+            properties="isHadoopClusterConnection"
+            type="org.talend.repository.model.RepositoryNode">
+      </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            contentProvider="org.talend.repository.hadoopcluster.ui.MetadataHadoopClusterContentProvider"
+            icon="icons/hadoop-logo-16x16.png"
+            id="org.talend.repository.viewer.metadata.hadoopcluster"
+            labelProvider="org.talend.repository.viewer.label.RepositoryViewLabelProvider"
+            name="HadoopCluster"
+            priority="high">
+         <possibleChildren>
+            <and>
+               <instanceof
+                     value="org.talend.repository.model.RepositoryNode">
+               </instanceof>
+               <or>
+                  <test
+                        property="org.talend.repository.node.metadata.isHadoopClusterConnection">
+                  </test>
+                  <test
+                        property="org.talend.repository.node.metadata.isSchema">
+                  </test>
+                  <test
+                        property="org.talend.repository.node.metadata.isSchemaColumn">
+                  </test>
+               </or>
+            </and>
+         </possibleChildren>
+         <triggerPoints>
+            <and>
+               <instanceof
+                     value="org.talend.repository.model.RepositoryNode">
+               </instanceof>
+               <or>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.talend.repository.node.isMetadataTopNode">
+                  </test>
+                  <test
+                        property="org.talend.repository.node.metadata.isHadoopClusterConnection">
+                  </test>
+               </or>
+            </and>
+         </triggerPoints>
+         <actionProvider
+               class="org.talend.repository.metadata.action.MetedataNodeActionProvier"
+               id="org.talend.repository.hadoopcluster.action.provider.id">
+            <enablement>
+               <and>
+                  <instanceof
+                        value="org.talend.repository.model.RepositoryNode">
+                  </instanceof>
+                  <test
+                        forcePluginActivation="true"
+                        property="org.talend.repository.node.metadata.isHadoopClusterConnection">
+                  </test>
+                  <not>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.talend.repository.node.isDeleted">
+                     </test>
+                  </not>
+               </and>
+            </enablement>
+         </actionProvider>
+      </navigatorContent>
+   </extension>
+   <extension
+         point="org.talend.core.repositoryContextualsActions">
+      <Action
+            class="org.talend.repository.hadoopcluster.action.EditHadoopClusterPropertiesAction"
+            id="org.talend.repository.hdfs.action.EditHadoopClusterPropertiesAction"
+            isPropertiesAction="true"
+            name="Edit Properties">
+      </Action>
+      <Action
+            class="org.talend.repository.hadoopcluster.action.CreateHadoopClusterAction"
+            id="org.talend.repository.hadoopcluster.action.CreateHadoopClusterAction"
+            isEditAction="true"
+            isReadAction="true"
+            level="15"
+            name="Metadata/Create Hadoop Cluster">
+      </Action>
+   </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.hadoopcluster.service.HadoopClusterService"
+            serviceId="IHadoopClusterService">
+      </Service>
+   </extension>
+
+</plugin>
