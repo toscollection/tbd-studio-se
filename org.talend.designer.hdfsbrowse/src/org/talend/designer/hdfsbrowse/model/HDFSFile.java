@@ -13,7 +13,6 @@
 
 package org.talend.designer.hdfsbrowse.model;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
+import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -48,20 +48,21 @@ public class HDFSFile extends HDFSPath {
      * @throws IllegalArgumentException
      * @throws SecurityException
      */
-    public InputStream open() throws IOException, InterruptedException, URISyntaxException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
-            InvocationTargetException {
+    public InputStream open() throws HadoopServerException {
         return getOperationManager().getFileContent(fileSystem, classLoader, getPath());
     }
 
+    @Override
     public String toString() {
         return getPath().toString();
     }
 
+    @Override
     public List<IHDFSNode> getChildren() {
         return null;
     }
 
+    @Override
     public boolean hasChildren() {
         return false;
     }
@@ -71,6 +72,7 @@ public class HDFSFile extends HDFSPath {
         getParent().refresh();
     }
 
+    @Override
     public Image getImage() {
         return sharedImages.getImage(ISharedImages.IMG_OBJ_FILE);
     }

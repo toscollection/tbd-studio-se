@@ -21,9 +21,9 @@ public class HDFSConnectionBean {
 
     private String dfVersion;
 
-    private String dfDrivers;
-
     private String nameNodeURI;
+
+    private String jobtrackerURI;
 
     private boolean enableKerberos;
 
@@ -53,20 +53,20 @@ public class HDFSConnectionBean {
         this.dfVersion = dfVersion;
     }
 
-    public String getDfDrivers() {
-        return this.dfDrivers;
-    }
-
-    public void setDfDrivers(String dfDrivers) {
-        this.dfDrivers = dfDrivers;
-    }
-
     public String getNameNodeURI() {
         return this.nameNodeURI;
     }
 
     public void setNameNodeURI(String nameNodeURI) {
         this.nameNodeURI = nameNodeURI;
+    }
+
+    public String getJobtrackerURI() {
+        return this.jobtrackerURI;
+    }
+
+    public void setJobtrackerURI(String jobtrackerURI) {
+        this.jobtrackerURI = jobtrackerURI;
     }
 
     public boolean isEnableKerberos() {

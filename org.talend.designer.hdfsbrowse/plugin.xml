@@ -26,6 +26,10 @@
             libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
       </classloader>
       <classloader
+            index="HDFS:HORTONWORKS:HDP_1_2"
+            libraries="hadoop-core-1.1.2.21.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
             index="HDFS:APACHE:APACHE_1_0_0"
             libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
       </classloader>
@@ -56,6 +60,10 @@
       <classloader
             index="HDFS:HORTONWORKS:HDP_1_0?USE_KRB"
             libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
+            index="HDFS:HORTONWORKS:HDP_1_2?USE_KRB"
+            libraries="hadoop-core-1.1.2.21.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
       </classloader>
       <classloader
             index="HDFS:APACHE:APACHE_1_0_0?USE_KRB"

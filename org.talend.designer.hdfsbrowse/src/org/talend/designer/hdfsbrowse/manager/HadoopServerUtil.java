@@ -17,11 +17,8 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -55,24 +52,17 @@ public class HadoopServerUtil {
      * 
      * @param connection
      * @return
-     * @throws IOException
-     * @throws InterruptedException
-     * @throws URISyntaxException
-     * @throws ClassNotFoundException
-     * @throws IllegalAccessException
-     * @throws InstantiationException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
-     * @throws IllegalArgumentException
-     * @throws SecurityException
-     * @throws ExecutionException
+     * @throws HadoopServerException
      */
-    public static Object getDFS(HDFSConnectionBean connection) throws ExecutionException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
-            InvocationTargetException, URISyntaxException, InterruptedException {
-        assert connection != null;
+    public static Object getDFS(HDFSConnectionBean connection) throws HadoopServerException {
+        if (connection == null) {
+            return null;
+        }
         String nameNodeURI = connection.getNameNodeURI();
-        assert nameNodeURI != null;
+        if (nameNodeURI == null) {
+            return null;
+        }
+
         nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(nameNodeURI);
         String userName = StringUtils.trimToNull(connection.getUserName());
         if (userName != null) {
@@ -115,6 +105,8 @@ public class HadoopServerUtil {
             } catch (TimeoutException e) {
                 future.cancel(true);
             }
+        } catch (Exception e) {
+            throw new HadoopServerException(e);
         } finally {
             Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
@@ -146,23 +138,19 @@ public class HadoopServerUtil {
 
     }
 
-    public static boolean hasReadAuthority(Object status, String userName) throws ClassNotFoundException, SecurityException,
-            IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public static boolean hasReadAuthority(Object status, String userName) throws HadoopServerException {
         return hasAuthority(status, userName, ELinuxAuthority.READ);
     }
 
-    public static boolean hasWriteAuthority(Object status, String userName) throws ClassNotFoundException, SecurityException,
-            IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public static boolean hasWriteAuthority(Object status, String userName) throws HadoopServerException {
         return hasAuthority(status, userName, ELinuxAuthority.WRITE);
     }
 
-    public static boolean hasExcuteAuthority(Object status, String userName) throws ClassNotFoundException, SecurityException,
-            IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public static boolean hasExcuteAuthority(Object status, String userName) throws HadoopServerException {
         return hasAuthority(status, userName, ELinuxAuthority.EXCUTE);
     }
 
-    public static boolean hasAuthority(Object status, String userName, ELinuxAuthority authority) throws ClassNotFoundException,
-            SecurityException, IllegalArgumentException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public static boolean hasAuthority(Object status, String userName, ELinuxAuthority authority) throws HadoopServerException {
         boolean hasAuthority = false;
         if (status == null) {
             return hasAuthority;
@@ -170,40 +158,45 @@ public class HadoopServerUtil {
         if (authority == null) {
             authority = ELinuxAuthority.READ;
         }
-        Object permission = ReflectionUtils.invokeMethod(status, "getPermission", new Object[0]);
-        if (permission == null) {
-            return hasAuthority;
-        }
-        userName = TalendQuoteUtils.addQuotesIfNotExist(userName);
-        String owner = (String) ReflectionUtils.invokeMethod(status, "getOwner", new Object[0]);
-        owner = TalendQuoteUtils.addQuotesIfNotExist(owner);
-        Object userAction = ReflectionUtils.invokeMethod(permission, "getUserAction", new Object[0]);
-        Object groupAction = ReflectionUtils.invokeMethod(permission, "getGroupAction", new Object[0]);
-        Object otherAction = ReflectionUtils.invokeMethod(permission, "getOtherAction", new Object[0]);
-        switch (authority) {
-        case READ:
-            if (owner != null && owner.equals(userName)) {
-                return hasReadAuthority(userAction) || hasReadAuthority(groupAction);
+
+        try {
+            Object permission = ReflectionUtils.invokeMethod(status, "getPermission", new Object[0]);
+            if (permission == null) {
+                return hasAuthority;
             }
-            return hasReadAuthority(otherAction);
-        case WRITE:
-            if (owner != null && owner.equals(userName)) {
-                return hasWriteAuthority(userAction) || hasWriteAuthority(groupAction);
+            userName = TalendQuoteUtils.addQuotesIfNotExist(userName);
+            String owner = (String) ReflectionUtils.invokeMethod(status, "getOwner", new Object[0]);
+            owner = TalendQuoteUtils.addQuotesIfNotExist(owner);
+            Object userAction = ReflectionUtils.invokeMethod(permission, "getUserAction", new Object[0]);
+            Object groupAction = ReflectionUtils.invokeMethod(permission, "getGroupAction", new Object[0]);
+            Object otherAction = ReflectionUtils.invokeMethod(permission, "getOtherAction", new Object[0]);
+            switch (authority) {
+            case READ:
+                if (owner != null && owner.equals(userName)) {
+                    return hasReadAuthority(userAction) || hasReadAuthority(groupAction);
+                }
+                return hasReadAuthority(otherAction);
+            case WRITE:
+                if (owner != null && owner.equals(userName)) {
+                    return hasWriteAuthority(userAction) || hasWriteAuthority(groupAction);
+                }
+                return hasWriteAuthority(otherAction);
+            case EXCUTE:
+                if (owner != null && owner.equals(userName)) {
+                    return hasExcuteAuthority(userAction) || hasExcuteAuthority(groupAction);
+                }
+                return hasExcuteAuthority(otherAction);
+            default:
+                break;
             }
-            return hasWriteAuthority(otherAction);
-        case EXCUTE:
-            if (owner != null && owner.equals(userName)) {
-                return hasExcuteAuthority(userAction) || hasExcuteAuthority(groupAction);
-            }
-            return hasExcuteAuthority(otherAction);
-        default:
-            break;
+        } catch (Exception e) {
+            throw new HadoopServerException(e);
         }
 
         return hasAuthority;
     }
 
-    private static boolean hasReadAuthority(Object action) throws ClassNotFoundException {
+    private static boolean hasReadAuthority(Object action) {
         if (action == null) {
             return false;
         }
@@ -306,8 +299,9 @@ public class HadoopServerUtil {
                 ReflectionUtils.invokeMethod(fileSystem, "mkdirs", new Object[] { destPath }); //$NON-NLS-1$
                 monitor.worked(1);
                 for (File child : localFile.listFiles()) {
-                    if (monitor.isCanceled())
+                    if (monitor.isCanceled()) {
                         return;
+                    }
                     upload(child, dfsPath + "/" + child.getName(), fileSystem, classLoader, monitor); //$NON-NLS-1$
                 }
             } else if (localFile.isFile()) {
@@ -319,8 +313,9 @@ public class HadoopServerUtil {
                 byte[] buffer = new byte[taskSize];
 
                 while ((bytes = istream.read(buffer)) >= 0) {
-                    if (monitor.isCanceled())
+                    if (monitor.isCanceled()) {
                         return;
+                    }
                     ostream.write(buffer, 0, bytes);
                     monitor.worked(1);
                 }
@@ -329,15 +324,17 @@ public class HadoopServerUtil {
             throw new HadoopServerException(String.format("Unable to upload file %s to %s", localFile, destPath), e); //$NON-NLS-1$
         } finally {
             try {
-                if (istream != null)
+                if (istream != null) {
                     istream.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 // nothing we can do here
             }
             try {
-                if (ostream != null)
+                if (ostream != null) {
                     ostream.close();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
                 // nothing we can do here

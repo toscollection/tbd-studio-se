@@ -13,14 +13,12 @@
 
 package org.talend.designer.hdfsbrowse.model;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
+import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
 
@@ -42,12 +40,11 @@ public class HDFSFolder extends HDFSPath {
         super(parent);
     }
 
-    protected void loadHDFSFolderChildren() throws IOException, InterruptedException, URISyntaxException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
-            InvocationTargetException {
+    protected void loadHDFSFolderChildren() throws HadoopServerException {
         HadoopOperationManager.getInstance().loadHDFSFolderChildren(connection, fileSystem, classLoader, this, getPath());
     }
 
+    @Override
     public List<IHDFSNode> getChildren() {
         if (!hasFetchedChildren) {
             super.getChildren().clear();
@@ -64,6 +61,7 @@ public class HDFSFolder extends HDFSPath {
         return super.getChildren();
     }
 
+    @Override
     public boolean hasChildren() {
         return true;
     }
@@ -78,6 +76,7 @@ public class HDFSFolder extends HDFSPath {
         this.doRefresh();
     }
 
+    @Override
     public Image getImage() {
         return sharedImages.getImage(ISharedImages.IMG_OBJ_FOLDER);
     }
