@@ -12,11 +12,8 @@
 // ============================================================================
 package org.talend.repository.hcatalog.ui;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchWizard;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.utils.VersionUtils;
@@ -25,68 +22,63 @@ import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
-import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hcatalog.Activator;
 import org.talend.repository.hcatalog.i18n.Messages;
+import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
 import org.talend.repository.hcatalog.update.HCatalogUpdateManager;
 import org.talend.repository.hcatalog.util.EHCatalogImage;
 import org.talend.repository.model.IProxyRepositoryFactory;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
+import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
 import org.talend.repository.model.hcatalog.HCatalogFactory;
-import org.talend.repository.ui.utils.ConnectionContextHelper;
-import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
 import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public class HCatalogWizard extends CheckLastVersionRepositoryWizard {
-
-    private static Logger log = Logger.getLogger(HCatalogWizard.class);
-
-    private Step0WizardPage propertiesPage;
+public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
 
     private HCatalogWizardPage mainPage;
 
     private HCatalogConnection connection;
 
-    private Property connectionProperty;
-
-    private String originalLabel;
-
-    private String originalVersion;
-
-    private String originalPurpose;
-
-    private String originalDescription;
-
-    private String originalStatus;
-
-    private boolean isToolBar;
-
     public HCatalogWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
         super(workbench, creation);
+        this.repNode = node;
         this.existingNames = existingNames;
         setNeedsProgressMonitor(true);
-        switch (node.getType()) {
-        case SIMPLE_FOLDER:
-        case REPOSITORY_ELEMENT:
-            pathToSave = RepositoryNodeUtilities.getPath(node);
-            break;
-        case SYSTEM_FOLDER:
+
+        final Object contentType = node.getProperties(EProperties.CONTENT_TYPE);
+        final ENodeType type = node.getType();
+        if (HCatalogRepositoryNodeType.HCATALOG.equals(contentType)) {
+            switch (type) {
+            case SIMPLE_FOLDER:
+            case REPOSITORY_ELEMENT:
+                pathToSave = RepositoryNodeUtilities.getPath(node);
+                break;
+            case SYSTEM_FOLDER:
+            case STABLE_SYSTEM_FOLDER:
+                pathToSave = new Path(""); //$NON-NLS-1$
+                break;
+            }
+        } else {
             pathToSave = new Path(""); //$NON-NLS-1$
-            break;
         }
 
-        switch (node.getType()) {
-        case SIMPLE_FOLDER:
-        case SYSTEM_FOLDER:
+        if (!HCatalogRepositoryNodeType.HCATALOG.equals(contentType) || type == ENodeType.SIMPLE_FOLDER
+                || type == ENodeType.SYSTEM_FOLDER || type == ENodeType.STABLE_SYSTEM_FOLDER) {
             connection = HCatalogFactory.eINSTANCE.createHCatalogConnection();
             connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
             connectionProperty.setAuthor(((RepositoryContext) CoreRuntimePlugin.getInstance().getContext()
@@ -97,9 +89,9 @@ public class HCatalogWizard extends CheckLastVersionRepositoryWizard {
             connectionItem = HCatalogFactory.eINSTANCE.createHCatalogConnectionItem();
             connectionItem.setProperty(connectionProperty);
             connectionItem.setConnection(connection);
-            break;
 
-        case REPOSITORY_ELEMENT:
+            initConnectionFromHadoopCluster(connection, node);
+        } else if (type == ENodeType.REPOSITORY_ELEMENT) {
             connection = (HCatalogConnection) ((ConnectionItem) node.getObject().getProperty().getItem()).getConnection();
             connectionProperty = node.getObject().getProperty();
             connectionItem = (ConnectionItem) node.getObject().getProperty().getItem();
@@ -107,8 +99,8 @@ public class HCatalogWizard extends CheckLastVersionRepositoryWizard {
             setRepositoryObject(node.getObject());
             isRepositoryObjectEditable();
             initLockStrategy();
-            break;
         }
+
         if (!creation) {
             this.originalLabel = this.connectionItem.getProperty().getDisplayName();
             this.originalVersion = this.connectionItem.getProperty().getVersion();
@@ -116,14 +108,20 @@ public class HCatalogWizard extends CheckLastVersionRepositoryWizard {
             this.originalPurpose = this.connectionItem.getProperty().getPurpose();
             this.originalStatus = this.connectionItem.getProperty().getStatusCode();
         }
-        // initialize the context mode
-        ConnectionContextHelper.checkContextMode(connectionItem);
     }
 
-    public void setToolBar(boolean isToolbar) {
-        this.isToolBar = isToolbar;
+    @Override
+    protected void initConnectionFromHadoopCluster(HCatalogConnection hadoopConnection, RepositoryNode node) {
+        HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
+        if (hcConnectionItem != null) {
+            HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+            hadoopConnection.setRelativeHadoopClusterId(hcConnectionItem.getProperty().getId());
+            hadoopConnection.setUserName(hcConnection.getUserName());
+            hadoopConnection.setHostName(HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
+        }
     }
 
+    @Override
     public void addPages() {
         setWindowTitle(Messages.getString("HCatalogWizard.windowTitle")); //$NON-NLS-1$
         setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHCatalogImage.HCATALOG_WIZ));
@@ -165,9 +163,7 @@ public class HCatalogWizard extends CheckLastVersionRepositoryWizard {
             this.connection.setLabel(displayName);
             try {
                 if (creation) {
-                    String nextId = factory.getNextId();
-                    connectionProperty.setId(nextId);
-                    factory.create(connectionItem, propertiesPage.getDestinationPath());
+                    createConnectionItem();
                 } else {
                     HCatalogUpdateManager.updateHCatalogConnection(connectionItem);
                     updateConnectionItem();
@@ -196,37 +192,6 @@ public class HCatalogWizard extends CheckLastVersionRepositoryWizard {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public boolean performCancel() {
-        if (!creation) {
-            connectionItem.getProperty().setVersion(this.originalVersion);
-            connectionItem.getProperty().setDisplayName(this.originalLabel);
-            connectionItem.getProperty().setDescription(this.originalDescription);
-            connectionItem.getProperty().setPurpose(this.originalPurpose);
-            connectionItem.getProperty().setStatusCode(this.originalStatus);
-        }
-        return super.performCancel();
-    }
-
-    /**
-     * We will accept the selection in the workbench to see if we can initialize from it.
-     * 
-     * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
-     */
-    public void init(final IWorkbench workbench, final IStructuredSelection selection2) {
-        super.setWorkbench(workbench);
-        this.selection = selection2;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.repository.ui.wizards.RepositoryWizard#getConnectionItem()
-     */
-    public ConnectionItem getConnectionItem() {
-        return this.connectionItem;
     }
 
 }

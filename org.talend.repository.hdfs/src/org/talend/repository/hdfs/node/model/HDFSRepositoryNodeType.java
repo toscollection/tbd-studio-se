@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.repository.hdfs.node;
+package org.talend.repository.hdfs.node.model;
 
 import org.talend.core.model.repository.ERepositoryObjectType;
 

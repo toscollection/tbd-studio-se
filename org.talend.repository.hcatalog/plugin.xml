@@ -13,7 +13,7 @@
       <repositoryNode
             alias="HCAT"
             class="org.talend.repository.hcatalog.node.HCatalogExtendNode"
-            folder="metadata/hcatalog"
+            folder="metadata/hadoop/hcatalog"
             isResouce="true"
             label="%hcatalog"
             products="DI"
@@ -52,68 +52,29 @@
       </Action>
    </extension>
    <extension
-         point="org.eclipse.ui.navigator.navigatorContent">
-      <navigatorContent
-            contentProvider="org.talend.repository.hcatalog.ui.MetadataHCatalogContentProvider"
-            icon="icons/hadoop-logo-16x16.png"
-            id="org.talend.repository.viewer.metadata.hcatalog"
-            labelProvider="org.talend.repository.viewer.label.RepositoryViewLabelProvider"
-            name="HCatalog"
-            priority="high">
-         <possibleChildren>
-            <instanceof
-                  value="org.talend.repository.model.RepositoryNode">
-            </instanceof>
-         </possibleChildren>
-         <triggerPoints>
-            <and>
-               <instanceof
-                     value="org.talend.repository.model.RepositoryNode">
-               </instanceof>
-               <test
-                     forcePluginActivation="true"
-                     property="org.talend.repository.node.isMetadataTopNode">
-               </test>
-            </and>
-         </triggerPoints>
-         <actionProvider
-               class="org.talend.repository.metadata.action.MetedataNodeActionProvier"
-               id="org.talend.hcatalog.action.provider.id">
-            <enablement>
-               <and>
-                  <instanceof
-                        value="org.talend.repository.model.RepositoryNode">
-                  </instanceof>
-                  <test
-                        forcePluginActivation="true"
-                        property="org.talend.repository.node.metadata.isHCatalogConnection">
-                  </test>
-                  <not>
-                     <test
-                           forcePluginActivation="true"
-                           property="org.talend.repository.node.isDeleted">
-                     </test>
-                  </not>
-               </and>
-            </enablement>
-         </actionProvider>
-      </navigatorContent>
-   </extension>
-   <extension
-         point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="org.talend.repository.hcatalog.tester.HCatalogMetadataNodeTester"
-            id="org.talend.repository.hcatalog.node.tester.hcatalog"
-            namespace="org.talend.repository.node.metadata"
-            properties="isHCatalogConnection"
-            type="org.talend.repository.model.RepositoryNode">
-      </propertyTester>
-   </extension>
-   <extension
          point="org.talend.core.repository.repository_handler">
       <RepositoryHandler
             class="org.talend.repository.hcatalog.ui.dnd.HCatalogDragAndDropHandler">
       </RepositoryHandler>
+   </extension>
+   <extension
+         point="org.talend.core.repository.repositorySeeker">
+      <seeker
+            class="org.talend.repository.hcatalog.ui.viewer.seeker.HCatalogRepositorySeeker"
+            name="HCatalog">
+      </seeker>
+   </extension>
+   <extension
+         point="org.talend.core.migrationTask">
+      <projecttask
+            beforeLogon="false"
+            breaks="5.3.0"
+            class="org.talend.repository.hcatalog.model.migration.PushHCatalogIntoHadoopClusterMigrationTask"
+            description="Convert old HCatalog items into hadoop cluster."
+            id="org.talend.repository.hcatalog.model.migration.PushHCatalogIntoHadoopClusterMigrationTask"
+            name="PushHCatalogIntoHadoopClusterMigrationTask"
+            version="5.3.0">
+      </projecttask>
    </extension>
 
 </plugin>

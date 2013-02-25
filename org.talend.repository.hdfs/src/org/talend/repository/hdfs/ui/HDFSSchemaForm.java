@@ -162,14 +162,14 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         String[] allTableLabel = tablenames.toArray(new String[0]);
         Arrays.sort(allTableLabel);
 
-        for (int i = 0; i < allTableLabel.length; i++) {
-            if (allTableLabel[i].equals(metadataTable.getLabel())) {
+        for (String element : allTableLabel) {
+            if (element.equals(metadataTable.getLabel())) {
                 TableItem subItem = new TableItem(tableNavigator, SWT.NONE);
-                subItem.setText(allTableLabel[i]);
+                subItem.setText(element);
                 tableNavigator.setSelection(subItem);
             } else {
                 TableItem subItem = new TableItem(tableNavigator, SWT.NONE);
-                subItem.setText(allTableLabel[i]);
+                subItem.setText(element);
             }
         }
     }
@@ -207,6 +207,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         // add listener to tableMetadata (listen the event of the toolbars)
         metadataEditor.addAfterOperationListListener(new IListenableListListener() {
 
+            @Override
             public void handleEvent(ListenableListEvent event) {
                 changeTableNavigatorStatus(checkFieldsValue());
             }
@@ -220,6 +221,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         nameText.forceFocus();
     }
 
+    @Override
     protected void addFields() {
         int leftCompositeWidth = 125;
         int rightCompositeWidth = WIDTH_GRIDDATA_PIXEL - leftCompositeWidth;
@@ -316,17 +318,20 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         addTableBtn = new UtilsButton(group, displayStr, girdData);
         displayStr = Messages.getString("HDFSSchemaForm.button.removeSchema"); //$NON-NLS-1$
         buttonSize = gc.stringExtent(displayStr);
-        if (buttonSize.x + 12 > girdData.widthHint)
+        if (buttonSize.x + 12 > girdData.widthHint) {
             girdData.widthHint = buttonSize.x + 12;
+        }
         girdData = new GridData(buttonSize.x + 12, HEIGHT_BUTTON_PIXEL);
         girdData.horizontalAlignment = SWT.CENTER;
         removeTableBtn = new UtilsButton(group, displayStr, girdData);
         gc.dispose();
     }
 
+    @Override
     protected void addUtilsButtonListeners() {
         retreiveSchemaButton.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (retreiveSchemaButton.getEnabled()) {
                     pressRetreiveSchemaButton();
@@ -336,6 +341,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
         addTableBtn.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (addTableBtn.getEnabled()) {
                     addTableBtn.setEnabled(true);
@@ -402,9 +408,11 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         initMetadataForm();
     }
 
+    @Override
     protected void addFieldsListeners() {
         tableNavigator.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 String schemaLabel = tableNavigator.getSelection()[0].getText();
                 metadataTable = HDFSSchemaUtil.getTableByName(getConnection(), schemaLabel);
@@ -418,6 +426,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
         nameText.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 String labelText = nameText.getText();
                 MetadataToolHelper.validateSchema(labelText);
@@ -432,6 +441,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         });
         nameText.addKeyListener(new KeyAdapter() {
 
+            @Override
             public void keyPressed(KeyEvent e) {
                 MetadataToolHelper.checkSchema(getShell(), e);
             }
@@ -439,6 +449,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
         commentText.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 metadataTable.setComment(commentText.getText());
             }
@@ -446,7 +457,8 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
     }
 
-    protected boolean checkFieldsValue() {
+    @Override
+    public boolean checkFieldsValue() {
         updateRetreiveSchemaButton();
 
         if (!checkAllTablesIsCorrect()) {
@@ -536,6 +548,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         changeTableNavigatorStatus(checkFieldsValue());
     }
 
+    @Override
     protected void adaptFormToReadOnly() {
         readOnly = isReadOnly();
 
@@ -547,6 +560,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         retreiveSchemaButton.setEnabled(!readOnly);
     }
 
+    @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (visible) {
@@ -557,6 +571,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         }
     }
 
+    @Override
     protected HDFSConnection getConnection() {
         if (temConnection != null) {
             return temConnection;

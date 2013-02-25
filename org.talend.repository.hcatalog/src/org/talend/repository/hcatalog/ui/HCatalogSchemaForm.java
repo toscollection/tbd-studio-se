@@ -162,14 +162,14 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         String[] allTableLabel = tablenames.toArray(new String[0]);
         Arrays.sort(allTableLabel);
 
-        for (int i = 0; i < allTableLabel.length; i++) {
-            if (allTableLabel[i].equals(metadataTable.getLabel())) {
+        for (String element : allTableLabel) {
+            if (element.equals(metadataTable.getLabel())) {
                 TableItem subItem = new TableItem(tableNavigator, SWT.NONE);
-                subItem.setText(allTableLabel[i]);
+                subItem.setText(element);
                 tableNavigator.setSelection(subItem);
             } else {
                 TableItem subItem = new TableItem(tableNavigator, SWT.NONE);
-                subItem.setText(allTableLabel[i]);
+                subItem.setText(element);
             }
         }
     }
@@ -207,6 +207,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         // add listener to tableMetadata (listen the event of the toolbars)
         metadataEditor.addAfterOperationListListener(new IListenableListListener() {
 
+            @Override
             public void handleEvent(ListenableListEvent event) {
                 changeTableNavigatorStatus(checkFieldsValue());
             }
@@ -220,6 +221,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         nameText.forceFocus();
     }
 
+    @Override
     protected void addFields() {
         int leftCompositeWidth = 125;
         int rightCompositeWidth = WIDTH_GRIDDATA_PIXEL - leftCompositeWidth;
@@ -316,17 +318,20 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         addTableBtn = new UtilsButton(group, displayStr, girdData);
         displayStr = Messages.getString("HCatalogSchemaForm.button.removeSchema"); //$NON-NLS-1$
         buttonSize = gc.stringExtent(displayStr);
-        if (buttonSize.x + 12 > girdData.widthHint)
+        if (buttonSize.x + 12 > girdData.widthHint) {
             girdData.widthHint = buttonSize.x + 12;
+        }
         girdData = new GridData(buttonSize.x + 12, HEIGHT_BUTTON_PIXEL);
         girdData.horizontalAlignment = SWT.CENTER;
         removeTableBtn = new UtilsButton(group, displayStr, girdData);
         gc.dispose();
     }
 
+    @Override
     protected void addUtilsButtonListeners() {
         retreiveSchemaButton.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (retreiveSchemaButton.getEnabled()) {
                     pressRetreiveSchemaButton();
@@ -336,6 +341,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
 
         addTableBtn.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (addTableBtn.getEnabled()) {
                     addTableBtn.setEnabled(true);
@@ -402,9 +408,11 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         initMetadataForm();
     }
 
+    @Override
     protected void addFieldsListeners() {
         tableNavigator.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 String schemaLabel = tableNavigator.getSelection()[0].getText();
                 metadataTable = HCatalogSchemaUtil.getTableByName(getConnection(), schemaLabel);
@@ -418,6 +426,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
 
         nameText.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 String labelText = nameText.getText();
                 MetadataToolHelper.validateSchema(labelText);
@@ -432,6 +441,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         });
         nameText.addKeyListener(new KeyAdapter() {
 
+            @Override
             public void keyPressed(KeyEvent e) {
                 MetadataToolHelper.checkSchema(getShell(), e);
             }
@@ -439,6 +449,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
 
         commentText.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 metadataTable.setComment(commentText.getText());
             }
@@ -446,7 +457,8 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
 
     }
 
-    protected boolean checkFieldsValue() {
+    @Override
+    public boolean checkFieldsValue() {
         updateRetreiveSchemaButton();
 
         if (!checkAllTablesIsCorrect()) {
@@ -537,6 +549,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         changeTableNavigatorStatus(checkFieldsValue());
     }
 
+    @Override
     protected void adaptFormToReadOnly() {
         readOnly = isReadOnly();
 
@@ -548,6 +561,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         retreiveSchemaButton.setEnabled(!readOnly);
     }
 
+    @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (visible) {
@@ -558,6 +572,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         }
     }
 
+    @Override
     protected HCatalogConnection getConnection() {
         if (temConnection != null) {
             return temConnection;

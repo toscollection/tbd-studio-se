@@ -21,12 +21,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IProject;
@@ -55,6 +52,7 @@ import org.talend.core.repository.model.ResourceModelUtils;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.utils.CsvArray;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;
@@ -86,10 +84,8 @@ public class ExtractMetaDataFromHDFS {
 
     private static final String DEFAULT_COLUMN_LABEL = "Column"; //$NON-NLS-1$
 
-    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node) throws IOException,
-            CoreException, InterruptedException, URISyntaxException, InstantiationException, IllegalAccessException,
-            ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
-            InvocationTargetException, ExecutionException {
+    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node)
+            throws HadoopServerException, CoreException, IOException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || node == null || node.getType() != EHadoopFileTypes.FILE) {
             return columns;
@@ -103,9 +99,7 @@ public class ExtractMetaDataFromHDFS {
     }
 
     public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, MetadataTable metadataTable)
-            throws CoreException, IOException, InterruptedException, URISyntaxException, InstantiationException,
-            IllegalAccessException, ClassNotFoundException, SecurityException, IllegalArgumentException, NoSuchMethodException,
-            InvocationTargetException, ExecutionException {
+            throws HadoopServerException, CoreException, IOException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || metadataTable == null) {
             return columns;
@@ -206,8 +200,12 @@ public class ExtractMetaDataFromHDFS {
         } finally {
             try {
                 inputStream.close();
-                reader.close();
-                writer.close();
+                if (reader != null) {
+                    reader.close();
+                }
+                if (writer != null) {
+                    writer.close();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

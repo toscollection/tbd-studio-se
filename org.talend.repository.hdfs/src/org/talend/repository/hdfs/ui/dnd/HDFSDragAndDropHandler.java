@@ -34,10 +34,11 @@ import org.talend.core.model.utils.IDragAndDropServiceHandler;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
-import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
-import org.talend.repository.hdfs.node.HDFSRepositoryNodeType;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSConnectionItem;
 
@@ -68,20 +69,25 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
     }
 
     private Object getHDFSRepositoryValue(HDFSConnection connection, String value, IMetadataTable table) {
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        if (hcConnection == null) {
+            return null;
+        }
+
         if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(value)) {
-            return connection.getDistribution();
+            return hcConnection.getDistribution();
         } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(value)) {
-            return connection.getDfDrivers();
+            return hcConnection.getDfVersion();
         } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getNameNodeURI()));
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getNameNodeURI()));
         } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(value)) {
-            return connection.isEnableKerberos();
+            return hcConnection.isEnableKerberos();
         } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getPrincipal()));
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getPrincipal()));
         } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getUserName()));
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getGroup()));
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getGroup()));
         } else if (EHDFSRepositoryToComponent.FILENAME.getRepositoryValue().equals(value)) {
             // if (table != null) {
             // MetadataTable metaTable = HDFSSchemaUtil.getTableByName(connection, table.getLabel());
@@ -177,36 +183,40 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
     }
 
     private void setHDFSRepositoryValue(HDFSConnection connection, INode node, String repositoryValue) {
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        if (hcConnection == null) {
+            return;
+        }
+
         if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
                     EHDFSRepositoryToComponent.DISTRIBUTION.getParameterName());
             if (value != null) {
-                connection.setDistribution(value);
+                hcConnection.setDistribution(value);
             }
         } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
                     EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
             if (value != null) {
-                connection.setDfVersion(EHadoopVersion4Drivers.getVersionByDriverStrs(value));
-                connection.setDfDrivers(value);
+                hcConnection.setDfVersion(value);
             }
         } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
                     EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getParameterName());
             if (value != null) {
-                connection.setNameNodeURI(value);
+                hcConnection.setNameNodeURI(value);
             }
         } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
                     EHDFSRepositoryToComponent.USE_KRB.getParameterName());
             if (value != null) {
-                connection.setEnableKerberos(Boolean.valueOf(value));
+                hcConnection.setEnableKerberos(Boolean.valueOf(value));
             }
         } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
                     EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getParameterName());
             if (value != null) {
-                connection.setPrincipal(value);
+                hcConnection.setPrincipal(value);
             }
         } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(repositoryValue)) {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
@@ -215,10 +225,10 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
                 connection.setUserName(value);
             }
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
                     EHDFSRepositoryToComponent.GROUP.getParameterName());
             if (value != null) {
-                connection.setGroup(value);
+                hcConnection.setGroup(value);
             }
         } else if (EHDFSRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(repositoryValue)) {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node,

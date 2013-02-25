@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
@@ -25,68 +24,60 @@ import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
-import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
-import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
+import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.update.HDFSUpdateManager;
 import org.talend.repository.hdfs.util.EHDFSImage;
-import org.talend.repository.model.IProxyRepositoryFactory;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
+import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSFactory;
-import org.talend.repository.ui.utils.ConnectionContextHelper;
-import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
 import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public class HDFSWizard extends CheckLastVersionRepositoryWizard {
-
-    private static Logger log = Logger.getLogger(HDFSWizard.class);
-
-    private Step0WizardPage propertiesPage;
-
-    private HDFSWizardPage mainPage;
+public class HDFSWizard extends HadoopRepositoryWizard<HDFSConnection> {
 
     private HDFSConnection connection;
 
-    private Property connectionProperty;
-
-    private String originalLabel;
-
-    private String originalVersion;
-
-    private String originalPurpose;
-
-    private String originalDescription;
-
-    private String originalStatus;
-
-    private boolean isToolBar;
+    private HDFSWizardPage mainPage;
 
     public HDFSWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
         super(workbench, creation);
+        this.repNode = node;
         this.existingNames = existingNames;
         setNeedsProgressMonitor(true);
-        switch (node.getType()) {
-        case SIMPLE_FOLDER:
-        case REPOSITORY_ELEMENT:
-            pathToSave = RepositoryNodeUtilities.getPath(node);
-            break;
-        case SYSTEM_FOLDER:
+
+        final Object contentType = node.getProperties(EProperties.CONTENT_TYPE);
+        final ENodeType type = node.getType();
+        if (HDFSRepositoryNodeType.HDFS.equals(contentType)) {
+            switch (type) {
+            case SIMPLE_FOLDER:
+            case REPOSITORY_ELEMENT:
+                pathToSave = RepositoryNodeUtilities.getPath(node);
+                break;
+            case SYSTEM_FOLDER:
+            case STABLE_SYSTEM_FOLDER:
+                pathToSave = new Path(""); //$NON-NLS-1$
+                break;
+            }
+        } else {
             pathToSave = new Path(""); //$NON-NLS-1$
-            break;
         }
 
-        switch (node.getType()) {
-        case SIMPLE_FOLDER:
-        case SYSTEM_FOLDER:
+        if (!HDFSRepositoryNodeType.HDFS.equals(contentType) || type == ENodeType.SIMPLE_FOLDER
+                || type == ENodeType.SYSTEM_FOLDER || type == ENodeType.STABLE_SYSTEM_FOLDER) {
             connection = HDFSFactory.eINSTANCE.createHDFSConnection();
             connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
             connectionProperty.setAuthor(((RepositoryContext) CoreRuntimePlugin.getInstance().getContext()
@@ -97,9 +88,9 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
             connectionItem = HDFSFactory.eINSTANCE.createHDFSConnectionItem();
             connectionItem.setProperty(connectionProperty);
             connectionItem.setConnection(connection);
-            break;
 
-        case REPOSITORY_ELEMENT:
+            initConnectionFromHadoopCluster(connection, node);
+        } else if (type == ENodeType.REPOSITORY_ELEMENT) {
             connection = (HDFSConnection) ((ConnectionItem) node.getObject().getProperty().getItem()).getConnection();
             connectionProperty = node.getObject().getProperty();
             connectionItem = (ConnectionItem) node.getObject().getProperty().getItem();
@@ -107,8 +98,8 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
             setRepositoryObject(node.getObject());
             isRepositoryObjectEditable();
             initLockStrategy();
-            break;
         }
+
         if (!creation) {
             this.originalLabel = this.connectionItem.getProperty().getDisplayName();
             this.originalVersion = this.connectionItem.getProperty().getVersion();
@@ -116,12 +107,16 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
             this.originalPurpose = this.connectionItem.getProperty().getPurpose();
             this.originalStatus = this.connectionItem.getProperty().getStatusCode();
         }
-        // initialize the context mode
-        ConnectionContextHelper.checkContextMode(connectionItem);
     }
 
-    public void setToolBar(boolean isToolbar) {
-        this.isToolBar = isToolbar;
+    @Override
+    protected void initConnectionFromHadoopCluster(HDFSConnection hadoopConnection, RepositoryNode node) {
+        HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
+        if (hcConnectionItem != null) {
+            HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+            hadoopConnection.setRelativeHadoopClusterId(hcConnectionItem.getProperty().getId());
+            hadoopConnection.setUserName(hcConnection.getUserName());
+        }
     }
 
     @Override
@@ -159,15 +154,12 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
     @Override
     public boolean performFinish() {
         if (mainPage.isPageComplete()) {
-            final IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
             String displayName = connectionProperty.getDisplayName();
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
                 if (creation) {
-                    String nextId = factory.getNextId();
-                    connectionProperty.setId(nextId);
-                    factory.create(connectionItem, propertiesPage.getDestinationPath());
+                    createConnectionItem();
                 } else {
                     HDFSUpdateManager.updateHDFSConnection(connectionItem);
                     updateConnectionItem();
@@ -215,6 +207,7 @@ public class HDFSWizard extends CheckLastVersionRepositoryWizard {
      * 
      * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
      */
+    @Override
     public void init(final IWorkbench workbench, final IStructuredSelection selection2) {
         super.setWorkbench(workbench);
         this.selection = selection2;

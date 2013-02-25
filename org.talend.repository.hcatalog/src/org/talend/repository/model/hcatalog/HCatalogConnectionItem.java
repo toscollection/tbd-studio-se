@@ -6,7 +6,7 @@
  */
 package org.talend.repository.model.hcatalog;
 
-import org.talend.core.model.properties.ConnectionItem;
+import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,5 +18,5 @@ import org.talend.core.model.properties.ConnectionItem;
  * @model
  * @generated
  */
-public interface HCatalogConnectionItem extends ConnectionItem {
+public interface HCatalogConnectionItem extends HadoopSubConnectionItem {
 } // HCatalogConnectionItem

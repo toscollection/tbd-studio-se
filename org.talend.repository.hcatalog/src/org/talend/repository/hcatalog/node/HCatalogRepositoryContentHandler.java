@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -23,13 +22,11 @@ import org.talend.core.model.metadata.MetadataManager;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
-import org.talend.core.model.repository.AbstractRepositoryContentHandler;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.utils.RepositoryNodeManager;
 import org.talend.core.repository.utils.XmiResourceManager;
-import org.talend.cwm.helper.ConnectionHelper;
-import org.talend.cwm.helper.SubItemHelper;
+import org.talend.repository.hadoopcluster.ui.viewer.handler.AbstractHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.hcatalog.metadata.ExtractMetaDataFromHCatalog;
 import org.talend.repository.hcatalog.ui.HCatalogWizard;
@@ -49,7 +46,7 @@ import orgomg.cwm.foundation.businessinformation.BusinessinformationPackage;
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentHandler {
+public class HCatalogRepositoryContentHandler extends AbstractHadoopSubnodeRepositoryContentHandler {
 
     private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
@@ -145,27 +142,12 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
     }
 
     @Override
-    public void addNode(ERepositoryObjectType type, RepositoryNode parentNode, IRepositoryViewObject repositoryObject,
-            RepositoryNode node) {
-        if (type == HCatalogRepositoryNodeType.HCATALOG) {
-            HCatalogConnection connection = (HCatalogConnection) ((HCatalogConnectionItem) repositoryObject.getProperty()
-                    .getItem()).getConnection();
-            Set<MetadataTable> tableset = ConnectionHelper.getTables(connection);
-            for (MetadataTable metadataTable : tableset) {
-                if (!SubItemHelper.isDeleted(metadataTable)) {
-                    RepositoryNode tableNode = RepositoryNodeManager.createMetatableNode(node, repositoryObject, metadataTable);
-                    node.getChildren().add(tableNode);
-                    if (metadataTable.getColumns().size() > 0) {
-                        RepositoryNodeManager.createColumns(tableNode, repositoryObject, metadataTable);
-                        createPartitionColumns(tableNode, repositoryObject, connection, metadataTable);
-                    }
-                }
-            }
-        }
+    public void addColumnNode(RepositoryNode tableNode, IRepositoryViewObject repositoryObject, MetadataTable metadataTable) {
+        super.addColumnNode(tableNode, repositoryObject, metadataTable);
+        createPartitionColumns(tableNode, repositoryObject, metadataTable);
     }
 
-    private void createPartitionColumns(RepositoryNode tableNode, IRepositoryViewObject repObj, HCatalogConnection connection,
-            MetadataTable metadataTable) {
+    private void createPartitionColumns(RepositoryNode tableNode, IRepositoryViewObject repObj, MetadataTable metadataTable) {
         List<MetadataColumn> partitionColumns = new ArrayList<MetadataColumn>();
         EMap<String, String> properties = metadataTable.getAdditionalProperties();
         String partitionStr = properties.get(HCatalogConstants.PARTITIONS);
@@ -193,11 +175,6 @@ public class HCatalogRepositoryContentHandler extends AbstractRepositoryContentH
     @Override
     public ERepositoryObjectType getHandleType() {
         return HCatalogRepositoryNodeType.HCATALOG;
-    }
-
-    @Override
-    public boolean hasSchemas() {
-        return true;
     }
 
     @Override

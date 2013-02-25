@@ -2,11 +2,18 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.talend.repository.model.hdfs.HDFSPackage"
+            uri="http://www.talend.org/hdfs">
+      </package>
+   </extension>
+   <extension
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode
             alias="HDFS"
             class="org.talend.repository.hdfs.node.HDFSExtendNode"
-            folder="metadata/hdfs"
+            folder="metadata/hadoop/hdfs"
             isResouce="true"
             label="%HDFS"
             products="DI"
@@ -45,82 +52,29 @@
       </Action>
    </extension>
    <extension
-         point="org.eclipse.ui.navigator.navigatorContent">
-      <navigatorContent
-            contentProvider="org.talend.repository.hdfs.ui.MetadataHDFSContentProvider"
-            icon="icons/hadoop-logo-16x16.png"
-            id="org.talend.repository.viewer.metadata.hdfs"
-            labelProvider="org.talend.repository.viewer.label.RepositoryViewLabelProvider"
-            name="HDFS"
-            priority="high">
-         <possibleChildren>
-            <instanceof
-                  value="org.talend.repository.model.RepositoryNode">
-            </instanceof>
-         </possibleChildren>
-         <triggerPoints>
-            <and>
-               <instanceof
-                     value="org.talend.repository.model.RepositoryNode">
-               </instanceof>
-               <test
-                     forcePluginActivation="true"
-                     property="org.talend.repository.node.isMetadataTopNode">
-               </test>
-            </and>
-         </triggerPoints>
-         <actionProvider
-               class="org.talend.repository.metadata.action.MetedataNodeActionProvier"
-               id="org.talend.repository.hdfs.action.provider.id">
-            <enablement>
-               <and>
-                  <instanceof
-                        value="org.talend.repository.model.RepositoryNode">
-                  </instanceof>
-                  <test
-                        forcePluginActivation="true"
-                        property="org.talend.repository.node.metadata.isHDFSConnection">
-                  </test>
-                  <not>
-                     <test
-                           forcePluginActivation="true"
-                           property="org.talend.repository.node.isDeleted">
-                     </test>
-                  </not>
-               </and>
-            </enablement>
-         </actionProvider>
-      </navigatorContent>
-   </extension>
-   <extension
-         point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="org.talend.repository.hdfs.tester.HDFSMetadataNodeTester"
-            id="org.talend.repository.hdfs.node.tester.hdfs"
-            namespace="org.talend.repository.node.metadata"
-            properties="isHDFSConnection"
-            type="org.talend.repository.model.RepositoryNode">
-      </propertyTester>
-   </extension>
-   <extension
-         point="org.eclipse.emf.ecore.generated_package">
-      <package
-            class="org.talend.repository.model.hdfs.HDFSPackage"
-            uri="http://www.talend.org/hdfs">
-      </package>
-   </extension>
-   <extension
          point="org.talend.core.repository.repository_handler">
       <RepositoryHandler
             class="org.talend.repository.hdfs.ui.dnd.HDFSDragAndDropHandler">
       </RepositoryHandler>
    </extension>
    <extension
-         point="org.talend.core.runtime.service">
-      <Service
-            class="org.talend.repository.hdfs.HDFSProviderService"
-            serviceId="IHDFSProviderService">
-      </Service>
+         point="org.talend.core.repository.repositorySeeker">
+      <seeker
+            class="org.talend.repository.hdfs.ui.viewer.seeker.HDFSRepositorySeeker"
+            name="HDFS">
+      </seeker>
+   </extension>
+   <extension
+         point="org.talend.core.migrationTask">
+      <projecttask
+            beforeLogon="false"
+            breaks="5.3.0"
+            class="org.talend.repository.hdfs.model.migration.PushHDFSIntoHadoopClusterMigrationTask"
+            description="Convert old HDFS items into hadoop cluster."
+            id="org.talend.repository.hdfs.model.migration.PushHDFSIntoHadoopClusterMigrationTask"
+            name="PushHDFSIntoHadoopClusterMigrationTask"
+            version="5.3.0">
+      </projecttask>
    </extension>
 
 </plugin>

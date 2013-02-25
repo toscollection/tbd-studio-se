@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
@@ -25,7 +22,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
@@ -36,38 +32,22 @@ import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
-import org.talend.designer.hdfsbrowse.util.EHadoopDistributions;
 import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
-import org.talend.repository.model.hdfs.HDFSConnection;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 /**
  * DOC ycbai class global comment. Detailled comment
  */
 public class HDFSForm extends AbstractHDFSForm {
 
-    private static final int VISIBLE_DISTRIBUTION_COUNT = 5;
-
-    private static final int VISIBLE_VERSION_COUNT = 6;
-
-    private boolean readOnly;
-
-    private LabelledCombo distributionCombo;
-
-    private LabelledCombo versionCombo;
-
-    private Button kerberosBtn;
+    private static final int VISIBLE_COMBO_ITEM_COUNT = 5;
 
     private UtilsButton checkConnectionBtn;
 
-    private LabelledText namenodeUriText;
-
-    private LabelledText principalText;
-
     private LabelledText userNameText;
-
-    private LabelledText groupText;
 
     private LabelledCombo rowSeparatorCombo;
 
@@ -89,21 +69,7 @@ public class HDFSForm extends AbstractHDFSForm {
 
     @Override
     public void initialize() {
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(getConnection().getDistribution(), false);
-        if (distribution != null) {
-            String distributionDisplayName = distribution.getDisplayName();
-            distributionCombo.setText(distributionDisplayName);
-            updateVersionCombo(distributionDisplayName);
-        }
-        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
-        if (version4Drivers != null) {
-            versionCombo.setText(version4Drivers.getVersionDisplay());
-        }
-        namenodeUriText.setText(getConnection().getNameNodeURI());
-        kerberosBtn.setSelection(getConnection().isEnableKerberos());
-        principalText.setText(getConnection().getPrincipal());
-        userNameText.setText(getConnection().getUserName());
-        groupText.setText(getConnection().getGroup());
+        userNameText.setText(StringUtils.trimToEmpty(getConnection().getUserName()));
         String rowSeparatorVal = getConnection().getRowSeparator();
         if (!StringUtils.isEmpty(rowSeparatorVal)) {
             rowSeparatorText.setText(rowSeparatorVal);
@@ -135,93 +101,34 @@ public class HDFSForm extends AbstractHDFSForm {
     @Override
     protected void adaptFormToReadOnly() {
         readOnly = isReadOnly();
-        distributionCombo.setReadOnly(readOnly);
-        versionCombo.setReadOnly(readOnly);
-        namenodeUriText.setReadOnly(readOnly);
-        kerberosBtn.setEnabled(!readOnly);
-        principalText.setReadOnly(readOnly);
         userNameText.setReadOnly(readOnly);
-        groupText.setReadOnly(readOnly);
+        rowSeparatorText.setEditable(!readOnly);
+        rowSeparatorCombo.setEnabled(!readOnly);
+        fieldSeparatorText.setEditable(!readOnly);
+        fieldSeparatorCombo.setEnabled(!readOnly);
     }
 
     @Override
     protected void addFields() {
-        addDistributionFields();
         addConnectionFields();
         addSeparatorFields();
         addCheckFields();
     }
 
-    private void addDistributionFields() {
-        Group distributionGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.distributionSettings"), 60); //$NON-NLS-1$
-
-        ScrolledComposite distributionComposite = new ScrolledComposite(distributionGroup, SWT.V_SCROLL | SWT.H_SCROLL);
-        distributionComposite.setExpandHorizontal(true);
-        distributionComposite.setExpandVertical(true);
-        distributionComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        Composite distributionGroupComposite = Form.startNewGridLayout(distributionComposite, 4);
-        GridLayout disGroupCompLayout = (GridLayout) distributionGroupComposite.getLayout();
-        disGroupCompLayout.marginHeight = 0;
-        disGroupCompLayout.marginTop = 0;
-        disGroupCompLayout.marginBottom = 0;
-        disGroupCompLayout.marginLeft = 0;
-        disGroupCompLayout.marginRight = 0;
-        disGroupCompLayout.marginWidth = 0;
-        distributionComposite.setContent(distributionGroupComposite);
-
-        distributionCombo = new LabelledCombo(distributionGroupComposite, Messages.getString("HDFSForm.distribution"), //$NON-NLS-1$
-                Messages.getString("HDFSForm.distribution.tooltip"), EHadoopDistributions.getAllDistributionDisplayNames() //$NON-NLS-1$
-                        .toArray(new String[0]), 1, true);
-        distributionCombo.setVisibleItemCount(VISIBLE_DISTRIBUTION_COUNT);
-        versionCombo = new LabelledCombo(distributionGroupComposite, Messages.getString("HDFSForm.version"), //$NON-NLS-1$
-                Messages.getString("HDFSForm.version.tooltip"), new String[0], 1, true); //$NON-NLS-1$
-        versionCombo.setVisibleItemCount(VISIBLE_VERSION_COUNT);
-    }
-
     private void addConnectionFields() {
-        Group connectionGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.connectionSettings"), 110); //$NON-NLS-1$
+        Group connectionGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.connectionSettings")); //$NON-NLS-1$
+        connectionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        ScrolledComposite connectionComposite = new ScrolledComposite(connectionGroup, SWT.V_SCROLL | SWT.H_SCROLL);
-        connectionComposite.setExpandHorizontal(true);
-        connectionComposite.setExpandVertical(true);
-        connectionComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        Composite connectionGroupComposite = Form.startNewGridLayout(connectionComposite, 1);
-        GridLayout disGroupCompLayout = (GridLayout) connectionGroupComposite.getLayout();
-        disGroupCompLayout.marginHeight = 0;
-        disGroupCompLayout.marginTop = 0;
-        disGroupCompLayout.marginBottom = 0;
-        disGroupCompLayout.marginLeft = 0;
-        disGroupCompLayout.marginRight = 0;
-        disGroupCompLayout.marginWidth = 0;
-        connectionComposite.setContent(connectionGroupComposite);
-
-        int width = getSize().x;
-        Composite namenodePartComposite = new Composite(connectionGroupComposite, SWT.NULL);
-        namenodePartComposite.setLayout(new GridLayout(2, false));
-        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.minimumWidth = width;
-        gridData.widthHint = width;
-        namenodePartComposite.setLayoutData(gridData);
-        namenodeUriText = new LabelledText(namenodePartComposite, Messages.getString("HDFSForm.text.namenodeURI"), 1); //$NON-NLS-1$
-
-        Composite connectionPartComposite = new Composite(connectionGroupComposite, SWT.NULL);
+        Composite connectionPartComposite = new Composite(connectionGroup, SWT.NULL);
         connectionPartComposite.setLayout(new GridLayout(4, false));
-        gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.minimumWidth = width;
-        gridData.widthHint = width;
-        connectionPartComposite.setLayoutData(gridData);
-        kerberosBtn = new Button(connectionPartComposite, SWT.CHECK);
-        kerberosBtn.setText(Messages.getString("HDFSForm.button.kerberos")); //$NON-NLS-1$
-        kerberosBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
-        principalText = new LabelledText(connectionPartComposite, Messages.getString("HDFSForm.text.principal"), 1); //$NON-NLS-1$
+        connectionPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
         userNameText = new LabelledText(connectionPartComposite, Messages.getString("HDFSForm.text.userName"), 1); //$NON-NLS-1$
-        groupText = new LabelledText(connectionPartComposite, Messages.getString("HDFSForm.text.group"), 1); //$NON-NLS-1$
     }
 
     private void addSeparatorFields() {
-        Group separatorGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.separatorSettings"), 60); //$NON-NLS-1$
+        Group separatorGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.separatorSettings")); //$NON-NLS-1$
+        separatorGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         ScrolledComposite separatorComposite = new ScrolledComposite(separatorGroup, SWT.V_SCROLL | SWT.H_SCROLL);
         separatorComposite.setExpandHorizontal(true);
@@ -241,7 +148,7 @@ public class HDFSForm extends AbstractHDFSForm {
         rowSeparatorCombo = new LabelledCombo(separatorGroupComposite, Messages.getString("HDFSForm.rowSeparator"), //$NON-NLS-1$
                 Messages.getString("HDFSForm.rowSeparator.tooltip"), EHDFSRowSeparator.getAllRowSeparators(true) //$NON-NLS-1$
                         .toArray(new String[0]), 1, true);
-        rowSeparatorCombo.setVisibleItemCount(VISIBLE_DISTRIBUTION_COUNT);
+        rowSeparatorCombo.setVisibleItemCount(VISIBLE_COMBO_ITEM_COUNT);
         rowSeparatorText = new Text(separatorGroupComposite, SWT.BORDER);
         rowSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
@@ -249,7 +156,7 @@ public class HDFSForm extends AbstractHDFSForm {
                 separatorGroupComposite,
                 Messages.getString("HDFSForm.fieldSeparator"), //$NON-NLS-1$
                 Messages.getString("HDFSForm.fieldSeparator.tooltip"), EHDFSFieldSeparator.getAllFieldSeparators(true).toArray(new String[0]), 1, true); //$NON-NLS-1$
-        fieldSeparatorCombo.setVisibleItemCount(VISIBLE_VERSION_COUNT);
+        fieldSeparatorCombo.setVisibleItemCount(VISIBLE_COMBO_ITEM_COUNT);
         fieldSeparatorText = new Text(separatorGroupComposite, SWT.BORDER);
         fieldSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     }
@@ -273,94 +180,20 @@ public class HDFSForm extends AbstractHDFSForm {
         checkConnectionBtn.setEnabled(false);
     }
 
-    private List<String> getDistributionVersions(String distribution) {
-        List<String> result = new ArrayList<String>();
-        List<EHadoopVersion4Drivers> v4dList = EHadoopVersion4Drivers.indexOfByDistribution(distribution);
-        for (EHadoopVersion4Drivers v4d : v4dList) {
-            result.add(v4d.getVersionDisplay());
-        }
-        return result;
-    }
-
     @Override
     protected void addFieldsListeners() {
-        distributionCombo.addModifyListener(new ModifyListener() {
-
-            public void modifyText(final ModifyEvent e) {
-                String newDistributionDisplayName = distributionCombo.getText();
-                EHadoopDistributions newDistribution = EHadoopDistributions
-                        .getDistributionByDisplayName(newDistributionDisplayName);
-                String originalDistributionName = getConnection().getDistribution();
-                EHadoopDistributions originalDistribution = EHadoopDistributions.getDistributionByName(originalDistributionName,
-                        false);
-                if (newDistribution != null && newDistribution != originalDistribution) {
-                    getConnection().setDistribution(newDistribution.getName());
-                    updateVersionCombo(newDistributionDisplayName);
-                    checkFieldsValue();
-                }
-            }
-        });
-
-        versionCombo.addModifyListener(new ModifyListener() {
-
-            public void modifyText(final ModifyEvent e) {
-                String newVersionDisplayName = versionCombo.getText();
-                EHadoopVersion4Drivers newVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersionDisplay(newVersionDisplayName);
-                String originalVersionName = getConnection().getDfVersion();
-                EHadoopVersion4Drivers originalVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersion(originalVersionName);
-                if (newVersion4Drivers != null && newVersion4Drivers != originalVersion4Drivers) {
-                    getConnection().setDfVersion(newVersion4Drivers.getVersionValue());
-                    getConnection().setDfDrivers(newVersion4Drivers.getDriverStrings());
-                    updateConnectionPart();
-                    checkFieldsValue();
-                }
-            }
-        });
-
-        namenodeUriText.addModifyListener(new ModifyListener() {
-
-            public void modifyText(final ModifyEvent e) {
-                getConnection().setNameNodeURI(namenodeUriText.getText());
-                checkFieldsValue();
-            }
-        });
-
-        principalText.addModifyListener(new ModifyListener() {
-
-            public void modifyText(final ModifyEvent e) {
-                getConnection().setPrincipal(principalText.getText());
-                checkFieldsValue();
-            }
-        });
-
         userNameText.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().setUserName(userNameText.getText());
                 checkFieldsValue();
             }
         });
 
-        groupText.addModifyListener(new ModifyListener() {
-
-            public void modifyText(final ModifyEvent e) {
-                getConnection().setGroup(groupText.getText());
-                checkFieldsValue();
-            }
-        });
-
-        kerberosBtn.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                getConnection().setEnableKerberos(kerberosBtn.getSelection());
-                updateConnectionPart();
-                checkFieldsValue();
-            }
-        });
-
         rowSeparatorCombo.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 String separatorDisplay = rowSeparatorCombo.getText();
                 EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(separatorDisplay, true);
@@ -374,6 +207,7 @@ public class HDFSForm extends AbstractHDFSForm {
 
         fieldSeparatorCombo.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 String separatorDisplay = fieldSeparatorCombo.getText();
                 EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(separatorDisplay, true);
@@ -387,6 +221,7 @@ public class HDFSForm extends AbstractHDFSForm {
 
         rowSeparatorText.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().setRowSeparator(rowSeparatorText.getText());
                 checkFieldsValue();
@@ -401,6 +236,7 @@ public class HDFSForm extends AbstractHDFSForm {
 
         fieldSeparatorText.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().setFieldSeparator(fieldSeparatorText.getText());
                 checkFieldsValue();
@@ -414,92 +250,20 @@ public class HDFSForm extends AbstractHDFSForm {
         });
     }
 
-    private void updateVersionCombo(String distribution) {
-        List<String> items = getDistributionVersions(distribution);
-        String[] versions = new String[items.size()];
-        items.toArray(versions);
-        versionCombo.getCombo().setItems(versions);
-        if (versions.length > 0) {
-            versionCombo.getCombo().select(0);
-        }
-    }
-
-    private void updateConnectionPart() {
-        HDFSConnection connection = getConnection();
-        String dfVersion = connection.getDfVersion();
-        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(dfVersion);
-        kerberosBtn.setEnabled(isSupportSecurity(version4Drivers));
-        groupText.setEnabled(isSupportGroup(version4Drivers));
-        principalText.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
-        userNameText.setEnabled(!kerberosBtn.getSelection());
-        if (!kerberosBtn.isEnabled()) {
-            kerberosBtn.setSelection(false);
-            getConnection().setEnableKerberos(false);
-            principalText.setText(EMPTY_STRING);
-        }
-        if (!groupText.getEnable()) {
-            groupText.setText(EMPTY_STRING);
-        }
-    }
-
-    private boolean isSupportSecurity(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            switch (version4Drivers) {
-            case HDP_1_0:
-            case APACHE_1_0_0:
-                return true;
-            default:
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean isSupportGroup(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            switch (version4Drivers) {
-            case APACHE_0_20_2:
-            case MAPR:
-                return true;
-            default:
-                return false;
-            }
-        }
-
-        return false;
-    }
-
+    @Override
     public boolean checkFieldsValue() {
         checkConnectionBtn.setEnabled(false);
 
-        if (distributionCombo.getSelectionIndex() == -1) {
-            updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.distribution")); //$NON-NLS-1$
-            return false;
-        }
-        if (versionCombo.getSelectionIndex() == -1) {
-            updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.version")); //$NON-NLS-1$
-            return false;
-        }
-
-        if (!validText(namenodeUriText.getText())) {
-            updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.namenodeURI")); //$NON-NLS-1$
-            return false;
-        }
-
-        if (kerberosBtn.isEnabled() && kerberosBtn.getSelection() && !validText(principalText.getText())) {
-            updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.principal")); //$NON-NLS-1$
-            return false;
-        }
-
-        if (groupText.getEnable()) {
-            if (!validText(userNameText.getText())) {
-                updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.userName")); //$NON-NLS-1$
-                return false;
-            }
-            if (!validText(groupText.getText())) {
-                updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.group")); //$NON-NLS-1$
-                return false;
+        HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
+        if (clusterConnection != null) {
+            String dfVersion = clusterConnection.getDfVersion();
+            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(dfVersion);
+            boolean supportGroup = isSupportGroup(version4Drivers);
+            if (supportGroup) {
+                if (!validText(userNameText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.userName")); //$NON-NLS-1$
+                    return false;
+                }
             }
         }
 
@@ -525,8 +289,12 @@ public class HDFSForm extends AbstractHDFSForm {
 
     }
 
-    private boolean validText(final String value) {
-        return StringUtils.isNotEmpty(value);
+    private void updateConnectionPart() {
+        HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
+        if (clusterConnection != null) {
+            boolean enableKerberos = clusterConnection.isEnableKerberos();
+            userNameText.setEnabled(!enableKerberos);
+        }
     }
 
     /*
@@ -546,6 +314,7 @@ public class HDFSForm extends AbstractHDFSForm {
         }
     }
 
+    @Override
     protected void addUtilsButtonListeners() {
         checkConnectionBtn.addSelectionListener(new SelectionAdapter() {
 

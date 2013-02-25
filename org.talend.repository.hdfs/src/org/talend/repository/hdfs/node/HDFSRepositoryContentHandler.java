@@ -2,7 +2,6 @@ package org.talend.repository.hdfs.node;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -16,15 +15,11 @@ import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.metadata.MetadataManager;
-import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
-import org.talend.core.model.repository.AbstractRepositoryContentHandler;
 import org.talend.core.model.repository.ERepositoryObjectType;
-import org.talend.core.model.repository.IRepositoryViewObject;
-import org.talend.core.repository.utils.RepositoryNodeManager;
 import org.talend.core.repository.utils.XmiResourceManager;
-import org.talend.cwm.helper.ConnectionHelper;
-import org.talend.cwm.helper.SubItemHelper;
+import org.talend.repository.hadoopcluster.ui.viewer.handler.AbstractHadoopSubnodeRepositoryContentHandler;
+import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.ui.HDFSWizard;
 import org.talend.repository.hdfs.util.EHDFSImage;
 import org.talend.repository.model.IRepositoryNode;
@@ -40,7 +35,7 @@ import orgomg.cwm.foundation.businessinformation.BusinessinformationPackage;
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandler {
+public class HDFSRepositoryContentHandler extends AbstractHadoopSubnodeRepositoryContentHandler {
 
     private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
@@ -49,6 +44,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
             return true;
         }
+
         return false;
     }
 
@@ -59,14 +55,13 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
 
     @Override
     public Resource create(IProject project, Item item, int classifierID, IPath path) throws PersistenceException {
+        Resource itemResource = null;
         if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
-            Resource itemResource = null;
-            ERepositoryObjectType type;
-            type = HDFSRepositoryNodeType.HDFS;
+            ERepositoryObjectType type = HDFSRepositoryNodeType.HDFS;
             itemResource = create(project, (HDFSConnectionItem) item, path, type);
-            return itemResource;
         }
-        return null;
+
+        return itemResource;
     }
 
     private Resource create(IProject project, HDFSConnectionItem item, IPath path, ERepositoryObjectType type)
@@ -79,12 +74,12 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
 
     @Override
     public Resource save(Item item) throws PersistenceException {
+        Resource itemResource = null;
         if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
-            Resource itemResource = null;
             itemResource = save((HDFSConnectionItem) item);
-            return itemResource;
         }
-        return null;
+
+        return itemResource;
     }
 
     private Resource save(HDFSConnectionItem item) {
@@ -114,6 +109,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         if (type == HDFSRepositoryNodeType.HDFS) {
             return EHDFSImage.HDFS_RESOURCE_ICON;
         }
+
         return null;
     }
 
@@ -132,36 +128,13 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
             return HDFSRepositoryNodeType.HDFS;
         }
-        return null;
-    }
 
-    @Override
-    public void addNode(ERepositoryObjectType type, RepositoryNode parentNode, IRepositoryViewObject repositoryObject,
-            RepositoryNode node) {
-        if (type == HDFSRepositoryNodeType.HDFS) {
-            HDFSConnection connection = (HDFSConnection) ((HDFSConnectionItem) repositoryObject.getProperty().getItem())
-                    .getConnection();
-            Set<MetadataTable> tableset = ConnectionHelper.getTables(connection);
-            for (MetadataTable metadataTable : tableset) {
-                if (!SubItemHelper.isDeleted(metadataTable)) {
-                    RepositoryNode tableNode = RepositoryNodeManager.createMetatableNode(node, repositoryObject, metadataTable);
-                    node.getChildren().add(tableNode);
-                    if (metadataTable.getColumns().size() > 0) {
-                        RepositoryNodeManager.createColumns(tableNode, repositoryObject, metadataTable);
-                    }
-                }
-            }
-        }
+        return null;
     }
 
     @Override
     public ERepositoryObjectType getHandleType() {
         return HDFSRepositoryNodeType.HDFS;
-    }
-
-    @Override
-    public boolean hasSchemas() {
-        return true;
     }
 
     @Override
@@ -194,6 +167,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         if (type != HDFSConnection.class) {
             return false;
         }
+
         ERepositoryObjectType nodeType = (ERepositoryObjectType) node.getProperties(EProperties.CONTENT_TYPE);
         if (nodeType == ERepositoryObjectType.METADATA_CON_TABLE) {
             RepositoryNode repNode = node.getParent();
@@ -208,6 +182,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
                 return true;
             }
         }
+
         return false;
     }
 
@@ -219,6 +194,7 @@ public class HDFSRepositoryContentHandler extends AbstractRepositoryContentHandl
         if (workbench == null) {
             workbench = PlatformUI.getWorkbench();
         }
+
         return new HDFSWizard(workbench, creation, node, existingNames);
     }
 

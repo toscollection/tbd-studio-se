@@ -6,7 +6,7 @@
  */
 package org.talend.repository.model.hdfs;
 
-import org.talend.core.model.metadata.builder.connection.Connection;
+import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,7 +33,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  * @model
  * @generated
  */
-public interface HDFSConnection extends Connection {
+public interface HDFSConnection extends HadoopSubConnection {
     /**
      * Returns the value of the '<em><b>Distribution</b></em>' attribute.
      * <!-- begin-user-doc -->

@@ -20,7 +20,7 @@ import org.talend.commons.ui.runtime.image.IImage;
 public enum EHDFSImage implements IImage {
 
     HDFS_RESOURCE_ICON("/icons/hadoop-logo-16x16.png"), //$NON-NLS-1$
-    HDFS_WIZ("/icons/hadoop-logo-wiz.png");
+    HDFS_WIZ("/icons/hadoop-logo-wiz.png"); //$NON-NLS-1$
 
     private String path;
 
@@ -37,6 +37,7 @@ public enum EHDFSImage implements IImage {
      * 
      * @return the path
      */
+    @Override
     public String getPath() {
         return this.path;
     }
@@ -46,6 +47,7 @@ public enum EHDFSImage implements IImage {
      * 
      * @return the clazz
      */
+    @Override
     public Class getLocation() {
         return EHDFSImage.class;
     }

@@ -34,7 +34,7 @@ import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
-import org.talend.repository.hdfs.node.HDFSRepositoryNodeType;
+import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.ui.HDFSSchemaWizard;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.ERepositoryStatus;
@@ -154,8 +154,9 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
         final boolean[] result = new boolean[] { true };
         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
 
+            @Override
             public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-                monitor.beginTask(Messages.getString("CreateHDFSSchemaAction.checkConnection"), IProgressMonitor.UNKNOWN);
+                monitor.beginTask(Messages.getString("CreateHDFSSchemaAction.checkConnection"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 Object dfs = null;
                 try {
                     HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
@@ -171,8 +172,7 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
                         @Override
                         public void run() {
                             String mainMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.mainMsg"); //$NON-NLS-1$
-                            String detailMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.detailMsg", //$NON-NLS-1$
-                                    connection.getNameNodeURI());
+                            String detailMsg = Messages.getString("CreateHDFSSchemaAction.connectionFailure.detailMsg"); //$NON-NLS-1$
                             new ErrorDialogWidthDetailArea(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
                                     Activator.PLUGIN_ID, mainMsg, detailMsg);
                             result[0] = false;

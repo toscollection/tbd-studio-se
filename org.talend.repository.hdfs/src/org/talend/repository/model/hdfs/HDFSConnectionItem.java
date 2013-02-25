@@ -6,7 +6,7 @@
  */
 package org.talend.repository.model.hdfs;
 
-import org.talend.core.model.properties.ConnectionItem;
+import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,5 +18,5 @@ import org.talend.core.model.properties.ConnectionItem;
  * @model
  * @generated
  */
-public interface HDFSConnectionItem extends ConnectionItem {
+public interface HDFSConnectionItem extends HadoopSubConnectionItem {
 } // HDFSConnectionItem

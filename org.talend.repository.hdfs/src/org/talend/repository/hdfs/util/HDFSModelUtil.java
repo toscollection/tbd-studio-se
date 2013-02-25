@@ -15,6 +15,8 @@ package org.talend.repository.hdfs.util;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hdfs.HDFSConnection;
 
 /**
@@ -35,7 +37,13 @@ public class HDFSModelUtil {
     public static HDFSConnectionBean convert2HDFSConnectionBean(HDFSConnection connection) {
         HDFSConnectionBean bean = new HDFSConnectionBean();
         try {
-            BeanUtils.copyProperties(bean, connection);
+            HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+            if (hcConnection != null) {
+                BeanUtils.copyProperties(bean, hcConnection);
+            }
+            bean.setUserName(connection.getUserName());
+            bean.setFieldSeparator(connection.getFieldSeparator());
+            bean.setRowSeparator(connection.getRowSeparator());
         } catch (Exception e) {
             log.error("Convert failure from HDFSConnection to HDFSConnectionBean", e);
         }

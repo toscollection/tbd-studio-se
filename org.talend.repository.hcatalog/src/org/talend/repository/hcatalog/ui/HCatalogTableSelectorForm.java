@@ -143,6 +143,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
         threadExecutor = new RetrieveSchemaThreadPoolExecutor(5, new ThreadPoolExecutor.CallerRunsPolicy());
         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
 
+            @Override
             public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                 monitor.beginTask(Messages.getString("HCatalogTableSelectorForm.AchieveSchema"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 try {
@@ -234,6 +235,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
         schemaTree.setLinesVisible(true);
         schemaTree.addListener(SWT.Expand, new Listener() {
 
+            @Override
             public void handleEvent(Event event) {
                 TreeItem treeItem = (TreeItem) event.item;
                 for (TreeItem item : treeItem.getItems()) {
@@ -313,6 +315,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
         super.setVisible(visible);
     }
 
+    @Override
     protected void addUtilsButtonListeners() {
         checkConnectionBtn.addSelectionListener(new SelectionAdapter() {
 
@@ -371,6 +374,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
         return StringUtils.trimToEmpty(this.nameFilter.getText());
     }
 
+    @Override
     protected HCatalogConnection getConnection() {
         if (temConnection != null) {
             return temConnection;
@@ -403,7 +407,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
      * @see org.talend.repository.ui.swt.utils.AbstractForm#checkFieldsValue()
      */
     @Override
-    protected boolean checkFieldsValue() {
+    public boolean checkFieldsValue() {
         updateStatus(IStatus.OK, null);
         return true;
     }
@@ -417,6 +421,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
     protected void addFieldsListeners() {
         nameFilter.addModifyListener(new ModifyListener() {
 
+            @Override
             public void modifyText(ModifyEvent e) {
                 schemaTreeViewer.refresh();
             }
@@ -463,6 +468,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
     private void refreshExistItem(final MetadataTable existTable, final TreeItem item) {
         Display.getDefault().syncExec(new Runnable() {
 
+            @Override
             public void run() {
                 orgomg.cwm.objectmodel.core.Package pack = (orgomg.cwm.objectmodel.core.Package) existTable.eContainer();
                 boolean confirm = MessageDialog.openConfirm(Display.getDefault().getActiveShell(),
@@ -717,8 +723,8 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
             if (runnable != null) {
                 return runnable;
             }
-            for (Iterator iter = getQueue().iterator(); iter.hasNext();) {
-                RetrieveColumnRunnable element = (RetrieveColumnRunnable) iter.next();
+            for (Object element2 : getQueue()) {
+                RetrieveColumnRunnable element = (RetrieveColumnRunnable) element2;
                 if (element.getTreeItem() == key) {
                     return element;
                 }
@@ -780,6 +786,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
             tableString = treeItem.getText(0);
         }
 
+        @Override
         public void run() {
             if (isCanceled()) {
                 return;
@@ -788,7 +795,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
             IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
 
             synchronized (lock) {
-                IHCatalogNode node = (IHCatalogNode) catalogNode;
+                IHCatalogNode node = catalogNode;
                 TdTable table = node.getTable();
                 String tableName = table.getName();
                 String comment = null;
@@ -836,6 +843,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
 
             Display.getDefault().syncExec(new Runnable() {
 
+                @Override
                 public void run() {
                     if (isCanceled()) {
                         return;
@@ -852,7 +860,7 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
             }
 
             if (checkConnectionIsDone) {
-                treeItem.setText(1, EMPTY_STRING + metadataColumns.size()); //$NON-NLS-1$
+                treeItem.setText(1, EMPTY_STRING + metadataColumns.size());
                 treeItem.setText(2, Messages.getString("HCatalogTableSelectorForm.title.success")); //$NON-NLS-1$
                 countSuccess++;
                 tableColumnNums.put(treeItem.getText(0), metadataColumns.size());

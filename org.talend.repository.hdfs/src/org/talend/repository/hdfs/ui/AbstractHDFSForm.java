@@ -19,18 +19,16 @@ import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.hdfs.HDFSConnection;
-import org.talend.repository.ui.swt.utils.AbstractForm;
 
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public abstract class AbstractHDFSForm extends AbstractForm {
-
-    protected static final String EMPTY_STRING = ""; //$NON-NLS-1$
+public abstract class AbstractHDFSForm extends AbstractHadoopForm<HDFSConnection> {
 
     protected boolean hdfsSettingIsValide = false;
 
@@ -40,21 +38,6 @@ public abstract class AbstractHDFSForm extends AbstractForm {
 
     protected AbstractHDFSForm(Composite parent, int style, String[] existingNames) {
         super(parent, style, existingNames);
-    }
-
-    @Override
-    protected void initialize() {
-    }
-
-    protected void addUtilsButtonListeners() {
-    }
-
-    @Override
-    protected void addFieldsListeners() {
-    }
-
-    @Override
-    protected void adaptFormToReadOnly() {
     }
 
     protected ConnectionStatus checkConnection() {
@@ -87,10 +70,6 @@ public abstract class AbstractHDFSForm extends AbstractForm {
         }
 
         return connectionStatus;
-    }
-
-    protected HDFSConnection getConnection() {
-        return (HDFSConnection) connectionItem.getConnection();
     }
 
     protected HDFSConnectionBean getConnectionBean() {

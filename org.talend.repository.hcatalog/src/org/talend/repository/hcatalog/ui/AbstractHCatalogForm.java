@@ -17,18 +17,16 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.repository.ConnectionStatus;
+import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hcatalog.Activator;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.hcatalog.service.HCatalogServiceUtil;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
-import org.talend.repository.ui.swt.utils.AbstractForm;
 
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public abstract class AbstractHCatalogForm extends AbstractForm {
-
-    protected static final String EMPTY_STRING = ""; //$NON-NLS-1$
+public abstract class AbstractHCatalogForm extends AbstractHadoopForm<HCatalogConnection> {
 
     protected boolean hcatalogSettingIsValide = false;
 
@@ -38,21 +36,6 @@ public abstract class AbstractHCatalogForm extends AbstractForm {
 
     protected AbstractHCatalogForm(Composite parent, int style, String[] existingNames) {
         super(parent, style, existingNames);
-    }
-
-    @Override
-    protected void initialize() {
-    }
-
-    protected void addUtilsButtonListeners() {
-    }
-
-    @Override
-    protected void addFieldsListeners() {
-    }
-
-    @Override
-    protected void adaptFormToReadOnly() {
     }
 
     protected ConnectionStatus checkConnection() {
@@ -85,10 +68,6 @@ public abstract class AbstractHCatalogForm extends AbstractForm {
         }
 
         return connectionStatus;
-    }
-
-    protected HCatalogConnection getConnection() {
-        return (HCatalogConnection) connectionItem.getConnection();
     }
 
 }

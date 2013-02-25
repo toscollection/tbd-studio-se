@@ -10,9 +10,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 
-import org.talend.core.model.metadata.builder.connection.ConnectionPackage;
-
-import org.talend.core.model.properties.PropertiesPackage;
+import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -79,7 +77,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__NAME = ConnectionPackage.CONNECTION__NAME;
+    int HCATALOG_CONNECTION__NAME = HadoopClusterPackage.HADOOP_SUB_CONNECTION__NAME;
 
     /**
      * The feature id for the '<em><b>Visibility</b></em>' attribute.
@@ -88,7 +86,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__VISIBILITY = ConnectionPackage.CONNECTION__VISIBILITY;
+    int HCATALOG_CONNECTION__VISIBILITY = HadoopClusterPackage.HADOOP_SUB_CONNECTION__VISIBILITY;
 
     /**
      * The feature id for the '<em><b>Client Dependency</b></em>' reference list.
@@ -97,7 +95,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__CLIENT_DEPENDENCY = ConnectionPackage.CONNECTION__CLIENT_DEPENDENCY;
+    int HCATALOG_CONNECTION__CLIENT_DEPENDENCY = HadoopClusterPackage.HADOOP_SUB_CONNECTION__CLIENT_DEPENDENCY;
 
     /**
      * The feature id for the '<em><b>Supplier Dependency</b></em>' reference list.
@@ -106,7 +104,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__SUPPLIER_DEPENDENCY = ConnectionPackage.CONNECTION__SUPPLIER_DEPENDENCY;
+    int HCATALOG_CONNECTION__SUPPLIER_DEPENDENCY = HadoopClusterPackage.HADOOP_SUB_CONNECTION__SUPPLIER_DEPENDENCY;
 
     /**
      * The feature id for the '<em><b>Constraint</b></em>' reference list.
@@ -115,7 +113,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__CONSTRAINT = ConnectionPackage.CONNECTION__CONSTRAINT;
+    int HCATALOG_CONNECTION__CONSTRAINT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__CONSTRAINT;
 
     /**
      * The feature id for the '<em><b>Namespace</b></em>' container reference.
@@ -124,7 +122,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__NAMESPACE = ConnectionPackage.CONNECTION__NAMESPACE;
+    int HCATALOG_CONNECTION__NAMESPACE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__NAMESPACE;
 
     /**
      * The feature id for the '<em><b>Importer</b></em>' reference list.
@@ -133,7 +131,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__IMPORTER = ConnectionPackage.CONNECTION__IMPORTER;
+    int HCATALOG_CONNECTION__IMPORTER = HadoopClusterPackage.HADOOP_SUB_CONNECTION__IMPORTER;
 
     /**
      * The feature id for the '<em><b>Stereotype</b></em>' reference.
@@ -142,7 +140,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__STEREOTYPE = ConnectionPackage.CONNECTION__STEREOTYPE;
+    int HCATALOG_CONNECTION__STEREOTYPE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__STEREOTYPE;
 
     /**
      * The feature id for the '<em><b>Tagged Value</b></em>' containment reference list.
@@ -151,7 +149,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__TAGGED_VALUE = ConnectionPackage.CONNECTION__TAGGED_VALUE;
+    int HCATALOG_CONNECTION__TAGGED_VALUE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__TAGGED_VALUE;
 
     /**
      * The feature id for the '<em><b>Document</b></em>' reference list.
@@ -160,7 +158,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DOCUMENT = ConnectionPackage.CONNECTION__DOCUMENT;
+    int HCATALOG_CONNECTION__DOCUMENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__DOCUMENT;
 
     /**
      * The feature id for the '<em><b>Description</b></em>' reference list.
@@ -169,7 +167,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DESCRIPTION = ConnectionPackage.CONNECTION__DESCRIPTION;
+    int HCATALOG_CONNECTION__DESCRIPTION = HadoopClusterPackage.HADOOP_SUB_CONNECTION__DESCRIPTION;
 
     /**
      * The feature id for the '<em><b>Responsible Party</b></em>' reference list.
@@ -178,7 +176,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__RESPONSIBLE_PARTY = ConnectionPackage.CONNECTION__RESPONSIBLE_PARTY;
+    int HCATALOG_CONNECTION__RESPONSIBLE_PARTY = HadoopClusterPackage.HADOOP_SUB_CONNECTION__RESPONSIBLE_PARTY;
 
     /**
      * The feature id for the '<em><b>Element Node</b></em>' reference list.
@@ -187,7 +185,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__ELEMENT_NODE = ConnectionPackage.CONNECTION__ELEMENT_NODE;
+    int HCATALOG_CONNECTION__ELEMENT_NODE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__ELEMENT_NODE;
 
     /**
      * The feature id for the '<em><b>Set</b></em>' reference list.
@@ -196,7 +194,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__SET = ConnectionPackage.CONNECTION__SET;
+    int HCATALOG_CONNECTION__SET = HadoopClusterPackage.HADOOP_SUB_CONNECTION__SET;
 
     /**
      * The feature id for the '<em><b>Rendered Object</b></em>' reference list.
@@ -205,7 +203,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__RENDERED_OBJECT = ConnectionPackage.CONNECTION__RENDERED_OBJECT;
+    int HCATALOG_CONNECTION__RENDERED_OBJECT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__RENDERED_OBJECT;
 
     /**
      * The feature id for the '<em><b>Vocabulary Element</b></em>' reference list.
@@ -214,7 +212,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__VOCABULARY_ELEMENT = ConnectionPackage.CONNECTION__VOCABULARY_ELEMENT;
+    int HCATALOG_CONNECTION__VOCABULARY_ELEMENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__VOCABULARY_ELEMENT;
 
     /**
      * The feature id for the '<em><b>Measurement</b></em>' reference list.
@@ -223,7 +221,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__MEASUREMENT = ConnectionPackage.CONNECTION__MEASUREMENT;
+    int HCATALOG_CONNECTION__MEASUREMENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__MEASUREMENT;
 
     /**
      * The feature id for the '<em><b>Change Request</b></em>' reference list.
@@ -232,7 +230,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__CHANGE_REQUEST = ConnectionPackage.CONNECTION__CHANGE_REQUEST;
+    int HCATALOG_CONNECTION__CHANGE_REQUEST = HadoopClusterPackage.HADOOP_SUB_CONNECTION__CHANGE_REQUEST;
 
     /**
      * The feature id for the '<em><b>Dasdl Property</b></em>' reference list.
@@ -241,7 +239,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DASDL_PROPERTY = ConnectionPackage.CONNECTION__DASDL_PROPERTY;
+    int HCATALOG_CONNECTION__DASDL_PROPERTY = HadoopClusterPackage.HADOOP_SUB_CONNECTION__DASDL_PROPERTY;
 
     /**
      * The feature id for the '<em><b>Properties</b></em>' attribute.
@@ -250,7 +248,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__PROPERTIES = ConnectionPackage.CONNECTION__PROPERTIES;
+    int HCATALOG_CONNECTION__PROPERTIES = HadoopClusterPackage.HADOOP_SUB_CONNECTION__PROPERTIES;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -259,7 +257,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__ID = ConnectionPackage.CONNECTION__ID;
+    int HCATALOG_CONNECTION__ID = HadoopClusterPackage.HADOOP_SUB_CONNECTION__ID;
 
     /**
      * The feature id for the '<em><b>Comment</b></em>' attribute.
@@ -268,7 +266,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__COMMENT = ConnectionPackage.CONNECTION__COMMENT;
+    int HCATALOG_CONNECTION__COMMENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__COMMENT;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -277,7 +275,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__LABEL = ConnectionPackage.CONNECTION__LABEL;
+    int HCATALOG_CONNECTION__LABEL = HadoopClusterPackage.HADOOP_SUB_CONNECTION__LABEL;
 
     /**
      * The feature id for the '<em><b>Read Only</b></em>' attribute.
@@ -286,7 +284,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__READ_ONLY = ConnectionPackage.CONNECTION__READ_ONLY;
+    int HCATALOG_CONNECTION__READ_ONLY = HadoopClusterPackage.HADOOP_SUB_CONNECTION__READ_ONLY;
 
     /**
      * The feature id for the '<em><b>Synchronised</b></em>' attribute.
@@ -295,7 +293,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__SYNCHRONISED = ConnectionPackage.CONNECTION__SYNCHRONISED;
+    int HCATALOG_CONNECTION__SYNCHRONISED = HadoopClusterPackage.HADOOP_SUB_CONNECTION__SYNCHRONISED;
 
     /**
      * The feature id for the '<em><b>Divergency</b></em>' attribute.
@@ -304,7 +302,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DIVERGENCY = ConnectionPackage.CONNECTION__DIVERGENCY;
+    int HCATALOG_CONNECTION__DIVERGENCY = HadoopClusterPackage.HADOOP_SUB_CONNECTION__DIVERGENCY;
 
     /**
      * The feature id for the '<em><b>Owned Element</b></em>' containment reference list.
@@ -313,7 +311,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__OWNED_ELEMENT = ConnectionPackage.CONNECTION__OWNED_ELEMENT;
+    int HCATALOG_CONNECTION__OWNED_ELEMENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__OWNED_ELEMENT;
 
     /**
      * The feature id for the '<em><b>Imported Element</b></em>' reference list.
@@ -322,7 +320,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__IMPORTED_ELEMENT = ConnectionPackage.CONNECTION__IMPORTED_ELEMENT;
+    int HCATALOG_CONNECTION__IMPORTED_ELEMENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__IMPORTED_ELEMENT;
 
     /**
      * The feature id for the '<em><b>Data Manager</b></em>' reference list.
@@ -331,7 +329,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DATA_MANAGER = ConnectionPackage.CONNECTION__DATA_MANAGER;
+    int HCATALOG_CONNECTION__DATA_MANAGER = HadoopClusterPackage.HADOOP_SUB_CONNECTION__DATA_MANAGER;
 
     /**
      * The feature id for the '<em><b>Pathname</b></em>' attribute.
@@ -340,7 +338,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__PATHNAME = ConnectionPackage.CONNECTION__PATHNAME;
+    int HCATALOG_CONNECTION__PATHNAME = HadoopClusterPackage.HADOOP_SUB_CONNECTION__PATHNAME;
 
     /**
      * The feature id for the '<em><b>Machine</b></em>' container reference.
@@ -349,7 +347,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__MACHINE = ConnectionPackage.CONNECTION__MACHINE;
+    int HCATALOG_CONNECTION__MACHINE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__MACHINE;
 
     /**
      * The feature id for the '<em><b>Deployed Software System</b></em>' reference list.
@@ -358,7 +356,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DEPLOYED_SOFTWARE_SYSTEM = ConnectionPackage.CONNECTION__DEPLOYED_SOFTWARE_SYSTEM;
+    int HCATALOG_CONNECTION__DEPLOYED_SOFTWARE_SYSTEM = HadoopClusterPackage.HADOOP_SUB_CONNECTION__DEPLOYED_SOFTWARE_SYSTEM;
 
     /**
      * The feature id for the '<em><b>Component</b></em>' reference.
@@ -367,7 +365,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__COMPONENT = ConnectionPackage.CONNECTION__COMPONENT;
+    int HCATALOG_CONNECTION__COMPONENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION__COMPONENT;
 
     /**
      * The feature id for the '<em><b>Is Case Sensitive</b></em>' attribute.
@@ -376,7 +374,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__IS_CASE_SENSITIVE = ConnectionPackage.CONNECTION__IS_CASE_SENSITIVE;
+    int HCATALOG_CONNECTION__IS_CASE_SENSITIVE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__IS_CASE_SENSITIVE;
 
     /**
      * The feature id for the '<em><b>Client Connection</b></em>' reference list.
@@ -385,7 +383,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__CLIENT_CONNECTION = ConnectionPackage.CONNECTION__CLIENT_CONNECTION;
+    int HCATALOG_CONNECTION__CLIENT_CONNECTION = HadoopClusterPackage.HADOOP_SUB_CONNECTION__CLIENT_CONNECTION;
 
     /**
      * The feature id for the '<em><b>Data Package</b></em>' reference list.
@@ -394,7 +392,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DATA_PACKAGE = ConnectionPackage.CONNECTION__DATA_PACKAGE;
+    int HCATALOG_CONNECTION__DATA_PACKAGE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__DATA_PACKAGE;
 
     /**
      * The feature id for the '<em><b>Resource Connection</b></em>' containment reference list.
@@ -403,7 +401,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__RESOURCE_CONNECTION = ConnectionPackage.CONNECTION__RESOURCE_CONNECTION;
+    int HCATALOG_CONNECTION__RESOURCE_CONNECTION = HadoopClusterPackage.HADOOP_SUB_CONNECTION__RESOURCE_CONNECTION;
 
     /**
      * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -412,7 +410,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__VERSION = ConnectionPackage.CONNECTION__VERSION;
+    int HCATALOG_CONNECTION__VERSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION__VERSION;
 
     /**
      * The feature id for the '<em><b>Queries</b></em>' containment reference.
@@ -421,7 +419,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__QUERIES = ConnectionPackage.CONNECTION__QUERIES;
+    int HCATALOG_CONNECTION__QUERIES = HadoopClusterPackage.HADOOP_SUB_CONNECTION__QUERIES;
 
     /**
      * The feature id for the '<em><b>Context Mode</b></em>' attribute.
@@ -430,7 +428,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__CONTEXT_MODE = ConnectionPackage.CONNECTION__CONTEXT_MODE;
+    int HCATALOG_CONNECTION__CONTEXT_MODE = HadoopClusterPackage.HADOOP_SUB_CONNECTION__CONTEXT_MODE;
 
     /**
      * The feature id for the '<em><b>Context Id</b></em>' attribute.
@@ -439,7 +437,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__CONTEXT_ID = ConnectionPackage.CONNECTION__CONTEXT_ID;
+    int HCATALOG_CONNECTION__CONTEXT_ID = HadoopClusterPackage.HADOOP_SUB_CONNECTION__CONTEXT_ID;
 
     /**
      * The feature id for the '<em><b>Context Name</b></em>' attribute.
@@ -448,7 +446,16 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__CONTEXT_NAME = ConnectionPackage.CONNECTION__CONTEXT_NAME;
+    int HCATALOG_CONNECTION__CONTEXT_NAME = HadoopClusterPackage.HADOOP_SUB_CONNECTION__CONTEXT_NAME;
+
+    /**
+     * The feature id for the '<em><b>Relative Hadoop Cluster Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HCATALOG_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID = HadoopClusterPackage.HADOOP_SUB_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID;
 
     /**
      * The feature id for the '<em><b>Distribution</b></em>' attribute.
@@ -457,7 +464,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DISTRIBUTION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 0;
+    int HCATALOG_CONNECTION__DISTRIBUTION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Hcat Version</b></em>' attribute.
@@ -466,7 +473,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__HCAT_VERSION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 1;
+    int HCATALOG_CONNECTION__HCAT_VERSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Hcat Drivers</b></em>' attribute.
@@ -475,7 +482,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__HCAT_DRIVERS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 2;
+    int HCATALOG_CONNECTION__HCAT_DRIVERS = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Host Name</b></em>' attribute.
@@ -484,7 +491,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__HOST_NAME = ConnectionPackage.CONNECTION_FEATURE_COUNT + 3;
+    int HCATALOG_CONNECTION__HOST_NAME = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Port</b></em>' attribute.
@@ -493,7 +500,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__PORT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 4;
+    int HCATALOG_CONNECTION__PORT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>User Name</b></em>' attribute.
@@ -502,7 +509,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__USER_NAME = ConnectionPackage.CONNECTION_FEATURE_COUNT + 5;
+    int HCATALOG_CONNECTION__USER_NAME = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Database</b></em>' attribute.
@@ -511,7 +518,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DATABASE = ConnectionPackage.CONNECTION_FEATURE_COUNT + 6;
+    int HCATALOG_CONNECTION__DATABASE = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Enable Kerberos</b></em>' attribute.
@@ -520,7 +527,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__ENABLE_KERBEROS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 7;
+    int HCATALOG_CONNECTION__ENABLE_KERBEROS = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Krb Principal</b></em>' attribute.
@@ -529,7 +536,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__KRB_PRINCIPAL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 8;
+    int HCATALOG_CONNECTION__KRB_PRINCIPAL = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 8;
 
     /**
      * The feature id for the '<em><b>Krb Realm</b></em>' attribute.
@@ -538,7 +545,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__KRB_REALM = ConnectionPackage.CONNECTION_FEATURE_COUNT + 9;
+    int HCATALOG_CONNECTION__KRB_REALM = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 9;
 
     /**
      * The feature id for the '<em><b>Nn Principal</b></em>' attribute.
@@ -547,7 +554,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__NN_PRINCIPAL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 10;
+    int HCATALOG_CONNECTION__NN_PRINCIPAL = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 10;
 
     /**
      * The number of structural features of the '<em>Connection</em>' class.
@@ -556,7 +563,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 11;
+    int HCATALOG_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 11;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionItemImpl <em>Connection Item</em>}' class.
@@ -575,7 +582,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_ITEM__PROPERTY = PropertiesPackage.CONNECTION_ITEM__PROPERTY;
+    int HCATALOG_CONNECTION_ITEM__PROPERTY = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__PROPERTY;
 
     /**
      * The feature id for the '<em><b>State</b></em>' reference.
@@ -584,7 +591,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_ITEM__STATE = PropertiesPackage.CONNECTION_ITEM__STATE;
+    int HCATALOG_CONNECTION_ITEM__STATE = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__STATE;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' reference.
@@ -593,7 +600,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_ITEM__PARENT = PropertiesPackage.CONNECTION_ITEM__PARENT;
+    int HCATALOG_CONNECTION_ITEM__PARENT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__PARENT;
 
     /**
      * The feature id for the '<em><b>Reference Resources</b></em>' reference list.
@@ -602,7 +609,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_ITEM__REFERENCE_RESOURCES = PropertiesPackage.CONNECTION_ITEM__REFERENCE_RESOURCES;
+    int HCATALOG_CONNECTION_ITEM__REFERENCE_RESOURCES = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__REFERENCE_RESOURCES;
 
     /**
      * The feature id for the '<em><b>File Extension</b></em>' attribute.
@@ -611,7 +618,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_ITEM__FILE_EXTENSION = PropertiesPackage.CONNECTION_ITEM__FILE_EXTENSION;
+    int HCATALOG_CONNECTION_ITEM__FILE_EXTENSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__FILE_EXTENSION;
 
     /**
      * The feature id for the '<em><b>Connection</b></em>' reference.
@@ -620,7 +627,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_ITEM__CONNECTION = PropertiesPackage.CONNECTION_ITEM__CONNECTION;
+    int HCATALOG_CONNECTION_ITEM__CONNECTION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__CONNECTION;
 
     /**
      * The number of structural features of the '<em>Connection Item</em>' class.
@@ -629,7 +636,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_ITEM_FEATURE_COUNT = PropertiesPackage.CONNECTION_ITEM_FEATURE_COUNT + 0;
+    int HCATALOG_CONNECTION_ITEM_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM_FEATURE_COUNT + 0;
 
 
     /**

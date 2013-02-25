@@ -19,15 +19,16 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
+ javax.wsdl,
  org.talend.model;visibility:=reexport,
  org.talend.core.runtime,
  org.talend.core,
  org.talend.core.repository,
  org.talend.repository.metadata,
+ org.talend.metadata.managment.ui,
  org.talend.repository,
  org.talend.libraries.apache,
  org.talend.designer.hdfsbrowse,
- org.talend.metadata.managment.ui,
- javax.wsdl
+ org.talend.repository.hadoopcluster
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.talend.repository.hcatalog.Activator
