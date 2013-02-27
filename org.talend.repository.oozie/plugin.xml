@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.talend.core.repository.repository_node_provider">
+      <repositoryNode
+            alias="Oozie"
+            class="org.talend.repository.oozie.node.OozieExtendNode"
+            folder="metadata/hadoop/oozie"
+            isResouce="true"
+            label="%OOZIE"
+            products="DI"
+            type="OOZIE">
+      </repositoryNode>
+   </extension>
+   <extension
+         point="org.talend.core.repository.repository_content">
+      <RepositoryContent
+            class="org.talend.repository.oozie.node.OozieRepositoryContentHandler">
+      </RepositoryContent>
+   </extension>
+   <extension
+         point="org.talend.core.repositoryContextualsActions">
+      <Action
+            class="org.talend.repository.oozie.action.EditOoziePropertiesAction"
+            id="org.talend.repository.oozie.action.EditOoziePropertiesAction"
+            isPropertiesAction="true"
+            name="Edit Properties">
+      </Action>
+      <Action
+            class="org.talend.repository.oozie.action.CreateOozieAction"
+            id="org.talend.repository.oozie.action.CreateOozieAction"
+            isEditAction="true"
+            isReadAction="true"
+            level="10"
+            name="Metadata/Create OOZIE">
+      </Action>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.talend.repository.model.oozie.OoziePackage"
+            uri="http://www.talend.org/oozie">
+      </package>
+   </extension>
+   <extension
+         point="org.talend.core.repository.repositorySeeker">
+      <seeker
+            class="org.talend.repository.oozie.ui.viewer.seeker.OozieRepositorySeeker"
+            name="OOZIE">
+      </seeker>
+   </extension>
+
+</plugin>
