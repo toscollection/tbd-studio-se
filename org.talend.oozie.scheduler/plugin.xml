@@ -16,17 +16,10 @@
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.talend.core.prefs"
-            class="org.talend.designer.core.ui.preferences.OozieSchedulerPreferencePage"
+            class="org.talend.oozie.scheduler.ui.prefs.OozieSchedulerPreferencePage"
             id="org.talend.designer.core.oozie.scheduler"
             name="Oozie">
       </page>
-   </extension>
-   <extension
-         point="org.talend.core.runtime.classloader_provider">
-      <classloader
-            index="OOZIE:HORTONWORKS:HDP_1_0"
-            libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hdp-dummy.jar">
-      </classloader>
    </extension>
 
 </plugin>

@@ -13,15 +13,11 @@
 package org.talend.oozie.scheduler.ui;
 
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 
 /**
@@ -29,21 +25,19 @@ import org.talend.oozie.scheduler.constants.TOozieUIConstants;
  */
 public class TOozieSettingDialog extends Dialog {
 
-    private Text nameNodeEndPointTxt;// "Name Node End Point" Text widget
+    private String hadoopDistributionValue;
 
-    private Text jobTrackerEndPointTxt;// "Job Tracker End Point" Text widget
+    private String hadoopVersionValue;
 
-    private Text oozieEndPointTxt;// "Oozie End Point" Text widget
+    private String nameNodeEndPointValue;
 
-    private Text userNameTxt;// "User Name" Text widget for hadoop
+    private String jobTrackerEndPointValue;
 
-    private String nameNodeEndPointValue;// The value of "Name Node End Point" Text widget
+    private String oozieEndPointValue;
 
-    private String jobTrackerEndPointValue;// The value of "Job Tracker End Point" Text widget
+    private String userNameValue;
 
-    private String oozieEndPointValue;// The value of "Oozie End Point" Text widget
-
-    private String userNameValue;// The value of "User Name" Text widget
+    private OozieSettingComposite settingComposite;
 
     /**
      * @param parentShell
@@ -57,86 +51,61 @@ public class TOozieSettingDialog extends Dialog {
     protected void configureShell(Shell parentShell) {
         super.configureShell(parentShell);
         parentShell.setText(TOozieUIConstants.OOZIE_DLG_SETTING_TITLE);
-
     }
 
-    /**
-     * 
-     */
+    @Override
     protected Control createDialogArea(Composite parent) {
-        Composite comp = new Composite(parent, SWT.NONE);
-        GridDataFactory.fillDefaults().grab(true, true).applyTo(comp);
+        settingComposite = new OozieSettingComposite(parent, SWT.BORDER) {
 
-        GridLayout gridLayout = new GridLayout(2, false);
-        comp.setLayout(gridLayout);
-
-        // Name node end point
-        Label nameNodeEPLbl = new Label(comp, SWT.NONE);
-        nameNodeEPLbl.setText(TOozieUIConstants.OOZIE_LBL_NAME_NODE_EP);
-
-        nameNodeEndPointTxt = new Text(comp, SWT.BORDER);
-        nameNodeEndPointTxt.setText(nameNodeEndPointValue == null ? "" : nameNodeEndPointValue);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(nameNodeEndPointTxt);
-
-        // Job tracker end point
-        Label jobTrackerEPLbl = new Label(comp, SWT.NONE);
-        jobTrackerEPLbl.setText(TOozieUIConstants.OOZIE_LBL_JOB_TRACKER_EP);
-
-        jobTrackerEndPointTxt = new Text(comp, SWT.BORDER);
-        jobTrackerEndPointTxt.setText(jobTrackerEndPointValue == null ? "" : jobTrackerEndPointValue);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(jobTrackerEndPointTxt);
-
-        // Oozie end point
-        Label oozieEPLbl = new Label(comp, SWT.NONE);
-        oozieEPLbl.setText(TOozieUIConstants.OOZIE_LBL_OOZIE_EP);
-
-        oozieEndPointTxt = new Text(comp, SWT.BORDER);
-        oozieEndPointTxt.setText(oozieEndPointValue == null ? "" : oozieEndPointValue);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(oozieEndPointTxt);
-
-        // UserName for hadoop
-        Label userNameLbl = new Label(comp, SWT.NONE);
-        userNameLbl.setText(TOozieUIConstants.OOZIE_LBL_USERNAME);
-
-        userNameTxt = new Text(comp, SWT.BORDER);
-        userNameTxt.setText(userNameValue == null ? "" : userNameValue);
-        GridDataFactory.fillDefaults().grab(true, false).applyTo(userNameTxt);
+            /*
+             * (non-Javadoc)
+             * 
+             * @see org.talend.oozie.scheduler.ui.OozieSettingComposite#preInitialization()
+             */
+            @Override
+            protected void preInitialization() {
+                super.preInitialization();
+                setHadoopDistributionValue(hadoopDistributionValue);
+                setHadoopVersionValue(hadoopVersionValue);
+                setNameNodeEndPointValue(nameNodeEndPointValue);
+                setJobTrackerEndPointValue(jobTrackerEndPointValue);
+                setOozieEndPointValue(oozieEndPointValue);
+                setUserNameValue(userNameValue);
+            }
+        };
 
         return parent;
     }
 
     /**
-     * Saves all the information like "Name node end point", "Job tracker end point" and "Oozie end point" to project
-     * preference. And sets the dialog's return code to <code>Window.OK</code> and closes the dialog.
-     */
-    @Override
-    protected void okPressed() {
-        doOk();
-        super.okPressed();
-    }
-
-    /**
-     * Gets the values of "Name node", "Job tracker" and "Oozie" to save.
-     */
-    protected void doOk() {
-        nameNodeEndPointValue = nameNodeEndPointTxt.getText();
-        jobTrackerEndPointValue = jobTrackerEndPointTxt.getText();
-        oozieEndPointValue = oozieEndPointTxt.getText();
-        userNameValue = userNameTxt.getText();
-    }
-
-    /**
      * Reset the dialog size.
      */
+    @Override
     protected Point getInitialSize() {
         Point result = super.getInitialSize();
         result.x = 500;
-        result.y = 220;
+        result.y = 350;
         return result;
     }
 
+    public String getHadoopDistributionValue() {
+        return settingComposite.getHadoopDistributionValue();
+    }
+
+    public void setHadoopDistributionValue(String hadoopDistributionValue) {
+        this.hadoopDistributionValue = hadoopDistributionValue;
+    }
+
+    public String getHadoopVersionValue() {
+        return settingComposite.getHadoopVersionValue();
+    }
+
+    public void setHadoopVersionValue(String hadoopVersionValue) {
+        this.hadoopVersionValue = hadoopVersionValue;
+    }
+
     public String getNameNodeEndPointValue() {
-        return this.nameNodeEndPointValue;
+        return settingComposite.getNameNodeEndPointValue();
     }
 
     public void setNameNodeEndPointValue(String nameNodeEndPointValue) {
@@ -144,7 +113,7 @@ public class TOozieSettingDialog extends Dialog {
     }
 
     public String getJobTrackerEndPointValue() {
-        return this.jobTrackerEndPointValue;
+        return settingComposite.getJobTrackerEndPointValue();
     }
 
     public void setJobTrackerEndPointValue(String jobTrackerEndPointValue) {
@@ -152,7 +121,7 @@ public class TOozieSettingDialog extends Dialog {
     }
 
     public String getOozieEndPointValue() {
-        return this.oozieEndPointValue;
+        return settingComposite.getOozieEndPointValue();
     }
 
     public void setOozieEndPointValue(String oozieEndPointValue) {
@@ -160,7 +129,7 @@ public class TOozieSettingDialog extends Dialog {
     }
 
     public String getUserNameValue() {
-        return this.userNameValue;
+        return settingComposite.getUserNameValue();
     }
 
     public void setUserNameValue(String userNameValue) {

@@ -26,6 +26,7 @@ import org.talend.core.CorePlugin;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ProcessItem;
 import org.talend.core.prefs.ITalendCorePrefConstants;
+import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
 import org.talend.designer.hdfsbrowse.reflection.HadoopClassConstants;
 import org.talend.designer.hdfsbrowse.reflection.HadoopReflection;
@@ -84,7 +85,8 @@ public class OozieJobDeployer {
     }
 
     private static void uploadProcess(IProcess2 process, String unzipDir) throws OozieJobDeployException {
-        String appPathOnHDFSParent = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
+        String appPathOnHDFSParent = (String) process.getElementParameter(EOozieParameterName.HADOOP_APP_PATH.getName())
+                .getValue();
         Object fs = null;
         ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -133,12 +135,10 @@ public class OozieJobDeployer {
             });
 
             if (files != null && files.length > 0) {
-                for (int i = 0; i < files.length; i++) {
-                    File file = files[i];
+                for (File file : files) {
                     File[] tempFiles = file.listFiles();
                     if (tempFiles != null && tempFiles.length > 0) {
-                        for (int j = 0; j < tempFiles.length; j++) {
-                            File tempFile = tempFiles[j];
+                        for (File tempFile : tempFiles) {
                             String destPath = appPathOnHDFSParent + "/lib/" + tempFile.getName(); //$NON-NLS-1$
                             HadoopServerUtil.upload(tempFile, destPath, fs, classLoader);
                         }

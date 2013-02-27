@@ -38,6 +38,7 @@ import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
+import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.oozie.scheduler.constants.TOozieImages;
@@ -185,6 +186,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     protected void regScheduleBtnListener() {
         scheduleBtn.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 executeJobCompController.doScheduleAction(contextComposite.getSelectedContext());
             }
@@ -194,6 +196,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     protected void regRunBtnListener() {
         runBtn.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 executeJobCompController.doRunAction(contextComposite.getSelectedContext());
             }
@@ -203,6 +206,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     protected void regKillBtnListener() {
         killBtn.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 executeJobCompController.doKillAction();
             }
@@ -212,6 +216,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     protected void regSettingBtnListener() {
         settingBtn.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 executeJobCompController.doSettingAction();
             }
@@ -236,6 +241,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     protected void regBtnEditListener() {
         btnEdit.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 executeJobCompController.doSetPathAction();
             }
@@ -245,6 +251,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     protected void regMonitoringBtnListener() {
         monitoringBtn.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(SelectionEvent e) {
                 executeJobCompController.doMonitoringBtnAction();
             }
@@ -261,7 +268,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     public String getPathValue() {
         if (getEditor() != null) {
             IProcess2 process = OozieJobTrackerListener.getProcess();
-            String appPath = (String) process.getElementParameter("HADOOP_APP_PATH").getValue();
+            String appPath = (String) process.getElementParameter(EOozieParameterName.HADOOP_APP_PATH.getName()).getValue();
             return appPath;
         }
         return "";
@@ -281,7 +288,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     public void setPathValue(String pathValue) {
         if (getEditor() != null && !pathValue.equals(getPathValue()) && !OozieJobTrackerListener.getProcess().isReadOnly()) {
             IProcess2 process = OozieJobTrackerListener.getProcess();
-            getCommandStack().execute(new PropertyChangeCommand(process, "HADOOP_APP_PATH", pathValue.trim()));
+            getCommandStack().execute(
+                    new PropertyChangeCommand(process, EOozieParameterName.HADOOP_APP_PATH.getName(), pathValue.trim()));
         }
     }
 

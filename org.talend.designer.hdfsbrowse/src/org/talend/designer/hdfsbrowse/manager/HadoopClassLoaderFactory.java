@@ -25,18 +25,26 @@ public class HadoopClassLoaderFactory {
         if (connectionBean == null) {
             return loader;
         }
-
         String distribution = connectionBean.getDistribution();
         String version = connectionBean.getDfVersion();
+        boolean enableKerberos = connectionBean.isEnableKerberos();
         if (distribution == null || version == null) {
             return loader;
         }
 
+        return getClassLoader(distribution, version, enableKerberos);
+    }
+
+    public static ClassLoader getClassLoader(String distribution, String version) {
+        return getClassLoader(distribution, version, false);
+    }
+
+    public static ClassLoader getClassLoader(String distribution, String version, boolean enableKerberos) {
         String index = "HDFS" + ":" + distribution + ":" + version; //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
-        if (connectionBean.isEnableKerberos()) {
+        if (enableKerberos) {
             index += "?USE_KRB"; //$NON-NLS-1$
         }
-        loader = ClassLoaderFactory.getClassLoader(index);
+        ClassLoader loader = ClassLoaderFactory.getClassLoader(index);
         if (loader == null) {
             loader = HadoopClassLoaderFactory.class.getClassLoader();
         }
