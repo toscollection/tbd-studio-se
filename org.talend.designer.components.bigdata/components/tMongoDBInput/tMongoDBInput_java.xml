@@ -33,7 +33,7 @@
 		<PARAMETER 
 			NAME="USE_EXISTING_CONNECTION" 
 			FIELD="CHECK"
-			NUM_ROW="2"
+			NUM_ROW="1"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>false</DEFAULT>
@@ -42,10 +42,20 @@
 			NAME="CONNECTION" 
 			FIELD="COMPONENT_LIST" 
 			FILTER="tMongoDBConnection"
-			NUM_ROW="2" 
+			NUM_ROW="1" 
 			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 			GROUP="CONNECTION"
 		/>
+        <PARAMETER 
+            NAME="DB_VERSION" 
+            FIELD="CLOSED_LIST" 
+            NUM_ROW="2" 
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')" 
+            GROUP="CONNECTION">
+            <ITEMS DEFAULT="MONGO_2_2_3">
+                <ITEM NAME="MONGO_2_2_3" VALUE="MONGO_2_2_3"/>
+            </ITEMS>
+        </PARAMETER>
 		<PARAMETER 
 			FIELD="CHECK" 
 			NAME="USE_REPLICA_SET" 
