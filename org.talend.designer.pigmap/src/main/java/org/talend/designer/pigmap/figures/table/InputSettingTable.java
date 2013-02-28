@@ -22,6 +22,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.talend.designer.gefabstractmap.figures.ComboCellLabel;
 import org.talend.designer.gefabstractmap.figures.borders.ColumnBorder;
 import org.talend.designer.gefabstractmap.figures.borders.RowBorder;
+import org.talend.designer.gefabstractmap.figures.cells.ITextCell;
 import org.talend.designer.gefabstractmap.figures.layout.RowLayout;
 import org.talend.designer.gefabstractmap.figures.table.AbstractTable;
 import org.talend.designer.gefabstractmap.figures.table.ColumnKeyConstant;
@@ -30,11 +31,8 @@ import org.talend.designer.gefabstractmap.figures.table.TableColumn;
 import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.gefabstractmap.resource.ColorInfo;
 import org.talend.designer.gefabstractmap.resource.ColorProviderMapper;
-import org.talend.designer.pigmap.figures.tablesettings.IUILookupMode;
-import org.talend.designer.pigmap.figures.tablesettings.IUIMatchingMode;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_LOOKUP_MODE;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_MATCHING_MODE;
-import org.talend.designer.pigmap.figures.tablesettings.TableSettingsConstant;
+import org.talend.designer.pigmap.figures.tablesettings.IUIJoinOptimization;
+import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapPackage;
 
@@ -45,21 +43,21 @@ public class InputSettingTable extends AbstractTable {
 
     private InputTable inputTable;
 
-    private Figure lookupModelRow;
-
-    private ComboCellLabel lookupModel;
-
-    private Figure matchModelRow;
-
-    private ComboCellLabel matchModel;
-
     private Figure joinModelRow;
 
     private ComboCellLabel joinModel;
 
-    private Figure persistentModelRow;
+    private Figure joinOptimizationRow;
 
-    private ComboCellLabel persistentModel;
+    private ComboCellLabel joinOptimization;
+
+    private Figure customPartitionerRow;
+
+    private TextCellLabel customPartitioner;
+
+    private Figure increaseParallelismRow;
+
+    private TextCellLabel increaseParallelism;
 
     public InputSettingTable(PigMapTableManager tableModelManager) {
         super(tableModelManager);
@@ -89,77 +87,72 @@ public class InputSettingTable extends AbstractTable {
 
         Figure container = getTableItemContainer();
 
-        lookupModelRow = new Figure();
-        lookupModelRow.setLayoutManager(new RowLayout());
-        Label label = new Label();
-        label.setText("Lookup Model");
-        label.setLabelAlignment(PositionConstants.LEFT);
-        CompoundBorder compoundBorder = new CompoundBorder(new ColumnBorder(), new RowBorder(2, 5, 2, -1));
-        label.setBorder(compoundBorder);
-        lookupModelRow.add(label);
-        lookupModel = new ComboCellLabel();
-        lookupModel.setDirectEditType(DirectEditType.LOOKUP_MODEL);
-        lookupModel.setText(getLookupDisplayName(inputTable.getLookupMode()));
-        lookupModel.setLabelAlignment(PositionConstants.LEFT);
-        lookupModel.setBorder(new RowBorder(2, 5, 2, -1));
-        lookupModelRow.add(lookupModel);
-        container.add(lookupModelRow);
-
-        matchModelRow = new Figure();
-        matchModelRow.setLayoutManager(new RowLayout());
-        label = new Label();
-        label.setText("Match Model");
-        label.setLabelAlignment(PositionConstants.LEFT);
-        compoundBorder = new CompoundBorder(new ColumnBorder(), new RowBorder(2, 5, 2, -1));
-        label.setBorder(compoundBorder);
-        matchModelRow.add(label);
-        matchModel = new ComboCellLabel();
-        matchModel.setDirectEditType(DirectEditType.MATCH_MODEL);
-        matchModel.setText(getMatchModelDisplayName(inputTable.getMatchingMode()));
-        matchModel.setLabelAlignment(PositionConstants.LEFT);
-        matchModel.setBorder(new RowBorder(2, 5, 2, -1));
-        matchModelRow.add(matchModel);
-        container.add(matchModelRow);
-
         joinModelRow = new Figure();
         joinModelRow.setLayoutManager(new RowLayout());
-        label = new Label();
+        Label label = new Label();
         label.setText("Join Model");
         label.setLabelAlignment(PositionConstants.LEFT);
-        compoundBorder = new CompoundBorder(new ColumnBorder(), new RowBorder(2, 5, 2, -1));
+        CompoundBorder compoundBorder = new CompoundBorder(new ColumnBorder(), new RowBorder(2, 5, 2, -1));
         label.setBorder(compoundBorder);
         joinModelRow.add(label);
         joinModel = new ComboCellLabel();
         joinModel.setDirectEditType(DirectEditType.JOIN_MODEL);
-
-        String join = "";
-        if (inputTable.isInnerJoin()) {
-            join = TableSettingsConstant.INNER_JOIN;
-        } else {
-            join = TableSettingsConstant.LEFT_OUTER_JOIN;
-        }
-
-        joinModel.setText(join);
+        joinModel.setText(inputTable.getJoinModel());
         joinModel.setLabelAlignment(PositionConstants.LEFT);
         joinModel.setBorder(new RowBorder(2, 5, 2, -1));
         joinModelRow.add(joinModel);
         container.add(joinModelRow);
 
-        persistentModelRow = new Figure();
-        persistentModelRow.setLayoutManager(new RowLayout());
+        //
+        joinOptimizationRow = new Figure();
+        joinOptimizationRow.setLayoutManager(new RowLayout());
         label = new Label();
-        label.setText("Store Temp Data");
+        label.setText("Join Optimization");
         label.setLabelAlignment(PositionConstants.LEFT);
         compoundBorder = new CompoundBorder(new ColumnBorder(), new RowBorder(2, 5, 2, -1));
         label.setBorder(compoundBorder);
-        persistentModelRow.add(label);
-        persistentModel = new ComboCellLabel();
-        persistentModel.setDirectEditType(DirectEditType.PERSISTENT_MODEL);
-        persistentModel.setText(String.valueOf(inputTable.isPersistent()));
-        persistentModel.setLabelAlignment(PositionConstants.LEFT);
-        persistentModel.setBorder(new RowBorder(2, 5, 2, -1));
-        persistentModelRow.add(persistentModel);
-        container.add(persistentModelRow);
+        joinOptimizationRow.add(label);
+        joinOptimization = new ComboCellLabel();
+        joinOptimization.setDirectEditType(DirectEditType.JOIN_OPTIMIZATION);
+        joinOptimization.setText(getJoinOptimizationDisplayName(inputTable.getJoinOptimization()));
+        joinOptimization.setLabelAlignment(PositionConstants.LEFT);
+        joinOptimization.setBorder(new RowBorder(2, 5, 2, -1));
+        joinOptimizationRow.add(joinOptimization);
+        container.add(joinOptimizationRow);
+
+        //
+        customPartitionerRow = new Figure();
+        customPartitionerRow.setLayoutManager(new RowLayout());
+        label = new Label();
+        label.setText("Custom Partitioner");
+        label.setLabelAlignment(PositionConstants.LEFT);
+        compoundBorder = new CompoundBorder(new ColumnBorder(), new RowBorder(2, 5, 2, -1));
+        label.setBorder(compoundBorder);
+        customPartitionerRow.add(label);
+        customPartitioner = new TextCellLabel();
+        customPartitioner.setDirectEditType(DirectEditType.CUSTOM_PARTITIONER);
+        customPartitioner.setText(inputTable.getCustomPartitioner());
+        customPartitioner.setLabelAlignment(PositionConstants.LEFT);
+        customPartitioner.setBorder(new RowBorder(2, 5, 2, -1));
+        customPartitionerRow.add(customPartitioner);
+        container.add(customPartitionerRow);
+
+        //
+        increaseParallelismRow = new Figure();
+        increaseParallelismRow.setLayoutManager(new RowLayout());
+        label = new Label();
+        label.setText("Increase Parallelism");
+        label.setLabelAlignment(PositionConstants.LEFT);
+        compoundBorder = new CompoundBorder(new ColumnBorder(), new RowBorder(2, 5, 2, -1));
+        label.setBorder(compoundBorder);
+        increaseParallelismRow.add(label);
+        increaseParallelism = new TextCellLabel();
+        increaseParallelism.setDirectEditType(DirectEditType.INCREASE_PARALLELISM);
+        increaseParallelism.setText(inputTable.getIncreaseParallelism());
+        increaseParallelism.setLabelAlignment(PositionConstants.LEFT);
+        increaseParallelism.setBorder(new RowBorder(2, 5, 2, -1));
+        increaseParallelismRow.add(increaseParallelism);
+        container.add(increaseParallelismRow);
         container.setOpaque(true);
         container.setBackgroundColor(ColorConstants.white);
 
@@ -169,25 +162,25 @@ public class InputSettingTable extends AbstractTable {
 
             @Override
             public void mousePressed(MouseEvent me) {
-                boolean lookup = lookupModelRow.containsPoint(me.x, me.y);
-                if (lookup) {
-                    if (selectedFigure != lookupModelRow) {
-                        lookupModelRow.setOpaque(true);
-                        lookupModelRow.setBackgroundColor(ColorProviderMapper.getColor(ColorInfo.COLOR_COLUMN_TREE_SETTING));
-                        matchModelRow.setOpaque(false);
+                boolean joinOptimization = joinOptimizationRow.containsPoint(me.x, me.y);
+                if (joinOptimization) {
+                    if (selectedFigure != joinOptimizationRow) {
+                        joinOptimizationRow.setOpaque(true);
+                        joinOptimizationRow.setBackgroundColor(ColorProviderMapper.getColor(ColorInfo.COLOR_COLUMN_TREE_SETTING));
+                        customPartitionerRow.setOpaque(false);
                         joinModelRow.setOpaque(false);
-                        persistentModelRow.setOpaque(false);
+                        increaseParallelismRow.setOpaque(false);
                     }
                     return;
                 }
-                boolean matchModel = matchModelRow.containsPoint(me.x, me.y);
-                if (matchModel) {
-                    if (selectedFigure != matchModelRow) {
-                        matchModelRow.setOpaque(true);
-                        matchModelRow.setBackgroundColor(ColorProviderMapper.getColor(ColorInfo.COLOR_COLUMN_TREE_SETTING));
-                        lookupModelRow.setOpaque(false);
+                boolean customPartitioner = customPartitionerRow.containsPoint(me.x, me.y);
+                if (customPartitioner) {
+                    if (selectedFigure != customPartitionerRow) {
+                        customPartitionerRow.setOpaque(true);
+                        customPartitionerRow.setBackgroundColor(ColorProviderMapper.getColor(ColorInfo.COLOR_COLUMN_TREE_SETTING));
+                        joinOptimizationRow.setOpaque(false);
                         joinModelRow.setOpaque(false);
-                        persistentModelRow.setOpaque(false);
+                        increaseParallelismRow.setOpaque(false);
                     }
                     return;
                 }
@@ -196,19 +189,20 @@ public class InputSettingTable extends AbstractTable {
                     if (selectedFigure != joinModelRow) {
                         joinModelRow.setOpaque(true);
                         joinModelRow.setBackgroundColor(ColorProviderMapper.getColor(ColorInfo.COLOR_COLUMN_TREE_SETTING));
-                        lookupModelRow.setOpaque(false);
-                        matchModelRow.setOpaque(false);
-                        persistentModelRow.setOpaque(false);
+                        joinOptimizationRow.setOpaque(false);
+                        customPartitionerRow.setOpaque(false);
+                        increaseParallelismRow.setOpaque(false);
                     }
                     return;
                 }
-                boolean persistentModel = persistentModelRow.containsPoint(me.x, me.y);
-                if (persistentModel) {
-                    if (selectedFigure != persistentModelRow) {
-                        persistentModelRow.setOpaque(true);
-                        persistentModelRow.setBackgroundColor(ColorProviderMapper.getColor(ColorInfo.COLOR_COLUMN_TREE_SETTING));
-                        lookupModelRow.setOpaque(false);
-                        matchModelRow.setOpaque(false);
+                boolean increaseParallelism = increaseParallelismRow.containsPoint(me.x, me.y);
+                if (increaseParallelism) {
+                    if (selectedFigure != increaseParallelismRow) {
+                        increaseParallelismRow.setOpaque(true);
+                        increaseParallelismRow.setBackgroundColor(ColorProviderMapper
+                                .getColor(ColorInfo.COLOR_COLUMN_TREE_SETTING));
+                        joinOptimizationRow.setOpaque(false);
+                        customPartitionerRow.setOpaque(false);
                         joinModelRow.setOpaque(false);
                     }
                 }
@@ -225,58 +219,64 @@ public class InputSettingTable extends AbstractTable {
         });
     }
 
-    private String getLookupDisplayName(String lookupModel) {
-        IUILookupMode[] availableJoins = { PIG_MAP_LOOKUP_MODE.LOAD_ONCE, PIG_MAP_LOOKUP_MODE.RELOAD,
-                PIG_MAP_LOOKUP_MODE.CACHE_OR_RELOAD };
-        for (IUILookupMode model : availableJoins) {
-            if (model.toString().equals(lookupModel)) {
+    private String getJoinOptimizationDisplayName(String joinOptimization) {
+        IUIJoinOptimization[] availableJoins = { PIG_MAP_JOIN_OPTIMIZATION.NONE, PIG_MAP_JOIN_OPTIMIZATION.REPLICATED,
+                PIG_MAP_JOIN_OPTIMIZATION.SKEWED, PIG_MAP_JOIN_OPTIMIZATION.MERGE };
+        for (IUIJoinOptimization model : availableJoins) {
+            if (model.toString().equals(joinOptimization)) {
                 return model.getLabel();
             }
         }
-        return lookupModel;
-    }
-
-    private String getMatchModelDisplayName(String matcheModel) {
-        IUIMatchingMode[] allMatchingModel = PIG_MAP_MATCHING_MODE.values();
-        for (IUIMatchingMode model : allMatchingModel) {
-            if (model.toString().equals(matcheModel)) {
-                return model.getLabel();
-            }
-        }
-        return matcheModel;
+        return joinOptimization;
     }
 
     public void update(int type) {
         switch (type) {
-        case PigmapPackage.INPUT_TABLE__LOOKUP_MODE:
-            lookupModel.setText(getLookupDisplayName(inputTable.getLookupMode()));
+        case PigmapPackage.INPUT_TABLE__JOIN_MODEL:
+            joinModel.setText(inputTable.getJoinModel());
             break;
-        case PigmapPackage.INPUT_TABLE__MATCHING_MODE:
-            matchModel.setText(getMatchModelDisplayName(inputTable.getMatchingMode()));
+        case PigmapPackage.INPUT_TABLE__JOIN_OPTIMIZATION:
+            joinOptimization.setText(getJoinOptimizationDisplayName(inputTable.getJoinOptimization()));
             break;
-        case PigmapPackage.INPUT_TABLE__INNER_JOIN:
-            joinModel.setText(String.valueOf(inputTable.isInnerJoin()));
+        case PigmapPackage.INPUT_TABLE__CUSTOM_PARTITIONER:
+            customPartitioner.setText(inputTable.getCustomPartitioner());
             break;
-        case PigmapPackage.INPUT_TABLE__PERSISTENT:
-            persistentModel.setText(String.valueOf(inputTable.isPersistent()));
+        case PigmapPackage.INPUT_TABLE__INCREASE_PARALLELISM:
+            increaseParallelism.setText(inputTable.getIncreaseParallelism());
         default:
             break;
         }
     }
 
     public void deselectTableSettingRows() {
-        if (lookupModelRow.isOpaque()) {
-            lookupModelRow.setOpaque(false);
-        }
-        if (matchModelRow.isOpaque()) {
-            matchModelRow.setOpaque(false);
-        }
         if (joinModelRow.isOpaque()) {
             joinModelRow.setOpaque(false);
         }
-        if (persistentModelRow.isOpaque()) {
-            persistentModelRow.setOpaque(false);
+        if (joinOptimizationRow.isOpaque()) {
+            joinOptimizationRow.setOpaque(false);
+        }
+        if (customPartitionerRow.isOpaque()) {
+            customPartitionerRow.setOpaque(false);
+        }
+        if (increaseParallelismRow.isOpaque()) {
+            increaseParallelismRow.setOpaque(false);
         }
     }
 
+    /**
+     * 
+     * DOC hcyi InputSettingTable class global comment. Detailled comment
+     */
+    class TextCellLabel extends Label implements ITextCell {
+
+        private DirectEditType type;
+
+        public void setDirectEditType(DirectEditType type) {
+            this.type = type;
+        }
+
+        public DirectEditType getDirectEditType() {
+            return this.type;
+        }
+    }
 }

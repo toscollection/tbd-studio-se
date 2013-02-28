@@ -17,20 +17,24 @@ package org.talend.designer.pigmap.figures.tablesettings;
  */
 public class TableSettingsConstant {
 
-    public static final String MATCH_MODEL_SETTING = "Match Model"; //$NON-NLS-1$
+    public static final String JOIN_MODEL_SETTING = "Join Model";
 
-    public static final String LOOKUP_MODEL_SETTING = "Lookup Model"; //$NON-NLS-1$
+    public static final String JOIN_OPTIMIZATION_SETTING = "Join Optimization";
 
-    public static final String JOIN_MODEL_SETTING = "Join Model"; //$NON-NLS-1$
+    public static final String CUSTOM_PARTITIONER_SETTING = "Custom Partitioner";
 
-    public static final String PERSISTENCE_MODEL_SETTING = "Store temp data"; //$NON-NLS-1$
+    public static final String INCREASE_PARALLELISM_SETTING = "Increase Parallelism";
 
-    public static final String OUTPUT_REJECT = "Catch output reject"; //$NON-NLS-1$
+    public static final String OUTPUT_REJECT = "Catch output reject";
 
-    public static final String LOOK_UP_INNER_JOIN_REJECT = "Catch lookup inner join reject"; //$NON-NLS-1$
+    public static final String LOOK_UP_INNER_JOIN_REJECT = "Catch lookup inner join reject";
 
     public static final String INNER_JOIN = "Inner Join";
 
     public static final String LEFT_OUTER_JOIN = "Left Outer Join";
+
+    public static final String RIGHT_OUTER_JOIN = "Right Outer Join";
+
+    public static final String FULL_OUTER_JOIN = "Full Outer Join";
 
 }

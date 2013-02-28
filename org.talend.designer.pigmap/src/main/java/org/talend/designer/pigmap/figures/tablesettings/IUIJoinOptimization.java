@@ -16,7 +16,7 @@ package org.talend.designer.pigmap.figures.tablesettings;
  * 
  * DOC hcyi class global comment. Detailled comment
  */
-public interface IUILookupMode extends IUIMenuOption {
+public interface IUIJoinOptimization extends IUIMenuOption {
 
-    public LOOKUP_MODE getLookupMode();
+    public JOIN_OPTIMIZATION getJoinOptimization();
 }

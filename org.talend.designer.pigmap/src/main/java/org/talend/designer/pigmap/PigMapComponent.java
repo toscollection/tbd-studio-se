@@ -32,13 +32,10 @@ import org.talend.core.model.process.IExternalData;
 import org.talend.core.model.process.IHashConfiguration;
 import org.talend.core.model.process.IHashableColumn;
 import org.talend.core.model.process.IHashableInputConnections;
-import org.talend.core.model.process.ILookupMode;
-import org.talend.core.model.process.IMatchingMode;
 import org.talend.core.model.process.Problem;
 import org.talend.core.model.utils.TalendTextUtils;
-import org.talend.designer.components.lookup.common.ICommonLookup.MATCHING_MODE;
 import org.talend.designer.core.model.utils.emf.talendfile.AbstractExternalData;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_LOOKUP_MODE;
+import org.talend.designer.pigmap.figures.tablesettings.JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
@@ -170,15 +167,10 @@ public class PigMapComponent extends AbstractExternalNode implements IHashableIn
                     }
                 }
 
-                IMatchingMode matchingMode = MATCHING_MODE.parse(inputTable.getMatchingMode());
-                if (matchingMode == null) {
-                    matchingMode = MATCHING_MODE.UNIQUE_MATCH;
-                }
-
-                ILookupMode lookupMode = org.talend.designer.pigmap.figures.tablesettings.LOOKUP_MODE.parse(inputTable
-                        .getLookupMode());
-                if (lookupMode == null) {
-                    lookupMode = org.talend.designer.pigmap.figures.tablesettings.LOOKUP_MODE.LOAD_ONCE;
+                JOIN_OPTIMIZATION joinOptimization = org.talend.designer.pigmap.figures.tablesettings.JOIN_OPTIMIZATION
+                        .parse(inputTable.getJoinOptimization());
+                if (joinOptimization == null) {
+                    joinOptimization = org.talend.designer.pigmap.figures.tablesettings.JOIN_OPTIMIZATION.NONE;
                 }
 
                 IElementParameter tempFolderElem = getElementParameter("TEMPORARY_DATA_DIRECTORY"); //$NON-NLS-1$
@@ -196,8 +188,7 @@ public class PigMapComponent extends AbstractExternalNode implements IHashableIn
                 if (rowsBufferSizeElem != null) {
                     rowsBufferSize = (String) rowsBufferSizeElem.getValue();
                 }
-                hashConfigurationForMapper = new HashConfiguration(hashableColumns, matchingMode, inputTable.isPersistent(),
-                        tempFolder, rowsBufferSize);
+                hashConfigurationForMapper = new HashConfiguration(hashableColumns, null, false, tempFolder, rowsBufferSize);
                 break;
             }
         }
@@ -256,11 +247,7 @@ public class PigMapComponent extends AbstractExternalNode implements IHashableIn
         List<InputTable> inputTables = new ArrayList<InputTable>(externalEmfData.getInputTables());
         for (InputTable table : inputTables) {
             if (table.getName().equals(connectionName)) {
-                String lookupMode = table.getLookupMode();
-                if (PIG_MAP_LOOKUP_MODE.RELOAD.name().equals(lookupMode)
-                        || PIG_MAP_LOOKUP_MODE.CACHE_OR_RELOAD.name().equals(lookupMode)) {
-                    return false;
-                }
+                //
             }
         }
         return true;

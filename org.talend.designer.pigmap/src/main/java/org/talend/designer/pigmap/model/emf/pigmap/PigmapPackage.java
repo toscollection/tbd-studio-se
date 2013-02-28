@@ -275,40 +275,40 @@ public interface PigmapPackage extends EPackage {
     int INPUT_TABLE__LOOKUP = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Matching Mode</b></em>' attribute.
+     * The feature id for the '<em><b>Join Model</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPUT_TABLE__MATCHING_MODE = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 1;
+    int INPUT_TABLE__JOIN_MODEL = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Lookup Mode</b></em>' attribute.
+     * The feature id for the '<em><b>Join Optimization</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPUT_TABLE__LOOKUP_MODE = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 2;
+    int INPUT_TABLE__JOIN_OPTIMIZATION = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 2;
 
     /**
-     * The feature id for the '<em><b>Inner Join</b></em>' attribute.
+     * The feature id for the '<em><b>Custom Partitioner</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPUT_TABLE__INNER_JOIN = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 3;
+    int INPUT_TABLE__CUSTOM_PARTITIONER = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 3;
 
     /**
-     * The feature id for the '<em><b>Persistent</b></em>' attribute.
+     * The feature id for the '<em><b>Increase Parallelism</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPUT_TABLE__PERSISTENT = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 4;
+    int INPUT_TABLE__INCREASE_PARALLELISM = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Input Table</em>' class.
@@ -1030,48 +1030,48 @@ public interface PigmapPackage extends EPackage {
     EAttribute getInputTable_Lookup();
 
     /**
-     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#getMatchingMode <em>Matching Mode</em>}'.
+     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#getJoinModel <em>Join Model</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Matching Mode</em>'.
-     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#getMatchingMode()
+     * @return the meta object for the attribute '<em>Join Model</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#getJoinModel()
      * @see #getInputTable()
      * @generated
      */
-    EAttribute getInputTable_MatchingMode();
+    EAttribute getInputTable_JoinModel();
 
     /**
-     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#getLookupMode <em>Lookup Mode</em>}'.
+     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#getJoinOptimization <em>Join Optimization</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Lookup Mode</em>'.
-     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#getLookupMode()
+     * @return the meta object for the attribute '<em>Join Optimization</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#getJoinOptimization()
      * @see #getInputTable()
      * @generated
      */
-    EAttribute getInputTable_LookupMode();
+    EAttribute getInputTable_JoinOptimization();
 
     /**
-     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#isInnerJoin <em>Inner Join</em>}'.
+     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#getCustomPartitioner <em>Custom Partitioner</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Inner Join</em>'.
-     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#isInnerJoin()
+     * @return the meta object for the attribute '<em>Custom Partitioner</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#getCustomPartitioner()
      * @see #getInputTable()
      * @generated
      */
-    EAttribute getInputTable_InnerJoin();
+    EAttribute getInputTable_CustomPartitioner();
 
     /**
-     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#isPersistent <em>Persistent</em>}'.
+     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.InputTable#getIncreaseParallelism <em>Increase Parallelism</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Persistent</em>'.
-     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#isPersistent()
+     * @return the meta object for the attribute '<em>Increase Parallelism</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.InputTable#getIncreaseParallelism()
      * @see #getInputTable()
      * @generated
      */
-    EAttribute getInputTable_Persistent();
+    EAttribute getInputTable_IncreaseParallelism();
 
     /**
      * Returns the meta object for class '{@link org.talend.designer.pigmap.model.emf.pigmap.OutputTable <em>Output Table</em>}'.
@@ -1546,36 +1546,36 @@ public interface PigmapPackage extends EPackage {
         EAttribute INPUT_TABLE__LOOKUP = eINSTANCE.getInputTable_Lookup();
 
         /**
-         * The meta object literal for the '<em><b>Matching Mode</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Join Model</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INPUT_TABLE__MATCHING_MODE = eINSTANCE.getInputTable_MatchingMode();
+        EAttribute INPUT_TABLE__JOIN_MODEL = eINSTANCE.getInputTable_JoinModel();
 
         /**
-         * The meta object literal for the '<em><b>Lookup Mode</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Join Optimization</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INPUT_TABLE__LOOKUP_MODE = eINSTANCE.getInputTable_LookupMode();
+        EAttribute INPUT_TABLE__JOIN_OPTIMIZATION = eINSTANCE.getInputTable_JoinOptimization();
 
         /**
-         * The meta object literal for the '<em><b>Inner Join</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Custom Partitioner</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INPUT_TABLE__INNER_JOIN = eINSTANCE.getInputTable_InnerJoin();
+        EAttribute INPUT_TABLE__CUSTOM_PARTITIONER = eINSTANCE.getInputTable_CustomPartitioner();
 
         /**
-         * The meta object literal for the '<em><b>Persistent</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Increase Parallelism</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute INPUT_TABLE__PERSISTENT = eINSTANCE.getInputTable_Persistent();
+        EAttribute INPUT_TABLE__INCREASE_PARALLELISM = eINSTANCE.getInputTable_IncreaseParallelism();
 
         /**
          * The meta object literal for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.OutputTableImpl <em>Output Table</em>}' class.

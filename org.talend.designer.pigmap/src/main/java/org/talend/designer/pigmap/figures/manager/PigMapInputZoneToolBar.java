@@ -141,8 +141,8 @@ public class PigMapInputZoneToolBar extends InputZoneToolBar {
     @Override
     public boolean getMinSizeStatus() {
         boolean min = true;
-        for (InputTable tree : externalData.getInputTables()) {
-            if (!tree.isMinimized()) {
+        for (InputTable table : externalData.getInputTables()) {
+            if (!table.isMinimized()) {
                 min = false;
             }
         }

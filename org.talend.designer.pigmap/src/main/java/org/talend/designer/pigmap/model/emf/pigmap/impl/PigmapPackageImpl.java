@@ -320,7 +320,7 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getInputTable_MatchingMode() {
+    public EAttribute getInputTable_JoinModel() {
         return (EAttribute)inputTableEClass.getEStructuralFeatures().get(1);
     }
 
@@ -329,7 +329,7 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getInputTable_LookupMode() {
+    public EAttribute getInputTable_JoinOptimization() {
         return (EAttribute)inputTableEClass.getEStructuralFeatures().get(2);
     }
 
@@ -338,7 +338,7 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getInputTable_InnerJoin() {
+    public EAttribute getInputTable_CustomPartitioner() {
         return (EAttribute)inputTableEClass.getEStructuralFeatures().get(3);
     }
 
@@ -347,7 +347,7 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getInputTable_Persistent() {
+    public EAttribute getInputTable_IncreaseParallelism() {
         return (EAttribute)inputTableEClass.getEStructuralFeatures().get(4);
     }
 
@@ -674,10 +674,10 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
 
         inputTableEClass = createEClass(INPUT_TABLE);
         createEAttribute(inputTableEClass, INPUT_TABLE__LOOKUP);
-        createEAttribute(inputTableEClass, INPUT_TABLE__MATCHING_MODE);
-        createEAttribute(inputTableEClass, INPUT_TABLE__LOOKUP_MODE);
-        createEAttribute(inputTableEClass, INPUT_TABLE__INNER_JOIN);
-        createEAttribute(inputTableEClass, INPUT_TABLE__PERSISTENT);
+        createEAttribute(inputTableEClass, INPUT_TABLE__JOIN_MODEL);
+        createEAttribute(inputTableEClass, INPUT_TABLE__JOIN_OPTIMIZATION);
+        createEAttribute(inputTableEClass, INPUT_TABLE__CUSTOM_PARTITIONER);
+        createEAttribute(inputTableEClass, INPUT_TABLE__INCREASE_PARALLELISM);
 
         outputTableEClass = createEClass(OUTPUT_TABLE);
         createEAttribute(outputTableEClass, OUTPUT_TABLE__REJECT);
@@ -781,10 +781,10 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
 
         initEClass(inputTableEClass, InputTable.class, "InputTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getInputTable_Lookup(), ecorePackage.getEBoolean(), "lookup", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getInputTable_MatchingMode(), ecorePackage.getEString(), "matchingMode", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getInputTable_LookupMode(), ecorePackage.getEString(), "lookupMode", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getInputTable_InnerJoin(), ecorePackage.getEBoolean(), "innerJoin", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getInputTable_Persistent(), ecorePackage.getEBoolean(), "persistent", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInputTable_JoinModel(), ecorePackage.getEString(), "joinModel", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInputTable_JoinOptimization(), ecorePackage.getEString(), "joinOptimization", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInputTable_CustomPartitioner(), ecorePackage.getEString(), "customPartitioner", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getInputTable_IncreaseParallelism(), ecorePackage.getEString(), "increaseParallelism", null, 0, 1, InputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(outputTableEClass, OutputTable.class, "OutputTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOutputTable_Reject(), ecorePackage.getEBoolean(), "reject", null, 0, 1, OutputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

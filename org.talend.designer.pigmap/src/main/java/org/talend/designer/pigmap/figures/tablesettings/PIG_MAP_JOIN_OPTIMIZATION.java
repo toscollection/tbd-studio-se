@@ -16,54 +16,29 @@ import org.talend.designer.gefabstractmap.resource.ImageInfo;
 
 /**
  * 
- * Lookup types.
- * 
- * $Id$
- * 
+ * DOC hcyi class global comment. Detailled comment
  */
-public enum PIG_MAP_LOOKUP_MODE implements IUILookupMode {
-    LOAD_ONCE(LOOKUP_MODE.LOAD_ONCE, "Load once", "Load once the lookup at subjob start", ImageInfo.ARROW_RIGHT),
+public enum PIG_MAP_JOIN_OPTIMIZATION implements IUIJoinOptimization {
 
-    LOAD_ONCE_AND_UPDATE(
-                         LOOKUP_MODE.LOAD_ONCE_AND_UPDATE,
-                         "Load once and update",
-                         "Load once the lookup at subjob start and add/update the lookup row during the process",
-                         ImageInfo.ARROW_RIGHT_EDIT),
+    NONE(JOIN_OPTIMIZATION.NONE, "None", "one", ImageInfo.ARROW_RIGHT),
 
-    RELOAD(LOOKUP_MODE.RELOAD, "Reload at each row", "Reload the lookup at each row", ImageInfo.REFRESH),
+    REPLICATED(JOIN_OPTIMIZATION.REPLICATED, "Replicated", "replicated", ImageInfo.ARROW_RIGHT_EDIT),
 
-    CACHE_OR_RELOAD(
-                    LOOKUP_MODE.CACHE_OR_RELOAD,
-                    "Reload at each row (cache)",
-                    "At each row, get result from the cache or reload the lookup",
-                    ImageInfo.REFRESH_CACHE), ;
+    SKEWED(JOIN_OPTIMIZATION.SKEWED, "Skewed", "skewed", ImageInfo.REFRESH),
+
+    MERGE(JOIN_OPTIMIZATION.MERGE, "Merge", "merge", ImageInfo.REFRESH_CACHE), ;
 
     private String label;
 
     private MENU_TYPE menuType;
 
-    /**
-     * Getter for menuType.
-     * 
-     * @return the menuType
-     */
-    public MENU_TYPE getMenuType() {
-        return menuType;
-    }
-
-    private LOOKUP_MODE multipleMatchingMode;
+    private JOIN_OPTIMIZATION multipleMatchingMode;
 
     private String tooltipText;
 
     private ImageInfo imageInfo;
 
-    /**
-     * 
-     * DOC amaumont LOOKUP_TYPE constructor comment.
-     * 
-     * @param labelKey
-     */
-    PIG_MAP_LOOKUP_MODE(LOOKUP_MODE multipleMatchingMode, String labelKey, String tooltipKey, ImageInfo imageInfo) {
+    PIG_MAP_JOIN_OPTIMIZATION(JOIN_OPTIMIZATION multipleMatchingMode, String labelKey, String tooltipKey, ImageInfo imageInfo) {
         this.multipleMatchingMode = multipleMatchingMode;
         this.label = labelKey;
         this.tooltipText = tooltipKey;
@@ -90,11 +65,20 @@ public enum PIG_MAP_LOOKUP_MODE implements IUILookupMode {
     }
 
     /**
+     * Getter for menuType.
+     * 
+     * @return the menuType
+     */
+    public MENU_TYPE getMenuType() {
+        return menuType;
+    }
+
+    /**
      * Getter for multipleMatchingMode.
      * 
      * @return the multipleMatchingMode
      */
-    public LOOKUP_MODE getLookupMode() {
+    public JOIN_OPTIMIZATION getJoinOptimization() {
         return this.multipleMatchingMode;
     }
 
@@ -102,10 +86,10 @@ public enum PIG_MAP_LOOKUP_MODE implements IUILookupMode {
         return this.tooltipText;
     }
 
-    public static IUILookupMode parse(String matchingMode) {
-        PIG_MAP_LOOKUP_MODE multipleMatchingMode = null;
-        PIG_MAP_LOOKUP_MODE[] tmapMultipleMatchingModes = values();
-        for (PIG_MAP_LOOKUP_MODE tmapMultipleMatchingMode : tmapMultipleMatchingModes) {
+    public static IUIJoinOptimization parse(String matchingMode) {
+        PIG_MAP_JOIN_OPTIMIZATION multipleMatchingMode = null;
+        PIG_MAP_JOIN_OPTIMIZATION[] tmapMultipleMatchingModes = values();
+        for (PIG_MAP_JOIN_OPTIMIZATION tmapMultipleMatchingMode : tmapMultipleMatchingModes) {
             if (tmapMultipleMatchingMode.toString().equals(matchingMode)) {
                 multipleMatchingMode = tmapMultipleMatchingMode;
                 break;

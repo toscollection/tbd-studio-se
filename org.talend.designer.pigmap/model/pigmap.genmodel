@@ -31,10 +31,10 @@
     </genClasses>
     <genClasses ecoreClass="pigmap.ecore#//InputTable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/lookup"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/matchingMode"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/lookupMode"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/innerJoin"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/persistent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/joinModel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/joinOptimization"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/customPartitioner"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//InputTable/increaseParallelism"/>
     </genClasses>
     <genClasses ecoreClass="pigmap.ecore#//OutputTable">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//OutputTable/reject"/>

@@ -44,10 +44,8 @@ public class PigDirectEditPolicy extends DirectEditPolicy {
                 case NODE_NAME:
                     command = new DirectEditCommand(getHost(), model, type, request.getCellEditor().getValue());
                     break;
-                case LOOKUP_MODEL:
-                case MATCH_MODEL:
                 case JOIN_MODEL:
-                case PERSISTENT_MODEL:
+                case JOIN_OPTIMIZATION:
                 case OUTPUT_REJECT:
                 case LOOK_UP_INNER_JOIN_REJECT:
                     if (editor instanceof ComboBoxCellEditor) {
@@ -56,6 +54,8 @@ public class PigDirectEditPolicy extends DirectEditPolicy {
                         command = new TableSettingDirectEditCommand(model, type, combo.getItems()[selectIndex]);
                     }
                     break;
+                case CUSTOM_PARTITIONER:
+                case INCREASE_PARALLELISM:
                 case EXPRESSION_FILTER:
                     if (editor instanceof TextCellEditor) {
                         command = new TableSettingDirectEditCommand(model, type, request.getCellEditor().getValue());
@@ -66,10 +66,8 @@ public class PigDirectEditPolicy extends DirectEditPolicy {
 
             } else {
                 switch (type) {
-                case LOOKUP_MODEL:
-                case MATCH_MODEL:
                 case JOIN_MODEL:
-                case PERSISTENT_MODEL:
+                case JOIN_OPTIMIZATION:
                 case OUTPUT_REJECT:
                 case LOOK_UP_INNER_JOIN_REJECT:
                 case ALL_IN_ONE:
@@ -80,6 +78,8 @@ public class PigDirectEditPolicy extends DirectEditPolicy {
                         command = new TableSettingDirectEditCommand(getHost().getModel(), type, combo.getItems()[selectIndex]);
                     }
                     break;
+                case CUSTOM_PARTITIONER:
+                case INCREASE_PARALLELISM:
                 case EXPRESSION_FILTER:
                     command = new TableSettingDirectEditCommand(getHost().getModel(), type, request.getCellEditor().getValue());
                 }

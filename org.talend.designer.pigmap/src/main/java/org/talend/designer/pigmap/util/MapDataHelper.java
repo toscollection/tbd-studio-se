@@ -21,8 +21,8 @@ import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.process.EConnectionType;
 import org.talend.core.model.process.IConnection;
 import org.talend.designer.pigmap.PigMapComponent;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_LOOKUP_MODE;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_MATCHING_MODE;
+import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_JOIN_OPTIMIZATION;
+import org.talend.designer.pigmap.figures.tablesettings.TableSettingsConstant;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
@@ -87,11 +87,12 @@ public class MapDataHelper {
             } else {
                 inputTable.setLookup(EConnectionType.FLOW_MAIN != inData.getLineStyle());
             }
-            if (inputTable.getLookupMode() == null) {
-                inputTable.setLookupMode(PIG_MAP_LOOKUP_MODE.LOAD_ONCE.toString());
+            // by default
+            if (inputTable.isLookup() && inputTable.getJoinModel() == null) {
+                inputTable.setJoinModel(TableSettingsConstant.LEFT_OUTER_JOIN);
             }
-            if (inputTable.getMatchingMode() == null) {
-                inputTable.setMatchingMode(PIG_MAP_MATCHING_MODE.ALL_ROWS.toString());
+            if (inputTable.isLookup() && inputTable.getJoinOptimization() == null) {
+                inputTable.setJoinOptimization(PIG_MAP_JOIN_OPTIMIZATION.NONE.toString());
             }
             rebuildInputTable(inputTable, inData.getMetadataTable(), mapData);
         }

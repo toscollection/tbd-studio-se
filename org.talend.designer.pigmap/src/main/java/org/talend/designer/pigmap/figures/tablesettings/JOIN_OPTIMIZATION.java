@@ -18,22 +18,22 @@ import org.talend.core.model.process.ILookupMode;
  * 
  * DOC hcyi class global comment. Detailled comment
  */
-public enum LOOKUP_MODE implements ILookupMode {
-    LOAD_ONCE,
-    LOAD_ONCE_AND_UPDATE,
-    RELOAD,
-    CACHE_OR_RELOAD, ;
+public enum JOIN_OPTIMIZATION implements ILookupMode {
+    NONE,
+    REPLICATED,
+    SKEWED,
+    MERGE, ;
 
-    public static LOOKUP_MODE parse(String matchingMode) {
-        LOOKUP_MODE multipleMatchingModeResult = null;
-        LOOKUP_MODE[] multipleMatchingModes = values();
-        for (LOOKUP_MODE multipleMatchingMode : multipleMatchingModes) {
-            if (multipleMatchingMode.toString().equals(matchingMode)) {
-                multipleMatchingModeResult = multipleMatchingMode;
+    public static JOIN_OPTIMIZATION parse(String joinOptimization) {
+        JOIN_OPTIMIZATION multipleJoinOptimizationResult = null;
+        JOIN_OPTIMIZATION[] multiplJoinOptimizationModes = values();
+        for (JOIN_OPTIMIZATION multiplJoinOptimizationMode : multiplJoinOptimizationModes) {
+            if (multiplJoinOptimizationMode.toString().equals(joinOptimization)) {
+                multipleJoinOptimizationResult = multiplJoinOptimizationMode;
                 break;
             }
         }
-        return multipleMatchingModeResult;
+        return multipleJoinOptimizationResult;
     }
 
 }

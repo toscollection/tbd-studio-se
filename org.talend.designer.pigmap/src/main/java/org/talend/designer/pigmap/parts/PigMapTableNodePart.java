@@ -141,9 +141,7 @@ public class PigMapTableNodePart extends TableEntityPart implements NodeEditPart
                         if (inputTable.isLookup()) {
                             if (((TableNode) getModel()).getExpression() != null
                                     && !((TableNode) getModel()).getExpression().trim().equals("")) {
-                                if (MATCHING_MODE.ALL_ROWS.toString().equals(inputTable.getMatchingMode())) {
-                                    inputTable.setMatchingMode(MATCHING_MODE.UNIQUE_MATCH.toString());
-                                }
+                                //
                             }
                         }
                     }

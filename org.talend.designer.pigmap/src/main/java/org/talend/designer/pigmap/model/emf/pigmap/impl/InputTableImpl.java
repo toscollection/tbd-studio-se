@@ -6,18 +6,14 @@
  */
 package org.talend.designer.pigmap.model.emf.pigmap.impl;
 
-import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapPackage;
-import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,10 +23,10 @@ import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#isLookup <em>Lookup</em>}</li>
- *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#getMatchingMode <em>Matching Mode</em>}</li>
- *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#getLookupMode <em>Lookup Mode</em>}</li>
- *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#isInnerJoin <em>Inner Join</em>}</li>
- *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#isPersistent <em>Persistent</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#getJoinModel <em>Join Model</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#getJoinOptimization <em>Join Optimization</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#getCustomPartitioner <em>Custom Partitioner</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.InputTableImpl#getIncreaseParallelism <em>Increase Parallelism</em>}</li>
  * </ul>
  * </p>
  *
@@ -58,84 +54,84 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
     protected boolean lookup = LOOKUP_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getMatchingMode() <em>Matching Mode</em>}' attribute.
+     * The default value of the '{@link #getJoinModel() <em>Join Model</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getMatchingMode()
+     * @see #getJoinModel()
      * @generated
      * @ordered
      */
-    protected static final String MATCHING_MODE_EDEFAULT = null;
+    protected static final String JOIN_MODEL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getMatchingMode() <em>Matching Mode</em>}' attribute.
+     * The cached value of the '{@link #getJoinModel() <em>Join Model</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getMatchingMode()
+     * @see #getJoinModel()
      * @generated
      * @ordered
      */
-    protected String matchingMode = MATCHING_MODE_EDEFAULT;
+    protected String joinModel = JOIN_MODEL_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getLookupMode() <em>Lookup Mode</em>}' attribute.
+     * The default value of the '{@link #getJoinOptimization() <em>Join Optimization</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLookupMode()
+     * @see #getJoinOptimization()
      * @generated
      * @ordered
      */
-    protected static final String LOOKUP_MODE_EDEFAULT = null;
+    protected static final String JOIN_OPTIMIZATION_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getLookupMode() <em>Lookup Mode</em>}' attribute.
+     * The cached value of the '{@link #getJoinOptimization() <em>Join Optimization</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLookupMode()
+     * @see #getJoinOptimization()
      * @generated
      * @ordered
      */
-    protected String lookupMode = LOOKUP_MODE_EDEFAULT;
+    protected String joinOptimization = JOIN_OPTIMIZATION_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isInnerJoin() <em>Inner Join</em>}' attribute.
+     * The default value of the '{@link #getCustomPartitioner() <em>Custom Partitioner</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isInnerJoin()
+     * @see #getCustomPartitioner()
      * @generated
      * @ordered
      */
-    protected static final boolean INNER_JOIN_EDEFAULT = false;
+    protected static final String CUSTOM_PARTITIONER_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #isInnerJoin() <em>Inner Join</em>}' attribute.
+     * The cached value of the '{@link #getCustomPartitioner() <em>Custom Partitioner</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isInnerJoin()
+     * @see #getCustomPartitioner()
      * @generated
      * @ordered
      */
-    protected boolean innerJoin = INNER_JOIN_EDEFAULT;
+    protected String customPartitioner = CUSTOM_PARTITIONER_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isPersistent() <em>Persistent</em>}' attribute.
+     * The default value of the '{@link #getIncreaseParallelism() <em>Increase Parallelism</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPersistent()
+     * @see #getIncreaseParallelism()
      * @generated
      * @ordered
      */
-    protected static final boolean PERSISTENT_EDEFAULT = false;
+    protected static final String INCREASE_PARALLELISM_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #isPersistent() <em>Persistent</em>}' attribute.
+     * The cached value of the '{@link #getIncreaseParallelism() <em>Increase Parallelism</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPersistent()
+     * @see #getIncreaseParallelism()
      * @generated
      * @ordered
      */
-    protected boolean persistent = PERSISTENT_EDEFAULT;
+    protected String increaseParallelism = INCREASE_PARALLELISM_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -182,8 +178,8 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getMatchingMode() {
-        return matchingMode;
+    public String getJoinModel() {
+        return joinModel;
     }
 
     /**
@@ -191,11 +187,11 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setMatchingMode(String newMatchingMode) {
-        String oldMatchingMode = matchingMode;
-        matchingMode = newMatchingMode;
+    public void setJoinModel(String newJoinModel) {
+        String oldJoinModel = joinModel;
+        joinModel = newJoinModel;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__MATCHING_MODE, oldMatchingMode, matchingMode));
+            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__JOIN_MODEL, oldJoinModel, joinModel));
     }
 
     /**
@@ -203,8 +199,8 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getLookupMode() {
-        return lookupMode;
+    public String getJoinOptimization() {
+        return joinOptimization;
     }
 
     /**
@@ -212,11 +208,11 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setLookupMode(String newLookupMode) {
-        String oldLookupMode = lookupMode;
-        lookupMode = newLookupMode;
+    public void setJoinOptimization(String newJoinOptimization) {
+        String oldJoinOptimization = joinOptimization;
+        joinOptimization = newJoinOptimization;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__LOOKUP_MODE, oldLookupMode, lookupMode));
+            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__JOIN_OPTIMIZATION, oldJoinOptimization, joinOptimization));
     }
 
     /**
@@ -224,8 +220,8 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isInnerJoin() {
-        return innerJoin;
+    public String getCustomPartitioner() {
+        return customPartitioner;
     }
 
     /**
@@ -233,11 +229,11 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setInnerJoin(boolean newInnerJoin) {
-        boolean oldInnerJoin = innerJoin;
-        innerJoin = newInnerJoin;
+    public void setCustomPartitioner(String newCustomPartitioner) {
+        String oldCustomPartitioner = customPartitioner;
+        customPartitioner = newCustomPartitioner;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__INNER_JOIN, oldInnerJoin, innerJoin));
+            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__CUSTOM_PARTITIONER, oldCustomPartitioner, customPartitioner));
     }
 
     /**
@@ -245,8 +241,8 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isPersistent() {
-        return persistent;
+    public String getIncreaseParallelism() {
+        return increaseParallelism;
     }
 
     /**
@@ -254,11 +250,11 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setPersistent(boolean newPersistent) {
-        boolean oldPersistent = persistent;
-        persistent = newPersistent;
+    public void setIncreaseParallelism(String newIncreaseParallelism) {
+        String oldIncreaseParallelism = increaseParallelism;
+        increaseParallelism = newIncreaseParallelism;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__PERSISTENT, oldPersistent, persistent));
+            eNotify(new ENotificationImpl(this, Notification.SET, PigmapPackage.INPUT_TABLE__INCREASE_PARALLELISM, oldIncreaseParallelism, increaseParallelism));
     }
 
     /**
@@ -271,14 +267,14 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
         switch (featureID) {
             case PigmapPackage.INPUT_TABLE__LOOKUP:
                 return isLookup();
-            case PigmapPackage.INPUT_TABLE__MATCHING_MODE:
-                return getMatchingMode();
-            case PigmapPackage.INPUT_TABLE__LOOKUP_MODE:
-                return getLookupMode();
-            case PigmapPackage.INPUT_TABLE__INNER_JOIN:
-                return isInnerJoin();
-            case PigmapPackage.INPUT_TABLE__PERSISTENT:
-                return isPersistent();
+            case PigmapPackage.INPUT_TABLE__JOIN_MODEL:
+                return getJoinModel();
+            case PigmapPackage.INPUT_TABLE__JOIN_OPTIMIZATION:
+                return getJoinOptimization();
+            case PigmapPackage.INPUT_TABLE__CUSTOM_PARTITIONER:
+                return getCustomPartitioner();
+            case PigmapPackage.INPUT_TABLE__INCREASE_PARALLELISM:
+                return getIncreaseParallelism();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -288,24 +284,23 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
      * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case PigmapPackage.INPUT_TABLE__LOOKUP:
                 setLookup((Boolean)newValue);
                 return;
-            case PigmapPackage.INPUT_TABLE__MATCHING_MODE:
-                setMatchingMode((String)newValue);
+            case PigmapPackage.INPUT_TABLE__JOIN_MODEL:
+                setJoinModel((String)newValue);
                 return;
-            case PigmapPackage.INPUT_TABLE__LOOKUP_MODE:
-                setLookupMode((String)newValue);
+            case PigmapPackage.INPUT_TABLE__JOIN_OPTIMIZATION:
+                setJoinOptimization((String)newValue);
                 return;
-            case PigmapPackage.INPUT_TABLE__INNER_JOIN:
-                setInnerJoin((Boolean)newValue);
+            case PigmapPackage.INPUT_TABLE__CUSTOM_PARTITIONER:
+                setCustomPartitioner((String)newValue);
                 return;
-            case PigmapPackage.INPUT_TABLE__PERSISTENT:
-                setPersistent((Boolean)newValue);
+            case PigmapPackage.INPUT_TABLE__INCREASE_PARALLELISM:
+                setIncreaseParallelism((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -322,17 +317,17 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
             case PigmapPackage.INPUT_TABLE__LOOKUP:
                 setLookup(LOOKUP_EDEFAULT);
                 return;
-            case PigmapPackage.INPUT_TABLE__MATCHING_MODE:
-                setMatchingMode(MATCHING_MODE_EDEFAULT);
+            case PigmapPackage.INPUT_TABLE__JOIN_MODEL:
+                setJoinModel(JOIN_MODEL_EDEFAULT);
                 return;
-            case PigmapPackage.INPUT_TABLE__LOOKUP_MODE:
-                setLookupMode(LOOKUP_MODE_EDEFAULT);
+            case PigmapPackage.INPUT_TABLE__JOIN_OPTIMIZATION:
+                setJoinOptimization(JOIN_OPTIMIZATION_EDEFAULT);
                 return;
-            case PigmapPackage.INPUT_TABLE__INNER_JOIN:
-                setInnerJoin(INNER_JOIN_EDEFAULT);
+            case PigmapPackage.INPUT_TABLE__CUSTOM_PARTITIONER:
+                setCustomPartitioner(CUSTOM_PARTITIONER_EDEFAULT);
                 return;
-            case PigmapPackage.INPUT_TABLE__PERSISTENT:
-                setPersistent(PERSISTENT_EDEFAULT);
+            case PigmapPackage.INPUT_TABLE__INCREASE_PARALLELISM:
+                setIncreaseParallelism(INCREASE_PARALLELISM_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -348,14 +343,14 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
         switch (featureID) {
             case PigmapPackage.INPUT_TABLE__LOOKUP:
                 return lookup != LOOKUP_EDEFAULT;
-            case PigmapPackage.INPUT_TABLE__MATCHING_MODE:
-                return MATCHING_MODE_EDEFAULT == null ? matchingMode != null : !MATCHING_MODE_EDEFAULT.equals(matchingMode);
-            case PigmapPackage.INPUT_TABLE__LOOKUP_MODE:
-                return LOOKUP_MODE_EDEFAULT == null ? lookupMode != null : !LOOKUP_MODE_EDEFAULT.equals(lookupMode);
-            case PigmapPackage.INPUT_TABLE__INNER_JOIN:
-                return innerJoin != INNER_JOIN_EDEFAULT;
-            case PigmapPackage.INPUT_TABLE__PERSISTENT:
-                return persistent != PERSISTENT_EDEFAULT;
+            case PigmapPackage.INPUT_TABLE__JOIN_MODEL:
+                return JOIN_MODEL_EDEFAULT == null ? joinModel != null : !JOIN_MODEL_EDEFAULT.equals(joinModel);
+            case PigmapPackage.INPUT_TABLE__JOIN_OPTIMIZATION:
+                return JOIN_OPTIMIZATION_EDEFAULT == null ? joinOptimization != null : !JOIN_OPTIMIZATION_EDEFAULT.equals(joinOptimization);
+            case PigmapPackage.INPUT_TABLE__CUSTOM_PARTITIONER:
+                return CUSTOM_PARTITIONER_EDEFAULT == null ? customPartitioner != null : !CUSTOM_PARTITIONER_EDEFAULT.equals(customPartitioner);
+            case PigmapPackage.INPUT_TABLE__INCREASE_PARALLELISM:
+                return INCREASE_PARALLELISM_EDEFAULT == null ? increaseParallelism != null : !INCREASE_PARALLELISM_EDEFAULT.equals(increaseParallelism);
         }
         return super.eIsSet(featureID);
     }
@@ -372,14 +367,14 @@ public class InputTableImpl extends AbstractInOutTableImpl implements InputTable
         StringBuffer result = new StringBuffer(super.toString());
         result.append(" (lookup: ");
         result.append(lookup);
-        result.append(", matchingMode: ");
-        result.append(matchingMode);
-        result.append(", lookupMode: ");
-        result.append(lookupMode);
-        result.append(", innerJoin: ");
-        result.append(innerJoin);
-        result.append(", persistent: ");
-        result.append(persistent);
+        result.append(", joinModel: ");
+        result.append(joinModel);
+        result.append(", joinOptimization: ");
+        result.append(joinOptimization);
+        result.append(", customPartitioner: ");
+        result.append(customPartitioner);
+        result.append(", increaseParallelism: ");
+        result.append(increaseParallelism);
         result.append(')');
         return result.toString();
     }

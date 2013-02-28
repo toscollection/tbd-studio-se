@@ -89,10 +89,10 @@ public class PigMapInputTablePart extends InputTablePart implements NodeEditPart
                 getFigure().validate();
                 break;
             case PigmapPackage.INPUT_TABLE__LOOKUP:
-            case PigmapPackage.INPUT_TABLE__LOOKUP_MODE:
-            case PigmapPackage.INPUT_TABLE__MATCHING_MODE:
-            case PigmapPackage.INPUT_TABLE__PERSISTENT:
-            case PigmapPackage.INPUT_TABLE__INNER_JOIN:
+            case PigmapPackage.INPUT_TABLE__JOIN_MODEL:
+            case PigmapPackage.INPUT_TABLE__JOIN_OPTIMIZATION:
+            case PigmapPackage.INPUT_TABLE__CUSTOM_PARTITIONER:
+            case PigmapPackage.INPUT_TABLE__INCREASE_PARALLELISM:
             case PigmapPackage.INPUT_TABLE__MINIMIZED:
             case PigmapPackage.INPUT_TABLE__EXPRESSION_FILTER:
                 ((InputTableFigure) getFigure()).update(featureId);

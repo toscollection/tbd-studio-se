@@ -12,9 +12,7 @@
 // ============================================================================
 package org.talend.designer.pigmap.parts.directedit;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.draw2d.Figure;
@@ -44,11 +42,8 @@ import org.talend.designer.gefabstractmap.figures.cells.ITextAreaCell;
 import org.talend.designer.gefabstractmap.figures.cells.ITextCell;
 import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.gefabstractmap.part.directedit.PigMapNodeCellEditorLocator;
-import org.talend.designer.pigmap.figures.tablesettings.IUILookupMode;
-import org.talend.designer.pigmap.figures.tablesettings.IUIMatchingMode;
-import org.talend.designer.pigmap.figures.tablesettings.LOOKUP_MODE;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_LOOKUP_MODE;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_MATCHING_MODE;
+import org.talend.designer.pigmap.figures.tablesettings.IUIJoinOptimization;
+import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.figures.tablesettings.TableSettingsConstant;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
@@ -71,14 +66,14 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
 
     private Map<CellEditor, DirectEditType> cellAndType = new HashMap<CellEditor, DirectEditType>();
 
-    private final String[] joinModel = new String[] { TableSettingsConstant.INNER_JOIN, TableSettingsConstant.LEFT_OUTER_JOIN };
+    private final String[] joinModel = new String[] { TableSettingsConstant.INNER_JOIN, TableSettingsConstant.LEFT_OUTER_JOIN,
+            TableSettingsConstant.RIGHT_OUTER_JOIN, TableSettingsConstant.FULL_OUTER_JOIN };
 
     public PigMapNodeDirectEditManager(GraphicalEditPart source, CellEditorLocator locator) {
         super(source, null, locator);
         this.source = source;
         this.locator = locator;
         model = source.getModel();
-
     }
 
     /*
@@ -124,37 +119,30 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     Text textarea = ((ExtendedTextCellEditor) getCellEditor()).getTextControl();
                     textarea.selectAll();
                     break;
-                case LOOKUP_MODEL:
-                    if (getCellEditor() instanceof ComboBoxCellEditor) {
-                        CCombo combo = (CCombo) getCellEditor().getControl();
-                        combo.setText(getLookupDisplayName(inputTable.getLookupMode()));
-                    }
-                    break;
-                case MATCH_MODEL:
-                    if (getCellEditor() instanceof ComboBoxCellEditor) {
-                        CCombo combo = (CCombo) getCellEditor().getControl();
-                        combo.setText(getMatchModelDisplayName(inputTable.getMatchingMode()));
-                    }
-                    break;
                 case JOIN_MODEL:
                     if (getCellEditor() instanceof ComboBoxCellEditor) {
                         CCombo combo = (CCombo) getCellEditor().getControl();
-                        String join = "";
-                        if (inputTable.isInnerJoin()) {
-                            join = joinModel[0];
-                        } else {
-                            join = joinModel[1];
-                        }
-                        combo.setText(join);
+                        combo.setText(inputTable.getJoinModel() != null ? inputTable.getJoinModel() : "");
                     }
                     break;
-                case PERSISTENT_MODEL:
+                case JOIN_OPTIMIZATION:
                     if (getCellEditor() instanceof ComboBoxCellEditor) {
                         CCombo combo = (CCombo) getCellEditor().getControl();
-                        combo.setText(String.valueOf(inputTable.isPersistent()));
+                        combo.setText(getJoinOptimizationDisplayName(inputTable.getJoinOptimization()));
                     }
                     break;
-
+                case CUSTOM_PARTITIONER:
+                    if (getCellEditor() instanceof TextCellEditor) {
+                        Text text = (Text) getCellEditor().getControl();
+                        text.setText(inputTable.getCustomPartitioner() != null ? inputTable.getCustomPartitioner() : "");
+                    }
+                    break;
+                case INCREASE_PARALLELISM:
+                    if (getCellEditor() instanceof TextCellEditor) {
+                        Text text = (Text) getCellEditor().getControl();
+                        text.setText(inputTable.getIncreaseParallelism() != null ? inputTable.getIncreaseParallelism() : "");
+                    }
+                    break;
                 }
             }
 
@@ -201,25 +189,15 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
 
     }
 
-    private String getLookupDisplayName(String lookupModel) {
-        IUILookupMode[] availableJoins = { PIG_MAP_LOOKUP_MODE.LOAD_ONCE, PIG_MAP_LOOKUP_MODE.RELOAD,
-                PIG_MAP_LOOKUP_MODE.CACHE_OR_RELOAD };
-        for (IUILookupMode model : availableJoins) {
-            if (model.toString().equals(lookupModel)) {
+    private String getJoinOptimizationDisplayName(String joinOptimization) {
+        IUIJoinOptimization[] availableJoins = { PIG_MAP_JOIN_OPTIMIZATION.NONE, PIG_MAP_JOIN_OPTIMIZATION.REPLICATED,
+                PIG_MAP_JOIN_OPTIMIZATION.SKEWED, PIG_MAP_JOIN_OPTIMIZATION.MERGE };
+        for (IUIJoinOptimization model : availableJoins) {
+            if (model.toString().equals(joinOptimization)) {
                 return model.getLabel();
             }
         }
-        return lookupModel;
-    }
-
-    private String getMatchModelDisplayName(String matcheModel) {
-        IUIMatchingMode[] allMatchingModel = PIG_MAP_MATCHING_MODE.values();
-        for (IUIMatchingMode model : allMatchingModel) {
-            if (model.toString().equals(matcheModel)) {
-                return model.getLabel();
-            }
-        }
-        return matcheModel;
+        return joinOptimization;
     }
 
     @Override
@@ -239,10 +217,8 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     if (DirectEditType.JOIN_MODEL.equals(((IComboCell) figure).getDirectEditType())) {
                         //
                     }
-                    if (DirectEditType.PERSISTENT_MODEL.equals(((IComboCell) figure).getDirectEditType())) {
-                        if (LOOKUP_MODE.CACHE_OR_RELOAD.toString().equals(inputTable.getLookupMode())) {
-                            return null;
-                        }
+                    if (DirectEditType.JOIN_OPTIMIZATION.equals(((IComboCell) figure).getDirectEditType())) {
+                        //
                     }
                 }
 
@@ -251,13 +227,10 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     if (DirectEditType.ALL_IN_ONE.equals(((IComboCell) figure).getDirectEditType())) {
                         //
                     }
-
                 }
-
                 cellEditor = new ComboCellEditor();
                 cellEditor.create(composite);
                 ((ComboCellEditor) cellEditor).setItems(getComboItemsByType(((IComboCell) figure).getDirectEditType()));
-
                 cellAndType.put(cellEditor, ((IComboCell) figure).getDirectEditType());
             } catch (Exception e) {
                 return null;
@@ -302,25 +275,16 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
         }
 
         switch (type) {
-        case LOOKUP_MODEL:
-            IUILookupMode[] availableJoins = { PIG_MAP_LOOKUP_MODE.LOAD_ONCE, PIG_MAP_LOOKUP_MODE.RELOAD,
-                    PIG_MAP_LOOKUP_MODE.CACHE_OR_RELOAD };
+        case JOIN_MODEL:
+            return joinModel;
+        case JOIN_OPTIMIZATION:
+            IUIJoinOptimization[] availableJoins = { PIG_MAP_JOIN_OPTIMIZATION.NONE, PIG_MAP_JOIN_OPTIMIZATION.REPLICATED,
+                    PIG_MAP_JOIN_OPTIMIZATION.SKEWED, PIG_MAP_JOIN_OPTIMIZATION.MERGE };
             String names[] = new String[availableJoins.length];
             for (int i = 0; i < availableJoins.length; i++) {
                 names[i] = availableJoins[i].getLabel();
             }
             return names;
-        case MATCH_MODEL:
-            IUIMatchingMode[] matchModel = getMatchModel();
-            String names2[] = new String[matchModel.length];
-            for (int i = 0; i < matchModel.length; i++) {
-                names2[i] = (matchModel[i].getLabel());
-            }
-            return names2;
-        case JOIN_MODEL:
-            return joinModel;
-        case PERSISTENT_MODEL:
-            return new String[] { String.valueOf(Boolean.TRUE), String.valueOf(Boolean.FALSE) };
         case OUTPUT_REJECT:
         case LOOK_UP_INNER_JOIN_REJECT:
         case ALL_IN_ONE:
@@ -330,32 +294,6 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
             return new String[0];
         }
 
-    }
-
-    private IUIMatchingMode[] getMatchModel() {
-        IUIMatchingMode[] allMatchingModel = PIG_MAP_MATCHING_MODE.values();
-        List<IUIMatchingMode> avilable = new ArrayList<IUIMatchingMode>();
-        if (model instanceof InputTable) {
-            InputTable inputTree = (InputTable) model;
-            for (int i = 0; i < allMatchingModel.length; ++i) {
-                IUIMatchingMode matchingMode = allMatchingModel[i];
-                final String text = matchingMode.getLabel();
-
-                if (text.length() != 0) {
-                    if (inputTree.getMatchingMode().equals(PIG_MAP_MATCHING_MODE.ALL_ROWS.toString())) {
-                        if (matchingMode.equals(PIG_MAP_MATCHING_MODE.ALL_ROWS)) {
-                            avilable.add(matchingMode);
-                        }
-                    } else {
-                        if (!matchingMode.equals(PIG_MAP_MATCHING_MODE.ALL_ROWS)) {
-                            avilable.add(matchingMode);
-                        }
-                    }
-                }
-            }
-        }
-
-        return avilable.toArray(new IUIMatchingMode[avilable.size()]);
     }
 
     @Override

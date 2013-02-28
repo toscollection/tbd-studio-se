@@ -18,11 +18,8 @@ import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.emf.common.util.EList;
 import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
-import org.talend.designer.pigmap.figures.tablesettings.IUILookupMode;
-import org.talend.designer.pigmap.figures.tablesettings.IUIMatchingMode;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_LOOKUP_MODE;
-import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_MATCHING_MODE;
-import org.talend.designer.pigmap.figures.tablesettings.TableSettingsConstant;
+import org.talend.designer.pigmap.figures.tablesettings.IUIJoinOptimization;
+import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
 import org.talend.designer.pigmap.model.emf.pigmap.FilterConnection;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
@@ -55,21 +52,17 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
                 InputTable inputTable = (InputTable) model;
                 if (type != null) {
                     switch (type) {
-                    case LOOKUP_MODEL:
-                        inputTable.setLookupMode(getLookupModelByLabel((String) newValue));
-                        break;
-                    case MATCH_MODEL:
-                        inputTable.setMatchingMode(getMatchModelByLabel((String) newValue));
-                        break;
                     case JOIN_MODEL:
-                        if (TableSettingsConstant.INNER_JOIN.equals(newValue)) {
-                            inputTable.setInnerJoin(true);
-                        } else {
-                            inputTable.setInnerJoin(false);
-                        }
+                        inputTable.setJoinModel((String) newValue);
                         break;
-                    case PERSISTENT_MODEL:
-                        inputTable.setPersistent(Boolean.valueOf((String) newValue));
+                    case JOIN_OPTIMIZATION:
+                        inputTable.setJoinOptimization(getJoinOptimizationByLabel((String) newValue));
+                        break;
+                    case CUSTOM_PARTITIONER:
+                        inputTable.setCustomPartitioner((String) newValue);
+                        break;
+                    case INCREASE_PARALLELISM:
+                        inputTable.setIncreaseParallelism((String) newValue);
                         break;
                     case EXPRESSION_FILTER:
                         calculateFilterConnections(inputTable, (String) newValue);
@@ -162,25 +155,14 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
         }
     }
 
-    private String getLookupModelByLabel(String label) {
-        IUILookupMode[] availableLookups = { PIG_MAP_LOOKUP_MODE.LOAD_ONCE, PIG_MAP_LOOKUP_MODE.RELOAD,
-                PIG_MAP_LOOKUP_MODE.CACHE_OR_RELOAD };
-        for (IUILookupMode mode : availableLookups) {
+    private String getJoinOptimizationByLabel(String label) {
+        IUIJoinOptimization[] availableJoins = { PIG_MAP_JOIN_OPTIMIZATION.NONE, PIG_MAP_JOIN_OPTIMIZATION.REPLICATED,
+                PIG_MAP_JOIN_OPTIMIZATION.SKEWED, PIG_MAP_JOIN_OPTIMIZATION.MERGE };
+        for (IUIJoinOptimization mode : availableJoins) {
             if (mode.getLabel().equals(label.trim())) {
                 return mode.toString();
             }
         }
         return "";
     }
-
-    private String getMatchModelByLabel(String label) {
-        IUIMatchingMode[] allMatchingModel = PIG_MAP_MATCHING_MODE.values();
-        for (IUIMatchingMode mode : allMatchingModel) {
-            if (mode.getLabel().equals(label)) {
-                return mode.toString();
-            }
-        }
-        return "";
-    }
-
 }
