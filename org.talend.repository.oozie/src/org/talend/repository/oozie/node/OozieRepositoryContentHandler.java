@@ -41,6 +41,11 @@ public class OozieRepositoryContentHandler extends AbstractHadoopSubnodeReposito
     }
 
     @Override
+    public ERepositoryObjectType getProcessType() {
+        return OozieRepositoryNodeType.OOZIE;
+    }
+
+    @Override
     public Resource create(IProject project, Item item, int classifierID, IPath path) throws PersistenceException {
         if (item.eClass() == OoziePackage.Literals.OOZIE_CONNECTION_ITEM) {
             Resource itemResource = null;

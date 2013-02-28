@@ -23,11 +23,11 @@ import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
-import org.talend.repository.model.StableRepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
@@ -112,7 +112,7 @@ public class HCRepositoryUtil {
      */
     public static HadoopClusterConnectionItem getHCConnectionItemFromRepositoryNode(RepositoryNode node) {
         IRepositoryViewObject viewObject = node.getObject();
-        if (viewObject != null) {
+        if (viewObject != null && viewObject.getProperty() != null) {
             Item item = viewObject.getProperty().getItem();
             if (item instanceof HadoopClusterConnectionItem) {
                 return (HadoopClusterConnectionItem) item;
@@ -256,12 +256,7 @@ public class HCRepositoryUtil {
      * @return
      */
     public static boolean isHadoopFolderNode(RepositoryNode node) {
-        if (node instanceof StableRepositoryNode) {
-            RepositoryNode parentNode = node.getParent();
-            return isHadoopClusterNode(parentNode);
-        }
-
-        return false;
+        return node instanceof HadoopFolderRepositoryNode;
     }
 
     /**

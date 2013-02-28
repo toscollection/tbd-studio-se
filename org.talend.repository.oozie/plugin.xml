@@ -5,10 +5,12 @@
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode
             alias="Oozie"
-            class="org.talend.repository.oozie.node.OozieExtendNode"
             folder="metadata/hadoop/oozie"
+            icon="icons/hadoop-logo-16x16.png"
             isResouce="true"
             label="%OOZIE"
+            ordinal="52"
+            parentNodeType="HADOOPCLUSTER"
             products="DI"
             type="OOZIE">
       </repositoryNode>

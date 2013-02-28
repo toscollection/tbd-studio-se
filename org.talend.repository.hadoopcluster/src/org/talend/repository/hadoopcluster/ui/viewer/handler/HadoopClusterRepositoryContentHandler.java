@@ -1,12 +1,8 @@
 package org.talend.repository.hadoopcluster.ui.viewer.handler;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -20,7 +16,6 @@ import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.metadata.MetadataManager;
-import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.AbstractRepositoryContentHandler;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -31,7 +26,6 @@ import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNod
 import org.talend.repository.hadoopcluster.ui.HadoopClusterWizard;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
-import org.talend.repository.model.ERepositoryStatus;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -61,6 +55,11 @@ public class HadoopClusterRepositoryContentHandler extends AbstractRepositoryCon
     @Override
     public boolean isRepObjType(ERepositoryObjectType type) {
         return type == HadoopClusterRepositoryNodeType.HADOOPCLUSTER;
+    }
+
+    @Override
+    public ERepositoryObjectType getProcessType() {
+        return HadoopClusterRepositoryNodeType.HADOOPCLUSTER;
     }
 
     @Override
@@ -147,44 +146,9 @@ public class HadoopClusterRepositoryContentHandler extends AbstractRepositoryCon
     public void addNode(ERepositoryObjectType type, RepositoryNode parentNode, IRepositoryViewObject repositoryObject,
             RepositoryNode node) {
         if (type == HadoopClusterRepositoryNodeType.HADOOPCLUSTER) {
-            IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
-            HadoopClusterConnection connection = (HadoopClusterConnection) ((HadoopClusterConnectionItem) repositoryObject
-                    .getProperty().getItem()).getConnection();
-
-            Map<ERepositoryObjectType, List<ConnectionItem>> type2Items = new HashMap<ERepositoryObjectType, List<ConnectionItem>>();
-            List<String> connIds = connection.getConnectionList();
-            for (String id : connIds) {
-                IRepositoryViewObject repObj = null;
-                try {
-                    repObj = ProxyRepositoryFactory.getInstance().getLastVersion(id);
-                } catch (PersistenceException e) {
-                    // do nothing.
-                }
-                if (repObj != null && repObj.getProperty() != null && factory.getStatus(repObj) != ERepositoryStatus.DELETED) {
-                    Item item = repObj.getProperty().getItem();
-                    if (item != null && item instanceof ConnectionItem) {
-                        ERepositoryObjectType itemType = ERepositoryObjectType.getItemType(item);
-                        List<ConnectionItem> itemList = type2Items.get(itemType);
-                        if (itemList == null) {
-                            itemList = new ArrayList<ConnectionItem>();
-                        }
-                        itemList.add((ConnectionItem) item);
-                        type2Items.put(itemType, itemList);
-                    }
-                }
+            for (IHadoopSubnodeRepositoryContentHandler handler : HadoopSubnodeRepositoryContentManager.getHandlers()) {
+                handler.addNode(node);
             }
-
-            Iterator<Entry<ERepositoryObjectType, List<ConnectionItem>>> iter = type2Items.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry<ERepositoryObjectType, List<ConnectionItem>> entry = iter.next();
-                ERepositoryObjectType objectType = entry.getKey();
-                List<ConnectionItem> items = entry.getValue();
-
-                for (IHadoopSubnodeRepositoryContentHandler handler : HadoopSubnodeRepositoryContentManager.getHandlers()) {
-                    handler.addNode(node, objectType, items);
-                }
-            }
-
         }
     }
 

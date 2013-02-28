@@ -12,10 +12,12 @@
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode
             alias="HCAT"
-            class="org.talend.repository.hcatalog.node.HCatalogExtendNode"
             folder="metadata/hadoop/hcatalog"
+            icon="icons/hadoop-logo-16x16.png"
             isResouce="true"
             label="%hcatalog"
+            ordinal="51"
+            parentNodeType="HADOOPCLUSTER"
             products="DI"
             type="HCATALOG">
       </repositoryNode>

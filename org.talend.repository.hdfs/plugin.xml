@@ -12,10 +12,12 @@
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode
             alias="HDFS"
-            class="org.talend.repository.hdfs.node.HDFSExtendNode"
             folder="metadata/hadoop/hdfs"
+            icon="icons/hadoop-logo-16x16.png"
             isResouce="true"
             label="%HDFS"
+            ordinal="50"
+            parentNodeType="HADOOPCLUSTER"
             products="DI"
             type="HDFS">
       </repositoryNode>

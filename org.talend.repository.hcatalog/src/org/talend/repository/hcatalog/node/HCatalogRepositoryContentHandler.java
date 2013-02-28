@@ -64,6 +64,11 @@ public class HCatalogRepositoryContentHandler extends AbstractHadoopSubnodeRepos
     }
 
     @Override
+    public ERepositoryObjectType getProcessType() {
+        return HCatalogRepositoryNodeType.HCATALOG;
+    }
+
+    @Override
     public Resource create(IProject project, Item item, int classifierID, IPath path) throws PersistenceException {
         if (item.eClass() == HCatalogPackage.Literals.HCATALOG_CONNECTION_ITEM) {
             Resource itemResource = null;

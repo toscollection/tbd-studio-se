@@ -14,9 +14,7 @@ package org.talend.repository.hadoopcluster.tester;
 
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
-import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.metadata.tester.CoMetadataNodeTester;
-import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
 
 /**
@@ -40,12 +38,15 @@ public class HadoopClusterMetadataNodeTester extends CoMetadataNodeTester {
 
     @Override
     public boolean isTypeNode(RepositoryNode repositoryNode, ERepositoryObjectType type) {
-        ERepositoryObjectType contentType = (ERepositoryObjectType) repositoryNode.getProperties(EProperties.CONTENT_TYPE);
-        if (contentType != null && contentType.equals(type)) {
+        if (super.isTypeNode(repositoryNode, type)) {
             return true;
         }
+        ERepositoryObjectType nodeContentType = getNodeContentType(repositoryNode);
+        if (nodeContentType != null) {
+            return type.isParentTypeOf(nodeContentType);
+        }
 
-        return HCRepositoryUtil.isHadoopNode(repositoryNode);
+        return false;
     }
 
 }

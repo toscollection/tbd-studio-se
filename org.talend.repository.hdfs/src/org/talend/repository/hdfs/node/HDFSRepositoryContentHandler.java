@@ -54,6 +54,11 @@ public class HDFSRepositoryContentHandler extends AbstractHadoopSubnodeRepositor
     }
 
     @Override
+    public ERepositoryObjectType getProcessType() {
+        return HDFSRepositoryNodeType.HDFS;
+    }
+
+    @Override
     public Resource create(IProject project, Item item, int classifierID, IPath path) throws PersistenceException {
         Resource itemResource = null;
         if (item.eClass() == HDFSPackage.Literals.HDFS_CONNECTION_ITEM) {
