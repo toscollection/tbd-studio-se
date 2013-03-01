@@ -246,7 +246,7 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
             cellEditor = new ExpressionCellEditor(composite, behavior, source, DirectEditType.EXPRESSION);
             ((ExpressionCellEditor) cellEditor).setOwnerId(((AbstractNode) model).getExpression());
             IExpressionBuilderDialogController dialog = ((IExpressionBuilderDialogService) expressionBuilderDialogService)
-                    .getExpressionBuilderInstance(parent, (ExpressionCellEditor) cellEditor, null);
+                    .getExpressionBuilderInstance(parent, (ExpressionCellEditor) cellEditor, null, true);
             cellAndType.put(cellEditor, DirectEditType.EXPRESSION);
             behavior.setCellEditorDialog(dialog);
         } else if (figure instanceof ITextAreaCell) {
