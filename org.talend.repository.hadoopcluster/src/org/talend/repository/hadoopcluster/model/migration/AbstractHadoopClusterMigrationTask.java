@@ -115,7 +115,7 @@ public abstract class AbstractHadoopClusterMigrationTask extends AbstractItemMig
         IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
         Connection connection = item.getConnection();
         if (connection instanceof HadoopSubConnection) {
-            HadoopSubConnection hadoopSubConnection = (HadoopSubConnection) item;
+            HadoopSubConnection hadoopSubConnection = (HadoopSubConnection) connection;
             String relClusterId = hadoopSubConnection.getRelativeHadoopClusterId();
             if (StringUtils.isNotBlank(relClusterId)) {
                 modified[0] = false;
