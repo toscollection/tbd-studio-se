@@ -50,6 +50,7 @@
 				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS" />
 				<ITEM NAME="CLOUDERA" VALUE="CLOUDERA" />
 				<ITEM NAME="MAPR" VALUE="MAPR" />
+				<ITEM NAME="AMAZON_EMR" VALUE="AMAZON_EMR"/>
 				<ITEM NAME="APACHE" VALUE="APACHE" />
 				<ITEM NAME="CUSTOM" VALUE="CUSTOM" />
 			</ITEMS>
@@ -66,6 +67,8 @@
                 <ITEM NAME="APACHE_0_20_2" VALUE="APACHE_0_20_2" SHOW_IF="DISTRIBUTION=='APACHE'" />
                 <ITEM NAME="MapR" VALUE="MapR" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="MapR2" VALUE="MapR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MapR_EMR" VALUE="MapR_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
+				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 			</ITEMS>
 		</PARAMETER>
         <PARAMETER NAME="AUTHENTICATION_MODE" FIELD="CLOSED_LIST" NUM_ROW="11" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION=='CUSTOM')">
@@ -76,21 +79,21 @@
             </ITEMS>
         </PARAMETER>
 		<PARAMETER NAME="USE_KRB" FIELD="CHECK" NUM_ROW="12" REPOSITORY_VALUE="USE_KRB"
-			SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND (((DB_VERSION=='HDP_1_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='APACHE_1_0_0') OR (DB_VERSION=='Cloudera_CDH4')) AND (DISTRIBUTION!='CUSTOM'))"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND (((DB_VERSION=='HDP_1_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='APACHE_1_0_0') OR (DB_VERSION=='APACHE_1_0_3_EMR') OR (DB_VERSION=='Cloudera_CDH4')) AND (DISTRIBUTION!='CUSTOM'))"
 			GROUP="CONN">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-        <PARAMETER NAME="NAMENODE_PRINCIPAL" FIELD="TEXT" REPOSITORY_VALUE="NAMENODE_PRINCIPAL" REQUIRED="true" NUM_ROW="12" SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND ((((DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4') AND DISTRIBUTION!='CUSTOM') AND USE_KRB=='true') OR (DISTRIBUTION=='CUSTOM' AND AUTHENTICATION_MODE=='KRB'))" GROUP="CONN">
+        <PARAMETER NAME="NAMENODE_PRINCIPAL" FIELD="TEXT" REPOSITORY_VALUE="NAMENODE_PRINCIPAL" REQUIRED="true" NUM_ROW="12" SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND ((((DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='APACHE_1_0_3_EMR' OR DB_VERSION=='Cloudera_CDH4') AND DISTRIBUTION!='CUSTOM') AND USE_KRB=='true') OR (DISTRIBUTION=='CUSTOM' AND AUTHENTICATION_MODE=='KRB'))" GROUP="CONN">
             <DEFAULT>"nn/_HOST@EXAMPLE.COM"</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" REPOSITORY_VALUE="FS_DEFAULT_NAME" REQUIRED="true" NUM_ROW="20" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" GROUP="CONN">
-            <DEFAULT IF="((DB_VERSION != 'MapR') AND (DB_VERSION != 'MapR2')) OR (DISTRIBUTION == 'CUSTOM')">"hdfs://localhost:9000/"</DEFAULT>
-            <DEFAULT IF="((DB_VERSION == 'MapR') OR (DB_VERSION == 'MapR2')) AND (DISTRIBUTION != 'CUSTOM')">"maprfs:///"</DEFAULT>
+            <DEFAULT IF="((DB_VERSION != 'MapR') AND (DB_VERSION != 'MapR2') AND (DB_VERSION != 'MapR_EMR')) OR (DISTRIBUTION == 'CUSTOM')">"hdfs://localhost:9000/"</DEFAULT>
+            <DEFAULT IF="((DB_VERSION == 'MapR') OR (DB_VERSION == 'MapR2') OR (DB_VERSION == 'MapR_EMR')) AND (DISTRIBUTION != 'CUSTOM')">"maprfs:///"</DEFAULT>
         </PARAMETER>
-        <PARAMETER NAME="USERNAME" FIELD="TEXT" REPOSITORY_VALUE="USERNAME" REQUIRED="true" NUM_ROW="30" NOT_SHOW_IF="((DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4') AND DISTRIBUTION!='CUSTOM' AND USE_KRB=='true') OR (DISTRIBUTION=='CUSTOM' AND AUTHENTICATION_MODE=='KRB') OR USE_EXISTING_CONNECTION == 'true'" GROUP="CONN">
+        <PARAMETER NAME="USERNAME" FIELD="TEXT" REPOSITORY_VALUE="USERNAME" REQUIRED="true" NUM_ROW="30" NOT_SHOW_IF="((DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='APACHE_1_0_3_EMR' OR DB_VERSION=='Cloudera_CDH4') AND DISTRIBUTION!='CUSTOM' AND USE_KRB=='true') OR (DISTRIBUTION=='CUSTOM' AND AUTHENTICATION_MODE=='KRB') OR USE_EXISTING_CONNECTION == 'true'" GROUP="CONN">
             <DEFAULT>"anonymous"</DEFAULT>
         </PARAMETER>
-        <PARAMETER NAME="GROUP" FIELD="TEXT" REPOSITORY_VALUE="GROUP" REQUIRED="true" NUM_ROW="30" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR') or (DB_VERSION == 'MapR2')) and (DISTRIBUTION!='CUSTOM')) OR (DISTRIBUTION=='CUSTOM' AND AUTHENTICATION_MODE=='UGI'))" GROUP="CONN">
+        <PARAMETER NAME="GROUP" FIELD="TEXT" REPOSITORY_VALUE="GROUP" REQUIRED="true" NUM_ROW="30" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR') or (DB_VERSION == 'MapR_EMR') or (DB_VERSION == 'MapR2')) and (DISTRIBUTION!='CUSTOM')) OR (DISTRIBUTION=='CUSTOM' AND AUTHENTICATION_MODE=='UGI'))" GROUP="CONN">
             <DEFAULT>"supergroup"</DEFAULT>
         </PARAMETER>
 	    <PARAMETER NAME="REMOTEDIR" FIELD="DIRECTORY_HADOOP" REQUIRED="false" NUM_ROW="40">
@@ -138,6 +141,11 @@
             <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
+            <!-- APACHE_1_0_3_EMR -->
+            <IMPORT NAME="hadoop-core-1.0.3.jar" MODULE="hadoop-core-1.0.3.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_3_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_3_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_3_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_3_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
             <!-- APACHE_0_20_204 -->
             <IMPORT NAME="hadoop-core-0.20.204.0.jar" MODULE="hadoop-core-0.20.204.0.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_204') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_204') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
@@ -166,6 +174,11 @@
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(DB_VERSION=='MapR') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MapR') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MapR') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
+            <!-- MapR_EMR -->
+            <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
             <!-- MapR2 -->
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />

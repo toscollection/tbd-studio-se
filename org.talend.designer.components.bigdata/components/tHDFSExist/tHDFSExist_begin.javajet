@@ -40,7 +40,7 @@
 			<% 
 			} 
 		}
-		if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) && !isCustom) && useKrb)
+		if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) && !isCustom) && useKrb)
 		 || (isCustom && "KRB".equals(auth)))) {
 			user = ElementParameterParser.getValue(node, "__USERNAME__");
 		} else {
@@ -48,7 +48,7 @@
 			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%
 		}
-		if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+		if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion || ("MapR_EMR").equals(hadoopVersion))) && !isCustom) || (isCustom && "UGI".equals(auth))){
 			String group = ElementParameterParser.getValue(node, "__GROUP__");
 			%>
 			conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
@@ -80,12 +80,12 @@
 			boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
 			String auth = ElementParameterParser.getValue(targetNode, "__AUTHENTICATION_MODE__");
 			
-		      	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+		      	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
 			    %>
 			    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				<%
 			  	}else{
-					if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && !isCustom && useKrb) || (isCustom && "KRB".equals(auth)))) {
+					if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && !isCustom && useKrb) || (isCustom && "KRB".equals(auth)))) {
 						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
 					} else {
 %>
