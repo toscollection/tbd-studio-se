@@ -9,6 +9,7 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui.intro,
  org.eclipse.core.runtime,
  org.eclipse.ui.workbench,
+ org.apache.commons.lang,
  org.talend.core.repository,
  org.talend.core,
  org.talend.repository,
