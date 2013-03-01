@@ -52,7 +52,7 @@
             NUM_ROW="2" 
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false')" 
             GROUP="CONNECTION">
-            <ITEMS DEFAULT="MONGODB_2_2_3">
+            <ITEMS DEFAULT="MONGODB_2_1_2">
                 <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
                 <ITEM NAME="MONGODB_2_1_2" VALUE="MONGODB_2_1_2"/>
             </ITEMS>
