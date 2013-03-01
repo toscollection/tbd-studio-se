@@ -47,11 +47,11 @@
             SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
             GROUP="CONNECTION"
         />
-        <PARAMETER 
-            NAME="DB_VERSION" 
-            FIELD="CLOSED_LIST" 
-            NUM_ROW="2" 
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')" 
+        <PARAMETER
+            NAME="DB_VERSION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="2"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
             GROUP="CONNECTION">
             <ITEMS DEFAULT="MONGODB_2_1_2">
                 <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
@@ -204,7 +204,7 @@
             <IMPORT NAME="commons_beanutils" MODULE="commons-beanutils-1.8.3.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-beanutils-1.8.3.jar" REQUIRED="true" />
             <IMPORT NAME="commons_collections" MODULE="commons-collections-3.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar" REQUIRED="true" />
             <IMPORT NAME="commons_lang" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED="true" />
-            <IMPORT NAME="commons_logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.1.jar" REQUIRED="true" />
+            <IMPORT NAME="commons_logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="true" />
             <IMPORT NAME="ezmorph" MODULE="ezmorph-1.0.6.jar" REQUIRED="true" />
             <IMPORT NAME="json-lib" MODULE="json-lib-2.4-jdk15.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json-lib-2.4-jdk15.jar" REQUIRED="true" />
         </IMPORTS>
