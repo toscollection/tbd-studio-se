@@ -12,132 +12,16 @@
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
-
-	boolean useColumns = "true".equals(ElementParameterParser.getValue(node,"__USE_COLUMNS__"));
-	List<Map<String, String>> columns = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__COLUMNS__");
-	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
-	String table = ElementParameterParser.getValue(node,"__TABLE__");
-	String username = ElementParameterParser.getValue(node,"__USERNAME__");
-	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
-	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
-	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
-	boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
-	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
-	boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
-	boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
-	String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
-	boolean useTarget = "true".equals(ElementParameterParser.getValue(node,"__USE_TARGET__"));
-	String target = ElementParameterParser.getValue(node,"__TARGET__");
-	boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
-	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
-	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
 	
-	boolean useWhere = "true".equals(ElementParameterParser.getValue(node,"__USE_WHERE__"));
-	String where = ElementParameterParser.getValue(node,"__WHERE__");
-	where = where.substring(1, where.length()-1);
-	where = "\"\\\""+where+"\\\"\"";
+	boolean useCommandLine = "true".equals(ElementParameterParser.getValue(node,"__USE_COMMANDLINE__"));
 	
-	boolean useQuery = "true".equals(ElementParameterParser.getValue(node,"__USE_QUERY__"));
-	String query = ElementParameterParser.getValue(node,"__QUERY__");
-	query = query.replaceAll("\n"," ");
-	query = query.replaceAll("\r"," ");
-	
-	boolean useSplit = "true".equals(ElementParameterParser.getValue(node,"__USE_SPLIT__"));
-	String split = ElementParameterParser.getValue(node,"__SPLIT__");
+	if(useCommandLine) {
 %>
-
+		<%@ include file="./tSqoopImport_commandline.javajet"%>
 <%
-String sColumns = "\\\"";
-int size = columns.size();
-int current = 0;
-for (Map<String, String> row : columns) {
-    String column = row.get("COLUMN");
-    column = column.substring(1, column.length()-1);
-    if (size-1 == current) {
-        sColumns += column;
-    } else {
-        sColumns += column + ",";
-    }
-    current++;
-}
-sColumns += "\\\"";
-%> 
-
-
-//call the cmd part
-Runtime runtime_<%=cid %> = Runtime.getRuntime();
-
-String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "--connect", <%=connection%>, "--username", <%=username%>, "--password", <%=password%>
-<%if(useQuery){%>, "--query", <%=query%><%} else {%>
-	, "--table", <%=table%>
-    <%if(useColumns){%>, "--columns", "<%=sColumns%>"<%}%>
-    <%if(useWhere){%>, "--where", <%=where%><%}%>
-<%}%>
-<%if(printLog && verbose){%>, "--verbose"<%}%>
-<%if(append){%>, "--append"<%}%>
-<%if(direct){%>, "--direct"<%}%>
-<%if(compress){%>, "--compress"<%}%>
-<%if(useTarget || useQuery){%>, "--target-dir", <%=target%><%}%>
-<%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
-<%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
-<%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
-<%if(useSplit){%>, "--split-by", <%=split%><%}%>
-<%
-boolean isNull=false; 
-if(additionalList != null){ 
-	for(Map<String,String> additionalMap : additionalList){ 
-		isNull=false; 
-	 	if(additionalMap.get("ADDITIONAL_VALUE")==null || "".equals(additionalMap.get("ADDITIONAL_VALUE"))) { 
-	 		isNull=true; 
-	 	} 
-	 	if(!isNull) { 
-%> 
-			,"<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>", <%=additionalMap.get("ADDITIONAL_VALUE")%> 
-<% 
-		} else { 
-%> 
-			,"<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>" 
-<% 
-		} 
-	} 
-} 
+	} else {
 %>
-
-};
-final Process ps_<%=cid%> = runtime_<%=cid%>.exec(cmd_<%=cid%>);
-
-java.lang.StringBuilder sb_<%=cid%> = null;
-byte[] byteArray_<%=cid%> = new byte[1024];
-int len_<%=cid%> = 0;
-
-java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
-sb_<%=cid%> = new java.lang.StringBuilder();
-while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-	String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
-<%
-	if(printLog){
-%>
-	    System.err.println(line_<%=cid%>);
+		<%@ include file="./tSqoopImport_javaapi.javajet"%>
 <%
 	}
 %>
-	sb_<%=cid%>.append(line_<%=cid%>);
-}
-globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
-
-byteArray_<%=cid%> = new byte[1024];
-len_<%=cid%> = 0;
-java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
-sb_<%=cid%> = new java.lang.StringBuilder();
-while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-	String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
-<%
-	if(printLog){
-%>
-	    System.out.println(line_<%=cid%>);
-<%
-	}
-%>
-	sb_<%=cid%>.append(line_<%=cid%>);
-}
-globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
