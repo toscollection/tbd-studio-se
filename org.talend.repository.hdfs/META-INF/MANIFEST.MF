@@ -7,6 +7,8 @@ Bundle-Activator: org.talend.repository.hdfs.Activator
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
+ org.apache.commons.beanutils,
+ org.apache.commons.lang,
  org.talend.core.runtime,
  org.talend.core,
  org.talend.core.repository,

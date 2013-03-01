@@ -6,6 +6,7 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.talend.repository.hbaseprovider.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
+ org.apache.commons.lang,
  org.talend.core.repository,
  org.talend.metadata.managment,
  org.talend.model,
