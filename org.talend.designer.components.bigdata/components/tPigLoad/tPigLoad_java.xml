@@ -208,14 +208,14 @@
 	</ADVANCED_PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="apache-pig" MODULE="pig-0.10.0.jar" REQUIRED="false" REQUIRED_IF="LOCAL=='true'"/>
+			<IMPORT NAME="apache-pig" MODULE="pig-0.10.0.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.10.0.jar" REQUIRED="false" REQUIRED_IF="LOCAL=='true'"/>
 			<IMPORT NAME="dom4j" MODULE="dom4j-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.dom4j-jaxen/lib/dom4j-1.6.1.jar" REQUIRED="true"/>
 			<IMPORT NAME="jaxen" MODULE="jaxen-1.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/jaxen-1.1.1.jar" REQUIRED="true"/>
-			<IMPORT NAME="apache-pig-without-hadoop" MODULE="pig-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1')) AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="apache-pig-without-hadoop" MODULE="pig-withouthadoop.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="hadoop-conf" MODULE="hadoop-conf.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND ((PIG_VERSION!='HDP_1_0' AND PIG_VERSION!='HDP_1_2' AND PIG_VERSION!='APACHE_1_0_0' AND PIG_VERSION!='CLOUDERA_CDH4') OR USE_KRB=='false')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND ((PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='CLOUDERA_CDH4') AND USE_KRB=='true')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="apache-hadoop" MODULE="hadoop-0.20.2-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='APACHE_0_20_2') AND DISTRIBUTION!='CUSTOM'"/>
-			<IMPORT NAME="cloudera-hadoop" MODULE="hadoop-0.20.2-cdh3u1-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="cloudera-hadoop" MODULE="hadoop-0.20.2-cdh3u1-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/hadoop-0.20.2-cdh3u1-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
@@ -224,26 +224,26 @@
 			<IMPORT NAME="hadoop-hdfs-cdh4.0.1" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="hadoop-mr1-cdh4.0.1" MODULE="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
-			<IMPORT NAME="pig-0.9.2-cdh4.0.1-withouthadoop" MODULE="pig-0.9.2-cdh4.0.1-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="pig-0.9.2-cdh4.0.1-withouthadoop" MODULE="pig-0.9.2-cdh4.0.1-withouthadoop.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.9.2-cdh4.0.1-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='CLOUDERA_CDH4') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="automaton" MODULE="automaton.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
-			<IMPORT NAME="pig-0.9.0-core" MODULE="pig-0.9.0-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
-			<IMPORT NAME="pigperf" MODULE="pigperf.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="pig-0.9.0-core" MODULE="pig-0.9.0-core.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.9.0-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="pigperf" MODULE="pigperf.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pigperf.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="sdsuLibJKD12" MODULE="sdsuLibJKD12.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="maprfs-0.1" MODULE="maprfs-0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="zookeeper-3.3.2" MODULE="zookeeper-3.3.2.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="hadoop-0.20.2-dev-core" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="automaton.jar" MODULE="automaton.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="pig-0.10.0-mapr2" MODULE="pig-0.10.0-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="pigperf-mapr2" MODULE="pigperf-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="pig-0.10.0-mapr2" MODULE="pig-0.10.0-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.10.0-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="pigperf-mapr2" MODULE="pigperf-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pigperf-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="sdsuLibJKD12-mapr2" MODULE="sdsuLibJKD12-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
-			<IMPORT NAME="pig-0.9.2-withouthadoop" MODULE="pig-0.9.2-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0')) AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="pig-0.9.2-withouthadoop" MODULE="pig-0.9.2-withouthadoop.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.9.2-withouthadoop.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="hadoop-core-1.0.0" MODULE="hadoop-core-1.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/log4j-1.2.15.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0')) AND DISTRIBUTION!='CUSTOM'"/>
@@ -263,7 +263,7 @@
             <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='HDP_1_2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hcatalog-core-0.5.0.21.jar" MODULE="hcatalog-core-0.5.0.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hcatalog-pig-adapter-0.5.0.21.jar" MODULE="hcatalog-pig-adapter-0.5.0.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hcatalog-server-extensions-0.5.0.21.jar" MODULE="hcatalog-server-extensions-0.5.0.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'"/>
@@ -281,15 +281,15 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 
-            <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/hbase-0.90.1-cdh3u0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/zookeeper-3.3.3-cdh3u0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='MAPR' OR PIG_VERSION=='CLOUDERA_0.20_CDH3U1') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 
             <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
@@ -297,7 +297,7 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 
             <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
@@ -305,7 +305,7 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='APACHE_1_0_0' OR PIG_VERSION=='HDP_1_0') AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 
             <IMPORT NAME="hbase-0.92.1-cdh4.0.1-security.jar" MODULE="hbase-0.92.1-cdh4.0.1-security.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.4.3-cdh4.0.1.jar" MODULE="zookeeper-3.4.3-cdh4.0.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
@@ -313,7 +313,7 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='CLOUDERA_CDH4' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 
 
 		</IMPORTS>

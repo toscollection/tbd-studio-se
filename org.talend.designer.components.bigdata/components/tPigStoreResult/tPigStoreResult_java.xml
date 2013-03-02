@@ -170,15 +170,15 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
 
-            <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/hbase-0.90.1-cdh3u0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/zookeeper-3.3.3-cdh3u0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_0_20_2' OR HBASE_VERSION=='MAPR' OR HBASE_VERSION=='CLOUDERA_0.20_CDH3U1') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
 
             <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -186,7 +186,7 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
 
             <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -194,7 +194,7 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
 
             <IMPORT NAME="hbase-0.92.1-cdh4.0.1-security.jar" MODULE="hbase-0.92.1-cdh4.0.1-security.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="zookeeper-3.4.3-cdh4.0.1.jar" MODULE="zookeeper-3.4.3-cdh4.0.1.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -202,7 +202,7 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='CLOUDERA_CDH4' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
 
 		</IMPORTS>
 	</CODEGENERATION>
