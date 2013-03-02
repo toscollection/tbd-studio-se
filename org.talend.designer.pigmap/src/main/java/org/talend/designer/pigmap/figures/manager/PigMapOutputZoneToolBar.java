@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.designer.pigmap.figures.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.MouseEvent;
@@ -25,6 +26,9 @@ import org.talend.designer.gefabstractmap.figures.treetools.ToolBarButtonImageFi
 import org.talend.designer.gefabstractmap.figures.treetools.zone.OutputZoneToolBar;
 import org.talend.designer.pigmap.PigMapComponent;
 import org.talend.designer.pigmap.editor.PigMapGraphicViewer;
+import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
+import org.talend.designer.pigmap.model.emf.pigmap.Connection;
+import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
@@ -51,11 +55,6 @@ public class PigMapOutputZoneToolBar extends OutputZoneToolBar {
 
     private PigMapGraphicViewer graphicViewer;
 
-    /**
-     * DOC Administrator XmlMapOutputZoneToolBar constructor comment.
-     * 
-     * @param rootModelManager
-     */
     public PigMapOutputZoneToolBar(PigMapDataManager rootModelManager) {
         super(rootModelManager);
         externalData = rootModelManager.getModel();
@@ -277,8 +276,86 @@ public class PigMapOutputZoneToolBar extends OutputZoneToolBar {
      */
     @Override
     public void autoMap() {
-        // AutoMapper mapper = new AutoMapper(externalData);
-        // mapper.map();
+        autoMapper();
     }
 
+    private void autoMapper() {
+        EList<InputTable> inputTables = externalData.getInputTables();
+        EList<OutputTable> outputTables = externalData.getOutputTables();
+        for (OutputTable outputTable : outputTables) {
+            List<TableNode> outputEntries = getAllEntities(outputTable);
+            for (TableNode outputEntry : outputEntries) {
+                if ((outputEntry.getExpression() == null || "".equals(outputEntry.getExpression()))
+                        && PigMapUtil.isExpressionEditable(outputEntry)) {
+                    String outputNodeName = outputEntry.getName();
+                    TableNode inputSameXpath = null;
+                    TableNode inputSameName = null;
+                    out: for (InputTable inputTable : inputTables) {
+                        List<TableNode> inputColumnEntries = getAllEntities(inputTable);
+                        in: for (TableNode inputEntry : inputColumnEntries) {
+                            // check if input tree node can be mapped
+                            if (PigMapUtil.isExpressionEditable(inputEntry)) {
+                                String inputNodePath = inputEntry.getName();
+                                if (outputNodeName.equals(inputNodePath)) {
+                                    inputSameXpath = inputEntry;
+                                    break out;
+                                }
+                                // if the same name , find the first matched node , don't overwrite
+                                if (inputSameName == null && outputEntry.getName() != null
+                                        && outputEntry.getName().equals(inputEntry.getName())) {
+                                    inputSameName = inputEntry;
+                                }
+                            }
+                        }
+                    }
+
+                    TableNode inputEntryToMap = null;
+                    if (inputSameXpath != null) {
+                        inputEntryToMap = inputSameXpath;
+                    } else if (inputSameName != null) {
+                        inputEntryToMap = inputSameName;
+                    }
+                    if (inputEntryToMap != null) {
+                        String expression = outputEntry.getExpression();
+                        String convertToExpression = null;
+                        if (inputEntryToMap.eContainer() != null && inputEntryToMap.eContainer() instanceof InputTable) {
+                            InputTable in = (InputTable) inputEntryToMap.eContainer();
+                            convertToExpression = in.getName() + "." + inputEntryToMap.getName();
+                        }
+                        if (convertToExpression != null && expression != null && expression.indexOf(convertToExpression) != -1) {
+                            continue;
+                        } else {
+                            if (expression == null) {
+                                expression = "";
+                            }
+                            expression = expression + convertToExpression;
+                        }
+                        outputEntry.setExpression(expression);
+                        Connection conn = PigmapFactory.eINSTANCE.createConnection();
+                        conn.setSource(inputEntryToMap);
+                        conn.setTarget(outputEntry);
+                        outputEntry.getIncomingConnections().add(conn);
+                        inputEntryToMap.getOutgoingConnections().add(conn);
+                        externalData.getConnections().add(conn);
+                    }
+                }
+            }
+        }
+    }
+
+    private List<TableNode> getAllEntities(AbstractInOutTable abstractTable) {
+        List<TableNode> allEntities = new ArrayList<TableNode>();
+        if (abstractTable instanceof InputTable) {
+            EList<TableNode> nodes = ((InputTable) abstractTable).getNodes();
+            if (!nodes.isEmpty()) {
+                allEntities.addAll(nodes);
+            }
+        } else if (abstractTable instanceof OutputTable) {
+            EList<TableNode> nodes = ((OutputTable) abstractTable).getNodes();
+            if (!nodes.isEmpty()) {
+                allEntities.addAll(nodes);
+            }
+        }
+        return allEntities;
+    }
 }
