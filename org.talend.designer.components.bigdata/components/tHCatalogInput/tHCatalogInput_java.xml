@@ -180,7 +180,7 @@
 			<IMPORT NAME="commons-configuration" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
 			<IMPORT NAME="commons-lang" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND USE_KRB=='true'" />
-			<IMPORT NAME="Talen File Enhanced" MODULE="talend_file_enhanced_20070724.jar" UrlPath="platform:/plugin/org.talend.libraries.csv/lib/talend_file_enhanced_20070724.jar" REQUIRED="true" />
+			<IMPORT NAME="Talen File Enhanced" MODULE="talend_file_enhanced_20070724.jar" UrlPath="platform:/plugin/org.talend.libraries.custom/lib/talend_file_enhanced_20070724.jar" REQUIRED="true" />
     	</IMPORTS>
 	</CODEGENERATION>
    <RETURNS/>
