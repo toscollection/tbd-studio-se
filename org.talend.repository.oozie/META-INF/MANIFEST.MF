@@ -8,6 +8,8 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xmi,
+ org.apache.commons.lang,
+ org.apache.commons.beanutils,
  org.talend.designer.hdfsbrowse,
  org.talend.repository.hadoopcluster,
  org.talend.commons.runtime,
