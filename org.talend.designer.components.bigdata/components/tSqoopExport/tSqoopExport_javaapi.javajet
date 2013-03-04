@@ -4,67 +4,35 @@
 	
 	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	String jobtracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
-	boolean useColumns = "true".equals(ElementParameterParser.getValue(node,"__USE_COLUMNS__"));
-	List<Map<String, String>> columns = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__COLUMNS__");
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String table = ElementParameterParser.getValue(node,"__TABLE__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
 	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
+	String exportDir = ElementParameterParser.getValue(node,"__EXPORT_DIR__");
 	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
 	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
-	boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
 	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
-	boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
 	boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
-	String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
-	boolean useTarget = "true".equals(ElementParameterParser.getValue(node,"__USE_TARGET__"));
-	String target = ElementParameterParser.getValue(node,"__TARGET__");
 	boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
 	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 	
-	boolean useWhere = "true".equals(ElementParameterParser.getValue(node,"__USE_WHERE__"));
-	String where = ElementParameterParser.getValue(node,"__WHERE__");
-	//where = where.substring(1, where.length()-1);
-	//where = "\"\\\""+where+"\\\"\"";
-	
-	boolean useQuery = "true".equals(ElementParameterParser.getValue(node,"__USE_QUERY__"));
-	String query = ElementParameterParser.getValue(node,"__QUERY__");
-	query = query.replaceAll("\n"," ");
-	query = query.replaceAll("\r"," ");
-	
-	boolean useSplit = "true".equals(ElementParameterParser.getValue(node,"__USE_SPLIT__"));
-	String split = ElementParameterParser.getValue(node,"__SPLIT__");
-%>
-	java.util.List<String> lColumns_<%=cid%> = new java.util.ArrayList<String>();
-<%
-	for (Map<String, String> row : columns) {
-		String column = row.get("COLUMN");
-%>
-		lColumns_<%=cid%>.add(<%=column%>);
-<%
-	}
 %>
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("fs.default.name", <%=namenode%>);
 	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
 
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);
-	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("import");
+	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("export");
 
 	com.cloudera.sqoop.SqoopOptions sqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
 	
 	sqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
+	sqoopOptions_<%=cid%>.setTableName(<%=table%>);
+	sqoopOptions_<%=cid%>.setExportDir(<%=exportDir%>);
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	sqoopOptions_<%=cid%>.setPassword(<%=password%>); // __PASSWORD__
-	
-	<%if(useQuery){%>
-		sqoopOptions_<%=cid%>.setSqlQuery(<%=query%>);
-	<%} else {%>
-		sqoopOptions_<%=cid%>.setTableName(<%=table%>); // __TABLE__
-		<%if(useColumns){%>sqoopOptions_<%=cid%>.setColumns(lColumns_<%=cid%>.toArray(new String[lColumns_<%=cid%>.size()]));<%}%>
-		<%if(useWhere){%>sqoopOptions_<%=cid%>.setWhereClause(<%=where%>); // __WHERE__<%}%>
-	<%}%>
+		
 <%	
 	if(!("HDP_1_0".equals(version) || "Cloudera_0_20_CDH3U1".equals(version))) {
 		if(printLog && verbose){
@@ -74,13 +42,8 @@
 		}
 	}
 %>
-	<%if(append){%>sqoopOptions_<%=cid%>.setAppendMode(true);<%}%>
 	<%if(direct){%>sqoopOptions_<%=cid%>.setDirectMode(true);<%}%>
-	<%if(compress){%>sqoopOptions_<%=cid%>.setUseCompression(true);<%}%>
-	<%if(useTarget || useQuery){%>sqoopOptions_<%=cid%>.setTargetDir(<%=target%>);<%}%>
-	<%if(fileFormat.equals("sequencefile")){%>sqoopOptions_<%=cid%>.setFileLayout(com.cloudera.sqoop.SqoopOptions.FileLayout.SequenceFile);<%} else {%>sqoopOptions_<%=cid%>.setFileLayout(com.cloudera.sqoop.SqoopOptions.FileLayout.TextFile);<%}%>
 	<%if(useMappers){%>sqoopOptions_<%=cid%>.setNumMappers(Integer.valueOf(<%=mappers%>));<%}%>
-	<%if(useSplit){%>sqoopOptions_<%=cid%>.setSplitByCol(<%=split%>);<%}%>
 	
 	java.util.Properties additionalProperties_<%=cid%> = new java.util.Properties();
 <%
@@ -116,5 +79,5 @@
 %>
 	int result_<%=cid%> = sqoop_<%=cid%>.run(null);
 	if(result_<%=cid%> != 0) {
-		throw new Exception("The Sqoop import job has failed");
+		throw new Exception("The Sqoop export job has failed");
 	}
