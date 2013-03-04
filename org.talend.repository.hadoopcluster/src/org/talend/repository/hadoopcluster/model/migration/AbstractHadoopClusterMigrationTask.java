@@ -120,6 +120,8 @@ public abstract class AbstractHadoopClusterMigrationTask extends AbstractItemMig
             if (StringUtils.isNotBlank(relClusterId)) {
                 modified[0] = false;
                 return;
+            } else {
+                modified[0] = true;
             }
 
             HadoopClusterConnection hcConn = null;
@@ -149,16 +151,19 @@ public abstract class AbstractHadoopClusterMigrationTask extends AbstractItemMig
                 hcConn.setLabel(migratedHCName);
                 String nextId = factory.getNextId();
                 connectionProperty.setId(nextId);
-                initCluster(hcConn, hadoopSubConnection);
                 factory.create(hcConnItem, new Path("")); //$NON-NLS-1$
-                modified[0] = true;
             }
+
+            if (hcConn == null) {
+                hcConn = (HadoopClusterConnection) hcConnItem.getConnection();
+            }
+            initCluster(hcConn, hadoopSubConnection);
+            factory.save(hcConnItem);
 
             if (hcConnItem != null) {
                 hadoopSubConnection.setRelativeHadoopClusterId(hcConnItem.getProperty().getId());
                 factory.save(item);
                 HCRepositoryUtil.setupConnectionToHadoopCluster(hcConnItem, item.getProperty().getId());
-                modified[0] = true;
             }
         }
     }

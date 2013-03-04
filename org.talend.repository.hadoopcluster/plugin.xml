@@ -167,5 +167,16 @@
          </includes>
       </viewerContentBinding>
    </extension>
-
+    <extension
+         point="org.talend.core.migrationTask">
+        <projecttask
+              beforeLogon="true"
+              breaks="5.3.0"
+              class="org.talend.repository.hadoopcluster.model.migration.MoveHDFSAndHCatalogToHadoopFolderMigrationTask"
+              description="Move hdfs and hcatalog files to /metadata/hadoop/hdfs and /metadata/hadoop/hcatalog folder when logon a old project which dont support hadoop cluster metadata yet."
+              id="org.talend.repository.hadoopcluster.model.migration.MoveHDFSAndHCatalogToHadoopFolderMigrationTask"
+              name="MoveHDFSAndHCatalogToHadoopFolderMigrationTask"
+              version="5.3.0">
+        </projecttask>
+    </extension>
 </plugin>
