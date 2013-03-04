@@ -43,6 +43,16 @@
 			NUM_ROW="2"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 		/>
+		<PARAMETER 
+            NAME="DB_VERSION" 
+            FIELD="CLOSED_LIST" 
+            NUM_ROW="3"
+            SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+            <ITEMS DEFAULT="CASSANDRA_1_1_2">
+                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
+                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
+            </ITEMS>
+        </PARAMETER>
 		<PARAMETER
 			FIELD="TEXT"
 			NAME="HOST"
