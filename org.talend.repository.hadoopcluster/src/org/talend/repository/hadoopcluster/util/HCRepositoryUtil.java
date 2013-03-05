@@ -26,8 +26,9 @@ import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.model.IProxyRepositoryFactory;
+import org.talend.repository.model.IRepositoryNode;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.IRepositoryNode.EProperties;
-import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
@@ -61,7 +62,7 @@ public class HCRepositoryUtil {
      * @param connectionID
      * @throws PersistenceException
      */
-    public static void setupConnectionToHadoopCluster(RepositoryNode node, String connectionID) throws PersistenceException {
+    public static void setupConnectionToHadoopCluster(IRepositoryNode node, String connectionID) throws PersistenceException {
         HadoopClusterConnectionItem hcConnectionItem = getHCConnectionItemFromRepositoryNode(node);
         setupConnectionToHadoopCluster(hcConnectionItem, connectionID);
     }
@@ -110,7 +111,7 @@ public class HCRepositoryUtil {
      * @param node
      * @return
      */
-    public static HadoopClusterConnectionItem getHCConnectionItemFromRepositoryNode(RepositoryNode node) {
+    public static HadoopClusterConnectionItem getHCConnectionItemFromRepositoryNode(IRepositoryNode node) {
         IRepositoryViewObject viewObject = node.getObject();
         if (viewObject != null && viewObject.getProperty() != null) {
             Item item = viewObject.getProperty().getItem();
@@ -231,7 +232,7 @@ public class HCRepositoryUtil {
      * @param node
      * @return
      */
-    public static boolean isHadoopNode(RepositoryNode node) {
+    public static boolean isHadoopNode(IRepositoryNode node) {
         return getHCConnectionItemFromRepositoryNode(node) != null;
     }
 
@@ -243,7 +244,7 @@ public class HCRepositoryUtil {
      * @param node
      * @return
      */
-    public static boolean isHadoopSubnode(RepositoryNode node) {
+    public static boolean isHadoopSubnode(IRepositoryNode node) {
         return !isHadoopClusterNode(node) && isHadoopNode(node);
     }
 
@@ -255,7 +256,7 @@ public class HCRepositoryUtil {
      * @param node
      * @return
      */
-    public static boolean isHadoopFolderNode(RepositoryNode node) {
+    public static boolean isHadoopFolderNode(IRepositoryNode node) {
         return node instanceof HadoopFolderRepositoryNode;
     }
 
@@ -267,7 +268,7 @@ public class HCRepositoryUtil {
      * @param node
      * @return
      */
-    public static boolean isHadoopContainerNode(RepositoryNode node) {
+    public static boolean isHadoopContainerNode(IRepositoryNode node) {
         return isHadoopClusterNode(node) || isHadoopFolderNode(node);
     }
 
@@ -279,10 +280,11 @@ public class HCRepositoryUtil {
      * @param node
      * @return
      */
-    public static boolean isHadoopClusterNode(RepositoryNode node) {
-        if (node == null || node.getObject() == null) {
+    public static boolean isHadoopClusterNode(IRepositoryNode node) {
+        if (node == null || node.getObject() == null || !ENodeType.REPOSITORY_ELEMENT.equals(node.getType())) {
             return false;
         }
+
         return HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(node.getProperties(EProperties.CONTENT_TYPE));
     }
 
@@ -290,7 +292,12 @@ public class HCRepositoryUtil {
         if (repObj == null) {
             return false;
         }
-        return HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(repObj.getRepositoryObjectType());
+        IRepositoryNode repNode = repObj.getRepositoryNode();
+        if (repNode == null) {
+            return false;
+        }
+
+        return isHadoopClusterNode(repNode);
     }
 
 }

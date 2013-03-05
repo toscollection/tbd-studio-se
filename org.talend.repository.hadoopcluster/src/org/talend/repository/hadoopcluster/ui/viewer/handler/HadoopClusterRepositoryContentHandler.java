@@ -15,6 +15,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
+import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.MetadataManager;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.AbstractRepositoryContentHandler;
@@ -22,6 +23,7 @@ import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.utils.XmiResourceManager;
+import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.hadoopcluster.ui.HadoopClusterWizard;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
@@ -146,8 +148,9 @@ public class HadoopClusterRepositoryContentHandler extends AbstractRepositoryCon
     public void addNode(ERepositoryObjectType type, RepositoryNode parentNode, IRepositoryViewObject repositoryObject,
             RepositoryNode node) {
         if (type == HadoopClusterRepositoryNodeType.HADOOPCLUSTER) {
+            Project project = new Project(ProjectManager.getInstance().getProject(node.getObject().getProperty()));
             for (IHadoopSubnodeRepositoryContentHandler handler : HadoopSubnodeRepositoryContentManager.getHandlers()) {
-                handler.addNode(node);
+                handler.addNode(project, node);
             }
         }
     }

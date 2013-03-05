@@ -51,6 +51,7 @@ public class HadoopClusterService implements IHadoopClusterService {
         return false;
     }
 
+    @Override
     public ERepositoryObjectType getHadoopClusterType() {
         return HadoopClusterRepositoryNodeType.HADOOPCLUSTER;
     }

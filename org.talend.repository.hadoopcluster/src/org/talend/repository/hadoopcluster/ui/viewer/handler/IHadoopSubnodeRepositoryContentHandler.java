@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui.viewer.handler;
 
+import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
@@ -40,9 +41,10 @@ public interface IHadoopSubnodeRepositoryContentHandler extends IRepositoryConte
      * 
      * Add nodes for special type.
      * 
+     * @param project
      * @param parentNode
      */
-    public void addNode(RepositoryNode parentNode);
+    public void addNode(Project project, RepositoryNode parentNode);
 
     /**
      * DOC ycbai Comment method "addSchemaNode".

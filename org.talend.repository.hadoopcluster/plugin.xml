@@ -26,10 +26,11 @@
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode
             alias="HC"
-            class="org.talend.repository.hadoopcluster.node.HadoopClusterExtendNode"
             folder="metadata/hadoop/hadoopcluster"
+            icon="icons/hadoop-logo-16x16.png"
             isResouce="true"
             label="%hadoopCluster"
+            ordinal="50"
             products="DI"
             type="HADOOPCLUSTER">
       </repositoryNode>

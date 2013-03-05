@@ -18,19 +18,23 @@ import java.util.Set;
 
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.AbstractRepositoryContentHandler;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryTypeProcessor;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.model.repository.RepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.utils.RepositoryNodeManager;
 import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.SubItemHelper;
+import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
+import org.talend.repository.hadoopcluster.ui.viewer.HadoopRepositoryTypeProcessor;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.IRepositoryNode.EProperties;
@@ -60,17 +64,20 @@ public abstract class AbstractHadoopSubnodeRepositoryContentHandler extends Abst
     }
 
     @Override
-    public void addNode(RepositoryNode parentNode) {
+    public void addNode(Project project, RepositoryNode parentNode) {
         IRepositoryViewObject parentObject = parentNode.getObject();
         if (parentObject == null) {
             return;
+        }
+        if (project == null) {
+            project = ProjectManager.getInstance().getCurrentProject();
         }
 
         String clusterId = parentObject.getProperty().getId();
         ERepositoryObjectType objectType = getProcessType();
         List<HadoopSubConnectionItem> items = new ArrayList<HadoopSubConnectionItem>();
         try {
-            List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(objectType);
+            List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(project, objectType);
             for (IRepositoryViewObject repObj : repObjs) {
                 if (repObj != null && repObj.getProperty() != null) {
                     HadoopSubConnectionItem item = (HadoopSubConnectionItem) repObj.getProperty().getItem();
@@ -136,6 +143,16 @@ public abstract class AbstractHadoopSubnodeRepositoryContentHandler extends Abst
                 HCRepositoryUtil.removeFromHadoopCluster(hadoopClusterItem, hadoopSubConnectionItem.getProperty().getId());
             }
         }
+    }
+
+    @Override
+    public IRepositoryTypeProcessor getRepositoryTypeProcessor(String repositoryType) {
+        ERepositoryObjectType processType = getProcessType();
+        if (repositoryType != null && processType != null && repositoryType.equals(processType.getType())) {
+            return new HadoopRepositoryTypeProcessor(repositoryType);
+        }
+
+        return null;
     }
 
 }
