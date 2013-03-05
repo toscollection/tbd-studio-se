@@ -1,0 +1,280 @@
+<%@ jet 
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String dbhost = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
+    String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    boolean useTriggerReplicate="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_TRIGGER_REPLICATE__"));
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    List<Map<String,String>> replicaTargetDB= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICATE_TARGET_DB__");
+    boolean useExistingConn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    
+   
+    boolean isQueryByView = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__QUERY_BY_VIEW__"));
+    boolean include_docs = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INCLUDE_DOCS__"));
+    
+    Object startKey = ElementParameterParser.getValue(node,"__STARTKEY__");
+    Object endKey = ElementParameterParser.getValue(node,"__ENDKEY__");
+    String startKeyDocId = ElementParameterParser.getValue(node,"__STARTKEY_DOCID__");
+    String endKeyDocId = ElementParameterParser.getValue(node,"__ENDKEY_DOCID__");
+    boolean descending = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DESCENDING__"));
+    boolean isAddOptions = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__ADD_OPTION__"));
+    
+    String docName = ElementParameterParser.getValue(node, "__DOC__");
+    String viewName = ElementParameterParser.getValue(node, "__VIEW__");
+    String doc_action = ElementParameterParser.getValue(node,"__DOC_ACTION__");
+    String view_action = ElementParameterParser.getValue(node,"__VIEW_ACTION__");
+    String map = ElementParameterParser.getValue(node,"__MAP__");
+    map = map.replaceAll("\n"," ");
+    map = map.replaceAll("\r"," ");
+    boolean isReduce = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__ISREDUCE__"));
+    String reduce = ElementParameterParser.getValue(node,"__REDUCE__");
+    reduce = reduce.replaceAll("\n"," ");
+    reduce = reduce.replaceAll("\r"," ");
+    boolean isGroup = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__GROUP__"));
+    String group_level = ElementParameterParser.getValue(node,"__GROUP_LEVEL__");
+    
+    String limit = ElementParameterParser.getValue(node, "__LIMIT__");
+    
+    List<IMetadataTable> metadatas = node.getMetadataList();
+  	List<IMetadataColumn> columnList = null;
+  	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
+  	String firstConnName = "";
+  	if (outputs.size() > 0){
+		IConnection out = outputs.get(0);
+		if(out!=null && out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+			firstConnName = out.getName();
+		}
+    }
+%>
+	org.jcouchdb.db.Server server_<%=cid%> =null;
+	org.jcouchdb.db.Database db_<%=cid%> = null;
+	org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.OFF);
+<%
+	if(useExistingConn){
+%>
+	server_<%=cid%> = (org.jcouchdb.db.Server)globalMap.get("server_<%=connection%>");
+	db_<%=cid%> = (org.jcouchdb.db.Database)globalMap.get("db_<%=connection%>");
+<%
+	}else{
+%>
+		server_<%=cid%>=new org.jcouchdb.db.ServerImpl(<%=dbhost%>,<%=dbport%>);
+		db_<%=cid%> = new org.jcouchdb.db.Database(server_<%=cid%>,<%=dbname%>);
+<%
+		if(useTriggerReplicate){
+%>
+		java.util.Map<String, Object> createParams_<%=cid%>=new java.util.HashMap<String,Object>();
+		java.util.List<java.util.Map<String, Object>> replicates_<%=cid%> = new java.util.ArrayList<java.util.Map<String, Object>>();
+		createParams_<%=cid%>.put("source",<%=dbname%>);
+		org.jcouchdb.db.Response reponse_<%=cid%> = null;
+<%
+			for(Map<String,String> targetDB:replicaTargetDB){
+				String targetDBName=targetDB.get("TARGET_DB_NAME");
+				boolean isCreateTargetDB = "true".equalsIgnoreCase(targetDB.get("CREATE_TARGET"));
+				boolean isContinuous = "true".equalsIgnoreCase(targetDB.get("CONTINUOUS"));
+				boolean isCancel = "true".equalsIgnoreCase(targetDB.get("CANCEL_REPLICATE"));
+%>
+
+			createParams_<%=cid%>.put("target",<%=targetDBName%>);
+			createParams_<%=cid%>.put("create_target",<%=isCreateTargetDB%>);
+			createParams_<%=cid%>.put("continuous",<%=isContinuous%>);
+			reponse_<%=cid%> = server_<%=cid%>.post("/_replicate",org.svenson.JSON.defaultJSON().forValue(createParams_<%=cid%>));
+			if(!reponse_<%=cid%>.isOk()){
+				System.err.println(reponse_<%=cid%>.getContentAsString());
+			}
+<%
+				if(isContinuous && isCancel){
+%>
+			java.util.HashMap<String,Object> cancelParams_<%=cid%> = null;
+			if(reponse_<%=cid%>.isOk()){
+				cancelParams_<%=cid%> = new java.util.HashMap<String,Object>();
+				cancelParams_<%=cid%>.put("source",<%=dbname%>);
+				cancelParams_<%=cid%>.put("target",<%=targetDBName%>);
+				cancelParams_<%=cid%>.put("continuous",true);
+				cancelParams_<%=cid%>.put("create_target",true);
+				cancelParams_<%=cid%>.put("cancel",true);
+				replicates_<%=cid%>.add(cancelParams_<%=cid%>);
+			}
+			
+<%
+				}
+			}
+		}
+		if (authentication){
+%>
+    	server_<%=cid%>.setCredentials(new org.apache.http.auth.AuthScope(<%=dbname%>,<%=dbport%>),org.apache.http.auth.UsernamePasswordCredentials(<%=dbuser%>,<%=dbpass%>))
+<%
+		}
+	}
+%>
+		int nb_line_<%=cid %> = 0;
+<%
+  	if(metadatas != null && metadatas.size() > 0){
+      	IMetadataTable metadata = metadatas.get(0);
+      	if(metadata != null){
+%>
+		org.jcouchdb.db.Options options_<%=cid%>=new org.jcouchdb.db.Options();
+		org.svenson.JSONParser parser_<%=cid%> = new org.svenson.JSONParser();
+<%
+		if(startKey!=null && !"".equals(startKey)){
+%>
+		options_<%=cid%>.startKey(<%=startKey%>);
+<%
+		}	
+		if(endKey!=null && !"".equals(endKey)){
+%>
+		options_<%=cid%>.endKey(<%=endKey%>);
+<%
+		}	
+		if(startKeyDocId!=null && !"".equals(startKeyDocId)){
+%>
+		options_<%=cid%>.startKeyDocId(<%=startKeyDocId%>);
+<%
+		}	
+		if(endKeyDocId!=null && !"".equals(endKeyDocId)){
+%>
+		options_<%=cid%>.endKeyDocId(<%=endKeyDocId%>);
+<%
+		}	
+		if (limit != null && limit.length() > 0){
+%>
+		options_<%=cid%>.limit(<%=limit%>);
+<%
+		}
+%>
+		options_<%=cid%>.includeDocs(<%=include_docs%>);
+		options_<%=cid%>.descending(<%=descending%>);
+<%
+		if(isAddOptions){
+			List<Map<String, String>> options = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__OPTIONS__");
+			for(Map<String,String>option:options){
+				if(option.get("PARAMETER")!=null && option.get("VALUE")!=null){
+%>
+		options_<%=cid%>.put(<%=option.get("PARAMETER")%>,<%=option.get("VALUE")%>);
+<%
+				}
+			}
+		}
+      	if(isQueryByView){
+%>
+		options_<%=cid%>.reduce(<%=isReduce%>);
+<%
+      		if(isReduce && isGroup){
+%>
+		options_<%=cid%>.group(true);
+		options_<%=cid%>.groupLevel(<%=group_level%>);
+<%
+      		}
+%>
+
+		org.jcouchdb.document.DesignDocument designDoc_<%=cid%>=null;
+		try {
+			designDoc_<%=cid%>= db_<%=cid%>.getDesignDocument(<%=docName%>);
+		} catch (java.lang.Exception e_<%=cid%>) {
+		}
+		
+<%
+			//A1:create design document or view
+			if(!"NONE".equals(doc_action) && !"CREATE_IF_NOT_EXISTS".equals(doc_action)){
+				if("CREATE".equals(view_action)){
+      				if("CREATE".equals(doc_action)){
+%>
+		designDoc_<%=cid%> = new org.jcouchdb.document.DesignDocument(<%=docName%>);
+		db_<%=cid%>.createDocument(designDoc_<%=cid%>);
+<%
+					}else if("DROP_CREATE".equals(doc_action)){
+%>
+		if(designDoc_<%=cid%> != null){
+			db_<%=cid%>.delete(designDoc_<%=cid%>);
+		}else{
+			System.err.println("Design Document named " + <%=docName%> + "not exist");
+		}
+		designDoc_<%=cid%> = new org.jcouchdb.document.DesignDocument(<%=docName%>);
+<%
+					}else if("DROP_IF_EXISTS_AND_CREATE".equals(doc_action)){
+%>
+		if(designDoc_<%=cid%> != null){
+			db_<%=cid%>.delete(designDoc_<%=cid%>);
+		}
+		designDoc_<%=cid%> = new org.jcouchdb.document.DesignDocument(<%=docName%>);
+<%
+					}
+%>
+		designDoc_<%=cid%>.addView(<%=viewName%>,new org.jcouchdb.document.View(<%=map%>,<%=reduce%>));
+<%
+				}else{
+%>
+		System.err.println("You should create a new view for the design document.");
+<%
+				}
+%>
+		db_<%=cid%>.createDocument(designDoc_<%=cid%>);
+<%
+			}else{
+				if("NONE".equals(doc_action)){
+					if("CREATE".equals(view_action)){
+%>
+		if(designDoc_<%=cid%> != null){
+			designDoc_<%=cid%>.addView(<%=viewName%>,new org.jcouchdb.document.View(<%=map%>,<%=reduce%>));
+			
+		}else{
+			System.err.println("Design Document named " + <%=docName%> + "not exist");
+		}
+<%
+					}
+				}else{
+%>
+		if(designDoc_<%=cid%> == null){
+			designDoc_<%=cid%> = new org.jcouchdb.document.DesignDocument(<%=docName%>);
+<%
+					if("NONE".equals(view_action)){
+%>
+			System.err.println("You should create a new view for the design document.");
+<%
+					}
+%>
+		}else{
+<%
+					if("CREATE".equals(view_action)){
+%>
+			designDoc_<%=cid%>.addView(<%=viewName%>,new org.jcouchdb.document.View(<%=map%>,<%=reduce%>));
+<%
+					}
+%>
+		}
+		db_<%=cid%>.createOrUpdateDocument(designDoc_<%=cid%>);
+<%
+				}
+			}//A1:end
+		}
+      	if(isQueryByView){
+%>
+		org.jcouchdb.document.ViewResult<org.jcouchdb.document.BaseDocument> results_<%=cid%> =	db_<%=cid%>.queryView(
+					<%=docName%>+"/"+<%=viewName%>, org.jcouchdb.document.BaseDocument.class, options_<%=cid%>,org.svenson.JSONParser.defaultJSONParser());
+<%
+		}else{
+%>
+		org.jcouchdb.document.ViewResult<java.util.Map> results_<%=cid%> = db_<%=cid%>.listDocuments(options_<%=cid%>, org.svenson.JSONParser.defaultJSONParser());
+<%
+		}
+%>
+		java.util.Map<String,Object> values_<%=cid%>=null;
+		for(org.jcouchdb.document.ValueRow valueRow_<%=cid%>:results_<%=cid%>.getRows()){
+			 nb_line_<%=cid%> ++;
+<%
+		if(!include_docs){
+%>
+			values_<%=cid%>=new java.util.HashMap<String,Object>();
+			values_<%=cid%>.put("Id",valueRow_<%=cid%>.getId());
+			values_<%=cid%>.put("Key",valueRow_<%=cid%>.getKey());
+			values_<%=cid%>.put("Value",valueRow_<%=cid%>.getValue());
+<%
+		}
+%>

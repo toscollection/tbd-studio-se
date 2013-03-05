@@ -1,0 +1,87 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.process.EConnectionType
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+
+		java.util.List
+	" 
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+	String jsonfield = ElementParameterParser.getValue(node,"__JSONFIELD__");
+	String key = ElementParameterParser.getValue(node,"__KEY__");
+	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+	IConnection inConn = null;
+	IMetadataTable metadata = null;
+	
+	if(inConns!=null && inConns.size()> 0) {
+		inConn = inConns.get(0);
+		metadata = inConn.getMetadataTable();
+	}
+	
+	if (metadata!=null) {    
+		List< ? extends IConnection> conns = node.getIncomingConnections();
+		for (IConnection conn : conns) {
+			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				List<IMetadataColumn> columnList = metadata.getListColumns();
+				int sizeColumns = columnList.size();
+%>
+		map_<%=cid%> = new java.util.HashMap();
+<%
+				for (int i = 0; i < sizeColumns; i++) {
+					IMetadataColumn column = columnList.get(i);
+%>
+		if(<%=conn.getName() %>.<%=column.getLabel() %>!=null){
+			map_<%=cid%>.put("<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+		}
+<%
+				}
+               	if("INSERT".equals(dataAction)){
+%>
+		map_<%=cid%>.put("_id",<%=conn.getName()%>.<%=key%>);
+		db_<%=cid%>.createDocument(map_<%=cid%>);
+<%
+                }else if("UPDATE".equals(dataAction)){
+%>
+		String rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
+		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,new org.svenson.JSON().forValue(map_<%=cid%>));
+		doc_<%=cid%>.setRevision(rev_<%=cid%>);
+		db_<%=cid%>.updateDocument(doc_<%=cid%>);
+<%
+                }else if("UPSERT".equals(dataAction)){
+%>
+		String rev_<%=cid%>=null;
+		try{
+			rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
+		}catch(java.lang.Exception e_<%=cid%>){
+			System.err.println(e_<%=cid%>.getMessage());
+		}
+		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,new org.svenson.JSON().forValue(map_<%=cid%>));
+		if(rev_<%=cid%>!=null){
+			doc_<%=cid%>.setRevision(rev_<%=cid%>);
+		}
+		db_<%=cid%>.createOrUpdateDocument(doc_<%=cid%>);
+<%
+				}else{
+%>
+		String rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
+		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,new org.svenson.JSON().forValue(map_<%=cid%>));
+		doc_<%=cid%>.setRevision(rev_<%=cid%>);
+		db_<%=cid%>.delete(doc_<%=cid%>);
+<%
+				}
+			}
+		}
+	}
+%>
