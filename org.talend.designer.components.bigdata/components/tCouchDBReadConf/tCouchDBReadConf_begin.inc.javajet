@@ -92,8 +92,8 @@
 <%
 				if(isContinuous && isCancel){
 %>
-			java.util.HashMap<String,Object> cancelParams_<%=cid%> = null;
 			if(reponse_<%=cid%>.isOk()){
+				java.util.HashMap<String,Object> cancelParams_<%=cid%> = null;
 				cancelParams_<%=cid%> = new java.util.HashMap<String,Object>();
 				cancelParams_<%=cid%>.put("source",<%=dbname%>);
 				cancelParams_<%=cid%>.put("target",<%=targetDBName%>);

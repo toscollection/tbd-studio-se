@@ -45,7 +45,6 @@
 %>
 		java.util.Map<String, Object> createParams_<%=cid%>=new java.util.HashMap<String,Object>();
 		java.util.List<java.util.Map<String, Object>> replicates_<%=cid%> = new java.util.ArrayList<java.util.Map<String, Object>>();
-		java.util.HashMap<String,Object> cancelParams_<%=cid%> = null;
 		createParams_<%=cid%>.put("source",<%=dbname%>);
 		org.jcouchdb.db.Response reponse_<%=cid%> = null;
 <%
@@ -67,7 +66,7 @@
 				if(isContinuous && isCancel){
 %>
 			if(reponse_<%=cid%>.isOk()){
-				cancelParams_<%=cid%> = new java.util.HashMap<String,Object>();
+				java.util.HashMap<String,Object>  cancelParams_<%=cid%> = new java.util.HashMap<String,Object>();
 				cancelParams_<%=cid%>.put("source",<%=dbname%>);
 				cancelParams_<%=cid%>.put("target",<%=targetDBName%>);
 				cancelParams_<%=cid%>.put("continuous",true);

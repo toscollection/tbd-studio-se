@@ -35,7 +35,6 @@ imports="
 <%
 		if(useTriggerReplicate){
 %>
-			org.jcouchdb.db.Response reponse_<%=cid%> = null;
 			if(replicates_<%=cid%> != null && replicates_<%=cid%>.size()>0){
 				for(java.util.Map<String,Object> cancelParams_<%=cid%> : replicates_<%=cid%>){
 					reponse_<%=cid%> = server_<%=cid%>.post("/_replicate",org.svenson.JSON.defaultJSON().forValue(cancelParams_<%=cid%>));
