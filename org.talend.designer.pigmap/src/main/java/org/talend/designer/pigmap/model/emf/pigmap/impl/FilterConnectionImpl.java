@@ -87,13 +87,9 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
-     * @generated NOT
      */
     public String getName() {
-        if (eContainer() != null && eContainer() instanceof PigMapData) {
-            return "Connection_" + ((PigMapData) eContainer()).getConnections().indexOf(this);
-        }
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     /**

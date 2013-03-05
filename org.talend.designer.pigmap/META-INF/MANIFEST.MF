@@ -22,4 +22,3 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
-Export-Package: org.talend.designer.pigmap.model.emf.pigmap
