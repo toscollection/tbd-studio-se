@@ -1,6 +1,7 @@
 <%@ jet
 	imports="
-		org.talend.core.model.process.INode 
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.IConnection
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		java.util.List
@@ -22,9 +23,13 @@
 	String previous_node="";
 	String start_node="";
 
+	String previousOutputConnectionName = "";
+	
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
-		previous_node = node.getIncomingConnections().get(0).getSource().getUniqueName();
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
 		start_node = node.getDesignSubjobStartNode().getUniqueName();
+		previousOutputConnectionName = connection.getName();
 	}
 	
 	String resultFile = ElementParameterParser.getValue(node, "__OUTPUT_FILENAME__");
@@ -222,7 +227,7 @@
 		System.setProperty("hive.metastore.uris", <%=thriftServer%>);
 		System.setProperty("hadoop.clientside.fs.operations", "true");
 		System.setProperty("hive.metastore.execute.setugi", "true");
-		sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' using org.apache.hcatalog.pig.<%=function%>('"+<%=partitionFilter%>+"'");
+		sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' using org.apache.hcatalog.pig.<%=function%>('"+<%=partitionFilter%>+"'");
 <%
 		List<IMetadataTable> metadatas = node.getMetadataList();
 		IMetadataTable metadata = null;
@@ -252,7 +257,7 @@
 		if("CustomStorer".equals(function)) {
 			String customStorer = ElementParameterParser.getValue(node, "__CUSTOM_STORER__");
 %>
-			sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=resultFile%>+"' using " + <%=customStorer%> + ";");
+			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using " + <%=customStorer%> + ";");
 <%
 		} else if("HBaseStorage".equals(function)) {
 			String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
@@ -296,11 +301,11 @@
     		
     		if((rowKeyIndex == 0) && !storeRowKeyToColumn) {//the default action
 %>
-				sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO ");
+				sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO ");
 <%
     		} else {
 %>
-				sb_<%=cid%>.append("<%=previous_node%>_TMP_RESULT = FOREACH <%=previous_node%>_RESULT GENERATE ");
+				sb_<%=cid%>.append("<%=previous_node%>_<%=previousOutputConnectionName%>_TMP_RESULT = FOREACH <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT GENERATE ");
 <%
 				for(int i=0;i<columnOrders.size();i++) {
 					Integer index = columnOrders.get(i);
@@ -316,7 +321,7 @@
 				}
 %>
 				sb_<%=cid%>.append(";");
-				sb_<%=cid%>.append("STORE <%=previous_node%>_TMP_RESULT INTO "); 
+				sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_TMP_RESULT INTO "); 
 <%
     		}
 %>
@@ -374,7 +379,7 @@
 <%
 		} else {
 %>
-			sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=resultFile%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
+			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
 <%
 		}
 	}

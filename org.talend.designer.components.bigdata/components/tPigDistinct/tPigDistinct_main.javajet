@@ -1,8 +1,10 @@
 <%@ jet
 	imports="
 		org.talend.core.model.process.INode 
+		org.talend.core.model.process.IConnection
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.List
 		"
 %>
 
@@ -15,10 +17,24 @@
 	
 	String previous_node="";
 	String start_node="";
+	
+	boolean inMain = true;
 
+	String previousOutputConnectionName = "";
+	
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
-		previous_node = node.getIncomingConnections().get(0).getSource().getUniqueName();
-		start_node = node.getDesignSubjobStartNode().getUniqueName();
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		INode loadNode = node.getDesignSubjobStartNode();
+		start_node = loadNode.getUniqueName();
+		inMain = loadNode.isStart();
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
 	}
 	
 	boolean useParallel = "true".equals(ElementParameterParser.getValue(node, "__INCREASE_PARALLELISM__"));
@@ -26,7 +42,7 @@
 	
 %>
 	StringBuilder sb_<%=cid%> = new StringBuilder();
-	sb_<%=cid%>.append("<%=cid%>_RESULT = DISTINCT <%=previous_node%>_RESULT");
+	sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = DISTINCT <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT");
 <%		
 	if(useParallel) {
 %>
@@ -35,6 +51,17 @@
 	}
 %>
 	sb_<%=cid%>.append(";");
-	pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
-		
-		
+<%
+	if(inMain) {//all output process and main input process 
+%>
+		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+<%
+	} else {//lookup process
+%>
+    	pl_<%=start_node%> = new Object[2];
+    	pl_<%=start_node%>[0] = "query";
+    	pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
+    	pigScript_<%=start_node%>.add(pl_<%=start_node%>);
+<%
+	}
+%>

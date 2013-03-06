@@ -20,12 +20,20 @@ if ((metadatas != null) && (metadatas.size() > 0)) {//a
     if (metadata != null) {//b	
         String previous_node = "";
         String start_node = "";
-            
+        
+        boolean inMain = true;
+        
+		String previousOutputConnectionName = "";
+		
       	List<? extends IConnection> inputConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
       	if ((inputConns!=null)&&(inputConns.size()>0)) {
       		IConnection incomingConn = inputConns.get(0); 
       		previous_node = incomingConn.getSource().getUniqueName();
-      		start_node = node.getDesignSubjobStartNode().getUniqueName();
+			INode loadNode = node.getDesignSubjobStartNode();
+    		start_node = loadNode.getUniqueName();
+    		inMain = loadNode.isStart();
+      		
+      		previousOutputConnectionName = incomingConn.getName();
       	}else{
       		return "";
       	}
@@ -34,10 +42,18 @@ if ((metadatas != null) && (metadatas.size() > 0)) {//a
     	List< ? extends IConnection> outConns = node.getOutgoingConnections();
     	for (IConnection conn : outConns) {	
     		if(conn.getLineStyle().equals(EConnectionType.FLOW_MAIN)||conn.getLineStyle().equals(EConnectionType.FLOW_MERGE)){
+    			if(inMain) {
 %>
-           pigServer_<%=start_node%>.registerQuery("<%=cid%>_RESULT = FOREACH <%=previous_node%>_RESULT GENERATE *;"); 
+           pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=conn.getName()%>_RESULT = FOREACH <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT GENERATE *;"); 
 <%		
-                break;	
+				} else {
+%>
+    	   pl_<%=start_node%> = new Object[2];
+    	   pl_<%=start_node%>[0] = "query";
+    	   pl_<%=start_node%>[1] = "<%=cid%>_<%=conn.getName()%>_RESULT = FOREACH <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT GENERATE *;";
+	       pigScript_<%=start_node%>.add(pl_<%=start_node%>);
+<%
+				}
     		}
     	}
   	}//b

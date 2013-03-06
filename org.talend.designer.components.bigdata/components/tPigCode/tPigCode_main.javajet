@@ -16,10 +16,14 @@
 
 	String previous_node="";
 	String start_node="";
+	
+	boolean inMain = true;
 
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
 		previous_node = node.getIncomingConnections().get(0).getSource().getUniqueName();
-		start_node = node.getDesignSubjobStartNode().getUniqueName();
+		INode loadNode = node.getDesignSubjobStartNode();
+		start_node = loadNode.getUniqueName();
+		inMain = loadNode.isStart();
 	}
 
 %>
@@ -31,8 +35,18 @@
 		if("true".equals(ElementParameterParser.getValue(node, "__ESCAPE__"))){
 			code = code.replace("\\","\\\\").replace("\"","\\\"");
 		}
+		
+		if(inMain) {
 %>
 		pigServer_<%=start_node%>.registerQuery("<%=code%>");		
 <%
+		} else {
+%>
+    	pl_<%=start_node%> = new Object[2];
+    	pl_<%=start_node%>[0] = "query";
+    	pl_<%=start_node%>[1] = "<%=code%>";
+    	pigScript_<%=start_node%>.add(pl_<%=start_node%>);
+<%
+		}
 	}
 %>

@@ -1,6 +1,7 @@
 <%@ jet
 	imports="
-		org.talend.core.model.process.INode 
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.IConnection
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.metadata.IMetadataTable 
@@ -99,8 +100,18 @@
 	String previous_node="";
 	String start_node=cid;
 
+	boolean inMain = true;
+
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
-		start_node = node.getDesignSubjobStartNode().getUniqueName();
+		INode loadNode = node.getDesignSubjobStartNode();
+		inMain = loadNode.isStart();
+		start_node = loadNode.getUniqueName();
+	}
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
 	}
 
 	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
@@ -243,9 +254,18 @@
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
 <%
 		}
+		
+		if(inMain) {//only main process create the server object,lookup process use the one in main process
 %>
 		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
 <%
+		} else {
+%>
+		//store the pig script in the lookup process
+		Object[] pl_<%=start_node%> = null;
+		java.util.List<Object[]> pigScript_<%=start_node%> = new java.util.ArrayList<Object[]>();
+<%
+		}
 	if((advProps.size() > 0) || compress || (isLocal && "HBaseStorage".equals(function))){
 %>
 		StringBuilder script_<%=cid%>=new StringBuilder();
@@ -277,9 +297,19 @@
 		script_<%=cid%>.append("SET hbase.zookeeper.property.clientPort ").append(<%=zookeeper_client_port%>).append(";");
 <%
 		}
+		
+		if(inMain){
 %>
 		pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
 <%
+		} else {
+%>
+		pl_<%=start_node%> = new Object[2];
+		pl_<%=start_node%>[0] = "script";
+		pl_<%=start_node%>[1] = new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes());
+		pigScript_<%=start_node%>.add(pl_<%=start_node%>);
+<%
+		}
 	}
 %>
 
@@ -291,10 +321,18 @@
 				String jarToRegister = jarsToRegister.get(i);
 				for(int j=0; j<jars.size(); j++) {
 					if(jars.get(j).contains(jarToRegister)) {
+						if(inMain) {
 %>
 						pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
 <%
-
+						} else {
+%>
+						pl_<%=start_node%> = new Object[2];
+						pl_<%=start_node%>[0] = "jar";
+						pl_<%=start_node%>[1] = getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>");
+						pigScript_<%=start_node%>.add(pl_<%=start_node%>);						
+<%
+						}
 						break;
 					}
 				}
@@ -305,9 +343,18 @@
 			if(!generateRegisterJarCodeForHCatalog) {
 				if(registerJarForHCatalog.size() > 0){
 					for(Map<String, String> item : registerJarForHCatalog){
+						if(inMain) {
 %>
 						pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
 <% 
+						} else {
+%>
+						pl_<%=start_node%> = new Object[2];
+						pl_<%=start_node%>[0] = "jar";
+						pl_<%=start_node%>[1] = <%=item.get("JAR_PATH") %>;
+						pigScript_<%=start_node%>.add(pl_<%=start_node%>);						
+<%
+						}
 					} 
 				}
 			}
@@ -315,13 +362,13 @@
 			
 			System.setProperty("hive.metastore.local", "false");
 			System.setProperty("hive.metastore.uris", <%=thriftServer%>);
-			sb_<%=cid%>.append("<%=cid%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using org.apache.hcatalog.pig.<%=function%>()");
+			sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using org.apache.hcatalog.pig.<%=function%>()");
 <%
 		} else {
 			if("CustomLoader".equals(function)) {
 				String customLoader = ElementParameterParser.getValue(node, "__CUSTOM_LOADER__");
 %>
-				sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using " + <%=customLoader%>);
+				sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using " + <%=customLoader%>);
 <%
 			} else {
 				List<IMetadataTable> metadatas = node.getMetadataList();
@@ -335,7 +382,7 @@
 					boolean loadkey = "true".equals(ElementParameterParser.getValue(node, "__LOAD_KEY__"));//if load key,the first column is hbase row key
 					List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
 %>
-					sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD 'hbase://").append(<%=hbasetable%>).append("' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('");
+					sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD 'hbase://").append(<%=hbasetable%>).append("' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('");
 					
 <%
 					if(metadata!=null && mapping!=null) {
@@ -408,7 +455,7 @@
 <%
 				} else {
 %>
-					sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
+					sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
 <%
 				}
 			
@@ -432,14 +479,26 @@
 		}
 %>
 		sb_<%=cid%>.append(";");
+<%
+		if(inMain) {
+%>
 		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
 <%
+		} else {
+%>
+		pl_<%=start_node%> = new Object[2];
+		pl_<%=start_node%>[0] = "query";
+		pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
+		pigScript_<%=start_node%>.add(pl_<%=start_node%>);		
+<%
+		}
+		
 		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we will have to consider the partition filter
 			if(partitionFilter.size() > 0){
 				int i = 0;
 %>
 				sb_<%=cid%> = new StringBuilder();
-				sb_<%=cid%>.append("<%=cid%>_RESULT = FILTER <%=cid%>_RESULT_TEMP BY ");
+				sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = FILTER <%=cid%>_<%=outputConnectionName%>_RESULT_TEMP BY ");
 <%
 				for(Map<String, String> item : partitionFilter){
 					if(i++ != 0) {
@@ -455,8 +514,19 @@
 				}
 %>
 					sb_<%=cid%>.append(";");
+<%
+				if(inMain) {
+%>
 					pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
 <%				
+				} else {
+%>
+					pl_<%=start_node%> = new Object[2];
+					pl_<%=start_node%>[0] = "query";
+					pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
+					pigScript_<%=start_node%>.add(pl_<%=start_node%>);					
+<%
+				}
 			}
 		}
 %>
