@@ -112,8 +112,8 @@
 %>
 			StringBuilder sb_<%=cid%> = new StringBuilder();
 			//the bag name of main input bag
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = <%=previous_node%>_<%=tableName%>_RESULT;");
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_RESULT = <%=cid%>_<%=tableName%>_RESULT;");
+			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=previous_node%>_<%=tableName%>_RESULT GENERATE *;");
+			pigServer_<%=start_node%>.registerQuery("<%=cid%>_RESULT = FOREACH <%=cid%>_<%=tableName%>_RESULT GENERATE *;");
 			
 			StringBuilder sb_innerJoinReject_<%=cid%> = new StringBuilder();
 <%
@@ -136,7 +136,7 @@
 			if(i_<%=tableName%> == (ps_<%=tableName%>.size() - 1)) {//get the bag name of current lookup bag
 				String bagName_<%=tableName%> = (String)o_<%=tableName%>[1];
 				bagName_<%=tableName%> = bagName_<%=tableName%>.substring(0,bagName_<%=tableName%>.indexOf("_RESULT")+7);
-				pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = " + bagName_<%=tableName%> + ";");
+				pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH " + bagName_<%=tableName%> + " GENERATE *;");
 			}
 		}
 <%
@@ -201,7 +201,7 @@
 <%
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = <%=cid%>_RESULT;");
+			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
 			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = JOIN <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT BY ");
 <%
 			}
@@ -359,7 +359,7 @@
  			expression = convertExpression(expressionConvertMap,expression);
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = <%=cid%>_RESULT;");
+			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
 			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FILTER <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT BY (NOT (<%=expression%>));");
 			//need to set the lookup columns as null
 			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FOREACH <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT GENERATE ");
@@ -431,7 +431,7 @@
 	 			if(isFirstInnerReject) {
 %>
 				//init inner reject resultset
-				pigServer_<%=start_node%>.registerQuery("<%=cid%>_INNER_REJECT_RESULT = <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT;");
+				pigServer_<%=start_node%>.registerQuery("<%=cid%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT GENERATE *;");
 <%
 				} else {
 %>
@@ -550,11 +550,11 @@
 	    }
 	    
 %>
-		pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = <%=cid%>_RESULT;");
+		pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
 <%
 		if(existInnerJoin && isRejectInnerJoin) {
 %>
-		pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = <%=cid%>_INNER_REJECT_RESULT;");
+		pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_INNER_REJECT_RESULT GENERATE *;");
 <%
 		}
 		
@@ -658,7 +658,7 @@
 <%
 			} else {//only inner reject
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT;");
+			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT GENERATE *;");
 <%
 			}
 		}
