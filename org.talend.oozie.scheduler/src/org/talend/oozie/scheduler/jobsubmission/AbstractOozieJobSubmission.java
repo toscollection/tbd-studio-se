@@ -64,20 +64,23 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
 
     protected void createWorkflowTemplate(JobContext jobContext) throws IOException, InterruptedException, URISyntaxException {
         Workflow workflow = createWorkflow(jobContext);
-        serializeToHDFS(workflow.toXMLString(), "/workflow.xml", jobContext);
+        serializeToHDFS(workflow.toXMLString(), "/workflow.xml", jobContext);//$NON-NLS-1$
     }
 
     protected Workflow createWorkflow(JobContext jobContext) {
         JavaAction action = new JavaAction(jobContext.getJobName(), jobContext.getJobTrackerEndPoint(),
                 jobContext.getNameNodeEndPoint(), jobContext.getJobFQClassName());
 
+        action.addArgument("-fs " + jobContext.get("NAMENODE")); //$NON-NLS-1$ //$NON-NLS-2$
+        action.addArgument("-jt " + jobContext.get("JOBTRACKER"));//$NON-NLS-1$ //$NON-NLS-2$
+
         // This directory is just for DistributedCache. Maybe later it need to enhance, because for common java
         // application, it also add this argument.
-        action.addArgument("--mr_libs_dir=" + jobContext.get(OozieClient.APP_PATH) + "/lib/");
+        action.addArgument("--mr_libs_dir=" + jobContext.get(OozieClient.APP_PATH) + "/lib/");//$NON-NLS-1$ //$NON-NLS-2$
 
         String tosContextPath = jobContext.getTosContextPath();
         if (tosContextPath != null) {
-            action.addArgument("--context=" + tosContextPath);
+            action.addArgument("--context=" + tosContextPath);//$NON-NLS-1$
         }
         return new Workflow(jobContext.getJobName(), action);
     }

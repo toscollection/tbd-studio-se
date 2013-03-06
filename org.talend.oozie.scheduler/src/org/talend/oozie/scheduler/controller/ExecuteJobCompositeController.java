@@ -42,6 +42,7 @@ import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.CorePlugin;
+import org.talend.core.model.components.ComponentCategory;
 import org.talend.core.model.process.IContext;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.utils.JavaResourcesHelper;
@@ -703,6 +704,14 @@ public class ExecuteJobCompositeController {
         JobContext jobContext = new JobContext();
 
         IProcess2 process = OozieJobTrackerListener.getProcess();
+        if (ComponentCategory.CATEGORY_4_MAPREDUCE.getName().equals(process.getComponentsType())) {
+            String fsForMapReduceJob = (String) process.getElementParameter("NAMENODE").getValue();//$NON-NLS-1$
+            jobContext.set("-fs", fsForMapReduceJob); //$NON-NLS-1$
+
+            String jtForMapReduceJob = (String) process.getElementParameter("JOBTRACKER").getValue();//$NON-NLS-1$
+            jobContext.set("-jt", jtForMapReduceJob);//$NON-NLS-1$
+        }
+
         // Job name.
         String jobName = process.getLabel();
         jobContext.setJobName(jobName);
