@@ -1,0 +1,44 @@
+public class CLASS {
+
+
+	public String convertExpression(Map<String,String> expressionConvertMap, String expression) {
+
+		if(expression == null || "".equals(expression.trim())) {
+			return "";
+		}
+		
+		for(Map.Entry<String, String> entry : expressionConvertMap.entrySet()) {
+			String key = entry.getKey();//like row1.column
+			String value = entry.getValue();//like $0
+			expression = expression.replace(key,value);
+		}
+		
+		return expression;
+	
+	}
+	
+   public static String getPigType(String talendType) {
+        String typeToGenerate = JavaTypesManager.getTypeToGenerate(talendType, false);
+        // Integers: int(Integer), long(Long), short(Short), byte(Byte), BigDecimal, double(Double).
+        if (typeToGenerate.equals("int") || typeToGenerate.equals("short") || typeToGenerate.equals("byte")) { 
+            return "int"; 
+        } else if (typeToGenerate.equals("long")) { 
+            return "long"; 
+        } else if (typeToGenerate.equals("BigDecimal") || typeToGenerate.equals("double")) { 
+            return "double";
+        }
+    
+        // Floats: float(Float)
+        if (typeToGenerate.equals("float")) { 
+            return "float";
+        }
+    
+        // others treat as string
+        return "chararray"; 
+
+   }
+
+    public String generate(Object argument) {
+
+    }    
+}

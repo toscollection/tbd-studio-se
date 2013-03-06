@@ -1,0 +1,69 @@
+<%@ jet 
+	imports="
+	java.util.ArrayList
+	java.util.Collections
+	java.util.Comparator
+	java.util.List
+	java.util.HashMap
+	java.util.Map
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.commons.utils.generation.CodeGenerationUtils
+	org.talend.core.model.process.IConnection
+	org.talend.core.model.process.EConnectionType
+	org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser
+    org.talend.designer.pigmap.PigMapComponent
+    org.talend.designer.pigmap.model.emf.pigmap.PigMapData
+    org.talend.designer.pigmap.model.emf.pigmap.InputTable
+    org.talend.designer.pigmap.model.emf.pigmap.OutputTable
+    org.talend.designer.pigmap.model.emf.pigmap.TableNode
+	" 
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	PigMapComponent node = (PigMapComponent) codeGenArgument.getArgument();
+	PigMapData data = (PigMapData)ElementParameterParser.getObjectValueXMLTree(node);
+	
+	String cid = node.getUniqueName();
+	
+	List<InputTable> inputTablesWithUnvalid = data.getInputTables();
+	List<OutputTable> outputTablesWithUnvalid = data.getOutputTables();
+	
+	List<IConnection> inputConnections = (List<IConnection>)node.getIncomingConnections();
+	
+	HashMap<String, IConnection> hNameToConnection = new HashMap<String, IConnection>();
+	for(IConnection connection : inputConnections){
+		hNameToConnection.put(connection.getName(), connection);
+	}
+	
+	List<InputTable> inputTables = new ArrayList<InputTable>();
+	for(int i=0; i<inputTablesWithUnvalid.size(); i++){
+		InputTable  currentTable = inputTablesWithUnvalid.get(i);
+		if(hNameToConnection.get(currentTable.getName()) != null){
+			inputTables.add(currentTable);
+		}
+	}
+	
+	int lstSizeInputs = inputTables.size();
+	for (int i = 1; i < lstSizeInputs; i++) {
+	    InputTable inputTable = inputTables.get(i);
+	    String tableName = inputTable.getName();
+	    
+	    List<TableNode> tableNodes = inputTable.getNodes();
+	    
+	    if((tableNodes == null) || (tableNodes.size()) == 0) {
+	    	continue;
+	    }
+%>
+		//get the scripts in the lookup process
+<%
+	}
+	
+%>
+
+
+
+
+
+
