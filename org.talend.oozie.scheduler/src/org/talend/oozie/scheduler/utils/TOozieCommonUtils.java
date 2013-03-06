@@ -19,9 +19,8 @@ import java.util.regex.Pattern;
 import org.talend.oozie.scheduler.constants.OozieJobProcessStatus;
 import org.talend.oozie.scheduler.constants.TOozieCommonConstants;
 import org.talend.oozie.scheduler.constants.TOozieTimeUnit;
-import org.talend.oozie.scheduler.jobsubmission.model.JobSubmission;
 import org.talend.oozie.scheduler.jobsubmission.model.JobContext.Timeunit;
-
+import org.talend.oozie.scheduler.jobsubmission.model.JobSubmission;
 
 /**
  * Created by Marvin Wang on Apr. 24, 2012

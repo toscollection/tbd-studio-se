@@ -35,6 +35,7 @@ import org.talend.designer.runprocess.ProcessorException;
 import org.talend.designer.runprocess.ProcessorUtilities;
 import org.talend.oozie.scheduler.exceptions.OozieJobDeployException;
 import org.talend.oozie.scheduler.utils.OozieClassLoaderFactory;
+import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.repository.documentation.ArchiveFileExportOperationFullPath;
 import org.talend.repository.documentation.ExportFileResource;
 import org.talend.repository.ui.utils.ZipToFile;
@@ -98,13 +99,10 @@ public class OozieJobDeployer {
             HadoopReflection.invokeMethod(
                     config,
                     "set",
-                    new Object[] {
-                            "fs.default.name",
-                            CorePlugin.getDefault().getPreferenceStore()
-                                    .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) });
+                    new Object[] { "fs.default.name",
+                            TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) });
 
-            String userName = CorePlugin.getDefault().getPreferenceStore()
-                    .getString(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+            String userName = TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
             if (StringUtils.isEmpty(userName)) {
                 HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] { config }, classLoader);
             } else {
