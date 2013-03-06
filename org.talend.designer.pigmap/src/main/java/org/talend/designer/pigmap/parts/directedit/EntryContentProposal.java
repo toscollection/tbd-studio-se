@@ -22,10 +22,6 @@ import org.talend.designer.pigmap.ui.tabs.MapperManager;
  */
 public class EntryContentProposal implements IContentProposal {
 
-    private static final String CARRIAGE_RETURN = "\n"; //$NON-NLS-1$
-
-    private static final String EMPTY_STRING = ""; //$NON-NLS-1$
-
     private AbstractNode entry;
 
     private String content = "";

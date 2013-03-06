@@ -35,7 +35,6 @@ import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.parts.PigMapDataEditPart;
 import org.talend.designer.pigmap.parts.PigMapDataManager;
-import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
 import org.talend.designer.pigmap.util.PigMapUtil;
@@ -155,7 +154,7 @@ public class PigMapOutputZoneToolBar extends OutputZoneToolBar {
                     PigMapUtil.detachFilterSource(outputTable, externalData);
                     //
                     indexOf = indexOf - 1;
-                    if (indexOf > -1 && (EditPart) externalPart.getChildren().get(indexOf) instanceof PigMapInputTablePart) {
+                    if (indexOf > -1 && (EditPart) externalPart.getChildren().get(indexOf) instanceof PigMapOutputTablePart) {
                         graphicViewer.select((EditPart) externalPart.getChildren().get(indexOf));
                     } else if (indexOf > -1 && indexOf + 1 < externalPart.getChildren().size()
                             && (EditPart) externalPart.getChildren().get(indexOf + 1) instanceof PigMapOutputTablePart) {
