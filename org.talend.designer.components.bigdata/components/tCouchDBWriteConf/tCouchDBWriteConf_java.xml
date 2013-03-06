@@ -247,7 +247,6 @@
    <CODEGENERATION>
     <IMPORTS>
     	<IMPORT NAME="jcouchdb-1.0.1-1.jar" MODULE="jcouchdb-1.0.1-1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
-		<IMPORT NAME="httpclient-4.0.1.jar" MODULE="httpclient-4.0.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="commons-beanutils-1.8.3.jar" MODULE="commons-beanutils-1.8.3.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="commons-codec-1.6.jar" MODULE="commons-codec-1.6.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="commons-io-1.4.jar" MODULE="commons-io-1.4.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />

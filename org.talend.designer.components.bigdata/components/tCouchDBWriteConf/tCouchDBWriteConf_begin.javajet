@@ -81,7 +81,7 @@
 		}
 		if (authentication){
 %>
-    	server_<%=cid%>.setCredentials(new org.apache.http.auth.AuthScope(<%=dbname%>,<%=dbport%>),org.apache.http.auth.UsernamePasswordCredentials(<%=dbuser%>,<%=dbpass%>))
+    	server_<%=cid%>.setCredentials(new org.apache.http.auth.AuthScope(<%=dbhost%>,<%=dbport%>),new org.apache.http.auth.UsernamePasswordCredentials(<%=dbuser%>,<%=dbpass%>));
 <%
 		}
 	}
