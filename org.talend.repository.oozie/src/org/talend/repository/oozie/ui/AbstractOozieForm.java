@@ -1,6 +1,5 @@
 package org.talend.repository.oozie.ui;
 
-import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -37,14 +36,14 @@ public abstract class AbstractOozieForm extends AbstractHadoopForm<OozieConnecti
         oozieSettingIsValide = connectionStatus.getResult();
 
         if (oozieSettingIsValide) {
-            try {
-                checkOozieConnection();
-            } catch (OozieClientException e) {
-                String mainMsg = Messages.getString("AbstractOozieForm.endPointInvalid"); //$NON-NLS-1$
-                connectionStatus.setMessageException(e.toString());
-                new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID, mainMsg, e.toString());
-                return connectionStatus;
-            }
+            // try {
+            // checkOozieConnection();
+            // } catch (OozieClientException e) {
+            //                String mainMsg = Messages.getString("AbstractOozieForm.endPointInvalid"); //$NON-NLS-1$
+            // connectionStatus.setMessageException(e.toString());
+            // new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID, mainMsg, e.toString());
+            // return connectionStatus;
+            // }
             if (!isReadOnly()) {
                 updateStatus(IStatus.OK, null);
             }
@@ -69,8 +68,8 @@ public abstract class AbstractOozieForm extends AbstractHadoopForm<OozieConnecti
     }
 
     private void checkOozieConnection() throws OozieClientException {
-        OozieClient oozieClient = new OozieClient(getConnection().getOozieEndPoind());
-        oozieClient.validateWSVersion();
+        // OozieClient oozieClient = new OozieClient(getConnection().getOozieEndPoind());
+        // oozieClient.validateWSVersion();
     }
 
     protected HDFSConnectionBean getConnectionBean() {

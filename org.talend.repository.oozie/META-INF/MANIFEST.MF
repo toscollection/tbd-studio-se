@@ -15,11 +15,11 @@ Require-Bundle: org.eclipse.ui,
  org.talend.commons.runtime,
  org.talend.core.repository,
  org.talend.common.ui.runtime,
- org.talend.core.runtime,
  org.talend.commons.ui,
  org.talend.repository,
  org.talend.repository.metadata,
- org.talend.metadata.managment.ui
+ org.talend.metadata.managment.ui,
+ org.talend.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: %providerName

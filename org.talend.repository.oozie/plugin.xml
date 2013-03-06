@@ -52,5 +52,12 @@
             name="OOZIE">
       </seeker>
    </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.oozie.service.OozieService"
+            serviceId="IOozieService">
+      </Service>
+   </extension>
 
 </plugin>
