@@ -177,6 +177,7 @@
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="true">
+      <DEFAULT>true</DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="ISJSON"
@@ -223,6 +224,15 @@
       SHOW_IF="FROMVIEW == 'true'"
       >
       <DEFAULT>10</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER NAME="SKIP"
+      FIELD="INTEGER"
+      NUM_ROW="94"
+      GROUP="VIEWPARAMS"
+      SHOW_IF="FROMVIEW == 'true'"
+      >
+      <DEFAULT></DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="USECOMPLEXKEY"
@@ -328,9 +338,11 @@
         <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
       </TABLE>
       <TABLE IF="((FROMVIEW == 'false') and (ISJSON == 'false'))" READONLY="false">
-        <COLUMN NAME="Value" TYPE="id_String" />
+        <COLUMN NAME="Key" TYPE="id_String"/>
+        <COLUMN NAME="Value" TYPE="id_String" CUSTOM="true"/>
       </TABLE>
       <TABLE IF="((FROMVIEW == 'false') and (ISJSON == 'true'))" READONLY="false">
+        <COLUMN NAME="Key" TYPE="id_String"/>
         <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
       </TABLE>
     </PARAMETER>
@@ -466,6 +478,7 @@
       <TEMPLATE_PARAM SOURCE="self.MAPPING"  TARGET="Out.MAPPING" />
       <TEMPLATE_PARAM SOURCE="self.DIE_ON_ERROR"  TARGET="Out.DIE_ON_ERROR" />
       <TEMPLATE_PARAM SOURCE="self.SCHEMA_OPT_NUM"  TARGET="Out.SCHEMA_OPT_NUM" />
+      <TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="In.DESTINATION" />
     </TEMPLATES>
     <IMPORTS>
       <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />

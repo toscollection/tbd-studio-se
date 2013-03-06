@@ -175,6 +175,7 @@
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
       REQUIRED="true">
+      <DEFAULT>true</DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="ISJSON"
@@ -221,6 +222,15 @@
       SHOW_IF="FROMVIEW == 'true'"
       >
       <DEFAULT>10</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER NAME="SKIP"
+      FIELD="INTEGER"
+      NUM_ROW="80"
+      GROUP="VIEWPARAMS"
+      SHOW_IF="FROMVIEW == 'true'"
+      >
+      <DEFAULT></DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="USECOMPLEXKEY"
@@ -342,6 +352,10 @@
     >
       <DEFAULT>"ISO-8859-15"</DEFAULT>
     </PARAMETER>
+        <PARAMETER NAME="DESTINATION" FIELD="TEXT" NUM_ROW="20"
+            REQUIRED="true" SHOW="false">
+            <DEFAULT>tCouchbaseIn_1</DEFAULT>
+        </PARAMETER>
 
   </PARAMETERS>
 	<ADVANCED_PARAMETERS>

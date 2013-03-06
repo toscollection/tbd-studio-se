@@ -60,7 +60,6 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
     IMetadataTable metadata = metadatas.get(0);
     if (metadata != null) {
     	
-    	String limit = ElementParameterParser.getValue(node, "__LIMIT__");
 		List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
 		if (conns != null){
 		
@@ -179,6 +178,8 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 					        String view_action = ElementParameterParser.getValue(node,"__VIEW_ACTION__");
 					        String map = ElementParameterParser.getValue(node,"__MAP__");
 					        String reduce = ElementParameterParser.getValue(node,"__REDUCE__");
+					        String limit = ElementParameterParser.getValue(node, "__LIMIT__");
+					        String skip = ElementParameterParser.getValue(node, "__SKIP__");
 					        if("NONE".equals(doc_action) && "CREATE".equals(view_action)){
                                 %>
                                 com.couchbase.client.protocol.views.DesignDocument dd_<%=cid%> = client_<%=cid%>.getDesignDocument(<%=docName%>);
@@ -212,11 +213,19 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 <%
                             generateCode.generateParameter(cid,startkey,"setRangeStart");
                             generateCode.generateParameter(cid,endkey,"setRangeEnd");
-                            generateCode.generateParameter(cid,startkey_docid,"setStartkeyDocID");
-                            generateCode.generateParameter(cid,endkey_docid,"setEndkeyDocID");
+                            if(startkey_docid!=null && !"".equals(startkey_docid.replaceAll("\\\"", ""))){
+                                %>
+                                query_<%=cid%>.setStartkeyDocID(<%=startkey_docid%>);
+                                <%
+                            }
+                            if(startkey_docid!=null && !"".equals(startkey_docid.replaceAll("\\\"", ""))){
+                                %>
+                                query_<%=cid%>.setEndkeyDocID(<%=startkey_docid%>);
+                                <%
+                            }
                             if("true".equals(useComplexkey)){
                                 generateCode.generateParameter(cid,complexkey,"setKeys");
-                            } else if(viewkey!=null &&!"".equals(viewkey)){
+                            } else if(viewkey!=null &&!"".equals(viewkey.replaceAll("\\\"", ""))){
 %>
                                 query_<%=cid%>.setKey(<%=viewkey%>);
 <%
@@ -224,6 +233,11 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                             if(limit!=null &&!"".equals(limit)){
 %>
                                 query_<%=cid%>.setLimit(<%=limit%>);
+<%
+                            }
+                            if(skip!=null &&!"".equals(skip)){
+%>
+                                query_<%=cid%>.setSkip(<%=skip%>);
 <%
                             }
                             if("false".equals(isreduce)&&"true".equals(include_docs)){
@@ -264,22 +278,30 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                         }else{
                             String isjson = ElementParameterParser.getValue(node,"__ISJSON__");
                             String searchKey = ElementParameterParser.getValue(node, "__KEY__");
-                            if("true".equals(isjson)){
-%>
-                                <%=connName%>.jsonDoc = client_<%=cid%>.get(<%=searchKey%>);
-<%
-                            }else{
-%>
-                                Object obj_<%=cid%> = client_<%=cid%>.get(<%=searchKey%>);
+%>                            
+                            java.util.Map<String, Object> Map_<%=cid%> = client_<%=cid%>.getBulk(<%=searchKey%>);
+                            for (java.util.Map.Entry<String, Object> m_<%=cid%> : Map_<%=cid%>.entrySet()) {
+                                Object obj_<%=cid%> = m_<%=cid%>.getValue();
                                 if(obj_<%=cid%>!=null){
                                     String str_<%=cid%> = obj_<%=cid%>.toString();
 <%
-                                    IMetadataColumn column = metadata.getColumn("Value");;
-                                    generateCode.generateMap(connName,cid,column);
+                                    if(metadata.getColumn("Key")!=null){
+%>
+                                        <%=connName%>.Key = m_<%=cid%>.getKey();
+<%
+                                    }
+                                    if("true".equals(isjson)){
+%>
+                                        <%=connName%>.jsonDoc = str_<%=cid%>;
+                                        nb_line_<%=cid%>++;
+<%
+                                    }else{
+                                        IMetadataColumn column = metadata.getColumn("Value");
+                                        generateCode.generateMap(connName,cid,column);
+                                    }
 %>
                                 }
 <%
-                            }
                         }
                     }		
 				}

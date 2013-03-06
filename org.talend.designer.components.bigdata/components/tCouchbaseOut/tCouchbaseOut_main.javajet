@@ -60,8 +60,8 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                 IConnection conn =conns.get(0);
                 String connName = conn.getName();
                 if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-                    int nbColumns = columnList.size();
-                    if(nbColumns>0){
+                    IMetadataTable meta =  conn.getMetadataTable();
+                    if(meta.getListColumns().size()>0){
                         String key = ElementParameterParser.getValue(node,"__KEY__");
 %>
                         whetherReject_<%=cid%> = false;
