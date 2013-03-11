@@ -31,7 +31,7 @@ public enum EHadoopConfProperties {
     /**
      * Property name for naming the default file system (URI).
      */
-    FS_DEFAULT_URI("fs.default.name", "hdfs://localhost:50040/"),
+    FS_DEFAULT_URI("fs.defaultFS", "hdfs://localhost:50040/"),
 
     /**
      * Property name for kerberos principal.
@@ -58,8 +58,9 @@ public enum EHadoopConfProperties {
     private static Map<String, EHadoopConfProperties> map;
 
     private static synchronized void registerProperty(String name, EHadoopConfProperties prop) {
-        if (EHadoopConfProperties.map == null)
+        if (EHadoopConfProperties.map == null) {
             EHadoopConfProperties.map = new HashMap<String, EHadoopConfProperties>();
+        }
 
         EHadoopConfProperties.map.put(name, prop);
     }

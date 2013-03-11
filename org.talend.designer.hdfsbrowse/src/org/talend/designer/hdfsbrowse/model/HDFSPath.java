@@ -13,7 +13,7 @@
 
 package org.talend.designer.hdfsbrowse.model;
 
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
 
@@ -58,13 +58,14 @@ public abstract class HDFSPath extends HDFSNode {
 
     @Override
     public String toString() {
-        if (PATH_SEPARATOR.equals(getPath())) { //$NON-NLS-1$
+        if (PATH_SEPARATOR.equals(getPath())) {
             return connection.getNameNodeURI();
         } else {
             return getPath();
         }
     }
 
+    @Override
     public abstract void refresh();
 
     /**

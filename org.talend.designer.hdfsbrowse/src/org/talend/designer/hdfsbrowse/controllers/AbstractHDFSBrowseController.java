@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.CorePlugin;
@@ -158,6 +158,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         final boolean[] result = new boolean[] { true };
         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
 
+            @Override
             public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                 monitor.beginTask(Messages.getString("AbstractHDFSBrowseController.checkConnection"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 Object dfs = null;
@@ -200,7 +201,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
     public Control createControl(final Composite subComposite, final IElementParameter param, final int numInRow,
             final int nbInRow, final int top, final Control lastControl) {
         this.curParameter = param;
-        Button btnEdit = getWidgetFactory().createButton(subComposite, EMPTY_STRING, SWT.PUSH); //$NON-NLS-1$
+        Button btnEdit = getWidgetFactory().createButton(subComposite, EMPTY_STRING, SWT.PUSH);
         FormData data;
 
         btnEdit.setImage(ImageProvider.getImage(CorePlugin.getImageDescriptor(DOTS_BUTTON)));
@@ -241,7 +242,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
             labelText.setToolTipText(VARIABLE_TOOLTIP + param.getVariableName());
         }
 
-        CLabel labelLabel = getWidgetFactory().createCLabel(subComposite, param.getDisplayName()); //$NON-NLS-1$
+        CLabel labelLabel = getWidgetFactory().createCLabel(subComposite, param.getDisplayName());
         data = new FormData();
         if (lastControl != null) {
             data.left = new FormAttachment(lastControl, 0);
@@ -297,10 +298,12 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
     private SelectionListener listenerSelection = new SelectionListener() {
 
+        @Override
         public void widgetDefaultSelected(SelectionEvent e) {
 
         }
 
+        @Override
         public void widgetSelected(SelectionEvent event) {
             HDFSConnectionBean connection = getHDFSConnectionBean();
             if (checkHDFSConnection(connection)) {
@@ -320,7 +323,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         }
         boolean valueChanged = false;
         if (value == null) {
-            labelText.setText(EMPTY_STRING); //$NON-NLS-1$
+            labelText.setText(EMPTY_STRING);
         } else {
             if (!value.equals(labelText.getText())) {
                 labelText.setText((String) value);
@@ -332,6 +335,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent arg0) {
     }
 

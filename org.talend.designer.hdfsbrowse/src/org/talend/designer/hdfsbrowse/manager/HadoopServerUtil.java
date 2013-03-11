@@ -28,7 +28,7 @@ import java.util.concurrent.TimeoutException;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.core.utils.TalendQuoteUtils;
