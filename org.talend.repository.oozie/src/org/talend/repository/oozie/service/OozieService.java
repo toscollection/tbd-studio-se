@@ -7,7 +7,11 @@ import org.talend.core.hadoop.IOozieService;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
+import org.talend.repository.model.IRepositoryNode.EProperties;
+import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.oozie.OozieConnection;
+import org.talend.repository.oozie.node.model.OozieRepositoryNodeType;
 
 public class OozieService implements IOozieService {
 
@@ -31,6 +35,14 @@ public class OozieService implements IOozieService {
             return oozieParam;
         }
         return null;
+    }
+
+    @Override
+    public boolean isOozieNode(RepositoryNode node) {
+        if (node == null || node.getObject() == null || !ENodeType.REPOSITORY_ELEMENT.equals(node.getType())) {
+            return false;
+        }
+        return OozieRepositoryNodeType.OOZIE.equals(node.getProperties(EProperties.CONTENT_TYPE));
     }
 
 }
