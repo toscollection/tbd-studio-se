@@ -56,6 +56,14 @@ imports="
     String dbname = null;
     String dbuser = null;
     String dbpwd = null;
+    
+    //hbase settings
+   	String storeByHBase = null;
+	String zookeeperQuorumForHBase = null;
+	String zookeeperClientPortForHBase = null;
+	String defineRegisterJar = null;
+	List<Map<String, String>> registerJarForHBase = null;
+	
     boolean useExistingConn = false;
     if(previousNode != null) {
         dbhost = ElementParameterParser.getValue(previousNode, "__HOST__");
@@ -64,6 +72,12 @@ imports="
         dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
         dbpwd = ElementParameterParser.getValue(previousNode, "__PASS__");
     	useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
+    	
+    	storeByHBase = ElementParameterParser.getValue(previousNode, "__STORE_BY_HBASE__");
+    	zookeeperQuorumForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_QUORUM__");
+    	zookeeperClientPortForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_CLIENT_PORT__");
+    	defineRegisterJar = ElementParameterParser.getValue(previousNode, "__DEFINE_REGISTER_JAR__");
+    	registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(previousNode, "__REGISTER_JAR__");
     }
 %>
 
@@ -112,6 +126,32 @@ if(useExistingConn) {
 %>
 
 <%
+
+if("true".equalsIgnoreCase(storeByHBase)) {%>
+	java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
+	<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
+		statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);
+	<%}%>
+	
+	<%if(zookeeperClientPortForHBase!=null && !"".equals(zookeeperClientPortForHBase) && !"\"\"".equals(zookeeperClientPortForHBase)) {%>
+		statement_<%=cid%>.execute("SET hbase.zookeeper.property.clientPort="+<%=zookeeperClientPortForHBase%>);
+	<%}%>
+	
+	<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
+		for(Map<String, String> jar : registerJarForHBase){
+			String path = jar.get("JAR_PATH");
+			if(path == null || "".equals(path) || "\"\"".equals(path)) {
+				continue;
+			}
+	%>
+			statement_<%=cid%>.execute("add jar "+<%=path%>);
+	<%
+		}
+	}%>
+	statement_<%=cid%>.close();
+<%
+}
+
 List<IMetadataColumn> columnList = null;
 
 List<IMetadataTable> metadatas = node.getMetadataList();

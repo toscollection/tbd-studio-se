@@ -172,6 +172,42 @@
 			SHOW="true" READONLY="true">
 			<DEFAULT>hive_id</DEFAULT>
 		</PARAMETER>
+		
+	    <PARAMETER NAME="STORE_BY_HBASE" FIELD="CHECK" NUM_ROW="100" REQUIRED="true" GROUP="HBASE_GROUP" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+	        <DEFAULT>false</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="110" REQUIRED="true" GROUP="HBASE_GROUP" SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
+	        <DEFAULT>"localhost"</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER
+	      NAME="ZOOKEEPER_CLIENT_PORT"
+	      FIELD="TEXT"
+	      NUM_ROW="120"
+	      REQUIRED="true"
+	      GROUP="HBASE_GROUP"
+	      SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
+	      <DEFAULT>"2181"</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="DEFINE_REGISTER_JAR" FIELD="CHECK" REQUIRED="true" NUM_ROW="130" GROUP="HBASE_GROUP" SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
+	      <DEFAULT>false</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="REGISTER_JAR_NOTE" FIELD="LABEL" NUM_ROW="140" SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') and (USE_EXISTING_CONNECTION == 'false')" GROUP="HBASE_GROUP">
+	      <DEFAULT>When filling in the Jar path information below, make sure that the JAR files are available on the server.</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="REGISTER_JAR" FIELD="TABLE" REQUIRED="false" NUM_ROW="160" NB_LINES="4" SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') and (USE_EXISTING_CONNECTION == 'false')" GROUP="HBASE_GROUP">
+	      <ITEMS>
+	        <ITEM NAME="JAR_NAME" FIELD="CLOSED_LIST">
+	          <ITEMS DEFAULT="HIVE-HBASE-HANDLER">
+	            <ITEM NAME="HIVE-HBASE-HANDLER" VALUE="HIVE-HBASE-HANDLER"/>
+	            <ITEM NAME="HBASE" VALUE="HBASE"/>
+	            <ITEM NAME="ZOOKEEPER" VALUE="ZOOKEEPER"/>
+	            <ITEM NAME="PROTOBUF-JAVA" VALUE="PROTOBUF-JAVA"/>
+	          </ITEMS>
+	        </ITEM>
+	        <ITEM NAME="JAR_PATH" FIELD="TEXT" />
+	      </ITEMS>
+	    </PARAMETER>
+
 	</PARAMETERS>
 	<ADVANCED_PARAMETERS>
 		<PARAMETER
@@ -309,7 +345,7 @@
             <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" BundleID="" />
-            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="HIVE_VERSION=='HDP_1_2' AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
@@ -344,6 +380,51 @@
 			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED="false" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+			
+            <!-- APACHE 0.20.203 & MAPR1 & CDH3 Hbase -->
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='MapR_EMR' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="zookeeper-3.3.3-cdh3u0.jar" MODULE="zookeeper-3.3.3-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/zookeeper-3.3.3-cdh3u0.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='MapR_EMR' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-hbase-handler-0.7.1-cdh3u3.jar" MODULE="hive-hbase-handler-0.7.1-cdh3u3.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='MapR_EMR' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.90.1-cdh3u0.jar" MODULE="hbase-0.90.1-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/hbase-0.90.1-cdh3u0.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='MapR_EMR' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='MapR_EMR' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="((HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='MapR_EMR' OR HIVE_VERSION=='Cloudera_CDH3') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- MAPR2 Hbase -->
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- APACHE 1.0 Hbase -->
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- HDP 1.0 Hbase -->
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- HDP 1.2 Hbase -->
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="zookeeper-3.4.5.21.jar" MODULE="zookeeper-3.4.5.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-hbase-handler-0.10.0.21.jar" MODULE="hive-hbase-handler-0.10.0.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_1_2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- CDH 4 Hbase -->
+            <IMPORT NAME="zookeeper-3.4.3-cdh4.0.1.jar" MODULE="zookeeper-3.4.3-cdh4.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-hbase-handler-0.8.1-cdh4.0.0.jar" MODULE="hive-hbase-handler-0.8.1-cdh4.0.0.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.92.1-cdh4.0.1-security.jar" MODULE="hbase-0.92.1-cdh4.0.1-security.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
      	</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
