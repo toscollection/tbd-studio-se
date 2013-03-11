@@ -30,7 +30,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.repository.ConnectionStatus;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hcatalog.util.KerberosPolicyConfig;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
 
 /**
@@ -76,7 +78,8 @@ public class HCatalogServiceUtil {
     }
 
     private static void addKerberos2Client(WebClient client, HCatalogConnection connection) {
-        if (connection.isEnableKerberos()) {
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        if (hcConnection != null && hcConnection.isEnableKerberos()) {
             KerberosAuthOutInterceptor kbInterceptor = new KerberosAuthOutInterceptor();
             AuthorizationPolicy policy = new AuthorizationPolicy();
             policy.setAuthorizationType(HttpAuthHeader.AUTH_TYPE_NEGOTIATE);
@@ -84,9 +87,9 @@ public class HCatalogServiceUtil {
             java.util.Map<String, String> properties = new HashMap<String, String>();
             kbInterceptor.setServicePrincipalName(StringUtils.trimToEmpty(connection.getKrbPrincipal()));
             kbInterceptor.setRealm(StringUtils.trimToEmpty(connection.getKrbRealm()));
-            properties.put("useTicketCache", "true"); //$NON-NLS-1$
-            properties.put("refreshKrb5Config", "true"); //$NON-NLS-1$
-            properties.put("renewTGT", "true"); //$NON-NLS-1$
+            properties.put("useTicketCache", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+            properties.put("refreshKrb5Config", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+            properties.put("renewTGT", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             kbInterceptor.setLoginConfig(new KerberosPolicyConfig(properties));
             WebClient.getConfig(client).getOutInterceptors().add(kbInterceptor);
         }

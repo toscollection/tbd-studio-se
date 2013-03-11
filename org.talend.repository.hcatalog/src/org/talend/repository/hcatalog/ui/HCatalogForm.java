@@ -28,7 +28,9 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hcatalog.i18n.Messages;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -43,12 +45,24 @@ public class HCatalogForm extends AbstractHCatalogForm {
 
     private LabelledText userNameText;
 
+    private LabelledText krbPrincipalText;
+
+    private LabelledText krbRealmText;
+
     private LabelledText databaseText;
+
+    private boolean enableKerberos = false;
 
     public HCatalogForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
         super(parent, SWT.NONE, existingNames);
         this.connectionItem = connectionItem;
         setConnectionItem(connectionItem);
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
+        if (hcConnection != null && hcConnection.isEnableKerberos()) {
+            enableKerberos = true;
+        } else {
+            enableKerberos = false;
+        }
         setupForm();
         GridLayout layout = (GridLayout) getLayout();
         layout.marginHeight = 0;
@@ -61,6 +75,10 @@ public class HCatalogForm extends AbstractHCatalogForm {
         portText.setText(getConnection().getPort());
         userNameText.setText(getConnection().getUserName());
         databaseText.setText(getConnection().getDatabase());
+        if (enableKerberos) {
+            krbPrincipalText.setText(getConnection().getKrbPrincipal());
+            krbRealmText.setText(getConnection().getKrbRealm());
+        }
 
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -71,6 +89,11 @@ public class HCatalogForm extends AbstractHCatalogForm {
         hostText.setReadOnly(readOnly);
         portText.setReadOnly(readOnly);
         userNameText.setReadOnly(readOnly);
+        databaseText.setReadOnly(readOnly);
+        if (enableKerberos) {
+            krbPrincipalText.setReadOnly(readOnly);
+            krbRealmText.setReadOnly(readOnly);
+        }
     }
 
     @Override
@@ -102,6 +125,15 @@ public class HCatalogForm extends AbstractHCatalogForm {
         hostText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.host"), 1); //$NON-NLS-1$
         portText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.port"), 1); //$NON-NLS-1$
         userNameText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.userName"), 1); //$NON-NLS-1$
+
+        if (enableKerberos) {
+            addKerberosFields(templetonGroupComposite);
+        }
+    }
+
+    private void addKerberosFields(Composite parent) {
+        krbPrincipalText = new LabelledText(parent, Messages.getString("HCatalogForm.text.krbPrincipal"), 1); //$NON-NLS-1$
+        krbRealmText = new LabelledText(parent, Messages.getString("HCatalogForm.text.krbRealm"), 1); //$NON-NLS-1$
     }
 
     private void addDatabaseFields() {
@@ -185,6 +217,26 @@ public class HCatalogForm extends AbstractHCatalogForm {
                 checkFieldsValue();
             }
         });
+
+        if (enableKerberos) {
+            krbPrincipalText.addModifyListener(new ModifyListener() {
+
+                @Override
+                public void modifyText(final ModifyEvent e) {
+                    getConnection().setKrbPrincipal(krbPrincipalText.getText());
+                    checkFieldsValue();
+                }
+            });
+
+            krbRealmText.addModifyListener(new ModifyListener() {
+
+                @Override
+                public void modifyText(final ModifyEvent e) {
+                    getConnection().setKrbRealm(krbRealmText.getText());
+                    checkFieldsValue();
+                }
+            });
+        }
     }
 
     @Override
@@ -209,6 +261,17 @@ public class HCatalogForm extends AbstractHCatalogForm {
         if (!validText(databaseText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.database")); //$NON-NLS-1$
             return false;
+        }
+
+        if (enableKerberos) {
+            if (!validText(krbPrincipalText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbPrincipal")); //$NON-NLS-1$
+                return false;
+            }
+            if (!validText(krbRealmText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbRealm")); //$NON-NLS-1$
+                return false;
+            }
         }
 
         checkConnectionBtn.setEnabled(true);

@@ -19,6 +19,7 @@ import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.repository.hadoopcluster.model.migration.AbstractHadoopClusterMigrationTask;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
 
@@ -48,6 +49,23 @@ public class PushHCatalogIntoHadoopClusterMigrationTask extends AbstractHadoopCl
     @Override
     protected ERepositoryObjectType getType() {
         return HCatalogRepositoryNodeType.HCATALOG;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.talend.repository.hadoopcluster.model.migration.AbstractHadoopClusterMigrationTask#initCluster(org.talend
+     * .repository.model.hadoopcluster.HadoopClusterConnection,
+     * org.talend.repository.model.hadoopcluster.HadoopSubConnection)
+     */
+    @Override
+    protected void initCluster(HadoopClusterConnection clusterConnection, HadoopSubConnection hadoopSubConnection)
+            throws Exception {
+        super.initCluster(clusterConnection, hadoopSubConnection);
+        HCatalogConnection hCatConnection = (HCatalogConnection) hadoopSubConnection;
+        clusterConnection.setDfVersion(hCatConnection.getHcatVersion());
+        clusterConnection.setPrincipal(hCatConnection.getNnPrincipal());
     }
 
     /*

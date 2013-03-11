@@ -155,18 +155,24 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
 
             @Override
-            public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+            public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                 monitor.beginTask(Messages.getString("CreateHDFSSchemaAction.checkConnection"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-                Object dfs = null;
-                try {
-                    HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
-                    dfs = HadoopOperationManager.getInstance().getDFS(connectionBean);
-                } catch (Exception e) {
-                    ExceptionHandler.process(e);
-                } finally {
-                    monitor.done();
-                }
-                if (dfs == null) {
+                final Object[] dfs = new Object[1];
+                Display.getDefault().syncExec(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        try {
+                            HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
+                            dfs[0] = HadoopOperationManager.getInstance().getDFS(connectionBean);
+                        } catch (Exception e) {
+                            ExceptionHandler.process(e);
+                        } finally {
+                            monitor.done();
+                        }
+                    }
+                });
+                if (dfs[0] == null) {
                     PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
                         @Override
