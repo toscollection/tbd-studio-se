@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -27,8 +26,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
@@ -49,8 +48,6 @@ import orgomg.cwm.objectmodel.core.Package;
  * DOC ycbai class global comment. Detailled comment
  */
 public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implements INewWizard {
-
-    private static Logger log = Logger.getLogger(HDFSSchemaWizard.class);
 
     private HDFSFileSelectorWizardPage fileSelectorWizardPage;
 
@@ -81,6 +78,7 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         initLockStrategy();
     }
 
+    @Override
     public void addPages() {
         setWindowTitle("Schema");
         setDefaultPageImageDescriptor(ImageProvider.getImageDesc(ECoreImage.METADATA_TABLE_WIZ));
@@ -109,12 +107,14 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         }
     }
 
+    @Override
     public boolean performFinish() {
         if (schemaWizardPage.isPageComplete()) {
             IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
             IWorkspaceRunnable operation = new IWorkspaceRunnable() {
 
+                @Override
                 public void run(IProgressMonitor monitor) throws CoreException {
                     connectionItem.setConnection(temConnection);
                     saveMetaData();
@@ -134,6 +134,20 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.ui.wizards.AbstractRepositoryFileTableWizard#performCancel()
+     */
+    @Override
+    public boolean performCancel() {
+        if (fileSelectorWizardPage != null) {
+            fileSelectorWizardPage.performCancel();
+        }
+        temConnection = null;
+        return super.performCancel();
+    }
+
     private void saveMetaData() {
         IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
         try {
@@ -147,12 +161,13 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
     }
 
     private void cloneBaseHDFSConnection(HDFSConnection connection) {
-        temConnection = (HDFSConnection) EcoreUtil.copy(connection);
+        temConnection = EcoreUtil.copy(connection);
         EList<Package> dataPackage = connection.getDataPackage();
         Collection<Package> newDataPackage = EcoreUtil.copyAll(dataPackage);
         ConnectionHelper.addPackages(newDataPackage, temConnection);
     }
 
+    @Override
     public void init(final IWorkbench workbench, final IStructuredSelection selection) {
         this.selection = selection;
     }

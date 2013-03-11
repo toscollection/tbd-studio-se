@@ -27,8 +27,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
@@ -81,6 +81,7 @@ public class HCatalogSchemaWizard extends AbstractRepositoryFileTableWizard impl
         initLockStrategy();
     }
 
+    @Override
     public void addPages() {
         setWindowTitle("Schema");
         setDefaultPageImageDescriptor(ImageProvider.getImageDesc(ECoreImage.METADATA_TABLE_WIZ));
@@ -110,12 +111,14 @@ public class HCatalogSchemaWizard extends AbstractRepositoryFileTableWizard impl
         }
     }
 
+    @Override
     public boolean performFinish() {
         if (schemaWizardPage.isPageComplete()) {
             IWorkspace workspace = ResourcesPlugin.getWorkspace();
 
             IWorkspaceRunnable operation = new IWorkspaceRunnable() {
 
+                @Override
                 public void run(IProgressMonitor monitor) throws CoreException {
                     connectionItem.setConnection(temConnection);
                     saveMetaData();
@@ -148,12 +151,13 @@ public class HCatalogSchemaWizard extends AbstractRepositoryFileTableWizard impl
     }
 
     private void cloneBaseHCatalogConnection(HCatalogConnection connection) {
-        temConnection = (HCatalogConnection) EcoreUtil.copy(connection);
+        temConnection = EcoreUtil.copy(connection);
         EList<Package> dataPackage = connection.getDataPackage();
         Collection<Package> newDataPackage = EcoreUtil.copyAll(dataPackage);
         ConnectionHelper.addPackages(newDataPackage, temConnection);
     }
 
+    @Override
     public void init(final IWorkbench workbench, final IStructuredSelection selection) {
         this.selection = selection;
     }

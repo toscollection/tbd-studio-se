@@ -76,4 +76,8 @@ public abstract class AbstractHDFSForm extends AbstractHadoopForm<HDFSConnection
         return HDFSModelUtil.convert2HDFSConnectionBean(getConnection());
     }
 
+    public void performCancel() {
+        processWhenDispose();
+    }
+
 }

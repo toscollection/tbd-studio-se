@@ -28,7 +28,7 @@ import org.apache.cxf.transport.http.auth.HttpAuthHeader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.repository.hcatalog.util.KerberosPolicyConfig;
 import org.talend.repository.model.hcatalog.HCatalogConnection;

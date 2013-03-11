@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.graphics.Image;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
 import org.talend.cwm.relational.TdTable;
 import org.talend.repository.hcatalog.metadata.ExtractMetaDataFromHCatalog;
@@ -30,10 +30,12 @@ import org.talend.repository.model.hcatalog.HCatalogConnection;
  */
 public class TableSelectorTreeViewerProvider extends AbstractMetadataExtractorViewProvider {
 
+    @Override
     public Object[] getElements(Object inputElement) {
         return getChildren(inputElement);
     }
 
+    @Override
     public Object[] getChildren(Object parentElement) {
         List<IHCatalogNode> nodes = new ArrayList<IHCatalogNode>();
         if (parentElement instanceof HCatalogConnection) {
@@ -53,10 +55,12 @@ public class TableSelectorTreeViewerProvider extends AbstractMetadataExtractorVi
         return nodes.toArray();
     }
 
+    @Override
     public Object getParent(Object element) {
         return null;
     }
 
+    @Override
     public boolean hasChildren(Object element) {
         if (element instanceof HCatalogConnection) {
             return true;
@@ -64,6 +68,7 @@ public class TableSelectorTreeViewerProvider extends AbstractMetadataExtractorVi
         return false;
     }
 
+    @Override
     public Image getColumnImage(Object element, int columnIndex) {
         if (columnIndex == 0 && element instanceof IHCatalogNode) {
             return ((IHCatalogNode) element).getImage();
@@ -71,6 +76,7 @@ public class TableSelectorTreeViewerProvider extends AbstractMetadataExtractorVi
         return null;
     }
 
+    @Override
     public String getColumnText(Object element, int columnIndex) {
         IHCatalogNode content = (IHCatalogNode) element;
         switch (columnIndex) {

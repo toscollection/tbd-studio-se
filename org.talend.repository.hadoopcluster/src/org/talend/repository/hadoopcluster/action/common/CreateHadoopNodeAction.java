@@ -76,6 +76,10 @@ public abstract class CreateHadoopNodeAction extends AbstractCreateAction {
             return;
         }
 
+        if (hideAction(node)) {
+            return;
+        }
+
         IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
         if (HCRepositoryUtil.isHadoopClusterNode(node)
                 || (node instanceof HadoopFolderRepositoryNode && getNodeType().equals(nodeType))) {
@@ -146,6 +150,10 @@ public abstract class CreateHadoopNodeAction extends AbstractCreateAction {
 
     protected String getOpenLabel() {
         return Messages.getString("CreateHadoopNodeAction.openLabel", getNodeType().getKey()); //$NON-NLS-1$
+    }
+
+    protected boolean hideAction(RepositoryNode node) {
+        return false;
     }
 
     protected abstract ERepositoryObjectType getNodeType();

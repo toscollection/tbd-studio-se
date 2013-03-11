@@ -42,12 +42,14 @@ public class HDFSFileSelectorWizardPage extends WizardPage {
         this.isRepositoryObjectEditable = isRepositoryObjectEditable;
     }
 
+    @Override
     public void createControl(final Composite parent) {
         hdfsFileSelectorForm = new HDFSFileSelectorForm(parent, connectionItem, temConnection, this);
         hdfsFileSelectorForm.setReadOnly(!isRepositoryObjectEditable);
 
         AbstractForm.ICheckListener listener = new AbstractForm.ICheckListener() {
 
+            @Override
             public void checkPerformed(final AbstractForm source) {
                 if (source.isStatusOnError()) {
                     HDFSFileSelectorWizardPage.this.setPageComplete(false);
@@ -68,6 +70,12 @@ public class HDFSFileSelectorWizardPage extends WizardPage {
 
     public void restoreCheckItems(List<String> tableNames) {
         hdfsFileSelectorForm.restoreCheckItems(tableNames);
+    }
+
+    public void performCancel() {
+        if (hdfsFileSelectorForm != null) {
+            hdfsFileSelectorForm.performCancel();
+        }
     }
 
 }

@@ -54,7 +54,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 import org.eclipse.ui.dialogs.SearchPattern;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
@@ -117,12 +117,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
     private UtilsButton checkConnectionBtn;
 
     private MetadataTable hdfsTable;
-
-    private int count = 0;
-
-    private int countSuccess = 0;
-
-    private int countPending = 0;
 
     private byte[] lock = new byte[0];
 
@@ -334,9 +328,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                count = 0;
-                countSuccess = 0;
-                countPending = 0;
                 for (TreeItem tItem : schemaTree.getItems()) {
                     fetchAllChildren((IHDFSNode) tItem.getData());
                 }
@@ -431,7 +422,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                             } else {
                                 treeItem.setText(3, EMPTY_STRING);
                                 treeItem.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
-                                countPending++;
                                 parentWizardPage.setPageComplete(false);
                                 refreshTable(treeItem, -1);
                             }
@@ -439,7 +429,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                             clearTreeItem(treeItem);
                             if (treeItem.getText() != null
                                     && treeItem.getText().equals(Messages.getString("HDFSFileSelectorForm.Pending"))) { //$NON-NLS-1$
-                                countPending--;
                             }
                         }
                     } else if (type == EHadoopFileTypes.FOLDER) {
@@ -512,7 +501,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         existItem.setChecked(false);
                     }
                     item.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
-                    countPending++;
                     parentWizardPage.setPageComplete(false);
                     refreshTable(item, -1);
                 } else {
@@ -626,7 +614,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             }
         }
         return null;
-
     }
 
     private void updateItem(final TreeItem item, boolean checked, boolean isEvent) {
@@ -659,7 +646,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         refreshExistItem(existTable, item);
                     } else {
                         item.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
-                        countPending++;
                         parentWizardPage.setPageComplete(false);
                         refreshTable(item, -1);
                     }
@@ -727,6 +713,13 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    protected void processWhenDispose() {
+        if (threadExecutor != null) {
+            threadExecutor.clearThreads();
         }
     }
 
@@ -922,20 +915,15 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             if (checkConnectionIsDone) {
                 treeItem.setText(3, EMPTY_STRING + metadataColumns.size());
                 treeItem.setText(4, Messages.getString("HDFSFileSelectorForm.title.success")); //$NON-NLS-1$
-                countSuccess++;
                 tableColumnNums.put(treeItem.getText(0), metadataColumns.size());
             } else {
                 String msg = Messages.getString("HDFSFileSelectorForm.msg.connectionFailure"); //$NON-NLS-1$
                 updateStatus(IStatus.WARNING, msg);
                 new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID, msg, msg);
-
             }
-            count++;
 
             updateStatus(IStatus.OK, null);
-
-            parentWizardPage.setPageComplete(threadExecutor.getQueue().isEmpty()
-                    && (threadExecutor.getActiveCount() == 0 || countSuccess == countPending));
+            parentWizardPage.setPageComplete(!threadExecutor.hasThreadRunning());
         }
 
     }

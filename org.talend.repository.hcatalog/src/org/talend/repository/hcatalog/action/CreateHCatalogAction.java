@@ -4,11 +4,15 @@ import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IWorkbench;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.designer.hdfsbrowse.util.EHadoopDistributions;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopNodeAction;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
 import org.talend.repository.hcatalog.ui.HCatalogWizard;
 import org.talend.repository.hcatalog.util.EHCatalogImage;
 import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hcatalog.HCatalogConnectionItem;
 
 /**
@@ -34,6 +38,20 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
     @Override
     public Class getClassForDoubleClick() {
         return HCatalogConnectionItem.class;
+    }
+
+    @Override
+    protected boolean hideAction(RepositoryNode node) {
+        HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
+        if (hcConnectionItem != null) {
+            HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+            EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
+            if (distribution == EHadoopDistributions.HORTONWORKS) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
 }
