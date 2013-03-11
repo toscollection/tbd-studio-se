@@ -158,7 +158,8 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
             public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
                 monitor.beginTask(Messages.getString("CreateHDFSSchemaAction.checkConnection"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                 final Object[] dfs = new Object[1];
-                Display.getDefault().syncExec(new Runnable() {
+                Display display = PlatformUI.getWorkbench().getDisplay();
+                display.syncExec(new Runnable() {
 
                     @Override
                     public void run() {
@@ -173,7 +174,7 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
                     }
                 });
                 if (dfs[0] == null) {
-                    PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                    display.syncExec(new Runnable() {
 
                         @Override
                         public void run() {
