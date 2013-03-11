@@ -85,6 +85,19 @@
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
             </ITEMS>
         </PARAMETER>
+        
+        <PARAMETER
+          NAME="CUSTOM_JARS"
+          FIELD="TABLE"
+          NUM_ROW="70"
+          NB_LINES="5" 
+          SHOW_IF="(STORE=='HBASESTORAGE') AND (DISTRIBUTION=='CUSTOM')"
+          GROUP="HBASE_CONFIGURATION"
+        >
+            <ITEMS> 
+                <ITEM NAME="JAR_NAME" FIELD="MODULE_LIST"  /> 
+            </ITEMS> 
+        </PARAMETER>
 
         <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="80" SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
             <DEFAULT>"localhost"</DEFAULT>
