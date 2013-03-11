@@ -91,6 +91,7 @@ public class PigMapOutputTablePart extends OutputTablePart implements NodeEditPa
             case PigmapPackage.OUTPUT_TABLE__MINIMIZED:
             case PigmapPackage.OUTPUT_TABLE__ALL_IN_ONE:
             case PigmapPackage.OUTPUT_TABLE__ENABLE_EMPTY_ELEMENT:
+            case PigmapPackage.OUTPUT_TABLE__EXPRESSION_FILTER:
                 ((OutputTableFigure) getFigure()).update(featureId);
                 break;
             }
