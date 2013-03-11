@@ -23,6 +23,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
@@ -30,6 +31,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.runtime.image.ImageProvider;
@@ -120,13 +122,13 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         // Server label
         Label serverLbl = new Label(parent, SWT.NONE);
         serverLbl.setText(Messages.getString("ExecuteJobComposite.Server")); //$NON-NLS-1$
-        GridDataFactory.fillDefaults().span(1, 1).indent(SWT.DEFAULT, 15).grab(false, false).align(SWT.END, SWT.CENTER)
+        GridDataFactory.fillDefaults().span(1, 1).indent(SWT.DEFAULT, 10).grab(false, false).align(SWT.END, SWT.CENTER)
                 .applyTo(serverLbl);
 
         // Server combo
         String[] comboitems = new String[] {
                 Messages.getString("ExecuteJobComposite.fromPreferences"), Messages.getString("ExecuteJobComposite.fromRepository") }; //$NON-NLS-1$ //$NON-NLS-2$
-        serverCombo = new Combo(parent, SWT.DROP_DOWN | SWT.READ_ONLY);
+        serverCombo = new Combo(parent, SWT.BORDER | SWT.DROP_DOWN | SWT.READ_ONLY);
         serverCombo.setItems(comboitems);
         serverCombo.setToolTipText(Messages.getString("ExecuteJobComposite.fromRepositorytoolTip")); //$NON-NLS-1$ 
         if (!TOozieParamUtils.isFromRepository()) {
@@ -154,13 +156,14 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         repositoryText.setEnabled(false);
         repositoryText.setVisible(serverCombo.getSelectionIndex() == 1);
         // repositoryText.setDoubleClickEnabled(true);
-        GridDataFactory.fillDefaults().grab(true, false).indent(-105, 10).hint(SWT.DEFAULT, 20).applyTo(repositoryText);
+        GridDataFactory.fillDefaults().grab(true, false).indent(-105, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 14)
+                .align(SWT.FILL, SWT.CENTER).applyTo(repositoryText);
 
         // Select button
         selectbtn = new Button(parent, SWT.NONE);
         selectbtn.setImage(ImageProvider.getImage(TOozieImages.IMG_DOTS));
         selectbtn.setVisible(serverCombo.getSelectionIndex() == 1);
-        GridDataFactory.fillDefaults().span(1, 1).grab(true, false).indent(SWT.DEFAULT, 10).hint(30, 25)
+        GridDataFactory.fillDefaults().span(1, 1).grab(true, false).indent(SWT.DEFAULT, 10).hint(30, 21)
                 .align(SWT.BEGINNING, SWT.CENTER).applyTo(selectbtn);
 
         regServerComboListener();
@@ -206,7 +209,12 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).align(SWT.BEGINNING, SWT.CENTER)
                 .applyTo(pathLbl);
 
-        pathText = new Text(parent, SWT.BORDER);
+        pathText = new Text(parent, SWT.SINGLE | SWT.BORDER);
+
+        // Need to think another way to display the text in
+        Font font = new Font(Display.getCurrent(), "Arial", 12, SWT.NORMAL);
+        pathText.setFont(font);
+
         pathText.setText(getPathValue() == null ? "" : getPathValue()); //$NON-NLS-1$
         GridDataFactory.fillDefaults().span(3, 1).grab(true, false).indent(-70, 10).hint(SWT.DEFAULT, 20).applyTo(pathText);
 

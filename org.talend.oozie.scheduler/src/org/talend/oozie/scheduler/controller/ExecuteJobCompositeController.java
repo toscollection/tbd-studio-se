@@ -579,7 +579,9 @@ public class ExecuteJobCompositeController {
                                     killBtn.setEnabled(false);
                                     selectBtn.setEnabled(true);
                                     pathTxt.setEnabled(true);
-                                    combo.setEnabled(true);
+                                    if (GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
+                                        combo.setEnabled(true);
+                                    }
                                     outputTxt.setEnabled(true);
                                     break;
                                 case KILLED:
@@ -588,7 +590,9 @@ public class ExecuteJobCompositeController {
                                     killBtn.setEnabled(false);
                                     selectBtn.setEnabled(true);
                                     pathTxt.setEnabled(true);
-                                    combo.setEnabled(true);
+                                    if (GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
+                                        combo.setEnabled(true);
+                                    }
                                     outputTxt.setEnabled(true);
                                     break;
                                 case FAILED:
@@ -597,7 +601,9 @@ public class ExecuteJobCompositeController {
                                     killBtn.setEnabled(false);
                                     selectBtn.setEnabled(true);
                                     pathTxt.setEnabled(true);
-                                    combo.setEnabled(true);
+                                    if (GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
+                                        combo.setEnabled(true);
+                                    }
                                     outputTxt.setEnabled(true);
                                     break;
                                 case SUSPENDED:
@@ -606,7 +612,9 @@ public class ExecuteJobCompositeController {
                                     killBtn.setEnabled(true);
                                     selectBtn.setEnabled(true);
                                     pathTxt.setEnabled(false);
-                                    combo.setEnabled(true);
+                                    if (GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
+                                        combo.setEnabled(true);
+                                    }
                                     outputTxt.setEnabled(true);
                                     break;
                                 }
@@ -874,7 +882,8 @@ public class ExecuteJobCompositeController {
         // Text pathText = executeJobComposite.getPathText();
 
         hideSettingBtn();
-        if (selectCombo.getSelectionIndex() == FROM_REPOSITORY && repositaryText.getText().length() == 0) {
+        if (selectCombo.getSelectionIndex() == FROM_REPOSITORY && executeJobComposite.getRepositoryTextValue().length() == 0) {
+            repositaryText.setText("");
             editBtn.setEnabled(false);
         }
         if (selectCombo.getSelectionIndex() == FROM_PREFERNCES) {
