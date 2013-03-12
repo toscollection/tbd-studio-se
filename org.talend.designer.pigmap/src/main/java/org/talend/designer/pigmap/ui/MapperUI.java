@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.designer.pigmap.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -31,6 +35,11 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.talend.commons.ui.runtime.image.ImageUtils.ICON_SIZE;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.model.components.IODataComponent;
+import org.talend.core.model.metadata.IMetadataColumn;
+import org.talend.core.model.metadata.IMetadataTable;
+import org.talend.core.model.metadata.MetadataColumn;
+import org.talend.core.model.metadata.MetadataTable;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.IExternalNode;
 import org.talend.core.model.process.INode;
@@ -46,7 +55,9 @@ import org.talend.designer.gefabstractmap.resource.ImageProviderMapper;
 import org.talend.designer.pigmap.PigMapComponent;
 import org.talend.designer.pigmap.editor.PigMapEditor;
 import org.talend.designer.pigmap.i18n.Messages;
+import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
+import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.ui.footer.FooterComposite;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
 import org.talend.designer.pigmap.ui.tabs.TabFolderEditors;
@@ -202,11 +213,62 @@ public class MapperUI {
         if (response == SWT.OK || response == SWT.CANCEL) {
             mapperShell.close();
         }
-
     }
 
     public void prepareClosing(int response) {
+        List<IMetadataTable> newMetadatas = new ArrayList<IMetadataTable>();
+        EList<OutputTable> outputTables = null;
+        if (response == SWT.OK || response == SWT.APPLICATION_MODAL) {
+            // fix for bug TDI-18185
+            mapperManager.fireCurrentDirectEditApply();
+            // if press ok or apply , use copyOfMapData to check the metadata list
+            outputTables = copyOfMapData.getOutputTables();
+        } else {
+            // if outputTables cancel , use the original mapData
+            outputTables = ((PigMapData) mapperComponent.getExternalEmfData()).getOutputTables();
+        }
 
+        List<IMetadataTable> copyOfMetadata = new ArrayList<IMetadataTable>(mapperComponent.getMetadataList());
+        for (OutputTable outputTable : outputTables) {
+            IMetadataTable found = null;
+            for (IMetadataTable table : mapperComponent.getMetadataList()) {
+                if (outputTable.getName().equals(table.getTableName())) {
+                    found = table;
+                }
+            }
+            if (found != null) {
+                newMetadatas.add(found);
+            } else {
+                // create a new metadata if needed
+                MetadataTable metadataTable = new MetadataTable();
+                metadataTable.setTableName(outputTable.getName());
+                mapperComponent.getProcess().addUniqueConnectionName(outputTable.getName());
+                List<IMetadataColumn> listColumns = new ArrayList<IMetadataColumn>();
+                for (TableNode tableNode : outputTable.getNodes()) {
+                    MetadataColumn column = new MetadataColumn();
+                    column.setLabel(tableNode.getName());
+                    column.setKey(tableNode.isKey());
+                    column.setTalendType(tableNode.getType());
+                    column.setNullable(tableNode.isNullable());
+                    column.setPattern(tableNode.getPattern());
+                    listColumns.add(column);
+                }
+                metadataTable.setListColumns(listColumns);
+                newMetadatas.add(metadataTable);
+            }
+        }
+        mapperComponent.setMetadataList(newMetadatas);
+        copyOfMetadata.removeAll(newMetadatas);
+        List<IODataComponent> outputs = mapperComponent.getIODataComponents().getOuputs();
+        List<String> connectionNames = new ArrayList<String>();
+        for (IODataComponent output : outputs) {
+            connectionNames.add(output.getUniqueName());
+        }
+        for (IMetadataTable leftTree : copyOfMetadata) {
+            if (!connectionNames.contains(leftTree.getTableName())) {
+                mapperComponent.getProcess().removeUniqueConnectionName(leftTree.getTableName());
+            }
+        }
     }
 
     public int getMapperDialogResponse() {
