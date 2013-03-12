@@ -325,7 +325,7 @@
 <%
     		}
 %>
-			sb_<%=cid%>.append("'hbase://").append(<%=hbasetable%>).append("' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('");;
+			sb_<%=cid%>.append("'").append(<%=hbasetable%>).append("' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('");;
 <%
 			List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
 			if(metadata!=null && mapping!=null) {
