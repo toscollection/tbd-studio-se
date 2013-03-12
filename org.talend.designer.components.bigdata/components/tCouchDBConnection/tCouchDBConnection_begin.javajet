@@ -15,9 +15,6 @@
     String cid = node.getUniqueName();
     String dbhost = ElementParameterParser.getValue(node, "__HOST__");
     String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
-    String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
-    String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
-    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     boolean useTriggerReplicate="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_TRIGGER_REPLICATE__"));
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
     List<Map<String,String>> replicaTargetDB= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICATE_TARGET_DB__");
@@ -65,11 +62,6 @@
 		}
 %>
 	globalMap.put("replicates_<%=cid%>", replicates_<%=cid%>);
-<%
-	}
-	if (authentication){
-%>
-    	server_<%=cid%>.setCredentials(new org.apache.http.auth.AuthScope(<%=dbhost%>,<%=dbport%>),new org.apache.http.auth.UsernamePasswordCredentials(<%=dbuser%>,<%=dbpass%>));
 <%
 	}
 %>

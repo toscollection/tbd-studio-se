@@ -38,6 +38,7 @@
 				int sizeColumns = columnList.size();
 %>
 		map_<%=cid%> = new java.util.HashMap();
+		nb_line_<%=cid%> ++;
 <%
 				for (int i = 0; i < sizeColumns; i++) {
 					IMetadataColumn column = columnList.get(i);

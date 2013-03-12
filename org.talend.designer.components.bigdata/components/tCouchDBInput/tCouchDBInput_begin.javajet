@@ -15,7 +15,6 @@
 	" 
 %>
 		<%@ include file="../tCouchDBReadConf/tCouchDBReadConf_begin.inc.javajet"%>
-			nb_line_<%=cid%> ++;
 <%
 			if(include_docs){
 %>

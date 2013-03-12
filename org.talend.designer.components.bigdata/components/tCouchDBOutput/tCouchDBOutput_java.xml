@@ -122,6 +122,7 @@
 			NAME="USE_TRIGGER_REPLICATE" 
 			NUM_ROW="30" 
 			SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+			GROUP="REPLICATION"
 		>
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
@@ -132,7 +133,8 @@
 	        REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_TRIGGER_REPLICATE == 'true')" 
 	        NUM_ROW="40" 
 	        NB_LINES="5" 
-	        SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_TRIGGER_REPLICATE == 'true')" 
+	        SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_TRIGGER_REPLICATE == 'true')"
+	        GROUP="REPLICATION" 
         >
             <ITEMS>
                 <ITEM NAME="TARGET_DB_NAME" FIELD="TEXT" />
@@ -142,36 +144,6 @@
                 
             </ITEMS>
         </PARAMETER>
-        
-        <PARAMETER 
-			FIELD="CHECK"
-			NAME="REQUIRED_AUTHENTICATION" 
-			NUM_ROW="45"
-			SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
-			GROUP="AUTHENTICATION"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
-		
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="USERNAME" 
-			NUM_ROW="50"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
-			GROUP="AUTHENTICATION"
-		>
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
-		
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="PASSWORD" 
-			NUM_ROW="50"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
-		   	GROUP="AUTHENTICATION"
-		>
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
         
 		<PARAMETER 
 			NAME="DATA_ACTION" 
@@ -214,22 +186,11 @@
 	        GROUP="JSON_CONFIGURATION"
 	    >
 	    </PARAMETER>
-	
-	    <!--
-	    <PARAMETER
-	        NAME="VALUE"
-	        FIELD="PREV_COLUMN_LIST"
-	        REQUIRED="true"
-	        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
-	        NUM_ROW="68"
-	        GROUP="JSON_CONFIGURATION"
-	    >
-	    </PARAMETER>
-        -->
+
         <PARAMETER 
 	        NAME="ROOT" 
 	        FIELD="TABLE" 
-	        REQUIRED_IF="true"
+	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
             NUM_ROW="70" 
             NB_LINES="3" 
             SHOW_IF="false"
@@ -263,7 +224,7 @@
         <PARAMETER 
 	        NAME="LOOP" 
 	        FIELD="TABLE" 
-	        REQUIRED_IF="true"
+	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
             NUM_ROW="90" 
             SHOW_IF="false"
         >
@@ -313,7 +274,7 @@
         <PARAMETER 
 	        NAME="COMPACT_FORMAT" 
 	        FIELD="CHECK" 
-	        REQUIRED_IF="true" 
+	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
 	        NUM_ROW="110" 
 	        SHOW_IF="false"
 	        GROUP="JSON_CONFIGURATION"
@@ -374,7 +335,6 @@
       	<TEMPLATE_PARAM SOURCE="self.REPLICATE_TARGET_DB"  TARGET="Out.REPLICATE_TARGET_DB" />
       	<TEMPLATE_PARAM SOURCE="self.SCHEMA" TARGET="Out.SCHEMA" />
       	<TEMPLATE_PARAM SOURCE="self.DATA_ACTION" TARGET="Out.DATA_ACTION" />
-      	<!--<TEMPLATE_PARAM SOURCE="self.VALUE_IS_JSON" TARGET="Out.VALUE_IS_JSON" />-->
       	<TEMPLATE_PARAM SOURCE="self.KEY" TARGET="Out.KEY" />
       	<TEMPLATE_PARAM SOURCE="self.VALUE" TARGET="Out.VALUE" />
       	<TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="Out.DESTINATION" />
@@ -388,8 +348,8 @@
 		<IMPORT NAME="commons-codec-1.6.jar" MODULE="commons-codec-1.6.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="commons-io-1.4.jar" MODULE="commons-io-1.4.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
-		<IMPORT NAME="httpclient-4.0.jar" MODULE="httpclient-4.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
-		<IMPORT NAME="httpcore-4.0.1.jar" MODULE="httpcore-4.0.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="httpclient-4.0.jar" MODULE="httpclient-4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="httpcore-4.0.1.jar" MODULE="httpcore-4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.0.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 		<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />

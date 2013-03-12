@@ -16,9 +16,6 @@
 		<%@ include file="../tCouchDBReadConf/tCouchDBReadConf_begin.inc.javajet"%>
 <%
 		String jsonField = ElementParameterParser.getValue(node, "__JSONFIELD__");
-%>
-			 nb_line_<%=cid%> ++;
-<%
 			if(include_docs){
 %>
 			 <%=firstConnName%>.<%=jsonField %> = new org.svenson.JSON().forValue(valueRow_<%=cid%>.getProperty(<%if(include_docs){%>"doc"<%}else{%>"value"<%}%>));

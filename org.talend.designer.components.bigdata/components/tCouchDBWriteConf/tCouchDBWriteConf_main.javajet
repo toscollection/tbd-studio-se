@@ -71,6 +71,9 @@
 		db_<%=cid%>.delete(doc_<%=cid%>);
 <%
 				}
+%>
+		nb_line_<%=cid%> ++;
+<%
 			}
 		}
 	}
