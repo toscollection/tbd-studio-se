@@ -23,3 +23,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
+Export-Package: org.talend.designer.pigmap.model.emf.pigmap

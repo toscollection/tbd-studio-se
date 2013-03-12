@@ -85,9 +85,13 @@ public class LookupConnectionImpl extends EObjectImpl implements LookupConnectio
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
+     * @generated NOT
      */
     public String getName() {
-        throw new UnsupportedOperationException();
+        if (eContainer() != null && eContainer() instanceof PigMapData) {
+            return "Connection_" + ((PigMapData) eContainer()).getConnections().indexOf(this);
+        }
+        return null;
     }
 
     /**
