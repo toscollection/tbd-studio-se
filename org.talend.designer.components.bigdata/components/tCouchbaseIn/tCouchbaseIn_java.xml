@@ -10,6 +10,8 @@
     RELEASE_DATE="20130120A"
     STARTABLE="true"
     TECHNICAL="true"
+    DATA_AUTO_PROPAGATE="false"
+    SCHEMA_AUTO_PROPAGATE="false"
   >
     <SIGNATURE/>
   </HEADER>

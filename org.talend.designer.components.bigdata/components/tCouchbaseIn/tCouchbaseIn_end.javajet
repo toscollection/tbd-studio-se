@@ -42,11 +42,10 @@ if(!("true").equals(useExistingConn))
     <%
 }
 String destination = ElementParameterParser.getValue(node, "__DESTINATION__");
-String strJobCid="";
-if(destination !=null && !("").equals(destination.trim()))
-    strJobCid=destination;
-else{
-    strJobCid= cid;
+if(destination==null || ("").equals(destination.trim())){
+    %>
+    globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+    <%
 }
 %>
-globalMap.put("<%=strJobCid %>_NB_LINE",nb_line_<%=cid%>);
+

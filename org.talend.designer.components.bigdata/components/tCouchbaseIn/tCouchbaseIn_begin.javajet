@@ -67,7 +67,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 		
 				IConnection conn =conns.get(0);
 				String connName = conn.getName();
-		
+				metadata = conn.getMetadataTable();
 				if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 		
 					List<IMetadataColumn> columns = metadata.getListColumns();
@@ -218,9 +218,9 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                                 query_<%=cid%>.setStartkeyDocID(<%=startkey_docid%>);
                                 <%
                             }
-                            if(startkey_docid!=null && !"".equals(startkey_docid.replaceAll("\\\"", ""))){
+                            if(endkey_docid!=null && !"".equals(endkey_docid.replaceAll("\\\"", ""))){
                                 %>
-                                query_<%=cid%>.setEndkeyDocID(<%=startkey_docid%>);
+                                query_<%=cid%>.setEndkeyDocID(<%=endkey_docid%>);
                                 <%
                             }
                             if("true".equals(useComplexkey)){
@@ -262,8 +262,8 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                             // fromview true reduce false doc false --->id,key,value ----->real component
                             // fromview true reduce true doc false --->key value ----->real component
                             // fromview true reduce false doc true --->id key value doc
-                            // fromview false isjson true --->doc
-                            // fromview false isjson false --->value ----->real component
+                            // fromview false isjson true --->id doc
+                            // fromview false isjson false --->id value ----->real component
 %>
                             query_<%=cid%>.setStale(com.couchbase.client.protocol.views.Stale.<%=stale%>);
                             query_<%=cid%>.setDescending(<%=descending%>);

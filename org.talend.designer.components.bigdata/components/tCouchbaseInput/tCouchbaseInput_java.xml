@@ -10,6 +10,8 @@
     AUTHOR="Talend"
     RELEASE_DATE="20130120A"
     STARTABLE="true"
+    SCHEMA_AUTO_PROPAGATE="false"
+    DATA_AUTO_PROPAGATE="false"
   >
     <SIGNATURE/>
   </HEADER>
@@ -23,7 +25,8 @@
     <URL/>
   </DOCUMENTATION>
   <CONNECTORS>
-      <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1" />
+      <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="0" />
+      <CONNECTOR NAME="OUTPUT" CTYPE="FLOW" MAX_OUTPUT="1" BASE_SCHEMA="FLOW"/>
       <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1" />
       <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
       <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
@@ -40,13 +43,16 @@
       NUM_ROW="1"
     />
     <PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
+            GROUP="CONNECTIONCONFIG"
             NUM_ROW="10">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
     <PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST" FILTER="tCouchbaseConnection"
+        GROUP="CONNECTIONCONFIG"
         NUM_ROW="10" SHOW_IF="USE_EXISTING_CONNECTION == 'true'"/>
 
     <PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="20"
+        GROUP="CONNECTIONCONFIG"
         SHOW_IF="(USE_EXISTING_CONNECTION == 'false')">
         <ITEMS DEFAULT="COUCHBASE_2_0">
             <ITEM NAME="COUCHBASE_2_0" VALUE="COUCHBASE_2_0" />
@@ -58,6 +64,7 @@
       FIELD="TABLE"
       NUM_ROW="40"
       REQUIRED="true"
+      GROUP="CONNECTIONCONFIG"
       SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
     >
         <ITEMS>
@@ -69,6 +76,7 @@
       FIELD="TEXT"
       NUM_ROW="20"
       SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+      GROUP="CONNECTIONCONFIG"
       REQUIRED="true">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
@@ -77,6 +85,7 @@
       NAME="USER"
       FIELD="TEXT"
       NUM_ROW="30"
+      GROUP="CONNECTIONCONFIG"
       SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
     >
       <DEFAULT>""</DEFAULT>
@@ -87,6 +96,7 @@
       FIELD="TEXT"
       NUM_ROW="30"
       REQUIRED="true"
+      GROUP="CONNECTIONCONFIG"
       SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
     >
       <DEFAULT>""</DEFAULT>
@@ -95,6 +105,7 @@
     <PARAMETER NAME="FROMVIEW"
       FIELD="CHECK"
       NUM_ROW="45"
+      GROUP="VIEWPARAMS"
       REQUIRED="true">
     </PARAMETER>
 
@@ -149,9 +160,7 @@
       SHOW_IF="(VIEW_ACTION != 'NONE') and (FROMVIEW == 'true') "
       GROUP="VIEWPARAMS"
       REQUIRED="true">
-      <DEFAULT>
-        "function (doc, meta) { emit(doc.name, meta.id); }"
-      </DEFAULT>
+      <DEFAULT>"function (doc, meta) { emit(doc.name, meta.id); }"</DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="REDUCE"
@@ -169,6 +178,7 @@
       GROUP="VIEWPARAMS"
       SHOW_IF="(FROMVIEW == 'true') and (ISREDUCE == 'false')"
       REQUIRED="true">
+      <DEFAULT>true</DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="INCLUSIVEEND"
@@ -182,9 +192,11 @@
 
     <PARAMETER NAME="ISJSON"
       FIELD="CHECK"
-      NUM_ROW="92"
+      NUM_ROW="43"
       SHOW_IF="FROMVIEW == 'false'"
+      GROUP="VIEWPARAMS"
       REQUIRED="true">
+      <DEFAULT>true</DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="ISREDUCE"
@@ -210,7 +222,7 @@
       GROUP="VIEWPARAMS"
       SHOW_IF="FROMVIEW == 'true'"
     >
-      <ITEMS DEFAULT="OK">
+      <ITEMS DEFAULT="FALSE">
         <ITEM NAME="OK"           VALUE="OK" />
         <ITEM NAME="FALSE"           VALUE="FALSE"/>
         <ITEM NAME="UPDATE_AFTER" VALUE="UPDATE_AFTER"/>
@@ -254,8 +266,9 @@
 
     <PARAMETER NAME="KEY"
       FIELD="TEXT"
-      NUM_ROW="90"
+      NUM_ROW="42"
       SHOW_IF="(FROMVIEW == 'false')"
+      GROUP="VIEWPARAMS"
       REQUIRED="false">
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
@@ -321,7 +334,7 @@
       REQUIRED="false">
     </PARAMETER>
 
-    <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="100">
+    <PARAMETER NAME="INPUT_SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="5">
         <TABLE IF="((FROMVIEW == 'true') and (ISREDUCE == 'true') and (INCLUDE_DOCS == 'false'))" READONLY="false">
         <COLUMN NAME="Key" TYPE="id_String" />
         <COLUMN NAME="Value" TYPE="id_String" />
@@ -346,7 +359,8 @@
         <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
       </TABLE>
     </PARAMETER>
-
+ <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="100" CONTEXT="OUTPUT">
+ </PARAMETER>
     <PARAMETER
       NAME="ENCODING"
       FIELD="ENCODING_TYPE"
@@ -361,7 +375,7 @@
       NAME="IS_VIRTUAL_COMPONENT"
       FIELD="CHECK"
       NUM_ROW="130"
-      SHOW_IF="((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true'))"
+      GROUP="JSONCONFIG"
     >
       <DEFAULT>true</DEFAULT>
     </PARAMETER>
@@ -370,6 +384,7 @@
       NAME="JSONFIELD"
       FIELD="CLOSED_LIST"
       NUM_ROW="130"
+      GROUP="JSONCONFIG"
       SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
     >
@@ -382,6 +397,7 @@
       NAME="LOOP_QUERY"
       FIELD="TEXT"
       NUM_ROW="140"
+      GROUP="JSONCONFIG"
       SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
     >
@@ -391,9 +407,9 @@
     <PARAMETER
       NAME="MAPPING"
       FIELD="TABLE"
-      REQUIRED="true"
       NUM_ROW="150"
       NB_LINES="5"
+      GROUP="JSONCONFIG"
       SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
     >
@@ -408,13 +424,14 @@
       NAME="DIE_ON_ERROR"
       FIELD="CHECK"
       NUM_ROW="160"
+      GROUP="JSONCONFIG"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
       SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))">
         <DEFAULT>false</DEFAULT>
     </PARAMETER>
 
     <PARAMETER NAME="SCHEMA_OPT_NUM" FIELD="TEXT" NUM_ROW="180"
-            REQUIRED="true" SHOW="false" REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'">
+            SHOW="false" REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'">
         <DEFAULT>100</DEFAULT>
     </PARAMETER>
 
@@ -471,7 +488,8 @@
       <TEMPLATE_PARAM SOURCE="self.GROUP_LEVEL"  TARGET="In.GROUP_LEVEL" />
       <TEMPLATE_PARAM SOURCE="self.COMPLEXKEY"  TARGET="In.COMPLEXKEY" />
       <TEMPLATE_PARAM SOURCE="self.DEBUG"  TARGET="In.DEBUG" />
-
+      <TEMPLATE_PARAM SOURCE="self.INPUT_SCHEMA"  TARGET="In.SCHEMA" />
+      <TEMPLATE_PARAM SOURCE="self.SCHEMA"  TARGET="Out.SCHEMA" />
 
       <TEMPLATE_PARAM SOURCE="self.JSONFIELD"  TARGET="Out.JSONFIELD" />
       <TEMPLATE_PARAM SOURCE="self.LOOP_QUERY"  TARGET="Out.LOOP_QUERY" />
@@ -479,6 +497,7 @@
       <TEMPLATE_PARAM SOURCE="self.DIE_ON_ERROR"  TARGET="Out.DIE_ON_ERROR" />
       <TEMPLATE_PARAM SOURCE="self.SCHEMA_OPT_NUM"  TARGET="Out.SCHEMA_OPT_NUM" />
       <TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="In.DESTINATION" />
+      <TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="Out.DESTINATION" />
     </TEMPLATES>
     <IMPORTS>
       <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
