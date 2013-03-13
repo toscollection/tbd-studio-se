@@ -81,7 +81,6 @@ import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.oozie.scheduler.utils.TOozieStringUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.oozie.scheduler.views.TOozieView;
-import org.talend.repository.ui.wizards.documentation.LinkUtils;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for doing some action from the widgets of
@@ -953,16 +952,6 @@ public class ExecuteJobCompositeController {
         updateBtnButtonEnabledOrNot();
     }
 
-    // public void doModifyRepositoryAction() {
-    // if (OozieJobTrackerListener.getProcess() != null) {
-    // String repository = executeJobComposite.getRepositoryTextValue();
-    // IProcess2 process = OozieJobTrackerListener.getProcess();
-    // process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue(repository);
-    // }
-    // // checkWidgetsStatus();
-    // updateAllEnabledOrNot();
-    // }
-
     /**
      * Checks if the current process is read-only.
      * 
@@ -996,7 +985,7 @@ public class ExecuteJobCompositeController {
      */
     public void doMonitoringBtnAction() {
         String oozieURL = getOozieEndPoint();
-        if (oozieURL == null || "".equals(oozieURL) || !LinkUtils.isRemoteFile(oozieURL)) {
+        if (oozieURL == null || "".equals(oozieURL) || !oozieURL.startsWith("http://")) {
             MessageDialog.openWarning(executeJobComposite.getShell(), TOozieOutputMessages.MSG_WARNING_URL_TITLE,
                     TOozieOutputMessages.MSG_WARNING_URL_NOTVALID);
         } else {
