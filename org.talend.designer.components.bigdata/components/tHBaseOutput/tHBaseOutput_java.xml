@@ -207,8 +207,8 @@
             <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
-            <IMPORT NAME="slf4j-api-1.4.3.jar" MODULE="slf4j-api-1.4.3.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
-            <IMPORT NAME="slf4j-log4j12-1.4.3.jar" MODULE="slf4j-log4j12-1.4.3.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false')" />
 			
 			<IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false')" />    
