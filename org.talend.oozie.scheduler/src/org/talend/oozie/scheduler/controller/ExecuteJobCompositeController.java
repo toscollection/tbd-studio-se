@@ -62,7 +62,6 @@ import org.talend.oozie.scheduler.utils.TOozieCommonUtils;
 import org.talend.oozie.scheduler.utils.TOozieStringUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.oozie.scheduler.views.TOozieView;
-import org.talend.repository.ui.wizards.documentation.LinkUtils;
 
 import com.hortonworks.etl.talend.JobContext;
 import com.hortonworks.etl.talend.JobContext.Timeunit;
@@ -870,7 +869,7 @@ public class ExecuteJobCompositeController {
      */
     public void doMonitoringBtnAction() {
         String oozieURL = getOozieFromPreference();
-        if (oozieURL == null || "".equals(oozieURL) || !LinkUtils.isRemoteFile(oozieURL)) {
+        if (oozieURL == null || "".equals(oozieURL) || !oozieURL.startsWith("http://")) {
             MessageDialog.openWarning(executeJobComposite.getShell(), TOozieOutputMessages.MSG_WARNING_URL_TITLE,
                     TOozieOutputMessages.MSG_WARNING_URL_NOTVALID);
         } else {
