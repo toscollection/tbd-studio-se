@@ -29,8 +29,10 @@ import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.DirectEditRequest;
 import org.talend.designer.gefabstractmap.figures.anchors.FilterTreeAnchor;
 import org.talend.designer.gefabstractmap.figures.cells.IWidgetCell;
+import org.talend.designer.gefabstractmap.figures.treesettings.FilterTextArea;
 import org.talend.designer.gefabstractmap.part.InputTablePart;
 import org.talend.designer.gefabstractmap.part.directedit.PigMapNodeCellEditorLocator;
+import org.talend.designer.pigmap.editor.PigMapGraphicViewer;
 import org.talend.designer.pigmap.figures.InputTableFigure;
 import org.talend.designer.pigmap.figures.table.PigMapTableManager;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
@@ -190,9 +192,17 @@ public class PigMapInputTablePart extends InputTablePart implements NodeEditPart
             DirectEditRequest drequest = (DirectEditRequest) req;
             Point figureLocation = drequest.getLocation();
             IFigure findFigureAt = getFigure().findFigureAt(figureLocation.x, figureLocation.y);
-            if (findFigureAt instanceof IWidgetCell) {
+            if (findFigureAt != null && findFigureAt instanceof IWidgetCell) {
                 directEditManager = new PigMapNodeDirectEditManager(this, new PigMapNodeCellEditorLocator((Figure) findFigureAt));
                 directEditManager.show();
+            }
+            if (directEditManager != null) {
+                if (findFigureAt != null && findFigureAt instanceof FilterTextArea) {
+                    if (figure.containsPoint(figureLocation)) {
+                        directEditManager.show();
+                        ((PigMapGraphicViewer) getViewer()).getMapperManager().setCurrentDirectEditManager(directEditManager);
+                    }
+                }
             }
         }
     }
