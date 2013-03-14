@@ -16,6 +16,7 @@ import org.talend.designer.gefabstractmap.figures.ExpressionFigure;
 import org.talend.designer.gefabstractmap.figures.manager.TableEntityManager;
 import org.talend.designer.gefabstractmap.figures.table.entity.TableEntityElement;
 import org.talend.designer.gefabstractmap.figures.table.entity.TableTreeEntityFigure;
+import org.talend.designer.gefabstractmap.figures.table.entity.TreeBranch;
 import org.talend.designer.gefabstractmap.part.TableEntityPart;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
@@ -76,7 +77,8 @@ public class PigMapTableNodeFigure extends TableTreeEntityFigure {
             entityElement.add(expression);
         }
         branchContent = new PigMapBranchContent(getEntityManager());
-        entityElement.add(branchContent);
+        TreeBranch treeBranch = new TreeBranch(branchContent, !isRoot());
+        entityElement.add(treeBranch);
     }
 
     public ExpressionFigure getExpressionFigure() {

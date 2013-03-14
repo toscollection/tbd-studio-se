@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.gef.EditPart;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -37,6 +38,7 @@ import org.talend.core.ui.metadata.editor.MetadataTableEditorView;
 import org.talend.designer.gefabstractmap.manager.AbstractMapperManager;
 import org.talend.designer.gefabstractmap.part.TableEntityPart;
 import org.talend.designer.pigmap.PigMapComponent;
+import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
@@ -45,6 +47,7 @@ import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
+import org.talend.designer.pigmap.parts.PigMapTableNodePart;
 import org.talend.designer.pigmap.parts.directedit.ExpressionCellEditor;
 import org.talend.designer.pigmap.parts.directedit.PigMapNodeDirectEditManager;
 import org.talend.designer.pigmap.ui.MapperUI;
@@ -93,6 +96,13 @@ public class MapperManager extends AbstractMapperManager {
                 if (firstElement instanceof TableEntityPart) {
                     AbstractNode model = (AbstractNode) ((TableEntityPart) firstElement).getModel();
                     boolean isInputMain = false;
+                    if (model != null && model instanceof TableNode && model.eContainer() != null) {
+                        if (model.eContainer() instanceof OutputTable) {
+                            onEntitySelection((IStructuredSelection) event.getSelection(), selectedOutputTable);
+                        } else {
+                            onEntitySelection((IStructuredSelection) event.getSelection(), selectedInputTable);
+                        }
+                    }
                     if (!isInputMain) {
                         refreshStyledTextEditor((TableEntityPart) firstElement);
                     } else {
@@ -163,7 +173,6 @@ public class MapperManager extends AbstractMapperManager {
                                 tableNode.setNullable((Boolean) event.newValue);
                             }
                         }
-
                     }
 
                 };
@@ -438,6 +447,38 @@ public class MapperManager extends AbstractMapperManager {
         }
     }
 
+    private void onEntitySelection(IStructuredSelection selection, AbstractInOutTable selectedTable) {
+        // do selection in metadata schema editor
+        MetadataTableEditorView metaEditorView = null;
+        EList<? extends TableNode> nodes = null;
+        if (selectedTable instanceof InputTable) {
+            nodes = ((InputTable) selectedTable).getNodes();
+            metaEditorView = mapperUI.getTabFolderEditors().getInputMetaEditorView();
+        } else {
+            nodes = ((OutputTable) selectedTable).getNodes();
+            metaEditorView = mapperUI.getTabFolderEditors().getOutputMetaEditorView();
+        }
+        List<Integer> selectionIndices = new ArrayList<Integer>();
+        Iterator iterator = selection.iterator();
+        while (iterator.hasNext()) {
+            Object obj = iterator.next();
+            if (obj instanceof PigMapTableNodePart) {
+                TableNode model = (TableNode) ((PigMapTableNodePart) obj).getModel();
+                if (model.eContainer() == selectedTable) {
+                    selectionIndices.add(nodes.indexOf(model));
+                }
+            }
+        }
+        int selections[] = new int[selectionIndices.size()];
+        for (int i = 0; i < selectionIndices.size(); i++) {
+            selections[i] = selectionIndices.get(i);
+        }
+        metaEditorView.getTableViewerCreator().getSelectionHelper().setActiveFireSelectionChanged(false);
+        metaEditorView.getExtendedTableViewer().getTableViewerCreator().getSelectionHelper().setSelection(selections);
+        metaEditorView.getTableViewerCreator().getSelectionHelper().setActiveFireSelectionChanged(true);
+        metaEditorView.getExtendedToolbar().updateEnabledStateOfButtons();
+    }
+
     private void processColumnNameChanged(final TableNode tableNode) {
         //
     }
@@ -451,7 +492,6 @@ public class MapperManager extends AbstractMapperManager {
         }
         AbstractNode node = (AbstractNode) nodePart.getModel();
         //
-
         String expression = node.getExpression();
         if (expression == null) {
             expression = "";
@@ -460,6 +500,43 @@ public class MapperManager extends AbstractMapperManager {
         mapperUI.getTabFolderEditors().getStyledTextHandler().getStyledText().setEnabled(true);
         mapperUI.getTabFolderEditors().getStyledTextHandler().getStyledText().setEditable(true);
         mapperUI.getTabFolderEditors().getStyledTextHandler().setSelectedNodePart(nodePart);
+    }
+
+    public void selectLinkedInputTableEntries(int[] selectionIndices) {
+        if (selectedInputTable != null) {
+            List nodes = selectedInputTable.getNodes();
+            if (nodes != null) {
+                selectLinkedTableEntries(nodes, selectionIndices);
+            }
+        }
+    }
+
+    public void selectLinkedOutputTableEntries(int[] selectionIndices) {
+        if (selectedOutputTable != null) {
+            List nodes = selectedOutputTable.getNodes();
+            if (nodes != null) {
+                selectLinkedTableEntries(nodes, selectionIndices);
+            }
+        }
+    }
+
+    private void selectLinkedTableEntries(List nodes, int[] selectionIndices) {
+        if (getGraphicalViewer() != null) {
+            boolean select = false;
+            for (int selectionIndice : selectionIndices) {
+                if (selectionIndice < nodes.size()) {
+                    Object object = getGraphicalViewer().getEditPartRegistry().get(nodes.get(selectionIndice));
+                    if (object instanceof EditPart) {
+                        if (!select) {
+                            getGraphicalViewer().select((EditPart) object);
+                            select = true;
+                        } else {
+                            getGraphicalViewer().appendSelection((EditPart) object);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

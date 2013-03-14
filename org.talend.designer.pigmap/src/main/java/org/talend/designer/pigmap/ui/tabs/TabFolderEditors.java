@@ -95,27 +95,55 @@ public class TabFolderEditors extends CTabFolder {
         SashForm inOutMetaEditorContainer = new SashForm(tabFolderEditors, SWT.SMOOTH | SWT.HORIZONTAL | SWT.SHADOW_OUT);
         inOutMetaEditorContainer.setLayout(new RowLayout(SWT.HORIZONTAL));
         item.setControl(inOutMetaEditorContainer);
-
+        // input metadata table view
         inputMetaEditor = new PigMapMetadataTableEditorView(inOutMetaEditorContainer, SWT.BORDER);
         inputMetaEditor.initGraphicComponents();
+        ILineSelectionListener metadataEditorViewerSelectionChangedListener = new ILineSelectionListener() {
+
+            @Override
+            public void handle(LineSelectionEvent e) {
+                if (inputMetaEditor.getTableViewerCreator() == e.source && mapperManage.getGraphicalViewer() != null) {
+                    if (inputMetaEditor.getExtendedTableViewer().isExecuteSelectionEvent()) {
+                        mapperManage.selectLinkedInputTableEntries(inputMetaEditor.getTableViewerCreator().getTable()
+                                .getSelectionIndices());
+                    }
+                }
+            }
+        };
+        inputMetaEditor.getTableViewerCreator().getSelectionHelper()
+                .addAfterSelectionListener(metadataEditorViewerSelectionChangedListener);
         addListenersToInputButtons();
 
+        // output metadata table view
         outputMetaEditor = new PigMapMetadataTableEditorView(inOutMetaEditorContainer, SWT.BORDER);
         outputMetaEditor.initGraphicComponents();
+        metadataEditorViewerSelectionChangedListener = new ILineSelectionListener() {
+
+            @Override
+            public void handle(LineSelectionEvent e) {
+                if (outputMetaEditor.getTableViewerCreator() == e.source && mapperManage.getGraphicalViewer() != null) {
+                    if (outputMetaEditor.getExtendedTableViewer().isExecuteSelectionEvent()) {
+                        mapperManage.selectLinkedOutputTableEntries(outputMetaEditor.getTableViewerCreator().getTable()
+                                .getSelectionIndices());
+                    }
+                }
+            }
+        };
+        outputMetaEditor.getTableViewerCreator().getSelectionHelper()
+                .addAfterSelectionListener(metadataEditorViewerSelectionChangedListener);
         addListenersToOutputButtons();
 
-        //
+        // expression
         item = new CTabItem(tabFolderEditors, SWT.BORDER);
         item.setText(Messages.getString("TabFolderEditors.ExpressionEditor.Title")); //$NON-NLS-1$
-
         StyledText styledText = createStyledText(item);
-
         this.styledTextHandler = new StyledTextHandler(styledText, mapperManage);
-
         tabFolderEditors.addListener(SWT.Selection, new Listener() {
 
             @Override
             public void handleEvent(Event event) {
+                mapperManage.fireCurrentDirectEditApply();
+                lastSelectedTab = tabFolderEditors.getSelectionIndex();
             }
         });
         tabFolderEditors.setSelection(0);
@@ -132,14 +160,7 @@ public class TabFolderEditors extends CTabFolder {
 
             @Override
             public void handleEvent(ExtendedButtonEvent event) {
-                // TableViewerCreator tableViewerCreator =
-                // mapperManager.getUiManager().getCurrentSelectedInputTableView()
-                // .getTableViewerCreatorForColumns();
-                // if (tableViewerCreator != null) {
-                // tableViewerCreator.applyActivatedCellEditor();
-                // }
             }
-
         };
 
         for (ExtendedPushButton extendedPushButton : inputToolBarButtons) {
@@ -158,9 +179,7 @@ public class TabFolderEditors extends CTabFolder {
                 for (ExtendedPushButton extendedPushButton : inputToolBarButtons) {
                     extendedPushButton.removeListener(beforeCommandListenerForInputButtons, true);
                 }
-
             }
-
         });
     }
 
