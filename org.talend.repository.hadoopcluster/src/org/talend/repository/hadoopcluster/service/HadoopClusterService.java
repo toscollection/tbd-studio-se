@@ -28,6 +28,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
+import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 
 /**
  * created by ycbai on 2013-1-28 Detailled comment
@@ -77,8 +78,21 @@ public class HadoopClusterService implements IHadoopClusterService {
             return false;
         }
         for (IHadoopSubnodeRepositoryContentHandler handler : HadoopSubnodeRepositoryContentManager.getHandlers()) {
-            if (handler.getRelativeHadoopClusterItemId(item) != null) {
+            if (handler.isProcess(item)) {
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean isValidHadoopSubItem(Item item) {
+        if (isHadoopSubItem(item)) {
+            HadoopSubConnectionItem hadoopSubConnectionItem = (HadoopSubConnectionItem) item;
+            Connection connection = hadoopSubConnectionItem.getConnection();
+            if (connection instanceof HadoopSubConnection) {
+                return ((HadoopSubConnection) connection).getRelativeHadoopClusterId() != null;
             }
         }
 
