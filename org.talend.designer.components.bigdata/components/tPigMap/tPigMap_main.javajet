@@ -643,11 +643,11 @@
 <%
 		}
 		
-		if(hasFilter && !isReject) {
+		if(hasFilter && !(isReject || isRejectInnerJoin)) {
 			previousFilterExpressions.add(currentExpression);
 		} 
 		
-		if(!hasFilter && !isReject){
+		if(!hasFilter && !(isReject || isRejectInnerJoin)){
 			previousAtLeastOneTableWithoutFilterExpression = true;
 		}
 		
