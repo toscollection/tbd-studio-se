@@ -21,6 +21,7 @@ imports="
 	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
 	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
 	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+    boolean isByFilter = ("true").equals(ElementParameterParser.getValue(node, "__IS_BY_FILTER__"));
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
@@ -73,6 +74,149 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 			String family_column= map.get("FAMILY_COLUMN");
 %>
 				scan_<%=cid %>.addColumn(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"));
+<%
+		}
+		if(isByFilter){
+			List<Map<String, String>> filterMapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FILTER__");
+			String logical = ElementParameterParser.getValue(node,"__LOGICAL_OP__");
+			boolean hasMultipleColumnPrefixFilterType = false;
+			for(int i=0;i<filterMapping.size();i++){
+				Map<String, String> filterMap = filterMapping.get(i);
+				String filterType = filterMap.get("FILTER_TYPE");
+				if("MultipleColumnPrefixFilter".equals(filterType)){
+					hasMultipleColumnPrefixFilterType = true;
+					break;
+				} 
+			}
+			if(hasMultipleColumnPrefixFilterType){
+%>
+				String [] multipleValues_<%=cid %> = null;
+				byte [][] multipleBytesValues_<%=cid%> = null;
+<%
+			}
+%>			
+			org.apache.hadoop.hbase.filter.FilterList filterList_<%=cid%> = new org.apache.hadoop.hbase.filter.FilterList(org.apache.hadoop.hbase.filter.FilterList.Operator.<%=logical%>);
+			org.apache.hadoop.hbase.filter.Filter filter_<%=cid%> = null;
+<%		
+			for(int j=0;j<filterMapping.size();j++){
+				Map<String, String> filterMap = filterMapping.get(j);
+				String filterType = filterMap.get("FILTER_TYPE");//"SingleColumnValueFilter","FamilyFilter","QualifierFilter","ColumnPrefixFilter","MultipleColumnPrefixFilter","MultipleColumnPrefixFilter","RowFilter"
+				String filterColumn = filterMap.get("FILTER_COLUMN");
+				String filterFamily = filterMap.get("FILTER_FAMILY");
+				String filterOperation = filterMap.get("FILTER_OPERATOR");//"EQUAL","GREATER","GREATER_OR_EQUAL","LESS","LESS_OR_EQUAL","NO_OP","NOT_EQUAL",
+				String filterValue = filterMap.get("FILTER_VALUE");
+				String filterComparatorType = filterMap.get("FILTER_COMPARATOR_TYPE");//"BinaryComparator" ,"RegexStringComparator" ,"SubstringComparator"
+				if("SingleColumnValueFilter".equals(filterType)){//"filterValue" is column value,like: "1" ,"2" ... ，return whole row (all columns) value 
+					if("BinaryComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.SingleColumnValueFilter(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterFamily%>), org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterColumn%>), org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>, org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterValue%>));
+<%
+					}else if ("RegexStringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.SingleColumnValueFilter(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterFamily%>), org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterColumn%>), org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>, new org.apache.hadoop.hbase.filter.RegexStringComparator(<%=filterValue%>));
+<%
+					}else if("SubstringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.SingleColumnValueFilter(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterFamily%>), org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterColumn%>), org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>, new org.apache.hadoop.hbase.filter.SubstringComparator(<%=filterValue%>));
+<%
+					}
+				}else if("FamilyFilter".equals(filterType)){//"Filter Family" is family name ,like: "id_family","name_family"....， return columns which mapping in "Filter Family",filter other columns
+					if("BinaryComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.FamilyFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.BinaryComparator(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterFamily%>)));
+<%
+					}else if ("RegexStringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.FamilyFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.RegexStringComparator(<%=filterColumn%>));
+<%
+					}else if("SubstringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.FamilyFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.SubstringComparator(<%=filterColumn%>));
+<%
+					}
+				}else if("QualifierFilter".equals(filterType)){ //"Filter Column" is column name,like:"id" or "name" .... then you will get meet codition column value ,filter other columns
+					if("BinaryComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.QualifierFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.BinaryComparator(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterColumn%>)));
+<%
+					}else if ("RegexStringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.QualifierFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.RegexStringComparator(<%=filterColumn%>));
+<%
+					}else if("SubstringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.QualifierFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.SubstringComparator(<%=filterColumn%>));
+<%
+					}
+				}else if("ColumnPrefixFilter".equals(filterType)){//"Filter Column" value is column name,like:"id" or "name" ....,return column value,filter other columns
+					if(filterFamily!=null && !"".equals(filterFamily)){ 
+%>
+						scan_<%=cid %>.addFamily(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterFamily%>));
+<%
+					}
+%>
+					filter_<%=cid%> = new org.apache.hadoop.hbase.filter.ColumnPrefixFilter(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterColumn%>));
+<%
+				}else if("MultipleColumnPrefixFilter".equals(filterType)){ //"Filter Column" value is for column name ,like:"id,name" ,"id,name,sex".... , return column value,filter other columns
+					if(filterFamily!=null && !"".equals(filterFamily)){ 
+%>
+						scan_<%=cid %>.addFamily(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterFamily%>));
+<%
+					}
+%>
+					if(<%=filterColumn%>!=null && !"".equals(<%=filterColumn%>)){
+						multipleValues_<%=cid %> = <%=filterColumn%>.split(",");
+						multipleBytesValues_<%=cid %> = new byte [multipleValues_<%=cid %>.length] [];
+						for(int i=0;i< multipleValues_<%=cid %>.length;i++){
+							multipleBytesValues_<%=cid %>[i] = org.apache.hadoop.hbase.util.Bytes.toBytes(multipleValues_<%=cid %>[i]);
+						}
+						filter_<%=cid%> =  new org.apache.hadoop.hbase.filter.MultipleColumnPrefixFilter(multipleBytesValues_<%=cid%>);
+					}
+<%
+				}else if("ColumnRangeFilter".equals(filterType)){//"Filter Column" value is tow columns name,like: "id,name" ,"id,sex" ....,return columns value ,filter other columns
+					if(filterFamily!=null && !"".equals(filterFamily)){ 
+%>
+						scan_<%=cid %>.addFamily(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterFamily%>));
+<%
+					}
+%>
+					filter_<%=cid%> = new org.apache.hadoop.hbase.filter.ColumnRangeFilter(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterColumn%>.split(",")[0]),true,org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterColumn%>.split(",")[1]),true);
+<%
+				}else if("RowFilter".equals(filterType)){//"Filter Value" is rowkey value,like "1" ,"car"....,return whole row (all columns)
+					if("BinaryComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.RowFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.BinaryComparator(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterValue%>)));
+<%
+					}else if ("RegexStringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.RowFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.RegexStringComparator(<%=filterValue%>));
+<%
+					}else if("SubstringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.RowFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.SubstringComparator(<%=filterValue%>));
+<%
+					}
+				}else if("ValueFilter".equals(filterType)){//"Filter Value" is any columns value,like "1" ,"car" .... ,return only the meet codition value,filter other columns
+					if("BinaryComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.ValueFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.BinaryComparator(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=filterValue%>)));
+<%
+					}else if ("RegexStringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.ValueFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.RegexStringComparator(<%=filterValue%>));
+<%
+					}else if("SubstringComparator".equals(filterComparatorType)){
+%>
+						filter_<%=cid%> = new org.apache.hadoop.hbase.filter.ValueFilter(org.apache.hadoop.hbase.filter.CompareFilter.CompareOp.<%=filterOperation%>,new org.apache.hadoop.hbase.filter.SubstringComparator(<%=filterValue%>));
+<%
+					}
+				}
+%>
+					filterList_<%=cid%>.addFilter(filter_<%=cid%>);
+<%
+			}
+%>
+			scan_<%=cid %>.setFilter(filterList_<%=cid%>);
 <%
 		}
 %>		
