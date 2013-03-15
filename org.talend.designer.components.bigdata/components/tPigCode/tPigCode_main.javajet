@@ -23,7 +23,7 @@
 		previous_node = node.getIncomingConnections().get(0).getSource().getUniqueName();
 		INode loadNode = node.getDesignSubjobStartNode();
 		start_node = loadNode.getUniqueName();
-		inMain = loadNode.isStart();
+		inMain = loadNode.isSubtreeStart();
 	}
 
 %>

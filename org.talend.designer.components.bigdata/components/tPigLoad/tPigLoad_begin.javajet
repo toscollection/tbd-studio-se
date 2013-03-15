@@ -104,7 +104,7 @@
 
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
 		INode loadNode = node.getDesignSubjobStartNode();
-		inMain = loadNode.isStart();
+		inMain = loadNode.isSubtreeStart();
 		start_node = loadNode.getUniqueName();
 	}
 	

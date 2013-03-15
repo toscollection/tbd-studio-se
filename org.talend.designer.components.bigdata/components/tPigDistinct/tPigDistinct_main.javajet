@@ -27,7 +27,7 @@
 		previous_node = connection.getSource().getUniqueName();
 		INode loadNode = node.getDesignSubjobStartNode();
 		start_node = loadNode.getUniqueName();
-		inMain = loadNode.isStart();
+		inMain = loadNode.isSubtreeStart();
 		previousOutputConnectionName = connection.getName();
 	}
 	
