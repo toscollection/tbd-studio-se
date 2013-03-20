@@ -64,6 +64,7 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
                 setJobTrackerEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT));
                 setOozieEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT));
                 setUserNameValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME));
+                setCustomJars(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS));
             }
         };
 
@@ -109,6 +110,7 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
                 settingComposite.getJobTrackerEndPointValue());
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT, settingComposite.getOozieEndPointValue());
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, settingComposite.getUserNameValue());
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, settingComposite.getCustomJars());
         return super.performOk();
     }
 

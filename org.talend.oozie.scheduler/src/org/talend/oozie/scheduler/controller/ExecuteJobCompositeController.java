@@ -45,6 +45,7 @@ import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.CorePlugin;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.hadoop.IOozieService;
+import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.model.components.ComponentCategory;
 import org.talend.core.model.process.IContext;
 import org.talend.core.model.process.IProcess2;
@@ -868,6 +869,10 @@ public class ExecuteJobCompositeController {
         return TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
     }
 
+    private String getHadoopCustomJars() {
+        return TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+    }
+
     private String getTOSJobFQCNValue() {
         IProcess2 process = OozieJobTrackerListener.getProcess();
         return JavaResourcesHelper.getCurrentProjectName() + "."
@@ -927,6 +932,7 @@ public class ExecuteJobCompositeController {
         String jobTrackerEPValue = getJobTracker();
         String oozieEPValue = getOozieEndPoint();
         String userNameValue = getUserNameForHadoop();
+        String customJars = getHadoopCustomJars();
 
         settingDialog.setHadoopDistributionValue(hadoopDistributionValue);
         settingDialog.setHadoopVersionValue(hadoopVersionValue);
@@ -934,6 +940,7 @@ public class ExecuteJobCompositeController {
         settingDialog.setJobTrackerEndPointValue(jobTrackerEPValue);
         settingDialog.setOozieEndPointValue(oozieEPValue);
         settingDialog.setUserNameValue(userNameValue);
+        settingDialog.setCustomJars(customJars);
     }
 
     public void doModifyPathAction() {
@@ -1013,6 +1020,7 @@ public class ExecuteJobCompositeController {
         String jobTrackerEPValue = settingDialog.getJobTrackerEndPointValue();
         String oozieEPValue = settingDialog.getOozieEndPointValue();
         String userNameValue = settingDialog.getUserNameValue();
+        String customJars = settingDialog.getCustomJars();
 
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION, hadoopDistributionValue);
@@ -1025,6 +1033,8 @@ public class ExecuteJobCompositeController {
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT, oozieEPValue);
         CorePlugin.getDefault().getPreferenceStore().setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, userNameValue);
+        CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, customJars);
     }
 
     /**
@@ -1289,8 +1299,9 @@ public class ExecuteJobCompositeController {
         String jobTrackerEPValue = getJobTracker();
         String oozieEPValue = getOozieEndPoint();
 
-        if ("".equals(distributionValue) || "".equals(versionValue) || "".equals(nameNodeEPValue) || "".equals(jobTrackerEPValue)
-                || "".equals(oozieEPValue)) {
+        if ("".equals(distributionValue)
+                || ("".equals(versionValue) && !EHadoopDistributions.CUSTOM.getName().equals(distributionValue))
+                || "".equals(nameNodeEPValue) || "".equals(jobTrackerEPValue) || "".equals(oozieEPValue)) {
             isSettingDone = false;
         } else {
             isSettingDone = true;

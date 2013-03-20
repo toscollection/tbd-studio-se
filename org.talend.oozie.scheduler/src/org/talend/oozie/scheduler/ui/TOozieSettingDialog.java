@@ -37,6 +37,8 @@ public class TOozieSettingDialog extends Dialog {
 
     private String userNameValue;
 
+    private String customJars;
+
     private OozieSettingComposite settingComposite;
 
     /**
@@ -71,6 +73,7 @@ public class TOozieSettingDialog extends Dialog {
                 setJobTrackerEndPointValue(jobTrackerEndPointValue);
                 setOozieEndPointValue(oozieEndPointValue);
                 setUserNameValue(userNameValue);
+                setCustomJars(customJars);
             }
         };
 
@@ -134,6 +137,14 @@ public class TOozieSettingDialog extends Dialog {
 
     public void setUserNameValue(String userNameValue) {
         this.userNameValue = userNameValue;
+    }
+
+    public String getCustomJars() {
+        return settingComposite.getCustomJars();
+    }
+
+    public void setCustomJars(String customJars) {
+        this.customJars = customJars;
     }
 
 }
