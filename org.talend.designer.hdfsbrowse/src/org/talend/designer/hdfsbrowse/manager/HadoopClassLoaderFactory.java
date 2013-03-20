@@ -12,7 +12,11 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.manager;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.talend.core.classloader.ClassLoaderFactory;
+import org.talend.core.hadoop.custom.ECustomVersionGroup;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 
 /**
@@ -20,11 +24,18 @@ import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
  */
 public class HadoopClassLoaderFactory {
 
+    protected final static String DEFAULT_JAR_SEPARATOR = ";"; //$NON-NLS-1$
+
     public static ClassLoader getClassLoader(HDFSConnectionBean connectionBean) {
         ClassLoader loader = null;
         if (connectionBean == null) {
             return loader;
         }
+
+        if (connectionBean.isUseCustomVersion()) {
+            return getCustomClassLoader(connectionBean);
+        }
+
         String distribution = connectionBean.getDistribution();
         String version = connectionBean.getDfVersion();
         boolean enableKerberos = connectionBean.isEnableKerberos();
@@ -45,6 +56,38 @@ public class HadoopClassLoaderFactory {
             index += "?USE_KRB"; //$NON-NLS-1$
         }
         ClassLoader loader = ClassLoaderFactory.getClassLoader(index);
+        if (loader == null) {
+            loader = HadoopClassLoaderFactory.class.getClassLoader();
+        }
+
+        return loader;
+    }
+
+    public static ClassLoader getCustomClassLoader(HDFSConnectionBean connectionBean) {
+        String hcId = connectionBean.getRelativeHadoopClusterId();
+        String index = "HadoopCustomVersion" + ":" + hcId; //$NON-NLS-1$ //$NON-NLS-2$
+        return getCustomClassLoader(index,
+                (Set<String>) connectionBean.getAdditionalProperties().get(ECustomVersionGroup.COMMON.getName()));
+    }
+
+    public static ClassLoader getCustomClassLoader(String index, String jars) {
+        return getCustomClassLoader(index, jars, DEFAULT_JAR_SEPARATOR);
+    }
+
+    public static ClassLoader getCustomClassLoader(String index, String jars, String jarSeparator) {
+        Set<String> jarSet = new HashSet<String>();
+        if (jars != null) {
+            String[] jarsArray = jars.split(jarSeparator);
+            for (String jar : jarsArray) {
+                jarSet.add(jar);
+            }
+        }
+
+        return getCustomClassLoader(index, jarSet);
+    }
+
+    public static ClassLoader getCustomClassLoader(String index, Set<String> jars) {
+        ClassLoader loader = ClassLoaderFactory.getCustomClassLoader(index, jars);
         if (loader == null) {
             loader = HadoopClassLoaderFactory.class.getClassLoader();
         }

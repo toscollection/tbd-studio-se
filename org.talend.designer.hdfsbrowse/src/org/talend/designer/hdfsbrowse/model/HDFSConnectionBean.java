@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * DOC ycbai class global comment. Detailled comment
  */
@@ -36,6 +39,12 @@ public class HDFSConnectionBean {
     private String rowSeparator;
 
     private String fieldSeparator;
+
+    private String relativeHadoopClusterId;
+
+    private boolean useCustomVersion;
+
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getDistribution() {
         return this.distribution;
@@ -115,6 +124,26 @@ public class HDFSConnectionBean {
 
     public void setFieldSeparator(String fieldSeparator) {
         this.fieldSeparator = fieldSeparator;
+    }
+
+    public String getRelativeHadoopClusterId() {
+        return this.relativeHadoopClusterId;
+    }
+
+    public void setRelativeHadoopClusterId(String relativeHadoopClusterId) {
+        this.relativeHadoopClusterId = relativeHadoopClusterId;
+    }
+
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    public boolean isUseCustomVersion() {
+        return this.useCustomVersion;
+    }
+
+    public void setUseCustomVersion(boolean useCustomVersion) {
+        this.useCustomVersion = useCustomVersion;
     }
 
 }
