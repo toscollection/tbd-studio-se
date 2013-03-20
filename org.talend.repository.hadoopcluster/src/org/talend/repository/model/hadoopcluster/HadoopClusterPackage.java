@@ -542,13 +542,22 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__GROUP = ConnectionPackage.CONNECTION_FEATURE_COUNT + 9;
 
     /**
+     * The feature id for the '<em><b>Auth Mode</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__AUTH_MODE = ConnectionPackage.CONNECTION_FEATURE_COUNT + 10;
+
+    /**
      * The feature id for the '<em><b>Connection List</b></em>' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST = ConnectionPackage.CONNECTION_FEATURE_COUNT + 10;
+    int HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST = ConnectionPackage.CONNECTION_FEATURE_COUNT + 11;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' map.
@@ -557,7 +566,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__PARAMETERS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 11;
+    int HADOOP_CLUSTER_CONNECTION__PARAMETERS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 12;
 
     /**
      * The number of structural features of the '<em>Connection</em>' class.
@@ -566,7 +575,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 12;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 13;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -1279,6 +1288,17 @@ public interface HadoopClusterPackage extends EPackage {
     EAttribute getHadoopClusterConnection_Group();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getAuthMode <em>Auth Mode</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Auth Mode</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getAuthMode()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_AuthMode();
+
+    /**
      * Returns the meta object for the attribute list '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getConnectionList <em>Connection List</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1486,6 +1506,14 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_CLUSTER_CONNECTION__GROUP = eINSTANCE.getHadoopClusterConnection_Group();
+
+        /**
+         * The meta object literal for the '<em><b>Auth Mode</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__AUTH_MODE = eINSTANCE.getHadoopClusterConnection_AuthMode();
 
         /**
          * The meta object literal for the '<em><b>Connection List</b></em>' attribute list feature.

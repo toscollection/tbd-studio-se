@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.talend.core.model.metadata.builder.connection.Connection;
 
 /**
@@ -30,6 +31,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getPrincipal <em>Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getGroup <em>Group</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getAuthMode <em>Auth Mode</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getConnectionList <em>Connection List</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getParameters <em>Parameters</em>}</li>
  * </ul>
@@ -306,6 +308,32 @@ public interface HadoopClusterConnection extends Connection {
     void setGroup(String value);
 
     /**
+     * Returns the value of the '<em><b>Auth Mode</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Auth Mode</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Auth Mode</em>' attribute.
+     * @see #setAuthMode(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_AuthMode()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getAuthMode();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getAuthMode <em>Auth Mode</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Auth Mode</em>' attribute.
+     * @see #getAuthMode()
+     * @generated
+     */
+    void setAuthMode(String value);
+
+    /**
      * Returns the value of the '<em><b>Connection List</b></em>' attribute list.
      * The list contents are of type {@link java.lang.String}.
      * <!-- begin-user-doc -->
@@ -323,6 +351,8 @@ public interface HadoopClusterConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>Parameters</b></em>' map.
+     * The key is of type {@link java.lang.String},
+     * and the value is of type {@link java.lang.String},
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Parameters</em>' map isn't clear,
@@ -330,21 +360,10 @@ public interface HadoopClusterConnection extends Connection {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Parameters</em>' map.
-     * @see #setParameters(Map.Entry)
      * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_Parameters()
      * @model mapType="org.talend.repository.model.hadoopcluster.HadoopAdditionalProperties<org.eclipse.emf.ecore.xml.type.String, org.eclipse.emf.ecore.xml.type.String>"
      * @generated
      */
-    Map.Entry<String, String> getParameters();
-
-    /**
-     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getParameters <em>Parameters</em>}' map.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Parameters</em>' map.
-     * @see #getParameters()
-     * @generated
-     */
-    void setParameters(Map.Entry<String, String> value);
+    EMap<String, String> getParameters();
 
 } // HadoopClusterConnection

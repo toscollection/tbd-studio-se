@@ -13,8 +13,10 @@
 package org.talend.repository.hadoopcluster.ui.common;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
-import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
+import org.eclipse.swt.widgets.Control;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.repository.ui.swt.utils.AbstractForm;
 
 /**
@@ -95,6 +97,16 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
 
     protected boolean validText(final String value) {
         return StringUtils.isNotEmpty(value);
+    }
+
+    protected void hideControl(Control control, boolean hide) {
+        GridData dataBtn = (GridData) control.getLayoutData();
+        dataBtn.exclude = hide;
+        control.setLayoutData(dataBtn);
+        control.setVisible(!hide);
+        if (control.getParent() != null) {
+            control.getParent().layout();
+        }
     }
 
 }

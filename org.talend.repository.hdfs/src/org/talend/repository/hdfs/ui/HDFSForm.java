@@ -29,10 +29,10 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
-import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
@@ -292,8 +292,7 @@ public class HDFSForm extends AbstractHDFSForm {
     private void updateConnectionPart() {
         HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
         if (clusterConnection != null) {
-            boolean enableKerberos = clusterConnection.isEnableKerberos();
-            userNameText.setEnabled(!enableKerberos);
+            userNameText.setEditable(!clusterConnection.isEnableKerberos());
         }
     }
 

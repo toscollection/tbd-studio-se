@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,14 +27,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.talend.commons.ui.runtime.image.EImage;
+import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
+import org.talend.core.hadoop.custom.HadoopCustomVersionDefineDialog;
+import org.talend.core.hadoop.version.EAuthenticationMode;
+import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.designer.hdfsbrowse.util.EHadoopDistributions;
-import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
+import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 /**
@@ -50,6 +55,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
     private LabelledCombo versionCombo;
 
+    private LabelledCombo authenticationCombo;
+
     private Button kerberosBtn;
 
     private LabelledText namenodeUriText;
@@ -61,6 +68,10 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     private LabelledText userNameText;
 
     private LabelledText groupText;
+
+    private Button customButton;
+
+    private Group customGroup;
 
     public HadoopClusterForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
         super(parent, SWT.NONE, existingNames);
@@ -76,13 +87,16 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     public void initialize() {
         EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(getConnection().getDistribution(), false);
         if (distribution != null) {
-            String distributionDisplayName = distribution.getDisplayName();
-            distributionCombo.setText(distributionDisplayName);
-            updateVersionCombo(distributionDisplayName);
+            distributionCombo.setText(distribution.getDisplayName());
+            updateVersionPart();
         }
         EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
         if (version4Drivers != null) {
             versionCombo.setText(version4Drivers.getVersionDisplay());
+        }
+        EAuthenticationMode authMode = EAuthenticationMode.getAuthenticationByName(getConnection().getAuthMode(), false);
+        if (authMode != null) {
+            authenticationCombo.setText(authMode.getDisplayName());
         }
         namenodeUriText.setText(getConnection().getNameNodeURI());
         jobtrackerUriText.setText(getConnection().getJobTrackerURI());
@@ -110,58 +124,44 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     @Override
     protected void addFields() {
         addVersionFields();
+        addCustomFields();
         addConnectionFields();
+        updateVersionPart();
     }
 
     private void addVersionFields() {
-        Group distributionGroup = Form.createGroup(this, 1, Messages.getString("HadoopClusterForm.versionSettings")); //$NON-NLS-1$
+        Group distributionGroup = Form.createGroup(this, 4, Messages.getString("HadoopClusterForm.versionSettings")); //$NON-NLS-1$
         distributionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        ScrolledComposite distributionComposite = new ScrolledComposite(distributionGroup, SWT.V_SCROLL | SWT.H_SCROLL);
-        distributionComposite.setExpandHorizontal(true);
-        distributionComposite.setExpandVertical(true);
-        distributionComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        Composite distributionGroupComposite = Form.startNewGridLayout(distributionComposite, 4);
-        GridLayout disGroupCompLayout = (GridLayout) distributionGroupComposite.getLayout();
-        disGroupCompLayout.marginHeight = 0;
-        disGroupCompLayout.marginTop = 0;
-        disGroupCompLayout.marginBottom = 0;
-        disGroupCompLayout.marginLeft = 0;
-        disGroupCompLayout.marginRight = 0;
-        disGroupCompLayout.marginWidth = 0;
-        distributionComposite.setContent(distributionGroupComposite);
-
-        distributionCombo = new LabelledCombo(distributionGroupComposite,
+        distributionCombo = new LabelledCombo(distributionGroup,
                 Messages.getString("HadoopClusterForm.distribution"), //$NON-NLS-1$
                 Messages.getString("HadoopClusterForm.distribution.tooltip"), EHadoopDistributions.getAllDistributionDisplayNames() //$NON-NLS-1$
                         .toArray(new String[0]), 1, true);
         distributionCombo.setVisibleItemCount(VISIBLE_DISTRIBUTION_COUNT);
-        versionCombo = new LabelledCombo(distributionGroupComposite, Messages.getString("HadoopClusterForm.version"), //$NON-NLS-1$
+        versionCombo = new LabelledCombo(distributionGroup, Messages.getString("HadoopClusterForm.version"), //$NON-NLS-1$
                 Messages.getString("HadoopClusterForm.version.tooltip"), new String[0], 1, true); //$NON-NLS-1$
         versionCombo.setVisibleItemCount(VISIBLE_VERSION_COUNT);
+        customButton = new Button(distributionGroup, SWT.NULL);
+        customButton.setImage(ImageProvider.getImage(EImage.THREE_DOTS_ICON));
+        customButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 2, 1));
+    }
+
+    private void addCustomFields() {
+        customGroup = Form.createGroup(this, 4, Messages.getString("HadoopClusterForm.customSettings")); //$NON-NLS-1$
+        customGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        authenticationCombo = new LabelledCombo(customGroup,
+                Messages.getString("HadoopClusterForm.authentication"), //$NON-NLS-1$
+                Messages.getString("HadoopClusterForm.authentication.tooltip"), EAuthenticationMode.getAllAuthenticationDisplayNames() //$NON-NLS-1$
+                        .toArray(new String[0]), 1, false);
     }
 
     private void addConnectionFields() {
         Group connectionGroup = Form.createGroup(this, 1, Messages.getString("HadoopClusterForm.connectionSettings"), 110); //$NON-NLS-1$
-
-        ScrolledComposite connectionComposite = new ScrolledComposite(connectionGroup, SWT.V_SCROLL | SWT.H_SCROLL);
-        connectionComposite.setExpandHorizontal(true);
-        connectionComposite.setExpandVertical(true);
-        connectionComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        Composite connectionGroupComposite = Form.startNewGridLayout(connectionComposite, 1);
-        GridLayout disGroupCompLayout = (GridLayout) connectionGroupComposite.getLayout();
-        disGroupCompLayout.marginHeight = 0;
-        disGroupCompLayout.marginTop = 0;
-        disGroupCompLayout.marginBottom = 0;
-        disGroupCompLayout.marginLeft = 0;
-        disGroupCompLayout.marginRight = 0;
-        disGroupCompLayout.marginWidth = 0;
-        connectionComposite.setContent(connectionGroupComposite);
+        connectionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         int width = getSize().x;
-        Composite uriPartComposite = new Composite(connectionGroupComposite, SWT.NULL);
+        Composite uriPartComposite = new Composite(connectionGroup, SWT.NULL);
         uriPartComposite.setLayout(new GridLayout(2, false));
         GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.minimumWidth = width;
@@ -170,7 +170,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         namenodeUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.namenodeURI"), 1); //$NON-NLS-1$
         jobtrackerUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.jobtrackerURI"), 1); //$NON-NLS-1$
 
-        Composite connectionPartComposite = new Composite(connectionGroupComposite, SWT.NULL);
+        Composite connectionPartComposite = new Composite(connectionGroup, SWT.NULL);
         connectionPartComposite.setLayout(new GridLayout(4, false));
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.minimumWidth = width;
@@ -184,7 +184,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         groupText = new LabelledText(connectionPartComposite, Messages.getString("HadoopClusterForm.text.group"), 1); //$NON-NLS-1$
     }
 
-    private List<String> getDistributionVersions(String distribution) {
+    private List<String> getDistributionVersions(EHadoopDistributions distribution) {
         List<String> result = new ArrayList<String>();
         List<EHadoopVersion4Drivers> v4dList = EHadoopVersion4Drivers.indexOfByDistribution(distribution);
         for (EHadoopVersion4Drivers v4d : v4dList) {
@@ -207,7 +207,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                         false);
                 if (newDistribution != null && newDistribution != originalDistribution) {
                     getConnection().setDistribution(newDistribution.getName());
-                    updateVersionCombo(newDistributionDisplayName);
+                    getConnection().setUseCustomVersion(newDistribution == EHadoopDistributions.CUSTOM);
+                    updateVersionPart();
+                    updateConnectionPart();
                     checkFieldsValue();
                 }
             }
@@ -225,6 +227,34 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                     getConnection().setDfVersion(newVersion4Drivers.getVersionValue());
                     updateConnectionPart();
                     checkFieldsValue();
+                }
+            }
+        });
+
+        authenticationCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                String newAuthDisplayName = authenticationCombo.getText();
+                EAuthenticationMode newAuthMode = EAuthenticationMode.getAuthenticationByDisplayName(newAuthDisplayName);
+                String originalAuthName = getConnection().getAuthMode();
+                EAuthenticationMode originalAuthMode = EAuthenticationMode.getAuthenticationByName(originalAuthName, false);
+                if (newAuthMode != null && newAuthMode != originalAuthMode) {
+                    getConnection().setAuthMode(newAuthMode.getName());
+                    updateConnectionPart();
+                    checkFieldsValue();
+                }
+            }
+        });
+
+        customButton.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                HadoopCustomVersionDefineDialog customVersionDialog = new HadoopCustomVersionDefineDialog(getShell(),
+                        HCVersionUtil.getCustomVersionMap(getConnection()));
+                if (customVersionDialog.open() == Window.OK) {
+                    HCVersionUtil.injectCustomVersionMap(getConnection(), customVersionDialog.getLibMap());
                 }
             }
         });
@@ -286,44 +316,97 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
     }
 
-    private void updateVersionCombo(String distribution) {
-        List<String> items = getDistributionVersions(distribution);
-        String[] versions = new String[items.size()];
-        items.toArray(versions);
-        versionCombo.getCombo().setItems(versions);
-        if (versions.length > 0) {
-            versionCombo.getCombo().select(0);
+    private void updateVersionPart() {
+        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(getConnection().getDistribution(), false);
+        if (distribution == EHadoopDistributions.CUSTOM) {
+            versionCombo.setHideWidgets(true);
+            hideControl(customButton, false);
+            hideControl(customGroup, false);
+        } else {
+            versionCombo.setHideWidgets(false);
+            hideControl(customButton, true);
+            hideControl(customGroup, true);
+            List<String> items = getDistributionVersions(distribution);
+            String[] versions = new String[items.size()];
+            items.toArray(versions);
+            versionCombo.getCombo().setItems(versions);
+            if (versions.length > 0) {
+                versionCombo.getCombo().select(0);
+            }
         }
     }
 
     private void updateConnectionPart() {
         HadoopClusterConnection connection = getConnection();
-        String dfVersion = connection.getDfVersion();
-        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(dfVersion);
-        kerberosBtn.setEnabled(isSupportSecurity(version4Drivers));
-        groupText.setEnabled(isSupportGroup(version4Drivers));
-        principalText.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
-        userNameText.setEnabled(!kerberosBtn.getSelection());
+        String distribution = connection.getDistribution();
+        if (EHadoopDistributions.CUSTOM.getName().equals(distribution)) {
+            String authModeName = connection.getAuthMode();
+            if (authModeName != null) {
+                EAuthenticationMode authMode = EAuthenticationMode.getAuthenticationByName(authModeName, false);
+                switch (authMode) {
+                case KRB:
+                    kerberosBtn.setEnabled(true);
+                    principalText.setEditable(kerberosBtn.getSelection());
+                    userNameText.setEditable(false);
+                    groupText.setEditable(false);
+                    break;
+                case UGI:
+                    kerberosBtn.setEnabled(false);
+                    principalText.setEditable(false);
+                    userNameText.setEditable(true);
+                    groupText.setEditable(true);
+                    break;
+                default:
+                    kerberosBtn.setEnabled(false);
+                    principalText.setEditable(false);
+                    userNameText.setEditable(true);
+                    groupText.setEditable(false);
+                    break;
+                }
+            }
+        } else {
+            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connection.getDfVersion());
+            kerberosBtn.setEnabled(isSupportSecurity(version4Drivers));
+            principalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
+            groupText.setEditable(isSupportGroup(version4Drivers));
+            userNameText.setEditable(!kerberosBtn.getSelection());
+        }
+        updateConnectionContent();
+    }
+
+    private void updateConnectionContent() {
         if (!kerberosBtn.isEnabled()) {
             kerberosBtn.setSelection(false);
-            getConnection().setEnableKerberos(false);
             principalText.setText(EMPTY_STRING);
+            getConnection().setEnableKerberos(false);
         }
-        if (!groupText.getEnable()) {
+        if (!groupText.getEditable()) {
             groupText.setText(EMPTY_STRING);
+        }
+        if (!userNameText.getEditable()) {
+            userNameText.setText(EMPTY_STRING);
         }
     }
 
     @Override
     public boolean checkFieldsValue() {
-
         if (distributionCombo.getSelectionIndex() == -1) {
             updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.distribution")); //$NON-NLS-1$
             return false;
         }
-        if (versionCombo.getSelectionIndex() == -1) {
-            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.version")); //$NON-NLS-1$
-            return false;
+
+        if (!getConnection().isUseCustomVersion()) {
+            if (versionCombo.getSelectionIndex() == -1) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.version")); //$NON-NLS-1$
+                return false;
+            }
+        }
+
+        if (getConnection().isUseCustomVersion()) {
+            if (authenticationCombo.getSelectionIndex() == -1) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.authentication")); //$NON-NLS-1$
+                return false;
+            }
         }
 
         if (!validText(namenodeUriText.getText())) {
@@ -341,7 +424,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             return false;
         }
 
-        if (groupText.getEnable()) {
+        if (groupText.getEditable()) {
             if (!validText(userNameText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.userName")); //$NON-NLS-1$
                 return false;
@@ -354,7 +437,6 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
         updateStatus(IStatus.OK, null);
         return true;
-
     }
 
     /*

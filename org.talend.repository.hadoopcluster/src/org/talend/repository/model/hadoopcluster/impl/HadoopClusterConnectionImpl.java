@@ -14,13 +14,17 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
+import org.eclipse.emf.ecore.util.EcoreEMap;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.talend.core.model.metadata.builder.connection.impl.ConnectionImpl;
 
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -43,6 +47,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getPrincipal <em>Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getGroup <em>Group</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getAuthMode <em>Auth Mode</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getConnectionList <em>Connection List</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
@@ -252,6 +257,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
     protected String group = GROUP_EDEFAULT;
 
     /**
+     * The default value of the '{@link #getAuthMode() <em>Auth Mode</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAuthMode()
+     * @generated
+     * @ordered
+     */
+    protected static final String AUTH_MODE_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getAuthMode() <em>Auth Mode</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAuthMode()
+     * @generated
+     * @ordered
+     */
+    protected String authMode = AUTH_MODE_EDEFAULT;
+
+    /**
      * The cached value of the '{@link #getConnectionList() <em>Connection List</em>}' attribute list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -269,7 +294,7 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @generated
      * @ordered
      */
-    protected Map.Entry<String, String> parameters;
+    protected EMap<String, String> parameters;
 
     /**
      * <!-- begin-user-doc -->
@@ -505,6 +530,27 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getAuthMode() {
+        return authMode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setAuthMode(String newAuthMode) {
+        String oldAuthMode = authMode;
+        authMode = newAuthMode;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__AUTH_MODE, oldAuthMode, authMode));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<String> getConnectionList() {
         if (connectionList == null) {
             connectionList = new EDataTypeUniqueEList<String>(String.class, this, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST);
@@ -517,42 +563,11 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
-    public Map.Entry<String, String> getParameters() {
+    public EMap<String, String> getParameters() {
+        if (parameters == null) {
+            parameters = new EcoreEMap<String,String>(HadoopClusterPackage.Literals.HADOOP_ADDITIONAL_PROPERTIES, HadoopAdditionalPropertiesImpl.class, this, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS);
+        }
         return parameters;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetParameters(Map.Entry<String, String> newParameters, NotificationChain msgs) {
-        Map.Entry<String, String> oldParameters = parameters;
-        parameters = newParameters;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS, oldParameters, newParameters);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setParameters(Map.Entry<String, String> newParameters) {
-        if (newParameters != parameters) {
-            NotificationChain msgs = null;
-            if (parameters != null)
-                msgs = ((InternalEObject)parameters).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS, null, msgs);
-            if (newParameters != null)
-                msgs = ((InternalEObject)newParameters).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS, null, msgs);
-            msgs = basicSetParameters(newParameters, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS, newParameters, newParameters));
     }
 
     /**
@@ -564,7 +579,7 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
-                return basicSetParameters(null, msgs);
+                return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -597,10 +612,13 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return getUserName();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
                 return getGroup();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__AUTH_MODE:
+                return getAuthMode();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST:
                 return getConnectionList();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
-                return getParameters();
+                if (coreType) return getParameters();
+                else return getParameters().map();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -644,12 +662,15 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
                 setGroup((String)newValue);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__AUTH_MODE:
+                setAuthMode((String)newValue);
+                return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST:
                 getConnectionList().clear();
                 getConnectionList().addAll((Collection<? extends String>)newValue);
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
-                setParameters((Map.Entry<String, String>)newValue);
+                ((EStructuralFeature.Setting)getParameters()).set(newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -693,11 +714,14 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
                 setGroup(GROUP_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__AUTH_MODE:
+                setAuthMode(AUTH_MODE_EDEFAULT);
+                return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST:
                 getConnectionList().clear();
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
-                setParameters((Map.Entry<String, String>)null);
+                getParameters().clear();
                 return;
         }
         super.eUnset(featureID);
@@ -731,10 +755,12 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return USER_NAME_EDEFAULT == null ? userName != null : !USER_NAME_EDEFAULT.equals(userName);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
                 return GROUP_EDEFAULT == null ? group != null : !GROUP_EDEFAULT.equals(group);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__AUTH_MODE:
+                return AUTH_MODE_EDEFAULT == null ? authMode != null : !AUTH_MODE_EDEFAULT.equals(authMode);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST:
                 return connectionList != null && !connectionList.isEmpty();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
-                return parameters != null;
+                return parameters != null && !parameters.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -769,6 +795,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(userName);
         result.append(", group: ");
         result.append(group);
+        result.append(", authMode: ");
+        result.append(authMode);
         result.append(", connectionList: ");
         result.append(connectionList);
         result.append(')');

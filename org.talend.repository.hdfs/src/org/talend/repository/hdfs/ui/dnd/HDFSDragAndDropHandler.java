@@ -14,11 +14,13 @@ package org.talend.repository.hdfs.ui.dnd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.hadoop.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
@@ -35,6 +37,7 @@ import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.model.RepositoryNode;
@@ -78,6 +81,10 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
             return hcConnection.getDistribution();
         } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(value)) {
             return hcConnection.getDfVersion();
+        } else if (EHDFSRepositoryToComponent.CUSTOM_JARS.getRepositoryValue().equals(value)) {
+            return HCVersionUtil.getCompCustomJarParamFromRep(hcConnection, ECustomVersionGroup.COMMON);
+        } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(value)) {
+            return hcConnection.getAuthMode();
         } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getNameNodeURI()));
         } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(value)) {
@@ -151,6 +158,7 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
         return tableWithMap;
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public IComponentName getCorrespondingComponentName(Item item, ERepositoryObjectType type) {
         RepositoryComponentSetting setting = null;
@@ -182,6 +190,7 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void setHDFSRepositoryValue(HDFSConnection connection, INode node, String repositoryValue) {
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
         if (hcConnection == null) {
@@ -199,6 +208,22 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
                     EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
             if (value != null) {
                 hcConnection.setDfVersion(value);
+            }
+        } else if (EHDFSRepositoryToComponent.CUSTOM_JARS.getRepositoryValue().equals(repositoryValue)) {
+            IElementParameter param = node.getElementParameter(EHDFSRepositoryToComponent.CUSTOM_JARS.getParameterName());
+            if (param != null) {
+                Object obj = param.getValue();
+                if (obj != null) {
+                    Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarParamFromComp(
+                            (List<Map<String, Object>>) obj, ECustomVersionGroup.COMMON);
+                    HCVersionUtil.injectCustomVersionMap(hcConnection, customVersionMap);
+                }
+            }
+        } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(repositoryValue)) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
+                    EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getParameterName());
+            if (value != null) {
+                hcConnection.setAuthMode(value);
             }
         } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(repositoryValue)) {
             String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,

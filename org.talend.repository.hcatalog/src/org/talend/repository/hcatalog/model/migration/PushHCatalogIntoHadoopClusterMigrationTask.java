@@ -15,8 +15,8 @@ package org.talend.repository.hcatalog.model.migration;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.repository.ERepositoryObjectType;
-import org.talend.designer.hdfsbrowse.util.EHadoopVersion4Drivers;
 import org.talend.repository.hadoopcluster.model.migration.AbstractHadoopClusterMigrationTask;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
