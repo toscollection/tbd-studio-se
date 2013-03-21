@@ -258,6 +258,7 @@
 		if(inMain) {//only main process create the server object,lookup process use the one in main process
 %>
 		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
+		pigServer_<%=start_node%>.setBatchOn();
 <%
 		} else {
 %>

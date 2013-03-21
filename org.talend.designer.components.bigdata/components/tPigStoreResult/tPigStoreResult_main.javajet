@@ -11,6 +11,7 @@
 		org.talend.designer.runprocess.ProcessorUtilities
 		org.talend.designer.runprocess.ProcessorException
 		org.talend.core.model.metadata.types.Java2STLangTypesHelper
+		org.talend.core.model.utils.NodeUtil
 		"
 %>
 
@@ -386,3 +387,10 @@
 %>
 
 	pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+<%
+	if(NodeUtil.isSubTreeEnd(node)) {
+%>
+	pigServer_<%=start_node%>.executeBatch();
+<%
+	}
+%>
