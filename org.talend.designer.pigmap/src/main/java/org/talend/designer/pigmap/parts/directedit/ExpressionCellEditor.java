@@ -39,7 +39,7 @@ import org.talend.commons.ui.swt.tableviewer.celleditor.CellEditorDialogBehavior
 import org.talend.commons.ui.swt.tableviewer.celleditor.ExtendedTextCellEditor;
 import org.talend.commons.ui.utils.ControlUtils;
 import org.talend.commons.ui.utils.threading.AsynchronousThreading;
-import org.talend.core.ui.proposal.TalendProposalProvider;
+import org.talend.core.ui.proposal.PigProposalProvider;
 import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.pigmap.editor.PigMapGraphicViewer;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
@@ -309,7 +309,7 @@ public class ExpressionCellEditor extends ExtendedTextCellEditor {
 
     private ExpressionProposalProvider createExpressionProposalProvider() {
         IContentProposalProvider[] contentProposalProviders = new IContentProposalProvider[0];
-        contentProposalProviders = new IContentProposalProvider[] { new TalendProposalProvider(mapperManager.getMapperComponent()
+        contentProposalProviders = new IContentProposalProvider[] { new PigProposalProvider(mapperManager.getMapperComponent()
                 .getProcess()) };
         ExpressionProposalProvider provider = new ExpressionProposalProvider(mapperManager, contentProposalProviders);
         provider.init(source);

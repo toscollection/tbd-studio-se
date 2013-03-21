@@ -12,17 +12,25 @@
 // ============================================================================
 package org.talend.designer.pigmap.figures.tablesettings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.draw2d.MouseEvent;
 import org.eclipse.draw2d.MouseListener;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
+import org.talend.commons.expressionbuilder.Variable;
 import org.talend.commons.ui.expressionbuilder.IExpressionBuilderDialogController;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.IService;
 import org.talend.designer.gefabstractmap.figures.manager.TableManager;
 import org.talend.designer.gefabstractmap.figures.treesettings.FilterContainer;
+import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
+import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
+import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
+import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.expressionbuilder.IExpressionBuilderDialogService;
 
 /**
@@ -48,7 +56,6 @@ public class TableFilterContainer extends FilterContainer {
      */
     @Override
     protected Command getFilterChangeCommand(Object model, String newValue) {
-        //
         return null;
     }
 
@@ -56,17 +63,37 @@ public class TableFilterContainer extends FilterContainer {
     protected void addButtonListener() {
         IService expressionBuilderDialogService = GlobalServiceRegister.getDefault().getService(
                 IExpressionBuilderDialogService.class);
-
         final IExpressionBuilderDialogController dialog = ((IExpressionBuilderDialogService) expressionBuilderDialogService)
-                .getExpressionBuilderInstance(parent, null, null, true);
+                .getExpressionBuilderInstance(parent, null, null, null);
 
         button.addMouseListener(new MouseListener() {
 
             @Override
             public void mousePressed(MouseEvent me) {
+                // Expression Builder
+                List<Variable> vars = new ArrayList<Variable>();
+                if (tableManager.getModel() != null
+                        && (tableManager.getModel() instanceof InputTable || tableManager.getModel() instanceof OutputTable)) {
+                    if (tableManager.getModel().eContainer() != null
+                            && tableManager.getModel().eContainer() instanceof PigMapData) {
+                        PigMapData pigMapData = (PigMapData) tableManager.getModel().eContainer();
+                        List<InputTable> inputTables = pigMapData.getInputTables();
+                        for (InputTable table : inputTables) {
+                            List<TableNode> nodes = table.getNodes();
+                            for (TableNode node : nodes) {
+                                Variable variable = new Variable();
+                                variable.setName(table.getName());
+                                variable.setValue(node.getName());
+                                vars.add(variable);
+                            }
+                        }
+                    }
+                }
+
                 if (dialog instanceof TrayDialog) {
                     TrayDialog parentDialog = (TrayDialog) dialog;
                     dialog.setDefaultExpression(tableManager.getExpressionFilter());
+                    dialog.addVariables(vars);
                     if (Window.OK == parentDialog.open()) {
                         String expressionForTable = dialog.getExpressionForTable();
                         tableManager.setExpressionFilter(expressionForTable);

@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.designer.pigmap.parts.directedit;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.draw2d.Figure;
@@ -31,6 +33,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
+import org.talend.commons.expressionbuilder.Variable;
 import org.talend.commons.ui.expressionbuilder.IExpressionBuilderDialogController;
 import org.talend.commons.ui.swt.tableviewer.celleditor.CellEditorDialogBehavior;
 import org.talend.commons.ui.swt.tableviewer.celleditor.ExtendedTextCellEditor;
@@ -48,8 +51,11 @@ import org.talend.designer.pigmap.figures.tablesettings.TableSettingsConstant;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
+import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
+import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
+import org.talend.designer.pigmap.util.PigMapUtil;
 import org.talend.expressionbuilder.IExpressionBuilderDialogService;
 
 /**
@@ -245,8 +251,21 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
             CellEditorDialogBehavior behavior = new CellEditorDialogBehavior();
             cellEditor = new ExpressionCellEditor(composite, behavior, source, DirectEditType.EXPRESSION);
             ((ExpressionCellEditor) cellEditor).setOwnerId(((AbstractNode) model).getExpression());
+            //
+            List<Variable> vars = new ArrayList<Variable>();
+            PigMapData pigMapData = PigMapUtil.getPigMapData(((AbstractNode) model));
+            List<InputTable> inputTables = pigMapData.getInputTables();
+            for (InputTable table : inputTables) {
+                List<TableNode> nodes = table.getNodes();
+                for (TableNode node : nodes) {
+                    Variable variable = new Variable();
+                    variable.setName(table.getName());
+                    variable.setValue(node.getName());
+                    vars.add(variable);
+                }
+            }
             IExpressionBuilderDialogController dialog = ((IExpressionBuilderDialogService) expressionBuilderDialogService)
-                    .getExpressionBuilderInstance(parent, (ExpressionCellEditor) cellEditor, null, true);
+                    .getExpressionBuilderInstance(parent, (ExpressionCellEditor) cellEditor, null, vars);
             cellAndType.put(cellEditor, DirectEditType.EXPRESSION);
             behavior.setCellEditorDialog(dialog);
         } else if (figure instanceof ITextAreaCell) {

@@ -38,10 +38,13 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.talend.commons.ui.swt.colorstyledtext.UnnotifiableColorStyledText;
 import org.talend.commons.ui.swt.proposal.ContentProposalAdapterExtended;
 import org.talend.commons.ui.swt.proposal.ProposalUtils;
-import org.talend.core.ui.proposal.TalendProposalProvider;
+import org.talend.core.ui.proposal.PigProposalProvider;
 import org.talend.designer.gefabstractmap.part.TableEntityPart;
+import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.gefabstractmap.resource.ColorInfo;
 import org.talend.designer.gefabstractmap.resource.ColorProviderMapper;
+import org.talend.designer.pigmap.commands.DirectEditCommand;
+import org.talend.designer.pigmap.editor.PigMapGraphicViewer;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.parts.directedit.ExpressionProposalProvider;
 
@@ -173,6 +176,9 @@ public class StyledTextHandler {
 
     private void updateCellExpression() {
         if (selectedNode != null && styledText != null && !styledText.getText().equals(selectedNode.getExpression())) {
+            DirectEditCommand command = new DirectEditCommand(selectedNodePart, selectedNode, DirectEditType.EXPRESSION,
+                    styledText.getText());
+            ((PigMapGraphicViewer) selectedNodePart.getViewer()).getEditDomain().getCommandStack().execute(command);
         }
     }
 
@@ -224,11 +230,10 @@ public class StyledTextHandler {
         this.selectedNodePart = selectedNode;
         this.selectedNode = (AbstractNode) selectedNodePart.getModel();
         IContentProposalProvider[] contentProposalProviders = new IContentProposalProvider[0];
-        contentProposalProviders = new IContentProposalProvider[] { new TalendProposalProvider(mapperManager.getMapperComponent()
+        contentProposalProviders = new IContentProposalProvider[] { new PigProposalProvider(mapperManager.getMapperComponent()
                 .getProcess()) };
         ExpressionProposalProvider provider = new ExpressionProposalProvider(mapperManager, contentProposalProviders);
         provider.init(selectedNode);
         getContentProposalAdapter().setContentProposalProvider(provider);
     }
-
 }
