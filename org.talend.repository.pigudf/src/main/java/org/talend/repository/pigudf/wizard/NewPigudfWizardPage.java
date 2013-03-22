@@ -21,6 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -72,8 +73,8 @@ public class NewPigudfWizardPage extends PropertiesWizardPage {
         GridLayout layout = new GridLayout(2, false);
         container.setLayout(layout);
 
-        super.createControl(container);
         createPigTemplateCombo(container);
+        super.createControl(container);
         setControl(container);
         updateContent();
         addListeners();
@@ -84,7 +85,10 @@ public class NewPigudfWizardPage extends PropertiesWizardPage {
     private void createPigTemplateCombo(Composite parent) {
         Label label = new Label(parent, SWT.NONE);
         label.setText(Messages.getString("NewPigudfWizardPage.pigtemplate")); //$NON-NLS-1$
+
         pigTemplate = new CCombo(parent, SWT.BORDER);
+        pigTemplate.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        pigTemplate.setEditable(false);
         pigTemplate.setItems(PigTemplate.getPigTemplateToDispaly());
         pigTemplate.setText("");
         pigTemplate.addModifyListener(new ModifyListener() {
@@ -103,19 +107,20 @@ public class NewPigudfWizardPage extends PropertiesWizardPage {
 
     @Override
     protected void evaluateTextField() {
+        if (!pigTemplate.isDisposed() && "".equals(pigTemplate.getText())) {
+            templateStatus = createStatus(IStatus.ERROR, Messages.getString("NewPigudfWizardPage.TemplateFormatError")); //$NON-NLS-1$
+        } else {
+            templateStatus = createOkStatus();
+        }
         super.evaluateTextField();
         if (nameStatus.getSeverity() == IStatus.OK) {
             evaluateNameInJob();
-        }
-        if (nameStatus.getSeverity() == IStatus.OK && !pigTemplate.isDisposed() && "".equals(pigTemplate.getText())) {
-            templateStatus = createStatus(IStatus.ERROR, Messages.getString("NewPigudfWizardPage.TemplateFormatError")); //$NON-NLS-1$
-            updatePageStatus();
         }
     }
 
     @Override
     protected IStatus[] getStatuses() {
-        return new IStatus[] { nameStatus, purposeStatus, commentStatus, templateStatus };
+        return new IStatus[] { templateStatus, nameStatus, purposeStatus, commentStatus };
     }
 
     @Override
