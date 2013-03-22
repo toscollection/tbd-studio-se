@@ -21,9 +21,11 @@ import org.talend.core.model.utils.IComponentName;
 import org.talend.core.model.utils.IDragAndDropServiceHandler;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
 import org.talend.repository.hcatalog.util.EHCatalogRepositoryToComponent;
 import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
 import org.talend.repository.model.hcatalog.HCatalogConnectionItem;
 
@@ -54,22 +56,27 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
     }
 
     private Object getHCatalogRepositoryValue(HCatalogConnection connection, String value, IMetadataTable table) {
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        if (hcConnection == null) {
+            return null;
+        }
+
         if (EHCatalogRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(value)) {
-            return connection.getDistribution();
+            return hcConnection.getDistribution();
         } else if (EHCatalogRepositoryToComponent.HCAT_VERSION.getRepositoryValue().equals(value)) {
-            return connection.getHcatVersion();
+            return hcConnection.getDfVersion();
         } else if (EHCatalogRepositoryToComponent.TEMPLETON_HOST.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getHostName()));
         } else if (EHCatalogRepositoryToComponent.TEMPLETON_PORT.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getPort()));
         } else if (EHCatalogRepositoryToComponent.USE_KRB.getRepositoryValue().equals(value)) {
-            return connection.isEnableKerberos();
+            return hcConnection.isEnableKerberos();
         } else if (EHCatalogRepositoryToComponent.KRB_PRINC.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbPrincipal()));
         } else if (EHCatalogRepositoryToComponent.KRB_REALM.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbRealm()));
         } else if (EHCatalogRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getNnPrincipal()));
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getPrincipal()));
         } else if (EHCatalogRepositoryToComponent.DATABASE_NAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getDatabase()));
         } else if (EHCatalogRepositoryToComponent.TABLE_NAME.getRepositoryValue().equals(value)) {
@@ -90,6 +97,20 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
             // }
         } else if (EHCatalogRepositoryToComponent.USERNAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getUserName()));
+        } else if (EHCatalogRepositoryToComponent.LOCAL.getRepositoryValue().equals(value)) {
+            return false;
+        } else if (EHCatalogRepositoryToComponent.MAPREDUCE.getRepositoryValue().equals(value)) {
+            return true;
+        } else if (EHCatalogRepositoryToComponent.PIG_VERSION.getRepositoryValue().equals(value)) {
+            return hcConnection.getDfVersion();
+        } else if (EHCatalogRepositoryToComponent.MAPRED_JOB_TRACKER.getRepositoryValue().equals(value)) {
+            return hcConnection.getJobTrackerURI();
+        } else if (EHCatalogRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getNameNodeURI()));
+        } else if (EHCatalogRepositoryToComponent.JOBTRACKER_PRINCIPAL.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbPrincipal()));
+        } else if (EHCatalogRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
+            return "HCatLoader";
         }
 
         return null;
@@ -119,7 +140,7 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
         }
 
         String componentProductname = component.getRepositoryType();
-        if (componentProductname != null && repositoryType.endsWith(componentProductname)
+        if (componentProductname != null && componentProductname.contains(repositoryType)
                 && isSubValid(item, type, seletetedNode, component, repositoryType)) {
             return true;
         }

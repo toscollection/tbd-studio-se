@@ -110,6 +110,18 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
         } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
+        } else if (EHDFSRepositoryToComponent.LOCAL.getRepositoryValue().equals(value)) {
+            return false;
+        } else if (EHDFSRepositoryToComponent.MAPREDUCE.getRepositoryValue().equals(value)) {
+            return true;
+        } else if (EHDFSRepositoryToComponent.PIG_VERSION.getRepositoryValue().equals(value)) {
+            return hcConnection.getDfVersion();
+        } else if (EHDFSRepositoryToComponent.MAPRED_JOB_TRACKER.getRepositoryValue().equals(value)) {
+            return hcConnection.getJobTrackerURI();
+        } else if (EHDFSRepositoryToComponent.FIELD_SEPARATOR_CHAR.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
+        } else if (EHDFSRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
+            return "PigStorage";
         }
 
         return null;
@@ -139,7 +151,7 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
         }
 
         String componentProductname = component.getRepositoryType();
-        if (componentProductname != null && repositoryType.endsWith(componentProductname)
+        if (componentProductname != null && componentProductname.contains(repositoryType)
                 && isSubValid(item, type, seletetedNode, component, repositoryType)) {
             return true;
         }
@@ -284,10 +296,14 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
             return;
         }
         IElementParameter fileNameParameter = ele.getElementParameter(EHDFSRepositoryToComponent.FILENAME.getParameterName());
-        if (fileNameParameter != null) {
-            String hdfsPath = metadataTable.getAdditionalProperties().get(HDFSConstants.HDFS_PATH);
-            if (hdfsPath != null) {
+        IElementParameter filePatheParameter = ele.getElementParameter(EHDFSRepositoryToComponent.INPUT_FILENAME
+                .getParameterName());
+        String hdfsPath = metadataTable.getAdditionalProperties().get(HDFSConstants.HDFS_PATH);
+        if (hdfsPath != null) {
+            if (fileNameParameter != null) {
                 fileNameParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(hdfsPath));
+            } else if (filePatheParameter != null) {
+                filePatheParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(hdfsPath));
             }
         }
     }
