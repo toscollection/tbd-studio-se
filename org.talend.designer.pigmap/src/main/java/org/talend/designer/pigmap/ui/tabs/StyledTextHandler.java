@@ -231,7 +231,7 @@ public class StyledTextHandler {
         this.selectedNode = (AbstractNode) selectedNodePart.getModel();
         IContentProposalProvider[] contentProposalProviders = new IContentProposalProvider[0];
         contentProposalProviders = new IContentProposalProvider[] { new PigProposalProvider(mapperManager.getMapperComponent()
-                .getProcess()) };
+                .getProcess(), mapperManager.getMapperComponent().getOriginalNode()) };
         ExpressionProposalProvider provider = new ExpressionProposalProvider(mapperManager, contentProposalProviders);
         provider.init(selectedNode);
         getContentProposalAdapter().setContentProposalProvider(provider);
