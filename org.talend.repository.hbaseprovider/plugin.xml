@@ -27,11 +27,19 @@
    <extension
          point="org.talend.core.runtime.classloader_provider">
       <classloader
+            index="HBASE:APACHE:APACHE_0_20_203"
+            libraries="commons-lang3-3.0.jar;commons-logging-1.1.1.jar;hadoop-core-0.20.203.0.jar;hbase-0.90.1-cdh3u0.jar;log4j-1.2.16.jar;zookeeper-3.3.3-cdh3u0.jar">
+      </classloader>
+      <classloader
             index="HBASE:APACHE:APACHE_0_20_204"
             libraries="commons-lang3-3.0.jar;commons-logging-1.1.1.jar;hadoop-core-0.20.203.0.jar;hbase-0.90.1-cdh3u0.jar;log4j-1.2.16.jar;zookeeper-3.3.3-cdh3u0.jar;commons-lang-2.4.jar">
       </classloader>
       <classloader
             index="HBASE:APACHE:APACHE_1_0_0"
+            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.15.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
+      </classloader>
+      <classloader
+            index="HBASE:APACHE:APACHE_1_0_3_EMR"
             libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.15.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
       </classloader>
       <classloader
@@ -41,6 +49,10 @@
       <classloader
             index="HBASE:HORTONWORKS:HDP_1_2"
             libraries="hbase-0.94.2.21.jar;zookeeper-3.4.5.21.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-core-1.1.2.21.jar;log4j-1.2.16.jar;slf4j-api-1.4.3.jar;slf4j-log4j12-1.4.3.jar;protobuf-java-2.4.0a.jar">
+      </classloader>
+      <classloader
+            index="HBASE:CLOUDERA:Cloudera_CDH3"
+            libraries="commons-lang3-3.0.jar;commons-logging-1.1.1.jar;hadoop-core-0.20.203.0.jar;hbase-0.90.1-cdh3u0.jar;log4j-1.2.16.jar;zookeeper-3.3.3-cdh3u0.jar">
       </classloader>
       <classloader
             index="HBASE:CLOUDERA:Cloudera_CDH4"
