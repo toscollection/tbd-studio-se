@@ -34,7 +34,7 @@ import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.SubItemHelper;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
-import org.talend.repository.hadoopcluster.ui.viewer.HadoopRepositoryTypeProcessor;
+import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubRepositoryTypeProcessor;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.IRepositoryNode.EProperties;
@@ -149,7 +149,7 @@ public abstract class AbstractHadoopSubnodeRepositoryContentHandler extends Abst
     public IRepositoryTypeProcessor getRepositoryTypeProcessor(String repositoryType) {
         ERepositoryObjectType processType = getProcessType();
         if (repositoryType != null && processType != null && repositoryType.equals(processType.getType())) {
-            return new HadoopRepositoryTypeProcessor(repositoryType);
+            return new HadoopSubRepositoryTypeProcessor(repositoryType);
         }
 
         return null;

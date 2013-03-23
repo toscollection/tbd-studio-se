@@ -33,14 +33,14 @@ import org.talend.repository.ui.processor.SingleTypeProcessor;
  * created by ycbai on 2013-3-5 Detailled comment
  * 
  */
-public class HadoopRepositoryTypeProcessor extends SingleTypeProcessor {
+public class HadoopSubRepositoryTypeProcessor extends SingleTypeProcessor {
 
     /**
      * DOC ycbai HadoopRepositoryTypeProcessor constructor comment.
      * 
      * @param repositoryType
      */
-    public HadoopRepositoryTypeProcessor(String repositoryType) {
+    public HadoopSubRepositoryTypeProcessor(String repositoryType) {
         super(repositoryType);
     }
 

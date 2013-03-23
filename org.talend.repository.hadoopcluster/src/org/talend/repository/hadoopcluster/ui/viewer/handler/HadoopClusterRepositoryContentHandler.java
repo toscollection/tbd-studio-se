@@ -20,12 +20,14 @@ import org.talend.core.model.metadata.MetadataManager;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.AbstractRepositoryContentHandler;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryTypeProcessor;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.hadoopcluster.ui.HadoopClusterWizard;
+import org.talend.repository.hadoopcluster.ui.viewer.HadoopClusterRepositoryTypeProcessor;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
 import org.talend.repository.model.IProxyRepositoryFactory;
@@ -196,6 +198,16 @@ public class HadoopClusterRepositoryContentHandler extends AbstractRepositoryCon
         }
         connection.getConnectionList().clear();
         factory.save(hadoopClusterItem);
+    }
+
+    @Override
+    public IRepositoryTypeProcessor getRepositoryTypeProcessor(String repositoryType) {
+        ERepositoryObjectType processType = getProcessType();
+        if (repositoryType != null && processType != null && repositoryType.equals(processType.getType())) {
+            return new HadoopClusterRepositoryTypeProcessor(repositoryType);
+        }
+
+        return null;
     }
 
 }
