@@ -72,6 +72,7 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
             case HDP_1_2:
             case APACHE_1_0_0:
             case CLOUDERA_CDH4:
+            case APACHE_1_0_3_EMR:
                 return true;
             default:
                 return false;
@@ -86,6 +87,7 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
             switch (version4Drivers) {
             case APACHE_0_20_2:
             case MAPR:
+            case MAPR_EMR:
                 return true;
             default:
                 return false;
