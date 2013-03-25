@@ -10,7 +10,7 @@
     RELEASE_DATE="20070314A"
     EXTENSION="org.talend.designer.fileoutputxml"
     STARTABLE="false"
-    SCHEMA_AUTO_PROPAGATE="false"
+    SCHEMA_AUTO_PROPAGATE="true"
     DATA_AUTO_PROPAGATE="false"
     HAS_CONDITIONAL_OUTPUTS="true"
   >
@@ -38,13 +38,6 @@
   </CONNECTORS>
   <PARAMETERS>
     
-    <PARAMETER
-      NAME="PROPERTY"
-      FIELD="PROPERTY_TYPE"
-      SHOW="true"
-      NUM_ROW="1"
-    />
-
     <PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
             GROUP="CONNECTIONCONFIG"
             NUM_ROW="10">
@@ -119,13 +112,6 @@
       </ITEMS>
       </PARAMETER>
 
-    <PARAMETER NAME="EXPIRE"
-      FIELD="INTEGER"
-      NUM_ROW="75"
-      REQUIRED="true">
-      <DEFAULT>0</DEFAULT>
-    </PARAMETER>
-
     <PARAMETER
         NAME="KEY"
         FIELD="PREV_COLUMN_LIST"
@@ -138,7 +124,7 @@
         NAME="VALUE"
         FIELD="PREV_COLUMN_LIST"
         REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'false'"
-        SHOW_IF="IS_VIRTUAL_COMPONENT == 'false'"
+        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'false') and (DATA_ACTION !='DELETE')"
         NUM_ROW="70"
     >
     </PARAMETER>
@@ -277,6 +263,14 @@
         </PARAMETER>
   </PARAMETERS>
     <ADVANCED_PARAMETERS>
+	    <PARAMETER NAME="EXPIRE"
+	      FIELD="INTEGER"
+	      NUM_ROW="10"
+	      SHOW_IF="DATA_ACTION !='DELETE'"
+	      REQUIRED="true">
+	      <DEFAULT>0</DEFAULT>
+	    </PARAMETER>
+
         <PARAMETER NAME="COMPACT_FORMAT" FIELD="CHECK" REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'" NUM_ROW="10" SHOW="false">
             <DEFAULT>true</DEFAULT>
         </PARAMETER>

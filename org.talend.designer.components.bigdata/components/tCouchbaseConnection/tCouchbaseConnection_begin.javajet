@@ -27,10 +27,5 @@ uris_<%=cid%>.add(java.net.URI.create(<%=map.get("URI")%>));
 <%
     }
 %>
-try {
     client_<%=cid%> = new com.couchbase.client.CouchbaseClient(uris_<%=cid%>, <%=dbname%>,<%if(username!=null && !"".equals(username)){%><%=username%>,<%}%> <%=dbpwd%>);
-} catch (Exception ex_<%=cid%>) {
-    System.err.println("Error connecting to Couchbase: " + ex_<%=cid%>.getMessage());
-}
-
 	globalMap.put("conn_<%=cid%>",client_<%=cid%>);

@@ -35,12 +35,6 @@
   </CONNECTORS>
   <PARAMETERS>
 
-    <PARAMETER
-      NAME="PROPERTY"
-      FIELD="PROPERTY_TYPE"
-      SHOW="true"
-      NUM_ROW="1"
-    />
     <PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
             NUM_ROW="10">
             <DEFAULT>false</DEFAULT>
@@ -322,27 +316,6 @@
     </PARAMETER>
 
     <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="100">
-        <TABLE IF="((FROMVIEW == 'true') and (ISREDUCE == 'true') and (INCLUDE_DOCS == 'false'))" READONLY="false">
-        <COLUMN NAME="Key" TYPE="id_String" CUSTOM="true" />
-        <COLUMN NAME="Value" TYPE="id_String" CUSTOM="true" />
-      </TABLE>
-      <TABLE IF="((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'false'))" READONLY="false">
-        <COLUMN NAME="Id" TYPE="id_String" CUSTOM="true" />
-        <COLUMN NAME="Key" TYPE="id_String" CUSTOM="true" />
-        <COLUMN NAME="Value" TYPE="id_String" CUSTOM="true" />
-      </TABLE>
-      <TABLE IF="((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true'))" READONLY="false">
-        <COLUMN NAME="Id" TYPE="id_String" CUSTOM="true" />
-        <COLUMN NAME="Key" TYPE="id_String" CUSTOM="true" />
-        <COLUMN NAME="Value" TYPE="id_String" CUSTOM="true" />
-        <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
-      </TABLE>
-      <TABLE IF="((FROMVIEW == 'false') and (ISJSON == 'false'))" READONLY="false">
-        <COLUMN NAME="Value" TYPE="id_String" CUSTOM="true" />
-      </TABLE>
-      <TABLE IF="((FROMVIEW == 'false') and (ISJSON == 'true'))" READONLY="false">
-        <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
-      </TABLE>
     </PARAMETER>
 
     <PARAMETER
