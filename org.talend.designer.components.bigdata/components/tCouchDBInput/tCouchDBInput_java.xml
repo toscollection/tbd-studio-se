@@ -39,12 +39,36 @@
   	<PARAMETERS>
 
 	    <PARAMETER
-	      NAME="PROPERTY"
-	      FIELD="PROPERTY_TYPE"
-	      SHOW="true"
-	      NUM_ROW="1"
-	    />
+        	NAME="INPUT_SCHEMA"
+			FIELD="SCHEMA_TYPE"
+			REQUIRED="true"
+			NUM_ROW="5"
+		>
+        	<TABLE IF="(QUERY_BY_VIEW == 'true') AND (ISREDUCE == 'true')" READONLY="false">
+		        <COLUMN NAME="key" TYPE="id_String" />
+		        <COLUMN NAME="value" TYPE="id_String" />
+		        <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
+      		</TABLE>
+      		<TABLE IF="(INCLUDE_DOCS == 'false')AND (ISREDUCE == 'false')" READONLY="false">
+		        <COLUMN NAME="id" TYPE="id_String" />
+		        <COLUMN NAME="key" TYPE="id_String" />
+		        <COLUMN NAME="value" TYPE="id_String" />
+		        <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
+      		</TABLE>
+      		<TABLE IF="(INCLUDE_DOCS == 'true') AND (ISREDUCE == 'false')" READONLY="false" >
+      			<COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
+      		</TABLE>
+   		</PARAMETER>
 	    
+	    <PARAMETER 
+        	NAME="SCHEMA" 
+	        FIELD="SCHEMA_TYPE" 
+	        REQUIRED="true"
+			NUM_ROW="6"
+			CONTEXT="OUTPUT"
+		>
+			<DEFAULT />
+		</PARAMETER>
 		
 	    <PARAMETER 
 		    NAME="USE_EXISTING_CONNECTION" 
@@ -207,7 +231,7 @@
 	    <PARAMETER NAME="REDUCE"
 	    	FIELD="MEMO"
 	      	REQUIRED="true"
-	      	SHOW_IF="(QUERY_BY_VIEW == 'true') and (VIEW_ACTION != 'NONE')"
+	      	SHOW_IF="(QUERY_BY_VIEW == 'true') AND (VIEW_ACTION != 'NONE') AND (ISREDUCE == 'true')"
 	      	NUM_ROW="75"
 	   		GROUP="QUERY_OPTION"
 	   	>
@@ -280,7 +304,7 @@
 	      	FIELD="CHECK"
 	      	NUM_ROW="90"
 	      	GROUP="QUERY_OPTION"
-	      	SHOW_IF="(QUERY_BY_VIEW == 'true') and (ISREDUCE == 'true')"
+	      	SHOW_IF="(QUERY_BY_VIEW == 'true') AND (ISREDUCE == 'true')"
 	      	REQUIRED="false"
 	  	>
 	  		<DEFAULT>false</DEFAULT>
@@ -291,7 +315,7 @@
 	      	NUM_ROW="90"
 	      	GROUP="QUERY_OPTION"
 	      	SHOW_IF="(ISREDUCE == 'true') and (GROUP == 'true')"
-	      	REQUIRED="false"
+	      	REQUIRED_IF="(ISREDUCE == 'true') AND (GROUP == 'true')"
 	  	>
 	   	</PARAMETER>
 	   	
@@ -335,6 +359,9 @@
 	      	NUM_ROW="125"
 	      	GROUP="EXTRACT_JSON"
 	    >
+	    	<ITEMS DEFAULT="jsonDoc">
+	            <ITEM NAME="jsonDoc" VALUE="jsonDoc" />
+	        </ITEMS>
     	</PARAMETER>
         
         <PARAMETER
@@ -361,7 +388,7 @@
 		    <ITEMS>
 		        <ITEM NAME="SCHEMA_COLUMN" FIELD="COLUMN_LIST"/>
 		        <ITEM NAME="QUERY" REPOSITORY_ITEM="XML_QUERY" />
-		    	<ITEM NAME="NODECHECK" FIELD="CHECK" VALUE="false" SHOW_IF="false"/>
+		    	<ITEM NAME="NODECHECK" FIELD="CHECK" VALUE="false"/>
 		    </ITEMS>
 		</PARAMETER>
 		
@@ -371,33 +398,6 @@
 	      >
 	      	<DEFAULT>10000</DEFAULT>
 	    </PARAMETER>
-		
-		<PARAMETER 
-        	NAME="INPUT_SCHEMA"  
-			FIELD="SCHEMA_TYPE" 
-			REQUIRED="true"
-			NUM_ROW="5" 
-		>
-	      	<TABLE IF="(INCLUDE_DOCS == 'false')" READONLY="false">
-		        <COLUMN NAME="Id" TYPE="id_String" />
-		        <COLUMN NAME="Key" TYPE="id_String" />
-		        <COLUMN NAME="Value" TYPE="id_String" />
-	      	</TABLE>
-	      	<TABLE IF="(INCLUDE_DOCS == 'true' AND IS_VIRTUAL_COMPONENT == 'true')" READONLY="false">
-		        <COLUMN NAME="jsonDoc" TYPE="id_String" READONLY="false" CUSTOM="true"/>
-	      	</TABLE>
-	      	<TABLE IF="(INCLUDE_DOCS == 'true')" READONLY="false" />
-		</PARAMETER>
-        
-        <PARAMETER 
-        	NAME="SCHEMA" 
-	        FIELD="SCHEMA_TYPE" 
-	        REQUIRED="true"
-			NUM_ROW="6"
-			CONTEXT="OUTPUT"
-		>
-			<DEFAULT />
-		</PARAMETER>
 		
 		<PARAMETER
 		    NAME="DIE_ON_ERROR"

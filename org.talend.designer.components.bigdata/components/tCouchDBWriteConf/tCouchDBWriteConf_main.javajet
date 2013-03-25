@@ -36,41 +36,44 @@
 		for (IConnection conn : conns) {
 			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 				List<IMetadataColumn> columnList = metadata.getListColumns();
-				int sizeColumns = columnList.size();
-               	if("INSERT".equals(dataAction)){
 %>
 		map_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(java.util.Map.class, <%=conn.getName()%>.<%=jsonfield%>.toString());
 		map_<%=cid%>.put("_id",<%=conn.getName()%>.<%=key%>);
+<%
+               	if("INSERT".equals(dataAction)){
+%>
 		db_<%=cid%>.createDocument(map_<%=cid%>);
 <%
-                }else if("UPDATE".equals(dataAction)){
+                }else {
 %>
-		String rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
-		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=jsonfield%>.toString());
+		String rev_<%=cid%>=null;
+   		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,org.svenson.JSON.defaultJSON().forValue(map_<%=cid%>));
+  		doc_<%=cid%>.setId(<%=conn.getName()%>.<%=key%>);
+<%
+                	if("UPDATE".equals(dataAction)){
+%>
+		rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
 		doc_<%=cid%>.setRevision(rev_<%=cid%>);
 		db_<%=cid%>.updateDocument(doc_<%=cid%>);
 <%
-                }else if("UPSERT".equals(dataAction)){
+                	}else if("UPSERT".equals(dataAction)){
 %>
-		String rev_<%=cid%>=null;
 		try{
 			rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
 		}catch(java.lang.Exception e_<%=cid%>){
-			System.err.println(e_<%=cid%>.getMessage());
 		}
-		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=jsonfield%>.toString());
 		if(rev_<%=cid%>!=null){
 			doc_<%=cid%>.setRevision(rev_<%=cid%>);
 		}
 		db_<%=cid%>.createOrUpdateDocument(doc_<%=cid%>);
 <%
-				}else{
+					}else{
 %>
-		String rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
-		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=jsonfield%>.toString());
+		rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
 		doc_<%=cid%>.setRevision(rev_<%=cid%>);
 		db_<%=cid%>.delete(doc_<%=cid%>);
 <%
+					}
 				}
 %>
 		nb_line_<%=cid%> ++;
