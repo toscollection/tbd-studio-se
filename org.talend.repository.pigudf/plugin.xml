@@ -5,13 +5,12 @@
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
             activeByDefault="true"
-            appearsBefore="org.talend.repository.viewer.code.jobscript"
             contentProvider="org.talend.repository.pigudf.content.PigudfContentProvider"
             icon="icons/pigudf.gif"
             id="org.talend.repository.viewer.code.PigUdf"
             labelProvider="org.talend.repository.viewer.label.RepositoryViewLabelProvider"
             name="%NavigatorContent.pigUdf"
-            priority="normal">
+            priority="high">
       <triggerPoints>
            <and>
               <instanceof
