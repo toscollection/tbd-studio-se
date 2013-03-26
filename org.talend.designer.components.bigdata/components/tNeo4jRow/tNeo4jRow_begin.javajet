@@ -1,0 +1,53 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+    
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    if (useExistingConnection) {
+    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    	String dbconn = "dbService_" + connection;
+		%>
+		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbconn%>");
+	<%
+    } else {
+    	boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
+    	if (remoteServer) {
+    		String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
+    		%>
+    		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>);
+    		<%
+    	} else {
+	    	String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
+			%>
+			org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedGraphDatabase(<%=databasePath%>);
+			<%
+		}
+    }
+    
+    String userNbLine = ElementParameterParser.getValue(node, "__USE_NB_LINE__");
+%>   
+org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>);
+org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+
+long counter_<%=cid%> = 0;
+long nbNodeInserted_<%=cid%> = 0;
+long nbRelationshipInserted_<%=cid%> = 0;
+long nbPropertiesUpdated_<%=cid%> = 0;
+long nbNodeDeleted_<%=cid%> = 0;
+long nbRelationshipDeleted_<%=cid%> = 0;

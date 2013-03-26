@@ -106,7 +106,7 @@ public class Relationship implements Cloneable {
 
     public static enum Direction {
         OUTGOING("Outgoing"),
-        INCOMMING("Incomming");
+        INCOMING("Incoming");
 
         private Direction(String name) {
             this.name = name;
