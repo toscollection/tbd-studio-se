@@ -22,7 +22,8 @@ import org.talend.commons.ui.runtime.image.IImage;
 public enum EHadoopClusterImage implements IImage {
 
     HADOOPCLUSTER_RESOURCE_ICON("/icons/hadoop-logo-16x16.png"), //$NON-NLS-1$
-    HADOOPCLUSTER_WIZ("/icons/hadoop-logo-wiz.png"); //$NON-NLS-1$
+    HADOOPCLUSTER_WIZ("/icons/hadoop-logo-wiz.png"), //$NON-NLS-1$
+    HADOOP_LINK_DB_ICON("/icons/db_link.png"); //$NON-NLS-1$
 
     private String path;
 

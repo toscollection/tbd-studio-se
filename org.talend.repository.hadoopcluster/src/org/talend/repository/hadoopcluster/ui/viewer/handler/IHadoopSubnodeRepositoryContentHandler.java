@@ -13,11 +13,8 @@
 package org.talend.repository.hadoopcluster.ui.viewer.handler;
 
 import org.talend.core.model.general.Project;
-import org.talend.core.model.metadata.builder.connection.Connection;
-import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.IRepositoryContentHandler;
-import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.repository.model.RepositoryNode;
 
 /**
@@ -45,27 +42,5 @@ public interface IHadoopSubnodeRepositoryContentHandler extends IRepositoryConte
      * @param parentNode
      */
     public void addNode(Project project, RepositoryNode parentNode);
-
-    /**
-     * DOC ycbai Comment method "addSchemaNode".
-     * 
-     * Add schema nodes.
-     * 
-     * @param parentNode
-     * @param connection
-     * @param repositoryObject
-     */
-    public void addSchemaNode(RepositoryNode parentNode, Connection connection, IRepositoryViewObject repositoryObject);
-
-    /**
-     * DOC ycbai Comment method "addColumnNode".
-     * 
-     * Add column nodes.
-     * 
-     * @param tableNode
-     * @param repositoryObject
-     * @param metadataTable
-     */
-    public void addColumnNode(RepositoryNode tableNode, IRepositoryViewObject repositoryObject, MetadataTable metadataTable);
 
 }

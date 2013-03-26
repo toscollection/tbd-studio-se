@@ -12,17 +12,27 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.EMap;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
+import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
+import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
+import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.model.IProxyRepositoryFactory;
@@ -40,6 +50,20 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
  * 
  */
 public class HCRepositoryUtil {
+
+    private static List<String> hadoopDbParameters = null;
+
+    static {
+        hadoopDbParameters = new ArrayList<String>();
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION);
+    }
 
     /**
      * DOC ycbai Comment method "isHadoopClusterItem".
@@ -298,6 +322,73 @@ public class HCRepositoryUtil {
         }
 
         return isHadoopClusterNode(repNode);
+    }
+
+    public static List<DatabaseConnectionItem> getHadoopRelatedDbConnectionItems(String clusterId) {
+        List<DatabaseConnectionItem> dbConnItems = new ArrayList<DatabaseConnectionItem>();
+        try {
+            List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(
+                    ERepositoryObjectType.METADATA_CONNECTIONS);
+            for (IRepositoryViewObject repObj : repObjs) {
+                if (repObj != null && repObj.getProperty() != null) {
+                    DatabaseConnectionItem item = (DatabaseConnectionItem) repObj.getProperty().getItem();
+                    DatabaseConnection connection = (DatabaseConnection) item.getConnection();
+                    String hcId = connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+                    if (hcId != null && hcId.equals(clusterId) && !dbConnItems.contains(connection)) {
+                        dbConnItems.add(item);
+                    }
+                }
+            }
+        } catch (PersistenceException e) {
+            ExceptionHandler.process(e);
+        }
+
+        return dbConnItems;
+    }
+
+    /**
+     * DOC ycbai Comment method "getHadoopDbParameters".
+     * 
+     * Get db connection(like hbase, hive) parameters by hadoop cluster.
+     * 
+     * @param clusterId
+     * @return
+     */
+    public static Map<String, String> getHadoopDbParameters(String clusterId) {
+        Map<String, String> map = new HashMap<String, String>();
+        HadoopClusterConnectionItem clusterItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
+        if (clusterItem != null) {
+            HadoopClusterConnection hcConnection = (HadoopClusterConnection) clusterItem.getConnection();
+            map.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID, clusterItem.getProperty().getId());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER,
+                    HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION, hcConnection.getDistribution());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION, hcConnection.getDfVersion());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL, hcConnection.getNameNodeURI());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL, hcConnection.getJobTrackerURI());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION, hcConnection.getDistribution());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION, hcConnection.getDfVersion());
+        }
+
+        return map;
+    }
+
+    /**
+     * DOC ycbai Comment method "removeHadoopDbParameters".
+     * 
+     * Remove all db connection related parameters.
+     * 
+     * @param connection
+     */
+    public static void removeHadoopDbParameters(DatabaseConnection connection) {
+        EMap<String, String> parameters = connection.getParameters();
+        Iterator<Entry<String, String>> iterator = parameters.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> entry = iterator.next();
+            if (hadoopDbParameters.contains(entry.getKey())) {
+                iterator.remove();
+            }
+        }
     }
 
 }

@@ -12,17 +12,26 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
+import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.utils.VersionUtils;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
+import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -33,6 +42,7 @@ import org.talend.repository.hadoopcluster.HadoopClusterPlugin;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.update.HadoopClusterUpdateManager;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
@@ -171,6 +181,7 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
                 } else {
                     HadoopClusterUpdateManager.updateHadoopClusterConnection(connectionItem);
                     updateConnectionItem();
+                    updateDbConnections();
 
                     boolean isModified = propertiesPage.isNameModifiedByUser();
                     if (isModified) {
@@ -182,7 +193,6 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
                             }
                         }
                     }
-
                 }
             } catch (Exception e) {
                 String detailError = e.toString();
@@ -195,6 +205,23 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void updateDbConnections() throws PersistenceException {
+        IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
+        List<DatabaseConnectionItem> dbConnectionItems = HCRepositoryUtil.getHadoopRelatedDbConnectionItems(connectionProperty
+                .getId());
+        Map<String, String> hadoopDbParameters = HCRepositoryUtil.getHadoopDbParameters(connectionProperty.getId());
+        for (DatabaseConnectionItem dbItem : dbConnectionItems) {
+            DatabaseConnection dbConn = (DatabaseConnection) dbItem.getConnection();
+            EMap<String, String> connParameters = dbConn.getParameters();
+            Iterator<Entry<String, String>> iter = hadoopDbParameters.entrySet().iterator();
+            while (iter.hasNext()) {
+                Map.Entry<String, String> entry = iter.next();
+                connParameters.put(entry.getKey(), entry.getValue());
+            }
+            factory.save(dbItem);
         }
     }
 

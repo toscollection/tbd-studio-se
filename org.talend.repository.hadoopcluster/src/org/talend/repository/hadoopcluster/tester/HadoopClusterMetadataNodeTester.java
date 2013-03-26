@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.tester;
 
+import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.tester.AbstractNodeTester;
@@ -31,6 +33,10 @@ public class HadoopClusterMetadataNodeTester extends AbstractNodeTester {
 
     private static final String IS_HADOOP_SUBCONNECTION_SCHEMA_COLUMN = "isHadoopSubconnectionSchemaColumn"; //$NON-NLS-1$
 
+    private static final String IS_HADOOP_FOLDER = "isHadoopFolder"; //$NON-NLS-1$
+
+    private static final String IS_HADOOP_DB_CONNECTION = "isHadoopDbConnection"; //$NON-NLS-1$
+
     @Override
     protected Boolean testProperty(Object receiver, String property, Object[] args, Object expectedValue) {
         if (receiver instanceof RepositoryNode) {
@@ -43,34 +49,38 @@ public class HadoopClusterMetadataNodeTester extends AbstractNodeTester {
                 return isHadoopSubNodeSchema(repositoryNode);
             } else if (IS_HADOOP_SUBCONNECTION_SCHEMA_COLUMN.equals(property)) {
                 return isHadoopSubNodeSchemaColumn(repositoryNode);
+            } else if (IS_HADOOP_FOLDER.equals(property)) {
+                return isHadoopFolder(repositoryNode);
+            } else if (IS_HADOOP_DB_CONNECTION.equals(property)) {
+                return isHadoopDbConnection(repositoryNode);
             }
         }
 
         return null;
     }
 
-    private boolean isHadoopClusterNode(RepositoryNode repositoryNode) {
+    public boolean isHadoopClusterNode(RepositoryNode repositoryNode) {
         if (repositoryNode == null) {
             return false;
         }
         return isTypeNode(repositoryNode, HadoopClusterRepositoryNodeType.HADOOPCLUSTER);
     }
 
-    private boolean isHadoopSubNode(RepositoryNode repositoryNode) {
+    public boolean isHadoopSubNode(RepositoryNode repositoryNode) {
         if (repositoryNode == null) {
             return false;
         }
         return HadoopClusterRepositoryNodeType.HADOOPCLUSTER.isParentTypeOf(getNodeContentType(repositoryNode));
     }
 
-    private boolean isHadoopSubNodeSchema(RepositoryNode repositoryNode) {
+    public boolean isHadoopSubNodeSchema(RepositoryNode repositoryNode) {
         if (repositoryNode == null) {
             return false;
         }
         return isHadoopSubNode(repositoryNode.getParent());
     }
 
-    private boolean isHadoopSubNodeSchemaColumn(RepositoryNode repositoryNode) {
+    public boolean isHadoopSubNodeSchemaColumn(RepositoryNode repositoryNode) {
         if (repositoryNode == null) {
             return false;
         }
@@ -79,6 +89,18 @@ public class HadoopClusterMetadataNodeTester extends AbstractNodeTester {
             return false;
         }
         return isHadoopSubNodeSchema(parentNode.getParent());
+    }
+
+    public boolean isHadoopFolder(RepositoryNode repositoryNode) {
+        return repositoryNode instanceof HadoopFolderRepositoryNode;
+    }
+
+    public boolean isHadoopDbConnection(RepositoryNode repositoryNode) {
+        if (repositoryNode == null) {
+            return false;
+        }
+        return isTypeNode(repositoryNode, ERepositoryObjectType.METADATA_CONNECTIONS)
+                && isHadoopFolder(repositoryNode.getParent());
     }
 
 }

@@ -1,8 +1,12 @@
 package org.talend.repository.hadoopcluster.ui.viewer.handler;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -15,10 +19,13 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
+import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.database.conn.template.EDatabaseConnTemplate;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.MetadataManager;
+import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
+import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
-import org.talend.core.model.repository.AbstractRepositoryContentHandler;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryTypeProcessor;
 import org.talend.core.model.repository.IRepositoryViewObject;
@@ -43,7 +50,7 @@ import orgomg.cwm.foundation.businessinformation.BusinessinformationPackage;
  * created by ycbai on 2013-1-21 Detailled comment
  * 
  */
-public class HadoopClusterRepositoryContentHandler extends AbstractRepositoryContentHandler {
+public class HadoopClusterRepositoryContentHandler extends AbstractHadoopRepositoryContentHandler {
 
     private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
@@ -154,7 +161,63 @@ public class HadoopClusterRepositoryContentHandler extends AbstractRepositoryCon
             for (IHadoopSubnodeRepositoryContentHandler handler : HadoopSubnodeRepositoryContentManager.getHandlers()) {
                 handler.addNode(project, node);
             }
+            addHadoopDBNode(node);
         }
+    }
+
+    private void addHadoopDBNode(RepositoryNode parentNode) {
+        String id = parentNode.getObject().getId();
+        Map<String, List<DatabaseConnectionItem>> dbItemMap = getLinkedDbMap().get(id);
+        if (dbItemMap != null && dbItemMap.size() > 0) {
+            Iterator<Entry<String, List<DatabaseConnectionItem>>> iterator = dbItemMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, List<DatabaseConnectionItem>> entry = iterator.next();
+                List<DatabaseConnectionItem> dbItems = entry.getValue();
+                EDatabaseConnTemplate dbTemplate = EDatabaseConnTemplate.indexOfTemplate(entry.getKey());
+                RepositoryNode hadoopFolderNode = createHadoopFolderNode(parentNode, ERepositoryObjectType.METADATA_CONNECTIONS,
+                        dbTemplate.getDBDisplayName(), dbItems.size());
+                parentNode.getChildren().add(hadoopFolderNode);
+                for (DatabaseConnectionItem dbItem : dbItems) {
+                    RepositoryNode hadoopSubNode = createHadoopSubNode(hadoopFolderNode, dbItem);
+                    // IRepositoryNode dbNode = RepositorySeekerManager.getInstance().searchRepoViewNode(
+                    // dbItem.getProperty().getId());
+                    // hadoopSubNode.getChildren().addAll(dbNode.getChildren());
+                    // TODO:try to add children like db...
+                }
+            }
+        }
+    }
+
+    private Map<String, Map<String, List<DatabaseConnectionItem>>> getLinkedDbMap() {
+        Map<String, Map<String, List<DatabaseConnectionItem>>> linkedDbMap = new HashMap<String, Map<String, List<DatabaseConnectionItem>>>();
+        try {
+            List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(
+                    ERepositoryObjectType.METADATA_CONNECTIONS);
+            for (IRepositoryViewObject repObj : repObjs) {
+                if (repObj != null && repObj.getProperty() != null) {
+                    DatabaseConnectionItem item = (DatabaseConnectionItem) repObj.getProperty().getItem();
+                    DatabaseConnection connection = (DatabaseConnection) item.getConnection();
+                    String hcId = connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+                    if (hcId != null) {
+                        Map<String, List<DatabaseConnectionItem>> dbItemMap = linkedDbMap.get(hcId);
+                        if (dbItemMap == null) {
+                            dbItemMap = new HashMap<String, List<DatabaseConnectionItem>>();
+                            linkedDbMap.put(hcId, dbItemMap);
+                        }
+                        List<DatabaseConnectionItem> itemList = dbItemMap.get(connection.getDatabaseType());
+                        if (itemList == null) {
+                            itemList = new ArrayList<DatabaseConnectionItem>();
+                            dbItemMap.put(connection.getDatabaseType(), itemList);
+                        }
+                        itemList.add(item);
+                    }
+                }
+            }
+        } catch (PersistenceException e) {
+            // dont care...
+        }
+
+        return linkedDbMap;
     }
 
     @Override

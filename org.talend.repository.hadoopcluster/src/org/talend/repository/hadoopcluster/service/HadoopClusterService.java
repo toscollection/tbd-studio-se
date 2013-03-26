@@ -14,16 +14,21 @@ package org.talend.repository.hadoopcluster.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.exception.PersistenceException;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.model.metadata.builder.connection.Connection;
+import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.IHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
-import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
@@ -58,13 +63,18 @@ public class HadoopClusterService implements IHadoopClusterService {
     }
 
     @Override
-    public boolean isHadoopClusterNode(RepositoryNode node) {
+    public boolean isHadoopClusterNode(IRepositoryNode node) {
         return HCRepositoryUtil.isHadoopClusterNode(node);
     }
 
     @Override
-    public boolean isHadoopSubnode(RepositoryNode node) {
+    public boolean isHadoopSubnode(IRepositoryNode node) {
         return HCRepositoryUtil.isHadoopSubnode(node);
+    }
+
+    @Override
+    public boolean isHadoopFolderNode(IRepositoryNode node) {
+        return HCRepositoryUtil.isHadoopFolderNode(node);
     }
 
     @Override
@@ -108,6 +118,28 @@ public class HadoopClusterService implements IHadoopClusterService {
         HadoopClusterConnection clusterConnection = (HadoopClusterConnection) clusterConnectionItem.getConnection();
 
         return clusterConnection.getConnectionList();
+    }
+
+    @Override
+    public void refreshCluster(String clusterId) {
+        HadoopClusterConnectionItem clusterItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
+        if (clusterItem != null) {
+            try {
+                ProxyRepositoryFactory.getInstance().save(clusterItem.getProperty());
+            } catch (PersistenceException e) {
+                ExceptionHandler.process(e);
+            }
+        }
+    }
+
+    @Override
+    public Map<String, String> getHadoopDbParameters(String clusterId) {
+        return HCRepositoryUtil.getHadoopDbParameters(clusterId);
+    }
+
+    @Override
+    public void removeHadoopDbParameters(DatabaseConnection connection) {
+        HCRepositoryUtil.removeHadoopDbParameters(connection);
     }
 
 }

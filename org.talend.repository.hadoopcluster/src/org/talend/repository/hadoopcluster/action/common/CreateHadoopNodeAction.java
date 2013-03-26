@@ -141,19 +141,23 @@ public abstract class CreateHadoopNodeAction extends AbstractCreateAction {
     }
 
     protected String getCreateLabel() {
-        return Messages.getString("CreateHadoopNodeAction.createLabel", getNodeType().getKey()); //$NON-NLS-1$
+        return Messages.getString("CreateHadoopNodeAction.createLabel", getNodeLabel()); //$NON-NLS-1$
     }
 
     protected String getEditLabel() {
-        return Messages.getString("CreateHadoopNodeAction.editLabel", getNodeType().getKey()); //$NON-NLS-1$
+        return Messages.getString("CreateHadoopNodeAction.editLabel", getNodeLabel()); //$NON-NLS-1$
     }
 
     protected String getOpenLabel() {
-        return Messages.getString("CreateHadoopNodeAction.openLabel", getNodeType().getKey()); //$NON-NLS-1$
+        return Messages.getString("CreateHadoopNodeAction.openLabel", getNodeLabel()); //$NON-NLS-1$
     }
 
     protected boolean hideAction(RepositoryNode node) {
         return false;
+    }
+
+    protected String getNodeLabel() {
+        return getNodeType().getKey();
     }
 
     protected abstract ERepositoryObjectType getNodeType();
