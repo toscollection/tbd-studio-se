@@ -23,15 +23,12 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.runtime.image.ImageProvider;
@@ -47,9 +44,7 @@ import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.oozie.scheduler.constants.TOozieImages;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
-import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.utils.TOozieCommonUtils;
-import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 
 /**
@@ -73,16 +68,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     private Text outputTxt;// Output logs/status
 
-    private Combo serverCombo;
-
-    private Text repositoryText;
-
-    private Button selectbtn;
-
     @SuppressWarnings("unused")
     private String pathValue;// The value of Path Text
-
-    private String repositoryValue;
 
     private ExecuteJobCompositeController executeJobCompController;
 
@@ -110,67 +97,11 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     }
 
     protected void createExecuteJobAreas(Composite parent) {
-        GridLayout gridLayout = new GridLayout(8, false);
+        GridLayout gridLayout = new GridLayout(5, false);
         parent.setLayout(gridLayout);
-        createTopContents(parent);
+        createButtons(parent);
         createCenterContents(parent);
         createBottomContents(parent);
-    }
-
-    private void createTopContents(Composite parent) {
-        createButtons(parent);
-        // Server label
-        Label serverLbl = new Label(parent, SWT.NONE);
-        serverLbl.setText(Messages.getString("ExecuteJobComposite.Server")); //$NON-NLS-1$
-        GridDataFactory.fillDefaults().span(1, 1).indent(SWT.DEFAULT, 10).grab(false, false).align(SWT.END, SWT.CENTER)
-                .applyTo(serverLbl);
-
-        // Server combo
-        String[] comboitems = new String[] {
-                Messages.getString("ExecuteJobComposite.fromPreferences"), Messages.getString("ExecuteJobComposite.fromRepository") }; //$NON-NLS-1$ //$NON-NLS-2$
-        serverCombo = new Combo(parent, SWT.BORDER | SWT.DROP_DOWN | SWT.READ_ONLY);
-        serverCombo.setItems(comboitems);
-        serverCombo.setToolTipText(Messages.getString("ExecuteJobComposite.fromRepositorytoolTip")); //$NON-NLS-1$ 
-        if (!TOozieParamUtils.isFromRepository()) {
-            serverCombo.select(1);
-            serverCombo.setEnabled(false);
-        } else if (getRepositoryTextValue().length() != 0) {
-            serverCombo.select(1);
-        } else {
-            serverCombo.select(0);
-        }
-        GridDataFactory.fillDefaults().span(1, 1).grab(false, false).indent(SWT.DEFAULT, 15)
-                .hint(computeComboTxtSize(serverCombo).x + 10, 30).applyTo(serverCombo);
-
-        // Setting button
-        settingBtn = new Button(parent, SWT.NONE);
-        settingBtn.setText(TOozieUIConstants.OOZIE_BTN_SETTING);
-        settingBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_SETTING));
-        GridDataFactory.fillDefaults().span(1, 1).grab(false, false).indent(SWT.DEFAULT, 10)
-                .hint(computeBtnTxtSize(settingBtn).x + 60, 30).align(SWT.END, SWT.CENTER).applyTo(settingBtn);
-
-        // Repository info
-        repositoryText = new Text(parent, SWT.BORDER);
-        repositoryText.setText(getRepositoryTextValue() == null ? "" : getRepositoryTextValue()); //$NON-NLS-1$
-        repositoryText.setEditable(false);
-        repositoryText.setEnabled(false);
-        repositoryText.setVisible(serverCombo.getSelectionIndex() == 1);
-        // repositoryText.setDoubleClickEnabled(true);
-        GridDataFactory.fillDefaults().grab(true, false).indent(-105, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 14)
-                .align(SWT.FILL, SWT.CENTER).applyTo(repositoryText);
-
-        // Select button
-        selectbtn = new Button(parent, SWT.NONE);
-        selectbtn.setImage(ImageProvider.getImage(TOozieImages.IMG_DOTS));
-        selectbtn.setVisible(serverCombo.getSelectionIndex() == 1);
-        GridDataFactory.fillDefaults().span(1, 1).grab(true, false).indent(SWT.DEFAULT, 10).hint(30, 21)
-                .align(SWT.BEGINNING, SWT.CENTER).applyTo(selectbtn);
-
-        regServerComboListener();
-        regSettingBtnListener();
-        regSelectBtnListener();
-        regRepositoryTextListener();
-
     }
 
     /**
@@ -200,6 +131,13 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(computeBtnTxtSize(killBtn).x + 70, 30)
                 .align(SWT.BEGINNING, SWT.CENTER).applyTo(killBtn);
 
+        // Setting button
+        settingBtn = new Button(parent, SWT.NONE);
+        settingBtn.setText(TOozieUIConstants.OOZIE_BTN_SETTING);
+        settingBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_SETTING));
+        GridDataFactory.fillDefaults().span(2, 1).grab(false, false).indent(50, 10)
+                .hint(computeBtnTxtSize(settingBtn).x + 60, 30).align(SWT.END, SWT.CENTER).applyTo(settingBtn);
+
         registerBtnListeners();
     }
 
@@ -209,25 +147,20 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).align(SWT.BEGINNING, SWT.CENTER)
                 .applyTo(pathLbl);
 
-        pathText = new Text(parent, SWT.SINGLE | SWT.BORDER);
-
-        // Need to think another way to display the text in
-        Font font = new Font(Display.getCurrent(), "Arial", 12, SWT.NORMAL);
-        pathText.setFont(font);
-
-        pathText.setText(getPathValue() == null ? "" : getPathValue()); //$NON-NLS-1$
-        GridDataFactory.fillDefaults().span(3, 1).grab(true, false).indent(-70, 10).hint(SWT.DEFAULT, 20).applyTo(pathText);
+        pathText = new Text(parent, SWT.BORDER);
+        pathText.setText(getPathValue() == null ? "" : getPathValue());
+        GridDataFactory.fillDefaults().span(2, 1).grab(true, false).indent(-50, 10).hint(SWT.DEFAULT, 20).applyTo(pathText);
 
         btnEdit = new Button(parent, SWT.PUSH);
         btnEdit.setImage(ImageProvider.getImage(TOozieImages.IMG_DOTS));
-        GridDataFactory.fillDefaults().span(1, 1).grab(true, false).indent(SWT.DEFAULT, 10).hint(30, 30)
+        GridDataFactory.fillDefaults().grab(false, false).indent(SWT.DEFAULT, 10).hint(SWT.DEFAULT, 30)
                 .align(SWT.BEGINNING, SWT.CENTER).applyTo(btnEdit);
 
         monitoringBtn = new Button(parent, SWT.NONE);
         monitoringBtn.setText(TOozieUIConstants.OOZIE_BTN_MONITOR);
         monitoringBtn.setImage(ImageProvider.getImage(TOozieImages.IMG_MONITOING));
-        GridDataFactory.fillDefaults().span(1, 1).grab(false, false).indent(SWT.DEFAULT, 10)
-                .hint(computeBtnTxtSize(settingBtn).x + 60, 30).align(SWT.END, SWT.CENTER).applyTo(monitoringBtn);
+        GridDataFactory.fillDefaults().grab(false, false).indent(30, 10).hint(computeBtnTxtSize(settingBtn).x + 60, 30)
+                .align(SWT.END, SWT.CENTER).applyTo(monitoringBtn);
         monitoringBtn.setVisible(TOozieCommonUtils.isWindowsOS());
 
         regPathTextListener();
@@ -237,7 +170,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     private void createBottomContents(Composite parent) {
         outputTxt = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
-        GridDataFactory.fillDefaults().span(8, 2).indent(SWT.DEFAULT, 10).grab(true, true).applyTo(outputTxt);
+        GridDataFactory.fillDefaults().span(5, 2).indent(SWT.DEFAULT, 10).grab(true, true).applyTo(outputTxt);
     }
 
     /**
@@ -247,62 +180,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         regScheduleBtnListener();
         regRunBtnListener();
         regKillBtnListener();
-
-    }
-
-    private void regRepositoryTextListener() {
-        repositoryText.addModifyListener(new ModifyListener() {
-
-            @Override
-            public void modifyText(ModifyEvent e) {
-                // executeJobCompController.updateAllEnabledOrNot();
-            }
-        });
-
-    }
-
-    public String getRepositoryTextValue() {
-        String name = ""; //$NON-NLS-1$
-        if (!TOozieParamUtils.isFromRepository()) {
-            return name;
-        }
-        if (getEditor() != null) {
-            IProcess2 process = OozieJobTrackerListener.getProcess();
-            String id = (String) process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).getValue();
-            if (id != null && id.length() != 0) {
-                name = TOozieParamUtils.getOozieConnectionById(id).getName();
-            }
-        }
-        return name;
-    }
-
-    public void setRepositoryValue(String id) {
-        if (getEditor() != null && !OozieJobTrackerListener.getProcess().isReadOnly()) {
-            IProcess2 process = OozieJobTrackerListener.getProcess();
-            getCommandStack().execute(
-                    new PropertyChangeCommand(process, EOozieParameterName.REPOSITORY_CONNECTION_ID.getName(), id.trim()));
-        }
-    }
-
-    private void regSelectBtnListener() {
-        selectbtn.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                executeJobCompController.doSelectRepositoryAction();
-            }
-        });
-
-    }
-
-    protected void regServerComboListener() {
-        serverCombo.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                executeJobCompController.doSelectComboAction();
-            }
-        });
+        regSettingBtnListener();
     }
 
     protected void regScheduleBtnListener() {
@@ -387,20 +265,13 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         return p;
     }
 
-    private Point computeComboTxtSize(Combo cmb) {
-        GC gc = new GC(cmb.getDisplay());
-        final Point p = gc.textExtent(cmb.getText());
-        gc.dispose();
-        return p;
-    }
-
     public String getPathValue() {
         if (getEditor() != null) {
             IProcess2 process = OozieJobTrackerListener.getProcess();
             String appPath = (String) process.getElementParameter(EOozieParameterName.HADOOP_APP_PATH.getName()).getValue();
             return appPath;
         }
-        return ""; //$NON-NLS-1$
+        return "";
     }
 
     private AbstractMultiPageTalendEditor getEditor() {
@@ -611,30 +482,6 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     public Button getBtnEdit() {
         return this.btnEdit;
-    }
-
-    public void setServerCombo(Combo serverCombo) {
-        this.serverCombo = serverCombo;
-    }
-
-    public Combo getServerCombo() {
-        return serverCombo;
-    }
-
-    public void setRepositoryText(Text repositoryText) {
-        this.repositoryText = repositoryText;
-    }
-
-    public Text getRepositoryText() {
-        return repositoryText;
-    }
-
-    public void setSelectbtn(Button selectbtn) {
-        this.selectbtn = selectbtn;
-    }
-
-    public Button getSelectbtn() {
-        return selectbtn;
     }
 
 }
