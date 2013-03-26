@@ -41,6 +41,8 @@ public class TOozieSettingDialog extends Dialog {
 
     private OozieSettingComposite settingComposite;
 
+    private String repositoryId;
+
     /**
      * @param parentShell
      */
@@ -74,6 +76,7 @@ public class TOozieSettingDialog extends Dialog {
                 setOozieEndPointValue(oozieEndPointValue);
                 setUserNameValue(userNameValue);
                 setCustomJars(customJars);
+                setRepositoryId(repositoryId);
             }
         };
 
@@ -145,6 +148,14 @@ public class TOozieSettingDialog extends Dialog {
 
     public void setCustomJars(String customJars) {
         this.customJars = customJars;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
+    }
+
+    public String getRepositoryId() {
+        return settingComposite.getRepositoryId();
     }
 
 }

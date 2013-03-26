@@ -28,6 +28,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -35,19 +36,27 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.runtime.image.EImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
+import org.talend.core.GlobalServiceRegister;
+import org.talend.core.hadoop.IOozieService;
 import org.talend.core.hadoop.custom.ECustomVersionGroup;
 import org.talend.core.hadoop.custom.ECustomVersionType;
 import org.talend.core.hadoop.custom.HadoopCustomVersionDefineDialog;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.core.model.process.IProcess2;
+import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.prefs.ITalendCorePrefConstants;
+import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 import org.talend.oozie.scheduler.utils.TOozieParamUtils;
+import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
+import org.talend.repository.ui.dialog.RepositoryReviewDialog;
 
 /**
  * created by ycbai on 2013-2-26 Detailled comment
@@ -83,6 +92,16 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     private String customJars;
 
+    private LabelledCombo ooziePropertyTypeCombo;
+
+    private Text oozieRepositoryText;
+
+    private Button oozieSelectBtn;
+
+    private String repositoryId;
+
+    private String repositoryName;
+
     /**
      * DOC ycbai OozieSettingComposite constructor comment.
      * 
@@ -109,11 +128,49 @@ public class OozieSettingComposite extends ScrolledComposite {
         comp.setLayout(layout);
         setContent(comp);
 
+        addPropertyType(comp);
         addVersionFields(comp);
         addConnectionFields(comp);
 
         initUI();
         addListeners();
+    }
+
+    private void addPropertyType(Composite comp) {
+        Group propertyTypeGroup = Form.createGroup(comp, 5, "Property");
+        propertyTypeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        String[] types = new String[] { "from preference", "from repository" };
+        ooziePropertyTypeCombo = new LabelledCombo(propertyTypeGroup, "Property Type", "", types, 1, true);
+        GridDataFactory.fillDefaults().span(1, 1).align(SWT.FILL, SWT.CENTER).applyTo(ooziePropertyTypeCombo.getCombo());
+        oozieRepositoryText = new Text(propertyTypeGroup, SWT.BORDER);
+        oozieRepositoryText.setEditable(false);
+        GridDataFactory.fillDefaults().grab(true, false).hint(SWT.DEFAULT, ooziePropertyTypeCombo.getCombo().getItemHeight())
+                .span(2, 1).align(SWT.FILL, SWT.CENTER).applyTo(oozieRepositoryText);
+        oozieSelectBtn = new Button(propertyTypeGroup, SWT.PUSH);
+        oozieSelectBtn.setImage(ImageProvider.getImage(EImage.THREE_DOTS_ICON));
+        GridDataFactory.fillDefaults().grab(false, false).hint(SWT.DEFAULT, ooziePropertyTypeCombo.getCombo().getItemHeight())
+                .align(SWT.BEGINNING, SWT.FILL).span(1, 1).applyTo(oozieSelectBtn);
+        if (OozieJobTrackerListener.getProcess() == null) {
+            ooziePropertyTypeCombo.setReadOnly(true);
+            ooziePropertyTypeCombo.select(0);
+            oozieSelectBtn.setEnabled(false);
+        }
+        if (!TOozieParamUtils.isFromRepository()) {
+            ooziePropertyTypeCombo.select(0);
+            oozieSelectBtn.setVisible(false);
+            oozieRepositoryText.setVisible(false);
+        } else {
+            ooziePropertyTypeCombo.select(1);
+            String connId = (String) OozieJobTrackerListener.getProcess()
+                    .getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).getValue();
+            this.repositoryId = connId;
+            oozieRepositoryText.setText(TOozieParamUtils.getOozieConnectionById(connId).getLabel());
+
+        }
+        if (!GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
+            propertyTypeGroup.setVisible(false);
+        }
     }
 
     protected void preInitialization() {
@@ -133,6 +190,10 @@ public class OozieSettingComposite extends ScrolledComposite {
         customButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 1, 1));
         EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hadoopDistributionValue, false);
         updateVersionPart(distribution);
+        if (TOozieParamUtils.isFromRepository()) {
+            hadoopDistributionCombo.setReadOnly(true);
+            hadoopVersionCombo.setReadOnly(true);
+        }
     }
 
     private void addConnectionFields(Composite parent) {
@@ -166,6 +227,13 @@ public class OozieSettingComposite extends ScrolledComposite {
 
         userNameTxt = new Text(connectionGroup, SWT.BORDER);
         GridDataFactory.fillDefaults().grab(true, false).applyTo(userNameTxt);
+
+        if (TOozieParamUtils.isFromRepository()) {
+            nameNodeEndPointTxt.setEditable(false);
+            jobTrackerEndPointTxt.setEditable(false);
+            oozieEndPointTxt.setEditable(false);
+            userNameTxt.setEditable(false);
+        }
     }
 
     protected void initUI() {
@@ -173,7 +241,9 @@ public class OozieSettingComposite extends ScrolledComposite {
         if (distribution != null) {
             String distributionDisplayName = distribution.getDisplayName();
             hadoopDistributionCombo.setText(distributionDisplayName);
-            updateVersionPart(distribution);
+            if (hadoopVersionValue == null) {
+                updateVersionPart(distribution);
+            }
         }
         EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hadoopVersionValue);
         if (version4Drivers != null) {
@@ -186,6 +256,44 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     protected void addListeners() {
+
+        ooziePropertyTypeCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                oozieSelectBtn.setVisible(ooziePropertyTypeCombo.getSelectionIndex() == 1);
+                oozieRepositoryText.setVisible(ooziePropertyTypeCombo.getSelectionIndex() == 1);
+                if (ooziePropertyTypeCombo.getSelectionIndex() == 0) {
+                    IProcess2 process = OozieJobTrackerListener.getProcess();
+                    process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue("");
+                    oozieRepositoryText.setText("");
+                    setRepositoryId("");
+                }
+                updateProperty();
+            }
+        });
+
+        oozieSelectBtn.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                RepositoryReviewDialog dialog = new RepositoryReviewDialog(new Shell(), ERepositoryObjectType.METADATA, "OOZIE");
+                if (dialog.open() == RepositoryReviewDialog.OK) {
+                    String id = dialog.getResult().getObject().getId();
+                    repositoryId = id;
+                    oozieRepositoryText.setText(dialog.getResult().getObject().getLabel());
+                    IProcess2 process = OozieJobTrackerListener.getProcess();
+                    process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue(repositoryId);
+                }
+                updateProperty();
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+
+            }
+        });
+
         hadoopDistributionCombo.addModifyListener(new ModifyListener() {
 
             @Override
@@ -195,6 +303,7 @@ public class OozieSettingComposite extends ScrolledComposite {
                 if (distribution != null) {
                     hadoopDistributionValue = distribution.getName();
                     updateVersionPart(distribution);
+                    updateProperty();
                 }
             }
         });
@@ -260,6 +369,53 @@ public class OozieSettingComposite extends ScrolledComposite {
                 userNameValue = userNameTxt.getText();
             }
         });
+    }
+
+    protected void updateProperty() {
+
+        if (ooziePropertyTypeCombo.getSelectionIndex() == 1) {
+            setHadoopDistributionValue(TOozieParamUtils.getParamValueFromRepositoryById(
+                    ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION, repositoryId));
+            setHadoopVersionValue(TOozieParamUtils.getParamValueFromRepositoryById(
+                    ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION, repositoryId));
+            setNameNodeEndPointValue(TOozieParamUtils.getParamValueFromRepositoryById(
+                    ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT, repositoryId));
+            setJobTrackerEndPointValue(TOozieParamUtils.getParamValueFromRepositoryById(
+                    ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT, repositoryId));
+            setOozieEndPointValue(TOozieParamUtils.getParamValueFromRepositoryById(
+                    ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT, repositoryId));
+            setUserNameValue(TOozieParamUtils.getParamValueFromRepositoryById(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME,
+                    repositoryId));
+            setCustomJars(TOozieParamUtils.getParamValueFromRepositoryById(
+                    ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, repositoryId));
+        } else if (ooziePropertyTypeCombo.getSelectionIndex() == 0) {
+            setHadoopDistributionValue(TOozieParamUtils
+                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION));
+            setHadoopVersionValue(TOozieParamUtils
+                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION));
+            setNameNodeEndPointValue(TOozieParamUtils
+                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT));
+            setJobTrackerEndPointValue(TOozieParamUtils
+                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT));
+            setOozieEndPointValue(TOozieParamUtils
+                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT));
+            setUserNameValue(TOozieParamUtils.getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME));
+            setCustomJars(TOozieParamUtils
+                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS));
+        }
+        updateSetting();
+
+    }
+
+    private void updateSetting() {
+        initUI();
+        boolean isFromRepository = ooziePropertyTypeCombo.getSelectionIndex() == 1;
+        hadoopDistributionCombo.setReadOnly(isFromRepository);
+        hadoopVersionCombo.setReadOnly(isFromRepository);
+        nameNodeEndPointTxt.setEditable(!isFromRepository);
+        jobTrackerEndPointTxt.setEditable(!isFromRepository);
+        oozieEndPointTxt.setEditable(!isFromRepository);
+        userNameTxt.setEditable(!isFromRepository);
     }
 
     private void updateVersionPart(EHadoopDistributions distribution) {
@@ -378,6 +534,22 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     public void setCustomJars(String customJars) {
         this.customJars = customJars;
+    }
+
+    public String getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryName(String repositoryName) {
+        this.repositoryName = repositoryName;
+    }
+
+    public String getRepositoryName() {
+        return repositoryName;
+    }
+
+    public void setRepositoryId(String repositoryId) {
+        this.repositoryId = repositoryId;
     }
 
 }

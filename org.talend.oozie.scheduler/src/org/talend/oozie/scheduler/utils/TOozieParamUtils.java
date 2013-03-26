@@ -29,6 +29,7 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
@@ -48,6 +49,16 @@ public class TOozieParamUtils {
         IProcess2 process = OozieJobTrackerListener.getProcess();
         IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName());
         String id = (String) elementParameter.getValue();
+        Connection repositoryConnection = getOozieConnectionById(id);
+        if (repositoryConnection != null && GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
+            IOozieService service = (IOozieService) GlobalServiceRegister.getDefault().getService(IOozieService.class);
+            return service.getOozieParamFromConnection(repositoryConnection);
+        } else {
+            return new HashMap<String, String>();
+        }
+    }
+
+    public static Map<String, String> getRepositoryOozieParam(String id) {
         Connection repositoryConnection = getOozieConnectionById(id);
         if (repositoryConnection != null && GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
             IOozieService service = (IOozieService) GlobalServiceRegister.getDefault().getService(IOozieService.class);
@@ -118,4 +129,38 @@ public class TOozieParamUtils {
         String versionValue = TOozieParamUtils.getRepositoryOozieParam().get(prefKey);
         return versionValue;
     }
+
+    public static String getParamValueFromRepositoryById(String prefKey, String id) {
+        String versionValue = TOozieParamUtils.getRepositoryOozieParam(id).get(prefKey);
+        return versionValue;
+    }
+
+    public static String getNameNode() {
+        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
+    }
+
+    public static String getJobTracker() {
+        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT);
+    }
+
+    public static String getOozieEndPoint() {
+        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
+    }
+
+    public static String getUserNameForHadoop() {
+        return getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+    }
+
+    public static String getHadoopDistribution() {
+        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
+    }
+
+    public static String getHadoopVersion() {
+        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
+    }
+
+    public static String getHadoopCustomJars() {
+        return getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+    }
+
 }
