@@ -19,7 +19,6 @@ import org.talend.core.model.repository.ERepositoryObjectType;
  */
 public class HCatalogRepositoryNodeType {
 
-    public static ERepositoryObjectType HCATALOG = (ERepositoryObjectType) ERepositoryObjectType.valueOf(
-            ERepositoryObjectType.class, "HCATALOG"); //$NON-NLS-1$
+    public static ERepositoryObjectType HCATALOG = ERepositoryObjectType.valueOf(ERepositoryObjectType.class, "HCATALOG"); //$NON-NLS-1$
 
 }

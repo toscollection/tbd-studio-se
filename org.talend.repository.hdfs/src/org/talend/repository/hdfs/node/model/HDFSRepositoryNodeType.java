@@ -19,7 +19,6 @@ import org.talend.core.model.repository.ERepositoryObjectType;
  */
 public class HDFSRepositoryNodeType {
 
-    public static ERepositoryObjectType HDFS = (ERepositoryObjectType) ERepositoryObjectType.valueOf(ERepositoryObjectType.class,
-            "HDFS"); //$NON-NLS-1$
+    public static ERepositoryObjectType HDFS = ERepositoryObjectType.valueOf(ERepositoryObjectType.class, "HDFS"); //$NON-NLS-1$
 
 }
