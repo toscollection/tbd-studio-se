@@ -20,7 +20,9 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
+import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
+import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
 
 /**
@@ -46,15 +48,19 @@ public class ExpressionProposalProvider implements IContentProposalProvider {
 
     public void init(Object source) {
         PigMapData mapData = mapperManager.getExternalData();
-        int index = 0;
-        boolean needVar = false;
-
+        for (int i = 0; i < mapData.getInputTables().size(); i++) {
+            InputTable inputTable = mapData.getInputTables().get(i);
+            getProposalsInside(inputTable.getNodes(), proposalsInside);
+        }
     }
 
     private void getProposalsInside(List<? extends AbstractNode> nodes, List<EntryContentProposal> proposalsInside) {
         for (AbstractNode absNode : nodes) {
+            if (absNode instanceof TableNode) {
+                TableNode tableNode = (TableNode) absNode;
+                proposalsInside.add(new EntryContentProposal(mapperManager, tableNode));
+            }
         }
-
     }
 
     @Override
@@ -67,7 +73,5 @@ public class ExpressionProposalProvider implements IContentProposalProvider {
         IContentProposal[] res = new IContentProposal[proposals.size()];
         res = proposals.toArray(res);
         return res;
-
     }
-
 }
