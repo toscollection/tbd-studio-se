@@ -94,7 +94,14 @@ if(useExistingConn) {
 		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
 		String connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
 		String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
-		
+		String hiveServer = ElementParameterParser.getValue(previousNode, "__HIVE_SERVER__");
+
+		if(hiveServer==null || "".equals(hiveServer.trim())) {
+			hiveServer = "hive";
+		} else {
+			hiveServer = hiveServer.toLowerCase();
+		}
+
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__"));
 		
 		if(!isCustom && (("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MAPR1".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MapR_EMR".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)))) {
@@ -109,11 +116,11 @@ if(useExistingConn) {
 			System.setProperty("hive.metastore.local", "false");
 			System.setProperty("hive.metastore.uris", "thrift://" + <%=dbhost%> + ":" + <%=dbport%>);
 			System.setProperty("hive.metastore.execute.setugi", "true");
-			String url_<%=cid%> = "jdbc:hive://";
+			String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
 <%
 		} else {
 %>
-			String url_<%=cid%> = "jdbc:hive://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+			String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
 <%
 		}
 %>
