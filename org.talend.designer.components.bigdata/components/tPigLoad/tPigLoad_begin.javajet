@@ -233,7 +233,7 @@
 <%
 			}
 			
-			if(("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "CLOUDERA_CDH4".equals(pigVersion) || isCustom) && useKrb) {
+			if(("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion) || isCustom) && useKrb) {
 				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 				String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
 %>
