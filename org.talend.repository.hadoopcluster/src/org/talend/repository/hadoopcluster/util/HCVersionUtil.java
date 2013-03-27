@@ -22,7 +22,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EMap;
-import org.talend.core.hadoop.custom.ECustomVersionGroup;
+import org.talend.core.repository.hadoop.custom.ECustomVersionGroup;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 /**

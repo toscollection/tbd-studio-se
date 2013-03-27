@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.talend.core.hadoop.IOozieService;
-import org.talend.core.hadoop.custom.ECustomVersionGroup;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.prefs.ITalendCorePrefConstants;
+import org.talend.core.repository.hadoop.custom.ECustomVersionGroup;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.IRepositoryNode.EProperties;
