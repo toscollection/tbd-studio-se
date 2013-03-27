@@ -20,9 +20,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
-import org.talend.core.classloader.ClassLoaderFactory;
-import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.model.metadata.IMetadataConnection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
@@ -40,6 +38,7 @@ import org.talend.cwm.helper.TaggedValueHelper;
 import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdColumn;
 import org.talend.cwm.relational.TdTable;
+import org.talend.repository.hbaseprovider.util.HBaseClassLoaderFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
 import orgomg.cwm.objectmodel.core.TaggedValue;
 import orgomg.cwm.resource.relational.Catalog;
@@ -49,19 +48,17 @@ import orgomg.cwm.resource.relational.Catalog;
  */
 public class HBaseMetadataProvider implements IDBMetadataProvider {
 
-    private static String CATALOG_NAME = "HBase";
+    private static String CATALOG_NAME = "HBase"; //$NON-NLS-1$
 
-    private static String COLUMN_FAMILY = "COLUMN FAMILY";
+    private static String COLUMN_FAMILY = "COLUMN FAMILY"; //$NON-NLS-1$
 
     private static ClassLoader classLoader;
 
     private static Map<IMetadataConnection, Object> adminMap = new HashMap<IMetadataConnection, Object>();
 
     @Override
-    public ConnectionStatus testConnection(String dbType, String url, String username, String pwd, String schema, String server,
-            String port, String driverClassName, String driverJarPath, String dbVersionString, String additionalParam,
-            Map<String, Object> otherParameters) {
-        initClassLoader(otherParameters);
+    public ConnectionStatus testConnection(IMetadataConnection metadataConnection) {
+        classLoader = HBaseClassLoaderFactory.getClassLoader(metadataConnection);
         ConnectionStatus connectionStatus = new ConnectionStatus();
         connectionStatus.setResult(false);
         ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
@@ -69,8 +66,10 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             Thread.currentThread().setContextClassLoader(classLoader);
             Object config = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.hbase.HBaseConfiguration", classLoader,
                     "create", new Object[0]);
-            ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.zookeeper.quorum", server });
-            ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.zookeeper.property.clientPort", port });
+            ReflectionUtils.invokeMethod(config, "set",
+                    new Object[] { "hbase.zookeeper.quorum", metadataConnection.getServerName() });
+            ReflectionUtils.invokeMethod(config, "set",
+                    new Object[] { "hbase.zookeeper.property.clientPort", metadataConnection.getPort() });
             ReflectionUtils.invokeStaticMethod("org.apache.hadoop.hbase.client.HBaseAdmin", classLoader, "checkHBaseAvailable",
                     new Object[] { config });
             connectionStatus.setResult(true);
@@ -714,17 +713,4 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         return true;
     }
 
-    private void initClassLoader(Map<String, Object> parameters) {
-        if (parameters != null) {
-            String distribution = (String) parameters.get(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION);
-            String version = (String) parameters.get(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION);
-            if (StringUtils.isNotEmpty(distribution) && StringUtils.isNotEmpty(version)) {
-                String index = "HBASE" + ":" + distribution + ":" + version; //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
-                classLoader = ClassLoaderFactory.getClassLoader(index);
-            }
-        }
-        if (classLoader == null) {
-            classLoader = HBaseMetadataProvider.class.getClassLoader();
-        }
-    }
 }
