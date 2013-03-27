@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.talend.core.classloader.ClassLoaderFactory;
-import org.talend.core.repository.hadoop.custom.ECustomVersionGroup;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 
 /**
