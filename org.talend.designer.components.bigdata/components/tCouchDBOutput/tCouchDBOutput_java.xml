@@ -10,6 +10,7 @@
 	    EXTENSION="org.talend.designer.fileoutputxml"
 	    STARTABLE="false"
 	    DATA_AUTO_PROPAGATE="false"
+		PARTITIONING="NONE"
   	>
     	<SIGNATURE/>
 	</HEADER>

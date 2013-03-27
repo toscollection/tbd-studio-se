@@ -8,6 +8,7 @@
     AUTHOR="Talend"
     RELEASE_DATE="20110729A"
     STARTABLE="true"
+	PARTITIONING="AUTO"
   >
     <SIGNATURE/>
   </HEADER>

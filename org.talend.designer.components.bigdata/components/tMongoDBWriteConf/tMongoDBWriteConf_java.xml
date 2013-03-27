@@ -11,6 +11,7 @@
 	    TECHNICAL="true"
 	    SCHEMA_AUTO_PROPAGATE="true"
 	    DATA_AUTO_PROPAGATE="false"
+		PARTITIONING="NONE"
 	>
         <SIGNATURE></SIGNATURE>
     </HEADER>

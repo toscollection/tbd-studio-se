@@ -11,6 +11,7 @@
        	EXTENSION="org.talend.designer.fileoutputxml"
  		RELEASE_DATE="20070210A"
     	STARTABLE="false"
+		PARTITIONING="NONE"
   	>
     	<SIGNATURE/>
   	</HEADER>
