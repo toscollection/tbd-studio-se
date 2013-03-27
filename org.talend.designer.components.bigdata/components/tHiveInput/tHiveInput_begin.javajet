@@ -17,7 +17,25 @@ imports="
 	
 	<%
 	class DBInputBeginUtil extends DefaultDBInputUtil{
-	
+		private String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
+		private String hiveServer = "hive";
+
+	    public void beforeComponentProcess(INode node){
+	    	super.beforeComponentProcess(node);
+	    	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+	    	hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
+			boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+			
+			if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || "HDP_1_2".equals(hiveVersion))) {
+				hiveServer = hiveServer.toLowerCase();
+				if ("hive2".equals(hiveServer)) {
+					javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
+				}
+			} else {
+				hiveServer = "hive";
+			}
+	    }
+
 		public void afterUseNewConnection(INode node) {
 		
         	String storeByHBase = ElementParameterParser.getValue(node, "__STORE_BY_HBASE__");
@@ -54,17 +72,10 @@ imports="
 		public void setURL(INode node) {
 			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
-			String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 			
 			boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
 			boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
 			List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__"); 
-
-			if(hiveServer==null || "".equals(hiveServer.trim())) {
-				hiveServer = "hive";
-			} else {
-				hiveServer = hiveServer.toLowerCase();
-			}
 
 			boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 			
@@ -113,7 +124,7 @@ imports="
 		}
 		
 		public String getDirverClassName(INode node){
-			return "org.apache.hadoop.hive.jdbc.HiveDriver";
+			return javaDbDriver;
 		}
 		
 	}//end class

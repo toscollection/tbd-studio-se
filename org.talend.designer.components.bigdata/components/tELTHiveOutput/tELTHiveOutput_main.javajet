@@ -96,13 +96,16 @@ if(useExistingConn) {
 		String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
 		String hiveServer = ElementParameterParser.getValue(previousNode, "__HIVE_SERVER__");
 
-		if(hiveServer==null || "".equals(hiveServer.trim())) {
-			hiveServer = "hive";
-		} else {
-			hiveServer = hiveServer.toLowerCase();
-		}
-
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__"));
+
+		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || "HDP_1_2".equals(hiveVersion))) {
+			hiveServer = hiveServer.toLowerCase();
+			if ("hive2".equals(hiveServer)) {
+				javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
+			}
+		} else {
+			hiveServer = "hive";
+		}
 		
 		if(!isCustom && (("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MAPR1".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MapR_EMR".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)))) {
 %>
