@@ -19,7 +19,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.core.GlobalServiceRegister;
-import org.talend.core.hadoop.custom.ECustomVersionGroup;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
