@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.oozie.scheduler.utils;
 
+import org.talend.core.classloader.ClassLoaderFactory;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.hdfsbrowse.manager.HadoopClassLoaderFactory;
@@ -29,8 +30,8 @@ public class OozieClassLoaderFactory {
         String customJars = TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
 
         if (distributionValue.equals(EHadoopDistributions.CUSTOM.getName())) {
-            classLoader = HadoopClassLoaderFactory.getCustomClassLoader(
-                    ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, customJars);
+            classLoader = ClassLoaderFactory.getCustomClassLoader(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS,
+                    customJars);
         } else {
             classLoader = HadoopClassLoaderFactory.getClassLoader(distributionValue, versionValue);
         }

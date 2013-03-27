@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.manager;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.talend.core.classloader.ClassLoaderFactory;
@@ -65,34 +64,9 @@ public class HadoopClassLoaderFactory {
 
     public static ClassLoader getCustomClassLoader(HDFSConnectionBean connectionBean) {
         String hcId = connectionBean.getRelativeHadoopClusterId();
-        String index = "HadoopCustomVersion" + ":" + hcId; //$NON-NLS-1$ //$NON-NLS-2$
-        return getCustomClassLoader(index,
+        String index = "HadoopCustomVersion:" + hcId; //$NON-NLS-1$ 
+        return ClassLoaderFactory.getCustomClassLoader(index,
                 (Set<String>) connectionBean.getAdditionalProperties().get(ECustomVersionGroup.COMMON.getName()));
-    }
-
-    public static ClassLoader getCustomClassLoader(String index, String jars) {
-        return getCustomClassLoader(index, jars, DEFAULT_JAR_SEPARATOR);
-    }
-
-    public static ClassLoader getCustomClassLoader(String index, String jars, String jarSeparator) {
-        Set<String> jarSet = new HashSet<String>();
-        if (jars != null) {
-            String[] jarsArray = jars.split(jarSeparator);
-            for (String jar : jarsArray) {
-                jarSet.add(jar);
-            }
-        }
-
-        return getCustomClassLoader(index, jarSet);
-    }
-
-    public static ClassLoader getCustomClassLoader(String index, Set<String> jars) {
-        ClassLoader loader = ClassLoaderFactory.getCustomClassLoader(index, jars);
-        if (loader == null) {
-            loader = HadoopClassLoaderFactory.class.getClassLoader();
-        }
-
-        return loader;
     }
 
 }
