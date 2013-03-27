@@ -62,6 +62,16 @@ public abstract class CreateHadoopDBNodeAction extends CreateHadoopNodeAction {
         return EHadoopClusterImage.HADOOP_LINK_DB_ICON;
     }
 
+    @Override
+    protected int getWizardWidth() {
+        return 600;
+    }
+
+    @Override
+    protected int getWizardHeight() {
+        return 540;
+    }
+
     /*
      * (non-Javadoc)
      * 
