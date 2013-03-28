@@ -5,7 +5,9 @@ import java.util.Map;
 import org.talend.core.database.EDatabaseTypeName;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.conn.template.EDatabaseConnTemplate;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopDBNodeAction;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 
 /**
@@ -28,6 +30,9 @@ public class CreateHiveAction extends CreateHadoopDBNodeAction {
     @Override
     protected void initConnectionParameters(Map<String, String> initMap, HadoopClusterConnectionItem hcConnectionItem) {
         super.initConnectionParameters(initMap, hcConnectionItem);
+        HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+        initMap.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS,
+                hcConnection.getParameters().get(ECustomVersionGroup.HIVE.getName()));
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_TYPE, EDatabaseConnTemplate.HIVE.getDBTypeName());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PRODUCT, EDatabaseTypeName.HIVE.getProduct());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PORT, EDatabaseConnTemplate.HIVE.getDefaultPort());

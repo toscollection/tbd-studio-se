@@ -56,6 +56,7 @@ public class HCRepositoryUtil {
     static {
         hadoopDbParameters = new ArrayList<String>();
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION);

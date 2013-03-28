@@ -12,15 +12,14 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.EMap;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -33,7 +32,7 @@ public class HCVersionUtil {
 
     public final static String JAR_SEPARATOR = ";"; //$NON-NLS-1$
 
-    public final static String COMP_JAR_PARAM = "JAR_NAME"; //$NON-NLS-1$
+    public final static String EMPTY_STR = ""; //$NON-NLS-1$
 
     public static Map<String, Set<String>> getCustomVersionMap(HadoopClusterConnection connection) {
         Map<String, Set<String>> map = new HashMap<String, Set<String>>();
@@ -67,8 +66,13 @@ public class HCVersionUtil {
         if (connection == null || map == null) {
             return;
         }
-
         EMap<String, String> parameters = connection.getParameters();
+        // remove previous custom param
+        for (String group : map.keySet()) {
+            if (parameters.keySet().contains(group)) {
+                parameters.put(group, EMPTY_STR);
+            }
+        }
         Iterator<Entry<String, Set<String>>> iter = map.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry<String, Set<String>> entry = iter.next();
@@ -87,39 +91,29 @@ public class HCVersionUtil {
         }
     }
 
-    public static List<Map<String, Object>> getCompCustomJarParamFromRep(HadoopClusterConnection connection,
-            ECustomVersionGroup versionGroup) {
-        List<Map<String, Object>> compCustomJars = new ArrayList<Map<String, Object>>();
+    public static String getCompCustomJarsParamFromRep(HadoopClusterConnection connection, ECustomVersionGroup versionGroup) {
         if (connection == null || versionGroup == null) {
-            return compCustomJars;
+            return EMPTY_STR;
         }
-        Map<String, Set<String>> customVersionMap = getCustomVersionMap(connection);
-        Set<String> jars = customVersionMap.get(versionGroup.getName());
-        if (jars != null) {
-            for (String jar : jars) {
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put(COMP_JAR_PARAM, jar);
-                compCustomJars.add(map);
-            }
+        EMap<String, String> parameters = connection.getParameters();
+        if (parameters.size() == 0) {
+            return EMPTY_STR;
         }
 
-        return compCustomJars;
+        return parameters.get(versionGroup.getName());
     }
 
-    public static Map<String, Set<String>> getRepCustomJarParamFromComp(List<Map<String, Object>> compCustomJars,
-            ECustomVersionGroup versionGroup) {
+    public static Map<String, Set<String>> getRepCustomJarsParamFromComp(String compCustomJars, ECustomVersionGroup versionGroup) {
         Map<String, Set<String>> customVersionMap = new HashMap<String, Set<String>>();
-        if (compCustomJars == null) {
+        if (StringUtils.isEmpty(compCustomJars)) {
             return customVersionMap;
         }
-        Set<String> repCustomJars = new HashSet<String>();
-        for (Map<String, Object> map : compCustomJars) {
-            Object obj = map.get(COMP_JAR_PARAM);
-            if (obj != null && obj instanceof String) {
-                repCustomJars.add((String) obj);
-            }
+        Set<String> jarSet = new HashSet<String>();
+        String[] jarArray = compCustomJars.split(JAR_SEPARATOR);
+        for (String jar : jarArray) {
+            jarSet.add(jar);
         }
-        customVersionMap.put(versionGroup.getName(), repCustomJars);
+        customVersionMap.put(versionGroup.getName(), jarSet);
 
         return customVersionMap;
     }

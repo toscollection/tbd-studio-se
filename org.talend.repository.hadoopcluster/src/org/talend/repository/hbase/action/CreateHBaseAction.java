@@ -6,6 +6,7 @@ import org.talend.core.database.EDatabaseTypeName;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.conn.template.EDatabaseConnTemplate;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopDBNodeAction;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.RepositoryNode;
@@ -32,6 +33,9 @@ public class CreateHBaseAction extends CreateHadoopDBNodeAction {
     @Override
     protected void initConnectionParameters(Map<String, String> initMap, HadoopClusterConnectionItem hcConnectionItem) {
         super.initConnectionParameters(initMap, hcConnectionItem);
+        HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+        initMap.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS,
+                hcConnection.getParameters().get(ECustomVersionGroup.HBASE.getName()));
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_TYPE, EDatabaseConnTemplate.HBASE.getDBTypeName());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PRODUCT, EDatabaseTypeName.HBASE.getProduct());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PORT, EDatabaseConnTemplate.HBASE.getDefaultPort());

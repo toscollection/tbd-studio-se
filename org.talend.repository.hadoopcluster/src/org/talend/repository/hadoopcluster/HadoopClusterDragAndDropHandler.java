@@ -61,13 +61,12 @@ public class HadoopClusterDragAndDropHandler implements IDragAndDropServiceHandl
     }
 
     private Object getHadoopClusterRepositoryValue(HadoopClusterConnection hcConnection, String value, IMetadataTable table) {
-
         if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(value)) {
             return hcConnection.getDistribution();
         } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(value)) {
             return hcConnection.getDfVersion();
-        } else if (EHDFSRepositoryToComponent.CUSTOM_JARS.getRepositoryValue().equals(value)) {
-            return HCVersionUtil.getCompCustomJarParamFromRep(hcConnection, ECustomVersionGroup.COMMON);
+        } else if (EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(value)) {
+            return HCVersionUtil.getCompCustomJarsParamFromRep(hcConnection, ECustomVersionGroup.COMMON);
         } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(value)) {
             return hcConnection.getAuthMode();
         } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
@@ -161,7 +160,6 @@ public class HadoopClusterDragAndDropHandler implements IDragAndDropServiceHandl
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void setHadoopClusterRepositoryValue(HadoopClusterConnection hcConnection, INode node, String repositoryValue) {
         if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(repositoryValue)) {
             String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
@@ -175,13 +173,13 @@ public class HadoopClusterDragAndDropHandler implements IDragAndDropServiceHandl
             if (value != null) {
                 hcConnection.setDfVersion(value);
             }
-        } else if (EHDFSRepositoryToComponent.CUSTOM_JARS.getRepositoryValue().equals(repositoryValue)) {
-            IElementParameter param = node.getElementParameter(EHDFSRepositoryToComponent.CUSTOM_JARS.getParameterName());
+        } else if (EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(repositoryValue)) {
+            IElementParameter param = node.getElementParameter(EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getParameterName());
             if (param != null) {
                 Object obj = param.getValue();
                 if (obj != null) {
-                    Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarParamFromComp(
-                            (List<Map<String, Object>>) obj, ECustomVersionGroup.COMMON);
+                    Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarsParamFromComp((String) obj,
+                            ECustomVersionGroup.COMMON);
                     HCVersionUtil.injectCustomVersionMap(hcConnection, customVersionMap);
                 }
             }

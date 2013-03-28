@@ -208,6 +208,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 if (newDistribution != null && newDistribution != originalDistribution) {
                     getConnection().setDistribution(newDistribution.getName());
                     getConnection().setUseCustomVersion(newDistribution == EHadoopDistributions.CUSTOM);
+                    getConnection().setDfVersion(null);
                     updateVersionPart();
                     updateConnectionPart();
                     checkFieldsValue();
