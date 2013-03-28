@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.oozie.scheduler.ui;
 
+import java.util.List;
+
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -19,6 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
+import org.talend.oozie.scheduler.ui.model.HadoopPropertiesType;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for Talend Oozie Scheduler setup dialog.
@@ -42,6 +45,12 @@ public class TOozieSettingDialog extends Dialog {
     private OozieSettingComposite settingComposite;
 
     private String repositoryId;
+
+    private boolean enableKerberos;
+
+    private String principalValue;
+
+    private List<HadoopPropertiesType> propertiesValue;
 
     /**
      * @param parentShell
@@ -77,6 +86,9 @@ public class TOozieSettingDialog extends Dialog {
                 setUserNameValue(userNameValue);
                 setCustomJars(customJars);
                 setRepositoryId(repositoryId);
+                setEnableKerberos(enableKerberos);
+                setPrincipal(principalValue);
+                setProperties(propertiesValue);
             }
         };
 
@@ -90,7 +102,7 @@ public class TOozieSettingDialog extends Dialog {
     protected Point getInitialSize() {
         Point result = super.getInitialSize();
         result.x = 500;
-        result.y = 350;
+        result.y = 600;
         return result;
     }
 
@@ -156,6 +168,30 @@ public class TOozieSettingDialog extends Dialog {
 
     public String getRepositoryId() {
         return settingComposite.getRepositoryId();
+    }
+
+    public boolean isEnableKerberos() {
+        return settingComposite.isEnableKerberos();
+    }
+
+    public void setEnableKerberos(boolean enableKerberos) {
+        this.enableKerberos = enableKerberos;
+    }
+
+    public String getPrincipalValue() {
+        return settingComposite.getPrincipal();
+    }
+
+    public void setPrincipalValue(String principalValue) {
+        this.principalValue = principalValue;
+    }
+
+    public void setPropertiesValue(List<HadoopPropertiesType> propertiesValue) {
+        this.propertiesValue = propertiesValue;
+    }
+
+    public List<HadoopPropertiesType> getPropertiesValue() {
+        return propertiesValue;
     }
 
 }

@@ -34,6 +34,8 @@ import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.repository.model.IProxyRepositoryFactory;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 /**
  * DOC plv class global comment. Detailed comment
@@ -45,7 +47,7 @@ public class TOozieParamUtils {
      * 
      * @return OozieParam
      */
-    public static Map<String, String> getRepositoryOozieParam() {
+    public static Map<String, Object> getRepositoryOozieParam() {
         IProcess2 process = OozieJobTrackerListener.getProcess();
         IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName());
         String id = (String) elementParameter.getValue();
@@ -54,17 +56,17 @@ public class TOozieParamUtils {
             IOozieService service = (IOozieService) GlobalServiceRegister.getDefault().getService(IOozieService.class);
             return service.getOozieParamFromConnection(repositoryConnection);
         } else {
-            return new HashMap<String, String>();
+            return new HashMap<String, Object>();
         }
     }
 
-    public static Map<String, String> getRepositoryOozieParam(String id) {
+    public static Map<String, Object> getRepositoryOozieParam(String id) {
         Connection repositoryConnection = getOozieConnectionById(id);
         if (repositoryConnection != null && GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
             IOozieService service = (IOozieService) GlobalServiceRegister.getDefault().getService(IOozieService.class);
             return service.getOozieParamFromConnection(repositoryConnection);
         } else {
-            return new HashMap<String, String>();
+            return new HashMap<String, Object>();
         }
     }
 
@@ -110,8 +112,8 @@ public class TOozieParamUtils {
         return isFromRepository;
     }
 
-    public static String getParamValue(String prefKey) {
-        String value = "";
+    public static Object getParamValue(String prefKey) {
+        Object value = "";
         if (isFromRepository()) {
             value = getParamValueFromRepository(prefKey);
         } else {
@@ -120,47 +122,69 @@ public class TOozieParamUtils {
         return value != null ? value : "";
     }
 
-    public static String getParamValueFromPreference(String prefKey) {
+    public static Object getParamValueFromPreference(String prefKey) {
+        Object versionValue = CorePlugin.getDefault().getPreferenceStore().getString(prefKey);
+        if (prefKey != null && prefKey.equals(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS)) {
+            versionValue = CorePlugin.getDefault().getPreferenceStore().getBoolean(prefKey);
+        }
+        return versionValue;
+    }
+
+    public static Object getParamValueFromRepository(String prefKey) {
+        Object versionValue = TOozieParamUtils.getRepositoryOozieParam().get(prefKey);
+        return versionValue;
+    }
+
+    public static Object getParamValueFromRepositoryById(String prefKey, String id) {
+        Object versionValue = TOozieParamUtils.getRepositoryOozieParam(id).get(prefKey);
+        return versionValue;
+    }
+
+    public static JSONObject getProperties(String prefKey) {
         String versionValue = CorePlugin.getDefault().getPreferenceStore().getString(prefKey);
-        return versionValue;
-    }
-
-    public static String getParamValueFromRepository(String prefKey) {
-        String versionValue = TOozieParamUtils.getRepositoryOozieParam().get(prefKey);
-        return versionValue;
-    }
-
-    public static String getParamValueFromRepositoryById(String prefKey, String id) {
-        String versionValue = TOozieParamUtils.getRepositoryOozieParam(id).get(prefKey);
-        return versionValue;
+        if (versionValue != null && versionValue.trim().length() > 0) {
+            try {
+                return new JSONObject(versionValue);
+            } catch (JSONException e) {
+                org.talend.commons.exception.ExceptionHandler.process(e);
+            }
+        }
+        return null;
     }
 
     public static String getNameNode() {
-        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
     }
 
     public static String getJobTracker() {
-        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT);
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT);
     }
 
     public static String getOozieEndPoint() {
-        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
     }
 
     public static String getUserNameForHadoop() {
-        return getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
     }
 
     public static String getHadoopDistribution() {
-        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
     }
 
     public static String getHadoopVersion() {
-        return getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
     }
 
     public static String getHadoopCustomJars() {
-        return getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
     }
 
+    public static boolean enableKerberos() {
+        return (Boolean) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS);
+    }
+
+    public static String getPrincipal() {
+        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL);
+    }
 }

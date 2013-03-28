@@ -16,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -72,11 +73,14 @@ import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.TOozieSchedulerDialog;
 import org.talend.oozie.scheduler.ui.TOozieSettingDialog;
+import org.talend.oozie.scheduler.ui.model.HadoopPropertiesType;
 import org.talend.oozie.scheduler.utils.TOozieCommonUtils;
 import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.oozie.scheduler.utils.TOozieStringUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.oozie.scheduler.views.TOozieView;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for doing some action from the widgets of
@@ -711,7 +715,25 @@ public class ExecuteJobCompositeController {
             String jtForMapReduceJob = (String) process.getElementParameter("JOBTRACKER").getValue();//$NON-NLS-1$
             jobContext.set("-jt", jtForMapReduceJob);//$NON-NLS-1$
         }
-
+        // if use kerberos
+        if (TOozieParamUtils.enableKerberos()) {
+            jobContext.set("dfs.namenode.kerberos.principal", TOozieParamUtils.getPrincipal());
+        }
+        // for hadoop properties
+        JSONObject object = TOozieParamUtils.getProperties(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PROPERTIES);
+        if (object != null) {
+            try {
+                Iterator keys = object.keys();
+                while (keys.hasNext()) {
+                    String key = (String) keys.next();
+                    String value;
+                    value = object.getString(key);
+                    jobContext.set(key, value);
+                }
+            } catch (JSONException e) {
+                org.talend.commons.exception.ExceptionHandler.process(e);
+            }
+        }
         // Job name.
         String jobName = process.getLabel();
         jobContext.setJobName(jobName);
@@ -880,6 +902,8 @@ public class ExecuteJobCompositeController {
         String oozieEPValue = getOozieEndPoint();
         String userNameValue = getUserNameForHadoop();
         String customJars = getHadoopCustomJars();
+        boolean kerberors = TOozieParamUtils.enableKerberos();
+        String principal = TOozieParamUtils.getPrincipal();
 
         settingDialog.setHadoopDistributionValue(hadoopDistributionValue);
         settingDialog.setHadoopVersionValue(hadoopVersionValue);
@@ -888,6 +912,8 @@ public class ExecuteJobCompositeController {
         settingDialog.setOozieEndPointValue(oozieEPValue);
         settingDialog.setUserNameValue(userNameValue);
         settingDialog.setCustomJars(customJars);
+        settingDialog.setEnableKerberos(kerberors);
+        settingDialog.setPrincipalValue(principal);
     }
 
     public void doModifyPathAction() {
@@ -966,7 +992,22 @@ public class ExecuteJobCompositeController {
         String oozieEPValue = settingDialog.getOozieEndPointValue();
         String userNameValue = settingDialog.getUserNameValue();
         String customJars = settingDialog.getCustomJars();
+        boolean enableKerberos = settingDialog.isEnableKerberos();
+        String principal = "";
 
+        if (enableKerberos) {
+            principal = settingDialog.getPrincipalValue();
+        }
+        JSONObject object = new JSONObject();
+        try {
+            for (HadoopPropertiesType type : settingDialog.getPropertiesValue()) {
+                object.put(type.getKey(), type.getValue());
+            }
+        } catch (JSONException e) {
+            org.talend.commons.exception.ExceptionHandler.process(e);
+        }
+        CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PROPERTIES, object.toString());
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION, hadoopDistributionValue);
         CorePlugin.getDefault().getPreferenceStore()
@@ -980,6 +1021,10 @@ public class ExecuteJobCompositeController {
         CorePlugin.getDefault().getPreferenceStore().setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, userNameValue);
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, customJars);
+        CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS, enableKerberos);
+        CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL, principal);
     }
 
     /**

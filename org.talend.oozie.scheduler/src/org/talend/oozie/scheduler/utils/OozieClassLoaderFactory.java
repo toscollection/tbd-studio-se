@@ -25,9 +25,9 @@ public class OozieClassLoaderFactory {
     public static ClassLoader getClassLoader() {
         ClassLoader classLoader = null;
 
-        String distributionValue = TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
-        String versionValue = TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
-        String customJars = TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+        String distributionValue = TOozieParamUtils.getHadoopDistribution();
+        String versionValue = TOozieParamUtils.getHadoopVersion();
+        String customJars = TOozieParamUtils.getHadoopCustomJars();
 
         if (distributionValue.equals(EHadoopDistributions.CUSTOM.getName())) {
             classLoader = ClassLoaderFactory.getCustomClassLoader(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS,

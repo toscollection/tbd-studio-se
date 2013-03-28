@@ -102,7 +102,7 @@ public class OozieJobDeployer {
                     new Object[] { "fs.default.name",
                             TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) });
 
-            String userName = TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+            String userName = TOozieParamUtils.getUserNameForHadoop();
             if (StringUtils.isEmpty(userName)) {
                 HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] { config }, classLoader);
             } else {

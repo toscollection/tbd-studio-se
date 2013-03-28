@@ -65,9 +65,11 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
                 setOozieEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT));
                 setUserNameValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME));
                 setCustomJars(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS));
+                setEnableKerberos(CorePlugin.getDefault().getPreferenceStore()
+                        .getBoolean(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS));
+                setPrincipal(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL));
             }
         };
-
         return parent;
     }
 
@@ -111,6 +113,8 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT, settingComposite.getOozieEndPointValue());
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, settingComposite.getUserNameValue());
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, settingComposite.getCustomJars());
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS, settingComposite.isEnableKerberos());
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL, settingComposite.getPrincipal());
         return super.performOk();
     }
 
