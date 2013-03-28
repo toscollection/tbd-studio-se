@@ -22,12 +22,15 @@
     String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
     String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
     List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
+    boolean isUseSpeedParallel = "true".equals(ElementParameterParser.getValue(node,"__USE_SPEED_PARALLEL__"));
+	List<Map<String,String>> specificParams= (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__SPECIFIC_PARAMS__");
 %>
 
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
 
 String[] cmd_<%=cid %> = new String[] {"sqoop", "export", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", <%=password%>, "--export-dir", <%=exportDir%>
+<%if(isUseSpeedParallel){%>,"--connection-manager","org.apache.sqoop.teradata.TeradataConnManager"<%}%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
 <%if(direct){%>, "--direct"<%}%>
 <%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
@@ -51,6 +54,26 @@ if(additionalList != null){
 <% 
         } 
     } 
+} 
+if(isUseSpeedParallel && specificParams!=null){
+	boolean isFirstParam=true;
+	for(Map<String,String> specificArg : specificParams){ 
+		isNull=false; 
+	 	if(specificArg.get("SPECIFIC_PARAM_VALUE")==null || "".equals(specificArg.get("SPECIFIC_PARAM_VALUE"))) { 
+	 		isNull=true; 
+	 	} 
+	 	if(!isNull) { 
+	 		if(isFirstParam){
+%>
+			,"--"
+<%
+				isFirstParam=false;
+			}
+%> 
+			,"--<%=specificArg.get("SPECIFIC_PARAM")%>", ""+<%=specificArg.get("SPECIFIC_PARAM_VALUE")%> 
+<% 
+		} 
+	} 
 } 
 %>
 };

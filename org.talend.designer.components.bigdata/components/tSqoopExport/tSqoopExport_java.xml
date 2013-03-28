@@ -144,6 +144,32 @@
           </ITEMS>
         </PARAMETER>
 	    
+	    <PARAMETER NAME="USE_SPEED_PARALLEL" FIELD="CHECK" NUM_ROW="32" GROUP="SPEED_PARALLEL">
+                <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+	    
+	    <PARAMETER NAME="NOTE_CUSTOMER" FIELD="LABEL" REQUIRED="true" NUM_ROW="32" COLOR="255;0;0" GROUP="SPEED_PARALLEL">
+          <DEFAULT>This function only apply between HDP and Teradata</DEFAULT>
+        </PARAMETER>
+	    
+	    <PARAMETER NAME="SPECIFIC_PARAMS" FIELD="TABLE" NUM_ROW="35" NB_LINES="5" SHOW_IF="(USE_COMMANDLINE=='true') AND (USE_SPEED_PARALLEL=='true')" GROUP="SPEED_PARALLEL">
+	      <ITEMS>
+	        <ITEM NAME="SPECIFIC_PARAM" FIELD="CLOSED_LIST" >
+	          <ITEMS DEFAULT="teradata-db-output-batch-size">
+	          	<ITEM NAME="teradata-db-output-method" VALUE="teradata.db.output.method"/>
+				<ITEM NAME="teradata-db-output-stage-database" VALUE="teradata.db.output.stage.database"/>
+				<ITEM NAME="teradata-db-output-batch-size" VALUE="teradata.db.output.batch.size"/>
+				<ITEM NAME="teradata-db-output-fastload-number-max" VALUE="teradata.db.output.fastload.number.max"/>
+				<ITEM NAME="teradata-db-output-fastload-socket-host" VALUE="teradata.db.output.fastload.socket.host"/>
+				<ITEM NAME="teradata-db-output-fastload-socket-port" VALUE="teradata.db.output.fastload.socket.port"/>
+				<ITEM NAME="teradata-db-output-stage-table-suffix" VALUE="teradata.db.output.stage.table.suffix"/>
+				<ITEM NAME="teradata-db-output-teradata-text-separator" VALUE="teradata.db.output.teradata.text.separator"/>
+	          </ITEMS>
+	        </ITEM>
+	        <ITEM NAME="SPECIFIC_PARAM_VALUE" FIELD="TEXT"/>
+	      </ITEMS>
+	    </PARAMETER>
+	    
 	</ADVANCED_PARAMETERS>
 
 	<CODEGENERATION>

@@ -208,6 +208,28 @@
 	        <ITEM NAME="ADDITIONAL_VALUE" FIELD="TEXT"/>
 	      </ITEMS>
 	    </PARAMETER>
+	    
+	    <PARAMETER NAME="USE_SPEED_PARALLEL" FIELD="CHECK" NUM_ROW="32" GROUP="SPEED_PARALLEL">
+                <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+	    
+	    <PARAMETER NAME="NOTE_CUSTOMER" FIELD="LABEL" REQUIRED="true" NUM_ROW="32" COLOR="255;0;0" GROUP="SPEED_PARALLEL">
+          <DEFAULT>This function only apply between HDP and Teradata</DEFAULT>
+        </PARAMETER>
+	    
+	    <PARAMETER NAME="SPECIFIC_PARAMS" FIELD="TABLE" NUM_ROW="35" NB_LINES="5" SHOW_IF="(USE_COMMANDLINE=='true') AND (USE_SPEED_PARALLEL=='true')" GROUP="SPEED_PARALLEL">
+	      <ITEMS>
+	        <ITEM NAME="SPECIFIC_PARAM" FIELD="CLOSED_LIST" >
+	          <ITEMS DEFAULT="teradata-db-input-batch-size">
+	          	<ITEM NAME="teradata-db-input-method" VALUE="teradata.db.input.method"/>
+				<ITEM NAME="teradata-db-input-stage-database" VALUE="teradata.db.input.stage.database"/>
+				<ITEM NAME="teradata-db-input-partition-num" VALUE="teradata.db.input.partition.num"/>
+				<ITEM NAME="teradata-db-input-batch-size" VALUE="teradata.db.input.batch.size"/>
+	          </ITEMS>
+	        </ITEM>
+	        <ITEM NAME="SPECIFIC_PARAM_VALUE" FIELD="TEXT"/>
+	      </ITEMS>
+	    </PARAMETER>
 
 	</ADVANCED_PARAMETERS>
 
