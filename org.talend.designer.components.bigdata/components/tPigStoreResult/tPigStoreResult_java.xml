@@ -86,18 +86,9 @@
             </ITEMS>
         </PARAMETER>
         
-        <PARAMETER
-          NAME="CUSTOM_JARS"
-          FIELD="TABLE"
-          NUM_ROW="70"
-          NB_LINES="5" 
-          SHOW_IF="(STORE=='HBASESTORAGE') AND (DISTRIBUTION=='CUSTOM')"
-          GROUP="HBASE_CONFIGURATION"
-        >
-            <ITEMS> 
-                <ITEM NAME="JAR_NAME" FIELD="MODULE_LIST"  /> 
-            </ITEMS> 
-        </PARAMETER>
+		<PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="HBASE_CONFIGURATION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="60"  SHOW_IF="DISTRIBUTION=='CUSTOM'">
+		  	<DEFAULT />
+		</PARAMETER>
 
         <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="80" SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION">
             <DEFAULT>"localhost"</DEFAULT>
@@ -107,7 +98,6 @@
           FIELD="TEXT"
           NUM_ROW="90"
           REQUIRED="true"
-          REPOSITORY_VALUE="PORT"
           SHOW_IF="(STORE=='HBASESTORAGE')" GROUP="HBASE_CONFIGURATION"
         >
           <DEFAULT>"2181"</DEFAULT>
