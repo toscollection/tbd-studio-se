@@ -2,6 +2,7 @@
 	imports="
     org.talend.core.model.process.INode 
     org.talend.core.model.metadata.IMetadataTable 
+	org.talend.core.model.metadata.IMetadataColumn 
     org.talend.designer.codegen.config.CodeGeneratorArgument
 	org.talend.core.model.process.ElementParameterParser
 	java.util.Map 
@@ -28,6 +29,8 @@
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
 	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
 	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
+	
+	String typeFile = ElementParameterParser.getValue(node,"__TYPEFILE__");
 	
 	boolean uncompress = "true".equals(ElementParameterParser.getValue(node, "__UNCOMPRESS__"));
 	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
@@ -125,35 +128,84 @@
 			    }
 		    }
 		}
-		%>
+%>
 		org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
+<%
+		if (typeFile.equals("TEXT")) {
+%>
 		org.apache.hadoop.fs.FSDataInputStream fsDataInputStream_<%=cid%> = fs_<%=cid%>.open(path_<%=cid%>);
 <%
-		if(!uncompress) {
+			if(!uncompress) {
 %>
 		org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
 <%
-		} else {
-			if("GZIP".equals(compression)) {
+			} else {
+				if("GZIP".equals(compression)) {
 %>
 				org.apache.hadoop.io.compress.GzipCodec codec_<%=cid%> = new org.apache.hadoop.io.compress.GzipCodec();
 				codec_<%=cid%>.setConf(conf_<%=cid%>);				
 <%
-			} else if("BZIP2".equals(compression)) {
+				} else if("BZIP2".equals(compression)) {
 %>
 				org.apache.hadoop.io.compress.BZip2Codec codec_<%=cid%> = new org.apache.hadoop.io.compress.BZip2Codec(); 
 <%
-			}
+				}
 %>
 			org.apache.hadoop.io.compress.CompressionInputStream in<%=cid%> = codec_<%=cid%>.createInputStream(fsDataInputStream_<%=cid%>);
 			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(in<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
 <%
-		}
+			}
 %>
 		while (fid_<%=cid %>.nextRecord()) {
+<%
+		} else {
+			String keyColumn = ElementParameterParser.getValue(node,"__KEYCOLUMN__");
+			String valueColumn = ElementParameterParser.getValue(node,"__VALUECOLUMN__");
+			
+			List<IMetadataColumn> listColumns = metadata.getListColumns();
+			String talendKeyClass = "";
+			String talendValueClass = "";
+			for (IMetadataColumn column : listColumns) {
+				if (column.getLabel().equals(keyColumn)) {
+					talendKeyClass = column.getTalendType();
+				}
+				if (column.getLabel().equals(valueColumn)) {
+					talendValueClass = column.getTalendType();
+				}
+			}
+			
+			String keyClass="org.apache.hadoop.io.Text";
+			if (talendKeyClass.equals("id_Boolean")) keyClass="org.apache.hadoop.io.BooleanWritable";
+			if (talendKeyClass.equals("id_Byte")) keyClass="org.apache.hadoop.io.ByteWritable";
+			if (talendKeyClass.equals("id_byte[]")) keyClass="org.apache.hadoop.io.BytesWritable";
+			if (talendKeyClass.equals("id_Double")) keyClass="org.apache.hadoop.io.DoubleWritable";
+			if (talendKeyClass.equals("id_Float")) keyClass="org.apache.hadoop.io.FloatWritable";
+			if (talendKeyClass.equals("id_Integer")) keyClass="org.apache.hadoop.io.IntWritable";
+			if (talendKeyClass.equals("id_Long")) keyClass="org.apache.hadoop.io.LongWritable";
+			if (talendKeyClass.equals("id_Short")) keyClass="org.apache.hadoop.io.ShortWritable";
+			if (talendKeyClass.equals("id_String")) keyClass="org.apache.hadoop.io.Text";
+			
+			String valueClass="org.apache.hadoop.io.Text";
+			if (talendValueClass.equals("id_Boolean")) valueClass="org.apache.hadoop.io.BooleanWritable";
+			if (talendValueClass.equals("id_Byte")) valueClass="org.apache.hadoop.io.ByteWritable";
+			if (talendValueClass.equals("id_byte[]")) valueClass="org.apache.hadoop.io.BytesWritable";
+			if (talendValueClass.equals("id_Double")) valueClass="org.apache.hadoop.io.DoubleWritable";
+			if (talendValueClass.equals("id_Float")) valueClass="org.apache.hadoop.io.FloatWritable";
+			if (talendValueClass.equals("id_Integer")) valueClass="org.apache.hadoop.io.IntWritable";
+			if (talendValueClass.equals("id_Long")) valueClass="org.apache.hadoop.io.LongWritable";
+			if (talendValueClass.equals("id_Short")) valueClass="org.apache.hadoop.io.ShortWritable";
+			if (talendValueClass.equals("id_String")) valueClass="org.apache.hadoop.io.Text";
+			
+%>
+		org.apache.hadoop.io.SequenceFile.Reader reader_<%=cid%> = new org.apache.hadoop.io.SequenceFile.Reader(fs_<%=cid%>, path_<%=cid%>,  conf_<%=cid%>);
+		<%=keyClass%> key_<%=cid%> = (<%=keyClass%>) reader_<%=cid%>.getKeyClass().newInstance();
+		<%=valueClass%> value_<%=cid%> = (<%=valueClass%>) reader_<%=cid%>.getValueClass().newInstance();
+		while (reader_<%=cid%>.next(key_<%=cid%>, value_<%=cid%>)) {
+<%
+		}
+%>
+		
 <%
 		}
 	}
 %>
-
-	

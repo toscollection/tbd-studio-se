@@ -4,6 +4,7 @@
     org.talend.designer.codegen.config.CodeGeneratorArgument
     org.talend.core.model.metadata.IMetadataTable 
     org.talend.core.model.metadata.IMetadataColumn
+	org.talend.core.model.process.ElementParameterParser
     
     java.util.List 
   " 
@@ -21,11 +22,19 @@
 			if(listColumns!=null && listColumns.size() > 0) {
 %>
 				} // while
-				
+<%
+				String typeFile = ElementParameterParser.getValue(node,"__TYPEFILE__");
+				if (typeFile.equals("SEQUENCE")) {
+%>
+				reader_<%=cid%>.close();
+<%
+				} else {
+%>				
 				if(fid_<%=cid %> !=null ) {
 					fid_<%=cid %>.close();
 				}
 <%
+				}
 			}
 		}
 	}

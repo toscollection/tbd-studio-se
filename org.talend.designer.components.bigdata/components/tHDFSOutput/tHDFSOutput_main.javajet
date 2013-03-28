@@ -35,44 +35,87 @@
 		inConn = inConns.get(0);
 		metadata = inConn.getMetadataTable();
 	}
-	
-	if (metadata!=null) {    
-		List< ? extends IConnection> conns = node.getIncomingConnections();
+
+String typeFile = ElementParameterParser.getValue(node,"__TYPEFILE__");
+
+if (metadata!=null) {
+	List< ? extends IConnection> conns = node.getIncomingConnections();
 		for (IConnection conn : conns) {
 			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-				List<IMetadataColumn> columnList = metadata.getListColumns();
-				int sizeColumns = columnList.size();
+				if (typeFile.equals("SEQUENCE")) {
+					String keyColumn = ElementParameterParser.getValue(node,"__KEYCOLUMN__");
+					String valueColumn = ElementParameterParser.getValue(node,"__VALUECOLUMN__");
+			
+					List<IMetadataColumn> listColumns = metadata.getListColumns();
+					String talendKeyClass = "";
+					String talendValueClass = "";
+					for (IMetadataColumn column : listColumns) {
+						if (column.getLabel().equals(keyColumn)) {
+							talendKeyClass = column.getTalendType();
+						}
+						if (column.getLabel().equals(valueColumn)) {
+							talendValueClass = column.getTalendType();
+						}
+					}
+			
+					String keyClass="org.apache.hadoop.io.Text";
+					if (talendKeyClass.equals("id_Boolean")) keyClass="org.apache.hadoop.io.BooleanWritable";
+					if (talendKeyClass.equals("id_Byte")) keyClass="org.apache.hadoop.io.ByteWritable";
+					if (talendKeyClass.equals("id_byte[]")) keyClass="org.apache.hadoop.io.BytesWritable";
+					if (talendKeyClass.equals("id_Double")) keyClass="org.apache.hadoop.io.DoubleWritable";
+					if (talendKeyClass.equals("id_Float")) keyClass="org.apache.hadoop.io.FloatWritable";
+					if (talendKeyClass.equals("id_Integer")) keyClass="org.apache.hadoop.io.IntWritable";
+					if (talendKeyClass.equals("id_Long")) keyClass="org.apache.hadoop.io.LongWritable";
+					if (talendKeyClass.equals("id_Short")) keyClass="org.apache.hadoop.io.ShortWritable";
+					if (talendKeyClass.equals("id_String")) keyClass="org.apache.hadoop.io.Text";
+			
+					String valueClass="org.apache.hadoop.io.Text";
+					if (talendValueClass.equals("id_Boolean")) valueClass="org.apache.hadoop.io.BooleanWritable";
+					if (talendValueClass.equals("id_Byte")) valueClass="org.apache.hadoop.io.ByteWritable";
+					if (talendValueClass.equals("id_byte[]")) valueClass="org.apache.hadoop.io.BytesWritable";
+					if (talendValueClass.equals("id_Double")) valueClass="org.apache.hadoop.io.DoubleWritable";
+					if (talendValueClass.equals("id_Float")) valueClass="org.apache.hadoop.io.FloatWritable";
+					if (talendValueClass.equals("id_Integer")) valueClass="org.apache.hadoop.io.IntWritable";
+					if (talendValueClass.equals("id_Long")) valueClass="org.apache.hadoop.io.LongWritable";
+					if (talendValueClass.equals("id_Short")) valueClass="org.apache.hadoop.io.ShortWritable";
+					if (talendValueClass.equals("id_String")) valueClass="org.apache.hadoop.io.Text";
+%>
+	writer_<%=cid%>.append(new <%=keyClass %>(<%=conn.getName() %>.<%=keyColumn %>),new <%=valueClass %>(<%=conn.getName() %>.<%=valueColumn %>));
+<%
+				} else {
+					List<IMetadataColumn> columnList = metadata.getListColumns();
+					int sizeColumns = columnList.size();
 %>
 				StringBuilder sb_<%=cid %> = new StringBuilder();
 <%
-				for (int i = 0; i < sizeColumns; i++) {
-					IMetadataColumn column = columnList.get(i);
-					JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+					for (int i = 0; i < sizeColumns; i++) {
+						IMetadataColumn column = columnList.get(i);
+						JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
 %>
 					sb_<%=cid %>.append(
 <%
-										String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
-										if (javaType == JavaTypesManager.DATE && pattern != null && pattern.trim().length() != 0) {
+						String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+						if (javaType == JavaTypesManager.DATE && pattern != null && pattern.trim().length() != 0) {
 %>
 											FormatterUtils.format_Date(<%=conn.getName() %>.<%=column.getLabel() %>, <%= pattern %>)
 <%	
-										} else if(javaType == JavaTypesManager.BIGDECIMAL){
+						} else if(javaType == JavaTypesManager.BIGDECIMAL){
 %>
 											<%=column.getPrecision() == null? conn.getName() + "." + column.getLabel() : conn.getName() + "." + column.getLabel() + ".setScale(" + column.getPrecision() + ", java.math.RoundingMode.HALF_UP)" %>.toPlainString()
 <%
-										} else if(javaType == JavaTypesManager.BYTE_ARRAY){
+						} else if(javaType == JavaTypesManager.BYTE_ARRAY){
 %>
 											java.nio.charset.Charset.forName(<%=(customEncoding?encoding:"utf8Charset")%>).decode(java.nio.ByteBuffer.wrap(<%=conn.getName() %>.<%=column.getLabel() %>)).toString()
 <%
-										} else {
+						} else {
 %>
 											<%=conn.getName() %>.<%=column.getLabel() %>
 <%				
-										}
+						}
 %>
 										);
 <%
-										if(i != sizeColumns - 1) {
+						if(i != sizeColumns - 1) {
 %>					
 					sb_<%=cid %>.append(<%=fieldSeparator%>);
 <%
@@ -100,6 +143,7 @@
 			}
 		}
 	}
+}
 %>
 
 	
