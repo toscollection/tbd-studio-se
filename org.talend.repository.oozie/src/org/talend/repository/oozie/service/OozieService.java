@@ -18,10 +18,10 @@ import org.talend.repository.oozie.node.model.OozieRepositoryNodeType;
 public class OozieService implements IOozieService {
 
     @Override
-    public Map<String, String> getOozieParamFromConnection(Connection connection) {
+    public Map<String, Object> getOozieParamFromConnection(Connection connection) {
         if (connection instanceof OozieConnection) {
             OozieConnection oozieConnection = (OozieConnection) connection;
-            Map<String, String> oozieParam = new HashMap<String, String>();
+            Map<String, Object> oozieParam = new HashMap<String, Object>();
 
             HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(oozieConnection);
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, oozieConnection.getUserName());
@@ -32,6 +32,8 @@ public class OozieService implements IOozieService {
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION, hcConnection.getDfVersion());
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS,
                     hcConnection.getParameters().get(ECustomVersionGroup.COMMON.getName()));
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL, hcConnection.getPrincipal());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS, hcConnection.isEnableKerberos());
 
             return oozieParam;
         }
