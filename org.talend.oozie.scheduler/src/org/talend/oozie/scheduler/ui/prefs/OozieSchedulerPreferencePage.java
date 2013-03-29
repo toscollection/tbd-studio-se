@@ -48,7 +48,7 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
     protected Control createContents(Composite p) {
         Composite parent = (Composite) super.createContents(p);
 
-        settingComposite = new OozieSettingComposite(parent, SWT.NONE) {
+        settingComposite = new OozieSettingComposite(parent, SWT.NONE, true) {
 
             /*
              * (non-Javadoc)

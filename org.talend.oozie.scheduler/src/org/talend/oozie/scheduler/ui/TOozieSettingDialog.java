@@ -68,7 +68,7 @@ public class TOozieSettingDialog extends Dialog {
 
     @Override
     protected Control createDialogArea(Composite parent) {
-        settingComposite = new OozieSettingComposite(parent, SWT.BORDER) {
+        settingComposite = new OozieSettingComposite(parent, SWT.BORDER, false) {
 
             /*
              * (non-Javadoc)
@@ -191,7 +191,7 @@ public class TOozieSettingDialog extends Dialog {
     }
 
     public List<HadoopPropertiesType> getPropertiesValue() {
-        return propertiesValue;
+        return settingComposite.getProperties();
     }
 
 }

@@ -15,6 +15,7 @@ package org.talend.oozie.scheduler.controller;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -904,6 +905,20 @@ public class ExecuteJobCompositeController {
         String customJars = getHadoopCustomJars();
         boolean kerberors = TOozieParamUtils.enableKerberos();
         String principal = TOozieParamUtils.getPrincipal();
+        List<HadoopPropertiesType> properties = new ArrayList<HadoopPropertiesType>();
+        JSONObject property = TOozieParamUtils.getProperties(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PROPERTIES);
+        Iterator<String> it = property.keys();
+        while (it.hasNext()) {
+            String key = it.next();
+            HadoopPropertiesType propertiesType = new HadoopPropertiesType();
+            propertiesType.setKey(key);
+            try {
+                propertiesType.setValue(property.getString(key));
+            } catch (JSONException e) {
+                //
+            }
+            properties.add(propertiesType);
+        }
 
         settingDialog.setHadoopDistributionValue(hadoopDistributionValue);
         settingDialog.setHadoopVersionValue(hadoopVersionValue);
@@ -914,6 +929,7 @@ public class ExecuteJobCompositeController {
         settingDialog.setCustomJars(customJars);
         settingDialog.setEnableKerberos(kerberors);
         settingDialog.setPrincipalValue(principal);
+        settingDialog.setPropertiesValue(properties);
     }
 
     public void doModifyPathAction() {
