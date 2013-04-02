@@ -38,6 +38,7 @@ import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.designer.runprocess.IRunProcessService;
 import org.talend.repository.hadoopcluster.HadoopClusterPlugin;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.update.HadoopClusterUpdateManager;
@@ -191,6 +192,15 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
                             if (service != null) {
                                 service.refreshComponentView(connectionItem);
                             }
+                        }
+
+                    }
+                    // Added by Marvin Wang on Mar. 28, 2013 for refreshing the process view when wizard finishes.
+                    if (GlobalServiceRegister.getDefault().isServiceRegistered(IRunProcessService.class)) {
+                        IRunProcessService runProcessService = (IRunProcessService) GlobalServiceRegister.getDefault()
+                                .getService(IRunProcessService.class);
+                        if (runProcessService != null) {
+                            runProcessService.refreshView();
                         }
                     }
                 }
