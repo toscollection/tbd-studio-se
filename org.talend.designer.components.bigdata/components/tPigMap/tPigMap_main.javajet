@@ -197,12 +197,12 @@
  			List<String> innerRejectLocationExpressions = new ArrayList<String>();
  			
 %>
-			sb_<%=cid%>.append("<%=cid%>_RESULT = JOIN <%=cid%>_RESULT BY ");
+			sb_<%=cid%>.append("<%=cid%>_RESULT = JOIN <%=cid%>_RESULT BY (");
 <%
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
 			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
-			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = JOIN <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT BY ");
+			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = JOIN <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT BY (");
 <%
 			}
 			
@@ -241,11 +241,11 @@
 				}
 	 		}
 %>
-			sb_<%=cid%>.append(" <%=joinModel%>, <%=cid%>_<%=tableName%>_RESULT BY ");
+			sb_<%=cid%>.append(") <%=joinModel%>, <%=cid%>_<%=tableName%>_RESULT BY (");
 <%
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
-			sb_innerJoinReject_<%=cid%>.append(" LEFT, <%=cid%>_<%=tableName%>_RESULT BY ");				
+			sb_innerJoinReject_<%=cid%>.append(") LEFT, <%=cid%>_<%=tableName%>_RESULT BY (");				
 <%
 			}
 			
@@ -272,6 +272,15 @@
 <%
 					}
 				}
+	 		}
+	 		
+%>
+			sb_<%=cid%>.append(")");
+<%
+	 		if(existInnerJoin && innerReject && isInnerJoin) {
+%>
+			sb_innerJoinReject_<%=cid%>.append(")");				
+<%
 	 		}
 	 		
 	 		if(useOptimization) {
@@ -532,13 +541,14 @@
 	int size = outputTablesSortedByReject.size();
 	List<String> previousFilterExpressions = new ArrayList<String>();
 	boolean previousAtLeastOneTableWithoutFilterExpression = false;
+	boolean previousAllOutputTableIsReject = true;
 	for(int i=0;i<size;i++) {
 		OutputTable outputTable = outputTablesSortedByReject.get(i);
 		boolean isReject = outputTable.isReject();
 		boolean isRejectInnerJoin = outputTable.isRejectInnerJoin();
 		
-		if(i == 0) {
-			isReject = false;//no filter reject for the first output table
+		if(previousAllOutputTableIsReject) {
+			isReject = false;//set it to code generate logic,no output reject for the first several output reject tables
 		}
 		
 	    String tableName = outputTable.getName();
@@ -561,7 +571,10 @@
 		boolean hasFilter = outputTable.isActivateExpressionFilter() 
 	    	&& outputTable.getExpressionFilter()!=null 
 	    	&& !"".equals(outputTable.getExpressionFilter());
-	    boolean needFilterExpression = hasFilter || isReject;
+	   	
+	   	boolean noRejectDataByFilter = isReject && previousAtLeastOneTableWithoutFilterExpression;
+	   	boolean hasRejectDataByFilter = isReject && !previousAtLeastOneTableWithoutFilterExpression && previousFilterExpressions.size() > 0;
+	    boolean needFilterExpression = hasFilter || hasRejectDataByFilter || noRejectDataByFilter;
 
 	    if(needFilterExpression) {
 %>
@@ -591,40 +604,38 @@
 			}
 	 	}
 	 	
-		if(isReject) {
-			if(!previousAtLeastOneTableWithoutFilterExpression) {//the common reject action
-				if(hasFilter) {
+		if(hasRejectDataByFilter) {//the common reject action
+			if(hasFilter) {
 %>
-				sb_<%=cid%>.append(" AND ");
-<%
-				}
-%>
-				sb_<%=cid%>.append("(NOT (");
-<%
-				for(int j=0;j<previousFilterExpressions.size();j++) {
-					String previousFilterExpression = previousFilterExpressions.get(j);
-%>
-					sb_<%=cid%>.append("<%=previousFilterExpression%>");
-<%
-					if(j<previousFilterExpressions.size()-1) {
-%>
-					sb_<%=cid%>.append(" OR ");
-<%
-					}
-				}
-%>
-				sb_<%=cid%>.append("))");
-<%
-			} else {//no data
-				if(hasFilter) {
-%>
-				sb_<%=cid%>.append(" AND ");
-<%
-				}
-%>
-				sb_<%=cid%>.append("(1!=1)");
+			sb_<%=cid%>.append(" AND ");
 <%
 			}
+%>
+			sb_<%=cid%>.append("(NOT (");
+<%
+			for(int j=0;j<previousFilterExpressions.size();j++) {
+				String previousFilterExpression = previousFilterExpressions.get(j);
+%>
+				sb_<%=cid%>.append("<%=previousFilterExpression%>");
+<%
+				if(j<previousFilterExpressions.size()-1) {
+%>
+				sb_<%=cid%>.append(" OR ");
+<%
+				}
+			}
+%>
+			sb_<%=cid%>.append("))");
+<%
+		} else if(noRejectDataByFilter) {//no data
+			if(hasFilter) {
+%>
+			sb_<%=cid%>.append(" AND ");
+<%
+			}
+%>
+			sb_<%=cid%>.append("(1!=1)");
+<%
 		}
 		
 		if(needFilterExpression) {
@@ -642,6 +653,10 @@
 		sb_innerJoinReject_<%=cid%>.setLength(0);
 <%
 		}
+		
+		isReject = outputTable.isReject();//reset it to ui settings
+		
+		previousAllOutputTableIsReject = previousAllOutputTableIsReject && isReject;
 		
 		if(hasFilter && !(isReject || isRejectInnerJoin)) {
 			previousFilterExpressions.add(currentExpression);
