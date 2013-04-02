@@ -229,7 +229,11 @@ public class HDFSForm extends AbstractHDFSForm {
                 if (rowSeparator == null) {
                     rowSeparatorCombo.deselectAll();
                 } else {
-                    rowSeparatorCombo.setText(rowSeparator.getDisplayName());
+                    String originalValue = rowSeparatorCombo.getText();
+                    String newValue = rowSeparator.getDisplayName();
+                    if (!newValue.equals(originalValue)) {
+                        rowSeparatorCombo.setText(newValue);
+                    }
                 }
             }
         });
@@ -244,7 +248,11 @@ public class HDFSForm extends AbstractHDFSForm {
                 if (fieldSeparator == null) {
                     fieldSeparatorCombo.deselectAll();
                 } else {
-                    fieldSeparatorCombo.setText(fieldSeparator.getDisplayName());
+                    String originalValue = fieldSeparatorCombo.getText();
+                    String newValue = fieldSeparator.getDisplayName();
+                    if (!newValue.equals(originalValue)) {
+                        fieldSeparatorCombo.setText(newValue);
+                    }
                 }
             }
         });
