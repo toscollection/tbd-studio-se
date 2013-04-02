@@ -24,7 +24,6 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.oozie.OozieConnection;
 import org.talend.repository.model.oozie.OozieFactory;
-import org.talend.repository.oozie.Activator;
 import org.talend.repository.oozie.i18n.Messages;
 import org.talend.repository.oozie.node.model.OozieRepositoryNodeType;
 import org.talend.repository.oozie.update.OozieUpdateManager;
@@ -164,7 +163,7 @@ public class OozieWizard extends HadoopRepositoryWizard<OozieConnection> {
                 }
             } catch (Exception e) {
                 String detailError = e.toString();
-                new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID,
+                new ErrorDialogWidthDetailArea(getShell(), "org.talend.repository.oozie", //$NON-NLS-1$
                         Messages.getString("OozieWizard.persistenceException"), //$NON-NLS-1$
                         detailError);
                 log.error(Messages.getString("OozieWizard.persistenceException") + "\n" + detailError); //$NON-NLS-1$ //$NON-NLS-2$

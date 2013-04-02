@@ -3,13 +3,12 @@ package org.talend.repository.oozie.i18n;
 import java.util.ResourceBundle;
 
 import org.talend.commons.i18n.MessagesCore;
-import org.talend.repository.oozie.Activator;
 
 public class Messages extends MessagesCore {
 
     private static final String BUNDLE_NAME = "messages"; //$NON-NLS-1$
 
-    private static final String PLUGIN_ID = Activator.PLUGIN_ID;
+    private static final String PLUGIN_ID = "org.talend.repository.oozie"; //$NON-NLS-1$
 
     private static ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE_NAME);
 

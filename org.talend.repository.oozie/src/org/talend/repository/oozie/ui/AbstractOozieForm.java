@@ -10,7 +10,6 @@ import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.model.oozie.OozieConnection;
-import org.talend.repository.oozie.Activator;
 import org.talend.repository.oozie.i18n.Messages;
 import org.talend.repository.oozie.util.OozieModelUtil;
 
@@ -60,7 +59,8 @@ public abstract class AbstractOozieForm extends AbstractHadoopForm<OozieConnecti
                 updateStatus(IStatus.WARNING, mainMsg);
             }
             if (displayDialog) {
-                new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID, mainMsg, connectException);
+                new ErrorDialogWidthDetailArea(getShell(), "org.talend.repository.oozie", //$NON-NLS-1$
+                        mainMsg, connectException);
             }
         }
 
