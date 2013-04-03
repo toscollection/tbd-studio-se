@@ -15,6 +15,7 @@ package org.talend.designer.hdfsbrowse.manager;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.talend.designer.hdfsbrowse.constants.HadoopPatternConstants;
 
 /**
@@ -22,21 +23,6 @@ import org.talend.designer.hdfsbrowse.constants.HadoopPatternConstants;
  * 
  */
 public class HadoopParameterUtil {
-
-    /**
-     * DOC ycbai Comment method "isValidNameNodeURI".
-     * 
-     * Check whether the name node uri is valid.
-     * 
-     * @param nameNodeURI
-     * @return
-     */
-    public static boolean isValidNameNodeURI(String nameNodeURI) {
-        Pattern p = Pattern.compile(HadoopPatternConstants.NAME_NODE_URI);
-        Matcher m = p.matcher(nameNodeURI);
-
-        return m.matches();
-    }
 
     /**
      * DOC ycbai Comment method "getHostNameFromNameNodeURI".
@@ -52,12 +38,21 @@ public class HadoopParameterUtil {
             return hostName;
         }
 
-        String[] array = nameNodeURI.split(":"); //$NON-NLS-1$
-        if (array.length > 1) {
-            hostName = array[1];
+        Matcher matcher = Pattern.compile(HadoopPatternConstants.NAME_NODE_URI_WITH_PORT).matcher(nameNodeURI);
+        if (matcher.find()) {
+            hostName = matcher.group(1);
         }
-        if (hostName.startsWith("//")) { //$NON-NLS-1$
-            hostName = hostName.substring(hostName.indexOf("//") + 2); //$NON-NLS-1$
+        if (StringUtils.isEmpty(hostName)) {
+            matcher = Pattern.compile(HadoopPatternConstants.NAME_NODE_URI_WITHOUT_PORT).matcher(nameNodeURI);
+            if (matcher.find()) {
+                hostName = matcher.group(1);
+            }
+        }
+        if (StringUtils.isEmpty(hostName)) {
+            matcher = Pattern.compile(HadoopPatternConstants.NAME_NODE_URI_LOCAL).matcher(nameNodeURI);
+            if (matcher.find()) {
+                hostName = "localhost"; //$NON-NLS-1$
+            }
         }
 
         return hostName;

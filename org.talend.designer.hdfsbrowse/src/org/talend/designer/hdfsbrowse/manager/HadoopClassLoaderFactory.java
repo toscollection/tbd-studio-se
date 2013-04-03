@@ -23,8 +23,6 @@ import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
  */
 public class HadoopClassLoaderFactory {
 
-    protected final static String DEFAULT_JAR_SEPARATOR = ";"; //$NON-NLS-1$
-
     public static ClassLoader getClassLoader(HDFSConnectionBean connectionBean) {
         ClassLoader loader = null;
         if (connectionBean == null) {

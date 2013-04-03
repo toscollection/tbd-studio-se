@@ -18,6 +18,53 @@ package org.talend.designer.hdfsbrowse.constants;
  */
 public interface HadoopPatternConstants {
 
-    public static final String NAME_NODE_URI = "^hdfs://.+:\\\\d+$"; //$NON-NLS-1$
+    /*
+     * All possible situation of Namenode Uri.
+     */
+    public final static String NAME_NODE_URI = "(^(file:///|local)$)|(^hdfs://([^:/\\\\\\s]*[^:/\\\\\\s]|(([^:/\\\\\\s]+)(:\\d+)))$)"; //$NON-NLS-1$
+
+    /*
+     * Namenode Uri with port, like "hdfs://talend-hdp-all:8020"
+     */
+    public final static String NAME_NODE_URI_WITH_PORT = "^hdfs://([^:/\\\\\\s]+):(\\d+)$"; //$NON-NLS-1$
+
+    /*
+     * Namenode Uri without port, like "hdfs://talend-hdp-all"
+     */
+    public final static String NAME_NODE_URI_WITHOUT_PORT = "^hdfs://([^:/\\\\\\s]*[^:\\s])$"; //$NON-NLS-1$
+
+    /*
+     * Local namenode Uri, like "local"(deprecated) or "file:///"
+     */
+    public final static String NAME_NODE_URI_LOCAL = "^(file:///|local)$"; //$NON-NLS-1$
+
+    /*
+     * All possible situation of Jobtracker Uri.
+     */
+    public final static String JOB_TRACKER_URI = "([^:/\\\\\\s]+):(\\d+)$"; //$NON-NLS-1$
+
+    /*
+     * All possible situation of host name.
+     */
+    public final static String HOST_NAME = "[^:/\\\\\\s]+"; //$NON-NLS-1$
+
+    /*
+     * All possible situation of user name.
+     */
+    public final static String USER_NAME = HOST_NAME;
+
+    /*
+     * All possible situation of database.
+     */
+    public final static String DATABASE = HOST_NAME;
+
+    /*
+     * All possible situation of oozie end point.
+     */
+    public final static String OOZIE_END_POINT = "^http://([^:/\\\\\\s]*):(\\d+)/\\S+"; //$NON-NLS-1$
+
+    public final static String WITHOUT_SPACE = "[^\\s]+"; //$NON-NLS-1$
+
+    public final static String NUMBER = "\\d+"; //$NON-NLS-1$
 
 }
