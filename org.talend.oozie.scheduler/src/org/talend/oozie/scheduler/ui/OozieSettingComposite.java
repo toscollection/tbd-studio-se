@@ -61,7 +61,6 @@ import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 import org.talend.oozie.scheduler.ui.model.HadoopPropertiesFieldModel;
-import org.talend.oozie.scheduler.ui.model.HadoopPropertiesType;
 import org.talend.oozie.scheduler.ui.view.HadoopPropertiesTableView;
 import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
@@ -127,7 +126,7 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     private HadoopPropertiesTableView propertiesTableView;
 
-    private List<HadoopPropertiesType> properties;
+    private List<HashMap<String, Object>> properties;
 
     /**
      * DOC ycbai OozieSettingComposite constructor comment.
@@ -143,7 +142,6 @@ public class OozieSettingComposite extends ScrolledComposite {
         setExpandHorizontal(true);
         setExpandVertical(true);
         createContents(this, forPrefPage);
-        properties = new ArrayList<HadoopPropertiesType>();
     }
 
     private void createContents(Composite parent, boolean forPrefPage) {
@@ -157,9 +155,9 @@ public class OozieSettingComposite extends ScrolledComposite {
         comp.setLayout(layout);
         setContent(comp);
 
+        IProcess2 process = OozieJobTrackerListener.getProcess();
         if (!forPrefPage) {
             if (!GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
-                IProcess2 process = OozieJobTrackerListener.getProcess();
                 if (process != null) {
                     process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue("");
                 }
@@ -169,7 +167,7 @@ public class OozieSettingComposite extends ScrolledComposite {
         }
         addVersionFields(comp);
         addConnectionFields(comp);
-        if (!forPrefPage) {
+        if (!forPrefPage && process != null) {
             addHadoopPropertiesFields(comp);
         }
         initUI();
@@ -337,7 +335,6 @@ public class OozieSettingComposite extends ScrolledComposite {
             nameNodeEndPointTxt.setEditable(true);
             jobTrackerEndPointTxt.setEditable(true);
             oozieEndPointTxt.setEditable(true);
-
             // init kerberos
             kerbBtn.setEnabled(isSupportSecurity);
             kerbLabel.setEnabled(kerbBtn.getEnabled());
@@ -390,9 +387,9 @@ public class OozieSettingComposite extends ScrolledComposite {
                 }
             });
             propertiesTableView.getExtendedTableModel().addModifiedBeanListener(
-                    new IModifiedBeanListener<HadoopPropertiesType>() {
+                    new IModifiedBeanListener<HashMap<String, Object>>() {
 
-                        public void handleEvent(ModifiedBeanEvent<HadoopPropertiesType> event) {
+                        public void handleEvent(ModifiedBeanEvent<HashMap<String, Object>> event) {
                             // checkFieldsValue();
                             updateModel();
                         }
@@ -741,11 +738,11 @@ public class OozieSettingComposite extends ScrolledComposite {
                 ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS);
     }
 
-    public void setProperties(List<HadoopPropertiesType> properties) {
+    public void setProperties(List<HashMap<String, Object>> properties) {
         this.properties = properties;
     }
 
-    public List<HadoopPropertiesType> getProperties() {
+    public List<HashMap<String, Object>> getProperties() {
         return properties;
     }
 }

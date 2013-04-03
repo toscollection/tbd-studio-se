@@ -17,8 +17,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.oozie.client.OozieClient;
@@ -47,10 +48,12 @@ import org.talend.core.CorePlugin;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.model.components.ComponentCategory;
 import org.talend.core.model.process.IContext;
+import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.utils.JavaResourcesHelper;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.core.model.components.EOozieParameterName;
+import org.talend.designer.core.model.components.EParameterName;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.designer.hdfsbrowse.controllers.HDFSBrowseDialog;
@@ -74,14 +77,11 @@ import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
 import org.talend.oozie.scheduler.ui.ExecuteJobComposite;
 import org.talend.oozie.scheduler.ui.TOozieSchedulerDialog;
 import org.talend.oozie.scheduler.ui.TOozieSettingDialog;
-import org.talend.oozie.scheduler.ui.model.HadoopPropertiesType;
 import org.talend.oozie.scheduler.utils.TOozieCommonUtils;
 import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.oozie.scheduler.utils.TOozieStringUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.oozie.scheduler.views.TOozieView;
-import org.talend.utils.json.JSONException;
-import org.talend.utils.json.JSONObject;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for doing some action from the widgets of
@@ -721,18 +721,11 @@ public class ExecuteJobCompositeController {
             jobContext.set("dfs.namenode.kerberos.principal", TOozieParamUtils.getPrincipal());
         }
         // for hadoop properties
-        JSONObject object = TOozieParamUtils.getProperties(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PROPERTIES);
-        if (object != null) {
-            try {
-                Iterator keys = object.keys();
-                while (keys.hasNext()) {
-                    String key = (String) keys.next();
-                    String value;
-                    value = object.getString(key);
-                    jobContext.set(key, value);
+        if (process != null) {
+            if ((Boolean) process.getElementParameter(EParameterName.USE_HADOOP_PROPERTIES.getName()).getValue()) {
+                for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
+                    jobContext.set((String) property.get("PROPERTY"), (String) property.get("VALUE"));
                 }
-            } catch (JSONException e) {
-                org.talend.commons.exception.ExceptionHandler.process(e);
             }
         }
         // Job name.
@@ -880,7 +873,21 @@ public class ExecuteJobCompositeController {
                 String id = settingDialog.getRepositoryId();
                 updateOozieFromRepositoryValues(id);
             }
+            updateHadoopProperties();
             updateAllEnabledOrNot();
+        }
+    }
+
+    /**
+     * DOC plv Comment method "updateHadoopProperties".
+     */
+    private void updateHadoopProperties() {
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        if (process != null) {
+            IElementParameter param = process.getElementParameter(EParameterName.HADOOP_ADVANCED_PROPERTIES.getName());
+            if (param != null) {
+                param.setValue(settingDialog.getPropertiesValue());
+            }
         }
     }
 
@@ -905,19 +912,17 @@ public class ExecuteJobCompositeController {
         String customJars = getHadoopCustomJars();
         boolean kerberors = TOozieParamUtils.enableKerberos();
         String principal = TOozieParamUtils.getPrincipal();
-        List<HadoopPropertiesType> properties = new ArrayList<HadoopPropertiesType>();
-        JSONObject property = TOozieParamUtils.getProperties(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PROPERTIES);
-        Iterator<String> it = property.keys();
-        while (it.hasNext()) {
-            String key = it.next();
-            HadoopPropertiesType propertiesType = new HadoopPropertiesType();
-            propertiesType.setKey(key);
-            try {
-                propertiesType.setValue(property.getString(key));
-            } catch (JSONException e) {
-                //
+        List<HashMap<String, Object>> properties = new ArrayList<HashMap<String, Object>>();
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        if (process != null) {
+            IElementParameter param = process.getElementParameter(EParameterName.HADOOP_ADVANCED_PROPERTIES.getName());
+            if (param != null && param.getValue() != null) {
+                properties.addAll((List<HashMap<String, Object>>) param.getValue());
+                IElementParameter param2 = process.getElementParameter(EParameterName.USE_HADOOP_PROPERTIES.getName());
+                if (param2 != null) {
+                    param2.setValue(true);
+                }
             }
-            properties.add(propertiesType);
         }
 
         settingDialog.setHadoopDistributionValue(hadoopDistributionValue);
@@ -1014,16 +1019,7 @@ public class ExecuteJobCompositeController {
         if (enableKerberos) {
             principal = settingDialog.getPrincipalValue();
         }
-        JSONObject object = new JSONObject();
-        try {
-            for (HadoopPropertiesType type : settingDialog.getPropertiesValue()) {
-                object.put(type.getKey(), type.getValue());
-            }
-        } catch (JSONException e) {
-            org.talend.commons.exception.ExceptionHandler.process(e);
-        }
-        CorePlugin.getDefault().getPreferenceStore()
-                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PROPERTIES, object.toString());
+
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION, hadoopDistributionValue);
         CorePlugin.getDefault().getPreferenceStore()

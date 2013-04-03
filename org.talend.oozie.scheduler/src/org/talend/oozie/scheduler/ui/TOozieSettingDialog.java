@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.oozie.scheduler.ui;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -21,7 +22,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
-import org.talend.oozie.scheduler.ui.model.HadoopPropertiesType;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for Talend Oozie Scheduler setup dialog.
@@ -50,7 +50,7 @@ public class TOozieSettingDialog extends Dialog {
 
     private String principalValue;
 
-    private List<HadoopPropertiesType> propertiesValue;
+    private List<HashMap<String, Object>> propertiesValue;
 
     /**
      * @param parentShell
@@ -186,11 +186,11 @@ public class TOozieSettingDialog extends Dialog {
         this.principalValue = principalValue;
     }
 
-    public void setPropertiesValue(List<HadoopPropertiesType> propertiesValue) {
+    public void setPropertiesValue(List<HashMap<String, Object>> propertiesValue) {
         this.propertiesValue = propertiesValue;
     }
 
-    public List<HadoopPropertiesType> getPropertiesValue() {
+    public List<HashMap<String, Object>> getPropertiesValue() {
         return settingComposite.getProperties();
     }
 

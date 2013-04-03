@@ -1,27 +1,28 @@
 package org.talend.oozie.scheduler.ui.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.talend.commons.ui.swt.extended.table.ExtendedTableModel;
 
-public class HadoopPropertiesFieldModel extends ExtendedTableModel<HadoopPropertiesType> {
+public class HadoopPropertiesFieldModel extends ExtendedTableModel<HashMap<String, Object>> {
 
     public HadoopPropertiesFieldModel(String name) {
         super(name);
-        setProperties(new ArrayList<HadoopPropertiesType>());
+        setProperties(new ArrayList<HashMap<String, Object>>());
     }
 
-    public HadoopPropertiesFieldModel(List<HadoopPropertiesType> conditionTypeList, String name) {
+    public HadoopPropertiesFieldModel(List<HashMap<String, Object>> conditionTypeList, String name) {
         super(name);
         setProperties(conditionTypeList);
     }
 
-    public void setProperties(List<HadoopPropertiesType> properties) {
-        registerDataList((List<HadoopPropertiesType>) properties);
+    public void setProperties(List<HashMap<String, Object>> properties) {
+        registerDataList((List<HashMap<String, Object>>) properties);
     }
 
-    public HadoopPropertiesType createHadoopPropertiesType() {
-        return new HadoopPropertiesType();
+    public HashMap<String, Object> createHadoopPropertiesType() {
+        return new HashMap<String, Object>();
     }
 }

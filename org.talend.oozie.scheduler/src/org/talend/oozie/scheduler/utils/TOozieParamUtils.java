@@ -34,8 +34,6 @@ import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.repository.model.IProxyRepositoryFactory;
-import org.talend.utils.json.JSONException;
-import org.talend.utils.json.JSONObject;
 
 /**
  * DOC plv class global comment. Detailed comment
@@ -138,18 +136,6 @@ public class TOozieParamUtils {
     public static Object getParamValueFromRepositoryById(String prefKey, String id) {
         Object versionValue = TOozieParamUtils.getRepositoryOozieParam(id).get(prefKey);
         return versionValue;
-    }
-
-    public static JSONObject getProperties(String prefKey) {
-        String versionValue = CorePlugin.getDefault().getPreferenceStore().getString(prefKey);
-        if (versionValue != null && versionValue.trim().length() > 0) {
-            try {
-                return new JSONObject(versionValue);
-            } catch (JSONException e) {
-                org.talend.commons.exception.ExceptionHandler.process(e);
-            }
-        }
-        return null;
     }
 
     public static String getNameNode() {
