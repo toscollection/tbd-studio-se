@@ -73,7 +73,12 @@ public class HortonBrandingService extends AbstractTalendBrandingService {
 
     @Override
     public String getJobLicenseHeader(String version) {
-        return Messages.getString("TosBrandingService_job_license_header_content", this.getFullProductName(), version);
+        return Messages.getString("TosBrandingService_license_header_content", this.getFullProductName(), version);
+    }
+
+    @Override
+    public String getRoutineLicenseHeader(String version) {
+        return Messages.getString("TosBrandingService_license_header_content", this.getFullProductName(), version);
     }
 
     public boolean isPoweredOnlyCamel() {
