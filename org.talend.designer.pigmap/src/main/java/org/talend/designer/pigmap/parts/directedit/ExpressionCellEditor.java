@@ -312,7 +312,12 @@ public class ExpressionCellEditor extends ExtendedTextCellEditor {
         contentProposalProviders = new IContentProposalProvider[] { new PigProposalProvider(mapperManager.getMapperComponent()
                 .getProcess(), mapperManager.getMapperComponent().getOriginalNode()) };
         ExpressionProposalProvider provider = new ExpressionProposalProvider(mapperManager, contentProposalProviders);
-        provider.init(source);
+        provider.init();
         return provider;
     }
+
+    public MapperManager getMapperManager() {
+        return this.mapperManager;
+    }
+
 }

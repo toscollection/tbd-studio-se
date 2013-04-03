@@ -227,13 +227,11 @@ public class StyledTextHandler {
     }
 
     public void setSelectedNodePart(TableEntityPart selectedNode) {
-        this.selectedNodePart = selectedNode;
-        this.selectedNode = (AbstractNode) selectedNodePart.getModel();
         IContentProposalProvider[] contentProposalProviders = new IContentProposalProvider[0];
         contentProposalProviders = new IContentProposalProvider[] { new PigProposalProvider(mapperManager.getMapperComponent()
                 .getProcess(), mapperManager.getMapperComponent().getOriginalNode()) };
         ExpressionProposalProvider provider = new ExpressionProposalProvider(mapperManager, contentProposalProviders);
-        provider.init(selectedNode);
+        provider.init();
         getContentProposalAdapter().setContentProposalProvider(provider);
     }
 }

@@ -27,5 +27,12 @@
             class="org.talend.designer.pigmap.PigMapComponent">
       </ExternalComponent>
    </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.designer.pigmap.PigMapService"
+            serviceId="IPigMapService">
+      </Service>
+   </extension>
 
 </plugin>

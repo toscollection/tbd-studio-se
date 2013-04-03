@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
@@ -42,11 +41,7 @@ public class ExpressionProposalProvider implements IContentProposalProvider {
         this.mapperManager = mapperManager;
     }
 
-    public void init(GraphicalEditPart source) {
-        init(source.getModel());
-    }
-
-    public void init(Object source) {
+    public void init() {
         PigMapData mapData = mapperManager.getExternalData();
         for (int i = 0; i < mapData.getInputTables().size(); i++) {
             InputTable inputTable = mapData.getInputTables().get(i);

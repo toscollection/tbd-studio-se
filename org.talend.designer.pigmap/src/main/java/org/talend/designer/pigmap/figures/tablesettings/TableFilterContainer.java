@@ -25,6 +25,7 @@ import org.talend.commons.expressionbuilder.Variable;
 import org.talend.commons.ui.expressionbuilder.IExpressionBuilderDialogController;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.IService;
+import org.talend.core.service.IPigMapService;
 import org.talend.designer.gefabstractmap.figures.manager.TableManager;
 import org.talend.designer.gefabstractmap.figures.treesettings.FilterContainer;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
@@ -86,6 +87,12 @@ public class TableFilterContainer extends FilterContainer {
                                 variable.setValue(node.getName());
                                 vars.add(variable);
                             }
+                        }
+
+                        if (GlobalServiceRegister.getDefault().isServiceRegistered(IPigMapService.class)) {
+                            final IPigMapService service = (IPigMapService) GlobalServiceRegister.getDefault().getService(
+                                    IPigMapService.class);
+                            service.setPigMapData(pigMapData);
                         }
                     }
                 }
