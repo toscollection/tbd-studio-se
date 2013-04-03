@@ -37,6 +37,7 @@ import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.HadoopCustomVersionDefineDialog;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
@@ -415,14 +416,30 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             return false;
         }
 
+        if (!HadoopParameterValidator.isValidNamenodeURI(namenodeUriText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodeURI.invalid")); //$NON-NLS-1$
+            return false;
+        }
+
         if (!validText(jobtrackerUriText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobtrackerURI")); //$NON-NLS-1$
             return false;
         }
 
-        if (kerberosBtn.isEnabled() && kerberosBtn.getSelection() && !validText(principalText.getText())) {
-            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.principal")); //$NON-NLS-1$
+        if (!HadoopParameterValidator.isValidJobtrackerURI(jobtrackerUriText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid")); //$NON-NLS-1$
             return false;
+        }
+
+        if (kerberosBtn.isEnabled() && kerberosBtn.getSelection()) {
+            if (!validText(principalText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.principal")); //$NON-NLS-1$
+                return false;
+            }
+            if (!HadoopParameterValidator.isValidPrincipal(principalText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.principal.invalid")); //$NON-NLS-1$
+                return false;
+            }
         }
 
         if (groupText.getEditable()) {
@@ -434,6 +451,14 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group")); //$NON-NLS-1$
                 return false;
             }
+            if (!HadoopParameterValidator.isValidGroup(groupText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group.invalid")); //$NON-NLS-1$
+                return false;
+            }
+        }
+        if (validText(userNameText.getText()) && !HadoopParameterValidator.isValidUserName(userNameText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.userName.invalid")); //$NON-NLS-1$
+            return false;
         }
 
         updateStatus(IStatus.OK, null);

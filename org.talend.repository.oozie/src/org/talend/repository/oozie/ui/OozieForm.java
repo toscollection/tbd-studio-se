@@ -18,10 +18,9 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
-import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.repository.oozie.i18n.Messages;
 
 public class OozieForm extends AbstractOozieForm {
@@ -39,10 +38,7 @@ public class OozieForm extends AbstractOozieForm {
     private List<String> versions;
 
     protected OozieForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
-        super(parent, SWT.NONE, existingNames);
-        this.connectionItem = connectionItem;
-        setConnectionItem(connectionItem);
-        setupForm();
+        super(parent, SWT.NONE, existingNames, connectionItem);
         GridLayout layout = (GridLayout) getLayout();
         layout.marginHeight = 0;
         setLayout(layout);
@@ -153,10 +149,8 @@ public class OozieForm extends AbstractOozieForm {
         if (!StringUtils.isEmpty(endPointVal)) {
             endPonitText.setText(endPointVal);
         } else {
-            // Need to redo
-            HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
-            String jobTrackerURI = clusterConnection.getJobTrackerURI();
-            endPointVal = "http://" + StringUtils.substringBefore(jobTrackerURI, ":") + ":11000/oozie"; //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            String hostName = HadoopParameterUtil.getHostNameFromNameNodeURI(clusterConnection.getNameNodeURI());
+            endPointVal = "http://" + hostName + ":11000/oozie"; //$NON-NLS-1$//$NON-NLS-2$ 
             endPonitText.setText(endPointVal);
             getConnection().setOozieEndPoind(endPointVal);
         }
@@ -165,31 +159,28 @@ public class OozieForm extends AbstractOozieForm {
     }
 
     private void updateConnectionPart() {
-        HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
-        if (clusterConnection != null) {
-            boolean enableKerberos = clusterConnection.isEnableKerberos();
-            userNameText.setEnabled(!enableKerberos);
-        }
+        userNameText.setEnabled(!enableKerberos);
     }
 
     @Override
     public boolean checkFieldsValue() {
         checkConnectionBtn.setEnabled(false);
-
-        HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
-        if (clusterConnection != null) {
-            String dfVersion = clusterConnection.getDfVersion();
-            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(dfVersion);
-            boolean supportGroup = isSupportGroup(version4Drivers);
-            if (supportGroup) {
-                if (!validText(userNameText.getText())) {
-                    updateStatus(IStatus.ERROR, Messages.getString("OozieForm.nameInvalid")); //$NON-NLS-1$
-                    return false;
-                }
+        if (enableGroup) {
+            if (!validText(userNameText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("OozieForm.nameInvalid")); //$NON-NLS-1$
+                return false;
             }
+        }
+        if (validText(userNameText.getText()) && !HadoopParameterValidator.isValidUserName(userNameText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("OozieForm.nameInvalid.invalid")); //$NON-NLS-1$
+            return false;
         }
         if (!validText(endPonitText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("OozieForm.endPointInvalid")); //$NON-NLS-1$
+            return false;
+        }
+        if (!HadoopParameterValidator.isValidOozieEndPoint(endPonitText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("OozieForm.endPointInvalid.invalid")); //$NON-NLS-1$
             return false;
         }
         // TODO check version if is specified

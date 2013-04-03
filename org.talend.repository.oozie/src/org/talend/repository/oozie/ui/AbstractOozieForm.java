@@ -5,24 +5,25 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
+import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
-import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
+import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopSubForm;
 import org.talend.repository.model.oozie.OozieConnection;
 import org.talend.repository.oozie.i18n.Messages;
 import org.talend.repository.oozie.util.OozieModelUtil;
 
-public abstract class AbstractOozieForm extends AbstractHadoopForm<OozieConnection> {
+public abstract class AbstractOozieForm extends AbstractHadoopSubForm<OozieConnection> {
 
     protected boolean oozieSettingIsValide = false;
 
-    protected AbstractOozieForm(Composite parent, int style) {
-        super(parent, style);
+    protected AbstractOozieForm(Composite parent, int style, ConnectionItem connectionItem) {
+        super(parent, style, connectionItem);
     }
 
-    protected AbstractOozieForm(Composite parent, int style, String[] existingNames) {
-        super(parent, style, existingNames);
+    protected AbstractOozieForm(Composite parent, int style, String[] existingNames, ConnectionItem connectionItem) {
+        super(parent, style, existingNames, connectionItem);
     }
 
     protected ConnectionStatus checkConnection() {

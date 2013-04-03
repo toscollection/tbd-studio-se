@@ -6,7 +6,7 @@
       <repositoryNode
             alias="Oozie"
             folder="metadata/hadoop/oozie"
-            icon="icons/hadoop-logo-16x16.png"
+            icon="icons/Oozie_icon16.png"
             isResouce="true"
             label="%OOZIE"
             ordinal="52"

@@ -4,8 +4,8 @@ import org.talend.commons.ui.runtime.image.IImage;
 
 public enum EOozieImage implements IImage {
 
-    OOZIE_RESOURCE_ICON("/icons/hadoop-logo-16x16.png"), //$NON-NLS-1$
-    OOZIE_WIZ("/icons/hadoop-logo-wiz.png");
+    OOZIE_RESOURCE_ICON("/icons/Oozie_icon16.png"), //$NON-NLS-1$
+    OOZIE_WIZ("/icons/hadoop-logo-wiz.png"); //$NON-NLS-1$
 
     private String path;
 
@@ -22,6 +22,7 @@ public enum EOozieImage implements IImage {
      * 
      * @return the path
      */
+    @Override
     public String getPath() {
         return this.path;
     }
@@ -31,6 +32,7 @@ public enum EOozieImage implements IImage {
      * 
      * @return the clazz
      */
+    @Override
     public Class getLocation() {
         return EOozieImage.class;
     }
