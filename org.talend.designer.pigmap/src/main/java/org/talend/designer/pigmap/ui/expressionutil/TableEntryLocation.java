@@ -28,6 +28,12 @@ public class TableEntryLocation {
     public TableEntryLocation(String tableName, String columnValue) {
         this("", tableName, columnValue, "");
     }
+    
+    public TableEntryLocation(String tableName) {
+        this.tableName = tableName;
+        this.prefix = "";
+        this.sufix = "";
+    }
 
     String prefix;
 

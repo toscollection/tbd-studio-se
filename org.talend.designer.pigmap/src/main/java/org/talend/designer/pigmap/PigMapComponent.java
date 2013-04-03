@@ -37,6 +37,7 @@ import org.talend.core.model.utils.TalendTextUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.AbstractExternalData;
 import org.talend.designer.pigmap.figures.tablesettings.JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
+import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
@@ -56,6 +57,7 @@ public class PigMapComponent extends AbstractExternalNode implements IHashableIn
     private PigMapExpressionManager expressionManager;
 
     public PigMapComponent() {
+        expressionManager = new PigMapExpressionManager();
     }
 
     @Override
@@ -105,10 +107,25 @@ public class PigMapComponent extends AbstractExternalNode implements IHashableIn
 
     @Override
     public void renameInputConnection(String oldName, String newName) {
+        PigMapData externalEmfData = (PigMapData) getExternalEmfData();
+        for (InputTable inputTable : externalEmfData.getInputTables()) {
+            if (inputTable.getName() != null && inputTable.getName().equals(oldName) && !oldName.equals(newName)) {
+                inputTable.setName(newName);
+                PigMapUtil.updateExpression(oldName,newName,externalEmfData,expressionManager);
+            }
+        }
     }
 
     @Override
     public void renameOutputConnection(String oldName, String newName) {
+
+        PigMapData externalEmfData = (PigMapData) getExternalEmfData();
+        for (OutputTable outputTable : externalEmfData.getOutputTables()) {
+            if (outputTable.getName() != null && outputTable.getName().equals(oldName) && !oldName.equals(newName)) {
+                outputTable.setName(newName);
+            }
+        }
+    
     }
 
     @Override

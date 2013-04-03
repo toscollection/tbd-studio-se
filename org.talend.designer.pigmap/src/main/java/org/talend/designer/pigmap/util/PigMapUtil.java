@@ -26,6 +26,8 @@ import org.talend.designer.pigmap.model.emf.pigmap.LookupConnection;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.ui.expressionutil.PigMapExpressionManager;
+import org.talend.designer.pigmap.ui.expressionutil.TableEntryLocation;
 
 /**
  * 
@@ -201,4 +203,73 @@ public class PigMapUtil {
         }
         return connections;
     }
+
+    /**
+     * DOC talend2 Comment method "updateExpression".
+     * @param oldName
+     * @param newName
+     * @param externalEmfData 
+     * @param expressionManager 
+     */
+    public static void updateExpression(String oldName, String newName, PigMapData externalEmfData, PigMapExpressionManager expressionManager) {
+        List<AbstractInOutTable> tables = new ArrayList<AbstractInOutTable>(externalEmfData.getInputTables());
+        tables.addAll(new ArrayList<AbstractInOutTable>(externalEmfData.getOutputTables()));
+        
+        for(AbstractInOutTable table : tables) {
+            
+            String newExpressionFilter = replaceExpression(oldName, newName, table.getExpressionFilter(), expressionManager);
+            
+            if (newExpressionFilter != null) {
+                table.setExpressionFilter(newExpressionFilter);
+            }
+            
+            List<TableNode>  nodes = table.getNodes();
+            if(nodes!=null) {
+                for(TableNode node : nodes) {
+                    String newExpression = replaceExpression(oldName, newName, node.getExpression(), expressionManager);
+                    if (newExpression != null) {
+                        node.setExpression(newExpression);
+                    }
+                }
+            }
+            
+        }
+    }
+
+    /**
+     * DOC talend2 Comment method "replaceExpression".
+     * @param oldName
+     * @param newName
+     * @param expressionFilter
+     * @param expressionManager
+     * @return
+     */
+    private static String replaceExpression(String oldName, String newName, String currentExpression,
+            PigMapExpressionManager expressionManager) {
+        
+        if (currentExpression == null || currentExpression.trim().length() == 0) {
+            return null;
+        }
+        
+        List<TableEntryLocation> tableEntryLocations = expressionManager.parseTableEntryLocation(currentExpression);
+        
+        TableEntryLocation oldLocation = new TableEntryLocation(oldName);
+        TableEntryLocation newLocation = new TableEntryLocation(newName);
+        
+        for (int i = 0; i < tableEntryLocations.size(); i++) {
+            TableEntryLocation currentLocation = tableEntryLocations.get(i);
+            if (oldLocation.getTableName().equals(currentLocation.getTableName())) {
+                oldLocation.setColumnValue(currentLocation.getColumnValue());
+                newLocation.setColumnValue(currentLocation.getColumnValue());
+            }
+            
+            if (currentLocation.equals(oldLocation)) {
+                currentExpression = expressionManager.replaceExpression(currentExpression, currentLocation, newLocation);
+            }
+        }
+        
+        return currentExpression;
+        
+    }
+    
 }
