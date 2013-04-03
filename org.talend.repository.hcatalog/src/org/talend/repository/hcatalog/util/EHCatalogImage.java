@@ -19,8 +19,8 @@ import org.talend.commons.ui.runtime.image.IImage;
  */
 public enum EHCatalogImage implements IImage {
 
-    HCATALOG_RESOURCE_ICON("/icons/hadoop-logo-16x16.png"), //$NON-NLS-1$
-    HCATALOG_WIZ("/icons/hadoop-logo-wiz.png");
+    HCATALOG_RESOURCE_ICON("/icons/HCatalog_icon16.png"), //$NON-NLS-1$
+    HCATALOG_WIZ("/icons/hadoop-logo-wiz.png"); //$NON-NLS-1$
 
     private String path;
 
@@ -37,6 +37,7 @@ public enum EHCatalogImage implements IImage {
      * 
      * @return the path
      */
+    @Override
     public String getPath() {
         return this.path;
     }
@@ -46,6 +47,7 @@ public enum EHCatalogImage implements IImage {
      * 
      * @return the clazz
      */
+    @Override
     public Class getLocation() {
         return EHCatalogImage.class;
     }

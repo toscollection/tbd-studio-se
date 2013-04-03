@@ -102,8 +102,6 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
     private LabelledText commentText;
 
-    boolean readOnly;
-
     private TableViewerCreator tableViewerCreator;
 
     private Table tableNavigator;
@@ -118,8 +116,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
     public HDFSSchemaForm(Composite parent, ConnectionItem connectionItem, MetadataTable metadataTable, IWizardPage page,
             HDFSConnection temConnection) {
-        super(parent, SWT.NONE);
-        this.connectionItem = connectionItem;
+        super(parent, SWT.NONE, connectionItem);
         this.parentWizardPage = page;
         this.temConnection = temConnection;
         this.metadataTable = metadataTable;
@@ -130,7 +127,6 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
                 break;
             }
         }
-        setupForm();
     }
 
     public void initializeForm() {

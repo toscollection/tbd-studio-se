@@ -16,8 +16,9 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
+import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.repository.ConnectionStatus;
-import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
+import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopSubForm;
 import org.talend.repository.hcatalog.Activator;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.hcatalog.service.HCatalogServiceUtil;
@@ -26,16 +27,16 @@ import org.talend.repository.model.hcatalog.HCatalogConnection;
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public abstract class AbstractHCatalogForm extends AbstractHadoopForm<HCatalogConnection> {
+public abstract class AbstractHCatalogForm extends AbstractHadoopSubForm<HCatalogConnection> {
 
     protected boolean hcatalogSettingIsValide = false;
 
-    protected AbstractHCatalogForm(Composite parent, int style) {
-        super(parent, style);
+    protected AbstractHCatalogForm(Composite parent, int style, ConnectionItem connectionItem) {
+        super(parent, style, connectionItem);
     }
 
-    protected AbstractHCatalogForm(Composite parent, int style, String[] existingNames) {
-        super(parent, style, existingNames);
+    protected AbstractHCatalogForm(Composite parent, int style, String[] existingNames, ConnectionItem connectionItem) {
+        super(parent, style, existingNames, connectionItem);
     }
 
     protected ConnectionStatus checkConnection() {

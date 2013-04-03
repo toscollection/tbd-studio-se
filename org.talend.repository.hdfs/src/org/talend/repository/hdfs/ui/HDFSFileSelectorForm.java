@@ -125,12 +125,9 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     public HDFSFileSelectorForm(Composite parent, ConnectionItem connectionItem, HDFSConnection temConnection,
             WizardPage parentWizardPage) {
-        super(parent, SWT.NONE);
-        this.connectionItem = connectionItem;
+        super(parent, SWT.NONE, connectionItem);
         this.temConnection = temConnection;
         this.parentWizardPage = parentWizardPage;
-        setConnectionItem(connectionItem);
-        setupForm();
         GridLayout layout = (GridLayout) getLayout();
         layout.marginHeight = 0;
         layout.marginWidth = 0;

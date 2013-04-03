@@ -102,8 +102,6 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
 
     private LabelledText commentText;
 
-    boolean readOnly;
-
     private TableViewerCreator tableViewerCreator;
 
     private Table tableNavigator;
@@ -118,8 +116,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
 
     public HCatalogSchemaForm(Composite parent, ConnectionItem connectionItem, MetadataTable metadataTable, IWizardPage page,
             HCatalogConnection temConnection) {
-        super(parent, SWT.NONE);
-        this.connectionItem = connectionItem;
+        super(parent, SWT.NONE, connectionItem);
         this.parentWizardPage = page;
         this.temConnection = temConnection;
         this.metadataTable = metadataTable;
@@ -509,8 +506,8 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         } else {
             boolean doit = true;
             if (tableEditorView.getMetadataEditor().getBeanCount() > 0) {
-                doit = MessageDialog.openConfirm(getShell(), Messages.getString("HCatalogSchemaForm.title.confirmChange"),
-                        Messages.getString("HCatalogSchemaForm.msg.changeSchema"));
+                doit = MessageDialog.openConfirm(getShell(), Messages.getString("HCatalogSchemaForm.title.confirmChange"), //$NON-NLS-1$
+                        Messages.getString("HCatalogSchemaForm.msg.changeSchema")); //$NON-NLS-1$
             }
             if (doit) {
                 String tableName = metadataTable.getName();

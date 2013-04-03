@@ -113,8 +113,6 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
 
     private MetadataTable hTable;
 
-    private int count = 0;
-
     private int countSuccess = 0;
 
     private int countPending = 0;
@@ -126,12 +124,9 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
 
     public HCatalogTableSelectorForm(Composite parent, ConnectionItem connectionItem, HCatalogConnection temConnection,
             WizardPage parentWizardPage) {
-        super(parent, SWT.NONE);
-        this.connectionItem = connectionItem;
+        super(parent, SWT.NONE, connectionItem);
         this.temConnection = temConnection;
         this.parentWizardPage = parentWizardPage;
-        setConnectionItem(connectionItem);
-        setupForm();
         GridLayout layout = (GridLayout) getLayout();
         layout.marginHeight = 0;
         layout.marginWidth = 0;
@@ -359,7 +354,6 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                count = 0;
                 countSuccess = 0;
                 countPending = 0;
                 for (TreeItem tItem : schemaTree.getItems()) {
@@ -870,7 +864,6 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
                 new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID, msg, msg);
 
             }
-            count++;
 
             updateStatus(IStatus.OK, null);
 

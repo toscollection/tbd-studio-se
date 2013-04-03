@@ -28,9 +28,8 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.repository.hcatalog.i18n.Messages;
-import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -51,19 +50,8 @@ public class HCatalogForm extends AbstractHCatalogForm {
 
     private LabelledText databaseText;
 
-    private boolean enableKerberos = false;
-
     public HCatalogForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
-        super(parent, SWT.NONE, existingNames);
-        this.connectionItem = connectionItem;
-        setConnectionItem(connectionItem);
-        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
-        if (hcConnection != null && hcConnection.isEnableKerberos()) {
-            enableKerberos = true;
-        } else {
-            enableKerberos = false;
-        }
-        setupForm();
+        super(parent, SWT.NONE, existingNames, connectionItem);
         GridLayout layout = (GridLayout) getLayout();
         layout.marginHeight = 0;
         setLayout(layout);
@@ -248,8 +236,18 @@ public class HCatalogForm extends AbstractHCatalogForm {
             return false;
         }
 
+        if (!HadoopParameterValidator.isValidHostName(hostText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.host.invalid")); //$NON-NLS-1$
+            return false;
+        }
+
         if (!validText(portText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.port")); //$NON-NLS-1$
+            return false;
+        }
+
+        if (!HadoopParameterValidator.isValidPort(portText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.port.invalid")); //$NON-NLS-1$
             return false;
         }
 
@@ -258,8 +256,18 @@ public class HCatalogForm extends AbstractHCatalogForm {
             return false;
         }
 
+        if (!HadoopParameterValidator.isValidUserName(userNameText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.userName.invalid")); //$NON-NLS-1$
+            return false;
+        }
+
         if (!validText(databaseText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.database")); //$NON-NLS-1$
+            return false;
+        }
+
+        if (!HadoopParameterValidator.isValidDatabase(databaseText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.database.invalid")); //$NON-NLS-1$
             return false;
         }
 
@@ -268,8 +276,16 @@ public class HCatalogForm extends AbstractHCatalogForm {
                 updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbPrincipal")); //$NON-NLS-1$
                 return false;
             }
+            if (!HadoopParameterValidator.isValidPrincipal(krbPrincipalText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbPrincipal.invalid")); //$NON-NLS-1$
+                return false;
+            }
             if (!validText(krbRealmText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbRealm")); //$NON-NLS-1$
+                return false;
+            }
+            if (!HadoopParameterValidator.isValidRealm(krbRealmText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbRealm.invalid")); //$NON-NLS-1$
                 return false;
             }
         }

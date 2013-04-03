@@ -13,7 +13,7 @@
       <repositoryNode
             alias="HCAT"
             folder="metadata/hadoop/hcatalog"
-            icon="icons/hadoop-logo-16x16.png"
+            icon="icons/HCatalog_icon16.png"
             isResouce="true"
             label="%hcatalog"
             ordinal="51"

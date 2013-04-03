@@ -19,7 +19,7 @@ import org.talend.commons.ui.runtime.image.IImage;
  */
 public enum EHDFSImage implements IImage {
 
-    HDFS_RESOURCE_ICON("/icons/hadoop-logo-16x16.png"), //$NON-NLS-1$
+    HDFS_RESOURCE_ICON("/icons/HDFS_icon16.png"), //$NON-NLS-1$
     HDFS_WIZ("/icons/hadoop-logo-wiz.png"); //$NON-NLS-1$
 
     private String path;

@@ -29,14 +29,11 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
-import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
-import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -58,10 +55,7 @@ public class HDFSForm extends AbstractHDFSForm {
     private Text fieldSeparatorText;
 
     public HDFSForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
-        super(parent, SWT.NONE, existingNames);
-        this.connectionItem = connectionItem;
-        setConnectionItem(connectionItem);
-        setupForm();
+        super(parent, SWT.NONE, existingNames, connectionItem);
         GridLayout layout = (GridLayout) getLayout();
         layout.marginHeight = 0;
         setLayout(layout);
@@ -262,16 +256,10 @@ public class HDFSForm extends AbstractHDFSForm {
     public boolean checkFieldsValue() {
         checkConnectionBtn.setEnabled(false);
 
-        HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
-        if (clusterConnection != null) {
-            String dfVersion = clusterConnection.getDfVersion();
-            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(dfVersion);
-            boolean supportGroup = isSupportGroup(version4Drivers);
-            if (supportGroup) {
-                if (!validText(userNameText.getText())) {
-                    updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.userName")); //$NON-NLS-1$
-                    return false;
-                }
+        if (enableGroup) {
+            if (!validText(userNameText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.userName")); //$NON-NLS-1$
+                return false;
             }
         }
 
@@ -298,10 +286,7 @@ public class HDFSForm extends AbstractHDFSForm {
     }
 
     private void updateConnectionPart() {
-        HadoopClusterConnection clusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(getConnection());
-        if (clusterConnection != null) {
-            userNameText.setEditable(!clusterConnection.isEnableKerberos());
-        }
+        userNameText.setEditable(!enableKerberos);
     }
 
     /*

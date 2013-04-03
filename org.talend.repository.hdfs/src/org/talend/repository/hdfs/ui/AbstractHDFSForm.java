@@ -16,10 +16,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
+import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
-import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
+import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopSubForm;
 import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
@@ -28,16 +29,16 @@ import org.talend.repository.model.hdfs.HDFSConnection;
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public abstract class AbstractHDFSForm extends AbstractHadoopForm<HDFSConnection> {
+public abstract class AbstractHDFSForm extends AbstractHadoopSubForm<HDFSConnection> {
 
     protected boolean hdfsSettingIsValide = false;
 
-    protected AbstractHDFSForm(Composite parent, int style) {
-        super(parent, style);
+    protected AbstractHDFSForm(Composite parent, int style, ConnectionItem connectionItem) {
+        super(parent, style, connectionItem);
     }
 
-    protected AbstractHDFSForm(Composite parent, int style, String[] existingNames) {
-        super(parent, style, existingNames);
+    protected AbstractHDFSForm(Composite parent, int style, String[] existingNames, ConnectionItem connectionItem) {
+        super(parent, style, existingNames, connectionItem);
     }
 
     protected ConnectionStatus checkConnection() {

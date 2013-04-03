@@ -13,7 +13,7 @@
       <repositoryNode
             alias="HDFS"
             folder="metadata/hadoop/hdfs"
-            icon="icons/hadoop-logo-16x16.png"
+            icon="icons/HDFS_icon16.png"
             isResouce="true"
             label="%HDFS"
             ordinal="50"
