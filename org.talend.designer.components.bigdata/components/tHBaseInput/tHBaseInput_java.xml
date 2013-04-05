@@ -56,6 +56,7 @@
 				<ITEM NAME="Cloudera_CDH3" VALUE="Cloudera_CDH3" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 				<ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 				<ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 			</ITEMS>
 		</PARAMETER>
@@ -192,6 +193,14 @@
 			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="zookeeper-3.4.3-cdh4.0.1" MODULE="zookeeper-3.4.3-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<!-- MAPR212 -->
+			<IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="mapr-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr212.jar" MODULE="hadoop-0.20.2-dev-core-mapr212.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hbase-0.92.2-mapr.jar" MODULE="hbase-0.92.2-mapr.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
     	</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>

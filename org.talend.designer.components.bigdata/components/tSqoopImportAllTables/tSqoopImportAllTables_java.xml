@@ -48,18 +48,19 @@
                 <ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
                 <ITEM NAME="MapR" VALUE="MapR" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="MapR2" VALUE="MapR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MapR212" VALUE="MapR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
             </ITEMS>
         </PARAMETER>
         
         <PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" NUM_ROW="7"
             REQUIRED="true" SHOW_IF="USE_JAVAAPI == 'true'" GROUP="CONFIGURATION">
-            <DEFAULT IF="(DB_VERSION != 'MAPR') AND (DB_VERSION != 'MAPR2')">"hdfs://localhost:8020"</DEFAULT>
-            <DEFAULT IF="(DB_VERSION == 'MAPR') OR (DB_VERSION == 'MAPR2')">"maprfs:///"</DEFAULT>
+            <DEFAULT IF="(DB_VERSION != 'MAPR') AND (DB_VERSION != 'MAPR2') AND (DB_VERSION != 'MAPR212')">"hdfs://localhost:8020"</DEFAULT>
+            <DEFAULT IF="(DB_VERSION == 'MAPR') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212')">"maprfs:///"</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="MAPRED_JOB_TRACKER" FIELD="TEXT" NUM_ROW="8"
             REQUIRED="true" SHOW_IF="USE_JAVAAPI == 'true'" GROUP="CONFIGURATION">
-            <DEFAULT IF="(DB_VERSION != 'MAPR') AND (DB_VERSION != 'MAPR2')">"localhost:8021"</DEFAULT>
-            <DEFAULT IF="(DB_VERSION == 'MAPR') OR (DB_VERSION == 'MAPR2')">"localhost:9001"</DEFAULT>
+            <DEFAULT IF="(DB_VERSION != 'MAPR') AND (DB_VERSION != 'MAPR2') AND (DB_VERSION != 'MAPR212')">"localhost:8021"</DEFAULT>
+            <DEFAULT IF="(DB_VERSION == 'MAPR') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212')">"localhost:9001"</DEFAULT>
         </PARAMETER>				
 		
 	    <PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="10">
@@ -235,6 +236,21 @@
             <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
             <IMPORT NAME="sqoop-1.4.2.21" MODULE="sqoop-1.4.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
+            <!-- -->
+			
+			<!-- MR212 -->
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr212.jar" MODULE="hadoop-0.20.2-dev-core-mapr212.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="org.apache.commons.logging_1.0.4.v201101211617.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="commons-io-2.4.jar" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="sqoop-1.4.2-mapr" MODULE="sqoop-1.4.2-mapr.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+			<IMPORT NAME="maprfs-0.20.2-2.1.2.jar" MODULE="maprfs-0.20.2-2.1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')" />
+			<IMPORT NAME="maprfs-jni-0.20.2-2.1.2.jar" MODULE="maprfs-jni-0.20.2-2.1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')" />
+			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')" />
+			<IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>			
             <!-- -->
             
         </IMPORTS>
