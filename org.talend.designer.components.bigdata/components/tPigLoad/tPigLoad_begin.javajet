@@ -97,7 +97,6 @@
 		}
 	}
 
-	String previous_node="";
 	String start_node=cid;
 
 	boolean inMain = true;
@@ -392,7 +391,6 @@
 								continue;
 							}
                 			Map<String, String> map = mapping.get(i);
-                			String schema_column = map.get("SCHEMA_COLUMN");
                 			String family_column= map.get("FAMILY_COLUMN");
 %>
 							sb_<%=cid%>.append(<%=family_column%>);

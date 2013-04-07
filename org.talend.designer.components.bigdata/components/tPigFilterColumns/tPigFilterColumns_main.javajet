@@ -5,8 +5,7 @@
 		org.talend.core.model.process.IConnectionCategory
 		org.talend.designer.codegen.config.CodeGeneratorArgument		
 		org.talend.core.model.metadata.IMetadataTable 
-	    	org.talend.core.model.metadata.IMetadataColumn 
-	    	org.talend.core.model.process.IConnection
+    	org.talend.core.model.metadata.IMetadataColumn 
 		java.util.Set
 		java.util.HashSet
 		java.util.List
@@ -44,15 +43,12 @@
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 	sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = FOREACH <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT GENERATE ");
 <%
-
-	String inputConnName = null;
 	Set<String> inputCols = new HashSet<String>();
  
  	
 	if (node.getIncomingConnections()!=null) {
 		for (IConnection incomingConn : node.getIncomingConnections()) {
 			if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-				inputConnName = incomingConn.getName();
 				IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
 				for (IMetadataColumn inputCol : inputMetadataTable.getListColumns()) {
 					inputCols.add(inputCol.getLabel());

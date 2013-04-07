@@ -14,13 +14,11 @@
 	String scriptCode = ElementParameterParser.getValue(node,"__SCRIPT_CODE__");
 	String [] codes = scriptCode.split("\n");
 
-	String previous_node="";
 	String start_node="";
 	
 	boolean inMain = true;
 
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
-		previous_node = node.getIncomingConnections().get(0).getSource().getUniqueName();
 		INode loadNode = node.getDesignSubjobStartNode();
 		start_node = loadNode.getUniqueName();
 		inMain = loadNode.isSubtreeStart();

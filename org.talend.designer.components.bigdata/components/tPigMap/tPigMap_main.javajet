@@ -6,12 +6,8 @@
 	java.util.List
 	java.util.HashMap
 	java.util.Map
-	java.util.Set
 	org.talend.designer.codegen.config.CodeGeneratorArgument
-	org.talend.commons.utils.generation.CodeGenerationUtils
 	org.talend.core.model.process.IConnection
-	org.talend.core.model.process.EConnectionType
-	org.talend.core.model.process.INode
     org.talend.core.model.process.ElementParameterParser
     org.talend.designer.pigmap.PigMapComponent
     org.talend.designer.pigmap.model.emf.pigmap.PigMapData
@@ -70,13 +66,8 @@
 		}
 	}
 	
-	boolean reject = false;
 	boolean innerReject = false;
 	for(OutputTable outputTable : outputTables) {
-		if(outputTable.isReject()) {
-			reject = true;
-		}
-		
 		if(outputTable.isRejectInnerJoin()) {
 			innerReject = true;
 		}
@@ -144,7 +135,6 @@
 	}
 	
 	//the join action
-	InputTable previousInputTable = null; 
 	boolean isFirstInnerReject = true;
 	
 	List<String> currentInnerRejectSchemaTypes = new ArrayList<String>();
@@ -511,7 +501,6 @@
 	 		previousInnerRejectSchemaTypes.addAll(currentInnerRejectSchemaTypes);
 	 	}
 	 	
-	 	previousInputTable = inputTable;
 	}
 	
 	//output action

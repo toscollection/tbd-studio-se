@@ -14,8 +14,6 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 	
-	boolean stat = codeGenArgument.isStatistics();
-	
 	String previous_node="";
 	String start_node="";
 
