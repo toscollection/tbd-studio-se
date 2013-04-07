@@ -89,10 +89,6 @@ import org.talend.oozie.scheduler.views.TOozieView;
  */
 public class ExecuteJobCompositeController {
 
-    private final static int FROM_PREFERNCES = 0;
-
-    private final static int FROM_REPOSITORY = 1;
-
     private ExecuteJobComposite executeJobComposite;
 
     private TOozieSchedulerDialog schedulingDialog;
@@ -722,10 +718,8 @@ public class ExecuteJobCompositeController {
         }
         // for hadoop properties
         if (process != null) {
-            if ((Boolean) process.getElementParameter(EParameterName.USE_HADOOP_PROPERTIES.getName()).getValue()) {
-                for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
-                    jobContext.set((String) property.get("PROPERTY"), (String) property.get("VALUE"));
-                }
+            for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
+                jobContext.set((String) property.get("PROPERTY"), (String) property.get("VALUE"));
             }
         }
         // Job name.
