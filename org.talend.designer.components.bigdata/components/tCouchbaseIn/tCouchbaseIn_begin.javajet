@@ -248,11 +248,11 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 %>
                                     query_<%=cid%>.setGroup(<%=group%>);
 <%
-                                    if(group_level!=null && !"".equals(group_level.trim())){
+                                }
+                                if(group_level!=null && !"".equals(group_level.trim())){
 %>
-                                        query_<%=cid%>.setGroupLevel(<%=group_level%>);
+                                    query_<%=cid%>.setGroupLevel(<%=group_level%>);
 <%
-                                    }
                                 }
                             }
                             // fromview true reduce false doc false --->id,key,value ----->real component
