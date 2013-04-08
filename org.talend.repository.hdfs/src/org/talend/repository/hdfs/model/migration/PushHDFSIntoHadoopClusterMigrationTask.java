@@ -61,11 +61,10 @@ public class PushHDFSIntoHadoopClusterMigrationTask extends AbstractHadoopCluste
     @Override
     protected String getClusterName(HadoopSubConnection hadoopConnection) {
         StringBuffer cnBuffer = new StringBuffer();
-        cnBuffer.append("migrated_hadoop_cluster_"); //$NON-NLS-1$
         HDFSConnection connection = (HDFSConnection) hadoopConnection;
         EHadoopVersion4Drivers version = EHadoopVersion4Drivers.indexOfByVersion(connection.getDfVersion());
         if (version != null) {
-            cnBuffer.append(version.getVersionDisplay());
+            cnBuffer.append(version.getVersionValue());
             cnBuffer.append(UNDER_LINE);
         }
         String nameNodeURI = connection.getNameNodeURI();

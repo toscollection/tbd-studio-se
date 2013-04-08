@@ -78,12 +78,11 @@ public class PushHCatalogIntoHadoopClusterMigrationTask extends AbstractHadoopCl
     @Override
     protected String getClusterName(HadoopSubConnection hadoopSubConnection) {
         StringBuffer cnBuffer = new StringBuffer();
-        cnBuffer.append("migrated_hadoop_cluster_"); //$NON-NLS-1$
         HCatalogConnection connection = (HCatalogConnection) hadoopSubConnection;
         EHadoopVersion4Drivers version = EHadoopVersion4Drivers.indexOfByVersion(connection.getHcatVersion());
         String hostName = connection.getHostName();
         if (version != null) {
-            cnBuffer.append(version.getVersionDisplay());
+            cnBuffer.append(version.getVersionValue());
             cnBuffer.append(UNDER_LINE);
         }
         if (hostName != null) {
