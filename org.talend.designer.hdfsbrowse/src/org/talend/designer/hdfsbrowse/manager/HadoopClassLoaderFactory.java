@@ -16,12 +16,17 @@ import java.util.Set;
 
 import org.talend.core.classloader.ClassLoaderFactory;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
+import org.talend.core.hadoop.version.custom.ECustomVersionType;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 
 /**
  * DOC ycbai class global comment. Detailled comment
  */
 public class HadoopClassLoaderFactory {
+
+    private static final String STANDALONE = "STANDALONE"; //$NON-NLS-1$ 
+
+    private static final String EMBEDDED = "EMBEDDED"; //$NON-NLS-1$ 
 
     public static ClassLoader getClassLoader(HDFSConnectionBean connectionBean) {
         ClassLoader loader = null;
@@ -53,6 +58,38 @@ public class HadoopClassLoaderFactory {
             index += "?USE_KRB"; //$NON-NLS-1$
         }
         ClassLoader loader = ClassLoaderFactory.getClassLoader(index);
+        if (loader == null) {
+            loader = HadoopClassLoaderFactory.class.getClassLoader();
+        }
+
+        return loader;
+    }
+
+    public static ClassLoader getClassLoader(ECustomVersionType type, String distribution, String version, boolean enableKerberos) {
+        if (type == null) {
+            return HadoopClassLoaderFactory.class.getClassLoader();
+        }
+        String baseIndex = type.getName() + ":" + distribution + ":" + version;
+        String index = baseIndex;
+        String hive_embeded = null;
+        switch (type) {
+        case HDFS:
+            if (enableKerberos) {
+                index += "?USE_KRB"; //$NON-NLS-1$
+            }
+            break;
+        case HIVE:
+            // take STANDALONE by default , if there is no STANDALONE for some version take EMBEDDED
+            index += ":" + STANDALONE;
+            hive_embeded = ":" + EMBEDDED;
+            break;
+        }
+
+        ClassLoader loader = ClassLoaderFactory.getClassLoader(index);
+        if (loader == null && hive_embeded != null) {
+            index = baseIndex + hive_embeded;
+            loader = ClassLoaderFactory.getClassLoader(index);
+        }
         if (loader == null) {
             loader = HadoopClassLoaderFactory.class.getClassLoader();
         }

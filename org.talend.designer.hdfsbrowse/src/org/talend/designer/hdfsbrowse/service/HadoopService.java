@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.talend.core.classloader.DynamicClassLoader;
 import org.talend.core.hadoop.IHadoopService;
+import org.talend.core.hadoop.version.custom.ECustomVersionType;
 import org.talend.designer.hdfsbrowse.manager.HadoopClassLoaderFactory;
 
 /**
@@ -35,6 +36,23 @@ public class HadoopService implements IHadoopService {
         Set<String> set = new HashSet<String>();
 
         ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(distribution, version);
+        if (classLoader instanceof DynamicClassLoader) {
+            set.addAll(((DynamicClassLoader) classLoader).getLibraries());
+        }
+
+        return set;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.hadoop.IHadoopService#getHadoopLibrariesByType(java.lang.String, java.lang.String)
+     */
+    @Override
+    public Set<String> getHadoopLibrariesByType(ECustomVersionType type, String distribution, String version) {
+        Set<String> set = new HashSet<String>();
+
+        ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(type, distribution, version, false);
         if (classLoader instanceof DynamicClassLoader) {
             set.addAll(((DynamicClassLoader) classLoader).getLibraries());
         }
