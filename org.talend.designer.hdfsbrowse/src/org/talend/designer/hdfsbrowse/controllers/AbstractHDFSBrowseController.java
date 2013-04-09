@@ -123,7 +123,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         connectionBean.setDfVersion(version);
         connectionBean.setNameNodeURI(nameNodeUri);
         connectionBean.setUserName(userName);
-        connectionBean.setEnableKerberos(useKrb);
+        connectionBean.setEnableKerberos(useKrb != null ? useKrb : false);
         connectionBean.setPrincipal(principal);
         connectionBean.setGroup(group);
 
