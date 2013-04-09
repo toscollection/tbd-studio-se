@@ -88,6 +88,7 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
             case APACHE_0_20_2:
             case MAPR:
             case MAPR2:
+            case MAPR_2_1_2:
             case MAPR_EMR:
                 return true;
             default:
