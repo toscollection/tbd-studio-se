@@ -28,9 +28,9 @@
 		<CONNECTOR CTYPE="RUN_IF" />
 	</CONNECTORS>
 	<PARAMETERS>
-	   <PARAMETER 
-            NAME="DB_VERSION" 
-            FIELD="CLOSED_LIST" 
+	   <PARAMETER
+            NAME="DB_VERSION"
+            FIELD="CLOSED_LIST"
             NUM_ROW="3">
             <ITEMS DEFAULT="CASSANDRA_1_1_2">
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
@@ -65,17 +65,17 @@
 		<IMPORTS>
 			<IMPORT MODULE="hector-core-1.0-5.jar" NAME="hector-core-1.0-5"
 				REQUIRED="true" />
-			<IMPORT MODULE="apache-cassandra-1.1.2.jar" NAME="apache-cassandra-1.1.2"
+			<IMPORT MODULE="apache-cassandra-1.1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.1.2.jar" NAME="apache-cassandra-1.1.2"
 				REQUIRED="true" />
-			<IMPORT MODULE="apache-cassandra-thrift-1.1.2.jar" NAME="apache-cassandra-thrift-1.1.2"
+			<IMPORT MODULE="apache-cassandra-thrift-1.1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.1.2.jar" NAME="apache-cassandra-thrift-1.1.2"
 				REQUIRED="true" />
-			<IMPORT MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar" NAME="slf4j-api-1.6.1"
+			<IMPORT MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" NAME="slf4j-api-1.6.1"
 				REQUIRED="true" />
-			<IMPORT MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar" NAME="slf4j-log4j12-1.6.1"
+			<IMPORT MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" NAME="slf4j-log4j12-1.6.1"
 				REQUIRED="true" />
 			<IMPORT MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" NAME="log4j-1.2.16"
 				REQUIRED="true" />
-			<IMPORT MODULE="libthrift-0.7.0.jar" NAME="libthrift-0.7.0"
+			<IMPORT MODULE="libthrift-0.7.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_hdp-1.0/lib/libthrift-0.7.0.jar" NAME="libthrift-0.7.0"
 				REQUIRED="true" />
     	</IMPORTS>
 	</CODEGENERATION>

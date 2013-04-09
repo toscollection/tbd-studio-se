@@ -32,7 +32,7 @@
             NUM_ROW="2" GROUP="MODE">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="5" REQUIRED="true" GROUP="VERSION" REPOSITORY_VALUE="DISTRIBUTION" SHOW_IF="USE_JAVAAPI=='true'">
             <ITEMS DEFAULT="HORTONWORKS">
                 <ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
@@ -51,7 +51,7 @@
 				<ITEM NAME="MapR212" VALUE="MapR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
             </ITEMS>
         </PARAMETER>
-        
+
         <PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" NUM_ROW="7"
             REQUIRED="true" SHOW_IF="USE_JAVAAPI == 'true'" GROUP="CONFIGURATION">
             <DEFAULT IF="(DB_VERSION != 'MAPR') AND (DB_VERSION != 'MAPR2') AND (DB_VERSION != 'MAPR212')">"hdfs://localhost:8020"</DEFAULT>
@@ -61,61 +61,61 @@
             REQUIRED="true" SHOW_IF="USE_JAVAAPI == 'true'" GROUP="CONFIGURATION">
             <DEFAULT IF="(DB_VERSION != 'MAPR') AND (DB_VERSION != 'MAPR2') AND (DB_VERSION != 'MAPR212')">"localhost:8021"</DEFAULT>
             <DEFAULT IF="(DB_VERSION == 'MAPR') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212')">"localhost:9001"</DEFAULT>
-        </PARAMETER>				
-		
+        </PARAMETER>
+
 	    <PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="10">
 				<DEFAULT>"jdbc:mysql://localhost/database_name"</DEFAULT>
 		</PARAMETER>
-		
+
 	    <PARAMETER NAME="USERNAME" FIELD="TEXT" NUM_ROW="20">
 				<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
+
 	    <PARAMETER NAME="PASSWORD" FIELD="TEXT" NUM_ROW="30">
 				<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
+
 	    <PARAMETER NAME="FILE_FORMAT" FIELD="CLOSED_LIST" NUM_ROW="40">
 				<ITEMS DEFAULT="textfile">
 					<ITEM NAME="textfile" VALUE="textfile"/>
 					<ITEM NAME="sequencefile" VALUE="sequencefile"/>
 				</ITEMS>
 		</PARAMETER>
-			
+
 	  	<PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="50">
 				<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
+
 	    <PARAMETER NAME="MAPPERS" FIELD="TEXT" NUM_ROW="50" SHOW_IF="USE_MAPPERS=='true'">
 				<DEFAULT>"2"</DEFAULT>
 		</PARAMETER>
-		
+
 	    <PARAMETER NAME="COMPRESS" FIELD="CHECK" NUM_ROW="60">
 				<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-			
+
 	  	<PARAMETER NAME="PRINT_LOG" FIELD="CHECK" NUM_ROW="70">
 				<DEFAULT IF="USE_COMMANDLINE=='true'">true</DEFAULT>
 				<DEFAULT IF="USE_COMMANDLINE=='false'">false</DEFAULT>
 		</PARAMETER>
-			
+
 	  	<PARAMETER NAME="VERBOSE" FIELD="CHECK" NUM_ROW="70" SHOW_IF="PRINT_LOG=='true'">
 				<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
-	    
+
+
 	</PARAMETERS>
-		
+
 	<ADVANCED_PARAMETERS>
-		
+
 	    <PARAMETER NAME="DIRECT" FIELD="CHECK" NUM_ROW="10">
 				<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-			
+
 	  	<PARAMETER NAME="MYSQL_DELIMITERS" FIELD="CHECK" NUM_ROW="11" SHOW_IF="USE_COMMANDLINE=='true'">
 				<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
+
 	    <PARAMETER NAME="ADDITIONAL" FIELD="TABLE" NUM_ROW="12" NB_LINES="5" SHOW_IF="USE_COMMANDLINE=='true'">
 	      <ITEMS>
 	        <ITEM NAME="ADDITIONAL_ARGUMENT" FIELD="CLOSED_LIST" >
@@ -148,115 +148,115 @@
 	        <ITEM NAME="ADDITIONAL_VALUE" FIELD="TEXT"/>
 	      </ITEMS>
 	    </PARAMETER>
-	    
+
 	    <PARAMETER NAME="ADDITIONAL_JAVA" FIELD="TABLE" NUM_ROW="30" NB_LINES="5" SHOW_IF="USE_COMMANDLINE=='false'">
           <ITEMS>
             <ITEM NAME="ADDITIONAL_ARGUMENT" FIELD="TEXT"/>
             <ITEM NAME="ADDITIONAL_VALUE" FIELD="TEXT"/>
           </ITEMS>
         </PARAMETER>
-        
+
     </ADVANCED_PARAMETERS>
 
     <CODEGENERATION>
         <IMPORTS>
-        
+
             <!-- HDP 1.0 -->
-            <IMPORT NAME="hadoop-core-1.0.3" MODULE="hadoop-core-1.0.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
+            <IMPORT NAME="hadoop-core-1.0.3" MODULE="hadoop-core-1.0.3.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_hdp-1.0/lib/hadoop-core-1.0.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
             <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
             <IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
             <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
             <IMPORT NAME="commons-io-1.4" MODULE="commons-io-1.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
-            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
-            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
-            <IMPORT NAME="sqoop-1.4.1-incubating" MODULE="sqoop-1.4.1-incubating.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
+            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
+            <IMPORT NAME="sqoop-1.4.1-incubating" MODULE="sqoop-1.4.1-incubating.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.1-incubating.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0')"/>
             <!-- -->
 
             <!-- HDP 1.2 -->
-            <IMPORT NAME="hadoop-core-1.1.2.21" MODULE="hadoop-core-1.1.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="hadoop-core-1.1.2.21" MODULE="hadoop-core-1.1.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_hdp-1.2/lib/hadoop-core-1.1.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
             <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
             <IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
             <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
             <IMPORT NAME="commons-io-1.4" MODULE="commons-io-1.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
-            <IMPORT NAME="sqoop-1.4.2.21" MODULE="sqoop-1.4.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
+            <IMPORT NAME="sqoop-1.4.2.21" MODULE="sqoop-1.4.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2')"/>
             <!-- -->
 
             <!-- CDH 3 -->
-            <IMPORT NAME="hadoop-0.20.2-cdh3u1-core" MODULE="hadoop-0.20.2-cdh3u1-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/hadoop-0.20.2-cdh3u1-core.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
+            <IMPORT NAME="hadoop-0.20.2-cdh3u1-core" MODULE="hadoop-0.20.2-cdh3u1-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_cloudera-0.20-cdh3/lib/hadoop-0.20.2-cdh3u1-core.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
             <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
             <IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
             <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
             <IMPORT NAME="commons-io-2.1" MODULE="commons-io-1.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
-            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
-            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
-            <IMPORT NAME="sqoop-1.3.0-cdh3u5" MODULE="sqoop-1.3.0-cdh3u5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
+            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
+            <IMPORT NAME="sqoop-1.3.0-cdh3u5" MODULE="sqoop-1.3.0-cdh3u5.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.3.0-cdh3u5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_0.20_CDH3U1')"/>
             <!-- -->
 
             <!-- CDH 4.0 -->
-            <IMPORT NAME="hadoop-core-2.0.0-mr1-cdh4.0.1" MODULE="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="hadoop-core-2.0.0-mr1-cdh4.0.1" MODULE="hadoop-core-2.0.0-mr1-cdh4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_cloudera-cdh4/lib/hadoop-core-2.0.0-mr1-cdh4.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
             <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
             <IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
             <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="commons-io-2.1" MODULE="commons-io-2.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="commons-io-2.1" MODULE="commons-io-2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
             <IMPORT NAME="jackson-core-asl-1.8.8" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
             <IMPORT NAME="jackson-mapper-asl-1.8.8" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="sqoop-1.4.2-cdh4.2.0" MODULE="sqoop-1.4.2-cdh4.2.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="hadoop-auth-cdh4.0.1" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="hadoop-common-cdh4.0.1" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="hadoop-hdfs-cdh4.0.1" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.hive/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="sqoop-1.4.2-cdh4.2.0" MODULE="sqoop-1.4.2-cdh4.2.0.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.2-cdh4.2.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="hadoop-auth-cdh4.0.1" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_cloudera-cdh4/lib/hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="hadoop-common-cdh4.0.1" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_cloudera-cdh4/lib/hadoop-common-2.0.0-cdh4.0.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="hadoop-hdfs-cdh4.0.1" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_cloudera-cdh4/lib/hadoop-hdfs-2.0.0-cdh4.0.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_cloudera-cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
-            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4')"/>
             <!-- -->
-                        
+
             <!-- MR1 -->
-            <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
-            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="org.apache.commons.logging_1.1.1.v201101211721.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
-            <IMPORT NAME="commons-io-2.1" MODULE="commons-io-2.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
-            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
-            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
-            <IMPORT NAME="sqoop-1.3.0-cdh3u5" MODULE="sqoop-1.3.0-cdh3u5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
+            <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_mapr/lib/hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
+            <IMPORT NAME="commons-io-2.1" MODULE="commons-io-2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
+            <IMPORT NAME="jackson-core-asl-1.7.3" MODULE="jackson-core-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
+            <IMPORT NAME="sqoop-1.3.0-cdh3u5" MODULE="sqoop-1.3.0-cdh3u5.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.3.0-cdh3u5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR')"/>
             <!-- -->
 
             <!-- MR2.0 -->
-            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2.jar" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
-            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="org.apache.commons.logging_1.0.4.v201101211617.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2.jar" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop_mapr2/lib/hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
             <IMPORT NAME="commons-io-2.4.jar" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
             <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
             <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
-            <IMPORT NAME="sqoop-1.4.2.21" MODULE="sqoop-1.4.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
-            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
+            <IMPORT NAME="sqoop-1.4.2.21" MODULE="sqoop-1.4.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r09.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR2')"/>
             <!-- -->
-			
+
 			<!-- MR212 -->
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr212.jar" MODULE="hadoop-0.20.2-dev-core-mapr212.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
-            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="org.apache.commons.logging_1.0.4.v201101211617.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
-            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
             <IMPORT NAME="commons-io-2.4.jar" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
             <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
             <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
             <IMPORT NAME="sqoop-1.4.2-mapr" MODULE="sqoop-1.4.2-mapr.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
-            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r09.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
 			<IMPORT NAME="maprfs-0.20.2-2.1.2.jar" MODULE="maprfs-0.20.2-2.1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')" />
 			<IMPORT NAME="maprfs-jni-0.20.2-2.1.2.jar" MODULE="maprfs-jni-0.20.2-2.1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')" />
-			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')" />
-			<IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>			
+			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')" />
+			<IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MapR212')"/>
             <!-- -->
-            
+
         </IMPORTS>
     </CODEGENERATION>
 	<RETURNS>
         <RETURN AVAILABILITY="AFTER" NAME="OUTPUT_MESSAGE" TYPE="id_String" SHOW_IF="USE_JAVAAPI=='false'" />
 	</RETURNS>
-	
+
 </COMPONENT>

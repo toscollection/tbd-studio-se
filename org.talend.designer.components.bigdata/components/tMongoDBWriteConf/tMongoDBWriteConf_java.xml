@@ -206,7 +206,7 @@
             <IMPORT NAME="commons_collections" MODULE="commons-collections-3.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar" REQUIRED="true" />
             <IMPORT NAME="commons_lang" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED="true" />
             <IMPORT NAME="commons_logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="true" />
-            <IMPORT NAME="ezmorph" MODULE="ezmorph-1.0.6.jar" REQUIRED="true" />
+            <IMPORT NAME="ezmorph" MODULE="ezmorph-1.0.6.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/ezmorph-1.0.6.jar" REQUIRED="true" />
             <IMPORT NAME="json-lib" MODULE="json-lib-2.4-jdk15.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json-lib-2.4-jdk15.jar" REQUIRED="true" />
         </IMPORTS>
 	</CODEGENERATION>
