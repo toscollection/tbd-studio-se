@@ -34,7 +34,7 @@
 	sqoopOptions_<%=cid%>.setPassword(<%=password%>); // __PASSWORD__
 		
 <%	
-	if(!("HDP_1_0".equals(version) || "Cloudera_0_20_CDH3U1".equals(version) || "MapR".equals(version))) {
+	if(!("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version))) {
 		if(printLog && verbose){
 %>
 			sqoopOptions_<%=cid%>.setVerbose(true);
@@ -67,7 +67,7 @@
 %>
 	sqoopOptions_<%=cid%>.loadProperties(additionalProperties_<%=cid%>);
 <%
-	if("Cloudera_0_20_CDH3U1".equals(version) || "MapR".equals(version)) {
+	if("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) {
 %>
 		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
 <%

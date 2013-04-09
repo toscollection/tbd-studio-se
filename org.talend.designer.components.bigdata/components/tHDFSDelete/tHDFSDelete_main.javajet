@@ -50,7 +50,7 @@
 			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%
 		}
-		if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion) || ("MapR2").equals(hadoopVersion) || ("MapR212").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+		if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
 			String group = ElementParameterParser.getValue(node, "__GROUP__");
 			%>
 			conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
@@ -82,7 +82,7 @@
 			boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
 			String auth = ElementParameterParser.getValue(targetNode, "__AUTHENTICATION_MODE__");
 			
-		      	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion) || ("MapR2").equals(hadoopVersion) || ("MapR212").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+		      	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
 			    %>
 			    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				<%
