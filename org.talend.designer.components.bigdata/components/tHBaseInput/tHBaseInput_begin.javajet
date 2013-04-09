@@ -249,7 +249,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 %>
 								rowResult_<%=cid %> = rr_<%=cid %>.getValue(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>),org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"));
 								temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toString(rowResult_<%=cid %>);
-								if(temp_<%=cid %>.length() > 0) {
+								if(temp_<%=cid %>!=null && temp_<%=cid %>.length() > 0) {
 <%									if(javaType == JavaTypesManager.STRING || javaType == JavaTypesManager.OBJECT) {
 %>
 										<%=connName %>.<%=columnName %>=temp_<%=cid %>.toString();
