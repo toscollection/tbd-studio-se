@@ -3,3 +3,14 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.talend.libraries.hadoop_apache-1.0.0
 Bundle-Version: 1.0.0.qualifier
 Bundle-Name: apache-1.0.0
+Bundle-ClassPath: lib/hadoop-core-1.0.0.jar,
+ .
+Export-Package: org.apache.hadoop,
+ org.apache.hadoop.conf,
+ org.apache.hadoop.fs,
+ org.apache.hadoop.io,
+ org.apache.hadoop.mapreduce,
+ org.apache.hadoop.mapreduce.lib.input,
+ org.apache.hadoop.mapreduce.lib.output,
+ org.apache.hadoop.security,
+ org.apache.hadoop.util
