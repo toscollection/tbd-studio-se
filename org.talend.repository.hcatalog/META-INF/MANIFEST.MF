@@ -4,7 +4,6 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: org.talend.repository.hcatalog;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
- lib/cxf-2.6.2-SNAPSHOT.jar,
  lib/hadoop-conf-kerberos.jar,
  lib/json_simple-1.1.jar,
  lib/jsr311-api-1.1.1.jar,
@@ -19,7 +18,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
- javax.wsdl,
+ org.talend.libraries.esb,
+ javax.wsdl;bundle-version="1.6.2",
+ org.talend.libraries.apache,
  org.apache.commons.lang,
  org.talend.model;visibility:=reexport,
  org.talend.core.runtime,
@@ -28,7 +29,6 @@ Require-Bundle: org.eclipse.ui,
  org.talend.repository.metadata,
  org.talend.metadata.managment.ui,
  org.talend.repository,
- org.talend.libraries.apache,
  org.talend.designer.hdfsbrowse,
  org.talend.repository.hadoopcluster
 Bundle-ActivationPolicy: lazy
