@@ -55,7 +55,7 @@
       </classloader>
       <classloader
             index="HDFS:MAPR:MapR2"
-            libraries="hadoop-0.20.2-dev-core-mapr2.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;commons-io-2.4.jar">
+            libraries="hadoop-0.20.2-dev-core-mapr2.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar">
       </classloader>
       <classloader
             index="HDFS:HORTONWORKS:HDP_1_0?USE_KRB"
@@ -84,6 +84,10 @@
       <classloader
             index="HDFS:AMAZON_EMR:APACHE_1_0_3_EMR?USE_KRB"
             libraries="hadoop-core-1.0.3.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar">
+      </classloader>
+      <classloader
+            index="HDFS:MAPR:MapR212"
+            libraries="hadoop-0.20.2-dev-core-mapr212.jar;commons-logging-1.0.4.jar;maprfs-0.20.2-2.1.2.jar;maprfs-jni-0.20.2-2.1.2.jar;zookeeper-3.3.6.jar">
       </classloader>
    </extension>
    <extension
