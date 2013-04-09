@@ -58,6 +58,10 @@
             index="HBASE:MAPR:MAPR2"
             libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr2.jar;hbase-0.92.1.jar;log4j-1.2.16.jar;zookeeper-3.3.2.jar;guava-r09.jar">
       </classloader>
+      <classloader
+            index="HBASE:MAPR:MAPR212"
+            libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr212.jar;hbase-0.92.2-mapr.jar;log4j-1.2.16.jar;zookeeper-3.3.6.jar;guava-r09.jar">
+      </classloader>
    </extension>
 
 </plugin>
