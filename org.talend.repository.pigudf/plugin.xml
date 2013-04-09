@@ -84,6 +84,7 @@
             folder="code/pigudf"
             icon="icons/pigudf.gif"
             isResouce="true"
+            key="repository.pigUdf"
             label="%NavigatorContent.pigUdf"
             ordinal="4"
             parentNodeType="CODE"
