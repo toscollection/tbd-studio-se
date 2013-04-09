@@ -173,20 +173,20 @@ public class HortonBrandingConfiguration extends DefaultBrandingConfiguration {
 
         List<IRepositoryNode> nodes = super.getHiddenRepositoryCategory(parent, type);
 
-        RepositoryNode businessProcessNode = new RepositoryNode(null, parent, ENodeType.SYSTEM_FOLDER);
-        businessProcessNode.setProperties(EProperties.LABEL, ERepositoryObjectType.BUSINESS_PROCESS);
-        businessProcessNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.BUSINESS_PROCESS);
-        nodes.add(businessProcessNode);
-
-        RepositoryNode docNode = new RepositoryNode(null, parent, ENodeType.SYSTEM_FOLDER);
-        docNode.setProperties(EProperties.LABEL, ERepositoryObjectType.DOCUMENTATION);
-        docNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.DOCUMENTATION);
-        nodes.add(docNode);
-
-        RepositoryNode metadataNode = new RepositoryNode(null, parent, ENodeType.STABLE_SYSTEM_FOLDER);
-        metadataNode.setProperties(EProperties.LABEL, ERepositoryObjectType.METADATA);
-        metadataNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.METADATA);
-        nodes.add(metadataNode);
+        // RepositoryNode businessProcessNode = new RepositoryNode(null, parent, ENodeType.SYSTEM_FOLDER);
+        // businessProcessNode.setProperties(EProperties.LABEL, ERepositoryObjectType.BUSINESS_PROCESS);
+        // businessProcessNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.BUSINESS_PROCESS);
+        // nodes.add(businessProcessNode);
+        //
+        // RepositoryNode docNode = new RepositoryNode(null, parent, ENodeType.SYSTEM_FOLDER);
+        // docNode.setProperties(EProperties.LABEL, ERepositoryObjectType.DOCUMENTATION);
+        // docNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.DOCUMENTATION);
+        // nodes.add(docNode);
+        //
+        // RepositoryNode metadataNode = new RepositoryNode(null, parent, ENodeType.STABLE_SYSTEM_FOLDER);
+        // metadataNode.setProperties(EProperties.LABEL, ERepositoryObjectType.METADATA);
+        // metadataNode.setProperties(EProperties.CONTENT_TYPE, ERepositoryObjectType.METADATA);
+        // nodes.add(metadataNode);
 
         RepositoryNode sqlTemplates = new RepositoryNode(null, parent, ENodeType.SIMPLE_FOLDER);
         sqlTemplates.setProperties(EProperties.LABEL, "Generic");

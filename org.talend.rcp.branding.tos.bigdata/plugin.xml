@@ -118,6 +118,43 @@
                </override>
                <triggerPoints></triggerPoints>
             </navigatorContent>
+            <navigatorContent
+                  activeByDefault="true"
+                  contentProvider="org.talend.repository.viewer.content.EmptyContentProvider"
+                  id="org.talend.repository.viewer.root.metadata.removed"
+                  labelProvider="org.talend.repository.viewer.label.EmptyLabelProvider"
+                  name="Metadata Removed"
+                  priority="high">
+               <override
+                     policy="InvokeAlwaysRegardlessOfSuppressedExt"
+                     suppressedExtensionId="org.talend.repository.viewer.root.metadata">
+               </override>
+               <triggerPoints>
+                  <or>
+                     <adapt
+                           type="org.talend.repository.model.ProjectRepositoryNode">
+                     </adapt>
+                     <instanceof
+                           value="org.talend.repository.model.ProjectRepositoryNode">
+                     </instanceof>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.talend.repository.node.isMetadataTopNode">
+                     </test>
+                  </or>
+               </triggerPoints>
+               <possibleChildren>
+                  <and>
+                     <instanceof
+                           value="org.talend.repository.model.RepositoryNode">
+                     </instanceof>
+                     <test
+                           forcePluginActivation="true"
+                           property="org.talend.repository.node.isMetadataTopNode">
+                     </test>
+                  </and>
+               </possibleChildren>
+            </navigatorContent>
          </extension>
          
          
