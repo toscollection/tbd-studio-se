@@ -15,6 +15,7 @@
             folder="metadata/hadoop/hcatalog"
             icon="icons/HCatalog_icon16.png"
             isResouce="true"
+            key="repository.hcatalog"
             label="%hcatalog"
             ordinal="51"
             parentNodeType="HADOOPCLUSTER"

@@ -34,6 +34,7 @@
             folder="metadata/hadoop/hadoopcluster"
             icon="icons/hadoop-logo-16x16.png"
             isResouce="true"
+            key="repository.hadoopCluster"
             label="%hadoopCluster"
             ordinal="50"
             products="DI"
