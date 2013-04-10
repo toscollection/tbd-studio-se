@@ -272,7 +272,6 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 <%
                                 generateCode.generate(connName,cid,metadata);
                         }else{
-                            String isjson = ElementParameterParser.getValue(node,"__ISJSON__");
                             String searchKey = ElementParameterParser.getValue(node, "__KEY__");
 %>                            
                             java.util.Map<String, Object> Map_<%=cid%> = client_<%=cid%>.getBulk(<%=searchKey%>);
@@ -286,13 +285,8 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                                         <%=connName%>.Key = m_<%=cid%>.getKey();
 <%
                                     }
-                                    if("true".equals(isjson)){
-%>
-                                        <%=connName%>.jsonDoc = str_<%=cid%>;
-                                        nb_line_<%=cid%>++;
-<%
-                                    }else{
-                                        IMetadataColumn column = metadata.getColumn("Value");
+                                    IMetadataColumn column = metadata.getColumn("Value");
+                                    if(column!=null){
                                         generateCode.generateMap(connName,cid,column);
                                     }
 %>

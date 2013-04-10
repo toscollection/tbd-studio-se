@@ -184,15 +184,6 @@
       <DEFAULT>true</DEFAULT>
     </PARAMETER>
 
-    <PARAMETER NAME="ISJSON"
-      FIELD="CHECK"
-      NUM_ROW="43"
-      SHOW_IF="FROMVIEW == 'false'"
-      GROUP="VIEWPARAMS"
-      REQUIRED="true">
-      <DEFAULT>true</DEFAULT>
-    </PARAMETER>
-
     <PARAMETER NAME="ISREDUCE"
       FIELD="CHECK"
       NUM_ROW="92"
@@ -344,13 +335,9 @@
         <COLUMN NAME="Value" TYPE="id_String"/>
         <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
       </TABLE>
-      <TABLE IF="((FROMVIEW == 'false') and (ISJSON == 'false'))" READONLY="false">
+      <TABLE IF="((FROMVIEW == 'false'))" READONLY="false">
         <COLUMN NAME="Key" TYPE="id_String"/>
         <COLUMN NAME="Value" TYPE="id_String" CUSTOM="true"/>
-      </TABLE>
-      <TABLE IF="((FROMVIEW == 'false') and (ISJSON == 'true'))" READONLY="false">
-        <COLUMN NAME="Key" TYPE="id_String"/>
-        <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
       </TABLE>
     </PARAMETER>
  <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="100" REQUIRED="true" CONTEXT="OUTPUT">
@@ -380,15 +367,12 @@
 
     <PARAMETER
       NAME="JSONFIELD"
-      FIELD="CLOSED_LIST"
+      FIELD="COLUMN_LIST"
       NUM_ROW="130"
       GROUP="JSONCONFIG"
-      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))"
+      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
     >
-        <ITEMS DEFAULT="JSONDOC">
-            <ITEM NAME="JSONDOC" VALUE="jsonDoc" />
-        </ITEMS>
     </PARAMETER>
 
     <PARAMETER
@@ -396,7 +380,7 @@
       FIELD="TEXT"
       NUM_ROW="140"
       GROUP="JSONCONFIG"
-      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))"
+      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
     >
       <DEFAULT>"/bills/bill/line"</DEFAULT>
@@ -408,7 +392,7 @@
       NUM_ROW="150"
       NB_LINES="5"
       GROUP="JSONCONFIG"
-      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))"
+      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
     >
       <ITEMS>
@@ -424,7 +408,7 @@
       NUM_ROW="160"
       GROUP="JSONCONFIG"
       REQUIRED_IF="IS_VIRTUAL_COMPONENT == 'true'"
-      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') and (((FROMVIEW == 'false') and (ISJSON == 'true')) or ((FROMVIEW == 'true') and (ISREDUCE == 'false') and (INCLUDE_DOCS == 'true')))">
+      SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')">
         <DEFAULT>false</DEFAULT>
     </PARAMETER>
 
@@ -470,7 +454,6 @@
       <TEMPLATE_PARAM SOURCE="self.REDUCE"  TARGET="In.REDUCE" />
       <TEMPLATE_PARAM SOURCE="self.INCLUDE_DOCS"  TARGET="In.INCLUDE_DOCS" />
       <TEMPLATE_PARAM SOURCE="self.INCLUSIVEEND"  TARGET="In.INCLUSIVEEND" />
-      <TEMPLATE_PARAM SOURCE="self.ISJSON"  TARGET="In.ISJSON" />
       <TEMPLATE_PARAM SOURCE="self.ISREDUCE"  TARGET="In.ISREDUCE" />
       <TEMPLATE_PARAM SOURCE="self.DESCENDING"  TARGET="In.DESCENDING" />
       <TEMPLATE_PARAM SOURCE="self.STALE"  TARGET="In.STALE" />
