@@ -39,38 +39,6 @@
   	<PARAMETERS>
 
 	    <PARAMETER
-        	NAME="INPUT_SCHEMA"
-			FIELD="SCHEMA_TYPE"
-			REQUIRED="true"
-			NUM_ROW="5"
-		>
-        	<TABLE IF="(QUERY_BY_VIEW == 'true') AND (ISREDUCE == 'true')" READONLY="false">
-		        <COLUMN NAME="key" TYPE="id_String" />
-		        <COLUMN NAME="value" TYPE="id_String" />
-		        <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
-      		</TABLE>
-      		<TABLE IF="(INCLUDE_DOCS == 'false')AND (ISREDUCE == 'false')" READONLY="false">
-		        <COLUMN NAME="id" TYPE="id_String" />
-		        <COLUMN NAME="key" TYPE="id_String" />
-		        <COLUMN NAME="value" TYPE="id_String" />
-		        <COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
-      		</TABLE>
-      		<TABLE IF="(INCLUDE_DOCS == 'true') AND (ISREDUCE == 'false')" READONLY="false" >
-      			<COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
-      		</TABLE>
-   		</PARAMETER>
-
-	    <PARAMETER
-        	NAME="SCHEMA"
-	        FIELD="SCHEMA_TYPE"
-	        REQUIRED="true"
-			NUM_ROW="6"
-			CONTEXT="OUTPUT"
-		>
-			<DEFAULT />
-		</PARAMETER>
-
-	    <PARAMETER
 		    NAME="USE_EXISTING_CONNECTION"
 		    FIELD="CHECK"
 		    NUM_ROW="10"
@@ -225,7 +193,7 @@
 	    	NUM_ROW="75"
 	    	GROUP="QUERY_OPTION"
 	    >
-	   		<DEFAULT>"function (doc, meta) { emit(doc.name, meta.id); }"</DEFAULT>
+	   		<DEFAULT>"function (doc) { emit(null, doc); }"</DEFAULT>
 	    </PARAMETER>
 
 	    <PARAMETER NAME="REDUCE"
@@ -392,6 +360,44 @@
 		    </ITEMS>
 		</PARAMETER>
 
+		<PARAMETER
+        	NAME="INPUT_SCHEMA"
+			FIELD="SCHEMA_TYPE"
+			REQUIRED="true"
+			NUM_ROW="5"
+		>
+        	<TABLE IF="(QUERY_BY_VIEW == 'true') AND (ISREDUCE == 'true')" READONLY="false">
+		        <COLUMN NAME="key" TYPE="id_Object" />
+		        <COLUMN NAME="value" TYPE="id_Object" />
+      		</TABLE>
+      		<TABLE IF="(INCLUDE_DOCS == 'false')AND (ISREDUCE == 'false')" READONLY="false">
+		        <COLUMN NAME="id" TYPE="id_String" />
+		        <COLUMN NAME="key" TYPE="id_Object" />
+		        <COLUMN NAME="value" TYPE="id_Object" />
+      		</TABLE>
+      		<TABLE IF="(INCLUDE_DOCS == 'true') AND (ISREDUCE == 'false')" READONLY="false" >
+      			<COLUMN NAME="id" TYPE="id_String" />
+		        <COLUMN NAME="key" TYPE="id_Object" />
+		        <COLUMN NAME="value" TYPE="id_Object" />
+      			<COLUMN NAME="jsonDoc" TYPE="id_Object" READONLY="true" CUSTOM="true"/>
+      		</TABLE>
+   		</PARAMETER>
+	    
+	    <PARAMETER 
+        	NAME="SCHEMA" 
+	        FIELD="SCHEMA_TYPE" 
+	        REQUIRED="true"
+			NUM_ROW="6"
+			CONTEXT="OUTPUT"
+		>
+			<TABLE READONLY="false">
+        		<COLUMN NAME="id" TYPE="id_String" />
+		        <COLUMN NAME="key" TYPE="id_Object" />
+		        <COLUMN NAME="value" TYPE="id_Object" />
+      			<COLUMN NAME="jsonDoc" TYPE="id_Object"/>
+      		</TABLE>
+		</PARAMETER>
+		
 		<PARAMETER NAME="LIMIT"
 	      	FIELD="INTEGER"
 	      	NUM_ROW="140"

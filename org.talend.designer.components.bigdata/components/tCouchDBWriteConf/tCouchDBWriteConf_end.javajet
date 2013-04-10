@@ -13,22 +13,7 @@ imports="
     cid = cid.replace("_Out", "");
     boolean useTriggerReplicate="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_TRIGGER_REPLICATE__"));
     boolean useExistingConn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-    boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
-%>
-	}catch(java.lang.Exception e_<%=cid%>){
-<%
-	if(dieOnError){
-%>
-	throw e_<%=cid%>;
-<%
-	}else{
-%>
-	System.err.println(e_<%=cid%>.getMessage());
-<%
-	}
-%>
-	}finally{
-<%
+    
 	if(!useExistingConn){
 %>
 		if(server_<%=cid%> != null){
@@ -51,5 +36,4 @@ imports="
 <%
 	}
 %>
-}
 	globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);

@@ -20,6 +20,7 @@
     String cid = node.getUniqueName();
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
 	String key = ElementParameterParser.getValue(node,"__KEY__");
+	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -36,51 +37,78 @@
 				List<IMetadataColumn> columnList = metadata.getListColumns();
 				int sizeColumns = columnList.size();
 %>
+	try{
 		map_<%=cid%> = new java.util.HashMap();
 		nb_line_<%=cid%> ++;
 <%
 				for (int i = 0; i < sizeColumns; i++) {
 					IMetadataColumn column = columnList.get(i);
+					if(!column.getLabel().equals(key)){
 %>
 		if(<%=conn.getName() %>.<%=column.getLabel() %>!=null){
-			map_<%=cid%>.put("<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+			String columnValue_<%=cid%>=<%=conn.getName() %>.<%=column.getLabel() %>.toString();
+			try{
+				map_<%=cid%>.put("<%=column.getOriginalDbColumnName() %>",org.svenson.JSONParser.defaultJSONParser().parse(columnValue_<%=cid%>));
+			}catch(Exception e_<%=cid%>){
+				map_<%=cid%>.put("<%=column.getOriginalDbColumnName() %>",<%=conn.getName() %>.<%=column.getLabel()%>);
+			}
 		}
 <%
+					}
 				}
-               	if("INSERT".equals(dataAction)){
 %>
 		map_<%=cid%>.put("_id",<%=conn.getName()%>.<%=key%>);
+<%
+               	if("INSERT".equals(dataAction)){
+%>
 		db_<%=cid%>.createDocument(map_<%=cid%>);
 <%
-                }else if("UPDATE".equals(dataAction)){
+                }else {
 %>
-		String rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
-		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,new org.svenson.JSON().forValue(map_<%=cid%>));
+		String rev_<%=cid%>=null;
+   		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,org.svenson.JSON.defaultJSON().forValue(map_<%=cid%>));
+  		doc_<%=cid%>.setId(<%=conn.getName()%>.<%=key%>);
+<%
+                	if("UPDATE".equals(dataAction)){
+%>
+		rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
 		doc_<%=cid%>.setRevision(rev_<%=cid%>);
 		db_<%=cid%>.updateDocument(doc_<%=cid%>);
 <%
-                }else if("UPSERT".equals(dataAction)){
+                	}else if("UPSERT".equals(dataAction)){
 %>
-		String rev_<%=cid%>=null;
 		try{
 			rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
 		}catch(java.lang.Exception e_<%=cid%>){
-			System.err.println(e_<%=cid%>.getMessage());
 		}
-		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,new org.svenson.JSON().forValue(map_<%=cid%>));
 		if(rev_<%=cid%>!=null){
 			doc_<%=cid%>.setRevision(rev_<%=cid%>);
 		}
 		db_<%=cid%>.createOrUpdateDocument(doc_<%=cid%>);
 <%
-				}else{
+					}else{
 %>
-		String rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
-		doc_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(org.jcouchdb.document.BaseDocument.class,new org.svenson.JSON().forValue(map_<%=cid%>));
+		rev_<%=cid%>=db_<%=cid%>.getDocument(org.jcouchdb.document.BaseDocument.class,<%=conn.getName()%>.<%=key%>).getRevision();
 		doc_<%=cid%>.setRevision(rev_<%=cid%>);
 		db_<%=cid%>.delete(doc_<%=cid%>);
 <%
+					}
 				}
+%>
+	}catch(java.lang.Exception e_<%=cid%>){
+<%
+				if(dieOnError){
+%>
+		throw e_<%=cid%>;
+<%
+				}else{
+%>
+		System.err.println(e_<%=cid%>.getMessage());
+<%
+				}
+%>
+	}
+<%
 			}
 		}
 	}

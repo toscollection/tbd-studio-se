@@ -176,7 +176,6 @@
 <%
       		if(isReduce && isGroup){
 %>
-		options_<%=cid%>.group(true);
 		options_<%=cid%>.groupLevel(<%=group_level%>);
 <%
       		}
@@ -264,8 +263,8 @@
 		}
       	if(isQueryByView){
 %>
-		org.jcouchdb.document.ViewResult<org.jcouchdb.document.BaseDocument> results_<%=cid%> =	db_<%=cid%>.queryView(
-					<%=docName%>+"/"+<%=viewName%>, org.jcouchdb.document.BaseDocument.class, options_<%=cid%>,org.svenson.JSONParser.defaultJSONParser());
+		org.jcouchdb.document.ViewResult<Object> results_<%=cid%> =	db_<%=cid%>.queryView(
+					<%=docName%>+"/"+<%=viewName%>, Object.class, options_<%=cid%>,org.svenson.JSONParser.defaultJSONParser());
 <%
 		}else{
 %>
@@ -276,8 +275,43 @@
 		java.util.Map<String,Object> values_<%=cid%>=null;
 		for(org.jcouchdb.document.ValueRow valueRow_<%=cid%>:results_<%=cid%>.getRows()){
 			 nb_line_<%=cid%> ++;
+<%
+		  if(firstConnName!=null && firstConnName.length()>0){
+			if(metadata.getColumn("id")!=null){
+%>
+			 <%=firstConnName%>.id=valueRow_<%=cid%>.getId();
+<%
+			}
+			if(metadata.getColumn("key")!=null){
+%>
+			Object key_<%=cid%>=valueRow_<%=cid%>.getKey();
+			if(key_<%=cid%>!=null){
+				if(key_<%=cid%> instanceof String){
+			 		<%=firstConnName%>.key=key_<%=cid%>;
+			 	}else{
+			 		<%=firstConnName%>.key=org.svenson.JSON.defaultJSON().forValue(key_<%=cid%>);
+			 	}
+			}
+<%
+			}
+			if(metadata.getColumn("value")!=null){
+%>
+			Object value_<%=cid%>=valueRow_<%=cid%>.getValue();
+			if(value_<%=cid%>!=null){
+				if(value_<%=cid%> instanceof String){
+					<%=firstConnName%>.value =value_<%=cid%>;
+				}else{
+					<%=firstConnName%>.value = org.svenson.JSON.defaultJSON().forValue(value_<%=cid%>);
+				}
+			}
+<%
+			}
+			if(metadata.getColumn("jsonDoc")!=null){
+%>
 			 <%=firstConnName%>.jsonDoc = new org.svenson.JSON().forValue(valueRow_<%=cid%><%if(include_docs && !isReduce){%>.getProperty("doc")<%}%>);
 <%
+			}
+		  }
 		}
 	}
 %>

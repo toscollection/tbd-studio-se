@@ -22,6 +22,7 @@
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
 	String jsonfield = ElementParameterParser.getValue(node,"__JSONFIELD__");
 	String key = ElementParameterParser.getValue(node,"__KEY__");
+	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -35,8 +36,8 @@
 		List< ? extends IConnection> conns = node.getIncomingConnections();
 		for (IConnection conn : conns) {
 			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-				List<IMetadataColumn> columnList = metadata.getListColumns();
 %>
+	try{
 		map_<%=cid%>=org.svenson.JSONParser.defaultJSONParser().parse(java.util.Map.class, <%=conn.getName()%>.<%=jsonfield%>.toString());
 		map_<%=cid%>.put("_id",<%=conn.getName()%>.<%=key%>);
 <%
@@ -77,6 +78,19 @@
 				}
 %>
 		nb_line_<%=cid%> ++;
+	}catch(java.lang.Exception e_<%=cid%>){
+<%
+				if(dieOnError){
+%>
+		throw e_<%=cid%>;
+<%
+				}else{
+%>
+		System.err.println(e_<%=cid%>.getMessage());
+<%
+				}
+%>
+	}
 <%
 			}
 		}
