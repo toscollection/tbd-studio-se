@@ -19,7 +19,7 @@
    <extension
          point="org.talend.core.repository.repository_handler">
       <RepositoryHandler
-            class="org.talend.repository.hadoopcluster.HadoopClusterDragAndDropHandler">
+            class="org.talend.repository.hadoopcluster.ui.dnd.HadoopClusterDragAndDropHandler">
       </RepositoryHandler>
    </extension>
    <extension point="org.eclipse.emf.ecore.extension_parser">

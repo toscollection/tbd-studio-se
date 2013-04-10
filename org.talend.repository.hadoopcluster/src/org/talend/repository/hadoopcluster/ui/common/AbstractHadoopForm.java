@@ -86,9 +86,9 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
         if (version4Drivers != null) {
             switch (version4Drivers) {
             case APACHE_0_20_2:
-            case MAPR:
+            case MAPR1:
             case MAPR2:
-            case MAPR_2_1_2:
+            case MAPR212:
             case MAPR_EMR:
                 return true;
             default:

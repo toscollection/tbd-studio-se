@@ -5,8 +5,11 @@ import java.util.Map;
 import org.talend.core.database.EDatabaseTypeName;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.conn.template.EDatabaseConnTemplate;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopDBNodeAction;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 
@@ -36,6 +39,21 @@ public class CreateHiveAction extends CreateHadoopDBNodeAction {
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_TYPE, EDatabaseConnTemplate.HIVE.getDBTypeName());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PRODUCT, EDatabaseTypeName.HIVE.getProduct());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PORT, EDatabaseConnTemplate.HIVE.getDefaultPort());
+    }
+
+    @Override
+    protected boolean hideAction(RepositoryNode node) {
+        HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
+        if (hcConnectionItem != null) {
+            HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
+            if (EHadoopVersion4Drivers.APACHE_0_20_204.equals(version4Drivers)
+                    || EHadoopVersion4Drivers.APACHE_0_20_2.equals(version4Drivers)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

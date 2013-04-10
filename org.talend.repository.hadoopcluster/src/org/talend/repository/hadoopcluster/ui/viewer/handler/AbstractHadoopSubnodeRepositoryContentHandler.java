@@ -85,7 +85,7 @@ public abstract class AbstractHadoopSubnodeRepositoryContentHandler extends Abst
             return;
         }
 
-        RepositoryNode typeFolderNode = createHadoopFolderNode(parentNode, objectType, objectType.getKey(), items.size());
+        RepositoryNode typeFolderNode = createHadoopFolderNode(parentNode, objectType, objectType.getLabel(), items.size());
         parentNode.getChildren().add(typeFolderNode);
 
         for (HadoopSubConnectionItem item : items) {

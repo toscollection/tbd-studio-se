@@ -157,7 +157,7 @@ public abstract class CreateHadoopNodeAction extends AbstractCreateAction {
     }
 
     protected String getNodeLabel() {
-        return getNodeType().getKey();
+        return getNodeType().getLabel();
     }
 
     protected abstract ERepositoryObjectType getNodeType();
