@@ -15,7 +15,7 @@
             folder="metadata/hadoop/hdfs"
             icon="icons/HDFS_icon16.png"
             isResouce="true"
-            key="repository.hdfs"
+            key="HDFS"
             label="%HDFS"
             ordinal="50"
             parentNodeType="HADOOPCLUSTER"
