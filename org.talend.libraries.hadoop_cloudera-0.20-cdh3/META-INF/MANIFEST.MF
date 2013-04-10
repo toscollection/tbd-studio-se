@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: cloudera-0.20-cdh3
-Bundle-SymbolicName: org.talend.libraries.hadoop_cloudera-0.20-cdh3
-Bundle-Version: 1.0.0.qualifier

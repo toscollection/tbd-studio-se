@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.talend.libraries.hadoop_apache-0.20.204
-Bundle-Version: 1.0.0.qualifier
-Bundle-Name: apache-0.20.204
