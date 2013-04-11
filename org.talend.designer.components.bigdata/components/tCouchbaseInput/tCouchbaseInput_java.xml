@@ -343,7 +343,7 @@
  <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="100" REQUIRED="true" CONTEXT="OUTPUT">
      <TABLE READONLY="false">
         <COLUMN NAME="Key" TYPE="id_String"/>
-        <COLUMN NAME="jsonDoc" TYPE="id_Object"/>
+        <COLUMN NAME="Value" TYPE="id_String"/>
       </TABLE>
  </PARAMETER>
     <PARAMETER
