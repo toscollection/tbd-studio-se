@@ -308,7 +308,7 @@
   <CODEGENERATION>
 		<IMPORTS>
 			<!-- APACHE 0.20.203 / CDH3 / MAPR -->
-			<IMPORT NAME="Driver-Hadoop-0.20.203" MODULE="hadoop-core-0.20.203.0.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="Driver-Hadoop-0.20.203" MODULE="hadoop-core-0.20.203.0.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Commons-Log4j-1.2.15" MODULE="log4j-1.2.15.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Hive-Exec-0.7.1" MODULE="hive-exec-0.7.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Hive-Jdbc-0.7.1" MODULE="hive-jdbc-0.7.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
@@ -320,6 +320,8 @@
 			<IMPORT NAME="Driver-Commons-Logging-1.1.1" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="Driver-Commons-Logging-API-1.0.4" MODULE="commons-logging-api-1.0.4.jar" REQUIRED_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false')" />
 			<!-- ############## -->
+			<!-- CDH3 --> 
+            <IMPORT NAME="hadoop-0.20.2-cdh3u1-core.jar" MODULE="hadoop-0.20.2-cdh3u1-core.jar" REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH3') AND (USE_EXISTING_CONNECTION == 'false')" />  
 			
 			<!-- MAPR2 -->
 			<IMPORT NAME="hadoop-0.20.2-dev-core-mapr2.jar" MODULE="hadoop-0.20.2-dev-core-mapr2.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
