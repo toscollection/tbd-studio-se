@@ -59,7 +59,7 @@ public class TOozieUIConstants {
 
     public static final String OOZIE_LBL_USERNAME = Messages.getString("TOozieUIConstants_LBL_userName_for_hadoop"); //$NON-NLS-1$
 
-    public static final String OOZIE_DLG_SETTING_TITLE = Messages.getString("TOozieUIConstants_DLG_setting_title"); //$NON-NLS-1$
+    public static final String OOZIE_DLG_SETTING_TITLE = Messages.getString("TOozieUIConstants_DLG_setting_title1"); //$NON-NLS-1$
 
     public static final String OOZIE_DLG_SCHEDULER_TITLE = Messages.getString("TOozieUIConstants_DLG_scheduler_title"); //$NON-NLS-1$
 
