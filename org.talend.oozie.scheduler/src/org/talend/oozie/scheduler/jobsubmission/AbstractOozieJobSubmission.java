@@ -89,7 +89,7 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
                 for (int i = 0; i < props.length(); i++) {
                     String property = TalendQuoteUtils.removeQuotesIfExist((String) ((JSONObject) props.get(i)).get("PROPERTY"));//$NON-NLS-1$
                     String value = TalendQuoteUtils.removeQuotesIfExist((String) ((JSONObject) props.get(i)).get("VALUE"));//$NON-NLS-1$
-                    if (StringUtils.isEmpty(property) && StringUtils.isEmpty(value)) {
+                    if (!StringUtils.isEmpty(property) && !StringUtils.isEmpty(value)) {
                         action.addArgument("-D " + property + "=" + value);//$NON-NLS-1$ //$NON-NLS-1$
                     }
                 }
