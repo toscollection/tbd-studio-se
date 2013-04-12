@@ -92,7 +92,7 @@ public class HadoopServerUtil {
             }
 
             Callable<Object> dfsCallable = null;
-            if (userName == null) {
+            if (userName == null || group != null) {
                 dfsCallable = getDFS(conf, classLoader);
             } else {
                 dfsCallable = getDFS(new URI(nameNodeURI), conf, userName, classLoader);

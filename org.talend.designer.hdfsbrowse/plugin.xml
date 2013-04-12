@@ -42,7 +42,7 @@
             libraries="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar">
       </classloader>
       <classloader
-            index="HDFS:CLOUDERA:Cloudera_0_20_CDH3U1"
+            index="HDFS:CLOUDERA:Cloudera_CDH3"
             libraries="hadoop-0.20.2-cdh3u1-core.jar;commons-logging-1.0.4.jar">
       </classloader>
       <classloader
@@ -50,11 +50,11 @@
             libraries="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.15.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;commons-io-2.4.jar">
       </classloader>
       <classloader
-            index="HDFS:MAPR:MapR"
+            index="HDFS:MAPR:MAPR1"
             libraries="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar">
       </classloader>
       <classloader
-            index="HDFS:MAPR:MapR2"
+            index="HDFS:MAPR:MAPR2"
             libraries="hadoop-0.20.2-dev-core-mapr2.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar">
       </classloader>
       <classloader
@@ -86,7 +86,7 @@
             libraries="hadoop-core-1.0.3.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar">
       </classloader>
       <classloader
-            index="HDFS:MAPR:MapR212"
+            index="HDFS:MAPR:MAPR212"
             libraries="hadoop-0.20.2-dev-core-mapr212.jar;commons-logging-1.0.4.jar;maprfs-0.20.2-2.1.2.jar;maprfs-jni-0.20.2-2.1.2.jar;zookeeper-3.3.6.jar">
       </classloader>
    </extension>
