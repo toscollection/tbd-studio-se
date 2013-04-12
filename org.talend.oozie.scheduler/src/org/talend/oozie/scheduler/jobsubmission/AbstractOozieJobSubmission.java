@@ -15,9 +15,11 @@ package org.talend.oozie.scheduler.jobsubmission;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopReflectionException;
 import org.talend.designer.hdfsbrowse.reflection.HadoopClassConstants;
 import org.talend.designer.hdfsbrowse.reflection.HadoopReflection;
@@ -26,6 +28,9 @@ import org.talend.oozie.scheduler.jobsubmission.model.JobSubmission;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
 import org.talend.oozie.scheduler.jobsubmission.model.Utils;
 import org.talend.oozie.scheduler.utils.OozieClassLoaderFactory;
+import org.talend.utils.json.JSONArray;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 public abstract class AbstractOozieJobSubmission implements JobSubmission {
 
@@ -73,6 +78,25 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
 
         action.addArgument("-fs " + jobContext.get("NAMENODE")); //$NON-NLS-1$ //$NON-NLS-2$
         action.addArgument("-jt " + jobContext.get("JOBTRACKER"));//$NON-NLS-1$ //$NON-NLS-2$
+
+        if (jobContext.get("KERBEROS.PRINCIPAL") != null) {//$NON-NLS-1$
+            action.addArgument("-D dfs.namenode.kerberos.principal=" + jobContext.get("KERBEROS.PRINCIPAL"));//$NON-NLS-1$ //$NON-NLS-1$
+        }
+        String jsontest = jobContext.get("HADOOP.PROPERTIES");
+        if (jsontest != null) {
+            try {
+                JSONArray props = new JSONArray(jsontest);
+                for (int i = 0; i < props.length(); i++) {
+                    String property = TalendQuoteUtils.removeQuotesIfExist((String) ((JSONObject) props.get(i)).get("PROPERTY"));//$NON-NLS-1$
+                    String value = TalendQuoteUtils.removeQuotesIfExist((String) ((JSONObject) props.get(i)).get("VALUE"));//$NON-NLS-1$
+                    if (StringUtils.isEmpty(property) && StringUtils.isEmpty(value)) {
+                        action.addArgument("-D " + property + "=" + value);//$NON-NLS-1$ //$NON-NLS-1$
+                    }
+                }
+            } catch (JSONException e) {
+                ExceptionHandler.process(e);
+            }
+        }
 
         // This directory is just for DistributedCache. Maybe later it need to enhance, because for common java
         // application, it also add this argument.

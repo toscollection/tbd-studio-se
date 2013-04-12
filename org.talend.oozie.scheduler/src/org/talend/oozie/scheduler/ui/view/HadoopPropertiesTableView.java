@@ -129,6 +129,7 @@ public class HadoopPropertiesTableView extends AbstractDataTableEditorView<HashM
                     protected Object getObjectToAdd() {
                         HashMap<String, Object> hpt = getModel().createHadoopPropertiesType();
                         hpt.put(PROPERTY, "new line");
+                        hpt.put(VALUE, "");
                         return hpt;
                     }
 

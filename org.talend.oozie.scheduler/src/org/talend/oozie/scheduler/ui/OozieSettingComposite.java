@@ -462,9 +462,11 @@ public class OozieSettingComposite extends ScrolledComposite {
                 String newDistributionDisplayName = hadoopDistributionCombo.getText();
                 EHadoopDistributions distribution = EHadoopDistributions.getDistributionByDisplayName(newDistributionDisplayName);
                 if (distribution != null) {
-                    hadoopDistributionValue = distribution.getName();
-                    updateVersionPart(distribution);
-                    initUI();
+                    if (hadoopDistributionValue != null && !hadoopDistributionValue.equals(newDistributionDisplayName)) {
+                        hadoopDistributionValue = distribution.getName();
+                        updateVersionPart(distribution);
+                        initUI();
+                    }
                 }
             }
         });

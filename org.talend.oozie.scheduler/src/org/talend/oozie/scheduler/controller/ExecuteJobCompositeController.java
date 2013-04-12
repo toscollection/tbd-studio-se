@@ -52,6 +52,7 @@ import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.utils.JavaResourcesHelper;
 import org.talend.core.prefs.ITalendCorePrefConstants;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.designer.core.model.components.EParameterName;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
@@ -82,6 +83,7 @@ import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.oozie.scheduler.utils.TOozieStringUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.oozie.scheduler.views.TOozieView;
+import org.talend.utils.json.JSONArray;
 
 /**
  * Created by Marvin Wang on Mar. 31, 2012 for doing some action from the widgets of
@@ -707,20 +709,22 @@ public class ExecuteJobCompositeController {
         IProcess2 process = OozieJobTrackerListener.getProcess();
         if (ComponentCategory.CATEGORY_4_MAPREDUCE.getName().equals(process.getComponentsType())) {
             String fsForMapReduceJob = (String) process.getElementParameter("NAMENODE").getValue();//$NON-NLS-1$
-            jobContext.set("-fs", fsForMapReduceJob); //$NON-NLS-1$
+            jobContext.set("NAMENODE", TalendQuoteUtils.removeQuotesIfExist(fsForMapReduceJob)); //$NON-NLS-1$
 
             String jtForMapReduceJob = (String) process.getElementParameter("JOBTRACKER").getValue();//$NON-NLS-1$
-            jobContext.set("-jt", jtForMapReduceJob);//$NON-NLS-1$
+            jobContext.set("JOBTRACKER", TalendQuoteUtils.removeQuotesIfExist(jtForMapReduceJob));//$NON-NLS-1$
         }
         // if use kerberos
         if (TOozieParamUtils.enableKerberos()) {
-            jobContext.set("dfs.namenode.kerberos.principal", TOozieParamUtils.getPrincipal());
+            jobContext.set("KERBEROS.PRINCIPAL", TOozieParamUtils.getPrincipal());
         }
         // for hadoop properties
         if (process != null) {
+            JSONArray props = new JSONArray();
             for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
-                jobContext.set((String) property.get("PROPERTY"), (String) property.get("VALUE"));
+                props.put(property);
             }
+            jobContext.set("HADOOP.PROPERTIES", props.toString());
         }
         // Job name.
         String jobName = process.getLabel();
