@@ -16,7 +16,6 @@ import org.apache.commons.lang.StringUtils;
 import org.talend.core.classloader.ClassLoaderFactory;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.hbase.conn.version.EHBaseDistributions;
-import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.metadata.IMetadataConnection;
 
 /**
@@ -49,6 +48,6 @@ public class HBaseClassLoaderFactory {
         String hcId = metadataConnection.getId();
         String index = "HadoopCustomVersion:HBase:" + hcId; //$NON-NLS-1$ 
         return ClassLoaderFactory.getCustomClassLoader(index,
-                (String) metadataConnection.getParameter(ECustomVersionGroup.HBASE.getName()));
+                (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS));
     }
 }
