@@ -294,7 +294,7 @@
 			<!-- -->
 
             <!-- MR1 -->
-            <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.5.3.0.NB_r100737/lib/hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR1')"/>
+            <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR1')"/>
             <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR1')"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR1')"/>
             <IMPORT NAME="commons-io-2.1" MODULE="commons-io-2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR1')"/>
