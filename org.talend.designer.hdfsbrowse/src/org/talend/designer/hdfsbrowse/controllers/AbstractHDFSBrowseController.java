@@ -44,6 +44,7 @@ import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.CorePlugin;
+import org.talend.core.model.components.IComponent;
 import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
@@ -98,6 +99,8 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
     protected HDFSConnectionBean getHDFSConnectionBean() {
         INode node = (INode) elem;
+        boolean isMr = false;
+        HDFSConnectionBean connectionBean = new HDFSConnectionBean();
         String useExistingConnection = ElementParameterParser.getValue(elem, "__USE_EXISTING_CONNECTION__"); //$NON-NLS-1$
         if ("true".equalsIgnoreCase(useExistingConnection)) { //$NON-NLS-1$
             String connectionName = ElementParameterParser.getValue(node, "__CONNECTION__"); //$NON-NLS-1$
@@ -108,25 +111,47 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
                     break;
                 }
             }
+        } else if (node != null && node.getComponent() != null && node.getComponent().getPaletteType() != null
+                && node.getComponent().getPaletteType().equals("MR")) {
+            List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+            for (INode iNode : nodes) {
+                IComponent component = iNode.getComponent();
+                if (component != null && component.getName() != null && component.getName().equals("tMRConfiguration")) {
+                    node = iNode;
+                    if (node instanceof DataNode) {
+                        DataNode dataNode = (DataNode) node;
+                        IElementParameter versionParameter = dataNode.getElementParameter(EHadoopParameter.MR_VERSION.getName());
+                        if (versionParameter != null) {
+                            connectionBean.setDfVersion((String) versionParameter.getValue());
+                            isMr = true;
+                        }
+                        IElementParameter nameNodeParameter = dataNode.getElementParameter(EHadoopParameter.NAMENODE.getName());
+                        if (nameNodeParameter != null) {
+                            connectionBean.setNameNodeURI((String) nameNodeParameter.getValue());
+                            isMr = true;
+                        }
+                    }
+                }
+            }
         }
 
         String distribution = (String) getParameterValue(node, EHadoopParameter.DISTRIBUTION.getName());
-        String version = (String) getParameterValue(node, EHadoopParameter.VERSION.getName());
-        String nameNodeUri = (String) getParameterValue(node, EHadoopParameter.NAMENODE_URI.getName());
+        if (!isMr) {
+            String version = (String) getParameterValue(node, EHadoopParameter.VERSION.getName());
+            String nameNodeUri = (String) getParameterValue(node, EHadoopParameter.NAMENODE_URI.getName());
+            connectionBean.setDfVersion(version);
+            connectionBean.setNameNodeURI(nameNodeUri);
+        }
         String userName = (String) getParameterValue(node, EHadoopParameter.USERNAME.getName());
         Boolean useKrb = (Boolean) getParameterValue(node, EHadoopParameter.USE_KRB.getName());
         String principal = (String) getParameterValue(node, EHadoopParameter.NAMENODE_PRINCIPAL.getName());
         String group = (String) getParameterValue(node, EHadoopParameter.GROUP.getName());
 
-        HDFSConnectionBean connectionBean = new HDFSConnectionBean();
         connectionBean.setDistribution(distribution);
-        connectionBean.setDfVersion(version);
-        connectionBean.setNameNodeURI(nameNodeUri);
         connectionBean.setUserName(userName);
         connectionBean.setEnableKerberos(useKrb != null ? useKrb : false);
         connectionBean.setPrincipal(principal);
         connectionBean.setGroup(group);
-
         return connectionBean;
     }
 

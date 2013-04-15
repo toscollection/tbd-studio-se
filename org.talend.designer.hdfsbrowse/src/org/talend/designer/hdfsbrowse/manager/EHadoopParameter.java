@@ -32,6 +32,10 @@ public enum EHadoopParameter {
 
     GROUP,
 
+    MR_VERSION,
+
+    NAMENODE,
+
     ;
 
     public String getName() {
