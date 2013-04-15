@@ -104,7 +104,7 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
         } else if (EHCatalogRepositoryToComponent.PIG_VERSION.getRepositoryValue().equals(value)) {
             return hcConnection.getDfVersion();
         } else if (EHCatalogRepositoryToComponent.MAPRED_JOB_TRACKER.getRepositoryValue().equals(value)) {
-            return hcConnection.getJobTrackerURI();
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobTrackerURI()));
         } else if (EHCatalogRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getNameNodeURI()));
         } else if (EHCatalogRepositoryToComponent.JOBTRACKER_PRINCIPAL.getRepositoryValue().equals(value)) {

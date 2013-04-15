@@ -117,7 +117,7 @@ public class HDFSDragAndDropHandler implements IDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.PIG_VERSION.getRepositoryValue().equals(value)) {
             return hcConnection.getDfVersion();
         } else if (EHDFSRepositoryToComponent.MAPRED_JOB_TRACKER.getRepositoryValue().equals(value)) {
-            return hcConnection.getJobTrackerURI();
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobTrackerURI()));
         } else if (EHDFSRepositoryToComponent.FIELD_SEPARATOR_CHAR.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
         } else if (EHDFSRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
