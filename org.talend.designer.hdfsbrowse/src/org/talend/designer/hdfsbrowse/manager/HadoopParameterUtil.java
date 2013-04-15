@@ -40,12 +40,12 @@ public class HadoopParameterUtil {
 
         Matcher matcher = Pattern.compile(HadoopPatternConstants.NAME_NODE_URI_WITH_PORT).matcher(nameNodeURI);
         if (matcher.find()) {
-            hostName = matcher.group(1);
+            hostName = matcher.group(2);
         }
         if (StringUtils.isEmpty(hostName)) {
             matcher = Pattern.compile(HadoopPatternConstants.NAME_NODE_URI_WITHOUT_PORT).matcher(nameNodeURI);
             if (matcher.find()) {
-                hostName = matcher.group(1);
+                hostName = matcher.group(2);
             }
         }
         if (StringUtils.isEmpty(hostName)) {

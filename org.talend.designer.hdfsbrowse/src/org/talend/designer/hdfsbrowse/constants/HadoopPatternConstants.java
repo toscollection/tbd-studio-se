@@ -21,17 +21,17 @@ public interface HadoopPatternConstants {
     /*
      * All possible situation of Namenode Uri.
      */
-    public final static String NAME_NODE_URI = "(^(file:///|local)$)|(^hdfs://([^:/\\\\\\s]*[^:/\\\\\\s]|(([^:/\\\\\\s]+)(:\\d+)))$)"; //$NON-NLS-1$
+    public final static String NAME_NODE_URI = "(^(file:///|local)$)|(^(hdfs://|maprfs:///)([^:/\\\\\\s]*[^:/\\\\\\s]|(([^:/\\\\\\s]+)(:\\d+)))$)"; //$NON-NLS-1$
 
     /*
      * Namenode Uri with port, like "hdfs://talend-hdp-all:8020"
      */
-    public final static String NAME_NODE_URI_WITH_PORT = "^hdfs://([^:/\\\\\\s]+):(\\d+)$"; //$NON-NLS-1$
+    public final static String NAME_NODE_URI_WITH_PORT = "^(hdfs://|maprfs:///)([^:/\\\\\\s]+):(\\d+)$"; //$NON-NLS-1$
 
     /*
      * Namenode Uri without port, like "hdfs://talend-hdp-all"
      */
-    public final static String NAME_NODE_URI_WITHOUT_PORT = "^hdfs://([^:/\\\\\\s]*[^:\\s])$"; //$NON-NLS-1$
+    public final static String NAME_NODE_URI_WITHOUT_PORT = "^(hdfs://|maprfs:///)([^:/\\\\\\s]*[^:\\s])$"; //$NON-NLS-1$
 
     /*
      * Local namenode Uri, like "local"(deprecated) or "file:///"

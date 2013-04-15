@@ -32,6 +32,8 @@ public class HadoopOperationManager {
 
     protected static final String PATH_SEPARATOR = "/"; //$NON-NLS-1$
 
+    protected static final String COLON = ":"; //$NON-NLS-1$
+
     private static HadoopOperationManager instance = new HadoopOperationManager();
 
     private HadoopOperationManager() {
@@ -141,6 +143,9 @@ public class HadoopOperationManager {
         String nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(connection.getNameNodeURI());
         if (absPath.startsWith(nameNodeURI)) {
             absPath = absPath.substring(absPath.indexOf(nameNodeURI) + nameNodeURI.length());
+        }
+        if (absPath.indexOf(COLON) != -1) {
+            absPath = absPath.substring(absPath.lastIndexOf(COLON) + 1);
         }
         if (!absPath.startsWith(PATH_SEPARATOR)) {
             absPath = PATH_SEPARATOR + absPath;
