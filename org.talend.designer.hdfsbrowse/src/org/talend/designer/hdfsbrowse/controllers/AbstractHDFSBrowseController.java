@@ -44,6 +44,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.CorePlugin;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.IElementParameter;
@@ -60,6 +61,7 @@ import org.talend.designer.hdfsbrowse.i18n.Messages;
 import org.talend.designer.hdfsbrowse.manager.EHadoopParameter;
 import org.talend.designer.hdfsbrowse.manager.HadoopMappingManager;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
+import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
@@ -142,16 +144,20 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
             connectionBean.setDfVersion(version);
             connectionBean.setNameNodeURI(nameNodeUri);
         }
+        // check support the group or not
+        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connectionBean.getDfVersion());
+        if (HadoopServerUtil.isSupportGroup(version4Drivers)) {
+            String group = (String) getParameterValue(node, EHadoopParameter.GROUP.getName());
+            connectionBean.setGroup(group);
+        }
         String userName = (String) getParameterValue(node, EHadoopParameter.USERNAME.getName());
         Boolean useKrb = (Boolean) getParameterValue(node, EHadoopParameter.USE_KRB.getName());
         String principal = (String) getParameterValue(node, EHadoopParameter.NAMENODE_PRINCIPAL.getName());
-        String group = (String) getParameterValue(node, EHadoopParameter.GROUP.getName());
 
         connectionBean.setDistribution(distribution);
         connectionBean.setUserName(userName);
         connectionBean.setEnableKerberos(useKrb != null ? useKrb : false);
         connectionBean.setPrincipal(principal);
-        connectionBean.setGroup(group);
         return connectionBean;
     }
 
