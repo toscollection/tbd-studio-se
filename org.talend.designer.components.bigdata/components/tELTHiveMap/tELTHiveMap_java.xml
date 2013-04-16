@@ -265,6 +265,7 @@
 			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="commons-dbcp-1.4" MODULE="commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false')" />
 			
 			
 			<IMPORT NAME="hive-exec-0.8.1.jar" MODULE="hive-exec-0.8.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0') and (USE_EXISTING_CONNECTION == 'false')" />
