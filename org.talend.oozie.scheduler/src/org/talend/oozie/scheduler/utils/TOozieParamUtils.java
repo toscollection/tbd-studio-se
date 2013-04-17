@@ -139,38 +139,65 @@ public class TOozieParamUtils {
     }
 
     public static String getNameNode() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
+        }
+        return "";
     }
 
     public static String getJobTracker() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT);
+        }
+        return "";
     }
 
     public static String getOozieEndPoint() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
+        }
+        return "";
     }
 
     public static String getUserNameForHadoop() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+        }
+        return "";
     }
 
     public static String getHadoopDistribution() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
+        }
+        return "";
     }
 
     public static String getHadoopVersion() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
+        }
+        return "";
     }
 
     public static String getHadoopCustomJars() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+        }
+        return "";
     }
 
     public static boolean enableKerberos() {
-        return (Boolean) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS) instanceof Boolean) {
+            return (Boolean) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS);
+        }
+        return false;
     }
 
     public static String getPrincipal() {
-        return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL);
+        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL) instanceof String) {
+            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL);
+        }
+        return "";
     }
 }
