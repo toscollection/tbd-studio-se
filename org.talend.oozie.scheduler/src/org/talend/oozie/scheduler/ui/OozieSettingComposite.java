@@ -231,8 +231,12 @@ public class OozieSettingComposite extends ScrolledComposite {
         Group versionGroup = Form.createGroup(parent, 3, TOozieUIConstants.OOZIE_LBL_VERSION_GROUP);
         versionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+        List<String> filterDistributionDisplayNames = EHadoopDistributions.getAllDistributionDisplayNames();
+        filterDistributionDisplayNames.remove(EHadoopDistributions.APACHE.getDisplayName());
+        filterDistributionDisplayNames.remove(EHadoopDistributions.AMAZON_EMR.getDisplayName());
+
         hadoopDistributionCombo = new LabelledCombo(versionGroup, TOozieUIConstants.OOZIE_LBL_HADOOP_DISTRIBUTION,
-                "", EHadoopDistributions.getAllDistributionDisplayNames() //$NON-NLS-1$
+                "", filterDistributionDisplayNames //$NON-NLS-1$
                         .toArray(new String[0]), 2, true);
         hadoopVersionCombo = new LabelledCombo(versionGroup, TOozieUIConstants.OOZIE_LBL_HADOOP_VERSION,
                 "", new String[0], 2, true); //$NON-NLS-1$
@@ -592,6 +596,9 @@ public class OozieSettingComposite extends ScrolledComposite {
             distriData.horizontalSpan = 2;
             hideControl(customButton, true);
             List<String> items = getDistributionVersions(distribution);
+            if (distribution == EHadoopDistributions.MAPR) {
+                items.remove(EHadoopVersion4Drivers.MAPR1.getVersionDisplay());
+            }
             String[] versions = new String[items.size()];
             items.toArray(versions);
             hadoopVersionCombo.getCombo().setItems(versions);
