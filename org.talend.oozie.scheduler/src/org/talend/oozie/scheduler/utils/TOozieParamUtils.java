@@ -139,64 +139,73 @@ public class TOozieParamUtils {
     }
 
     public static String getNameNode() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
 
     public static String getJobTracker() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
 
     public static String getOozieEndPoint() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
 
     public static String getUserNameForHadoop() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
 
     public static String getHadoopDistribution() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
 
     public static String getHadoopVersion() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
 
     public static String getHadoopCustomJars() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
 
     public static boolean enableKerberos() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS) instanceof Boolean) {
-            return (Boolean) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS);
+        if (value instanceof Boolean) {
+            return (Boolean) value;
         }
         return false;
     }
 
     public static String getPrincipal() {
-        if (getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL) instanceof String) {
-            return (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL);
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL);
+        if (value instanceof String) {
+            return (String) value;
         }
         return "";
     }
