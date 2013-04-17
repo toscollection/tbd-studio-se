@@ -23,7 +23,7 @@
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     final INode node = (INode)codeGenArgument.getArgument();
     final String cid = node.getUniqueName();
-    String dataAction = ElementParameterParser.getValue(node, "__DATA_ACTION__");
+    final String dataAction = ElementParameterParser.getValue(node, "__DATA_ACTION__");
     String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__");
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
     
@@ -204,7 +204,18 @@
 			}
 			%>
 			if (endNode_<%=cid%>.get(<%=relationship.getIndex().getName()%>) != null) {
-				<%
+<%
+				if(dataAction.equals("UPDATE") || dataAction.equals("INSERT_OR_UPDATE")) {
+%>
+					java.util.Iterator<org.neo4j.graphdb.Relationship> relationShipIterator_<%=cid%> = node_<%=cid%>.getRelationships().iterator();
+					while(relationShipIterator_<%=cid%>.hasNext()) {
+						org.neo4j.graphdb.Relationship relation_<%=cid%> = ((org.neo4j.graphdb.Relationship) relationShipIterator_<%=cid%>.next());
+						if(relation_<%=cid%>.getOtherNode(node_<%=cid%>).equals(endNode_<%=cid%>.get(<%=relationship.getIndex().getName()%>))) {
+							relation_<%=cid%>.delete();
+						}
+					}
+<%
+				}
 				switch (relationship.getDirection()) {
 					case OUTGOING :
 						%>		 	
