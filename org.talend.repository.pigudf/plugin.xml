@@ -121,5 +121,11 @@
             level="10"
             name="%NavigatorContent.action.editPigudfProperties">
       </Action>
+      <Action
+            class="org.talend.repository.pigudf.actions.OpenPigudfExistVersionProcessAction"
+            id="org.talend.repository.pigudf.actions.OpenPigudfExistVersionProcessAction"
+            level="10"
+            name="%NavigatorContent.action.openPigudfExistVersionProcess">
+      </Action>
    </extension>
 </plugin>
