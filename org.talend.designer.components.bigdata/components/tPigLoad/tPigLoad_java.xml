@@ -243,7 +243,7 @@
 			<IMPORT NAME="pig-0.9.0-core" MODULE="pig-0.9.0-core.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.9.0-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='MAPR1' OR PIG_VERSION=='MapR_EMR')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="pigperf" MODULE="pigperf.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pigperf.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='MAPR1' OR PIG_VERSION=='MapR_EMR')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="sdsuLibJKD12" MODULE="sdsuLibJKD12.jar" UrlPath="platform:/plugin/org.talend.libraries.sdsulib/lib/sdsuLibJKD12.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='MAPR1' OR PIG_VERSION=='MapR_EMR')) AND DISTRIBUTION!='CUSTOM'"/>
-			<IMPORT NAME="maprfs-0.1" MODULE="maprfs-0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/maprfs-0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='MAPR1' OR PIG_VERSION=='MapR_EMR')) AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="maprfs-0.1" MODULE="maprfs-0.1.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='MAPR1' OR PIG_VERSION=='MapR_EMR')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="zookeeper-3.3.2" MODULE="zookeeper-3.3.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.3.2.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='MAPR1' OR PIG_VERSION=='MapR_EMR')) AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="hadoop-0.20.2-dev-core" MODULE="hadoop-0.20.2-dev-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/hadoop-0.20.2-dev-core.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='MAPR1' OR PIG_VERSION=='MapR_EMR')) AND DISTRIBUTION!='CUSTOM'"/>
 
@@ -252,7 +252,7 @@
             <IMPORT NAME="pig-0.10.0-mapr2" MODULE="pig-0.10.0-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.10.0-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="pigperf-mapr2" MODULE="pigperf-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pigperf-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="sdsuLibJKD12-mapr2" MODULE="sdsuLibJKD12-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.sdsulib/lib/sdsuLibJKD12-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/maprfs-0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.3.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR2') AND DISTRIBUTION!='CUSTOM'"/>
 

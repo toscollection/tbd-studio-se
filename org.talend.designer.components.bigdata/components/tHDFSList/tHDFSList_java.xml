@@ -213,17 +213,17 @@
             <!-- MAPR1 -->
             <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(DB_VERSION=='MAPR1') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(DB_VERSION=='MAPR1') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
-            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MAPR1') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MAPR1') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MAPR1') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <!-- MapR_EMR -->
             <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
-            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MapR_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
             <!-- MAPR2 -->
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(DB_VERSION=='MAPR2') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(DB_VERSION=='MAPR2') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
-            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MAPR2') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MAPR2') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MAPR2') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
 			<!-- MAPR212 -->
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr212" MODULE="hadoop-0.20.2-dev-core-mapr212.jar" REQUIRED_IF="((DB_VERSION=='MAPR212') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false'))" />
