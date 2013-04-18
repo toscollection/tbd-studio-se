@@ -18,8 +18,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.oozie.client.OozieClient;
@@ -61,6 +63,7 @@ import org.talend.designer.hdfsbrowse.controllers.HDFSBrowseDialog;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
+import org.talend.designer.runprocess.java.JavaProcessorUtilities;
 import org.talend.oozie.scheduler.actions.SaveJobBeforeRunAction;
 import org.talend.oozie.scheduler.constants.JobSubmissionType;
 import org.talend.oozie.scheduler.constants.OozieJobProcessStatus;
@@ -716,7 +719,7 @@ public class ExecuteJobCompositeController {
         }
         // if use kerberos
         if (TOozieParamUtils.enableKerberos()) {
-            jobContext.set("KERBEROS.PRINCIPAL", TOozieParamUtils.getPrincipal());
+            jobContext.set("KERBEROS.PRINCIPAL", TOozieParamUtils.getPrincipal()); //$NON-NLS-1$
         }
         // for hadoop properties
         if (process != null) {
@@ -724,7 +727,17 @@ public class ExecuteJobCompositeController {
             for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
                 props.put(property);
             }
-            jobContext.set("HADOOP.PROPERTIES", props.toString());
+            jobContext.set("HADOOP.PROPERTIES", props.toString()); //$NON-NLS-1$
+
+            StringBuffer libJars = new StringBuffer();
+            Set<String> libNames = JavaProcessorUtilities.extractLibNamesOnlyForMapperAndReducer(process);
+            if (libNames != null && libNames.size() > 0) {
+                Iterator<String> itLibNames = libNames.iterator();
+                while (itLibNames.hasNext()) {
+                    libJars.append(itLibNames.next()).append(",");//$NON-NLS-1$
+                }
+            }
+            jobContext.set("LIBJARS", libJars.substring(0, libJars.length() - 1)); //$NON-NLS-1$
         }
         // Job name.
         String jobName = process.getLabel();

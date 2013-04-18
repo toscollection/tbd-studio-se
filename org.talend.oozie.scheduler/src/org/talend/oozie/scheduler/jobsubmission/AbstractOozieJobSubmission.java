@@ -76,13 +76,23 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
         JavaAction action = new JavaAction(jobContext.getJobName(), jobContext.getJobTrackerEndPoint(),
                 jobContext.getNameNodeEndPoint(), jobContext.getJobFQClassName());
 
-        action.addArgument("-fs " + jobContext.get("NAMENODE")); //$NON-NLS-1$ //$NON-NLS-2$
-        action.addArgument("-jt " + jobContext.get("JOBTRACKER"));//$NON-NLS-1$ //$NON-NLS-2$
+        action.addArgument("-fs"); //$NON-NLS-1$
+        action.addArgument(jobContext.get("NAMENODE")); //$NON-NLS-1$
+        action.addArgument("-jt");//$NON-NLS-1$
+        action.addArgument(jobContext.get("JOBTRACKER"));//$NON-NLS-1$
+        action.addArgument("-libjars");//$NON-NLS-1$
+        String[] libjarsTemp = jobContext.get("LIBJARS").split(","); //$NON-NLS-1$ //$NON-NLS-2$
+        StringBuffer libjars = new StringBuffer();
+        for (String libjar : libjarsTemp) {
+            libjars.append(jobContext.get(OozieClient.APP_PATH) + "/lib/" + libjar + ","); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        action.addArgument(libjars.substring(0, libjars.length() - 1));
 
         if (jobContext.get("KERBEROS.PRINCIPAL") != null) {//$NON-NLS-1$
-            action.addArgument("-D dfs.namenode.kerberos.principal=" + jobContext.get("KERBEROS.PRINCIPAL"));//$NON-NLS-1$ //$NON-NLS-1$
+            action.addArgument("-D");//$NON-NLS-1$
+            action.addArgument("dfs.namenode.kerberos.principal=" + jobContext.get("KERBEROS.PRINCIPAL"));//$NON-NLS-1$ //$NON-NLS-2$
         }
-        String jsontest = jobContext.get("HADOOP.PROPERTIES");
+        String jsontest = jobContext.get("HADOOP.PROPERTIES"); //$NON-NLS-1$
         if (jsontest != null) {
             try {
                 JSONArray props = new JSONArray(jsontest);
@@ -90,17 +100,14 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
                     String property = TalendQuoteUtils.removeQuotesIfExist((String) ((JSONObject) props.get(i)).get("PROPERTY"));//$NON-NLS-1$
                     String value = TalendQuoteUtils.removeQuotesIfExist((String) ((JSONObject) props.get(i)).get("VALUE"));//$NON-NLS-1$
                     if (!StringUtils.isEmpty(property) && !StringUtils.isEmpty(value)) {
-                        action.addArgument("-D " + property + "=" + value);//$NON-NLS-1$ //$NON-NLS-1$
+                        action.addArgument("-D");//$NON-NLS-1$ 
+                        action.addArgument(property + "=" + value);//$NON-NLS-1$ 
                     }
                 }
             } catch (JSONException e) {
                 ExceptionHandler.process(e);
             }
         }
-
-        // This directory is just for DistributedCache. Maybe later it need to enhance, because for common java
-        // application, it also add this argument.
-        action.addArgument("--mr_libs_dir=" + jobContext.get(OozieClient.APP_PATH) + "/lib/");//$NON-NLS-1$ //$NON-NLS-2$
 
         String tosContextPath = jobContext.getTosContextPath();
         if (tosContextPath != null) {
