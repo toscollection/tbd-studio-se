@@ -30,6 +30,7 @@ import org.talend.core.model.metadata.builder.database.TableNode;
 import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.repository.IDBMetadataProvider;
+import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.cwm.helper.CatalogHelper;
 import org.talend.cwm.helper.ConnectionHelper;
@@ -39,6 +40,7 @@ import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdColumn;
 import org.talend.cwm.relational.TdTable;
 import org.talend.repository.hbaseprovider.util.HBaseClassLoaderFactory;
+import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
 import orgomg.cwm.objectmodel.core.TaggedValue;
 import orgomg.cwm.resource.relational.Catalog;
@@ -432,6 +434,10 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                                             }
                                         }
                                         if (!findTable) {
+                                            if (metadataTable.getId() == null) {
+                                                IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
+                                                metadataTable.setId(factory.getNextId());
+                                            }
                                             PackageHelper.addMetadataTable(metadataTable, catalogToWrite);
                                         }
 
