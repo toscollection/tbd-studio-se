@@ -18,7 +18,11 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
+import org.talend.designer.hdfsbrowse.HDFSPlugin;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
+import org.talend.designer.hdfsbrowse.i18n.Messages;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
 
@@ -46,6 +50,7 @@ public class HDFSFolder extends HDFSPath {
 
     @Override
     public List<IHDFSNode> getChildren() {
+        boolean checkConnection = true;
         if (!hasFetchedChildren) {
             super.getChildren().clear();
             try {
@@ -53,8 +58,23 @@ public class HDFSFolder extends HDFSPath {
                 hasFetchedChildren = true;
             } catch (Exception e) {
                 log.error(e);
+                checkConnection = false;
+                PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        String mainMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.mainMsg"); //$NON-NLS-1$
+                        String detailMsg = Messages.getString("AbstractHDFSBrowseController.connectionFailure.detailMsg", //$NON-NLS-1$
+                                connection.getNameNodeURI());
+                        new ErrorDialogWidthDetailArea(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+                                HDFSPlugin.PLUGIN_ID, mainMsg, detailMsg);
+                        return;
+                    }
+                });
             } finally {
-                provider.refresh(HDFSFolder.this);
+                if (checkConnection) {
+                    provider.refresh(HDFSFolder.this);
+                }
             }
         }
 
