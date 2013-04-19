@@ -39,14 +39,20 @@
 	  	<PARAMETER NAME="DISTRIBUTION" REPOSITORY_VALUE="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION">
 			<ITEMS DEFAULT="HORTONWORKS">
 				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
+				<ITEM NAME="CUSTOM" VALUE="CUSTOM"/>
 			</ITEMS>
 		</PARAMETER>
-		<PARAMETER NAME="HCAT_VERSION" REPOSITORY_VALUE="HCAT_VERSION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION">
+		<PARAMETER NAME="HCAT_VERSION" REPOSITORY_VALUE="HCAT_VERSION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION" NOT_SHOW_IF="DISTRIBUTION=='CUSTOM'">
 			<ITEMS DEFAULT="HDP_1_0">
 				<ITEM NAME="HDP_1_0" VALUE="HDP_1_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="HDP_1_2" VALUE="HDP_1_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 			</ITEMS>
 		</PARAMETER>
+        
+        <PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="VERSION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="10"  SHOW_IF="DISTRIBUTION=='CUSTOM'" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS" >
+        <DEFAULT />
+        </PARAMETER>
+    
 		<PARAMETER NAME="TEMPLETON_HOST" REPOSITORY_VALUE="TEMPLETON_HOST" FIELD="TEXT" NUM_ROW="20" REQUIRED="true" GROUP="TEMPLETON_CONFIGURATION">
 			<DEFAULT>"localhost"</DEFAULT>
 		</PARAMETER>
@@ -170,24 +176,24 @@
 	<CODEGENERATION>
 		<IMPORTS>
 			<IMPORT NAME="json-simple" MODULE="json_simple-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar" REQUIRED="true"/>
-			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-			<IMPORT NAME="apache-hadoop" MODULE="hadoop-core-1.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.1.0.0/lib/hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0'"/>
-			<IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hadoop-core-1.1.2.21.jar" REQUIRED_IF="HCAT_VERSION=='HDP_1_2'"/>
-			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
-			<IMPORT NAME="commons-configuration" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
-			<IMPORT NAME="commons-lang" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
-			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND USE_KRB=='true'" />
+			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="apache-hadoop" MODULE="hadoop-core-1.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.1.0.0/lib/hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0' AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hadoop-core-1.1.2.21.jar" REQUIRED_IF="HCAT_VERSION=='HDP_1_2' AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-configuration" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-lang" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND USE_KRB=='true' AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="Talen File Enhanced" MODULE="talend_file_enhanced_20070724.jar" UrlPath="platform:/plugin/org.talend.libraries.custom/lib/talend_file_enhanced_20070724.jar" REQUIRED="true" />
 			
-			<IMPORT NAME="cxf-rt-frontend-jaxrs-2.7.3" MODULE="cxf-rt-frontend-jaxrs-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-frontend-jaxrs-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-   			<IMPORT NAME="javax.ws.rs-api-2.0-m10" MODULE="javax.ws.rs-api-2.0-m10.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/javax.ws.rs-api-2.0-m10.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-   			<IMPORT NAME="cxf-api-2.7.3" MODULE="cxf-api-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-api-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-  			<IMPORT NAME="cxf-rt-core-2.7.3" MODULE="cxf-rt-core-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-core-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-   			<IMPORT NAME="cxf-rt-bindings-xml-2.7.3" MODULE="cxf-rt-bindings-xml-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-bindings-xml-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-   			<IMPORT NAME="cxf-rt-transports-http-2.7.3" MODULE="cxf-rt-transports-http-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-transports-http-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
-   			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')" />
+			<IMPORT NAME="cxf-rt-frontend-jaxrs-2.7.3" MODULE="cxf-rt-frontend-jaxrs-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-frontend-jaxrs-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+   			<IMPORT NAME="javax.ws.rs-api-2.0-m10" MODULE="javax.ws.rs-api-2.0-m10.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/javax.ws.rs-api-2.0-m10.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+   			<IMPORT NAME="cxf-api-2.7.3" MODULE="cxf-api-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-api-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+  			<IMPORT NAME="cxf-rt-core-2.7.3" MODULE="cxf-rt-core-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-core-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+   			<IMPORT NAME="cxf-rt-bindings-xml-2.7.3" MODULE="cxf-rt-bindings-xml-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-bindings-xml-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+   			<IMPORT NAME="cxf-rt-transports-http-2.7.3" MODULE="cxf-rt-transports-http-2.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-transports-http-2.7.3.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM') AND (DISTRIBUTION!='CUSTOM')" />
+   			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
     	</IMPORTS>
 	</CODEGENERATION>
    <RETURNS/>
