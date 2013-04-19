@@ -961,12 +961,7 @@ public class ExecuteJobCompositeController {
             IProcess2 process = OozieJobTrackerListener.getProcess();
             process.getElementParameter(EOozieParameterName.HADOOP_APP_PATH.getName()).setValue(path);
         }
-        // checkWidgetsStatus();
-        updateRunBtnEnabledOrNot();
-        updateScheduleBtnEnabledOrNot();
-        updateKillBtnEnabledOrNot();
-        updatePathTxtEnabledOrNot();
-        updateOutputTxtEnabledOrNot();
+        updateAllEnabledOrNot();
     }
 
     /**
@@ -1163,11 +1158,62 @@ public class ExecuteJobCompositeController {
      * Updates all buttons status, enabled or not.
      */
     public void updateAllEnabledOrNot() {
-        updateRunBtnEnabledOrNot();
-        updateScheduleBtnEnabledOrNot();
-        updateKillBtnEnabledOrNot();
+        String jobIdInOozie = getJobIdInOozie();
+        String pathValue = executeJobComposite.getPathValue();
+        Button runBtn = executeJobComposite.getRunBtn();
+        Button scheduleBtn = executeJobComposite.getScheduleBtn();
+        Button killBtn = executeJobComposite.getKillBtn();
+        if (pathValue != null && !"".equals(pathValue) && isSettingDone()) {
+            if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
+                try {
+                    JobSubmission.Status status = checkJobSubmissionStaus(jobIdInOozie);
+                    switch (status) {
+                    case RUNNING:
+                        isRunBtnEnabled = false;
+                        isScheduleBtnEnabled = false;
+                        isKillBtnEnabled = true;
+                        break;
+                    case PREP:
+                    case SUCCEEDED:
+                    case KILLED:
+                        isRunBtnEnabled = true;
+                        isScheduleBtnEnabled = true;
+                        isKillBtnEnabled = false;
+                        break;
+                    case FAILED:
+                    case SUSPENDED:
+                        isKillBtnEnabled = true;
+                        isScheduleBtnEnabled = true;
+                        isRunBtnEnabled = true;
+                    }
+                } catch (JobSubmissionException e) {
+                    isRunBtnEnabled = true;
+                    isScheduleBtnEnabled = true;
+                    isKillBtnEnabled = false;
+                    org.talend.commons.exception.ExceptionHandler.process(e);
+                }
+            } else {
+                isRunBtnEnabled = true;
+                isScheduleBtnEnabled = true;
+                isKillBtnEnabled = false;
+            }
+        }
+        updateBtn(runBtn, isRunBtnEnabled);
+        updateBtn(scheduleBtn, isScheduleBtnEnabled);
+        updateBtn(killBtn, isKillBtnEnabled);
         updatePathTxtEnabledOrNot();
         updateOutputTxtEnabledOrNot();
+    }
+
+    private void updateBtn(Button button, Boolean enable) {
+        if (button.isDisposed()) {
+            return;
+        }
+        if (OozieJobTrackerListener.getProcess() == null) {
+            button.setEnabled(false);
+        } else {
+            button.setEnabled(enable);
+        }
     }
 
     protected void updateRunBtnEnabledOrNot() {

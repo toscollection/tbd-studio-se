@@ -93,7 +93,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
         createExecuteJobAreas(comp);
         this.setMinSize(comp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-        executeJobCompController.updateAllEnabledOrNot();
+        // executeJobCompController.updateAllEnabledOrNot();
+
     }
 
     protected void createExecuteJobAreas(Composite parent) {
@@ -319,7 +320,7 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
     public void initValues() {
         executeJobCompController.initValues();
-        executeJobCompController.updateAllEnabledOrNot();
+        // executeJobCompController.updateAllEnabledOrNot();
     }
 
     /*

@@ -15,6 +15,11 @@ package org.talend.oozie.scheduler.jobsubmission;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
@@ -26,6 +31,8 @@ import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
  * JobSubmission implementation that launches the ETL job on the Hadoop Cluster using Oozie workflow
  */
 public class RemoteJobSubmission extends AbstractOozieJobSubmission {
+
+    public static final int TIMEOUT = 15;
 
     @Override
     public String submit(JobContext jobContext) throws JobSubmissionException, InterruptedException, URISyntaxException {
@@ -72,16 +79,37 @@ public class RemoteJobSubmission extends AbstractOozieJobSubmission {
 
     @Override
     public Status status(String jobHandle, String oozieEndPoint) throws JobSubmissionException {
+        Status status = null;
+        Callable<Status> statusCallable = null;
+        statusCallable = getStatus(jobHandle, oozieEndPoint);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Status> future = executor.submit(statusCallable);
         try {
-            OozieClient oozieClient = createOozieClient(oozieEndPoint, 0);
-            WorkflowJob workflowJob = oozieClient.getJobInfo(jobHandle);
-            if (workflowJob == null) {
-                throw new OozieClientException(OozieClientException.INVALID_INPUT, "");
-            }
-            String status = oozieClient.getJobInfo(jobHandle).getStatus().name();
-            return Status.valueOf(status);
-        } catch (OozieClientException e) {
+            status = future.get(TIMEOUT, TimeUnit.SECONDS);
+        } catch (Exception e) {
+            future.cancel(true);
             throw new JobSubmissionException("Error getting status for job: " + jobHandle, e);
         }
+        return status;
+    }
+
+    private Callable<Status> getStatus(final String jobHandle, final String oozieEndPoint) {
+        return new Callable<Status>() {
+
+            @Override
+            public Status call() throws Exception {
+                try {
+                    OozieClient oozieClient = createOozieClient(oozieEndPoint, 0);
+                    WorkflowJob workflowJob = oozieClient.getJobInfo(jobHandle);
+                    if (workflowJob == null)
+                        throw new OozieClientException(OozieClientException.INVALID_INPUT, "");
+                    String status = workflowJob.getStatus().name();
+                    return Status.valueOf(status);
+                } catch (OozieClientException e) {
+                    throw new JobSubmissionException("Error getting status for job: " + jobHandle, e);
+                }
+            }
+        };
+
     }
 }

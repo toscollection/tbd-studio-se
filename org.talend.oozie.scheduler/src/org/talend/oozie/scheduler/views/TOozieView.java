@@ -189,7 +189,7 @@ public class TOozieView extends ViewPart {
             monitoringComposite = new OozieMonitoringComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
             dc = monitoringComposite;
         }
-        refresh();
+        // refresh();
         if (dc != null) {
             dc.refresh();
         }
@@ -214,6 +214,7 @@ public class TOozieView extends ViewPart {
             }
             contextComposite.setProcess(null);
         }
+        executeJobComposite.getExecuteJobCompController().updateAllEnabledOrNot();
     }
 
     private void setElement() {
