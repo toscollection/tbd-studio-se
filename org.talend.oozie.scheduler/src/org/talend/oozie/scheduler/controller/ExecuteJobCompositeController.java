@@ -766,7 +766,14 @@ public class ExecuteJobCompositeController {
         // APP path
         // IPath appPath = new Path(nameNodeEPValue).append(path);
         // mhirt : bug fix on linux Path changes // to /. FIXME : Do a better coding for 5.1.1
-        String appPath = (nameNodeEPValue != null) ? nameNodeEPValue.concat(path) : path;
+        String appPath = path;
+        String hadoopDistribution = getHadoopDistribution();
+        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hadoopDistribution, false);
+        if (distribution == EHadoopDistributions.MAPR) {
+            appPath = "maprfs:".concat(appPath);//$NON-NLS-1$
+        } else if (nameNodeEPValue != null) {
+            appPath = nameNodeEPValue.concat(appPath);
+        }
         jobContext.set(OozieClient.APP_PATH, appPath);
 
         // User Name for acessing hadoop

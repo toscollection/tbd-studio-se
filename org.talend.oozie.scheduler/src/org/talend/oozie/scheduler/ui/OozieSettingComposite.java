@@ -294,7 +294,9 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     protected void initUI() {
         EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hadoopDistributionValue, false);
-        if (distribution != null) {
+        EHadoopDistributions originalDistribution = EHadoopDistributions.getDistributionByDisplayName(hadoopDistributionCombo
+                .getText());
+        if (distribution != null && !distribution.equals(originalDistribution)) {
             String distributionDisplayName = distribution.getDisplayName();
             hadoopDistributionCombo.setText(distributionDisplayName);
             if (hadoopVersionValue == null) {
@@ -302,7 +304,9 @@ public class OozieSettingComposite extends ScrolledComposite {
             }
         }
         EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hadoopVersionValue);
-        if (version4Drivers != null) {
+        EHadoopVersion4Drivers originalVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersionDisplay(hadoopVersionCombo
+                .getText());
+        if (version4Drivers != null && !version4Drivers.equals(originalVersion4Drivers)) {
             hadoopVersionCombo.setText(version4Drivers.getVersionDisplay());
         }
         boolean isSupportSecurity = isSupportSecurity(version4Drivers);
@@ -385,6 +389,7 @@ public class OozieSettingComposite extends ScrolledComposite {
         if (propertiesTableView != null) {
             propertiesTableView.getExtendedTableModel().addAfterOperationListListener(new IListenableListListener() {
 
+                @Override
                 public void handleEvent(ListenableListEvent event) {
                     // checkFieldsValue();
                     updateModel();
@@ -393,6 +398,7 @@ public class OozieSettingComposite extends ScrolledComposite {
             propertiesTableView.getExtendedTableModel().addModifiedBeanListener(
                     new IModifiedBeanListener<HashMap<String, Object>>() {
 
+                        @Override
                         public void handleEvent(ModifiedBeanEvent<HashMap<String, Object>> event) {
                             // checkFieldsValue();
                             updateModel();

@@ -49,8 +49,9 @@ public class RemoteJobSubmission extends AbstractOozieJobSubmission {
         // create a workflow job configuration and set the workflow application path
         Properties configuration = oozieClient.createConfiguration();
         configuration.setProperty(OozieClient.APP_PATH, appPath);
-        if (userName != null && !"".equals(userName))
+        if (userName != null && !"".equals(userName)) { //$NON-NLS-1$
             configuration.setProperty(OozieClient.USER_NAME, userName);
+        }
 
         // start the workflow job
         String jobHandle = oozieClient.run(configuration);
@@ -74,8 +75,9 @@ public class RemoteJobSubmission extends AbstractOozieJobSubmission {
         try {
             OozieClient oozieClient = createOozieClient(oozieEndPoint, 0);
             WorkflowJob workflowJob = oozieClient.getJobInfo(jobHandle);
-            if (workflowJob == null)
+            if (workflowJob == null) {
                 throw new OozieClientException(OozieClientException.INVALID_INPUT, "");
+            }
             String status = oozieClient.getJobInfo(jobHandle).getStatus().name();
             return Status.valueOf(status);
         } catch (OozieClientException e) {
