@@ -13,10 +13,10 @@
 package org.talend.designer.hdfsbrowse.manager;
 
 import java.io.InputStream;
+import java.net.URI;
 
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.utils.ReflectionUtils;
-import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdTable;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
@@ -140,24 +140,7 @@ public class HadoopOperationManager {
     }
 
     private String getRelativePath(HDFSConnectionBean connection, String absPath) {
-        String nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(connection.getNameNodeURI());
-        if (absPath.startsWith(nameNodeURI)) {
-            absPath = absPath.substring(absPath.indexOf(nameNodeURI) + nameNodeURI.length());
-        } else if (nameNodeURI.endsWith(HadoopParameterUtil.DEFAULT_NAMENODE_PORT)) {
-            String nameNodeURIWithoutPort = nameNodeURI.substring(0,
-                    nameNodeURI.lastIndexOf(HadoopParameterUtil.DEFAULT_NAMENODE_PORT) - 1);
-            if (absPath.startsWith(nameNodeURIWithoutPort)) {
-                absPath = absPath.substring(absPath.indexOf(nameNodeURIWithoutPort) + nameNodeURIWithoutPort.length());
-            }
-        }
-        if (absPath.indexOf(COLON) != -1) {
-            absPath = absPath.substring(absPath.lastIndexOf(COLON) + 1);
-        }
-        if (!absPath.startsWith(PATH_SEPARATOR)) {
-            absPath = PATH_SEPARATOR + absPath;
-        }
-
-        return absPath;
+        return URI.create(absPath).getPath();
     }
 
     private TdTable createTable(String tableName) {
