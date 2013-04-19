@@ -238,10 +238,12 @@
     >
       <DEFAULT>"select id, name from employee"</DEFAULT>
     </PARAMETER>
-    <PARAMETER NAME="STORE_BY_HBASE" FIELD="CHECK" NUM_ROW="100" REQUIRED="true" GROUP="HBASE_GROUP" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+    <PARAMETER NAME="STORE_BY_HBASE" FIELD="CHECK" NUM_ROW="100" REQUIRED="true" GROUP="HBASE_GROUP" 
+        SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((CONNECTION_MODE != 'EMBEDDED') OR (HIVE_VERSION!='MAPR2'))">
         <DEFAULT>false</DEFAULT>
     </PARAMETER>
-    <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="110" REQUIRED="true" GROUP="HBASE_GROUP" SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
+    <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="110" REQUIRED="true" GROUP="HBASE_GROUP" 
+        SHOW_IF="(STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND ((CONNECTION_MODE != 'EMBEDDED') OR (HIVE_VERSION!='MAPR2'))">
         <DEFAULT>"localhost"</DEFAULT>
     </PARAMETER>
     <PARAMETER
@@ -250,16 +252,19 @@
       NUM_ROW="120"
       REQUIRED="true"
       GROUP="HBASE_GROUP"
-      SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
+      SHOW_IF="(STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND ((CONNECTION_MODE != 'EMBEDDED') OR (HIVE_VERSION!='MAPR2'))">
       <DEFAULT>"2181"</DEFAULT>
     </PARAMETER>
-    <PARAMETER NAME="DEFINE_REGISTER_JAR" FIELD="CHECK" REQUIRED="true" NUM_ROW="130" GROUP="HBASE_GROUP" SHOW_IF="(STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false')">
+    <PARAMETER NAME="DEFINE_REGISTER_JAR" FIELD="CHECK" REQUIRED="true" NUM_ROW="130" GROUP="HBASE_GROUP" 
+      SHOW_IF="(STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND ((CONNECTION_MODE != 'EMBEDDED') OR (HIVE_VERSION!='MAPR2'))">
       <DEFAULT>false</DEFAULT>
     </PARAMETER>
-    <PARAMETER NAME="REGISTER_JAR_NOTE" FIELD="LABEL" NUM_ROW="140" SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') and (USE_EXISTING_CONNECTION == 'false')" GROUP="HBASE_GROUP">
+    <PARAMETER NAME="REGISTER_JAR_NOTE" FIELD="LABEL" NUM_ROW="140" 
+      SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') AND (USE_EXISTING_CONNECTION == 'false') AND ((CONNECTION_MODE != 'EMBEDDED') OR (HIVE_VERSION!='MAPR2'))" GROUP="HBASE_GROUP">
       <DEFAULT>When filling in the Jar path information below, make sure that the JAR files are available on the server.</DEFAULT>
     </PARAMETER>
-    <PARAMETER NAME="REGISTER_JAR" FIELD="TABLE" REQUIRED="false" NUM_ROW="160" NB_LINES="4" SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') and (USE_EXISTING_CONNECTION == 'false')" GROUP="HBASE_GROUP">
+    <PARAMETER NAME="REGISTER_JAR" FIELD="TABLE" REQUIRED="false" NUM_ROW="160" NB_LINES="4" 
+      SHOW_IF="(STORE_BY_HBASE=='true') AND (DEFINE_REGISTER_JAR=='true') AND (USE_EXISTING_CONNECTION == 'false') AND ((CONNECTION_MODE != 'EMBEDDED') OR (HIVE_VERSION!='MAPR2'))" GROUP="HBASE_GROUP">
       <ITEMS>
         <ITEM NAME="JAR_NAME" FIELD="CLOSED_LIST">
           <ITEMS DEFAULT="HIVE-HBASE-HANDLER">
@@ -386,10 +391,10 @@
 			<IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r09.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
             <!-- MAPR2 Hbase -->
-            <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.92.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-hbase-handler-0.9.0.jar" MODULE="hive-hbase-handler-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hive-hbase-handler-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND (CONNECTION_MODE != 'EMBEDDED') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.92.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND (CONNECTION_MODE != 'EMBEDDED') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND (CONNECTION_MODE != 'EMBEDDED') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR2' AND (CONNECTION_MODE != 'EMBEDDED') AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
 			<!-- ############## -->
 
 			<!-- MAPR212 -->

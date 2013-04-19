@@ -39,12 +39,15 @@ imports="
 		public void afterUseNewConnection(INode node) {
 		
         	String storeByHBase = ElementParameterParser.getValue(node, "__STORE_BY_HBASE__");
+			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
+			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+			
         	String zookeeperQuorumForHBase = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
         	String zookeeperClientPortForHBase = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
         	String defineRegisterJar = ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__");
         	List<Map<String, String>> registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
         	
-    		if("true".equalsIgnoreCase(storeByHBase)) {%>
+    		if("true".equalsIgnoreCase(storeByHBase) && !("EMBEDDED".equals(connectionMode) && "MAPR2".equals(hiveVersion))) {%>
     			java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
         		<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
         			statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);

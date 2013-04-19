@@ -84,6 +84,9 @@ imports="
 java.sql.Connection conn_<%=cid%> = null;
 
 <%
+String connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
+String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
+
 if(useExistingConn) {
     String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
     String conn = "conn_" + connection;
@@ -92,8 +95,6 @@ if(useExistingConn) {
     <%
 } else {
 		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
-		String connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
-		String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
 		String hiveServer = ElementParameterParser.getValue(previousNode, "__HIVE_SERVER__");
 
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__"));
@@ -137,7 +138,7 @@ if(useExistingConn) {
 
 <%
 
-if("true".equalsIgnoreCase(storeByHBase)) {%>
+if("true".equalsIgnoreCase(storeByHBase) && !("EMBEDDED".equals(connectionMode) && "MAPR2".equals(hiveVersion))) {%>
 	java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
 	<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
 		statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);
