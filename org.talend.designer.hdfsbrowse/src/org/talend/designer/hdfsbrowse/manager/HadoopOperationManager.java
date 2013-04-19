@@ -143,6 +143,12 @@ public class HadoopOperationManager {
         String nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(connection.getNameNodeURI());
         if (absPath.startsWith(nameNodeURI)) {
             absPath = absPath.substring(absPath.indexOf(nameNodeURI) + nameNodeURI.length());
+        } else if (nameNodeURI.endsWith(HadoopParameterUtil.DEFAULT_NAMENODE_PORT)) {
+            String nameNodeURIWithoutPort = nameNodeURI.substring(0,
+                    nameNodeURI.lastIndexOf(HadoopParameterUtil.DEFAULT_NAMENODE_PORT) - 1);
+            if (absPath.startsWith(nameNodeURIWithoutPort)) {
+                absPath = absPath.substring(absPath.indexOf(nameNodeURIWithoutPort) + nameNodeURIWithoutPort.length());
+            }
         }
         if (absPath.indexOf(COLON) != -1) {
             absPath = absPath.substring(absPath.lastIndexOf(COLON) + 1);

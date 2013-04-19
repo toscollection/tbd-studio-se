@@ -24,6 +24,8 @@ import org.talend.designer.hdfsbrowse.constants.HadoopPatternConstants;
  */
 public class HadoopParameterUtil {
 
+    public final static String DEFAULT_NAMENODE_PORT = "8020"; //$NON-NLS-1$
+
     /**
      * DOC ycbai Comment method "getHostNameFromNameNodeURI".
      * 
@@ -56,6 +58,20 @@ public class HadoopParameterUtil {
         }
 
         return hostName;
+    }
+
+    public static String getPortFromNameNodeURI(String nameNodeURI) {
+        String port = DEFAULT_NAMENODE_PORT;
+        if (nameNodeURI == null) {
+            return port;
+        }
+
+        Matcher matcher = Pattern.compile(HadoopPatternConstants.NAME_NODE_URI_WITH_PORT).matcher(nameNodeURI);
+        if (matcher.find()) {
+            port = matcher.group(3);
+        }
+
+        return port;
     }
 
 }
