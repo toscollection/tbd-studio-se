@@ -117,6 +117,83 @@
   	}
 	%>	    
 
+    class FileUtil_<%=cid%> {
+
+		private long size = 0;
+		
+    	// copy from :
+    	// directory or file of some file system
+    	// to
+    	// file or directory of local file system
+    	// not support dir to file
+    	public boolean copyToLocal(org.apache.hadoop.fs.FileSystem srcFS, org.apache.hadoop.fs.Path src, java.io.File dst,
+				boolean overwrite, boolean append, boolean copyDirectory)
+    			throws java.io.IOException {
+    
+    		boolean srcIsDir = srcFS.getFileStatus(src).isDir();
+    
+    		if (srcIsDir && !copyDirectory) {
+    			return false;
+    		}
+    
+    		dst = checkDest(src.getName(), dst, overwrite);
+    		
+    		if(dst == null) {
+    			return false;
+    		}
+    
+    		if (srcIsDir) {
+    			if (!dst.mkdirs()) {
+    				return false;
+    			}
+    			org.apache.hadoop.fs.FileStatus contents[] = srcFS.listStatus(src);
+    			for (int i = 0; i < contents.length; i++) {
+    				copyToLocal(srcFS, contents[i].getPath(), new java.io.File(dst, contents[i]
+    						.getPath().getName()), overwrite, append, copyDirectory);
+    			}
+    		} else if (srcFS.isFile(src)) {
+    			java.io.InputStream in = null;
+    			java.io.OutputStream out = null;
+    			try {
+    				in = srcFS.open(src, 10000);
+    				out = new java.io.FileOutputStream(dst, append);
+    				org.apache.hadoop.io.IOUtils.copyBytes(in, out, 10000, true);
+    				size += srcFS.getFileStatus(src).getLen();
+    			} catch (java.io.IOException e) {
+    				org.apache.hadoop.io.IOUtils.closeStream(out);
+    				org.apache.hadoop.io.IOUtils.closeStream(in);
+    				throw e;
+    			}
+    		} else {
+    			throw new java.io.IOException(src.toString()
+    					+ ": No such file or directory");
+    		}
+    
+    		return true;
+    
+    	}
+    
+    	private java.io.File checkDest(String srcName, java.io.File dst, boolean overwrite) {
+    		if (dst.exists()) {
+    			if (dst.isDirectory()) {
+    				if (null == srcName) {
+    					return null;
+    				}
+    				return checkDest(null, new java.io.File(dst, srcName), overwrite);
+    			} else if (!overwrite) {
+    				System.err.print(dst+" exist, didn't overwrite.");
+    				return null;
+    			}
+    		}
+    		return dst;
+    	}
+    	
+    	public long getSize() {
+    		return size;
+    	}
+
+	}
+
 	for (java.util.Map<String, String> map_<%=cid %> : list_<%=cid %>) 
 	{
 

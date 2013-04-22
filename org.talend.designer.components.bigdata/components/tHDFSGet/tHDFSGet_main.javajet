@@ -16,7 +16,7 @@
 	boolean overwrite = ("true").equals(ElementParameterParser.getValue(node, "__OVERWRITE__"));
 	String remotedir = ElementParameterParser.getValue(node, "__REMOTEDIR__");
 	boolean append = ("true").equals(ElementParameterParser.getValue(node, "__APPEND__"));
-	//boolean onWin = ("true").equals(ElementParameterParser.getValue(node, "__ON_WINDOWS__"));
+	boolean includeSubDir = ("true").equals(ElementParameterParser.getValue(node, "__INCLUDSUBDIR__"));
 %>
 	java.util.Set<String> keySet_<%=cid %> = map_<%=cid %>.keySet();
     for (String key_<%=cid %> : keySet_<%=cid %>){     
@@ -47,51 +47,14 @@
 						localFilePath_<%=cid%> = <%=localdir%>+"/"+map_<%=cid %>.get(key_<%=cid %>);
 					}
 					try{
-						<%
-						if(!overwrite){
-						%>
-						java.io.File localFile_<%=cid%> = new java.io.File(localFilePath_<%=cid%>);
-						if(!localFile_<%=cid%>.exists()||localFile_<%=cid%>.isDirectory()){
-						<%	
-						}
-						%>
-							<%
-							//if(onWin){
-							%>
-							java.io.File winFileRoot_<%=cid%> = new java.io.File(localFilePath_<%=cid%>);
-							java.io.File winFile_<%=cid%> = null;
-							if(!winFileRoot_<%=cid%>.exists()){
-								winFileRoot_<%=cid%>.createNewFile();
-								winFile_<%=cid%> = 	winFileRoot_<%=cid%>;							
-							}else if(winFileRoot_<%=cid%>.isDirectory()){
-								winFile_<%=cid%> = new java.io.File(localFilePath_<%=cid%>+"/"+path_<%=cid%>.getName());
-								winFile_<%=cid%>.createNewFile();
-							}else{
-								winFile_<%=cid%> = 	winFileRoot_<%=cid%>;	
-							}
-							org.apache.hadoop.fs.FSDataInputStream fsInput_<%=cid%> = fs_<%=cid%>.open(path_<%=cid%>, 10000);
-							java.io.OutputStream output_<%=cid%> = new java.io.FileOutputStream(winFile_<%=cid%>,<%=append%>);
-							org.apache.hadoop.io.IOUtils.copyBytes(fsInput_<%=cid%>, output_<%=cid%>, 10000, true);
-							<%	
-							//}else{
-							%>
-							//fs_<%=cid%>.copyToLocalFile(path_<%=cid%>,new org.apache.hadoop.fs.Path(localFilePath_<%=cid%>));
-							<%
-							//}
-							%>
+						FileUtil_<%=cid%> fileutil_<%=cid%> = new FileUtil_<%=cid%>();
+						boolean success_<%=cid%> = fileutil_<%=cid%>.copyToLocal(fs_<%=cid%>, path_<%=cid%>, new java.io.File(localFilePath_<%=cid%>),
+    						<%=overwrite%>, <%=append%>, <%=includeSubDir%>);
+						if(success_<%=cid%>) {
 							msg_<%=cid%>.add("file: " + path_<%=cid%>.toString() + ", size: "
-			                    	+ (fs_<%=cid%>.listStatus(path_<%=cid%>))[0].getLen() + " bytes download successfully");
-							
-							nb_success_<%=cid%>++;
-						<%
-						if(!overwrite){
-						%>	
-						}else{
-							System.err.print(localFilePath_<%=cid%>+" exist, didn't overwrite.");
-						}
-						<%
-						}
-						%>
+		                    	+ fileutil_<%=cid%>.getSize() + " bytes download successfully");
+		                    nb_success_<%=cid%>++;
+		                }
 					}catch(java.io.IOException e){
 						<%
   							if(("true").equals(dieOnError)){
