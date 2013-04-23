@@ -136,14 +136,14 @@
     			return false;
     		}
     
-    		dst = checkDest(src.getName(), dst, overwrite);
+    		dst = checkDest(src.getName(), srcIsDir, dst, overwrite);
     		
     		if(dst == null) {
     			return false;
     		}
     
     		if (srcIsDir) {
-    			if (!dst.mkdirs()) {
+    			if (!dst.exists() && !dst.mkdirs()) {
     				return false;
     			}
     			org.apache.hadoop.fs.FileStatus contents[] = srcFS.listStatus(src);
@@ -173,13 +173,18 @@
     
     	}
     
-    	private java.io.File checkDest(String srcName, java.io.File dst, boolean overwrite) {
+    	private java.io.File checkDest(String srcName, boolean srcIsDir, java.io.File dst, boolean overwrite) {
     		if (dst.exists()) {
     			if (dst.isDirectory()) {
     				if (null == srcName) {
     					return null;
     				}
-    				return checkDest(null, new java.io.File(dst, srcName), overwrite);
+    				
+    				if(srcIsDir) {
+						return dst;
+					}
+    				
+    				return checkDest(null, srcIsDir, new java.io.File(dst, srcName), overwrite);
     			} else if (!overwrite) {
     				System.err.print(dst+" exist, didn't overwrite.");
     				return null;
