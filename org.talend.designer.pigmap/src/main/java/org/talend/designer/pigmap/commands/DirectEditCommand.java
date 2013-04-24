@@ -21,9 +21,13 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
+import org.talend.designer.pigmap.model.emf.pigmap.Connection;
 import org.talend.designer.pigmap.model.emf.pigmap.INodeConnection;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
+import org.talend.designer.pigmap.model.emf.pigmap.LookupConnection;
+import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
+import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
@@ -83,6 +87,7 @@ public class DirectEditCommand extends Command {
                     if (!matchedLocations.isEmpty()) {
                         for (int i = 0; i < matchedLocations.size(); i++) {
                             TableEntryLocation currentLocation = matchedLocations.get(i);
+                            boolean found = false;
                             for (INodeConnection conn : connections) {
                                 TableEntryLocation sourceLocation = null;
                                 String temp = "";
@@ -96,8 +101,32 @@ public class DirectEditCommand extends Command {
                                     sourceLocation = expressionManager.parseTableEntryLocation(temp).get(0);
                                 }
                                 if (currentLocation.equals(sourceLocation)) {
+                                    found = true;
                                     usefullConnections.add(conn);
                                     break;
+                                }
+                            }
+                            if (!found) {
+                                if (mapperData != null) {
+                                    AbstractNode sourceNode = findConnectionSource(mapperData, currentLocation);
+                                    if (sourceNode != null && model.eContainer() != null && sourceNode.eContainer() != null) {
+                                        INodeConnection connection = null;
+                                        if (model.eContainer() instanceof OutputTable) {
+                                            connection = PigmapFactory.eINSTANCE.createConnection();
+                                            sourceNode.getOutgoingConnections().add((Connection) connection);
+                                            model.getIncomingConnections().add((Connection) connection);
+                                        } else if (model.eContainer() instanceof InputTable
+                                                && sourceNode.eContainer() instanceof InputTable) {
+                                            TableNode source = (TableNode) sourceNode;
+                                            connection = PigmapFactory.eINSTANCE.createLookupConnection();
+                                            source.getLookupOutgoingConnections().add((LookupConnection) connection);
+                                            ((TableNode) model).getLookupIncomingConnections().add((LookupConnection) connection);
+                                        }
+                                        connection.setSource(sourceNode);
+                                        connection.setTarget(model);
+                                        mapperData.getConnections().add(connection);
+                                        usefullConnections.add(connection);
+                                    }
                                 }
                             }
                         }
@@ -152,29 +181,15 @@ public class DirectEditCommand extends Command {
         if (mapperData == null) {
             return null;
         }
-        AbstractNode node = findConnectionSource(mapperData.getInputTables(), matchedLocation);
-        if (node instanceof TableNode) {
-
-        }
-        return node;
-    }
-
-    private TableNode findConnectionSource(List<InputTable> inputTables, TableEntryLocation matchedLocation) {
-        for (InputTable inputTable : inputTables) {
+        for (InputTable inputTable : mapperData.getInputTables()) {
             for (TableNode node : inputTable.getNodes()) {
-                TableNode source = findConnectionSource(node, matchedLocation);
-                if (source != null) {
-                    return source;
+                TableEntryLocation sourceLocation = expressionManager.parseTableEntryLocation(
+                        inputTable.getName() + "." + node.getName()).get(0);
+                if (matchedLocation.equals(sourceLocation)) {
+                    return node;
                 }
             }
         }
-
         return null;
     }
-
-    private TableNode findConnectionSource(TableNode tableNode, TableEntryLocation matchedLocation) {
-        //
-        return null;
-    }
-
 }
