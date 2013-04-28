@@ -1,3 +1,5 @@
+<%@jet
+%>
 <%
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
@@ -32,7 +34,7 @@
 	sqoopOptions_<%=cid%>.setPassword(<%=password%>); // __PASSWORD__
 	
 <%	
-	if(!("HDP_1_0".equals(version) || "Cloudera_0_20_CDH3U1".equals(version) || "MapR".equals(version))) {
+	if(!("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version))) {
 		if(printLog && verbose){
 %>
 			sqoopOptions_<%=cid%>.setVerbose(true);
