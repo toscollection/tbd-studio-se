@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.cursor.CursorHelper;
-import org.talend.core.model.process.AbstractExternalNode;
 import org.talend.core.model.process.EConnectionType;
 import org.talend.core.model.process.HashConfiguration;
 import org.talend.core.model.process.HashableColumn;
@@ -33,6 +32,7 @@ import org.talend.core.model.process.IHashConfiguration;
 import org.talend.core.model.process.IHashableColumn;
 import org.talend.core.model.process.IHashableInputConnections;
 import org.talend.core.model.process.Problem;
+import org.talend.core.model.process.node.MapperExternalNode;
 import org.talend.core.model.utils.TalendTextUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.AbstractExternalData;
 import org.talend.designer.pigmap.figures.tablesettings.JOIN_OPTIMIZATION;
@@ -48,7 +48,7 @@ import org.talend.designer.pigmap.util.PigMapUtil;
  * 
  * DOC hcyi class global comment. Detailled comment
  */
-public class PigMapComponent extends AbstractExternalNode implements IHashableInputConnections {
+public class PigMapComponent extends MapperExternalNode implements IHashableInputConnections {
 
     private AbstractExternalData emfMapData;
 
@@ -111,7 +111,7 @@ public class PigMapComponent extends AbstractExternalNode implements IHashableIn
         for (InputTable inputTable : externalEmfData.getInputTables()) {
             if (inputTable.getName() != null && inputTable.getName().equals(oldName) && !oldName.equals(newName)) {
                 inputTable.setName(newName);
-                PigMapUtil.updateExpression(oldName,newName,externalEmfData,expressionManager);
+                PigMapUtil.updateExpression(oldName, newName, externalEmfData, expressionManager);
             }
         }
     }
@@ -125,7 +125,7 @@ public class PigMapComponent extends AbstractExternalNode implements IHashableIn
                 outputTable.setName(newName);
             }
         }
-    
+
     }
 
     @Override
