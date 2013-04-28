@@ -31,7 +31,7 @@ public enum EHadoopConfProperties {
     /**
      * Property name for naming the default file system (URI).
      */
-    FS_DEFAULT_URI("fs.defaultFS", "hdfs://localhost:50040/"),
+    FS_DEFAULT_URI("fs.default.name", "hdfs://localhost:50040/"),
 
     /**
      * Property name for kerberos principal.

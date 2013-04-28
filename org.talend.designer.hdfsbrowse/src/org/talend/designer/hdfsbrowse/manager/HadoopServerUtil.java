@@ -44,7 +44,7 @@ public class HadoopServerUtil {
 
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
-    public static final int timeout = 20; // the max time(second) which achieve DFS connection use.
+    public static final int TIMEOUT = 20; // the max time(second) which achieve DFS connection use.
 
     /**
      * DOC ycbai Comment method "getDFS".
@@ -102,7 +102,7 @@ public class HadoopServerUtil {
             ExecutorService executor = Executors.newSingleThreadExecutor();
             Future<Object> future = executor.submit(dfsCallable);
             try {
-                dfs = future.get(timeout, TimeUnit.SECONDS);
+                dfs = future.get(TIMEOUT, TimeUnit.SECONDS);
             } catch (TimeoutException e) {
                 future.cancel(true);
             }

@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.exceptions;
 
+import java.lang.reflect.InvocationTargetException;
+
 /**
  * DOC ycbai class global comment. Detailled comment
  */
@@ -23,12 +25,12 @@ public class HadoopServerException extends Exception {
         super();
     }
 
-    public HadoopServerException(Exception e) {
-        super(e);
+    public HadoopServerException(Throwable cause) {
+        super(cause instanceof InvocationTargetException ? cause.getCause() : cause);
     }
 
-    public HadoopServerException(String msg, Exception e) {
-        super(msg, e);
+    public HadoopServerException(String msg, Throwable cause) {
+        super(msg, cause instanceof InvocationTargetException ? cause.getCause() : cause);
     }
 
 }
