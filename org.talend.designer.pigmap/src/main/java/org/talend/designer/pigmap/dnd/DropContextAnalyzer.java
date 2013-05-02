@@ -110,30 +110,29 @@ public class DropContextAnalyzer {
     }
 
     private boolean checkDropInputValid(Object target) {
-        if (!(target instanceof TableNode) && !(target instanceof InputTable))
-            if (objects.getType() == TransferdType.INPUT) {
-                for (Object obj : objects.getToTransfer()) {
-                    PigMapTableNodePart part = (PigMapTableNodePart) obj;
-                    AbstractInOutTable srouceTree = PigMapUtil.getAbstractInOutTable((TableNode) part.getModel());
-                    AbstractInOutTable targetTree = null;
-                    if (target instanceof InputTable) {
-                        targetTree = (InputTable) target;
-                    } else {
-                        targetTree = PigMapUtil.getAbstractInOutTable((TableNode) target);
-                    }
-                    if (srouceTree == targetTree) {
+        if (objects.getType() == TransferdType.INPUT) {
+            for (Object obj : objects.getToTransfer()) {
+                PigMapTableNodePart part = (PigMapTableNodePart) obj;
+                AbstractInOutTable srouceTree = PigMapUtil.getAbstractInOutTable((TableNode) part.getModel());
+                AbstractInOutTable targetTree = null;
+                if (target instanceof InputTable) {
+                    targetTree = (InputTable) target;
+                } else {
+                    targetTree = PigMapUtil.getAbstractInOutTable((TableNode) target);
+                }
+                if (srouceTree == targetTree) {
+                    return false;
+                }
+                if (srouceTree.eContainer() instanceof PigMapData) {
+                    PigMapData mapdata = ((PigMapData) srouceTree.eContainer());
+                    int indexSource = mapdata.getInputTables().indexOf(srouceTree);
+                    int indexTarget = mapdata.getInputTables().indexOf(targetTree);
+                    if (indexTarget < indexSource) {
                         return false;
-                    }
-                    if (srouceTree.eContainer() instanceof PigMapData) {
-                        PigMapData mapdata = ((PigMapData) srouceTree.eContainer());
-                        int indexSource = mapdata.getInputTables().indexOf(srouceTree);
-                        int indexTarget = mapdata.getInputTables().indexOf(targetTree);
-                        if (indexTarget < indexSource) {
-                            return false;
-                        }
                     }
                 }
             }
+        }
         return true;
     }
 
