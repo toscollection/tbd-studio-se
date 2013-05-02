@@ -64,7 +64,7 @@ public abstract class CreateHadoopDBNodeAction extends CreateHadoopNodeAction {
 
     @Override
     protected int getWizardWidth() {
-        return 600;
+        return 780;
     }
 
     @Override
