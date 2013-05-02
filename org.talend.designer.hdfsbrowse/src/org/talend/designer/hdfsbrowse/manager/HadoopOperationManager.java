@@ -62,11 +62,8 @@ public class HadoopOperationManager {
                 HDFSPath content = null;
                 Object statusPath = ReflectionUtils.invokeMethod(status, "getPath", new Object[0]);
                 String pathName = (String) ReflectionUtils.invokeMethod(statusPath, "getName", new Object[0]);
-                // String absolutePath = ((URI) ReflectionUtils.invokeMethod(statusPath, "toUri", new
-                // Object[0])).toString();
-                // Get path from toString method since convert to URI will escape some special characters. Need test...
-                String absolutePath = (String) ReflectionUtils.invokeMethod(statusPath, "toString", new Object[0]);
-                String relativePath = getRelativePath(connection, absolutePath);
+                String absolutePath = ((URI) ReflectionUtils.invokeMethod(statusPath, "toUri", new Object[0])).toString();
+                String relativePath = URI.create(absolutePath).getPath();
                 if ((Boolean) ReflectionUtils.invokeMethod(status, "isDir", new Object[0])) {
                     content = new HDFSFolder(parent);
                 } else {
@@ -137,10 +134,6 @@ public class HadoopOperationManager {
             fileName = fileName.substring(0, fileName.lastIndexOf(".")); //$NON-NLS-1$
         }
         return fileName;
-    }
-
-    private String getRelativePath(HDFSConnectionBean connection, String absPath) {
-        return URI.create(absPath).getPath();
     }
 
     private TdTable createTable(String tableName) {
