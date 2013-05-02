@@ -477,7 +477,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private boolean isExistTable(IHDFSNode node) {
         if (node != null && node.getType() == EHadoopFileTypes.FILE) {
-            return HDFSSchemaUtil.getTableByName(getConnection(), node.getTable().getName()) != null;
+            String tabName = MetadataToolHelper.validateTableName(node.getTable().getName());
+            return HDFSSchemaUtil.getTableByName(getConnection(), tabName) != null;
         }
         return false;
     }
