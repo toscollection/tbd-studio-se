@@ -19,6 +19,7 @@ import org.talend.designer.gefabstractmap.part.MapperTablePart;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.FilterConnection;
+import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
@@ -53,7 +54,16 @@ public class UpdateFilterExpressionCommand extends Command {
                 if (objects.getType() == TransferdType.INPUT) {
                     PigMapTableNodePart part = (PigMapTableNodePart) obj;
                     sourceNode = (TableNode) part.getModel();
-                    //
+                    String tableName = "";
+                    if (sourceNode != null && sourceNode.eContainer() instanceof InputTable) {
+                        InputTable table = (InputTable) sourceNode.eContainer();
+                        tableName = table.getName();
+                    }
+                    if (expression == null || expression.equals("")) {
+                        expression = tableName + "." + sourceNode.getName();
+                    } else {
+                        expression = expression + " " + tableName + "." + sourceNode.getName();
+                    }
                 }
                 if (sourceNode != null) {
                     targetTable.setExpressionFilter(expression);
