@@ -954,8 +954,20 @@ public class ExecuteJobCompositeController {
             String path = executeJobComposite.getPathValue();
             IProcess2 process = OozieJobTrackerListener.getProcess();
             process.getElementParameter(EOozieParameterName.HADOOP_APP_PATH.getName()).setValue(path);
+            Button runBtn = executeJobComposite.getRunBtn();
+            Button scheduleBtn = executeJobComposite.getScheduleBtn();
+            Button killBtn = executeJobComposite.getKillBtn();
+            if (path != null && !StringUtils.isEmpty(path)) {
+                updateBtn(runBtn, true);
+                updateBtn(scheduleBtn, true);
+                updateBtn(killBtn, false);
+            } else {
+                updateBtn(runBtn, false);
+                updateBtn(scheduleBtn, false);
+                updateBtn(killBtn, false);
+            }
         }
-        updateAllEnabledOrNot();
+        // updateAllEnabledOrNot();
     }
 
     /**
