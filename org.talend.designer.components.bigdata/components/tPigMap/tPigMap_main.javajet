@@ -6,6 +6,8 @@
 	java.util.List
 	java.util.HashMap
 	java.util.Map
+	java.util.regex.Matcher
+	java.util.regex.Pattern
 	org.talend.designer.codegen.config.CodeGeneratorArgument
 	org.talend.core.model.process.IConnection
     org.talend.core.model.process.ElementParameterParser
@@ -88,7 +90,7 @@
 	    
 	    for(TableNode tnode : tableNodes) {
 	    	String nodeName = tnode.getName();
-	    	expressionConvertMap.put(tableName+"."+nodeName,"$"+(index++));
+	    	expressionConvertMap.put(tableName+"."+nodeName,"\\$"+(index++));
 	    }
 	    
 	    String model = inputTable.getJoinModel();
