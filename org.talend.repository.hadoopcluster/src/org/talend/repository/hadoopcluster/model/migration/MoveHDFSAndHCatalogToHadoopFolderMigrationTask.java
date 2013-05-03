@@ -14,7 +14,6 @@ package org.talend.repository.hadoopcluster.model.migration;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -28,7 +27,6 @@ import org.talend.core.model.general.Project;
 import org.talend.core.model.migration.AbstractProjectMigrationTask;
 import org.talend.core.repository.constants.FileConstants;
 import org.talend.core.repository.model.ResourceModelUtils;
-import org.talend.repository.ProjectManager;
 
 /**
  * created by ycbai on 2013-2-28 Detailled comment
@@ -58,20 +56,15 @@ public class MoveHDFSAndHCatalogToHadoopFolderMigrationTask extends AbstractProj
     @Override
     public ExecutionResult execute(Project project) {
         try {
-            List<Project> projects = ProjectManager.getInstance().getReferencedProjects(project);
-            projects.add(project);
-            for (Project pro : projects) {
-                IProject iPro = ResourceModelUtils.getProject(pro);
-                IFolder oldHDFSFolder = iPro.getFolder(OLD_HDFS_FOLDER_PATH);
-                IFolder newHDFSFolder = iPro.getFolder(NEW_HDFS_FOLDER_PATH);
-                moveFiles(oldHDFSFolder, newHDFSFolder);
-                ResourceUtils.deleteResource(oldHDFSFolder);
-                IFolder oldHCatalogFolder = iPro.getFolder(OLD_HCATALOG_FOLDER_PATH);
-                IFolder newHCatalogFolder = iPro.getFolder(NEW_HCATALOG_FOLDER_PATH);
-                moveFiles(oldHCatalogFolder, newHCatalogFolder);
-                ResourceUtils.deleteResource(oldHCatalogFolder);
-            }
-
+            IProject iPro = ResourceModelUtils.getProject(project);
+            IFolder oldHDFSFolder = iPro.getFolder(OLD_HDFS_FOLDER_PATH);
+            IFolder newHDFSFolder = iPro.getFolder(NEW_HDFS_FOLDER_PATH);
+            moveFiles(oldHDFSFolder, newHDFSFolder);
+            ResourceUtils.deleteResource(oldHDFSFolder);
+            IFolder oldHCatalogFolder = iPro.getFolder(OLD_HCATALOG_FOLDER_PATH);
+            IFolder newHCatalogFolder = iPro.getFolder(NEW_HCATALOG_FOLDER_PATH);
+            moveFiles(oldHCatalogFolder, newHCatalogFolder);
+            ResourceUtils.deleteResource(oldHCatalogFolder);
             return ExecutionResult.SUCCESS_NO_ALERT;
         } catch (Exception e) {
             ExceptionHandler.process(e);
