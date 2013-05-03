@@ -102,12 +102,6 @@ public class ExecuteJobCompositeController {
 
     private boolean isSettingDone = false;// To check if the values of setting are done.
 
-    boolean isRunBtnEnabled = false;// Identify if the "Run" button is enabled.
-
-    boolean isScheduleBtnEnabled = false;// Identify if the "Schedule" button is enabled.
-
-    boolean isKillBtnEnabled = false;// Identify if the "Kill" button is enabled.
-
     private RemoteJobSubmission remoteJobSubmission;
 
     private ScheduledJobSubmission scheduledJobSubmission;
@@ -722,7 +716,7 @@ public class ExecuteJobCompositeController {
             jobContext.set("KERBEROS.PRINCIPAL", TOozieParamUtils.getPrincipal()); //$NON-NLS-1$
         }
         // for hadoop properties
-        if (process != null) {
+        if (process != null && settingDialog != null) {
             JSONArray props = new JSONArray();
             for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
                 props.put(property);
@@ -1052,107 +1046,110 @@ public class ExecuteJobCompositeController {
                 .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL, principal);
     }
 
-    /**
-     * Checks if the "Run" button is enabled. Return <code>true</code> if "Path" value is not <code>null</code> and
-     * empty, and all preference values are done, and job is not running on hadoop. Otherwise, return <code>false</code>
-     * .
-     * 
-     * @return
-     */
-    public boolean checkIfRunBtnEnabled() {
-        String jobIdInOozie = getJobIdInOozie();
-        isRunBtnEnabled = false;
-        String pathValue = executeJobComposite.getPathValue();
-        if (pathValue != null && !"".equals(pathValue) && isSettingDone()) {
-            if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
-                try {
-                    JobSubmission.Status status = checkJobSubmissionStaus(jobIdInOozie);
-                    switch (status) {
-                    case RUNNING:
-                        isRunBtnEnabled = false;
-                        break;
-                    case PREP:
-                    case SUCCEEDED:
-                    case KILLED:
-                    case FAILED:
-                    case SUSPENDED:
-                        isRunBtnEnabled = true;
-                    }
-                } catch (JobSubmissionException e) {
-                    isRunBtnEnabled = true;
-                    // ExceptionHandler.process(e);
-                }
-            } else {
-                isRunBtnEnabled = true;
-            }
-        }
-
-        return isRunBtnEnabled;
-    }
-
-    /**
-     * Checks if the "Schedule" button is enabled. Return <code>true</code> if "Path" value is not <code>null</code> and
-     * empty, and all preference values are done, and job is not running on hadoop. Otherwise, return <code>false</code>
-     * .
-     * 
-     * @return
-     */
-    public boolean checkIfScheduleBtnEnabled() {
-        String jobIdInOozie = getJobIdInOozie();
-        isScheduleBtnEnabled = false;
-        String pathValue = executeJobComposite.getPathValue();
-        if (pathValue != null && !"".equals(pathValue) && isSettingDone()) {
-            if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
-                try {
-                    JobSubmission.Status status = checkJobSubmissionStaus(jobIdInOozie);
-                    switch (status) {
-                    case RUNNING:
-                        isScheduleBtnEnabled = false;
-                        break;
-                    case PREP:
-                    case SUCCEEDED:
-                    case KILLED:
-                    case FAILED:
-                    case SUSPENDED:
-                        isScheduleBtnEnabled = true;
-                    }
-                } catch (JobSubmissionException e) {
-                    isScheduleBtnEnabled = true;
-                    // ExceptionHandler.process(e);
-                }
-            } else {
-                isScheduleBtnEnabled = true;
-            }
-        }
-        return isScheduleBtnEnabled;
-    }
-
-    public boolean checkIfKillBtnEnabled() {
-        String jobIdInOozie = getJobIdInOozie();
-        if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
-            try {
-                JobSubmission.Status status = checkJobSubmissionStaus(jobIdInOozie);
-                switch (status) {
-                case PREP:
-                case RUNNING:
-                case SUSPENDED:
-                    isKillBtnEnabled = true;
-                    break;
-                case SUCCEEDED:
-                case FAILED:
-                case KILLED:
-                    isKillBtnEnabled = false;
-                    break;
-                }
-            } catch (JobSubmissionException e) {
-                isKillBtnEnabled = false;
-                // ExceptionHandler.process(e);
-            }
-        } else {
-            isKillBtnEnabled = false;
-        }
-        return isKillBtnEnabled;
-    }
+    // /**
+    // * Checks if the "Run" button is enabled. Return <code>true</code> if "Path" value is not <code>null</code> and
+    // * empty, and all preference values are done, and job is not running on hadoop. Otherwise, return
+    // <code>false</code>
+    // * .
+    // *
+    // * @return
+    // */
+    // public boolean checkIfRunBtnEnabled() {
+    // String jobIdInOozie = getJobIdInOozie();
+    // isRunBtnEnabled = false;
+    // String pathValue = executeJobComposite.getPathValue();
+    // if (pathValue != null && !"".equals(pathValue) && isSettingDone()) {
+    // if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
+    // try {
+    // JobSubmission.Status status = checkJobSubmissionStaus(jobIdInOozie);
+    // switch (status) {
+    // case RUNNING:
+    // isRunBtnEnabled = false;
+    // break;
+    // case PREP:
+    // case SUCCEEDED:
+    // case KILLED:
+    // case FAILED:
+    // case SUSPENDED:
+    // isRunBtnEnabled = true;
+    // }
+    // } catch (JobSubmissionException e) {
+    // isRunBtnEnabled = true;
+    // // ExceptionHandler.process(e);
+    // }
+    // } else {
+    // isRunBtnEnabled = true;
+    // }
+    // }
+    //
+    // return isRunBtnEnabled;
+    // }
+    //
+    // /**
+    // * Checks if the "Schedule" button is enabled. Return <code>true</code> if "Path" value is not <code>null</code>
+    // and
+    // * empty, and all preference values are done, and job is not running on hadoop. Otherwise, return
+    // <code>false</code>
+    // * .
+    // *
+    // * @return
+    // */
+    // public boolean checkIfScheduleBtnEnabled() {
+    // String jobIdInOozie = getJobIdInOozie();
+    // isScheduleBtnEnabled = false;
+    // String pathValue = executeJobComposite.getPathValue();
+    // if (pathValue != null && !"".equals(pathValue) && isSettingDone()) {
+    // if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
+    // try {
+    // JobSubmission.Status status = checkJobSubmissionStaus(jobIdInOozie);
+    // switch (status) {
+    // case RUNNING:
+    // isScheduleBtnEnabled = false;
+    // break;
+    // case PREP:
+    // case SUCCEEDED:
+    // case KILLED:
+    // case FAILED:
+    // case SUSPENDED:
+    // isScheduleBtnEnabled = true;
+    // }
+    // } catch (JobSubmissionException e) {
+    // isScheduleBtnEnabled = true;
+    // // ExceptionHandler.process(e);
+    // }
+    // } else {
+    // isScheduleBtnEnabled = true;
+    // }
+    // }
+    // return isScheduleBtnEnabled;
+    // }
+    //
+    // public boolean checkIfKillBtnEnabled() {
+    // String jobIdInOozie = getJobIdInOozie();
+    // if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
+    // try {
+    // JobSubmission.Status status = checkJobSubmissionStaus(jobIdInOozie);
+    // switch (status) {
+    // case PREP:
+    // case RUNNING:
+    // case SUSPENDED:
+    // isKillBtnEnabled = true;
+    // break;
+    // case SUCCEEDED:
+    // case FAILED:
+    // case KILLED:
+    // isKillBtnEnabled = false;
+    // break;
+    // }
+    // } catch (JobSubmissionException e) {
+    // isKillBtnEnabled = false;
+    // // ExceptionHandler.process(e);
+    // }
+    // } else {
+    // isKillBtnEnabled = false;
+    // }
+    // return isKillBtnEnabled;
+    // }
 
     /**
      * Updates all buttons status, enabled or not.
@@ -1163,6 +1160,9 @@ public class ExecuteJobCompositeController {
         Button runBtn = executeJobComposite.getRunBtn();
         Button scheduleBtn = executeJobComposite.getScheduleBtn();
         Button killBtn = executeJobComposite.getKillBtn();
+        boolean isRunBtnEnabled = false;
+        boolean isScheduleBtnEnabled = false;
+        boolean isKillBtnEnabled = false;
         if (pathValue != null && !"".equals(pathValue) && isSettingDone()) {
             if (jobIdInOozie != null && !"".equals(jobIdInOozie)) {
                 try {
@@ -1216,41 +1216,41 @@ public class ExecuteJobCompositeController {
         }
     }
 
-    protected void updateRunBtnEnabledOrNot() {
-        Button runBtn = executeJobComposite.getRunBtn();
-        if (runBtn.isDisposed()) {
-            return;
-        }
-        if (OozieJobTrackerListener.getProcess() == null) {
-            runBtn.setEnabled(false);
-        } else {
-            runBtn.setEnabled(checkIfRunBtnEnabled());
-        }
-    }
-
-    protected void updateScheduleBtnEnabledOrNot() {
-        Button scheduleBtn = executeJobComposite.getScheduleBtn();
-        if (scheduleBtn.isDisposed()) {
-            return;
-        }
-        if (OozieJobTrackerListener.getProcess() == null) {
-            scheduleBtn.setEnabled(false);
-        } else {
-            scheduleBtn.setEnabled(checkIfScheduleBtnEnabled());
-        }
-    }
-
-    protected void updateKillBtnEnabledOrNot() {
-        Button killBtn = executeJobComposite.getKillBtn();
-        if (killBtn.isDisposed()) {
-            return;
-        }
-        if (OozieJobTrackerListener.getProcess() == null) {
-            killBtn.setEnabled(false);
-        } else {
-            killBtn.setEnabled(checkIfKillBtnEnabled());
-        }
-    }
+    // protected void updateRunBtnEnabledOrNot() {
+    // Button runBtn = executeJobComposite.getRunBtn();
+    // if (runBtn.isDisposed()) {
+    // return;
+    // }
+    // if (OozieJobTrackerListener.getProcess() == null) {
+    // runBtn.setEnabled(false);
+    // } else {
+    // runBtn.setEnabled(checkIfRunBtnEnabled());
+    // }
+    // }
+    //
+    // protected void updateScheduleBtnEnabledOrNot() {
+    // Button scheduleBtn = executeJobComposite.getScheduleBtn();
+    // if (scheduleBtn.isDisposed()) {
+    // return;
+    // }
+    // if (OozieJobTrackerListener.getProcess() == null) {
+    // scheduleBtn.setEnabled(false);
+    // } else {
+    // scheduleBtn.setEnabled(checkIfScheduleBtnEnabled());
+    // }
+    // }
+    //
+    // protected void updateKillBtnEnabledOrNot() {
+    // Button killBtn = executeJobComposite.getKillBtn();
+    // if (killBtn.isDisposed()) {
+    // return;
+    // }
+    // if (OozieJobTrackerListener.getProcess() == null) {
+    // killBtn.setEnabled(false);
+    // } else {
+    // killBtn.setEnabled(checkIfKillBtnEnabled());
+    // }
+    // }
 
     protected void updatePathTxtEnabledOrNot() {
         Text pathTxt = executeJobComposite.getPathText();
