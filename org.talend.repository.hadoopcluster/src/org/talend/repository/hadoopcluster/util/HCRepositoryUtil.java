@@ -197,6 +197,27 @@ public class HCRepositoryUtil {
                 .getRelativeHadoopClusterId());
     }
 
+    public static HadoopClusterConnectionItem getHadoopClusterItemBySubitemId(String subitemId) {
+        if (subitemId == null) {
+            return null;
+        }
+
+        IRepositoryViewObject repObj = null;
+        try {
+            repObj = ProxyRepositoryFactory.getInstance().getLastVersion(subitemId);
+        } catch (PersistenceException e) {
+            ExceptionHandler.process(e);
+        }
+        if (repObj != null && repObj.getProperty() != null) {
+            Item item = repObj.getProperty().getItem();
+            if (item instanceof HadoopSubConnectionItem) {
+                return getRelativeHadoopClusterItem((HadoopSubConnectionItem) item);
+            }
+        }
+
+        return null;
+    }
+
     public static HadoopClusterConnectionItem getRelativeHadoopClusterItem(String hadoopClusterId) {
         if (hadoopClusterId != null) {
             IRepositoryViewObject repObj = null;

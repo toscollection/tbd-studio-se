@@ -121,6 +121,11 @@ public class HadoopClusterService implements IHadoopClusterService {
     }
 
     @Override
+    public Item getHadoopClusterBySubitemId(String subItemId) {
+        return HCRepositoryUtil.getHadoopClusterItemBySubitemId(subItemId);
+    }
+
+    @Override
     public void refreshCluster(String clusterId) {
         HadoopClusterConnectionItem clusterItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
         if (clusterItem != null) {
