@@ -182,7 +182,7 @@ public class ExtractMetaDataFromHCatalog {
     public static synchronized String extractPartitionsJsonStr(HCatalogConnection connection, String tableName) throws Exception {
         String path = connection.getDatabase() + SEPARATOR + TABLE + SEPARATOR + tableName + SEPARATOR + PARTITION;
         WebClient client = HCatalogServiceUtil.getHCatalogClient(connection, path);
-        JSONObject obj = HCatalogServiceUtil.getDataFromHCatalog(client);
+        JSONObject obj = HCatalogServiceUtil.getDataFromHCatalog(client, tableName);
         if (obj != null) {
             return obj.toJSONString();
         }

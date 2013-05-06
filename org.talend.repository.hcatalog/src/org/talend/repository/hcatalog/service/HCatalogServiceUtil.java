@@ -28,6 +28,7 @@ import org.apache.cxf.transport.http.auth.HttpAuthHeader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -145,6 +146,11 @@ public class HCatalogServiceUtil {
      * @throws Exception
      */
     public static JSONObject getDataFromHCatalog(WebClient client) throws Exception {
+        return getDataFromHCatalog(client, null);
+    }
+
+    public static JSONObject getDataFromHCatalog(WebClient client, String tableName) throws Exception {
+
         Response response = client.get();
         InputStream inputStream = (InputStream) response.getEntity();
         String input = IOUtils.toString(inputStream);
@@ -166,7 +172,14 @@ public class HCatalogServiceUtil {
                         "Error 404 (Not found): The URI requested is invalid or the resource requested does not exist.\n"
                                 + errorMsgDetail);
             case 500:
-                throw new Exception("Error 500 (Internal Server Error): We received an unexpected result.\n" + errorMsgDetail);
+                if (("Table " + tableName + " is not a partitioned table").equals(errorMsgDetail)) {
+                    // fix for TDI-25548, in case no partition is created
+                    CommonExceptionHandler.warn("Warning 500 (Internal Server Error): We received an unexpected result.\n"
+                            + errorMsgDetail);
+                } else {
+                    throw new Exception("Error 500 (Internal Server Error): We received an unexpected result.\n" + errorMsgDetail);
+                }
+                break;
             case 503:
                 throw new Exception("Error 503 (Busy, please retry): The server is busy.\n" + errorMsgDetail);
             default:
@@ -175,6 +188,7 @@ public class HCatalogServiceUtil {
         }
 
         return jsonObject;
+
     }
 
     public static void main(String[] args) {
