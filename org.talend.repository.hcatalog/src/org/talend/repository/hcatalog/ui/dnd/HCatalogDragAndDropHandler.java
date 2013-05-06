@@ -42,6 +42,10 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
 
     private static final String OUTPUT = "tHCatalogOutput"; //$NON-NLS-1$
 
+    private static final String HCATALOG_LOAD = "HCatLoader"; //$NON-NLS-1$
+
+    private static final String HCATALOG_STORE = "HCatStorer"; //$NON-NLS-1$
+
     @Override
     public boolean canHandle(Connection connection) {
         return connection instanceof HCatalogConnection;
@@ -110,7 +114,9 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
         } else if (EHCatalogRepositoryToComponent.JOBTRACKER_PRINCIPAL.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbPrincipal()));
         } else if (EHCatalogRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
-            return "HCatLoader";
+            return HCATALOG_LOAD;
+        } else if (EHCatalogRepositoryToComponent.STORE.getRepositoryValue().equals(value)) {
+            return HCATALOG_STORE;
         }
 
         return null;
