@@ -21,10 +21,12 @@ import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.pigmap.figures.tablesettings.IUIJoinOptimization;
 import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
+import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.FilterConnection;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
+import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.ui.expressionutil.TableEntryLocation;
 
@@ -94,7 +96,6 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
                     }
                 }
             }
-
         } catch (PatternSyntaxException ex) {
             // Syntax error in the regular expression
         }
@@ -102,20 +103,22 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
 
     private void calculateFilterConnections(AbstractInOutTable abstractTable, String newValue) {
         PigMapData mapperData = (PigMapData) abstractTable.eContainer();
-
         List<TableEntryLocation> matchedLocations = expressionManager.parseTableEntryLocation((String) newValue);
         EList<FilterConnection> connections = abstractTable.getFilterIncomingConnections();
-
         List usefullConnections = new ArrayList();
-
         if (!matchedLocations.isEmpty()) {
             for (int i = 0; i < matchedLocations.size(); i++) {
                 TableEntryLocation currentLocation = matchedLocations.get(i);
                 boolean found = false;
                 for (FilterConnection conn : connections) {
                     TableEntryLocation sourceLocation = null;
-                    if (conn.getSource() instanceof TableNode) {
-
+                    String temp = "";
+                    if (conn.getSource() != null && conn.getSource() instanceof TableNode) {
+                        TableNode tableSourceNode = (TableNode) conn.getSource();
+                        if (tableSourceNode.eContainer() != null && tableSourceNode.eContainer() instanceof InputTable) {
+                            temp = ((InputTable) tableSourceNode.eContainer()).getName() + "." + conn.getSource().getName();
+                        }
+                        sourceLocation = expressionManager.parseTableEntryLocation(temp).get(0);
                     }
                     if (currentLocation.equals(sourceLocation)) {
                         found = true;
@@ -124,10 +127,20 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
                     }
                 }
                 if (!found) {
-                    //
+                    if (mapperData != null) {
+                        AbstractNode sourceNode = findConnectionSource(mapperData, currentLocation);
+                        if (sourceNode != null) {
+                            FilterConnection connection = PigmapFactory.eINSTANCE.createFilterConnection();
+                            sourceNode.getFilterOutGoingConnections().add(connection);
+                            abstractTable.getFilterIncomingConnections().add(connection);
+                            connection.setSource(sourceNode);
+                            connection.setTarget(abstractTable);
+                            mapperData.getConnections().add(connection);
+                            usefullConnections.add(connection);
+                        }
+                    }
                 }
             }
-
             List<FilterConnection> copyOfConnections = new ArrayList<FilterConnection>(connections);
             copyOfConnections.removeAll(usefullConnections);
             for (FilterConnection connection : copyOfConnections) {
@@ -139,9 +152,7 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
                 }
             }
             abstractTable.getFilterIncomingConnections().removeAll(copyOfConnections);
-
         } else if (!connections.isEmpty()) {
-
             for (FilterConnection connection : connections) {
                 if (connection.getSource() != null) {
                     if (connection.getSource().getFilterOutGoingConnections().contains(connection)) {
@@ -150,7 +161,6 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
                     }
                 }
             }
-
             abstractTable.getFilterIncomingConnections().removeAll(connections);
         }
     }
