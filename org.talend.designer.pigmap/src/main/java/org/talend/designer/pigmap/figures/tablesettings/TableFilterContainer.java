@@ -32,6 +32,7 @@ import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.ui.tabs.MapperManager;
 import org.talend.expressionbuilder.IExpressionBuilderDialogService;
 
 /**
@@ -99,6 +100,9 @@ public class TableFilterContainer extends FilterContainer {
 
                 if (dialog instanceof TrayDialog) {
                     TrayDialog parentDialog = (TrayDialog) dialog;
+                    // if press the button ,should apply ExpressionCellEditor value
+                    MapperManager mapperManger = (MapperManager) tableManager.getMapperManger();
+                    mapperManger.fireCurrentDirectEditApply();
                     dialog.setDefaultExpression(tableManager.getExpressionFilter());
                     dialog.addVariables(vars);
                     if (Window.OK == parentDialog.open()) {
