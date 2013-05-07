@@ -37,6 +37,7 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
     public OozieSchedulerPreferencePage() {
         super(FLAT);
         setPreferenceStore(CorePlugin.getDefault().getPreferenceStore());
+        this.noDefaultAndApplyButton();
     }
 
     /*
