@@ -83,6 +83,7 @@ public class HCatalogRepositoryContentHandler extends AbstractHadoopSubnodeRepos
     private Resource create(IProject project, HCatalogConnectionItem item, IPath path, ERepositoryObjectType type)
             throws PersistenceException {
         Resource itemResource = xmiResourceManager.createItemResource(project, item, path, type, false);
+        MetadataManager.addContents(item, itemResource);
         itemResource.getContents().add(item.getConnection());
 
         return itemResource;

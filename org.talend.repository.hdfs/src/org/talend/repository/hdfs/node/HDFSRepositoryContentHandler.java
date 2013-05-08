@@ -72,6 +72,7 @@ public class HDFSRepositoryContentHandler extends AbstractHadoopSubnodeRepositor
     private Resource create(IProject project, HDFSConnectionItem item, IPath path, ERepositoryObjectType type)
             throws PersistenceException {
         Resource itemResource = xmiResourceManager.createItemResource(project, item, path, type, false);
+        MetadataManager.addContents(item, itemResource);
         itemResource.getContents().add(item.getConnection());
 
         return itemResource;
