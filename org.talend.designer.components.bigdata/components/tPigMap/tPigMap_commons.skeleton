@@ -20,7 +20,7 @@ public class CLASS {
                 String columnName = key.substring(index + 1);
                 
                 StringBuffer pattern = new StringBuffer();
-                pattern.append("\\s*").append(tableName).append("\\s*\\.\\s*").append(columnName).append("\\s*");
+                pattern.append(tableName).append("\\s*\\.\\s*").append(columnName);
                 p = Pattern.compile(pattern.toString());
                 cache.put(key, p);
             }
