@@ -21,6 +21,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.cursor.CursorHelper;
+import org.talend.core.model.components.IODataComponent;
+import org.talend.core.model.components.IODataComponentContainer;
+import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.process.EConnectionType;
 import org.talend.core.model.process.HashConfiguration;
 import org.talend.core.model.process.HashableColumn;
@@ -277,5 +280,28 @@ public class PigMapComponent extends MapperExternalNode implements IHashableInpu
     @Override
     public boolean isReadOnly() {
         return super.isReadOnly() || this.getProcess().isReadOnly();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.model.process.AbstractExternalNode#getIODataComponents()
+     */
+    @Override
+    public IODataComponentContainer getIODataComponents() {
+        // if metadata exist in IO + metadatalist, just update the instance of the one in IO.
+        // check if there is some table added / deleted as well. (correct one is in metadatalist)
+        List<IODataComponent> listOutput = super.getIODataComponents().getOuputs();
+        List<IMetadataTable> metadataTableList = getMetadataList();
+        for (IODataComponent ioComponent : listOutput) {
+            String newLabel = ioComponent.getNewMetadataTable().getLabel();
+            for (IMetadataTable table : metadataTableList) {
+                if (newLabel != null && newLabel.equals(table.getLabel())) {
+                    ioComponent.setNewMetadataTable(table);
+                }
+            }
+        }
+        // TODO Auto-generated method stub
+        return super.getIODataComponents();
     }
 }
