@@ -131,14 +131,14 @@ public class ExecuteJobCompositeController {
                 String outputValue = traceManager.getTrace(jobIdInOozie);
                 updateOutputTextContents(outputValue == null ? "" : outputValue, process.getLabel());
 
-                updatePathTxtEnabledOrNot();
+                updatePathEnabledOrNot();
                 updateOutputTxtEnabledOrNot();
                 // updateAllEnabledOrNot();
                 // updateOutputTxtValue();
             } else {
                 pathText.setText("");
                 outputText.setText("");
-                updatePathTxtEnabledOrNot();
+                updatePathEnabledOrNot();
                 updateOutputTxtEnabledOrNot();
             }
         }
@@ -527,6 +527,7 @@ public class ExecuteJobCompositeController {
                                 Button scheduleBtn = executeJobComposite.getScheduleBtn();
                                 Button killBtn = executeJobComposite.getKillBtn();
                                 Text pathTxt = executeJobComposite.getPathText();
+                                Button pathBtn = executeJobComposite.getBtnEdit();
                                 Text outputTxt = executeJobComposite.getOutputTxt();
                                 switch (status) {
                                 case INIT:
@@ -536,6 +537,7 @@ public class ExecuteJobCompositeController {
                                     scheduleBtn.setEnabled(false);
                                     killBtn.setEnabled(false);
                                     pathTxt.setEnabled(false);
+                                    pathBtn.setEnabled(false);
                                     outputTxt.setEnabled(true);
                                     break;
                                 case PREP:
@@ -543,6 +545,7 @@ public class ExecuteJobCompositeController {
                                     scheduleBtn.setEnabled(false);
                                     killBtn.setEnabled(true);
                                     pathTxt.setEnabled(false);
+                                    pathBtn.setEnabled(false);
                                     outputTxt.setEnabled(true);
                                     break;
                                 case RUNNING:
@@ -550,6 +553,7 @@ public class ExecuteJobCompositeController {
                                     scheduleBtn.setEnabled(false);
                                     killBtn.setEnabled(true);
                                     pathTxt.setEnabled(false);
+                                    pathBtn.setEnabled(false);
                                     outputTxt.setEnabled(true);
                                     break;
                                 case SUCCEEDED:
@@ -557,6 +561,7 @@ public class ExecuteJobCompositeController {
                                     scheduleBtn.setEnabled(true);
                                     killBtn.setEnabled(false);
                                     pathTxt.setEnabled(true);
+                                    pathBtn.setEnabled(true);
                                     outputTxt.setEnabled(true);
                                     break;
                                 case KILLED:
@@ -564,6 +569,7 @@ public class ExecuteJobCompositeController {
                                     scheduleBtn.setEnabled(true);
                                     killBtn.setEnabled(false);
                                     pathTxt.setEnabled(true);
+                                    pathBtn.setEnabled(true);
                                     outputTxt.setEnabled(true);
                                     break;
                                 case FAILED:
@@ -571,6 +577,7 @@ public class ExecuteJobCompositeController {
                                     scheduleBtn.setEnabled(true);
                                     killBtn.setEnabled(false);
                                     pathTxt.setEnabled(true);
+                                    pathBtn.setEnabled(true);
                                     outputTxt.setEnabled(true);
                                     break;
                                 case SUSPENDED:
@@ -578,6 +585,7 @@ public class ExecuteJobCompositeController {
                                     scheduleBtn.setEnabled(false);
                                     killBtn.setEnabled(true);
                                     pathTxt.setEnabled(false);
+                                    pathBtn.setEnabled(false);
                                     outputTxt.setEnabled(true);
                                     break;
                                 }
@@ -1213,7 +1221,7 @@ public class ExecuteJobCompositeController {
         updateBtn(runBtn, isRunBtnEnabled);
         updateBtn(scheduleBtn, isScheduleBtnEnabled);
         updateBtn(killBtn, isKillBtnEnabled);
-        updatePathTxtEnabledOrNot();
+        updatePathEnabledOrNot();
         updateOutputTxtEnabledOrNot();
     }
 
@@ -1264,17 +1272,16 @@ public class ExecuteJobCompositeController {
     // }
     // }
 
-    protected void updatePathTxtEnabledOrNot() {
+    protected void updatePathEnabledOrNot() {
         Text pathTxt = executeJobComposite.getPathText();
-        if (pathTxt.isDisposed()) {
+        Button pathBtn = executeJobComposite.getBtnEdit();
+        if (pathTxt.isDisposed() || pathBtn.isDisposed()) {
             return;
         }
-        if (OozieJobTrackerListener.getProcess() == null) {
-            pathTxt.setEnabled(false);
-        } else {
-            pathTxt.setEnabled(true);
-        }
-
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        boolean settingDone = isSettingDone();
+        pathTxt.setEnabled(process != null && settingDone);
+        pathBtn.setEnabled(process != null && settingDone);
     }
 
     protected void updateOutputTxtEnabledOrNot() {
