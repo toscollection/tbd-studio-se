@@ -413,7 +413,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     }
                     if (type == EHadoopFileTypes.FILE) {
                         if (promptNeeded) {
-                            MetadataTable existTable = HDFSSchemaUtil.getTableByName(getConnection(), treeItem.getText(0));
+                            MetadataTable existTable = HDFSSchemaUtil.getTableByLabel(getConnection(), treeItem.getText(0));
                             if (existTable != null) {
                                 refreshExistItem(existTable, treeItem);
                             } else {
@@ -477,8 +477,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private boolean isExistTable(IHDFSNode node) {
         if (node != null && node.getType() == EHadoopFileTypes.FILE) {
-            String tabName = MetadataToolHelper.validateTableName(node.getTable().getName());
-            return HDFSSchemaUtil.getTableByName(getConnection(), tabName) != null;
+            String tabLabel = MetadataToolHelper.validateTableName(node.getTable().getName());
+            return HDFSSchemaUtil.getTableByLabel(getConnection(), tabLabel) != null;
         }
         return false;
     }
@@ -586,7 +586,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
     protected void deleteTable(TreeItem treeItem) {
         IHDFSNode node = (IHDFSNode) treeItem.getData();
         if (node != null && node.getTable() != null) {
-            HDFSSchemaUtil.removeTableFromConnection(getConnection(), node.getTable().getName());
+            HDFSSchemaUtil.removeTableFromConnection(getConnection(), treeItem.getText());
         }
     }
 
@@ -639,7 +639,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             }
             if (checked) {
                 if (!item.getChecked()) {
-                    MetadataTable existTable = HDFSSchemaUtil.getTableByName(getConnection(), item.getText(0));
+                    MetadataTable existTable = HDFSSchemaUtil.getTableByLabel(getConnection(), item.getText(0));
                     if (existTable != null) {
                         refreshExistItem(existTable, item);
                     } else {

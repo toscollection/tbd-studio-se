@@ -58,10 +58,25 @@ public class HDFSSchemaUtil {
         return null;
     }
 
-    public static void removeTableFromConnection(HDFSConnection connection, String tableName) {
+    public static MetadataTable getTableByLabel(HDFSConnection connection, String label) {
+        if (label != null) {
+            for (Object obj : ConnectionHelper.getTables(connection)) {
+                if (obj == null) {
+                    continue;
+                }
+                MetadataTable table = (MetadataTable) obj;
+                if (table.getLabel().equals(label)) {
+                    return table;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void removeTableFromConnection(HDFSConnection connection, String tableLabel) {
         Schema schema = getDefaultSchema(connection);
         if (schema != null) {
-            MetadataTable metadataTable = getTableByName(connection, tableName);
+            MetadataTable metadataTable = getTableByLabel(connection, tableLabel);
             schema.getOwnedElement().remove(metadataTable);
         }
     }

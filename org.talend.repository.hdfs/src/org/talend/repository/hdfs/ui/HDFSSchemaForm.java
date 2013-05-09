@@ -75,6 +75,7 @@ import org.talend.cwm.helper.TableHelper;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
+import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSSchemaUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hdfs.HDFSConnection;
@@ -101,6 +102,8 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
     private LabelledText nameText;
 
     private LabelledText commentText;
+
+    private LabelledText baseFilePathText;
 
     private TableViewerCreator tableViewerCreator;
 
@@ -213,6 +216,8 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         String label = MetadataToolHelper.validateValue(metadataTable.getLabel());
         nameText.setText(label);
         commentText.setText(metadataTable.getComment());
+        String filePath = metadataTable.getAdditionalProperties().get(HDFSConstants.HDFS_PATH);
+        baseFilePathText.setText(StringUtils.trimToEmpty(filePath));
         updateRetreiveSchemaButton();
         nameText.forceFocus();
     }
@@ -248,17 +253,23 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         rightTopGridData.verticalAlignment = GridData.VERTICAL_ALIGN_CENTER;
         nameText = new LabelledText(rightTopComp, Messages.getString("HDFSSchemaForm.text.name"), 3); //$NON-NLS-1$
         commentText = new LabelledText(rightTopComp, Messages.getString("HDFSSchemaForm.text.comment"), 3); //$NON-NLS-1$
+        baseFilePathText = new LabelledText(rightTopComp, Messages.getString("HDFSSchemaForm.text.baseFilePath"), 3); //$NON-NLS-1$
+        baseFilePathText.getTextControl().setEditable(false);
 
         gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
-        Composite container = Form.startNewGridLayout(rightTopComp, 4, false, SWT.BEGINNING, SWT.CENTER);
+        Composite container = Form.startNewGridLayout(rightTopComp, 4, false, SWT.FILL, SWT.BEGINNING);
         container.setLayoutData(gridData);
+        GridLayout conLayout = (GridLayout) container.getLayout();
+        conLayout.marginWidth = 0;
 
-        Composite compositeRetreiveSchemaButton = Form.startNewGridLayout(container, 1, false, SWT.BEGINNING, SWT.TOP);
-        GC gc = new GC(compositeRetreiveSchemaButton);
+        Composite guessSchemaComp = Form.startNewGridLayout(container, 1, false, SWT.FILL, SWT.BEGINNING);
+        GridLayout btnLayout = (GridLayout) container.getLayout();
+        btnLayout.marginWidth = 0;
+        GC gc = new GC(guessSchemaComp);
         String displayStr = Messages.getString("HDFSSchemaForm.button.guessSchema"); //$NON-NLS-1$
         Point buttonSize = gc.stringExtent(displayStr);
-        retreiveSchemaButton = new UtilsButton(compositeRetreiveSchemaButton, displayStr, buttonSize.x + 12, HEIGHT_BUTTON_PIXEL);
+        retreiveSchemaButton = new UtilsButton(guessSchemaComp, displayStr, buttonSize.x + 12, HEIGHT_BUTTON_PIXEL);
         retreiveSchemaButton.setToolTipText(Messages.getString("HDFSSchemaForm.button.guessSchema.tooltip")); //$NON-NLS-1$
         gc.dispose();
 
@@ -295,6 +306,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         tableViewerCreator.setLayoutMode(LAYOUT_MODE.NONE);
         tableViewerCreator.setCheckboxInFirstColumn(false);
         tableViewerCreator.setFirstColumnMasked(false);
+        tableViewerCreator.setTriggerEditorActivate(false);
 
         tableNavigator = tableViewerCreator.createTable();
         tableNavigator.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -379,7 +391,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
                             if (size >= 1) {
                                 index = size - 1;
                                 String tableName = tableNavigator.getItem(index).getText();
-                                metadataTable = HDFSSchemaUtil.getTableByName(getConnection(), tableName);
+                                metadataTable = HDFSSchemaUtil.getTableByLabel(getConnection(), tableName);
                                 initMetadataForm();
                             }
                         }
@@ -411,7 +423,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 String schemaLabel = tableNavigator.getSelection()[0].getText();
-                metadataTable = HDFSSchemaUtil.getTableByName(getConnection(), schemaLabel);
+                metadataTable = HDFSSchemaUtil.getTableByLabel(getConnection(), schemaLabel);
                 initMetadataForm();
                 if (isReadOnly()) {
                     addTableBtn.setEnabled(false);
@@ -505,8 +517,8 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         } else {
             boolean doit = true;
             if (tableEditorView.getMetadataEditor().getBeanCount() > 0) {
-                doit = MessageDialog.openConfirm(getShell(), Messages.getString("HDFSSchemaForm.title.confirmChange"),
-                        Messages.getString("HDFSSchemaForm.msg.changeSchema"));
+                doit = MessageDialog.openConfirm(getShell(), Messages.getString("HDFSSchemaForm.title.confirmChange"), //$NON-NLS-1$
+                        Messages.getString("HDFSSchemaForm.msg.changeSchema")); //$NON-NLS-1$
             }
             if (doit) {
                 List<MetadataColumn> metadataColumns;
