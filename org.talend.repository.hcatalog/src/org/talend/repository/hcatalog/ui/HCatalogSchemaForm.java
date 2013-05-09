@@ -127,7 +127,6 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
                 break;
             }
         }
-        setupForm();
     }
 
     public void initializeForm() {
