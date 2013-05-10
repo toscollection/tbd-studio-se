@@ -21,7 +21,7 @@ public interface HadoopPatternConstants {
     /*
      * All possible situation of Namenode Uri.
      */
-    public final static String NAME_NODE_URI = "(^(file:///|local)$)|(^(hdfs://|maprfs:///)([^:/\\\\\\s]*[^:/\\\\\\s]|(([^:/\\\\\\s]+)(:\\d+)))$)"; //$NON-NLS-1$
+    public final static String NAME_NODE_URI = "(^(file:///|local|maprfs:///)$)|(^(hdfs://|maprfs:///)([^:/\\\\\\s]*[^:/\\\\\\s]|(([^:/\\\\\\s]+)(:\\d+)))$)"; //$NON-NLS-1$
 
     /*
      * Namenode Uri with port, like "hdfs://talend-hdp-all:8020"
@@ -36,12 +36,12 @@ public interface HadoopPatternConstants {
     /*
      * Local namenode Uri, like "local"(deprecated) or "file:///"
      */
-    public final static String NAME_NODE_URI_LOCAL = "^(file:///|local)$"; //$NON-NLS-1$
+    public final static String NAME_NODE_URI_LOCAL = "^(file:///|local|maprfs:///)$"; //$NON-NLS-1$
 
     /*
      * All possible situation of Jobtracker Uri.
      */
-    public final static String JOB_TRACKER_URI = "([^:/\\\\\\s]+):(\\d+)$"; //$NON-NLS-1$
+    public final static String JOB_TRACKER_URI = "^(([^:/\\\\\\s]+):(\\d+)|maprfs:///)$"; //$NON-NLS-1$
 
     /*
      * All possible situation of host name.
