@@ -161,13 +161,13 @@ public class HadoopClusterRepositoryContentHandler extends AbstractHadoopReposit
             for (IHadoopSubnodeRepositoryContentHandler handler : HadoopSubnodeRepositoryContentManager.getHandlers()) {
                 handler.addNode(project, node);
             }
-            addHadoopDBNode(node);
+            addHadoopDBNode(project, node);
         }
     }
 
-    private void addHadoopDBNode(RepositoryNode parentNode) {
+    private void addHadoopDBNode(Project project, RepositoryNode parentNode) {
         String id = parentNode.getObject().getId();
-        Map<String, List<DatabaseConnectionItem>> dbItemMap = getLinkedDbMap().get(id);
+        Map<String, List<DatabaseConnectionItem>> dbItemMap = getLinkedDbMap(project).get(id);
         if (dbItemMap != null && dbItemMap.size() > 0) {
             Iterator<Entry<String, List<DatabaseConnectionItem>>> iterator = dbItemMap.entrySet().iterator();
             while (iterator.hasNext()) {
@@ -188,10 +188,10 @@ public class HadoopClusterRepositoryContentHandler extends AbstractHadoopReposit
         }
     }
 
-    private Map<String, Map<String, List<DatabaseConnectionItem>>> getLinkedDbMap() {
+    private Map<String, Map<String, List<DatabaseConnectionItem>>> getLinkedDbMap(Project project) {
         Map<String, Map<String, List<DatabaseConnectionItem>>> linkedDbMap = new HashMap<String, Map<String, List<DatabaseConnectionItem>>>();
         try {
-            List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(
+            List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(project,
                     ERepositoryObjectType.METADATA_CONNECTIONS);
             for (IRepositoryViewObject repObj : repObjs) {
                 if (repObj != null && repObj.getProperty() != null) {
