@@ -477,8 +477,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private boolean isExistTable(IHDFSNode node) {
         if (node != null && node.getType() == EHadoopFileTypes.FILE) {
-            String tabLabel = MetadataToolHelper.validateTableName(node.getTable().getName());
-            return HDFSSchemaUtil.getTableByLabel(getConnection(), tabLabel) != null;
+            return HDFSSchemaUtil.getTableByLabel(getConnection(), node.getTable().getName()) != null;
         }
         return false;
     }
@@ -861,16 +860,15 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     hdfsTable.setTableType(type);
                     String lableName = MetadataToolHelper.validateTableName(table.getName());
                     hdfsTable.setLabel(lableName);
+                    hdfsTable.setSourceName(lableName);
+                    hdfsTable.setId(factory.getNextId());
+                    hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
                     try {
                         metadataColumns = ExtractMetaDataFromHDFS.extractColumns(getConnection(), file);
                     } catch (Exception e) {
                         ExceptionHandler.process(e);
                         return;
                     }
-                    hdfsTable.setSourceName(lableName);
-                    hdfsTable.setId(factory.getNextId());
-                    hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
-
                     Iterator<MetadataColumn> iterate = metadataColumns.iterator();
                     while (iterate.hasNext()) {
                         MetadataColumn metadataColumn = iterate.next();

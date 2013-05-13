@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.talend.core.model.metadata.MetadataToolHelper;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.PackageHelper;
@@ -58,8 +59,9 @@ public class HDFSSchemaUtil {
         return null;
     }
 
-    public static MetadataTable getTableByLabel(HDFSConnection connection, String label) {
-        if (label != null) {
+    public static MetadataTable getTableByLabel(HDFSConnection connection, String tableLabel) {
+        if (tableLabel != null) {
+            String label = MetadataToolHelper.validateTableName(tableLabel);
             for (Object obj : ConnectionHelper.getTables(connection)) {
                 if (obj == null) {
                     continue;
