@@ -118,6 +118,9 @@ public class PigMapOutputZoneToolBar extends OutputZoneToolBar {
                     if (!min_size.isEnabled()) {
                         min_size.setEnabled(true);
                     }
+                    if (!externalData.getOutputTables().isEmpty() && !externalData.getInputTables().isEmpty()) {
+                        auto_map.setEnabled(true);
+                    }
                     mapperManger.getMapperUI().updateStatusBar();
                 }
 
@@ -167,6 +170,9 @@ public class PigMapOutputZoneToolBar extends OutputZoneToolBar {
                 }
                 if (externalData.getOutputTables().isEmpty() && min_size.isEnabled()) {
                     min_size.setEnabled(false);
+                }
+                if (externalData.getOutputTables().isEmpty() || externalData.getInputTables().isEmpty()) {
+                    auto_map.setEnabled(false);
                 }
             }
         });
@@ -356,5 +362,10 @@ public class PigMapOutputZoneToolBar extends OutputZoneToolBar {
             }
         }
         return allEntities;
+    }
+
+    @Override
+    protected boolean isAutoMapEnable() {
+        return externalData.getOutputTables().isEmpty() || externalData.getInputTables().isEmpty();
     }
 }

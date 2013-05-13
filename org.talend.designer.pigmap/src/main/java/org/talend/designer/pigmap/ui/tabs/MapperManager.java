@@ -98,8 +98,10 @@ public class MapperManager extends AbstractMapperManager {
                     boolean isInputMain = false;
                     if (model != null && model instanceof TableNode && model.eContainer() != null) {
                         if (model.eContainer() instanceof OutputTable) {
+                            selectOutputTable((OutputTable) model.eContainer());
                             onEntitySelection((IStructuredSelection) event.getSelection(), selectedOutputTable);
                         } else {
+                            selectInputTable((InputTable) model.eContainer());
                             onEntitySelection((IStructuredSelection) event.getSelection(), selectedInputTable);
                         }
                     }
