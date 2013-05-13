@@ -15,6 +15,7 @@ package org.talend.designer.hdfsbrowse.manager;
 import java.io.InputStream;
 import java.net.URI;
 
+import org.apache.commons.lang.StringUtils;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.cwm.relational.RelationalFactory;
@@ -61,8 +62,17 @@ public class HadoopOperationManager {
                 }
                 HDFSPath content = null;
                 Object statusPath = ReflectionUtils.invokeMethod(status, "getPath", new Object[0]);
+                if (statusPath == null) {
+                    continue;
+                }
                 String pathName = (String) ReflectionUtils.invokeMethod(statusPath, "getName", new Object[0]);
+                if (StringUtils.isBlank(pathName)) {
+                    continue;
+                }
                 String absolutePath = ((URI) ReflectionUtils.invokeMethod(statusPath, "toUri", new Object[0])).toString();
+                if (StringUtils.isBlank(absolutePath)) {
+                    continue;
+                }
                 String relativePath = URI.create(absolutePath).getPath();
                 if ((Boolean) ReflectionUtils.invokeMethod(status, "isDir", new Object[0])) {
                     content = new HDFSFolder(parent);
