@@ -245,13 +245,14 @@ public class HadoopClusterRepositoryContentHandler extends AbstractHadoopReposit
     @Override
     protected void deleteNode(Item item) throws Exception {
         final IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
+        Project project = new Project(ProjectManager.getInstance().getProject(item.getProperty()));
         HadoopClusterConnectionItem hadoopClusterItem = (HadoopClusterConnectionItem) item;
         HadoopClusterConnection connection = (HadoopClusterConnection) hadoopClusterItem.getConnection();
         List<String> connectionList = connection.getConnectionList();
         for (String connId : connectionList) {
             IRepositoryViewObject repObj = null;
             try {
-                repObj = factory.getLastVersion(connId);
+                repObj = factory.getLastVersion(project, connId);
             } catch (PersistenceException e) {
                 // do nothing.
             }
@@ -261,6 +262,22 @@ public class HadoopClusterRepositoryContentHandler extends AbstractHadoopReposit
         }
         connection.getConnectionList().clear();
         factory.save(hadoopClusterItem);
+
+        // Disconnect db connection to hadoop cluster.
+        String clusterId = hadoopClusterItem.getProperty().getId();
+        List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(project,
+                ERepositoryObjectType.METADATA_CONNECTIONS);
+        for (IRepositoryViewObject repObj : repObjs) {
+            if (repObj != null && repObj.getProperty() != null) {
+                DatabaseConnectionItem dbItem = (DatabaseConnectionItem) repObj.getProperty().getItem();
+                DatabaseConnection dbConnection = (DatabaseConnection) dbItem.getConnection();
+                String hcId = dbConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+                if (clusterId.equals(hcId)) {
+                    dbConnection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID, null);
+                    factory.save(dbItem);
+                }
+            }
+        }
     }
 
     @Override

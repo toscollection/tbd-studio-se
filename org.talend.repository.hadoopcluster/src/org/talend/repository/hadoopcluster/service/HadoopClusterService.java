@@ -15,12 +15,18 @@ package org.talend.repository.hadoopcluster.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.IPath;
+import org.talend.commons.exception.BusinessException;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
+import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
+import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
@@ -28,6 +34,7 @@ import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNod
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.IHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
@@ -147,4 +154,40 @@ public class HadoopClusterService implements IHadoopClusterService {
         HCRepositoryUtil.removeHadoopDbParameters(connection);
     }
 
+    @Override
+    public void copyHadoopCluster(final Item sourceItem, final IPath path) throws PersistenceException, BusinessException {
+        copyHadoopCluster(sourceItem, path, null);
+    }
+
+    @Override
+    public void copyHadoopCluster(final Item sourceItem, final IPath path, String newName) throws PersistenceException,
+            BusinessException {
+        if (isHadoopClusterItem(sourceItem)) {
+            IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
+            HadoopClusterConnectionItem sourceClusterItem = (HadoopClusterConnectionItem) sourceItem;
+            HadoopClusterConnectionItem targetClusterItem = null;
+            if (StringUtils.isNotBlank(newName)) {
+                targetClusterItem = (HadoopClusterConnectionItem) factory.copy(sourceClusterItem, path, newName);
+            } else {
+                targetClusterItem = (HadoopClusterConnectionItem) factory.copy(sourceClusterItem, path, true);
+            }
+            HadoopClusterConnection targetClusterConnection = (HadoopClusterConnection) targetClusterItem.getConnection();
+            targetClusterConnection.getConnectionList().clear();
+            String targetClusterId = targetClusterItem.getProperty().getId();
+            Set<Item> sourceSubitems = HCRepositoryUtil.getSubitemsOfHadoopCluster(sourceClusterItem);
+            for (Item subitem : sourceSubitems) {
+                Item newSubitem = factory.copy(subitem, path, true);
+                if (newSubitem instanceof HadoopSubConnectionItem) {
+                    ((HadoopSubConnection) ((HadoopSubConnectionItem) newSubitem).getConnection())
+                            .setRelativeHadoopClusterId(targetClusterId);
+                    targetClusterConnection.getConnectionList().add(newSubitem.getProperty().getId());
+                } else if (subitem instanceof DatabaseConnectionItem) {
+                    ((DatabaseConnection) ((DatabaseConnectionItem) newSubitem).getConnection()).getParameters().put(
+                            ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID, targetClusterId);
+                }
+                factory.save(newSubitem);
+            }
+            factory.save(targetClusterItem);
+        }
+    }
 }

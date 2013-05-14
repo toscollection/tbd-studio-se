@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
@@ -33,6 +34,7 @@ import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.model.IProxyRepositoryFactory;
@@ -244,28 +246,39 @@ public class HCRepositoryUtil {
      * 
      * @param item
      * @return
+     * @throws PersistenceException
      */
-    public static Set<Item> getSubitemsOfHadoopCluster(Item item) {
+    public static Set<Item> getSubitemsOfHadoopCluster(Item item) throws PersistenceException {
         Set<Item> subItems = new HashSet<Item>();
         if (item.eClass() != HadoopClusterPackage.Literals.HADOOP_CLUSTER_CONNECTION_ITEM) {
             return subItems;
         }
+
+        Project project = new Project(ProjectManager.getInstance().getProject(item.getProperty()));
         HadoopClusterConnectionItem clusterConnectionItem = (HadoopClusterConnectionItem) item;
         HadoopClusterConnection clusterConnection = (HadoopClusterConnection) clusterConnectionItem.getConnection();
         EList<String> connectionList = clusterConnection.getConnectionList();
         for (String connId : connectionList) {
             if (connId != null) {
-                IRepositoryViewObject repObj = null;
-                try {
-                    repObj = ProxyRepositoryFactory.getInstance().getLastVersion(connId);
-                } catch (PersistenceException e) {
-                    ExceptionHandler.process(e);
-                }
+                IRepositoryViewObject repObj = ProxyRepositoryFactory.getInstance().getLastVersion(project, connId);
                 if (repObj != null && repObj.getProperty() != null) {
                     Item subItem = repObj.getProperty().getItem();
                     if (subItem != null) {
                         subItems.add(subItem);
                     }
+                }
+            }
+        }
+        String clusterId = clusterConnectionItem.getProperty().getId();
+        List<IRepositoryViewObject> repObjs = ProxyRepositoryFactory.getInstance().getAll(project,
+                ERepositoryObjectType.METADATA_CONNECTIONS);
+        for (IRepositoryViewObject repObj : repObjs) {
+            if (repObj != null && repObj.getProperty() != null) {
+                DatabaseConnectionItem dbItem = (DatabaseConnectionItem) repObj.getProperty().getItem();
+                DatabaseConnection dbConnection = (DatabaseConnection) dbItem.getConnection();
+                String hcId = dbConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+                if (clusterId.equals(hcId)) {
+                    subItems.add(dbItem);
                 }
             }
         }
