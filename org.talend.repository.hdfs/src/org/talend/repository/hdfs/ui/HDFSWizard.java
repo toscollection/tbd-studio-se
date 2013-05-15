@@ -24,9 +24,9 @@ import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
-import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hdfs.Activator;
@@ -42,7 +42,6 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSFactory;
-import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -126,8 +125,9 @@ public class HDFSWizard extends HadoopRepositoryWizard<HDFSConnection> {
         if (isToolBar) {
             pathToSave = null;
         }
-        propertiesPage = new Step0WizardPage(connectionProperty, pathToSave, ERepositoryObjectType.METADATA_CONNECTIONS,
-                !isRepositoryObjectEditable(), creation);
+        propertiesPage = new HadoopPropertiesWizardPage(
+                "HDFSPropertiesWizardPage", connectionProperty, pathToSave, HDFSRepositoryNodeType.HDFS, //$NON-NLS-1$
+                !isRepositoryObjectEditable());
         mainPage = new HDFSWizardPage(connectionItem, isRepositoryObjectEditable(), existingNames);
 
         if (creation) {

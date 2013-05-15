@@ -22,11 +22,11 @@ import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
-import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hcatalog.Activator;
@@ -43,7 +43,6 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
 import org.talend.repository.model.hcatalog.HCatalogFactory;
-import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -128,8 +127,9 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
         if (isToolBar) {
             pathToSave = null;
         }
-        propertiesPage = new Step0WizardPage(connectionProperty, pathToSave, ERepositoryObjectType.METADATA_CONNECTIONS,
-                !isRepositoryObjectEditable(), creation);
+        propertiesPage = new HadoopPropertiesWizardPage(
+                "HCatalogPropertiesWizardPage", connectionProperty, pathToSave, HCatalogRepositoryNodeType.HCATALOG, //$NON-NLS-1$
+                !isRepositoryObjectEditable());
         mainPage = new HCatalogWizardPage(connectionItem, isRepositoryObjectEditable(), existingNames);
 
         if (creation) {
