@@ -452,7 +452,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
                         @Override
                         public void run() {
-                            monitor.beginTask(Messages.getString("HDFSFileSelectorForm.fetchChildren"), 10); //$NON-NLS-1$
+                            monitor.beginTask(Messages.getString("HDFSFileSelectorForm.fetchChildren"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                             fetchChildren(node);
                             monitor.done();
                         }
@@ -570,7 +570,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             IHDFSNode node = (IHDFSNode) data;
             if (node.getType() == EHadoopFileTypes.FILE) {
                 if (deleteFromConnection) {
-                    deleteTable(item);
+                    deleteTable(node);
                 }
                 item.setText(3, EMPTY_STRING);
                 item.setText(4, EMPTY_STRING);
@@ -582,10 +582,9 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         }
     }
 
-    protected void deleteTable(TreeItem treeItem) {
-        IHDFSNode node = (IHDFSNode) treeItem.getData();
+    protected void deleteTable(IHDFSNode node) {
         if (node != null && node.getTable() != null) {
-            HDFSSchemaUtil.removeTableFromConnection(getConnection(), treeItem.getText());
+            HDFSSchemaUtil.removeTableFromConnection(getConnection(), node.getTable().getName());
         }
     }
 
