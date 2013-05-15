@@ -36,7 +36,6 @@ import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
-import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 
 /**
  * created by ycbai on 2013-1-28 Detailled comment
@@ -46,7 +45,7 @@ public abstract class HadoopRepositoryWizard<E extends HadoopSubConnection> exte
 
     protected RepositoryNode repNode;
 
-    protected Step0WizardPage propertiesPage;
+    protected HadoopPropertiesWizardPage propertiesPage;
 
     protected Property connectionProperty;
 

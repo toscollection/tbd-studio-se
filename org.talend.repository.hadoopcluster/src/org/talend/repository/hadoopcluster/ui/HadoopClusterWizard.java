@@ -34,13 +34,14 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.model.properties.Property;
-import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.designer.runprocess.IRunProcessService;
 import org.talend.repository.hadoopcluster.HadoopClusterPlugin;
 import org.talend.repository.hadoopcluster.i18n.Messages;
+import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
+import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.update.HadoopClusterUpdateManager;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -51,7 +52,6 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterFactory;
 import org.talend.repository.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
-import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 
 /**
  * 
@@ -60,7 +60,7 @@ import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
  */
 public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
 
-    private Step0WizardPage propertiesPage;
+    private HadoopPropertiesWizardPage propertiesPage;
 
     private HadoopClusterWizardPage mainPage;
 
@@ -141,10 +141,10 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
         if (isToolBar) {
             pathToSave = null;
         }
-        propertiesPage = new Step0WizardPage(connectionProperty, pathToSave, ERepositoryObjectType.METADATA_CONNECTIONS,
+        propertiesPage = new HadoopPropertiesWizardPage(
+                "HadoopClusterPropertiesWizardPage", connectionProperty, pathToSave, HadoopClusterRepositoryNodeType.HADOOPCLUSTER, //$NON-NLS-1$
                 !isRepositoryObjectEditable(), creation);
         mainPage = new HadoopClusterWizardPage(connectionItem, isRepositoryObjectEditable(), existingNames);
-
         if (creation) {
             propertiesPage.setTitle(Messages.getString("HadoopClusterWizardPage.titleCreate.Step1")); //$NON-NLS-1$
             propertiesPage.setDescription(Messages.getString("HadoopClusterWizardPage.descriptionCreate.Step1")); //$NON-NLS-1$

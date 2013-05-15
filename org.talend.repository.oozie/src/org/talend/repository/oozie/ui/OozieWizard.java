@@ -11,9 +11,9 @@ import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
-import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
@@ -28,7 +28,6 @@ import org.talend.repository.oozie.i18n.Messages;
 import org.talend.repository.oozie.node.model.OozieRepositoryNodeType;
 import org.talend.repository.oozie.update.OozieUpdateManager;
 import org.talend.repository.oozie.util.EOozieImage;
-import org.talend.repository.ui.wizards.metadata.connection.Step0WizardPage;
 
 /**
  * DOC plv class global comment. Detailed comment
@@ -111,8 +110,9 @@ public class OozieWizard extends HadoopRepositoryWizard<OozieConnection> {
         if (isToolBar) {
             pathToSave = null;
         }
-        propertiesPage = new Step0WizardPage(connectionProperty, pathToSave, ERepositoryObjectType.METADATA_CONNECTIONS,
-                !isRepositoryObjectEditable(), creation);
+        propertiesPage = new HadoopPropertiesWizardPage(
+                "OoziePropertiesWizardPage", connectionProperty, pathToSave, OozieRepositoryNodeType.OOZIE, //$NON-NLS-1$
+                !isRepositoryObjectEditable());
         mainPage = new OozieWizardPage(connectionItem, isRepositoryObjectEditable(), existingNames);
         if (creation) {
             propertiesPage.setTitle(Messages.getString("OozieWizard.titleStep1")); //$NON-NLS-1$
@@ -133,7 +133,6 @@ public class OozieWizard extends HadoopRepositoryWizard<OozieConnection> {
         }
         addPage(propertiesPage);
         addPage(mainPage);
-
     }
 
     @Override
