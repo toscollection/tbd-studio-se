@@ -46,7 +46,6 @@ public class HadoopClusterRepositoryTypeProcessor extends SingleTypeProcessor {
 
         ERepositoryObjectType repObjType = (ERepositoryObjectType) node.getProperties(EProperties.CONTENT_TYPE);
         if (repObjType == ERepositoryObjectType.REFERENCED_PROJECTS) {
-            // if (node.getContentType() == ERepositoryObjectType.REFERENCED_PROJECTS) {
             return true;
         }
 
@@ -74,7 +73,8 @@ public class HadoopClusterRepositoryTypeProcessor extends SingleTypeProcessor {
     }
 
     private boolean isValidFolder(IRepositoryNode node) {
-        if (node.getObjectType() != null && node.getObjectType().equals(HadoopClusterRepositoryNodeType.HADOOPCLUSTER)) {
+        ERepositoryObjectType repObjType = (ERepositoryObjectType) node.getProperties(EProperties.CONTENT_TYPE);
+        if (repObjType != null && repObjType.equals(HadoopClusterRepositoryNodeType.HADOOPCLUSTER)) {
             return true;
         }
         return false;

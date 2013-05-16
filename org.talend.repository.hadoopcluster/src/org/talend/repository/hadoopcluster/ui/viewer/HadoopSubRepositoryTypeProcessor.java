@@ -70,7 +70,6 @@ public class HadoopSubRepositoryTypeProcessor extends SingleTypeProcessor {
 
         ERepositoryObjectType repObjType = (ERepositoryObjectType) node.getProperties(EProperties.CONTENT_TYPE);
         if (repObjType == ERepositoryObjectType.REFERENCED_PROJECTS) {
-            // if (node.getContentType() == ERepositoryObjectType.REFERENCED_PROJECTS) {
             return true;
         }
 
