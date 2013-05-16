@@ -15,14 +15,14 @@ package org.talend.repository.hadoopcluster.ui.provider;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
-import org.talend.repository.viewer.label.AbstractRepoViewLabelProvider;
+import org.talend.repository.viewer.label.RepositoryViewLabelProvider;
 
 /**
  * 
  * created by ycbai on 2013-3-22 Detailled comment
  * 
  */
-public class HadoopLabelProvider extends AbstractRepoViewLabelProvider {
+public class HadoopLabelProvider extends RepositoryViewLabelProvider {
 
     @Override
     protected IImage getIcon(ERepositoryObjectType itemType) {
@@ -31,5 +31,4 @@ public class HadoopLabelProvider extends AbstractRepoViewLabelProvider {
         }
         return null;
     }
-
 }
