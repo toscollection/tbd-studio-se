@@ -259,6 +259,7 @@
 			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
 			<IMPORT NAME="commons-configuration" MODULE="commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
 			<IMPORT NAME="commons-lang" MODULE="commons-lang-2.4.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2')"/>
+			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND USE_KRB=='true'" />
     	</IMPORTS>
 	</CODEGENERATION>
    <RETURNS/>
