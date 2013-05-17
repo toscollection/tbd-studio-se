@@ -18,6 +18,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,13 +32,17 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.classloader.DynamicClassLoader;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.core.model.general.ModuleNeeded;
+import org.talend.core.model.general.ModuleNeeded.ELibraryInstallStatus;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 import org.talend.designer.hdfsbrowse.model.ELinuxAuthority;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.librariesmanager.model.ModulesNeededProvider;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -246,8 +253,13 @@ public class HadoopServerUtil {
                 connectionStatus.setMessageException(errorMsg);
             }
         } catch (Exception e) {
+            Set<String> jars = getMissingJars(connection);
+            String missJarMsg = "";
+            if (jars.size() > 0) {
+                missJarMsg = "Missing jars:" + jars.toString() + "; " + "Need to check them in modules view.";
+            }
             ExceptionHandler.process(e);
-            connectionStatus.setMessageException(errorMsg);
+            connectionStatus.setMessageException(errorMsg + "\n" + missJarMsg);
         } finally {
             if (dfs != null) {
                 try {
@@ -258,6 +270,32 @@ public class HadoopServerUtil {
         }
 
         return connectionStatus;
+    }
+
+    /**
+     * DOC Talend Comment method "getMissingJars".
+     * 
+     * @param connection
+     * @return
+     */
+    public static Set<String> getMissingJars(HDFSConnectionBean connection) {
+        Set<String> set = new HashSet<String>();
+        Set<String> jars = new HashSet<String>();
+        ClassLoader classLoader = HadoopClassLoaderFactory
+                .getClassLoader(connection.getDistribution(), connection.getDfVersion());
+        if (classLoader instanceof DynamicClassLoader) {
+            set.addAll(((DynamicClassLoader) classLoader).getLibraries());
+        }
+        List jarsNeed = ModulesNeededProvider.getModulesNeeded();
+        for (Object jar : jarsNeed) {
+            if (jar instanceof ModuleNeeded) {
+                String jarName = ((ModuleNeeded) jar).getModuleName();
+                if (set.contains(jarName) && ((ModuleNeeded) jar).getStatus().equals(ELibraryInstallStatus.NOT_INSTALLED)) {
+                    jars.add(jarName);
+                }
+            }
+        }
+        return jars;
     }
 
     public static ClassLoader getClassLoader(HDFSConnectionBean connection) {

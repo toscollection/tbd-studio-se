@@ -13,12 +13,16 @@
 package org.talend.designer.hdfsbrowse.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.talend.core.classloader.DynamicClassLoader;
 import org.talend.core.hadoop.IHadoopService;
 import org.talend.core.hadoop.version.custom.ECustomVersionType;
+import org.talend.core.model.general.ModuleNeeded;
+import org.talend.core.model.general.ModuleNeeded.ELibraryInstallStatus;
 import org.talend.designer.hdfsbrowse.manager.HadoopClassLoaderFactory;
+import org.talend.librariesmanager.model.ModulesNeededProvider;
 
 /**
  * created by ycbai on 2013-3-14 Detailled comment
@@ -58,6 +62,22 @@ public class HadoopService implements IHadoopService {
         }
 
         return set;
+    }
+
+    @Override
+    public Set<String> getMissingLibraries(String distribution, String version) {
+        Set<String> jars = new HashSet<String>();
+        Set<String> set = getHadoopLibraries(distribution, version);
+        List jarsNeed = ModulesNeededProvider.getModulesNeeded();
+        for (Object jar : jarsNeed) {
+            if (jar instanceof ModuleNeeded) {
+                String jarName = ((ModuleNeeded) jar).getModuleName();
+                if (set.contains(jarName) && ((ModuleNeeded) jar).getStatus().equals(ELibraryInstallStatus.NOT_INSTALLED)) {
+                    jars.add(jarName);
+                }
+            }
+        }
+        return jars;
     }
 
 }
