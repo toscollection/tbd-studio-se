@@ -138,6 +138,7 @@
 						} catch (TalendException te) {
 							this.lastException = te.getException();
 							this.currentComponent = te.getCurrentComponent();
+							globalMap.put("<%=cid%>_FINISH", "true");
 						}
 					}
 				}
