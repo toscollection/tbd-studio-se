@@ -54,7 +54,6 @@ import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.utils.JavaResourcesHelper;
 import org.talend.core.prefs.ITalendCorePrefConstants;
-import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.designer.core.model.components.EParameterName;
 import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
@@ -712,24 +711,19 @@ public class ExecuteJobCompositeController {
         JobContext jobContext = new JobContext();
 
         IProcess2 process = OozieJobTrackerListener.getProcess();
-        if (ComponentCategory.CATEGORY_4_MAPREDUCE.getName().equals(process.getComponentsType())) {
-            String fsForMapReduceJob = (String) process.getElementParameter("NAMENODE").getValue();//$NON-NLS-1$
-            jobContext.set("NAMENODE", TalendQuoteUtils.removeQuotesIfExist(fsForMapReduceJob)); //$NON-NLS-1$
-
-            String jtForMapReduceJob = (String) process.getElementParameter("JOBTRACKER").getValue();//$NON-NLS-1$
-            jobContext.set("JOBTRACKER", TalendQuoteUtils.removeQuotesIfExist(jtForMapReduceJob));//$NON-NLS-1$
-        }
         // if use kerberos
-        if (TOozieParamUtils.enableKerberos()) {
+        if (TOozieParamUtils.enableKerberos() && ComponentCategory.CATEGORY_4_DI.getName().equals(process.getComponentsType())) {
             jobContext.set("KERBEROS.PRINCIPAL", TOozieParamUtils.getPrincipal()); //$NON-NLS-1$
         }
         // for hadoop properties
         if (process != null && settingDialog != null) {
-            JSONArray props = new JSONArray();
-            for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
-                props.put(property);
+            if (ComponentCategory.CATEGORY_4_DI.getName().equals(process.getComponentsType())) {
+                JSONArray props = new JSONArray();
+                for (Map<String, Object> property : settingDialog.getPropertiesValue()) {
+                    props.put(property);
+                }
+                jobContext.set("HADOOP.PROPERTIES", props.toString()); //$NON-NLS-1$
             }
-            jobContext.set("HADOOP.PROPERTIES", props.toString()); //$NON-NLS-1$
 
             StringBuffer libJars = new StringBuffer();
             Set<String> libNames = JavaProcessorUtilities.extractLibNamesOnlyForMapperAndReducer(process);
