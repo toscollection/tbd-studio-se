@@ -103,21 +103,21 @@
       <Action
             class="org.talend.repository.pigudf.actions.EditPigudfAction"
             id="org.talend.repository.pigudf.actions.EditPigudfAction"
-            isEditAction="false"
-            isPropertiesAction="false"
-            isReadAction="false"
+            isEditAction="true"
             level="10"
             name="%NavigatorContent.action.editPigudf">
       </Action>
       <Action
             class="org.talend.repository.pigudf.actions.ReadPigudfAction"
             id="org.talend.repository.pigudf.actions.ReadPigudfAction"
+            isReadAction="true"
             level="10"
             name="%NavigatorContent.action.readPigudf">
       </Action>
       <Action
             class="org.talend.repository.pigudf.actions.EditPigudfPropertiesAction"
             id="org.talend.repository.pigudf.actions.EditPigudfPropertiesAction"
+            isPropertiesAction="true"
             level="10"
             name="%NavigatorContent.action.editPigudfProperties">
       </Action>
