@@ -55,6 +55,7 @@ import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.hadoop.version.custom.ECustomVersionType;
 import org.talend.core.hadoop.version.custom.HadoopCustomVersionDefineDialog;
+import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.prefs.ITalendCorePrefConstants;
@@ -218,8 +219,10 @@ public class OozieSettingComposite extends ScrolledComposite {
             String connId = (String) OozieJobTrackerListener.getProcess()
                     .getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).getValue();
             this.repositoryId = connId;
-            oozieRepositoryText.setText(TOozieParamUtils.getOozieConnectionById(connId).getLabel());
-
+            Connection connection = TOozieParamUtils.getOozieConnectionById(connId);
+            if (connection != null) {
+                oozieRepositoryText.setText(connection.getLabel());
+            }
         }
 
     }
