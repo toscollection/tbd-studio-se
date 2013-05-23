@@ -12,30 +12,38 @@
 // ============================================================================
 package org.talend.oozie.scheduler.ui;
 
+import java.net.URL;
 import java.util.Map;
 
 import org.apache.commons.collections.BidiMap;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.talend.core.CorePlugin;
+import org.eclipse.swt.widgets.Link;
+import org.eclipse.ui.PlatformUI;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
+import org.talend.oozie.scheduler.i18n.Messages;
+import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 
 /**
  */
 public class OozieMonitoringComposite extends ScrolledComposite implements IDynamicProperty {
 
-    Browser browser;
+    private Browser browser;
+
+    private Link link;
 
     /**
      * 
@@ -57,8 +65,26 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
     protected void createContents(Composite parent) {
         GridLayout gridLayout = new GridLayout(1, false);
         parent.setLayout(gridLayout);
-        browser = new Browser(parent, SWT.NONE);
-        browser.setLayoutData(new GridData(GridData.FILL_BOTH));
+        if (!"yes".equalsIgnoreCase(System.getProperty("USE_BROWSER"))) { //$NON-NLS-1$ //$NON-NLS-2$
+            browser = new Browser(parent, SWT.NONE);
+            browser.setLayoutData(new GridData(GridData.FILL_BOTH));
+        } else {
+            link = new Link(parent, SWT.NONE);
+            link.setText(getLinkText());
+            link.setSize(400, 100);
+            link.addSelectionListener(new SelectionAdapter() {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    try {
+                        // Open default external browser
+                        PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(new URL(e.text));
+                    } catch (Exception ex) {
+                        ExceptionHandler.process(ex);
+                    }
+                }
+            });
+        }
     }
 
     /*
@@ -168,19 +194,27 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
         if (!isDisposed()) {
             getParent().layout();
         }
-        if (!browser.isDisposed()) {
-            if (OozieJobTrackerListener.getProcess() != null) {
-                String url = CorePlugin.getDefault().getPreferenceStore()
-                        .getString(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT);
-                if (url != null) {
-                    browser.setUrl(url);
-                }
-            } else {
-                browser.setUrl("");
+
+        boolean hasProcess = OozieJobTrackerListener.getProcess() != null;
+        if (hasProcess) {
+            if (browser != null && !browser.isDisposed()) {
+                browser.setUrl(getOozieEndPoint());
             }
         }
     }
 
+    private String getLinkText() {
+        String oozieEndPoint = getOozieEndPoint();
+        String message = Messages.getString("OozieMonitoringComposite.linkText", oozieEndPoint, oozieEndPoint); //$NON-NLS-1$
+
+        return message;
+    }
+
+    private String getOozieEndPoint() {
+        return TOozieParamUtils.getOozieEndPoint();
+    }
+
+    @Override
     public void dispose() {
         super.dispose();
     }
