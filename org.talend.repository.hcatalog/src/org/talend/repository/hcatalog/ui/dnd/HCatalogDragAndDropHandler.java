@@ -7,6 +7,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
@@ -17,8 +18,8 @@ import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.utils.AbstractDragAndDropServiceHandler;
 import org.talend.core.model.utils.IComponentName;
-import org.talend.core.model.utils.IDragAndDropServiceHandler;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -32,7 +33,7 @@ import org.talend.repository.model.hcatalog.HCatalogConnectionItem;
 /**
  * DOC ycbai class global comment. Detailled comment
  */
-public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
+public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandler {
 
     private static final String HCATALOG = "HCATALOG"; //$NON-NLS-1$
 
@@ -52,14 +53,15 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
     }
 
     @Override
-    public Object getComponentValue(Connection connection, String value, IMetadataTable table) {
+    public Object getComponentValue(Connection connection, String value, IMetadataTable table, String targetComponent) {
         if (value != null && canHandle(connection)) {
-            return getHCatalogRepositoryValue((HCatalogConnection) connection, value, table);
+            return getHCatalogRepositoryValue((HCatalogConnection) connection, value, table, targetComponent);
         }
         return null;
     }
 
-    private Object getHCatalogRepositoryValue(HCatalogConnection connection, String value, IMetadataTable table) {
+    private Object getHCatalogRepositoryValue(HCatalogConnection connection, String value, IMetadataTable table,
+            String targetComponent) {
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
         if (hcConnection == null) {
             return null;
@@ -117,6 +119,10 @@ public class HCatalogDragAndDropHandler implements IDragAndDropServiceHandler {
             return HCATALOG_LOAD;
         } else if (EHCatalogRepositoryToComponent.STORE.getRepositoryValue().equals(value)) {
             return HCATALOG_STORE;
+        } else if (EHCatalogRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(value)) {
+            if (targetComponent != null && targetComponent.startsWith("tPig")) {
+                return hcConnection.getParameters().get(ECustomVersionGroup.PIG_HCATALOG.getName());
+            }
         }
 
         return null;

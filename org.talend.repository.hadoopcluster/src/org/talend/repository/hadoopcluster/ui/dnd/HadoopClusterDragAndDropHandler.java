@@ -30,8 +30,8 @@ import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.utils.AbstractDragAndDropServiceHandler;
 import org.talend.core.model.utils.IComponentName;
-import org.talend.core.model.utils.IDragAndDropServiceHandler;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
@@ -45,7 +45,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
  * created by nrousseau on Mar 27, 2013 Detailled comment
  * 
  */
-public class HadoopClusterDragAndDropHandler implements IDragAndDropServiceHandler {
+public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceHandler {
 
     @Override
     public boolean canHandle(Connection connection) {
@@ -53,7 +53,7 @@ public class HadoopClusterDragAndDropHandler implements IDragAndDropServiceHandl
     }
 
     @Override
-    public Object getComponentValue(Connection connection, String value, IMetadataTable table) {
+    public Object getComponentValue(Connection connection, String value, IMetadataTable table, String targetComponent) {
         if (value != null && canHandle(connection)) {
             return getHadoopClusterRepositoryValue((HadoopClusterConnection) connection, value, table);
         }

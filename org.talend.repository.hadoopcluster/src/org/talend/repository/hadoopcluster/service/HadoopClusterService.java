@@ -13,12 +13,14 @@
 package org.talend.repository.hadoopcluster.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.EMap;
 import org.talend.commons.exception.BusinessException;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
@@ -189,5 +191,23 @@ public class HadoopClusterService implements IHadoopClusterService {
             }
             factory.save(targetClusterItem);
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.hadoop.IHadoopClusterService#getHadoopCustomLibraries()
+     */
+    @Override
+    public Map<String, String> getHadoopCustomLibraries(String clusterId) {
+        Map<String, String> customLibraries = new HashMap<String, String>();
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(clusterId);
+        if (hadoopClusterConnection != null) {
+            EMap<String, String> parameters = hadoopClusterConnection.getParameters();
+            for (String key : parameters.keySet()) {
+                customLibraries.put(key, parameters.get(key));
+            }
+        }
+        return customLibraries;
     }
 }

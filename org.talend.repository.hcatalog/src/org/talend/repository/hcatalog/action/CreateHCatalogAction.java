@@ -46,7 +46,7 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
-            if (distribution == EHadoopDistributions.HORTONWORKS) {
+            if (distribution == EHadoopDistributions.HORTONWORKS || distribution == EHadoopDistributions.CUSTOM) {
                 return false;
             }
         }
