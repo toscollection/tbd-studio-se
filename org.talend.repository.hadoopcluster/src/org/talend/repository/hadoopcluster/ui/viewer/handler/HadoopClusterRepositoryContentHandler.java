@@ -26,6 +26,7 @@ import org.talend.core.model.metadata.MetadataManager;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
+import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryTypeProcessor;
 import org.talend.core.model.repository.IRepositoryViewObject;
@@ -38,6 +39,8 @@ import org.talend.repository.hadoopcluster.ui.viewer.HadoopClusterRepositoryType
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
 import org.talend.repository.model.IProxyRepositoryFactory;
+import org.talend.repository.model.IRepositoryNode;
+import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
@@ -167,8 +170,17 @@ public class HadoopClusterRepositoryContentHandler extends AbstractHadoopReposit
 
     private void addHadoopDBNode(Project project, RepositoryNode parentNode) {
         String id = parentNode.getObject().getId();
+
         Map<String, List<DatabaseConnectionItem>> dbItemMap = getLinkedDbMap(project).get(id);
         if (dbItemMap != null && dbItemMap.size() > 0) {
+            // if existed linked DBs
+            RepositoryNode dbRootNode = (RepositoryNode) parentNode.getRoot().getRootRepositoryNode(
+                    ERepositoryObjectType.METADATA_CONNECTIONS);
+            if (dbRootNode == null || !dbRootNode.isInitialized()) { // init database
+                dbRootNode = parentNode.getRoot().getRootRepositoryNode(ERepositoryObjectType.METADATA_CONNECTIONS, true);
+            }
+            Map<String, IRepositoryNode> linkedDbNodesMap = getLinkedDbNodesMap(dbRootNode);
+
             Iterator<Entry<String, List<DatabaseConnectionItem>>> iterator = dbItemMap.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, List<DatabaseConnectionItem>> entry = iterator.next();
@@ -179,13 +191,43 @@ public class HadoopClusterRepositoryContentHandler extends AbstractHadoopReposit
                 parentNode.getChildren().add(hadoopFolderNode);
                 for (DatabaseConnectionItem dbItem : dbItems) {
                     RepositoryNode hadoopSubNode = createHadoopSubNode(hadoopFolderNode, dbItem);
-                    // IRepositoryNode dbNode = RepositorySeekerManager.getInstance().searchRepoViewNode(
-                    // dbItem.getProperty().getId());
-                    // hadoopSubNode.getChildren().addAll(dbNode.getChildren());
-                    // TODO:try to add children like db...
+                    IRepositoryNode dbNode = linkedDbNodesMap.get(dbItem.getProperty().getId());
+                    if (dbNode != null) { // add the children, make sure be same as DB connections
+                        hadoopSubNode.getChildren().addAll(dbNode.getChildren());
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * 
+     * Find all Hive or HBase to be linked hadoop cluster.
+     */
+    private Map<String, IRepositoryNode> getLinkedDbNodesMap(IRepositoryNode curNode) {
+        Map<String, IRepositoryNode> linkedDbNodesMap = new HashMap<String, IRepositoryNode>();
+
+        if (curNode.getType() == ENodeType.SIMPLE_FOLDER || curNode.getType() == ENodeType.SYSTEM_FOLDER) {
+            List<IRepositoryNode> children = curNode.getChildren();
+            for (IRepositoryNode node : children) {
+                // add sub folders
+                linkedDbNodesMap.putAll(getLinkedDbNodesMap(node));
+            }
+        } else {
+            if (curNode.getObject() != null) {
+                Property property = curNode.getObject().getProperty();
+                if (property.getItem() instanceof DatabaseConnectionItem) {
+                    DatabaseConnectionItem item = (DatabaseConnectionItem) property.getItem();
+                    DatabaseConnection connection = (DatabaseConnection) item.getConnection();
+                    String hcId = connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+                    if (hcId != null) { // linked DB, for Hive and HBase
+                        linkedDbNodesMap.put(property.getId(), curNode);
+                    }
+                }
+            }
+        }
+
+        return linkedDbNodesMap;
     }
 
     private Map<String, Map<String, List<DatabaseConnectionItem>>> getLinkedDbMap(Project project) {
