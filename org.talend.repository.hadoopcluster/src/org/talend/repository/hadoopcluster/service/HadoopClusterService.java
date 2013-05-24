@@ -31,8 +31,10 @@ import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryTypeProcessor;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
+import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubMultiRepTypeProcessor;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.IHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -210,4 +212,9 @@ public class HadoopClusterService implements IHadoopClusterService {
         }
         return customLibraries;
     }
+
+    public IRepositoryTypeProcessor getHadoopSubMultiRepTypeProcessor(String[] repositoryTypes) {
+        return new HadoopSubMultiRepTypeProcessor(repositoryTypes);
+    }
+
 }
