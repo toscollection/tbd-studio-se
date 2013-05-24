@@ -59,6 +59,8 @@ public class PigMapComponent extends MapperExternalNode implements IHashableInpu
 
     private PigMapExpressionManager expressionManager;
 
+    public static final String SOURCE_JAVA_PIGUDF = "pigudf";
+
     public PigMapComponent() {
         expressionManager = new PigMapExpressionManager();
     }
@@ -217,13 +219,52 @@ public class PigMapComponent extends MapperExternalNode implements IHashableInpu
     }
 
     @Override
-    public List<String> checkNeededRoutines(List<String> possibleRoutines, String additionalString) {
-        return null;
+    public List<String> checkNeededRoutines(List<String> possiblePigudfs, String additionalString) {
+        List<String> pigudfsToAdd = new ArrayList<String>();
+        PigMapData pigMapData = (PigMapData) getExternalEmfData();
+        for (String pigudf : possiblePigudfs) {
+            List<OutputTable> listOutput = pigMapData.getOutputTables();
+            for (OutputTable outTable : listOutput) {
+                List<TableNode> listOutEntry = outTable.getNodes();
+                if (listOutEntry != null && !listOutEntry.isEmpty()) {
+                    for (TableNode outEntry : listOutEntry) {
+                        String expression = outEntry.getExpression();
+                        if (expression != null && !pigudfsToAdd.contains(pigudf)
+                                && expression.contains(SOURCE_JAVA_PIGUDF + additionalString + pigudf)) {
+                            pigudfsToAdd.add(pigudf);
+                        }
+                    }
+                }
+                String filter = outTable.getExpressionFilter();
+                if (filter != null && !pigudfsToAdd.contains(pigudf)
+                        && filter.contains(SOURCE_JAVA_PIGUDF + additionalString + pigudf)) {
+                    pigudfsToAdd.add(pigudf);
+                }
+            }
+            List<InputTable> listInput = pigMapData.getInputTables();
+            for (InputTable inputTable : listInput) {
+                List<TableNode> listInEntry = inputTable.getNodes();
+                if (listInEntry != null && !listInEntry.isEmpty()) {
+                    for (TableNode inEntry : listInEntry) {
+                        String expression = inEntry.getExpression();
+                        if (expression != null && !pigudfsToAdd.contains(pigudf)
+                                && expression.contains(SOURCE_JAVA_PIGUDF + additionalString + pigudf)) {
+                            pigudfsToAdd.add(pigudf);
+                        }
+                    }
+                }
+                String filter = inputTable.getExpressionFilter();
+                if (filter != null && !pigudfsToAdd.contains(pigudf)
+                        && filter.contains(SOURCE_JAVA_PIGUDF + additionalString + pigudf)) {
+                    pigudfsToAdd.add(pigudf);
+                }
+            }
+        }
+        return pigudfsToAdd;
     }
 
     @Override
     public List<Problem> getProblems() {
-        //
         return null;
     }
 
