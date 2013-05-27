@@ -2,6 +2,7 @@
 %>
 <%
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	boolean isCustom = "CUSTOM".equals(distribution);
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
 	
 	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
@@ -34,7 +35,7 @@
 	sqoopOptions_<%=cid%>.setPassword(<%=password%>); // __PASSWORD__
 	
 <%	
-	if(!("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version))) {
+	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
 		if(printLog && verbose){
 %>
 			sqoopOptions_<%=cid%>.setVerbose(true);
@@ -69,7 +70,7 @@
 %>
 	sqoopOptions_<%=cid%>.loadProperties(additionalProperties_<%=cid%>);
 <%
-	if("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) {
+	if(("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom) {
 %>
 		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
 <%
