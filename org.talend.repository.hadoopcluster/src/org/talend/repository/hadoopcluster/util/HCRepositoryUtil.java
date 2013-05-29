@@ -28,6 +28,8 @@ import org.talend.commons.exception.PersistenceException;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
+import org.talend.core.model.process.IProcess;
+import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -147,8 +149,8 @@ public class HCRepositoryUtil {
             Item item = viewObject.getProperty().getItem();
             if (item instanceof HadoopClusterConnectionItem) {
                 return (HadoopClusterConnectionItem) item;
-            } else if (item instanceof HadoopSubConnectionItem) {
-                return getRelativeHadoopClusterItem((HadoopSubConnectionItem) item);
+            } else if (item instanceof ConnectionItem) {
+                return getRelativeHadoopClusterItem(item);
             }
         } else if (isHadoopFolderNode(node)) {
             return getHCConnectionItemFromRepositoryNode(node.getParent());
@@ -190,13 +192,21 @@ public class HCRepositoryUtil {
         return getRelativeHadoopClusterConnection((HadoopSubConnection) hadoopSubConnectionItem.getConnection());
     }
 
-    public static HadoopClusterConnectionItem getRelativeHadoopClusterItem(HadoopSubConnectionItem hadoopSubConnectionItem) {
-        if (hadoopSubConnectionItem == null) {
+    public static HadoopClusterConnectionItem getRelativeHadoopClusterItem(Item subConnectionItem) {
+        if (subConnectionItem == null) {
             return null;
         }
 
-        return getRelativeHadoopClusterItem(((HadoopSubConnection) hadoopSubConnectionItem.getConnection())
-                .getRelativeHadoopClusterId());
+        String hcId = null;
+        if (subConnectionItem instanceof HadoopSubConnectionItem) {
+            hcId = ((HadoopSubConnection) ((HadoopSubConnectionItem) subConnectionItem).getConnection())
+                    .getRelativeHadoopClusterId();
+        } else if (subConnectionItem instanceof DatabaseConnectionItem) {
+            hcId = ((DatabaseConnection) ((DatabaseConnectionItem) subConnectionItem).getConnection()).getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+        }
+
+        return getRelativeHadoopClusterItem(hcId);
     }
 
     public static HadoopClusterConnectionItem getHadoopClusterItemBySubitemId(String subitemId) {
@@ -212,8 +222,8 @@ public class HCRepositoryUtil {
         }
         if (repObj != null && repObj.getProperty() != null) {
             Item item = repObj.getProperty().getItem();
-            if (item instanceof HadoopSubConnectionItem) {
-                return getRelativeHadoopClusterItem((HadoopSubConnectionItem) item);
+            if (item != null) {
+                return getRelativeHadoopClusterItem(item);
             }
         }
 
@@ -429,6 +439,54 @@ public class HCRepositoryUtil {
                 iterator.remove();
             }
         }
+    }
+
+    /**
+     * DOC ycbai Comment method "detectClusterChangeOfMRProcess".
+     * 
+     * <p>
+     * Detect the changes of hadoop related parameters from Process to Hadoop cluster.
+     * </p>
+     * 
+     * @param hcConnection
+     * @param process
+     * @return true if there are some changes from them, otherwise return false.
+     */
+    public static boolean detectClusterChangeOfProcess(HadoopClusterConnection hcConnection, IProcess process) {
+        String distribution = hcConnection.getDistribution();
+        String version = hcConnection.getVersion();
+        String customJars = hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+        String namenode = hcConnection.getNameNodeURI();
+        String jobTracker = hcConnection.getJobTrackerURI();
+        boolean useKrb = hcConnection.isEnableKerberos();
+        String nnPrincipal = hcConnection.getPrincipal();
+        String userName = hcConnection.getUserName();
+
+        String distributionPr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.DISTRIBUTION.getParameterName());
+        String versionPr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.VERSION.getParameterName());
+        String customJarsPr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.CUSTOM_JARS.getParameterName());
+        String namenodePr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.NAMENODE.getParameterName());
+        String jobTrackerPr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.JOB_TRACKER.getParameterName());
+        String useKrbPr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.USE_KRB.getParameterName());
+        String nnPrincipalPr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.NN_PRINCIPAL.getParameterName());
+        String userNamePr = HCParameterUtil.getParameterRealValue(process, process,
+                EHadoopRepositoryToMapReduce.USERNAME.getParameterName());
+
+        if (distribution != null && !distribution.equals(distributionPr) || version != null && !version.equals(versionPr)
+                || customJars != null && !customJars.equals(customJarsPr) || namenode != null && !namenode.equals(namenodePr)
+                || jobTracker != null && !jobTracker.equals(jobTrackerPr) || useKrb != Boolean.valueOf(useKrbPr)
+                || nnPrincipal != null && nnPrincipal.equals(nnPrincipalPr) || userName != null && userName.equals(userNamePr)) {
+            return true;
+        }
+
+        return false;
     }
 
 }

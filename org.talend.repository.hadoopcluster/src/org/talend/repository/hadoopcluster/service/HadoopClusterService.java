@@ -28,6 +28,7 @@ import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
+import org.talend.core.model.process.IProcess;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -213,8 +214,21 @@ public class HadoopClusterService implements IHadoopClusterService {
         return customLibraries;
     }
 
+    @Override
     public IRepositoryTypeProcessor getHadoopSubMultiRepTypeProcessor(String[] repositoryTypes) {
         return new HadoopSubMultiRepTypeProcessor(repositoryTypes);
+    }
+
+    public boolean hasDiffsFromClusterToProcess(Connection hcConnection, IProcess process) {
+        if (hcConnection == null || process == null) {
+            return false;
+        }
+
+        if (hcConnection instanceof HadoopClusterConnection) {
+            return HCRepositoryUtil.detectClusterChangeOfProcess((HadoopClusterConnection) hcConnection, process);
+        }
+
+        return false;
     }
 
 }
