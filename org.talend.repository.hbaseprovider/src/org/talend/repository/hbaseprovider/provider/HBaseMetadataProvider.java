@@ -12,10 +12,16 @@
 // ============================================================================
 package org.talend.repository.hbaseprovider.provider;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.Viewer;
@@ -72,16 +78,93 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                     new Object[] { "hbase.zookeeper.quorum", metadataConnection.getServerName() });
             ReflectionUtils.invokeMethod(config, "set",
                     new Object[] { "hbase.zookeeper.property.clientPort", metadataConnection.getPort() });
-            ReflectionUtils.invokeStaticMethod("org.apache.hadoop.hbase.client.HBaseAdmin", classLoader, "checkHBaseAvailable",
-                    new Object[] { config });
-            connectionStatus.setResult(true);
+            ReflectionUtils.invokeMethod(config, "set", new Object[] { "zookeeper.session.timeout", "30000" });
+            ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.client.operation.timeout", "30000" });
+            ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.rpc.timeout", "30000" });
+
+            Callable<Object> callable = checkHBaseAvailable(config);
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Future<Object> future = executor.submit(callable);
+            try {
+                future.get(10, TimeUnit.SECONDS);
+                connectionStatus.setResult(true);
+            } catch (Exception e) {
+                future.cancel(true);
+                connectionStatus.setResult(false);
+                connectionStatus.setMessageException("Connection timeout !");
+                // fix for TDI-25921
+                // try to terminate the org.apache.zookeeper.ClientCnxn$SendThread
+                ThreadGroup group = Thread.currentThread().getThreadGroup();
+                int activeCount = group.activeCount();
+                Thread[] allThreads = new Thread[activeCount];
+                group.enumerate(allThreads);
+
+                Thread foundThread = null;
+                for (Thread t : allThreads) {
+                    if (t.getClass().getName().equals("org.apache.zookeeper.ClientCnxn$SendThread")) {
+                        foundThread = t;
+                        break;
+                    }
+                }
+                if (foundThread != null) {
+                    // stop connect
+                    foundThread.getClass().getDeclaredMethods();
+                    Method method = foundThread.getClass().getDeclaredMethod("close");
+                    method.setAccessible(true);
+                    method.invoke(foundThread);
+                }
+
+                Class ownerClass = Class.forName("org.apache.hadoop.hbase.client.HConnectionManager", true, classLoader);
+                Method[] methods = ownerClass.getMethods();
+                // Method m = null;
+                Method m2 = null;
+                for (Method method : methods) {
+                    Class<?>[] parameterTypes = method.getParameterTypes();
+                    // if ("deleteConnection".equals(method.getName()) && parameterTypes != null &&
+                    // parameterTypes.length == 2) {
+                    // if ("org.apache.hadoop.conf.Configuration".equals(parameterTypes[0].getName())
+                    // && "boolean".equals(parameterTypes[1].getName())) {
+                    // m = method;
+                    // // break;
+                    // }
+                    // }
+                    // remove connections in cache ,need to modify latter ,better use
+                    // "deleteAllConnections(config,boolean)" , but it can't work for now
+                    if ("deleteAllConnections".equals(method.getName()) && parameterTypes.length == 1
+                            && "boolean".equals(parameterTypes[0].getName())) {
+                        m2 = method;
+                    }
+                }
+                // if (m != null) {
+                // m.setAccessible(true);
+                // m.invoke(null, config, true);
+                // }
+                if (m2 != null) {
+                    m2.setAccessible(true);
+                    m2.invoke(null, true);
+                }
+
+            }
+
         } catch (Exception e) {
             ExceptionHandler.process(e);
-            connectionStatus.setMessageException(e.getMessage());
+            connectionStatus.setMessageException(e.getStackTrace() == null ? e.getMessage() : e.getStackTrace().toString());
         } finally {
             Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
         return connectionStatus;
+    }
+
+    private Callable<Object> checkHBaseAvailable(final Object config) {
+        return new Callable<Object>() {
+
+            @Override
+            public Object call() throws Exception {
+                return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.hbase.client.HBaseAdmin", classLoader,
+                        "checkHBaseAvailable", new Object[] { config });
+            }
+        };
+
     }
 
     @Override
@@ -675,6 +758,8 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                         "create", new Object[0]);
                 ReflectionUtils.invokeMethod(config, "set",
                         new Object[] { "hbase.zookeeper.quorum", metadataConnection.getServerName() });
+                ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.zookeeper.property.clientPort",
+                        metadataConnection.getPort() });
                 ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.zookeeper.property.clientPort",
                         metadataConnection.getPort() });
                 hAdmin = ReflectionUtils.newInstance("org.apache.hadoop.hbase.client.HBaseAdmin", classLoader,
