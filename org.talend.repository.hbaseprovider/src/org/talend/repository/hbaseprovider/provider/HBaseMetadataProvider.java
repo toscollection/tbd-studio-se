@@ -27,12 +27,14 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.GlobalServiceRegister;
 import org.talend.core.model.metadata.IMetadataConnection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.builder.database.ExtractMetaDataFromDataBase.ETableTypes;
 import org.talend.core.model.metadata.builder.database.TableNode;
+import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.repository.IDBMetadataProvider;
@@ -45,6 +47,7 @@ import org.talend.cwm.helper.TaggedValueHelper;
 import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdColumn;
 import org.talend.cwm.relational.TdTable;
+import org.talend.designer.core.IDesignerCoreService;
 import org.talend.repository.hbaseprovider.util.HBaseClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
@@ -86,7 +89,14 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             ExecutorService executor = Executors.newSingleThreadExecutor();
             Future<Object> future = executor.submit(callable);
             try {
-                future.get(10, TimeUnit.SECONDS);
+                int timeout = 15;
+                if (GlobalServiceRegister.getDefault().isServiceRegistered(IDesignerCoreService.class)) {
+                    IDesignerCoreService designerService = (IDesignerCoreService) GlobalServiceRegister.getDefault().getService(
+                            IDesignerCoreService.class);
+                    timeout = designerService.getDesignerCorePreferenceStore().getInt(
+                            ITalendCorePrefConstants.DB_CONNECTION_TIMEOUT);
+                }
+                future.get(timeout, TimeUnit.SECONDS);
                 connectionStatus.setResult(true);
             } catch (Exception e) {
                 future.cancel(true);
