@@ -12,9 +12,9 @@
 // ============================================================================
 package org.talend.repository.hcatalog.ui;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -135,37 +135,41 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
     }
 
     private void initTreeNavigatorNodes() {
-        List<MetadataTable> tables = ConnectionHelper.getTablesWithOrders(getConnection());
-        if (metadataTable == null) {
-            if (tables != null && !tables.isEmpty()) {
-                for (MetadataTable table : tables) {
-                    if (!TableHelper.isDeleted(table)) {
-                        metadataTable = table;
-                        break;
-                    }
-                }
-            } else {
-                addMetadataTable();
-            }
-        }
-
         tableNavigator.removeAll();
 
-        List<String> tablenames = new ArrayList<String>();
-        for (MetadataTable t : tables) {
-            tablenames.add(t.getLabel());
-        }
-        String[] allTableLabel = tablenames.toArray(new String[0]);
-        Arrays.sort(allTableLabel);
-
-        for (String element : allTableLabel) {
-            if (element.equals(metadataTable.getLabel())) {
-                TableItem subItem = new TableItem(tableNavigator, SWT.NONE);
-                subItem.setText(element);
-                tableNavigator.setSelection(subItem);
+        List<MetadataTable> tables = ConnectionHelper.getTablesWithOrders(getConnection());
+        if (tables != null && !tables.isEmpty()) {
+            boolean metadataTableExist = false;
+            if (metadataTable == null) {
+                metadataTableExist = false;
             } else {
+                for (MetadataTable table : tables) {
+                    if (table.getLabel().equals(metadataTable.getLabel())) {
+                        metadataTableExist = true;
+                    }
+                }
+            }
+            if (!metadataTableExist) {
+                metadataTable = tables.get(0);
+            }
+
+            Collections.sort(tables, new Comparator<MetadataTable>() {
+
+                @Override
+                public int compare(MetadataTable tab1, MetadataTable tab2) {
+                    String tab1Label = tab1.getLabel();
+                    String tab2Label = tab2.getLabel();
+                    return tab1Label.compareTo(tab2Label);
+                }
+            });
+
+            for (MetadataTable table : tables) {
+                String tabLabel = table.getLabel();
                 TableItem subItem = new TableItem(tableNavigator, SWT.NONE);
-                subItem.setText(element);
+                subItem.setText(tabLabel);
+                if (tabLabel.equals(metadataTable.getLabel())) {
+                    tableNavigator.setSelection(subItem);
+                }
             }
         }
     }
@@ -183,6 +187,10 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
     }
 
     private void initMetadataForm() {
+        if (metadataTable == null) {
+            return;
+        }
+
         metadataEditor.setMetadataTable(metadataTable);
 
         IPreferenceStore store = RepositoryManager.getPreferenceStore();
