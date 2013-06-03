@@ -130,6 +130,7 @@
 		    <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4')" />
 		    <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4')" />
 		    <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4')" />
+		    <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (DISTRIBUTION!='CUSTOM')" />
 		    <!-- APACHE_0_20_2 -->
 		    <IMPORT NAME="hadoop-0.20.2-core.jar" MODULE="hadoop-0.20.2-core.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_2')" />
 		    <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_2')" />
