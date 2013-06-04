@@ -454,7 +454,7 @@ public class HCRepositoryUtil {
      */
     public static boolean detectClusterChangeOfProcess(HadoopClusterConnection hcConnection, IProcess process) {
         String distribution = hcConnection.getDistribution();
-        String version = hcConnection.getVersion();
+        String version = hcConnection.getDfVersion();
         String customJars = hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
         String namenode = hcConnection.getNameNodeURI();
         String jobTracker = hcConnection.getJobTrackerURI();
@@ -482,7 +482,7 @@ public class HCRepositoryUtil {
         if (distribution != null && !distribution.equals(distributionPr) || version != null && !version.equals(versionPr)
                 || customJars != null && !customJars.equals(customJarsPr) || namenode != null && !namenode.equals(namenodePr)
                 || jobTracker != null && !jobTracker.equals(jobTrackerPr) || useKrb != Boolean.valueOf(useKrbPr)
-                || nnPrincipal != null && nnPrincipal.equals(nnPrincipalPr) || userName != null && userName.equals(userNamePr)) {
+                || nnPrincipal != null && !nnPrincipal.equals(nnPrincipalPr) || userName != null && !userName.equals(userNamePr)) {
             return true;
         }
 
