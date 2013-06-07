@@ -228,6 +228,7 @@
       NAME="GUESS_SCHEMA"
       FIELD="GUESS_SCHEMA"
       NUM_ROW="70"
+	  SHOW="false"
     >
       <DEFAULT>""</DEFAULT>
     </PARAMETER>
