@@ -19,6 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopReflectionException;
 import org.talend.designer.hdfsbrowse.reflection.HadoopClassConstants;
@@ -28,6 +29,7 @@ import org.talend.oozie.scheduler.jobsubmission.model.JobSubmission;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
 import org.talend.oozie.scheduler.jobsubmission.model.Utils;
 import org.talend.oozie.scheduler.utils.OozieClassLoaderFactory;
+import org.talend.oozie.scheduler.utils.TOozieParamUtils;
 import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
 import org.talend.utils.json.JSONObject;
@@ -80,14 +82,16 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
         action.addArgument(jobContext.get("NAMENODE")); //$NON-NLS-1$
         action.addArgument("-jt");//$NON-NLS-1$
         action.addArgument(jobContext.get("JOBTRACKER"));//$NON-NLS-1$
-        action.addArgument("-libjars");//$NON-NLS-1$
-        String[] libjarsTemp = jobContext.get("LIBJARS").split(","); //$NON-NLS-1$ //$NON-NLS-2$
-        StringBuffer libjars = new StringBuffer();
-        for (String libjar : libjarsTemp) {
-            libjars.append(jobContext.get(OozieClient.APP_PATH) + "/lib/" + libjar + ","); //$NON-NLS-1$ //$NON-NLS-2$
+        String libJars = jobContext.get("LIBJARS"); //$NON-NLS-1$
+        if (libJars != null) {
+            action.addArgument("-libjars");//$NON-NLS-1$
+            String[] libjarsTemp = libJars.split(","); //$NON-NLS-1$
+            StringBuffer libjars = new StringBuffer();
+            for (String libjar : libjarsTemp) {
+                libjars.append(jobContext.get(OozieClient.APP_PATH) + "/lib/" + libjar + ","); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+            action.addArgument(libjars.substring(0, libjars.length() - 1));
         }
-        action.addArgument(libjars.substring(0, libjars.length() - 1));
-
         if (jobContext.get("KERBEROS.PRINCIPAL") != null) {//$NON-NLS-1$
             action.addArgument("-D");//$NON-NLS-1$
             action.addArgument("dfs.namenode.kerberos.principal=" + jobContext.get("KERBEROS.PRINCIPAL"));//$NON-NLS-1$ //$NON-NLS-2$
@@ -124,8 +128,16 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
     protected Coordinator createCoordinator(JobContext jobContext) {
         Utils.assertTrue(jobContext.getFrequency() > 0, "Frequency has to be greater than 0.");
 
-        return new Coordinator(jobContext.getJobName(), jobContext.getNameNodeEndPoint() + jobContext.getJobPathOnHDFS(),
-                jobContext.getStartTime(), jobContext.getEndTime(), jobContext.getFrequency(), jobContext.getTimeUnit());
+        String cooAppPath = jobContext.getJobPathOnHDFS();
+        String hadoopDistribution = TOozieParamUtils.getHadoopDistribution();
+        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hadoopDistribution, false);
+        if (distribution == EHadoopDistributions.MAPR) {
+            cooAppPath = "maprfs:".concat(cooAppPath);//$NON-NLS-1$
+        } else {
+            cooAppPath = jobContext.getNameNodeEndPoint().concat(cooAppPath);
+        }
+        return new Coordinator(jobContext.getJobName(), cooAppPath, jobContext.getStartTime(), jobContext.getEndTime(),
+                jobContext.getFrequency(), jobContext.getTimeUnit());
     }
 
     protected void serializeToHDFS(String toSerialize, String asFile, JobContext jobContext) throws IOException,
