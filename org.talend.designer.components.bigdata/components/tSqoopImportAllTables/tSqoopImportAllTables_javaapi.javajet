@@ -19,10 +19,15 @@
 	boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
 	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
+
+	String fsDefalutName = "fs.default.name";
+	if(version!=null && "Cloudera_CDH4".equals(db_version)){
+		fsDefalutName="fs.defaultFS";
+	}
 	
 %>
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
-	configuration_<%=cid%>.set("fs.default.name", <%=namenode%>);
+	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
 
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);

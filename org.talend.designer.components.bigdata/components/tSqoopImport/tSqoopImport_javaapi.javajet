@@ -36,6 +36,11 @@
 	
 	boolean useSplit = "true".equals(ElementParameterParser.getValue(node,"__USE_SPLIT__"));
 	String split = ElementParameterParser.getValue(node,"__SPLIT__");
+	
+	String fsDefalutName = "fs.default.name";
+	if(version!=null && "Cloudera_CDH4".equals(version)){
+		fsDefalutName="fs.defaultFS";
+	}
 %>
 	java.util.List<String> lColumns_<%=cid%> = new java.util.ArrayList<String>();
 <%
@@ -47,7 +52,7 @@
 	}
 %>
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
-	configuration_<%=cid%>.set("fs.default.name", <%=namenode%>);
+	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
 
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);
