@@ -91,6 +91,12 @@ if (metadata!=null) {
 					for (int i = 0; i < sizeColumns; i++) {
 						IMetadataColumn column = columnList.get(i);
 						JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+						boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( javaType, column.isNullable());
+						if(!isPrimitive) {
+%>
+				if(<%=conn.getName() %>.<%=column.getLabel() %> != null) {
+<%
+						}
 %>
 					sb_<%=cid %>.append(
 <%
@@ -115,6 +121,12 @@ if (metadata!=null) {
 %>
 										);
 <%
+						if(!isPrimitive) {
+%>
+				}
+<%
+						}
+						
 						if(i != sizeColumns - 1) {
 %>					
 					sb_<%=cid %>.append(<%=fieldSeparator%>);
