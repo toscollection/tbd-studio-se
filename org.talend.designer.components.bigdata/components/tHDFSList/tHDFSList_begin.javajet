@@ -37,13 +37,17 @@
     boolean bOrdByModifiedTime = "true".equals(ElementParameterParser.getValue(node, "__ORDER_BY_MODIFIEDDATE__"));
     
     boolean bOrdASC = "true".equals(ElementParameterParser.getValue(node, "__ORDER_ACTION_ASC__"));
+    String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	String fsDefalutName = "fs.default.name";
+	if(hadoopVersion!=null && "Cloudera_CDH4".equals(hadoopVersion)){
+		fsDefalutName="fs.defaultFS";
+	}
   	
 	%>
 	String username_<%=cid%> = "";
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
 	<%   
 	if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
-		String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 		boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 		String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 		
@@ -51,7 +55,7 @@
 		String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
 		%>
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
-		conf_<%=cid%>.set("fs.default.name", <%=fsDefaultName%>);
+		conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
 		<%
 		if(hadoopProps.size() > 0){
 			for(Map<String, String> item : hadoopProps){
@@ -80,7 +84,7 @@
 			if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
 				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 			}else{
-				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("fs.default.name")),conf_<%=cid%>,username_<%=cid%>);
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
 			}	
 		<%
 		}
@@ -93,7 +97,7 @@
 		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
 	    for(INode targetNode : nodes){
 	    	if (targetNode.getUniqueName().equals(connectionSid)) {
-		      	String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+		      	
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
 			String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
 			
@@ -117,7 +121,7 @@
 					if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
 						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 					}else{
-						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("fs.default.name")),conf_<%=cid%>,username_<%=cid%>);
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
 					}			  		
 			  	<%
 			  	}
