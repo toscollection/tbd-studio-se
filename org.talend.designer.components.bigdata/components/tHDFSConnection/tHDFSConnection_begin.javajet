@@ -14,6 +14,10 @@
 	String cid = node.getUniqueName();
 	
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	String fsDefalutName = "fs.default.name";
+	if(hadoopVersion!=null && "Cloudera_CDH4".equals(hadoopVersion)){
+		fsDefalutName="fs.defaultFS";
+	}
 	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	String username = ElementParameterParser.getValue(node, "__USERNAME__");
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
@@ -23,7 +27,7 @@
 	%>
 
 	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
-	conf_<%=cid%>.set("fs.default.name", <%=fsDefaultName%>);
+	conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
 	<%
 	if(hadoopProps.size() > 0){
 		for(Map<String, String> item : hadoopProps){
