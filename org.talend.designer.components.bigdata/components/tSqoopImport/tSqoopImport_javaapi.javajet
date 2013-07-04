@@ -16,7 +16,6 @@
 	boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
 	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
 	boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
-	boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
 	String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
 	boolean useTarget = "true".equals(ElementParameterParser.getValue(node,"__USE_TARGET__"));
 	String target = ElementParameterParser.getValue(node,"__TARGET__");

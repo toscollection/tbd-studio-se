@@ -2,15 +2,11 @@
 %>
 
 <%
-    boolean useColumns = "true".equals(ElementParameterParser.getValue(node,"__USE_COLUMNS__"));
-    List<Map<String, String>> columns = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__COLUMNS__");
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
-    String table = ElementParameterParser.getValue(node,"__TABLE__");
     String username = ElementParameterParser.getValue(node,"__USERNAME__");
     String password = ElementParameterParser.getValue(node,"__PASSWORD__");
     boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
     boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
-    boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
     boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
     boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
     boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
