@@ -208,6 +208,13 @@
 	}
 %>
 	java.util.Properties props_<%=cid%> = new java.util.Properties();
+<%  
+	if(inMain) {
+%>
+	props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
+<%  
+	}
+%>
 	try {
 <%
 		if(isLocal) { // LOCAL mode
