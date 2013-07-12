@@ -176,14 +176,17 @@
 	 		
 	 		boolean useOptimization = false;
 	 		String optimizationModel = "";
-	 		if("None".equals(optimization)) {
+	 		if("None".equalsIgnoreCase(optimization)) {
 	 			//do nothing
-	 		} else if("Replicated".equals(optimization)) {
+	 		} else if("Replicated".equalsIgnoreCase(optimization)) {
 	 			optimizationModel = "replicated";
-	 		} else if("Skewed".equals(optimization)) {
+	 			useOptimization = true;
+	 		} else if("Skewed".equalsIgnoreCase(optimization)) {
 	 			optimizationModel = "skewed";
-	 		} else if("Merge".equals(optimization)) {
+	 			useOptimization = true;
+	 		} else if("Merge".equalsIgnoreCase(optimization)) {
 	 			optimizationModel = "merge";
+	 			useOptimization = true;
 	 		}
 	 		
  			List<String> innerRejectLocationExpressions = new ArrayList<String>();
