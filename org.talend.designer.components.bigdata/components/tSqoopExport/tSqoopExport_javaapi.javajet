@@ -3,6 +3,8 @@
 	boolean isCustom = "CUSTOM".equals(distribution);
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
 	
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	
 	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	String jobtracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
@@ -24,7 +26,15 @@
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
-
+<%
+	if(hadoopProps!=null && hadoopProps.size() > 0){
+		for(Map<String, String> item : hadoopProps){
+%>
+			configuration_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<% 
+		}
+	}
+%>
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);
 	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("export");
 
