@@ -8,7 +8,7 @@
 
     <groupId>org.talend</groupId>
     <artifactId>org.talend.tos</artifactId>
-    <version>5.3.1</version>
+    <version>5.3.2-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
