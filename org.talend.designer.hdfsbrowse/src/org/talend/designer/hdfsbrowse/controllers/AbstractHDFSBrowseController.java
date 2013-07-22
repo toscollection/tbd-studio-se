@@ -43,13 +43,13 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
-import org.talend.core.CorePlugin;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.properties.tab.IDynamicProperty;
+import org.talend.core.ui.CoreUIPlugin;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.model.process.DataNode;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
@@ -235,7 +235,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         Button btnEdit = getWidgetFactory().createButton(subComposite, EMPTY_STRING, SWT.PUSH);
         FormData data;
 
-        btnEdit.setImage(ImageProvider.getImage(CorePlugin.getImageDescriptor(DOTS_BUTTON)));
+        btnEdit.setImage(ImageProvider.getImage(CoreUIPlugin.getImageDescriptor(DOTS_BUTTON)));
 
         data = new FormData();
         data.left = new FormAttachment(((numInRow * MAX_PERCENT) / nbInRow), -STANDARD_BUTTON_WIDTH);
