@@ -281,8 +281,8 @@ public class HadoopServerUtil {
     public static Set<String> getMissingJars(HDFSConnectionBean connection) {
         Set<String> set = new HashSet<String>();
         Set<String> jars = new HashSet<String>();
-        ClassLoader classLoader = HadoopClassLoaderFactory
-                .getClassLoader(connection.getDistribution(), connection.getDfVersion());
+        ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(connection.getDistribution(),
+                connection.getDfVersion(), false, false);
         if (classLoader instanceof DynamicClassLoader) {
             set.addAll(((DynamicClassLoader) classLoader).getLibraries());
         }

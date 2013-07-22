@@ -45,19 +45,16 @@ public class HadoopClassLoaderFactory {
             return loader;
         }
 
-        return getClassLoader(distribution, version, enableKerberos);
+        return getClassLoader(distribution, version, enableKerberos, true);
     }
 
-    public static ClassLoader getClassLoader(String distribution, String version) {
-        return getClassLoader(distribution, version, false);
-    }
-
-    public static ClassLoader getClassLoader(String distribution, String version, boolean enableKerberos) {
+    public static ClassLoader getClassLoader(String distribution, String version, boolean enableKerberos,
+            boolean showDownloadIfNotExist) {
         String index = "HDFS" + ":" + distribution + ":" + version; //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
         if (enableKerberos) {
             index += "?USE_KRB"; //$NON-NLS-1$
         }
-        ClassLoader loader = ClassLoaderFactory.getClassLoader(index);
+        ClassLoader loader = ClassLoaderFactory.getClassLoader(index, showDownloadIfNotExist);
         if (loader == null) {
             loader = HadoopClassLoaderFactory.class.getClassLoader();
         }
@@ -65,7 +62,8 @@ public class HadoopClassLoaderFactory {
         return loader;
     }
 
-    public static ClassLoader getClassLoader(ECustomVersionType type, String distribution, String version, boolean enableKerberos) {
+    public static ClassLoader getClassLoader(ECustomVersionType type, String distribution, String version,
+            boolean enableKerberos, boolean showDownloadIfNotExist) {
         if (type == null) {
             return HadoopClassLoaderFactory.class.getClassLoader();
         }
@@ -85,10 +83,10 @@ public class HadoopClassLoaderFactory {
             break;
         }
 
-        ClassLoader loader = ClassLoaderFactory.getClassLoader(index);
+        ClassLoader loader = ClassLoaderFactory.getClassLoader(index, showDownloadIfNotExist);
         if (loader == null && hive_embeded != null) {
             index = baseIndex + hive_embeded;
-            loader = ClassLoaderFactory.getClassLoader(index);
+            loader = ClassLoaderFactory.getClassLoader(index, showDownloadIfNotExist);
         }
         if (loader == null) {
             loader = HadoopClassLoaderFactory.class.getClassLoader();
