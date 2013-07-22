@@ -33,7 +33,7 @@ public class OozieClassLoaderFactory {
             classLoader = ClassLoaderFactory.getCustomClassLoader(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS,
                     customJars);
         } else {
-            classLoader = HadoopClassLoaderFactory.getClassLoader(distributionValue, versionValue);
+            classLoader = HadoopClassLoaderFactory.getClassLoader(distributionValue, versionValue, false, true);
         }
 
         if (classLoader == null) {

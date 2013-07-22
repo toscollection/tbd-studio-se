@@ -36,10 +36,10 @@ public class HadoopService implements IHadoopService {
      * @see org.talend.core.hadoop.IHadoopService#getHadoopJars(java.lang.String, java.lang.String)
      */
     @Override
-    public Set<String> getHadoopLibraries(String distribution, String version) {
+    public Set<String> getHadoopLibraries(String distribution, String version, boolean showDownloadIfNotExist) {
         Set<String> set = new HashSet<String>();
 
-        ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(distribution, version);
+        ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(distribution, version, false, showDownloadIfNotExist);
         if (classLoader instanceof DynamicClassLoader) {
             set.addAll(((DynamicClassLoader) classLoader).getLibraries());
         }
@@ -56,7 +56,7 @@ public class HadoopService implements IHadoopService {
     public Set<String> getHadoopLibrariesByType(ECustomVersionType type, String distribution, String version) {
         Set<String> set = new HashSet<String>();
 
-        ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(type, distribution, version, false);
+        ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(type, distribution, version, false, false);
         if (classLoader instanceof DynamicClassLoader) {
             set.addAll(((DynamicClassLoader) classLoader).getLibraries());
         }
@@ -67,7 +67,7 @@ public class HadoopService implements IHadoopService {
     @Override
     public Set<String> getMissingLibraries(String distribution, String version) {
         Set<String> jars = new HashSet<String>();
-        Set<String> set = getHadoopLibraries(distribution, version);
+        Set<String> set = getHadoopLibraries(distribution, version, false);
         List jarsNeed = ModulesNeededProvider.getModulesNeeded();
         for (Object jar : jarsNeed) {
             if (jar instanceof ModuleNeeded) {
