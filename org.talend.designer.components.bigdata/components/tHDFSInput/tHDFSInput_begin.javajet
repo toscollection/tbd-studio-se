@@ -22,6 +22,7 @@
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 		
 	String fileName = ElementParameterParser.getValue(node, "__FILENAME__");
+	boolean incldSubdir = ("true").equals(ElementParameterParser.getValue(node, "__INCLUDSUBDIR__"));
 	
 	String fileAction = ElementParameterParser.getValue(node, "__FILE_ACTION__");
 	
@@ -134,7 +135,38 @@
 		    }
 		}
 %>
-		org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
+		org.apache.hadoop.fs.Path rootPath_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
+		org.apache.hadoop.fs.FileStatus rootStatu_<%=cid%> = fs_<%=cid%>.getFileStatus(rootPath_<%=cid%>);
+		final java.util.List<org.apache.hadoop.fs.FileStatus> status_<%=cid%> = new java.util.ArrayList<org.apache.hadoop.fs.FileStatus>();
+		if(rootStatu_<%=cid%>.isDir()) {
+        	final org.apache.hadoop.fs.FileSystem filesystem_<%=cid%> = fs_<%=cid%>;
+        	filesystem_<%=cid%>.listStatus(rootPath_<%=cid%>,new org.apache.hadoop.fs.PathFilter() {
+        	
+        		public boolean accept(org.apache.hadoop.fs.Path path) {
+        			try {
+        				org.apache.hadoop.fs.FileStatus statu = filesystem_<%=cid%>.getFileStatus(path);
+        				if(statu.isDir()) {
+        					<%if(incldSubdir) {%>
+        					filesystem_<%=cid%>.listStatus(path, this);
+        					<%}%>
+        				} else {
+        					status_<%=cid%>.add(statu);
+        				}
+        			} catch (java.io.FileNotFoundException e) {
+        				e.printStackTrace();
+        			} catch (java.io.IOException e) {
+        				e.printStackTrace();
+        			}
+        			return false;
+        		}
+        
+        	});			
+		} else {
+			status_<%=cid%>.add(rootStatu_<%=cid%>);
+		}
+		
+		for(org.apache.hadoop.fs.FileStatus statu_<%=cid%> : status_<%=cid%>) {
+			org.apache.hadoop.fs.Path path_<%=cid%> = statu_<%=cid%>.getPath();
 <%
 		if (typeFile.equals("TEXT")) {
 %>
