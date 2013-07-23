@@ -26,7 +26,6 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -66,9 +65,9 @@ import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.editor.MetadataEmfTableEditor;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.repository.IRepositoryPrefConstants;
-import org.talend.core.model.repository.RepositoryManager;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.ui.metadata.editor.MetadataEmfTableEditorView;
 import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.TableHelper;
@@ -193,8 +192,8 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
 
         metadataEditor.setMetadataTable(metadataTable);
 
-        IPreferenceStore store = RepositoryManager.getPreferenceStore();
-        Boolean flag = store.getBoolean(IRepositoryPrefConstants.ALLOW_SPECIFIC_CHARACTERS_FOR_SCHEMA_COLUMNS);
+        Boolean flag = CoreRuntimePlugin.getInstance().getDesignerCoreService()
+                .getPreferenceStoreBooleanValue(IRepositoryPrefConstants.ALLOW_SPECIFIC_CHARACTERS_FOR_SCHEMA_COLUMNS);
         if (!flag.booleanValue()) {
             List<MetadataColumn> list = metadataEditor.getMetadataColumnList();
             for (MetadataColumn column : list) {

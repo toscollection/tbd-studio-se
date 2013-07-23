@@ -33,7 +33,6 @@ import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.builder.database.ExtractMetaDataFromDataBase.ETableTypes;
 import org.talend.core.model.metadata.builder.database.TableNode;
-import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.repository.IDBMetadataProvider;
@@ -91,8 +90,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                 if (GlobalServiceRegister.getDefault().isServiceRegistered(IDesignerCoreService.class)) {
                     IDesignerCoreService designerService = (IDesignerCoreService) GlobalServiceRegister.getDefault().getService(
                             IDesignerCoreService.class);
-                    timeout = designerService.getDesignerCorePreferenceStore().getInt(
-                            ITalendCorePrefConstants.DB_CONNECTION_TIMEOUT);
+                    timeout = designerService.getDBConnectionTimeout();
                 }
                 future.get(timeout, TimeUnit.SECONDS);
                 connectionStatus.setResult(true);
