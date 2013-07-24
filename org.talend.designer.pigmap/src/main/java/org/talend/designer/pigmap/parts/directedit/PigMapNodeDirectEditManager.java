@@ -39,12 +39,14 @@ import org.talend.commons.ui.swt.tableviewer.celleditor.CellEditorDialogBehavior
 import org.talend.commons.ui.swt.tableviewer.celleditor.ExtendedTextCellEditor;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.IService;
+import org.talend.designer.gefabstractmap.figures.VarNodeTextLabel;
 import org.talend.designer.gefabstractmap.figures.cells.IComboCell;
 import org.talend.designer.gefabstractmap.figures.cells.IExpressionBuilderCell;
 import org.talend.designer.gefabstractmap.figures.cells.ITextAreaCell;
 import org.talend.designer.gefabstractmap.figures.cells.ITextCell;
 import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.gefabstractmap.part.directedit.PigMapNodeCellEditorLocator;
+import org.talend.designer.pigmap.figures.manager.PigMapSearchZoneToolBar;
 import org.talend.designer.pigmap.figures.tablesettings.IUIJoinOptimization;
 import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.figures.tablesettings.TableSettingsConstant;
@@ -191,8 +193,17 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                 }
             }
 
+        } else if (model instanceof PigMapData) {
+            PigMapData pigMapData = (PigMapData) model;
+            if (directEditType != null) {
+                switch (directEditType) {
+                case SERACH:
+                    Text text = (Text) getCellEditor().getControl();
+                    text.selectAll();
+                    break;
+                }
+            }
         }
-
     }
 
     private String getJoinOptimizationDisplayName(String joinOptimization) {
@@ -317,6 +328,27 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
 
     @Override
     public void commit() {
+        DirectEditType directEditType = cellAndType.get(getCellEditor());
+        if (directEditType != null) {
+            switch (directEditType) {
+            case SERACH:
+                VarNodeTextLabel figure = null;
+                if (this.locator instanceof PigMapNodeCellEditorLocator) {
+                    PigMapNodeCellEditorLocator lo = (PigMapNodeCellEditorLocator) locator;
+                    if (lo.getFigure() != null && lo.getFigure() instanceof VarNodeTextLabel) {
+                        figure = (VarNodeTextLabel) lo.getFigure();
+                        Object searchTextObject = getDirectEditRequest().getCellEditor().getValue();
+                        if (searchTextObject != null) {
+                            if (figure.getParent() != null && figure.getParent() instanceof PigMapSearchZoneToolBar) {
+                                PigMapSearchZoneToolBar searchZone = (PigMapSearchZoneToolBar) figure.getParent();
+                                searchZone.search(searchTextObject.toString());
+                                figure.setText(searchTextObject.toString());
+                            }
+                        }
+                    }
+                }
+            }
+        }
         super.commit();
     }
 

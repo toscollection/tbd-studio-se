@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.gef.EditPart;
 import org.eclipse.jface.viewers.CellEditor;
@@ -77,6 +78,8 @@ public class MapperManager extends AbstractMapperManager {
 
     public static final String ERROR_REJECT_STACK_TRACE = "errorStackTrace";
 
+    private IFigure selectedFigure;
+
     public MapperManager(PigMapComponent mapperComponent, PigMapData copyOfMapData) {
         super(mapperComponent, copyOfMapData);
         for (InputTable input : copyOfMapData.getInputTables()) {
@@ -110,6 +113,7 @@ public class MapperManager extends AbstractMapperManager {
                     } else {
                         refreshStyledTextEditor(null);
                     }
+                    selectedFigure = ((TableEntityPart) firstElement).getFigure();
                 } else if (firstElement instanceof PigMapInputTablePart) {
                     selectInputTable((InputTable) ((PigMapInputTablePart) firstElement).getModel());
                     refreshStyledTextEditor(null);
@@ -583,5 +587,13 @@ public class MapperManager extends AbstractMapperManager {
 
     public InputTable getMainInputTable() {
         return mainInputTable;
+    }
+
+    public IFigure getSelectedFigure() {
+        return this.selectedFigure;
+    }
+
+    public void setSelectedFigure(IFigure selectedFigure) {
+        this.selectedFigure = selectedFigure;
     }
 }
