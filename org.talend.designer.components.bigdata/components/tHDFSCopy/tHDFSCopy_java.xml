@@ -98,13 +98,21 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="RENAME" FIELD="CHECK" REQUIRED="true"
-			NUM_ROW="80">
+			NUM_ROW="80" SHOW_IF="MERGE == 'false'">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="NEWNAME" FIELD="TEXT" NUM_ROW="80"
-			REQUIRED="true" SHOW_IF="RENAME == 'true'">
+			REQUIRED="true" SHOW_IF="(RENAME == 'true') AND (MERGE == 'false')">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
+        <PARAMETER NAME="MERGE" FIELD="CHECK" REQUIRED="true"
+            NUM_ROW="85" SHOW_IF="RENAME == 'false'">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER NAME="MERGENAME" FIELD="TEXT" NUM_ROW="87"
+            REQUIRED="true" SHOW_IF="(MERGE == 'true') AND (RENAME == 'false')">
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
 		<PARAMETER NAME="REMOVE_FILE" FIELD="CHECK" REQUIRED="true"
 			NUM_ROW="90">
 			<DEFAULT>false</DEFAULT>
