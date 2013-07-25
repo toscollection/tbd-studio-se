@@ -140,12 +140,10 @@ public class PigMapSearchZoneToolBar extends SearchZoneToolBar {
     }
 
     public void search(String searchText) {
+        // if change the search text ,need clear the data .
         if (searchMaps.size() > 0) {
-            if (!searchZoneMapper.isHightlightAll()) {
-                searchZoneMapper.hightlightAll(searchMaps, false);
-            } else {
-                searchZoneMapper.hightlightAll(searchMaps, true);
-            }
+            searchZoneMapper.hightlightAll(searchMaps, false);
+            searchZoneMapper.setHightlightAll(false);
             searchMaps.clear();
         }
         searchZoneMapper.search(searchMaps, searchText);

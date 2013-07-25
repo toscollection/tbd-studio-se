@@ -31,6 +31,7 @@ import org.talend.designer.pigmap.figures.InputTableFigure;
 import org.talend.designer.pigmap.figures.OutputTableFigure;
 import org.talend.designer.pigmap.figures.tablenode.PigMapTableNodeFigure;
 import org.talend.designer.pigmap.figures.tablesettings.TableFilterContainer;
+import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
@@ -47,21 +48,21 @@ public class SearchZoneMapper {
 
     private boolean isHightlightAll = false;
 
+    private SearchPattern matcher = null;
+
     public SearchZoneMapper(MapperManager mapperManager) {
         this.mapperManager = mapperManager;
+        matcher = new SearchPattern();
     }
 
     public void search(Map<Integer, Figure> searchMaps, String searchValue) {
         if (searchValue.equals("") || searchValue == null) {
             return;
         }
-        // SearchPattern
-        SearchPattern matcher = new SearchPattern();
-        matcher.setPattern(searchValue);
 
         List<InputTable> inputTables = mapperManager.getExternalData().getInputTables();
         List<OutputTable> outputTables = mapperManager.getExternalData().getOutputTables();
-
+        matcher.setPattern(searchValue);
         int index = -1;
 
         // for the Lookup InputTables
@@ -83,19 +84,9 @@ public class SearchZoneMapper {
             }
             // TableNode
             for (TableNode node : inputTable.getNodes()) {
-                if (node.getExpression() != null && matcher.matches(node.getExpression())) {
-                    EList<Adapter> adapter = node.eAdapters();
-                    if (adapter.size() > 0) {
-                        if (adapter.get(0) instanceof TableEntityPart) {
-                            TableEntityPart tableEntityPart = (TableEntityPart) adapter.get(0);
-                            if (tableEntityPart != null && tableEntityPart.getFigure() != null
-                                    && tableEntityPart.getFigure() instanceof TableEntityFigure) {
-                                TableEntityFigure nodeFigure = (TableEntityFigure) tableEntityPart.getFigure();
-                                index++;
-                                searchMaps.put(index, nodeFigure);
-                            }
-                        }
-                    }
+                if (getMatcherNodeFigure(node) != null) {
+                    index++;
+                    searchMaps.put(index, getMatcherNodeFigure(node));
                 }
             }
         }
@@ -119,19 +110,9 @@ public class SearchZoneMapper {
             }
             // OutputTableNode
             for (TableNode node : outputTable.getNodes()) {
-                if (node.getExpression() != null && matcher.matches(node.getExpression())) {
-                    EList<Adapter> adapter = node.eAdapters();
-                    if (adapter.size() > 0) {
-                        if (adapter.get(0) instanceof TableEntityPart) {
-                            TableEntityPart tableEntityPart = (TableEntityPart) adapter.get(0);
-                            if (tableEntityPart != null && tableEntityPart.getFigure() != null
-                                    && tableEntityPart.getFigure() instanceof TableEntityFigure) {
-                                TableEntityFigure nodeFigure = (TableEntityFigure) tableEntityPart.getFigure();
-                                index++;
-                                searchMaps.put(index, nodeFigure);
-                            }
-                        }
-                    }
+                if (getMatcherNodeFigure(node) != null) {
+                    index++;
+                    searchMaps.put(index, getMatcherNodeFigure(node));
                 }
             }
         }
@@ -234,8 +215,23 @@ public class SearchZoneMapper {
                 }
             }
         }
-
         return selectKey;
+    }
+
+    private TableEntityFigure getMatcherNodeFigure(AbstractNode node) {
+        if (node != null && node.getExpression() != null && matcher.matches(node.getExpression())) {
+            EList<Adapter> adapter = node.eAdapters();
+            if (adapter.size() > 0) {
+                if (adapter.get(0) instanceof TableEntityPart) {
+                    TableEntityPart tableEntityPart = (TableEntityPart) adapter.get(0);
+                    if (tableEntityPart != null && tableEntityPart.getFigure() != null
+                            && tableEntityPart.getFigure() instanceof TableEntityFigure) {
+                        return (TableEntityFigure) tableEntityPart.getFigure();
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public boolean isHightlightAll() {
