@@ -36,6 +36,11 @@
 	boolean uncompress = "true".equals(ElementParameterParser.getValue(node, "__UNCOMPRESS__"));
 	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
 	
+	String header = ElementParameterParser.getValue(node, "__HEADER__");
+	if(("").equals(header)){
+		header="0";
+	}
+	
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 	String fsDefalutName = "fs.default.name";
 	if(hadoopVersion!=null && "Cloudera_CDH4".equals(hadoopVersion)){
@@ -174,7 +179,7 @@
 <%
 			if(!uncompress) {
 %>
-		org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
+		org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,<%=header%>,0,-1,-1, false);
 <%
 			} else {
 				if("GZIP".equals(compression)) {
@@ -189,7 +194,7 @@
 				}
 %>
 			org.apache.hadoop.io.compress.CompressionInputStream in<%=cid%> = codec_<%=cid%>.createInputStream(fsDataInputStream_<%=cid%>);
-			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(in<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);
+			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(in<%=cid%>,  <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,<%=header%>,0,-1,-1, false);
 <%
 			}
 %>

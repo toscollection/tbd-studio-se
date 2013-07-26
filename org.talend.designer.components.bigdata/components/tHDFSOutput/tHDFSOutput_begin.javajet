@@ -36,6 +36,8 @@
 	boolean compress = "true".equals(ElementParameterParser.getValue(node, "__COMPRESS__"));
 	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
 	
+	boolean isIncludeHeader = ("true").equals(ElementParameterParser.getValue(node,"__INCLUDEHEADER__"));
+	
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 	String fsDefalutName = "fs.default.name";
 	if(hadoopVersion!=null && "Cloudera_CDH4".equals(hadoopVersion)){
@@ -172,6 +174,55 @@
 %>
 			org.apache.hadoop.io.compress.CompressionOutputStream out<%=cid%> = codec_<%=cid%>.createOutputStream(fsDataOutputStream_<%=cid%>);
 <%
+		}
+		
+		if(isIncludeHeader) {
+			String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
+        	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
+        	
+			if("APPEND".equals(fileAction)){
+%>
+			boolean fileExistAndHasContent_<%=cid%> = false;
+			if(fs_<%=cid%>.exists(path_<%=cid%>)) {
+				org.apache.hadoop.fs.FileStatus statu_<%=cid%> = fs_<%=cid%>.getFileStatus(path_<%=cid%>);
+				fileExistAndHasContent_<%=cid%> = (!statu_<%=cid%>.isDir()) && (statu_<%=cid%>.getLen() != 0);
+			}
+			if(!fileExistAndHasContent_<%=cid%>) {
+<%
+			}
+%>
+			StringBuilder header_<%=cid %> = new StringBuilder();
+<%
+    		List<IMetadataColumn> columns = metadata.getListColumns();
+	        int sizeColumns = columns.size();
+	        for (int i = 0; i < sizeColumns; i++) {
+	        	IMetadataColumn column = columns.get(i);
+%>
+				header_<%=cid %>.append("<%=column.getLabel() %>");
+<%
+	            if(i != sizeColumns - 1) {
+%>
+                header_<%=cid %>.append(<%=fieldSeparator%>);
+<%
+	            }
+	        }
+%>
+			header_<%=cid %>.append(<%=rowSeparator%>);
+<%
+			if(!compress) {
+%>
+			out<%=cid %>.write(header_<%=cid %>.toString());
+<%
+			} else {
+%>
+			out<%=cid%>.write(header_<%=cid %>.toString().getBytes(<%=customEncoding?encoding:""%>));
+<%
+			}
+			if("APPEND".equals(fileAction)){
+%>
+			}
+<%
+			}
 		}
 	} else {
 		String keyColumn = ElementParameterParser.getValue(node,"__KEYCOLUMN__");
