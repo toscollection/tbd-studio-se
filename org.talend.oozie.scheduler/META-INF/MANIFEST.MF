@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Talend Oozie Scheduler
+Bundle-Name: Oozie Scheduler Plug-in
 Bundle-SymbolicName: org.talend.oozie.scheduler;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.talend.oozie.scheduler.OozieSchedulerPlugin

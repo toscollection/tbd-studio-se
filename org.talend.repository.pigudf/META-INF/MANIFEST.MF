@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Pigudf
+Bundle-Name: Pig UDF Plug-in
 Bundle-SymbolicName: org.talend.repository.pigudf;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.talend.repository.pigudf.PigudfPlugin
@@ -21,4 +21,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.metadata.managment.ui,
  org.talend.designer.core
 Bundle-ActivationPolicy: lazy
+Bundle-Vendor: .Talend SA.
 
