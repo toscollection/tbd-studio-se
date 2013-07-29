@@ -13,10 +13,15 @@
 package org.talend.repository.pigudf.wizard;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jdt.core.JavaConventions;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
@@ -30,6 +35,7 @@ import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.designer.codegen.PigTemplate;
+import org.talend.repository.model.RepositoryConstants;
 import org.talend.repository.pigudf.i18n.Messages;
 import org.talend.repository.ui.wizards.PropertiesWizardPage;
 
@@ -44,6 +50,8 @@ public class NewPigudfWizardPage extends PropertiesWizardPage {
     private CCombo pigTemplate;
 
     protected IStatus templateStatus;
+
+    private static String CLASS = ".class"; //$NON-NLS-1$
 
     /**
      * Constructs a new NewPigudfWizardPage.
@@ -112,7 +120,40 @@ public class NewPigudfWizardPage extends PropertiesWizardPage {
         } else {
             templateStatus = createOkStatus();
         }
-        super.evaluateTextField();
+        if (super.readOnly) {
+            return;
+        }
+        if (nameText == null || nameText.isDisposed()) {
+            return;
+        }
+        if (nameText.getText().length() == 0) {
+            nameStatus = createStatus(IStatus.ERROR, Messages.getString("PropertiesWizardPage.NameEmptyError")); //$NON-NLS-1$
+        } else if (!Pattern.matches(RepositoryConstants.getPattern(getRepositoryObjectType()), nameText.getText())
+                || nameText.getText().trim().contains(" ")) { //$NON-NLS-1$
+            nameStatus = createStatus(IStatus.ERROR, Messages.getString("PropertiesWizardPage.NameFormatError")); //$NON-NLS-1$
+        } else if (JavaConventions.validateClassFileName(nameText.getText() + CLASS,
+                JavaCore.getOption(JavaCore.COMPILER_SOURCE), JavaCore.getOption(JavaCore.COMPILER_COMPLIANCE)).getSeverity() == IStatus.ERROR
+                || "java".equalsIgnoreCase(nameText.getText())) {//$NON-NLS-1$
+            nameStatus = createStatus(IStatus.ERROR, Messages.getString("PropertiesWizardPage.KeywordsError")); //$NON-NLS-1$
+        } else if (super.nameModifiedByUser) {
+            if (super.retrieveNameFinished) {
+                if (!isValid(nameText.getText())) {
+                    nameStatus = createStatus(IStatus.ERROR, Messages.getString("PropertiesWizardPage.ItemExistsError")); //$NON-NLS-1$
+                } else {
+                    nameStatus = createOkStatus();
+                }
+            } else {
+                nameStatus = createStatus(IStatus.ERROR, "Looking for current items name list"); //$NON-NLS-1$
+            }
+        } else {
+            nameStatus = createOkStatus();
+        }
+        if (property != null && nameStatus.getSeverity() == IStatus.OK) {
+            property.setLabel(getPropertyLabel(StringUtils.trimToNull(nameText.getText())));
+            property.setDisplayName(StringUtils.trimToNull(nameText.getText()));
+            property.setModificationDate(new Date());
+        }
+        updatePageStatus();
         if (nameStatus.getSeverity() == IStatus.OK) {
             evaluateNameInJob();
         }
