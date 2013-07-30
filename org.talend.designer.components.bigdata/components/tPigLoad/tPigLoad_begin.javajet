@@ -4,7 +4,8 @@
 		org.talend.core.model.process.IConnection
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
-		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
 		org.talend.core.model.metadata.types.Java2STLangTypesHelper
 		org.talend.designer.runprocess.ProcessorUtilities
 		org.talend.designer.runprocess.ProcessorException
@@ -56,8 +57,10 @@
 	java.util.List<String> jars = null;
 	
 	boolean generateRegisterJarCodeForHBase = !isLocal && "HBaseStorage".equals(function);
+	
+	boolean generateRegisterJarCodeForSequenceFile = !isLocal && "SequenceFileStorage".equals(function);
 
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
 			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
@@ -88,6 +91,12 @@
 			jarsToRegister.add("zookeeper");
 			jarsToRegister.add("guava");
 		}
+		
+		if(generateRegisterJarCodeForSequenceFile) {
+			jarsToRegister.add("elephant-bird-core");
+			jarsToRegister.add("elephant-bird-hadoop-compat");
+			jarsToRegister.add("pigutil");
+		}
 
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {
@@ -113,7 +122,7 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
+	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile) {
 %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
@@ -323,7 +332,7 @@
 		StringBuilder sb_<%=cid%> = new StringBuilder();
 
 <%		
-		if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase) {
+		if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile) {
 			for(int i=0; i<jarsToRegister.size(); i++) {
 				String jarToRegister = jarsToRegister.get(i);
 				for(int j=0; j<jars.size(); j++) {
@@ -371,6 +380,64 @@
 			System.setProperty("hive.metastore.uris", <%=thriftServer%>);
 			sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using org.apache.hcatalog.pig.<%=function%>()");
 <%
+		} else if(!isLocal && "SequenceFileStorage".equals(function)) {
+			List<IMetadataTable> metadatas = node.getMetadataList();
+			IMetadataTable metadata = null;
+			if(metadatas != null && metadatas.size() > 0) {
+				metadata = metadatas.get(0);
+			}
+			
+			String keyColumn = ElementParameterParser.getValue(node,"__KEYCOLUMN__");
+			String valueColumn = ElementParameterParser.getValue(node,"__VALUECOLUMN__");
+			
+			String talendKeyClass = "";
+			String talendValueClass = "";
+			
+			if(metadata!=null) {
+    			List<IMetadataColumn> listColumns = metadata.getListColumns();
+    			
+    			for (IMetadataColumn column : listColumns) {
+    				if (column.getLabel().equals(keyColumn)) {
+    					talendKeyClass = column.getTalendType();
+    				}
+    				if (column.getLabel().equals(valueColumn)) {
+    					talendValueClass = column.getTalendType();
+    				}
+    			}
+			}
+			
+			String keyConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+			if (talendKeyClass.equals("id_Boolean")) keyConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+			if (talendKeyClass.equals("id_Byte")) keyConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
+			if (talendKeyClass.equals("id_byte[]")) keyConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+			if (talendKeyClass.equals("id_Double")) keyConverterClass="com.talend.pig.util.DoubleWritableConverter";
+			if (talendKeyClass.equals("id_Float")) keyConverterClass="com.talend.pig.util.FloatWritableConverter";
+			if (talendKeyClass.equals("id_Integer")) keyConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
+			if (talendKeyClass.equals("id_Long")) keyConverterClass="com.twitter.elephantbird.pig.util.LongWritableConverter";
+			if (talendKeyClass.equals("id_Short")) keyConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
+			if (talendKeyClass.equals("id_String")) keyConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+			
+			String valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+			if (talendValueClass.equals("id_Boolean")) valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+			if (talendValueClass.equals("id_Byte")) valueConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
+			if (talendValueClass.equals("id_byte[]")) valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+			if (talendValueClass.equals("id_Double")) valueConverterClass="com.talend.pig.util.DoubleWritableConverter";
+			if (talendValueClass.equals("id_Float")) valueConverterClass="com.talend.pig.util.FloatWritableConverter";
+			if (talendValueClass.equals("id_Integer")) valueConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
+			if (talendValueClass.equals("id_Long")) valueConverterClass="com.twitter.elephantbird.pig.util.LongWritableConverter";
+			if (talendValueClass.equals("id_Short")) valueConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
+			if (talendValueClass.equals("id_String")) valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
+%>
+			sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+
+				"' using com.twitter.elephantbird.pig.load.SequenceFileLoader('-c <%=keyConverterClass%>','-c <%=valueConverterClass%>')");
+<%
+			if(metadata!=null) {
+%>
+				sb_<%=cid%>.append(" AS (");
+				sb_<%=cid%>.append("<%=keyColumn%>:<%=Java2STLangTypesHelper.getPigType(metadata, keyColumn)%>, <%=valueColumn%>:<%=Java2STLangTypesHelper.getPigType(metadata, valueColumn)%>");
+				sb_<%=cid%>.append(")");
+<%
+			}
 		} else {
 			if("CustomLoader".equals(function)) {
 				String customLoader = ElementParameterParser.getValue(node, "__CUSTOM_LOADER__");
