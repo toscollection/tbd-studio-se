@@ -31,6 +31,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.utils.TalendPropertiesUtil;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
 import org.talend.oozie.scheduler.i18n.Messages;
@@ -65,7 +66,7 @@ public class OozieMonitoringComposite extends ScrolledComposite implements IDyna
     protected void createContents(Composite parent) {
         GridLayout gridLayout = new GridLayout(1, false);
         parent.setLayout(gridLayout);
-        if (!"yes".equalsIgnoreCase(System.getProperty("USE_BROWSER"))) { //$NON-NLS-1$ //$NON-NLS-2$
+        if (TalendPropertiesUtil.isEnabledUseBrowser()) {
             browser = new Browser(parent, SWT.NONE);
             browser.setLayoutData(new GridData(GridData.FILL_BOTH));
         } else {
