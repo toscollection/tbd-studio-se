@@ -387,6 +387,7 @@
             <IMPORT NAME="elephant-bird-core-4.1.jar" MODULE="elephant-bird-core-4.1.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-core-4.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='SEQUENCEFILELOADER') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="elephant-bird-hadoop-compat-4.1.jar" MODULE="elephant-bird-hadoop-compat-4.1.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-hadoop-compat-4.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='SEQUENCEFILELOADER') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="pigutil.jar" MODULE="pigutil.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pigutil.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='SEQUENCEFILELOADER') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='SEQUENCEFILELOADER') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='SEQUENCEFILELOADER') AND DISTRIBUTION!='CUSTOM'"/>
 		</IMPORTS>
 	</CODEGENERATION>
