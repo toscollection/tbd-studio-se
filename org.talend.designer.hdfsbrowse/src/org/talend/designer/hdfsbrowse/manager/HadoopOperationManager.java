@@ -159,10 +159,12 @@ public class HadoopOperationManager {
             return false;
         }
         String userName = null;
+        String group = null;
         if (connection != null) {
             userName = connection.getUserName();
+            group = connection.getGroup();
         }
-        return HadoopServerUtil.hasReadAuthority(status, userName);
+        return HadoopServerUtil.hasReadAuthority(status, userName, group);
     }
 
 }

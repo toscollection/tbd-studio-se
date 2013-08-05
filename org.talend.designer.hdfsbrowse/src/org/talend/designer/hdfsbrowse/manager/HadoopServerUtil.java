@@ -146,19 +146,20 @@ public class HadoopServerUtil {
 
     }
 
-    public static boolean hasReadAuthority(Object status, String userName) throws HadoopServerException {
-        return hasAuthority(status, userName, ELinuxAuthority.READ);
+    public static boolean hasReadAuthority(Object status, String userName, String group) throws HadoopServerException {
+        return hasAuthority(status, userName, group, ELinuxAuthority.READ);
     }
 
-    public static boolean hasWriteAuthority(Object status, String userName) throws HadoopServerException {
-        return hasAuthority(status, userName, ELinuxAuthority.WRITE);
+    public static boolean hasWriteAuthority(Object status, String userName, String group) throws HadoopServerException {
+        return hasAuthority(status, userName, group, ELinuxAuthority.WRITE);
     }
 
-    public static boolean hasExcuteAuthority(Object status, String userName) throws HadoopServerException {
-        return hasAuthority(status, userName, ELinuxAuthority.EXCUTE);
+    public static boolean hasExcuteAuthority(Object status, String userName, String group) throws HadoopServerException {
+        return hasAuthority(status, userName, group, ELinuxAuthority.EXCUTE);
     }
 
-    public static boolean hasAuthority(Object status, String userName, ELinuxAuthority authority) throws HadoopServerException {
+    public static boolean hasAuthority(Object status, String userName, String group, ELinuxAuthority authority)
+            throws HadoopServerException {
         boolean hasAuthority = false;
         if (status == null) {
             return hasAuthority;
@@ -172,26 +173,42 @@ public class HadoopServerUtil {
             if (permission == null) {
                 return hasAuthority;
             }
-            userName = TalendQuoteUtils.addQuotesIfNotExist(userName);
-            String owner = (String) ReflectionUtils.invokeMethod(status, "getOwner", new Object[0]);
-            owner = TalendQuoteUtils.addQuotesIfNotExist(owner);
+            if (StringUtils.isNotBlank(userName)) {
+                userName = TalendQuoteUtils.addQuotesIfNotExist(userName);
+            }
+            if (StringUtils.isNotBlank(group)) {
+                group = TalendQuoteUtils.addQuotesIfNotExist(group);
+            }
+            String fileOwner = (String) ReflectionUtils.invokeMethod(status, "getOwner", new Object[0]);
+            fileOwner = TalendQuoteUtils.addQuotesIfNotExist(fileOwner);
+            String fileGroup = (String) ReflectionUtils.invokeMethod(status, "getGroup", new Object[0]);
+            fileGroup = TalendQuoteUtils.addQuotesIfNotExist(fileGroup);
             Object userAction = ReflectionUtils.invokeMethod(permission, "getUserAction", new Object[0]);
             Object groupAction = ReflectionUtils.invokeMethod(permission, "getGroupAction", new Object[0]);
             Object otherAction = ReflectionUtils.invokeMethod(permission, "getOtherAction", new Object[0]);
             switch (authority) {
             case READ:
-                if (owner != null && owner.equals(userName)) {
-                    return hasReadAuthority(userAction) || hasReadAuthority(groupAction);
+                if (fileOwner != null && fileOwner.equals(userName)) {
+                    return hasReadAuthority(userAction);
+                }
+                if (fileGroup != null && fileGroup.equals(group)) {
+                    return hasReadAuthority(groupAction);
                 }
                 return hasReadAuthority(otherAction);
             case WRITE:
-                if (owner != null && owner.equals(userName)) {
-                    return hasWriteAuthority(userAction) || hasWriteAuthority(groupAction);
+                if (fileOwner != null && fileOwner.equals(userName)) {
+                    return hasWriteAuthority(userAction);
+                }
+                if (fileGroup != null && fileGroup.equals(group)) {
+                    return hasWriteAuthority(groupAction);
                 }
                 return hasWriteAuthority(otherAction);
             case EXCUTE:
-                if (owner != null && owner.equals(userName)) {
-                    return hasExcuteAuthority(userAction) || hasExcuteAuthority(groupAction);
+                if (fileOwner != null && fileOwner.equals(userName)) {
+                    return hasExcuteAuthority(userAction);
+                }
+                if (fileGroup != null && fileGroup.equals(group)) {
+                    return hasExcuteAuthority(groupAction);
                 }
                 return hasExcuteAuthority(otherAction);
             default:
