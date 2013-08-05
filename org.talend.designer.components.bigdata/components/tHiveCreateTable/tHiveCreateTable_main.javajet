@@ -189,8 +189,10 @@ if(likeTable) {
     	createTableSQL.append(" + \"'");
 	}
 %>
-    stmt_<%=cid%>.execute("<%=createTableSQL.toString()%>");
+	String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
+    stmt_<%=cid%>.execute(querySQL_<%=cid %>);
     stmt_<%=cid %>.close();	
+    globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
 <%	
 	if(!("true").equals(useExistingConn)) {
 %>
@@ -487,8 +489,10 @@ if(asSelect) {
 	createTableSQL.append(" + \"");
 }
 %>
-stmt_<%=cid%>.execute("<%=createTableSQL.toString()%>");
+String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
+stmt_<%=cid%>.execute(querySQL_<%=cid %>);
 stmt_<%=cid %>.close();	
 <%if(!("true").equals(useExistingConn)) {%>
 	conn_<%=cid %>.close();
 <%}%>    
+globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
