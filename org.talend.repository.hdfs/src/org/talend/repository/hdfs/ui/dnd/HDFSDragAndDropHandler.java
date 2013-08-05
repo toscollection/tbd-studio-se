@@ -82,7 +82,7 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(value)) {
             return hcConnection.getDfVersion();
         } else if (EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(value)) {
-            if (targetComponent != null && targetComponent.startsWith("tPig")) {
+            if (targetComponent != null && targetComponent.startsWith("tPig")) { //$NON-NLS-1$
                 return hcConnection.getParameters().get(ECustomVersionGroup.PIG.getName());
             }
             return HCVersionUtil.getCompCustomJarsParamFromRep(hcConnection, ECustomVersionGroup.COMMON);
@@ -113,6 +113,8 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
         } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
+        } else if (EHDFSRepositoryToComponent.HEADER.getRepositoryValue().equals(value)) {
+            return StringUtils.trimToNull(connection.getHeaderValue());
         } else if (EHDFSRepositoryToComponent.LOCAL.getRepositoryValue().equals(value)) {
             return false;
         } else if (EHDFSRepositoryToComponent.MAPREDUCE.getRepositoryValue().equals(value)) {
@@ -124,7 +126,7 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.FIELD_SEPARATOR_CHAR.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
         } else if (EHDFSRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
-            return "PigStorage";
+            return "PigStorage"; //$NON-NLS-1$
         }
 
         return null;
@@ -205,7 +207,6 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private void setHDFSRepositoryValue(HDFSConnection connection, INode node, String repositoryValue) {
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
         if (hcConnection == null) {
@@ -281,6 +282,12 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
                     EHDFSRepositoryToComponent.FIELDSEPARATOR.getParameterName());
             if (value != null) {
                 connection.setFieldSeparator(value);
+            }
+        } else if (EHDFSRepositoryToComponent.HEADER.getRepositoryValue().equals(repositoryValue)) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
+                    EHDFSRepositoryToComponent.HEADER.getParameterName());
+            if (value != null) {
+                connection.setHeaderValue(value);
             }
         }
     }

@@ -209,6 +209,33 @@ public class HDFSPackageImpl extends EPackageImpl implements HDFSPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getHDFSConnection_UseHeader() {
+        return (EAttribute)hdfsConnectionEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHDFSConnection_HeaderValue() {
+        return (EAttribute)hdfsConnectionEClass.getEStructuralFeatures().get(11);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHDFSConnection_FirstLineCaption() {
+        return (EAttribute)hdfsConnectionEClass.getEStructuralFeatures().get(12);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getHDFSConnectionItem() {
         return hdfsConnectionItemEClass;
     }
@@ -252,6 +279,9 @@ public class HDFSPackageImpl extends EPackageImpl implements HDFSPackage {
         createEAttribute(hdfsConnectionEClass, HDFS_CONNECTION__GROUP);
         createEAttribute(hdfsConnectionEClass, HDFS_CONNECTION__ROW_SEPARATOR);
         createEAttribute(hdfsConnectionEClass, HDFS_CONNECTION__FIELD_SEPARATOR);
+        createEAttribute(hdfsConnectionEClass, HDFS_CONNECTION__USE_HEADER);
+        createEAttribute(hdfsConnectionEClass, HDFS_CONNECTION__HEADER_VALUE);
+        createEAttribute(hdfsConnectionEClass, HDFS_CONNECTION__FIRST_LINE_CAPTION);
 
         hdfsConnectionItemEClass = createEClass(HDFS_CONNECTION_ITEM);
     }
@@ -303,6 +333,9 @@ public class HDFSPackageImpl extends EPackageImpl implements HDFSPackage {
         initEAttribute(getHDFSConnection_Group(), theEcorePackage.getEString(), "group", null, 0, 1, HDFSConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHDFSConnection_RowSeparator(), theEcorePackage.getEString(), "rowSeparator", null, 0, 1, HDFSConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHDFSConnection_FieldSeparator(), theEcorePackage.getEString(), "fieldSeparator", null, 0, 1, HDFSConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHDFSConnection_UseHeader(), ecorePackage.getEBoolean(), "useHeader", null, 0, 1, HDFSConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHDFSConnection_HeaderValue(), ecorePackage.getEString(), "headerValue", null, 0, 1, HDFSConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHDFSConnection_FirstLineCaption(), ecorePackage.getEBoolean(), "firstLineCaption", null, 0, 1, HDFSConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hdfsConnectionItemEClass, HDFSConnectionItem.class, "HDFSConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

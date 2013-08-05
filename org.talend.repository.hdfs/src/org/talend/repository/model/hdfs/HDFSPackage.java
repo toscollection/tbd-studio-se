@@ -548,13 +548,40 @@ public interface HDFSPackage extends EPackage {
     int HDFS_CONNECTION__FIELD_SEPARATOR = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 9;
 
     /**
+     * The feature id for the '<em><b>Use Header</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HDFS_CONNECTION__USE_HEADER = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 10;
+
+    /**
+     * The feature id for the '<em><b>Header Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HDFS_CONNECTION__HEADER_VALUE = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 11;
+
+    /**
+     * The feature id for the '<em><b>First Line Caption</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HDFS_CONNECTION__FIRST_LINE_CAPTION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 12;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HDFS_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 10;
+    int HDFS_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 13;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hdfs.impl.HDFSConnectionItemImpl <em>Connection Item</em>}' class.
@@ -751,6 +778,39 @@ public interface HDFSPackage extends EPackage {
     EAttribute getHDFSConnection_FieldSeparator();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hdfs.HDFSConnection#isUseHeader <em>Use Header</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Use Header</em>'.
+     * @see org.talend.repository.model.hdfs.HDFSConnection#isUseHeader()
+     * @see #getHDFSConnection()
+     * @generated
+     */
+    EAttribute getHDFSConnection_UseHeader();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hdfs.HDFSConnection#getHeaderValue <em>Header Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Header Value</em>'.
+     * @see org.talend.repository.model.hdfs.HDFSConnection#getHeaderValue()
+     * @see #getHDFSConnection()
+     * @generated
+     */
+    EAttribute getHDFSConnection_HeaderValue();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hdfs.HDFSConnection#isFirstLineCaption <em>First Line Caption</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>First Line Caption</em>'.
+     * @see org.talend.repository.model.hdfs.HDFSConnection#isFirstLineCaption()
+     * @see #getHDFSConnection()
+     * @generated
+     */
+    EAttribute getHDFSConnection_FirstLineCaption();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hdfs.HDFSConnectionItem <em>Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -871,6 +931,30 @@ public interface HDFSPackage extends EPackage {
          * @generated
          */
         EAttribute HDFS_CONNECTION__FIELD_SEPARATOR = eINSTANCE.getHDFSConnection_FieldSeparator();
+
+        /**
+         * The meta object literal for the '<em><b>Use Header</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HDFS_CONNECTION__USE_HEADER = eINSTANCE.getHDFSConnection_UseHeader();
+
+        /**
+         * The meta object literal for the '<em><b>Header Value</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HDFS_CONNECTION__HEADER_VALUE = eINSTANCE.getHDFSConnection_HeaderValue();
+
+        /**
+         * The meta object literal for the '<em><b>First Line Caption</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HDFS_CONNECTION__FIRST_LINE_CAPTION = eINSTANCE.getHDFSConnection_FirstLineCaption();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hdfs.impl.HDFSConnectionItemImpl <em>Connection Item</em>}' class.

@@ -290,33 +290,12 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                try {
-                    parentWizardPage.getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
-
-                        @Override
-                        public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-                            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    monitor.beginTask(Messages.getString("HDFSFileSelectorForm.extractColumns"), 10); //$NON-NLS-1$
-                                    updateStatus(IStatus.ERROR, null);
-                                    for (TreeItem tItem : schemaTree.getItems()) {
-                                        fetchAllChildren((IHDFSNode) tItem.getData());
-                                    }
-                                    for (TreeItem tItem : schemaTree.getItems()) {
-                                        updateItem(tItem, true, false);
-                                    }
-                                    monitor.done();
-                                }
-                            });
-                        }
-
-                    });
-                } catch (InvocationTargetException e1) {
-                    ExceptionHandler.process(e1);
-                } catch (InterruptedException e1) {
-                    ExceptionHandler.process(e1);
+                updateStatus(IStatus.ERROR, null);
+                for (TreeItem tItem : schemaTree.getItems()) {
+                    fetchAllChildren((IHDFSNode) tItem.getData());
+                }
+                for (TreeItem tItem : schemaTree.getItems()) {
+                    updateItem(tItem, true, false);
                 }
             }
         });
@@ -332,7 +311,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     updateItem(tItem, false, false);
                 }
             }
-
         });
     }
 

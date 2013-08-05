@@ -34,6 +34,9 @@ import org.talend.repository.model.hdfs.HDFSPackage;
  *   <li>{@link org.talend.repository.model.hdfs.impl.HDFSConnectionImpl#getGroup <em>Group</em>}</li>
  *   <li>{@link org.talend.repository.model.hdfs.impl.HDFSConnectionImpl#getRowSeparator <em>Row Separator</em>}</li>
  *   <li>{@link org.talend.repository.model.hdfs.impl.HDFSConnectionImpl#getFieldSeparator <em>Field Separator</em>}</li>
+ *   <li>{@link org.talend.repository.model.hdfs.impl.HDFSConnectionImpl#isUseHeader <em>Use Header</em>}</li>
+ *   <li>{@link org.talend.repository.model.hdfs.impl.HDFSConnectionImpl#getHeaderValue <em>Header Value</em>}</li>
+ *   <li>{@link org.talend.repository.model.hdfs.impl.HDFSConnectionImpl#isFirstLineCaption <em>First Line Caption</em>}</li>
  * </ul>
  * </p>
  *
@@ -239,6 +242,66 @@ public class HDFSConnectionImpl extends HadoopSubConnectionImpl implements HDFSC
      * @ordered
      */
     protected String fieldSeparator = FIELD_SEPARATOR_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isUseHeader() <em>Use Header</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseHeader()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean USE_HEADER_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isUseHeader() <em>Use Header</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseHeader()
+     * @generated
+     * @ordered
+     */
+    protected boolean useHeader = USE_HEADER_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getHeaderValue() <em>Header Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getHeaderValue()
+     * @generated
+     * @ordered
+     */
+    protected static final String HEADER_VALUE_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getHeaderValue() <em>Header Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getHeaderValue()
+     * @generated
+     * @ordered
+     */
+    protected String headerValue = HEADER_VALUE_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isFirstLineCaption() <em>First Line Caption</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFirstLineCaption()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean FIRST_LINE_CAPTION_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isFirstLineCaption() <em>First Line Caption</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isFirstLineCaption()
+     * @generated
+     * @ordered
+     */
+    protected boolean firstLineCaption = FIRST_LINE_CAPTION_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -474,6 +537,69 @@ public class HDFSConnectionImpl extends HadoopSubConnectionImpl implements HDFSC
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isUseHeader() {
+        return useHeader;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUseHeader(boolean newUseHeader) {
+        boolean oldUseHeader = useHeader;
+        useHeader = newUseHeader;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HDFSPackage.HDFS_CONNECTION__USE_HEADER, oldUseHeader, useHeader));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getHeaderValue() {
+        return headerValue;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setHeaderValue(String newHeaderValue) {
+        String oldHeaderValue = headerValue;
+        headerValue = newHeaderValue;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HDFSPackage.HDFS_CONNECTION__HEADER_VALUE, oldHeaderValue, headerValue));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isFirstLineCaption() {
+        return firstLineCaption;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFirstLineCaption(boolean newFirstLineCaption) {
+        boolean oldFirstLineCaption = firstLineCaption;
+        firstLineCaption = newFirstLineCaption;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HDFSPackage.HDFS_CONNECTION__FIRST_LINE_CAPTION, oldFirstLineCaption, firstLineCaption));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -497,6 +623,12 @@ public class HDFSConnectionImpl extends HadoopSubConnectionImpl implements HDFSC
                 return getRowSeparator();
             case HDFSPackage.HDFS_CONNECTION__FIELD_SEPARATOR:
                 return getFieldSeparator();
+            case HDFSPackage.HDFS_CONNECTION__USE_HEADER:
+                return isUseHeader();
+            case HDFSPackage.HDFS_CONNECTION__HEADER_VALUE:
+                return getHeaderValue();
+            case HDFSPackage.HDFS_CONNECTION__FIRST_LINE_CAPTION:
+                return isFirstLineCaption();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -538,6 +670,15 @@ public class HDFSConnectionImpl extends HadoopSubConnectionImpl implements HDFSC
                 return;
             case HDFSPackage.HDFS_CONNECTION__FIELD_SEPARATOR:
                 setFieldSeparator((String)newValue);
+                return;
+            case HDFSPackage.HDFS_CONNECTION__USE_HEADER:
+                setUseHeader((Boolean)newValue);
+                return;
+            case HDFSPackage.HDFS_CONNECTION__HEADER_VALUE:
+                setHeaderValue((String)newValue);
+                return;
+            case HDFSPackage.HDFS_CONNECTION__FIRST_LINE_CAPTION:
+                setFirstLineCaption((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -581,6 +722,15 @@ public class HDFSConnectionImpl extends HadoopSubConnectionImpl implements HDFSC
             case HDFSPackage.HDFS_CONNECTION__FIELD_SEPARATOR:
                 setFieldSeparator(FIELD_SEPARATOR_EDEFAULT);
                 return;
+            case HDFSPackage.HDFS_CONNECTION__USE_HEADER:
+                setUseHeader(USE_HEADER_EDEFAULT);
+                return;
+            case HDFSPackage.HDFS_CONNECTION__HEADER_VALUE:
+                setHeaderValue(HEADER_VALUE_EDEFAULT);
+                return;
+            case HDFSPackage.HDFS_CONNECTION__FIRST_LINE_CAPTION:
+                setFirstLineCaption(FIRST_LINE_CAPTION_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -613,6 +763,12 @@ public class HDFSConnectionImpl extends HadoopSubConnectionImpl implements HDFSC
                 return ROW_SEPARATOR_EDEFAULT == null ? rowSeparator != null : !ROW_SEPARATOR_EDEFAULT.equals(rowSeparator);
             case HDFSPackage.HDFS_CONNECTION__FIELD_SEPARATOR:
                 return FIELD_SEPARATOR_EDEFAULT == null ? fieldSeparator != null : !FIELD_SEPARATOR_EDEFAULT.equals(fieldSeparator);
+            case HDFSPackage.HDFS_CONNECTION__USE_HEADER:
+                return useHeader != USE_HEADER_EDEFAULT;
+            case HDFSPackage.HDFS_CONNECTION__HEADER_VALUE:
+                return HEADER_VALUE_EDEFAULT == null ? headerValue != null : !HEADER_VALUE_EDEFAULT.equals(headerValue);
+            case HDFSPackage.HDFS_CONNECTION__FIRST_LINE_CAPTION:
+                return firstLineCaption != FIRST_LINE_CAPTION_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -647,6 +803,12 @@ public class HDFSConnectionImpl extends HadoopSubConnectionImpl implements HDFSC
         result.append(rowSeparator);
         result.append(", fieldSeparator: ");
         result.append(fieldSeparator);
+        result.append(", useHeader: ");
+        result.append(useHeader);
+        result.append(", headerValue: ");
+        result.append(headerValue);
+        result.append(", firstLineCaption: ");
+        result.append(firstLineCaption);
         result.append(')');
         return result.toString();
     }

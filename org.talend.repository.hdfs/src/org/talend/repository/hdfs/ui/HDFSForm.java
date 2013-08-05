@@ -16,16 +16,21 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.swt.formtools.Form;
+import org.talend.commons.ui.swt.formtools.LabelledCheckboxCombo;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
@@ -40,6 +45,8 @@ import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
  */
 public class HDFSForm extends AbstractHDFSForm {
 
+    private static final String DEFAULT_HEADER_VALUE = "1"; //$NON-NLS-1$
+
     private static final int VISIBLE_COMBO_ITEM_COUNT = 5;
 
     private UtilsButton checkConnectionBtn;
@@ -49,6 +56,10 @@ public class HDFSForm extends AbstractHDFSForm {
     private LabelledCombo rowSeparatorCombo;
 
     private LabelledCombo fieldSeparatorCombo;
+
+    private LabelledCheckboxCombo rowsToSkipHeaderCheckboxCombo;
+
+    private Button firstRowIsCaptionCheckbox;
 
     private Text rowSeparatorText;
 
@@ -65,7 +76,7 @@ public class HDFSForm extends AbstractHDFSForm {
     public void initialize() {
         userNameText.setText(StringUtils.trimToEmpty(getConnection().getUserName()));
         String rowSeparatorVal = getConnection().getRowSeparator();
-        if (!StringUtils.isEmpty(rowSeparatorVal)) {
+        if (StringUtils.isNotEmpty(rowSeparatorVal)) {
             rowSeparatorText.setText(rowSeparatorVal);
         } else {
             rowSeparatorVal = ExtractMetaDataFromHDFS.DEFAULT_ROW_SEPARATOR;
@@ -77,7 +88,7 @@ public class HDFSForm extends AbstractHDFSForm {
             rowSeparatorCombo.setText(rowSeparator.getDisplayName());
         }
         String fieldSeparatorVal = getConnection().getFieldSeparator();
-        if (!StringUtils.isEmpty(fieldSeparatorVal)) {
+        if (StringUtils.isNotEmpty(fieldSeparatorVal)) {
             fieldSeparatorText.setText(fieldSeparatorVal);
         } else {
             fieldSeparatorVal = ExtractMetaDataFromHDFS.DEFAULT_FIELD_SEPARATOR;
@@ -88,6 +99,11 @@ public class HDFSForm extends AbstractHDFSForm {
         if (fieldSeparator != null) {
             fieldSeparatorCombo.setText(fieldSeparator.getDisplayName());
         }
+        String header = getConnection().getHeaderValue();
+        if (StringUtils.isNotEmpty(header) && !"0".equals(header)) { //$NON-NLS-1$
+            rowsToSkipHeaderCheckboxCombo.setText(header);
+        }
+        firstRowIsCaptionCheckbox.setSelection(getConnection().isFirstLineCaption());
 
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -106,6 +122,7 @@ public class HDFSForm extends AbstractHDFSForm {
     protected void addFields() {
         addConnectionFields();
         addSeparatorFields();
+        addSkipFields();
         addCheckFields();
     }
 
@@ -155,6 +172,26 @@ public class HDFSForm extends AbstractHDFSForm {
         fieldSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     }
 
+    private void addSkipFields() {
+        Group skipGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.skipSettings")); //$NON-NLS-1$
+        skipGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        Composite skipPartComposite = Form.startNewGridLayout(skipGroup, 4);
+
+        Label desc = new Label(skipPartComposite, SWT.NONE);
+        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.horizontalSpan = 4;
+        desc.setLayoutData(gridData);
+        desc.setText(Messages.getString("HDFSForm.skipSettings.desc")); //$NON-NLS-1$
+
+        rowsToSkipHeaderCheckboxCombo = new LabelledCheckboxCombo(skipPartComposite, Messages.getString("HDFSForm.text.header"), //$NON-NLS-1$
+                Messages.getString("HDFSForm.text.header"), getNumberStrings(20), 1, true, SWT.NONE); //$NON-NLS-1$
+
+        firstRowIsCaptionCheckbox = new Button(skipPartComposite, SWT.CHECK);
+        firstRowIsCaptionCheckbox.setText(Messages.getString("HDFSForm.button.firstRowsIsCaption")); //$NON-NLS-1$
+        firstRowIsCaptionCheckbox.setAlignment(SWT.LEFT);
+    }
+
     private void addCheckFields() {
         Composite checkGroup = new Composite(this, SWT.NONE);
         GridLayout checkGridLayout = new GridLayout(1, false);
@@ -170,7 +207,7 @@ public class HDFSForm extends AbstractHDFSForm {
         checkButtonLayout.marginLeft = 0;
         checkButtonLayout.marginRight = 0;
         checkButtonLayout.marginWidth = 0;
-        checkConnectionBtn = new UtilsButton(checkButtonComposite, "Check", WIDTH_BUTTON_PIXEL, HEIGHT_BUTTON_PIXEL);
+        checkConnectionBtn = new UtilsButton(checkButtonComposite, "Check", WIDTH_BUTTON_PIXEL, HEIGHT_BUTTON_PIXEL); //$NON-NLS-1$
         checkConnectionBtn.setEnabled(false);
     }
 
@@ -250,6 +287,98 @@ public class HDFSForm extends AbstractHDFSForm {
                 }
             }
         });
+
+        rowsToSkipHeaderCheckboxCombo.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                String string = String.valueOf(e.character);
+                // Check if input is number, backspace key and delete key of keyboard.
+                if (!(string.matches("[0-9]*")) && e.keyCode != 8 && e.keyCode != SWT.DEL) { //$NON-NLS-1$
+                    e.doit = false;
+                }
+            }
+        });
+
+        rowsToSkipHeaderCheckboxCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                if (!rowsToSkipHeaderCheckboxCombo.isEmpty()) {
+                    if (!rowsToSkipHeaderCheckboxCombo.isInteger() || rowsToSkipHeaderCheckboxCombo.getText().trim().equals("0")) { //$NON-NLS-1$
+                        rowsToSkipHeaderCheckboxCombo.deselectAll();
+                        getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
+                        getConnection().setHeaderValue("" + 0); //$NON-NLS-1$
+
+                        rowsToSkipHeaderCheckboxCombo.getCombo().setFocus();
+
+                        // if rowsHeaderToSkip isn't integer or is equals to 0, the firstRowIsCaptionCheckbox is
+                        // unusable.
+                        firstRowIsCaptionCheckbox.setSelection(false);
+                        getConnection().setFirstLineCaption(false);
+                        return;
+                    } else {
+                        getConnection().setHeaderValue(rowsToSkipHeaderCheckboxCombo.getText().trim());
+                        getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
+                        checkFieldsValue();
+                    }
+                } else {
+                    getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
+                    getConnection().setHeaderValue("" + 0); //$NON-NLS-1$
+                    checkFieldsValue();
+                }
+
+            }
+        });
+
+        rowsToSkipHeaderCheckboxCombo.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                String text = rowsToSkipHeaderCheckboxCombo.getText();
+                if ((!rowsToSkipHeaderCheckboxCombo.isChecked()) || text.trim().equals("0")) { //$NON-NLS-1$
+                    firstRowIsCaptionCheckbox.setSelection(false);
+                    getConnection().setFirstLineCaption(false);
+                }
+                getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
+            }
+        });
+
+        firstRowIsCaptionCheckbox.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                getConnection().setFirstLineCaption(firstRowIsCaptionCheckbox.getSelection());
+                if (firstRowIsCaptionCheckbox.getSelection()) {
+                    // when firstRowIsCaption is checked
+                    if (rowsToSkipHeaderCheckboxCombo.isEmpty()) {
+                        // at least, rowsToSkipHeader = 1
+                        rowsToSkipHeaderCheckboxCombo.setText(DEFAULT_HEADER_VALUE);
+                        getConnection().setHeaderValue(DEFAULT_HEADER_VALUE);
+                    } else {
+                        // rowsToSkipHeader ++
+                        int value = Integer.parseInt(rowsToSkipHeaderCheckboxCombo.getText());
+                        String newValue = String.valueOf(++value);
+                        rowsToSkipHeaderCheckboxCombo.setText(newValue);
+                        getConnection().setHeaderValue(newValue);
+                    }
+                } else {
+                    // when firstRowIsCaption isn't checked
+                    if (rowsToSkipHeaderCheckboxCombo.getText().equals(DEFAULT_HEADER_VALUE)) {
+                        // rowsToSkipHeader is unusable
+                        rowsToSkipHeaderCheckboxCombo.deselectAll();
+                        getConnection().setHeaderValue("" + 0); //$NON-NLS-1$
+                    } else {
+                        // rowsToSkipHeader --
+                        int value = Integer.parseInt(rowsToSkipHeaderCheckboxCombo.getText());
+                        String newValue = String.valueOf(--value);
+                        rowsToSkipHeaderCheckboxCombo.setText(newValue);
+                        getConnection().setHeaderValue(newValue);
+                    }
+                }
+                checkFieldsValue();
+            }
+        });
     }
 
     @Override
@@ -271,6 +400,13 @@ public class HDFSForm extends AbstractHDFSForm {
         if (!validText(fieldSeparatorText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.fieldSeparator")); //$NON-NLS-1$
             return false;
+        }
+
+        if (rowsToSkipHeaderCheckboxCombo.getCheckbox().getSelection()) {
+            if (StringUtils.isBlank(rowsToSkipHeaderCheckboxCombo.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HDFSForm.check.header")); //$NON-NLS-1$
+                return false;
+            }
         }
 
         checkConnectionBtn.setEnabled(true);

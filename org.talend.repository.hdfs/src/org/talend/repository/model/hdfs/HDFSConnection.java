@@ -26,6 +26,9 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
  *   <li>{@link org.talend.repository.model.hdfs.HDFSConnection#getGroup <em>Group</em>}</li>
  *   <li>{@link org.talend.repository.model.hdfs.HDFSConnection#getRowSeparator <em>Row Separator</em>}</li>
  *   <li>{@link org.talend.repository.model.hdfs.HDFSConnection#getFieldSeparator <em>Field Separator</em>}</li>
+ *   <li>{@link org.talend.repository.model.hdfs.HDFSConnection#isUseHeader <em>Use Header</em>}</li>
+ *   <li>{@link org.talend.repository.model.hdfs.HDFSConnection#getHeaderValue <em>Header Value</em>}</li>
+ *   <li>{@link org.talend.repository.model.hdfs.HDFSConnection#isFirstLineCaption <em>First Line Caption</em>}</li>
  * </ul>
  * </p>
  *
@@ -296,5 +299,83 @@ public interface HDFSConnection extends HadoopSubConnection {
      * @generated
      */
     void setFieldSeparator(String value);
+
+    /**
+     * Returns the value of the '<em><b>Use Header</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Use Header</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Use Header</em>' attribute.
+     * @see #setUseHeader(boolean)
+     * @see org.talend.repository.model.hdfs.HDFSPackage#getHDFSConnection_UseHeader()
+     * @model
+     * @generated
+     */
+    boolean isUseHeader();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hdfs.HDFSConnection#isUseHeader <em>Use Header</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Use Header</em>' attribute.
+     * @see #isUseHeader()
+     * @generated
+     */
+    void setUseHeader(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Header Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Header Value</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Header Value</em>' attribute.
+     * @see #setHeaderValue(String)
+     * @see org.talend.repository.model.hdfs.HDFSPackage#getHDFSConnection_HeaderValue()
+     * @model
+     * @generated
+     */
+    String getHeaderValue();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hdfs.HDFSConnection#getHeaderValue <em>Header Value</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Header Value</em>' attribute.
+     * @see #getHeaderValue()
+     * @generated
+     */
+    void setHeaderValue(String value);
+
+    /**
+     * Returns the value of the '<em><b>First Line Caption</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>First Line Caption</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>First Line Caption</em>' attribute.
+     * @see #setFirstLineCaption(boolean)
+     * @see org.talend.repository.model.hdfs.HDFSPackage#getHDFSConnection_FirstLineCaption()
+     * @model
+     * @generated
+     */
+    boolean isFirstLineCaption();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hdfs.HDFSConnection#isFirstLineCaption <em>First Line Caption</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>First Line Caption</em>' attribute.
+     * @see #isFirstLineCaption()
+     * @generated
+     */
+    void setFirstLineCaption(boolean value);
 
 } // HDFSConnection
