@@ -113,4 +113,35 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
         }
     }
 
+    protected String[] getNumberStrings(int sum) {
+        return getNumberStrings(sum, 1);
+    }
+
+    /**
+     * Generate a string array which contains continuous numbers like { 1, 2, 3, 4 }.
+     * 
+     * You can use getNumberStrings(4,1) to generate the front array.
+     * <p>
+     * 
+     * DOC ycbai Comment method "getNumberStrings".
+     * 
+     * @param sum is the amount of the numbers.
+     * @param startNum is the number which you want to start from.
+     * @return the number string array.
+     */
+    protected String[] getNumberStrings(int sum, int startNum) {
+        if (sum < 1) {
+            sum = 1;
+        }
+        if (startNum < 0) {
+            startNum = 0;
+        }
+        String[] array = new String[sum];
+        for (int i = 0; i < sum; i++) {
+            array[i] = String.valueOf(i + startNum);
+        }
+
+        return array;
+    }
+
 }
