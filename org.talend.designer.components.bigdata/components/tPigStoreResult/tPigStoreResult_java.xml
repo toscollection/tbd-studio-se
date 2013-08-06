@@ -42,6 +42,7 @@
 					<ITEM NAME="HCATSTORER" VALUE="HCatStorer" />
                     <ITEM NAME="HBASESTORAGE" VALUE="HBaseStorage"/>
                     <ITEM NAME="SEQUENCEFILESTORAGE" VALUE="SequenceFileStorage"/>
+                    <ITEM NAME="RCFILEPIGSTORAGE" VALUE="RCFilePigStorage" />
 					<ITEM NAME="CUSTOM" VALUE="CustomStorer" />
 			</ITEMS>
 		</PARAMETER>
@@ -251,6 +252,14 @@
             <IMPORT NAME="pigutil.jar" MODULE="pigutil.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pigutil.jar" REQUIRED_IF="(STORE=='SEQUENCEFILESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(STORE=='SEQUENCEFILESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(STORE=='SEQUENCEFILESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <IMPORT NAME="elephant-bird-core-4.1.jar" MODULE="elephant-bird-core-4.1.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-core-4.1.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="elephant-bird-hadoop-compat-4.1.jar" MODULE="elephant-bird-hadoop-compat-4.1.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-hadoop-compat-4.1.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="elephant-bird-rcfile-4.1.jar" MODULE="elephant-bird-rcfile-4.1.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-rcfile-4.1.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-serde-0.8.0.jar" MODULE="hive-serde-0.8.0.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/hive-serde-0.8.0.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-common-0.8.0.jar" MODULE="hive-common-0.8.0.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/hive-common-0.8.0.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-exec-0.8.0.jar" MODULE="hive-exec-0.8.0.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/hive-exec-0.8.0.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 
 		</IMPORTS>
 	</CODEGENERATION>

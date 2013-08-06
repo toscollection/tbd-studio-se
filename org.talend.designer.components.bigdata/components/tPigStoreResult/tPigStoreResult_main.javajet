@@ -60,7 +60,11 @@
 	
 	boolean generateRegisterJarCodeForSequenceFile = "SequenceFileStorage".equals(function);
 	
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile) {
+	boolean generateRegisterJarCodeForRCFile = "RCFilePigStorage".equals(function);
+	
+	boolean generateRegisterJarCodeForAll = generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile || generateRegisterJarCodeForRCFile;
+	
+	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
 			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
@@ -96,7 +100,15 @@
 			jarsToRegister.add("elephant-bird-hadoop-compat");
 			jarsToRegister.add("pigutil");
 		}
-
+		
+		if(generateRegisterJarCodeForRCFile) {
+			jarsToRegister.add("elephant-bird-core");
+			jarsToRegister.add("elephant-bird-hadoop-compat");
+			jarsToRegister.add("hive-serde");
+			jarsToRegister.add("hive-common");
+			jarsToRegister.add("hive-exec");
+		}
+		
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {
 				jars = java.util.Arrays.asList(commandLine[j].split(";"));
@@ -105,7 +117,7 @@
 		}
 	}
 	
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile) {
+	if(generateRegisterJarCodeForAll) {
 %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
@@ -207,7 +219,7 @@
 
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 <%	
-	if(generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile) {
+	if(generateRegisterJarCodeForAll) {
 		for(int i=0; i<jarsToRegister.size(); i++) {
 			String jarToRegister = jarsToRegister.get(i);
 			for(int j=0; j<jars.size(); j++) {
@@ -439,6 +451,9 @@
 			sb_<%=cid%>.append(");");
 <%
 		} else {
+    		if("RCFilePigStorage".equals(function)) {
+    			function = "com.twitter.elephantbird.pig.store.RCFilePigStorage";
+    		}
 %>
 			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
 <%
