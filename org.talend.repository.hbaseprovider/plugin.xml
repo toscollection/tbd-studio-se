@@ -56,7 +56,7 @@
       </classloader>
       <classloader
             index="HBASE:MAPR:MAPR2"
-            libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr2.jar;hbase-0.92.1.jar;log4j-1.2.16.jar;zookeeper-3.3.2.jar;guava-r09.jar">
+            libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr212.jar;hbase-0.94.5-mapr.jar;log4j-1.2.16.jar;zookeeper-3.4.5.jar;guava-r09.jar;slf4j-api-1.4.3.jar;slf4j-log4j12-1.4.3.jar;protobuf-java-2.4.0a.jar">
       </classloader>
       <classloader
             index="HBASE:MAPR:MAPR212"
