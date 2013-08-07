@@ -34,7 +34,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.utils.data.text.IndiceHelper;
 import org.talend.commons.utils.encoding.CharsetToolkit;
-import org.talend.core.ICoreService;
+import org.talend.core.GlobalServiceRegister;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.MetadataToolHelper;
 import org.talend.core.model.metadata.builder.connection.ConnectionFactory;
@@ -44,7 +44,7 @@ import org.talend.core.model.metadata.types.JavaDataTypeHelper;
 import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.prefs.ui.MetadataTypeLengthConstants;
 import org.talend.core.repository.model.ResourceModelUtils;
-import org.talend.core.runtime.CoreRuntimePlugin;
+import org.talend.core.service.IDesignerCoreUIService;
 import org.talend.core.utils.CsvArray;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
@@ -322,18 +322,21 @@ public class ExtractMetaDataFromHDFS {
                                 precisionValue = lengthValue - positionDecimal;
                             }
                         } else {
-                            ICoreService coreService = CoreRuntimePlugin.getInstance().getCoreService();
-                            IPreferenceStore preferenceStore = coreService.getPreferenceStore();
-                            if (preferenceStore != null) {
-                                if (preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE) != null
-                                        && !preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE).equals("")) { //$NON-NLS-1$
-                                    globalType = preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE);
-                                    if (preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH) != null
-                                            && !preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH)
-                                                    .equals("")) { //$NON-NLS-1$
-                                        lengthValue = Integer.parseInt(preferenceStore
-                                                .getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH));
-                                    }
+                            IPreferenceStore preferenceStore = null;
+                            if (GlobalServiceRegister.getDefault().isServiceRegistered(IDesignerCoreUIService.class)) {
+                                IDesignerCoreUIService designerCoreUiService = (IDesignerCoreUIService) GlobalServiceRegister
+                                        .getDefault().getService(IDesignerCoreUIService.class);
+                                preferenceStore = designerCoreUiService.getPreferenceStore();
+                            }
+                            if (preferenceStore != null
+                                    && preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE) != null
+                                    && !preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE).equals("")) { //$NON-NLS-1$
+                                globalType = preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_TYPE);
+                                if (preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH) != null
+                                        && !preferenceStore.getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH)
+                                                .equals("")) { //$NON-NLS-1$
+                                    lengthValue = Integer.parseInt(preferenceStore
+                                            .getString(MetadataTypeLengthConstants.VALUE_DEFAULT_LENGTH));
                                 }
                             }
                         }
