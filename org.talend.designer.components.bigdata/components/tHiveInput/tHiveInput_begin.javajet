@@ -22,9 +22,6 @@ imports="
 			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 			String fsDefalutName = "fs.default.name";
-			if(hiveVersion!=null && "Cloudera_CDH4".equals(hiveVersion)){
-				fsDefalutName="fs.defaultFS";
-			}
 			
 			boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
 			boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
