@@ -31,9 +31,6 @@
     
     String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 	String fsDefalutName = "fs.default.name";
-	if(hiveVersion!=null && "Cloudera_CDH4".equals(hiveVersion)){
-		fsDefalutName="fs.defaultFS";
-	}
     
 	boolean setTempPath = "true".equals(ElementParameterParser.getValue(node, "__SET_TEMP_PATH__")); 
 	if(setTempPath) { 

@@ -37,9 +37,6 @@
 	String split = ElementParameterParser.getValue(node,"__SPLIT__");
 	
 	String fsDefalutName = "fs.default.name";
-	if(version!=null && "Cloudera_CDH4".equals(version)){
-		fsDefalutName="fs.defaultFS";
-	}
 %>
 	java.util.List<String> lColumns_<%=cid%> = new java.util.ArrayList<String>();
 <%

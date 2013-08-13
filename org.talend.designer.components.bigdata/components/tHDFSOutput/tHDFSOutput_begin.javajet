@@ -36,11 +36,7 @@
 	boolean compress = "true".equals(ElementParameterParser.getValue(node, "__COMPRESS__"));
 	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
 	
-	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 	String fsDefalutName = "fs.default.name";
-	if(hadoopVersion!=null && "Cloudera_CDH4".equals(hadoopVersion)){
-		fsDefalutName="fs.defaultFS";
-	}
 	
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
@@ -58,6 +54,7 @@
 		org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
 		<%
 		if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
+			String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 			String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
     		
@@ -108,7 +105,7 @@
 			List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
 		    for(INode targetNode : nodes){
 		    	if (targetNode.getUniqueName().equals(connectionSid)) {
-			      	
+			    String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");  	
 				boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
 				String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
 			

@@ -17,9 +17,6 @@
 	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 	String fsDefalutName = "fs.default.name";
-	if(version!=null && "Cloudera_CDH4".equals(version)){
-		fsDefalutName="fs.defaultFS";
-	}
 %>
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
