@@ -49,9 +49,6 @@ java.sql.Connection conn_<%=cid%> = null;
 		String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 		String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 		String fsDefalutName = "fs.default.name";
-		if(hiveVersion!=null && "Cloudera_CDH4".equals(hiveVersion)){
-			fsDefalutName="fs.defaultFS";
-		}
 		String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 		
 		boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
