@@ -62,7 +62,9 @@
 	
 	boolean generateRegisterJarCodeForRCFile = !isLocal && "RCFilePigStorage".equals(function);
 	
-	boolean generateRegisterJarCodeForAll = generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile || generateRegisterJarCodeForRCFile;
+	boolean generateRegisterJarCodeForAvroFile = !isLocal && "AvroStorage".equals(function);
+	
+	boolean generateRegisterJarCodeForAll = generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile || generateRegisterJarCodeForRCFile || generateRegisterJarCodeForAvroFile;
 
 	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
@@ -108,6 +110,12 @@
 			jarsToRegister.add("hive-serde");
 			jarsToRegister.add("hive-common");
 			jarsToRegister.add("hive-exec");
+		}
+		
+		if(generateRegisterJarCodeForAvroFile) {
+			jarsToRegister.add("piggybank");
+			jarsToRegister.add("avro");
+			jarsToRegister.add("json_simple");
 		}
 
 		for (int j = 0; j < commandLine.length; j++) {
@@ -541,6 +549,10 @@
 				} else {
 					if("RCFilePigStorage".equals(function)) {
 						function = "com.twitter.elephantbird.pig.store.RCFilePigStorage";
+					}
+					
+					if("AvroStorage".equals(function)) {
+						function = "org.apache.pig.piggybank.storage.avro.AvroStorage";
 					}
 %>
 					sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");

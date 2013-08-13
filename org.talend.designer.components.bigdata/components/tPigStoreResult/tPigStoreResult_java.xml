@@ -43,6 +43,7 @@
                     <ITEM NAME="HBASESTORAGE" VALUE="HBaseStorage"/>
                     <ITEM NAME="SEQUENCEFILESTORAGE" VALUE="SequenceFileStorage"/>
                     <ITEM NAME="RCFILEPIGSTORAGE" VALUE="RCFilePigStorage" />
+                    <ITEM NAME="AVROSTORAGE" VALUE="AvroStorage" />
 					<ITEM NAME="CUSTOM" VALUE="CustomStorer" />
 			</ITEMS>
 		</PARAMETER>
@@ -66,7 +67,7 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
-        <PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="36" REQUIRED="true" GROUP="CONFIGURATION" SHOW_IF="(STORE=='HBASESTORAGE') OR (STORE=='HCATSTORER')" REPOSITORY_VALUE="DISTRIBUTION">
+        <PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="36" REQUIRED="true" GROUP="CONFIGURATION" SHOW_IF="(STORE=='HBASESTORAGE') OR (STORE=='HCATSTORER') OR (STORE=='AVROSTORAGE')" REPOSITORY_VALUE="DISTRIBUTION">
             <ITEMS DEFAULT="HORTONWORKS">
                 <ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
                 <ITEM NAME="CLOUDERA" VALUE="CLOUDERA" NOT_SHOW_IF="STORE=='HCATSTORER'"/>
@@ -76,7 +77,7 @@
                 <ITEM NAME="CUSTOM" VALUE="CUSTOM"/>
             </ITEMS>
         </PARAMETER>
-        <PARAMETER NAME="HBASE_VERSION" FIELD="CLOSED_LIST" NUM_ROW="36" REQUIRED="true" GROUP="CONFIGURATION" SHOW_IF="((STORE=='HBASESTORAGE') OR (STORE=='HCATSTORER')) AND (DISTRIBUTION!='CUSTOM')" REPOSITORY_VALUE="PIG_VERSION">
+        <PARAMETER NAME="HBASE_VERSION" FIELD="CLOSED_LIST" NUM_ROW="36" REQUIRED="true" GROUP="CONFIGURATION" SHOW_IF="((STORE=='HBASESTORAGE') OR (STORE=='HCATSTORER') OR (STORE=='AVROSTORAGE')) AND (DISTRIBUTION!='CUSTOM')" REPOSITORY_VALUE="PIG_VERSION">
             <ITEMS DEFAULT="HDP_1_0">
                 <ITEM NAME="HDP_1_0" VALUE="HDP_1_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
                 <ITEM NAME="HDP_1_2" VALUE="HDP_1_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
@@ -260,6 +261,11 @@
             <IMPORT NAME="hive-common-0.8.0.jar" MODULE="hive-common-0.8.0.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/hive-common-0.8.0.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-exec-0.8.0.jar" MODULE="hive-exec-0.8.0.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/hive-exec-0.8.0.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <IMPORT NAME="piggybank.jar" MODULE="piggybank.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH4')) AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="piggybank-cdh4.jar" MODULE="piggybank-cdh4.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='Cloudera_CDH4')) AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(STORE=='AVROSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="json_simple-1.1.jar" MODULE="json_simple-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar" REQUIRED_IF="(STORE=='AVROSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 
 		</IMPORTS>
 	</CODEGENERATION>
