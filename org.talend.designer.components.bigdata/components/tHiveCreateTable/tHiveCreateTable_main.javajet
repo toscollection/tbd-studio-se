@@ -154,6 +154,8 @@ boolean setSerdeRowFormat = "true".equals(ElementParameterParser.getValue(node, 
 
 boolean setRowFormat = (setDelimitedRowFormat || setSerdeRowFormat) && !"STORAGE".equals(storedFormat);
 
+boolean storeAsAvro = "AVRO".equals(storedFormat);
+
 createTableSQL.append("CREATE ");
 createTableSQL.append(external?"EXTERNAL":"");
 createTableSQL.append(" TABLE ");
@@ -199,7 +201,9 @@ if(likeTable) {
 	return stringBuffer.toString();
 }
 
-createTableSQL.append("(");
+if(!storeAsAvro) {
+	createTableSQL.append("(");
+}
 
 final MappingTypeRetriever mappingType = MetadataTalendType.getMappingTypeRetriever("hive_id");
 
@@ -248,6 +252,83 @@ class Util {
         }
 	}
 	
+	java.util.Map<String,String> hiveTypeToAvroType = null;
+	
+	void generateAvroSchema(List<IMetadataColumn> listColumn,StringBuilder schemaBuilder, String quote) {
+		if(hiveTypeToAvroType == null) {
+			hiveTypeToAvroType = new java.util.HashMap<String,String>();
+			hiveTypeToAvroType.put("SMALLINT","int");
+			hiveTypeToAvroType.put("FLOAT","float");
+			hiveTypeToAvroType.put("DOUBLE","double");
+			hiveTypeToAvroType.put("BIGINT","long");
+			hiveTypeToAvroType.put("INT","int");
+			hiveTypeToAvroType.put("TINYINT","int");
+			hiveTypeToAvroType.put("STRING","string");
+			hiveTypeToAvroType.put("BOOLEAN","boolean");
+			hiveTypeToAvroType.put("STRUCT","record");
+			hiveTypeToAvroType.put("MAP","map");
+			hiveTypeToAvroType.put("ARRAY","list");
+			hiveTypeToAvroType.put("TIMESTAMP","long");
+		}
+		
+		index++;
+	
+		int count = 0;
+		String ending = ",";
+        for(IMetadataColumn metadataColumn : listColumn) {
+        	schemaBuilder.append("{");
+        	
+        	schemaBuilder.append(quote).append("name").append(quote);
+            schemaBuilder.append(" : ");
+            schemaBuilder.append(quote).append(metadataColumn.getOriginalDbColumnName()).append(quote);
+            
+            schemaBuilder.append(", ");
+            
+            String hiveType = null;
+            if(metadataColumn.getType() == null || metadataColumn.getType().trim().length() == 0) {
+                hiveType = mappingType.getDefaultSelectedDbType(metadataColumn.getTalendType());
+            } else {
+                hiveType = metadataColumn.getType();
+            }
+            
+            String avroType = hiveTypeToAvroType.get(hiveType);
+            
+            schemaBuilder.append(quote).append("type").append(quote);
+            schemaBuilder.append(" : ");
+        	schemaBuilder.append(quote).append(avroType).append(quote);
+        	
+        	String comment = metadataColumn.getComment();
+        	if(comment!=null && !"".equals(comment) && !"\"\"".equals(comment)) {
+        		schemaBuilder.append(", ");
+%>
+				String comment_<%=index%>_<%=count%>_<%=cid%> = <%=comment%>;
+<%
+        		schemaBuilder.append(quote).append("doc").append(quote);
+        		schemaBuilder.append(" : ");
+        		schemaBuilder.append(quote);
+        		
+	    		schemaBuilder.append("\" + ");
+    			schemaBuilder.append("comment_");
+    			schemaBuilder.append(index);
+    			schemaBuilder.append("_");
+    			schemaBuilder.append(count);
+    			schemaBuilder.append("_");
+    			schemaBuilder.append(cid);
+        		schemaBuilder.append(" + \"");
+        		
+        		schemaBuilder.append(quote);
+        	}
+            
+            schemaBuilder.append("}");
+            
+            if(count == listColumn.size() - 1) {
+                ending = "";
+            }
+            schemaBuilder.append(ending);
+            count++;
+        }
+	}
+	
 	void generatePros(String prefix, List<Map<String, String>> pros, StringBuilder createTableSQL) {
 		index++;
 		
@@ -288,15 +369,36 @@ class Util {
 	            createTableSQL.append(ending);
             	count++;
 			}
+			
+			if(appendKeyValue!=null) {
+				createTableSQL.append(",");
+				createTableSQL.append(appendKeyValue);
+				appendKeyValue = null;
+			}
+			
 			createTableSQL.append(")");
+		} else if(appendKeyValue!=null) {
+			createTableSQL.append(prefix);
+			createTableSQL.append("(");
+			createTableSQL.append(appendKeyValue);
+			createTableSQL.append(")");
+			appendKeyValue = null;
 		}
 	}
 	
+	String appendKeyValue = null;
+	
+	void appendKeyValue(String appendKeyValue) {
+		this.appendKeyValue = appendKeyValue;
+	}
 }
 
 Util util = new Util();
-util.generateColumnsSQL(listColumn,createTableSQL);
-createTableSQL.append(")");
+
+if(!storeAsAvro) {
+	util.generateColumnsSQL(listColumn,createTableSQL);
+	createTableSQL.append(")");
+}
 
 String tableComment = ElementParameterParser.getValue(node, "__TABLE_COMMENT__");
 if(tableComment!=null && !"".equals(tableComment) && !"\"\"".equals(tableComment)) {
@@ -338,7 +440,10 @@ if(clustededOrSkewed) {
 	createTableSQL.append(" + \"");
 }
 
-if(setRowFormat) {
+if(storeAsAvro) {
+	createTableSQL.append(" ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'");
+	util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
+} else if(setRowFormat) {
 	createTableSQL.append(" ROW FORMAT ");
 	if(setDelimitedRowFormat) {
 		createTableSQL.append("DELIMITED ");
@@ -421,7 +526,10 @@ if(setRowFormat) {
 	}
 }
 
-if(!"STORAGE".equals(storedFormat)) {
+if(storeAsAvro) {
+	createTableSQL.append(" STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'");
+	createTableSQL.append(" OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'");
+} else if(!"STORAGE".equals(storedFormat)) {
 	createTableSQL.append(" STORED AS ");
 	if("INPUTFORMAT_AND_OUTPUTFORMAT".equals(storedFormat)) {
 		String inputClass = ElementParameterParser.getValue(node, "__INPUTFORMAT_CLASS__");
@@ -467,6 +575,18 @@ if(setLocation) {
 	createTableSQL.append("location_");
 	createTableSQL.append(cid);
 	createTableSQL.append(" + \"'");
+}
+
+if(storeAsAvro) {
+	StringBuilder avroSchemaBuilder = new StringBuilder();
+	String quote = "\\\"";
+	avroSchemaBuilder.append("'avro.schema.literal'='{").append(quote).append("name").append(quote).append(" : ").append(quote).append("row").append(quote)
+	.append(", ").append(quote).append("type").append(quote).append(" : ").append(quote).append("record").append(quote)
+	.append(", ").append(quote).append("fields").append(quote).append(" : [");
+	util.generateAvroSchema(listColumn, avroSchemaBuilder, quote);
+	avroSchemaBuilder.append("] }'");
+	
+	util.appendKeyValue(avroSchemaBuilder.toString());
 }
 
 util.generatePros(" TBLPROPERTIES ", tableProps, createTableSQL);
