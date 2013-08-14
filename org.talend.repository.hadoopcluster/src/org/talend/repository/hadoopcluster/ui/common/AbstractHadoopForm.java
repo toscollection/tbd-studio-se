@@ -70,6 +70,7 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
             switch (version4Drivers) {
             case HDP_1_0:
             case HDP_1_2:
+            case HDP_1_3:
             case APACHE_1_0_0:
             case CLOUDERA_CDH4:
             case APACHE_1_0_3_EMR:
