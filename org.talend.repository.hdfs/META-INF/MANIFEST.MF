@@ -24,7 +24,8 @@ Require-Bundle: org.eclipse.ui,
  org.talend.metadata.managment.ui,
  org.talend.designer.hdfsbrowse,
  org.talend.libraries.apache,
- org.talend.repository.hadoopcluster
+ org.talend.repository.hadoopcluster,
+ org.talend.repository.items.importexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: %providerName

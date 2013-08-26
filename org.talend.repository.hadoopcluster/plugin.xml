@@ -219,4 +219,15 @@
              name="Metadata/Create HBase">
        </Action>
     </extension>
+    <extension
+          point="org.talend.repository.items.importexport.handler">
+       <importProvider
+             class="org.talend.repository.hadoopcluster.ui.handler.HadoopClusterImportHandler"
+             id="org.talend.repository.hadoopcluster.importProvider"
+             name="Hadoop Cluster importer"
+             priority="NORMAL">
+          <repType
+                type="HADOOPCLUSTER"></repType>
+       </importProvider>
+    </extension>
 </plugin>

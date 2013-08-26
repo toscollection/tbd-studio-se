@@ -25,7 +25,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.metadata.managment.ui,
  org.talend.libraries.apache,
  org.talend.designer.hdfsbrowse,
- org.talend.designer.core
+ org.talend.designer.core,
+ org.talend.repository.items.importexport
 Bundle-ActivationPolicy: lazy
 Export-Package: org.talend.repository.hadoopcluster.action.common,
  org.talend.repository.hadoopcluster.model.migration,

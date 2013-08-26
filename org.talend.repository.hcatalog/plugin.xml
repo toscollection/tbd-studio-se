@@ -79,5 +79,16 @@
             version="5.3.0">
       </projecttask>
    </extension>
+   <extension
+         point="org.talend.repository.items.importexport.handler">
+      <importProvider
+            class="org.talend.repository.hcatalog.ui.handler.HCatalogImportHandler"
+            id="org.talend.repository.hcatalog.importProvider"
+            name="HCatalog importer"
+            priority="NORMAL">
+         <repType
+               type="HCATALOG"></repType>
+      </importProvider>
+   </extension>
 
 </plugin>

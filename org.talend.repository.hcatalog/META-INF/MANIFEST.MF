@@ -32,6 +32,7 @@ Require-Bundle: org.eclipse.ui,
  org.talend.metadata.managment.ui,
  org.talend.repository,
  org.talend.designer.hdfsbrowse,
- org.talend.repository.hadoopcluster
+ org.talend.repository.hadoopcluster,
+ org.talend.repository.items.importexport
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.talend.repository.hcatalog.Activator
