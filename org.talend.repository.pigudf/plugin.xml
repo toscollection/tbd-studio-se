@@ -128,4 +128,15 @@
             name="%NavigatorContent.action.openPigudfExistVersionProcess">
       </Action>
    </extension>
+   <extension
+         point="org.talend.repository.items.importexport.handler">
+      <importProvider
+            class="org.talend.repository.pigudf.handler.PigUdfImportHandler"
+            id="org.talend.repository.pigudf.importProvider"
+            name="Pig UDF importer"
+            priority="NORMAL">
+         <repType
+               type="PIG_UDF"></repType>
+      </importProvider>
+   </extension>
 </plugin>
