@@ -97,7 +97,9 @@ imports="
 			String cid = node.getUniqueName();
 			String table_name = ElementParameterParser.getValue(node, "__TABLE__");
 %>
+		if(!admin_<%=cid %>.isTableDisabled(<%=table_name%>)){
 			admin_<%=cid %>.disableTable(<%=table_name%>);
+		}
 			admin_<%=cid %>.deleteTable(<%=table_name%>);
 <%
 		}
