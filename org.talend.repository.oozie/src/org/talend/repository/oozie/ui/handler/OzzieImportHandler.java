@@ -17,8 +17,8 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.repository.items.importexport.handlers.imports.MetadataConnectionImportHandler;
-import org.talend.repository.items.importexport.ui.wizard.imports.managers.ResourcesManager;
-import org.talend.repository.items.importexport.ui.wizard.imports.models.ItemRecord;
+import org.talend.repository.items.importexport.handlers.model.ItemRecord;
+import org.talend.repository.items.importexport.manager.ResourcesManager;
 
 /**
  * DOC ggu class global comment. Detailled comment
