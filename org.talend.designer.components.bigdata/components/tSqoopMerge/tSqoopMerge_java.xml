@@ -85,11 +85,11 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="NEWDATA" FIELD="TEXT" NUM_ROW="20">
+        <PARAMETER NAME="NEWDATA" FIELD="TEXT" NUM_ROW="30" GROUP="FOLDERS">
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="ONTO" FIELD="TEXT" NUM_ROW="30">
+        <PARAMETER NAME="ONTO" FIELD="TEXT" NUM_ROW="20" GROUP="FOLDERS">
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         
@@ -105,7 +105,7 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="GENERATE" FIELD="CHECK" NUM_ROW="65">
+        <PARAMETER NAME="GENERATE" FIELD="CHECK" NUM_ROW="55">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         
