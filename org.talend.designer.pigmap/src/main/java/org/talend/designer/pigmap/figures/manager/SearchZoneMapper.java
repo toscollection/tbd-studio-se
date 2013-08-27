@@ -62,7 +62,7 @@ public class SearchZoneMapper {
 
         List<InputTable> inputTables = mapperManager.getExternalData().getInputTables();
         List<OutputTable> outputTables = mapperManager.getExternalData().getOutputTables();
-        matcher.setPattern(searchValue);
+        matcher.setPattern("*" + searchValue.trim() + "*");
         int index = -1;
 
         // for the Lookup InputTables
