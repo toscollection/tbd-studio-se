@@ -295,7 +295,7 @@
 
     <RETURNS>
         <RETURN AVAILABILITY="AFTER" NAME="OUTPUT_MESSAGE" TYPE="id_String"
-            SHOW_IF="USE_JAVAAPI=='false'" />
+            SHOW_IF="USE_COMMANDLINE=='true'" />
     </RETURNS>
 
 </COMPONENT>

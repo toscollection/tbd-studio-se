@@ -75,7 +75,7 @@
         com.cloudera.sqoop.Sqoop codeGenerator_<%=cid%> = new com.cloudera.sqoop.Sqoop(codeGen_<%=cid%>,configuration_<%=cid%>, needGenereateJarSqoopOptions_<%=cid%>);
         int ret_<%=cid%> = com.cloudera.sqoop.Sqoop.runSqoop(codeGenerator_<%=cid%>, new String[0]);
         if (0 != ret_<%=cid%>) {
-            System.out.println("Nonzero exit from codegen: " + ret_<%=cid%>);
+            throw new Exception("codegen the jar failed with code:" + ret_<%=cid%>);
         }
         List<String> jars_<%=cid%> = codeGen_<%=cid%>.getGeneratedJarFiles();
         jarFileName_<%=cid%> = jars_<%=cid%>.get(0);

@@ -145,13 +145,15 @@ java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%
 sb_<%=cid%> = new java.lang.StringBuilder();
 while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
     String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
-    <%
+    sb_<%=cid%>.append(line_<%=cid%>);
+}
+<%
     if(printLog){
 %>
-        System.out.println(line_<%=cid%>);
+if (sb_<%=cid%>.length() > 0 ) {
+	System.out.println(sb_<%=cid%>);
+}
 <%
     }
 %>
-    sb_<%=cid%>.append(line_<%=cid%>);
-}
 globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
