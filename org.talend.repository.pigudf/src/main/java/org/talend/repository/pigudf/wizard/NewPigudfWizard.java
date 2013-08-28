@@ -15,7 +15,6 @@ package org.talend.repository.pigudf.wizard;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -23,6 +22,7 @@ import java.util.HashSet;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.wizard.Wizard;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
@@ -31,6 +31,9 @@ import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.utils.VersionUtils;
 import org.talend.core.CorePlugin;
+import org.talend.core.GlobalServiceRegister;
+import org.talend.core.ILibraryManagerService;
+import org.talend.core.ILibraryManagerUIService;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.general.ILibrariesService;
@@ -124,28 +127,48 @@ public class NewPigudfWizard extends Wizard {
 
             // set a default pig version from org.talend.libraries.pig
             IMPORTType type = ComponentFactory.eINSTANCE.createIMPORTType();
-            String relativePath = "platform:/plugin/org.talend.libraries.pig/lib/pig-0.10.0.jar";
+            String jarName = "pig-0.10.0.jar";//$NON-NLS-1$
+            String relativePath = "platform:/plugin/org.talend.libraries.pig/lib/" + jarName; //$NON-NLS-1$
             URI uri = new URI(relativePath);
-            URL url = FileLocator.toFileURL(uri.toURL());
-            File file = new File(url.getFile());
-            if (file.exists()) {
-                type.setMODULE(file.getName());
+            boolean libExist = false;
+            ILibraryManagerService librairesService = (ILibraryManagerService) GlobalServiceRegister.getDefault().getService(
+                    ILibraryManagerService.class);
+            try {
+                // try to get from local library
+                URL url = FileLocator.toFileURL(uri.toURL());
+                File file = new File(url.getFile());
+                if (file.exists()) {
+                    libExist = true;
+                    CorePlugin.getDefault().getLibrariesService().deployLibrary(file.toURL());
+                }
+            } catch (Exception e) {
+                // if there is no local library available, try to install it from the wizard
+                if (GlobalServiceRegister.getDefault().isServiceRegistered(ILibraryManagerUIService.class)) {
+                    ILibraryManagerUIService libUiService = (ILibraryManagerUIService) GlobalServiceRegister.getDefault()
+                            .getService(ILibraryManagerUIService.class);
+
+                    libUiService.installModules(new String[] { jarName });
+                }
+                if (librairesService.list(new NullProgressMonitor()).contains(repositoryFactory)) {
+                    libExist = true;
+                }
+
+            }
+
+            if (libExist) {
+                type.setMODULE(jarName);
                 type.setREQUIRED(true);
-                type.setUrlPath(file.getAbsolutePath());
+                type.setUrlPath(librairesService.getJarPath(jarName));
                 pigUDFItem.getImports().add(type);
             }
             repositoryFactory.create(pigUDFItem, mainPage.getDestinationPath());
-            if (file.exists()) {
-                CorePlugin.getDefault().getLibrariesService().deployLibrary(file.toURL());
+            if (libExist) {
+                // to force to update the classpath of the routine
                 CorePlugin.getDefault().getRunProcessService().updateLibraries(new HashSet<String>(), null);
             }
         } catch (PersistenceException e) {
             ExceptionHandler.process(e);
         } catch (URISyntaxException e) {
-            ExceptionHandler.process(e);
-        } catch (MalformedURLException e) {
-            ExceptionHandler.process(e);
-        } catch (IOException e) {
             ExceptionHandler.process(e);
         }
 
