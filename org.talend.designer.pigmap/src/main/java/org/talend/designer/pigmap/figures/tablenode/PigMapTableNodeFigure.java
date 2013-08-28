@@ -94,4 +94,8 @@ public class PigMapTableNodeFigure extends TableTreeEntityFigure {
             expression.setText(tableNode.getExpression());
         }
     }
+
+    public TableNode getTableNode() {
+        return this.tableNode;
+    }
 }

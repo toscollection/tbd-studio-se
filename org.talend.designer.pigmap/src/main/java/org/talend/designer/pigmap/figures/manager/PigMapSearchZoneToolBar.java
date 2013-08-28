@@ -35,7 +35,7 @@ public class PigMapSearchZoneToolBar extends SearchZoneToolBar {
 
     private final SearchZoneMapper searchZoneMapper;
 
-    private Map<Integer, Figure> searchMaps = new LinkedHashMap<Integer, Figure>();
+    private Map<Integer, Map<Integer, Figure>> searchMaps = new LinkedHashMap<Integer, Map<Integer, Figure>>();
 
     private Integer selectKey = -1;
 
@@ -132,7 +132,7 @@ public class PigMapSearchZoneToolBar extends SearchZoneToolBar {
      */
     @Override
     protected void hightlightAll() {
-        if (searchMaps.isEmpty() && true) {
+        if (searchMaps.isEmpty()) {
             searchZoneMapper.search(searchMaps, searchText.getText());
         }
         searchZoneMapper.setHightlightAll(searchZoneMapper.isHightlightAll() ? false : true);
@@ -147,7 +147,7 @@ public class PigMapSearchZoneToolBar extends SearchZoneToolBar {
             searchMaps.clear();
         }
         searchZoneMapper.search(searchMaps, searchText);
-        selectKey = searchZoneMapper.selectHightlight(searchMaps, 0, "first");
+        // selectKey = searchZoneMapper.selectHightlight(searchMaps, 0, "first");
     }
 
     /*
@@ -184,5 +184,13 @@ public class PigMapSearchZoneToolBar extends SearchZoneToolBar {
 
     public VarNodeTextLabel getSearchText() {
         return this.searchText;
+    }
+
+    public SearchZoneMapper getSearchZoneMapper() {
+        return this.searchZoneMapper;
+    }
+
+    public Map<Integer, Map<Integer, Figure>> getSearchMaps() {
+        return this.searchMaps;
     }
 }

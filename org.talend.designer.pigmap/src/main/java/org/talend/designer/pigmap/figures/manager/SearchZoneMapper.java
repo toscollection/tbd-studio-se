@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.designer.pigmap.figures.manager;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class SearchZoneMapper {
         matcher = new SearchPattern();
     }
 
-    public void search(Map<Integer, Figure> searchMaps, String searchValue) {
+    public void search(Map<Integer, Map<Integer, Figure>> searchMaps, String searchValue) {
         if (searchValue.equals("") || searchValue == null) {
             return;
         }
@@ -65,7 +66,7 @@ public class SearchZoneMapper {
         matcher.setPattern("*" + searchValue.trim() + "*");
         int index = -1;
 
-        // for the Lookup InputTables
+        // for the InputTables
         for (InputTable inputTable : inputTables) {
             // ExpressionFilter
             if (inputTable.getExpressionFilter() != null && matcher.matches(inputTable.getExpressionFilter())) {
@@ -76,15 +77,17 @@ public class SearchZoneMapper {
                         if (inputTablePart != null && inputTablePart.getFigure() != null
                                 && inputTablePart.getFigure() instanceof InputTableFigure) {
                             InputTableFigure inputTableFigure = (InputTableFigure) inputTablePart.getFigure();
+                            Map<Integer, Figure> map = new HashMap<Integer, Figure>();
+                            map.put(0, inputTableFigure.getFilterContainer());
                             index++;
-                            searchMaps.put(index, inputTableFigure.getFilterContainer());
+                            searchMaps.put(index, map);
                         }
                     }
                 }
             }
             // TableNode
             for (TableNode node : inputTable.getNodes()) {
-                if (getMatcherNodeFigure(node) != null) {
+                if (getMatcherNodeFigure(node).size() > 0) {
                     index++;
                     searchMaps.put(index, getMatcherNodeFigure(node));
                 }
@@ -102,15 +105,17 @@ public class SearchZoneMapper {
                         if (outputTablePart != null && outputTablePart.getFigure() != null
                                 && outputTablePart.getFigure() instanceof OutputTableFigure) {
                             OutputTableFigure outputTableFigure = (OutputTableFigure) outputTablePart.getFigure();
+                            Map<Integer, Figure> map = new HashMap<Integer, Figure>();
+                            map.put(0, outputTableFigure.getFilterContainer());
                             index++;
-                            searchMaps.put(index, outputTableFigure.getFilterContainer());
+                            searchMaps.put(index, map);
                         }
                     }
                 }
             }
             // OutputTableNode
             for (TableNode node : outputTable.getNodes()) {
-                if (getMatcherNodeFigure(node) != null) {
+                if (getMatcherNodeFigure(node).size() > 0) {
                     index++;
                     searchMaps.put(index, getMatcherNodeFigure(node));
                 }
@@ -118,48 +123,60 @@ public class SearchZoneMapper {
         }
     }
 
-    public Integer selectHightlight(Map<Integer, Figure> searchMaps, Integer selectKey, String option) {
+    public Integer selectHightlight(Map<Integer, Map<Integer, Figure>> searchMaps, Integer selectKey, String option) {
         if (searchMaps.containsKey(selectKey)) {
             if (option.equals("next") && selectKey + 1 < searchMaps.size()) {
+                Map<Integer, Figure> map = searchMaps.get(selectKey);
+                Map<Integer, Figure> mapNext = searchMaps.get(selectKey + 1);
                 if (isHightlightAll) {
-                    setEntryState(mapperManager, EntryState.HIGHLIGHTALL, searchMaps.get(selectKey));
-                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, searchMaps.get(selectKey + 1));
+                    setEntryState(mapperManager, EntryState.HIGHLIGHTALL, map.get(0));
+                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, mapNext.get(0));
                 } else {
-                    setEntryState(mapperManager, EntryState.NONE, searchMaps.get(selectKey));
-                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, searchMaps.get(selectKey + 1));
+                    setEntryState(mapperManager, EntryState.NONE, map.get(0));
+                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, mapNext.get(0));
                 }
                 // move scrollBarZone at selected TableItem
-                moveScrollBarZoneAtSelectedTableItem(searchMaps.get(selectKey + 1));
+                moveScrollBarZoneAtSelectedTableItem(mapNext.get(0));
                 return selectKey + 1;
             } else if (option.equals("previous") && selectKey > 0) {
+                Map<Integer, Figure> map = searchMaps.get(selectKey);
+                Map<Integer, Figure> mapNext = searchMaps.get(selectKey - 1);
                 if (isHightlightAll) {
-                    setEntryState(mapperManager, EntryState.HIGHLIGHTALL, searchMaps.get(selectKey));
-                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, searchMaps.get(selectKey - 1));
+                    setEntryState(mapperManager, EntryState.HIGHLIGHTALL, map.get(0));
+                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, mapNext.get(0));
                 } else {
-                    setEntryState(mapperManager, EntryState.NONE, searchMaps.get(selectKey));
-                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, searchMaps.get(selectKey - 1));
+                    setEntryState(mapperManager, EntryState.NONE, map.get(0));
+                    setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, mapNext.get(0));
                 }
                 // move scrollBarZone at selected TableItem
-                moveScrollBarZoneAtSelectedTableItem(searchMaps.get(selectKey - 1));
+                moveScrollBarZoneAtSelectedTableItem(mapNext.get(0));
                 return selectKey - 1;
             } else if (option.equals("first")) {
-                setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, searchMaps.get(0));
+                setEntryState(mapperManager, EntryState.SEARCH_HIGHLIGHT, searchMaps.get(0).get(0));
                 // move scrollBarZone at selected TableItem
-                moveScrollBarZoneAtSelectedTableItem(searchMaps.get(0));
+                moveScrollBarZoneAtSelectedTableItem(searchMaps.get(0).get(0));
                 return 0;
             }
+        } else {
+            searchMaps.clear();
+            return 0;
         }
         return selectKey;
     }
 
-    public void hightlightAll(Map<Integer, Figure> searchMaps, boolean isHightlight) {
+    public void hightlightAll(Map<Integer, Map<Integer, Figure>> searchMaps, boolean isHightlight) {
         Iterator iter = searchMaps.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
-            if (isHightlight) {
-                setEntryState(mapperManager, EntryState.HIGHLIGHTALL, (Figure) entry.getValue());
-            } else {
-                setEntryState(mapperManager, EntryState.NONE, (Figure) entry.getValue());
+            Map<Integer, Figure> map = (Map<Integer, Figure>) entry.getValue();
+            Iterator it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry e = (Map.Entry) it.next();
+                if (isHightlight) {
+                    setEntryState(mapperManager, EntryState.HIGHLIGHTALL, (Figure) e.getValue());
+                } else {
+                    setEntryState(mapperManager, EntryState.NONE, (Figure) e.getValue());
+                }
             }
         }
     }
@@ -168,9 +185,21 @@ public class SearchZoneMapper {
         if (entry != null) {
             if (entry instanceof PigMapTableNodeFigure) {
                 PigMapTableNodeFigure tableNodeFigure = (PigMapTableNodeFigure) entry;
-                if (tableNodeFigure != null && tableNodeFigure.getExpressionFigure() != null) {
-                    tableNodeFigure.getExpressionFigure().setOpaque(true);
-                    tableNodeFigure.getExpressionFigure().setBackgroundColor(entryState.getColor());
+                if (tableNodeFigure != null) {
+                    if (tableNodeFigure.getExpressionFigure() != null
+                            && matcher.matches(tableNodeFigure.getExpressionFigure().getText())) {
+                        tableNodeFigure.getExpressionFigure().setOpaque(true);
+                        tableNodeFigure.getExpressionFigure().setBackgroundColor(entryState.getColor());
+                    }
+                    if (tableNodeFigure.getTableNode() != null && matcher.matches(tableNodeFigure.getTableNode().getName())) {
+                        tableNodeFigure.setOpaque(true);
+                        tableNodeFigure.setBackgroundColor(entryState.getColor());
+                        if (tableNodeFigure.getExpressionFigure() != null
+                                && !matcher.matches(tableNodeFigure.getExpressionFigure().getText())) {
+                            tableNodeFigure.getExpressionFigure().setOpaque(true);
+                            tableNodeFigure.getExpressionFigure().setBackgroundColor(EntryState.NONE.getColor());
+                        }
+                    }
                 }
             } else if (entry instanceof TableFilterContainer) {
                 TableFilterContainer filterText = (TableFilterContainer) entry;
@@ -199,18 +228,25 @@ public class SearchZoneMapper {
         scrollComposite.setOrigin(0, scrollBarSelection);
     }
 
-    public Integer getSelectedKeyAtSelectedTableItem(Map<Integer, Figure> searchMaps) {
+    public Integer getSelectedKeyAtSelectedTableItem(Map<Integer, Map<Integer, Figure>> searchMaps) {
         Integer selectKey = 0;
         IFigure figure = mapperManager.getSelectedFigure();
-        if (figure != null && searchMaps.containsValue(figure)) {
+        if (figure != null) {
             Iterator iter = searchMaps.entrySet().iterator();
             while (iter.hasNext()) {
                 Map.Entry entry = (Map.Entry) iter.next();
-                if (entry.getValue() != null && entry.getValue() instanceof IFigure) {
-                    IFigure figureTemp = (IFigure) entry.getValue();
-                    if (figure.equals(figureTemp)) {
-                        mapperManager.setSelectedFigure(null);
-                        return (Integer) entry.getKey();
+                Map<Integer, Figure> map = (Map<Integer, Figure>) entry.getValue();
+                if (map.containsValue(figure)) {
+                    Iterator it = map.entrySet().iterator();
+                    while (it.hasNext()) {
+                        Map.Entry e = (Map.Entry) it.next();
+                        if (e.getValue() != null && e.getValue() instanceof IFigure) {
+                            IFigure figureTemp = (IFigure) e.getValue();
+                            if (figure.equals(figureTemp)) {
+                                mapperManager.setSelectedFigure(null);
+                                return (Integer) entry.getKey();
+                            }
+                        }
                     }
                 }
             }
@@ -218,20 +254,30 @@ public class SearchZoneMapper {
         return selectKey;
     }
 
-    private TableEntityFigure getMatcherNodeFigure(AbstractNode node) {
-        if (node != null && node.getExpression() != null && matcher.matches(node.getExpression())) {
+    private Map<Integer, Figure> getMatcherNodeFigure(AbstractNode node) {
+        Map<Integer, Figure> map = new HashMap<Integer, Figure>();
+        int i = -1;
+        TableEntityFigure figure = null;
+        if (node != null) {
             EList<Adapter> adapter = node.eAdapters();
             if (adapter.size() > 0) {
                 if (adapter.get(0) instanceof TableEntityPart) {
                     TableEntityPart tableEntityPart = (TableEntityPart) adapter.get(0);
                     if (tableEntityPart != null && tableEntityPart.getFigure() != null
                             && tableEntityPart.getFigure() instanceof TableEntityFigure) {
-                        return (TableEntityFigure) tableEntityPart.getFigure();
+                        figure = (TableEntityFigure) tableEntityPart.getFigure();
                     }
                 }
             }
+            if (node.getExpression() != null && matcher.matches(node.getExpression())) {
+                i++;
+                map.put(i, figure);
+            } else if (node.getName() != null && matcher.matches(node.getName())) {
+                i++;
+                map.put(i, figure);
+            }
         }
-        return null;
+        return map;
     }
 
     public boolean isHightlightAll() {

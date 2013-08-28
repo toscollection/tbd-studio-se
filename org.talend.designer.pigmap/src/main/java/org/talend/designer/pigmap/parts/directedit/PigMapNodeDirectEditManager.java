@@ -232,17 +232,13 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                 if (source instanceof PigMapInputTablePart) {
                     InputTable inputTable = (InputTable) ((PigMapInputTablePart) source).getModel();
                     if (DirectEditType.JOIN_MODEL.equals(((IComboCell) figure).getDirectEditType())) {
-                        //
                     }
                     if (DirectEditType.JOIN_OPTIMIZATION.equals(((IComboCell) figure).getDirectEditType())) {
-                        //
                     }
                 }
-
                 if (source instanceof PigMapOutputTablePart) {
                     OutputTable outputTable = (OutputTable) ((PigMapOutputTablePart) source).getModel();
                     if (DirectEditType.ALL_IN_ONE.equals(((IComboCell) figure).getDirectEditType())) {
-                        //
                     }
                 }
                 cellEditor = new ComboCellEditor();
@@ -256,6 +252,20 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
             // this one is created for direct doc child name , no use anymore...
             cellEditor = new TextCellEditor(composite);
             cellAndType.put(cellEditor, ((ITextCell) figure).getDirectEditType());
+            // for the search
+            PigMapNodeCellEditorLocator lo = (PigMapNodeCellEditorLocator) locator;
+            if (lo.getFigure() != null && lo.getFigure() instanceof VarNodeTextLabel) {
+                figure = (VarNodeTextLabel) lo.getFigure();
+                if (figure.getParent() != null && figure.getParent() instanceof PigMapSearchZoneToolBar) {
+                    PigMapSearchZoneToolBar searchZone = (PigMapSearchZoneToolBar) figure.getParent();
+                    if (searchZone.getSearchMaps().size() > 0) {
+                        searchZone.getSearchZoneMapper().hightlightAll(searchZone.getSearchMaps(), false);
+                        searchZone.getSearchZoneMapper().setHightlightAll(false);
+                        searchZone.getSearchMaps().clear();
+                        searchZone.hightLightAll.setSelected(false);
+                    }
+                }
+            }
         } else if (figure instanceof IExpressionBuilderCell && model instanceof AbstractNode) {
             IService expressionBuilderDialogService = GlobalServiceRegister.getDefault().getService(
                     IExpressionBuilderDialogService.class);
