@@ -46,6 +46,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.MessageBoxExceptionHandler;
 import org.talend.core.CorePlugin;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.model.components.ComponentCategory;
@@ -612,7 +613,6 @@ public class ExecuteJobCompositeController {
 
     public void doKillAction() {
         try {
-
             OozieClient oozieClient = new OozieClient(getOozieEndPoint());
             StringBuffer output = new StringBuffer("");
             String jobIdInOozie = CorePlugin
@@ -642,12 +642,11 @@ public class ExecuteJobCompositeController {
                 // afterDoKillAction(jobIdInOozie);
             }
         } catch (OozieClientException e) {
-            ExceptionHandler.process(e);
+            MessageBoxExceptionHandler.process(e);
         }
     }
 
     private void afterDoKillAction(String killedJobId, StringBuffer output) throws OozieJobException {
-
         OozieClient oozieClient = new OozieClient(getOozieEndPoint());
         oozieClient.setDebugMode(0);
         try {
