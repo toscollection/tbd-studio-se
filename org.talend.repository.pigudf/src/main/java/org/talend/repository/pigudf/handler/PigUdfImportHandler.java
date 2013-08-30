@@ -12,12 +12,12 @@
 // ============================================================================
 package org.talend.repository.pigudf.handler;
 
-import org.talend.repository.items.importexport.handlers.imports.AbstractImportHandler;
+import org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class PigUdfImportHandler extends AbstractImportHandler {
+public class PigUdfImportHandler extends ImportRepTypeHandler {
 
     /**
      * DOC ggu PigUdfImportHandler constructor comment.

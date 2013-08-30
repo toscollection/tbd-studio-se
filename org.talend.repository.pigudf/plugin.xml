@@ -131,12 +131,16 @@
    <extension
          point="org.talend.repository.items.importexport.handler">
       <importProvider
-            class="org.talend.repository.pigudf.handler.PigUdfImportHandler"
             id="org.talend.repository.pigudf.importProvider"
             name="Pig UDF importer"
             priority="NORMAL">
-         <repType
-               type="PIG_UDF"></repType>
+         <handler
+               class="org.talend.repository.pigudf.handler.PigUdfImportHandler">
+            <parameter
+                  name="type"
+                  value="PIG_UDF">
+            </parameter>
+         </handler>
       </importProvider>
    </extension>
 </plugin>
