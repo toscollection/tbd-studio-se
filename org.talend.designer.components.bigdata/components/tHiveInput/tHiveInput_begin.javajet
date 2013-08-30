@@ -46,7 +46,14 @@ imports="
         	String zookeeperClientPortForHBase = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
         	String defineRegisterJar = ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__");
         	List<Map<String, String>> registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
-        	
+%>
+        	String dbname_<%=cid%> = <%=dbname%>;
+        	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+            	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+            	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+            	goToDatabase_<%=cid%>.close();
+        	}
+<%
     		if("true".equalsIgnoreCase(storeByHBase) && !("EMBEDDED".equals(connectionMode) && "MAPR2".equals(hiveVersion))) {%>
     			java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
         		<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>

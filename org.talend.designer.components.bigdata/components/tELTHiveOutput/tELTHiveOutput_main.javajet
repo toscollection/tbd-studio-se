@@ -43,8 +43,14 @@ imports="
 	String differenttable = ElementParameterParser.getValue(node, "__DIFFERENT_TABLE_NAME__");
     boolean useDifferentTable = "true".equals(ElementParameterParser.getValue(node, "__USE_DIFFERENT_TABLE__"));
     
+   	String dbschema = ElementParameterParser.getValue(node,"__ELT_SCHEMA_NAME__");
 	%>
-		tableName_<%=cid%> = <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		String dbschema_<%=cid%> = <%=dbschema%>;
+		if(dbschema_<%=cid%> != null && dbschema_<%=cid%>.trim().length() > 0) {
+		 	tableName_<%=cid%> = <%=dbschema%> + "." + <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		} else {
+			tableName_<%=cid%> = <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		}
 	<%
 	
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
@@ -133,35 +139,38 @@ if(useExistingConn) {
 		String dbPwd_<%=cid %> = <%=dbpwd%>;    
 		java.lang.Class.forName("<%=javaDbDriver %>");
 		conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
+		
+    	String dbname_<%=cid%> = <%=dbname%>;
+    	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+        	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+        	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+        	goToDatabase_<%=cid%>.close();
+    	}
 <%
-}
-%>
-
+        if("true".equalsIgnoreCase(storeByHBase) && !("EMBEDDED".equals(connectionMode) && "MAPR2".equals(hiveVersion))) {%>
+        	java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
+        	<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
+        		statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);
+        	<%}%>
+        	
+        	<%if(zookeeperClientPortForHBase!=null && !"".equals(zookeeperClientPortForHBase) && !"\"\"".equals(zookeeperClientPortForHBase)) {%>
+        		statement_<%=cid%>.execute("SET hbase.zookeeper.property.clientPort="+<%=zookeeperClientPortForHBase%>);
+        	<%}%>
+        	
+        	<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
+        		for(Map<String, String> jar : registerJarForHBase){
+        			String path = jar.get("JAR_PATH");
+        			if(path == null || "".equals(path) || "\"\"".equals(path)) {
+        				continue;
+        			}
+        	%>
+        			statement_<%=cid%>.execute("add jar "+<%=path%>);
+        	<%
+        		}
+        	}%>
+        	statement_<%=cid%>.close();
 <%
-
-if("true".equalsIgnoreCase(storeByHBase) && !("EMBEDDED".equals(connectionMode) && "MAPR2".equals(hiveVersion))) {%>
-	java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
-	<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
-		statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);
-	<%}%>
-	
-	<%if(zookeeperClientPortForHBase!=null && !"".equals(zookeeperClientPortForHBase) && !"\"\"".equals(zookeeperClientPortForHBase)) {%>
-		statement_<%=cid%>.execute("SET hbase.zookeeper.property.clientPort="+<%=zookeeperClientPortForHBase%>);
-	<%}%>
-	
-	<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
-		for(Map<String, String> jar : registerJarForHBase){
-			String path = jar.get("JAR_PATH");
-			if(path == null || "".equals(path) || "\"\"".equals(path)) {
-				continue;
-			}
-	%>
-			statement_<%=cid%>.execute("add jar "+<%=path%>);
-	<%
-		}
-	}%>
-	statement_<%=cid%>.close();
-<%
+        }
 }
 
 List<IMetadataColumn> columnList = null;

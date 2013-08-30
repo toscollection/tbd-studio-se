@@ -115,6 +115,12 @@ java.sql.Connection conn_<%=cid%> = null;
 		java.lang.Class.forName("<%=javaDbDriver %>");
 		conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
 		
+    	String dbname_<%=cid%> = <%=dbname%>;
+    	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+        	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+        	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+        	goToDatabase_<%=cid%>.close();
+    	}
 <%
 	}
 	
