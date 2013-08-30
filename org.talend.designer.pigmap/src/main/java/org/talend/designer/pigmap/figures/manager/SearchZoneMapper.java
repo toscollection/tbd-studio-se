@@ -19,11 +19,10 @@ import java.util.Map;
 
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.ui.dialogs.SearchPattern;
 import org.talend.designer.gefabstractmap.figures.table.entity.TableEntityFigure;
 import org.talend.designer.gefabstractmap.part.TableEntityPart;
@@ -36,8 +35,10 @@ import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.parts.PigMapDataEditPart;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
+import org.talend.designer.pigmap.parts.PigMapTableNodePart;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
 
 /**
@@ -214,18 +215,25 @@ public class SearchZoneMapper {
     public void moveScrollBarZoneAtSelectedTableItem(Figure entry) {
         if (entry != null) {
             Rectangle bounds = entry.getBounds();
-            int selection = bounds.y - 30;
-            ScrolledComposite scrollComposite = null;
-            if (scrollComposite != null) {
-                setPositionOfVerticalScrollBarZone(scrollComposite, selection);
+            int selection = bounds.y - 100;
+            if (entry instanceof PigMapTableNodeFigure) {
+                PigMapTableNodeFigure pigMapTableNodeFigure = (PigMapTableNodeFigure) entry;
+                TableNode tableNode = pigMapTableNodeFigure.getTableNode();
+                if (tableNode != null) {
+                    for (Adapter adapter : tableNode.eAdapters()) {
+                        PigMapTableNodePart part = (PigMapTableNodePart) adapter;
+                        PigMapDataEditPart pigMapDataEditPart = part.getMapDataEditPart();
+                        if (part.getParent() instanceof PigMapOutputTablePart) {
+                            Viewport viewport = pigMapDataEditPart.getOutputScroll().getViewport();
+                            viewport.setViewLocation(viewport.getViewLocation().translate(bounds.x, selection));
+                        } else if (part.getParent() instanceof PigMapInputTablePart) {
+                            Viewport viewport = pigMapDataEditPart.getInputScroll().getViewport();
+                            viewport.setViewLocation(viewport.getViewLocation().translate(bounds.x, selection));
+                        }
+                    }
+                }
             }
         }
-    }
-
-    private void setPositionOfVerticalScrollBarZone(ScrolledComposite scrollComposite, int scrollBarSelection) {
-        ScrollBar verticalBar = scrollComposite.getVerticalBar();
-        verticalBar.setSelection(scrollBarSelection);
-        scrollComposite.setOrigin(0, scrollBarSelection);
     }
 
     public Integer getSelectedKeyAtSelectedTableItem(Map<Integer, Map<Integer, Figure>> searchMaps) {
