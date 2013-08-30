@@ -36,7 +36,7 @@ public class OzzieImportHandler extends MetadataConnectionImportHandler {
      * (non-Javadoc)
      * 
      * @see
-     * org.talend.repository.items.importexport.handlers.imports.ImportHandler#calcItemRecord(org.eclipse.core.runtime
+     * org.talend.repository.items.importexport.handlers.imports.ImportExecutableBasePathHandler#calcItemRecord(org.eclipse.core.runtime
      * .IProgressMonitor, org.talend.repository.items.importexport.ui.wizard.imports.managers.ResourcesManager,
      * org.eclipse.core.runtime.IPath, boolean, java.util.List)
      */

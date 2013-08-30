@@ -82,12 +82,16 @@
    <extension
          point="org.talend.repository.items.importexport.handler">
       <importProvider
-            class="org.talend.repository.hcatalog.ui.handler.HCatalogImportHandler"
             id="org.talend.repository.hcatalog.importProvider"
             name="HCatalog importer"
             priority="NORMAL">
-         <repType
-               type="HCATALOG"></repType>
+         <handler
+               class="org.talend.repository.hcatalog.ui.handler.HCatalogImportHandler">
+            <parameter
+                  name="type"
+                  value="HCATALOG">
+            </parameter>
+         </handler>
       </importProvider>
    </extension>
 

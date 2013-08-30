@@ -62,12 +62,16 @@
    <extension
          point="org.talend.repository.items.importexport.handler">
       <importProvider
-            class="org.talend.repository.oozie.ui.handler.OzzieImportHandler"
             id="org.talend.repository.oozie.importProvider"
             name="Ozzie importer"
             priority="NORMAL">
-         <repType
-               type="OOZIE"></repType>
+         <handler
+               class="org.talend.repository.oozie.ui.handler.OzzieImportHandler">
+            <parameter
+                  name="type"
+                  value="OOZIE">
+            </parameter>
+         </handler>
       </importProvider>
    </extension>
 

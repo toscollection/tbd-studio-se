@@ -222,12 +222,16 @@
     <extension
           point="org.talend.repository.items.importexport.handler">
        <importProvider
-             class="org.talend.repository.hadoopcluster.ui.handler.HadoopClusterImportHandler"
              id="org.talend.repository.hadoopcluster.importProvider"
              name="Hadoop Cluster importer"
              priority="NORMAL">
-          <repType
-                type="HADOOPCLUSTER"></repType>
+          <handler
+                class="org.talend.repository.hadoopcluster.ui.handler.HadoopClusterImportHandler">
+             <parameter
+                   name="type"
+                   value="HADOOPCLUSTER">
+             </parameter>
+          </handler>
        </importProvider>
     </extension>
 </plugin>

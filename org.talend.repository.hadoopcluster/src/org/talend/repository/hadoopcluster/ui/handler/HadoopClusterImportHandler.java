@@ -19,14 +19,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.model.properties.Item;
-import org.talend.repository.items.importexport.handlers.imports.AbstractImportHandler;
+import org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler;
 import org.talend.repository.items.importexport.handlers.model.ItemRecord;
 import org.talend.repository.items.importexport.manager.ResourcesManager;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HadoopClusterImportHandler extends AbstractImportHandler {
+public class HadoopClusterImportHandler extends ImportRepTypeHandler {
 
     public HadoopClusterImportHandler() {
         super();
@@ -36,7 +36,7 @@ public class HadoopClusterImportHandler extends AbstractImportHandler {
      * (non-Javadoc)
      * 
      * @see
-     * org.talend.repository.items.importexport.handlers.imports.AbstractImportHandler#findRelatedItemRecord(org.eclipse
+     * org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler#findRelatedItemRecord(org.eclipse
      * .core.runtime.IProgressMonitor,
      * org.talend.repository.items.importexport.ui.wizard.imports.managers.ResourcesManager,
      * org.talend.repository.items.importexport.ui.wizard.imports.models.ItemRecord,
