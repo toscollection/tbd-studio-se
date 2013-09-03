@@ -125,6 +125,7 @@ java.sql.Connection conn_<%=cid%> = null;
 	}
 	
 	String tableName = ElementParameterParser.getValue(node, "__TABLE__");
+	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 %>
 	java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 	String query_<%=cid %> = "";
@@ -195,7 +196,19 @@ if(likeTable) {
 	}
 %>
 	String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
-    stmt_<%=cid%>.execute(querySQL_<%=cid %>);
+	try {
+    	stmt_<%=cid%>.execute(querySQL_<%=cid %>);
+    } catch(java.sql.SQLException e_<%=cid%>) {
+    	<%if(("true").equals(dieOnError)) {
+    	%>
+    		throw(e_<%=cid%>);
+    	<%
+    	}else {
+    	%> 
+    		System.err.println(e_<%=cid%>.getMessage());
+    	<%
+    	}%>
+    }
     stmt_<%=cid %>.close();	
     globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
 <%	
@@ -613,7 +626,19 @@ if(asSelect) {
 }
 %>
 String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
-stmt_<%=cid%>.execute(querySQL_<%=cid %>);
+try {
+	stmt_<%=cid%>.execute(querySQL_<%=cid %>);
+} catch(java.sql.SQLException e_<%=cid%>) {
+	<%if(("true").equals(dieOnError)) {
+	%>
+		throw(e_<%=cid%>);
+	<%
+	}else {
+	%> 
+		System.err.println(e_<%=cid%>.getMessage());
+	<%
+	}%>
+}
 stmt_<%=cid %>.close();	
 <%if(!("true").equals(useExistingConn)) {%>
 	conn_<%=cid %>.close();

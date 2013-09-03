@@ -314,6 +314,14 @@
        <DEFAULT>false</DEFAULT>
     </PARAMETER>
     
+    <PARAMETER
+      NAME="DIE_ON_ERROR"
+      FIELD="CHECK"
+      NUM_ROW="180"
+    >
+      <DEFAULT>false</DEFAULT>
+    </PARAMETER>
+    
   </PARAMETERS>
   
   <ADVANCED_PARAMETERS>
