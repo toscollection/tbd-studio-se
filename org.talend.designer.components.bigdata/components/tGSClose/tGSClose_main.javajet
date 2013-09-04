@@ -15,7 +15,7 @@
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 	
 %>
-	rg.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
+	org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
 			(org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
 	if(service_<%=cid%> !=null){
 			service_<%=cid%>.shutdown();
