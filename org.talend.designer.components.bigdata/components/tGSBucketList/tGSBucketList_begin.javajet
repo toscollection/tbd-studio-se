@@ -1,0 +1,52 @@
+<%@ jet 
+imports="
+	org.talend.core.model.process.INode
+	org.talend.core.model.process.ElementParameterParser
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+" 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    
+    String accessKey = ElementParameterParser.getValue(node, "__ACCESS_KEY__");
+	String secretKey = ElementParameterParser.getValue(node, "__SECRET_KEY__");
+	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
+	boolean isSpecifyprojectID=("true").equals(ElementParameterParser.getValue(node,"__SPECIFY_PROJECT__"));
+	String projectID=ElementParameterParser.getValue(node,"__PROJECT_ID__");
+%>
+	int nb_bucket_<%=cid%> = 0;
+	org.jets3t.service.model.GSBucket[] buckets_<%=cid%> = new org.jets3t.service.model.GSBucket[] {};
+<%
+	if(("true").equals(useExistingConn)) {
+		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+%>
+		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
+			(org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
+<%
+	}else{
+%>
+	try {
+		org.jets3t.service.security.GSCredentials credentials_<%=cid%> = new org.jets3t.service.security.GSCredentials(<%=accessKey%>,<%=secretKey%>);
+	
+		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
+			new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
+		service_<%=cid%>.getAccountOwner();
+<%		
+	}
+		if(isSpecifyprojectID){
+%>
+		buckets_<%=cid%>=service_<%=cid%>.listAllBuckets(<%=projectID%>);
+<%
+		}else{
+%>
+		buckets_<%=cid%>=service_<%=cid%>.listAllBuckets();
+<%
+		}
+%>
+	for (org.jets3t.service.model.GSBucket bucket_<%=cid%> : buckets_<%=cid%>) {
+		nb_bucket_<%=cid%>++;
+		String currentBucketName_<%=cid%> = bucket_<%=cid%>.getName();
+		globalMap.put("<%=cid%>_CURRENT_BUCKET_NAME", currentBucketName_<%=cid%>);

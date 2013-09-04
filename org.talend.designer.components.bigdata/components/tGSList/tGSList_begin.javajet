@@ -1,0 +1,106 @@
+<%@ jet 
+imports="
+	org.talend.core.model.metadata.IMetadataColumn
+	org.talend.core.model.metadata.IMetadataTable
+	org.talend.core.model.process.ElementParameterParser
+	org.talend.core.model.process.IConnection
+	org.talend.core.model.process.IConnectionCategory
+	org.talend.core.model.process.INode
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+	
+	java.util.List
+	java.util.Map
+" 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    
+    String accessKey = ElementParameterParser.getValue(node, "__ACCESS_KEY__");
+	String secretKey = ElementParameterParser.getValue(node, "__SECRET_KEY__");
+	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
+	boolean isSpecifyprojectID=("true").equals(ElementParameterParser.getValue(node,"__SPECIFY_PROJECT__"));
+	String projectID=ElementParameterParser.getValue(node,"__PROJECT_ID__");
+	String delimiter=ElementParameterParser.getValue(node,"__DELIMITER__");
+%>
+	int nb_line_<%=cid%> = 0;
+	try {
+<%
+	if(("true").equals(useExistingConn)) {
+		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+%>
+		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
+			(org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
+<%
+	}else{
+%>
+		org.jets3t.service.security.GSCredentials credentials_<%=cid%> = new org.jets3t.service.security.GSCredentials(<%=accessKey%>,<%=secretKey%>);
+	
+		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
+			new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
+		service_<%=cid%>.getAccountOwner();
+<%		
+	}
+				List<Map<String, String>> buckets = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__BUCKETS__");
+				boolean listAll = "true".equals(ElementParameterParser.getValue(node,"__LISTALL__"));
+				if(listAll){
+					String objects_prefix=ElementParameterParser.getValue(node,"__OBJECTS_PREFIX__");
+					if(isSpecifyprojectID && projectID!=null && !"".equals(projectID)&& !"\"\"".equals(projectID)){
+%>
+				org.jets3t.service.model.GSBucket[] buckets_<%=cid%>=service_<%=cid%>.listAllBuckets(<%=projectID%>);
+<%
+					}else{
+%>
+				org.jets3t.service.model.GSBucket[] buckets_<%=cid%>=service_<%=cid%>.listAllBuckets();
+<%
+					}
+%>
+				for (org.jets3t.service.model.GSBucket bucket_<%=cid%> : buckets_<%=cid%>) {
+					String currentBucketName_<%=cid%> = bucket_<%=cid%>.getName();
+					org.jets3t.service.model.GSObject[] objects_<%=cid%> = service_<%=cid%>.listObjects(currentBucketName_<%=cid%>,
+					<%if(objects_prefix!=null && objects_prefix.trim().length()>0){%><%=objects_prefix%><% }else{%> null <%}%>,
+					<%if(delimiter!=null && delimiter.trim().length()>0){%><%=delimiter%><% }else{%> null <%}%>
+					);
+<%
+				} else if(buckets.size()>0){
+%>
+				java.util.List<String> buckets_<%=cid%> = new java.util.ArrayList<String>();
+				java.util.Map<String,String> object_prefixs_<%=cid%> = new java.util.HashMap<String,String>();
+				java.util.Map<String,String> object_delimiter_<%=cid%> = new java.util.HashMap<String,String>();
+<%
+					for(Map<String, String> map: buckets){
+						String bucket_name =map.get("BUCKET_NAME");
+						String object_prefix =map.get("OBJECT_PREFIX");
+						String object_delimiter =map.get("OBJECT_DELIMITER");
+						if(object_prefix!=null && object_prefix.trim().length()>0){
+%>
+				object_prefixs_<%=cid%>.put(<%=bucket_name%>,<%=object_prefix%>);
+<%
+						}
+						if(object_delimiter!=null && object_delimiter.trim().length()>0){
+%>
+				object_delimiter_<%=cid%>.put(<%=bucket_name%>,<%=object_delimiter%>);
+<%
+						}
+%>
+				if(!buckets_<%=cid%>.contains(<%=bucket_name%>)){
+					buckets_<%=cid%>.add(<%=bucket_name%>);
+				}
+<%
+					}
+%>
+				for (String currentBucketName_<%=cid%> : buckets_<%=cid%>) {
+					org.jets3t.service.model.GSObject[] objects_<%=cid%> = service_<%=cid%>.listObjects(currentBucketName_<%=cid%>,
+						object_prefixs_<%=cid%>.get(currentBucketName_<%=cid%>),object_delimiter_<%=cid%>.get(currentBucketName_<%=cid%>));
+<%
+				}
+				if(listAll || buckets.size()>0){
+%>
+					for (org.jets3t.service.model.GSObject objectSummary_<%=cid%> : objects_<%=cid%>) {
+						globalMap.put("<%=cid%>_CURRENT_BUCKET", currentBucketName_<%=cid%>);
+						globalMap.put("<%=cid%>_CURRENT_KEY", objectSummary_<%=cid%>.getKey());
+<%
+				}
+%>
