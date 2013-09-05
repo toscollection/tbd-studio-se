@@ -23,6 +23,8 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
@@ -66,9 +68,9 @@ import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.model.metadata.types.PerlTypesManager;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.repository.IRepositoryPrefConstants;
+import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
-import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.ui.metadata.editor.MetadataEmfTableEditorView;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.cwm.helper.ConnectionHelper;
@@ -196,9 +198,8 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         }
 
         metadataEditor.setMetadataTable(metadataTable);
-
-        Boolean flag = CoreRuntimePlugin.getInstance().getPreferenceStore()
-                .getBoolean(IRepositoryPrefConstants.ALLOW_SPECIFIC_CHARACTERS_FOR_SCHEMA_COLUMNS);
+        IEclipsePreferences preferences = new InstanceScope().getNode(ITalendCorePrefConstants.CoreUIPlugin_ID);
+        Boolean flag = preferences.getBoolean(IRepositoryPrefConstants.ALLOW_SPECIFIC_CHARACTERS_FOR_SCHEMA_COLUMNS, false);
         if (!flag.booleanValue()) {
             List<MetadataColumn> list = metadataEditor.getMetadataColumnList();
             for (MetadataColumn column : list) {

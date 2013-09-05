@@ -67,9 +67,9 @@ import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.editor.MetadataEmfTableEditor;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.repository.IRepositoryPrefConstants;
+import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
-import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.ui.metadata.editor.MetadataEmfTableEditorView;
 import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.TableHelper;
@@ -193,7 +193,7 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
         }
 
         metadataEditor.setMetadataTable(metadataTable);
-        IEclipsePreferences preferences = new InstanceScope().getNode(CoreRuntimePlugin.PLUGIN_ID);
+        IEclipsePreferences preferences = new InstanceScope().getNode(ITalendCorePrefConstants.CoreUIPlugin_ID);
         Boolean flag = preferences.getBoolean(IRepositoryPrefConstants.ALLOW_SPECIFIC_CHARACTERS_FOR_SCHEMA_COLUMNS, false);
         if (!flag.booleanValue()) {
             List<MetadataColumn> list = metadataEditor.getMetadataColumnList();
