@@ -81,18 +81,18 @@
    </extension>
    <extension
          point="org.talend.repository.items.importexport.handler">
-      <importProvider
+      <importItemsProvider
             id="org.talend.repository.hdfs.importProvider"
             name="HDFS importer"
             priority="NORMAL">
-         <handler
+         <importItemsHandler
                class="org.talend.repository.hdfs.ui.handler.HdfsImportHandler">
             <parameter
                   name="type"
                   value="HDFS">
             </parameter>
-         </handler>
-      </importProvider>
+         </importItemsHandler>
+      </importItemsProvider>
    </extension>
 
 </plugin>
