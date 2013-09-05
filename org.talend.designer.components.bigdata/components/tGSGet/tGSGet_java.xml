@@ -82,6 +82,7 @@
 	      	SHOW_IF="(GETLIST == 'false')"
 	      	GROUP="QUERY_CONFIG"
 	    >
+	    	<DEFAULT>""</DEFAULT>
 	    </PARAMETER>
 	    
 	    <PARAMETER
@@ -92,6 +93,7 @@
 	      	SHOW_IF="(GETLIST == 'false')"
 	      	GROUP="QUERY_CONFIG"
 	    >
+	    	<DEFAULT>""</DEFAULT>
 	    </PARAMETER>
 	    
 	    <PARAMETER

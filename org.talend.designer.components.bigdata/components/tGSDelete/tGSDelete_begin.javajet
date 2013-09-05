@@ -22,28 +22,29 @@
 	String delimiter=ElementParameterParser.getValue(node,"__DELIMITER__");
 %>
 	int nb_line_<%=cid%> = 0;
+	org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = null;
 	try {
 <%
 	if(("true").equals(useExistingConn)) {
 		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 %>
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			(org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
+		service_<%=cid%> = (org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
 <%
 	}else{
 %>
 		org.jets3t.service.security.GSCredentials credentials_<%=cid%> = new org.jets3t.service.security.GSCredentials(<%=accessKey%>,<%=secretKey%>);
 	
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
-		service_<%=cid%>.getAccountOwner();
+		service_<%=cid%> = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
 <%		
 	}
+%>
+		service_<%=cid%>.getAccountOwner();
+<%
 	List<Map<String, String>> buckets = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__BUCKETS__");
-	boolean queryDelObjInAllBuckets = "true".equals(ElementParameterParser.getValue(node,"__DEL_IN_ALL_BUCKETS__"));
-	if(queryDelObjInAllBuckets){
+	boolean queryDelObjInListBuckets = "true".equals(ElementParameterParser.getValue(node,"__DEL_IN_LIST_BUCKETS__"));
+	if(!queryDelObjInListBuckets){
 		String objects_prefix=ElementParameterParser.getValue(node,"__OBJECTS_PREFIX__");
-		if(isSpecifyprojectID && projectID!=null && !"".equals(projectID)&& !"\"\"".equals(projectID)){
+		if(isSpecifyprojectID){
 %>
 		org.jets3t.service.model.GSBucket[] buckets_<%=cid%>=service_<%=cid%>.listAllBuckets(<%=projectID%>);
 <%
@@ -92,7 +93,7 @@
 				object_prefixs_<%=cid%>.get(currentBucketName_<%=cid%>),object_delimiter_<%=cid%>.get(currentBucketName_<%=cid%>));
 <%
 	}
-	if(queryDelObjInAllBuckets || buckets.size()>0){
+	if(!queryDelObjInListBuckets || buckets.size()>0){
 %>
 				for (org.jets3t.service.model.GSObject objectSummary_<%=cid%> : objects_<%=cid%>) {
 					nb_line_<%=cid%>++;

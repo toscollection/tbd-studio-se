@@ -19,28 +19,26 @@
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 %>
 	boolean bucketExist_<%=cid%>=false;
+	org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = null;
 	try {
 <%
 	if(("true").equals(useExistingConn)) {
 		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 %>
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			(org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
+		service_<%=cid%> = (org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
 <%
 	}else{
 %>
 		org.jets3t.service.security.GSCredentials credentials_<%=cid%> = new org.jets3t.service.security.GSCredentials(<%=accessKey%>,<%=secretKey%>);
 	
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
-		service_<%=cid%>.getAccountOwner();	
+		service_<%=cid%> = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
 <%		
 	}
 %>
+		service_<%=cid%>.getAccountOwner();	
 		if(service_<%=cid%>.getBucket(<%=bucketName%>)!=null){
 			bucketExist_<%=cid%>=true;
 		}
-
 	}catch(java.lang.Exception e_<%=cid%>) {
 <%
 		if (("true").equals(dieOnError)) {
@@ -58,7 +56,6 @@
 		if(service_<%=cid%> !=null){
 			service_<%=cid%>.shutdown();
 		}
-		
 <%
 		}
 %>

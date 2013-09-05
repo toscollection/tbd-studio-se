@@ -100,22 +100,10 @@
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 		
-		<PARAMETER 
-            NAME="ACTION_TYPE" 
-            FIELD="CLOSED_LIST" 
-            NUM_ROW="35" 
-            REQUIRED="true"
-       	>
-            <ITEMS DEFAULT="COPY">
-                <ITEM NAME="COPY" VALUE="COPY"/>
-                <ITEM NAME="MOVE" VALUE="MOVE"/>
-            </ITEMS>
-        </PARAMETER>
-        
-	    <PARAMETER
+		 <PARAMETER
 	      	NAME="TARGET_BUCKET"
 	      	FIELD="TEXT"
-	      	NUM_ROW="40"
+	      	NUM_ROW="35"
 	      	REQUIRED="true"
 	    >
 	    	<DEFAULT>""</DEFAULT>
@@ -124,12 +112,25 @@
 	    <PARAMETER
 	      	NAME="TARGET_FOLDER"
 	      	FIELD="TEXT"
-	      	NUM_ROW="40"
+	      	NUM_ROW="35"
 	      	REQUIRED="true"
 	    >
 	    	<DEFAULT>""</DEFAULT>
 	    </PARAMETER>
 	    
+		
+		<PARAMETER 
+            NAME="ACTION_TYPE" 
+            FIELD="CLOSED_LIST" 
+            NUM_ROW="40" 
+            REQUIRED="true"
+       	>
+            <ITEMS DEFAULT="COPY">
+                <ITEM NAME="COPY" VALUE="COPY"/>
+                <ITEM NAME="MOVE" VALUE="MOVE"/>
+            </ITEMS>
+        </PARAMETER>
+        
 	    <PARAMETER
       		NAME="RENAME"
       		FIELD="CHECK"

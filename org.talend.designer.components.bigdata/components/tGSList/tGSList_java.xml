@@ -75,20 +75,32 @@
 	    </PARAMETER>
 	    
 	    <PARAMETER
-	      	NAME="LISTALL"
-	      	FIELD="CHECK"
+	      	NAME="OBJECTS_PREFIX"
+	      	FIELD="TEXT"
 	      	NUM_ROW="25"
-	      	REQUIRED="true"
+	      	REQUIRED="false"
+	      	SHOW_IF="LIST_IN_BUCKET_LIST == 'false'"
 	      	GROUP="QUERY_CONFIG"
 	    >
-	        <DEFAULT>true</DEFAULT>
+	    	<DEFAULT>""</DEFAULT>
+	    </PARAMETER>
+	    
+	    <PARAMETER
+	      	NAME="DELIMITER"
+	      	FIELD="TEXT"
+	      	NUM_ROW="25"
+	      	REQUIRED="false"
+	      	SHOW_IF="LIST_IN_BUCKET_LIST == 'false'"
+	      	GROUP="QUERY_CONFIG"
+	    >
+	    	<DEFAULT>""</DEFAULT>
 	    </PARAMETER>
 	    
 	    <PARAMETER 
 		    NAME="SPECIFY_PROJECT" 
 		    FIELD="CHECK"
 	        NUM_ROW="30"  
-	        SHOW_IF="LISTALL == 'true'"
+	        SHOW_IF="LIST_IN_BUCKET_LIST == 'false'"
 	        GROUP="QUERY_CONFIG"
   		>
         	<DEFAULT>false</DEFAULT>
@@ -99,30 +111,20 @@
 	      	FIELD="TEXT"
 	      	NUM_ROW="30"
 	     	REQUIRED="true"
-	      	SHOW_IF="(SPECIFY_PROJECT == 'true') AND (LISTALL == 'true')"
+	      	SHOW_IF="(SPECIFY_PROJECT == 'true') AND (LIST_IN_BUCKET_LIST == 'false')"
 	      	GROUP="QUERY_CONFIG"
     	>
         	<DEFAULT>""</DEFAULT>
     	</PARAMETER>
-	
-	    <PARAMETER
-	      	NAME="OBJECTS_PREFIX"
-	      	FIELD="TEXT"
+    	
+    	 <PARAMETER
+	      	NAME="LIST_IN_BUCKET_LIST"
+	      	FIELD="CHECK"
 	      	NUM_ROW="35"
-	      	REQUIRED="false"
-	      	SHOW_IF="LISTALL == 'true'"
+	      	REQUIRED="true"
 	      	GROUP="QUERY_CONFIG"
 	    >
-	    </PARAMETER>
-	    
-	    <PARAMETER
-	      	NAME="DELIMITER"
-	      	FIELD="TEXT"
-	      	NUM_ROW="35"
-	      	REQUIRED="false"
-	      	SHOW_IF="LISTALL == 'true'"
-	      	GROUP="QUERY_CONFIG"
-	    >
+	        <DEFAULT>false</DEFAULT>
 	    </PARAMETER>
 	
 	    <PARAMETER 
@@ -131,7 +133,7 @@
 			NUM_ROW="40"
 			REQUIRED="true"
 			NB_LINES="5"
-			SHOW_IF="LISTALL == 'false'"
+			SHOW_IF="LIST_IN_BUCKET_LIST == 'true'"
 			GROUP="QUERY_CONFIG"
 		>
 	        <ITEMS>

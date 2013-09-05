@@ -1,10 +1,6 @@
 <%@ jet 
 imports="
-	org.talend.core.model.metadata.IMetadataColumn
-	org.talend.core.model.metadata.IMetadataTable
 	org.talend.core.model.process.ElementParameterParser
-	org.talend.core.model.process.IConnection
-	org.talend.core.model.process.IConnectionCategory
 	org.talend.core.model.process.INode
 	org.talend.designer.codegen.config.CodeGeneratorArgument
 	
@@ -26,43 +22,44 @@ imports="
 	String delimiter=ElementParameterParser.getValue(node,"__DELIMITER__");
 %>
 	int nb_line_<%=cid%> = 0;
+	org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = null;
 	try {
 <%
 	if(("true").equals(useExistingConn)) {
 		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 %>
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			(org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
+		service_<%=cid%> = (org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
 <%
 	}else{
 %>
 		org.jets3t.service.security.GSCredentials credentials_<%=cid%> = new org.jets3t.service.security.GSCredentials(<%=accessKey%>,<%=secretKey%>);
 	
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
-		service_<%=cid%>.getAccountOwner();
+		service_<%=cid%> = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
 <%		
 	}
-				List<Map<String, String>> buckets = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__BUCKETS__");
-				boolean listAll = "true".equals(ElementParameterParser.getValue(node,"__LISTALL__"));
-				if(listAll){
-					String objects_prefix=ElementParameterParser.getValue(node,"__OBJECTS_PREFIX__");
-					if(isSpecifyprojectID && projectID!=null && !"".equals(projectID)&& !"\"\"".equals(projectID)){
 %>
-				org.jets3t.service.model.GSBucket[] buckets_<%=cid%>=service_<%=cid%>.listAllBuckets(<%=projectID%>);
+		service_<%=cid%>.getAccountOwner();
 <%
-					}else{
+	List<Map<String, String>> buckets = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__BUCKETS__");
+	boolean listInBucketList = "true".equals(ElementParameterParser.getValue(node,"__LIST_IN_BUCKET_LIST__"));
+	if(!listInBucketList){
+		String objects_prefix=ElementParameterParser.getValue(node,"__OBJECTS_PREFIX__");
+		if(isSpecifyprojectID){
 %>
-				org.jets3t.service.model.GSBucket[] buckets_<%=cid%>=service_<%=cid%>.listAllBuckets();
+		org.jets3t.service.model.GSBucket[] buckets_<%=cid%>=service_<%=cid%>.listAllBuckets(<%=projectID%>);
 <%
-					}
+	}else{
 %>
-				for (org.jets3t.service.model.GSBucket bucket_<%=cid%> : buckets_<%=cid%>) {
-					String currentBucketName_<%=cid%> = bucket_<%=cid%>.getName();
-					org.jets3t.service.model.GSObject[] objects_<%=cid%> = service_<%=cid%>.listObjects(currentBucketName_<%=cid%>,
-					<%if(objects_prefix!=null && objects_prefix.trim().length()>0){%><%=objects_prefix%><% }else{%> null <%}%>,
-					<%if(delimiter!=null && delimiter.trim().length()>0){%><%=delimiter%><% }else{%> null <%}%>
-					);
+		org.jets3t.service.model.GSBucket[] buckets_<%=cid%>=service_<%=cid%>.listAllBuckets();
+<%
+	}
+%>
+		for (org.jets3t.service.model.GSBucket bucket_<%=cid%> : buckets_<%=cid%>) {
+			String currentBucketName_<%=cid%> = bucket_<%=cid%>.getName();
+			org.jets3t.service.model.GSObject[] objects_<%=cid%> = service_<%=cid%>.listObjects(currentBucketName_<%=cid%>,
+			<%if(objects_prefix!=null && objects_prefix.trim().length()>0){%><%=objects_prefix%><% }else{%> null <%}%>,
+			<%if(delimiter!=null && delimiter.trim().length()>0){%><%=delimiter%><% }else{%> null <%}%>
+			);
 <%
 				} else if(buckets.size()>0){
 %>
@@ -96,7 +93,7 @@ imports="
 						object_prefixs_<%=cid%>.get(currentBucketName_<%=cid%>),object_delimiter_<%=cid%>.get(currentBucketName_<%=cid%>));
 <%
 				}
-				if(listAll || buckets.size()>0){
+				if(!listInBucketList || buckets.size()>0){
 %>
 					for (org.jets3t.service.model.GSObject objectSummary_<%=cid%> : objects_<%=cid%>) {
 						globalMap.put("<%=cid%>_CURRENT_BUCKET", currentBucketName_<%=cid%>);

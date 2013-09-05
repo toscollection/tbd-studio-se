@@ -79,9 +79,10 @@
 	      	FIELD="TEXT"
 	      	NUM_ROW="25"
 	      	REQUIRED="false"
-	      	SHOW_IF="DEL_IN_ALL_BUCKETS == 'true'"
+	      	SHOW_IF="DEL_IN_LIST_BUCKETS == 'false'"
 	      	GROUP="DELETE_CONFIG"
 	    >
+	    	<DEFAULT>""</DEFAULT>
 	    </PARAMETER>
 	    
 	    <PARAMETER
@@ -89,16 +90,17 @@
 	      	FIELD="TEXT"
 	      	NUM_ROW="25"
 	      	REQUIRED="false"
-	      	SHOW_IF="DEL_IN_ALL_BUCKETS == 'true'"
+	      	SHOW_IF="DEL_IN_LIST_BUCKETS == 'false'"
 	      	GROUP="DELETE_CONFIG"
 	    >
+	    	<DEFAULT>""</DEFAULT>
 	    </PARAMETER>
 	    
 	    <PARAMETER 
 		    NAME="SPECIFY_PROJECT" 
 		    FIELD="CHECK"
 	        NUM_ROW="30"  
-	        SHOW_IF="DEL_IN_ALL_BUCKETS == 'true'"
+	        SHOW_IF="DEL_IN_LIST_BUCKETS == 'false'"
 	        GROUP="DELETE_CONFIG"
   		>
         	<DEFAULT>false</DEFAULT>
@@ -109,20 +111,20 @@
 	      	FIELD="TEXT"
 	      	NUM_ROW="30"
 	     	REQUIRED="true"
-	      	SHOW_IF="(SPECIFY_PROJECT == 'true') AND (DEL_IN_ALL_BUCKETS == 'true')"
+	      	SHOW_IF="(SPECIFY_PROJECT == 'true') AND (DEL_IN_LIST_BUCKETS == 'false')"
 	      	GROUP="DELETE_CONFIG"
     	>
         	<DEFAULT>""</DEFAULT>
     	</PARAMETER>
     	
     	 <PARAMETER
-	      	NAME="DEL_IN_ALL_BUCKETS"
+	      	NAME="DEL_IN_LIST_BUCKETS"
 	      	FIELD="CHECK"
 	      	NUM_ROW="35"
 	      	REQUIRED="true"
 	      	GROUP="DELETE_CONFIG"
 	    >
-	        <DEFAULT>true</DEFAULT>
+	        <DEFAULT>false</DEFAULT>
 	    </PARAMETER>
 	
 	    <PARAMETER 
@@ -131,7 +133,7 @@
 			NUM_ROW="35"
 			REQUIRED="true"
 			NB_LINES="5"
-			SHOW_IF="DEL_IN_ALL_BUCKETS == 'false'"
+			SHOW_IF="DEL_IN_LIST_BUCKETS == 'true'"
 			GROUP="DELETE_CONFIG"
 		>
 	        <ITEMS>

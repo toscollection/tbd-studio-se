@@ -28,24 +28,23 @@
 %>
 
 	int nb_line_<%=cid%> = 0;
+	org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = null;
 	try {
 <%
 	if(("true").equals(useExistingConn)) {
 		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 %>
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			(org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
+		service_<%=cid%> = (org.jets3t.service.impl.rest.httpclient.GoogleStorageService)globalMap.get("service_<%=connection%>");
 <%
 	}else{
 %>
 		org.jets3t.service.security.GSCredentials credentials_<%=cid%> = new org.jets3t.service.security.GSCredentials(<%=accessKey%>,<%=secretKey%>);
 	
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService service_<%=cid%> = 
-			new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
-		service_<%=cid%>.getAccountOwner();
+		service_<%=cid%> = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(credentials_<%=cid%>);
 <%		
 	}
 %>
+		service_<%=cid%>.getAccountOwner();
 		org.talend.gs.util.GSObjectUtil gsUtil_<%=cid%>=new  org.talend.gs.util.GSObjectUtil();
 		gsUtil_<%=cid%>.initMimeTypes();
 		java.io.File dataDir_<%=cid%>=new java.io.File(<%=localdir%>);
@@ -63,12 +62,12 @@
 <%
 			}
 %>
-		java.util.Map<String,String> fileMap_<%=cid%>=gsUtil_<%=cid%>.genFileFilterList(list_<%=cid %>, <%=localdir%>, <%=(remotedir==null || "".equals(remotedir))?"\"\"":remotedir%>);
+		java.util.Map<String,String> fileMap_<%=cid%>=gsUtil_<%=cid%>.genFileFilterList(list_<%=cid %>, <%=localdir%>, <%=remotedir%>);
 		objects_<%=cid%> = gsUtil_<%=cid%>.genObjectByFileMap(fileMap_<%=cid%>);	
 <%
 		}else{
 %>
-		objects_<%=cid%>=gsUtil_<%=cid%>.genGSObjectList(objects_<%=cid%>, dataDir_<%=cid%>, <%=(remotedir==null || "".equals(remotedir))?"\"\"":remotedir%>,true,false);
+		objects_<%=cid%>=gsUtil_<%=cid%>.genGSObjectList(objects_<%=cid%>, dataDir_<%=cid%>, <%=remotedir%>,true,false);
 <%
 		}
 %>
