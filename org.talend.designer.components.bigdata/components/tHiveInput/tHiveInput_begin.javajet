@@ -12,7 +12,7 @@ imports="
 		java.util.Map
 		"
 %>
-
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jDBConnUtil.javajet"%>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/HelpClass.javajet"%>
 	
 	<%
@@ -94,6 +94,9 @@ imports="
 			 || ("HDP_1_3".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MAPR1".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MapR_EMR".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)))) {
 %>
 				if(true) {
+					<%if(isLog4jEnabled){%>
+						log.fatal("<%=cid%> - The Hive version and the connection mode are not compatible together. Please check your component configuration.");
+					<%}%>
 					throw new Exception("The Hive version and the connection mode are not compatible together. Please check your component configuration.");
 				}
 <%
