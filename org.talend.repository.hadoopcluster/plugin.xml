@@ -234,4 +234,12 @@
           </importItemsHandler>
        </importItemsProvider>
     </extension>
+    <extension
+          point="org.talend.core.runtime.itemRelationship">
+       <parameterHandler
+             class="org.talend.repository.hadoopcluster.handlers.HadoopClusterPropertyTypeParameterRelationshipHandler"
+             id="org.talend.repository.hadoopcluster.parameterHandler.propertyType"
+             name="Property Type (Hadoop Cluster)">
+       </parameterHandler>
+    </extension>
 </plugin>

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.relationship.Relation;
 import org.talend.core.model.relationship.RelationshipItemBuilder;
 import org.talend.core.model.update.EUpdateItemType;
 import org.talend.core.model.update.RepositoryUpdateManager;
@@ -33,9 +34,8 @@ public class OozieUpdateManager {
      * @return
      */
     public static boolean updateOozieConnection(ConnectionItem connectionItem, boolean show, final boolean onlySimpleShow) {
-        List<RelationshipItemBuilder.Relation> relations = RelationshipItemBuilder.getInstance().getItemsRelatedTo(
-                connectionItem.getProperty().getId(), RelationshipItemBuilder.LATEST_VERSION,
-                RelationshipItemBuilder.PROPERTY_RELATION);
+        List<Relation> relations = RelationshipItemBuilder.getInstance().getItemsRelatedTo(connectionItem.getProperty().getId(),
+                RelationshipItemBuilder.LATEST_VERSION, RelationshipItemBuilder.PROPERTY_RELATION);
 
         RepositoryUpdateManager repositoryUpdateManager = new RepositoryUpdateManager(connectionItem.getConnection(), relations) {
 
