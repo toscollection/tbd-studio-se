@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.manager;
 
+import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +33,13 @@ public class HadoopParameterValidator {
      * @return
      */
     public static boolean isValidNamenodeURI(String nameNodeURI) {
-        return isValid(nameNodeURI, HadoopPatternConstants.NAME_NODE_URI);
+        try {
+            URI.create(nameNodeURI);
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
