@@ -1,0 +1,200 @@
+<COMPONENT>
+    <HEADER
+        AUTHOR="Talend"
+        COMPATIBILITY="ALL"
+        DATA_AUTO_PROPAGATE="true"
+        PLATEFORM="ALL"
+        RELEASE_DATE="20080229A"
+        SERIAL=""
+        STATUS="ALPHA"
+        VERSION="0.102"
+        STARTABLE="false"
+    >
+        <SIGNATURE />
+    </HEADER>
+    <FAMILIES>
+        <FAMILY>Databases/Cassandra</FAMILY>
+        <FAMILY>Big Data/Cassandra</FAMILY>
+    </FAMILIES>
+    <DOCUMENTATION>
+        <URL />
+    </DOCUMENTATION>
+    <CONNECTORS>
+        <CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="0"/>
+        <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="0"/>
+        <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+        <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+        <CONNECTOR CTYPE="COMPONENT_OK"/>
+        <CONNECTOR CTYPE="COMPONENT_ERROR"/>
+        <CONNECTOR CTYPE="RUN_IF"/>
+    </CONNECTORS>
+    <PARAMETERS>
+        <PARAMETER
+            NAME="SCHEMA_FLOW"
+            FIELD="SCHEMA_TYPE"
+            NUM_ROW="1"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="MAPPING"
+            FIELD="MAPPING_TYPE"
+            NUM_ROW="1"
+            SHOW="false"
+        >
+            <DEFAULT>cassandra_id</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="DB_VERSION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="5"
+            >
+            <ITEMS DEFAULT="CASSANDRA_1_2_2">
+                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
+                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="HOST"
+            FIELD="TEXT"
+            REQUIRED="true"
+            NUM_ROW="10"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="PORT"
+            FIELD="TEXT"
+            REQUIRED="true"
+            NUM_ROW="10"
+        >
+            <DEFAULT>9160</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="REQUIRED_AUTHENTICATION"
+            FIELD="CHECK"
+            NUM_ROW="15"
+            SHOW_IF="DB_VERSION == 'CASSANDRA_1_2_2'"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="USERNAME"
+            FIELD="TEXT"
+            REQUIRED="true"
+            NUM_ROW="20"
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (DB_VERSION == 'CASSANDRA_1_2_2')"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="PASSWORD"
+            FIELD="TEXT"
+            REQUIRED="true"
+            NUM_ROW="20"
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (DB_VERSION == 'CASSANDRA_1_2_2')"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="KEY_SPACE"
+            FIELD="TEXT"
+            REQUIRED="true"
+            NUM_ROW="25"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="COLUMN_FAMILY"
+            FIELD="TEXT"
+            REQUIRED="true"
+            NUM_ROW="25"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="PARTITIONER"
+            FIELD="CLOSED_LIST"
+            REQUIRED="true"
+            NUM_ROW="25"
+        >
+            <ITEMS DEFAULT="RANDOMPARTITIONER">
+                <ITEM NAME="RANDOMPARTITIONER" VALUE="RandomPartitioner"/>
+                <ITEM NAME="MURMUR3PARTITIONER" VALUE="Murmur3Partitioner" NOT_SHOW_IF="DB_VERSION == 'CASSANDRA_1_1_2'"/>
+                <ITEM NAME="ORDERPRESERVINGPARTITIONER" VALUE="OrderPreservingPartitioner"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="COMPARATOR"
+            FIELD="CLOSED_LIST"
+            REQUIRED="true"
+            NUM_ROW="30"
+        >
+            <ITEMS DEFAULT="ASCIITYPE">
+                <ITEM NAME="ASCIITYPE" VALUE="AsciiType"/>
+                <ITEM NAME="BYTESTYPE" VALUE="BytesType"/>
+                <ITEM NAME="LEXICALUUIDTYPE" VALUE="LexicalUUIDType"/>
+                <ITEM NAME="LONGTYPE" VALUE="LongType"/>
+                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType"/>
+                <ITEM NAME="UTF8TYPE" VALUE="UTF8Type"/>
+            </ITEMS>
+        </PARAMETER>
+        <!--PARAMETER
+            NAME="SUBCOMPARATOR"
+            FIELD="CLOSED_LIST"
+            REQUIRED="true"
+            NUM_ROW="25"
+        >
+            <ITEMS DEFAULT="NONE">
+                <ITEM NAME="NONE" VALUE="NONE"/>
+                <ITEM NAME="ASCIITYPE" VALUE="ASCIITYPE"/>
+            </ITEMS>
+        </PARAMETER-->
+        <PARAMETER
+            NAME="SSTABLE_STORE_PATH"
+            FIELD="FILE"
+            REQUIRED="true"
+            NUM_ROW="40"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="BUFFER_SIZE"
+            FIELD="TEXT"
+            REQUIRED="true"
+            NUM_ROW="45"
+        >
+            <DEFAULT>64</DEFAULT>
+        </PARAMETER>
+    </PARAMETERS>
+    <ADVANCED_PARAMETERS/>
+    <CODEGENERATION>
+        <TEMPLATES INPUT="tCOB" OUTPUT="tCBE">
+            <TEMPLATE NAME="tCOB" COMPONENT="tCassandraOutputBulk">
+              <LINK_TO NAME="tCBE" CTYPE="ROWS_END"/>
+            </TEMPLATE>
+            
+            <TEMPLATE NAME="tCBE" COMPONENT="tCassandraBulkExec"/>
+            
+            <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="tCOB.SCHEMA_FLOW"/>
+            <TEMPLATE_PARAM SOURCE="self.DB_VERSION" TARGET="tCOB.DB_VERSION"/>
+            <TEMPLATE_PARAM SOURCE="self.KEY_SPACE" TARGET="tCOB.KEY_SPACE"/>
+            <TEMPLATE_PARAM SOURCE="self.COLUMN_FAMILY" TARGET="tCOB.COLUMN_FAMILY"/>
+            <TEMPLATE_PARAM SOURCE="self.PARTITIONER" TARGET="tCOB.PARTITIONER"/>
+            <TEMPLATE_PARAM SOURCE="self.COMPARATOR" TARGET="tCOB.COMPARATOR"/>
+            <TEMPLATE_PARAM SOURCE="self.BUFFER_SIZE" TARGET="tCOB.BUFFER_SIZE"/>
+            <TEMPLATE_PARAM SOURCE="self.SSTABLE_STORE_PATH" TARGET="tCOB.SSTABLE_STORE_PATH"/>
+            
+            <TEMPLATE_PARAM SOURCE="self.DB_VERSION" TARGET="tCBE.DB_VERSION"/>
+            <TEMPLATE_PARAM SOURCE="self.HOST" TARGET="tCBE.HOST"/>
+            <TEMPLATE_PARAM SOURCE="self.PORT" TARGET="tCBE.PORT"/>
+            <TEMPLATE_PARAM SOURCE="self.REQUIRED_AUTHENTICATION" TARGET="tCBE.REQUIRED_AUTHENTICATION"/>
+            <TEMPLATE_PARAM SOURCE="self.USERNAME" TARGET="tCBE.USERNAME"/>
+            <TEMPLATE_PARAM SOURCE="self.PASSWORD" TARGET="tCBE.PASSWORD"/>
+            <TEMPLATE_PARAM SOURCE="self.KEY_SPACE" TARGET="tCBE.KEY_SPACE"/>
+            <TEMPLATE_PARAM SOURCE="self.COLUMN_FAMILY" TARGET="tCBE.COLUMN_FAMILY"/>
+            <TEMPLATE_PARAM SOURCE="self.SSTABLE_STORE_PATH" TARGET="tCBE.SSTABLE_STORE_PATH"/>
+        </TEMPLATES>
+    </CODEGENERATION>
+    <RETURNS/>
+</COMPONENT>
