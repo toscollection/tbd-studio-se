@@ -99,6 +99,12 @@ if(useExistingConn) {
     %>
     conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
     <%
+    
+	String yarnClasspathSeparator = ElementParameterParser.getValue(previousNode, "__CLASSPATH_SEPARATOR__");
+%>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
 } else {
 		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
 		String hiveServer = ElementParameterParser.getValue(previousNode, "__HIVE_SERVER__");
@@ -139,7 +145,25 @@ if(useExistingConn) {
 		String dbPwd_<%=cid %> = <%=dbpwd%>;    
 		java.lang.Class.forName("<%=javaDbDriver %>");
 		conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
-		
+<%
+		boolean useYarn = "true".equals(ElementParameterParser.getValue(previousNode, "__USE_YARN__"));
+    	boolean setResourceManager = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_RESOURCE_MANAGER__"));
+    	
+    	if(((isCustom && useYarn) || (!isCustom && "PIVOTAL_HD_1_0_1".equals(hiveVersion))) && setResourceManager) {
+    		String resourceManager = ElementParameterParser.getValue(previousNode, "__RESOURCE_MANAGER__");
+%>
+        	java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
+        	init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
+        	init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
+        	init_<%=cid%>.close();
+<%
+    		String yarnClasspathSeparator = ElementParameterParser.getValue(previousNode, "__CLASSPATH_SEPARATOR__");
+%>
+    		globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+    		System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
+		}
+%>		
     	String dbname_<%=cid%> = <%=dbname%>;
     	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
         	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
@@ -294,3 +318,9 @@ if(!useExistingConn) {
 
 globalMap.put("<%=cid %>_NB_LINE_OVERWRITE",nb_line_overwrite_<%=cid%>);
 globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
+
+String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+if(currentClientPathSeparator_<%=cid%>!=null) {
+	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+	globalMap.put("current_client_path_separator", null);
+}

@@ -38,6 +38,7 @@
                 <ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
                 <ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
                 <ITEM NAME="MAPR" VALUE="MAPR"/>
+                <ITEM NAME="PIVOTAL_HD" VALUE="PIVOTAL_HD"/>
                 <ITEM NAME="CUSTOM" VALUE="CUSTOM" />
             </ITEMS>
         </PARAMETER>
@@ -51,11 +52,20 @@
                 <ITEM NAME="MAPR1" VALUE="MAPR1" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'"/>
             </ITEMS>
         </PARAMETER>
 
         <PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="VERSION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="5"  SHOW_IF="(USE_JAVAAPI=='true') AND (DISTRIBUTION=='CUSTOM')" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS">
             <DEFAULT />
+        </PARAMETER>
+        
+       <PARAMETER
+           NAME="USE_YARN"
+           FIELD="CHECK"
+           NUM_ROW="6"
+           SHOW_IF="(USE_JAVAAPI=='true') AND (DISTRIBUTION=='CUSTOM')" GROUP="VERSION">
+           <DEFAULT>false</DEFAULT>
         </PARAMETER>
 
         <PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" NUM_ROW="7"
@@ -64,9 +74,13 @@
             <DEFAULT IF="((DB_VERSION == 'MAPR1') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212')) AND (DISTRIBUTION != 'CUSTOM')">"maprfs:///"</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="MAPRED_JOB_TRACKER" FIELD="TEXT" NUM_ROW="8"
-            REQUIRED="true" SHOW_IF="USE_JAVAAPI == 'true'" GROUP="CONFIGURATION">
+            REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND DB_VERSION!='PIVOTAL_HD_1_0_1'))" GROUP="CONFIGURATION">
             <DEFAULT IF="((DB_VERSION != 'MAPR1') AND (DB_VERSION != 'MAPR2') AND (DB_VERSION != 'MAPR212')) OR (DISTRIBUTION == 'CUSTOM')">"localhost:8021"</DEFAULT>
             <DEFAULT IF="((DB_VERSION == 'MAPR1') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212')) AND (DISTRIBUTION != 'CUSTOM')">"localhost:9001"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="8" REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND DB_VERSION=='PIVOTAL_HD_1_0_1'))" GROUP="CONFIGURATION">
+            <DEFAULT>"localhost:8032"</DEFAULT>
         </PARAMETER>
 
 	    <PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="10">
@@ -278,6 +292,31 @@
 			<IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR212') AND (DISTRIBUTION != 'CUSTOM')"/>
             <!-- -->
 
+            <!-- PIVOTAL_HD_1_0_1 -->
+            <IMPORT NAME="hadoop-mapreduce-client-common-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-mapreduce-client-common-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-mapreduce-client-common-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-mapreduce-client-core-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-mapreduce-client-core-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-mapreduce-client-core-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-mapreduce-client-jobclient-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-mapreduce-client-jobclient-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-mapreduce-client-jobclient-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-yarn-api-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-yarn-api-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-yarn-api-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-yarn-client-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-yarn-client-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-yarn-client-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-yarn-common-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-yarn-common-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-yarn-common-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-io-2.1" MODULE="commons-io-2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="jackson-core-asl-1.8.8" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.8.8" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="sqoop-1.4.2-cdh4.2.0" MODULE="sqoop-1.4.2-cdh4.2.0.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.2-cdh4.2.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-hdfs-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-hdfs-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-hdfs-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <!-- -->
         </IMPORTS>
     </CODEGENERATION>
 	<RETURNS>

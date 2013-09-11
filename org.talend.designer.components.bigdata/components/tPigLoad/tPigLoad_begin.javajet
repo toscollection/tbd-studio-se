@@ -46,6 +46,9 @@
 	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");	
 	
 	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
+	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
+	boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_JOBHISTORY_ADDRESS__"));
 	
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
@@ -253,8 +256,31 @@
 		} else { // MAPREDUCE mode
 %>
 			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
-			props_<%=cid%>.put("mapred.job.tracker", <%=mapredJobTracker%>);
+			<%if((isCustom && useYarn) || (!isCustom && "PIVOTAL_HD_1_0_1".equals(pigVersion))) {
+%>
+				props_<%=cid%>.put("mapreduce.framework.name", "yarn");
+				props_<%=cid%>.put("yarn.resourcemanager.address", <%=resourceManager%>);
 <%
+				if(setJobHistoryAddress) {
+					String jobHistoryAddress = ElementParameterParser.getValue(node, "__JOBHISTORY_ADDRESS__");
+%>
+					props_<%=cid%>.put("mapreduce.jobhistory.address", <%=jobHistoryAddress%>);
+<%
+				}
+				
+				if(inMain) {
+					String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+%>
+					globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+					System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
+				}
+			} else {
+%>
+				props_<%=cid%>.put("mapred.job.tracker", <%=mapredJobTracker%>);
+<%
+			}
+			
 			if("HCatLoader".equals(function)) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
 %>
 				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);

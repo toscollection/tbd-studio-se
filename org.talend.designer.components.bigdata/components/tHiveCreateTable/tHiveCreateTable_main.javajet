@@ -44,6 +44,12 @@ java.sql.Connection conn_<%=cid%> = null;
 		%>
 		conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
 		<%
+		
+    	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+%>
+		globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+		System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
 	} else {
 		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
 		String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
@@ -56,6 +62,7 @@ java.sql.Connection conn_<%=cid%> = null;
 		List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 		
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+		boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 
 		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion)))) {
 			hiveServer = hiveServer.toLowerCase();
@@ -82,8 +89,8 @@ java.sql.Connection conn_<%=cid%> = null;
 <%
 			} 
 		}
-			
-		if(setMapredJT) {
+		
+		if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion))) && setMapredJT) {
 			String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
 %>
 			System.setProperty("mapred.job.tracker", <%=mapredJT%>);
@@ -114,7 +121,24 @@ java.sql.Connection conn_<%=cid%> = null;
 		String dbPwd_<%=cid %> = <%=dbpwd%>;    
 		java.lang.Class.forName("<%=javaDbDriver %>");
 		conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
-		
+<%
+    	boolean setResourceManager = "true".equals(ElementParameterParser.getValue(node, "__SET_RESOURCE_MANAGER__"));
+    	
+    	if(((isCustom && useYarn) || (!isCustom && "PIVOTAL_HD_1_0_1".equals(hiveVersion))) && setResourceManager) {
+    		String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
+%>
+        	java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
+        	init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
+        	init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
+        	init_<%=cid%>.close();
+<%
+    		String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+%>
+    		globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+    		System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
+		}
+%>
     	String dbname_<%=cid%> = <%=dbname%>;
     	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
         	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
@@ -211,6 +235,12 @@ if(likeTable) {
     }
     stmt_<%=cid %>.close();	
     globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
+    
+    String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+    if(currentClientPathSeparator_<%=cid%>!=null) {
+    	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+    	globalMap.put("current_client_path_separator", null);
+    }
 <%	
 	if(!("true").equals(useExistingConn)) {
 %>
@@ -644,3 +674,9 @@ stmt_<%=cid %>.close();
 	conn_<%=cid %>.close();
 <%}%>    
 globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
+
+String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+if(currentClientPathSeparator_<%=cid%>!=null) {
+	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+	globalMap.put("current_client_path_separator", null);
+}

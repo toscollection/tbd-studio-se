@@ -22,11 +22,24 @@
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 
 	String fsDefalutName = "fs.default.name";
+	
+	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
+	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 %>
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
-	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
 <%
+	if((isCustom && useYarn) || (!isCustom && "PIVOTAL_HD_1_0_1".equals(version))) {
+%>
+		configuration_<%=cid%>.set("mapreduce.framework.name", "yarn");
+		configuration_<%=cid%>.set("yarn.resourcemanager.address", <%=resourceManager%>);
+<%
+	} else {
+%>
+		configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
+<%
+	}
+	
 	if(hadoopProps!=null && hadoopProps.size() > 0){
 		for(Map<String, String> item : hadoopProps){
 %>
