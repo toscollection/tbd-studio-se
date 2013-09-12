@@ -1,0 +1,91 @@
+<%@ jet 
+	imports="
+	    org.talend.core.model.metadata.IMetadataTable
+	    org.talend.core.model.process.EConnectionType
+	    org.talend.core.model.process.ElementParameterParser
+	    org.talend.core.model.process.IConnection
+	    org.talend.core.model.process.INode
+	    org.talend.designer.codegen.config.CodeGeneratorArgument
+	    org.talend.core.model.process.IConnectionCategory
+	    
+		java.util.List
+		java.util.Map
+	" 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+	
+    String cid = node.getUniqueName();
+    List<Map<String, String>> riakNodes = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__NODES__");
+    
+    boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    String bucket = ElementParameterParser.getValue(node,"__BUCKET__");
+    
+  	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+    IConnection inConn = null;
+	IMetadataTable metadata = null;
+	if(inConns!=null && inConns.size()> 0) {
+		inConn = inConns.get(0);
+		metadata = inConn.getMetadataTable();
+	}
+  	List< ? extends IConnection> conns = node.getIncomingConnections();
+	for (IConnection conn : conns) {
+		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+	      	if(metadata != null){
+%>
+	com.basho.riak.client.IRiakClient client_<%=cid%> = null;
+	int upsert_nb_line_<%=cid%> = 0;
+	int delete_nb_line_<%=cid%> = 0;
+	try{
+<%
+			if(useExistingConn){
+				String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+%>
+		client_<%=cid%> = (com.basho.riak.client.IRiakClient)globalMap.get("client_<%=connection%>");
+<%
+			}else{
+		    	if(riakNodes.size()>0){
+%>
+		com.basho.riak.client.raw.http.HTTPClusterConfig  clusterConfig_<%=cid%> = new com.basho.riak.client.raw.http.HTTPClusterConfig(com.basho.riak.client.raw.config.ClusterConfig.UNLIMITED_CONNECTIONS);
+<%
+			    	for(int i=0;i<riakNodes.size();i++){
+			    		Map<String, String> riakNode = riakNodes.get(i);
+						String host =riakNode.get("HOST");
+						String port =riakNode.get("PORT");
+						String riakPath =riakNode.get("RIAK_PATH");
+						if(host!=null && host.trim().length()>0 && !"\"\"".equals(host)){
+%>
+		com.basho.riak.client.raw.http.HTTPClientConfig clientConfig_<%=cid%>_<%=i%> = new com.basho.riak.client.raw.http.HTTPClientConfig.Builder()
+<%
+							if(port!=null && port.trim().length()>0){
+%>
+			.withPort(<%=port%>)
+<%
+							}
+							if(riakPath!=null && riakPath.trim().length()>0 && !"\"\"".equals(riakPath)){
+%>
+			.withRiakPath(<%=riakPath%>)
+<%
+							}
+%>
+			.build();
+			clusterConfig_<%=cid%>.addHosts(clientConfig_<%=cid%>_<%=i%>, <%=host%>);
+<%
+				}
+			}
+%>
+		client_<%=cid%> =com.basho.riak.client.RiakFactory.newClient(clusterConfig_<%=cid%>);
+		client_<%=cid%>.ping();
+<%
+		}
+    }
+%>
+		com.basho.riak.client.bucket.Bucket bucket_<%=cid%> = client_<%=cid%>.fetchBucket(<%=bucket%>).execute();
+		java.util.Map<String,Object> object_<%=cid%> = null;
+<%
+			}
+    	}
+    }
+%>

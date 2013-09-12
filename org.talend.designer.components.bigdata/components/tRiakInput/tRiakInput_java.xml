@@ -1,0 +1,155 @@
+<COMPONENT>
+
+	<HEADER
+	    PLATEFORM="ALL"
+	    SERIAL=""
+	    VERSION="0.102"
+	    STATUS="ALPHA"
+	
+	    COMPATIBILITY="ALL"
+	    AUTHOR="Talend"
+	    RELEASE_DATE="20130911A"
+	    STARTABLE="true"
+  	>
+    	<SIGNATURE/>
+  	</HEADER>
+
+  	<FAMILIES>
+  		<FAMILY>Databases/Riak</FAMILY>
+    	<FAMILY>Big Data/Riak</FAMILY>
+  	</FAMILIES>
+
+  	<DOCUMENTATION>
+    	<URL/>
+  	</DOCUMENTATION>
+
+  	<CONNECTORS>
+		<CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>
+	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
+	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_OK"/>
+	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
+	    <CONNECTOR CTYPE="RUN_IF"/>
+	</CONNECTORS>
+
+	<PARAMETERS>
+		
+		<PARAMETER 
+			NAME="SCHEMA" 
+			FIELD="SCHEMA_TYPE" 
+			NUM_ROW="5"
+		>
+    		<DEFAULT>""</DEFAULT>
+    	</PARAMETER>
+	
+		<PARAMETER 
+	    	NAME="USE_EXISTING_CONNECTION" 
+	    	FIELD="CHECK"
+	        NUM_ROW="10"  
+	        GROUP="CONNECTION_CONFIG"
+	 	>
+	        	<DEFAULT>false</DEFAULT>
+	    </PARAMETER>
+	    
+	     <PARAMETER 
+		    NAME="CONNECTION" 
+		    FIELD="COMPONENT_LIST" 
+		    FILTER="tRiakConnection"
+			NUM_ROW="10" 
+		   	SHOW_IF="USE_EXISTING_CONNECTION == 'true'" 
+		   	GROUP="CONNECTION_CONFIG"
+	  	/>
+
+	    <PARAMETER 
+			NAME="NODES"
+			FIELD="TABLE"
+			NUM_ROW="15"
+			REQUIRED="true"
+			NB_LINES="5"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'" 
+			GROUP="CONNECTION_CONFIG"
+		>
+	        <ITEMS>
+	        	<ITEM NAME="HOST" VALUE="&quot;&quot;" />
+	            <ITEM NAME="PORT" VALUE="" />
+	            <ITEM NAME="RIAK_PATH" VALUE="&quot;&quot;" />
+	        </ITEMS>
+	    </PARAMETER>
+	    
+	    <PARAMETER
+	      	NAME="BUCKET"
+	      	FIELD="TEXT"
+	      	NUM_ROW="20"
+	      	REQUIRED="true"
+	      	GROUP="CONNECTION_CONFIG"
+	    >
+    		<DEFAULT>""</DEFAULT>
+    	</PARAMETER>
+    	
+		<PARAMETER
+	      	NAME="KEY"
+	      	FIELD="TEXT"
+	      	NUM_ROW="25"
+	      	REQUIRED="false"
+	      	GROUP="KEYS_CONF"
+	    >
+    		<DEFAULT>""</DEFAULT>
+    	</PARAMETER>
+    	
+    	<PARAMETER 
+	    	NAME="OUTPUT_KEY_COLUMN" 
+	    	FIELD="CHECK"
+	        NUM_ROW="30"  
+	        GROUP="KEYS_CONF"
+	 	>
+	        	<DEFAULT>false</DEFAULT>
+	    </PARAMETER>
+    	
+    	<PARAMETER
+	      	NAME="OUTPUT_KEY"
+	      	FIELD="COLUMN_LIST"
+	      	NUM_ROW="30"
+	      	REQUIRED="true"
+	      	SHOW_IF="OUTPUT_KEY_COLUMN == 'true'" 
+	      	GROUP="KEYS_CONF"
+		/>
+		
+		<PARAMETER 
+			NAME="VALUE_COLUMNS"
+			FIELD="TABLE"
+			NUM_ROW="40"
+			REQUIRED="true"
+			NB_LINES="5"
+			GROUP="VALUE_CONF"
+		>
+	        <ITEMS>
+	        	<ITEM NAME="SCHEMA_COLUMN" FIELD="COLUMN_LIST"/>
+	        </ITEMS>
+	    </PARAMETER>
+		
+	</PARAMETERS>
+
+	<ADVANCED_PARAMETERS/>
+
+	<CODEGENERATION>
+	    <IMPORTS>
+			<IMPORT NAME="commons-codec" MODULE="commons-codec-1.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.7.jar" REQUIRED="true"/>
+			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.jar" REQUIRED="true" />
+			<IMPORT NAME="httpcore" MODULE="httpcore-4.2.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.2.2.jar" REQUIRED="true"/>
+			<IMPORT NAME="httpclient" MODULE="httpclient-4.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.2.1.jar" REQUIRED="true"/>
+			<IMPORT NAME="jackson-annotations" MODULE="jackson-annotations-2.1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-annotations-2.1.2.jar" REQUIRED="true"/>
+			<IMPORT NAME="jackson-core" MODULE="jackson-core-2.2.2.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-2.2.2.jar" REQUIRED="true"/>
+			<IMPORT NAME="jackson-databind" MODULE="jackson-databind-2.2.2.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-databind-2.2.2.jar" REQUIRED="true"/>
+			<IMPORT NAME="jackson-datatype-joda" MODULE="jackson-datatype-joda-2.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-datatype-joda-2.0.4.jar" REQUIRED="true"/>
+			<IMPORT NAME="java-json" MODULE="java-json.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/java-json.jar" REQUIRED="true"/>
+			<IMPORT NAME="joda-time" MODULE="joda-time-2.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/joda-time-2.3.jar" REQUIRED="true"/>
+			<IMPORT NAME="riak-client" MODULE="riak-client-1.4.1.jar" REQUIRED="true" />
+		</IMPORTS>
+	</CODEGENERATION>
+
+   	<RETURNS>
+        <RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER" />
+    </RETURNS>
+   	
+</COMPONENT>
