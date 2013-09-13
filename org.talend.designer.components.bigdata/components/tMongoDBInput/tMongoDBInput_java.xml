@@ -53,8 +53,10 @@
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false')" 
             GROUP="CONNECTION">
             <ITEMS DEFAULT="MONGODB_2_1_2">
-                <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
                 <ITEM NAME="MONGODB_2_1_2" VALUE="MONGODB_2_1_2"/>
+                <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
+            	<ITEM NAME="MONGODB_2_4_X" VALUE="MONGODB_2_4_X"/>
+            	<ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
             </ITEMS>
         </PARAMETER>
 		<PARAMETER 
@@ -196,7 +198,8 @@
 	
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" REQUIRED="true" />
+			<IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" REQUIRED_IF="(DB_VERSION=='MONGODB_2_1_2' OR DB_VERSION=='MONGODB_2_2_3') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="mongo-java-driver-2.11.2.jar" NAME="mongo-2.11.2"  REQUIRED_IF="(DB_VERSION=='MONGODB_2_4_X' OR DB_VERSION=='MONGODB_2_5_X') AND (USE_EXISTING_CONNECTION == 'false')" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
