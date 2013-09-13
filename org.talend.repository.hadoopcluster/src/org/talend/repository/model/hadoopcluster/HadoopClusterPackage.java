@@ -479,13 +479,22 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_VERSION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Use Yarn</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__USE_YARN = ConnectionPackage.CONNECTION_FEATURE_COUNT + 3;
+
+    /**
      * The feature id for the '<em><b>Server</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__SERVER = ConnectionPackage.CONNECTION_FEATURE_COUNT + 3;
+    int HADOOP_CLUSTER_CONNECTION__SERVER = ConnectionPackage.CONNECTION_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Name Node URI</b></em>' attribute.
@@ -494,7 +503,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__NAME_NODE_URI = ConnectionPackage.CONNECTION_FEATURE_COUNT + 4;
+    int HADOOP_CLUSTER_CONNECTION__NAME_NODE_URI = ConnectionPackage.CONNECTION_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Job Tracker URI</b></em>' attribute.
@@ -503,7 +512,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__JOB_TRACKER_URI = ConnectionPackage.CONNECTION_FEATURE_COUNT + 5;
+    int HADOOP_CLUSTER_CONNECTION__JOB_TRACKER_URI = ConnectionPackage.CONNECTION_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Enable Kerberos</b></em>' attribute.
@@ -512,7 +521,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__ENABLE_KERBEROS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 6;
+    int HADOOP_CLUSTER_CONNECTION__ENABLE_KERBEROS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Principal</b></em>' attribute.
@@ -521,7 +530,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__PRINCIPAL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 7;
+    int HADOOP_CLUSTER_CONNECTION__PRINCIPAL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 8;
 
     /**
      * The feature id for the '<em><b>User Name</b></em>' attribute.
@@ -530,7 +539,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__USER_NAME = ConnectionPackage.CONNECTION_FEATURE_COUNT + 8;
+    int HADOOP_CLUSTER_CONNECTION__USER_NAME = ConnectionPackage.CONNECTION_FEATURE_COUNT + 9;
 
     /**
      * The feature id for the '<em><b>Group</b></em>' attribute.
@@ -539,7 +548,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__GROUP = ConnectionPackage.CONNECTION_FEATURE_COUNT + 9;
+    int HADOOP_CLUSTER_CONNECTION__GROUP = ConnectionPackage.CONNECTION_FEATURE_COUNT + 10;
 
     /**
      * The feature id for the '<em><b>Auth Mode</b></em>' attribute.
@@ -548,7 +557,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__AUTH_MODE = ConnectionPackage.CONNECTION_FEATURE_COUNT + 10;
+    int HADOOP_CLUSTER_CONNECTION__AUTH_MODE = ConnectionPackage.CONNECTION_FEATURE_COUNT + 11;
 
     /**
      * The feature id for the '<em><b>Connection List</b></em>' attribute list.
@@ -557,7 +566,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST = ConnectionPackage.CONNECTION_FEATURE_COUNT + 11;
+    int HADOOP_CLUSTER_CONNECTION__CONNECTION_LIST = ConnectionPackage.CONNECTION_FEATURE_COUNT + 12;
 
     /**
      * The feature id for the '<em><b>Parameters</b></em>' map.
@@ -566,7 +575,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__PARAMETERS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 12;
+    int HADOOP_CLUSTER_CONNECTION__PARAMETERS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 13;
 
     /**
      * The number of structural features of the '<em>Connection</em>' class.
@@ -575,7 +584,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 13;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 14;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -631,6 +640,15 @@ public interface HadoopClusterPackage extends EPackage {
      * @ordered
      */
     int HADOOP_CLUSTER_CONNECTION_ITEM__FILE_EXTENSION = PropertiesPackage.CONNECTION_ITEM__FILE_EXTENSION;
+
+    /**
+     * The feature id for the '<em><b>Need Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION_ITEM__NEED_VERSION = PropertiesPackage.CONNECTION_ITEM__NEED_VERSION;
 
     /**
      * The feature id for the '<em><b>Connection</b></em>' reference.
@@ -1149,6 +1167,15 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_SUB_CONNECTION_ITEM__FILE_EXTENSION = PropertiesPackage.CONNECTION_ITEM__FILE_EXTENSION;
 
     /**
+     * The feature id for the '<em><b>Need Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_SUB_CONNECTION_ITEM__NEED_VERSION = PropertiesPackage.CONNECTION_ITEM__NEED_VERSION;
+
+    /**
      * The feature id for the '<em><b>Connection</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1209,6 +1236,17 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      */
     EAttribute getHadoopClusterConnection_UseCustomVersion();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseYarn <em>Use Yarn</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Use Yarn</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseYarn()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_UseYarn();
 
     /**
      * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getServer <em>Server</em>}'.
@@ -1450,6 +1488,14 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_VERSION = eINSTANCE.getHadoopClusterConnection_UseCustomVersion();
+
+        /**
+         * The meta object literal for the '<em><b>Use Yarn</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__USE_YARN = eINSTANCE.getHadoopClusterConnection_UseYarn();
 
         /**
          * The meta object literal for the '<em><b>Server</b></em>' attribute feature.

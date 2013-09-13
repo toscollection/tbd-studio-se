@@ -40,6 +40,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getDistribution <em>Distribution</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getDfVersion <em>Df Version</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseCustomVersion <em>Use Custom Version</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseYarn <em>Use Yarn</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getServer <em>Server</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getNameNodeURI <em>Name Node URI</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getJobTrackerURI <em>Job Tracker URI</em>}</li>
@@ -115,6 +116,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected boolean useCustomVersion = USE_CUSTOM_VERSION_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isUseYarn() <em>Use Yarn</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseYarn()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean USE_YARN_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isUseYarn() <em>Use Yarn</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseYarn()
+     * @generated
+     * @ordered
+     */
+    protected boolean useYarn = USE_YARN_EDEFAULT;
 
     /**
      * The default value of the '{@link #getServer() <em>Server</em>}' attribute.
@@ -383,6 +404,27 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isUseYarn() {
+        return useYarn;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUseYarn(boolean newUseYarn) {
+        boolean oldUseYarn = useYarn;
+        useYarn = newUseYarn;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_YARN, oldUseYarn, useYarn));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getServer() {
         return server;
     }
@@ -598,6 +640,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return getDfVersion();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_VERSION:
                 return isUseCustomVersion();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_YARN:
+                return isUseYarn();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SERVER:
                 return getServer();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__NAME_NODE_URI:
@@ -640,6 +684,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_VERSION:
                 setUseCustomVersion((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_YARN:
+                setUseYarn((Boolean)newValue);
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SERVER:
                 setServer((String)newValue);
@@ -693,6 +740,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_VERSION:
                 setUseCustomVersion(USE_CUSTOM_VERSION_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_YARN:
+                setUseYarn(USE_YARN_EDEFAULT);
+                return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SERVER:
                 setServer(SERVER_EDEFAULT);
                 return;
@@ -741,6 +791,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return DF_VERSION_EDEFAULT == null ? dfVersion != null : !DF_VERSION_EDEFAULT.equals(dfVersion);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_VERSION:
                 return useCustomVersion != USE_CUSTOM_VERSION_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_YARN:
+                return useYarn != USE_YARN_EDEFAULT;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SERVER:
                 return SERVER_EDEFAULT == null ? server != null : !SERVER_EDEFAULT.equals(server);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__NAME_NODE_URI:
@@ -781,6 +833,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(dfVersion);
         result.append(", useCustomVersion: ");
         result.append(useCustomVersion);
+        result.append(", useYarn: ");
+        result.append(useYarn);
         result.append(", server: ");
         result.append(server);
         result.append(", nameNodeURI: ");

@@ -74,6 +74,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
     private Group customGroup;
 
+    private Button useYarnButton;
+
     public HadoopClusterForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
         super(parent, SWT.NONE, existingNames);
         this.connectionItem = connectionItem;
@@ -99,6 +101,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         if (authMode != null) {
             authenticationCombo.setText(authMode.getDisplayName());
         }
+        useYarnButton.setSelection(getConnection().isUseYarn());
         namenodeUriText.setText(getConnection().getNameNodeURI());
         jobtrackerUriText.setText(getConnection().getJobTrackerURI());
         kerberosBtn.setSelection(getConnection().isEnableKerberos());
@@ -145,6 +148,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         customButton = new Button(distributionGroup, SWT.NULL);
         customButton.setImage(ImageProvider.getImage(EImage.THREE_DOTS_ICON));
         customButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 2, 1));
+        useYarnButton = new Button(distributionGroup, SWT.CHECK);
+        useYarnButton.setText(Messages.getString("HadoopClusterForm.useYarn")); //$NON-NLS-1$
+        useYarnButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 2, 1));
     }
 
     private void addCustomFields() {
@@ -261,6 +267,15 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             }
         });
 
+        useYarnButton.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setUseYarn(useYarnButton.getSelection());
+                updateConnectionPart();
+            }
+        });
+
         namenodeUriText.addModifyListener(new ModifyListener() {
 
             @Override
@@ -322,10 +337,12 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(getConnection().getDistribution(), false);
         if (distribution == EHadoopDistributions.CUSTOM) {
             versionCombo.setHideWidgets(true);
+            hideControl(useYarnButton, false);
             hideControl(customButton, false);
             hideControl(customGroup, false);
         } else {
             versionCombo.setHideWidgets(false);
+            hideControl(useYarnButton, true);
             hideControl(customButton, true);
             hideControl(customGroup, true);
             List<String> items = getDistributionVersions(distribution);
@@ -373,6 +390,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             groupText.setEditable(isSupportGroup(version4Drivers));
             userNameText.setEditable(!kerberosBtn.getSelection());
         }
+        jobtrackerUriText
+                .setLabelText(connection.isUseYarn() ? Messages.getString("HadoopClusterForm.text.resourceManager") : Messages.getString("HadoopClusterForm.text.jobtrackerURI")); //$NON-NLS-1$ //$NON-NLS-2$
+        jobtrackerUriText.getTextControl().getParent().layout();
         updateConnectionContent();
     }
 
@@ -422,12 +442,14 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         }
 
         if (!validText(jobtrackerUriText.getText())) {
-            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobtrackerURI")); //$NON-NLS-1$
+            updateStatus(IStatus.ERROR,
+                    Messages.getString("HadoopClusterForm.check.jobtrackerURI", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
             return false;
         }
 
         if (!HadoopParameterValidator.isValidJobtrackerURI(jobtrackerUriText.getText())) {
-            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid")); //$NON-NLS-1$
+            updateStatus(IStatus.ERROR,
+                    Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
             return false;
         }
 
