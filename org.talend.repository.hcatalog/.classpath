@@ -4,7 +4,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/neethi-3.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hadoop-conf-kerberos.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/json_simple-1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jsr311-api-1.1.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
