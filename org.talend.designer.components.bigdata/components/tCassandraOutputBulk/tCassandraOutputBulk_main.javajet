@@ -75,13 +75,13 @@ class ConvertTypeUtil{
 			org.apache.cassandra.db.marshal.DecimalType.instance.decompose(<%=inConnName%>.<%=columnName%>)
 		<%
 		}else if("UUIDType".equals(cType) || "TimeUUIDType".equals(cType)){
-			if("CASSANDRA_1_2_2".equals(version)){
-			%>
-				org.apache.cassandra.utils.ByteBufferUtil.bytes(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>))
-			<%
-			}else if("CASSANDRA_1_1_2".equals(version)){
+			if("CASSANDRA_1_1_2".equals(version)){
 			%>
 				java.nio.ByteBuffer.wrap(org.apache.cassandra.utils.UUIDGen.decompose(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)))
+			<%
+			}else{
+			%>
+				org.apache.cassandra.utils.ByteBufferUtil.bytes(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>))
 			<%
 			}
 		}else{

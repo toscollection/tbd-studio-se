@@ -50,6 +50,7 @@
             NUM_ROW="3"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
             <ITEMS DEFAULT="CASSANDRA_1_1_2">
+                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
             </ITEMS>
@@ -338,6 +339,48 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <!-- Cassandra 2.0.0 -->
+            <IMPORT 
+                MODULE="hector-core-1.1-4.jar" 
+                NAME="hector-core-1.1-4"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="apache-cassandra-2.0.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-2.0.0.jar" 
+                NAME="apache-cassandra-2.0.0"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="apache-cassandra-thrift-2.0.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-2.0.0.jar" 
+                NAME="apache-cassandra-thrift-2.0.0"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="slf4j-api-1.7.2.jar" 
+                NAME="slf4j-api-1.7.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="slf4j-log4j12-1.7.2.jar" 
+                NAME="slf4j-log4j12-1.7.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="log4j-1.2.16.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" 
+                NAME="log4j-1.2.16"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                NAME="libthrift-0.9.0"
+                MODULE="libthrift-0.9.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.0.jar" 
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="guava-13.0.1.jar" 
+                NAME="guava-13.0.1"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="commons-lang-2.6.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
+                NAME="commons-lang-2.6"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
