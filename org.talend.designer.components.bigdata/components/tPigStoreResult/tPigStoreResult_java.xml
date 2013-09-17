@@ -89,6 +89,7 @@
                 <ITEM NAME="MAPR1" VALUE="MAPR1" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR213" VALUE="MAPR213" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'"/>
@@ -232,6 +233,16 @@
             <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR212' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r09.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR212' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR212' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- HBASE MAPR213 -->
+            <IMPORT NAME="hbase-0.94.5-mapr.jar" MODULE="hbase-0.94.5-mapr.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.94.5-mapr.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-api-1.4.3.jar" MODULE="slf4j-api-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.4.3.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-log4j12-1.4.3.jar" MODULE="slf4j-log4j12-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.4.3.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
 
             <IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.92.0.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.2.jar" REQUIRED_IF="((HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -285,6 +296,11 @@
             <IMPORT NAME="hive-serde-0.10.0-mapr.jar" MODULE="hive-serde-0.10.0-mapr.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR212') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-common-0.10.0-mapr.jar" MODULE="hive-common-0.10.0-mapr.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR212') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-exec-0.10.0.jar" MODULE="hive-exec-0.10.0.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR212') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- MAPR213 -->
+            <IMPORT NAME="hive-serde-0.11-mapr.jar" MODULE="hive-serde-0.11-mapr.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-common-0.11-mapr.jar" MODULE="hive-common-0.11-mapr.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-exec-0.11-mapr.jar" MODULE="hive-exec-0.11-mapr.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             
             <!-- Hadoop 1.0 Family -->
             <IMPORT NAME="hive-serde-0.8.1.jar" MODULE="hive-serde-0.8.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.1.0.0/lib/hive-serde-0.8.1.jar" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>

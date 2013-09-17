@@ -22,7 +22,12 @@
 	
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
+	
+	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+	
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 <%
@@ -104,3 +109,9 @@
 	if(result_<%=cid%> != 0) {
 		throw new Exception("The Sqoop export job has failed");
 	}
+	
+    String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+    if(currentClientPathSeparator_<%=cid%>!=null) {
+    	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+    	globalMap.put("current_client_path_separator", null);
+    }

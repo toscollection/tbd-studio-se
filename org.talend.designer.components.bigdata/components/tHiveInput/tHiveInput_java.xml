@@ -75,6 +75,7 @@
 			<ITEM NAME="MAPR1" VALUE="MAPR1" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			<ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
+			<ITEM NAME="MAPR213" VALUE="MAPR213" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			<ITEM NAME="MapR_EMR" VALUE="MapR_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 			<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 			<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'"/>
@@ -99,7 +100,7 @@
 			<ITEM NAME="STANDALONE" VALUE="STANDALONE" NOT_SHOW_IF="(HIVE_VERSION=='HDP_1_0' OR HIVE_VERSION=='HDP_1_2' OR HIVE_VERSION=='HDP_1_3') AND DISTRIBUTION!='CUSTOM'"/>
 		</ITEMS>
 	</PARAMETER>
-    <PARAMETER NAME="HIVE_SERVER" FIELD="CLOSED_LIST" NUM_ROW="28" REQUIRED="true" GROUP="CONN" REPOSITORY_VALUE="HIVE_SERVER" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM') OR ((HIVE_VERSION=='HDP_1_2') OR (HIVE_VERSION=='HDP_1_3') OR (HIVE_VERSION=='Cloudera_CDH4')))">
+    <PARAMETER NAME="HIVE_SERVER" FIELD="CLOSED_LIST" NUM_ROW="28" REQUIRED="true" GROUP="CONN" REPOSITORY_VALUE="HIVE_SERVER" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM') OR ((HIVE_VERSION=='HDP_1_2') OR (HIVE_VERSION=='HDP_1_3') OR (HIVE_VERSION=='Cloudera_CDH4') OR (HIVE_VERSION=='MAPR213')))">
        <ITEMS DEFAULT="HIVE">
             <ITEM NAME="HIVE" VALUE="HIVE"/>
             <ITEM NAME="HIVE2" VALUE="HIVE2"/>
@@ -364,7 +365,7 @@
 		</ITEMS>
 	</PARAMETER>
 	
-    <PARAMETER NAME="CLASSPATH_SEPARATOR" FIELD="TEXT" REQUIRED="true" NUM_ROW="60" SHOW_IF="(USE_EXISTING_CONNECTION == 'true') OR (((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND HIVE_VERSION=='PIVOTAL_HD_1_0_1')) AND (SET_RESOURCE_MANAGER=='true'))">
+    <PARAMETER NAME="CLASSPATH_SEPARATOR" FIELD="TEXT" REQUIRED="true" NUM_ROW="60">
         <DEFAULT>":"</DEFAULT>
     </PARAMETER>
 	
@@ -466,6 +467,42 @@
 			<IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR212' AND STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')"/>
 			<IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR212' AND STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')"/>
 			<!-- ############## -->
+			
+            <!-- MAPR213 -->
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr213.jar" MODULE="hadoop-0.20.2-dev-core-mapr213.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="log4j-1.2.16" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" BundleID="" />
+            <IMPORT NAME="hive-exec-0.11-mapr.jar" MODULE="hive-exec-0.11-mapr.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="hive-jdbc-0.11-mapr.jar" MODULE="hive-jdbc-0.11-mapr.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="hive-metastore-0.11-mapr.jar" MODULE="hive-metastore-0.11-mapr.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="hive-service-0.11-mapr.jar" MODULE="hive-service-0.11-mapr.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="libfb303-0.9.0" MODULE="libfb303-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libfb303-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="libthrift-0.9.0" MODULE="libthrift-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libthrift-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="commons-logging-api-1.0.4.jar" MODULE="commons-logging-api-1.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-api-1.0.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="jdo2-api-2.3-ec" MODULE="jdo2-api-2.3-ec.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/jdo2-api-2.3-ec.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="antlr-runtime-3.4.jar" MODULE="antlr-runtime-3.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="datanucleus-connectionpool-2.0.3" MODULE="datanucleus-connectionpool-2.0.3.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/datanucleus-connectionpool-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="datanucleus-enhancer-2.0.3" MODULE="datanucleus-enhancer-2.0.3.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/datanucleus-enhancer-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="datanucleus-core-2.0.3" MODULE="datanucleus-core-2.0.3.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/datanucleus-core-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="datanucleus-rdbms-2.0.3" MODULE="datanucleus-rdbms-2.0.3.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/datanucleus-rdbms-2.0.3.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="derby-10.4.2.0" MODULE="derby-10.4.2.0.jar" UrlPath="platform:/plugin/org.talend.libraries.jdbc.derby/lib/derby-10.4.2.0.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="maprfs-1.0.3-mapr-2.1.3.2.jar" MODULE="maprfs-1.0.3-mapr-2.1.3.2.jar" REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))"/>
+            <IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="commons-dbcp-1.4" MODULE="commons-dbcp-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar"   REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <!-- MAPR213 Hbase -->
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar"   REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hive-hbase-handler-0.11-mapr.jar" MODULE="hive-hbase-handler-0.11-mapr.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hbase-0.94.5-mapr.jar" MODULE="hbase-0.94.5-mapr.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.94.5-mapr.jar" REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND STORE_BY_HBASE=='true') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')"/>
+            <!-- ############## -->
 
 			<!-- APACHE 1.0 -->
 			<IMPORT NAME="hive-exec-0.8.1.jar" MODULE="hive-exec-0.8.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.1.0.0/lib/hive-exec-0.8.1.jar"  REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />

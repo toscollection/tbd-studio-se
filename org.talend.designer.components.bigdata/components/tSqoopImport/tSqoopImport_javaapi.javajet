@@ -39,7 +39,12 @@
 	String split = ElementParameterParser.getValue(node,"__SPLIT__");
 	
 	String fsDefalutName = "fs.default.name";
+	
+	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+	
 	java.util.List<String> lColumns_<%=cid%> = new java.util.ArrayList<String>();
 <%
 	for (Map<String, String> row : columns) {
@@ -144,3 +149,9 @@
 	if(result_<%=cid%> != 0) {
 		throw new Exception("The Sqoop import job has failed");
 	}
+	
+    String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+    if(currentClientPathSeparator_<%=cid%>!=null) {
+    	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+    	globalMap.put("current_client_path_separator", null);
+    }

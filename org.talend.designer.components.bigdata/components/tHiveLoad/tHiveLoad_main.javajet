@@ -36,7 +36,14 @@ java.sql.Connection conn_<%=cid%> = null;
 %> 
 		System.setProperty("java.io.tmpdir", <%=tempPath%>); 
 <% 
-	} 
+	}
+	
+	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+%>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
+	
 	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
 	if(("true").equals(useExistingConn)) {
 		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
@@ -44,12 +51,6 @@ java.sql.Connection conn_<%=cid%> = null;
 		%>
 		conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
 		<%
-		
-		String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
-%>
-		globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
-		System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
-<%
 	} else {
 		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
 		String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
@@ -64,7 +65,7 @@ java.sql.Connection conn_<%=cid%> = null;
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 		boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 
-		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion)))) {
+		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "MAPR213".equals(hiveVersion)))) {
 			hiveServer = hiveServer.toLowerCase();
 			if ("hive2".equals(hiveServer)) {
 				javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
@@ -131,11 +132,6 @@ java.sql.Connection conn_<%=cid%> = null;
         	init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
         	init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
         	init_<%=cid%>.close();
-<%
-			String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
-%>
-			globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
-			System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
 <%
 		}
 %>

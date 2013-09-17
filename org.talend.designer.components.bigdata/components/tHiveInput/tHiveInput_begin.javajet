@@ -26,7 +26,7 @@ imports="
 	    	hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 			boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 			
-			if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion)))) {
+			if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "MAPR213".equals(hiveVersion)))) {
 				hiveServer = hiveServer.toLowerCase();
 				if ("hive2".equals(hiveServer)) {
 					javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
@@ -36,14 +36,6 @@ imports="
 			}
 	    }
 	    
-	    public void afterUseExistConnection(INode node) {
-	    	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
-%>
-			globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
-			System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
-<%
-	    }
-
 		public void afterUseNewConnection(INode node) {
 		
         	String storeByHBase = ElementParameterParser.getValue(node, "__STORE_BY_HBASE__");
@@ -66,11 +58,6 @@ imports="
             	init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
             	init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
             	init_<%=cid%>.close();
-<%
-				String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
-%>
-				globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
-				System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
 <%
 			}
 %>
@@ -186,5 +173,10 @@ imports="
 		System.setProperty("java.io.tmpdir", <%=tempPath%>); 
 <% 
 	} 
+	
+	String yarnClasspathSeparator = ElementParameterParser.getValue(hiveNode, "__CLASSPATH_SEPARATOR__");
 %>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+	
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/AbstractDBInputBegin.javajet"%>
