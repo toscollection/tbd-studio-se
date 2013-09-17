@@ -237,6 +237,7 @@ public class OozieSettingComposite extends ScrolledComposite {
         List<String> filterDistributionDisplayNames = EHadoopDistributions.getAllDistributionDisplayNames();
         filterDistributionDisplayNames.remove(EHadoopDistributions.APACHE.getDisplayName());
         filterDistributionDisplayNames.remove(EHadoopDistributions.AMAZON_EMR.getDisplayName());
+        filterDistributionDisplayNames.remove(EHadoopDistributions.PIVOTAL_HD.getDisplayName());
 
         hadoopDistributionCombo = new LabelledCombo(versionGroup, TOozieUIConstants.OOZIE_LBL_HADOOP_DISTRIBUTION,
                 "", filterDistributionDisplayNames //$NON-NLS-1$
