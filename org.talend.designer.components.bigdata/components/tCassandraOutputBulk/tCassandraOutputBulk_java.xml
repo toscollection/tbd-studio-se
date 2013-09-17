@@ -342,7 +342,6 @@
             <IMPORT 
                 NAME="high-scale-lib-1.1.2"
                 MODULE="high-scale-lib-1.1.2.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/high-scale-lib-1.1.2.jar" 
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />    
             <IMPORT 
                 NAME="jackson-core-asl-1.9.2"
