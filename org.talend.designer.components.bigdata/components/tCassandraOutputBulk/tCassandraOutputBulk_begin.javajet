@@ -59,6 +59,21 @@ bFalse_<%=cid%>[0] = (byte)0;
 java.io.File file_<%=cid%> = new java.io.File(<%=sstablePath%>, <%=keySpace%>+"/"+<%=columnFamily%>);		
 file_<%=cid%>.mkdirs();
 
+class ObjectSerializer_<%=cid%>{
+	public java.nio.ByteBuffer toByteBuffer(Object obj){
+	    try{
+	      	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	      	ObjectOutputStream oos = new ObjectOutputStream(baos);
+	      	oos.writeObject(obj);
+	      	oos.close();
+	      	return java.nio.ByteBuffer.wrap(baos.toByteArray());
+	    }catch (IOException ex){
+	      	throw new RuntimeException(ex);
+	    }
+	}
+}
+ObjectSerializer_<%=cid%> objectSerializer_<%=cid%> = new ObjectSerializer_<%=cid%>();
+
 org.apache.cassandra.dht.IPartitioner partitioner_<%=cid%> = new org.apache.cassandra.dht.<%=partitioner%>();
 
 org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter writer_<%=cid%> = new org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter(file_<%=cid%>, partitioner_<%=cid%>, <%=keySpace%>, <%=columnFamily%>, 

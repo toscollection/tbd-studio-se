@@ -35,18 +35,42 @@
     }
 	
 	if (node.getIncomingConnections() != null) {
-		Map<JavaType,String> typeMap=new java.util.HashMap<JavaType,String>();
-		typeMap.put(JavaTypesManager.BOOLEAN,"BooleanSerializer");
-		typeMap.put(JavaTypesManager.BYTE_ARRAY,"BytesArraySerializer");
-		typeMap.put(JavaTypesManager.DATE,"DateSerializer");
-		typeMap.put(JavaTypesManager.DOUBLE,"DoubleSerializer");
-		typeMap.put(JavaTypesManager.FLOAT,"FloatSerializer");
-		typeMap.put(JavaTypesManager.INTEGER,"IntegerSerializer");
-		typeMap.put(JavaTypesManager.LONG,"LongSerializer");
-		typeMap.put(JavaTypesManager.OBJECT,"ObjectSerializer");
-		typeMap.put(JavaTypesManager.SHORT,"ShortSerializer");
-		typeMap.put(JavaTypesManager.STRING,"StringSerializer");
-		typeMap.put(JavaTypesManager.CHARACTER,"CharSerializer");
+		class TypeMap{
+  			Map<String,String> typeMap=new java.util.HashMap<String,String>();
+  			
+  			public TypeMap(){
+				typeMap.put("Boolean","BooleanSerializer");
+				typeMap.put("byte[]","BytesArraySerializer");
+				typeMap.put("java.util.Date","DateSerializer");
+				typeMap.put("Double","DoubleSerializer");
+				typeMap.put("Float","FloatSerializer");
+				typeMap.put("Integer","IntegerSerializer");
+				typeMap.put("Long","LongSerializer");
+				typeMap.put("Object","ObjectSerializer");
+				typeMap.put("Short","ShortSerializer");
+				typeMap.put("String","StringSerializer");
+				typeMap.put("Character","CharSerializer");
+				typeMap.put("BigDecimal","BigDecimalSerializer");
+  			}
+  			public String get(String tType, String cType){
+  				if("".equals(cType) || "Default".equals(cType)){
+  					return typeMap.get(tType);
+  				}else if("CounterColumnType".equals(cType)){
+  					return "LongSerializer";
+  				}else if("IntegerType".equals(cType)){
+  					return "BigIntegerSerializer";
+  				}else if("AsciiType".equals(cType)){
+  					return "AsciiSerializer";
+  				}else if("UUIDType".equals(cType)){
+  					return "UUIDSerializer";
+  				}else if("TimeUUIDType".equals(cType)){
+  					return "TimeUUIDSerializer";
+  				}else{
+  					return typeMap.get(tType) == null ? "ObjectSerializer" : typeMap.get(tType);
+  				}
+  			}
+  		}
+ 		TypeMap typeMap = new TypeMap();
 		for (IConnection incomingConn : node.getIncomingConnections()) {
 			String conName = incomingConn.getName();
 			if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
@@ -70,6 +94,8 @@
 			}
     		for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
     			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+    			String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
+				String cType = column.getType();
     			boolean isJavaPrimitiveType = JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable());
     			if("STANDARD".equals(columnFamilyType)){
 					if (incKey || !column.getLabel().equals(keyColumn)) {
@@ -77,8 +103,22 @@
 %>
 <%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null) { <%}%>
 							mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,
-								me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
-									serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get()));
+								me.prettyprint.hector.api.factory.HFactory.createColumn(
+								"<%=column.getOriginalDbColumnName()%>",
+								<%if("BigIntegerSerializer".equals(typeMap.get(columnType, cType))){%>
+									(java.math.BigInteger)<%=conName%>.<%=column.getLabel()%>
+								<%}else if("UUIDSerializer".equals(typeMap.get(columnType, cType))){%>
+									java.util.UUID.fromString(<%=conName%>.<%=column.getLabel()%>)
+								<%}else if("TimeUUIDSerializer".equals(typeMap.get(columnType, cType))){%>
+									new com.eaio.uuid.UUID(<%=conName%>.<%=column.getLabel()%>)
+								<%}else{%>
+									<%=conName%>.<%=column.getLabel()%>
+								<%}%>
+								,
+								serializer_<%=cid%>,
+								me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get()
+								)
+							);
 <%if (!isJavaPrimitiveType) {%>} <%}%>
 <%
 						}else{
@@ -94,8 +134,22 @@
 						if("UPSERT".equals(actionOnData)){
 %>
 <%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null){ <%}%>
-							me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
-								serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get());
+							me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=
+								me.prettyprint.hector.api.factory.HFactory.createColumn(
+									"<%=column.getOriginalDbColumnName()%>",
+									<%if("BigIntegerSerializer".equals(typeMap.get(columnType, cType))){%>
+										(java.math.BigInteger)<%=conName%>.<%=column.getLabel()%>
+									<%}else if("UUIDSerializer".equals(typeMap.get(columnType, cType))){%>
+										java.util.UUID.fromString(<%=conName%>.<%=column.getLabel()%>)
+									<%}else if("TimeUUIDSerializer".equals(typeMap.get(columnType, cType))){%>
+										new com.eaio.uuid.UUID(<%=conName%>.<%=column.getLabel()%>)
+									<%}else{%>
+										<%=conName%>.<%=column.getLabel()%>
+									<%}%>
+									,
+									serializer_<%=cid%>,
+									me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get()
+								);
 							innerColumn_<%=cid%>.add( column_<%=column.getOriginalDbColumnName()%>);
 <%if (!isJavaPrimitiveType) {%>} <%}%>
 <%

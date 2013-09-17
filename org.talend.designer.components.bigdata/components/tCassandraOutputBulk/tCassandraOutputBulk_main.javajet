@@ -66,6 +66,10 @@ class ConvertTypeUtil{
 		%>
 			java.nio.ByteBuffer.wrap(<%=inConnName%>.<%=columnName%>?bTrue_<%=cid%>:bFalse_<%=cid%>)
 		<%
+		}else if("ObjectType".equals(cType)){
+		%>
+		    objectSerializer_<%=cid%>.toByteBuffer(<%=inConnName%>.<%=columnName%>)
+		<%
 		}else if("IntegerType".equals(cType)){
 		%>
 			java.nio.ByteBuffer.wrap(((java.math.BigInteger)<%=inConnName%>.<%=columnName%>).toByteArray())

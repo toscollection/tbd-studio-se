@@ -28,6 +28,14 @@
 	    <CONNECTOR CTYPE="RUN_IF"/>
 	</CONNECTORS>
 	<PARAMETERS>
+        <PARAMETER
+            NAME="MAPPING"
+            FIELD="MAPPING_TYPE"
+            NUM_ROW="1"
+            SHOW="false"
+        >
+            <DEFAULT>cassandra_id</DEFAULT>
+        </PARAMETER>
 		<PARAMETER
 			NAME="USE_EXISTING_CONNECTION"
 			FIELD="CHECK"
@@ -149,10 +157,55 @@
 			NUM_ROW="20"
 			SHOW_IF="(INC_KEY == 'true')"
 		/>
+        <PARAMETER
+            FIELD="OPENED_LIST"
+            NAME="ROW_KEY_TYPE"
+            NUM_ROW="21"
+            REQUIRED="true"
+             >
+            <ITEMS DEFAULT="STRING">
+                <ITEM NAME="INTEGER" VALUE="Integer" />
+                <ITEM NAME="LONG" VALUE="Long" />
+                <ITEM NAME="DOUBLE" VALUE="Double" />
+                <ITEM NAME="FLOAT" VALUE="Float" />
+                <ITEM NAME="CHARACTER" VALUE="Character" />
+                <ITEM NAME="STRING" VALUE="String" />
+                <ITEM NAME="DATE" VALUE="java.util.Date" />
+                <ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
+                <ITEM NAME="BOOLEAN" VALUE="Boolean" />
+                <ITEM NAME="OBJECT" VALUE="Object" />
+                <ITEM NAME="SHORT" VALUE="Short" />
+                <ITEM NAME="BIGDECIMAL" VALUE="java.math.BigDecimal" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="CLOSED_LIST"
+            NAME="ROW_KEY_C_TYPE"
+            NUM_ROW="21"
+            REQUIRED="true"
+             >
+            <ITEMS DEFAULT="DEFAULT">
+                <ITEM NAME="DEFAULT" VALUE="Default" />
+                <!--ITEM NAME="BOOLEANTYPE" VALUE="BooleanType" SHOW_IF="ROW_KEY_TYPE == 'BOOLEAN'" /-->
+                <!--ITEM NAME="BYTESTYPE" VALUE="BytesType" SHOW_IF="ROW_KEY_TYPE == 'BYTE_ARRAY'" /-->
+                <!--ITEM NAME="DATETYPE" VALUE="DateType" SHOW_IF="ROW_KEY_TYPE == 'DATE'" /-->
+                <!--ITEM NAME="DECIMALTYPE" VALUE="DecimalType" SHOW_IF="ROW_KEY_TYPE == 'BIGDECIMAL'" /-->
+                <!--ITEM NAME="DOUBLETYPE" VALUE="DoubleType" SHOW_IF="ROW_KEY_TYPE == 'DOUBLE'" /-->
+                <!--ITEM NAME="FLOATTYPE" VALUE="FloatType" SHOW_IF="ROW_KEY_TYPE == 'FLOAT'" /-->
+                <!--ITEM NAME="INT32TYPE" VALUE="Int32Type" SHOW_IF="ROW_KEY_TYPE == 'INTEGER'" /-->
+                <!--ITEM NAME="LONGTYPE" VALUE="LongType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" /-->
+                <ITEM NAME="COUNTERCOLUMNTYPE" VALUE="CounterColumnType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" />
+                <ITEM NAME="INTEGERTYPE" VALUE="IntegerType" SHOW_IF="ROW_KEY_TYPE == 'OBJECT'" />
+                <!--ITEM NAME="UTF8TYPE" VALUE="UTF8Type" SHOW_IF="ROW_KEY_TYPE == 'STRING'" /-->
+                <ITEM NAME="ASCIITYPE" VALUE="AsciiType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+                <ITEM NAME="UUIDTYPE" VALUE="UUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+            </ITEMS>
+        </PARAMETER>
 		<PARAMETER
             FIELD="CHECK"
             NAME="INC_SUPER_KEY"
-            NUM_ROW="21"
+            NUM_ROW="22"
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')"
         >
             <DEFAULT>false</DEFAULT>
@@ -160,53 +213,58 @@
         <PARAMETER
             FIELD="COLUMN_LIST"
             NAME="SUPER_KEY_COLUMN"
-            NUM_ROW="21"
+            NUM_ROW="22"
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'true')"
         />
-        <PARAMETER
-        	FIELD="OPENED_LIST"
-        	NAME="ROW_KEY_TYPE"
-        	NUM_ROW="22"
-        	REQUIRED="true"
-			 >
-    		<ITEMS DEFAULT="STRING">
-    			<ITEM NAME="INTEGER" VALUE="Integer" />
-    			<ITEM NAME="LONG" VALUE="Long" />
-    			<ITEM NAME="DOUBLE" VALUE="Double" />
-    			<ITEM NAME="FLOAT" VALUE="Float" />
-    			<ITEM NAME="CHARACTER" VALUE="Character" />
-    			<ITEM NAME="STRING" VALUE="String" />
-    			<ITEM NAME="DATE" VALUE="java.util.Date" />
-    			<ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
-    			<ITEM NAME="BOOLEAN" VALUE="Boolean" />
-    			<ITEM NAME="OBJECT" VALUE="Object" />
-    			<ITEM NAME="SHORT" VALUE="Short" />
-    		</ITEMS>
-    	</PARAMETER>
     	<PARAMETER
         	FIELD="OPENED_LIST"
         	NAME="SUPER_COLUMN_TYPE"
-        	NUM_ROW="22"
+        	NUM_ROW="23"
         	REQUIRED="true"
         	SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')">
     		<ITEMS DEFAULT="STRING">
     			<ITEM NAME="INTEGER" VALUE="Integer" />
-    			<ITEM NAME="LONG" VALUE="Long" />
-    			<ITEM NAME="DOUBLE" VALUE="Double" />
-    			<ITEM NAME="FLOAT" VALUE="Float" />
-    			<ITEM NAME="CHARACTER" VALUE="Character" />
-    			<ITEM NAME="STRING" VALUE="String" />
-    			<ITEM NAME="DATE" VALUE="java.util.Date" />
-    			<ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
-    			<ITEM NAME="BOOLEAN" VALUE="Boolean" />
-    			<ITEM NAME="OBJECT" VALUE="Object" />
-    			<ITEM NAME="SHORT" VALUE="Short" />
+                <ITEM NAME="LONG" VALUE="Long" />
+                <ITEM NAME="DOUBLE" VALUE="Double" />
+                <ITEM NAME="FLOAT" VALUE="Float" />
+                <ITEM NAME="CHARACTER" VALUE="Character" />
+                <ITEM NAME="STRING" VALUE="String" />
+                <ITEM NAME="DATE" VALUE="java.util.Date" />
+                <ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
+                <ITEM NAME="BOOLEAN" VALUE="Boolean" />
+                <ITEM NAME="OBJECT" VALUE="Object" />
+                <ITEM NAME="SHORT" VALUE="Short" />
+                <ITEM NAME="BIGDECIMAL" VALUE="java.math.BigDecimal" />
     		</ITEMS>
     	</PARAMETER>
         <PARAMETER
+            FIELD="CLOSED_LIST"
+            NAME="SUPER_COLUMN_C_TYPE"
+            NUM_ROW="23"
+            REQUIRED="true"
+            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')">
+            <ITEMS DEFAULT="DEFAULT">
+                <ITEM NAME="DEFAULT" VALUE="Default" />
+                <!--ITEM NAME="BOOLEANTYPE" VALUE="BooleanType" SHOW_IF="ROW_KEY_TYPE == 'BOOLEAN'" /-->
+                <!--ITEM NAME="BYTESTYPE" VALUE="BytesType" SHOW_IF="ROW_KEY_TYPE == 'BYTE_ARRAY'" /-->
+                <!--ITEM NAME="DATETYPE" VALUE="DateType" SHOW_IF="ROW_KEY_TYPE == 'DATE'" /-->
+                <!--ITEM NAME="DECIMALTYPE" VALUE="DecimalType" SHOW_IF="ROW_KEY_TYPE == 'BIGDECIMAL'" /-->
+                <!--ITEM NAME="DOUBLETYPE" VALUE="DoubleType" SHOW_IF="ROW_KEY_TYPE == 'DOUBLE'" /-->
+                <!--ITEM NAME="FLOATTYPE" VALUE="FloatType" SHOW_IF="ROW_KEY_TYPE == 'FLOAT'" /-->
+                <!--ITEM NAME="INT32TYPE" VALUE="Int32Type" SHOW_IF="ROW_KEY_TYPE == 'INTEGER'" /-->
+                <!--ITEM NAME="LONGTYPE" VALUE="LongType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" /-->
+                <ITEM NAME="COUNTERCOLUMNTYPE" VALUE="CounterColumnType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" />
+                <ITEM NAME="INTEGERTYPE" VALUE="IntegerType" SHOW_IF="ROW_KEY_TYPE == 'OBJECT'" />
+                <!--ITEM NAME="UTF8TYPE" VALUE="UTF8Type" SHOW_IF="ROW_KEY_TYPE == 'STRING'" /-->
+                <ITEM NAME="ASCIITYPE" VALUE="AsciiType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+                <ITEM NAME="UUIDTYPE" VALUE="UUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
             FIELD="CHECK"
             NAME="SPECIFY_KEYS"
-            NUM_ROW="23"
+            NUM_ROW="24"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT>false</DEFAULT>
@@ -354,6 +412,10 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <!-- Cassandra 1.2.2 -->
             <IMPORT 
                 MODULE="hector-core-1.1-4.jar" 
@@ -396,6 +458,10 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <!-- Cassandra 2.0.0 -->
             <IMPORT 
                 MODULE="hector-core-1.1-4.jar" 
@@ -437,6 +503,10 @@
                 MODULE="commons-lang-2.6.jar" 
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
                 NAME="commons-lang-2.6"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
 		</IMPORTS>
 	</CODEGENERATION>

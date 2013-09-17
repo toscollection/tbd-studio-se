@@ -29,7 +29,15 @@
 	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
 	    <CONNECTOR CTYPE="RUN_IF"/>
 	</CONNECTORS>
-	<PARAMETERS>
+	<PARAMETERS>   
+        <PARAMETER
+            NAME="MAPPING"
+            FIELD="MAPPING_TYPE"
+            NUM_ROW="1"
+            SHOW="false"
+        >
+            <DEFAULT>cassandra_id</DEFAULT>
+        </PARAMETER>
 		<PARAMETER
 			NAME="USE_EXISTING_CONNECTION"
 			FIELD="CHECK"
@@ -297,6 +305,19 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT 
+                NAME="jackson-core-asl-1.9.2"
+                MODULE="jackson-core-asl-1.9.2.jar" 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT 
+                NAME="jackson-mapper-asl-1.9.2"
+                MODULE="jackson-mapper-asl-1.9.2.jar" 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            
             <!-- Cassandra 1.2.2 -->
             <IMPORT 
                 MODULE="hector-core-1.1-4.jar" 
@@ -339,6 +360,19 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <IMPORT 
+                NAME="jackson-core-asl-1.9.2"
+                MODULE="jackson-core-asl-1.9.2.jar" 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <IMPORT 
+                NAME="jackson-mapper-asl-1.9.2"
+                MODULE="jackson-mapper-asl-1.9.2.jar" 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />   
+            
             <!-- Cassandra 2.0.0 -->
             <IMPORT 
                 MODULE="hector-core-1.1-4.jar" 
@@ -380,7 +414,20 @@
                 MODULE="commons-lang-2.6.jar" 
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
                 NAME="commons-lang-2.6"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT 
+                NAME="jackson-core-asl-1.9.2"
+                MODULE="jackson-core-asl-1.9.2.jar" 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT 
+                NAME="jackson-mapper-asl-1.9.2"
+                MODULE="jackson-mapper-asl-1.9.2.jar" 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />   
+            
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
