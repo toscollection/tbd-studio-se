@@ -52,7 +52,8 @@ public class CreateOozieAction extends CreateHadoopNodeAction {
                     || EHadoopVersion4Drivers.APACHE_0_20_204.equals(version4Drivers)
                     || EHadoopVersion4Drivers.APACHE_0_20_203.equals(version4Drivers)
                     || EHadoopVersion4Drivers.APACHE_0_20_2.equals(version4Drivers)
-                    || EHadoopVersion4Drivers.MAPR1.equals(version4Drivers)) {
+                    || EHadoopVersion4Drivers.MAPR1.equals(version4Drivers)
+                    || EHadoopVersion4Drivers.PIVOTAL_HD_1_0_1.equals(version4Drivers)) {
                 return true;
             }
         }

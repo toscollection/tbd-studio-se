@@ -16,7 +16,6 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.repository.ui.swt.utils.AbstractForm;
 
 /**
@@ -63,41 +62,6 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
 
     protected T getConnection() {
         return (T) connectionItem.getConnection();
-    }
-
-    protected boolean isSupportSecurity(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            switch (version4Drivers) {
-            case HDP_1_0:
-            case HDP_1_2:
-            case HDP_1_3:
-            case APACHE_1_0_0:
-            case CLOUDERA_CDH4:
-            case APACHE_1_0_3_EMR:
-                return true;
-            default:
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    protected boolean isSupportGroup(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            switch (version4Drivers) {
-            case APACHE_0_20_2:
-            case MAPR1:
-            case MAPR2:
-            case MAPR212:
-            case MAPR_EMR:
-                return true;
-            default:
-                return false;
-            }
-        }
-
-        return false;
     }
 
     protected boolean validText(final String value) {

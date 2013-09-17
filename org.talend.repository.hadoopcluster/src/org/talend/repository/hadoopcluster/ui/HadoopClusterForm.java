@@ -217,6 +217,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                     getConnection().setUseCustomVersion(newDistribution == EHadoopDistributions.CUSTOM);
                     getConnection().setDfVersion(null);
                     updateVersionPart();
+                    updateYarnContent();
                     updateConnectionPart();
                     checkFieldsValue();
                 }
@@ -233,6 +234,12 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 EHadoopVersion4Drivers originalVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersion(originalVersionName);
                 if (newVersion4Drivers != null && newVersion4Drivers != originalVersion4Drivers) {
                     getConnection().setDfVersion(newVersion4Drivers.getVersionValue());
+                    if (HCVersionUtil.isSupportYARN(newVersion4Drivers) && !HCVersionUtil.isSupportMR1(newVersion4Drivers)) {
+                        getConnection().setUseYarn(true);
+                    } else {
+                        getConnection().setUseYarn(false);
+                    }
+                    updateYarnContent();
                     updateConnectionPart();
                     checkFieldsValue();
                 }
@@ -385,15 +392,23 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             }
         } else {
             EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connection.getDfVersion());
-            kerberosBtn.setEnabled(isSupportSecurity(version4Drivers));
+            kerberosBtn.setEnabled(HCVersionUtil.isSupportSecurity(version4Drivers));
             principalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
-            groupText.setEditable(isSupportGroup(version4Drivers));
+            groupText.setEditable(HCVersionUtil.isSupportGroup(version4Drivers));
             userNameText.setEditable(!kerberosBtn.getSelection());
         }
-        jobtrackerUriText
-                .setLabelText(connection.isUseYarn() ? Messages.getString("HadoopClusterForm.text.resourceManager") : Messages.getString("HadoopClusterForm.text.jobtrackerURI")); //$NON-NLS-1$ //$NON-NLS-2$
-        jobtrackerUriText.getTextControl().getParent().layout();
+        updateJobtrackerContent();
         updateConnectionContent();
+    }
+
+    private void updateJobtrackerContent() {
+        jobtrackerUriText
+                .setLabelText(getConnection().isUseYarn() ? Messages.getString("HadoopClusterForm.text.resourceManager") : Messages.getString("HadoopClusterForm.text.jobtrackerURI")); //$NON-NLS-1$ //$NON-NLS-2$
+        jobtrackerUriText.getTextControl().getParent().layout();
+    }
+
+    private void updateYarnContent() {
+        useYarnButton.setSelection(getConnection().isUseYarn());
     }
 
     private void updateConnectionContent() {

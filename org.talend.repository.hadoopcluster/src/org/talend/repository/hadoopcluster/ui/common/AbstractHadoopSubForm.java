@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 
@@ -57,7 +58,7 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
         distribution = clusterConnection.getDistribution();
         version = clusterConnection.getDfVersion();
         enableKerberos = clusterConnection.isEnableKerberos();
-        enableGroup = isSupportGroup(EHadoopVersion4Drivers.indexOfByVersion(version));
+        enableGroup = HCVersionUtil.isSupportGroup(EHadoopVersion4Drivers.indexOfByVersion(version));
         setupForm();
     }
 
