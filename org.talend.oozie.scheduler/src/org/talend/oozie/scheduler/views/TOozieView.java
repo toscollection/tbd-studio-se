@@ -80,10 +80,9 @@ public class TOozieView extends ViewPart {
         createRightContents(sash);
 
         tabFactory.getTabComposite().layout();
-        tabFactory.getTabbedPropertyComposite().getComposite().dispose();
-        tabFactory.getTabbedPropertyComposite().pack();
         tabFactory.addSelectionChangedListener(new ISelectionChangedListener() {
 
+            @Override
             public void selectionChanged(SelectionChangedEvent event) {
                 IStructuredSelection selection = (IStructuredSelection) event.getSelection();
                 TalendPropertyTabDescriptor descriptor = (TalendPropertyTabDescriptor) selection.getFirstElement();
@@ -164,6 +163,7 @@ public class TOozieView extends ViewPart {
     private void regMoveButtonListener() {
         moveButton.addSelectionListener(new SelectionAdapter() {
 
+            @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (moveButton.getText().equals(">>")) { //$NON-NLS-1$
                     sash.setWeights(new int[] { 23, 1 });
@@ -230,22 +230,27 @@ public class TOozieView extends ViewPart {
         tabFactory.setInput(descriptors);
         tabFactory.setSelection(new IStructuredSelection() {
 
+            @Override
             public Object getFirstElement() {
                 return null;
             }
 
+            @Override
             public Iterator<?> iterator() {
                 return null;
             }
 
+            @Override
             public int size() {
                 return 0;
             }
 
+            @Override
             public Object[] toArray() {
                 return null;
             }
 
+            @Override
             public List<TalendPropertyTabDescriptor> toList() {
                 List<TalendPropertyTabDescriptor> d = new ArrayList<TalendPropertyTabDescriptor>();
 
@@ -263,6 +268,7 @@ public class TOozieView extends ViewPart {
                 return d;
             }
 
+            @Override
             public boolean isEmpty() {
                 return false;
             }
@@ -277,10 +283,11 @@ public class TOozieView extends ViewPart {
      */
     private EComponentCategory[] getCategories() {
         EComponentCategory[] categories = null;
-        if (TOozieCommonUtils.isWindowsOS())
+        if (TOozieCommonUtils.isWindowsOS()) {
             categories = EElementType.SCHEDULE_4_HADOOP_WINDOWS.getCategories();
-        else
+        } else {
             categories = EElementType.SCHEDULE_4_HADOOP_NON_WINDOWS.getCategories();
+        }
         new ArrayList<EComponentCategory>(Arrays.asList(categories));
         return categories;
     }
