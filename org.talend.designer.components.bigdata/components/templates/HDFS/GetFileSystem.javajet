@@ -25,6 +25,9 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	
 	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
@@ -47,6 +50,11 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 %>
 		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%
+		if(useKeytab) {
+%>
+			org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+		}
 	}
 	
 	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MAPR213").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){

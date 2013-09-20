@@ -9,6 +9,7 @@
 
 	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	String jobtracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
 	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
@@ -50,6 +51,22 @@
 %>
 			configuration_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
 <% 
+		}
+	}
+	if(("HDP_1_0".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "Cloudera_CDH4".equals(version) || isCustom) && useKrb) {
+		String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+		String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
+		boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+		String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+		String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+%>
+		configuration_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
+		configuration_<%=cid%>.set("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
+<%
+		if(useKeytab) {
+%>
+			org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
 		}
 	}
 %>

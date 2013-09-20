@@ -29,6 +29,9 @@
 	boolean useKerberos = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String krb_realm = ElementParameterParser.getValue(node, "__KRB_REALM__");
 	String krb_princ = ElementParameterParser.getValue(node, "__KRB_PRINC__");
+	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	
 	if(useKerberos) {
 %>
@@ -67,6 +70,15 @@
 		properties_<%=cid%>.put("useTicketCache", "true");
 		properties_<%=cid%>.put("refreshKrb5Config", "true");
 		properties_<%=cid%>.put("renewTGT", "true");
+<%		
+		if(useKeytab) {
+%>
+			properties_<%=cid%>.put("useKeyTab", "true");
+			properties_<%=cid%>.put("keyTab", <%=keytabPath%>);
+			properties_<%=cid%>.put("principal", <%=userPrincipal%>);
+<%
+		}
+%>
 		kbInterceptor_<%=cid%>.setLoginConfig(new KerberosPolicyConfig_<%=cid%>(properties_<%=cid%>));
 <%
 	}	

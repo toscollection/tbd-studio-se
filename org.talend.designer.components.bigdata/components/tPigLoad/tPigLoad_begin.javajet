@@ -296,13 +296,19 @@
 			if(("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion) || isCustom) && useKrb) {
 				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 				String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
+				boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+				String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+				String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 %>
 				props_<%=cid%>.put("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
 				props_<%=cid%>.put("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
 <%
-			}
+				if(useKeytab) {
 %>
+					org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
 <%
+				}
+			}
 			if(hadoopProps.size() > 0){
 				for(Map<String, String> item : hadoopProps){
 %>

@@ -6,22 +6,23 @@
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	
 	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
-    String jobtracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
-    List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
-    List<Map<String,String>> generateJarAdditionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__GENERATE_JAR_ADDITIONAL_JAVA__");
-    boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
-    boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
-    String newDataDir = ElementParameterParser.getValue(node,"__NEWDATA__");
-    String oldDataDir = ElementParameterParser.getValue(node,"__ONTO__");
-    String targetDir = ElementParameterParser.getValue(node,"__TARGETDIR__");
-    String jarFile = ElementParameterParser.getValue(node,"__JARFILE__");
-    String className = ElementParameterParser.getValue(node,"__CLASSNAME__");
-    String key = ElementParameterParser.getValue(node,"__MERGEKEY__");
-    boolean needGenerateJar = "true".equals(ElementParameterParser.getValue(node,"__GENERATE__"));
-    String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
-    String table = ElementParameterParser.getValue(node,"__TABLE__");
-    String username = ElementParameterParser.getValue(node,"__USERNAME__");
-    String password = ElementParameterParser.getValue(node,"__PASSWORD__");
+	String jobtracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
+	List<Map<String,String>> generateJarAdditionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__GENERATE_JAR_ADDITIONAL_JAVA__");
+	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
+	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
+	String newDataDir = ElementParameterParser.getValue(node,"__NEWDATA__");
+	String oldDataDir = ElementParameterParser.getValue(node,"__ONTO__");
+	String targetDir = ElementParameterParser.getValue(node,"__TARGETDIR__");
+	String jarFile = ElementParameterParser.getValue(node,"__JARFILE__");
+	String className = ElementParameterParser.getValue(node,"__CLASSNAME__");
+	String key = ElementParameterParser.getValue(node,"__MERGEKEY__");
+	boolean needGenerateJar = "true".equals(ElementParameterParser.getValue(node,"__GENERATE__"));
+	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+	String table = ElementParameterParser.getValue(node,"__TABLE__");
+	String username = ElementParameterParser.getValue(node,"__USERNAME__");
+	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
     
 	String fsDefalutName = "fs.default.name";
 	
@@ -57,8 +58,23 @@
 <% 
 		}
 	}
+	if(("HDP_1_0".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "Cloudera_CDH4".equals(version) || isCustom) && useKrb) {
+		String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+		String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
+		boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+		String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+		String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 %>
+		configuration_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
+		configuration_<%=cid%>.set("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
 <%
+		if(useKeytab) {
+%>
+			org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+		}
+	}
+
     if(needGenerateJar){
 %>
         com.cloudera.sqoop.SqoopOptions needGenereateJarSqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
