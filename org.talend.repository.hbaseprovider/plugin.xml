@@ -67,28 +67,13 @@
             libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr212.jar;hbase-0.94.5-mapr.jar;log4j-1.2.16.jar;zookeeper-3.4.5.jar;guava-r09.jar;slf4j-api-1.4.3.jar;slf4j-log4j12-1.4.3.jar;protobuf-java-2.4.0a.jar">
       </classloader>
       <classloader
+            index="HBASE:MAPR:MAPR213"
+            libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr213.jar;hbase-0.94.5-mapr.jar;log4j-1.2.16.jar;zookeeper-3.4.5.jar;guava-11.0.2.jar;slf4j-api-1.4.3.jar;slf4j-log4j12-1.4.3.jar;protobuf-java-2.4.0a.jar">
+      </classloader>
+      <classloader
             index="HBASE:PIVOTAL_HD:PIVOTAL_HD_1_0_1"
             libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;guava-11.0.2.jar;protobuf-java-2.4.0a.jar;hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar;hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar;hbase-0.94.2-gphd-2.0.1.0.jar;zookeeper-3.4.5-gphd-2.0.1.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
       </classloader>
-   </extension>
-   <extension
-         point="org.talend.core.runtime.librariesNeeded">
-      <libraryNeeded
-            context="HBASE"
-            language="java"
-            message="Required for using the HBase DB Connection Wizard"
-            name="hbase-0.94.5-mapr.jar"
-            required="true"
-            uripath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.94.5-mapr.jar">
-      </libraryNeeded>
-      <libraryNeeded
-            context="HBASE"
-            language="java"
-            message="Required for using the HBase DB Connection Wizard"
-            name="zookeeper-3.4.5.jar"
-            required="true"
-            uripath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar">
-      </libraryNeeded>
    </extension>
 
 </plugin>
