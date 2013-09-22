@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
@@ -209,7 +210,7 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
                 new ErrorDialogWidthDetailArea(getShell(), HadoopClusterPlugin.PLUGIN_ID,
                         Messages.getString("HadoopClusterWizard.persistenceException"), //$NON-NLS-1$
                         detailError);
-                log.error(Messages.getString("HadoopClusterWizard.persistenceException") + "\n" + detailError); //$NON-NLS-1$ //$NON-NLS-2$
+                ExceptionHandler.process(e);
                 return false;
             }
             return true;

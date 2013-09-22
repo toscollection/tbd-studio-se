@@ -234,7 +234,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 EHadoopVersion4Drivers originalVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersion(originalVersionName);
                 if (newVersion4Drivers != null && newVersion4Drivers != originalVersion4Drivers) {
                     getConnection().setDfVersion(newVersion4Drivers.getVersionValue());
-                    if (HCVersionUtil.isSupportYARN(newVersion4Drivers) && !HCVersionUtil.isSupportMR1(newVersion4Drivers)) {
+                    if (newVersion4Drivers.isSupportYARN() && !newVersion4Drivers.isSupportMR1()) {
                         getConnection().setUseYarn(true);
                     } else {
                         getConnection().setUseYarn(false);
@@ -392,9 +392,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             }
         } else {
             EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connection.getDfVersion());
-            kerberosBtn.setEnabled(HCVersionUtil.isSupportSecurity(version4Drivers));
+            kerberosBtn.setEnabled(version4Drivers.isSupportSecurity());
             principalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
-            groupText.setEditable(HCVersionUtil.isSupportGroup(version4Drivers));
+            groupText.setEditable(version4Drivers.isSupportGroup());
             userNameText.setEditable(!kerberosBtn.getSelection());
         }
         updateJobtrackerContent();

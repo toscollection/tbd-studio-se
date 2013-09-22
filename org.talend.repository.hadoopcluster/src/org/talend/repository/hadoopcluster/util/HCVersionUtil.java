@@ -19,11 +19,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.EMap;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
-import org.talend.core.hadoop.version.EMRVersion;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
@@ -119,57 +116,6 @@ public class HCVersionUtil {
         customVersionMap.put(versionGroup.getName(), jarSet);
 
         return customVersionMap;
-    }
-
-    public static boolean isSupportSecurity(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            switch (version4Drivers) {
-            case HDP_1_0:
-            case HDP_1_2:
-            case HDP_1_3:
-            case APACHE_1_0_0:
-            case CLOUDERA_CDH4:
-            case APACHE_1_0_3_EMR:
-                return true;
-            default:
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    public static boolean isSupportGroup(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            switch (version4Drivers) {
-            case APACHE_0_20_2:
-            case MAPR1:
-            case MAPR2:
-            case MAPR212:
-            case MAPR_EMR:
-                return true;
-            default:
-                return false;
-            }
-        }
-
-        return false;
-    }
-
-    public static boolean isSupportMR1(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            return ArrayUtils.contains(version4Drivers.getMrVersions(), EMRVersion.MR1);
-        }
-
-        return false;
-    }
-
-    public static boolean isSupportYARN(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers != null) {
-            return ArrayUtils.contains(version4Drivers.getMrVersions(), EMRVersion.YARN);
-        }
-
-        return false;
     }
 
 }
