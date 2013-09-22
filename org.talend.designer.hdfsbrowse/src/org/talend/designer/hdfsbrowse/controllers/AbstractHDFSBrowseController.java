@@ -61,7 +61,6 @@ import org.talend.designer.hdfsbrowse.i18n.Messages;
 import org.talend.designer.hdfsbrowse.manager.EHadoopParameter;
 import org.talend.designer.hdfsbrowse.manager.HadoopMappingManager;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
-import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
@@ -146,7 +145,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         }
         // check support the group or not
         EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connectionBean.getDfVersion());
-        if (HadoopServerUtil.isSupportGroup(version4Drivers)) {
+        if (version4Drivers.isSupportGroup()) {
             String group = (String) getParameterValue(node, EHadoopParameter.GROUP.getName());
             connectionBean.setGroup(group);
         }
