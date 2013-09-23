@@ -1,5 +1,8 @@
 package org.talend.repository.oozie.ui;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
@@ -142,6 +145,9 @@ public class OozieWizard extends HadoopRepositoryWizard<OozieConnection> {
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
+                OozieForm oozieForm = (OozieForm) mainPage.getControl();
+                List<HashMap<String, Object>> hadoopPrperties = oozieForm.getProperties();
+                this.connection.setHadoopProperties(getHadoopPropertiesString(hadoopPrperties));
                 if (creation) {
                     createConnectionItem();
                 } else {

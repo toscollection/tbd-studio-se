@@ -12,6 +12,12 @@
 // ============================================================================
 package org.talend.repository.hcatalog.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -24,12 +30,18 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.talend.commons.ui.command.CommandStackForComposite;
+import org.talend.commons.ui.swt.advanced.dataeditor.HadoopPropertiesTableView;
+import org.talend.commons.ui.swt.extended.table.HadoopPropertiesFieldModel;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.repository.hcatalog.i18n.Messages;
+import org.talend.utils.json.JSONArray;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -49,6 +61,10 @@ public class HCatalogForm extends AbstractHCatalogForm {
     private LabelledText krbRealmText;
 
     private LabelledText databaseText;
+
+    private List<HashMap<String, Object>> properties;
+
+    private HadoopPropertiesTableView propertiesTableView;
 
     public HCatalogForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
         super(parent, SWT.NONE, existingNames, connectionItem);
@@ -88,7 +104,50 @@ public class HCatalogForm extends AbstractHCatalogForm {
     protected void addFields() {
         addTempletonFields();
         addDatabaseFields();
+        addHadoopPropertiesFields();
         addCheckFields();
+    }
+
+    private void addHadoopPropertiesFields() {
+        // table view
+        Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
+        GridData gridData = new GridData(GridData.FILL_BOTH);
+        gridData.horizontalSpan = 4;
+        compositeTable.setLayoutData(gridData);
+        CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
+        properties = new ArrayList<HashMap<String, Object>>();
+        initHadoopProperties();
+        HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
+        propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
+        propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
+        final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
+        fieldTableEditorComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+        fieldTableEditorComposite.setBackground(null);
+    }
+
+    private void initHadoopProperties() {
+        String hadoopProperties = getConnection().getHadoopProperties();
+        try {
+            if (StringUtils.isNotEmpty(hadoopProperties)) {
+                JSONArray jsonArr = new JSONArray(hadoopProperties);
+                for (int i = 0; i < jsonArr.length(); i++) {
+                    HashMap<String, Object> map = new HashMap();
+                    JSONObject object = jsonArr.getJSONObject(i);
+                    Iterator it = object.keys();
+                    while (it.hasNext()) {
+                        String key = (String) it.next();
+                        map.put(key, object.get(key));
+                    }
+                    properties.add(map);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateModel() {
+        setProperties(propertiesTableView.getExtendedTableModel().getBeansList());
     }
 
     private void addTempletonFields() {
@@ -327,6 +386,14 @@ public class HCatalogForm extends AbstractHCatalogForm {
             }
 
         });
+    }
+
+    public void setProperties(List<HashMap<String, Object>> properties) {
+        this.properties = properties;
+    }
+
+    public List<HashMap<String, Object>> getProperties() {
+        return properties;
     }
 
 }

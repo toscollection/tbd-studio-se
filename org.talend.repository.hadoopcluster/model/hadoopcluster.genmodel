@@ -31,6 +31,7 @@
     </genClasses>
     <genClasses ecoreClass="hadoopcluster.ecore#//HadoopSubConnection">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopSubConnection/relativeHadoopClusterId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopSubConnection/hadoopProperties"/>
     </genClasses>
     <genClasses ecoreClass="hadoopcluster.ecore#//HadoopSubConnectionItem"/>
   </genPackages>

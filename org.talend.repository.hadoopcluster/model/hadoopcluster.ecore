@@ -35,6 +35,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="HadoopSubConnection" eSuperTypes="../../org.talend.model/model/metadata.ecore#//Connection">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="relativeHadoopClusterId"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hadoopProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//String"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HadoopSubConnectionItem" eSuperTypes="../../org.talend.model/model/properties.ecore#//ConnectionItem"/>
 </ecore:EPackage>

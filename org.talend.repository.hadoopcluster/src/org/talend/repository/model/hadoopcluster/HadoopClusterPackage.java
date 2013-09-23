@@ -1103,13 +1103,22 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_SUB_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID = ConnectionPackage.CONNECTION_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Hadoop Properties</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_SUB_CONNECTION__HADOOP_PROPERTIES = ConnectionPackage.CONNECTION_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Hadoop Sub Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_SUB_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 1;
+    int HADOOP_SUB_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopSubConnectionItemImpl <em>Hadoop Sub Connection Item</em>}' class.
@@ -1424,6 +1433,17 @@ public interface HadoopClusterPackage extends EPackage {
     EAttribute getHadoopSubConnection_RelativeHadoopClusterId();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopSubConnection#getHadoopProperties <em>Hadoop Properties</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Hadoop Properties</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopSubConnection#getHadoopProperties()
+     * @see #getHadoopSubConnection()
+     * @generated
+     */
+    EAttribute getHadoopSubConnection_HadoopProperties();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem <em>Hadoop Sub Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1630,6 +1650,14 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_SUB_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID = eINSTANCE.getHadoopSubConnection_RelativeHadoopClusterId();
+
+        /**
+         * The meta object literal for the '<em><b>Hadoop Properties</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_SUB_CONNECTION__HADOOP_PROPERTIES = eINSTANCE.getHadoopSubConnection_HadoopProperties();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopSubConnectionItemImpl <em>Hadoop Sub Connection Item</em>}' class.

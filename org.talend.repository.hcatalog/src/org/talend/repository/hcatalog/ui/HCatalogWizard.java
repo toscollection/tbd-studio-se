@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.repository.hcatalog.ui;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IWorkbench;
 import org.talend.commons.ui.runtime.image.ImageProvider;
@@ -162,6 +165,9 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
+                HCatalogForm hcatalogForm = (HCatalogForm) mainPage.getControl();
+                List<HashMap<String, Object>> hadoopPrperties = hcatalogForm.getProperties();
+                this.connection.setHadoopProperties(getHadoopPropertiesString(hadoopPrperties));
                 if (creation) {
                     createConnectionItem();
                 } else {

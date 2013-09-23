@@ -329,6 +329,15 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getHadoopSubConnection_HadoopProperties() {
+        return (EAttribute)hadoopSubConnectionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getHadoopSubConnectionItem() {
         return hadoopSubConnectionItemEClass;
     }
@@ -385,6 +394,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
 
         hadoopSubConnectionEClass = createEClass(HADOOP_SUB_CONNECTION);
         createEAttribute(hadoopSubConnectionEClass, HADOOP_SUB_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID);
+        createEAttribute(hadoopSubConnectionEClass, HADOOP_SUB_CONNECTION__HADOOP_PROPERTIES);
 
         hadoopSubConnectionItemEClass = createEClass(HADOOP_SUB_CONNECTION_ITEM);
     }
@@ -452,6 +462,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
 
         initEClass(hadoopSubConnectionEClass, HadoopSubConnection.class, "HadoopSubConnection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getHadoopSubConnection_RelativeHadoopClusterId(), ecorePackage.getEString(), "relativeHadoopClusterId", null, 1, 1, HadoopSubConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopSubConnection_HadoopProperties(), theXMLTypePackage.getString(), "hadoopProperties", null, 0, 1, HadoopSubConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hadoopSubConnectionItemEClass, HadoopSubConnectionItem.class, "HadoopSubConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

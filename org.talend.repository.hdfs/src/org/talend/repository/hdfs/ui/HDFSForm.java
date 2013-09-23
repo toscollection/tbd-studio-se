@@ -12,16 +12,26 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -29,16 +39,27 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.talend.commons.ui.command.CommandStackForComposite;
+import org.talend.commons.ui.swt.advanced.dataeditor.HadoopPropertiesTableView;
+import org.talend.commons.ui.swt.extended.table.HadoopPropertiesFieldModel;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCheckboxCombo;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
+import org.talend.commons.ui.swt.tableviewer.IModifiedBeanListener;
+import org.talend.commons.ui.swt.tableviewer.ModifiedBeanEvent;
+import org.talend.commons.utils.data.list.IListenableListListener;
+import org.talend.commons.utils.data.list.ListenableListEvent;
+import org.talend.core.database.conn.template.EDatabaseConnTemplate;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
+import org.talend.utils.json.JSONArray;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -64,6 +85,10 @@ public class HDFSForm extends AbstractHDFSForm {
     private Text rowSeparatorText;
 
     private Text fieldSeparatorText;
+
+    private List<HashMap<String, Object>> properties;
+
+    private HadoopPropertiesTableView propertiesTableView;
 
     public HDFSForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
         super(parent, SWT.NONE, existingNames, connectionItem);
@@ -104,7 +129,6 @@ public class HDFSForm extends AbstractHDFSForm {
             rowsToSkipHeaderCheckboxCombo.setText(header);
         }
         firstRowIsCaptionCheckbox.setSelection(getConnection().isFirstLineCaption());
-
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
 
@@ -123,7 +147,50 @@ public class HDFSForm extends AbstractHDFSForm {
         addConnectionFields();
         addSeparatorFields();
         addSkipFields();
+        addHadoopPropertiesFields();
         addCheckFields();
+    }
+
+    private void initHadoopProperties() {
+        String hadoopProperties = getConnection().getHadoopProperties();
+        try {
+            if (StringUtils.isNotEmpty(hadoopProperties)) {
+                JSONArray jsonArr = new JSONArray(hadoopProperties);
+                for (int i = 0; i < jsonArr.length(); i++) {
+                    HashMap<String, Object> map = new HashMap();
+                    JSONObject object = jsonArr.getJSONObject(i);
+                    Iterator it = object.keys();
+                    while (it.hasNext()) {
+                        String key = (String) it.next();
+                        map.put(key, object.get(key));
+                    }
+                    properties.add(map);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addHadoopPropertiesFields() {
+        // table view
+        Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
+        GridData gridData = new GridData(GridData.FILL_BOTH);
+        gridData.horizontalSpan = 4;
+        compositeTable.setLayoutData(gridData);
+        CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
+        properties = new ArrayList<HashMap<String, Object>>();
+        initHadoopProperties();
+        HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
+        propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
+        propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
+        final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
+        fieldTableEditorComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+        fieldTableEditorComposite.setBackground(null);
+    }
+
+    private void updateModel() {
+        setProperties(propertiesTableView.getExtendedTableModel().getBeansList());
     }
 
     private void addConnectionFields() {
@@ -379,6 +446,26 @@ public class HDFSForm extends AbstractHDFSForm {
                 checkFieldsValue();
             }
         });
+
+        if (propertiesTableView != null) {
+            propertiesTableView.getExtendedTableModel().addAfterOperationListListener(new IListenableListListener() {
+
+                @Override
+                public void handleEvent(ListenableListEvent event) {
+                    // checkFieldsValue();
+                    updateModel();
+                }
+            });
+            propertiesTableView.getExtendedTableModel().addModifiedBeanListener(
+                    new IModifiedBeanListener<HashMap<String, Object>>() {
+
+                        @Override
+                        public void handleEvent(ModifiedBeanEvent<HashMap<String, Object>> event) {
+                            // checkFieldsValue();
+                            updateModel();
+                        }
+                    });
+        }
     }
 
     @Override
@@ -452,6 +539,14 @@ public class HDFSForm extends AbstractHDFSForm {
             }
 
         });
+    }
+
+    public void setProperties(List<HashMap<String, Object>> properties) {
+        this.properties = properties;
+    }
+
+    public List<HashMap<String, Object>> getProperties() {
+        return properties;
     }
 
 }

@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui.common;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -36,6 +40,9 @@ import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 import org.talend.repository.ui.wizards.CheckLastVersionRepositoryWizard;
+import org.talend.utils.json.JSONArray;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 /**
  * created by ycbai on 2013-1-28 Detailled comment
@@ -148,6 +155,20 @@ public abstract class HadoopRepositoryWizard<E extends HadoopSubConnection> exte
     @Override
     public ConnectionItem getConnectionItem() {
         return this.connectionItem;
+    }
+
+    protected String getHadoopPropertiesString(List<HashMap<String, Object>> hadoopPrperties) throws JSONException {
+        JSONArray jsonArr = new JSONArray();
+        for (HashMap<String, Object> map : hadoopPrperties) {
+            JSONObject object = new JSONObject();
+            Iterator it = map.keySet().iterator();
+            while (it.hasNext()) {
+                String key = (String) it.next();
+                object.put(key, map.get(key));
+            }
+            jsonArr.put(object);
+        }
+        return jsonArr.toString();
     }
 
 }

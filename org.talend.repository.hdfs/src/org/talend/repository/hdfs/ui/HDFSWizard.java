@@ -12,6 +12,12 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
@@ -42,6 +48,8 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSFactory;
+import org.talend.utils.json.JSONArray;
+import org.talend.utils.json.JSONObject;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -158,6 +166,9 @@ public class HDFSWizard extends HadoopRepositoryWizard<HDFSConnection> {
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
+                HDFSForm hdfsForm = (HDFSForm) mainPage.getControl();
+                List<HashMap<String, Object>> hadoopPrperties = hdfsForm.getProperties();
+                this.connection.setHadoopProperties(getHadoopPropertiesString(hadoopPrperties));
                 if (creation) {
                     createConnectionItem();
                 } else {
