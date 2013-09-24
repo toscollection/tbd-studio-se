@@ -12,7 +12,7 @@ imports="
 		java.util.Map
 		java.util.HashMap
 "
-skeleton="../templates/db_output_bulk.skeleton"
+skeleton="@{org.talend.designer.components.localprovider}/components/templates/db_output_bulk.skeleton"
 %>
 
 <%
@@ -159,7 +159,7 @@ int count_<%=cid%>=0;
 <%
 if(columnList != null && columnList.size() > 0) {
 	%>
-	<%@ include file="../templates/_tableActionForOutput.javajet"%>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/_tableActionForOutput.javajet"%>
 	<%
 	Map<String, StringBuilder> actionSQLMap = getManager(dbmsId, cid).createProcessSQL(stmtStructure);
 	StringBuilder insertColName = actionSQLMap.get(INSERT_COLUMN_NAME);
@@ -202,7 +202,7 @@ if(columnList != null && columnList.size() > 0) {
 	if(isEnableDebug) {
 		%>
 		StringBuffer query_<%=cid%> = null;
-	   	<%@ include file="../templates/DB/Output/splitSQLForAllDBInBegin.javajet" %>
+	   	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Output/splitSQLForAllDBInBegin.javajet" %>
 		<%
 	}
 }
