@@ -33,6 +33,7 @@
             NAME="NOTE"
             FIELD="LABEL"
             NUM_ROW="1"
+            COLOR="255;0;0" 
             SHOW_IF="DB_VERSION=='CASSANDRA_2_0_0'"
         >
             <DEFAULT>only work with JVM1.7</DEFAULT>
@@ -41,6 +42,7 @@
             NAME="NOTE"
             FIELD="LABEL"
             NUM_ROW="1"
+            COLOR="255;0;0" 
             SHOW_IF="DB_VERSION=='CASSANDRA_1_2_2'"
         >
             <DEFAULT>it doesn't support different Client OS to visit different Server OS.</DEFAULT>
@@ -49,6 +51,7 @@
             NAME="NOTE"
             FIELD="LABEL"
             NUM_ROW="1"
+            COLOR="255;0;0" 
             SHOW_IF="DB_VERSION=='CASSANDRA_1_1_2'"
         >
             <DEFAULT>it only supports locally visiting in Linux.</DEFAULT>
