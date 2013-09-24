@@ -64,6 +64,13 @@ java.sql.Connection conn_<%=cid%> = null;
 		
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 		boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
+		
+		boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+		boolean cdh4CanBeSecured = "Cloudera_CDH4".equals(hiveVersion) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
+		boolean securityIsEnabled = useKrb && (isCustom || ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || cdh4CanBeSecured));
+		boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
+		boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
+		String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
 
 		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "MAPR213".equals(hiveVersion)))) {
 			hiveServer = hiveServer.toLowerCase();
@@ -74,8 +81,8 @@ java.sql.Connection conn_<%=cid%> = null;
 			hiveServer = "hive";
 		}
 		
-		if(!isCustom && (("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode))
-		 || ("HDP_1_3".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MAPR1".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MapR_EMR".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)))) {
+		if(!isCustom && (("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer))
+		 || ("HDP_1_3".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MAPR1".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MapR_EMR".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)))) {
 %>
 			if(true) {
 				throw new java.lang.Exception("The Hive version and the connection mode are not compatible together. Please check your component configuration.");
@@ -89,6 +96,31 @@ java.sql.Connection conn_<%=cid%> = null;
 				System.setProperty(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
 <%
 			} 
+		}
+
+		
+		if(securedEmbedded) {
+			String metastoreUrl = ElementParameterParser.getValue(node, "__METASTORE_JDBC_URL__");
+			String driverClass = ElementParameterParser.getValue(node, "__METASTORE_CLASSNAME__");
+			String metastoreUsername = ElementParameterParser.getValue(node, "__METASTORE_USERNAME__");
+			String metastorePassword = ElementParameterParser.getValue(node, "__METASTORE_PASSWORD__");
+			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+			String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+			String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+%>
+			System.setProperty("hive.metastore.sasl.enabled", "true");
+			System.setProperty("javax.jdo.option.ConnectionDriverName", <%=driverClass%>);
+			System.setProperty("hive.security.authorization.enabled", "true");
+			System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
+			System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
+			System.setProperty("javax.jdo.option.ConnectionPassword", <%=metastorePassword%>);
+			System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);				
+<%
+			if(useKeytab) {
+%>
+				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+			}
 		}
 		
 		if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion))) && setMapredJT) {
@@ -113,16 +145,30 @@ java.sql.Connection conn_<%=cid%> = null;
 			String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
 <%
 		} else {
+			if(securedStandaloneHive2) {
 %>
-			String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+				String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
 <%
+			} else {
+%>
+				String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+<%
+			}
 		}
 %>
 		String dbUser_<%=cid %> = <%=dbuser%>;
 		String dbPwd_<%=cid %> = <%=dbpwd%>;    
 		java.lang.Class.forName("<%=javaDbDriver %>");
-		conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
 <%
+		if(securedStandaloneHive2) {
+%>
+			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>);
+<%
+		} else {
+%>
+			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
+<%
+		}
     	boolean setResourceManager = "true".equals(ElementParameterParser.getValue(node, "__SET_RESOURCE_MANAGER__"));
     	
     	if(((isCustom && useYarn) || (!isCustom && "PIVOTAL_HD_1_0_1".equals(hiveVersion))) && setResourceManager) {

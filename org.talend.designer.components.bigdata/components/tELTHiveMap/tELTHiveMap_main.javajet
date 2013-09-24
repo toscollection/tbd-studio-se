@@ -29,7 +29,9 @@
     ExternalDbMapData data = (ExternalDbMapData) node.getExternalData();
     uniqueNameComponent = node.getUniqueName();
     
-    String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+	String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
+	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 	String fsDefalutName = "fs.default.name";
     
 	boolean setTempPath = "true".equals(ElementParameterParser.getValue(node, "__SET_TEMP_PATH__")); 
@@ -47,6 +49,12 @@ if(("false").equals(useExistingConn)) {
 	
 	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
+	
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	boolean cdh4CanBeSecured = "Cloudera_CDH4".equals(hiveVersion) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
+	boolean securityIsEnabled = useKrb && (isCustom || ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || cdh4CanBeSecured));
+	boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
+	String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
 
 	if(hadoopProps.size() > 0){
 		for(Map<String, String> item : hadoopProps){
@@ -55,6 +63,30 @@ if(("false").equals(useExistingConn)) {
 <%
 		} 
 	}
+	
+		if(securedEmbedded) {
+			String metastoreUrl = ElementParameterParser.getValue(node, "__METASTORE_JDBC_URL__");
+			String driverClass = ElementParameterParser.getValue(node, "__METASTORE_CLASSNAME__");
+			String metastoreUsername = ElementParameterParser.getValue(node, "__METASTORE_USERNAME__");
+			String metastorePassword = ElementParameterParser.getValue(node, "__METASTORE_PASSWORD__");
+			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+			String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+			String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+%>
+			System.setProperty("hive.metastore.sasl.enabled", "true");
+			System.setProperty("javax.jdo.option.ConnectionDriverName", <%=driverClass%>);
+			System.setProperty("hive.security.authorization.enabled", "true");
+			System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
+			System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
+			System.setProperty("javax.jdo.option.ConnectionPassword", <%=metastorePassword%>);
+			System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);				
+<%
+			if(useKeytab) {
+%>
+				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+			}
+		}
 	
 	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion))) && setMapredJT) {
 		String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
