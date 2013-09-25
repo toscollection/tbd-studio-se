@@ -7,11 +7,8 @@
 		org.talend.core.model.process.IConnection
 		org.talend.core.model.process.IConnectionCategory
 		org.talend.designer.codegen.config.CodeGeneratorArgument
-		org.talend.core.model.metadata.types.JavaTypesManager
-		org.talend.core.model.metadata.types.JavaType
 		java.util.List 
     	java.util.Map 
-    	java.util.HashMap 
     	java.util.HashSet 
     	java.util.Set 
 	" 
@@ -22,10 +19,11 @@
     String cid = node.getUniqueName();	
     
     String query = ElementParameterParser.getValue(node, "__QUERY__");
+    query = query.replaceAll("\n"," ");
+    query = query.replaceAll("\r"," ");
     List<Map<String, String>> listParameters = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__PARAMETERS__");
     boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));   
     String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
-    String userNbLine = ElementParameterParser.getValue(node, "__USE_NB_LINE__");
     
     List<IMetadataColumn> columnList = null;
     List<IMetadataTable> metadatas = node.getMetadataList();
