@@ -176,6 +176,7 @@
     
     <PARAMETER
       NAME="USE_KRB"
+      REPOSITORY_VALUE="USE_KRB_VALUE"
       FIELD="CHECK"
       NUM_ROW="32"
       REQUIRED="true"
@@ -187,6 +188,7 @@
     
     <PARAMETER
       NAME="HIVE_PRINCIPAL"
+      REPOSITORY_VALUE="HIVE_PRINCIPAL"
       FIELD="TEXT"
       NUM_ROW="33"
       REQUIRED="true"
@@ -198,6 +200,7 @@
     
     <PARAMETER
       NAME="METASTORE_JDBC_URL"
+      REPOSITORY_VALUE="METASTORE_JDBC_URL"
       FIELD="TEXT"
       NUM_ROW="34"
       REQUIRED="true"
@@ -209,6 +212,7 @@
     
     <PARAMETER
       NAME="METASTORE_CLASSNAME"
+      REPOSITORY_VALUE="METASTORE_CLASSNAME"
       FIELD="TEXT"
       NUM_ROW="35"
       REQUIRED="true"
@@ -220,6 +224,7 @@
 
     <PARAMETER
       NAME="METASTORE_USERNAME"
+      REPOSITORY_VALUE="METASTORE_USERNAME"
       FIELD="TEXT"
       NUM_ROW="36"
       REQUIRED="true"
@@ -231,6 +236,7 @@
     
     <PARAMETER
       NAME="METASTORE_PASSWORD"
+      REPOSITORY_VALUE="METASTORE_PASSWORD"
       FIELD="TEXT"
       NUM_ROW="37"
       REQUIRED="true"
@@ -242,6 +248,7 @@
     
     <PARAMETER
       NAME="USE_KEYTAB"
+      REPOSITORY_VALUE="USE_KEYTAB"
       FIELD="CHECK"
       NUM_ROW="39"
       REQUIRED="true"
@@ -253,6 +260,7 @@
     
     <PARAMETER
       NAME="PRINCIPAL"
+      REPOSITORY_VALUE="PRINCIPAL"
       FIELD="TEXT"
       NUM_ROW="40"
       REQUIRED="true"
@@ -264,6 +272,7 @@
     
     <PARAMETER
       NAME="KEYTAB_PATH"
+      REPOSITORY_VALUE="KEYTAB_PATH"
       FIELD="FILE"
       NUM_ROW="40"
       REQUIRED="true"
