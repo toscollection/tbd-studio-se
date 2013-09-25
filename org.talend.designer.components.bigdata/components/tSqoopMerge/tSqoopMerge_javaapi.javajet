@@ -16,6 +16,7 @@
 	String oldDataDir = ElementParameterParser.getValue(node,"__ONTO__");
 	String targetDir = ElementParameterParser.getValue(node,"__TARGETDIR__");
 	String jarFile = ElementParameterParser.getValue(node,"__JARFILE__");
+	boolean customClassName = "true".equals(ElementParameterParser.getValue(node,"__CUSTOMCLASSNAME__"));
 	String className = ElementParameterParser.getValue(node,"__CLASSNAME__");
 	String key = ElementParameterParser.getValue(node,"__MERGEKEY__");
 	boolean needGenerateJar = "true".equals(ElementParameterParser.getValue(node,"__GENERATE__"));
@@ -82,7 +83,11 @@
         needGenereateJarSqoopOptions_<%=cid%>.setUsername(<%=username%>);
         needGenereateJarSqoopOptions_<%=cid%>.setPassword(<%=password%>);
         needGenereateJarSqoopOptions_<%=cid%>.setTableName(<%=table%>);
-        needGenereateJarSqoopOptions_<%=cid%>.setClassName(<%=className%>);
+        <%if(customClassName){%>
+            needGenereateJarSqoopOptions_<%=cid%>.setClassName(<%=className%>);
+        <%}else{%>
+            needGenereateJarSqoopOptions_<%=cid%>.setClassName("SqoopMerge_<%=cid%>");
+        <%}%>
 
         java.util.Properties generateJarAdditionalProperties_<%=cid%> = new java.util.Properties();
 <%
@@ -131,7 +136,11 @@
 	sqoopOptions_<%=cid%>.setMergeNewPath(<%=newDataDir%>);
 	sqoopOptions_<%=cid%>.setMergeKeyCol(<%=key%>);
 	sqoopOptions_<%=cid%>.setTargetDir(<%=targetDir%>); 
-	sqoopOptions_<%=cid%>.setClassName(<%=className%>); 
+    <%if(customClassName){%>
+		sqoopOptions_<%=cid%>.setClassName(<%=className%>);
+    <%}else{%>
+		sqoopOptions_<%=cid%>.setClassName("SqoopMerge_<%=cid%>");
+    <%}%>
 		
 <%	
 	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
