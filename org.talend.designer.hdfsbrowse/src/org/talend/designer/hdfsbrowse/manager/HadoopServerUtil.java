@@ -75,9 +75,12 @@ public class HadoopServerUtil {
         if (userName != null) {
             userName = TalendQuoteUtils.removeQuotesIfExist(userName);
         }
-        String principal = StringUtils.trimToNull(connection.getPrincipal());
+        String namenodePrincipal = StringUtils.trimToNull(connection.getPrincipal());
         String group = StringUtils.trimToNull(connection.getGroup());
         boolean enableKerberos = connection.isEnableKerberos();
+        boolean useKeytab = connection.isUseKeytab();
+        String keytabPrincipal = StringUtils.trimToNull(connection.getKeytabPrincipal());
+        String keytab = StringUtils.trimToNull(connection.getKeytab());
 
         Object dfs = null;
         ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
@@ -87,15 +90,22 @@ public class HadoopServerUtil {
             Object conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance();
             EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
             if (enableKerberos) {
-                assert principal != null;
+                assert namenodePrincipal != null;
                 userName = null;
                 // EHadoopConfProperties.JOB_UGI.set(conf, EMPTY_STRING);
-                EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, principal);
+                EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, namenodePrincipal);
             }
             if (group != null) {
                 assert userName != null;
                 // EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, EMPTY_STRING);
                 EHadoopConfProperties.JOB_UGI.set(conf, userName + "," + group); //$NON-NLS-1$
+            }
+
+            if (useKeytab) {
+                assert keytabPrincipal != null;
+                assert keytab != null;
+                ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader,
+                        "loginUserFromKeytab", new String[] { keytabPrincipal, keytab });
             }
 
             Callable<Object> dfsCallable = null;

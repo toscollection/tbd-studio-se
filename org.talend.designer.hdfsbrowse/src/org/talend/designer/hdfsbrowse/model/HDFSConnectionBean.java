@@ -44,6 +44,12 @@ public class HDFSConnectionBean {
 
     private boolean useCustomVersion;
 
+    private boolean useKeytab;
+
+    private String keytabPrincipal;
+
+    private String keytab;
+
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public String getDistribution() {
@@ -144,6 +150,30 @@ public class HDFSConnectionBean {
 
     public void setUseCustomVersion(boolean useCustomVersion) {
         this.useCustomVersion = useCustomVersion;
+    }
+
+    public boolean isUseKeytab() {
+        return this.useKeytab;
+    }
+
+    public void setUseKeytab(boolean useKeytab) {
+        this.useKeytab = useKeytab;
+    }
+
+    public String getKeytabPrincipal() {
+        return this.keytabPrincipal;
+    }
+
+    public void setKeytabPrincipal(String keytabPrincipal) {
+        this.keytabPrincipal = keytabPrincipal;
+    }
+
+    public String getKeytab() {
+        return this.keytab;
+    }
+
+    public void setKeytab(String keytab) {
+        this.keytab = keytab;
     }
 
 }
