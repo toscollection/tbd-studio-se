@@ -34,6 +34,10 @@
             libraries="hadoop-core-1.2.0.1.3.0.0-107.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
       </classloader>
       <classloader
+            index="HDFS:HORTONWORKS:HDP_2_0"
+            libraries="hadoop-common-2.1.0.2.0.5.0-67.jar;hadoop-auth-2.1.0.2.0.5.0-67.jar;hadoop-hdfs-2.1.0.2.0.5.0-67.jar;commons-cli-1.2.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;guava-11.0.2.jar;log4j-1.2.17.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.5.0.jar;">
+      </classloader>
+      <classloader
             index="HDFS:APACHE:APACHE_1_0_0"
             libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
       </classloader>
@@ -74,6 +78,10 @@
             libraries="hadoop-core-1.2.0.1.3.0.0-107.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;hadoop-conf-kerberos.jar">
       </classloader>
       <classloader
+            index="HDFS:HORTONWORKS:HDP_2_0?USE_KRB"
+            libraries="hadoop-common-2.1.0.2.0.5.0-67.jar;hadoop-auth-2.1.0.2.0.5.0-67.jar;hadoop-hdfs-2.1.0.2.0.5.0-67.jar;commons-cli-1.2.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;guava-11.0.2.jar;log4j-1.2.17.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.5.0.jar;">
+      </classloader>
+      <classloader
             index="HDFS:APACHE:APACHE_1_0_0?USE_KRB"
             libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
       </classloader>
@@ -104,6 +112,10 @@
       <classloader
             index="HDFS:MAPR:MAPR213"
             libraries="hadoop-0.20.2-dev-core-mapr213.jar;commons-logging-1.0.4.jar;maprfs-1.0.3-mapr-2.1.3.2.jar;zookeeper-3.3.6.jar">
+      </classloader>
+      <classloader
+            index="HDFS:MAPR:MAPR301"
+            libraries="hadoop-0.20.2-dev-core301.jar;commons-logging-1.0.4.jar;maprfs-1.0.3-mapr-3.0.1.jar;zookeeper-3.3.6.jar;guava-13.0.1.jar;libprotodefs.jar;protobuf-java-2.4.1.jar">
       </classloader>
    </extension>
    <extension
