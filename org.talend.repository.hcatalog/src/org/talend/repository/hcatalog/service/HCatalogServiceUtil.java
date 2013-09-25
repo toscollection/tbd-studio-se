@@ -91,6 +91,11 @@ public class HCatalogServiceUtil {
             properties.put("useTicketCache", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             properties.put("refreshKrb5Config", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             properties.put("renewTGT", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+            if (hcConnection.isUseKeytab()) {
+                properties.put("useKeyTab", "true"); //$NON-NLS-1$//$NON-NLS-2$
+                properties.put("principal", hcConnection.getKeytabPrincipal()); //$NON-NLS-1$
+                properties.put("keyTab", hcConnection.getKeytab()); //$NON-NLS-1$
+            }
             kbInterceptor.setLoginConfig(new KerberosPolicyConfig(properties));
             WebClient.getConfig(client).getOutInterceptors().add(kbInterceptor);
         }
