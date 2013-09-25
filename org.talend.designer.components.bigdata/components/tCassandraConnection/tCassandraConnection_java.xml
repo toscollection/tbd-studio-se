@@ -68,6 +68,7 @@
 			<IMPORT 
                 MODULE="hector-core-1.1-4.jar" 
                 NAME="hector-core-1.1-4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
 				REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
 			<IMPORT 
                 MODULE="apache-cassandra-1.1.2.jar" 
@@ -113,6 +114,7 @@
             <IMPORT 
                 MODULE="hector-core-1.1-4.jar" 
                 NAME="hector-core-1.1-4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT 
                 MODULE="apache-cassandra-1.2.2.jar" 
@@ -131,6 +133,7 @@
             <IMPORT 
                 MODULE="slf4j-log4j12-1.7.2.jar" 
                 NAME="slf4j-log4j12-1.7.2"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT 
                 MODULE="log4j-1.2.16.jar" 
@@ -155,6 +158,7 @@
             <IMPORT 
                 MODULE="hector-core-1.1-4.jar" 
                 NAME="hector-core-1.1-4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
             <IMPORT 
                 MODULE="apache-cassandra-2.0.0.jar" 
@@ -173,6 +177,7 @@
             <IMPORT 
                 MODULE="slf4j-log4j12-1.7.2.jar" 
                 NAME="slf4j-log4j12-1.7.2"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
             <IMPORT 
                 MODULE="log4j-1.2.16.jar" 
