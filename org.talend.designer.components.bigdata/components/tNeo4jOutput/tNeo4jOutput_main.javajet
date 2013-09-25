@@ -5,18 +5,12 @@
 		org.talend.core.model.metadata.IMetadataTable 
 		org.talend.core.model.metadata.IMetadataColumn 
 		org.talend.core.model.process.IConnection 
-		org.talend.core.model.process.IConnectionCategory 
 		org.talend.designer.codegen.config.CodeGeneratorArgument 
-		org.talend.core.model.metadata.types.JavaTypesManager 
-		org.talend.core.model.metadata.types.JavaType 
 		org.talend.designer.neo4j.data.Neo4jData 
 		org.talend.designer.neo4j.data.Index 
 		org.talend.designer.neo4j.data.Relationship 
 		org.talend.designer.neo4j.ui.editor.MetadataColumnExt 
 		java.util.List 
-		java.util.ArrayList 
-		java.util.HashMap 
-    	java.util.Map 
 	" 
 %>	
 <% 
