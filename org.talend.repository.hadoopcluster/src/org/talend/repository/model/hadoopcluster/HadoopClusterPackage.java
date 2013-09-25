@@ -578,13 +578,40 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__PARAMETERS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 13;
 
     /**
+     * The feature id for the '<em><b>Use Keytab</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__USE_KEYTAB = ConnectionPackage.CONNECTION_FEATURE_COUNT + 14;
+
+    /**
+     * The feature id for the '<em><b>Keytab Principal</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 15;
+
+    /**
+     * The feature id for the '<em><b>Keytab</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__KEYTAB = ConnectionPackage.CONNECTION_FEATURE_COUNT + 16;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 14;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 17;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -1368,6 +1395,39 @@ public interface HadoopClusterPackage extends EPackage {
     EReference getHadoopClusterConnection_Parameters();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseKeytab <em>Use Keytab</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Use Keytab</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseKeytab()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_UseKeytab();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytabPrincipal <em>Keytab Principal</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Keytab Principal</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytabPrincipal()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_KeytabPrincipal();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytab <em>Keytab</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Keytab</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytab()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_Keytab();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem <em>Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1596,6 +1656,30 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EReference HADOOP_CLUSTER_CONNECTION__PARAMETERS = eINSTANCE.getHadoopClusterConnection_Parameters();
+
+        /**
+         * The meta object literal for the '<em><b>Use Keytab</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__USE_KEYTAB = eINSTANCE.getHadoopClusterConnection_UseKeytab();
+
+        /**
+         * The meta object literal for the '<em><b>Keytab Principal</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL = eINSTANCE.getHadoopClusterConnection_KeytabPrincipal();
+
+        /**
+         * The meta object literal for the '<em><b>Keytab</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__KEYTAB = eINSTANCE.getHadoopClusterConnection_Keytab();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.

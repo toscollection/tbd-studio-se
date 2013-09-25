@@ -51,6 +51,9 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getAuthMode <em>Auth Mode</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getConnectionList <em>Connection List</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseKeytab <em>Use Keytab</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getKeytabPrincipal <em>Keytab Principal</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getKeytab <em>Keytab</em>}</li>
  * </ul>
  * </p>
  *
@@ -316,6 +319,66 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected EMap<String, String> parameters;
+
+    /**
+     * The default value of the '{@link #isUseKeytab() <em>Use Keytab</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseKeytab()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean USE_KEYTAB_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isUseKeytab() <em>Use Keytab</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseKeytab()
+     * @generated
+     * @ordered
+     */
+    protected boolean useKeytab = USE_KEYTAB_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getKeytabPrincipal() <em>Keytab Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getKeytabPrincipal()
+     * @generated
+     * @ordered
+     */
+    protected static final String KEYTAB_PRINCIPAL_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getKeytabPrincipal() <em>Keytab Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getKeytabPrincipal()
+     * @generated
+     * @ordered
+     */
+    protected String keytabPrincipal = KEYTAB_PRINCIPAL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getKeytab() <em>Keytab</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getKeytab()
+     * @generated
+     * @ordered
+     */
+    protected static final String KEYTAB_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getKeytab() <em>Keytab</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getKeytab()
+     * @generated
+     * @ordered
+     */
+    protected String keytab = KEYTAB_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -617,6 +680,69 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isUseKeytab() {
+        return useKeytab;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUseKeytab(boolean newUseKeytab) {
+        boolean oldUseKeytab = useKeytab;
+        useKeytab = newUseKeytab;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_KEYTAB, oldUseKeytab, useKeytab));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getKeytabPrincipal() {
+        return keytabPrincipal;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setKeytabPrincipal(String newKeytabPrincipal) {
+        String oldKeytabPrincipal = keytabPrincipal;
+        keytabPrincipal = newKeytabPrincipal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL, oldKeytabPrincipal, keytabPrincipal));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getKeytab() {
+        return keytab;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setKeytab(String newKeytab) {
+        String oldKeytab = keytab;
+        keytab = newKeytab;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB, oldKeytab, keytab));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -663,6 +789,12 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
                 if (coreType) return getParameters();
                 else return getParameters().map();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_KEYTAB:
+                return isUseKeytab();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL:
+                return getKeytabPrincipal();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
+                return getKeytab();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -719,6 +851,15 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
                 ((EStructuralFeature.Setting)getParameters()).set(newValue);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_KEYTAB:
+                setUseKeytab((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL:
+                setKeytabPrincipal((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
+                setKeytab((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -773,6 +914,15 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
                 getParameters().clear();
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_KEYTAB:
+                setUseKeytab(USE_KEYTAB_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL:
+                setKeytabPrincipal(KEYTAB_PRINCIPAL_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
+                setKeytab(KEYTAB_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -813,6 +963,12 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return connectionList != null && !connectionList.isEmpty();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PARAMETERS:
                 return parameters != null && !parameters.isEmpty();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_KEYTAB:
+                return useKeytab != USE_KEYTAB_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL:
+                return KEYTAB_PRINCIPAL_EDEFAULT == null ? keytabPrincipal != null : !KEYTAB_PRINCIPAL_EDEFAULT.equals(keytabPrincipal);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
+                return KEYTAB_EDEFAULT == null ? keytab != null : !KEYTAB_EDEFAULT.equals(keytab);
         }
         return super.eIsSet(featureID);
     }
@@ -853,6 +1009,12 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(authMode);
         result.append(", connectionList: ");
         result.append(connectionList);
+        result.append(", useKeytab: ");
+        result.append(useKeytab);
+        result.append(", keytabPrincipal: ");
+        result.append(keytabPrincipal);
+        result.append(", keytab: ");
+        result.append(keytab);
         result.append(')');
         return result.toString();
     }
