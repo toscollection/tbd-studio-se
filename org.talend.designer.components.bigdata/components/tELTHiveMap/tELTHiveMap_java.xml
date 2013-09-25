@@ -65,6 +65,7 @@
 				<ITEM NAME="HDP_1_0" VALUE="HDP_1_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
 				<ITEM NAME="HDP_1_2" VALUE="HDP_1_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
 				<ITEM NAME="HDP_1_3" VALUE="HDP_1_3" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
+				<ITEM NAME="HDP_2_0" VALUE="HDP_2_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
 				<ITEM NAME="APACHE_0_20_203" VALUE="APACHE_0_20_203" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="Cloudera_CDH3" VALUE="Cloudera_CDH3" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
@@ -95,10 +96,10 @@
 			NUM_ROW="15" REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION=='false'" GROUP="CONN" REPOSITORY_VALUE="CONNECTION_MODE">
 			<ITEMS DEFAULT="EMBEDDED">
 				<ITEM NAME="EMBEDDED" VALUE="EMBEDDED" NOT_SHOW_IF="(HIVE_VERSION=='APACHE_0_20_203' OR HIVE_VERSION=='MAPR1' OR HIVE_VERSION=='MapR_EMR' OR HIVE_VERSION=='Cloudera_CDH3') AND DISTRIBUTION!='CUSTOM'" />
-				<ITEM NAME="STANDALONE" VALUE="STANDALONE" NOT_SHOW_IF="(HIVE_VERSION=='HDP_1_0' OR (HIVE_VERSION=='HDP_1_2' AND HIVE_SERVER=='HIVE') OR (HIVE_VERSION=='HDP_1_3' AND HIVE_SERVER=='HIVE')) AND (DISTRIBUTION!='CUSTOM')"/>
+				<ITEM NAME="STANDALONE" VALUE="STANDALONE" NOT_SHOW_IF="(HIVE_VERSION=='HDP_1_0' OR (HIVE_VERSION=='HDP_1_2' AND HIVE_SERVER=='HIVE') OR (HIVE_VERSION=='HDP_1_3' AND HIVE_SERVER=='HIVE') OR (HIVE_VERSION=='HDP_2_0' AND HIVE_SERVER=='HIVE')) AND (DISTRIBUTION!='CUSTOM')"/>
 			</ITEMS>
 		</PARAMETER>
-        <PARAMETER NAME="HIVE_SERVER" FIELD="CLOSED_LIST" NUM_ROW="15" REQUIRED="true" GROUP="CONN" REPOSITORY_VALUE="HIVE_SERVER" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM') OR ((HIVE_VERSION=='HDP_1_2') OR (HIVE_VERSION=='HDP_1_3') OR (HIVE_VERSION=='Cloudera_CDH4') OR (HIVE_VERSION=='MAPR213')))">
+        <PARAMETER NAME="HIVE_SERVER" FIELD="CLOSED_LIST" NUM_ROW="15" REQUIRED="true" GROUP="CONN" REPOSITORY_VALUE="HIVE_SERVER" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM') OR ((HIVE_VERSION=='HDP_1_2') OR (HIVE_VERSION=='HDP_1_3') OR (HIVE_VERSION=='HDP_2_0') OR (HIVE_VERSION=='Cloudera_CDH4') OR (HIVE_VERSION=='MAPR213')))">
            <ITEMS DEFAULT="HIVE">
                 <ITEM NAME="HIVE" VALUE="HIVE"/>
                 <ITEM NAME="HIVE2" VALUE="HIVE2"/>
@@ -253,7 +254,7 @@
 		  FIELD="CHECK"
 		  NUM_ROW="62"
 		  REQUIRED="true"
-		  SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND HIVE_VERSION!='PIVOTAL_HD_1_0_1'))"
+		  SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND HIVE_VERSION!='PIVOTAL_HD_1_0_1' AND HIVE_VERSION!='HDP_2_0'))"
 		  GROUP="HADOOP_PROPS"
 		>
 		<DEFAULT IF="(CONNECTION_MODE == 'STANDALONE')">false</DEFAULT>
@@ -265,7 +266,7 @@
 		  NUM_ROW="62"
 		  REPOSITORY_VALUE="MAPRED_JT"
 		  REQUIRED="true"
-		  SHOW_IF="(USE_EXISTING_CONNECTION == 'false' AND SET_MAPRED_JT=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND HIVE_VERSION!='PIVOTAL_HD_1_0_1'))"
+		  SHOW_IF="(USE_EXISTING_CONNECTION == 'false' AND SET_MAPRED_JT=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND HIVE_VERSION!='PIVOTAL_HD_1_0_1' AND HIVE_VERSION!='HDP_2_0'))"
 		  GROUP="HADOOP_PROPS"
 		>
 		  <DEFAULT>"localhost:50300"</DEFAULT>
@@ -276,13 +277,13 @@
 	      FIELD="CHECK"
 	      NUM_ROW="62"
 	      REQUIRED="true"
-	      SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND HIVE_VERSION=='PIVOTAL_HD_1_0_1'))"
+	      SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (HIVE_VERSION=='PIVOTAL_HD_1_0_1' OR HIVE_VERSION=='HDP_2_0')))"
 	      GROUP="HADOOP_PROPS"
 	    >
 	        <DEFAULT IF="(CONNECTION_MODE == 'STANDALONE')">false</DEFAULT>
 	        <DEFAULT IF="(CONNECTION_MODE == 'EMBEDDED')">true</DEFAULT>
 	    </PARAMETER>
-	    <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="62" REQUIRED="true" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND HIVE_VERSION=='PIVOTAL_HD_1_0_1')) AND (SET_RESOURCE_MANAGER=='true')" GROUP="HADOOP_PROPS" REPOSITORY_VALUE="RESOURCE_MANAGER">
+	    <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="62" REQUIRED="true" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (HIVE_VERSION=='PIVOTAL_HD_1_0_1' OR HIVE_VERSION=='HDP_2_0'))) AND (SET_RESOURCE_MANAGER=='true')" GROUP="HADOOP_PROPS" REPOSITORY_VALUE="RESOURCE_MANAGER">
 	        <DEFAULT>"localhost:8032"</DEFAULT>
 	    </PARAMETER>
 		
@@ -728,6 +729,55 @@
             <IMPORT NAME="zookeeper-3.4.5-gphd-2.0.1.0.jar" MODULE="zookeeper-3.4.5-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-gphd-2.0.1.0.jar" REQUIRED_IF="(HIVE_VERSION=='PIVOTAL_HD_1_0_1' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-hbase-handler-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-hbase-handler-0.9.1-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-hbase-handler-0.9.1-gphd-2.0.1.0.jar"  REQUIRED_IF="(HIVE_VERSION=='PIVOTAL_HD_1_0_1' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='PIVOTAL_HD_1_0_1' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <!-- ############## -->
+            
+            <!-- HDP_2_0 -->
+            <IMPORT NAME="hive-exec-0.11.0.2.0.5.0-67.jar" MODULE="hive-exec-0.11.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hive-exec-0.11.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-jdbc-0.11.0.2.0.5.0-67.jar" MODULE="hive-jdbc-0.11.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hive-jdbc-0.11.0.2.0.5.0-67.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-metastore-0.11.0.2.0.5.0-67.jar" MODULE="hive-metastore-0.11.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hive-metastore-0.11.0.2.0.5.0-67.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hive-service-0.11.0.2.0.5.0-67.jar" MODULE="hive-service-0.11.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hive-service-0.11.0.2.0.5.0-67.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libfb303-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libthrift-0.9.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" BundleID="" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hadoop-hdfs-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-hdfs-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-hdfs-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hadoop-common-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-common-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-common-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hadoop-auth-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-auth-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-auth-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hadoop-mapreduce-client-common-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-mapreduce-client-common-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-mapreduce-client-common-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-mapreduce-client-core-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-mapreduce-client-core-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-mapreduce-client-core-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-mapreduce-client-jobclient-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-mapreduce-client-jobclient-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-mapreduce-client-jobclient-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-yarn-api-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-yarn-api-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-yarn-api-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-yarn-client-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-yarn-client-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-yarn-client-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-yarn-common-2.1.0.2.0.5.0-67.jar" MODULE="hadoop-yarn-common-2.1.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-yarn-common-2.1.0.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.5.0.jar" MODULE="protobuf-java-2.5.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-httpclient-3.0.1.jar" MODULE="commons-httpclient-3.0.1.jar" UrlPath="platform:/org.talend.libraries.apache.http/lib/commons-httpclient-3.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-codec-1.4.jar" MODULE="commons-codec-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+
+            <IMPORT NAME="antlr-runtime-3.4.jar" MODULE="antlr-runtime-3.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-dbcp-1.4.jar" MODULE="commons-dbcp-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-pool-1.5.4.jar" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="datanucleus-api-jdo-3.2.1.jar" MODULE="datanucleus-api-jdo-3.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/datanucleus-api-jdo-3.2.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="datanucleus-core-3.2.2.jar" MODULE="datanucleus-core-3.2.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/datanucleus-core-3.2.2.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="datanucleus-rdbms-3.2.1.jar" MODULE="datanucleus-rdbms-3.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/datanucleus-rdbms-3.2.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="derby-10.4.2.0.jar" MODULE="derby-10.4.2.0.jar" UrlPath="platform:/plugin/org.talend.libraries.jdbc.derby/lib/derby-10.4.2.0.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="jdo-api-3.0.1.jar" MODULE="jdo-api-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/jdo-api-3.0.1.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- HDP_2_0 Hbase -->
+            <IMPORT NAME="hbase-server-0.95.2.2.0.5.0-67.jar" MODULE="hbase-server-0.95.2.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hbase-server-0.95.2.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-client-0.95.2.2.0.5.0-67.jar" MODULE="hbase-client-0.95.2.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hbase-client-0.95.2.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-common-0.95.2.2.0.5.0-67.jar" MODULE="hbase-common-0.95.2.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hbase-common-0.95.2.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-protocol-0.95.2.2.0.5.0-67.jar" MODULE="hbase-protocol-0.95.2.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hbase-protocol-0.95.2.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="zookeeper-3.4.5.2.0.5.0-67.jar" MODULE="zookeeper-3.4.5.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-hbase-handler-0.11.0.2.0.5.0-67.jar" MODULE="hive-hbase-handler-0.11.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hive-hbase-handler-0.11.0.2.0.5.0-67.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <!-- ############## -->
      	</IMPORTS>
 	</CODEGENERATION>

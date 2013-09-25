@@ -1,0 +1,13 @@
+<%@ jet 
+imports="
+    org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser 
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+" 
+%>
+
+<%if(hbaseVersion!=null && "HDP_2_0".equals(hbaseVersion)) {%>
+		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
+<%} else {%>
+		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>,true);
+<%}%>

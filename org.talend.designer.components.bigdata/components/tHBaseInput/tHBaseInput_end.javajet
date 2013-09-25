@@ -38,10 +38,11 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 <%
 //use existing connection
 if(!"true".equals(useExistingConn)){
+	String hbaseVersion = ElementParameterParser.getValue(node,"__HBASE_VERSION__");
 %>
 	}finally{
 		if(conn_<%=cid%>!=null){
-			org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>, true);
+			<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CloseHBaseConnection.javajet"%>
 		}
 	}
 <%
