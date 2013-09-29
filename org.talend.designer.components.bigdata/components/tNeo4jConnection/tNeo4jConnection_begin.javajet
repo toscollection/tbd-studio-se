@@ -12,8 +12,7 @@
     String dbPath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
 
 	boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
-	boolean batchMode = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_MODE__"));
-	boolean readOnlyMode = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_MODE__"));
+	boolean readOnlyMode = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__READ_ONLY_MODE__"));
 	
 	
 	if (remoteServer) {
