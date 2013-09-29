@@ -83,11 +83,10 @@
 		}
 		
 		if(generateRegisterJarCodeForHCatalog) {
-			jarsToRegister.add("datanucleus-core");
-			jarsToRegister.add("datanucleus-rdbms");
 			jarsToRegister.add("hcatalog");
 			jarsToRegister.add("hive-exec");
 			jarsToRegister.add("hive-metastore");
+			jarsToRegister.add("libfb303");
 		}
 		
 		if(generateRegisterJarCodeForHBase) {

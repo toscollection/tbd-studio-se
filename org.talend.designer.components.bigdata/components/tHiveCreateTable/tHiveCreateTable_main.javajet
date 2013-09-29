@@ -15,6 +15,7 @@ imports="
 		java.util.HashSet
 		" 
 %>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jDBConnUtil.javajet"%>
 
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
@@ -26,170 +27,13 @@ imports="
 	String dbname= ElementParameterParser.getValue(node, "__DBNAME__");
 	String dbuser= ElementParameterParser.getValue(node, "__USER__");
 	String dbpwd= ElementParameterParser.getValue(node, "__PASS__");
-%>
-
-java.sql.Connection conn_<%=cid%> = null;
-<%
-	boolean setTempPath = "true".equals(ElementParameterParser.getValue(node, "__SET_TEMP_PATH__")); 
-	if(setTempPath) {
-		String tempPath = ElementParameterParser.getValue(node, "__TEMP_PATH__"); 
-%> 
-		System.setProperty("java.io.tmpdir", <%=tempPath%>); 
-<% 
-	}
 	
-	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>
-	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
-	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
-<%
 
-	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
-	if(("true").equals(useExistingConn)) {
-		String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
-		String conn = "conn_" + connection;;
-		%>
-		conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
-		<%
-	} else {
-		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
-		String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
-		String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
-		String fsDefalutName = "fs.default.name";
-		String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
-		
-		boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
-		boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
-		List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
-		
-		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
-		boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
-		
-		boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-		boolean cdh4CanBeSecured = "Cloudera_CDH4".equals(hiveVersion) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
-		boolean securityIsEnabled = useKrb && (isCustom || ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || cdh4CanBeSecured));
-		boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
-		boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
-		String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
-
-		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "MAPR213".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion)))) {
-			hiveServer = hiveServer.toLowerCase();
-			if ("hive2".equals(hiveServer)) {
-				javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
-			}
-		} else {
-			hiveServer = "hive";
-		}
-		
-		if(!isCustom && (("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer))
-		 || ("HDP_1_3".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer)) || ("HDP_2_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MAPR1".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MapR_EMR".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)))) {
-%>
-			if(true) {
-				throw new java.lang.Exception("The Hive version and the connection mode are not compatible together. Please check your component configuration.");
-			}
-<%
-		}
-		
-		if(hadoopProps.size() > 0){
-			for(Map<String, String> item : hadoopProps){
-%>
-				System.setProperty(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
-<%
-			} 
-		}
-
-		
-		if(securedEmbedded) {
-			String metastoreUrl = ElementParameterParser.getValue(node, "__METASTORE_JDBC_URL__");
-			String driverClass = ElementParameterParser.getValue(node, "__METASTORE_CLASSNAME__");
-			String metastoreUsername = ElementParameterParser.getValue(node, "__METASTORE_USERNAME__");
-			String metastorePassword = ElementParameterParser.getValue(node, "__METASTORE_PASSWORD__");
-			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
-			String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
-			String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
-%>
-			System.setProperty("hive.metastore.sasl.enabled", "true");
-			System.setProperty("javax.jdo.option.ConnectionDriverName", <%=driverClass%>);
-			System.setProperty("hive.security.authorization.enabled", "true");
-			System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
-			System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
-			System.setProperty("javax.jdo.option.ConnectionPassword", <%=metastorePassword%>);
-			System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);				
-<%
-			if(useKeytab) {
-%>
-				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
-<%
-			}
-		}
-		
-		if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion))) && setMapredJT) {
-			String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
-%>
-			System.setProperty("mapred.job.tracker", <%=mapredJT%>);
-<%
-		}
-		
-		if(setNamenode) {
-			String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
-%>
-			System.setProperty("<%=fsDefalutName%>", <%=namenode%>);
-<%
-		}		
-		
-		if("EMBEDDED".equals(connectionMode)) {
-%>
-			System.setProperty("hive.metastore.local", "false");
-			System.setProperty("hive.metastore.uris", "thrift://" + <%=dbhost%> + ":" + <%=dbport%>);
-			System.setProperty("hive.metastore.execute.setugi", "true");
-			String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
-<%
-		} else {
-			if(securedStandaloneHive2) {
-%>
-				String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
-<%
-			} else {
-%>
-				String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
-<%
-			}
-		}
-%>
-		String dbUser_<%=cid %> = <%=dbuser%>;
-		String dbPwd_<%=cid %> = <%=dbpwd%>;    
-		java.lang.Class.forName("<%=javaDbDriver %>");
-<%
-		if(securedStandaloneHive2) {
-%>
-			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>);
-<%
-		} else {
-%>
-			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
-<%
-		}
-    	boolean setResourceManager = "true".equals(ElementParameterParser.getValue(node, "__SET_RESOURCE_MANAGER__"));
-    	
-    	if(((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion)))) && setResourceManager) {
-    		String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
-%>
-        	java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
-        	init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
-        	init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
-        	init_<%=cid%>.close();
-<%
-		}
-%>
-    	String dbname_<%=cid%> = <%=dbname%>;
-    	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
-        	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
-        	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
-        	goToDatabase_<%=cid%>.close();
-    	}
-<%
-	}
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Hive/GetConnection.javajet"%>
 	
+<%
 	String tableName = ElementParameterParser.getValue(node, "__TABLE__");
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 %>

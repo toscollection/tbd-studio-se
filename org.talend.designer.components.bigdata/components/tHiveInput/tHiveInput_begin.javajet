@@ -68,17 +68,28 @@ imports="
         	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
         	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
         	boolean setResourceManager = "true".equals(ElementParameterParser.getValue(node, "__SET_RESOURCE_MANAGER__"));
-		
+%>
+			java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
+<%
         	if(((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion)))) && setResourceManager) {
         		String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 %>
-            	java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
             	init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
             	init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
-            	init_<%=cid%>.close();
 <%
 			}
+			
+            List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADVANCED_PROPERTIES__");
+        	if(advProps!=null) {
+				for(Map<String, String> item : advProps){
 %>
+					init_<%=cid%>.execute("SET "+<%=item.get("PROPERTY")%>+"="+<%=item.get("VALUE")%>);
+<%
+				}
+			}
+%>
+			init_<%=cid%>.close();
+			
         	String dbname_<%=cid%> = <%=dbname%>;
         	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
             	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();

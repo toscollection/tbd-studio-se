@@ -389,6 +389,13 @@
 			</ITEMS>
 		</PARAMETER>
 		
+	    <PARAMETER NAME="ADVANCED_PROPERTIES" FIELD="TABLE" REQUIRED="false" NUM_ROW="50" NB_LINES="3" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+	        <ITEMS>
+	            <ITEM NAME="PROPERTY" />
+	            <ITEM NAME="VALUE" />
+	        </ITEMS>
+	    </PARAMETER>
+		
 	    <PARAMETER NAME="CLASSPATH_SEPARATOR" FIELD="TEXT" REQUIRED="true" NUM_ROW="60">
 	        <DEFAULT>":"</DEFAULT>
 	    </PARAMETER>
@@ -778,6 +785,7 @@
             <IMPORT NAME="zookeeper-3.4.5.2.0.5.0-67.jar" MODULE="zookeeper-3.4.5.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.2.0.5.0-67.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-hbase-handler-0.11.0.2.0.5.0-67.jar" MODULE="hive-hbase-handler-0.11.0.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hive-hbase-handler-0.11.0.2.0.5.0-67.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="htrace-1.50.jar" MODULE="htrace-1.50.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/htrace-1.50.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
             <!-- ############## -->
      	</IMPORTS>
 	</CODEGENERATION>
