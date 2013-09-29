@@ -175,7 +175,7 @@ public class HDFSForm extends AbstractHDFSForm {
     private void addHadoopPropertiesFields() {
         // table view
         Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
-        GridData gridData = new GridData(GridData.FILL_BOTH);
+        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
         gridData.horizontalSpan = 4;
         compositeTable.setLayoutData(gridData);
         CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
@@ -185,7 +185,9 @@ public class HDFSForm extends AbstractHDFSForm {
         propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
         propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
         final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
-        fieldTableEditorComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+        gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.heightHint = 180;
+        fieldTableEditorComposite.setLayoutData(gridData);
         fieldTableEditorComposite.setBackground(null);
     }
 
