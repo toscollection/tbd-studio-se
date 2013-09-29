@@ -155,7 +155,6 @@ public class HCatalogServiceUtil {
     }
 
     public static JSONObject getDataFromHCatalog(WebClient client, String tableName) throws Exception {
-
         Response response = client.get();
         InputStream inputStream = (InputStream) response.getEntity();
         String input = IOUtils.toString(inputStream);

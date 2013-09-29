@@ -88,6 +88,12 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbRealm()));
         } else if (EHCatalogRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getPrincipal()));
+        } else if (EHCatalogRepositoryToComponent.USE_KEYTAB.getRepositoryValue().equals(value)) {
+            return hcConnection.isUseKeytab();
+        } else if (EHCatalogRepositoryToComponent.KEYTAB_PRINCIPAL.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytabPrincipal()));
+        } else if (EHCatalogRepositoryToComponent.KEYTAB_PATH.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytab()));
         } else if (EHCatalogRepositoryToComponent.DATABASE_NAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getDatabase()));
         } else if (EHCatalogRepositoryToComponent.TABLE_NAME.getRepositoryValue().equals(value)) {

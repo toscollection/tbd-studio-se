@@ -99,6 +99,12 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
             return hcConnection.isEnableKerberos();
         } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getPrincipal()));
+        } else if (EHDFSRepositoryToComponent.USE_KEYTAB.getRepositoryValue().equals(value)) {
+            return hcConnection.isUseKeytab();
+        } else if (EHDFSRepositoryToComponent.KEYTAB_PRINCIPAL.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytabPrincipal()));
+        } else if (EHDFSRepositoryToComponent.KEYTAB_PATH.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytab()));
         } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getUserName()));
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(value)) {
@@ -287,6 +293,24 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
                     EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getParameterName());
             if (value != null) {
                 hcConnection.setPrincipal(value);
+            }
+        } else if (EHDFSRepositoryToComponent.USE_KEYTAB.getRepositoryValue().equals(repositoryValue)) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
+                    EHDFSRepositoryToComponent.USE_KEYTAB.getParameterName());
+            if (value != null) {
+                hcConnection.setUseKeytab(Boolean.valueOf(value));
+            }
+        } else if (EHDFSRepositoryToComponent.KEYTAB_PRINCIPAL.getRepositoryValue().equals(repositoryValue)) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
+                    EHDFSRepositoryToComponent.KEYTAB_PRINCIPAL.getParameterName());
+            if (value != null) {
+                hcConnection.setKeytabPrincipal(value);
+            }
+        } else if (EHDFSRepositoryToComponent.KEYTAB_PATH.getRepositoryValue().equals(repositoryValue)) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
+                    EHDFSRepositoryToComponent.KEYTAB_PATH.getParameterName());
+            if (value != null) {
+                hcConnection.setKeytab(value);
             }
         } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(repositoryValue)) {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
