@@ -245,20 +245,20 @@
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')">
             <ITEMS DEFAULT="DEFAULT">
                 <ITEM NAME="DEFAULT" VALUE="Default" />
-                <!--ITEM NAME="BOOLEANTYPE" VALUE="BooleanType" SHOW_IF="ROW_KEY_TYPE == 'BOOLEAN'" /-->
-                <!--ITEM NAME="BYTESTYPE" VALUE="BytesType" SHOW_IF="ROW_KEY_TYPE == 'BYTE_ARRAY'" /-->
-                <!--ITEM NAME="DATETYPE" VALUE="DateType" SHOW_IF="ROW_KEY_TYPE == 'DATE'" /-->
-                <!--ITEM NAME="DECIMALTYPE" VALUE="DecimalType" SHOW_IF="ROW_KEY_TYPE == 'BIGDECIMAL'" /-->
-                <!--ITEM NAME="DOUBLETYPE" VALUE="DoubleType" SHOW_IF="ROW_KEY_TYPE == 'DOUBLE'" /-->
-                <!--ITEM NAME="FLOATTYPE" VALUE="FloatType" SHOW_IF="ROW_KEY_TYPE == 'FLOAT'" /-->
-                <!--ITEM NAME="INT32TYPE" VALUE="Int32Type" SHOW_IF="ROW_KEY_TYPE == 'INTEGER'" /-->
-                <!--ITEM NAME="LONGTYPE" VALUE="LongType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" /-->
-                <ITEM NAME="COUNTERCOLUMNTYPE" VALUE="CounterColumnType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" />
-                <ITEM NAME="INTEGERTYPE" VALUE="IntegerType" SHOW_IF="ROW_KEY_TYPE == 'OBJECT'" />
-                <!--ITEM NAME="UTF8TYPE" VALUE="UTF8Type" SHOW_IF="ROW_KEY_TYPE == 'STRING'" /-->
-                <ITEM NAME="ASCIITYPE" VALUE="AsciiType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
-                <ITEM NAME="UUIDTYPE" VALUE="UUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
-                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+                <!--ITEM NAME="BOOLEANTYPE" VALUE="BooleanType" SHOW_IF="SUPER_COLUMN_TYPE == 'BOOLEAN'" /-->
+                <!--ITEM NAME="BYTESTYPE" VALUE="BytesType" SHOW_IF="SUPER_COLUMN_TYPE == 'BYTE_ARRAY'" /-->
+                <!--ITEM NAME="DATETYPE" VALUE="DateType" SHOW_IF="SUPER_COLUMN_TYPE == 'DATE'" /-->
+                <!--ITEM NAME="DECIMALTYPE" VALUE="DecimalType" SHOW_IF="SUPER_COLUMN_TYPE == 'BIGDECIMAL'" /-->
+                <!--ITEM NAME="DOUBLETYPE" VALUE="DoubleType" SHOW_IF="SUPER_COLUMN_TYPE == 'DOUBLE'" /-->
+                <!--ITEM NAME="FLOATTYPE" VALUE="FloatType" SHOW_IF="SUPER_COLUMN_TYPE == 'FLOAT'" /-->
+                <!--ITEM NAME="INT32TYPE" VALUE="Int32Type" SHOW_IF="SUPER_COLUMN_TYPE == 'INTEGER'" /-->
+                <!--ITEM NAME="LONGTYPE" VALUE="LongType" SHOW_IF="SUPER_COLUMN_TYPE == 'LONG'" /-->
+                <ITEM NAME="COUNTERCOLUMNTYPE" VALUE="CounterColumnType" SHOW_IF="SUPER_COLUMN_TYPE == 'LONG'" />
+                <ITEM NAME="INTEGERTYPE" VALUE="IntegerType" SHOW_IF="SUPER_COLUMN_TYPE == 'OBJECT'" />
+                <!--ITEM NAME="UTF8TYPE" VALUE="UTF8Type" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" /-->
+                <ITEM NAME="ASCIITYPE" VALUE="AsciiType" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" />
+                <ITEM NAME="UUIDTYPE" VALUE="UUIDType" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" />
+                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" />
             </ITEMS>
         </PARAMETER>
         <PARAMETER
