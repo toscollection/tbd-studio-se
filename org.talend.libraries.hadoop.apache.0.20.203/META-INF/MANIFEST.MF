@@ -3,3 +3,4 @@ Bundle-ManifestVersion: 2
 Bundle-Name: apache-0.20.203
 Bundle-SymbolicName: org.talend.libraries.hadoop.apache.0.20.203
 Bundle-Version: 1.0.0.qualifier
+Bundle-ActivationPolicy: lazy

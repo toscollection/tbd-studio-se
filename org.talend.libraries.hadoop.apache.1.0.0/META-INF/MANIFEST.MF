@@ -14,3 +14,4 @@ Export-Package: org.apache.hadoop,
  org.apache.hadoop.mapreduce.lib.output,
  org.apache.hadoop.security,
  org.apache.hadoop.util
+Bundle-ActivationPolicy: lazy

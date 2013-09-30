@@ -3,3 +3,4 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Zookeeper
 Bundle-SymbolicName: org.talend.libraries.zookeeper
 Bundle-Version: 1.0.0.qualifier
+Bundle-ActivationPolicy: lazy
