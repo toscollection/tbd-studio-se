@@ -60,6 +60,7 @@
 			<ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			<ITEM NAME="MAPR213" VALUE="MAPR213" SHOW_IF="DISTRIBUTION=='MAPR'" />
+			<ITEM NAME="MAPR3" VALUE="MAPR3" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 			<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'"/>
 		</ITEMS>
@@ -168,6 +169,17 @@
             <IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HBASE_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')" />
+            <!-- MAPR3 -->
+            <IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR3'  AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="mapr-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="HBASE_VERSION=='MAPR3' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr301.jar" MODULE="hadoop-0.20.2-dev-core-mapr301.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.0.1/lib/hadoop-0.20.2-dev-core-mapr301.jar" REQUIRED_IF="HBASE_VERSION=='MAPR3' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hbase-0.94.9-mapr-1308.jar" MODULE="hbase-0.94.9-mapr-1308.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.0.1/lib/hbase-0.94.9-mapr-1308.jar" REQUIRED_IF="HBASE_VERSION=='MAPR3' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="HBASE_VERSION=='MAPR3' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR3' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="HBASE_VERSION=='MAPR3' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HBASE_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')" />
 			<!-- CDH3 -->
             <IMPORT NAME="hadoop-0.20.2-cdh3u1-core.jar" MODULE="hadoop-0.20.2-cdh3u1-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.0.20.cdh3/lib/hadoop-0.20.2-cdh3u1-core.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH3') AND (DISTRIBUTION!='CUSTOM')" />
             <!-- PIVOTAL_HD_1_0_1 -->

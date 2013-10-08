@@ -56,7 +56,7 @@ java.sql.Connection conn_<%=cid%> = null;
 		boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
 		String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
 
-		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "MAPR213".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion)))) {
+		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "MAPR213".equals(hiveVersion) || "MAPR3".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion)))) {
 			hiveServer = hiveServer.toLowerCase();
 			if ("hive2".equals(hiveServer)) {
 				javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
