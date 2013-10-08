@@ -56,6 +56,12 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 						if(family_column==null||family_column.trim().length()==0){
 							continue;
 						}
+						boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( javaType, column.isNullable());
+						if(!isPrimitive){
+%>
+					if(<%=connName %>.<%=column.getLabel() %>!=null){
+<%
+						}
 						if (javaType == JavaTypesManager.DATE && pattern != null && pattern.trim().length() != 0) {
 %>
 						temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toBytes(FormatterUtils.format_Date(<%=connName %>.<%=column.getLabel() %>, <%= pattern %>));
@@ -81,8 +87,14 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 						temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toBytes(<%=connName%>.<%=column.getLabel()%>.toString());
 <%
 						}
+						if(!isPrimitive){
+%>
+					}
+<%
+						}
 %>						
 						p_<%=cid%>.add(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid %>);
+						temp_<%=cid %> = null;
 <%
 					}
 %>
