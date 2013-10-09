@@ -177,7 +177,7 @@
     
     <PARAMETER
       NAME="USE_KRB"
-      REPOSITORY_VALUE="USE_KRB_VALUE"
+      REPOSITORY_VALUE="USE_KRB"
       FIELD="CHECK"
       NUM_ROW="32"
       REQUIRED="true"
