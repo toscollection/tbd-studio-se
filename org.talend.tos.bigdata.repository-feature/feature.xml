@@ -148,7 +148,6 @@
       <import plugin="org.eclipse.equinox.registry" version="3.4.0" match="greaterOrEqual"/>
       <import plugin="org.talend.common.ui.runtime"/>
       <import plugin="org.talend.metadata.managment.ui"/>
-      <import plugin="org.talend.libraries.jdom"/>
    </requires>
 
    <plugin
@@ -769,12 +768,6 @@
 
    <plugin
          id="org.talend.libraries.dom4j-jaxen"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.talend.libraries.jdom"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
