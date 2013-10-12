@@ -480,7 +480,7 @@
 	    </TEMPLATES>
 
 	    <IMPORTS>
-	    	<IMPORT NAME="jcouchdb-1.0.1-1.jar" MODULE="jcouchdb-1.0.1-1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+	    	<IMPORT NAME="jcouchdb-1.0.1-1.jar" MODULE="jcouchdb-1.0.1-1.jar" UrlPath="platform:/plugin/org.talend.libraries.couchdb/lib/jcouchdb-1.0.1-1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 			<IMPORT NAME="commons-beanutils-1.8.3.jar" MODULE="commons-beanutils-1.8.3.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-beanutils-1.8.3.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 			<IMPORT NAME="commons-codec-1.6.jar" MODULE="commons-codec-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.6.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 			<IMPORT NAME="commons-io-1.4.jar" MODULE="commons-io-1.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
@@ -490,7 +490,7 @@
 			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
-			<IMPORT NAME="svenson-1.3.8.jar" MODULE="svenson-1.3.8.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+			<IMPORT NAME="svenson-1.3.8.jar" MODULE="svenson-1.3.8.jar" UrlPath="platform:/plugin/org.talend.libraries.couchdb/lib/svenson-1.3.8.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
 	    </IMPORTS>
    </CODEGENERATION>
 

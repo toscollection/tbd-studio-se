@@ -304,4 +304,28 @@
          install-size="0"
          version="0.0.0"/>
 
+   <plugin
+         id="org.talend.libraries.couchbase"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.libraries.couchdb"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.libraries.mongo"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.libraries.neo4j"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
 </feature>
