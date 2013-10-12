@@ -148,6 +148,7 @@
             <IMPORT 
                 MODULE="guava-13.0.1.jar" 
                 NAME="guava-13.0.1"
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT 
                 MODULE="commons-lang-2.6.jar" 
@@ -192,6 +193,7 @@
             <IMPORT 
                 MODULE="guava-13.0.1.jar" 
                 NAME="guava-13.0.1"
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
             <IMPORT 
                 MODULE="commons-lang-2.6.jar" 

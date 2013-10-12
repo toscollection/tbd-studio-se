@@ -148,6 +148,7 @@
             <IMPORT 
                 NAME="guava-13.0.1"
                 MODULE="guava-13.0.1.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
             <IMPORT 
                 NAME="log4j-1.2.16"
@@ -238,7 +239,8 @@
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT 
                 NAME="guava-13.0.1"
-                MODULE="guava-13.0.1.jar" 
+                MODULE="guava-13.0.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT 
                 NAME="log4j-1.2.16"
@@ -342,6 +344,7 @@
             <IMPORT 
                 NAME="guava-r08"
                 MODULE="guava-r08.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r08.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />                
             <IMPORT 
                 NAME="high-scale-lib-1.1.2"

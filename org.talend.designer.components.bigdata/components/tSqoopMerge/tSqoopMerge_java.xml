@@ -355,7 +355,7 @@
             <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="sqoop-1.4.2-mapr" MODULE="sqoop-1.4.2-mapr.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="maprfs-1.0.3-mapr-2.1.3.2.jar" MODULE="maprfs-1.0.3-mapr-2.1.3.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -369,7 +369,7 @@
             <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="sqoop-1.4.2-mapr" MODULE="sqoop-1.4.2-mapr.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="maprfs-1.0.3-mapr-3.0.1.jar" MODULE="maprfs-1.0.3-mapr-3.0.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR3') AND (DISTRIBUTION!='CUSTOM')"/>

@@ -339,7 +339,7 @@
 			<IMPORT NAME="maprfs-jni-0.20.2-2.1.2.jar" MODULE="maprfs-jni-0.20.2-2.1.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR212') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="pig-0.10.0-withouthadoop.jar" MODULE="pig-0.10.0-withouthadoop.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR212') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR212') AND DISTRIBUTION!='CUSTOM'"/>
-			<IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR212') AND DISTRIBUTION!='CUSTOM'"/>
+			<IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR212') AND DISTRIBUTION!='CUSTOM'"/>
 			<IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/base/plugins/org.apache.log4j_1.2.15.v201012070815.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR212') AND DISTRIBUTION!='CUSTOM'"/>
 			
             <!--MAPR213-->
@@ -350,7 +350,7 @@
             <IMPORT NAME="maprfs-1.0.3-mapr-2.1.3.2.jar" MODULE="maprfs-1.0.3-mapr-2.1.3.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR213') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="pig-0.11.2-mapr-withouthadoop.jar" MODULE="pig-0.11.2-mapr-withouthadoop.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR213') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR213') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR213') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR213') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/base/plugins/org.apache.log4j_1.2.15.v201012070815.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR213') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-codec-1.5.jar" MODULE="commons-codec-1.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR213') AND DISTRIBUTION!='CUSTOM'"/>
             
@@ -362,7 +362,7 @@
             <IMPORT NAME="maprfs-1.0.3-mapr-3.0.1.jar" MODULE="maprfs-1.0.3-mapr-3.0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR3') AND DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="pig-0.11.2-mapr-withouthadoop.jar" MODULE="pig-0.11.2-mapr-withouthadoop.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR3') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR3') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR3') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR3') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="log4j-1.2.15" MODULE="log4j-1.2.15.jar" UrlPath="platform:/base/plugins/org.apache.log4j_1.2.15.v201012070815.jar" REQUIRED="false" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR3') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-codec-1.5.jar" MODULE="commons-codec-1.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='MAPR3') AND DISTRIBUTION!='CUSTOM'"/>
 
@@ -517,7 +517,7 @@
             <IMPORT NAME="slf4j-api-1.4.3.jar" MODULE="slf4j-api-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.4.3.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR213' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-log4j12-1.4.3.jar" MODULE="slf4j-log4j12-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.4.3.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR213' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR213' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR213' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR213' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR213' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR213' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             
@@ -527,7 +527,7 @@
             <IMPORT NAME="slf4j-api-1.4.3.jar" MODULE="slf4j-api-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.4.3.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-log4j12-1.4.3.jar" MODULE="slf4j-log4j12-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.4.3.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='MAPR3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
 

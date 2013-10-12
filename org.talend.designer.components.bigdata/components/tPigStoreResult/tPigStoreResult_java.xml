@@ -271,7 +271,7 @@
             <IMPORT NAME="slf4j-api-1.4.3.jar" MODULE="slf4j-api-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.4.3.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="slf4j-log4j12-1.4.3.jar" MODULE="slf4j-log4j12-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.4.3.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR213' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             
@@ -281,7 +281,7 @@
             <IMPORT NAME="slf4j-api-1.4.3.jar" MODULE="slf4j-api-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.4.3.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="slf4j-log4j12-1.4.3.jar" MODULE="slf4j-log4j12-1.4.3.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.4.3.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
-            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')"/>
 
