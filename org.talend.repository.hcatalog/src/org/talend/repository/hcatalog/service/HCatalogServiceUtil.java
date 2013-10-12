@@ -74,7 +74,6 @@ public class HCatalogServiceUtil {
     public static WebClient getHCatalogDBClient(HCatalogConnection connection) {
         String database = StringUtils.trimToEmpty(connection.getDatabase());
         WebClient client = getHCatalogClient(connection, database);
-        addKerberos2Client(client, connection);
         return client;
     }
 
@@ -109,14 +108,15 @@ public class HCatalogServiceUtil {
      * @return the HCatalog client with the special path.
      */
     public static WebClient getHCatalogClient(HCatalogConnection connection, String path) {
-        if (connection == null || path == null) {
+        String queryPath = path;
+        if (connection == null || queryPath == null) {
             return null;
         }
         WebClient rootClient = getHCatalogRootClient(connection);
-        if (!path.startsWith(TEMPLETON_DB_ROOT)) {
-            path = TEMPLETON_DB_ROOT + path;
+        if (!queryPath.startsWith(TEMPLETON_DB_ROOT)) {
+            queryPath = TEMPLETON_DB_ROOT + queryPath;
         }
-        rootClient.path(path);
+        rootClient.path(queryPath);
         rootClient.accept("application/json"); //$NON-NLS-1$
 
         return rootClient;
@@ -128,7 +128,10 @@ public class HCatalogServiceUtil {
         String userName = StringUtils.trimToEmpty(connection.getUserName());
         String path = "http://" + host + ":" + port + "?user.name=" + userName; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-        return WebClient.create(path);
+        WebClient client = WebClient.create(path);
+        addKerberos2Client(client, connection);
+
+        return client;
     }
 
     /**
@@ -159,6 +162,9 @@ public class HCatalogServiceUtil {
         InputStream inputStream = (InputStream) response.getEntity();
         String input = IOUtils.toString(inputStream);
         JSONObject jsonObject = (JSONObject) JSONValue.parse(input);
+        if (jsonObject == null) {
+            throw new Exception(input);
+        }
         String errorMsgDetail = ""; //$NON-NLS-1$
         Object errorObj = jsonObject.get("error"); //$NON-NLS-1$
         if (errorObj != null) {
