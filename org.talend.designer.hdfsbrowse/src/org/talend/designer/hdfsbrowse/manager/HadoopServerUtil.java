@@ -308,7 +308,7 @@ public class HadoopServerUtil {
         Set<String> set = new HashSet<String>();
         Set<String> jars = new HashSet<String>();
         ClassLoader classLoader = HadoopClassLoaderFactory.getClassLoader(connection.getDistribution(),
-                connection.getDfVersion(), false, false);
+                connection.getDfVersion(), connection.isEnableKerberos(), false);
         if (classLoader instanceof DynamicClassLoader) {
             set.addAll(((DynamicClassLoader) classLoader).getLibraries());
         }

@@ -38,6 +38,8 @@ public enum EHadoopConfProperties {
      */
     KERBEROS_PRINCIPAL("dfs.namenode.kerberos.principal", "nn/_HOST@EXAMPLE.COM"),
 
+    KERBEROS_COMMAND_KINIT("hadoop.kerberos.kinit.command", "/usr/kerberos/bin/kinit"),
+
     /**
      * Property name for job ugi.
      */
