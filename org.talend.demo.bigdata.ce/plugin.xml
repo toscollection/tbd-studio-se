@@ -5,7 +5,7 @@
          point="org.talend.core.runtime.demoProjects_provider">
       <demoProvider
             descHtml="resources/bd_demos.html"
-            description="Big Data(BD) Demo"
+            description="%demo.description"
             icon="resources/product-icon-bd-16px.gif"
             id="org.talend.demo.project.bd.ce"
             name="Big Data Demo"
