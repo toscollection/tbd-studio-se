@@ -39,7 +39,7 @@
     org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 <%
-	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(version) || "HDP_2_0".equals(version)))) {
+	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(version) || "HDP_2_0".equals(version) || "Cloudera_CDH4_YARN".equals(version)))) {
 %>
 		configuration_<%=cid%>.set("mapreduce.framework.name", "yarn");
 		configuration_<%=cid%>.set("yarn.resourcemanager.address", <%=resourceManager%>);

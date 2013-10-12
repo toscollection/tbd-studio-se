@@ -88,7 +88,7 @@ if(("false").equals(useExistingConn)) {
 			}
 		}
 	
-	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion))) && setMapredJT) {
+	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion))) && setMapredJT) {
 		String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
 %>
 		System.setProperty("mapred.job.tracker", <%=mapredJT%>);

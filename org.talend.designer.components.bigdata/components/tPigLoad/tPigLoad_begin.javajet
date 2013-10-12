@@ -263,7 +263,7 @@
 			}
 %>
 			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
-			<%if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(pigVersion) || "HDP_2_0".equals(pigVersion)))) {
+			<%if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion)))) {
 %>
 				props_<%=cid%>.put("mapreduce.framework.name", "yarn");
 				props_<%=cid%>.put("yarn.resourcemanager.address", <%=resourceManager%>);

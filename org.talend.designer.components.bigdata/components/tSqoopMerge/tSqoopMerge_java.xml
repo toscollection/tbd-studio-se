@@ -54,6 +54,7 @@
                 <ITEM NAME="HDP_2_0" VALUE="HDP_2_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
                 <ITEM NAME="Cloudera_CDH3" VALUE="Cloudera_CDH3" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
                 <ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+                <ITEM NAME="Cloudera_CDH4_YARN" VALUE="Cloudera_CDH4_YARN" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
                 <ITEM NAME="MAPR1" VALUE="MAPR1" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
@@ -86,14 +87,14 @@
                 IF="((DB_VERSION == 'MAPR1') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212') OR (DB_VERSION == 'MAPR213') OR (DB_VERSION == 'MAPR3')) AND (DISTRIBUTION != 'CUSTOM')">"maprfs:///"</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="MAPRED_JOB_TRACKER" FIELD="TEXT" NUM_ROW="8"
-            REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND DB_VERSION!='PIVOTAL_HD_1_0_1' AND DB_VERSION!='HDP_2_0'))" GROUP="CONFIGURATION">
+            REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND DB_VERSION!='PIVOTAL_HD_1_0_1' AND DB_VERSION!='HDP_2_0' AND DB_VERSION!='Cloudera_CDH4_YARN'))" GROUP="CONFIGURATION">
             <DEFAULT
                 IF="((DB_VERSION != 'MAPR1') AND (DB_VERSION != 'MAPR2') AND (DB_VERSION != 'MAPR212') AND (DB_VERSION != 'MAPR213') AND (DB_VERSION != 'MAPR3')) OR (DISTRIBUTION == 'CUSTOM')">"localhost:8021"</DEFAULT>
             <DEFAULT
                 IF="((DB_VERSION == 'MAPR1') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212') OR (DB_VERSION == 'MAPR213') OR (DB_VERSION == 'MAPR3')) AND (DISTRIBUTION != 'CUSTOM')">"localhost:9001"</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="8" REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='HDP_2_0')))" GROUP="CONFIGURATION">
+        <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="8" REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='Cloudera_CDH4_YARN')))" GROUP="CONFIGURATION">
             <DEFAULT>"localhost:8032"</DEFAULT>
         </PARAMETER>
 	
@@ -396,6 +397,32 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
+            <!-- -->
+            
+            <!-- Cloudera_CDH4_YARN -->
+            <IMPORT NAME="hadoop-auth-2.0.0-cdh4.4.0.jar" MODULE="hadoop-auth-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-auth-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-common-2.0.0-cdh4.4.0.jar" MODULE="hadoop-common-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-common-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-hdfs-2.0.0-cdh4.4.0.jar" MODULE="hadoop-hdfs-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-hdfs-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-mapreduce-client-common-2.0.0-cdh4.4.0.jar" MODULE="hadoop-mapreduce-client-common-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-mapreduce-client-common-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-mapreduce-client-core-2.0.0-cdh4.4.0.jar" MODULE="hadoop-mapreduce-client-core-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-mapreduce-client-core-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-mapreduce-client-jobclient-2.0.0-cdh4.4.0.jar" MODULE="hadoop-mapreduce-client-jobclient-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-mapreduce-client-jobclient-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-yarn-api-2.0.0-cdh4.4.0.jar" MODULE="hadoop-yarn-api-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-yarn-api-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-yarn-client-2.0.0-cdh4.4.0.jar" MODULE="hadoop-yarn-client-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-yarn-client-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hadoop-yarn-common-2.0.0-cdh4.4.0.jar" MODULE="hadoop-yarn-common-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-yarn-common-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-io-2.1" MODULE="commons-io-2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.1.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="jackson-core-asl-1.8.8" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="jackson-mapper-asl-1.8.8" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="sqoop-1.4.3-cdh4.4.0.jar" MODULE="sqoop-1.4.3-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.3-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="protobuf-java-2.4.0a" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
             
             <!-- HDP_2_0 -->

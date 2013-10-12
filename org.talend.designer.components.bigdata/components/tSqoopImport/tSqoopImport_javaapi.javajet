@@ -61,7 +61,7 @@
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 <%
-	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(version) || "HDP_2_0".equals(version)))) {
+	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(version) || "HDP_2_0".equals(version) || "Cloudera_CDH4_YARN".equals(version)))) {
 %>
 		configuration_<%=cid%>.set("mapreduce.framework.name", "yarn");
 		configuration_<%=cid%>.set("yarn.resourcemanager.address", <%=resourceManager%>);
