@@ -203,7 +203,7 @@
 	<CODEGENERATION>
 		<IMPORTS>
             <IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-2.8.0.jar" REQUIRED="true" />
-            <IMPORT NAME="xom" MODULE="xom-1.2.7.jar" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED="true" />
+            <IMPORT NAME="xom" MODULE="xom-1.2.7.jar" REQUIRED="true" />
             <IMPORT NAME="commons_beanutils" MODULE="commons-beanutils-1.8.3.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-beanutils-1.8.3.jar" REQUIRED="true" />
             <IMPORT NAME="commons_collections" MODULE="commons-collections-3.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar" REQUIRED="true" />
             <IMPORT NAME="commons_lang" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED="true" />
