@@ -149,7 +149,7 @@
         </PARAMETER>
         
         <PARAMETER NAME="NOTE_CUSTOMER" FIELD="LABEL" REQUIRED="true" NUM_ROW="60" COLOR="255;0;0" SHOW_IF="(GENERATE=='true')" GROUP="GENERATEJAR">
-          <DEFAULT>When generate jar,you should special delimiters filed and some other argument in "Additional Arguments" table in "Advanced settings".</DEFAULT>
+          <DEFAULT>By default, field separator is comma(,), define --fields-terminated-by in the table:"Additional Arguments" to specify a different field separator.</DEFAULT>
         </PARAMETER>
         
         <PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="70"  SHOW_IF="GENERATE=='true'" REQUIRED="true" GROUP="GENERATEJAR">
