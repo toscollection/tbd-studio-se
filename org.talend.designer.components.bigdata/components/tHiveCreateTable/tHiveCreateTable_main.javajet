@@ -136,7 +136,9 @@ if(likeTable) {
 	return stringBuffer.toString();
 }
 
-if(!storeAsAvro) {
+boolean asSelect = "true".equals(ElementParameterParser.getValue(node, "__AS_SELECT__"));
+
+if(!storeAsAvro && !asSelect) {
 	createTableSQL.append("(");
 }
 
@@ -330,7 +332,7 @@ class Util {
 
 Util util = new Util();
 
-if(!storeAsAvro) {
+if(!storeAsAvro && !asSelect) {
 	util.generateColumnsSQL(listColumn,createTableSQL);
 	createTableSQL.append(")");
 }
@@ -526,7 +528,6 @@ if(storeAsAvro) {
 
 util.generatePros(" TBLPROPERTIES ", tableProps, createTableSQL);
 
-boolean asSelect = "true".equals(ElementParameterParser.getValue(node, "__AS_SELECT__"));
 if(asSelect) {
 	String sql = ElementParameterParser.getValue(node, "__SELECT__");
 	sql = sql.replaceAll("\n"," ");
