@@ -102,8 +102,16 @@ System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
 if(useExistingConn) {
     String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
     String conn = "conn_" + connection;
+    String db = "db_" + connection;
     %>
     conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
+    
+	String dbname_<%=cid%> = (String)globalMap.get("<%=db%>");
+	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+    	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+    	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+    	goToDatabase_<%=cid%>.close();
+	}
     <%
 } else {
 		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
