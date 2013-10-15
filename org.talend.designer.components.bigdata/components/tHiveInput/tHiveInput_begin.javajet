@@ -207,6 +207,9 @@ imports="
 				System.setProperty("hive.metastore.local", "false");
 				System.setProperty("hive.metastore.uris", "thrift://" + <%=dbhost%> + ":" + <%=dbport%>);
 				System.setProperty("hive.metastore.execute.setugi", "true");
+				<%if(dbuser!=null && !"".equals(dbuser.trim())) {%>
+               	System.setProperty("HADOOP_USER_NAME", <%=dbuser%>);
+            	<%}%>
 				String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
 <%
 			} else {
