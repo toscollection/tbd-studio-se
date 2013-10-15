@@ -15,6 +15,7 @@ package org.talend.repository.hadoopcluster.ui;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -66,6 +67,16 @@ public class HadoopClusterWizardPage extends WizardPage {
         if (StringUtils.isNotEmpty(connectionItem.getProperty().getLabel())) {
             hadoopClusterForm.checkFieldsValue();
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.dialogs.DialogPage#performHelp()
+     */
+    @Override
+    public void performHelp() {
+        PlatformUI.getWorkbench().getHelpSystem().displayHelp("org.talend.help.hadoop_cluster_metadata");
     }
 
 }

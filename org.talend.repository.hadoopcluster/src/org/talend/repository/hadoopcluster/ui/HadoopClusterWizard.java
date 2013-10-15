@@ -129,6 +129,7 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
         }
         // initialize the context mode
         ConnectionContextHelper.checkContextMode(connectionItem);
+        setHelpAvailable(true);
     }
 
     public void setToolBar(boolean isToolbar) {
