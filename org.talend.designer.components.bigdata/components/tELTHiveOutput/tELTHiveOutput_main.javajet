@@ -133,6 +133,16 @@ if(useExistingConn) {
 		java.lang.Class.forName("<%=javaDbDriver %>");
 		conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
 <%
+    	if(!isCustom && "HDP_1_2".equals(hiveVersion)) {
+       		String mapMemory = ElementParameterParser.getValue(previousNode,"__MAPRED_JOB_MAP_MEMORY_MB__");
+        	String reduceMemory = ElementParameterParser.getValue(previousNode,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+			java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
+	        init_<%=cid%>.execute("SET mapred.job.map.memory.mb=" + <%=mapMemory%>);
+		    init_<%=cid%>.execute("SET mapred.job.reduce.memory.mb=" + <%=reduceMemory%>);
+		    init_<%=cid%>.close();
+<%
+		}
 }
 %>
 

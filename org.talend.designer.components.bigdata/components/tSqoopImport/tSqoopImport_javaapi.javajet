@@ -50,6 +50,16 @@
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
+<%
+    if(!isCustom && ("HDP_1_2".equals(version))) {
+        String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
+        String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+        configuration_<%=cid%>.set("mapred.job.map.memory.mb", <%=mapMemory%>);
+        configuration_<%=cid%>.set("mapred.job.reduce.memory.mb", <%=reduceMemory%>);
+<%
+    }
+%>
 
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);
 	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("import");
