@@ -309,6 +309,15 @@
 <%
 				}
 			}
+
+		    if(!isCustom && ("HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion))) {
+		        String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
+		        String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+		        props_<%=cid%>.put("mapred.job.map.memory.mb", <%=mapMemory%>);
+		        props_<%=cid%>.put("mapred.job.reduce.memory.mb", <%=reduceMemory%>);
+<%
+    		}
 			if(hadoopProps.size() > 0){
 				for(Map<String, String> item : hadoopProps){
 %>

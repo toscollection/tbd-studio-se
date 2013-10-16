@@ -178,6 +178,14 @@ if(useExistingConn) {
 %>
 		java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
 <%
+	    if(!isCustom && ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion))) {
+	        String mapMemory = ElementParameterParser.getValue(previousNode,"__MAPRED_JOB_MAP_MEMORY_MB__");
+	        String reduceMemory = ElementParameterParser.getValue(previousNode,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+	        init_<%=cid%>.execute("SET mapred.job.map.memory.mb=" + <%=mapMemory%>);
+		    init_<%=cid%>.execute("SET mapred.job.reduce.memory.mb=" + <%=reduceMemory%>);
+<%
+		}
 		boolean useYarn = "true".equals(ElementParameterParser.getValue(previousNode, "__USE_YARN__"));
     	boolean setResourceManager = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_RESOURCE_MANAGER__"));
     	

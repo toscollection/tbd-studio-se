@@ -43,6 +43,14 @@
 <%
 	}
 	
+    if(!isCustom && ("HDP_1_2".equals(version) || "HDP_1_3".equals(version))) {
+        String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
+        String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+        configuration_<%=cid%>.set("mapred.job.map.memory.mb", <%=mapMemory%>);
+        configuration_<%=cid%>.set("mapred.job.reduce.memory.mb", <%=reduceMemory%>);
+<%
+    }
 	if(hadoopProps!=null && hadoopProps.size() > 0){
 		for(Map<String, String> item : hadoopProps){
 %>

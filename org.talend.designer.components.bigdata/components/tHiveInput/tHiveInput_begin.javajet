@@ -84,6 +84,15 @@ imports="
 %>
 			java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
 <%
+
+		    if(!isCustom && ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion))) {
+		        String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
+		        String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+	        	init_<%=cid%>.execute("SET mapred.job.map.memory.mb=" + <%=mapMemory%>);
+		    	init_<%=cid%>.execute("SET mapred.job.reduce.memory.mb=" + <%=reduceMemory%>);
+<%
+    		}
         	if(((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion)))) && setResourceManager) {
         		String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 %>
