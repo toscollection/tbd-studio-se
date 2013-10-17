@@ -1,8 +1,12 @@
 package org.talend.repository.oozie.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.talend.core.hadoop.IOozieService;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.metadata.builder.connection.Connection;
@@ -14,6 +18,9 @@ import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.oozie.OozieConnection;
 import org.talend.repository.oozie.node.model.OozieRepositoryNodeType;
+import org.talend.utils.json.JSONArray;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 public class OozieService implements IOozieService {
 
@@ -46,6 +53,37 @@ public class OozieService implements IOozieService {
             return false;
         }
         return OozieRepositoryNodeType.OOZIE.equals(node.getProperties(EProperties.CONTENT_TYPE));
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getHadoopProperties(Connection connection) {
+        if (connection instanceof OozieConnection) {
+            OozieConnection oozieConnection = (OozieConnection) connection;
+            return initHadoopProperties(oozieConnection.getHadoopProperties());
+        }
+        return null;
+    }
+
+    private List<HashMap<String, Object>> initHadoopProperties(String hadoopProperties) {
+        List<HashMap<String, Object>> properties = new ArrayList<HashMap<String, Object>>();
+        try {
+            if (StringUtils.isNotEmpty(hadoopProperties)) {
+                JSONArray jsonArr = new JSONArray(hadoopProperties);
+                for (int i = 0; i < jsonArr.length(); i++) {
+                    HashMap<String, Object> map = new HashMap();
+                    JSONObject object = jsonArr.getJSONObject(i);
+                    Iterator it = object.keys();
+                    while (it.hasNext()) {
+                        String key = (String) it.next();
+                        map.put(key, object.get(key));
+                    }
+                    properties.add(map);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return properties;
     }
 
 }
