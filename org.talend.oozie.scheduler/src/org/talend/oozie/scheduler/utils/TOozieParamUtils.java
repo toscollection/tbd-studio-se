@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.oozie.scheduler.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -65,6 +67,16 @@ public class TOozieParamUtils {
             return service.getOozieParamFromConnection(repositoryConnection);
         } else {
             return new HashMap<String, Object>();
+        }
+    }
+
+    public static List<HashMap<String, Object>> getHadoopProperties(String id) {
+        Connection repositoryConnection = getOozieConnectionById(id);
+        if (repositoryConnection != null && GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
+            IOozieService service = (IOozieService) GlobalServiceRegister.getDefault().getService(IOozieService.class);
+            return service.getHadoopProperties(repositoryConnection);
+        } else {
+            return new ArrayList<HashMap<String, Object>>();
         }
     }
 

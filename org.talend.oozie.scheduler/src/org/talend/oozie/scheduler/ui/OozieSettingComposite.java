@@ -57,6 +57,7 @@ import org.talend.core.hadoop.version.custom.ECustomVersionType;
 import org.talend.core.hadoop.version.custom.HadoopCustomVersionDefineDialog;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.process.IProcess2;
+import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.core.model.components.EOozieParameterName;
@@ -129,6 +130,8 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     private List<HashMap<String, Object>> properties;
 
+    private HadoopPropertiesFieldModel model;
+
     /**
      * DOC ycbai OozieSettingComposite constructor comment.
      * 
@@ -182,7 +185,7 @@ public class OozieSettingComposite extends ScrolledComposite {
         gridData.horizontalSpan = 4;
         compositeTable.setLayoutData(gridData);
         CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
-        HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
+        model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
         propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
         propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
         final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
@@ -339,6 +342,7 @@ public class OozieSettingComposite extends ScrolledComposite {
 
             principalText.setText(principalValue != null ? principalValue : "");//$NON-NLS-1$
             userNameTxt.setText(userNameValue != null ? userNameValue : ""); //$NON-NLS-1$
+            propertiesTableView.setReadOnly(true);
 
         } else {
             // from perf
@@ -359,6 +363,7 @@ public class OozieSettingComposite extends ScrolledComposite {
             userNameLbl.setEnabled(userNameTxt.getEditable());
             principalText.setText(principalText.getEditable() ? principalValue : "");//$NON-NLS-1$
             userNameTxt.setText(userNameTxt.getEditable() && userNameValue != null ? userNameValue : ""); //$NON-NLS-1$
+            propertiesTableView.setReadOnly(false);
         }
         // update values
         nameNodeEndPointTxt.setText(nameNodeEndPointValue == null ? "" : nameNodeEndPointValue); //$NON-NLS-1$
@@ -439,6 +444,8 @@ public class OozieSettingComposite extends ScrolledComposite {
                         process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue("");
                         oozieRepositoryText.setText("");
                         setRepositoryId("");
+                        model.setProperties(new ArrayList<HashMap<String, Object>>());
+                        propertiesTableView.getTable().redraw();
                     }
                     updateProperty();
                 }
@@ -460,6 +467,8 @@ public class OozieSettingComposite extends ScrolledComposite {
                                 .setValue(repositoryId);
                         enableKerberos = enableKerberosFromRepository(repositoryId);
                         kerbBtn.setSelection(enableKerberos);
+                        model.setProperties(getHadoopProperties(repositoryId));
+                        propertiesTableView.getTable().redraw();
                     }
                     updateProperty();
                 }
@@ -756,6 +765,10 @@ public class OozieSettingComposite extends ScrolledComposite {
     public boolean enableKerberosFromRepository(String id) {
         return (Boolean) TOozieParamUtils.getRepositoryOozieParam(id).get(
                 ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS);
+    }
+
+    public List<HashMap<String, Object>> getHadoopProperties(String id) {
+        return TOozieParamUtils.getHadoopProperties(id);
     }
 
     public void setProperties(List<HashMap<String, Object>> properties) {
