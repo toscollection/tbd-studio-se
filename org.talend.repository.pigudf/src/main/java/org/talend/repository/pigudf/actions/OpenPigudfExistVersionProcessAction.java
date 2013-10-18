@@ -14,6 +14,7 @@ package org.talend.repository.pigudf.actions;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.PigudfItem;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -31,6 +32,11 @@ public class OpenPigudfExistVersionProcessAction extends OpenExistVersionProcess
     public void init(TreeViewer viewer, IStructuredSelection selection) {
         boolean canWork = selection.size() == 1;
         if (canWork) {
+            boolean loadMetadata = PluginChecker.isPluginLoaded("org.talend.repository.metadata");
+            if (!loadMetadata) {
+                setEnabled(false);
+                return;
+            }
             Object o = selection.getFirstElement();
             if (o instanceof RepositoryNode) {
                 RepositoryNode node = (RepositoryNode) o;
