@@ -24,6 +24,8 @@
 	String projectId = ElementParameterParser.getValue(node,"__PROJECT_ID__");
 	String authorizationCode = ElementParameterParser.getValue(node,"__AUTHORIZATION_CODE__");
 	String query = ElementParameterParser.getValue(node,"__QUERY__");
+	query = query.replaceAll("\n"," ");
+	query = query.replaceAll("\r"," ");
 
     String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
 %>
