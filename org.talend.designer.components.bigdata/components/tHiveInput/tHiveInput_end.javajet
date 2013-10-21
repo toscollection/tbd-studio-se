@@ -24,3 +24,9 @@ stmt_<%=cid %>.close();
 %>
 
 globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+
+String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+if(currentClientPathSeparator_<%=cid%>!=null) {
+	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+	globalMap.put("current_client_path_separator", null);
+}

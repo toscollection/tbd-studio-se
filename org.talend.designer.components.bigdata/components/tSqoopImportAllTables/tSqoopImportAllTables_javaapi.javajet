@@ -20,7 +20,11 @@
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 
 	String fsDefalutName = "fs.default.name";
+	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+	
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
@@ -94,3 +98,8 @@
 	if(result_<%=cid%> != 0) {
 		throw new Exception("The Sqoop import-all-tables job has failed");
 	}
+    String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+    if(currentClientPathSeparator_<%=cid%>!=null) {
+    	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+    	globalMap.put("current_client_path_separator", null);
+    }

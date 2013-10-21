@@ -157,5 +157,9 @@ imports="
 		System.setProperty("java.io.tmpdir", <%=tempPath%>); 
 <% 
 	} 
+	String yarnClasspathSeparator = ElementParameterParser.getValue(hiveNode, "__CLASSPATH_SEPARATOR__");
 %>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+	
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/AbstractDBInputBegin.javajet"%>

@@ -389,7 +389,12 @@
 <%
 	if(NodeUtil.isSubTreeEnd(node)) {
 %>
-	pigServer_<%=start_node%>.executeBatch();
+		pigServer_<%=start_node%>.executeBatch();
+		String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+		if(currentClientPathSeparator_<%=cid%>!=null) {
+			System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+			globalMap.put("current_client_path_separator", null);
+		}
 <%
 	}
 %>

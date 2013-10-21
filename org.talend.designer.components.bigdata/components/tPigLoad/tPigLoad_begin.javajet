@@ -215,6 +215,13 @@
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
 <%
 		} else { // MAPREDUCE mode
+			if(inMain) {
+				String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+%>
+				globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+				System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
+			}
 %>
 			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
 			props_<%=cid%>.put("mapred.job.tracker", <%=mapredJobTracker%>);

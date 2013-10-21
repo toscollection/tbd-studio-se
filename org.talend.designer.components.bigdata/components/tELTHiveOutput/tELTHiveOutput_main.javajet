@@ -86,6 +86,11 @@ java.sql.Connection conn_<%=cid%> = null;
 <%
 String connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
 String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
+String yarnClasspathSeparator = ElementParameterParser.getValue(previousNode, "__CLASSPATH_SEPARATOR__");
+%>
+globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+<%
 
 if(useExistingConn) {
     String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
@@ -294,3 +299,9 @@ if(!useExistingConn) {
 
 globalMap.put("<%=cid %>_NB_LINE_OVERWRITE",nb_line_overwrite_<%=cid%>);
 globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
+
+String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+if(currentClientPathSeparator_<%=cid%>!=null) {
+	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+	globalMap.put("current_client_path_separator", null);
+}
