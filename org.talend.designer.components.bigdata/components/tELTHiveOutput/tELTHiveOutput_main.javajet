@@ -103,6 +103,7 @@ if(useExistingConn) {
     String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
     String conn = "conn_" + connection;
     String db = "db_" + connection;
+    String dbUser = "dbUser_" + connection;
     %>
     conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
     
@@ -111,6 +112,15 @@ if(useExistingConn) {
     	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
     	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
     	goToDatabase_<%=cid%>.close();
+	}
+	
+	String dbUser_<%=cid%> = (String)globalMap.get("<%=dbUser%>");
+	globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
+	if(dbUser_<%=cid %>!=null && !"".equals(dbUser_<%=cid %>.trim())) {
+		System.setProperty("HADOOP_USER_NAME",dbUser_<%=cid %>);
+		//make relative file path work for hive
+		globalMap.put("current_client_user_name", System.getProperty("user.name"));
+		System.setProperty("user.name",dbUser_<%=cid %>);
 	}
     <%
 } else {
@@ -142,6 +152,11 @@ if(useExistingConn) {
 			}
 <%
 		}
+%>
+		String dbUser_<%=cid %> = <%=dbuser%>;
+		String dbPwd_<%=cid %> = <%=dbpwd%>; 
+		globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
+<%
 		if("EMBEDDED".equals(connectionMode)) {
 %>
 			System.setProperty("hive.metastore.local", "false");
@@ -149,6 +164,16 @@ if(useExistingConn) {
 			System.setProperty("hive.metastore.execute.setugi", "true");
 			String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
 <%
+			if(isCustom || (!isCustom && ("HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,PIVOTAL_HD_1_0_1".contains(hiveVersion)))) {
+%>
+    			if(dbUser_<%=cid %>!=null && !"".equals(dbUser_<%=cid %>.trim())) {
+    				System.setProperty("HADOOP_USER_NAME",dbUser_<%=cid %>);
+    				//make relative file path work for hive
+    				globalMap.put("current_client_user_name", System.getProperty("user.name"));
+    				System.setProperty("user.name",dbUser_<%=cid %>);
+    			}
+<%
+			}
 		} else {
 			if(securedStandaloneHive2) {
 %>
@@ -161,8 +186,6 @@ if(useExistingConn) {
 			}
 		}
 %>
-		String dbUser_<%=cid %> = <%=dbuser%>;
-		String dbPwd_<%=cid %> = <%=dbpwd%>;    
 		java.lang.Class.forName("<%=javaDbDriver %>");	
 <%		
 		if(securedStandaloneHive2) {
@@ -367,4 +390,18 @@ String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_clie
 if(currentClientPathSeparator_<%=cid%>!=null) {
 	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
 	globalMap.put("current_client_path_separator", null);
+}
+
+String currentClientUsername_<%=cid%> = (String)globalMap.get("current_client_user_name");
+if(currentClientUsername_<%=cid%>!=null) {
+	System.setProperty("user.name", currentClientUsername_<%=cid%>);
+	globalMap.put("current_client_user_name", null);
+}
+
+String originalHadoopUsername_<%=cid%> = (String)globalMap.get("HADOOP_USER_NAME_<%=cid%>");
+if(originalHadoopUsername_<%=cid%>!=null) {
+	System.setProperty("HADOOP_USER_NAME", originalHadoopUsername_<%=cid%>);
+	globalMap.put("HADOOP_USER_NAME_<%=cid%>", null);
+} else {
+	System.clearProperty("HADOOP_USER_NAME");
 }

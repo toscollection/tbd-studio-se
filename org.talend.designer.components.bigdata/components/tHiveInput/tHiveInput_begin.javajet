@@ -41,6 +41,7 @@ imports="
 		public void afterUseExistConnection(INode node) {
 			String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	        String db = "db_" + connection;
+	        String dbUser = "dbUser_" + connection;
 %>
 			String dbname_<%=cid%> = (String)globalMap.get("<%=db%>");
         	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
@@ -48,6 +49,15 @@ imports="
             	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
             	goToDatabase_<%=cid%>.close();
         	}
+        	
+        	String dbUser_<%=cid%> = (String)globalMap.get("<%=dbUser%>");
+        	globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
+    		if(dbUser_<%=cid %>!=null && !"".equals(dbUser_<%=cid %>.trim())) {
+    			System.setProperty("HADOOP_USER_NAME",dbUser_<%=cid %>);
+    			//make relative file path work for hive
+    			globalMap.put("current_client_user_name", System.getProperty("user.name"));
+    			System.setProperty("user.name",dbUser_<%=cid %>);
+    		}
 <%
 	    }
 
@@ -223,17 +233,26 @@ imports="
 				}
 			}
 			
-			
+%>
+			globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
+<%
 			if("EMBEDDED".equals(connectionMode)) {
 %>
 				System.setProperty("hive.metastore.local", "false");
 				System.setProperty("hive.metastore.uris", "thrift://" + <%=dbhost%> + ":" + <%=dbport%>);
 				System.setProperty("hive.metastore.execute.setugi", "true");
-				<%if(dbuser!=null && !"".equals(dbuser.trim())) {%>
-               	System.setProperty("HADOOP_USER_NAME", <%=dbuser%>);
-            	<%}%>
 				String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
 <%
+				if(isCustom || (!isCustom && ("HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,PIVOTAL_HD_1_0_1".contains(hiveVersion)))) {
+%>
+    				if(dbUser_<%=cid %>!=null && !"".equals(dbUser_<%=cid %>.trim())) {
+    					System.setProperty("HADOOP_USER_NAME",dbUser_<%=cid %>);
+    					//make relative file path work for hive
+    					globalMap.put("current_client_user_name", System.getProperty("user.name"));
+    					System.setProperty("user.name",dbUser_<%=cid %>);
+    				}
+<%
+				}
 			} else {
 				if(securedStandaloneHive2) {
 %>
