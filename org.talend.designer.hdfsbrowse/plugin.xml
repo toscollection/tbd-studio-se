@@ -119,7 +119,7 @@
       </classloader>
       <classloader
             index="HDFS:MAPR:MAPR301"
-            libraries="hadoop-0.20.2-dev-core301.jar;commons-logging-1.0.4.jar;maprfs-1.0.3-mapr-3.0.1.jar;zookeeper-3.3.6.jar;guava-13.0.1.jar;libprotodefs.jar;protobuf-java-2.4.1.jar">
+            libraries="hadoop-0.20.2-dev-core-mapr301.jar;commons-logging-1.0.4.jar;maprfs-1.0.3-mapr-3.0.1.jar;zookeeper-3.3.6.jar;guava-13.0.1.jar;libprotodefs.jar;protobuf-java-2.4.1.jar">
       </classloader>
    </extension>
    <extension
