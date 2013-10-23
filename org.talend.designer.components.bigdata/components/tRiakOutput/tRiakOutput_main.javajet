@@ -72,7 +72,7 @@
 						}
 						if(autoGenKey){
 %>
-			bucket_<%=cid%>.store(object_<%=cid%>).execute();
+			bucket_<%=cid%>.store(object_<%=cid%>).withoutFetch().execute();
 <%
 						}else{
 %>
