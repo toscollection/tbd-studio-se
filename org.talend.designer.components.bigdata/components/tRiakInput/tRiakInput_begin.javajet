@@ -133,7 +133,7 @@
 					String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
 					JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
 					String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
-					if(outKeyCol!=null && outKeyCol.equals(column.getLabel())){
+					if(outPutKey && outKeyCol!=null && outKeyCol.equals(column.getLabel())){
 %>
 					valueCol_<%=cid%> = key_<%=cid%>;
 <%
