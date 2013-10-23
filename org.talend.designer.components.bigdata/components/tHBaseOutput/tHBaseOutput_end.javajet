@@ -32,6 +32,7 @@ String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CO
 //use existing connection
 if(!"true".equals(useExistingConn)){
 	String hbaseVersion = ElementParameterParser.getValue(node,"__HBASE_VERSION__");
+	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 %>
 	finally{
 		if(conn_<%=cid%>!=null){

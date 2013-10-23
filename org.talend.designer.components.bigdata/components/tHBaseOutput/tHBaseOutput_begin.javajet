@@ -15,6 +15,28 @@ imports="
 	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
 	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
 	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+	
+	String version = null;
+	String custom = null;
+	
+	if(!"true".equals(useExistingConn)) {
+		version = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
+		custom =  ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	} else {
+		String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
+		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+		for(INode targetNode : nodes){
+			if (targetNode.getUniqueName().equals(connectionSid)) {
+				version = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
+				custom =  ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
+				break;
+			}
+		}
+	}
+	
+	final String hbaseVersion = version;
+	final boolean isCustom = "CUSTOM".equals(custom);
+	
 	class GenerateCode {
 		
 		public void generateCreateTable(INode node) {
@@ -52,7 +74,13 @@ imports="
 				}
 				if(family_bloomfiltertype!=null&&!"".equals(family_bloomfiltertype)){
 %>
-					family_<%=cid%>.setBloomFilterType(org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>);
+					family_<%=cid%>.setBloomFilterType(
+						<%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
+						org.apache.hadoop.hbase.regionserver.BloomType.<%=family_bloomfiltertype%>
+						<%} else {%>
+						org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>
+						<%}%>
+					);
 <%
 				}
 				if(family_blocksize!=null&&!"".equals(family_blocksize)){
@@ -62,12 +90,24 @@ imports="
 				}
 				if(family_compactioncompressiontype!=null&&!"".equals(family_compactioncompressiontype)){
 %>
-					family_<%=cid%>.setCompactionCompressionType( org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>);
+					family_<%=cid%>.setCompactionCompressionType(
+						<%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
+						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compactioncompressiontype%>
+						<%} else {%>
+						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>
+						<%}%>
+					);
 <%
 				}
 				if(family_compressiontype!=null&&!"".equals(family_compressiontype)){
 %>
-					family_<%=cid%>.setCompressionType( org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>);
+					family_<%=cid%>.setCompressionType(
+						<%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
+						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compressiontype%>
+						<%} else {%>
+						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>
+						<%}%>
+					);
 <%
 				}
 				if(family_maxversions!=null&&!"".equals(family_maxversions)){

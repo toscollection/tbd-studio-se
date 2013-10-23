@@ -39,7 +39,7 @@
 	  <%
 	  	} else if("BZIP2".equals(compression)) {
 	  %>
-	  	org.apache.hadoop.io.compress.BZip2Codec codec_<%=cid%> = new org.apache.hadoop.io.compress.BZip2Codec(); 
+	  	org.apache.hadoop.io.compress.CompressionCodec codec_<%=cid%> = org.apache.hadoop.util.ReflectionUtils.newInstance(org.apache.hadoop.io.compress.BZip2Codec.class, conf_<%=cid%>);
 	  <%
 	  	}
 	  %>
