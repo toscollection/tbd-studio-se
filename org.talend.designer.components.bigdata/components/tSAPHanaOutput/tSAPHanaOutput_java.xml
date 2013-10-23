@@ -84,7 +84,6 @@
 			FIELD="TEXT"
 			NUM_ROW="3"
 			SHOW="false"
-			REPOSITORY_VALUE="TYPE"
 		>
 			<DEFAULT>SAPHana</DEFAULT>
 		</PARAMETER>
