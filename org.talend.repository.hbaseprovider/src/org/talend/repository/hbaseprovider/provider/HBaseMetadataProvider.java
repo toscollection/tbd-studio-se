@@ -27,6 +27,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.model.metadata.IMetadataConnection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
@@ -80,8 +82,13 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             ReflectionUtils.invokeMethod(config, "set",
                     new Object[] { "hbase.zookeeper.property.clientPort", metadataConnection.getPort() });
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "zookeeper.recovery.retry", "0" });
-            ReflectionUtils.invokeStaticMethod("org.apache.hadoop.hbase.client.HBaseAdmin", classLoader, "checkHBaseAvailable",
-                    new Object[] { config });
+
+            String hadoopProperties = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_PROPERTIES);
+            List<HashMap<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+            for (HashMap<String, Object> hadoopPros : hadoopPropertiesList) {
+                ReflectionUtils.invokeMethod(config, "set", new Object[] { hadoopPros.get("PROPERTY"), hadoopPros.get("VALUE") });
+            }
+
             Callable<Object> callable = checkHBaseAvailable(config);
             ExecutorService executor = Executors.newSingleThreadExecutor();
             Future<Object> future = executor.submit(callable);
@@ -714,6 +721,16 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                         new Object[] { "hbase.zookeeper.quorum", metadataConnection.getServerName() });
                 ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.zookeeper.property.clientPort",
                         metadataConnection.getPort() });
+
+                String hadoopProperties = (String) metadataConnection
+                        .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_PROPERTIES);
+                List<HashMap<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil
+                        .getHadoopPropertiesList(hadoopProperties);
+                for (HashMap<String, Object> hadoopPros : hadoopPropertiesList) {
+                    ReflectionUtils.invokeMethod(config, "set",
+                            new Object[] { hadoopPros.get("PROPERTY"), hadoopPros.get("VALUE") });
+                }
+
                 hAdmin = ReflectionUtils.newInstance("org.apache.hadoop.hbase.client.HBaseAdmin", classLoader,
                         new Object[] { config });
                 adminMap.put(metadataConnection, hAdmin);

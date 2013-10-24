@@ -802,14 +802,21 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
                 hTable.setTableType(type);
                 String lableName = MetadataToolHelper.validateTableName(table.getName());
                 hTable.setLabel(lableName);
+
                 try {
                     metadataColumns = ExtractMetaDataFromHCatalog.extractColumns(getConnection(), tableName);
-                    partitionColumns = ExtractMetaDataFromHCatalog.extractPartitions(getConnection(), tableName);
-                    partitionJsonStr = ExtractMetaDataFromHCatalog.extractPartitionsJsonStr(getConnection(), tableName);
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
                     return;
                 }
+
+                try {
+                    partitionColumns = ExtractMetaDataFromHCatalog.extractPartitions(getConnection(), tableName);
+                    partitionJsonStr = ExtractMetaDataFromHCatalog.extractPartitionsJsonStr(getConnection(), tableName);
+                } catch (Exception e) {
+                    ExceptionHandler.process(e);
+                }
+
                 hTable.setSourceName(lableName);
                 hTable.setId(factory.getNextId());
                 Map<String, MetadataColumn> partitionColumnsMap = new HashMap<String, MetadataColumn>();
