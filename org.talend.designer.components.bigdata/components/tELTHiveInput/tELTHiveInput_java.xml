@@ -51,6 +51,14 @@
     </PARAMETER>
     
     <PARAMETER
+      NAME="ELT_SCHEMA_NAME"
+      FIELD="TEXT"
+      NUM_ROW="7"
+    >
+      <DEFAULT>""</DEFAULT>
+    </PARAMETER>
+    
+    <PARAMETER
       NAME="MAPPING"
       FIELD="MAPPING_TYPE"
       NUM_ROW="99"
