@@ -43,8 +43,14 @@ imports="
 	String differenttable = ElementParameterParser.getValue(node, "__DIFFERENT_TABLE_NAME__");
     boolean useDifferentTable = "true".equals(ElementParameterParser.getValue(node, "__USE_DIFFERENT_TABLE__"));
     
+   	String dbschema = ElementParameterParser.getValue(node,"__ELT_SCHEMA_NAME__");
 	%>
-		tableName_<%=cid%> = <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		String dbschema_<%=cid%> = <%=dbschema%>;
+		if(dbschema_<%=cid%> != null && dbschema_<%=cid%>.trim().length() > 0) {
+		 	tableName_<%=cid%> = <%=dbschema%> + "." + <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		} else {
+			tableName_<%=cid%> = <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		}
 	<%
 	
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
@@ -95,8 +101,16 @@ System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
 if(useExistingConn) {
     String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
     String conn = "conn_" + connection;
+    String db = "db_" + connection;
     %>
     conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
+    
+	String dbname_<%=cid%> = (String)globalMap.get("<%=db%>");
+	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+    	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+    	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+    	goToDatabase_<%=cid%>.close();
+	}
     <%
 } else {
 		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
@@ -148,34 +162,39 @@ if(useExistingConn) {
 		    init_<%=cid%>.close();
 <%
 		}
-}
+		
 %>
-
+    	String dbname_<%=cid%> = <%=dbname%>;
+    	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+        	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+        	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+        	goToDatabase_<%=cid%>.close();
+    	}
 <%
-
-if("true".equalsIgnoreCase(storeByHBase) && !("EMBEDDED".equals(connectionMode) && "MAPR2".equals(hiveVersion))) {%>
-	java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
-	<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
-		statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);
-	<%}%>
-	
-	<%if(zookeeperClientPortForHBase!=null && !"".equals(zookeeperClientPortForHBase) && !"\"\"".equals(zookeeperClientPortForHBase)) {%>
-		statement_<%=cid%>.execute("SET hbase.zookeeper.property.clientPort="+<%=zookeeperClientPortForHBase%>);
-	<%}%>
-	
-	<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
-		for(Map<String, String> jar : registerJarForHBase){
-			String path = jar.get("JAR_PATH");
-			if(path == null || "".equals(path) || "\"\"".equals(path)) {
-				continue;
-			}
-	%>
-			statement_<%=cid%>.execute("add jar "+<%=path%>);
-	<%
+		if("true".equalsIgnoreCase(storeByHBase) && !("EMBEDDED".equals(connectionMode) && "MAPR2".equals(hiveVersion))) {%>
+			java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
+			<%if(zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
+				statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);
+			<%}%>
+			
+			<%if(zookeeperClientPortForHBase!=null && !"".equals(zookeeperClientPortForHBase) && !"\"\"".equals(zookeeperClientPortForHBase)) {%>
+				statement_<%=cid%>.execute("SET hbase.zookeeper.property.clientPort="+<%=zookeeperClientPortForHBase%>);
+			<%}%>
+			
+			<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
+				for(Map<String, String> jar : registerJarForHBase){
+					String path = jar.get("JAR_PATH");
+					if(path == null || "".equals(path) || "\"\"".equals(path)) {
+						continue;
+					}
+			%>
+					statement_<%=cid%>.execute("add jar "+<%=path%>);
+			<%
+				}
+			}%>
+			statement_<%=cid%>.close();
+		<%
 		}
-	}%>
-	statement_<%=cid%>.close();
-<%
 }
 
 List<IMetadataColumn> columnList = null;
