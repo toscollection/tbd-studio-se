@@ -845,6 +845,7 @@
             <IMPORT NAME="hive-hbase-handler-0.12.0.2.0.6.0-76.jar" MODULE="hive-hbase-handler-0.12.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hive-hbase-handler-0.12.0.2.0.6.0-76.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="htrace-core-2.01.jar" MODULE="htrace-core-2.01.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/htrace-core-2.01.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="netty-3.6.6.Final.jar" MODULE="netty-3.6.6.Final.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/netty-3.6.6.Final.jar" REQUIRED_IF="(HIVE_VERSION=='HDP_2_0' AND STORE_BY_HBASE=='true') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
             <!-- ############## -->
             
             <!-- Cloudera_CDH4_YARN -->
