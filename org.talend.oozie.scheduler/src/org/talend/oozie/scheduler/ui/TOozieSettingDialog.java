@@ -78,8 +78,6 @@ public class TOozieSettingDialog extends Dialog {
             @Override
             protected void preInitialization() {
                 super.preInitialization();
-                setHadoopDistributionValue(hadoopDistributionValue);
-                setHadoopVersionValue(hadoopVersionValue);
                 setNameNodeEndPointValue(nameNodeEndPointValue);
                 setJobTrackerEndPointValue(jobTrackerEndPointValue);
                 setOozieEndPointValue(oozieEndPointValue);
@@ -89,6 +87,12 @@ public class TOozieSettingDialog extends Dialog {
                 setEnableKerberos(enableKerberos);
                 setPrincipal(principalValue);
                 setProperties(propertiesValue);
+            }
+
+            protected void createContents(Composite parent, boolean forPrefPage) {
+                super.createContents(parent, forPrefPage);
+                setHadoopDistributionValue(hadoopDistributionValue);
+                setHadoopVersionValue(hadoopVersionValue);
             }
         };
 
@@ -107,7 +111,8 @@ public class TOozieSettingDialog extends Dialog {
     }
 
     public String getHadoopDistributionValue() {
-        return settingComposite.getHadoopDistributionValue();
+        return this.hadoopDistributionValue;
+
     }
 
     public void setHadoopDistributionValue(String hadoopDistributionValue) {
@@ -115,7 +120,7 @@ public class TOozieSettingDialog extends Dialog {
     }
 
     public String getHadoopVersionValue() {
-        return settingComposite.getHadoopVersionValue();
+        return this.hadoopVersionValue;
     }
 
     public void setHadoopVersionValue(String hadoopVersionValue) {
@@ -192,6 +197,13 @@ public class TOozieSettingDialog extends Dialog {
 
     public List<HashMap<String, Object>> getPropertiesValue() {
         return settingComposite.getProperties();
+    }
+
+    @Override
+    protected void okPressed() {
+        this.setHadoopDistributionValue(settingComposite.getHadoopDistributionValue());
+        this.setHadoopVersionValue(settingComposite.getHadoopVersionValue());
+        super.okPressed();
     }
 
 }
