@@ -59,8 +59,6 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
             @Override
             protected void preInitialization() {
                 super.preInitialization();
-                setHadoopDistributionValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION));
-                setHadoopVersionValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION));
                 setNameNodeEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT));
                 setJobTrackerEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT));
                 setOozieEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT));
@@ -69,6 +67,13 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
                 setEnableKerberos(CorePlugin.getDefault().getPreferenceStore()
                         .getBoolean(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS));
                 setPrincipal(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL));
+            }
+
+            protected void createContents(Composite parent, boolean forPrefPage) {
+                super.createContents(parent, forPrefPage);
+
+                setHadoopDistributionValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION));
+                setHadoopVersionValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION));
             }
         };
         return parent;
