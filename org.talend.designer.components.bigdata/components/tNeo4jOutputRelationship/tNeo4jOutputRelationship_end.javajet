@@ -9,10 +9,13 @@
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
+    String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
     
     %>
-	tx_<%=cid%>.success();
-	tx_<%=cid%>.finish();
+	if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
+		tx_<%=cid%>.success();
+		tx_<%=cid%>.finish();
+	}
 	<%
     
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
