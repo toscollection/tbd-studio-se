@@ -24,6 +24,7 @@ import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EMap;
@@ -118,6 +119,8 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
     private int countPending = 0;
 
     private byte[] lock = new byte[0];
+
+    private static Logger log = Logger.getLogger(HCatalogTableSelectorForm.class);
 
     // store column number for each table name
     private final Map<String, Integer> tableColumnNums = new HashMap<String, Integer>();
@@ -814,14 +817,16 @@ public class HCatalogTableSelectorForm extends AbstractHCatalogForm {
                     partitionColumns = ExtractMetaDataFromHCatalog.extractPartitions(getConnection(), tableName);
                     partitionJsonStr = ExtractMetaDataFromHCatalog.extractPartitionsJsonStr(getConnection(), tableName);
                 } catch (Exception e) {
-                    ExceptionHandler.process(e);
+                    log.warn(Messages.getString("HCatalogTableSelectorForm.cannotExtractPartitionsWarn", tableName), e); //$NON-NLS-1$
                 }
 
                 hTable.setSourceName(lableName);
                 hTable.setId(factory.getNextId());
                 Map<String, MetadataColumn> partitionColumnsMap = new HashMap<String, MetadataColumn>();
-                for (MetadataColumn column : partitionColumns) {
-                    partitionColumnsMap.put(column.getLabel(), column);
+                if (partitionColumns != null && partitionColumns.size() > 0) {
+                    for (MetadataColumn column : partitionColumns) {
+                        partitionColumnsMap.put(column.getLabel(), column);
+                    }
                 }
                 Iterator<MetadataColumn> columnIterator = metadataColumns.iterator();
                 while (columnIterator.hasNext()) {

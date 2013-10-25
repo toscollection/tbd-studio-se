@@ -523,15 +523,23 @@ public class HCatalogSchemaForm extends AbstractHCatalogForm {
                 String partitionJsonStr = null;
                 try {
                     metadataColumns = ExtractMetaDataFromHCatalog.extractColumns(getConnection(), tableName);
-                    partitionColumns = ExtractMetaDataFromHCatalog.extractPartitions(getConnection(), tableName);
-                    partitionJsonStr = ExtractMetaDataFromHCatalog.extractPartitionsJsonStr(getConnection(), tableName);
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
                     return;
                 }
+
+                try {
+                    partitionColumns = ExtractMetaDataFromHCatalog.extractPartitions(getConnection(), tableName);
+                    partitionJsonStr = ExtractMetaDataFromHCatalog.extractPartitionsJsonStr(getConnection(), tableName);
+                } catch (Exception e) {
+                    log.warn(Messages.getString("HCatalogTableSelectorForm.cannotExtractPartitionsWarn", tableName), e); //$NON-NLS-1$
+                }
+
                 Map<String, MetadataColumn> partitionColumnsMap = new HashMap<String, MetadataColumn>();
-                for (MetadataColumn column : partitionColumns) {
-                    partitionColumnsMap.put(column.getLabel(), column);
+                if (partitionColumns != null && partitionColumns.size() > 0) {
+                    for (MetadataColumn column : partitionColumns) {
+                        partitionColumnsMap.put(column.getLabel(), column);
+                    }
                 }
                 Iterator<MetadataColumn> columnIterator = metadataColumns.iterator();
                 while (columnIterator.hasNext()) {
