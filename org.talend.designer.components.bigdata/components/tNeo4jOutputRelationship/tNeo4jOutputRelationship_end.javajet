@@ -34,8 +34,12 @@
 	if (batchImport) {
 		%>
 		}finally{
-			indexProvider_<%=cid%>.shutdown();
-			inserter_<%=cid%>.shutdown();
+			if(indexProvider_<%=cid%>!=null){
+				indexProvider_<%=cid%>.shutdown();
+			}
+			if(inserter_<%=cid%>!=null){
+				inserter_<%=cid%>.shutdown();
+			}
 		}
 		<%
 		if (useExistingConnection && !shutdownDb) {
