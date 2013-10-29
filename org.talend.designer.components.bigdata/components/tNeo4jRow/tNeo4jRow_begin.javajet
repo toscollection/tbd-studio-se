@@ -11,6 +11,7 @@
     String cid = node.getUniqueName();	
     
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     if (useExistingConnection) {
     	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     	String dbconn = "dbService_" + connection;
@@ -43,3 +44,10 @@ long nbRelationshipInserted_<%=cid%> = 0;
 long nbPropertiesUpdated_<%=cid%> = 0;
 long nbNodeDeleted_<%=cid%> = 0;
 long nbRelationshipDeleted_<%=cid%> = 0;
+<%
+	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
+%>
+try{
+<%
+	}
+%>

@@ -10,7 +10,8 @@
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
     
-    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));        
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));        
     String query = ElementParameterParser.getValue(node, "__QUERY__");
     query = query.replaceAll("\n"," ");
     query = query.replaceAll("\r"," ");
@@ -44,4 +45,11 @@ java.util.Iterator<java.util.Map<String, Object>> resultIterator_<%=cid%> = resu
 
 int nb_line_<%=cid%> = 0;
 String expression_<%=cid%> = "";
+<%
+	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
+%>
+try{
+<%
+	}
+%>
 while (resultIterator_<%=cid%>.hasNext()) {

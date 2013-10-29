@@ -20,7 +20,9 @@
 <%
 	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
 %>
-	databaseService_<%=cid%>.shutdown();
+	}finally{
+		databaseService_<%=cid%>.shutdown();
+	}
 <%
 	}
 %>

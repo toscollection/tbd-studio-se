@@ -18,6 +18,7 @@
     
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
+    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     List<Map<String, String>> values = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__VALUES__");
     
     List<String> autoIndexedColumns = new ArrayList<String>();
@@ -60,6 +61,15 @@
 			<%
 		}
     }
+%>
+int nb_line_<%=cid %> = 0;
+long counter_<%=cid%> = 0;
+<%
+	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
+%>
+try{
+<%
+	}
     // Index configuration
     if (batchImport) {
 		String nodeMappedMemory = ElementParameterParser.getValue(node, "__NODE_MAPPED_MEMORY__");
@@ -76,7 +86,9 @@
 		importProperties_<%=cid%>.put("neostore.propertystore.db.arrays.mapped_memory", <%=arraysMappedMemory%>);
 		String storeDir_<%=cid%> = "";
 		org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
-		if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
+		org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> =null;
+	  try{
+	  	if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
 			org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
 			storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
 			db_<%=cid%>.shutdown();
@@ -84,7 +96,7 @@
 		} else {
 			throw new UnsupportedOperationException("Batch import is not supported with database server edition");
 		}
-    	org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+    	indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
 		java.util.Map<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex> indexInserterMap_<%=cid%> = new java.util.HashMap<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex>();
     	<%
     	for (String indexName : indexNames) {
@@ -116,5 +128,3 @@
 	}
 %>	
 org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-int nb_line_<%=cid %> = 0;
-long counter_<%=cid%> = 0;
