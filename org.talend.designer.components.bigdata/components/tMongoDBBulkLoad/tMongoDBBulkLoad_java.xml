@@ -85,7 +85,7 @@
 			SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false')"
 			GROUP="CONNECTION"
 		>
-			<DEFAULT>rep1</DEFAULT>
+			<DEFAULT>"rep1"</DEFAULT>
 		</PARAMETER>
         
         <PARAMETER 
