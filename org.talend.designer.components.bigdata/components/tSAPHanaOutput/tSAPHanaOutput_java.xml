@@ -155,6 +155,21 @@
 				<ITEM NAME="CLEAR" VALUE="CLEAR"/>
 			</ITEMS>
 		</PARAMETER>
+		
+		<PARAMETER
+            NAME="TABLE_TYPE"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="35"
+            SHOW_IF="(PARALLELIZE == 'false') and ((TABLE_ACTION == 'DROP_CREATE') or (TABLE_ACTION == 'CREATE') or (TABLE_ACTION == 'CREATE_IF_NOT_EXISTS') or (TABLE_ACTION == 'DROP_IF_EXISTS_AND_CREATE'))"
+        >
+            <ITEMS DEFAULT="ROW">
+                <ITEM NAME="ROW" VALUE="ROW" />
+                <ITEM NAME="COLUMN" VALUE="COLUMN"/>
+                <ITEM NAME="HISTORY_COLUMN" VALUE="HISTORY COLUMN"/>
+                <ITEM NAME="GLOBAL_TEMPORARY" VALUE="GLOBAL TEMPORARY"/>
+                <ITEM NAME="LOCAL_TEMPORARY" VALUE="LOCAL TEMPORARY" />
+            </ITEMS>
+        </PARAMETER>
 
 		<PARAMETER
 			NAME="DATA_ACTION"

@@ -85,15 +85,15 @@ imports="
 	    	    deletedCount_<%=cid%> += countSum_<%=cid%>;
 	    	<%
 	    	}%>            	    
-    }catch (java.sql.BatchUpdateException e){
+    }catch (java.sql.BatchUpdateException e_<%=cid%>){
     	<%if(("true").equals(dieOnError)) {
     	%>
-    		throw(e);
+    		throw(e_<%=cid%>);
     	<%
     	}else {
     	%>
     	int countSum_<%=cid%> = 0;
-		for(int countEach_<%=cid%>: e.getUpdateCounts()) {
+		for(int countEach_<%=cid%>: e_<%=cid%>.getUpdateCounts()) {
 			countSum_<%=cid%> += (countEach_<%=cid%> < 0 ? 0 : countEach_<%=cid%>);
 		}
 		<%if (("INSERT").equals(dataAction)) {
@@ -109,7 +109,7 @@ imports="
     	    deletedCount_<%=cid%> += countSum_<%=cid%>;
     	<%
     	}%> 
-    	System.out.println(e.getMessage());
+    	System.out.println(e_<%=cid%>.getMessage());
     	<%
     	}%>                	
 	}                                  
@@ -126,7 +126,9 @@ imports="
     if(!("true").equals(useExistingConn)) {
         if(!("").equals(commitEvery) && !("0").equals(commitEvery)) {
         %>
+        if(commitCounter_<%=cid%> > 0){
             conn_<%=cid%>.commit();
+        }
         <%
         }        
         %>
