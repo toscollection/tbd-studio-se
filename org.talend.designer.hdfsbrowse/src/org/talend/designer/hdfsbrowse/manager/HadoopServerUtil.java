@@ -50,6 +50,8 @@ public class HadoopServerUtil {
 
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
+    public static final String ROOT_PATH = "/"; //$NON-NLS-1$
+
     public static final int TIMEOUT = 20; // the max time(second) which achieve DFS connection use.
 
     /**
@@ -273,6 +275,11 @@ public class HadoopServerUtil {
         try {
             dfs = getDFS(connection);
             if (dfs != null) {
+                // Check if we can access the HDFS file content.
+                Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", getClassLoader(connection),
+                        new Object[] { ROOT_PATH });
+                ReflectionUtils.invokeMethod(dfs, "listStatus", new Object[] { pathObj });
+
                 connectionStatus.setResult(true);
                 connectionStatus.setMessageException("Connection successful");
             } else {
