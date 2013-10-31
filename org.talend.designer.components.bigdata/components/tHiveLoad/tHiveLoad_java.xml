@@ -658,6 +658,7 @@
             <IMPORT NAME="commons-dbcp-1.4" MODULE="commons-dbcp-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-dbcp-1.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR301' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
             <IMPORT NAME="commons-pool-1.5.4" MODULE="commons-pool-1.5.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-pool-1.5.4.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR301' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
             <IMPORT NAME="guava-13.0.1.jar" MODULE="guava-13.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar" REQUIRED_IF="(HIVE_VERSION=='MAPR301' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+            <IMPORT NAME="servlet-api-2.5-20081211.jar" MODULE="servlet-api-2.5-20081211.jar" UrlPath="platform:/plugin/org.talend.libraries.servlet/lib/servlet-api-2.5-20081211.jar"  REQUIRED_IF="(HIVE_VERSION=='MAPR301' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))"/>
             <!-- ############## -->
 
 			<!-- APACHE 1.0 -->
