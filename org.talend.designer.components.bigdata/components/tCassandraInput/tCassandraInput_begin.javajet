@@ -267,6 +267,10 @@
 									%>
 										<%=firstConnName %>.<%=column.getLabel() %>=String.valueOf(row_<%=cid%>.getKey()).getBytes(utf8Charset);
 									<%
+									}else if(javaType == JavaTypesManager.OBJECT){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=row_<%=cid%>.getKey();
+									<%
 									}else{
 									%>
 										<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_<%=typeToGenerate%>(String.valueOf(row_<%=cid%>.getKey()));
@@ -287,10 +291,14 @@
 									%>
 										<%=firstConnName %>.<%=column.getLabel() %>=String.valueOf(superRow_<%=cid%>.getKey()).getBytes(utf8Charset);
 									<%
+									}else if(javaType == JavaTypesManager.OBJECT){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=superRow_<%=cid%>.getKey();
+									<%
 									}else{
 									%>
 										<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_<%=typeToGenerate%>(String.valueOf(superRow_<%=cid%>.getKey()));
-									<%
+									<%	
 									}
 									%>
 								}
