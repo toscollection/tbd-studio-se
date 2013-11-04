@@ -2,17 +2,28 @@
 	imports="
 		org.talend.core.model.process.INode 
 		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.ElementParameterParser
 	" 
 %>
 <% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
-    
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
+    String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
     %>
-	tx_<%=cid%>.success();
-	tx_<%=cid%>.finish();
-	
+    if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
+		tx_<%=cid%>.success();
+		tx_<%=cid%>.finish();
+	}
+<%
+	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
+%>
+	databaseService_<%=cid%>.shutdown();
+<%
+	}
+%>
 	globalMap.put("<%=cid %>_NB_NODE_INSERTED", nbNodeInserted_<%=cid%>);
 	globalMap.put("<%=cid %>_NB_RELATIONSHIP_INSERTED", nbRelationshipInserted_<%=cid%>);
 	globalMap.put("<%=cid %>_NB_PROPERTY_UPDATED", nbPropertiesUpdated_<%=cid%>);
