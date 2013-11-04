@@ -17,8 +17,9 @@ imports="
 		log.debug("<%=cid%> - Retrieving the record " + nb_line_<%=cid%> + " " + log4jSb_<%=cid%>);
 		log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
 	<%}%>
-}
-stmt_<%=cid %>.close();
+	}
+}finally{
+	stmt_<%=cid %>.close();
 <%
 	if(!("true").equals(useExistingConn))
 	{
@@ -33,7 +34,7 @@ stmt_<%=cid %>.close();
 		<%
 	}
 %>
-
+}
 globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
 <%if(isLog4jEnabled){%>
 	log.info("<%=cid%> - Retrieved records count: "+ nb_line_<%=cid%> +".");
