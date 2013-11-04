@@ -17,19 +17,23 @@ List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParamet
 String user = null;
 
 String fsDefalutName = "fs.default.name";
+
+String hadoopVersion = null;
+boolean isCustom = false;
+
 %>
 String username_<%=cid%> = "";
 org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
 <%   
 if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
-	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	
-	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
 	%>
 	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
@@ -82,11 +86,11 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 	List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
     for(INode targetNode : nodes){
 		if (targetNode.getUniqueName().equals(connectionSid)) {
-        	String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__"); 
+        	hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__"); 
     		boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
     		String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
     		
-    		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
+    		isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
     		String auth = ElementParameterParser.getValue(targetNode, "__AUTHENTICATION_MODE__");
 		
 	      	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MAPR213").equals(hadoopVersion) || ("MAPR301").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){

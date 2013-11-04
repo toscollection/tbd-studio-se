@@ -115,30 +115,9 @@
 					talendValueClass = column.getTalendType();
 				}
 			}
-			
-			String keyClass="org.apache.hadoop.io.Text";
-			if (talendKeyClass.equals("id_Boolean")) keyClass="org.apache.hadoop.io.BooleanWritable";
-			if (talendKeyClass.equals("id_Byte")) keyClass="org.apache.hadoop.io.ByteWritable";
-			if (talendKeyClass.equals("id_byte[]")) keyClass="org.apache.hadoop.io.BytesWritable";
-			if (talendKeyClass.equals("id_Double")) keyClass="org.apache.hadoop.io.DoubleWritable";
-			if (talendKeyClass.equals("id_Float")) keyClass="org.apache.hadoop.io.FloatWritable";
-			if (talendKeyClass.equals("id_Integer")) keyClass="org.apache.hadoop.io.IntWritable";
-			if (talendKeyClass.equals("id_Long")) keyClass="org.apache.hadoop.io.LongWritable";
-			if (talendKeyClass.equals("id_Short")) keyClass="org.apache.hadoop.io.ShortWritable";
-			if (talendKeyClass.equals("id_String")) keyClass="org.apache.hadoop.io.Text";
-			
-			String valueClass="org.apache.hadoop.io.Text";
-			if (talendValueClass.equals("id_Boolean")) valueClass="org.apache.hadoop.io.BooleanWritable";
-			if (talendValueClass.equals("id_Byte")) valueClass="org.apache.hadoop.io.ByteWritable";
-			if (talendValueClass.equals("id_byte[]")) valueClass="org.apache.hadoop.io.BytesWritable";
-			if (talendValueClass.equals("id_Double")) valueClass="org.apache.hadoop.io.DoubleWritable";
-			if (talendValueClass.equals("id_Float")) valueClass="org.apache.hadoop.io.FloatWritable";
-			if (talendValueClass.equals("id_Integer")) valueClass="org.apache.hadoop.io.IntWritable";
-			if (talendValueClass.equals("id_Long")) valueClass="org.apache.hadoop.io.LongWritable";
-			if (talendValueClass.equals("id_Short")) valueClass="org.apache.hadoop.io.ShortWritable";
-			if (talendValueClass.equals("id_String")) valueClass="org.apache.hadoop.io.Text";
-			
 %>
+			<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HDFS/SequenceFileMapping.javajet"%>
+			
 		org.apache.hadoop.io.SequenceFile.Reader reader_<%=cid%> = new org.apache.hadoop.io.SequenceFile.Reader(fs_<%=cid%>, path_<%=cid%>,  conf_<%=cid%>);
 		<%=keyClass%> key_<%=cid%> = (<%=keyClass%>) reader_<%=cid%>.getKeyClass().newInstance();
 		<%=valueClass%> value_<%=cid%> = (<%=valueClass%>) reader_<%=cid%>.getValueClass().newInstance();
