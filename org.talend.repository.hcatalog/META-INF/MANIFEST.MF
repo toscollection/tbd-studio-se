@@ -5,8 +5,7 @@ Bundle-SymbolicName: org.talend.repository.hcatalog;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  lib/hadoop-conf-kerberos.jar,
- lib/json_simple-1.1.jar,
- lib/neethi-3.0.1.jar
+ lib/json_simple-1.1.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
