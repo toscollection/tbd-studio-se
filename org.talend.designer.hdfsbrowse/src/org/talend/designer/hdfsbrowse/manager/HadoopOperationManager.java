@@ -164,6 +164,13 @@ public class HadoopOperationManager {
             userName = connection.getUserName();
             group = connection.getGroup();
         }
+        if (StringUtils.trimToNull(userName) == null) {
+            userName = HadoopServerUtil.extractUsername(connection);
+        }
+        if (StringUtils.trimToNull(group) == null) {
+            group = HadoopServerUtil.extractGroups(connection);
+        }
+
         return HadoopServerUtil.hasReadAuthority(status, userName, group);
     }
 

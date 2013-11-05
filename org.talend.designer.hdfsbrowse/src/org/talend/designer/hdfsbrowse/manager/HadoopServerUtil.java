@@ -28,6 +28,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -51,6 +52,8 @@ public class HadoopServerUtil {
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
     public static final String ROOT_PATH = "/"; //$NON-NLS-1$
+
+    public static final String GROUP_SEPARATOR = ","; //$NON-NLS-1$
 
     public static final int TIMEOUT = 20; // the max time(second) which achieve DFS connection use.
 
@@ -89,6 +92,7 @@ public class HadoopServerUtil {
         try {
             ClassLoader classLoader = getClassLoader(connection);
             Thread.currentThread().setContextClassLoader(classLoader);
+
             Object conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance();
             EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
             if (enableKerberos) {
@@ -100,7 +104,7 @@ public class HadoopServerUtil {
             if (group != null) {
                 assert userName != null;
                 // EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, EMPTY_STRING);
-                EHadoopConfProperties.JOB_UGI.set(conf, userName + "," + group); //$NON-NLS-1$
+                EHadoopConfProperties.JOB_UGI.set(conf, userName + GROUP_SEPARATOR + group);
             }
 
             if (useKeytab) {
@@ -184,16 +188,18 @@ public class HadoopServerUtil {
             if (permission == null) {
                 return hasAuthority;
             }
-            if (StringUtils.isNotBlank(userName)) {
-                userName = TalendQuoteUtils.addQuotesIfNotExist(userName);
+            if (StringUtils.trimToNull(userName) != null) {
+                userName = TalendQuoteUtils.removeQuotesIfExist(userName);
             }
-            if (StringUtils.isNotBlank(group)) {
-                group = TalendQuoteUtils.addQuotesIfNotExist(group);
+            String[] groups = new String[0];
+            if (StringUtils.trimToNull(group) != null) {
+                group = TalendQuoteUtils.removeQuotesIfExist(group);
+                groups = group.split(GROUP_SEPARATOR);
             }
             String fileOwner = (String) ReflectionUtils.invokeMethod(status, "getOwner", new Object[0]);
-            fileOwner = TalendQuoteUtils.addQuotesIfNotExist(fileOwner);
+            fileOwner = TalendQuoteUtils.removeQuotesIfExist(fileOwner);
             String fileGroup = (String) ReflectionUtils.invokeMethod(status, "getGroup", new Object[0]);
-            fileGroup = TalendQuoteUtils.addQuotesIfNotExist(fileGroup);
+            fileGroup = TalendQuoteUtils.removeQuotesIfExist(fileGroup);
             Object userAction = ReflectionUtils.invokeMethod(permission, "getUserAction", new Object[0]);
             Object groupAction = ReflectionUtils.invokeMethod(permission, "getGroupAction", new Object[0]);
             Object otherAction = ReflectionUtils.invokeMethod(permission, "getOtherAction", new Object[0]);
@@ -202,7 +208,7 @@ public class HadoopServerUtil {
                 if (fileOwner != null && fileOwner.equals(userName)) {
                     return hasReadAuthority(userAction);
                 }
-                if (fileGroup != null && fileGroup.equals(group)) {
+                if (fileGroup != null && ArrayUtils.contains(groups, fileGroup)) {
                     return hasReadAuthority(groupAction);
                 }
                 return hasReadAuthority(otherAction);
@@ -210,7 +216,7 @@ public class HadoopServerUtil {
                 if (fileOwner != null && fileOwner.equals(userName)) {
                     return hasWriteAuthority(userAction);
                 }
-                if (fileGroup != null && fileGroup.equals(group)) {
+                if (fileGroup != null && ArrayUtils.contains(groups, fileGroup)) {
                     return hasWriteAuthority(groupAction);
                 }
                 return hasWriteAuthority(otherAction);
@@ -218,7 +224,7 @@ public class HadoopServerUtil {
                 if (fileOwner != null && fileOwner.equals(userName)) {
                     return hasExcuteAuthority(userAction);
                 }
-                if (fileGroup != null && fileGroup.equals(group)) {
+                if (fileGroup != null && ArrayUtils.contains(groups, fileGroup)) {
                     return hasExcuteAuthority(groupAction);
                 }
                 return hasExcuteAuthority(otherAction);
@@ -257,6 +263,44 @@ public class HadoopServerUtil {
         Object enumName = ((Enum) action).name();
         return "EXECUTE".equals(enumName) || "READ_EXECUTE".equals(enumName) || "WRITE_EXECUTE".equals(enumName)
                 || "ALL".equals(enumName);
+    }
+
+    public static String extractUsername(HDFSConnectionBean connection) throws HadoopServerException {
+        String username = null;
+        try {
+            Object ugi = ReflectionUtils.invokeStaticMethod(
+                    "org.apache.hadoop.security.UserGroupInformation", getClassLoader(connection), //$NON-NLS-1$
+                    "getCurrentUser", new String[0]); //$NON-NLS-1$
+            if (ugi != null) {
+                username = (String) ReflectionUtils.invokeMethod(ugi, "getShortUserName", new Object[0]); //$NON-NLS-1$
+            }
+        } catch (Exception e) {
+            throw new HadoopServerException(e);
+        }
+
+        return username;
+    }
+
+    public static String extractGroups(HDFSConnectionBean connection) throws HadoopServerException {
+        StringBuffer groupBuf = new StringBuffer();
+        try {
+            Object ugi = ReflectionUtils.invokeStaticMethod(
+                    "org.apache.hadoop.security.UserGroupInformation", getClassLoader(connection), //$NON-NLS-1$
+                    "getCurrentUser", new String[0]); //$NON-NLS-1$
+            if (ugi != null) {
+                String[] groups = (String[]) ReflectionUtils.invokeMethod(ugi, "getGroupNames", new Object[0]); //$NON-NLS-1$
+                if (groups != null && groups.length > 0) {
+                    for (String group : groups) {
+                        groupBuf.append(group).append(GROUP_SEPARATOR);
+                    }
+                    groupBuf.deleteCharAt(groups.length - 1);
+                }
+            }
+        } catch (Exception e) {
+            throw new HadoopServerException(e);
+        }
+
+        return groupBuf.toString();
     }
 
     /**
