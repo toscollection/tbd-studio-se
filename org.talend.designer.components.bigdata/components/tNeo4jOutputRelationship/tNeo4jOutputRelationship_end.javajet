@@ -24,21 +24,23 @@
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     String dbconn = "dbService_" + connection;
 
-	if (!useExistingConnection) {
-	%>
-		databaseService_<%=cid%>.shutdown();
-	<%
-	} else {
-		if (shutdownDb) {
+	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
 		%>
+		}finally{
 			databaseService_<%=cid%>.shutdown();
-		<%
 		}
+		<%
 	}
 	if (batchImport) {
 		%>
-		indexProvider_<%=cid%>.shutdown();
-		inserter_<%=cid%>.shutdown();
+		}finally{
+			if(indexProvider_<%=cid%>!=null){
+				indexProvider_<%=cid%>.shutdown();
+			}
+			if(inserter_<%=cid%>!=null){
+				inserter_<%=cid%>.shutdown();
+			}
+		}
 		<%
 		if (useExistingConnection && !shutdownDb) {
 			%>

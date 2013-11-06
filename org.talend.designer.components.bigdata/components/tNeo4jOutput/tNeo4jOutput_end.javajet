@@ -30,16 +30,12 @@
     String dbconn = "dbService_" + connection;
     List<Map<String, String>> values = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__VALUES__");
 
-	if (!useExistingConnection && !batchImport) {
+	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
 		%>
-		databaseService_<%=cid%>.shutdown();
-		<%
-	} else {		
-		if (shutdownDb) {
-		%>
+		}finally{
 			databaseService_<%=cid%>.shutdown();
-		<%
 		}
+		<%
 	}
 	if (batchImport) {
 		Set<String> indexNames = new HashSet();
@@ -56,8 +52,14 @@
 	    }
 		// Must shutdown database to prevent data corruption after batch importation
 		%>
-		indexProvider_<%=cid%>.shutdown();
-		inserter_<%=cid%>.shutdown();
+		}finally{
+			if(indexProvider_<%=cid%>!=null){
+				indexProvider_<%=cid%>.shutdown();
+			}
+			if(inserter_<%=cid%>!=null){
+				inserter_<%=cid%>.shutdown();
+			}
+		}
 		<%
 		if (useExistingConnection && !shutdownDb) {
 			%>

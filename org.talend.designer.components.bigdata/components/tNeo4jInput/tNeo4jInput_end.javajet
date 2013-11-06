@@ -11,21 +11,17 @@
     String cid = node.getUniqueName();	
     
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
 %>
 }
 
 <%
-	if (!useExistingConnection) {
-	%>
+	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
+%>
+	}finally{
 		databaseService_<%=cid%>.shutdown();
-	<%
-	} else {
-		boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
-		if (shutdownDb) {
-		%>
-			databaseService_<%=cid%>.shutdown();
-		<%
-		}
+	}
+<%
 	}
 %>
 
