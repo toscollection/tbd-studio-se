@@ -252,13 +252,19 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 								if(temp_<%=cid %>!=null && temp_<%=cid %>.length() > 0) {
 <%									if(javaType == JavaTypesManager.STRING || javaType == JavaTypesManager.OBJECT) {
 %>
-										<%=connName %>.<%=columnName %>=temp_<%=cid %>.toString();
+										<%=connName %>.<%=columnName %>=temp_<%=cid %>;
 <%									}else if(javaType == JavaTypesManager.BYTE_ARRAY){
 %> 
-										<%=connName%>.<%=columnName%>=temp_<%=cid %>.getBytes();
+										<%=connName%>.<%=columnName%>=rowResult_<%=cid %>;
 <%									}else if(javaType == JavaTypesManager.DATE){
 %> 
 										<%=connName%>.<%=columnName%>=ParserUtils.parseTo_Date(temp_<%=cid %>, <%= patternValue %>);
+<%									}else if(javaType == JavaTypesManager.INTEGER){
+%>
+										<%=connName%>.<%=columnName%>=org.apache.hadoop.hbase.util.Bytes.toInt(rowResult_<%=cid %>);
+<%									}else if(javaType == JavaTypesManager.SHORT || javaType == JavaTypesManager.LONG || javaType == JavaTypesManager.FLOAT || javaType == JavaTypesManager.DOUBLE || javaType == JavaTypesManager.BOOLEAN || javaType == JavaTypesManager.BIGDECIMAL){
+%>
+										<%=connName%>.<%=columnName%>=org.apache.hadoop.hbase.util.Bytes.to<%=javaType.getNullableClass().getSimpleName()%>(rowResult_<%=cid %>);
 <%									}else{
 %>
 										<%=connName%>.<%=columnName%>=ParserUtils.parseTo_<%= typeToGenerate %>(temp_<%=cid %>);
