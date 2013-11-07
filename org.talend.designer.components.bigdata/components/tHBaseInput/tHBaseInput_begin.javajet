@@ -252,7 +252,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 								if(temp_<%=cid %>!=null && temp_<%=cid %>.length() > 0) {
 <%									if(javaType == JavaTypesManager.STRING || javaType == JavaTypesManager.OBJECT) {
 %>
-										<%=connName %>.<%=columnName %>=temp_<%=cid %>;
+										<%=connName %>.<%=columnName %>=temp_<%=cid %>.toString();
 <%									}else if(javaType == JavaTypesManager.BYTE_ARRAY){
 %> 
 										<%=connName%>.<%=columnName%>=rowResult_<%=cid %>;
