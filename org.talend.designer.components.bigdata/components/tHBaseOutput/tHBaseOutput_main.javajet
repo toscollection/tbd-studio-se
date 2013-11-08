@@ -59,6 +59,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 						boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( javaType, column.isNullable());
 						if(!isPrimitive){
 %>
+					temp_<%=cid %> = null;
 					if(<%=connName %>.<%=column.getLabel() %>!=null){
 <%
 						}
@@ -94,7 +95,6 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 						}
 %>						
 						p_<%=cid%>.add(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid %>);
-						temp_<%=cid %> = null;
 <%
 					}
 %>
