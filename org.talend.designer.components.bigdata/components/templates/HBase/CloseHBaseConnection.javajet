@@ -5,7 +5,8 @@ imports="
     org.talend.designer.codegen.config.CodeGeneratorArgument
 " 
 %>
-
+<%//for TDI-28055%>
+org.apache.hadoop.hbase.client.HConnection connection_<%=cid%> = org.apache.hadoop.hbase.client.HConnectionManager.getConnection(conn_<%=cid%>);
 <%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
 		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
 <%} else {%>
