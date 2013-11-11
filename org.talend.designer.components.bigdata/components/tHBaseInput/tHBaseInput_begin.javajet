@@ -246,20 +246,11 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 								String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
 								JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
 								String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+								boolean isPrimitiveType = JavaTypesManager.isJavaPrimitiveType(javaType, column.isNullable());
 %>
 								rowResult_<%=cid %> = rr_<%=cid %>.getValue(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>),org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"));
 								temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toString(rowResult_<%=cid %>);
-								<%
-								if(JavaTypesManager.isJavaPrimitiveType(javaType, column.isNullable())){
-								%>
-								if(temp_<%=cid %>!=null && temp_<%=cid %>.trim().length() > 0) {
-								<%
-								}else{
-								%>
 								if(temp_<%=cid %>!=null && temp_<%=cid %>.length() > 0) {
-								<%
-								}
-								%>
 <%									if(javaType == JavaTypesManager.STRING || javaType == JavaTypesManager.OBJECT) {
 %>
 										<%=connName %>.<%=columnName %>=temp_<%=cid %>.toString();
@@ -269,6 +260,15 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 <%									}else if(javaType == JavaTypesManager.DATE){
 %> 
 										<%=connName%>.<%=columnName%>=ParserUtils.parseTo_Date(temp_<%=cid %>, <%= patternValue %>);
+<%									}else if(isPrimitiveType && javaType == JavaTypesManager.INTEGER){  
+%>
+										<%=connName%>.<%=columnName%>=org.apache.hadoop.hbase.util.Bytes.toInt(rowResult_<%=cid %>);  
+<%									}else if(isPrimitiveType && javaType == JavaTypesManager.CHARACTER){  
+%>
+										<%=connName%>.<%=columnName%>=(char)org.apache.hadoop.hbase.util.Bytes.toInt(rowResult_<%=cid %>);  
+<%									}else if(isPrimitiveType && (javaType == JavaTypesManager.SHORT || javaType == JavaTypesManager.LONG || javaType == JavaTypesManager.FLOAT || javaType == JavaTypesManager.DOUBLE)) {  
+%>
+										<%=connName%>.<%=columnName%>=org.apache.hadoop.hbase.util.Bytes.to<%=javaType.getNullableClass().getSimpleName()%>(rowResult_<%=cid %>);  
 <%									}else{
 %>
 										<%=connName%>.<%=columnName%>=ParserUtils.parseTo_<%= typeToGenerate %>(temp_<%=cid %>);
