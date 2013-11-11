@@ -113,7 +113,7 @@ public class CreatePigudfAction extends AbstractRoutineAction {
                 if (nodeType != ERepositoryObjectType.PIG_UDF) {
                     canWork = false;
                 }
-                if (node.getObject() != null && node.getObject().getProperty().getItem().getState().isDeleted()) {
+                if (node.getObject() != null && node.getObject().isDeleted()) {
                     canWork = false;
                 }
                 break;
