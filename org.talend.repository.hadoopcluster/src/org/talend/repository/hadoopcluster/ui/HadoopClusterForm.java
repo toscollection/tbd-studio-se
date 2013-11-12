@@ -536,13 +536,13 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
         if (!validText(jobtrackerUriText.getText())) {
             updateStatus(IStatus.ERROR,
-                    Messages.getString("HadoopClusterForm.check.jobtrackerURI", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
+                    Messages.getString("HadoopClusterForm.check.jobtrackerURI2", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
             return false;
         }
 
         if (!HadoopParameterValidator.isValidJobtrackerURI(jobtrackerUriText.getText())) {
             updateStatus(IStatus.ERROR,
-                    Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
+                    Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid2", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
             return false;
         }
 
