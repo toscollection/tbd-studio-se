@@ -249,7 +249,7 @@ if(useExistingConn) {
 			}
 		}
 		
-		List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADVANCED_PROPERTIES__");
+		List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(previousNode, "__ADVANCED_PROPERTIES__");
 		if(advProps!=null) {
 			for(Map<String, String> item : advProps){
 %>
