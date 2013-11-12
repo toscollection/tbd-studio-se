@@ -5,9 +5,9 @@ imports="
     org.talend.designer.codegen.config.CodeGeneratorArgument
 " 
 %>
-<%//for TDI-28055%>
-<%//if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
-	//	org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
-<%//} else {%>
-	//	org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>,true);
-<%//}%>
+
+<%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
+		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
+<%} else {%>
+		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>,true);
+<%}%>
