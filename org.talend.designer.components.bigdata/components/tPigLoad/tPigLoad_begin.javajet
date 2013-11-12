@@ -268,6 +268,29 @@
 				props_<%=cid%>.put("mapreduce.framework.name", "yarn");
 				props_<%=cid%>.put("yarn.resourcemanager.address", <%=resourceManager%>);
 <%
+				boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_SCHEDULER_ADDRESS__"));
+				if(setSchedulerAddress) {
+					String schedulerAddress = ElementParameterParser.getValue(node,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
+%>
+					props_<%=cid%>.put("yarn.resourcemanager.scheduler.address", <%=schedulerAddress%>);
+<%
+				}
+%>
+				//set default yarn classpath with environment variable
+				props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
+<%
+				boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
+				if(setMemory) {
+					String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
+					String reduceMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_REDUCE_MEMORY_MB__");
+					String amMemory = ElementParameterParser.getValue(node,"__YARN_APP_MAPREDUCE_AM_RESOURCE_MB__");
+%>
+    				props_<%=cid%>.put("mapreduce.map.memory.mb", <%=mapMemory%>);
+    				props_<%=cid%>.put("mapreduce.reduce.memory.mb", <%=reduceMemory%>);
+    				props_<%=cid%>.put("yarn.app.mapreduce.am.resource.mb", <%=amMemory%>);
+<%
+				}
+				
 				if(setJobHistoryAddress) {
 					String jobHistoryAddress = ElementParameterParser.getValue(node, "__JOBHISTORY_ADDRESS__");
 %>

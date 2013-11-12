@@ -103,12 +103,41 @@ imports="
 		    	init_<%=cid%>.execute("SET mapred.job.reduce.memory.mb=" + <%=reduceMemory%>);
 <%
     		}
-        	if(((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion)))) && setResourceManager) {
-        		String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
+        	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion)))) {
+        		if(setResourceManager) {
+        			String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 %>
-            	init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
-            	init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
+            		init_<%=cid%>.execute("SET mapreduce.framework.name=yarn");
+            		init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
 <%
+				}
+				
+				boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_SCHEDULER_ADDRESS__"));
+				if(setSchedulerAddress) {
+					String schedulerAddress = ElementParameterParser.getValue(node,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
+%>
+					init_<%=cid%>.execute("SET yarn.resourcemanager.scheduler.address=" + <%=schedulerAddress%>);
+<%
+				}
+		
+				if("EMBEDDED".equals(connectionMode)) {
+%>
+        			//set default yarn classpath with environment variable
+        			init_<%=cid%>.execute("SET yarn.application.classpath=$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
+<%
+				}
+		
+    			boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
+    			if(setMemory) {
+        			String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
+        			String reduceMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_REDUCE_MEMORY_MB__");
+        			String amMemory = ElementParameterParser.getValue(node,"__YARN_APP_MAPREDUCE_AM_RESOURCE_MB__");
+%>
+        			init_<%=cid%>.execute("SET mapreduce.map.memory.mb=" + <%=mapMemory%>);
+        			init_<%=cid%>.execute("SET mapreduce.reduce.memory.mb=" + <%=reduceMemory%>);
+        			init_<%=cid%>.execute("SET yarn.app.mapreduce.am.resource.mb=" + <%=amMemory%>);
+<%
+				}
 			}
 			
             List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADVANCED_PROPERTIES__");
