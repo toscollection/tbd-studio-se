@@ -145,7 +145,11 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
         IRepositoryViewObject object = node.getObject();
         if (object != null && object.getProperty().getItem() != null) {
             ERepositoryObjectType repObjType = (ERepositoryObjectType) node.getProperties(EProperties.CONTENT_TYPE);
-            if (!HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(repObjType)) {
+            if (HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(repObjType)) {
+                if (repositoryTypes != null && ArrayUtils.contains(repositoryTypes, "HADOOPCLUSTER")) { //$NON-NLS-1$
+                    return true;
+                }
+            } else {
                 return true;
             }
         }
