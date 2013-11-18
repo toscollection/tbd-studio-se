@@ -46,6 +46,7 @@
 			 />
 
 		<PARAMETER NAME="TYPE" FIELD="TEXT" NUM_ROW="5" SHOW="false"
+            REPOSITORY_VALUE="TYPE"
 			>
 			<DEFAULT>SAPHana</DEFAULT>
 		</PARAMETER>
