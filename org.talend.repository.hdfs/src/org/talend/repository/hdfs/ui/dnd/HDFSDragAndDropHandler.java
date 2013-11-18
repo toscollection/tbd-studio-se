@@ -134,7 +134,7 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
             return hcConnection.getDfVersion();
         } else if (EHDFSRepositoryToComponent.MAPRED_JOB_TRACKER.getRepositoryValue().equals(value)
                 || EHDFSRepositoryToComponent.MAPRED_RESOURCE_MANAGER.getRepositoryValue().equals(value)
-                || EHDFSRepositoryToComponent.MAPRED_RESOURCE_MANAGER.getParameterName().equals(value)) {
+                || EHDFSRepositoryToComponent.RESOURCE_MANAGER.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobTrackerURI()));
         } else if (EHDFSRepositoryToComponent.FIELD_SEPARATOR_CHAR.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
