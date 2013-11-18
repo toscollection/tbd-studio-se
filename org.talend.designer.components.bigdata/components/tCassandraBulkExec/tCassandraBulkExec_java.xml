@@ -36,7 +36,7 @@
             COLOR="255;0;0" 
             SHOW_IF="DB_VERSION=='CASSANDRA_2_0_0'"
         >
-            <DEFAULT>only work with JVM1.7</DEFAULT>
+            <DEFAULT>This component requires a Java 1.7</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="NOTE"
@@ -45,7 +45,7 @@
             COLOR="255;0;0" 
             SHOW_IF="DB_VERSION=='CASSANDRA_1_2_2'"
         >
-            <DEFAULT>it doesn't support different Client OS to visit different Server OS.</DEFAULT>
+            <DEFAULT>This component requires the server OS and the client OS to be similar.</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="NOTE"
@@ -54,7 +54,7 @@
             COLOR="255;0;0" 
             SHOW_IF="DB_VERSION=='CASSANDRA_1_1_2'"
         >
-            <DEFAULT>it only supports locally visiting in Linux.</DEFAULT>
+            <DEFAULT>This component only works locally on a Linux OS.</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="DB_VERSION"
