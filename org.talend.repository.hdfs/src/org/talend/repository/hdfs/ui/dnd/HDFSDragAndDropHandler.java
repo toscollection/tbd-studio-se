@@ -13,8 +13,6 @@
 package org.talend.repository.hdfs.ui.dnd;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +20,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
@@ -46,9 +45,7 @@ import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSConnectionItem;
-import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
-import org.talend.utils.json.JSONObject;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -141,32 +138,14 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
             return "PigStorage"; //$NON-NLS-1$
         } else if (EHDFSRepositoryToComponent.HADOOP_ADVANCED_PROPERTIES.getRepositoryValue().equals(value)) {
-            return getHadoopProperties(connection.getHadoopProperties());
+            try {
+                return HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties(), true);
+            } catch (JSONException e) {
+                ExceptionHandler.process(e);
+            }
         }
 
         return null;
-    }
-
-    private List<HashMap<String, Object>> getHadoopProperties(String message) {
-        List<HashMap<String, Object>> properties = new ArrayList<HashMap<String, Object>>();
-        try {
-            if (StringUtils.isNotEmpty(message)) {
-                JSONArray jsonArr = new JSONArray(message);
-                for (int i = 0; i < jsonArr.length(); i++) {
-                    HashMap<String, Object> map = new HashMap();
-                    JSONObject object = jsonArr.getJSONObject(i);
-                    Iterator it = object.keys();
-                    while (it.hasNext()) {
-                        String key = (String) it.next();
-                        map.put(key, object.get(key));
-                    }
-                    properties.add(map);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return properties;
     }
 
     @Override
