@@ -592,6 +592,9 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private void updateItem(final TreeItem item, boolean checked, boolean isEvent) {
         IHDFSNode node = (IHDFSNode) item.getData();
+        if (node == null) {
+            return;
+        }
         if (node.getType() == EHadoopFileTypes.FOLDER) {
             for (TreeItem treeItem : item.getItems()) {
                 updateItem(treeItem, checked, true);
