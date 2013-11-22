@@ -9,8 +9,8 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 %>
-	if(csvWriter_<%=cid%>!=null) {
-		csvWriter_<%=cid%>.close();
+	if(resourceMap.get("finish_<%=cid%>") == null){
+		if(resourceMap.get("csvWriter_<%=cid%>")!=null) {
+			((com.talend.csv.CSVWriter)resourceMap.get("csvWriter_<%=cid%>")).close();
+		}
 	}
-	resourceMap.put("finish_<%=cid%>", true); 
-	globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid %>);

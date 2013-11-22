@@ -21,7 +21,7 @@
     String cid = node.getUniqueName();
     List<Map<String, String>> valueColumns = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__VALUE_COLUMNS__");
     List<String> valueColumnNames = new java.util.ArrayList<String>();
-    
+	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
     boolean autoGenKey = "true".equals(ElementParameterParser.getValue(node,"__AUTO_GEN_KEY__"));
     String key = ElementParameterParser.getValue(node,"__KEY__");
     String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
@@ -52,42 +52,60 @@
 					}
 				}
 				int sizeColumns = tempValuesColumns.size();
-				if("DELETE".equals(dataAction)){
-%>
-				if(<%=conn.getName()%>.<%=key%>!=null){
-					bucket_<%=cid%>.delete(String.valueOf(<%=conn.getName()%>.<%=key%>)).execute();
-					delete_nb_line_<%=cid%>++;
-				}
-<%
-				}else{
-					if(sizeColumns>0){
-%>
-			object_<%=cid%>=new java.util.HashMap<String,Object>();
-<%
-						for (int i = 0; i < sizeColumns; i++) {
-							IMetadataColumn column = tempValuesColumns.get(i);
-%>
-			object_<%=cid%>.put("<%=column.getOriginalDbColumnName()%>", <%=conn.getName()%>.<%=column.getLabel()%>);
-<%
+				%>
+				try{
+					<%
+					if("DELETE".equals(dataAction)){
+					%>
+						if(<%=conn.getName()%>.<%=key%>!=null){
+							bucket_<%=cid%>.delete(String.valueOf(<%=conn.getName()%>.<%=key%>)).execute();
+							delete_nb_line_<%=cid%>++;
 						}
-						if(autoGenKey){
-%>
-			bucket_<%=cid%>.store(object_<%=cid%>).withoutFetch().execute();
-<%
-						}else{
-%>
-			if(<%=conn.getName()%>.<%=key%>!=null){
-				bucket_<%=cid%>.store(String.valueOf(<%=conn.getName()%>.<%=key%>), object_<%=cid%>).execute();
-			}else{
-				bucket_<%=cid%>.store(object_<%=cid%>).execute();
-			}
-<%
+					<%
+					}else{
+						if(sizeColumns>0){
+						%>
+							object_<%=cid%>=new java.util.HashMap<String,Object>();
+							<%
+							for (int i = 0; i < sizeColumns; i++) {
+								IMetadataColumn column = tempValuesColumns.get(i);
+								%>
+								object_<%=cid%>.put("<%=column.getOriginalDbColumnName()%>", <%=conn.getName()%>.<%=column.getLabel()%>);
+							<%
+							}
+							if(autoGenKey){
+							%>
+								bucket_<%=cid%>.store(object_<%=cid%>).withoutFetch().execute();
+							<%
+							}else{
+							%>
+								if(<%=conn.getName()%>.<%=key%>!=null){
+									bucket_<%=cid%>.store(String.valueOf(<%=conn.getName()%>.<%=key%>), object_<%=cid%>).execute();
+								}else{
+									bucket_<%=cid%>.store(object_<%=cid%>).execute();
+								}
+							<%
+							}
 						}
+						%>
+						upsert_nb_line_<%=cid%>++;
+					<%
 					}
-%>
-			upsert_nb_line_<%=cid%>++;
-<%
+					%>
+				}catch(java.lang.Exception e_<%=cid%>){
+					<%
+					if(dieOnError) {
+					%>
+				        throw(e_<%=cid%>);
+					<%
+					}else{
+					%>
+						System.err.println(e_<%=cid%>.getMessage());
+					<%
+					}	
+					%>
 				}
+			<%
 			}
     	}
     }

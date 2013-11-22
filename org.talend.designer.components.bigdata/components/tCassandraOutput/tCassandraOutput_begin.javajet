@@ -33,101 +33,104 @@
 	
 	String superKeyColumn = ElementParameterParser.getValue(node,"__SUPER_KEY_COLUMN__");
 	String keyColumn = ElementParameterParser.getValue(node,"__KEY_COLUMN__");
-%>
+	%>
 		me.prettyprint.hector.api.Cluster cluster_<%=cid%> =null;
 		me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
 		int batchCounter_<%=cid%> = 0;
 		int nb_line_<%=cid %> = 0;
-		try{
-<%
-	if (useExistingConnection){
-      			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-%>
-		cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
-<%
-	}else{
-%>
+		<%
+		if(useExistingConnection){
+  			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+			%>
+			cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
+		<%
+		}else{
+		%>
 		    String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
 		    me.prettyprint.cassandra.service.CassandraHostConfigurator hosts_<%=cid%> = new me.prettyprint.cassandra.service.CassandraHostConfigurator(hostIps_<%=cid%>);
 		    java.util.Map<String, String> credentials_<%=cid%> = new java.util.HashMap<String, String>();
-<%
-		if (authentication){
-%>
-		    credentials_<%=cid%>.put("username",<%=userName%>);
-		    credentials_<%=cid%>.put("password",<%=passWord%>);
-<%
+			<%
+			if (authentication){
+			%>
+			    credentials_<%=cid%>.put("username",<%=userName%>);
+			    credentials_<%=cid%>.put("password",<%=passWord%>);
+			<%
+			}
+			%>
+    		cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
+    		resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
+		<%
 		}
-%>
-	    	cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
-<%
-	}
-%>
-			me.prettyprint.cassandra.model.ConfigurableConsistencyLevel clpolicy_<%=cid%> = new me.prettyprint.cassandra.model.ConfigurableConsistencyLevel();
-			me.prettyprint.hector.api.HConsistencyLevel consistencyLevel_<%=cid%> = me.prettyprint.hector.api.HConsistencyLevel.ONE;
-			  clpolicy_<%=cid%>.setDefaultWriteConsistencyLevel(consistencyLevel_<%=cid%>);
-<%
+		%>
+		me.prettyprint.cassandra.model.ConfigurableConsistencyLevel clpolicy_<%=cid%> = new me.prettyprint.cassandra.model.ConfigurableConsistencyLevel();
+		me.prettyprint.hector.api.HConsistencyLevel consistencyLevel_<%=cid%> = me.prettyprint.hector.api.HConsistencyLevel.ONE;
+		clpolicy_<%=cid%>.setDefaultWriteConsistencyLevel(consistencyLevel_<%=cid%>);
+		<%
 		if("DROP_CREATE".equals(actionOnKeyspace)){
-%>
+		%>
 			cluster_<%=cid%>.dropKeyspace(<%=keySpace%>, true);
 			cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
-<%
-		}if("CREATE".equals(actionOnKeyspace)){
-%>
+		<%
+		}
+		if("CREATE".equals(actionOnKeyspace)){
+		%>
 			cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
-<%
-		}if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnKeyspace)){
-%>
+		<%
+		}
+		if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnKeyspace)){
+		%>
 			if (cluster_<%=cid%>.describeKeyspace(<%=keySpace%>) != null) {
 	      		cluster_<%=cid%>.dropKeyspace(<%=keySpace%>, true);
 	   		}
 	   		cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
-<%
-		}if("CREATE_IF_NOT_EXISTS".equals(actionOnKeyspace)){
-%>
+		<%
+		}
+		if("CREATE_IF_NOT_EXISTS".equals(actionOnKeyspace)){
+		%>
 			if (cluster_<%=cid%>.describeKeyspace(<%=keySpace%>) == null) {
 	      		cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
 	   		}
-<%
+		<%
 		}
-%>
-	    	keyspace_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createKeyspace(<%=keySpace%>, cluster_<%=cid%>,clpolicy_<%=cid%>);
-<%
+		%>
+    	keyspace_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createKeyspace(<%=keySpace%>, cluster_<%=cid%>,clpolicy_<%=cid%>);
+		<%
 		if("DROP_CREATE".equals(actionOnColumnFamily)){
-%>
+		%>
 			cluster_<%=cid%>.dropColumnFamily(<%=keySpace%>,<%=columnFamily%>, true);
-<%
+		<%
 		}
 		if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily) || "CREATE_IF_NOT_EXISTS".equals(actionOnColumnFamily)){
-%>
+		%>
 			try {
-<%
-			if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
-%>
-				cluster_<%=cid%>.dropColumnFamily(<%=keySpace%>,<%=columnFamily%>, true);
-<%
-			}else{
-%>
-				me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
-				cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
-				cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
-<%
- 			}
-%>
+				<%
+				if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
+				%>
+					cluster_<%=cid%>.dropColumnFamily(<%=keySpace%>,<%=columnFamily%>, true);
+				<%
+				}else{
+				%>
+					me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
+					cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
+					cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
+				<%
+ 				}
+				%>
 			} catch (Exception e_<%=cid%>) {
-<%
-			if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
-%>
-			}finally{
-				me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
-				cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
-				cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
-			}
-<%
-			}else{
-%>
-			}
-<%
-			}
+				<%
+				if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
+				%>
+					}finally{
+						me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
+						cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
+						cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
+					}
+				<%
+				}else{
+				%>
+					}
+				<%
+				}
 		}
 		if("CREATE".equals(actionOnColumnFamily) || "DROP_CREATE".equals(actionOnColumnFamily)){
 %>

@@ -30,6 +30,7 @@
     boolean deleteRow = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DELETE_ROW__"));
     boolean delSuperColumn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DELETE_SUPER_COLUMN__"));
     Map<String,String> deleteColumns=new java.util.HashMap<String,String>();
+    boolean dieOnError = ("true").equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
     for(Map<String,String> delColumn:listDeleteCols){
     	deleteColumns.put(delColumn.get("DELETE_COLUMN"),delColumn.get("DELETE_COLUMN"));
     }
@@ -89,85 +90,44 @@
 				if (metaKeyColumn != null) {
 					isKeyColumnJavaPrimitive = JavaTypesManager.isJavaPrimitiveType(metaKeyColumn.getTalendType(), metaKeyColumn.isNullable());
 				}
-				if (!isKeyColumnJavaPrimitive) {
 				%>
-					if (<%=conName%>.<%=keyColumn%> != null) {
-				<%
-				}
-				if("SUPER".equals(columnFamilyType)){
-				%>
-
-					java.util.List<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>> innerColumn_<%=cid%>=new 
-		    		java.util.ArrayList<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>>();
-				<%
-				}
-	    		for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
-	    			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
-	    			String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
-					String cType = column.getType();
-	    			boolean isJavaPrimitiveType = JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable());
-	    			if("STANDARD".equals(columnFamilyType)){
-						if (incKey || !column.getLabel().equals(keyColumn)) {
-							if("UPSERT".equals(actionOnData)){
-							%>
-								<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null) { <%}%>
-									mutator_<%=cid%>.addInsertion(
-										<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
-										<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
-										<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
-										<%}else{%>
-											<%=conName%>.<%=keyColumn%>
-										<%}%>
-										
-										, <%=columnFamily%>,
-										me.prettyprint.hector.api.factory.HFactory.createColumn(
-										"<%=column.getOriginalDbColumnName()%>",
-										<%if("BigIntegerSerializer".equals(typeMap.get(columnType, cType))){%>
-											(java.math.BigInteger)<%=conName%>.<%=column.getLabel()%>
-										<%}else if("UUIDSerializer".equals(typeMap.get(columnType, cType))){%>
-											java.util.UUID.fromString(<%=conName%>.<%=column.getLabel()%>)
-										<%}else if("TimeUUIDSerializer".equals(typeMap.get(columnType, cType))){%>
-											new com.eaio.uuid.UUID(<%=conName%>.<%=column.getLabel()%>)
-										<%}else{%>
-											<%=conName%>.<%=column.getLabel()%>
-										<%}%>
-										,
-										serializer_<%=cid%>,
-										me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get()
-										)
-									);
-								<%if (!isJavaPrimitiveType) {%>} <%}%>
-							<%
-							}else{
-								if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
+				try{
+					<%
+					if (!isKeyColumnJavaPrimitive) {
+					%>
+						if (<%=conName%>.<%=keyColumn%> != null) {
+					<%
+					}
+					if("SUPER".equals(columnFamilyType)){
+					%>
+	
+						java.util.List<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>> innerColumn_<%=cid%>=new 
+			    		java.util.ArrayList<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>>();
+					<%
+					}
+		    		for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
+		    			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+		    			String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
+						String cType = column.getType();
+		    			boolean isJavaPrimitiveType = JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable());
+		    			if("STANDARD".equals(columnFamilyType)){
+							if (incKey || !column.getLabel().equals(keyColumn)) {
+								if("UPSERT".equals(actionOnData)){
 								%>
-									mutator_<%=cid%>.addDeletion(
-									
-										<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
-										<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
-										<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
-										<%}else{%>
-											<%=conName%>.<%=keyColumn%>
-										<%}%>
-									
-									, <%=columnFamily%>,"<%=column.getOriginalDbColumnName()%>",serializer_<%=cid%>);
-								<%
-								}
-							}
-						}
-					}else{
-						if (!((!incKey && column.getLabel().equals(keyColumn))|| (!incSuperKey && column.getLabel().equals(superKeyColumn)))) {
-							if("UPSERT".equals(actionOnData)){
-							%>
-								<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null){ <%}%>
-									me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=
-										me.prettyprint.hector.api.factory.HFactory.createColumn(
+									<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null) { <%}%>
+										mutator_<%=cid%>.addInsertion(
+											<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
+											<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
+											<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
+											<%}else{%>
+												<%=conName%>.<%=keyColumn%>
+											<%}%>
+											
+											, <%=columnFamily%>,
+											me.prettyprint.hector.api.factory.HFactory.createColumn(
 											"<%=column.getOriginalDbColumnName()%>",
 											<%if("BigIntegerSerializer".equals(typeMap.get(columnType, cType))){%>
 												(java.math.BigInteger)<%=conName%>.<%=column.getLabel()%>
@@ -181,84 +141,96 @@
 											,
 											serializer_<%=cid%>,
 											me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get()
+											)
 										);
-									innerColumn_<%=cid%>.add( column_<%=column.getOriginalDbColumnName()%>);
-								<%if (!isJavaPrimitiveType) {%>} <%}%>
-							<%
-							}else{
-								if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
-								%>
-									mutator_<%=cid%>.addSubDelete(
-										<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
-										<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
-										<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-											new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
-										<%}else{%>
-											<%=conName%>.<%=keyColumn%>
-										<%}%>
-										,
-										<%=columnFamily%>
-										,
-										<%if("BigIntegerSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-											(java.math.BigInteger)<%=conName%>.<%=superKeyColumn%>
-										<%}else if("UUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-											java.util.UUID.fromString(<%=conName%>.<%=superKeyColumn%>)
-										<%}else if("TimeUUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-											new com.eaio.uuid.UUID(<%=conName%>.<%=superKeyColumn%>)
-										<%}else{%>
-											<%=conName%>.<%=superKeyColumn%>
-										<%}%>
-										,
-										"<%=column.getOriginalDbColumnName()%>",sNameSerializer_<%=cid%>,serializer_<%=cid%>);
+									<%if (!isJavaPrimitiveType) {%>} <%}%>
 								<%
+								}else{
+									if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
+									%>
+										mutator_<%=cid%>.addDeletion(
+										
+											<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
+											<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
+											<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
+											<%}else{%>
+												<%=conName%>.<%=keyColumn%>
+											<%}%>
+										
+										, <%=columnFamily%>,"<%=column.getOriginalDbColumnName()%>",serializer_<%=cid%>);
+									<%
+									}
+								}
+							}
+						}else{
+							if (!((!incKey && column.getLabel().equals(keyColumn))|| (!incSuperKey && column.getLabel().equals(superKeyColumn)))) {
+								if("UPSERT".equals(actionOnData)){
+								%>
+									<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null){ <%}%>
+										me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=
+											me.prettyprint.hector.api.factory.HFactory.createColumn(
+												"<%=column.getOriginalDbColumnName()%>",
+												<%if("BigIntegerSerializer".equals(typeMap.get(columnType, cType))){%>
+													(java.math.BigInteger)<%=conName%>.<%=column.getLabel()%>
+												<%}else if("UUIDSerializer".equals(typeMap.get(columnType, cType))){%>
+													java.util.UUID.fromString(<%=conName%>.<%=column.getLabel()%>)
+												<%}else if("TimeUUIDSerializer".equals(typeMap.get(columnType, cType))){%>
+													new com.eaio.uuid.UUID(<%=conName%>.<%=column.getLabel()%>)
+												<%}else{%>
+													<%=conName%>.<%=column.getLabel()%>
+												<%}%>
+												,
+												serializer_<%=cid%>,
+												me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get()
+											);
+										innerColumn_<%=cid%>.add( column_<%=column.getOriginalDbColumnName()%>);
+									<%if (!isJavaPrimitiveType) {%>} <%}%>
+								<%
+								}else{
+									if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
+									%>
+										mutator_<%=cid%>.addSubDelete(
+											<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
+											<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
+											<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+												new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
+											<%}else{%>
+												<%=conName%>.<%=keyColumn%>
+											<%}%>
+											,
+											<%=columnFamily%>
+											,
+											<%if("BigIntegerSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+												(java.math.BigInteger)<%=conName%>.<%=superKeyColumn%>
+											<%}else if("UUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+												java.util.UUID.fromString(<%=conName%>.<%=superKeyColumn%>)
+											<%}else if("TimeUUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+												new com.eaio.uuid.UUID(<%=conName%>.<%=superKeyColumn%>)
+											<%}else{%>
+												<%=conName%>.<%=superKeyColumn%>
+											<%}%>
+											,
+											"<%=column.getOriginalDbColumnName()%>",sNameSerializer_<%=cid%>,serializer_<%=cid%>);
+									<%
+									}
 								}
 							}
 						}
 					}
-				}
-	           	if("SUPER".equals(columnFamilyType) && "UPSERT".equals(actionOnData)){
-					IMetadataColumn metaSuperKeyColumn = inputMetadataTable.getColumn(superKeyColumn);
-					boolean isSuperKeyColumnJavaPrimitive = false;
-					if (metaSuperKeyColumn != null) {
-						isSuperKeyColumnJavaPrimitive = JavaTypesManager.isJavaPrimitiveType(metaSuperKeyColumn.getTalendType(), metaSuperKeyColumn.isNullable());
-					}
-					%>
-					<%if (!isSuperKeyColumnJavaPrimitive) {%>if(<%=conName%>.<%=superKeyColumn%>!=null){ <%}%>
-						mutator_<%=cid%>.addInsertion(
-							<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-								(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
-							<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-								java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
-							<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-								new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
-							<%}else{%>
-								<%=conName%>.<%=keyColumn%>
-							<%}%>
-							,
-							<%=columnFamily%>,
-							new me.prettyprint.cassandra.model.HSuperColumnImpl(
-								<%if("BigIntegerSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-									(java.math.BigInteger)<%=conName%>.<%=superKeyColumn%>
-								<%}else if("UUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-									java.util.UUID.fromString(<%=conName%>.<%=superKeyColumn%>)
-								<%}else if("TimeUUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-									new com.eaio.uuid.UUID(<%=conName%>.<%=superKeyColumn%>)
-								<%}else{%>
-									<%=conName%>.<%=superKeyColumn%>
-								<%}%>
-								,
-								innerColumn_<%=cid%>,
-								me.prettyprint.hector.api.factory.HFactory.createClock(),sNameSerializer_<%=cid%>,serializer_<%=cid%>,serializer_<%=cid%>));
-					<%if (!isSuperKeyColumnJavaPrimitive) {%>} <%}%>
-				<%
-				}
-				if("DELETE".equals(actionOnData)){
-					if(deleteRow || listDeleteCols.size()<1){
-						if("STANDARD".equals(columnFamilyType)){
+		           	if("SUPER".equals(columnFamilyType) && "UPSERT".equals(actionOnData)){
+						IMetadataColumn metaSuperKeyColumn = inputMetadataTable.getColumn(superKeyColumn);
+						boolean isSuperKeyColumnJavaPrimitive = false;
+						if (metaSuperKeyColumn != null) {
+							isSuperKeyColumnJavaPrimitive = JavaTypesManager.isJavaPrimitiveType(metaSuperKeyColumn.getTalendType(), metaSuperKeyColumn.isNullable());
+						}
 						%>
-							mutator_<%=cid%>.addDeletion(
+						<%if (!isSuperKeyColumnJavaPrimitive) {%>if(<%=conName%>.<%=superKeyColumn%>!=null){ <%}%>
+							mutator_<%=cid%>.addInsertion(
 								<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
 									(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
 								<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
@@ -268,10 +240,27 @@
 								<%}else{%>
 									<%=conName%>.<%=keyColumn%>
 								<%}%>
-								, <%=columnFamily%>);
-						<%             		
-						}else{
-							if(deleteRow && !delSuperColumn){
+								,
+								<%=columnFamily%>,
+								new me.prettyprint.cassandra.model.HSuperColumnImpl(
+									<%if("BigIntegerSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+										(java.math.BigInteger)<%=conName%>.<%=superKeyColumn%>
+									<%}else if("UUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+										java.util.UUID.fromString(<%=conName%>.<%=superKeyColumn%>)
+									<%}else if("TimeUUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+										new com.eaio.uuid.UUID(<%=conName%>.<%=superKeyColumn%>)
+									<%}else{%>
+										<%=conName%>.<%=superKeyColumn%>
+									<%}%>
+									,
+									innerColumn_<%=cid%>,
+									me.prettyprint.hector.api.factory.HFactory.createClock(),sNameSerializer_<%=cid%>,serializer_<%=cid%>,serializer_<%=cid%>));
+						<%if (!isSuperKeyColumnJavaPrimitive) {%>} <%}%>
+					<%
+					}
+					if("DELETE".equals(actionOnData)){
+						if(deleteRow || listDeleteCols.size()<1){
+							if("STANDARD".equals(columnFamilyType)){
 							%>
 								mutator_<%=cid%>.addDeletion(
 									<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
@@ -284,41 +273,71 @@
 										<%=conName%>.<%=keyColumn%>
 									<%}%>
 									, <%=columnFamily%>);
-							<%
+							<%             		
 							}else{
-							%>
-								mutator_<%=cid%>.addSuperDelete(
-									<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-										(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
-									<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-										java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
-									<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
-										new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
-									<%}else{%>
-										<%=conName%>.<%=keyColumn%>
-									<%}%>
-									, <%=columnFamily%>,
-									<%if("BigIntegerSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-										(java.math.BigInteger)<%=conName%>.<%=superKeyColumn%>
-									<%}else if("UUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-										java.util.UUID.fromString(<%=conName%>.<%=superKeyColumn%>)
-									<%}else if("TimeUUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
-										new com.eaio.uuid.UUID(<%=conName%>.<%=superKeyColumn%>)
-									<%}else{%>
-										<%=conName%>.<%=superKeyColumn%>
-									<%}%>
-									,sNameSerializer_<%=cid%>);
-							<%
+								if(deleteRow && !delSuperColumn){
+								%>
+									mutator_<%=cid%>.addDeletion(
+										<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+											(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
+										<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+											java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
+										<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+											new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
+										<%}else{%>
+											<%=conName%>.<%=keyColumn%>
+										<%}%>
+										, <%=columnFamily%>);
+								<%
+								}else{
+								%>
+									mutator_<%=cid%>.addSuperDelete(
+										<%if("BigIntegerSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+											(java.math.BigInteger)<%=conName%>.<%=keyColumn%>
+										<%}else if("UUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+											java.util.UUID.fromString(<%=conName%>.<%=keyColumn%>)
+										<%}else if("TimeUUIDSerializer".equals(typeMap.get(keyColumnType, keyCType))){%>
+											new com.eaio.uuid.UUID(<%=conName%>.<%=keyColumn%>)
+										<%}else{%>
+											<%=conName%>.<%=keyColumn%>
+										<%}%>
+										, <%=columnFamily%>,
+										<%if("BigIntegerSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+											(java.math.BigInteger)<%=conName%>.<%=superKeyColumn%>
+										<%}else if("UUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+											java.util.UUID.fromString(<%=conName%>.<%=superKeyColumn%>)
+										<%}else if("TimeUUIDSerializer".equals(typeMap.get(supKeyColumnType, supKeyCType))){%>
+											new com.eaio.uuid.UUID(<%=conName%>.<%=superKeyColumn%>)
+										<%}else{%>
+											<%=conName%>.<%=superKeyColumn%>
+										<%}%>
+										,sNameSerializer_<%=cid%>);
+								<%
+								}
 							}
 						}
+		            }
+					%>
+					<%if (!isKeyColumnJavaPrimitive) {%>
+						}
+					<%}%>
+					nb_line_<%=cid %>++;
+					if (batchCounter_<%=cid%>++ == <%=batchSize%>) {
+						mutator_<%=cid%>.execute();
+						batchCounter_<%=cid%> = 0;
 					}
-	            }
-				%>
-				<%if (!isKeyColumnJavaPrimitive) {%>} <%}%>
-				nb_line_<%=cid %>++;
-				if (batchCounter_<%=cid%>++ == <%=batchSize%>) {
-					mutator_<%=cid%>.execute();
-					batchCounter_<%=cid%> = 0;
+				}catch(java.lang.Exception e_<%=cid%>){
+					<%
+					if(dieOnError) {
+					%>
+				        throw(e_<%=cid%>);
+					<%
+					}else {
+					%>
+						System.err.println(e_<%=cid%>.getMessage());
+					<%
+					}
+					%>    
 				}
 			<%
 			}

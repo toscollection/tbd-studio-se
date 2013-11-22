@@ -15,14 +15,6 @@
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
     String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
-
-	%>
-	if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
-		tx_<%=cid%>.success();
-		tx_<%=cid%>.finish();
-	}
-	<%
-    
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
@@ -31,10 +23,13 @@
     List<Map<String, String>> values = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__VALUES__");
 
 	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
-		%>
-			databaseService_<%=cid%>.shutdown();
-			resourceMap.put("finish_<%=cid%>", true); 
-		<%
+	%>
+		if(resourceMap.get("finish_<%=cid%>") == null){
+			if(resourceMap.get("databaseService_<%=cid%>") != null){
+				((org.neo4j.graphdb.GraphDatabaseService)resourceMap.get("databaseService_<%=cid%>")).shutdown();
+			}
+		}
+	<%
 	}
 	if (batchImport) {
 		Set<String> indexNames = new HashSet();
@@ -45,26 +40,20 @@
 	   		}
 	    }
 	    for (String indexName : indexNames) {
-	    	%>
+	    %>
 	    	indexInserterMap_<%=cid%>.get(<%=indexName%>).flush();
-	    	<%
+	    <%
 	    }
 		// Must shutdown database to prevent data corruption after batch importation
 		%>
-			if(indexProvider_<%=cid%>!=null){
-				indexProvider_<%=cid%>.shutdown();
+			if(resourceMap.get("finish_<%=cid%>") == null){
+				if(resourceMap.get("indexProvider_<%=cid%>") != null){
+					((org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider)resourceMap.get("indexProvider_<%=cid%>")).shutdown();
+				}
+				if(resourceMap.get("inserter_<%=cid%>") != null){
+					((org.neo4j.unsafe.batchinsert.BatchInserter)resourceMap.get("inserter_<%=cid%>")).shutdown();
+				}
 			}
-			if(inserter_<%=cid%>!=null){
-				inserter_<%=cid%>.shutdown();
-			}
-			resourceMap.put("finish_<%=cid%>", true); 
-		<%
-		if (useExistingConnection && !shutdownDb) {
-			%>
-			databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedGraphDatabase(storeDir_<%=cid%>);
-			globalMap.put("<%=dbconn%>", databaseService_<%=cid%>);
-			<%
-		}
+	<%
 	}
 %>
-globalMap.put("<%=cid%>_NB_LINE", nb_line_<%=cid%>);
