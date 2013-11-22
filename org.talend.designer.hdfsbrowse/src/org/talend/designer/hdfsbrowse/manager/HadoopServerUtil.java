@@ -297,7 +297,7 @@ public class HadoopServerUtil {
                 }
             }
         } catch (Exception e) {
-            throw new HadoopServerException(e);
+            // ignore it.
         }
 
         return groupBuf.toString();
