@@ -15,8 +15,10 @@ import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.metadata.MetadataManager;
+import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.AbstractHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.model.RepositoryNode;
@@ -147,5 +149,19 @@ public class OozieRepositoryContentHandler extends AbstractHadoopSubnodeReposito
         }
 
         return new OozieWizard(workbench, creation, node, existingNames);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.model.repository.IRepositoryContentHandler#newSchemaWizard(org.eclipse.ui.IWorkbench,
+     * boolean, org.talend.core.model.repository.IRepositoryViewObject,
+     * org.talend.core.model.metadata.builder.connection.MetadataTable, java.lang.String[], boolean)
+     */
+    @Override
+    public IWizard newSchemaWizard(IWorkbench workbench, boolean creation, IRepositoryViewObject object,
+            MetadataTable metadataTable, String[] existingNames, boolean forceReadOnly) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
