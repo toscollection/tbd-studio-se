@@ -24,7 +24,7 @@
 		if (metadata!=null) {
 %>
 					}
-					if (globalMap.containsKey("<%=cid%>_FINISH") ) {
+					if (globalMap.containsKey(readFinishMarkWithPipeId_<%=cid%>)) {
 						if (queue_<%=cid%>.isEmpty()) {
 							break;
 						}
@@ -59,7 +59,8 @@
 <%
 				}
 %>
-			globalMap.remove("<%=cid%>_FINISH");
+			globalMap.put(readFinishMarkWithPipeId_<%=cid%>,null);//syn
+			globalMap.remove(readFinishMarkWithPipeId_<%=cid%>);
 <%
 		}
 	}
