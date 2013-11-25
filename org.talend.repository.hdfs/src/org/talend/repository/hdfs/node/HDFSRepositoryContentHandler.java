@@ -15,11 +15,14 @@ import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.metadata.MetadataManager;
+import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.AbstractHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
+import org.talend.repository.hdfs.ui.HDFSSchemaWizard;
 import org.talend.repository.hdfs.ui.HDFSWizard;
 import org.talend.repository.hdfs.util.EHDFSImage;
 import org.talend.repository.model.IRepositoryNode;
@@ -202,6 +205,19 @@ public class HDFSRepositoryContentHandler extends AbstractHadoopSubnodeRepositor
         }
 
         return new HDFSWizard(workbench, creation, node, existingNames);
+    }
+
+    @Override
+    public IWizard newSchemaWizard(IWorkbench workbench, boolean creation, IRepositoryViewObject object,
+            MetadataTable metadataTable, String[] existingNames, boolean forceReadOnly) {
+        if (object == null) {
+            return null;
+        }
+        if (workbench == null) {
+            workbench = PlatformUI.getWorkbench();
+        }
+
+        return new HDFSSchemaWizard(workbench, creation, object, metadataTable, existingNames, forceReadOnly);
     }
 
 }

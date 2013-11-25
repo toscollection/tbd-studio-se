@@ -29,6 +29,7 @@ import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.AbstractHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.hcatalog.metadata.ExtractMetaDataFromHCatalog;
+import org.talend.repository.hcatalog.ui.HCatalogSchemaWizard;
 import org.talend.repository.hcatalog.ui.HCatalogWizard;
 import org.talend.repository.hcatalog.util.EHCatalogImage;
 import org.talend.repository.hcatalog.util.HCatalogConstants;
@@ -240,6 +241,19 @@ public class HCatalogRepositoryContentHandler extends AbstractHadoopSubnodeRepos
             workbench = PlatformUI.getWorkbench();
         }
         return new HCatalogWizard(workbench, creation, node, existingNames);
+    }
+
+    @Override
+    public IWizard newSchemaWizard(IWorkbench workbench, boolean creation, IRepositoryViewObject object,
+            MetadataTable metadataTable, String[] existingNames, boolean forceReadOnly) {
+        if (object == null) {
+            return null;
+        }
+        if (workbench == null) {
+            workbench = PlatformUI.getWorkbench();
+        }
+
+        return new HCatalogSchemaWizard(workbench, creation, object, metadataTable, existingNames, forceReadOnly);
     }
 
 }
