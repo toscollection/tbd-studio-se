@@ -88,6 +88,11 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
             return true;
         }
 
+        if (HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(repObjType)
+                && ArrayUtils.contains(repositoryTypes, "HADOOPCLUSTER")) { //$NON-NLS-1$
+            return true;
+        }
+
         if (node.getType() == ENodeType.SIMPLE_FOLDER || HCRepositoryUtil.isHadoopContainerNode(node)) {
             return isValidFolder(node);
         }
