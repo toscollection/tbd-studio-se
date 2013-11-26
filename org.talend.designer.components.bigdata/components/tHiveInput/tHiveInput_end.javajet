@@ -38,7 +38,7 @@ imports="
 globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
 <%if(isLog4jEnabled){%>
 	log.info("<%=cid%> - Retrieved records count: "+ nb_line_<%=cid%> +".");
-	log.info("<%=cid%> - Has finished.");
+	log.info("<%=cid%> - Done.");
 <%}%>
 
 String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
