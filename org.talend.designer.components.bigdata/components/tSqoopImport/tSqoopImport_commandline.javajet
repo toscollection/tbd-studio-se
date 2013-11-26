@@ -76,7 +76,7 @@ if(isUseSpeedParallel && specificParams!=null){
 		} 
 	} 
 } 
-if(isUseAdditionParams){
+if(isUseSpeedParallel && isUseAdditionParams){
 %>
 ,<%=specificAdditionParams%>
 <%
