@@ -26,9 +26,11 @@
 <%
 	}
 %>
-	globalMap.put("<%=cid %>_NB_NODE_INSERTED", nbNodeInserted_<%=cid%>);
-	globalMap.put("<%=cid %>_NB_RELATIONSHIP_INSERTED", nbRelationshipInserted_<%=cid%>);
-	globalMap.put("<%=cid %>_NB_PROPERTY_UPDATED", nbPropertiesUpdated_<%=cid%>);
-	globalMap.put("<%=cid %>_NB_NODE_DELETED", nbNodeDeleted_<%=cid%>);
-	globalMap.put("<%=cid %>_NB_RELATIONSHIP_DELETED", nbRelationshipDeleted_<%=cid%>);
+	if(engine_<%=cid%>!=null){
+		globalMap.put("<%=cid %>_NB_NODE_INSERTED", nbNodeInserted_<%=cid%>);
+		globalMap.put("<%=cid %>_NB_RELATIONSHIP_INSERTED", nbRelationshipInserted_<%=cid%>);
+		globalMap.put("<%=cid %>_NB_PROPERTY_UPDATED", nbPropertiesUpdated_<%=cid%>);
+		globalMap.put("<%=cid %>_NB_NODE_DELETED", nbNodeDeleted_<%=cid%>);
+		globalMap.put("<%=cid %>_NB_RELATIONSHIP_DELETED", nbRelationshipDeleted_<%=cid%>);
+	}
 	

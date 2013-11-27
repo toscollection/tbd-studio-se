@@ -51,41 +51,48 @@
     
 %>
 	java.util.Map<String, Object> row_<%=cid%> = resultIterator_<%=cid%>.next();
+	Object value_<%=cid%> = null;
 <%
 	for (Map.Entry<String, IMetadataColumn> columnMapped : columnsMapped.entrySet()) {
 		String returnParameter = columnMapped.getKey();	
 		IMetadataColumn column = columnMapped.getValue();	
 		%>
 		expression_<%=cid%> = <%=returnParameter%>!=null?<%=returnParameter%>:"";
-		Object value_<%=column%> = row_<%=cid%>.get(expression_<%=cid%>);
-		if (value_<%=column%> == null) {
-			if(expression_<%=cid%>.contains(".")) {
-				if (row_<%=cid%>.get(expression_<%=cid%>.split("\\.")[0]) != null && row_<%=cid%>.get(expression_<%=cid%>.split("\\.")[0]) instanceof org.neo4j.graphdb.PropertyContainer) {
-					org.neo4j.graphdb.PropertyContainer propertyContainer = (org.neo4j.graphdb.PropertyContainer) row_<%=cid%>.get(expression_<%=cid%>.split("\\.")[0]);
-					value_<%=column%> = propertyContainer.getProperty(expression_<%=cid%>.split("\\.")[1]);
+		value_<%=cid%> = row_<%=cid%>.get(expression_<%=cid%>);
+		if (value_<%=cid%> == null) {
+			try{
+				if(expression_<%=cid%>.contains(".")) {
+					String suffix_<%=cid%>=expression_<%=cid%>.split("\\.")[0];
+					String propertyName_<%=cid%>=expression_<%=cid%>.split("\\.")[1];
+					if (row_<%=cid%>.get(suffix_<%=cid%>) != null && row_<%=cid%>.get(suffix_<%=cid%>) instanceof org.neo4j.graphdb.PropertyContainer) {
+						org.neo4j.graphdb.PropertyContainer propertyContainer = (org.neo4j.graphdb.PropertyContainer) row_<%=cid%>.get(suffix_<%=cid%>);
+						value_<%=cid%> = propertyContainer.getProperty(propertyName_<%=cid%>);
+					}
 				}
+			}catch(org.neo4j.graphdb.NotFoundException e_<%=cid%>){
+				System.err.println(e_<%=cid%>.getMessage()+" not found!!");
 			}
 		}
 		<%
 		String cType = column.getTalendType();
 		if (outgoingConnName != null) {
 			%>
-			if (value_<%=column%> == null) {
+			if (value_<%=cid%> == null) {
 				<%=outgoingConnName%>.<%=column%> = null;
 			} else {
 				<%
 				if (cType.equals("id_Date")) {
 					%>
-					if (value_<%=column%> instanceof Number) {
-						<%=outgoingConnName%>.<%=column%> = new java.util.Date(((Number) value_<%=column%>).longValue());
+					if (value_<%=cid%> instanceof Number) {
+						<%=outgoingConnName%>.<%=column%> = new java.util.Date(((Number) value_<%=cid%>).longValue());
 					<%
 					if (column.getPattern() != null && !column.getPattern().isEmpty()) {
 						%>
-						} else if (value instanceof String) {
-							java.text.SimpleDateFormat formater = new SimpleDateFormat("<%=column.getPattern()%>");
+						} else if (value_<%=cid%> instanceof String) {
+							java.text.SimpleDateFormat formater_<%=cid%> = new SimpleDateFormat(<%=column.getPattern()%>);
 							try {
-            					<%=outgoingConnName%>.<%=column%> = simpleDateFormat.parse(value_<%=column%>);
-        					} catch (ParseException e) {
+            					<%=outgoingConnName%>.<%=column%> = formater_<%=cid%>.parse((String)value_<%=cid%>);
+        					} catch (ParseException e_<%=cid%>) {
             					throw new RuntimeException("Unable to parse date");
         					}
 						}
@@ -99,8 +106,8 @@
 					}
 				} else if (cType.equals("id_List")) {
 					%>
-					if (value_<%=column%> instanceof java.util.Collection<?>) {				
-						java.util.Collection<?> collection = (java.util.Collection<?>) value_<%=column%>;				
+					if (value_<%=cid%> instanceof java.util.Collection<?>) {				
+						java.util.Collection<?> collection = (java.util.Collection<?>) value_<%=cid%>;				
 						<%=outgoingConnName%>.<%=column%> = new java.util.ArrayList(collection);
 					} else {
 						throw new RuntimeException("The returned parameter is not a Collection");
@@ -108,53 +115,53 @@
 					<%
 				} else if (cType.equals("id_String")) {
 					%>
-					if (value_<%=column%> instanceof String) {
-						<%=outgoingConnName%>.<%=column%> = (String) value_<%=column%>;
+					if (value_<%=cid%> instanceof String) {
+						<%=outgoingConnName%>.<%=column%> = (String) value_<%=cid%>;
 					} else {
-						<%=outgoingConnName%>.<%=column%> = value_<%=column%>.toString();
+						<%=outgoingConnName%>.<%=column%> = value_<%=cid%>.toString();
 					}
 					<%
 				} else if (cType.equals("id_Long")) {
 					%>
-					if (value_<%=column%> instanceof Long) {
-						<%=outgoingConnName%>.<%=column%> = (Long) value_<%=column%>;
-					} else if (value_<%=column%> instanceof Double) {
-						<%=outgoingConnName%>.<%=column%> = (Long) Math.round((Double) value_<%=column%>);
+					if (value_<%=cid%> instanceof Long) {
+						<%=outgoingConnName%>.<%=column%> = (Long) value_<%=cid%>;
+					} else if (value_<%=cid%> instanceof Double) {
+						<%=outgoingConnName%>.<%=column%> = (Long) Math.round((Double) value_<%=cid%>);
 					} else {
-						<%=outgoingConnName%>.<%=column%> = new Long(value_<%=column%>.toString());
+						<%=outgoingConnName%>.<%=column%> = new Long(value_<%=cid%>.toString());
 					}
 					<%
 				} else if (cType.equals("id_Integer")) {
 					%>
-					if (value_<%=column%> instanceof Integer) {
-						<%=outgoingConnName%>.<%=column%> = (Integer) value_<%=column%>;
-					} else if (value_<%=column%> instanceof Double) {
-						<%=outgoingConnName%>.<%=column%> = (int) Math.round((Double) value_<%=column%>);
+					if (value_<%=cid%> instanceof Integer) {
+						<%=outgoingConnName%>.<%=column%> = (Integer) value_<%=cid%>;
+					} else if (value_<%=cid%> instanceof Double) {
+						<%=outgoingConnName%>.<%=column%> = (int) Math.round((Double) value_<%=cid%>);
 					} else {
-						<%=outgoingConnName%>.<%=column%> = new Integer(value_<%=column%>.toString());
+						<%=outgoingConnName%>.<%=column%> = new Integer(value_<%=cid%>.toString());
 					}
 					<%
 				} else if (cType.equals("id_Float")) {
 					%>
-					if (value_<%=column%> instanceof Float) {
-						<%=outgoingConnName%>.<%=column%> = (Float) value_<%=column%>;
-					} else if (value_<%=column%> instanceof Double) {
-					 	<%=outgoingConnName%>.<%=column%> = ((Double) value_<%=column%>).floatValue();
+					if (value_<%=cid%> instanceof Float) {
+						<%=outgoingConnName%>.<%=column%> = (Float) value_<%=cid%>;
+					} else if (value_<%=cid%> instanceof Double) {
+					 	<%=outgoingConnName%>.<%=column%> = ((Double) value_<%=cid%>).floatValue();
 					} else {
-						<%=outgoingConnName%>.<%=column%> = new Float(value_<%=column%>.toString());
+						<%=outgoingConnName%>.<%=column%> = new Float(value_<%=cid%>.toString());
 					}
 					<%
 				} else if (cType.equals("id_Boolean")) {
 					%>
-					if (value_<%=column%> instanceof Boolean) {
-						<%=outgoingConnName%>.<%=column%> = (Boolean) value_<%=column%>;
+					if (value_<%=cid%> instanceof Boolean) {
+						<%=outgoingConnName%>.<%=column%> = (Boolean) value_<%=cid%>;
 					} else {
-						<%=outgoingConnName%>.<%=column%> = new Boolean(value_<%=column%>.toString());
+						<%=outgoingConnName%>.<%=column%> = new Boolean(value_<%=cid%>.toString());
 					}
 					<%
 				} else if (cType.equals("id_Object")) {
 					%>
-					<%=outgoingConnName%>.<%=column%> = value_<%=column%>;
+					<%=outgoingConnName%>.<%=column%> = value_<%=cid%>;
 					<%
 				}
 			%>
