@@ -220,7 +220,18 @@
 %>
 				globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
 				System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+				
+				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
+				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,Cloudera_CDH4".contains(pigVersion)))) {
+					String username = ElementParameterParser.getValue(node, "__USERNAME__");
+%>
+					String username_<%=cid %> = <%=username%>;
+					if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+						System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
+					}
+<%
+				}
 			}
 %>
 			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
