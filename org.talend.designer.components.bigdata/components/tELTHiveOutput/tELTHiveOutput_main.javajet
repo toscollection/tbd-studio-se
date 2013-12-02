@@ -198,6 +198,7 @@ if(columnList != null && columnList.size()>0){
 <%
 	}
 %>
+int nb_line_<%=cid%> = 0;
 int nb_line_overwrite_<%=cid%> = 0;
 int nb_line_inserted_<%=cid%> = 0;
 <%
@@ -221,6 +222,7 @@ if(incomingConnName != null && columnList != null){
 
 System.out.println("Inserting with : \n" + insertQuery_<%=cid %> + "\n");
 nb_line_inserted_<%=cid%> = stmt_<%=cid %>.executeUpdate();
+nb_line_<%=cid%> = nb_line_inserted_<%=cid%>; 
 System.out.println("--> " + nb_line_inserted_<%=cid%> + " rows inserted. \n");
 
 	<%
@@ -228,7 +230,8 @@ System.out.println("--> " + nb_line_inserted_<%=cid%> + " rows inserted. \n");
 	%>
 System.out.println("Overwriting with : \n" + overwriteQuery_<%=cid %> +"\n");
 nb_line_overwrite_<%=cid%> = stmt_<%=cid %>.executeUpdate();
-	System.out.println("--> " + nb_line_overwrite_<%=cid%> + " rows overwrited. \n");
+nb_line_<%=cid%> = nb_line_overwrite_<%=cid%>;
+System.out.println("--> " + nb_line_overwrite_<%=cid%> + " rows overwrited. \n");
 	<%
 	}
 }
@@ -248,6 +251,6 @@ if(!useExistingConn) {
     <%
 }
 %>
-
+globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>); 
 globalMap.put("<%=cid %>_NB_LINE_OVERWRITE",nb_line_overwrite_<%=cid%>);
 globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
