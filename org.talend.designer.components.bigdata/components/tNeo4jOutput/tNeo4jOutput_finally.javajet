@@ -32,28 +32,16 @@
 	<%
 	}
 	if (batchImport) {
-		Set<String> indexNames = new HashSet();
-	    for (Map<String, String> value : values) {
-	   		String strIndexNames = value.get("INDEX_NAMES");
-	   		if (strIndexNames != null && !strIndexNames.isEmpty()) {
-	   			indexNames.addAll(Arrays.asList(strIndexNames.split(",")));
-	   		}
-	    }
-	    for (String indexName : indexNames) {
-	    %>
-	    	indexInserterMap_<%=cid%>.get(<%=indexName%>).flush();
-	    <%
-	    }
-		// Must shutdown database to prevent data corruption after batch importation
-		%>
-			if(resourceMap.get("finish_<%=cid%>") == null){
-				if(resourceMap.get("indexProvider_<%=cid%>") != null){
-					((org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider)resourceMap.get("indexProvider_<%=cid%>")).shutdown();
-				}
-				if(resourceMap.get("inserter_<%=cid%>") != null){
-					((org.neo4j.unsafe.batchinsert.BatchInserter)resourceMap.get("inserter_<%=cid%>")).shutdown();
-				}
+	// Must shutdown database to prevent data corruption after batch importation
+	%>
+		if(resourceMap.get("finish_<%=cid%>") == null){
+			if(resourceMap.get("indexProvider_<%=cid%>") != null){
+				((org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider)resourceMap.get("indexProvider_<%=cid%>")).shutdown();
 			}
+			if(resourceMap.get("inserter_<%=cid%>") != null){
+				((org.neo4j.unsafe.batchinsert.BatchInserter)resourceMap.get("inserter_<%=cid%>")).shutdown();
+			}
+		}
 	<%
 	}
 %>
