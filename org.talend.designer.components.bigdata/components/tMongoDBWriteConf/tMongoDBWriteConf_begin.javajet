@@ -39,6 +39,7 @@
 		%>
 			com.mongodb.Mongo mongo_<%=cid%>=null;
 			com.mongodb.DB db_<%=cid%> =null;
+			String readFinishMarkWithPipeId_<%=cid%> = "<%=cid%>_FINISH";
 			<%
       		if (useExistingConnection){
       			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
@@ -152,7 +153,7 @@
 			<%
 			}
 		    %>
-			String readFinishMarkWithPipeId_<%=cid%> = "<%=cid%>_FINISH"+(queue_<%=cid%>==null?"":queue_<%=cid%>.hashCode());
+			readFinishMarkWithPipeId_<%=cid%> = "<%=cid%>_FINISH"+(queue_<%=cid%>==null?"":queue_<%=cid%>.hashCode());
 			String str_<%=cid %> = null;
 			
 			while(true) {
