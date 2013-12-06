@@ -141,11 +141,8 @@ public abstract class CreateHadoopDBNodeAction extends CreateHadoopNodeAction {
 
         switch (node.getType()) {
         case SIMPLE_FOLDER:
-            if (node.getObject() != null && node.getObject().getProperty().getItem().getState().isDeleted()) {
-                setEnabled(false);
-                return;
-            }
-            break;
+            setEnabled(false);
+            return;
         case SYSTEM_FOLDER:
             if (factory.isUserReadOnlyOnCurrentProject() || !ProjectManager.getInstance().isInCurrentMainProject(node)
                     || !isParentNode(node)) {
