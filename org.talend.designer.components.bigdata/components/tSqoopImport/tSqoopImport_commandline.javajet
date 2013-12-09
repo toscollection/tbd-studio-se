@@ -21,6 +21,8 @@
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
 	boolean isUseSpeedParallel = "true".equals(ElementParameterParser.getValue(node,"__USE_SPEED_PARALLEL__"));
 	List<Map<String,String>> specificParams= (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__SPECIFIC_PARAMS__");
+	boolean isUseAdditionParams = "true".equals(ElementParameterParser.getValue(node,"__USE_ADDITION_PARAM__"));
+	String specificAdditionParams=ElementParameterParser.getValue(node,"__SPECIFIC_ADDITION_PARAM__");
 	
 	boolean useWhere = "true".equals(ElementParameterParser.getValue(node,"__USE_WHERE__"));
 	String where = ElementParameterParser.getValue(node,"__WHERE__");
@@ -57,7 +59,30 @@ sColumns += "\\\"";
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
 
-String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "--connect", <%=connection%>, "--username", <%=username%>, "--password", <%=password%>
+String[] cmd_<%=cid %> = new String[] {"sqoop", "import"
+<%
+boolean isNull=false; 
+if(isUseSpeedParallel && specificParams!=null){
+	boolean isFirstParam=true;
+	for(Map<String,String> specificArg : specificParams){ 
+		isNull=false; 
+	 	if(specificArg.get("SPECIFIC_PARAM_VALUE")==null || "".equals(specificArg.get("SPECIFIC_PARAM_VALUE"))) { 
+	 		isNull=true; 
+	 	} 
+	 	if(!isNull) { 
+%> 
+			,"-D<%=specificArg.get("SPECIFIC_PARAM")%>="+<%=specificArg.get("SPECIFIC_PARAM_VALUE")%>
+<% 
+		} 
+	} 
+} 
+if(isUseSpeedParallel && isUseAdditionParams){
+%>
+,<%=specificAdditionParams%>
+<%
+}
+%>
+, "--connect", <%=connection%>, "--username", <%=username%>, "--password", <%=password%>
 <%if(isUseSpeedParallel){%>,"--connection-manager","org.apache.sqoop.teradata.TeradataConnManager"<%}%>
 <%if(useQuery){%>, "--query", <%=query%><%} else {%>
 	, "--table", <%=table%>
@@ -74,7 +99,6 @@ String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "--connect", <%=connec
 <%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
 <%if(useSplit){%>, "--split-by", <%=split%><%}%>
 <%
-boolean isNull=false; 
 if(additionalList != null){ 
 	for(Map<String,String> additionalMap : additionalList){ 
 		isNull=false; 
@@ -88,26 +112,6 @@ if(additionalList != null){
 		} else { 
 %> 
 			,"<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>" 
-<% 
-		} 
-	} 
-} 
-if(isUseSpeedParallel && specificParams!=null){
-	boolean isFirstParam=true;
-	for(Map<String,String> specificArg : specificParams){ 
-		isNull=false; 
-	 	if(specificArg.get("SPECIFIC_PARAM_VALUE")==null || "".equals(specificArg.get("SPECIFIC_PARAM_VALUE"))) { 
-	 		isNull=true; 
-	 	} 
-	 	if(!isNull) { 
-	 		if(isFirstParam){
-%>
-			,"--"
-<%
-				isFirstParam=false;
-			}
-%> 
-			,"--<%=specificArg.get("SPECIFIC_PARAM")%>", ""+<%=specificArg.get("SPECIFIC_PARAM_VALUE")%> 
 <% 
 		} 
 	} 
