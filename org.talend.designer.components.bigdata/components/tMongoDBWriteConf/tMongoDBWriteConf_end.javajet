@@ -52,11 +52,10 @@
 <%
 				if(!"true".equals(useExistingConn)){
 %>
-			}finally{
 				if(mongo_<%=cid%> != null ){
 					mongo_<%=cid%>.close();
 				}
-			}
+				resourceMap.put("finish_<%=cid%>", true); 
 <%
 				}
 %>

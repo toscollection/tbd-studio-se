@@ -54,7 +54,7 @@ long nbRelationshipDeleted_<%=cid%> = 0;
 <%
 	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
 %>
-try{
+	resourceMap.put("databaseService_<%=cid%>", databaseService_<%=cid%>);
 <%
 	}
 %>

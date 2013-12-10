@@ -108,12 +108,12 @@ imports="
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
-try{
 <% 
 // not use existing connection
 if(!"true".equals(useExistingConn)){
 %>
 	conn_<%=cid %> = org.apache.hadoop.hbase.HBaseConfiguration.create();
+	resourceMap.put("conn_<%=cid%>", conn_<%=cid%>); 
 	conn_<%=cid %>.clear();
 	conn_<%=cid %>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
 	conn_<%=cid %>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 

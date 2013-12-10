@@ -67,7 +67,7 @@ long counter_<%=cid%> = 0;
 <%
 	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
 %>
-try{
+	resourceMap.put("databaseService_<%=cid%>", databaseService_<%=cid%>);
 <%
 	}
     // Index configuration
@@ -87,7 +87,6 @@ try{
 		String storeDir_<%=cid%> = "";
 		org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
 		org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> =null;
-	  try{
 	  	if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
 			org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
 			storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
@@ -97,6 +96,8 @@ try{
 			throw new UnsupportedOperationException("Batch import is not supported with database server edition");
 		}
     	indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+    	resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
+    	resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
 		java.util.Map<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex> indexInserterMap_<%=cid%> = new java.util.HashMap<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex>();
     	<%
     	for (String indexName : indexNames) {
