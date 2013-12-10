@@ -175,9 +175,25 @@
 		    </ITEMS>
     	</PARAMETER>
     	<PARAMETER
+            NAME="COMPARATOR"
+            FIELD="CLOSED_LIST"
+            REQUIRED="true"
+            NUM_ROW="17"
+            GROUP="COLUMN_FAMILY_CONFIGURATION"
+        >
+            <ITEMS DEFAULT="ASCIITYPE">
+				<ITEM NAME="ASCIITYPE" VALUE="AsciiType"/>
+                <ITEM NAME="BYTESTYPE" VALUE="BytesType"/>
+                <ITEM NAME="LEXICALUUIDTYPE" VALUE="LexicalUUIDType"/>
+                <ITEM NAME="LONGTYPE" VALUE="LongType"/>
+                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType"/>
+                <ITEM NAME="UTF8TYPE" VALUE="UTF8Type"/>
+            </ITEMS>
+        </PARAMETER>
+    	<PARAMETER
 			NAME="ACTION_ON_DATA"
 	     	FIELD="CLOSED_LIST"
-	      	NUM_ROW="17"
+	      	NUM_ROW="18"
     	>
 		   	<ITEMS DEFAULT="UPSERT">
 		        <ITEM NAME="DELETE" VALUE="DELETE"/>
@@ -187,7 +203,7 @@
     	<PARAMETER
 			NAME="SCHEMA_FLOW"
 			FIELD="SCHEMA_TYPE"
-			NUM_ROW="17"
+			NUM_ROW="18"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
