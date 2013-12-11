@@ -12,12 +12,11 @@
 	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
 	if(!"true".equals(useExistingConn)){
 %>
-		if(mongo_<%=cid%> != null){
-			mongo_<%=cid%>.close();
+		if(resourceMap.get("finish_<%=cid%>") == null){
+			if(resourceMap.get("mongo_<%=cid%>") != null){
+				((com.mongodb.Mongo)resourceMap.get("mongo_<%=cid%>")).close();
+			}
 		}
-		resourceMap.put("finish_<%=cid%>", true); 
 <%
 	}
 %>
-globalMap.put("<%=cid %>_NB_LINE", nb_line_<%=cid%>);
-

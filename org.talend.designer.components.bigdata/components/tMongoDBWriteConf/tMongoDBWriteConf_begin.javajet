@@ -49,7 +49,6 @@
 			<%
 			}else{
 			%>
-				try{
 				<%
 	 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
 	   			if(useReplicaSet){
@@ -70,6 +69,7 @@
 				<%
 				}
 				%>
+				resourceMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
 				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 				<%
 				if (authentication){
