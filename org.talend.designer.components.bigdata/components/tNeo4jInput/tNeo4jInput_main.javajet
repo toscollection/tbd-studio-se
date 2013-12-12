@@ -69,7 +69,7 @@
 		if (outgoingConnName != null) {
 			%>
 			if (value_<%=cid%> == null) {
-				<%=outgoingConnName%>.<%=column%> = null;
+				<%=outgoingConnName%>.<%=column%> = <%=JavaTypesManager.getDefaultValueFromJavaType(typeToGenerate)%>;
 			} else {
 				<%
 				if (cType.equals("id_Date")) {
@@ -174,8 +174,8 @@
 					<%
 				} else{
 					%>
-					if (value_<%=cid%> instanceof <%=typeToGenerate%>) {
-						<%=outgoingConnName%>.<%=column%> = (<%=typeToGenerate%>) value_<%=cid%>;
+					if (value_<%=cid%> instanceof <%=JavaTypesManager.getTypeToGenerate(cType,true)%>) {
+						<%=outgoingConnName%>.<%=column%> = (<%=JavaTypesManager.getTypeToGenerate(cType,true)%>) value_<%=cid%>;
 					}else{
 						<%=outgoingConnName%>.<%=column%>=ParserUtils.parseTo_<%=typeToGenerate%>(value_<%=cid%>.toString());
 					}
