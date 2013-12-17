@@ -505,7 +505,7 @@
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_1_0_1') AND DISTRIBUTION!='CUSTOM'"/>
 
             <!-- HBASE Support Start-->
-            <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.3/lib/hbase-0.94.2.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hbase-0.94.2.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.4.5.21.jar" MODULE="zookeeper-3.4.5.21.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
@@ -514,7 +514,7 @@
             <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             
             <!-- HBASE HDP_1_3 -->
-            <IMPORT NAME="hbase-0.94.6.1.3.0.0-107-security.jar" MODULE="hbase-0.94.6.1.3.0.0-107-security.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hbase-0.94.6.1.3.0.0-107-security.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hbase-0.94.6.1.3.0.0-107-security.jar" MODULE="hbase-0.94.6.1.3.0.0-107-security.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.3/lib/hbase-0.94.6.1.3.0.0-107-security.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="zookeeper-3.4.5.1.3.0.0-107.jar" MODULE="zookeeper-3.4.5.1.3.0.0-107.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.1.3.0.0-107.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_3' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
