@@ -20,9 +20,8 @@
 <%
 	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
 %>
-	}finally{
-		databaseService_<%=cid%>.shutdown();
-	}
+	databaseService_<%=cid%>.shutdown();
+	resourceMap.put("finish_<%=cid%>", true); 
 <%
 	}
 %>
