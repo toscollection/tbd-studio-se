@@ -38,10 +38,16 @@
     }
 %>
 
-org.neo4j.cypher.ExecutionEngine engine = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>);
-org.neo4j.cypher.ExecutionResult result = engine.execute(<%=query%>);
-
-java.util.Iterator<java.util.Map<String, Object>> resultIterator_<%=cid%> = result.javaIterator();
+java.util.Iterator<java.util.Map<String, Object>> resultIterator_<%=cid%> = null;
+if (databaseService_<%=cid%> instanceof org.neo4j.rest.graphdb.RestGraphDatabase) {
+	org.neo4j.rest.graphdb.RestGraphDatabase restDatabase_<%=cid%> = (org.neo4j.rest.graphdb.RestGraphDatabase) databaseService_<%=cid%>; 
+	org.neo4j.rest.graphdb.query.QueryEngine<java.util.Map<String, Object>> queryEngine_<%=cid%> = new org.neo4j.rest.graphdb.query.RestCypherQueryEngine(restDatabase_<%=cid%>.getRestAPI());
+	resultIterator_<%=cid%> = queryEngine_<%=cid%>.query(<%=query%>, null).iterator();
+} else {
+	org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>);
+	org.neo4j.cypher.ExecutionResult result_<%=cid%> = engine_<%=cid%>.execute(<%=query%>);
+	resultIterator_<%=cid%> = result_<%=cid%>.javaIterator();
+}
 
 int nb_line_<%=cid%> = 0;
 String expression_<%=cid%> = "";
