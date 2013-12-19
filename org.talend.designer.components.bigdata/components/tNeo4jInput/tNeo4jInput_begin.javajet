@@ -51,6 +51,28 @@ if (databaseService_<%=cid%> instanceof org.neo4j.rest.graphdb.RestGraphDatabase
 
 int nb_line_<%=cid%> = 0;
 String expression_<%=cid%> = "";
+class Neo4jUtil_<%=cid%>{
+	public Object getPropertyValue(String expression,java.util.Map<String, Object> row){
+		Object value=null;
+		if(expression!=null){
+			try{
+				if(expression.contains(".")) {
+					String suffix=expression.split("\\.")[0];
+					String propertyName=expression.split("\\.")[1];
+					if (row.get(suffix) != null && row.get(suffix) instanceof org.neo4j.graphdb.PropertyContainer) {
+						org.neo4j.graphdb.PropertyContainer propertyContainer = (org.neo4j.graphdb.PropertyContainer) row.get(suffix);
+						value=propertyContainer.getProperty(propertyName);
+					}
+				}
+				
+			}catch(org.neo4j.graphdb.NotFoundException e_<%=cid%>){
+				System.err.println(e_<%=cid%>.getMessage()+" not found!!");
+			}
+		}
+		return value;
+	}
+}
+Neo4jUtil_<%=cid%> neo4jUtil_<%=cid%>=new Neo4jUtil_<%=cid%>();
 <%
 	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
 %>
