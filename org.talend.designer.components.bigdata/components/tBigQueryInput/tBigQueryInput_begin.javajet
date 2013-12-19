@@ -80,7 +80,7 @@
 			System.out
 					.println("Paste this URL into a web browser to authorize BigQuery Access:\n"
 							+ authorizeUrl_<%=cid%>);
-			System.exit(0);
+			throw new java.lang.Exception("Authorization Code error");
 <%
 		} else {
 %>
