@@ -371,42 +371,7 @@ if(columnList != null && columnList.size()>0){
 
 <%
 	}
-%>
-int nb_line_overwrite_<%=cid%> = 0;
-int nb_line_inserted_<%=cid%> = 0;
-<%
 }
-
-
-// MAIN
-
-	String incomingConnName = null;
-	columnList = null;
-	
-	List< ? extends IConnection> conns = node.getIncomingConnections();
-	if(conns!=null && conns.size()>0){
-		IConnection conn = conns.get(0);
-		incomingConnName = conn.getName();
-	}
-
-if(incomingConnName != null && columnList != null){
-	if(("INSERT").equals(dataAction)){
-	%>
-
-System.out.println("Inserting with : \n" + insertQuery_<%=cid %> + "\n");
-nb_line_inserted_<%=cid%> = stmt_<%=cid %>.executeUpdate();
-System.out.println("--> " + nb_line_inserted_<%=cid%> + " rows inserted. \n");
-
-	<%
-	}else if(("OVERWRITE").equals(dataAction)){
-	%>
-System.out.println("Overwriting with : \n" + overwriteQuery_<%=cid %> +"\n");
-nb_line_overwrite_<%=cid%> = stmt_<%=cid %>.executeUpdate();
-	System.out.println("--> " + nb_line_overwrite_<%=cid%> + " rows overwrited. \n");
-	<%
-	}
-}
-
 
 // END
 
@@ -422,9 +387,6 @@ if(!useExistingConn) {
     <%
 }
 %>
-
-globalMap.put("<%=cid %>_NB_LINE_OVERWRITE",nb_line_overwrite_<%=cid%>);
-globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
 
 String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
 if(currentClientPathSeparator_<%=cid%>!=null) {
