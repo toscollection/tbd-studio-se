@@ -155,7 +155,7 @@
 			String readFinishMarkWithPipeId_<%=cid%> = "<%=cid%>_FINISH"+(queue_<%=cid%>==null?"":queue_<%=cid%>.hashCode());
 			String str_<%=cid %> = null;
 			
-			while(true) {
+			while(!globalMap.containsKey(readFinishMarkWithPipeId_<%=cid%>) || !queue_<%=cid%>.isEmpty()) {
 				if (!queue_<%=cid%>.isEmpty()) {
 					str_<%=cid %> = queue_<%=cid %>.poll();
 					//Convert XML to JSON
