@@ -13,8 +13,6 @@
 package org.talend.repository.pigudf.actions;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.jdt.core.IPackageFragment;
-import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -24,9 +22,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
-import org.talend.commons.utils.generation.JavaUtils;
 import org.talend.core.language.ECodeLanguage;
 import org.talend.core.language.LanguageManager;
 import org.talend.core.model.general.Project;
@@ -165,8 +162,4 @@ public class EditPigudfPropertiesAction extends EditPropertiesAction {
 
     }
 
-    @Override
-    protected IPackageFragment getPackageFragment(IPackageFragmentRoot rootPackageFragment) {
-        return rootPackageFragment.getPackageFragment(JavaUtils.JAVA_PIGUDF_DIRECTORY);
-    };
 }
