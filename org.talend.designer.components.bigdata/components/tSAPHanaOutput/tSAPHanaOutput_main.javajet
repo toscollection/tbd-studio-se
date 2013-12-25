@@ -76,8 +76,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
         }
     }
 	
-	List<Column> stmtStructure = getManager(dbmsId, cid).createColumnList(columnList, useFieldOptions, fieldOptions, addCols);
-	
 	Manager manager = null;
 	boolean isDynamic = false;
 	List<IMetadataTable> metadatas = node.getMetadataList();
@@ -86,10 +84,13 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
 		isDynamic = metadata.isDynamicSchema(); 
 	}
 	
+	List<Column> stmtStructure = getManager(dbmsId, cid).createColumnList(columnList, useFieldOptions, fieldOptions, addCols);
+	isDynamic = isDynamic && !getManager(dbmsId, cid).isDynamicColumnReplaced();
+	
     ////////////////////////////////////////////////////////////
     List<Column> colStruct = new ArrayList<Column>();
     for(Column colStmt:stmtStructure) {
-    	if(!colStmt.isReplaced()&&!colStmt.isAddCol()) {
+    	if(!colStmt.isReplaced()&&!colStmt.isAddCol()&&!colStmt.isDynamic()) {
     		colStruct.add(colStmt);
     	}
     }
