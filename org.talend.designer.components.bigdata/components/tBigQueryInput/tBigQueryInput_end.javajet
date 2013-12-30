@@ -1,3 +1,17 @@
-<%@ jet%>
+<%@ jet 
+imports="
+        org.talend.core.model.process.INode 
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+" 
+%>
 
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+%>
+	}
+	if (startIndex_<%=cid%> >= queryResult_<%=cid %>.getTotalRows().intValue()) {
+		break;
+	}
   }
