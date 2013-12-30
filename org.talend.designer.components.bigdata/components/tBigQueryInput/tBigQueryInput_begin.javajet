@@ -158,11 +158,16 @@
 
 
 	// Fetch Results
-	com.google.api.services.bigquery.model.GetQueryResultsResponse queryResult_<%=cid %> = bigqueryclient_<%=cid %>.jobs().getQueryResults(PROJECT_ID_<%=cid %>, jobId_<%=cid %>.getJobId()).execute();
-	List<com.google.api.services.bigquery.model.TableRow> rows_<%=cid %> = queryResult_<%=cid %>.getRows();
-	for (com.google.api.services.bigquery.model.TableRow row_<%=cid %> : rows_<%=cid %>) {
-		java.util.List<com.google.api.services.bigquery.model.TableRow.F> field_<%=cid %> = row_<%=cid %>.getF();
-		String value_<%=cid%> = null;
+	long startIndex_<%=cid%>=0;
+	while(true){
+		com.google.api.services.bigquery.model.GetQueryResultsResponse queryResult_<%=cid %> = bigqueryclient_<%=cid %>.jobs().getQueryResults(PROJECT_ID_<%=cid %>, jobId_<%=cid %>.getJobId())
+				.setStartIndex(java.math.BigInteger.valueOf(startIndex_<%=cid%>)).execute();
+		List<com.google.api.services.bigquery.model.TableRow> rows_<%=cid %> = queryResult_<%=cid %>.getRows();
+		long fetchRowCount_<%=cid%> = rows_<%=cid %>.size();
+		startIndex_<%=cid%>=startIndex_<%=cid%>+fetchRowCount_<%=cid%>;
+		for (com.google.api.services.bigquery.model.TableRow row_<%=cid %> : rows_<%=cid %>) {
+			java.util.List<com.google.api.services.bigquery.model.TableRow.F> field_<%=cid %> = row_<%=cid %>.getF();
+			String value_<%=cid%> = null;
 		<%
 		List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
 		if (conns != null){
