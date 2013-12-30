@@ -175,11 +175,21 @@
 		    </ITEMS>
     	</PARAMETER>
     	<PARAMETER
+			NAME="DEFINE_CF_STRUCTS"
+			FIELD="CHECK"
+			NUM_ROW="17"
+			GROUP="COLUMN_FAMILY_CONFIGURATION"
+			SHOW_IF="(ACTION_ON_COLUMN_FAMILY != 'NONE')"
+		>
+			<DEFAULT>true</DEFAULT>
+		</PARAMETER>
+    	<PARAMETER
             NAME="COMPARATOR"
             FIELD="CLOSED_LIST"
             REQUIRED="true"
-            NUM_ROW="17"
+            NUM_ROW="18"
             GROUP="COLUMN_FAMILY_CONFIGURATION"
+            SHOW_IF="(DEFINE_CF_STRUCTS == 'true') AND (ACTION_ON_COLUMN_FAMILY != 'NONE')"
         >
             <ITEMS DEFAULT="ASCIITYPE">
 				<ITEM NAME="ASCIITYPE" VALUE="AsciiType"/>
@@ -193,7 +203,7 @@
     	<PARAMETER
 			NAME="ACTION_ON_DATA"
 	     	FIELD="CLOSED_LIST"
-	      	NUM_ROW="18"
+	      	NUM_ROW="19"
     	>
 		   	<ITEMS DEFAULT="UPSERT">
 		        <ITEM NAME="DELETE" VALUE="DELETE"/>
@@ -203,7 +213,7 @@
     	<PARAMETER
 			NAME="SCHEMA_FLOW"
 			FIELD="SCHEMA_TYPE"
-			NUM_ROW="18"
+			NUM_ROW="19"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>

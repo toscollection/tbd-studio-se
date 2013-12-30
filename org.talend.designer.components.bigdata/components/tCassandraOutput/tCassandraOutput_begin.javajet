@@ -37,6 +37,7 @@
 	String comparator = ElementParameterParser.getValue(node,"__COMPARATOR__");
 	boolean incKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_KEY__"));
 	boolean incSuperKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_SUPER_KEY__"));
+	boolean isDefine = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DEFINE_CF_STRUCTS__"));
 	%>
 		me.prettyprint.hector.api.Cluster cluster_<%=cid%> =null;
 		me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
@@ -105,39 +106,44 @@
 		me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
 		cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
 			<%
-			if("SUPER".equals(columnFamilyType)){
-			%>
+			if(isDefine){
+				if("SUPER".equals(columnFamilyType)){
+				%>
 		cfDefinition_<%=cid%>.setSubComparatorType(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=comparator%>"));
-			<%
-			}else{
-			%>
+				<%
+				}else{
+				%>
 		cfDefinition_<%=cid%>.setComparatorType(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=comparator%>"));
-			<%
-			}
-			if(metadatas != null && metadatas.size() > 0){
-	      		IMetadataTable metadata = metadatas.get(0);
-	      		if(metadata != null){
-	      			for (IMetadataColumn column : metadata.getListColumns()) {
-	    				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
-	    				String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
-						String cType = column.getType();
-	    				if(column.getLabel().equals(keyColumn)){
+				<%
+				}
+				if(metadatas != null && metadatas.size() > 0){
+		      		IMetadataTable metadata = metadatas.get(0);
+		      		if(metadata != null){
+		      			for (IMetadataColumn column : metadata.getListColumns()) {
+		    				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+		    				String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
+							String cType = column.getType();
+							if("ObjectType".equalsIgnoreCase(cType)){
+								cType="BytesType";
+							}
+		    				if(column.getLabel().equals(keyColumn)){
 						%>
 		cfDefinition_<%=cid%>.setKeyValidationClass(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=cType%>").getClassName());
-						<%
-						}
-						if("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn)){
+							<%
+							}
+							if("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn)){
 						%>
 		cfDefinition_<%=cid%>.setComparatorType(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=cType%>"));
-						<%
-						}
-						if((!column.getLabel().equals(keyColumn) || incKey) || !("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn) && !incSuperKey)){
+							<%
+							}
+							if((!column.getLabel().equals(keyColumn) || incKey) || !("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn) && !incSuperKey)){
 						%>
 		me.prettyprint.cassandra.model.BasicColumnDefinition colDef_<%=column.getLabel()%>_<%=cid%> = new me.prettyprint.cassandra.model.BasicColumnDefinition();
 		colDef_<%=column.getLabel()%>_<%=cid%>.setName(me.prettyprint.cassandra.serializers.StringSerializer.get().toByteBuffer("<%=column.getOriginalDbColumnName()%>"));
 		colDef_<%=column.getLabel()%>_<%=cid%>.setValidationClass(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=cType%>").getClassName());
 		cfDefinition_<%=cid%>.addColumnDefinition(colDef_<%=column.getLabel()%>_<%=cid%>);
-						<%
+							<%
+							}
 						}
 					}
 				}
