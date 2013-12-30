@@ -24,6 +24,8 @@
 	String projectId = ElementParameterParser.getValue(node,"__PROJECT_ID__");
 	String authorizationCode = ElementParameterParser.getValue(node,"__AUTHORIZATION_CODE__");
 	String query = ElementParameterParser.getValue(node,"__QUERY__");
+	query = query.replaceAll("\n"," ");
+	query = query.replaceAll("\r"," ");
 
     String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
 %>
@@ -78,7 +80,7 @@
 			System.out
 					.println("Paste this URL into a web browser to authorize BigQuery Access:\n"
 							+ authorizeUrl_<%=cid%>);
-			System.exit(0);
+			throw new java.lang.Exception("Authorization Code error");
 <%
 		} else {
 %>
