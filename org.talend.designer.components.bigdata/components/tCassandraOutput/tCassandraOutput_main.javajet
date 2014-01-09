@@ -166,7 +166,8 @@
 								}
 							}
 						}else{
-							if (!((!incKey && column.getLabel().equals(keyColumn))|| (!incSuperKey && column.getLabel().equals(superKeyColumn)))) {
+							if((incKey && column.getLabel().equals(keyColumn))||(incSuperKey && column.getLabel().equals(superKeyColumn))|| 
+								(!column.getLabel().equals(keyColumn)&&!column.getLabel().equals(superKeyColumn)) ){
 								if("UPSERT".equals(actionOnData)){
 								%>
 									<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null){ <%}%>
