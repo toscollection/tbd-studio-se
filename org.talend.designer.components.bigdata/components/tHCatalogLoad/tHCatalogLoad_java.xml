@@ -175,7 +175,7 @@
             <IMPORT NAME="cxf-rt-core-2.7.7" MODULE="cxf-rt-core-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-core-2.7.7.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="cxf-rt-bindings-xml-2.7.7" MODULE="cxf-rt-bindings-xml-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-bindings-xml-2.7.7.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="cxf-rt-transports-http-2.7.7" MODULE="cxf-rt-transports-http-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-transports-http-2.7.7.jar" REQUIRED="false" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
-            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_0' OR HCAT_VERSION=='HDP_1_2') AND USE_KRB=='true' AND (DISTRIBUTION!='CUSTOM')" />
     	</IMPORTS>
 	</CODEGENERATION>
    <RETURNS/>
