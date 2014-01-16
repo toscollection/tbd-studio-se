@@ -7,24 +7,28 @@
     
     " 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
     
     boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-%>
-		}
-<%
+	%>
+	}
+	<%
 	if(!useExistingConn){
-%>
-	}finally{
-		if(client_<%=cid%> !=null){
-			client_<%=cid%>.shutdown();
+	%>
+		}finally{
+			if(client_<%=cid%> !=null){
+				client_<%=cid%>.shutdown();
+			}
 		}
+	<%
 	}
-<%
-	}
-%>
+	%>
 	globalMap.put("<%=cid%>_NB_LINE", nb_line_<%=cid%>);
+	<%
+	log4jFileUtil.retrievedDataNumberInfo(node);
+	log4jFileUtil.componentFinishInfo(node);
+	%>

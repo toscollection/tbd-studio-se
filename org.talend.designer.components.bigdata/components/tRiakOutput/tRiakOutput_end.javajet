@@ -12,7 +12,7 @@ imports="
 	java.util.List
     " 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -20,6 +20,9 @@ imports="
     
 	boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	
     IConnection inConn = null;
 	IMetadataTable metadata = null;
 	if(inConns!=null && inConns.size()> 0) {
@@ -41,7 +44,19 @@ imports="
 				%>
 				globalMap.put("<%=cid%>_UPSERT_NB_LINE", upsert_nb_line_<%=cid%>);
 				globalMap.put("<%=cid%>_DELETE_NB_LINE", delete_nb_line_<%=cid%>);
-			<%
+				<%
+				if(isLog4jEnabled){
+					if("DELETE".equals(dataAction)){
+					%>
+						log.info("<%=cid%> - Has deleted " + delete_nb_line_<%=cid%> + " records.");
+					<%
+					}else{
+					%>
+						log.info("<%=cid%> - Has inserted or updated " + upsert_nb_line_<%=cid%> + " records.");
+					<%
+					}
+				}
+				log4jFileUtil.componentFinishInfo(node);	
 			}
 		}
 	}

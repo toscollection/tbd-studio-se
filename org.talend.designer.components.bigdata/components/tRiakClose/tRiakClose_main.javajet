@@ -5,7 +5,7 @@
 	    org.talend.designer.codegen.config.CodeGeneratorArgument
 	" 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -14,8 +14,13 @@
 
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 	
-%>
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
 	com.basho.riak.client.IRiakClient client_<%=cid%> = (com.basho.riak.client.IRiakClient)globalMap.get("client_<%=connection%>");
 	if(client_<%=cid%> !=null){
 			client_<%=cid%>.shutdown();
 	}
+	<%
+	log4jFileUtil.componentFinishInfo(node);
+	%>

@@ -14,13 +14,12 @@
 		java.util.Map
 	" 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
 	
     String cid = node.getUniqueName();
-    List<Map<String, String>> riakNodes = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__NODES__");
     List<Map<String, String>> valueColumns = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__VALUE_COLUMNS__");
     List<String> valueColumnNames = new java.util.ArrayList<String>();
     
@@ -40,7 +39,11 @@
 			firstConnName = out.getName();
 		}
     }
-    
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	
     java.util.List<IMetadataColumn> tempValuesColumns = new java.util.ArrayList<IMetadataColumn>();
 	if(metadatas != null && metadatas.size() > 0){
       	IMetadataTable metadata = metadatas.get(0);
@@ -63,42 +66,20 @@
 %>
 	client_<%=cid%> = (com.basho.riak.client.IRiakClient)globalMap.get("client_<%=connection%>");
 <%
+	if(isLog4jEnabled){
+%>	
+		if(client_<%=cid%> != null) {
+			log.info("<%=cid%> - Get an existing client from " + "<%=connection%>" + ".");
+		}
+<%
+	}
 			}else{
 %>
 	try{
-		com.basho.riak.client.raw.http.HTTPClusterConfig  clusterConfig_<%=cid%> = new com.basho.riak.client.raw.http.HTTPClusterConfig(com.basho.riak.client.raw.config.ClusterConfig.UNLIMITED_CONNECTIONS);
+	
+	<%@ include file="../tRiakConnection/tRiak_connection_inc.javajet"%>
+	
 <%
-		    	if(riakNodes.size()>0){
-			    	for(int i=0;i<riakNodes.size();i++){
-			    		Map<String, String> riakNode = riakNodes.get(i);
-						String host =riakNode.get("HOST");
-						String port =riakNode.get("PORT");
-						String riakPath =riakNode.get("RIAK_PATH");
-						if(host!=null && host.trim().length()>0 && !"\"\"".equals(host)){
-%>
-		com.basho.riak.client.raw.http.HTTPClientConfig clientConfig_<%=cid%>_<%=i%> = new com.basho.riak.client.raw.http.HTTPClientConfig.Builder()
-<%
-							if(port!=null && port.trim().length()>0){
-%>
-			.withPort(<%=port%>)
-<%
-							}
-							if(riakPath!=null && riakPath.trim().length()>0 && !"\"\"".equals(riakPath)){
-%>
-			.withRiakPath(<%=riakPath%>)
-<%
-							}
-%>
-			.build();
-			clusterConfig_<%=cid%>.addHosts(clientConfig_<%=cid%>_<%=i%>, <%=host%>);
-<%
-						}
-					}
-%>
-		client_<%=cid%> =com.basho.riak.client.RiakFactory.newClient(clusterConfig_<%=cid%>);
-		client_<%=cid%>.ping();
-<%
-				}
     		}
 %>
 		com.basho.riak.client.bucket.Bucket bucket_<%=cid%> = client_<%=cid%>.fetchBucket(<%=bucket%>).execute();
@@ -114,6 +95,7 @@
 		keys_<%=cid%> = keysStreamOpts_<%=cid%>.getAll();
 <%
 		}
+		log4jFileUtil.startRetriveDataInfo();
 %>
 		for(String key_<%=cid%>:keys_<%=cid%>){
 			nb_line_<%=cid%>++;
@@ -177,10 +159,12 @@
 					}
 <%
           			}
+          			log4jFileUtil.collectRetriveData(firstConnName+"."+column.getLabel());
 				}
 %>
 				}
 <%
+				log4jFileUtil.debugRetriveData(node);
 			}
     	}
     }

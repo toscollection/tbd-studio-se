@@ -1,0 +1,40 @@
+<%@ jet 
+%>
+
+	<%
+    List<Map<String, String>> riakNodes = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__NODES__");
+    if(riakNodes.size()>0){
+	%>
+		com.basho.riak.client.raw.http.HTTPClusterConfig  clusterConfig_<%=cid%> = new com.basho.riak.client.raw.http.HTTPClusterConfig(com.basho.riak.client.raw.config.ClusterConfig.UNLIMITED_CONNECTIONS);
+		<%
+    	for(int i=0;i<riakNodes.size();i++){
+    		Map<String, String> riakNode = riakNodes.get(i);
+			String host =riakNode.get("HOST");
+			String port =riakNode.get("PORT");
+			String riakPath =riakNode.get("RIAK_PATH");
+			if(host!=null && host.trim().length()>0 && !"\"\"".equals(host)){
+			%>
+				com.basho.riak.client.raw.http.HTTPClientConfig clientConfig_<%=cid%>_<%=i%> = new com.basho.riak.client.raw.http.HTTPClientConfig.Builder()
+				<%
+				if(port!=null && port.trim().length()>0){
+				%>
+					.withPort(<%=port%>)
+				<%
+				}
+				if(riakPath!=null && riakPath.trim().length()>0 && !"\"\"".equals(riakPath)){
+				%>
+					.withRiakPath(<%=riakPath%>)
+				<%
+				}
+				%>
+					.build();
+				clusterConfig_<%=cid%>.addHosts(clientConfig_<%=cid%>_<%=i%>, <%=host%>);
+			<%
+			}
+		}
+		%>
+		client_<%=cid%> =com.basho.riak.client.RiakFactory.newClient(clusterConfig_<%=cid%>);
+		client_<%=cid%>.ping();
+	<%
+    }
+	%>

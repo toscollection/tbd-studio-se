@@ -25,6 +25,7 @@
     boolean autoGenKey = "true".equals(ElementParameterParser.getValue(node,"__AUTO_GEN_KEY__"));
     String key = ElementParameterParser.getValue(node,"__KEY__");
     String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     
   	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
     java.util.List<IMetadataColumn> tempValuesColumns = new java.util.ArrayList<IMetadataColumn>();
@@ -52,6 +53,11 @@
 					}
 				}
 				int sizeColumns = tempValuesColumns.size();
+				if (isLog4jEnabled) {
+				%>
+					log.info("<%=cid%> - Start to manipulate data in bucket " +bucket_<%=cid%>.getName()+ " .");
+				<%
+				}
 				%>
 				try{
 					<%
@@ -60,6 +66,14 @@
 						if(<%=conn.getName()%>.<%=key%>!=null){
 							bucket_<%=cid%>.delete(String.valueOf(<%=conn.getName()%>.<%=key%>)).execute();
 							delete_nb_line_<%=cid%>++;
+							<%
+							if (isLog4jEnabled) {
+							%>
+								log.debug("<%=cid%> - Delete the record " + (delete_nb_line_<%=cid%>) + ".");
+								log.trace("<%=cid%> - Key of the record " + (delete_nb_line_<%=cid%>) + ": " + <%=conn.getName()%>.<%=key%>);
+							<%
+							}
+							%>
 						}
 					<%
 					}else{
@@ -71,7 +85,13 @@
 								IMetadataColumn column = tempValuesColumns.get(i);
 								%>
 								object_<%=cid%>.put("<%=column.getOriginalDbColumnName()%>", <%=conn.getName()%>.<%=column.getLabel()%>);
-							<%
+								<%
+								if (isLog4jEnabled) {
+								%>
+									log4jSb_<%=cid%>.append(<%=conn.getName()%>.<%=column.getLabel()%>);
+									log4jSb_<%=cid%>.append("|");
+								<%
+								}
 							}
 							if(autoGenKey){
 							%>
@@ -89,17 +109,34 @@
 						}
 						%>
 						upsert_nb_line_<%=cid%>++;
-					<%
+						<%
+						if(isLog4jEnabled){
+						%>
+							log.debug("<%=cid%> - Saved the record " + (upsert_nb_line_<%=cid%>) + ".");
+							log.trace("<%=cid%> - Content of the record " + (upsert_nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
+							log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+						<%
+						}
 					}
 					%>
 				}catch(java.lang.Exception e_<%=cid%>){
 					<%
 					if(dieOnError) {
-					%>
+						if(isLog4jEnabled){
+						%>
+							log.fatal("<%=cid%> - " + e_<%=cid%>.getMessage());
+						<%
+						}
+						%>
 				        throw(e_<%=cid%>);
 					<%
 					}else{
-					%>
+						if(isLog4jEnabled){
+						%>
+						log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+						<%
+						}
+						%>
 						System.err.println(e_<%=cid%>.getMessage());
 					<%
 					}	

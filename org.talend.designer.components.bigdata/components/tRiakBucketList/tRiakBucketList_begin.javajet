@@ -8,64 +8,52 @@
 		java.util.Map
 	" 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
 	
     String cid = node.getUniqueName();
-    List<Map<String, String>> riakNodes = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__NODES__");
     
     boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-%>
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
 	com.basho.riak.client.IRiakClient client_<%=cid%> = null;
 	int nb_line_<%=cid%> = 0;
-<%
+	<%
 	if(useExistingConn){
 		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-%>
-	client_<%=cid%> = (com.basho.riak.client.IRiakClient)globalMap.get("client_<%=connection%>");
-<%
-	}else{
-%>
-	try{
-		com.basho.riak.client.raw.http.HTTPClusterConfig  clusterConfig_<%=cid%> = new com.basho.riak.client.raw.http.HTTPClusterConfig(com.basho.riak.client.raw.config.ClusterConfig.UNLIMITED_CONNECTIONS);
-<%
-    	if(riakNodes.size()>0){
-	    	for(int i=0;i<riakNodes.size();i++){
-	    		Map<String, String> riakNode = riakNodes.get(i);
-				String host =riakNode.get("HOST");
-				String port =riakNode.get("PORT");
-				String riakPath =riakNode.get("RIAK_PATH");
-				if(host!=null && host.trim().length()>0 && !"\"\"".equals(host)){
-%>
-		com.basho.riak.client.raw.http.HTTPClientConfig clientConfig_<%=cid%>_<%=i%> = new com.basho.riak.client.raw.http.HTTPClientConfig.Builder()
-<%
-					if(port!=null && port.trim().length()>0){
-%>
-			.withPort(<%=port%>)
-<%
-					}
-					if(riakPath!=null && riakPath.trim().length()>0 && !"\"\"".equals(riakPath)){
-%>
-			.withRiakPath(<%=riakPath%>)
-<%
-					}
-%>
-			.build();
-			clusterConfig_<%=cid%>.addHosts(clientConfig_<%=cid%>_<%=i%>, <%=host%>);
-<%
-				}
+		%>
+		client_<%=cid%> = (com.basho.riak.client.IRiakClient)globalMap.get("client_<%=connection%>");
+		<%
+		if(isLog4jEnabled){
+		%>	
+			if(client_<%=cid%> != null) {
+				log.info("<%=cid%> - Get an existing client from " + "<%=connection%>" + ".");
 			}
-%>
-		client_<%=cid%> =com.basho.riak.client.RiakFactory.newClient(clusterConfig_<%=cid%>);
-		client_<%=cid%>.ping();
-<%
+		<%
 		}
+	}else{
+	%>
+		try{
+
+			<%@ include file="../tRiakConnection/tRiak_connection_inc.javajet"%>
+
+	<%
     }
-%>
+	%>
 		com.basho.riak.client.query.StreamingOperation<String> bucketsStreamOpts_<%=cid%> = client_<%=cid%>.listBucketsStreaming();
 		java.util.List<String> buckets_<%=cid%> = bucketsStreamOpts_<%=cid%>.getAll();
+		<%
+		log4jFileUtil.startRetriveDataInfo();
+		%>
 		for(String bucketName_<%=cid%>:buckets_<%=cid%>){
 			nb_line_<%=cid%>++;
 			globalMap.put("<%=cid%>_CURRENT_BUCKET_NAME", bucketName_<%=cid%>);
+			<%
+			log4jFileUtil.collectRetriveData("bucketName_"+cid);
+			log4jFileUtil.debugRetriveData(node);
+			%>
