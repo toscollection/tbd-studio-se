@@ -12,7 +12,6 @@ imports="
 		java.util.Map
 		"
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jDBConnUtil.javajet"%>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/HelpClass.javajet"%>
 	
 	<%
