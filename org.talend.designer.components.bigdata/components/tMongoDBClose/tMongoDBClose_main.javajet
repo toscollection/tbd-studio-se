@@ -5,7 +5,7 @@
     	org.talend.designer.codegen.config.CodeGeneratorArgument
 " 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -13,10 +13,29 @@
     String cid = node.getUniqueName();
 
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-	
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
 %>
 	com.mongodb.Mongo mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
 	if(mongo_<%=cid%> != null )
 	{
-		mongo_<%=cid%>.close();
+		<%
+		if(isLog4jEnabled){
+		%>
+			log.info("<%=cid%> - Closing the connection " + mongo_<%=cid%>.getServerAddressList() + ".");
+		<%
+		}
+		%>
+			mongo_<%=cid%>.close();
+		<%
+		if(isLog4jEnabled){
+		%>
+			log.info("<%=cid%> - Connection to" + mongo_<%=cid%>.getServerAddressList() + " closed.");
+		<%
+		}
+		%>
 	}
+	<%
+	log4jFileUtil.componentFinishInfo(node);
+	%>

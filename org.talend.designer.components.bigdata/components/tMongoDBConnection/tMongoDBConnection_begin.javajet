@@ -8,6 +8,7 @@
 		java.util.List
 	" 
 %>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
@@ -21,31 +22,45 @@
     boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
     List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+    
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+    
     if(useReplicaSet){
-%>
-	List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
-<%
+	%>
+		List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+		<%
 		for(Map<String,String> replicaAddr:replicaAddrs){
-%>
-	addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
-<%
+		%>
+			addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+		<%
 		}
-%>
-	com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
-<%
+		%>
+		com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+	<%
 	}else{
-%>
-	com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
-<%
+	%>
+		com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+	<%
 	}
-%>
+	%>
+	mongo_<%=cid%>.isLocked();
 	com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
-<%
+	<%
 	if (authentication){
-%>
-    db_<%=cid%>.authenticate(<%=dbuser%>, new String(<%=dbpass%>).toCharArray());
-<%
+	%>
+    	db_<%=cid%>.authenticate(<%=dbuser%>, new String(<%=dbpass%>).toCharArray());
+	<%
 	}
-%>
+	if(isLog4jEnabled){
+	%>	
+		log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
+	<%
+	}
+	%>
 	globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
 	globalMap.put("db_<%=cid%>", db_<%=cid%>);
+	<%
+	log4jFileUtil.componentFinishInfo(node);
+	%>

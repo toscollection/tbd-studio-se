@@ -10,7 +10,7 @@
     	java.util.Map		
 	" 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
   	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
   	INode node = (INode)codeGenArgument.getArgument();
@@ -37,6 +37,10 @@
   	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
   	List<Map<String, String>> additionalParams = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADDITIONAL_ARGS__");
   	
+  	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+  	
   	List<IMetadataTable> metadatas = node.getMetadataList();
   	String fileds="";
   	if(!"JSON".equalsIgnoreCase(fileType) && metadatas != null && metadatas.size() > 0){
@@ -54,41 +58,40 @@
 			}
 		}
 	}
-  	
-%>
-		Runtime runtime_<%=cid%> = Runtime.getRuntime();
-		StringBuffer comand_<%=cid%>=new StringBuffer();
-<%	
+  	%>
+	Runtime runtime_<%=cid%> = Runtime.getRuntime();
+	StringBuffer comand_<%=cid%>=new StringBuffer();
+	<%	
 	if(mongoBinFolder!= null && !"".equals(mongoBinFolder)&& !"\"\"".equals(mongoBinFolder)){
-%>
+	%>
 		comand_<%=cid%>.append(<%=mongoBinFolder%>);
-<%
+	<%
 	}
-%>
+	%>
 		comand_<%=cid%>.append("/bin/mongoimport");
-<%	
+	<%	
 	if(useLocalDBpath){
-%>
+	%>
 		comand_<%=cid%>.append(" --dbpath "+<%=localDBpath%>);
-<%
+	<%
 	}else{
 		if(!useReplicaSet){
 			if(dbhost!= null && !"".equals(dbhost)&& !"\"\"".equals(dbhost)){
-%>
-		comand_<%=cid%>.append(" --host "+<%=dbhost%>);
-<%	
+			%>
+				comand_<%=cid%>.append(" --host "+<%=dbhost%>);
+			<%	
 			}
 			if(dbport!= null && !"".equals(dbport)&& !"\"\"".equals(dbport)){
-%>
-		comand_<%=cid%>.append(" --port "+<%=dbport%>);
-<%
+			%>
+				comand_<%=cid%>.append(" --port "+<%=dbport%>);
+			<%
 			}
 		}else{
 			String replicaSetName = ElementParameterParser.getValue(node, "__REPLICA_NAME__");
-%>
-		StringBuffer repHosts_<%=cid%>=new StringBuffer();
-		repHosts_<%=cid%>.append(<%=replicaSetName%>+"/");
-<%
+			%>
+			StringBuffer repHosts_<%=cid%>=new StringBuffer();
+			repHosts_<%=cid%>.append(<%=replicaSetName%>+"/");
+			<%
 		  	List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
 		  	boolean isFirstHost=true;
 		  	for(Map<String,String> replicaAddr:replicaAddrs){
@@ -98,64 +101,64 @@
 					if(isFirstHost){
 						isFirstHost=false;
 					}else{
-%>
-		repHosts_<%=cid%>.append(",");
-<%
+					%>
+						repHosts_<%=cid%>.append(",");
+					<%
 					}
-%>
-		repHosts_<%=cid%>.append(<%=repHost%>);
-<%
+					%>
+						repHosts_<%=cid%>.append(<%=repHost%>);
+					<%
 					if(repPort!= null && !"".equals(repPort)&& !"\"\"".equals(repPort)){
-%>
-		repHosts_<%=cid%>.append(":"+<%=repPort%>);
-<%
+					%>
+						repHosts_<%=cid%>.append(":"+<%=repPort%>);
+					<%
 					}
 				}else{
 					break;
 				}
 		  	}
-%>
-		comand_<%=cid%>.append(" --host "+repHosts_<%=cid%>.toString());
-<%
+			%>
+			comand_<%=cid%>.append(" --host "+repHosts_<%=cid%>.toString());
+		<%
 		}
 	}
 	
 	if(dbname!= null && !"".equals(dbname)&& !"\"\"".equals(dbname)){
-%>
+	%>
 		comand_<%=cid%>.append(" --db "+<%=dbname%>);
-<%
+	<%
 	}
 	if(collection!= null && !"".equals(collection)&& !"\"\"".equals(collection)){
-%>
+	%>
 		comand_<%=cid%>.append(" --collection "+<%=collection%>);
-<%
+	<%
 	}
 	if (authentication){
 		if(dbuser!= null && !"".equals(dbuser)&& !"\"\"".equals(dbuser)){
-%>
- 		comand_<%=cid%>.append(" --username "+<%=dbuser%>); 
-<%
+		%>
+ 			comand_<%=cid%>.append(" --username "+<%=dbuser%>); 
+		<%
 		}
 		if(dbpass!= null && !"".equals(dbpass)&& !"\"\"".equals(dbpass)){
-%>
+		%>
  		comand_<%=cid%>.append(" --password "+<%=dbpass%>); 
-<%
+		<%
 		}
 	}
 	if(fileType!= null && !"".equals(fileType)&& !"\"\"".equals(fileType)){
-%>
+	%>
 		comand_<%=cid%>.append(" --type "+"<%=fileType%>");
-<%
+	<%
 	}
 	if(dataFileName!= null && !"".equals(dataFileName)&& !"\"\"".equals(dataFileName)){
-%>
+	%>
 		comand_<%=cid%>.append(" --file "+<%=dataFileName%>);
-<%
+	<%
 	}
 	if(dropCreateColl){
-%>
+	%>
 		comand_<%=cid%>.append(" --drop");
-<%
+	<%
 	}
 	if("UPSERT".equalsIgnoreCase(dataAction)){
 		List<Map<String, String>> upsertFieldList = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__UPSERT_FIELDS__");
@@ -167,30 +170,30 @@
 				upsertFields=upsertFields+","+field.get("COLNAME");
 			}
 		}
-%>
+		%>
 		comand_<%=cid%>.append(" --upsert");
-<%
+		<%
 		if(!"".equals(upsertFields)){
-%>
-		comand_<%=cid%>.append(" --upsertFields "+"<%=upsertFields%>");
-<%
+		%>
+			comand_<%=cid%>.append(" --upsertFields "+"<%=upsertFields%>");
+		<%
 		}
 	}
 	if(!"JSON".equalsIgnoreCase(fileType)){
 		if(ignoreBlanks){
-%>
-		comand_<%=cid%>.append(" --ignoreBlanks");
-<%
+		%>
+			comand_<%=cid%>.append(" --ignoreBlanks");
+		<%
 		}
 		if(!"".equals(fileds)){
-%>
-		comand_<%=cid%>.append(" --fields "+"<%=fileds%>");
-<%
+		%>
+			comand_<%=cid%>.append(" --fields "+"<%=fileds%>");
+		<%
 		}
 		if(isFirstLineHeader){
-%>
-		comand_<%=cid%>.append(" --headerline");
-<%
+		%>
+			comand_<%=cid%>.append(" --headerline");
+		<%
 		}
 	}
 	if(additionalParams != null && additionalParams.size()>0){
@@ -198,57 +201,63 @@
 			String arg = param.get("ARGUMENT");
 			String value = param.get("VALUE");
 			if(arg!=null && !"".equals(arg)){
-%>
-		comand_<%=cid%>.append(" "+<%=arg%>);
-<%
+			%>
+				comand_<%=cid%>.append(" "+<%=arg%>);
+				<%
 				if(value!=null && !"".equals(value)){
-%>
-		comand_<%=cid%>.append(" "+<%=value%>);
-<%
+				%>
+					comand_<%=cid%>.append(" "+<%=value%>);
+				<%
 				}
 			}
 		}
 	}
-%>
-		final Process process_<%=cid%> = runtime_<%=cid%>.exec(comand_<%=cid%>.toString());
+	if(isLog4jEnabled){
+	%>	
+		log.info("<%=cid%> - Execute command " + comand_<%=cid%>.toString() + ".");
+		log.info("<%=cid%> - Start to import the data into ["+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%>+"]");
+	<%
+	}
+	%>
+	final Process process_<%=cid%> = runtime_<%=cid%>.exec(comand_<%=cid%>.toString());
 
-		Thread normal_<%=cid %> = new Thread() {
-			public void run() {
+	Thread normal_<%=cid %> = new Thread() {
+		public void run() {
+			try {
+				java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(process_<%=cid %>.getInputStream()));
+				String line = "";
 				try {
-					java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(process_<%=cid %>.getInputStream()));
-					String line = "";
-					try {
-						while((line = reader.readLine()) != null) {
-<%
-    if(printLog){
-%>
+					while((line = reader.readLine()) != null) {
+						<%
+					    if(printLog){
+						%>
 							System.out.println(line);
-<%
-    }
-%>				
-							int im=line.indexOf("imported");
-							int obj=line.indexOf("objects");
-							if(im > 0 && obj > 0){
-								line = line.substring(im+8, obj).trim();
-							}
-							if(line.matches("^[\\d]+$")){
-								globalMap.put("<%=cid %>_NB_LINE", Integer.parseInt(line));
-							}else{
-								globalMap.put("<%=cid %>_NB_LINE", 0);
-							}
+						<%
+					    }
+						%>				
+						int im=line.indexOf("imported");
+						int obj=line.indexOf("objects");
+						if(im > 0 && obj > 0){
+							line = line.substring(im+8, obj).trim();
 						}
-					} finally {
-						reader.close();
+						if(line.matches("^[\\d]+$")){
+							globalMap.put("<%=cid %>_NB_LINE", Integer.parseInt(line));
+						}else{
+							globalMap.put("<%=cid %>_NB_LINE", 0);
+						}
 					}
-				} catch(java.io.IOException ioe) {
-					ioe.printStackTrace();
+				} finally {
+					reader.close();
 				}
+			} catch(java.io.IOException ioe) {
+				ioe.printStackTrace();
 			}
-		};
-		normal_<%=cid%>.start();
-<%
+		}
+	};
+	normal_<%=cid%>.start();
+	<%
     if(printLog){
-%>
+	%>
 		Thread error_<%=cid%> = new Thread() {
 			public void run() {
 				try {
@@ -267,15 +276,22 @@
 			}
 		};
 		error_<%=cid%>.start();
-<%
+	<%
     }
-%>			
-		process_<%=cid %>.waitFor();
-		normal_<%=cid%>.interrupt();
-<%
+	%>			
+	process_<%=cid %>.waitFor();
+	normal_<%=cid%>.interrupt();
+	<%
     if(printLog){
-%>
+	%>
 		error_<%=cid%>.interrupt();
-<%
+	<%
     }
-%>	
+    if(isLog4jEnabled){
+	%>	
+		log.info("<%=cid%> - Has been imported "+globalMap.get("<%=cid %>_NB_LINE")+" objects.");
+		log.info("<%=cid%> - Finish imported.");
+	<%
+	}
+	log4jFileUtil.componentFinishInfo(node);
+	%>	

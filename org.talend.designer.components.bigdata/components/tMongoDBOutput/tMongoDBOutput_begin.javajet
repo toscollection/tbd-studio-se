@@ -8,7 +8,7 @@
 		java.util.Map
 	" 
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <% 
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -26,14 +26,18 @@
     
     List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
     boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
-%>
-			int nb_line_<%=cid %> = 0;
-<%
+    
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
+	int nb_line_<%=cid %> = 0;
+	<%
     List<IMetadataTable> metadatas = node.getMetadataList();
   	if(metadatas != null && metadatas.size() > 0){
       	IMetadataTable metadata = metadatas.get(0);
       	if(metadata != null){
-%>
+		%>
 			class DBObjectUtil_<%=cid%> {
 			
 				private com.mongodb.BasicDBObject object = null;
@@ -99,66 +103,81 @@
 			java.util.Map<String, String> pathMap_<%=cid%>=new java.util.HashMap<String, String>();
 			com.mongodb.Mongo mongo_<%=cid%>=null;
 			com.mongodb.DB db_<%=cid%> =null;
-<%
+			<%
 			for (int i=0;i<mapping.size();i++) {
 				String path = mapping.get(i).get("PARENT_NODE_PATH");
 				if(path==null || "".equals(path)){
 					path="\"\"";
 				}
 				String schemaColumn=mapping.get(i).get("SCHEMA_COLUMN");
-%>
+				%>
 				pathMap_<%=cid%>.put("<%=schemaColumn%>",<%=path%>);
-<%
+			<%
 			}
       		if (useExistingConnection){
       			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-%>
+				%>
 				mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
 				db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
-<%
-			}else{
-%>
-<%
- 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
-   			if(useReplicaSet){
-%>
-				List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
-<%
-				for(Map<String,String> replicaAddr:replicaAddrs){
-%>
-				addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
-<%
+				<%
+				if(isLog4jEnabled){
+				%>	
+					log.info("<%=cid%> - Get an existing client from " + "<%=connection%>" + ".");
+					log.info("<%=cid%> - Get an existing DB from " + "<%=connection%>" + ".");
+				<%
 				}
-%>
-				mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
-<%
 			}else{
-%>
-				mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
-<%
-			}
-%>
+	 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+	   			if(useReplicaSet){
+				%>
+					List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+					<%
+					for(Map<String,String> replicaAddr:replicaAddrs){
+					%>
+					addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+					<%
+					}
+					%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+				<%
+				}else{
+				%>
+					mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+				<%
+				}
+				%>
 				resourceMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
 				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
-<%
+				<%
 				if (authentication){
-%>
+				%>
     			db_<%=cid%>.authenticate(<%=dbuser%>, <%=dbpass%>.toCharArray());
-<%
+				<%
 				}
 			}
-%>
-<%
+			%>
+			mongo_<%=cid%>.isLocked();
+			<%
+			if(isLog4jEnabled){
+			%>	
+				log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
+			<%
+			}
 			if(dropExistCollection){
-%>
+			%>
 				if(db_<%=cid%>.collectionExists(<%=collection%>)){
 					db_<%=cid%>.getCollection(<%=collection%>).drop();
 				}
-<%
+			<%
 			}
-%>
-				com.mongodb.DBCollection coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
-<%
+			%>
+			com.mongodb.DBCollection coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
+			<%
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Start to write data into database [" + db_<%=cid%>.getName() + "].");
+			<%
+			}
     	}
     }
-%>
+	%>
