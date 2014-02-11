@@ -15,25 +15,22 @@ imports="
     boolean useExistingConn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     
 	if(!useExistingConn){
-%>
-		if(server_<%=cid%> != null){
-<%
-		if(useTriggerReplicate){
-%>
-			if(replicates_<%=cid%> != null && replicates_<%=cid%>.size()>0){
-				for(java.util.Map<String,Object> cancelParams_<%=cid%> : replicates_<%=cid%>){
-					reponse_<%=cid%> = server_<%=cid%>.post("/_replicate",org.svenson.JSON.defaultJSON().forValue(cancelParams_<%=cid%>));
-					if(!reponse_<%=cid%>.isOk()){
-						System.err.println(reponse_<%=cid%>.getContentAsString());
+	%>
+		if(client_<%=cid%> != null){
+			<%
+			if(useTriggerReplicate){
+			%>
+				if(replications_<%=cid%> != null && replications_<%=cid%>.size()>0){
+					for(org.lightcouch.Replication replication_<%=cid%> : replications_<%=cid%>){
+						replication_<%=cid%>.trigger();
 					}
 				}
+			<%
 			}
-<%
-		}
-%>
-			server_<%=cid%>.shutDown();
+			%>
+			client_<%=cid%>.shutdown();
 		}  
-<%
+	<%
 	}
-%>
+	%>
 	globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);

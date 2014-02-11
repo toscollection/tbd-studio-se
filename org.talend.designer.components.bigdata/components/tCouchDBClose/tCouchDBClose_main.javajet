@@ -15,18 +15,14 @@
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 	
 %>
-	org.jcouchdb.db.Server server_<%=cid%> = (org.jcouchdb.db.Server)globalMap.get("server_<%=connection%>");
-	if(server_<%=cid%> != null){
-		java.util.List<java.util.Map<String, Object>> replicates_<%=cid%> = (java.util.List<java.util.Map<String, Object>>)globalMap.get("replicates_<%=connection%>");
-		org.jcouchdb.db.Response reponse_<%=cid%> = null;
-		if(replicates_<%=cid%> != null && replicates_<%=cid%>.size()>0){
-			for(java.util.Map<String,Object> cancelParams_<%=cid%> : replicates_<%=cid%>){
-				reponse_<%=cid%> = server_<%=cid%>.post("/_replicate",org.svenson.JSON.defaultJSON().forValue(cancelParams_<%=cid%>));
-				if(!reponse_<%=cid%>.isOk()){
-					System.err.println(reponse_<%=cid%>.getContentAsString());
-				}
+	org.lightcouch.CouchDbClient client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
+	if(client_<%=cid%> != null){
+		List<org.lightcouch.Replication> replications_<%=cid%> = (List<org.lightcouch.Replication>)globalMap.get("replications_<%=connection%>");
+		if(replications_<%=cid%> != null && replications_<%=cid%>.size()>0){
+			for(org.lightcouch.Replication replication_<%=cid%> : replications_<%=cid%>){
+				replication_<%=cid%>.trigger();
 			}
 		}
-		server_<%=cid%>.shutDown();
+		client_<%=cid%>.shutdown();
 	}
 	
