@@ -9,8 +9,8 @@ imports="
         java.util.List
 " 
 %>
-
-<%
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
@@ -26,26 +26,27 @@ imports="
                     if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
                         int nbColumns = metadata.getListColumns().size();
                         if(nbColumns>0){
-%>
-}
-<%
+						%>
+							}
+						<%
                         }
                     }
                 }
             }
         }
     }
-if(!("true").equals(useExistingConn))
-{
-    %>
-    client_<%=cid%>.shutdown();
-    <%
-}
-String destination = ElementParameterParser.getValue(node, "__DESTINATION__");
-if(destination==null || ("").equals(destination.trim())){
-    %>
-    globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
-    <%
-}
-%>
+	if(!("true").equals(useExistingConn)){
+	%>
+		client_<%=cid%>.shutdown();
+	<%
+	}
+	String destination = ElementParameterParser.getValue(node, "__DESTINATION__");
+	if(destination==null || ("").equals(destination.trim())){
+	%>
+		globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+	<%
+	}
+	log4jFileUtil.retrievedDataNumberInfo(node);
+	log4jFileUtil.componentFinishInfo(node);
+	%>
 

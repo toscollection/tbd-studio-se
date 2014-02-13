@@ -5,8 +5,8 @@ imports="
     org.talend.designer.codegen.config.CodeGeneratorArgument
 " 
 %>
-
-<%
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
 
@@ -15,9 +15,15 @@ imports="
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 
     String conn = "conn_" + connection;
-%>
-com.couchbase.client.CouchbaseClient client_<%=cid%> = (com.couchbase.client.CouchbaseClient)globalMap.get("<%=conn%>");
-    if(client_<%=cid%> != null)
-    {
+    
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
+	com.couchbase.client.CouchbaseClient client_<%=cid%> = (com.couchbase.client.CouchbaseClient)globalMap.get("<%=conn%>");
+    if(client_<%=cid%> != null){
         client_<%=cid%>.shutdown();
     }
+	<%
+	log4jFileUtil.componentFinishInfo(node);
+	%>
