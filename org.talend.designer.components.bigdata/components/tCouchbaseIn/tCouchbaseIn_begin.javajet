@@ -86,6 +86,12 @@
 						int nbColumns = columns.size();
 						if(nbColumns>0){
 						    class Generate{
+						    
+						    	private boolean isLog4jEnabled;
+						    	
+						    	public void setIsLog4jEnabled(boolean isLog4jEnabled){
+						    		this.isLog4jEnabled = isLog4jEnabled;
+						    	}
 
 						        public void generate(String connName,String cid,IMetadataTable metadata){
 								    String[] columns = new String[]{"Id","Key","Value","jsonDoc"};
@@ -133,7 +139,6 @@
 									        query_<%=cid%>.<%=method%>(com.couchbase.client.protocol.views.ComplexKey.of((Object[])key_<%=cid%>));
 									    }else{
 									    	<%
-									    	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 									    	if(isLog4jEnabled){
 											%>
 												log.error("The type of "+key_<%=cid%>+" should be String or Object[]!");
@@ -174,6 +179,7 @@
 						        }
 						    }
 						    Generate generateCode = new Generate();
+						    generateCode.setIsLog4jEnabled(isLog4jEnabled);
 						    String fromview = ElementParameterParser.getValue(node,"__FROMVIEW__");
 						    
 						    log4jFileUtil.startRetriveDataInfo();
