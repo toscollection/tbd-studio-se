@@ -30,6 +30,9 @@ import org.talend.commons.utils.VersionUtils;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
+import org.talend.core.database.EDatabaseTypeName;
+import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.DatabaseConnectionItem;
@@ -232,6 +235,13 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
             while (iter.hasNext()) {
                 Map.Entry<String, String> entry = iter.next();
                 connParameters.put(entry.getKey(), entry.getValue());
+            }
+            if (dbConn.getDatabaseType().equals(EDatabaseTypeName.HIVE.getDisplayName())) {
+                connParameters.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS,
+                        connection.getParameters().get(ECustomVersionGroup.HIVE.getName()));
+            } else if (dbConn.getDatabaseType().equals(EDatabaseTypeName.HBASE.getDisplayName())) {
+                connParameters.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS,
+                        connection.getParameters().get(ECustomVersionGroup.HBASE.getName()));
             }
             factory.save(dbItem);
         }
