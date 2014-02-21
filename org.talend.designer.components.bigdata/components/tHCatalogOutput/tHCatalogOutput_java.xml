@@ -40,6 +40,7 @@
 	  	<PARAMETER NAME="DISTRIBUTION" REPOSITORY_VALUE="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION">
 			<ITEMS DEFAULT="HORTONWORKS">
 				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
+				<ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
 				<ITEM NAME="CUSTOM" VALUE="CUSTOM"/>
 			</ITEMS>
 		</PARAMETER>
@@ -49,6 +50,7 @@
 				<ITEM NAME="HDP_1_2" VALUE="HDP_1_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="HDP_1_3" VALUE="HDP_1_3" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="HDP_2_0" VALUE="HDP_2_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+				<ITEM NAME="Cloudera_CDH5" VALUE="Cloudera_CDH5" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 			</ITEMS>
 		</PARAMETER>
 		
@@ -260,6 +262,7 @@
 			<IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hadoop-core-1.1.2.21.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_2' AND DISTRIBUTION!='CUSTOM')"/>
 			<IMPORT NAME="hadoop-core-1.2.0.1.3.0.0-107.jar" MODULE="hadoop-core-1.2.0.1.3.0.0-107.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.3/lib/hadoop-core-1.2.0.1.3.0.0-107.jar" REQUIRED_IF="(HCAT_VERSION=='HDP_1_3' AND DISTRIBUTION!='CUSTOM')"/>
  			
+ 			<!-- HDP_2_0 HDFS JARS -->
  			<IMPORT NAME="hadoop-hdfs-2.2.0.2.0.6.0-76.jar" MODULE="hadoop-hdfs-2.2.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-hdfs-2.2.0.2.0.6.0-76.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_0' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-common-2.2.0.2.0.6.0-76.jar" MODULE="hadoop-common-2.2.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-common-2.2.0.2.0.6.0-76.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_0' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-auth-2.2.0.2.0.6.0-76.jar" MODULE="hadoop-auth-2.2.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-auth-2.2.0.2.0.6.0-76.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_0' AND (DISTRIBUTION!='CUSTOM')" />
@@ -271,6 +274,19 @@
             <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_0' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_0' AND (DISTRIBUTION!='CUSTOM')" />
 
+		    <!-- Cloudera_CDH5 HDFS JARS -->
+		    <IMPORT NAME="hadoop-hdfs-2.2.0-cdh5.0.0-beta-2.jar" MODULE="hadoop-hdfs-2.2.0-cdh5.0.0-beta-2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-hdfs-2.2.0-cdh5.0.0-beta-2.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-common-2.2.0-cdh5.0.0-beta-2.jar" MODULE="hadoop-common-2.2.0-cdh5.0.0-beta-2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-common-2.2.0-cdh5.0.0-beta-2.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-auth-2.2.0-cdh5.0.0-beta-2.jar" MODULE="hadoop-auth-2.2.0-cdh5.0.0-beta-2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-auth-2.2.0-cdh5.0.0-beta-2.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-collections-3.2.1.jar" MODULE="commons-collections-3.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="protobuf-java-2.5.0.jar" MODULE="protobuf-java-2.5.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-api-1.7.5.jar" MODULE="slf4j-api-1.7.5.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/slf4j-api-1.7.5.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/slf4j-log4j12-1.7.5.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="avro-1.7.5-cdh5.0.0-beta-2.jar" MODULE="avro-1.7.5-cdh5.0.0-beta-2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.0-beta-2.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
+		    
 			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />

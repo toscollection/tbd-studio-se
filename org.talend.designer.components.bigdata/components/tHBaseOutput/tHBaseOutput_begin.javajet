@@ -75,7 +75,7 @@ imports="
 				if(family_bloomfiltertype!=null&&!"".equals(family_bloomfiltertype)){
 %>
 					family_<%=cid%>.setBloomFilterType(
-						<%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
+						<%if(!isCustom && ("HDP_2_0".equals(hbaseVersion) || "Cloudera_CDH5".equals(hbaseVersion))) {%>
 						org.apache.hadoop.hbase.regionserver.BloomType.<%=family_bloomfiltertype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>
@@ -91,7 +91,7 @@ imports="
 				if(family_compactioncompressiontype!=null&&!"".equals(family_compactioncompressiontype)){
 %>
 					family_<%=cid%>.setCompactionCompressionType(
-						<%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
+						<%if(!isCustom && ("HDP_2_0".equals(hbaseVersion) || "Cloudera_CDH5".equals(hbaseVersion))) {%>
 						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compactioncompressiontype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>
@@ -102,7 +102,7 @@ imports="
 				if(family_compressiontype!=null&&!"".equals(family_compressiontype)){
 %>
 					family_<%=cid%>.setCompressionType(
-						<%if(!isCustom && "HDP_2_0".equals(hbaseVersion)) {%>
+						<%if(!isCustom && ("HDP_2_0".equals(hbaseVersion) || "Cloudera_CDH5".equals(hbaseVersion))) {%>
 						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compressiontype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>
