@@ -141,10 +141,43 @@ imports="
 	nb_line_update_<%=cid%>=nb_line_update_<%=cid%> + updatedCount_<%=cid%>;
 	nb_line_inserted_<%=cid%>=nb_line_inserted_<%=cid%> + insertedCount_<%=cid%>;
 	nb_line_rejected_<%=cid%>=nb_line_rejected_<%=cid%> + rejectedCount_<%=cid%>;
-
-
-    globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
-    globalMap.put("<%=cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>);
-    globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
-    globalMap.put("<%=cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>);
-    globalMap.put("<%=cid %>_NB_LINE_REJECTED",nb_line_rejected_<%=cid%>);
+<% 
+    boolean isEnableParallelize ="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__PARALLELIZE__")); 
+    if (isEnableParallelize) { 
+%> 
+    	if (globalMap.get("<%=cid %>_NB_LINE") == null) { 
+    		globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>); 
+		} else { 
+    		globalMap.put("<%=cid %>_NB_LINE",(Integer)globalMap.get("<%=cid %>_NB_LINE") + nb_line_<%=cid%>); 
+		} 
+		if (globalMap.get("<%=cid %>_NB_LINE_UPDATED") == null) { 
+   	 	globalMap.put("<%=cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>); 
+		} else { 
+   			globalMap.put("<%=cid %>_NB_LINE_UPDATED",(Integer)globalMap.get("<%=cid %>_NB_LINE_UPDATED") + nb_line_update_<%=cid%>); 
+   	 	} 
+		if (globalMap.get("<%=cid %>_NB_LINE_INSERTED") == null) { 
+    		globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>); 
+    	} else { 
+		    globalMap.put("<%=cid %>_NB_LINE_INSERTED",(Integer)globalMap.get("<%=cid %>_NB_LINE_INSERTED") + nb_line_inserted_<%=cid%>); 
+    	} 
+		if (globalMap.get("<%=cid %>_NB_LINE_DELETED") == null) { 
+    		globalMap.put("<%=cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>); 
+    	} else { 
+		    globalMap.put("<%=cid %>_NB_LINE_DELETED",(Integer)globalMap.get("<%=cid %>_NB_LINE_DELETED") + nb_line_deleted_<%=cid%>); 
+    	} 
+		if (globalMap.get("<%=cid %>_NB_LINE_REJECTED") == null) { 
+    		globalMap.put("<%=cid %>_NB_LINE_REJECTED",nb_line_rejected_<%=cid%>); 
+    	} else { 
+		    globalMap.put("<%=cid %>_NB_LINE_REJECTED",(Integer)globalMap.get("<%=cid %>_NB_LINE_REJECTED") + nb_line_rejected_<%=cid%>); 
+   		}  
+<% 
+	} else { 
+%> 
+		globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>); 
+	    globalMap.put("<%=cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>); 
+	    globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>); 
+	    globalMap.put("<%=cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>); 
+		globalMap.put("<%=cid %>_NB_LINE_REJECTED",nb_line_rejected_<%=cid%>);
+<% 
+    } 
+%>
