@@ -46,7 +46,6 @@
 
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 <%
-//key_fields != null && key_fields.size()>0
 	if(operations_config != null && operations_config.size()>0) {
 %>
 		sb_<%=cid%>.append("<%=cid%>_GROUP = GROUP <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT ");
