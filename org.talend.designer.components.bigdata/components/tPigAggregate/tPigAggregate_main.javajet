@@ -46,27 +46,36 @@
 
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 <%
-	if(key_fields != null && key_fields.size()>0 && operations_config != null && operations_config.size()>0) {
+//key_fields != null && key_fields.size()>0
+	if(operations_config != null && operations_config.size()>0) {
 %>
-		sb_<%=cid%>.append("<%=cid%>_GROUP = GROUP <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT BY (");
-		
+		sb_<%=cid%>.append("<%=cid%>_GROUP = GROUP <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT ");
 <%
-		boolean isFirst = true;
-		for(Map<String, String> key_field : key_fields) {
-			if(!isFirst) {
+		if(key_fields != null && key_fields.size()>0) {
 %>
-				sb_<%=cid%>.append(",");
+			sb_<%=cid%>.append("BY (");
+<%
+			boolean isFirst = true;
+    		for(Map<String, String> key_field : key_fields) {
+    			if(!isFirst) {
+%>
+					sb_<%=cid%>.append(",");
 <%	
-			}
-			isFirst=false;
+				}
+				isFirst=false;
 %>
-			sb_<%=cid%>.append("<%=key_field.get("INPUT_COLUMN")%>");
+				sb_<%=cid%>.append("<%=key_field.get("INPUT_COLUMN")%>");
+<%
+			}
+%>
+			sb_<%=cid%>.append(")");
+<%
+		} else {
+%>
+			sb_<%=cid%>.append("ALL");
 <%
 		}
-%>
-		sb_<%=cid%>.append(")");
-<%
-
+		
 		if(useParallel) {
 %>
 			sb_<%=cid%>.append(" PARALLEL "+<%=reduce_number%>);
@@ -93,23 +102,27 @@
 		sb_<%=cid%> = new StringBuilder();
 		sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = FOREACH <%=cid%>_GROUP GENERATE ");
 <%
-		isFirst = true;
-		for(Map<String, String> key_field : key_fields) {
-			if(!isFirst) {
+		if(key_fields != null && key_fields.size()>0) {
+    		for(Map<String, String> key_field : key_fields) {
 %>
-				sb_<%=cid%>.append(",");
-<%	
-			}
-			isFirst=false;
-%>
-			sb_<%=cid%>.append("group<%=key_fields.size()>1?"."+key_field.get("INPUT_COLUMN"):""%> AS <%=key_field.get("INPUT_COLUMN")%>");
+    			sb_<%=cid%>.append("group<%=key_fields.size()>1?"."+key_field.get("INPUT_COLUMN"):""%> AS <%=key_field.get("INPUT_COLUMN")%>");
+    			sb_<%=cid%>.append(",");
 <%
+			}
 		}
 
-		for(Map<String, String> operation_config : operations_config) {
+		java.util.Iterator<Map<String, String>> iterator = operations_config.iterator();
+		
+		while(iterator.hasNext()) {
+			Map<String, String> operation_config = iterator.next();
 %>
-			sb_<%=cid%>.append(", <%=operation_config.get("FUNCTION")%>(<%=previous_node%>_<%=previousOutputConnectionName%>_RESULT.<%=operation_config.get("INPUT_COLUMN")%>) AS <%=operation_config.get("OUTPUT_COLUMN")%>");
+			sb_<%=cid%>.append(" <%=operation_config.get("FUNCTION")%>(<%=previous_node%>_<%=previousOutputConnectionName%>_RESULT.<%=operation_config.get("INPUT_COLUMN")%>) AS <%=operation_config.get("OUTPUT_COLUMN")%>");
 <%
+			if(iterator.hasNext()) {
+%>
+			sb_<%=cid%>.append(",");
+<%
+			}
 		}
 %>
 		sb_<%=cid%>.append(";");
