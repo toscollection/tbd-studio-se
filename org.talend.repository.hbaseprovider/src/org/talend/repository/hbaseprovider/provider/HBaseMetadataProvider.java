@@ -23,6 +23,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.talend.commons.exception.ExceptionHandler;
@@ -100,12 +101,13 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             } catch (Exception e) {
                 future.cancel(true);
                 connectionStatus.setResult(false);
-                connectionStatus.setMessageException("Connection timeout!");
+                connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
+                ExceptionHandler.process(e);
             }
         } catch (Exception e) {
             ExceptionHandler.process(e);
             connectionStatus.setResult(false);
-            connectionStatus.setMessageException(e.getMessage());
+            connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
         } finally {
             Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
