@@ -30,6 +30,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.talend.commons.exception.ExceptionHandler;
@@ -334,9 +335,11 @@ public class HadoopServerUtil {
             String missJarMsg = "";
             if (jars.size() > 0) {
                 missJarMsg = "Missing jars:" + jars.toString() + "; " + "Need to check them in modules view.";
+                connectionStatus.setMessageException(missJarMsg);
+            } else {
+                connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
             }
             ExceptionHandler.process(e);
-            connectionStatus.setMessageException(errorMsg + "\n" + missJarMsg);
         } finally {
             if (dfs != null) {
                 try {
