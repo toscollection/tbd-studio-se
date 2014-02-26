@@ -4,6 +4,7 @@ import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IWorkbench;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopNodeAction;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -46,6 +47,10 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
+            if (distribution == EHadoopDistributions.CLOUDERA
+                    && hcConnection.getDfVersion().equals(EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue())) {
+                return false;
+            }
             if (distribution == EHadoopDistributions.HORTONWORKS || distribution == EHadoopDistributions.CUSTOM) {
                 return false;
             }
