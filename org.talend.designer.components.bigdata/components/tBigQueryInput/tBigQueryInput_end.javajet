@@ -4,14 +4,18 @@ imports="
         org.talend.designer.codegen.config.CodeGeneratorArgument
 " 
 %>
-
-<%
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
-%>
+	%>
+		}
+		if (startIndex_<%=cid%> >= queryResult_<%=cid %>.getTotalRows().intValue()) {
+			break;
+		}
 	}
-	if (startIndex_<%=cid%> >= queryResult_<%=cid %>.getTotalRows().intValue()) {
-		break;
-	}
-  }
+  	<%
+	log4jFileUtil.retrievedDataNumberInfo(node);
+	log4jFileUtil.componentFinishInfo(node);
+	%>
