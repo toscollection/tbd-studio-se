@@ -17,6 +17,8 @@
 	String remotedir = ElementParameterParser.getValue(node, "__REMOTEDIR__");
 	boolean append = ("true").equals(ElementParameterParser.getValue(node, "__APPEND__"));
 	boolean includeSubDir = ("true").equals(ElementParameterParser.getValue(node, "__INCLUDSUBDIR__"));
+	
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>
 	java.util.Set<String> keySet_<%=cid %> = map_<%=cid %>.keySet();
     for (String key_<%=cid %> : keySet_<%=cid %>){     
@@ -37,6 +39,10 @@
 		org.apache.hadoop.fs.Path[] filePathList_<%=cid%> = org.apache.hadoop.fs.FileUtil.stat2Paths(fileStatusList_<%=cid%>);
 		if(filePathList_<%=cid%>==null){
 			System.err.println("No match file("+key_<%=cid %>+") exist!");
+			
+			<%if(isLog4jEnabled) {%>
+       		log.error("<%=cid%> - No match file("+key_<%=cid %>+") exist.");
+        	<%}%>
 		}else{
 			String localFilePath_<%=cid%> = "";
 	    	for(org.apache.hadoop.fs.Path path_<%=cid%>:filePathList_<%=cid%>){
@@ -65,6 +71,11 @@
 						%>
 						System.err.print(e.getMessage());
 						<%	
+								if(isLog4jEnabled) {
+								%>
+						log.error("<%=cid%> - " +e.getMessage());
+								<%	
+								}
 							} 
 						%>
 					}

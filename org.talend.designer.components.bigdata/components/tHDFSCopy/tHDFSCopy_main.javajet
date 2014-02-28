@@ -37,7 +37,11 @@
 			<%}%>
 			org.apache.hadoop.fs.FileUtil.copyMerge(fs_<%=cid%>,sourcePath_<%=cid%>,fs_<%=cid%>,targetPath_<%=cid%>,<%=remove%>,conf_<%=cid%>, null);
 		} else {
+		    <%if(isLog4jEnabled) {%>
+    		log.error("<%=cid%> - source file or directory : " + sourcePath_<%=cid%> + " don't exist.");
+    		<%}%>
 			System.err.println("source file or directory does not exist.");
+			
 		}
 	<%}else{%>	
     	<%if(rename && newName!=null && !"".equals(newName.trim()) && !"\"\"".equals(newName.trim())) {%>
@@ -50,8 +54,13 @@
     	if(fs_<%=cid%>.exists(sourcePath_<%=cid%>)) {
     		org.apache.hadoop.fs.FileUtil.copy(fs_<%=cid%>,sourcePath_<%=cid%>,fs_<%=cid%>,targetPath_<%=cid%>,<%=remove%>,<%=override%>,conf_<%=cid%>);
     	} else {
+    		<%if(isLog4jEnabled) {%>
+    		log.error("<%=cid%> - source file or directory : " + sourcePath_<%=cid%> + " don't exist.");
+    		<%}%>
     		System.err.println("source file or directory does not exist.");
     	}
 	<%}%>
 	globalMap.put("<%=cid %>_SOURCE_FILEPATH",<%=sourcePath%>);
 	globalMap.put("<%=cid %>_DESTINATION_FILEPATH",target_<%=cid%>);
+	
+	<%log4jFileUtil.componentFinishInfo(node);%>

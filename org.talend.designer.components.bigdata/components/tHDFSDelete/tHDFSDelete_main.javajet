@@ -16,13 +16,29 @@
 	if(fs_<%=cid%>.exists(path_<%=cid%>)){
 		if(fs_<%=cid%>.delete(path_<%=cid%>, true)){
 			globalMap.put("<%=cid %>_CURRENT_STATUS", "Path deleted.");
+			
+	    	<%if(isLog4jEnabled) {%>
+            log.info("<%=cid%> - directory or file : " + path_<%=cid%> + " is deleted.");
+            <%}%>
 		}else{
 			globalMap.put("<%=cid %>_CURRENT_STATUS", "No path deleted.");
+			
+			<%if(isLog4jEnabled) {%>
+            log.info("<%=cid%> - fail to delete directory or file : " + path_<%=cid%> + ".");
+            <%}%>
 		}
 	}else{
 		globalMap.put("<%=cid %>_CURRENT_STATUS", "Path does not exists.");
+		
+		<%if(isLog4jEnabled) {%>
+       	log.info("<%=cid%> - directory or file : " + path_<%=cid%> + " don't exist.");
+        <%}%>
 	}
 	globalMap.put("<%=cid %>_DELETE_PATH",<%=path%>);
+	
+<%
+	log4jFileUtil.componentFinishInfo(node);
+%>
 
 
 	

@@ -22,7 +22,6 @@
 	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-    log4jFileUtil.beforeComponentProcess(node);
     
 	IConnection inConn = null;
 	IMetadataTable metadata = null;

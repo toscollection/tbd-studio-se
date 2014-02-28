@@ -107,6 +107,11 @@
     				return checkDest(null, srcIsDir, new java.io.File(dst, srcName), overwrite);
     			} else if (!overwrite) {
     				System.err.print(dst+" exist, didn't overwrite.");
+    				
+    				<%if(isLog4jEnabled) {%>
+                   	log.error("<%=cid%> - directory or file : " + dst + " exist, didn't overwrite.");
+                    <%}%>
+                    
     				return null;
     			}
     		}

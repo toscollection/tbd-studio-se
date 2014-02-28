@@ -18,7 +18,6 @@
 	String queryNode = ElementParameterParser.getValue(node,"__QUERY_NODE__");
 	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.beforeComponentProcess(node);
     
     List<IMetadataTable> metadatas = node.getMetadataList();
   	if(metadatas != null && metadatas.size() > 0){

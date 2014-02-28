@@ -104,8 +104,16 @@
 				}
 			} catch (java.io.FileNotFoundException e) {
 				e.printStackTrace();
+				
+        		<%if(isLog4jEnabled) {%>
+               	log.error("<%=cid%> - " + e.getMessage());
+                <%}%>
 			} catch (java.io.IOException e) {
 				e.printStackTrace();
+				
+			    <%if(isLog4jEnabled) {%>
+               	log.error("<%=cid%> - " + e.getMessage());
+                <%}%>
 			}
 			return false;
 		}
@@ -228,4 +236,8 @@
 		globalMap.put("<%=cid %>_CURRENT_FILEDIRECTORY", currentFileDirectory_<%=cid%>);
 		globalMap.put("<%=cid %>_CURRENT_FILEEXTENSION", currentFileExtension_<%=cid%>);
 		globalMap.put("<%=cid%>_NB_FILE", NB_FILE<%=cid%>);
+		
+		<%if(isLog4jEnabled) {%>
+		log.info("<%=cid%> - Current file path : " + currentFilePath_<%=cid%>);
+	  	<%}%>
 		

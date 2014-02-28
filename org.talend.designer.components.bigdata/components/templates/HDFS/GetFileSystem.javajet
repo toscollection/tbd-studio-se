@@ -6,6 +6,8 @@ imports="
 " 
 %>
 
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
@@ -20,6 +22,11 @@ String fsDefalutName = "fs.default.name";
 
 String hadoopVersion = null;
 boolean isCustom = false;
+
+boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+
+log4jFileUtil.logParameters(node);
+log4jFileUtil.componentStartInfo(node);
 
 %>
 String username_<%=cid%> = "";

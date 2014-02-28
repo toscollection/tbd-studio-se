@@ -23,7 +23,6 @@
   	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
   	
   	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-  	log4jFileUtil.beforeComponentProcess(node);
 	%>
 	try{
 		<%

@@ -106,6 +106,12 @@
 	<%
 	}
 	
+	if(isLog4jEnabled) {
+	%>
+	log.info("<%=cid%> - Compare result : " + message<%=cid %> + ".");
+	<%
+	}
+	
 	for (IConnection conn : node.getOutgoingConnections()) {
 		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 	%>
@@ -117,7 +123,14 @@
 	<%=conn.getName() %>.differ = (result_<%=cid%>)?0:1;
 	<%=conn.getName() %>.message = message<%=cid %>;
 	<%
+			if(isLog4jEnabled) {
+			%>
+			log.info("<%=cid%> - Compare date : " + routines.system.FormatterUtils.format_Date(<%=conn.getName() %>.moment,"dd-MM-yyyy HH:mm:ss") + ".");
+			<%
+			}
 		}
 	}
+	
+	log4jFileUtil.componentFinishInfo(node);
 	%>
 	

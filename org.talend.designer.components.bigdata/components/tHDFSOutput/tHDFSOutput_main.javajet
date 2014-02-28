@@ -14,6 +14,8 @@
 	"
 %>
 
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -151,6 +153,12 @@ if (metadata!=null) {
 <%
 				}
 			}
+			
+%>
+			nb_line_<%=cid %>++;
+<%
+			log4jFileUtil.collectRetriveData(conn.getName(),metadata);
+			log4jFileUtil.debugWriteData(node);
 		}
 	}
 }

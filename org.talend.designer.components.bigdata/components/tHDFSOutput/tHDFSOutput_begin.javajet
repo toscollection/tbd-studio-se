@@ -44,8 +44,8 @@
 	
 	boolean isIncludeHeader = ("true").equals(ElementParameterParser.getValue(node,"__INCLUDEHEADER__"));
 %>
-		org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
-
+	org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
+	int nb_line_<%=cid %> = 0;
 <%
 	if (typeFile.equals("TEXT")) {
 %>			

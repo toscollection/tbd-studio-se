@@ -17,12 +17,14 @@
 	boolean MD5 = new Boolean(ElementParameterParser.getValue(node, "__MD5__"));
 	
 	String outputConnName = null;
+	IConnection outputConn = null;
 	List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
 	if (conns!=null) {
 		if (conns.size()>0) {
 			for (int i=0;i<conns.size();i++) {
 				IConnection connTemp = conns.get(i);
 				if (connTemp.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+					outputConn = connTemp;
 					outputConnName = connTemp.getName();
 					break;
 				}
@@ -65,8 +67,21 @@
 				}
 			}
 		<%}%>
+		
+		<%
+		log4jFileUtil.collectRetriveData(outputConn);
+		log4jFileUtil.debugRetriveData();
+		%>
+	}
+	<%
+		if(isLog4jEnabled) {
+	%>
+	else {
+		log.info("<%=cid%> - file or directory : " + path_<%=cid %> + " don't exist.");
+	}
+	<%
+    	}
 	}
 	
-	<%
-	}
+	log4jFileUtil.componentFinishInfo(node);
 	%>

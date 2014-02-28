@@ -14,6 +14,8 @@
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 	boolean overwrite = ("true").equals(ElementParameterParser.getValue(node, "__OVERWRITE__"));
 	String remotedir = ElementParameterParser.getValue(node, "__REMOTEDIR__");
+	
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>
 		globalMap.put("<%=cid %>_CURRENT_STATUS", "No file renamed.");	      				
    		java.util.Set<String> keySet_<%=cid %> = map_<%=cid %>.keySet();
@@ -43,6 +45,9 @@
 			if(count_<%=cid%>!=1) {
 				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail:file not exist or not unique match for current filemask");
 				System.err.println("Info : file not exist or not unique match for current filemask");
+				<%if(isLog4jEnabled) {%>
+       			log.error("<%=cid%> - file not exist or not unique match for current filemask : " + mask_<%=cid %>);
+        		<%}%>
 				continue;
 			}
 			
@@ -62,6 +67,9 @@
 		    			} else {
 		    				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail.");
 		    				System.err.println("Info : File rename fail");
+            				<%if(isLog4jEnabled) {%>
+                   			log.error("<%=cid%> - fail to rename file from " + fromPath_<%=cid%> + " to " + toPath_<%=cid%>);
+                    		<%}%>
 		    			}
 		    		}
 		    		<%if(overwrite){%>
@@ -84,6 +92,9 @@
 		    			} else {
 		    				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail.");
 		    				System.err.println("Info : File rename fail");
+            				<%if(isLog4jEnabled) {%>
+                   			log.error("<%=cid%> - fail to rename file from " + fromPath_<%=cid%> + " to " + toPath_<%=cid%>);
+                    		<%}%>
 		    			}
 		    		}
 		    		<%}%>
@@ -93,7 +104,10 @@
 					throw(e);
 					<%}else{%>
 					System.err.print(e.getMessage());
-					<%}%>	    		
+    					<%if(isLog4jEnabled) {%>
+           			log.error("<%=cid%> - fail to rename file : " + e.getMessage());
+            			<%}
+					}%>	    		
 	    		}
     		}
 	    }

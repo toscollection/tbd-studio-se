@@ -59,8 +59,16 @@
         				}
         			} catch (java.io.FileNotFoundException e) {
         				e.printStackTrace();
+        				
+        				<%if(isLog4jEnabled) {%>
+       					log.error("<%=cid%> - " + e.getMessage());
+        				<%}%>
         			} catch (java.io.IOException e) {
         				e.printStackTrace();
+        				
+    					<%if(isLog4jEnabled) {%>
+       					log.error("<%=cid%> - " + e.getMessage());
+        				<%}%>
         			}
         			return false;
         		}
@@ -69,6 +77,11 @@
 		} else {
 			status_<%=cid%>.add(rootStatu_<%=cid%>);
 		}
+		
+<%
+		log4jFileUtil.startRetriveDataInfo();
+%>
+		int nb_line_<%=cid%> = 0;
 		
 		for(org.apache.hadoop.fs.FileStatus statu_<%=cid%> : status_<%=cid%>) {
 			org.apache.hadoop.fs.Path path_<%=cid%> = statu_<%=cid%>.getPath();

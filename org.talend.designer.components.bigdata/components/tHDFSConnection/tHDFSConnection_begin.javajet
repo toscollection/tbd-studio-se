@@ -8,6 +8,8 @@
 	"
 %>
 
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -27,6 +29,9 @@
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	
+	log4jFileUtil.logParameters(node);
+	log4jFileUtil.componentStartInfo(node);
 	%>
 
 	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
@@ -58,3 +63,7 @@
 	}
 %>
 	globalMap.put("conn_<%=cid%>",conf_<%=cid%>);
+	
+<%
+	log4jFileUtil.componentFinishInfo(node);
+%>

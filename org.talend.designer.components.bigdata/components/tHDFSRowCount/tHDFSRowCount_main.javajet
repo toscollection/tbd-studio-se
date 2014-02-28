@@ -97,3 +97,13 @@
   	lineCount_<%=cid %> -= emptyLineCount_<%=cid%>;
 	<%}%>   
   	globalMap.put("<%=cid %>_COUNT",lineCount_<%=cid %>);
+  	
+	<%
+	if(isLog4jEnabled) {
+	%>
+	log.info("<%=cid%> - file : " + file_<%=cid%> + " line count is " + lineCount_<%=cid %>);
+	<%
+	}
+	
+	log4jFileUtil.componentFinishInfo(node);
+	%>

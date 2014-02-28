@@ -16,6 +16,8 @@
 	boolean overwrite = ("true").equals(ElementParameterParser.getValue(node, "__OVERWRITE__"));
 	String remotedir = ElementParameterParser.getValue(node, "__REMOTEDIR__");
 	boolean append = ("true").equals(ElementParameterParser.getValue(node, "__APPEND__"));
+	
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>	      				
    		java.util.Set<String> keySet_<%=cid %> = map_<%=cid %>.keySet();
       	for (String key_<%=cid %> : keySet_<%=cid %>){     
@@ -46,6 +48,9 @@
         	} 
 	    	if(listings_<%=cid %> == null || listings_<%=cid %>.length <= 0){
 	    		System.err.println("No match file("+key_<%=cid %>+") exist!");
+	    		<%if(isLog4jEnabled) {%>
+       			log.error("<%=cid%> - No match file("+key_<%=cid %>+") exist!");
+        		<%}%>
 	    	}else{
 	    		String localFilePath_<%=cid%> = "";
 	    		String hdfsFilePath_<%=cid%> = "";
@@ -69,8 +74,13 @@
 								}else{
 							%>
 							System.err.print(e.getMessage());
-							<%	
-								} 
+							<%   
+									if(isLog4jEnabled) {
+							%>
+       						log.error("<%=cid%> - " + e.getMessage());
+        					<%
+        							}
+								}
 						    %>
 		                }
 						nb_file_<%=cid%>++;
