@@ -200,6 +200,9 @@
 	});
 	<%}%>
 	
+	<%if(isLog4jEnabled) {%>
+		log.info("<%=cid%> - Start to list files");
+	<%}%>
 	for(int i_<%=cid%>=0;i_<%=cid%><status_<%=cid%>.size();i_<%=cid%>++) {//TD512
 		org.apache.hadoop.fs.FileStatus file_<%=cid%> = status_<%=cid%>.get(i_<%=cid%>);
 		org.apache.hadoop.fs.Path path_<%=cid%> = file_<%=cid%>.getPath();
