@@ -170,7 +170,7 @@
       <DEFAULT>"ISO-8859-15"</DEFAULT>
     </PARAMETER>
     <PARAMETER NAME="DESTINATION" FIELD="TEXT" NUM_ROW="20"
-        REQUIRED="true">
+        REQUIRED="true" SHOW="false">
         <DEFAULT>tCouchbaseOut_1</DEFAULT>
     </PARAMETER>
         <PARAMETER

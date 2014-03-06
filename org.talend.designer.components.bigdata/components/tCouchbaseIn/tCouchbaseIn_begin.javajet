@@ -22,6 +22,7 @@
 	String cid = node.getUniqueName();
 	boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("KEY","PASS"));
 	log4jFileUtil.componentStartInfo(node);
 	log4jFileUtil.logParameters(node);
 	%>
@@ -141,7 +142,7 @@
 									    	<%
 									    	if(isLog4jEnabled){
 											%>
-												log.error("The type of "+key_<%=cid%>+" should be String or Object[]!");
+												log.error("<%=cid%> - The type of "+key_<%=cid%>+" should be String or Object[]!");
 											<%
 											}
 									    	%>
