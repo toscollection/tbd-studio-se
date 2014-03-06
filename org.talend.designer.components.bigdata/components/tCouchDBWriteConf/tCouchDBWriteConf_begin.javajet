@@ -8,12 +8,12 @@
 		java.util.List
 	" 
 %>
-<%
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
-    cid = cid.replace("_Out", "");
     String dbhost = ElementParameterParser.getValue(node, "__HOST__");
     String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
     String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
@@ -28,18 +28,33 @@
     List<Map<String,String>> replicaTargetDB= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICATE_TARGET_DB__");
     boolean useExistingConn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-%>
+    
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
 	org.lightcouch.CouchDbClient client_<%=cid%> = null;
 	java.util.Map<Object,Object> map_<%=cid%>=null;
 	com.google.gson.JsonParser jsonParse_<%=cid%> = new com.google.gson.JsonParser();
 	int nb_line_<%=cid%> = 0;
-<%
+	int nb_line_update_<%=cid%> = 0;
+	int nb_line_inserted_<%=cid%> = 0;
+	int nb_line_upserted_<%=cid%> = 0;
+	int nb_line_deleted_<%=cid%> = 0;
+	<%
 	if(useExistingConn){
-%>
-	client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
-<%
+	%>
+		client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
+		<%
+		if(isLog4jEnabled){
+		%>	
+			if(client_<%=cid%> != null) {
+				log.info("<%=cid%> - Get an existing client from " + "<%=connection%>" + ".");
+			}
+		<%
+		}
 	}else{
-%>
+	%>
 		client_<%=cid%> = new org.lightcouch.CouchDbClient(<%=dbname%>, true, "http", <%=dbhost%>, <%=dbport%>, <%=dbuser%>, <%=dbpass%>);
 		<%
 		if(useTriggerReplicate){
@@ -79,4 +94,9 @@
 			}
 		}
 	}
-%>
+	if (isLog4jEnabled) {
+	%>
+		log.info("<%=cid%> - Start to manipulate data in database [" +<%=dbname%>+ "].");
+	<%
+	}
+	%>

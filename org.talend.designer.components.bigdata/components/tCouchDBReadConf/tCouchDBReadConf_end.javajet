@@ -5,12 +5,12 @@ imports="
         org.talend.core.model.process.ElementParameterParser
 " 
 %>
-
-<%
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
-    cid = cid.replace("_In", "");
+    String src_cid = cid.replace("_In", "");
     boolean useTriggerReplicate="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_TRIGGER_REPLICATE__"));
     boolean useExistingConn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 	%>
@@ -37,4 +37,8 @@ imports="
 	<%
 	}
 	%>
-	globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+	globalMap.put("<%=src_cid %>_NB_LINE",nb_line_<%=cid%>);
+	<%
+	log4jFileUtil.retrievedDataNumberInfo(node);
+	log4jFileUtil.componentFinishInfo(node);
+	%>

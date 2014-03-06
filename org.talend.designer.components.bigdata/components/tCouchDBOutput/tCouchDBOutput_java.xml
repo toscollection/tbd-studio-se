@@ -315,7 +315,7 @@
 	<ADVANCED_PARAMETERS />
 
    	<CODEGENERATION>
-   	<TEMPLATES INPUT="In" OUTPUT="Out">
+	<TEMPLATES INPUT="In" OUTPUT="Out">
     	<TEMPLATE NAME="In" COMPONENT="tWriteXMLFieldOut">
 			<LINK_TO NAME="Mid" CTYPE="COMPONENT_OK" />
 		</TEMPLATE>
@@ -370,9 +370,13 @@
 			<IMPORT NAME="httpclient-4.2.5.jar" MODULE="httpclient-4.2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.2.5.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'COUCHDB_1_0_2')" />
 			<IMPORT NAME="httpcore-4.2.4.jar" MODULE="httpcore-4.2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.2.4.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'COUCHDB_1_0_2')" />
 		</IMPORTS>
-   </CODEGENERATION>
+	</CODEGENERATION>
 
-   <RETURNS>
-    <RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER" />
-   </RETURNS>
+	<RETURNS>
+		<RETURN NAME="NB_LINE"          TYPE="id_Integer" AVAILABILITY="AFTER"/>
+	    <RETURN NAME="NB_LINE_UPDATED"  TYPE="id_Integer" AVAILABILITY="AFTER" SHOW_IF="DATA_ACTION =='UPDATE'"/>
+	    <RETURN NAME="NB_LINE_INSERTED" TYPE="id_Integer" AVAILABILITY="AFTER" SHOW_IF="DATA_ACTION =='INSERT'"/>
+	    <RETURN NAME="NB_LINE_UPSERTED" TYPE="id_Integer" AVAILABILITY="AFTER" SHOW_IF="DATA_ACTION =='UPSERT'"/>
+	    <RETURN NAME="NB_LINE_DELETED"  TYPE="id_Integer" AVAILABILITY="AFTER" SHOW_IF="DATA_ACTION =='DELETE'"/>
+	</RETURNS>
 </COMPONENT>

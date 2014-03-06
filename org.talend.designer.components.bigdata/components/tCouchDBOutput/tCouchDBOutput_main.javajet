@@ -21,6 +21,7 @@
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
 	String key = ElementParameterParser.getValue(node,"__KEY__");
 	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -62,14 +63,25 @@
 				%>
 					try{
 						client_<%=cid%>.save(map_<%=cid%>);
+						nb_line_inserted_<%=cid%> ++;
 					}catch(org.lightcouch.DocumentConflictException e_<%=cid%>){
 						<%
 						if(dieOnError){
-						%>
+							if(isLog4jEnabled){
+							%>
+								log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
+							<%
+							}
+							%>
 							throw e_<%=cid%>;
 						<%
 						}else{
-						%>
+							if(isLog4jEnabled){
+							%>
+								log.error("<%=cid%> - "+e_<%=cid%>.getMessage());
+							<%
+							}
+							%>
 							System.err.println(e_<%=cid%>.getMessage());
 						<%
 						}
@@ -87,11 +99,13 @@
 						if("UPDATE".equals(dataAction)||"UPSERT".equals(dataAction)){
 						%>
 							client_<%=cid%>.update(map_<%=cid%>);
+							nb_line_update_<%=cid%> ++;
 						<%
 		               	}
 						if("DELETE".equals(dataAction)){
 						%>
 							client_<%=cid%>.remove(<%=conn.getName()%>.<%=key%>,rev_<%=cid%>);
+							nb_line_deleted_<%=cid%> ++;
 						<%
 						}
 						%>
@@ -100,20 +114,43 @@
 						if("UPSERT".equals(dataAction)){
 						%>
 							client_<%=cid%>.save(map_<%=cid%>);
+							nb_line_inserted_<%=cid%> ++;
 						<%
 						}else{
 							if(dieOnError){
-							%>
+								if(isLog4jEnabled){
+								%>
+									log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
+								<%
+								}
+								%>
 								throw e_<%=cid%>;
 							<%
 							}else{
-							%>
+								if(isLog4jEnabled){
+								%>
+									log.error("<%=cid%> - "+e_<%=cid%>.getMessage());
+								<%
+								}
+								%>
 								System.err.println(e_<%=cid%>.getMessage());
 							<%
 							}
 						}
 						%>
 					}
+				<%
+				}
+				if (isLog4jEnabled) {
+				%>
+					log4jSb_<%=cid%>.append("[key:"+<%=conn.getName()%>.<%=key%>+"]");
+					log4jSb_<%=cid%>.append("|");
+					log4jSb_<%=cid%>.append("[value:"+map_<%=cid%>+"]");
+					log4jSb_<%=cid%>.append("|");
+					
+					log.debug("<%=cid%> - Saved the record " + (nb_line_<%=cid%>) + ".");
+					log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
+					log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
 				<%
 				}
 			}

@@ -11,12 +11,12 @@
 		java.util.List
 	" 
 %>
-<%
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
-    cid = cid.replace("_In", "");
     String dbhost = ElementParameterParser.getValue(node, "__HOST__");
     String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
     String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
@@ -58,6 +58,10 @@
     String group_level = ElementParameterParser.getValue(node,"__GROUP_LEVEL__");
     
     String limit = ElementParameterParser.getValue(node, "__LIMIT__");
+    
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
     
     List<IMetadataTable> metadatas = node.getMetadataList();
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
@@ -122,6 +126,7 @@
 	%>
 		int nb_line_<%=cid %> = 0;
 	<%
+	log4jFileUtil.startRetriveDataInfo();
   	if(metadatas != null && metadatas.size() > 0){
 		IMetadataTable metadata = metadatas.get(0);
       	if(metadata != null){
@@ -329,7 +334,9 @@
 				 			<%=firstConnName%>.jsonDoc = valueRow_<%=cid%><%if(include_docs && !isReduce){%>.getDoc()<%}%>;
 						<%
 						}
+						log4jFileUtil.collectRetriveData(firstConnName,metadata);
 					}
+					log4jFileUtil.debugRetriveData(node);
 		}
 	}
 	%>

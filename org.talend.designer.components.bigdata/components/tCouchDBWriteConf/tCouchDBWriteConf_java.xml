@@ -211,6 +211,7 @@
 		    FIELD="TEXT"
 		    NUM_ROW="110"
 	        REQUIRED="true"
+	        SHOW_IF="false"
 	  	>
         	<DEFAULT>tCouchDBWriteConf_1</DEFAULT>
     	</PARAMETER>
