@@ -9,6 +9,7 @@
 	java.util.regex.Matcher
 	java.util.regex.Pattern
 	org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.INode
 	org.talend.core.model.process.IConnection
     org.talend.core.model.process.ElementParameterParser
     org.talend.designer.pigmap.PigMapComponent
@@ -48,6 +49,8 @@
 	
 	String previous_node="";
 	String start_node="";
+	
+	boolean inMain = true;
 
 	Map<String,String> expressionConvertMap = new HashMap<String,String>();//like that : row1.id ==> $0
 	int index = 0;
@@ -74,7 +77,9 @@
 			innerReject = true;
 		}
 	}
-	
+%>
+	routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
+<%
 	boolean existInnerJoin = false;
 	int lstSizeInputs = inputTables.size();
 	//prepare the flat data
@@ -101,12 +106,14 @@
 	    if(i == 0) {//main table
 	    	IConnection connection = hNameToConnection.get(tableName);
 	  		previous_node = connection.getSource().getUniqueName();
-			start_node = node.getDesignSubjobStartNode().getUniqueName();
+	  		INode loadNode = node.getDesignSubjobStartNode();
+			start_node = loadNode.getUniqueName();
+			inMain = loadNode.isSubtreeStart();
 %>
 			StringBuilder sb_<%=cid%> = new StringBuilder();
 			//the bag name of main input bag
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=previous_node%>_<%=tableName%>_RESULT GENERATE *;");
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_RESULT = FOREACH <%=cid%>_<%=tableName%>_RESULT GENERATE *;");
+			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=previous_node%>_<%=tableName%>_RESULT GENERATE *;");
+			helper_<%=cid%>.add("query","<%=cid%>_RESULT = FOREACH <%=cid%>_<%=tableName%>_RESULT GENERATE *;");
 			
 			StringBuilder sb_innerJoinReject_<%=cid%> = new StringBuilder();
 <%
@@ -117,19 +124,12 @@
 		
 		for(int i_<%=tableName%>=0; i_<%=tableName%><ps_<%=tableName%>.size(); i_<%=tableName%>++) {
 			Object[] o_<%=tableName%> = ps_<%=tableName%>.get(i_<%=tableName%>);
-			String type_<%=tableName%> = (String)o_<%=tableName%>[0];
-			if("query".equals(type_<%=tableName%>)) {
-				pigServer_<%=start_node%>.registerQuery((String)o_<%=tableName%>[1]);
-			} else if("jar".equals(type_<%=tableName%>)) {
-				pigServer_<%=start_node%>.registerJar((String)o_<%=tableName%>[1]);
-			} else if("script".equals(type_<%=tableName%>)) {
-				pigServer_<%=start_node%>.registerScript((java.io.InputStream)o_<%=tableName%>[1]);
-			}
+			helper_<%=cid%>.add((String)o_<%=tableName%>[0],o_<%=tableName%>[1]);
 			
 			if(i_<%=tableName%> == (ps_<%=tableName%>.size() - 1)) {//get the bag name of current lookup bag
 				String bagName_<%=tableName%> = (String)o_<%=tableName%>[1];
 				bagName_<%=tableName%> = bagName_<%=tableName%>.substring(0,bagName_<%=tableName%>.indexOf("_RESULT")+7);
-				pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH " + bagName_<%=tableName%> + " GENERATE *;");
+				helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_RESULT = FOREACH " + bagName_<%=tableName%> + " GENERATE *;");
 			}
 		}
 <%
@@ -196,7 +196,7 @@
 <%
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
+			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
 			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = JOIN <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT BY (");
 <%
 			}
@@ -312,13 +312,13 @@
 	 		}
 %>
 			sb_<%=cid%>.append(";");
-			pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+			helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 			sb_<%=cid%>.setLength(0);
 <%
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
 			sb_innerJoinReject_<%=cid%>.append(";");
-			pigServer_<%=start_node%>.registerQuery(sb_innerJoinReject_<%=cid%>.toString());
+			helper_<%=cid%>.add("query",sb_innerJoinReject_<%=cid%>.toString());
 			sb_innerJoinReject_<%=cid%>.setLength(0);
 			
 			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FILTER <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT BY ");
@@ -336,7 +336,7 @@
 				}
 %>
     		sb_innerJoinReject_<%=cid%>.append(";");
-    		pigServer_<%=start_node%>.registerQuery(sb_innerJoinReject_<%=cid%>.toString());
+    		helper_<%=cid%>.add("query",sb_innerJoinReject_<%=cid%>.toString());
     		sb_innerJoinReject_<%=cid%>.setLength(0);							
 <%
 			}
@@ -363,8 +363,8 @@
  			expression = convertExpression(expressionConvertMap,expression);
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FILTER <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT BY (NOT (<%=expression%>));");
+			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
+			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FILTER <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT BY (NOT (<%=expression%>));");
 			//need to set the lookup columns as null
 			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FOREACH <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT GENERATE ");
 <%
@@ -387,13 +387,13 @@
 				}
 %>
         		sb_innerJoinReject_<%=cid%>.append(";");
-        		pigServer_<%=start_node%>.registerQuery(sb_innerJoinReject_<%=cid%>.toString());
+        		helper_<%=cid%>.add("query",sb_innerJoinReject_<%=cid%>.toString());
         		sb_innerJoinReject_<%=cid%>.setLength(0);
 <%
 				if(isFirstInnerReject) {
 %>
 				//init inner reject resultset
-				pigServer_<%=start_node%>.registerQuery("<%=cid%>_INNER_REJECT_RESULT = UNION <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT;");
+				helper_<%=cid%>.add("query","<%=cid%>_INNER_REJECT_RESULT = UNION <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT;");
 <%
 				} else {
 %>
@@ -419,23 +419,23 @@
 %>
         		sb_innerJoinReject_<%=cid%>.append(";");
         		//syn the schema
-        		pigServer_<%=start_node%>.registerQuery(sb_innerJoinReject_<%=cid%>.toString());
+        		helper_<%=cid%>.add("query",sb_innerJoinReject_<%=cid%>.toString());
         		sb_innerJoinReject_<%=cid%>.setLength(0);
 				//union
-				pigServer_<%=start_node%>.registerQuery("<%=cid%>_INNER_REJECT_RESULT = UNION <%=cid%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT;");
+				helper_<%=cid%>.add("query","<%=cid%>_INNER_REJECT_RESULT = UNION <%=cid%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT;");
 <%
 				}
 				isFirstInnerReject = false;
 			}
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_RESULT = FILTER <%=cid%>_RESULT BY <%=expression%>;");
+			helper_<%=cid%>.add("query","<%=cid%>_RESULT = FILTER <%=cid%>_RESULT BY <%=expression%>;");
 <%
 	 	} else {
 	 		if(existInnerJoin && innerReject && isInnerJoin) {
 	 			if(isFirstInnerReject) {
 %>
 				//init inner reject resultset
-				pigServer_<%=start_node%>.registerQuery("<%=cid%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT GENERATE *;");
+				helper_<%=cid%>.add("query","<%=cid%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT GENERATE *;");
 <%
 				} else {
 %>
@@ -461,10 +461,10 @@
 %>
         		sb_innerJoinReject_<%=cid%>.append(";");
         		//syn the schema
-        		pigServer_<%=start_node%>.registerQuery(sb_innerJoinReject_<%=cid%>.toString());
+        		helper_<%=cid%>.add("query",sb_innerJoinReject_<%=cid%>.toString());
         		sb_innerJoinReject_<%=cid%>.setLength(0);
 				//union
-				pigServer_<%=start_node%>.registerQuery("<%=cid%>_INNER_REJECT_RESULT = UNION <%=cid%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT;");
+				helper_<%=cid%>.add("query","<%=cid%>_INNER_REJECT_RESULT = UNION <%=cid%>_INNER_REJECT_RESULT,<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT;");
 <%
 				}
 				isFirstInnerReject = false;
@@ -496,7 +496,7 @@
 %>
     		sb_innerJoinReject_<%=cid%>.append(";");
     		//syn the schema
-    		pigServer_<%=start_node%>.registerQuery(sb_innerJoinReject_<%=cid%>.toString());
+    		helper_<%=cid%>.add("query",sb_innerJoinReject_<%=cid%>.toString());
     		sb_innerJoinReject_<%=cid%>.setLength(0);
 <%
 	 	}
@@ -554,11 +554,11 @@
 	    }
 	    
 %>
-		pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
+		helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
 <%
 		if(existInnerJoin && isRejectInnerJoin) {
 %>
-		pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_INNER_REJECT_RESULT GENERATE *;");
+		helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_INNER_REJECT_RESULT = FOREACH <%=cid%>_INNER_REJECT_RESULT GENERATE *;");
 <%
 		}
 		
@@ -635,7 +635,7 @@
 		if(needFilterExpression) {
 %>
 		sb_<%=cid%>.append(";");
-		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 		sb_<%=cid%>.setLength(0);
 <%
 		}
@@ -643,7 +643,7 @@
 		if(existInnerJoin && isRejectInnerJoin && hasFilter) {
 %>
 		sb_innerJoinReject_<%=cid%>.append(";");
-		pigServer_<%=start_node%>.registerQuery(sb_innerJoinReject_<%=cid%>.toString());
+		helper_<%=cid%>.add("query",sb_innerJoinReject_<%=cid%>.toString());
 		sb_innerJoinReject_<%=cid%>.setLength(0);
 <%
 		}
@@ -663,11 +663,11 @@
 		if(existInnerJoin && isRejectInnerJoin) {
 			if(isReject) {//union reject and inner reject
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = UNION <%=cid%>_<%=tableName%>_RESULT, <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT;");
+			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_RESULT = UNION <%=cid%>_<%=tableName%>_RESULT, <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT;");
 <%
 			} else {//only inner reject
 %>
-			pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT GENERATE *;");
+			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_RESULT = FOREACH <%=cid%>_<%=tableName%>_INNER_REJECT_RESULT GENERATE *;");
 <%
 			}
 		}
@@ -702,11 +702,35 @@
  		
 %>
 		sb_<%=cid%>.append(";");
-		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 		sb_<%=cid%>.setLength(0);
 <%
 	 
 	}
+%>
+	java.util.List<Object[]> pigLatins_<%=cid%> = helper_<%=cid%>.getPigLatins();
+<%
+	if(inMain) {
+%>
+		for(Object[] pigLatin_<%=cid%> : pigLatins_<%=cid%>) {
+			String type_<%=cid%> = (String)pigLatin_<%=cid%>[0];
+			if("query".equals(type_<%=cid%>)) {
+				pigServer_<%=start_node%>.registerQuery((String)pigLatin_<%=cid%>[1]);
+			} else if("jar".equals(type_<%=cid%>)) {
+				pigServer_<%=start_node%>.registerJar((String)pigLatin_<%=cid%>[1]);
+			} else if("script".equals(type_<%=cid%>)) {
+				pigServer_<%=start_node%>.registerScript((java.io.InputStream)pigLatin_<%=cid%>[1]);
+			}
+		}
+<%
+	} else {
+%>
+    	pigScript_<%=start_node%>.addAll(pigLatins_<%=cid%>);
+<%
+	}
+%>
+	pigLatins_<%=cid%>.clear();
+<%
 %>
 
 
