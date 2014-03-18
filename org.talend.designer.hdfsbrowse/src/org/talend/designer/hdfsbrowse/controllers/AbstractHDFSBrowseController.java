@@ -17,6 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
@@ -43,11 +44,15 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertyConstants;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
+import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
+import org.talend.core.model.process.IProcess;
+import org.talend.core.model.process.IProcess2;
 import org.talend.core.properties.tab.IDynamicProperty;
 import org.talend.core.ui.CoreUIPlugin;
 import org.talend.core.utils.TalendQuoteUtils;
@@ -136,6 +141,10 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
             }
         }
 
+        if (node == null) {
+            return connectionBean;
+        }
+
         String distribution = (String) getParameterValue(node, EHadoopParameter.DISTRIBUTION.getName());
         if (!isMr) {
             String version = (String) getParameterValue(node, EHadoopParameter.VERSION.getName());
@@ -151,21 +160,39 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         }
         String userName = (String) getParameterValue(node, EHadoopParameter.USERNAME.getName());
         Boolean useKrb = (Boolean) getParameterValue(node, EHadoopParameter.USE_KRB.getName());
-        String principal = (String) getParameterValue(node, EHadoopParameter.NAMENODE_PRINCIPAL.getName());
+        String nnPrincipal = (String) getParameterValue(node, EHadoopParameter.NAMENODE_PRINCIPAL.getName());
+        Boolean useKeytab = (Boolean) getParameterValue(node, EHadoopParameter.USE_KEYTAB.getName());
+        String ktPrincipal = (String) getParameterValue(node, EHadoopParameter.PRINCIPAL.getName());
+        String ktPath = (String) getParameterValue(node, EHadoopParameter.KEYTAB_PATH.getName());
+        Boolean isUseCustom = EHadoopDistributions.CUSTOM.getName().equals(distribution);
+        String customJars = (String) getParameterValue(node, EHadoopParameter.HADOOP_CUSTOM_JARS.getName());
 
         connectionBean.setDistribution(distribution);
         connectionBean.setUserName(userName);
         connectionBean.setEnableKerberos(useKrb != null ? useKrb : false);
-        connectionBean.setPrincipal(principal);
+        connectionBean.setPrincipal(nnPrincipal);
+        connectionBean.setUseKeytab(useKeytab);
+        connectionBean.setKeytabPrincipal(ktPrincipal);
+        connectionBean.setKeytab(ktPath);
+        connectionBean.setUseCustomVersion(isUseCustom);
+        if (StringUtils.isNotBlank(customJars)) {
+            connectionBean.getAdditionalProperties().put(ECustomVersionGroup.COMMON.getName(), customJars);
+        }
+        IProcess process = node.getProcess();
+        if (process instanceof IProcess2) {
+            IProcess2 pro = (IProcess2) process;
+            connectionBean.setRelativeHadoopClusterId(pro.getProperty().getId());
+        }
+
         return connectionBean;
     }
 
     private Object getParameterValue(INode node, String paramName) {
+        Object value = null;
         Map<String, List<String>> componentParamsMap = HadoopMappingManager.getInstance().getComponentParamsMap();
         List<String> paramslist = componentParamsMap.get(paramName);
         if (paramslist != null && paramslist.size() > 0) {
             for (String param : paramslist) {
-                Object value = null;
                 if (node instanceof DataNode) {
                     DataNode dataNode = (DataNode) node;
                     IElementParameter parameter = dataNode.getElementParameter(param);
@@ -180,8 +207,11 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
                 }
             }
         }
+        if (value == null) {
+            value = node.getPropertyValue(paramName);
+        }
 
-        return null;
+        return value;
     }
 
     protected boolean checkHDFSConnection(final HDFSConnectionBean connection) {

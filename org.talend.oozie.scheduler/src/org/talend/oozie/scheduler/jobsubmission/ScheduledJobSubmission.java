@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.oozie.scheduler.jobsubmission.model.JobContext;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
@@ -37,8 +38,10 @@ public class ScheduledJobSubmission extends AbstractOozieJobSubmission {
 
             return doSubmit(jobContext);
         } catch (IOException e) {
+            ExceptionHandler.process(e);
             throw new JobSubmissionException("Error serializing coordinator xml to HDFS.", e);
         } catch (OozieClientException e) {
+            ExceptionHandler.process(e);
             throw new JobSubmissionException("Error submitting coordinator job to Oozie.", e);
         }
     }

@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.oozie.scheduler.ui.prefs;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
@@ -63,12 +64,23 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
                 setJobTrackerEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT));
                 setOozieEndPointValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT));
                 setUserNameValue(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME));
+                setGroup(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_GROUP));
                 setCustomJars(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS));
                 setEnableKerberos(CorePlugin.getDefault().getPreferenceStore()
                         .getBoolean(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS));
+                setEnableOoKerberos(CorePlugin.getDefault().getPreferenceStore()
+                        .getBoolean(ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS));
                 setPrincipal(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL));
+                setUseKeytab(CorePlugin.getDefault().getPreferenceStore()
+                        .getBoolean(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB));
+                setKtPrincipal(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL));
+                setKeytab(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH));
+                setUseYarn(CorePlugin.getDefault().getPreferenceStore()
+                        .getBoolean(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_YARN));
+                setAuthMode(getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_AUTH_MODE));
             }
 
+            @Override
             protected void createContents(Composite parent, boolean forPrefPage) {
                 super.createContents(parent, forPrefPage);
 
@@ -111,16 +123,32 @@ public class OozieSchedulerPreferencePage extends FieldEditorPreferencePage impl
     public boolean performOk() {
         IPreferenceStore prefs = getPreferenceStore();
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION,
-                settingComposite.getHadoopDistributionValue());
-        prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION, settingComposite.getHadoopVersionValue());
-        prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT, settingComposite.getNameNodeEndPointValue());
+                StringUtils.trimToEmpty(settingComposite.getHadoopDistributionValue()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION,
+                StringUtils.trimToEmpty(settingComposite.getHadoopVersionValue()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_AUTH_MODE,
+                StringUtils.trimToEmpty(settingComposite.getAuthMode()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT,
+                StringUtils.trimToEmpty(settingComposite.getNameNodeEndPointValue()));
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT,
-                settingComposite.getJobTrackerEndPointValue());
-        prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT, settingComposite.getOozieEndPointValue());
-        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, settingComposite.getUserNameValue());
-        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, settingComposite.getCustomJars());
+                StringUtils.trimToEmpty(settingComposite.getJobTrackerEndPointValue()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT,
+                StringUtils.trimToEmpty(settingComposite.getOozieEndPointValue()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME,
+                StringUtils.trimToEmpty(settingComposite.getUserNameValue()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_GROUP, StringUtils.trimToEmpty(settingComposite.getGroup()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS,
+                StringUtils.trimToEmpty(settingComposite.getCustomJars()));
         prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS, settingComposite.isEnableKerberos());
-        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL, settingComposite.getPrincipal());
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL,
+                StringUtils.trimToEmpty(settingComposite.getPrincipal()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB, settingComposite.isUseKeytab());
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_YARN, settingComposite.isUseYarn());
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL,
+                StringUtils.trimToEmpty(settingComposite.getKtPrincipal()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH,
+                StringUtils.trimToEmpty(settingComposite.getKeytab()));
+        prefs.setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS, settingComposite.isEnableOoKerberos());
         return super.performOk();
     }
 

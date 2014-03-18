@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -38,7 +37,13 @@ public class TOozieSettingDialog extends Dialog {
 
     private String oozieEndPointValue;
 
+    private boolean useYarn;
+
+    private String authMode;
+
     private String userNameValue;
+
+    private String group;
 
     private String customJars;
 
@@ -48,7 +53,15 @@ public class TOozieSettingDialog extends Dialog {
 
     private boolean enableKerberos;
 
+    private boolean enableOoKerberos;
+
     private String principalValue;
+
+    private boolean useKeytab;
+
+    private String ktPrincipal;
+
+    private String keytab;
 
     private List<HashMap<String, Object>> propertiesValue;
 
@@ -82,13 +95,21 @@ public class TOozieSettingDialog extends Dialog {
                 setJobTrackerEndPointValue(jobTrackerEndPointValue);
                 setOozieEndPointValue(oozieEndPointValue);
                 setUserNameValue(userNameValue);
+                setUseYarn(useYarn);
+                setAuthMode(authMode);
+                setGroup(group);
                 setCustomJars(customJars);
                 setRepositoryId(repositoryId);
                 setEnableKerberos(enableKerberos);
+                setEnableOoKerberos(enableOoKerberos);
                 setPrincipal(principalValue);
+                setUseKeytab(useKeytab);
+                setKtPrincipal(ktPrincipal);
+                setKeytab(keytab);
                 setProperties(propertiesValue);
             }
 
+            @Override
             protected void createContents(Composite parent, boolean forPrefPage) {
                 super.createContents(parent, forPrefPage);
                 setHadoopDistributionValue(hadoopDistributionValue);
@@ -97,17 +118,6 @@ public class TOozieSettingDialog extends Dialog {
         };
 
         return parent;
-    }
-
-    /**
-     * Reset the dialog size.
-     */
-    @Override
-    protected Point getInitialSize() {
-        Point result = super.getInitialSize();
-        result.x = 500;
-        result.y = 600;
-        return result;
     }
 
     public String getHadoopDistributionValue() {
@@ -183,6 +193,24 @@ public class TOozieSettingDialog extends Dialog {
         this.enableKerberos = enableKerberos;
     }
 
+    /**
+     * Getter for enableOoKerberos.
+     * 
+     * @return the enableOoKerberos
+     */
+    public boolean isEnableOoKerberos() {
+        return settingComposite.isEnableOoKerberos();
+    }
+
+    /**
+     * Sets the enableOoKerberos.
+     * 
+     * @param enableOoKerberos the enableOoKerberos to set
+     */
+    public void setEnableOoKerberos(boolean enableOoKerberos) {
+        this.enableOoKerberos = enableOoKerberos;
+    }
+
     public String getPrincipalValue() {
         return settingComposite.getPrincipal();
     }
@@ -197,6 +225,114 @@ public class TOozieSettingDialog extends Dialog {
 
     public List<HashMap<String, Object>> getPropertiesValue() {
         return settingComposite.getProperties();
+    }
+
+    /**
+     * Getter for group.
+     * 
+     * @return the group
+     */
+    public String getGroup() {
+        return settingComposite.getGroup();
+    }
+
+    /**
+     * Sets the group.
+     * 
+     * @param group the group to set
+     */
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    /**
+     * Getter for useKeytab.
+     * 
+     * @return the useKeytab
+     */
+    public boolean isUseKeytab() {
+        return settingComposite.isUseKeytab();
+    }
+
+    /**
+     * Sets the useKeytab.
+     * 
+     * @param useKeytab the useKeytab to set
+     */
+    public void setUseKeytab(boolean useKeytab) {
+        this.useKeytab = useKeytab;
+    }
+
+    /**
+     * Getter for ktPrincipal.
+     * 
+     * @return the ktPrincipal
+     */
+    public String getKtPrincipal() {
+        return settingComposite.getKtPrincipal();
+    }
+
+    /**
+     * Sets the ktPrincipal.
+     * 
+     * @param ktPrincipal the ktPrincipal to set
+     */
+    public void setKtPrincipal(String ktPrincipal) {
+        this.ktPrincipal = ktPrincipal;
+    }
+
+    /**
+     * Getter for keytab.
+     * 
+     * @return the keytab
+     */
+    public String getKeytab() {
+        return settingComposite.getKeytab();
+    }
+
+    /**
+     * Sets the keytab.
+     * 
+     * @param keytab the keytab to set
+     */
+    public void setKeytab(String keytab) {
+        this.keytab = keytab;
+    }
+
+    /**
+     * Getter for useYarn.
+     * 
+     * @return the useYarn
+     */
+    public boolean isUseYarn() {
+        return settingComposite.isUseYarn();
+    }
+
+    /**
+     * Sets the useYarn.
+     * 
+     * @param useYarn the useYarn to set
+     */
+    public void setUseYarn(boolean useYarn) {
+        this.useYarn = useYarn;
+    }
+
+    /**
+     * Getter for authMode.
+     * 
+     * @return the authMode
+     */
+    public String getAuthMode() {
+        return settingComposite.getAuthMode();
+    }
+
+    /**
+     * Sets the authMode.
+     * 
+     * @param authMode the authMode to set
+     */
+    public void setAuthMode(String authMode) {
+        this.authMode = authMode;
     }
 
     @Override

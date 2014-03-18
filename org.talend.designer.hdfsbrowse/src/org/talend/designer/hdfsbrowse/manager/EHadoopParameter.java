@@ -28,6 +28,12 @@ public enum EHadoopParameter {
 
     NAMENODE_PRINCIPAL,
 
+    USE_KEYTAB,
+
+    PRINCIPAL,
+
+    KEYTAB_PATH,
+
     USERNAME,
 
     GROUP,
@@ -35,6 +41,8 @@ public enum EHadoopParameter {
     MR_VERSION,
 
     NAMENODE,
+
+    HADOOP_CUSTOM_JARS,
 
     ;
 
