@@ -16,12 +16,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.oozie.client.AuthOozieClient;
+import org.apache.oozie.client.AuthOozieClient.AuthType;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.utils.TalendQuoteUtils;
-import org.talend.designer.hdfsbrowse.exceptions.HadoopReflectionException;
+import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.reflection.HadoopClassConstants;
 import org.talend.designer.hdfsbrowse.reflection.HadoopReflection;
 import org.talend.oozie.scheduler.jobsubmission.model.JobContext;
@@ -63,9 +66,12 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
     }
 
     protected OozieClient createOozieClient(String oozieEndPoint, int debug) {
-        OozieClient oozieClient = new OozieClient(oozieEndPoint);
+        String authName = AuthType.SIMPLE.name();
+        if (TOozieParamUtils.enableOoKerberos()) {
+            authName = AuthType.KERBEROS.name();
+        }
+        AuthOozieClient oozieClient = new AuthOozieClient(oozieEndPoint, authName);
         oozieClient.setDebugMode(debug);
-
         return oozieClient;
     }
 
@@ -142,26 +148,29 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
 
     protected void serializeToHDFS(String toSerialize, String asFile, JobContext jobContext) throws IOException,
             InterruptedException, URISyntaxException {
-        Object fs = null;
-        ClassLoader classLoader = OozieClassLoaderFactory.getClassLoader();
+        // Object fs = null;
+        HDFSConnectionBean connectionBean = TOozieParamUtils.getHDFSConnectionBean();
+        ClassLoader classLoader = OozieClassLoaderFactory.getClassLoader(connectionBean);
         try {
-            Object configuration = HadoopReflection.newInstance(HadoopClassConstants.CONFIGURATION, classLoader);
-            HadoopReflection.invokeMethod(configuration, "set",
-                    new Object[] { "fs.default.name", jobContext.getNameNodeEndPoint() });
-            // configuration.set("fs.default.name"FileSystem.FS_DEFAULT_NAME_KEY, jobContext.getNameNodeEndPoint());
-            // FileSystem fs = FileSystem.get(configuration);
+            // Object configuration = HadoopReflection.newInstance(HadoopClassConstants.CONFIGURATION, classLoader);
+            // HadoopReflection.invokeMethod(configuration, "set",
+            // new Object[] { "fs.default.name", jobContext.getNameNodeEndPoint() });
 
-            String userName = jobContext.get(OozieClient.USER_NAME);
+            // String userName = jobContext.get(OozieClient.USER_NAME);
+            // String appPath = jobContext.get(OozieClient.APP_PATH);
+            // if (userName != null && !"".equals(userName)) {
+            // String nnUri = (String) HadoopReflection.invokeMethod(configuration, "get", new Object[] {
+            // "fs.default.name" });
+            // fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] {
+            // new java.net.URI(nnUri), configuration, userName }, classLoader);
+            // } else {
+            // fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] {
+            // configuration },
+            // classLoader);
+            // }
+
             String appPath = jobContext.get(OozieClient.APP_PATH);
-            if (userName != null && !"".equals(userName)) {
-                String nnUri = (String) HadoopReflection.invokeMethod(configuration, "get", new Object[] { "fs.default.name" });
-                fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] {
-                        new java.net.URI(nnUri), configuration, userName }, classLoader);
-            } else {
-                fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] { configuration },
-                        classLoader);
-            }
-
+            Object fs = HadoopServerUtil.getDFS(connectionBean);
             Object wfFile = HadoopReflection.newInstance(HadoopClassConstants.PATH, new Object[] { appPath + asFile },
                     classLoader);
             Object outputStream = null;
@@ -184,7 +193,7 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
                     HadoopReflection.invokeMethod(outputStream, "close");
                 }
             }
-        } catch (HadoopReflectionException e) {
+        } catch (Exception e) {
             ExceptionHandler.process(e);
         }
     }

@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.apache.oozie.client.WorkflowJob;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.oozie.scheduler.jobsubmission.model.JobContext;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
 
@@ -41,8 +42,10 @@ public class RemoteJobSubmission extends AbstractOozieJobSubmission {
 
             return doSubmit(jobContext);
         } catch (IOException e) {
+            ExceptionHandler.process(e);
             throw new JobSubmissionException("Error serializing workflow xml to HDFS.", e);
         } catch (OozieClientException e) {
+            ExceptionHandler.process(e);
             throw new JobSubmissionException("Error submitting workflow job to Oozie.", e);
         }
     }
@@ -101,8 +104,9 @@ public class RemoteJobSubmission extends AbstractOozieJobSubmission {
                 try {
                     OozieClient oozieClient = createOozieClient(oozieEndPoint, 0);
                     WorkflowJob workflowJob = oozieClient.getJobInfo(jobHandle);
-                    if (workflowJob == null)
+                    if (workflowJob == null) {
                         throw new OozieClientException(OozieClientException.INVALID_INPUT, "");
+                    }
                     String status = workflowJob.getStatus().name();
                     return Status.valueOf(status);
                 } catch (OozieClientException e) {

@@ -18,7 +18,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -28,6 +27,7 @@ import org.talend.core.model.properties.ProcessItem;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.reflection.HadoopClassConstants;
 import org.talend.designer.hdfsbrowse.reflection.HadoopReflection;
 import org.talend.designer.runprocess.IProcessor;
@@ -88,30 +88,33 @@ public class OozieJobDeployer {
     private static void uploadProcess(IProcess2 process, String unzipDir) throws OozieJobDeployException {
         String appPathOnHDFSParent = (String) process.getElementParameter(EOozieParameterName.HADOOP_APP_PATH.getName())
                 .getValue();
-        Object fs = null;
+        // Object fs = null;
         ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
+        HDFSConnectionBean connectionBean = TOozieParamUtils.getHDFSConnectionBean();
         try {
-            ClassLoader classLoader = OozieClassLoaderFactory.getClassLoader();
+            ClassLoader classLoader = OozieClassLoaderFactory.getClassLoader(connectionBean);
             Thread.currentThread().setContextClassLoader(classLoader);
 
-            Object config = HadoopReflection.newInstance(HadoopClassConstants.CONFIGURATION, classLoader);
+            // Object config = HadoopReflection.newInstance(HadoopClassConstants.CONFIGURATION, classLoader);
+            //
+            // HadoopReflection.invokeMethod(
+            // config,
+            // "set",
+            // new Object[] { "fs.default.name",
+            // TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) });
+            //
+            // String userName = TOozieParamUtils.getUserNameForHadoop();
+            // if (StringUtils.isEmpty(userName)) {
+            // HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] { config },
+            // classLoader);
+            // } else {
+            // String nnURI = (String) HadoopReflection.invokeMethod(config, "get", new Object[] { "fs.default.name" });
+            // fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] {
+            // new java.net.URI(nnURI), config, userName }, classLoader);
+            // }
 
-            HadoopReflection.invokeMethod(
-                    config,
-                    "set",
-                    new Object[] { "fs.default.name",
-                            TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) });
+            Object fs = HadoopServerUtil.getDFS(connectionBean);
 
-            String userName = TOozieParamUtils.getUserNameForHadoop();
-            if (StringUtils.isEmpty(userName)) {
-                HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] { config }, classLoader);
-            } else {
-                String nnURI = (String) HadoopReflection.invokeMethod(config, "get", new Object[] { "fs.default.name" });
-                fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] {
-                        new java.net.URI(nnURI), config, userName }, classLoader);
-            }
-
-            // /user/hdp/etl/talend/MarvinJob_0.1/MarvinJob
             // if something has been uploaded already before in the same folder, delete the old content
             Object libPath = HadoopReflection.newInstance(HadoopClassConstants.PATH,
                     new Object[] { appPathOnHDFSParent + "/lib" }, classLoader);

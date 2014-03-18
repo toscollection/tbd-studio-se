@@ -61,7 +61,6 @@ import org.talend.designer.core.ui.AbstractMultiPageTalendEditor;
 import org.talend.designer.core.ui.editor.cmd.PropertyChangeCommand;
 import org.talend.designer.hdfsbrowse.controllers.HDFSBrowseDialog;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
-import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 import org.talend.designer.runprocess.java.JavaProcessorUtilities;
 import org.talend.oozie.scheduler.actions.SaveJobBeforeRunAction;
@@ -922,9 +921,13 @@ public class ExecuteJobCompositeController {
         String jobTrackerEPValue = getJobTracker();
         String oozieEPValue = getOozieEndPoint();
         String userNameValue = getUserNameForHadoop();
+        String group = TOozieParamUtils.getGroupForHadoop();
         String customJars = getHadoopCustomJars();
-        boolean kerberors = TOozieParamUtils.enableKerberos();
+        boolean enableKerberos = TOozieParamUtils.enableKerberos();
         String principal = TOozieParamUtils.getPrincipal();
+        boolean useKeytab = TOozieParamUtils.isUseKeytab();
+        String ktPrincipal = TOozieParamUtils.getKeytabPrincipal();
+        String keytab = TOozieParamUtils.getKeytabPath();
         List<HashMap<String, Object>> properties = new ArrayList<HashMap<String, Object>>();
         IProcess2 process = OozieJobTrackerListener.getProcess();
         if (process != null) {
@@ -944,9 +947,13 @@ public class ExecuteJobCompositeController {
         settingDialog.setJobTrackerEndPointValue(jobTrackerEPValue);
         settingDialog.setOozieEndPointValue(oozieEPValue);
         settingDialog.setUserNameValue(userNameValue);
+        settingDialog.setGroup(group);
         settingDialog.setCustomJars(customJars);
-        settingDialog.setEnableKerberos(kerberors);
+        settingDialog.setEnableKerberos(enableKerberos);
         settingDialog.setPrincipalValue(principal);
+        settingDialog.setUseKeytab(useKeytab);
+        settingDialog.setKtPrincipal(ktPrincipal);
+        settingDialog.setKeytab(keytab);
         settingDialog.setPropertiesValue(properties);
     }
 
@@ -986,12 +993,8 @@ public class ExecuteJobCompositeController {
      * when clicking the browser button,the HDFS browser dialog will be open.
      */
     public void doSetPathAction() {
-        HDFSConnectionBean connection = new HDFSConnectionBean();
-        connection.setDistribution(getHadoopDistribution());
-        connection.setDfVersion(getHadoopVersion());
-        connection.setNameNodeURI(getNameNode());
-        connection.setUserName(getUserNameForHadoop());
-        HDFSBrowseDialog dial = new HDFSBrowseDialog(executeJobComposite.getShell(), EHadoopFileTypes.FOLDER, connection);
+        HDFSBrowseDialog dial = new HDFSBrowseDialog(executeJobComposite.getShell(), EHadoopFileTypes.FOLDER,
+                TOozieParamUtils.getHDFSConnectionBean());
         if (dial.open() == Window.OK) {
             IHDFSNode result = dial.getResult();
             String path = result.getPath();
@@ -1026,19 +1029,22 @@ public class ExecuteJobCompositeController {
      * "Oozie end point", and "User name for hadoop".
      */
     private void updateOoziePreferencePageValues() {
-        String hadoopDistributionValue = settingDialog.getHadoopDistributionValue();
-        String hadoopVersionValue = settingDialog.getHadoopVersionValue();
-        String nameNodeEPValue = settingDialog.getNameNodeEndPointValue();
-        String jobTrackerEPValue = settingDialog.getJobTrackerEndPointValue();
-        String oozieEPValue = settingDialog.getOozieEndPointValue();
-        String userNameValue = settingDialog.getUserNameValue();
-        String customJars = settingDialog.getCustomJars();
+        String hadoopDistributionValue = StringUtils.trimToEmpty(settingDialog.getHadoopDistributionValue());
+        String hadoopVersionValue = StringUtils.trimToEmpty(settingDialog.getHadoopVersionValue());
+        String nameNodeEPValue = StringUtils.trimToEmpty(settingDialog.getNameNodeEndPointValue());
+        String jobTrackerEPValue = StringUtils.trimToEmpty(settingDialog.getJobTrackerEndPointValue());
+        String oozieEPValue = StringUtils.trimToEmpty(settingDialog.getOozieEndPointValue());
+        String userNameValue = StringUtils.trimToEmpty(settingDialog.getUserNameValue());
+        String group = StringUtils.trimToEmpty(settingDialog.getGroup());
+        String customJars = StringUtils.trimToEmpty(settingDialog.getCustomJars());
         boolean enableKerberos = settingDialog.isEnableKerberos();
-        String principal = "";
-
-        if (enableKerberos) {
-            principal = settingDialog.getPrincipalValue();
-        }
+        String principal = StringUtils.trimToEmpty(settingDialog.getPrincipalValue());
+        boolean useKeytab = settingDialog.isUseKeytab();
+        String ktPrincipal = StringUtils.trimToEmpty(settingDialog.getKtPrincipal());
+        String keytab = StringUtils.trimToEmpty(settingDialog.getKeytab());
+        boolean useYarn = settingDialog.isUseYarn();
+        String authMode = StringUtils.trimToEmpty(settingDialog.getAuthMode());
+        boolean enableOoKerberos = settingDialog.isEnableOoKerberos();
 
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION, hadoopDistributionValue);
@@ -1051,12 +1057,23 @@ public class ExecuteJobCompositeController {
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT, oozieEPValue);
         CorePlugin.getDefault().getPreferenceStore().setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, userNameValue);
+        CorePlugin.getDefault().getPreferenceStore().setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_GROUP, group);
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS, customJars);
         CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS, enableKerberos);
         CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS, enableOoKerberos);
+        CorePlugin.getDefault().getPreferenceStore()
                 .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL, principal);
+        CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB, useKeytab);
+        CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL, ktPrincipal);
+        CorePlugin.getDefault().getPreferenceStore()
+                .setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH, keytab);
+        CorePlugin.getDefault().getPreferenceStore().setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_YARN, useYarn);
+        CorePlugin.getDefault().getPreferenceStore().setValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_AUTH_MODE, authMode);
     }
 
     // /**

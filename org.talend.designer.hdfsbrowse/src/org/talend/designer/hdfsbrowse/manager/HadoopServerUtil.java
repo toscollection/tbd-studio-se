@@ -75,17 +75,30 @@ public class HadoopServerUtil {
             return null;
         }
 
-        nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(nameNodeURI);
         String userName = StringUtils.trimToNull(connection.getUserName());
-        if (userName != null) {
-            userName = TalendQuoteUtils.removeQuotesIfExist(userName);
-        }
         String namenodePrincipal = StringUtils.trimToNull(connection.getPrincipal());
         String group = StringUtils.trimToNull(connection.getGroup());
         boolean enableKerberos = connection.isEnableKerberos();
         boolean useKeytab = connection.isUseKeytab();
         String keytabPrincipal = StringUtils.trimToNull(connection.getKeytabPrincipal());
         String keytab = StringUtils.trimToNull(connection.getKeytab());
+
+        nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(nameNodeURI);
+        if (userName != null) {
+            userName = TalendQuoteUtils.removeQuotesIfExist(userName);
+        }
+        if (namenodePrincipal != null) {
+            namenodePrincipal = TalendQuoteUtils.removeQuotesIfExist(namenodePrincipal);
+        }
+        if (group != null) {
+            group = TalendQuoteUtils.removeQuotesIfExist(group);
+        }
+        if (keytabPrincipal != null) {
+            keytabPrincipal = TalendQuoteUtils.removeQuotesIfExist(keytabPrincipal);
+        }
+        if (keytab != null) {
+            keytab = TalendQuoteUtils.removeQuotesIfExist(keytab);
+        }
 
         Object dfs = null;
         ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();

@@ -24,6 +24,8 @@ import org.talend.core.CorePlugin;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.hadoop.IOozieService;
+import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.IProcess2;
@@ -34,6 +36,7 @@ import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.core.model.components.EOozieParameterName;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.repository.model.IProxyRepositoryFactory;
 
@@ -134,7 +137,10 @@ public class TOozieParamUtils {
 
     public static Object getParamValueFromPreference(String prefKey) {
         Object versionValue = CorePlugin.getDefault().getPreferenceStore().getString(prefKey);
-        if (prefKey != null && prefKey.equals(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS)) {
+        if (ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS.equals(prefKey)
+                || ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS.equals(prefKey)
+                || ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB.equals(prefKey)
+                || ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_YARN.endsWith(prefKey)) {
             versionValue = CorePlugin.getDefault().getPreferenceStore().getBoolean(prefKey);
         }
         return versionValue;
@@ -182,6 +188,14 @@ public class TOozieParamUtils {
         return "";
     }
 
+    public static String getGroupForHadoop() {
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_GROUP);
+        if (value instanceof String) {
+            return (String) value;
+        }
+        return "";
+    }
+
     public static String getHadoopDistribution() {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION);
         if (value instanceof String) {
@@ -214,11 +228,65 @@ public class TOozieParamUtils {
         return false;
     }
 
+    public static boolean enableOoKerberos() {
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS);
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        return false;
+    }
+
     public static String getPrincipal() {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL);
         if (value instanceof String) {
             return (String) value;
         }
         return "";
+    }
+
+    public static boolean isUseKeytab() {
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB);
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+        return false;
+    }
+
+    public static String getKeytabPrincipal() {
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL);
+        if (value instanceof String) {
+            return (String) value;
+        }
+        return "";
+    }
+
+    public static String getKeytabPath() {
+        Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH);
+        if (value instanceof String) {
+            return (String) value;
+        }
+        return "";
+    }
+
+    public static HDFSConnectionBean getHDFSConnectionBean() {
+        HDFSConnectionBean connection = new HDFSConnectionBean();
+        connection.setDistribution(getHadoopDistribution());
+        connection.setDfVersion(getHadoopVersion());
+        connection.setNameNodeURI(getNameNode());
+        connection.setUserName(getUserNameForHadoop());
+        connection.setGroup(getGroupForHadoop());
+        connection.setEnableKerberos(enableKerberos());
+        connection.setPrincipal(getPrincipal());
+        connection.setUseKeytab(isUseKeytab());
+        connection.setKeytabPrincipal(getKeytabPrincipal());
+        connection.setKeytab(getKeytabPath());
+        connection.setUseCustomVersion(EHadoopDistributions.CUSTOM.getName().equals(getHadoopDistribution()));
+        connection.getAdditionalProperties().put(ECustomVersionGroup.COMMON.getName(), getHadoopCustomJars());
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        if (process != null) { // Just use the process item id to substitude hadoop cluster id.
+            connection.setRelativeHadoopClusterId(process.getProperty().getId());
+        }
+
+        return connection;
     }
 }
