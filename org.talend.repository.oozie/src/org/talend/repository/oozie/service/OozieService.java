@@ -32,6 +32,7 @@ public class OozieService implements IOozieService {
 
             HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(oozieConnection);
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME, oozieConnection.getUserName());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_GROUP, hcConnection.getGroup());
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT, oozieConnection.getOozieEndPoind());
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT, hcConnection.getJobTrackerURI());
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT, hcConnection.getNameNodeURI());
@@ -41,6 +42,12 @@ public class OozieService implements IOozieService {
                     hcConnection.getParameters().get(ECustomVersionGroup.COMMON.getName()));
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL, hcConnection.getPrincipal());
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS, hcConnection.isEnableKerberos());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB, hcConnection.isUseKeytab());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_YARN, hcConnection.isUseYarn());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL, hcConnection.getKeytabPrincipal());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH, hcConnection.getKeytab());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_AUTH_MODE, hcConnection.getAuthMode());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS, oozieConnection.isEnableKerberos());
 
             return oozieParam;
         }

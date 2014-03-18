@@ -14,13 +14,13 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.command.CommandStackForComposite;
 import org.talend.commons.ui.swt.advanced.dataeditor.HadoopPropertiesTableView;
 import org.talend.commons.ui.swt.extended.table.HadoopPropertiesFieldModel;
 import org.talend.commons.ui.swt.formtools.Form;
-import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.commons.ui.swt.tableviewer.IModifiedBeanListener;
@@ -37,17 +37,13 @@ import org.talend.utils.json.JSONObject;
 
 public class OozieForm extends AbstractOozieForm {
 
-    private static final String DEFAULT_END_POINT = "http://localhost:11000/oozie"; //$NON-NLS-1$
-
     private UtilsButton checkConnectionBtn;
 
     private LabelledText userNameText;
 
     private LabelledText endPonitText;
 
-    private LabelledCombo versionCombo;
-
-    private List<String> versions;
+    private Button kerbBtn;
 
     private List<HashMap<String, Object>> properties;
 
@@ -62,8 +58,7 @@ public class OozieForm extends AbstractOozieForm {
 
     @Override
     protected void addFields() {
-        // Wait for oozie version complete
-        // addVersionFields();
+        addOozieAuthenticationFields();
         addConnectionFields();
         addHadoopPropertiesFields();
         addCheckFields();
@@ -111,20 +106,14 @@ public class OozieForm extends AbstractOozieForm {
         }
     }
 
-    private void addVersionFields() {
-        Group connectionGroup = Form.createGroup(this, 1, Messages.getString("OozieForm.versionSetting")); //$NON-NLS-1$
-        connectionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    private void addOozieAuthenticationFields() {
+        Group authGroup = Form.createGroup(this, 1, "Authentication Settings");
+        authGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        Composite connectionPartComposite = new Composite(connectionGroup, SWT.NULL);
-        connectionPartComposite.setLayout(new GridLayout(2, false));
-        connectionPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        // TODO need add versions
-        if (versions == null) {
-            versions = new ArrayList<String>();
-        }
-
-        versionCombo = new LabelledCombo(connectionPartComposite,
-                Messages.getString("OozieForm.oozieVersion"), Messages.getString("OozieForm.versionTip"), versions); //$NON-NLS-1$ //$NON-NLS-2$
+        kerbBtn = new Button(authGroup, SWT.CHECK);
+        kerbBtn.setText("Enable oozie kerberos security");
+        kerbBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+        userNameText = new LabelledText(authGroup, Messages.getString("OozieForm.userName"), 1); //$NON-NLS-1$
     }
 
     private void addConnectionFields() {
@@ -136,7 +125,6 @@ public class OozieForm extends AbstractOozieForm {
         connectionPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         endPonitText = new LabelledText(connectionPartComposite, Messages.getString("OozieForm.endPoint"), 1); //$NON-NLS-1$
-        userNameText = new LabelledText(connectionPartComposite, Messages.getString("OozieForm.userName"), 1); //$NON-NLS-1$
     }
 
     private void addCheckFields() {
@@ -161,6 +149,13 @@ public class OozieForm extends AbstractOozieForm {
 
     @Override
     protected void addFieldsListeners() {
+        kerbBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setEnableKerberos(kerbBtn.getSelection());
+            }
+        });
         userNameText.addModifyListener(new ModifyListener() {
 
             @Override
@@ -177,13 +172,6 @@ public class OozieForm extends AbstractOozieForm {
                 checkFieldsValue();
             }
         });
-        // versionCombo.addModifyListener(new ModifyListener() {
-        //
-        // @Override
-        // public void modifyText(ModifyEvent e) {
-        // getConnection().setOozieVersion(versionCombo.getText());
-        // }
-        // });
         if (propertiesTableView != null) {
             propertiesTableView.getExtendedTableModel().addAfterOperationListListener(new IListenableListListener() {
 
@@ -219,9 +207,8 @@ public class OozieForm extends AbstractOozieForm {
 
     @Override
     protected void initialize() {
+        kerbBtn.setSelection(getConnection().isEnableKerberos());
         userNameText.setText(StringUtils.trimToEmpty(getConnection().getUserName()));
-        // TODO version for oozie
-        //        versionCombo.setText(""); //$NON-NLS-1$
 
         String endPointVal = getConnection().getOozieEndPoind();
         if (!StringUtils.isEmpty(endPointVal)) {
@@ -234,6 +221,10 @@ public class OozieForm extends AbstractOozieForm {
         }
 
         updateStatus(IStatus.OK, EMPTY_STRING);
+    }
+
+    private void updateAuthenticationPart() {
+        kerbBtn.setEnabled(enableKerberos);
     }
 
     private void updateConnectionPart() {
@@ -261,7 +252,6 @@ public class OozieForm extends AbstractOozieForm {
             updateStatus(IStatus.ERROR, Messages.getString("OozieForm.endPointInvalid.invalid")); //$NON-NLS-1$
             return false;
         }
-        // TODO check version if is specified
         checkConnectionBtn.setEnabled(true);
         updateStatus(IStatus.OK, null);
         return true;
@@ -275,6 +265,7 @@ public class OozieForm extends AbstractOozieForm {
     @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
+        updateAuthenticationPart();
         updateConnectionPart();
         if (isReadOnly() != readOnly) {
             adaptFormToReadOnly();

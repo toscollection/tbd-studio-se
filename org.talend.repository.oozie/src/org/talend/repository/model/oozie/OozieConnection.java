@@ -19,6 +19,7 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
  *   <li>{@link org.talend.repository.model.oozie.OozieConnection#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.oozie.OozieConnection#getOozieEndPoind <em>Oozie End Poind</em>}</li>
  *   <li>{@link org.talend.repository.model.oozie.OozieConnection#getOozieVersion <em>Oozie Version</em>}</li>
+ *   <li>{@link org.talend.repository.model.oozie.OozieConnection#isEnableKerberos <em>Enable Kerberos</em>}</li>
  * </ul>
  * </p>
  *
@@ -104,5 +105,31 @@ public interface OozieConnection extends HadoopSubConnection {
      * @generated
      */
     void setOozieVersion(String value);
+
+    /**
+     * Returns the value of the '<em><b>Enable Kerberos</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Enable Kerberos</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Enable Kerberos</em>' attribute.
+     * @see #setEnableKerberos(boolean)
+     * @see org.talend.repository.model.oozie.OoziePackage#getOozieConnection_EnableKerberos()
+     * @model
+     * @generated
+     */
+    boolean isEnableKerberos();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.oozie.OozieConnection#isEnableKerberos <em>Enable Kerberos</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Enable Kerberos</em>' attribute.
+     * @see #isEnableKerberos()
+     * @generated
+     */
+    void setEnableKerberos(boolean value);
 
 } // OozieConnection

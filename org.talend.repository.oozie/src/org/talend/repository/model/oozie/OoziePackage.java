@@ -458,6 +458,15 @@ public interface OoziePackage extends EPackage {
     int OOZIE_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID = HadoopClusterPackage.HADOOP_SUB_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID;
 
     /**
+     * The feature id for the '<em><b>Hadoop Properties</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OOZIE_CONNECTION__HADOOP_PROPERTIES = HadoopClusterPackage.HADOOP_SUB_CONNECTION__HADOOP_PROPERTIES;
+
+    /**
      * The feature id for the '<em><b>User Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -485,13 +494,22 @@ public interface OoziePackage extends EPackage {
     int OOZIE_CONNECTION__OOZIE_VERSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Enable Kerberos</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OOZIE_CONNECTION__ENABLE_KERBEROS = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OOZIE_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 3;
+    int OOZIE_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.oozie.impl.OozieConnectionItemImpl <em>Connection Item</em>}' class.
@@ -547,6 +565,15 @@ public interface OoziePackage extends EPackage {
      * @ordered
      */
     int OOZIE_CONNECTION_ITEM__FILE_EXTENSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__FILE_EXTENSION;
+
+    /**
+     * The feature id for the '<em><b>Need Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int OOZIE_CONNECTION_ITEM__NEED_VERSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__NEED_VERSION;
 
     /**
      * The feature id for the '<em><b>Connection</b></em>' reference.
@@ -609,6 +636,17 @@ public interface OoziePackage extends EPackage {
      * @generated
      */
     EAttribute getOozieConnection_OozieVersion();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.oozie.OozieConnection#isEnableKerberos <em>Enable Kerberos</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Enable Kerberos</em>'.
+     * @see org.talend.repository.model.oozie.OozieConnection#isEnableKerberos()
+     * @see #getOozieConnection()
+     * @generated
+     */
+    EAttribute getOozieConnection_EnableKerberos();
 
     /**
      * Returns the meta object for class '{@link org.talend.repository.model.oozie.OozieConnectionItem <em>Connection Item</em>}'.
@@ -675,6 +713,14 @@ public interface OoziePackage extends EPackage {
          * @generated
          */
         EAttribute OOZIE_CONNECTION__OOZIE_VERSION = eINSTANCE.getOozieConnection_OozieVersion();
+
+        /**
+         * The meta object literal for the '<em><b>Enable Kerberos</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute OOZIE_CONNECTION__ENABLE_KERBEROS = eINSTANCE.getOozieConnection_EnableKerberos();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.oozie.impl.OozieConnectionItemImpl <em>Connection Item</em>}' class.

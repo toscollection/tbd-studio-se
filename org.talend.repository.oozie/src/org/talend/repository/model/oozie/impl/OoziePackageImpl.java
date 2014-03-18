@@ -146,6 +146,15 @@ public class OoziePackageImpl extends EPackageImpl implements OoziePackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getOozieConnection_EnableKerberos() {
+        return (EAttribute)oozieConnectionEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getOozieConnectionItem() {
         return oozieConnectionItemEClass;
     }
@@ -182,6 +191,7 @@ public class OoziePackageImpl extends EPackageImpl implements OoziePackage {
         createEAttribute(oozieConnectionEClass, OOZIE_CONNECTION__USER_NAME);
         createEAttribute(oozieConnectionEClass, OOZIE_CONNECTION__OOZIE_END_POIND);
         createEAttribute(oozieConnectionEClass, OOZIE_CONNECTION__OOZIE_VERSION);
+        createEAttribute(oozieConnectionEClass, OOZIE_CONNECTION__ENABLE_KERBEROS);
 
         oozieConnectionItemEClass = createEClass(OOZIE_CONNECTION_ITEM);
     }
@@ -226,6 +236,7 @@ public class OoziePackageImpl extends EPackageImpl implements OoziePackage {
         initEAttribute(getOozieConnection_UserName(), theEcorePackage.getEString(), "userName", null, 0, 1, OozieConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getOozieConnection_OozieEndPoind(), theEcorePackage.getEString(), "oozieEndPoind", null, 0, 1, OozieConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getOozieConnection_OozieVersion(), theEcorePackage.getEString(), "oozieVersion", null, 0, 1, OozieConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getOozieConnection_EnableKerberos(), ecorePackage.getEBoolean(), "enableKerberos", null, 0, 1, OozieConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(oozieConnectionItemEClass, OozieConnectionItem.class, "OozieConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

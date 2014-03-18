@@ -27,6 +27,7 @@ import org.talend.repository.model.oozie.OoziePackage;
  *   <li>{@link org.talend.repository.model.oozie.impl.OozieConnectionImpl#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.oozie.impl.OozieConnectionImpl#getOozieEndPoind <em>Oozie End Poind</em>}</li>
  *   <li>{@link org.talend.repository.model.oozie.impl.OozieConnectionImpl#getOozieVersion <em>Oozie Version</em>}</li>
+ *   <li>{@link org.talend.repository.model.oozie.impl.OozieConnectionImpl#isEnableKerberos <em>Enable Kerberos</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,6 +93,26 @@ public class OozieConnectionImpl extends HadoopSubConnectionImpl implements Oozi
      * @ordered
      */
     protected String oozieVersion = OOZIE_VERSION_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isEnableKerberos() <em>Enable Kerberos</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isEnableKerberos()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean ENABLE_KERBEROS_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isEnableKerberos() <em>Enable Kerberos</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isEnableKerberos()
+     * @generated
+     * @ordered
+     */
+    protected boolean enableKerberos = ENABLE_KERBEROS_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -180,6 +201,27 @@ public class OozieConnectionImpl extends HadoopSubConnectionImpl implements Oozi
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isEnableKerberos() {
+        return enableKerberos;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setEnableKerberos(boolean newEnableKerberos) {
+        boolean oldEnableKerberos = enableKerberos;
+        enableKerberos = newEnableKerberos;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, OoziePackage.OOZIE_CONNECTION__ENABLE_KERBEROS, oldEnableKerberos, enableKerberos));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -189,6 +231,8 @@ public class OozieConnectionImpl extends HadoopSubConnectionImpl implements Oozi
                 return getOozieEndPoind();
             case OoziePackage.OOZIE_CONNECTION__OOZIE_VERSION:
                 return getOozieVersion();
+            case OoziePackage.OOZIE_CONNECTION__ENABLE_KERBEROS:
+                return isEnableKerberos();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -209,6 +253,9 @@ public class OozieConnectionImpl extends HadoopSubConnectionImpl implements Oozi
                 return;
             case OoziePackage.OOZIE_CONNECTION__OOZIE_VERSION:
                 setOozieVersion((String)newValue);
+                return;
+            case OoziePackage.OOZIE_CONNECTION__ENABLE_KERBEROS:
+                setEnableKerberos((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -231,6 +278,9 @@ public class OozieConnectionImpl extends HadoopSubConnectionImpl implements Oozi
             case OoziePackage.OOZIE_CONNECTION__OOZIE_VERSION:
                 setOozieVersion(OOZIE_VERSION_EDEFAULT);
                 return;
+            case OoziePackage.OOZIE_CONNECTION__ENABLE_KERBEROS:
+                setEnableKerberos(ENABLE_KERBEROS_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -249,6 +299,8 @@ public class OozieConnectionImpl extends HadoopSubConnectionImpl implements Oozi
                 return OOZIE_END_POIND_EDEFAULT == null ? oozieEndPoind != null : !OOZIE_END_POIND_EDEFAULT.equals(oozieEndPoind);
             case OoziePackage.OOZIE_CONNECTION__OOZIE_VERSION:
                 return OOZIE_VERSION_EDEFAULT == null ? oozieVersion != null : !OOZIE_VERSION_EDEFAULT.equals(oozieVersion);
+            case OoziePackage.OOZIE_CONNECTION__ENABLE_KERBEROS:
+                return enableKerberos != ENABLE_KERBEROS_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -269,6 +321,8 @@ public class OozieConnectionImpl extends HadoopSubConnectionImpl implements Oozi
         result.append(oozieEndPoind);
         result.append(", oozieVersion: ");
         result.append(oozieVersion);
+        result.append(", enableKerberos: ");
+        result.append(enableKerberos);
         result.append(')');
         return result.toString();
     }
