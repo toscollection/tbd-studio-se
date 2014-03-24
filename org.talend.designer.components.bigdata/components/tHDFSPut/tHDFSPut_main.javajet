@@ -47,9 +47,9 @@
 	            });
         	} 
 	    	if(listings_<%=cid %> == null || listings_<%=cid %>.length <= 0){
-	    		System.err.println("No match file("+key_<%=cid %>+") exist!");
+	    		System.err.println("No match file("+key_<%=cid %>+") exists!");
 	    		<%if(isLog4jEnabled) {%>
-       			log.error("<%=cid%> - No match file("+key_<%=cid %>+") exist!");
+       			log.error("<%=cid%> - No match file("+key_<%=cid %>+") exists!");
         		<%}%>
 	    	}else{
 	    		String localFilePath_<%=cid%> = "";

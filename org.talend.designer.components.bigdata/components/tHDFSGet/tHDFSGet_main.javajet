@@ -38,10 +38,10 @@
 		org.apache.hadoop.fs.FileStatus[] fileStatusList_<%=cid%> = fs_<%=cid%>.listStatus(new org.apache.hadoop.fs.Path(tempdir_<%=cid%>));
 		org.apache.hadoop.fs.Path[] filePathList_<%=cid%> = org.apache.hadoop.fs.FileUtil.stat2Paths(fileStatusList_<%=cid%>);
 		if(filePathList_<%=cid%>==null){
-			System.err.println("No match file("+key_<%=cid %>+") exist!");
+			System.err.println("No match file("+key_<%=cid %>+") exists!");
 			
 			<%if(isLog4jEnabled) {%>
-       		log.error("<%=cid%> - No match file("+key_<%=cid %>+") exist.");
+       		log.error("<%=cid%> - No match file("+key_<%=cid %>+") exists.");
         	<%}%>
 		}else{
 			String localFilePath_<%=cid%> = "";

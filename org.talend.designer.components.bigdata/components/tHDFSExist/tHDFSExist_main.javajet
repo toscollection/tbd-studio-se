@@ -25,13 +25,13 @@
 		globalMap.put("<%=cid %>_EXISTS", true);
 		
 		<%if(isLog4jEnabled) {%>
-       	log.info("<%=cid%> - directory or file : " + path_<%=cid%> + " exist.");
+       	log.info("<%=cid%> - directory or file : " + path_<%=cid%> + " exists.");
         <%}%>
 	}else{
 		globalMap.put("<%=cid %>_EXISTS", false);
 		
 		<%if(isLog4jEnabled) {%>
-       	log.info("<%=cid%> - directory or file : " + path_<%=cid%> + " don't exist.");
+       	log.info("<%=cid%> - directory or file : " + path_<%=cid%> + " does not exist.");
         <%}%>
 	}
 	globalMap.put("<%=cid %>_FILENAME",<%=filename%>);

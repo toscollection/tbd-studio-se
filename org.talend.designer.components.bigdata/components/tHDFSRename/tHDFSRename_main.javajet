@@ -43,10 +43,10 @@
 			}
 			
 			if(count_<%=cid%>!=1) {
-				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail:file not exist or not unique match for current filemask");
-				System.err.println("Info : file not exist or not unique match for current filemask");
+				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail:file does not exist or no unique matching for current filemask");
+				System.err.println("Info : file does not exist or no unique matching for current filemask");
 				<%if(isLog4jEnabled) {%>
-       			log.error("<%=cid%> - file not exist or not unique match for current filemask : " + mask_<%=cid %>);
+       			log.error("<%=cid%> - file does not exist or no unique matching for current filemask : " + mask_<%=cid %>);
         		<%}%>
 				continue;
 			}
@@ -62,6 +62,9 @@
 		    		if(!fs_<%=cid%>.exists(toPath_<%=cid%>)) {
 		    			boolean success_<%=cid%> = fs_<%=cid%>.rename(fromPath_<%=cid%>,toPath_<%=cid%>);
 		    			if(success_<%=cid%>) {
+		    				<%if(isLog4jEnabled) {%>
+                   			log.info("<%=cid%> - " + fromPath_<%=cid%> + " is renamed as " + toPath_<%=cid%> + ".");
+                    		<%}%>
 		    				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename OK.");
 		    				nb_file_<%=cid%>++;
 		    			} else {
@@ -87,6 +90,9 @@
 		     			fs_<%=cid%>.delete(tempPath_<%=cid%>);
 		     			
 		     			if(success_<%=cid%>) {
+		     			    <%if(isLog4jEnabled) {%>
+                   			log.info("<%=cid%> - " + fromPath_<%=cid%> + " is renamed as " + toPath_<%=cid%> + ".");
+                    		<%}%>
 		    				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename OK.");
 		    				nb_file_<%=cid%>++;
 		    			} else {

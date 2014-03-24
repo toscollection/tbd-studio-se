@@ -35,10 +35,37 @@
 				fs_<%=cid%>.delete(targetPath_<%=cid%>, false);
 			}
 			<%}%>
-			org.apache.hadoop.fs.FileUtil.copyMerge(fs_<%=cid%>,sourcePath_<%=cid%>,fs_<%=cid%>,targetPath_<%=cid%>,<%=remove%>,conf_<%=cid%>, null);
+			boolean success_<%=cid%> = org.apache.hadoop.fs.FileUtil.copyMerge(fs_<%=cid%>,sourcePath_<%=cid%>,fs_<%=cid%>,targetPath_<%=cid%>,<%=remove%>,conf_<%=cid%>, null);
+			if(!success_<%=cid%>) {
+    			<%if(remove) {
+	    			if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - fail to copy and merge from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + " or fail to remove the source file.");
+					<%}%>
+    			System.err.println("fail to copy and merge from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + " or fail to remove the source file.");
+    			<%} else {
+    				if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - fail to copy and merge from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + ".");
+					<%}%>
+    			System.err.println("fail to copy and merge from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + ".");
+    			<%}%>
+    		}
+    		
+    		<%if(isLog4jEnabled) {%>
+    		else {
+    			log.info("<%=cid%> - " + sourcePath_<%=cid%> + " is copied to the target location : " + targetPath_<%=cid%> + ".");
+    			
+    			<%if(remove) {%>
+    			log.info("<%=cid%> - the source file is removed.");
+    			<%}%>
+    			
+    			<%if(override) {%>
+    			log.info("<%=cid%> - the target file is overridden if it exists.");
+    			<%}%>
+    		}
+    		<%}%>
 		} else {
 		    <%if(isLog4jEnabled) {%>
-    		log.error("<%=cid%> - source file or directory : " + sourcePath_<%=cid%> + " don't exist.");
+    		log.error("<%=cid%> - source file or directory : " + sourcePath_<%=cid%> + " does not exist.");
     		<%}%>
 			System.err.println("source file or directory does not exist.");
 			
@@ -52,10 +79,37 @@
     	String target_<%=cid%> = <%=targetLocation%> + "/" + newName_<%=cid%>;
     	org.apache.hadoop.fs.Path targetPath_<%=cid%> = new org.apache.hadoop.fs.Path(target_<%=cid%>);
     	if(fs_<%=cid%>.exists(sourcePath_<%=cid%>)) {
-    		org.apache.hadoop.fs.FileUtil.copy(fs_<%=cid%>,sourcePath_<%=cid%>,fs_<%=cid%>,targetPath_<%=cid%>,<%=remove%>,<%=override%>,conf_<%=cid%>);
+    		boolean success_<%=cid%> = org.apache.hadoop.fs.FileUtil.copy(fs_<%=cid%>,sourcePath_<%=cid%>,fs_<%=cid%>,targetPath_<%=cid%>,<%=remove%>,<%=override%>,conf_<%=cid%>);
+    		if(!success_<%=cid%>) {
+    			<%if(remove) {
+	    			if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - fail to copy from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + " or fail to remove the source file.");
+					<%}%>
+    			System.err.println("fail to copy from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + " or fail to remove the source file.");
+    			<%} else {
+    				if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - fail to copy from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + ".");
+					<%}%>
+    			System.err.println("fail to copy from : " + sourcePath_<%=cid%> + " to : " + targetPath_<%=cid%> + ".");
+    			<%}%>
+    		}
+    		
+    		<%if(isLog4jEnabled) {%>
+    		else {
+    			log.info("<%=cid%> - " + sourcePath_<%=cid%> + " is copied to the target location : " + targetPath_<%=cid%> + ".");
+    			
+    			<%if(remove) {%>
+    			log.info("<%=cid%> - the source file is removed.");
+    			<%}%>
+    			
+    			<%if(override) {%>
+    			log.info("<%=cid%> - the target file is overridden if it exists.");
+    			<%}%>
+    		}
+    		<%}%>
     	} else {
     		<%if(isLog4jEnabled) {%>
-    		log.error("<%=cid%> - source file or directory : " + sourcePath_<%=cid%> + " don't exist.");
+    		log.error("<%=cid%> - source file or directory : " + sourcePath_<%=cid%> + " does not exist.");
     		<%}%>
     		System.err.println("source file or directory does not exist.");
     	}
