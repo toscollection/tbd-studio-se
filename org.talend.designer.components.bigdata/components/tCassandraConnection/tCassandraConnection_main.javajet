@@ -5,7 +5,8 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 	" 
 %>
-<%
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
     INode node = (INode)codeGenArgument.getArgument();
@@ -16,19 +17,25 @@
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
     String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
-%>
+	
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
     String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
     me.prettyprint.cassandra.service.CassandraHostConfigurator hosts_<%=cid%> = new me.prettyprint.cassandra.service.CassandraHostConfigurator(hostIps_<%=cid%>);
     hosts_<%=cid%>.setAutoDiscoverHosts(true);
     java.util.Map<String, String> credentials_<%=cid%> =new java.util.HashMap<String,String>();
-<%
+	<%
 	if (authentication){
-%>
-    credentials_<%=cid%>.put("username",<%=userName%>);
-    credentials_<%=cid%>.put("password",<%=passWord%>);
-<%
+	%>
+    	credentials_<%=cid%>.put("username",<%=userName%>);
+    	credentials_<%=cid%>.put("password",<%=passWord%>);
+	<%
 	}
-%>
-    me.prettyprint.hector.api.Cluster cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
+	%>
+	me.prettyprint.hector.api.Cluster cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
 
 	globalMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
+	<%
+	log4jFileUtil.componentFinishInfo(node);
+	%>

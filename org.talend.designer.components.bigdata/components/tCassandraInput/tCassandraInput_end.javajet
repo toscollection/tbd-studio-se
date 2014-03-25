@@ -5,28 +5,33 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 	" 
 %>
-<% 
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
-%>
+	%>
 		}
-<%
+	<%
 	if("SUPER".equals(columnFamilyType)){
-%>
-	}
-<%
+	%>
+		}
+	<%
 	}
 	if (!useExistingConnection){
-%>
-	}finally{
-		if(cluster_<%=cid%>!=null){
-			cluster_<%=cid%>.getConnectionManager().shutdown();
+	%>
+		}finally{
+			if(cluster_<%=cid%>!=null){
+				cluster_<%=cid%>.getConnectionManager().shutdown();
+			}
 		}
+	<%
 	}
-<%
-	}
-%>
+	%>
 	globalMap.put("<%=cid %>_NB_LINE", nb_line_<%=cid%>);
+	<%
+	log4jFileUtil.retrievedDataNumberInfo(node);
+	log4jFileUtil.componentFinishInfo(node);
+	%>

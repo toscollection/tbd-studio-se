@@ -14,7 +14,8 @@
 		java.util.List
 	" 
 %>
-<% 
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
@@ -34,6 +35,7 @@
     for(Map<String,String> delColumn:listDeleteCols){
     	deleteColumns.put(delColumn.get("DELETE_COLUMN"),delColumn.get("DELETE_COLUMN"));
     }
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	if (node.getIncomingConnections() != null) {
 		class TypeMap{
@@ -318,23 +320,58 @@
 							}
 						}
 		            }
+		            log4jFileUtil.collectRetriveData(conName,inputMetadataTable);
 					%>
 					<%if (!isKeyColumnJavaPrimitive) {%>
 						}
 					<%}%>
 					nb_line_<%=cid %>++;
-					if (batchCounter_<%=cid%>++ == <%=batchSize%>) {
+					batchCounter_<%=cid%>++;
+					<%
+					if(isLog4jEnabled){
+					%>
+						log.debug("<%=cid%> - Add the record " + (nb_line_<%=cid%>) + " to the batch[size:"+batchCounter_<%=cid%>+"].");
+						log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
+						log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+					<%
+					}
+					%>
+					if (batchCounter_<%=cid%> == <%=batchSize%>) {
+						<%
+						if(isLog4jEnabled){
+						%>
+							log.info("<%=cid%> - Executing the batch.");
+						<%
+						}
+						%>
 						mutator_<%=cid%>.execute();
 						batchCounter_<%=cid%> = 0;
+						<%
+						if(isLog4jEnabled){
+						%>
+							log.info("<%=cid%> - <%=cid%> - Executed the batch successfully and clear the batch counter.");
+						<%
+						}
+						%>
 					}
 				}catch(java.lang.Exception e_<%=cid%>){
 					<%
 					if(dieOnError) {
-					%>
+						if(isLog4jEnabled){
+						%>
+							log.fatal("<%=cid%> - " + e_<%=cid%>);
+						<%
+						}
+						%>
 				        throw(e_<%=cid%>);
 					<%
 					}else {
-					%>
+						if(isLog4jEnabled){
+						%>
+							log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+						<%
+						}
+						%>
 						System.err.println(e_<%=cid%>.getMessage());
 					<%
 					}

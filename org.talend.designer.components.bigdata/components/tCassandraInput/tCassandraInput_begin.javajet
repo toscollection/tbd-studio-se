@@ -13,6 +13,7 @@
 		java.util.Map
 	" 
 %>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<% 
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -53,6 +54,10 @@
   	List<IMetadataColumn> columnList = null;
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
   	String firstConnName = "";
+		
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
 	%>
 	int nb_line_<%=cid %> = 0;
 	<%
@@ -114,7 +119,12 @@
       			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 				%>
 				cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
-			<%
+				<%
+				if(isLog4jEnabled){
+				%>	
+					log.info("<%=cid%> - Get an existing cluster instance from " + "<%=connection%>" + ".");
+				<%
+				}
 			}else{
 			%>
 				try{
@@ -132,6 +142,7 @@
 	   	 			cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
 			<%
 			}
+			log4jFileUtil.startRetriveDataInfo();
 			%>
 			me.prettyprint.cassandra.model.ConfigurableConsistencyLevel clpolicy_<%=cid%> = new me.prettyprint.cassandra.model.ConfigurableConsistencyLevel();
 			me.prettyprint.hector.api.HConsistencyLevel consistencyLevel_<%=cid%> = me.prettyprint.hector.api.HConsistencyLevel.ONE;
@@ -384,6 +395,8 @@
 						<%
 						}
 			   		}
+			   		log4jFileUtil.collectRetriveData(out);
+			   		log4jFileUtil.debugRetriveData(node);
 	     		}
 			}
       	}

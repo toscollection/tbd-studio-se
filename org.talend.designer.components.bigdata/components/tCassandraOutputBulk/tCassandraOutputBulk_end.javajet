@@ -11,6 +11,7 @@
 		java.util.Map
 	"
 %>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
@@ -43,4 +44,7 @@ if(sizeColumns == 0 || inConnName == null){
 }
 %>
 writer_<%=cid%>.close();
-
+<%
+log4jFileUtil.writeDataFinishInfo(node);
+log4jFileUtil.componentFinishInfo(node);
+%>

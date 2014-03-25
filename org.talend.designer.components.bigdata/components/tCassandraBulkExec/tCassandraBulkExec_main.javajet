@@ -11,6 +11,7 @@
 		java.util.Map
 	"
 %>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
@@ -26,6 +27,9 @@ boolean requireAuth = "true".equals(ElementParameterParser.getValue(node,"__REQU
 boolean needAuth = !"CASSANDRA_1_1_2".equals(version) && requireAuth;
 String username = ElementParameterParser.getValue(node,"__USERNAME__");
 String password = ElementParameterParser.getValue(node,"__PASSWORD__"); 
+boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+log4jFileUtil.componentStartInfo(node);
+log4jFileUtil.logParameters(node);
 %> 	
 java.io.File file_<%=cid%> = new java.io.File(<%=sstablePath%>, <%=keySpace%>+"/"+<%=columnFamily%>);
 
@@ -37,4 +41,19 @@ args_<%=cid%>.add("-pw"+<%=password%>);
 args_<%=cid%>.add("-u"+<%=username%>);
 <%}%>
 args_<%=cid%>.add(file_<%=cid%>.getAbsolutePath());
+<%
+if (isLog4jEnabled) {
+%>
+	log.info("<%=cid%> - Loading the data from SSTable "+file_<%=cid%>.getAbsolutePath()+"to the server.");
+<%
+}
+%>
 org.apache.cassandra.tools.BulkLoader.main(args_<%=cid%>.toArray(new String[args_<%=cid%>.size()]));
+<%
+if (isLog4jEnabled) {
+%>
+	log.info("<%=cid%> - Loaded the data to the server successfully.");
+<%
+}
+log4jFileUtil.componentFinishInfo(node);
+%>
