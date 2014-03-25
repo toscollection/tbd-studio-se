@@ -78,7 +78,7 @@
 
     <PARAMETER
       NAME="PASS"
-      FIELD="TEXT"
+      FIELD="PASSWORD"
       NUM_ROW="30"
       REQUIRED="true"
       GROUP="CONNECTIONCONFIG"
