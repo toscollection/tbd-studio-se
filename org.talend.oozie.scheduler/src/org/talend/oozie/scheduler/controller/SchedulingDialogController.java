@@ -59,14 +59,25 @@ public class SchedulingDialogController {
 
     public boolean checkIfAllValidOrNot() {
         boolean okBtnIsEnabled = false;
-        boolean startTimeHasValue = hasStartTimeValue();
-        boolean endTimeHasValue = hasEndTimeValue();
+        boolean checkTimeValue = checkTime();
         boolean frequencyValueIsValid = checkFrequencyValue();
-        if (startTimeHasValue && endTimeHasValue && frequencyValueIsValid)
+
+        if (checkTimeValue && frequencyValueIsValid)
             okBtnIsEnabled = true;
         else
             okBtnIsEnabled = false;
         return okBtnIsEnabled;
+    }
+
+    private boolean checkTime() {
+        if (hasStartTimeValue() && hasEndTimeValue()) {
+            Date startTimeValue = schedulingDialog.getStartDate();
+            Date endTimeValue = schedulingDialog.getEndDate();
+            Date now = new Date();
+            boolean b = now.getTime() - startTimeValue.getTime() < 10000;
+            return b && endTimeValue.after(startTimeValue);
+        }
+        return false;
     }
 
     protected boolean hasEndTimeValue() {
