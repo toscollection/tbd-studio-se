@@ -17,7 +17,7 @@
 	log4jFileUtil.componentStartInfo(node);
 	log4jFileUtil.logParameters(node);
 	%>
-	me.prettyprint.hector.api.Cluster cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<<%=connection%>");
+	me.prettyprint.hector.api.Cluster cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
 	if(cluster_<%=cid%>!=null){
 			cluster_<%=cid%>.getConnectionManager().shutdown();
 	}
