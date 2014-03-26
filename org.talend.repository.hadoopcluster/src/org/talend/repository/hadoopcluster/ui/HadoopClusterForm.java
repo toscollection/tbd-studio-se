@@ -13,7 +13,6 @@
 package org.talend.repository.hadoopcluster.ui;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
@@ -420,7 +419,6 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             hideControl(customButton, true);
             hideControl(customGroup, true);
             List<String> items = getDistributionVersions(distribution);
-            Collections.reverse(items);
             String[] versions = new String[items.size()];
             items.toArray(versions);
             versionCombo.getCombo().setItems(versions);
