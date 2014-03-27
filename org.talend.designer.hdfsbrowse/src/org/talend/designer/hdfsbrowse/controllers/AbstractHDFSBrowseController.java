@@ -171,10 +171,10 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         connectionBean.setUserName(userName);
         connectionBean.setEnableKerberos(useKrb != null ? useKrb : false);
         connectionBean.setPrincipal(nnPrincipal);
-        connectionBean.setUseKeytab(useKeytab);
+        connectionBean.setUseKeytab(useKeytab != null ? useKeytab : false);
         connectionBean.setKeytabPrincipal(ktPrincipal);
         connectionBean.setKeytab(ktPath);
-        connectionBean.setUseCustomVersion(isUseCustom);
+        connectionBean.setUseCustomVersion(isUseCustom != null ? isUseCustom : false);
         if (StringUtils.isNotBlank(customJars)) {
             connectionBean.getAdditionalProperties().put(ECustomVersionGroup.COMMON.getName(), customJars);
         }
