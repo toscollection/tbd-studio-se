@@ -109,7 +109,7 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
-            FIELD="TEXT"
+            FIELD="PASSWORD"
             NAME="PASSWORD"
             REQUIRED="true"
             NUM_ROW="11"

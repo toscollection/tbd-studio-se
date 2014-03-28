@@ -72,7 +72,7 @@
 
     <PARAMETER
       NAME="PASS"
-      FIELD="TEXT"
+      FIELD="PASSWORD"
       NUM_ROW="30"
       REQUIRED="true"
       SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"

@@ -102,7 +102,7 @@
         </PARAMETER>
         <PARAMETER
             NAME="PASSWORD"
-            FIELD="TEXT"
+            FIELD="PASSWORD"
             REQUIRED="true"
             NUM_ROW="11"
             NOT_SHOW_IF="(REQUIRED_AUTHENTICATION == 'false') OR (DB_VERSION == 'CASSANDRA_1_1_2')"
