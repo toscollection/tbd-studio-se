@@ -855,4 +855,20 @@
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="org.talend.repository.items.importexport.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.items.importexport.ui.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
 </feature>
