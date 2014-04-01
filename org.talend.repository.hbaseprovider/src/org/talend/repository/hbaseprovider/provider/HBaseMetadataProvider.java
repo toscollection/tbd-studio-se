@@ -24,6 +24,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.talend.commons.exception.ExceptionHandler;
@@ -49,6 +52,7 @@ import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdColumn;
 import org.talend.cwm.relational.TdTable;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.repository.hbaseprovider.Activator;
 import org.talend.repository.hbaseprovider.util.HBaseClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
@@ -710,6 +714,9 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             }
         } catch (Exception e) {
             ExceptionHandler.process(e);
+            Status status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, 0, "Error encountered when retrieving schema.", e);
+            ErrorDialog errorDialog = new ErrorDialog(null, "Error", null, status, IStatus.ERROR);
+            errorDialog.open();
         } finally {
             Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
