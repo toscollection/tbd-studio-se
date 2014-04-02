@@ -45,9 +45,9 @@
 	
 	String thriftServer = ElementParameterParser.getValue(node, "__THRIFT_SERVER__");
 	
+	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJarForHCatalog = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	
-	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
 	boolean generateRegisterJarCodeForHCatalog = ("HCatStorer".equals(function) && !defineJarsToRegister);
@@ -243,7 +243,7 @@
 
 	if("HCatStorer".equals(function)) {
 		if(!generateRegisterJarCodeForHCatalog) {
-			if(registerJarForHCatalog.size() > 0){
+			if(defineJarsToRegister && registerJarForHCatalog.size() > 0){
 				for(Map<String, String> item : registerJarForHCatalog){
 %>
 					pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
