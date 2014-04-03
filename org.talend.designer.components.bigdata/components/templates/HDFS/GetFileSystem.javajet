@@ -25,8 +25,8 @@ boolean isCustom = false;
 
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
-log4jFileUtil.logParameters(node);
 log4jFileUtil.componentStartInfo(node);
+log4jFileUtil.logParameters(node);
 
 %>
 String username_<%=cid%> = "";

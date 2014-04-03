@@ -241,6 +241,6 @@
 		globalMap.put("<%=cid%>_NB_FILE", NB_FILE<%=cid%>);
 		
 		<%if(isLog4jEnabled) {%>
-		log.info("<%=cid%> - Current file path : " + currentFilePath_<%=cid%>);
+		log.info("<%=cid%> - Current file or directory path : " + currentFilePath_<%=cid%>);
 	  	<%}%>
 		

@@ -21,7 +21,7 @@
 <%
 	if(isLog4jEnabled) {
 %>
-    log.info("<%=cid%> - File count : " + NB_FILE<%=cid%>);
+    log.info("<%=cid%> - File or directory count : " + NB_FILE<%=cid%>);
 <%
 	}
 	log4jFileUtil.componentFinishInfo(node);
