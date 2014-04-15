@@ -20,7 +20,7 @@ import org.talend.core.GlobalServiceRegister;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.model.properties.Item;
 import org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler;
-import org.talend.repository.items.importexport.handlers.model.ItemRecord;
+import org.talend.repository.items.importexport.handlers.model.ImportItem;
 import org.talend.repository.items.importexport.manager.ResourcesManager;
 
 /**
@@ -36,29 +36,29 @@ public class HadoopClusterImportHandler extends ImportRepTypeHandler {
      * (non-Javadoc)
      * 
      * @see
-     * org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler#findRelatedItemRecord(org.eclipse
+     * org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler#findRelatedImportItems(org.eclipse
      * .core.runtime.IProgressMonitor,
      * org.talend.repository.items.importexport.ui.wizard.imports.managers.ResourcesManager,
      * org.talend.repository.items.importexport.ui.wizard.imports.models.ItemRecord,
      * org.talend.repository.items.importexport.ui.wizard.imports.models.ItemRecord[])
      */
     @Override
-    public List<ItemRecord> findRelatedItemRecord(IProgressMonitor monitor, ResourcesManager resManager,
-            ItemRecord selectedItemRecord, ItemRecord[] allImportItemRecords) {
+    public List<ImportItem> findRelatedImportItems(IProgressMonitor monitor, ResourcesManager resManager, ImportItem importItem,
+            ImportItem[] allImportItemRecords) throws Exception {
 
-        List<ItemRecord> relatedItemRecords = new ArrayList<ItemRecord>();
-        relatedItemRecords.addAll(super.findRelatedItemRecord(monitor, resManager, selectedItemRecord, allImportItemRecords));
+        List<ImportItem> relatedItemRecords = new ArrayList<ImportItem>();
+        relatedItemRecords.addAll(super.findRelatedImportItems(monitor, resManager, importItem, allImportItemRecords));
 
         if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
             IHadoopClusterService hadoopClusterService = (IHadoopClusterService) GlobalServiceRegister.getDefault().getService(
                     IHadoopClusterService.class);
-            final Item item = selectedItemRecord.getItem();
+            final Item item = importItem.getItem();
             if (hadoopClusterService != null && hadoopClusterService.isHadoopClusterItem(item)) {
-                resolveItem(resManager, selectedItemRecord);
+                resolveItem(resManager, importItem);
 
                 List<String> subitemIds = hadoopClusterService.getSubitemIdsOfHadoopCluster(item);
                 if (!subitemIds.isEmpty() && allImportItemRecords != null) {
-                    for (ItemRecord ir : allImportItemRecords) {
+                    for (ImportItem ir : allImportItemRecords) {
                         if (ir.getProperty() != null && subitemIds.contains(ir.getProperty().getId())) {
                             relatedItemRecords.add(ir);
                         }

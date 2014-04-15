@@ -17,7 +17,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.repository.items.importexport.handlers.imports.MetadataConnectionImportHandler;
-import org.talend.repository.items.importexport.handlers.model.ItemRecord;
+import org.talend.repository.items.importexport.handlers.model.ImportItem;
 import org.talend.repository.items.importexport.manager.ResourcesManager;
 
 /**
@@ -36,14 +36,15 @@ public class HCatalogImportHandler extends MetadataConnectionImportHandler {
      * (non-Javadoc)
      * 
      * @see
-     * org.talend.repository.items.importexport.handlers.imports.ImportExecutableBasePathHandler#calcItemRecord(org.eclipse.core.runtime
-     * .IProgressMonitor, org.talend.repository.items.importexport.ui.wizard.imports.managers.ResourcesManager,
+     * org.talend.repository.items.importexport.handlers.imports.ImportExecutableBasePathHandler#createImportItem(org
+     * .eclipse.core.runtime .IProgressMonitor,
+     * org.talend.repository.items.importexport.ui.wizard.imports.managers.ResourcesManager,
      * org.eclipse.core.runtime.IPath, boolean, java.util.List)
      */
     @Override
-    public ItemRecord calcItemRecord(IProgressMonitor progressMonitor, ResourcesManager resManager, IPath resourcePath,
-            boolean overwrite, List<ItemRecord> existeditems) {
-        final ItemRecord itemRecord = super.calcItemRecord(progressMonitor, resManager, resourcePath, overwrite, existeditems);
+    public ImportItem createImportItem(IProgressMonitor progressMonitor, ResourcesManager resManager, IPath resourcePath,
+            boolean overwrite, List<ImportItem> existeditems) throws Exception {
+        final ImportItem itemRecord = super.createImportItem(progressMonitor, resManager, resourcePath, overwrite, existeditems);
         if (itemRecord != null) {
             // won't display in import dialog, will be implict to import by hadoop cluster(method
             // findRelatedItemRecord).
