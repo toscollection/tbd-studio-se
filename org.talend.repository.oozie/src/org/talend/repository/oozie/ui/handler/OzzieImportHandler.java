@@ -44,12 +44,22 @@ public class OzzieImportHandler extends MetadataConnectionImportHandler {
     @Override
     public ImportItem createImportItem(IProgressMonitor progressMonitor, ResourcesManager resManager, IPath resourcePath,
             boolean overwrite, List<ImportItem> existeditems) throws Exception {
-        final ImportItem itemRecord = super.createImportItem(progressMonitor, resManager, resourcePath, overwrite, existeditems);
-        if (itemRecord != null) {
+        final ImportItem importItem = super.createImportItem(progressMonitor, resManager, resourcePath, overwrite, existeditems);
+        if (importItem != null) {
             // won't display in import dialog, will be implict to import by hadoop cluster(method
             // findRelatedItemRecord).
-            itemRecord.setVisible(false);
+            importItem.setVisible(false);
         }
-        return itemRecord;
+        return importItem;
+    }
+
+    @Override
+    public boolean checkItem(ResourcesManager resManager, ImportItem importItem, boolean overwrite) {
+        if (importItem != null) {
+            // won't display in import dialog, will be implict to import by hadoop cluster(method
+            // findRelatedItemRecord).
+            importItem.setVisible(false);
+        }
+        return super.checkItem(resManager, importItem, overwrite);
     }
 }
