@@ -30,9 +30,18 @@
 	log4jFileUtil.componentStartInfo(node);
 	log4jFileUtil.logParameters(node);
 	
+	String passwordFieldName = "";
+	
 	%>
 	final String CLIENT_ID_<%=cid %> = <%=clientId %>;
-	final String CLIENT_SECRET_<%=cid%> = "{\"web\": {\"client_id\": \""+<%=clientId%>+"\",\"client_secret\": \"" +<%=clientSecret%>+ "\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://accounts.google.com/o/oauth2/token\"}}";
+	
+    <%
+    passwordFieldName = "__CLIENT_SECRET__";
+    %>
+    
+    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>	
+	
+	final String CLIENT_SECRET_<%=cid%> = "{\"web\": {\"client_id\": \""+<%=clientId%>+"\",\"client_secret\": \"" +decryptedPassword_<%=cid%>+ "\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://accounts.google.com/o/oauth2/token\"}}";
 	final String PROJECT_ID_<%=cid %> = <%=projectId %>;
 
 	// Static variables for API scope, callback URI, and HTTP/JSON functions
@@ -177,7 +186,18 @@
 	if(!bulkFileAlreadyExists) {
 	%>
 
-		org.jets3t.service.security.GSCredentials gsCredentials = new org.jets3t.service.security.GSCredentials(<%=accessKey%>, <%=secretKey%>);
+        <%
+        passwordFieldName = "__GS_SECRET_KEY__";
+        %>
+        
+        <%if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {%> 
+        	final String decryptedPwd_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+        <%} else {%>
+        	final String decryptedPwd_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+        <%}%>
+
+
+		org.jets3t.service.security.GSCredentials gsCredentials = new org.jets3t.service.security.GSCredentials(<%=accessKey%>, decryptedPwd_<%=cid%>);
 		
 		org.jets3t.service.impl.rest.httpclient.GoogleStorageService gsService = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(gsCredentials);
 		//org.jets3t.service.model.GSBucket[] myBuckets = gsService.listAllBuckets();

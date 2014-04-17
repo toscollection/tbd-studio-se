@@ -61,7 +61,6 @@ imports="
     String dbport = null;
     String dbname = null;
     String dbuser = null;
-    String dbpwd = null;
     
     //hbase settings
    	String storeByHBase = null;
@@ -76,7 +75,6 @@ imports="
         dbport = ElementParameterParser.getValue(previousNode, "__PORT__");
         dbname = ElementParameterParser.getValue(previousNode, "__DBNAME__");
         dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
-        dbpwd = ElementParameterParser.getValue(previousNode, "__PASS__");
     	useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
     	
     	storeByHBase = ElementParameterParser.getValue(previousNode, "__STORE_BY_HBASE__");
@@ -155,7 +153,14 @@ if(useExistingConn) {
 		}
 %>
 		String dbUser_<%=cid %> = <%=dbuser%>;
-		String dbPwd_<%=cid %> = <%=dbpwd%>; 
+		
+        <%
+        String passwordFieldName = "__PASS__";
+        %>
+        
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/eltpassword.javajet"%>
+		
+		String dbPwd_<%=cid %> = decryptedPassword_<%=cid%>; 
 		globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
 		if("EMBEDDED".equals(connectionMode)) {

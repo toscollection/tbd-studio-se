@@ -16,7 +16,7 @@ imports="
 	String cid = node.getUniqueName();
 	String dbname = ElementParameterParser.getValue(node, "__DBNAME__");
 	String username = ElementParameterParser.getValue(node, "__USER__");
-	String dbpwd = ElementParameterParser.getValue(node, "__PASS__");
+
 	List<Map<String, String>> URIList = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__URIS__");
 	
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
@@ -38,7 +38,14 @@ imports="
 	<%
 	}
 	%>
-    client_<%=cid%> = new com.couchbase.client.CouchbaseClient(uris_<%=cid%>, <%=dbname%>,<%if(username!=null && !"".equals(username)){%><%=username%>,<%}%> <%=dbpwd%>);
+	
+    <%
+    String passwordFieldName = "__PASS__";
+    %>
+    
+    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>	
+	
+    client_<%=cid%> = new com.couchbase.client.CouchbaseClient(uris_<%=cid%>, <%=dbname%>,<%if(username!=null && !"".equals(username)){%><%=username%>,<%}%> decryptedPassword_<%=cid%>);
 	globalMap.put("conn_<%=cid%>",client_<%=cid%>);
 	<%
 	log4jFileUtil.componentFinishInfo(node);

@@ -34,7 +34,14 @@
 	log4jFileUtil.logParameters(node);
 	%>
 	final String CLIENT_ID_<%=cid %> = <%=clientId %>;
-	final String CLIENT_SECRET_<%=cid%> = "{\"web\": {\"client_id\": \""+<%=clientId%>+"\",\"client_secret\": \"" +<%=clientSecret%>+ "\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://accounts.google.com/o/oauth2/token\"}}";
+	
+	<%
+	String passwordFieldName = "__CLIENT_SECRET__";
+	%>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+	
+	final String CLIENT_SECRET_<%=cid%> = "{\"web\": {\"client_id\": \""+<%=clientId%>+"\",\"client_secret\": \"" +decryptedPassword_<%=cid%>+ "\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://accounts.google.com/o/oauth2/token\"}}";
 	final String PROJECT_ID_<%=cid %> = <%=projectId %>;
 
 	// Static variables for API scope, callback URI, and HTTP/JSON functions

@@ -50,7 +50,14 @@
 	<%
 	if (authentication){
 	%>
-    	db_<%=cid%>.authenticate(<%=dbuser%>, new String(<%=dbpass%>).toCharArray());
+	
+        <%
+        String passwordFieldName = "__PASSWORD__";
+        %>
+        
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+	
+    	db_<%=cid%>.authenticate(<%=dbuser%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 	<%
 	}
 	if(isLog4jEnabled){

@@ -26,7 +26,7 @@ imports="
 	String dbport = ElementParameterParser.getValue(node, "__PORT__");
 	String dbname= ElementParameterParser.getValue(node, "__DBNAME__");
 	String dbuser= ElementParameterParser.getValue(node, "__USER__");
-	String dbpwd= ElementParameterParser.getValue(node, "__PASS__");
+
 	
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>

@@ -83,7 +83,14 @@
 				<%
 				if (authentication){
 				%>
-    				db_<%=cid%>.authenticate(<%=dbuser%>, <%=dbpass%>.toCharArray());
+				
+                    <%
+                    String passwordFieldName = "__PASSWORD__";
+                    %>
+                    
+                    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>						
+				
+    				db_<%=cid%>.authenticate(<%=dbuser%>, decryptedPassword_<%=cid%>.toCharArray());
 				<%
 				}
 			}

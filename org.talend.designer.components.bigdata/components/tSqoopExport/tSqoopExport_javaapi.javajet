@@ -31,7 +31,14 @@
 	sqoopOptions_<%=cid%>.setTableName(<%=table%>);
 	sqoopOptions_<%=cid%>.setExportDir(<%=exportDir%>);
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
-	sqoopOptions_<%=cid%>.setPassword(<%=password%>); // __PASSWORD__
+	
+    <%
+    String passwordFieldName = "__PASSWORD__";
+    %>
+    
+    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+
+	sqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>); // __PASSWORD__
 		
 <%	
 	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {

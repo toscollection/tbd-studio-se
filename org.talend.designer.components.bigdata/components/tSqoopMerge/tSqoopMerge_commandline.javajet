@@ -30,7 +30,14 @@
 
 <%if(needGenerateJar){%>
 Runtime runtime_generateJar_<%=cid %> = Runtime.getRuntime();
-String[] generateJar_cmd_<%=cid %> = new String[] {"sqoop", "codegen", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", <%=password%>
+
+<%
+String passwordFieldName = "__PASSWORD__";
+%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
+
+String[] generateJar_cmd_<%=cid %> = new String[] {"sqoop", "codegen", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
 <%
 boolean isNull=false; 

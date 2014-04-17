@@ -54,7 +54,14 @@ if(isUseSpeedParallel && isUseAdditionParams){
 <%
 }
 %>
-, "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", <%=password%>, "--export-dir", <%=exportDir%>
+
+<%
+String passwordFieldName = "__PASSWORD__";
+%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
+
+, "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>, "--export-dir", <%=exportDir%>
 <%if(isUseSpeedParallel){%>,"--connection-manager","org.apache.sqoop.teradata.TeradataConnManager"<%}%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
 <%if(direct){%>, "--direct"<%}%>

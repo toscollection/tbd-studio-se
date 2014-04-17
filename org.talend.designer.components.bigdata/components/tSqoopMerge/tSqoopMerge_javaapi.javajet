@@ -35,7 +35,14 @@
         com.cloudera.sqoop.SqoopOptions needGenereateJarSqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
         needGenereateJarSqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
         needGenereateJarSqoopOptions_<%=cid%>.setUsername(<%=username%>);
-        needGenereateJarSqoopOptions_<%=cid%>.setPassword(<%=password%>);
+        
+        <%
+        String passwordFieldName = "__PASSWORD__";
+        %>
+        
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		        
+        
+        needGenereateJarSqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>);
         needGenereateJarSqoopOptions_<%=cid%>.setTableName(<%=table%>);
         <%if(customClassName){%>
             needGenereateJarSqoopOptions_<%=cid%>.setClassName(<%=className%>);
