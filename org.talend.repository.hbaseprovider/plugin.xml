@@ -68,7 +68,7 @@
       </classloader>
       <classloader
             index="HBASE:CLOUDERA:Cloudera_CDH5"
-            libraries="hbase-client-0.96.1.1-cdh5.0.0-beta-2.jar;hbase-common-0.96.1.1-cdh5.0.0-beta-2.jar;hbase-protocol-0.96.1.1-cdh5.0.0-beta-2.jar;zookeeper-3.4.5-cdh5.0.0-beta-2.jar;hadoop-common-2.2.0-cdh5.0.0-beta-2.jar;hadoop-auth-2.2.0-cdh5.0.0-beta-2.jar;htrace-core-2.01.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-codec-1.7.jar;commons-collections-3.2.1.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;netty-3.6.6.Final.jar;">
+            libraries="hbase-client-0.96.1.1-cdh5.0.0.jar;hbase-common-0.96.1.1-cdh5.0.0.jar;hbase-protocol-0.96.1.1-cdh5.0.0.jar;zookeeper-3.4.5-cdh5.0.0.jar;hadoop-common-2.3.0-cdh5.0.0.jar;hadoop-auth-2.3.0-cdh5.0.0.jar;htrace-core-2.01.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-codec-1.7.jar;commons-collections-3.2.1.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;netty-3.6.6.Final.jar">
       </classloader>
       <classloader
             index="HBASE:MAPR:MAPR2"
