@@ -24,6 +24,7 @@ import org.talend.core.model.utils.IComponentName;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
 import org.talend.repository.hcatalog.util.EHCatalogRepositoryToComponent;
 import org.talend.repository.model.RepositoryNode;
@@ -133,6 +134,7 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
             if (targetComponent != null && targetComponent.startsWith("tPig")) {
                 return hcConnection.getParameters().get(ECustomVersionGroup.PIG_HCATALOG.getName());
             }
+            return HCVersionUtil.getCompCustomJarsParamFromRep(hcConnection, ECustomVersionGroup.COMMON);
         } else if (EHCatalogRepositoryToComponent.HADOOP_ADVANCED_PROPERTIES.getRepositoryValue().equals(value)) {
             try {
                 return HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties(), true);
