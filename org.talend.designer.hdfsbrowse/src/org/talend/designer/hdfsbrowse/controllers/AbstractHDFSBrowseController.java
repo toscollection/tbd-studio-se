@@ -118,23 +118,22 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
                 }
             }
         } else if (node != null && node.getComponent() != null && node.getComponent().getPaletteType() != null
-                && node.getComponent().getPaletteType().equals("MR")) {
+                && node.getComponent().getPaletteType().equals("MR")) { //$NON-NLS-1$
             List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
             for (INode iNode : nodes) {
                 IComponent component = iNode.getComponent();
-                if (component != null && component.getName() != null && component.getName().equals("tMRConfiguration")) {
+                if (component != null && component.getName() != null && component.getName().equals("tMRConfiguration")) { //$NON-NLS-1$
+                    isMr = true;
                     node = iNode;
                     if (node instanceof DataNode) {
                         DataNode dataNode = (DataNode) node;
                         IElementParameter versionParameter = dataNode.getElementParameter(EHadoopParameter.MR_VERSION.getName());
                         if (versionParameter != null) {
                             connectionBean.setDfVersion((String) versionParameter.getValue());
-                            isMr = true;
                         }
                         IElementParameter nameNodeParameter = dataNode.getElementParameter(EHadoopParameter.NAMENODE.getName());
                         if (nameNodeParameter != null) {
                             connectionBean.setNameNodeURI((String) nameNodeParameter.getValue());
-                            isMr = true;
                         }
                     }
                 }
@@ -165,6 +164,12 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         String ktPrincipal = (String) getParameterValue(node, EHadoopParameter.PRINCIPAL.getName());
         String ktPath = (String) getParameterValue(node, EHadoopParameter.KEYTAB_PATH.getName());
         Boolean isUseCustom = EHadoopDistributions.CUSTOM.getName().equals(distribution);
+        if (isUseCustom) {
+            Object authMode = getParameterValue(node, EHadoopParameter.AUTHENTICATION_MODE.getName());
+            if ("KRB".equals(authMode)) { //$NON-NLS-1$
+                useKrb = true;
+            }
+        }
         String customJars = (String) getParameterValue(node, EHadoopParameter.HADOOP_CUSTOM_JARS.getName());
 
         connectionBean.setDistribution(distribution);
@@ -188,26 +193,30 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
     }
 
     private Object getParameterValue(INode node, String paramName) {
-        Object value = null;
         Map<String, List<String>> componentParamsMap = HadoopMappingManager.getInstance().getComponentParamsMap();
         List<String> paramslist = componentParamsMap.get(paramName);
         if (paramslist != null && paramslist.size() > 0) {
+            Object value = null;
             for (String param : paramslist) {
-                if (node instanceof DataNode) {
-                    DataNode dataNode = (DataNode) node;
-                    IElementParameter parameter = dataNode.getElementParameter(param);
-                    if (parameter != null) {
-                        value = parameter.getValue();
-                    }
-                } else {
-                    value = node.getPropertyValue(param);
-                }
+                value = getTheParameterValue(node, param);
                 if (value != null) {
                     return value;
                 }
             }
         }
-        if (value == null) {
+
+        return getTheParameterValue(node, paramName);
+    }
+
+    private Object getTheParameterValue(INode node, String paramName) {
+        Object value = null;
+        if (node instanceof DataNode) {
+            DataNode dataNode = (DataNode) node;
+            IElementParameter parameter = dataNode.getElementParameter(paramName);
+            if (parameter != null) {
+                value = parameter.getValue();
+            }
+        } else {
             value = node.getPropertyValue(paramName);
         }
 
