@@ -42,6 +42,8 @@ public enum EHadoopParameter {
 
     NAMENODE,
 
+    AUTHENTICATION_MODE,
+
     HADOOP_CUSTOM_JARS,
 
     ;
