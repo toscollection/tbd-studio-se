@@ -258,7 +258,6 @@ imports="
 				String metastoreUrl = ElementParameterParser.getValue(node, "__METASTORE_JDBC_URL__");
 				String driverClass = ElementParameterParser.getValue(node, "__METASTORE_CLASSNAME__");
 				String metastoreUsername = ElementParameterParser.getValue(node, "__METASTORE_USERNAME__");
-				String metastorePassword = ElementParameterParser.getValue(node, "__METASTORE_PASSWORD__");
 				boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 				String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 				String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
@@ -268,7 +267,15 @@ imports="
 				System.setProperty("hive.security.authorization.enabled", "true");
 				System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
 				System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
-				System.setProperty("javax.jdo.option.ConnectionPassword", <%=metastorePassword%>);
+        		<%
+        		String passwordFieldName = "__METASTORE_PASSWORD__";
+        		%>
+        		<%if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {%> 
+            	String decryptedMetastorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+       		 	<%} else {%>
+            	String decryptedMetastorePassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+    			<%}%>
+				System.setProperty("javax.jdo.option.ConnectionPassword", decryptedMetastorePassword_<%=cid%>);
 				System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);
 				
 <%

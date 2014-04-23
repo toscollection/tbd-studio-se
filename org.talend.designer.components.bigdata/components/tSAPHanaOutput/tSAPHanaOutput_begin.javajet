@@ -25,7 +25,6 @@ List<Map<String, String>> fieldOptions = (List<Map<String,String>>)ElementParame
 String dbhost = ElementParameterParser.getValue(node, "__HOST__");
 String dbport = ElementParameterParser.getValue(node, "__PORT__");
 String dbuser= ElementParameterParser.getValue(node, "__USER__");
-String dbpwd= ElementParameterParser.getValue(node, "__PASS__");
 String table = ElementParameterParser.getValue(node,"__TABLE__");
 String dbmsId = ElementParameterParser.getValue(node,"__MAPPING__");
 String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
@@ -118,7 +117,14 @@ if(useExistingConnection) {
 %>
 	java.lang.Class.forName("com.sap.db.jdbc.Driver");
 	String dbUser_<%=cid%> = <%=dbuser%>;
-	String dbPwd_<%=cid%> = <%=dbpwd%>;
+	<%
+	String passwordFieldName = "__PASS__";
+	%>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+
+	String dbPwd_<%=cid %> = decryptedPassword_<%=cid%>;
+
 	String dbschema_<%=cid%>= <%=tableSchema%>;	
 	String dbProperties_<%=cid%> = <%=dbproperties%>;
 	String url_<%=cid %> = "jdbc:sap://" + <%=dbhost%> + ":" + <%=dbport%>;

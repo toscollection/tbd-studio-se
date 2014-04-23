@@ -13,7 +13,6 @@ imports="
 	String dbhost = ElementParameterParser.getValue(node, "__HOST__");
 	String dbport = ElementParameterParser.getValue(node, "__PORT__");
 	String dbuser= ElementParameterParser.getValue(node, "__USER__");
-	String dbpwd= ElementParameterParser.getValue(node, "__PASS__");
 	String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__");
 	String dbquery= ElementParameterParser.getValue(node, "__QUERY__");
 	dbquery = org.talend.core.model.utils.NodeUtil.replaceCRLFInMEMO_SQL(dbquery);
@@ -33,7 +32,14 @@ if(("true").equals(useExistingConn)) {
 %>
 	java.lang.Class.forName("com.sap.db.jdbc.Driver");
 	String dbUser_<%=cid %> = <%=dbuser%>;	
-	String dbPwd_<%=cid %> = <%=dbpwd%>;	
+	<%
+	String passwordFieldName = "__PASS__";
+	%>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+
+	String dbPwd_<%=cid %> = decryptedPassword_<%=cid%>;
+	
 	String dbProperties_<%=cid%> = <%=dbproperties%>;
 	String url_<%=cid %> = "jdbc:sap://" + <%=dbhost%> + ":" + <%=dbport%>;
 	if(dbProperties_<%=cid%> != null && dbProperties_<%=cid%>.trim().length() > 0) {
