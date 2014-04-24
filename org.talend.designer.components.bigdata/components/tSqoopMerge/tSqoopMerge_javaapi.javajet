@@ -23,7 +23,6 @@
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String table = ElementParameterParser.getValue(node,"__TABLE__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
-	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
     
 	String fsDefalutName = "fs.default.name";
 %>

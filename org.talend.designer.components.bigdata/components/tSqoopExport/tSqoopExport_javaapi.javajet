@@ -11,7 +11,6 @@
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String table = ElementParameterParser.getValue(node,"__TABLE__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
-	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
 	String exportDir = ElementParameterParser.getValue(node,"__EXPORT_DIR__");
 	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
 	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));

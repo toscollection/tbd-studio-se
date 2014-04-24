@@ -6,7 +6,6 @@
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String table = ElementParameterParser.getValue(node,"__TABLE__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
-	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
 	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
 	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
 	boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
@@ -59,6 +58,12 @@ sColumns += "\\\"";
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
 
+<%
+String passwordFieldName = "__PASSWORD__";
+%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>	
+
 String[] cmd_<%=cid %> = new String[] {"sqoop", "import"
 <%
 boolean isNull=false; 
@@ -82,12 +87,6 @@ if(isUseSpeedParallel && isUseAdditionParams){
 <%
 }
 %>
-
-<%
-String passwordFieldName = "__PASSWORD__";
-%>
-
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
 
 , "--connect", <%=connection%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
 <%if(isUseSpeedParallel){%>,"--connection-manager","org.apache.sqoop.teradata.TeradataConnManager"<%}%>

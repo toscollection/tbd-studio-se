@@ -12,7 +12,6 @@
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
-	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
 	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
 	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
 	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
