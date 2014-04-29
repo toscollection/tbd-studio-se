@@ -87,6 +87,10 @@
             libraries="commons-lang-2.6.jar;commons-logging-1.1.1.jar;hadoop-0.20.2-dev-core-mapr301.jar;hbase-0.94.9-mapr-1308.jar;log4j-1.2.16.jar;zookeeper-3.4.5.jar;guava-11.0.2.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.4.0a.jar">
       </classloader>
       <classloader
+            index="HBASE:MAPR:MAPR310"
+            libraries="maprfs-1.0.3-mapr-3.1.0.jar;maprfs-jni-1.0.3-mapr-3.1.0.jar;hadoop-auth-1.0.3-mapr-3.1.0.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-codec-1.4.jar;hadoop-core-1.0.3-mapr-3.1.0.jar;hbase-0.94.13-mapr-1401.jar;log4j-1.2.17.jar;zookeeper-3.4.5-mapr-1401.jar;guava-11.0.2.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.4.0a.jar;">
+      </classloader>
+      <classloader
             index="HBASE:PIVOTAL_HD:PIVOTAL_HD_1_0_1"
             libraries="commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;guava-11.0.2.jar;protobuf-java-2.4.0a.jar;hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar;hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar;hbase-0.94.2-gphd-2.0.1.0.jar;zookeeper-3.4.5-gphd-2.0.1.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
       </classloader>
