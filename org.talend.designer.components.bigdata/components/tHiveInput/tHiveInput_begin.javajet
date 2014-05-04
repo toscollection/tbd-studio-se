@@ -66,7 +66,7 @@ imports="
 	    	hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 			boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 			
-			if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "MAPR213".equals(hiveVersion) || "MAPR301".equals(hiveVersion) || "MAPR310".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion)))) {
+			if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || ("HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "MAPR213".equals(hiveVersion) || "MAPR301".equals(hiveVersion) || "MAPR310".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "PIVOTAL_HD_2_0".equals(hiveVersion)))) {
 				hiveServer = hiveServer.toLowerCase();
 				if ("hive2".equals(hiveServer)) {
 					javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
@@ -119,7 +119,7 @@ imports="
 <%
 			}
 			
-        	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion)))) {
+        	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(hiveVersion) || "PIVOTAL_HD_2_0".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion)))) {
         		if(setResourceManager) {
         			String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 %>
@@ -239,7 +239,7 @@ imports="
 				}  
 			}
 			
-			if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion) && !"Cloudera_CDH5".equals(hiveVersion))) && setMapredJT) {
+			if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"PIVOTAL_HD_2_0".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion) && !"Cloudera_CDH5".equals(hiveVersion))) && setMapredJT) {
 				String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__"); 
 %> 
 				System.setProperty("mapred.job.tracker", <%=mapredJT%>); 
@@ -298,7 +298,7 @@ imports="
 				System.setProperty("hive.metastore.execute.setugi", "true");
 				String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
 <%
-				if(isCustom || (!isCustom && ("HDP_1_0,HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1".contains(hiveVersion)))) {
+				if(isCustom || (!isCustom && ("HDP_1_0,HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(hiveVersion)))) {
 %>
     				if(dbUser_<%=cid %>!=null && !"".equals(dbUser_<%=cid %>.trim())) {
     					System.setProperty("HADOOP_USER_NAME",dbUser_<%=cid %>);

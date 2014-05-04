@@ -98,6 +98,7 @@
                 <ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'"/>
+				<ITEM NAME="PIVOTAL_HD_2_0" VALUE="PIVOTAL_HD_2_0" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'" />
             </ITEMS>
         </PARAMETER>
 
@@ -437,21 +438,26 @@
             <IMPORT NAME="hive-serde-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-serde-0.9.1-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-serde-0.9.1-gphd-2.0.1.0.jar" REQUIRED_IF="(HBASE_VERSION=='PIVOTAL_HD_1_0_1') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-common-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-common-0.9.1-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-common-0.9.1-gphd-2.0.1.0.jar" REQUIRED_IF="(HBASE_VERSION=='PIVOTAL_HD_1_0_1') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-exec-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-exec-0.9.1-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-exec-0.9.1-gphd-2.0.1.0.jar" REQUIRED_IF="(HBASE_VERSION=='PIVOTAL_HD_1_0_1') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- PIVOTAL_HD_2_0 -->
+            <IMPORT NAME="hive-serde-0.12.0-gphd-3.0.0.0.jar" MODULE="hive-serde-0.12.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hive-serde-0.12.0-gphd-3.0.0.0.jar" REQUIRED_IF="(HBASE_VERSION=='PIVOTAL_HD_2_0') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-common-0.12.0-gphd-3.0.0.0.jar" MODULE="hive-common-0.12.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hive-common-0.12.0-gphd-3.0.0.0.jar" REQUIRED_IF="(HBASE_VERSION=='PIVOTAL_HD_2_0') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-exec-0.12.0-gphd-3.0.0.0.jar" MODULE="hive-exec-0.12.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hive-exec-0.12.0-gphd-3.0.0.0.jar" REQUIRED_IF="(HBASE_VERSION=='PIVOTAL_HD_2_0') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <!-- RC ORC Support End-->
             
             <!-- AVRO Support Start-->
-            <IMPORT NAME="piggybank.jar" MODULE="piggybank.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH4') AND (HBASE_VERSION!='Cloudera_CDH4_YARN') AND (HBASE_VERSION!='Cloudera_CDH5') AND (HBASE_VERSION!='PIVOTAL_HD_1_0_1') AND (HBASE_VERSION!='HDP_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="piggybank.jar" MODULE="piggybank.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH4') AND (HBASE_VERSION!='Cloudera_CDH4_YARN') AND (HBASE_VERSION!='Cloudera_CDH5') AND (HBASE_VERSION!='PIVOTAL_HD_1_0_1') AND (HBASE_VERSION!='PIVOTAL_HD_2_0') AND (HBASE_VERSION!='HDP_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
             
             <IMPORT NAME="piggybank-cdh4.jar" MODULE="piggybank-cdh4.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-cdh4.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='Cloudera_CDH4' OR HBASE_VERSION=='Cloudera_CDH4_YARN')) AND DISTRIBUTION!='CUSTOM'"/>
             
             <IMPORT NAME="piggybank-cdh5.jar" MODULE="piggybank-cdh5.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-cdh5.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="avro-1.7.5-cdh5.0.0.jar" MODULE="avro-1.7.5-cdh5.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.0.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'" />
             
-            <IMPORT NAME="piggybank-phd.jar" MODULE="piggybank-phd.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-phd.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='PIVOTAL_HD_1_0_1')) AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="piggybank-phd.jar" MODULE="piggybank-phd.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-phd.jar" REQUIRED_IF="(STORE=='AVROSTORAGE') AND ((HBASE_VERSION=='PIVOTAL_HD_1_0_1') OR (HBASE_VERSION=='PIVOTAL_HD_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
             
             <IMPORT NAME="piggybank_hdp20.jar" MODULE="piggybank_hdp20.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank_hdp20.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='HDP_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
             
-            <IMPORT NAME="commons-io" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='HDP_2_0' OR HBASE_VERSION=='Cloudera_CDH4_YARN' OR HBASE_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="commons-io" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='HDP_2_0' OR HBASE_VERSION=='Cloudera_CDH4_YARN' OR HBASE_VERSION=='Cloudera_CDH5' OR HBASE_VERSION=='PIVOTAL_HD_2_0')) AND DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="json_simple-1.1.jar" MODULE="json_simple-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar" REQUIRED_IF="(STORE=='AVROSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <!-- AVRO Support End-->

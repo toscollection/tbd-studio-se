@@ -71,6 +71,7 @@
 				<ITEM NAME="MapR_EMR" VALUE="MapR_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'"/>
+				<ITEM NAME="PIVOTAL_HD_2_0" VALUE="PIVOTAL_HD_2_0" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'" />
 			</ITEMS>
 		</PARAMETER>
         <PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="CONFIGURATION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="8"  SHOW_IF="DISTRIBUTION=='CUSTOM'" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS" >
@@ -89,7 +90,7 @@
 				<ITEM NAME="BINSTORAGE" VALUE="BinStorage" />
 				<ITEM NAME="TEXTLOADER" VALUE="TextLoader" />
 				<ITEM NAME="HCATLOADER" VALUE="HCatLoader" SHOW_IF="((PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='HDP_1_3' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH5' OR DISTRIBUTION=='CUSTOM') AND MAPREDUCE=='true')"/>
-				<ITEM NAME="HBASESTORAGE" VALUE="HBaseStorage" SHOW_IF="(MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0')"/>
+				<ITEM NAME="HBASESTORAGE" VALUE="HBaseStorage" SHOW_IF="(MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0'))"/>
 				<ITEM NAME="SEQUENCEFILELOADER" VALUE="SequenceFileStorage" SHOW_IF="MAPREDUCE=='true'"/>
 				<ITEM NAME="RCFILEPIGSTORAGE" VALUE="RCFilePigStorage" SHOW_IF="MAPREDUCE=='true'"/>
 				<ITEM NAME="AVROSTORAGE" VALUE="AvroStorage" SHOW_IF="MAPREDUCE=='true'"/>
@@ -105,26 +106,26 @@
 			<DEFAULT IF="((PIG_VERSION == 'MAPR1') OR (PIG_VERSION == 'MAPR2') OR (PIG_VERSION == 'MAPR212') OR (PIG_VERSION == 'MAPR213') OR (PIG_VERSION == 'MAPR301') OR (PIG_VERSION == 'MAPR310') OR (PIG_VERSION == 'MapR_EMR')) AND (DISTRIBUTION != 'CUSTOM')">"maprfs:///"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="MAPRED_JOB_TRACKER" FIELD="TEXT" NUM_ROW="17" REPOSITORY_VALUE="MAPRED_JOB_TRACKER"
-			REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND PIG_VERSION!='PIVOTAL_HD_1_0_1' AND PIG_VERSION!='HDP_2_0' AND PIG_VERSION!='Cloudera_CDH4_YARN' AND PIG_VERSION!='Cloudera_CDH5'))" GROUP="CONFIGURATION">
+			REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND PIG_VERSION!='PIVOTAL_HD_1_0_1' AND PIG_VERSION!='PIVOTAL_HD_2_0' AND PIG_VERSION!='HDP_2_0' AND PIG_VERSION!='Cloudera_CDH4_YARN' AND PIG_VERSION!='Cloudera_CDH5'))" GROUP="CONFIGURATION">
 			<DEFAULT>"localhost:8021"</DEFAULT>
 			<DEFAULT IF="((PIG_VERSION == 'MAPR1') OR (PIG_VERSION == 'MAPR2') OR (PIG_VERSION == 'MAPR212') OR (PIG_VERSION == 'MAPR213') OR (PIG_VERSION == 'MAPR301') OR (PIG_VERSION == 'MAPR310') OR (PIG_VERSION == 'MapR_EMR')) AND (DISTRIBUTION != 'CUSTOM')">"localhost:9001"</DEFAULT>
 		</PARAMETER>
-        <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="17" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION" REPOSITORY_VALUE="RESOURCE_MANAGER">
+        <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="17" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION" REPOSITORY_VALUE="RESOURCE_MANAGER">
             <DEFAULT>"localhost:8032"</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="SET_JOBHISTORY_ADDRESS" FIELD="CHECK" NUM_ROW="18" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
+        <PARAMETER NAME="SET_JOBHISTORY_ADDRESS" FIELD="CHECK" NUM_ROW="18" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="JOBHISTORY_ADDRESS" FIELD="TEXT" NUM_ROW="18" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND (SET_JOBHISTORY_ADDRESS=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
+        <PARAMETER NAME="JOBHISTORY_ADDRESS" FIELD="TEXT" NUM_ROW="18" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND (SET_JOBHISTORY_ADDRESS=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>"localhost:10020"</DEFAULT>
         </PARAMETER>
         
-        <PARAMETER NAME="SET_SCHEDULER_ADDRESS" FIELD="CHECK" NUM_ROW="20" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
+        <PARAMETER NAME="SET_SCHEDULER_ADDRESS" FIELD="CHECK" NUM_ROW="20" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        <PARAMETER NAME="RESOURCEMANAGER_SCHEDULER_ADDRESS" FIELD="TEXT" NUM_ROW="20" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND (SET_SCHEDULER_ADDRESS=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
+        <PARAMETER NAME="RESOURCEMANAGER_SCHEDULER_ADDRESS" FIELD="TEXT" NUM_ROW="20" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND (SET_SCHEDULER_ADDRESS=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>"localhost:8030"</DEFAULT>
         </PARAMETER>
         
@@ -157,12 +158,12 @@
 		<PARAMETER NAME="KEYTAB_PATH" FIELD="FILE" REQUIRED="true" NUM_ROW="29" SHOW_IF="USE_KEYTAB == 'true' AND USE_KRB == 'true' AND (MAPREDUCE=='true' AND ((DISTRIBUTION!='CUSTOM' AND ((PIG_VERSION=='HDP_1_0') OR (PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='APACHE_1_0_0') OR (PIG_VERSION=='APACHE_1_0_3_EMR') OR (PIG_VERSION=='Cloudera_CDH4'))) OR (DISTRIBUTION=='CUSTOM'))) AND (SUBTREE_START=='true')" GROUP="AUTHENTICATION">
 			<DEFAULT>"/tmp/hdfs.headless.keytab"</DEFAULT>
 		</PARAMETER>
-	    <PARAMETER NAME="USERNAME" FIELD="TEXT" GROUP="AUTHENTICATION" REQUIRED="true" NUM_ROW="30" SHOW_IF="(MAPREDUCE=='true' AND ((DISTRIBUTION!='CUSTOM' AND ((PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='HDP_2_0') OR (PIG_VERSION=='Cloudera_CDH4') OR (PIG_VERSION=='Cloudera_CDH4_YARN') OR (PIG_VERSION=='Cloudera_CDH5') OR (PIG_VERSION=='PIVOTAL_HD_1_0_1'))) OR (DISTRIBUTION=='CUSTOM'))) AND (SUBTREE_START=='true')">
+	    <PARAMETER NAME="USERNAME" FIELD="TEXT" GROUP="AUTHENTICATION" REQUIRED="true" NUM_ROW="30" SHOW_IF="(MAPREDUCE=='true' AND ((DISTRIBUTION!='CUSTOM' AND ((PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='HDP_2_0') OR (PIG_VERSION=='Cloudera_CDH4') OR (PIG_VERSION=='Cloudera_CDH4_YARN') OR (PIG_VERSION=='Cloudera_CDH5') OR (PIG_VERSION=='PIVOTAL_HD_1_0_1') OR (PIG_VERSION=='PIVOTAL_HD_2_0'))) OR (DISTRIBUTION=='CUSTOM'))) AND (SUBTREE_START=='true')">
             <DEFAULT>""</DEFAULT>
 	    </PARAMETER>
 		
 		<PARAMETER NAME="INPUT_FILENAME" FIELD="TEXT" NUM_ROW="31"
-			REQUIRED="true" NOT_SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='HDP_1_3' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH5' OR DISTRIBUTION=='CUSTOM') AND LOAD=='HCATLOADER') OR ((LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0')))">
+			REQUIRED="true" NOT_SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='HDP_1_3' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH5' OR DISTRIBUTION=='CUSTOM') AND LOAD=='HCATLOADER') OR ((LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0'))))">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="DATABASE_NAME" FIELD="TEXT" NUM_ROW="32" REPOSITORY_VALUE="DATABASE_NAME"
@@ -192,7 +193,7 @@
                 <ITEM NAME="BZIP2" VALUE="BZIP2"/>
             </ITEMS>
         </PARAMETER>
-	    <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="120" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0'))" GROUP="HBASE_CONFIGURATION" REPOSITORY_VALUE="ZOOKEEPER_QUORUM">
+	    <PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="120" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0')))" GROUP="HBASE_CONFIGURATION" REPOSITORY_VALUE="ZOOKEEPER_QUORUM">
 	        <DEFAULT>"localhost"</DEFAULT>
 	    </PARAMETER>
 	    <PARAMETER
@@ -201,18 +202,18 @@
 	      NUM_ROW="130"
 	      REQUIRED="true"
 	      REPOSITORY_VALUE="ZOOKEEPER_CLIENT_PORT"
-	      SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0'))" GROUP="HBASE_CONFIGURATION"
+	      SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0')))" GROUP="HBASE_CONFIGURATION"
 	    >
 	      <DEFAULT>"2181"</DEFAULT>
 	    </PARAMETER>
-        <PARAMETER NAME="HBASE_TABLE" FIELD="TEXT" NUM_ROW="140" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0'))" GROUP="HBASE_CONFIGURATION">
+        <PARAMETER NAME="HBASE_TABLE" FIELD="TEXT" NUM_ROW="140" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0')))" GROUP="HBASE_CONFIGURATION">
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
-        <PARAMETER NAME="LOAD_KEY" FIELD="CHECK" NUM_ROW="150" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0'))" GROUP="HBASE_CONFIGURATION">
+        <PARAMETER NAME="LOAD_KEY" FIELD="CHECK" NUM_ROW="150" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0')))" GROUP="HBASE_CONFIGURATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="MAPPING" FIELD="TABLE" REQUIRED="true"
-            NUM_ROW="160" NB_LINES="5" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0'))" GROUP="HBASE_CONFIGURATION">
+            NUM_ROW="160" NB_LINES="5" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0')))" GROUP="HBASE_CONFIGURATION">
             <ITEMS BASED_ON_SCHEMA="true" >
                 <ITEM NAME="FAMILY_COLUMN"/>
             </ITEMS>
@@ -257,7 +258,7 @@
 			<ITEM FIELD="TEXT" NAME="JAR_PATH"/>
 		</ITEMS>
 	  </PARAMETER>
-      <PARAMETER NAME="HBASESTORAGE_PARAMETER" FIELD="TABLE" REQUIRED="false" NUM_ROW="30" NB_LINES="4" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR (PIG_VERSION!='HDP_2_0'))" GROUP="HBASE_CONFIGURATION">
+      <PARAMETER NAME="HBASESTORAGE_PARAMETER" FIELD="TABLE" REQUIRED="false" NUM_ROW="30" NB_LINES="4" SHOW_IF="(LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0')))" GROUP="HBASE_CONFIGURATION">
 	      <ITEMS>
 	        <ITEM NAME="PARAM_NAME" FIELD="CLOSED_LIST">
 	          <ITEMS DEFAULT="LIMIT">
@@ -286,16 +287,16 @@
           <DEFAULT>"1000"</DEFAULT>
       </PARAMETER>
       
-      <PARAMETER NAME="SET_MEMORY" GROUP="MEMORY_PARAMETERS" FIELD="CHECK" NUM_ROW="80" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" >
+      <PARAMETER NAME="SET_MEMORY" GROUP="MEMORY_PARAMETERS" FIELD="CHECK" NUM_ROW="80" REQUIRED="true" SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))" >
           <DEFAULT>false</DEFAULT>
       </PARAMETER>        
-      <PARAMETER NAME="MAPREDUCE_MAP_MEMORY_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (MAPREDUCE == 'true') AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))">
+      <PARAMETER NAME="MAPREDUCE_MAP_MEMORY_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (MAPREDUCE == 'true') AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))">
           <DEFAULT>"1024"</DEFAULT>
       </PARAMETER>
-      <PARAMETER NAME="MAPREDUCE_REDUCE_MEMORY_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (MAPREDUCE == 'true') AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))">
+      <PARAMETER NAME="MAPREDUCE_REDUCE_MEMORY_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (MAPREDUCE == 'true') AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))">
           <DEFAULT>"1024"</DEFAULT>
       </PARAMETER>
-      <PARAMETER NAME="YARN_APP_MAPREDUCE_AM_RESOURCE_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (MAPREDUCE == 'true') AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))">
+      <PARAMETER NAME="YARN_APP_MAPREDUCE_AM_RESOURCE_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (MAPREDUCE == 'true') AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))">
           <DEFAULT>"1024"</DEFAULT>
       </PARAMETER>
       
@@ -555,6 +556,28 @@
             <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_1_0_1') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_1_0_1') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_1_0_1') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- PIVOTAL_HD_2_0 -->
+            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-cli-1.2.jar" MODULE="commons-cli-1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="commons-codec-1.4.jar" MODULE="commons-codec-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hadoop-common-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-common-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-common-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hadoop-auth-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-auth-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-auth-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="hadoop-mapreduce-client-common-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-mapreduce-client-common-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-mapreduce-client-common-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-mapreduce-client-core-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-mapreduce-client-core-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-mapreduce-client-core-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-mapreduce-client-jobclient-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-mapreduce-client-jobclient-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-mapreduce-client-jobclient-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-yarn-api-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-yarn-api-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-yarn-api-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-yarn-client-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-yarn-client-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-yarn-client-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hadoop-yarn-common-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-yarn-common-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-yarn-common-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="pig-0.12.0-gphd-3.0.0.0-withouthadoop.jar" MODULE="pig-0.12.0-gphd-3.0.0.0-withouthadoop.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.12.0-gphd-3.0.0.0-withouthadoop.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="protobuf-java-2.5.0.jar" MODULE="protobuf-java-2.5.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
 
             <!-- HBASE Support Start-->
             <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hbase-0.94.2.21.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_1_2' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
@@ -759,21 +782,26 @@
             <IMPORT NAME="hive-serde-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-serde-0.9.1-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-serde-0.9.1-gphd-2.0.1.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='PIVOTAL_HD_1_0_1') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-common-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-common-0.9.1-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-common-0.9.1-gphd-2.0.1.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='PIVOTAL_HD_1_0_1') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="hive-exec-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-exec-0.9.1-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-exec-0.9.1-gphd-2.0.1.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='PIVOTAL_HD_1_0_1') AND DISTRIBUTION!='CUSTOM'"/>
+            
+            <!-- PIVOTAL_HD_2_0 -->
+            <IMPORT NAME="hive-serde-0.12.0-gphd-3.0.0.0.jar" MODULE="hive-serde-0.12.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hive-serde-0.12.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-common-0.12.0-gphd-3.0.0.0.jar" MODULE="hive-common-0.12.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hive-common-0.12.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="hive-exec-0.12.0-gphd-3.0.0.0.jar" MODULE="hive-exec-0.12.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hive-exec-0.12.0-gphd-3.0.0.0.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='PIVOTAL_HD_2_0') AND DISTRIBUTION!='CUSTOM'"/>
             <!-- RC ORC Support End-->
             
             <!-- AVRO Support Start-->
-            <IMPORT NAME="piggybank.jar" MODULE="piggybank.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION!='Cloudera_CDH4') AND (PIG_VERSION!='Cloudera_CDH4_YARN') AND (PIG_VERSION!='Cloudera_CDH5') AND (PIG_VERSION!='PIVOTAL_HD_1_0_1') AND (PIG_VERSION!='HDP_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="piggybank.jar" MODULE="piggybank.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION!='Cloudera_CDH4') AND (PIG_VERSION!='Cloudera_CDH4_YARN') AND (PIG_VERSION!='Cloudera_CDH5') AND (PIG_VERSION!='PIVOTAL_HD_1_0_1') AND (PIG_VERSION!='PIVOTAL_HD_2_0') AND (PIG_VERSION!='HDP_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
             
             <IMPORT NAME="piggybank-cdh4.jar" MODULE="piggybank-cdh4.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-cdh4.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='Cloudera_CDH4' OR PIG_VERSION=='Cloudera_CDH4_YARN')) AND DISTRIBUTION!='CUSTOM'"/>
             
             <IMPORT NAME="piggybank-cdh5.jar" MODULE="piggybank-cdh5.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-cdh5.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="avro-1.7.5-cdh5.0.0.jar" MODULE="avro-1.7.5-cdh5.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.0.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'" />
             
-            <IMPORT NAME="piggybank-phd.jar" MODULE="piggybank-phd.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-phd.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='PIVOTAL_HD_1_0_1')) AND DISTRIBUTION!='CUSTOM'"/>
+            <IMPORT NAME="piggybank-phd.jar" MODULE="piggybank-phd.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-phd.jar" REQUIRED_IF="(MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND ((PIG_VERSION=='PIVOTAL_HD_1_0_1') OR (PIG_VERSION=='PIVOTAL_HD_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
             
             <IMPORT NAME="piggybank_hdp20.jar" MODULE="piggybank_hdp20.jar" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank_hdp20.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='HDP_2_0')) AND DISTRIBUTION!='CUSTOM'"/>
             
-            <IMPORT NAME="commons-io" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="commons-io" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5' OR PIG_VERSION=='PIVOTAL_HD_2_0')) AND DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='AVROSTORAGE') AND (PIG_VERSION!='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'"/>
             <IMPORT NAME="json_simple-1.1.jar" MODULE="json_simple-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='AVROSTORAGE') AND DISTRIBUTION!='CUSTOM'"/>
             <!-- AVRO Support End-->

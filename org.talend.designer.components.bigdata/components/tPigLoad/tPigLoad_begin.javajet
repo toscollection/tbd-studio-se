@@ -263,7 +263,7 @@
 				
 				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
-				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1".contains(pigVersion)))) {
+				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(pigVersion)))) {
 					String username = ElementParameterParser.getValue(node, "__USERNAME__");
 %>
 					String username_<%=cid %> = <%=username%>;
@@ -275,7 +275,7 @@
 			}
 %>
 			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
-			<%if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion)))) {
+			<%if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(pigVersion) || "PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion)))) {
 %>
 				props_<%=cid%>.put("mapreduce.framework.name", "yarn");
 				props_<%=cid%>.put("yarn.resourcemanager.address", <%=resourceManager%>);
