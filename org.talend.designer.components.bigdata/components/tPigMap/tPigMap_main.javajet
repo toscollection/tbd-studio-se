@@ -18,6 +18,7 @@
     org.talend.designer.pigmap.model.emf.pigmap.OutputTable
     org.talend.designer.pigmap.model.emf.pigmap.TableNode
     org.talend.core.model.metadata.types.JavaTypesManager
+    org.talend.core.model.utils.NodeUtil
 	" 
 	skeleton="tPigMap_commons.skeleton"
 %>
@@ -215,12 +216,13 @@
 	 		for(int j=0;j<expressions.size();j++) {
 	 			String expression = expressions.get(j);
 	 			expression = convertExpression(expressionConvertMap,expression);
+	 			String expressionStr = NodeUtil.replaceCRLFInMEMO_SQL("\""+expression+"\"");
 %>
-				sb_<%=cid%>.append("<%=expression%>");
+				sb_<%=cid%>.append(<%=expressionStr%>);
 <%
 				if(existInnerJoin && innerReject && isInnerJoin) {
 %>
-				sb_innerJoinReject_<%=cid%>.append("<%=expression%>");				
+				sb_innerJoinReject_<%=cid%>.append(<%=expressionStr%>);				
 <%
 				}
 				
@@ -361,10 +363,11 @@
  			String expression = inputTable.getExpressionFilter();
  			//convert the expression to big expression(replace the java var to pig $n)
  			expression = convertExpression(expressionConvertMap,expression);
+ 			String expressionStr = NodeUtil.replaceCRLFInMEMO_SQL("\""+expression+"\"");
 			if(existInnerJoin && innerReject && isInnerJoin) {
 %>
 			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FOREACH <%=cid%>_RESULT GENERATE *;");
-			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FILTER <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT BY (NOT (<%=expression%>));");
+			helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FILTER <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT BY (NOT ("+<%=expressionStr%>+"));");
 			//need to set the lookup columns as null
 			sb_innerJoinReject_<%=cid%>.append("<%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT = FOREACH <%=cid%>_<%=tableName%>_FILTER_INNER_REJECT_RESULT GENERATE ");
 <%
@@ -428,7 +431,7 @@
 				isFirstInnerReject = false;
 			}
 %>
-			helper_<%=cid%>.add("query","<%=cid%>_RESULT = FILTER <%=cid%>_RESULT BY <%=expression%>;");
+			helper_<%=cid%>.add("query","<%=cid%>_RESULT = FILTER <%=cid%>_RESULT BY "+<%=expressionStr%>+";");
 <%
 	 	} else {
 	 		if(existInnerJoin && innerReject && isInnerJoin) {
@@ -587,13 +590,14 @@
  			String expression = outputTable.getExpressionFilter();
  			//convert the expression to big expression(replace the java var to pig $n)
  			expression = convertExpression(expressionConvertMap,expression);
- 			currentExpression = expression;
+ 			String expressionStr = NodeUtil.replaceCRLFInMEMO_SQL("\""+expression+"\"");
+ 			currentExpression = expressionStr;
 %>
-			sb_<%=cid%>.append("<%=expression%>");
+			sb_<%=cid%>.append(<%=expressionStr%>);
 <%
 			if(existInnerJoin && isRejectInnerJoin) {
 %>
-			sb_innerJoinReject_<%=cid%>.append("<%=expression%>");
+			sb_innerJoinReject_<%=cid%>.append(<%=expressionStr%>);
 <%
 			}
 	 	}
@@ -610,7 +614,7 @@
 			for(int j=0;j<previousFilterExpressions.size();j++) {
 				String previousFilterExpression = previousFilterExpressions.get(j);
 %>
-				sb_<%=cid%>.append("<%=previousFilterExpression%>");
+				sb_<%=cid%>.append(<%=previousFilterExpression%>);
 <%
 				if(j<previousFilterExpressions.size()-1) {
 %>
@@ -690,8 +694,9 @@
 			String expression = expressions.get(j);
 			String name = names.get(j);
 			expression = convertExpression(expressionConvertMap,expression);
+			String expressionStr = NodeUtil.replaceCRLFInMEMO_SQL("\""+expression+" AS "+name+"\"");
 %>
-			sb_<%=cid%>.append("<%=expression%> AS <%=name%>");
+			sb_<%=cid%>.append(<%=expressionStr%>);
 <%
 			if(j<expressions.size()-1) {
 %>
