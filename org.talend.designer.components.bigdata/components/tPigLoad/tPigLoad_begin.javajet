@@ -54,7 +54,7 @@
 	
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;
@@ -98,8 +98,13 @@
 		if(generateRegisterJarCodeForHBase) {
 			jarsToRegister.add("protobuf-java");
 			jarsToRegister.add("hbase");
+			jarsToRegister.add("hbase-client");
+			jarsToRegister.add("hbase-common");
+			jarsToRegister.add("hbase-protocol");
+			jarsToRegister.add("hbase-server");
 			jarsToRegister.add("zookeeper");
 			jarsToRegister.add("guava");
+			jarsToRegister.add("htrace-core");
 		}
 		
 		if(generateRegisterJarCodeForSequenceFile) {
@@ -263,7 +268,7 @@
 				
 				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
-				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(pigVersion)))) {
+				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(pigVersion)))) {
 					String username = ElementParameterParser.getValue(node, "__USERNAME__");
 %>
 					String username_<%=cid %> = <%=username%>;
@@ -275,7 +280,7 @@
 			}
 %>
 			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
-			<%if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(pigVersion) || "PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion)))) {
+			<%if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(pigVersion) || "PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion)))) {
 %>
 				props_<%=cid%>.put("mapreduce.framework.name", "yarn");
 				props_<%=cid%>.put("yarn.resourcemanager.address", <%=resourceManager%>);

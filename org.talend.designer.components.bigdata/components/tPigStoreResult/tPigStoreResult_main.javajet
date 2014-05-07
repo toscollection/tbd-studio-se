@@ -92,8 +92,13 @@
 		if(generateRegisterJarCodeForHBase) {
 			jarsToRegister.add("protobuf-java");
 			jarsToRegister.add("hbase");
+			jarsToRegister.add("hbase-client");
+			jarsToRegister.add("hbase-common");
+			jarsToRegister.add("hbase-protocol");
+			jarsToRegister.add("hbase-server");
 			jarsToRegister.add("zookeeper");
 			jarsToRegister.add("guava");
+			jarsToRegister.add("htrace-core");
 		}
 		
 		if(generateRegisterJarCodeForSequenceFile) {
