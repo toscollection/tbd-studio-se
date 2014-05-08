@@ -84,6 +84,11 @@
 		
 		if(generateRegisterJarCodeForHCatalog) {
 			jarsToRegister.add("hcatalog");
+			
+			jarsToRegister.add("hcatalog-core");
+			
+			jarsToRegister.add("hive-hcatalog-core");
+			
 			jarsToRegister.add("hive-exec");
 			jarsToRegister.add("hive-metastore");
 			jarsToRegister.add("libfb303");
