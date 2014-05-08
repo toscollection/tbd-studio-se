@@ -40,6 +40,7 @@
 			<ITEMS DEFAULT="HORTONWORKS">
 				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
 				<ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
+				<ITEM NAME="MAPR" VALUE="MAPR"/>
 				<ITEM NAME="CUSTOM" VALUE="CUSTOM"/>
 			</ITEMS>
 		</PARAMETER>
@@ -51,6 +52,7 @@
 				<ITEM NAME="HDP_2_0" VALUE="HDP_2_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="HDP_2_1" VALUE="HDP_2_1" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="Cloudera_CDH5" VALUE="Cloudera_CDH5" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			</ITEMS>
 		</PARAMETER>
         <PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="VERSION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="10"  SHOW_IF="DISTRIBUTION=='CUSTOM'" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS" >
@@ -234,6 +236,15 @@
             <IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="avro-1.7.5-cdh5.0.0.jar" MODULE="avro-1.7.5-cdh5.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.0.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />
 		    
+		    <!-- MAPR310 HDFS JARS -->
+            <IMPORT NAME="hadoop-core-1.0.3-mapr-3.1.0.jar" MODULE="hadoop-core-1.0.3-mapr-3.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hadoop-core-1.0.3-mapr-3.1.0.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="maprfs-1.0.3-mapr-3.1.0.jar" MODULE="maprfs-1.0.3-mapr-3.1.0.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="zookeeper-3.4.5-mapr-1401.jar" MODULE="zookeeper-3.4.5-mapr-1401.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-mapr-1401.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-auth-1.0.3-mapr-3.1.0.jar" MODULE="hadoop-auth-1.0.3-mapr-3.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hadoop-auth-1.0.3-mapr-3.1.0.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="json-20080701.jar" MODULE="json-20080701.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/json-20080701.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar"  REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')"/>
+            
 			<IMPORT NAME="json-simple" MODULE="json_simple-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar" REQUIRED="true"/>
 			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />

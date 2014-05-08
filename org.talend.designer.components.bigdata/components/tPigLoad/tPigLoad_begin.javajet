@@ -54,7 +54,7 @@
 	
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "MAPR310".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;

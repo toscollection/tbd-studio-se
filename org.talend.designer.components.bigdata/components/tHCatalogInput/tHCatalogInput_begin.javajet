@@ -164,8 +164,21 @@
 	String namenode_<%=cid%> = "";
 	
 	if(location_<%=cid%>.contains(":")) {
+<%
+        boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+        String hcatVersion = ElementParameterParser.getValue(node, "__HCAT_VERSION__");
+        if(!isCustom && "MAPR310".equals(hcatVersion)) {
+%>
+		pathHDFS_<%=cid%> = location_<%=cid%>;
+		namenode_<%=cid%> = "maprfs:///";
+<%
+		} else {
+%>
 		pathHDFS_<%=cid%> = "/" + (location_<%=cid%>.split(":")[2]).split("/", 2)[1];
 		namenode_<%=cid%> = location_<%=cid%>.substring(0, location_<%=cid%>.length()- pathHDFS_<%=cid%>.length());
+<%
+		}
+%>
 	}
 <%
 	List<IMetadataTable> metadatas = node.getMetadataList();

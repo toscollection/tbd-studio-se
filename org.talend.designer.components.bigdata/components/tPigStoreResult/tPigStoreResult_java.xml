@@ -71,7 +71,7 @@
             <ITEMS DEFAULT="HORTONWORKS">
                 <ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
                 <ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
-                <ITEM NAME="MAPR" VALUE="MAPR" NOT_SHOW_IF="STORE=='HCATSTORER'"/>
+                <ITEM NAME="MAPR" VALUE="MAPR"/>
 				<ITEM NAME="AMAZON_EMR" VALUE="AMAZON_EMR" NOT_SHOW_IF="STORE=='HCATSTORER'"/>
                 <ITEM NAME="APACHE" VALUE="APACHE" NOT_SHOW_IF="STORE=='HCATSTORER'"/>
                 <ITEM NAME="PIVOTAL_HD" VALUE="PIVOTAL_HD" NOT_SHOW_IF="STORE=='HCATSTORER'"/>
@@ -90,11 +90,11 @@
                 <ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4" SHOW_IF="(DISTRIBUTION=='CLOUDERA') AND (STORE!='HCATSTORER')" />
                 <ITEM NAME="Cloudera_CDH4_YARN" VALUE="Cloudera_CDH4_YARN" SHOW_IF="(DISTRIBUTION=='CLOUDERA') AND (STORE!='HCATSTORER')" />
                 <ITEM NAME="Cloudera_CDH5" VALUE="Cloudera_CDH5" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />                
-                <ITEM NAME="MAPR1" VALUE="MAPR1" SHOW_IF="DISTRIBUTION=='MAPR'" />
-                <ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
-				<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
-				<ITEM NAME="MAPR213" VALUE="MAPR213" SHOW_IF="DISTRIBUTION=='MAPR'" />
-				<ITEM NAME="MAPR301" VALUE="MAPR301" SHOW_IF="DISTRIBUTION=='MAPR'" />
+                <ITEM NAME="MAPR1" VALUE="MAPR1" SHOW_IF="(DISTRIBUTION=='MAPR') AND (STORE!='HCATSTORER')" />
+                <ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="(DISTRIBUTION=='MAPR') AND (STORE!='HCATSTORER')" />
+				<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="(DISTRIBUTION=='MAPR') AND (STORE!='HCATSTORER')" />
+				<ITEM NAME="MAPR213" VALUE="MAPR213" SHOW_IF="(DISTRIBUTION=='MAPR') AND (STORE!='HCATSTORER')" />
+				<ITEM NAME="MAPR301" VALUE="MAPR301" SHOW_IF="(DISTRIBUTION=='MAPR') AND (STORE!='HCATSTORER')" />
 				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
@@ -243,6 +243,18 @@
             <IMPORT NAME="jdo-api-3.0.1.jar" MODULE="jdo-api-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/jdo-api-3.0.1.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='Cloudera_CDH5') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libfb303-0.9.0.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='Cloudera_CDH5') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="libthrift-0.9.0.cloudera.2.jar" MODULE="libthrift-0.9.0.cloudera.2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/libthrift-0.9.0.cloudera.2.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='Cloudera_CDH5') AND (DISTRIBUTION!='CUSTOM')"/>
+                        
+            <IMPORT NAME="hcatalog-core-0.12-mapr-1401-140130.jar" MODULE="hcatalog-core-0.12-mapr-1401-140130.jar" UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hcatalog-core-0.12-mapr-1401-140130.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hcatalog-pig-adapter-0.12-mapr-1401-140130.jar" MODULE="hcatalog-pig-adapter-0.12-mapr-1401-140130.jar" UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hcatalog-pig-adapter-0.12-mapr-1401-140130.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hcatalog-server-extensions-0.12-mapr-1401-140130.jar" MODULE="hcatalog-server-extensions-0.12-mapr-1401-140130.jar" UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hcatalog-server-extensions-0.12-mapr-1401-140130.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hive-exec-0.12-mapr-1401-140130.jar" MODULE="hive-exec-0.12-mapr-1401-140130.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hive-exec-0.12-mapr-1401-140130.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="hive-metastore-0.12-mapr-1401-140130.jar" MODULE="hive-metastore-0.12-mapr-1401-140130.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hive-metastore-0.12-mapr-1401-140130.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="jdo-api-3.0.1.jar" MODULE="jdo-api-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/jdo-api-3.0.1.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libfb303-0.9.0.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libthrift-0.9.0.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
+            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"  REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')" />
 			<!-- HCatalog Support End-->
 
             <!-- HBASE Support Start-->
