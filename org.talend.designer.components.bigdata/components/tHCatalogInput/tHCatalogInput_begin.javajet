@@ -224,6 +224,9 @@
 
 		org.apache.hadoop.fs.FileStatus [] fileStatus_<%=cid%>= fs_<%=cid%>.listStatus(new org.apache.hadoop.fs.Path(pathHDFS_<%=cid%>));
 		for(int i_<%=cid%>=0; i_<%=cid%><fileStatus_<%=cid%>.length; i_<%=cid%>++) {
+			if(fileStatus_<%=cid%>[i_<%=cid%>].isDir()) {
+				continue;
+			}
 			org.apache.hadoop.fs.Path path_<%=cid%> = fileStatus_<%=cid%>[i_<%=cid%>].getPath();
 			org.apache.hadoop.fs.FSDataInputStream fsDataInputStream_<%=cid%> = fs_<%=cid%>.open(path_<%=cid%>);
 			org.talend.fileprocess.FileInputDelimited fid_<%=cid %> = new org.talend.fileprocess.FileInputDelimited(fsDataInputStream_<%=cid%>, <%=(customEncoding?encoding:null) %>,<%=fieldSeparator %>,<%=rowSeparator %>,false,0,0,-1,-1, false);

@@ -183,15 +183,15 @@
 		<IMPORTS>
 			<IMPORT NAME="json" MODULE="json_simple-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar" REQUIRED="true" />
 			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			
-            <IMPORT NAME="cxf-rt-frontend-jaxrs-2.7.7" MODULE="cxf-rt-frontend-jaxrs-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-frontend-jaxrs-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="cxf-rt-frontend-jaxrs-2.7.7" MODULE="cxf-rt-frontend-jaxrs-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-frontend-jaxrs-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="javax.ws.rs-api-2.0-m10" MODULE="javax.ws.rs-api-2.0-m10.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-            <IMPORT NAME="cxf-api-2.7.7" MODULE="cxf-api-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-api-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-            <IMPORT NAME="cxf-rt-core-2.7.7" MODULE="cxf-rt-core-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-core-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-            <IMPORT NAME="cxf-rt-bindings-xml-2.7.7" MODULE="cxf-rt-bindings-xml-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-bindings-xml-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-            <IMPORT NAME="cxf-rt-transports-http-2.7.7" MODULE="cxf-rt-transports-http-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/cxf-rt-transports-http-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="cxf-api-2.7.7" MODULE="cxf-api-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-api-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="cxf-rt-core-2.7.7" MODULE="cxf-rt-core-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-core-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="cxf-rt-bindings-xml-2.7.7" MODULE="cxf-rt-bindings-xml-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-bindings-xml-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+            <IMPORT NAME="cxf-rt-transports-http-2.7.7" MODULE="cxf-rt-transports-http-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-transports-http-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(USE_KRB=='true') AND (DISTRIBUTION!='CUSTOM')" />
     	</IMPORTS>
 	</CODEGENERATION>
