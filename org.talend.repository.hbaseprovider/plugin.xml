@@ -56,7 +56,7 @@
       </classloader>
       <classloader
             index="HBASE:HORTONWORKS:HDP_2_1"
-            libraries="hadoop-auth-2.4.0.2.1.1.0-385.jar;hadoop-common-2.4.0.2.1.1.0-385.jar;hbase-client-0.98.0.2.1.1.0-385-hadoop2.jar;hbase-common-0.98.0.2.1.1.0-385-hadoop2.jar;hbase-protocol-0.98.0.2.1.1.0-385-hadoop2.jar;zookeeper-3.4.5.2.1.1.0-385.jar;htrace-core-2.04.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-codec-1.7.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;netty-3.5.5.Final.jar;">
+            libraries="hadoop-auth-2.4.0.2.1.1.0-385.jar;hadoop-common-2.4.0.2.1.1.0-385.jar;hbase-client-0.98.0.2.1.1.0-385-hadoop2.jar;hbase-common-0.98.0.2.1.1.0-385-hadoop2.jar;hbase-protocol-0.98.0.2.1.1.0-385-hadoop2.jar;zookeeper-3.4.5.2.1.1.0-385.jar;htrace-core-2.04.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-codec-1.7.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;netty-3.5.5.Final.jar;">
       </classloader>
       <classloader
             index="HBASE:CLOUDERA:Cloudera_CDH3"
@@ -92,7 +92,7 @@
       </classloader>
       <classloader
             index="HBASE:MAPR:MAPR310"
-            libraries="maprfs-1.0.3-mapr-3.1.0.jar;maprfs-jni-1.0.3-mapr-3.1.0.jar;hadoop-auth-1.0.3-mapr-3.1.0.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-codec-1.4.jar;hadoop-core-1.0.3-mapr-3.1.0.jar;hbase-0.94.13-mapr-1401.jar;log4j-1.2.17.jar;zookeeper-3.4.5-mapr-1401.jar;guava-11.0.2.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.4.0a.jar;">
+            libraries="maprfs-1.0.3-mapr-3.1.0.jar;maprfs-jni-1.0.3-mapr-3.1.0.jar;hadoop-auth-1.0.3-mapr-3.1.0.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-codec-1.4.jar;hadoop-core-1.0.3-mapr-3.1.0.jar;hbase-0.94.13-mapr-1401.jar;log4j-1.2.16.jar;zookeeper-3.4.5-mapr-1401.jar;guava-11.0.2.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.4.0a.jar;">
       </classloader>
       <classloader
             index="HBASE:PIVOTAL_HD:PIVOTAL_HD_1_0_1"
@@ -100,7 +100,7 @@
       </classloader>
       <classloader
             index="HBASE:PIVOTAL_HD:PIVOTAL_HD_2_0"
-            libraries="commons-codec-1.7.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.2.0-gphd-3.0.0.0.jar;hadoop-common-2.2.0-gphd-3.0.0.0.jar;hbase-client-0.96.0-hadoop2-gphd-3.0.0.0.jar;hbase-common-0.96.0-hadoop2-gphd-3.0.0.0.jar;hbase-protocol-0.96.0-hadoop2-gphd-3.0.0.0.jar;htrace-core-2.01.jar;jackson-core-asl-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;log4j-1.2.17.jar;protobuf-java-2.5.0.jar;slf4j-api-1.6.4.jar;zookeeper-3.4.5-gphd-3.0.0.0.jar;netty-3.2.4.Final.jar;">
+            libraries="commons-codec-1.7.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.2.0-gphd-3.0.0.0.jar;hadoop-common-2.2.0-gphd-3.0.0.0.jar;hbase-client-0.96.0-hadoop2-gphd-3.0.0.0.jar;hbase-common-0.96.0-hadoop2-gphd-3.0.0.0.jar;hbase-protocol-0.96.0-hadoop2-gphd-3.0.0.0.jar;htrace-core-2.01.jar;jackson-core-asl-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;log4j-1.2.16.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.5.0.jar;slf4j-api-1.6.1.jar;zookeeper-3.4.5-gphd-3.0.0.0.jar;netty-3.2.4.Final.jar;">
       </classloader>
    </extension>
 
