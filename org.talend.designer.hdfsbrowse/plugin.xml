@@ -127,7 +127,7 @@
       </classloader>
       <classloader
             index="HDFS:PIVOTAL_HD:PIVOTAL_HD_2_0"
-            libraries="avro-1.7.4.jar;commons-cli-1.2.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;hadoop-auth-2.2.0-gphd-3.0.0.0.jar;hadoop-common-2.2.0-gphd-3.0.0.0.jar;hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;">
+            libraries="avro-1.5.4.jar;commons-cli-1.2.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;hadoop-auth-2.2.0-gphd-3.0.0.0.jar;hadoop-common-2.2.0-gphd-3.0.0.0.jar;hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar;protobuf-java-2.5.0.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;">
       </classloader>
       <classloader
             index="HDFS:MAPR:MAPR212"
@@ -143,7 +143,7 @@
       </classloader>
       <classloader
             index="HDFS:MAPR:MAPR310"
-            libraries="hadoop-core-1.0.3-mapr-3.1.0.jar;hadoop-auth-1.0.3-mapr-3.1.0.jar;commons-logging-1.0.4.jar;maprfs-1.0.3-mapr-3.1.0.jar;zookeeper-3.4.5-mapr-1401.jar;guava-13.0.1.jar;libprotodefs.jar;protobuf-java-2.4.1-lite.jar;json-20080701.jar;">
+            libraries="hadoop-core-1.0.3-mapr-3.1.0.jar;hadoop-auth-1.0.3-mapr-3.1.0.jar;commons-logging-1.0.4.jar;maprfs-1.0.3-mapr-3.1.0.jar;zookeeper-3.4.5-mapr-1401.jar;guava-13.0.1.jar;libprotodefs.jar;protobuf-java-2.4.1.jar;json-20080701.jar;">
       </classloader>
    </extension>
    <extension
