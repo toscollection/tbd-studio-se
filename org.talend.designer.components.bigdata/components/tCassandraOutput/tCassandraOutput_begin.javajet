@@ -23,7 +23,6 @@
     String port = ElementParameterParser.getValue(node,"__PORT__");
     //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
-    String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
@@ -58,7 +57,11 @@
 			if (authentication){
 			%>
 			    credentials_<%=cid%>.put("username",<%=userName%>);
-			    credentials_<%=cid%>.put("password",<%=passWord%>);
+	            <%
+	            String passwordFieldName = "__PASSWORD__";
+	            %>
+	            <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+				credentials_<%=cid%>.put("password",decryptedPassword_<%=cid%>);
 			<%
 			}
 			%>

@@ -25,7 +25,6 @@ String version = ElementParameterParser.getValue(node,"__DB_VERSION__");
 boolean requireAuth = "true".equals(ElementParameterParser.getValue(node,"__REQUIRED_AUTHENTICATION__"));
 boolean needAuth = !"CASSANDRA_1_1_2".equals(version) && requireAuth;
 String username = ElementParameterParser.getValue(node,"__USERNAME__");
-String password = ElementParameterParser.getValue(node,"__PASSWORD__"); 
 %> 	
 java.io.File file_<%=cid%> = new java.io.File(<%=sstablePath%>, <%=keySpace%>+"/"+<%=columnFamily%>);
 
@@ -33,7 +32,11 @@ java.util.List<String> args_<%=cid%> = new java.util.ArrayList<String>();
 args_<%=cid%>.add("-d"+<%=host%>);
 args_<%=cid%>.add("-p"+<%=port%>);
 <%if(needAuth){%>
-args_<%=cid%>.add("-pw"+<%=password%>);
+<%
+String passwordFieldName = "__PASSWORD__";
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+args_<%=cid%>.add("-pw"+decryptedPassword_<%=cid%>);
 args_<%=cid%>.add("-u"+<%=username%>);
 <%}%>
 args_<%=cid%>.add(file_<%=cid%>.getAbsolutePath());

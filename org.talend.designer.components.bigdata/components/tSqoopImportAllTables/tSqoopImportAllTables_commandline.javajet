@@ -4,7 +4,6 @@
 <%
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
     String username = ElementParameterParser.getValue(node,"__USERNAME__");
-    String password = ElementParameterParser.getValue(node,"__PASSWORD__");
     boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
     boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
     boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
@@ -19,7 +18,13 @@
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
 
-String[] cmd_<%=cid %> = new String[] {"sqoop", "import-all-tables", "--connect", <%=connection%>, "--username", <%=username%>, "--password", <%=password%>
+<%
+String passwordFieldName = "__PASSWORD__";
+%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
+
+String[] cmd_<%=cid %> = new String[] {"sqoop", "import-all-tables", "--connect", <%=connection%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
 <%if(direct){%>, "--direct"<%}%>
 <%if(compress){%>, "--compress"<%}%>

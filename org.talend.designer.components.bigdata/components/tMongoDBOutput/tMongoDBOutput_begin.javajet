@@ -18,7 +18,6 @@
     String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
     boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
-    String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
     String collection=ElementParameterParser.getValue(node, "__COLLECTION__");
     boolean dropExistCollection="true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DROP_COLLECTION_CREATE__"));
@@ -143,7 +142,11 @@
 <%
 				if (authentication){
 %>
-    			db_<%=cid%>.authenticate(<%=dbuser%>, <%=dbpass%>.toCharArray());
+                    <%
+                    String passwordFieldName = "__PASSWORD__";
+                    %>
+                    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>						
+    				db_<%=cid%>.authenticate(<%=dbuser%>, decryptedPassword_<%=cid%>.toCharArray());
 <%
 				}
 			}

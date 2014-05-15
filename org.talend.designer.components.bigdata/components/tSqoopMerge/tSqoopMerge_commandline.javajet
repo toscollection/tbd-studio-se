@@ -12,7 +12,6 @@
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
     String table = ElementParameterParser.getValue(node,"__TABLE__");
     String username = ElementParameterParser.getValue(node,"__USERNAME__");
-    String password = ElementParameterParser.getValue(node,"__PASSWORD__");
     boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
     String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
     List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
@@ -30,7 +29,14 @@
 
 <%if(needGenerateJar){%>
 Runtime runtime_generateJar_<%=cid %> = Runtime.getRuntime();
-String[] generateJar_cmd_<%=cid %> = new String[] {"sqoop", "codegen", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", <%=password%>
+
+<%
+String passwordFieldName = "__PASSWORD__";
+%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
+
+String[] generateJar_cmd_<%=cid %> = new String[] {"sqoop", "codegen", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
 <%
 boolean isNull=false; 

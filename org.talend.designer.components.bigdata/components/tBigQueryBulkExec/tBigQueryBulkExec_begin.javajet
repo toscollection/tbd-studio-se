@@ -16,7 +16,6 @@
 	String cid = node.getUniqueName();
 
 	String clientId = ElementParameterParser.getValue(node,"__CLIENT_ID__");
-	String clientSecret = ElementParameterParser.getValue(node,"__CLIENT_SECRET__");
 	String projectId = ElementParameterParser.getValue(node,"__PROJECT_ID__");
 	String authorizationCode = ElementParameterParser.getValue(node,"__AUTHORIZATION_CODE__");
 
@@ -25,9 +24,14 @@
 
     String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
 
+	String passwordFieldName = "";
 %>
 	final String CLIENT_ID_<%=cid %> = <%=clientId %>;
-	final String CLIENT_SECRET_<%=cid%> = "{\"web\": {\"client_id\": \""+<%=clientId%>+"\",\"client_secret\": \"" +<%=clientSecret%>+ "\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://accounts.google.com/o/oauth2/token\"}}";
+    <%
+    passwordFieldName = "__CLIENT_SECRET__";
+    %>
+    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>	
+	final String CLIENT_SECRET_<%=cid%> = "{\"web\": {\"client_id\": \""+<%=clientId%>+"\",\"client_secret\": \"" +decryptedPassword_<%=cid%>+ "\",\"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\"token_uri\": \"https://accounts.google.com/o/oauth2/token\"}}";
 	final String PROJECT_ID_<%=cid %> = <%=projectId %>;
 
 	// Static variables for API scope, callback URI, and HTTP/JSON functions
@@ -117,13 +121,20 @@
 <%
 	boolean bulkFileAlreadyExists = "true".equals(ElementParameterParser.getValue(node, "__BULK_FILE_ALREADY_EXIST__"));
 	String accessKey = ElementParameterParser.getValue(node, "__GS_ACCESS_KEY__");
-	String secretKey = ElementParameterParser.getValue(node, "__GS_SECRET_KEY__");
 	String localFilename = ElementParameterParser.getValue(node, "__GS_LOCAL_FILE__");
 	String bucketName = ElementParameterParser.getValue(node, "__BUCKET_NAME__");
 	if(!bulkFileAlreadyExists) {
 %>
 
-		org.jets3t.service.security.GSCredentials gsCredentials = new org.jets3t.service.security.GSCredentials(<%=accessKey%>, <%=secretKey%>);
+        <%
+        passwordFieldName = "__GS_SECRET_KEY__";
+        %>
+        <%if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {%> 
+        	final String decryptedPwd_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+        <%} else {%>
+        	final String decryptedPwd_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+        <%}%>
+		org.jets3t.service.security.GSCredentials gsCredentials = new org.jets3t.service.security.GSCredentials(<%=accessKey%>, decryptedPwd_<%=cid%>);
 		
 		org.jets3t.service.impl.rest.httpclient.GoogleStorageService gsService = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(gsCredentials);
 		//org.jets3t.service.model.GSBucket[] myBuckets = gsService.listAllBuckets();

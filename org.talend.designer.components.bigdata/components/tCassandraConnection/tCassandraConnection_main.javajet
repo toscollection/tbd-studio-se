@@ -14,7 +14,6 @@
     String port = ElementParameterParser.getValue(node,"__PORT__");
     //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
-    String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
 %>
     String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
@@ -24,8 +23,12 @@
 <%
 	if (authentication){
 %>
-    credentials_<%=cid%>.put("username",<%=userName%>);
-    credentials_<%=cid%>.put("password",<%=passWord%>);
+    	credentials_<%=cid%>.put("username",<%=userName%>);
+        <%
+        String passwordFieldName = "__PASSWORD__";
+        %>
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>    	
+    	credentials_<%=cid%>.put("password",decryptedPassword_<%=cid%>);
 <%
 	}
 %>
