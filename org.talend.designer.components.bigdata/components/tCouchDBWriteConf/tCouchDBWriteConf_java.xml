@@ -56,7 +56,7 @@
 	    <PARAMETER
 		    NAME="CONNECTION"
 		    FIELD="COMPONENT_LIST"
-		    FILTER="tCouchDBConnection"
+		    REQUIRED="true" FILTER="tCouchDBConnection"
 		    NUM_ROW="10"
 		    SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 		    GROUP="CONNECTION_CONF"

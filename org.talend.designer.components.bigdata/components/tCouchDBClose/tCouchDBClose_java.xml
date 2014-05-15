@@ -34,7 +34,7 @@
     	<PARAMETER
 	      NAME="CONNECTION"
 	      FIELD="COMPONENT_LIST"
-	      FILTER="tCouchDBConnection"
+	      REQUIRED="true" FILTER="tCouchDBConnection"
 	      NUM_ROW="10"
     	/>
   	</PARAMETERS>

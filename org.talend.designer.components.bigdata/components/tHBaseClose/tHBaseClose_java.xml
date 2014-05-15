@@ -36,7 +36,7 @@
     <PARAMETER
       NAME="CONNECTION"
       FIELD="COMPONENT_LIST"
-      FILTER="tHBaseConnection"
+      REQUIRED="true" FILTER="tHBaseConnection"
       NUM_ROW="10"
     />
   </PARAMETERS>
