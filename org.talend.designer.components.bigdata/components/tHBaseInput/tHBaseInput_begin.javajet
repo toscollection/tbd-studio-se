@@ -15,13 +15,14 @@ imports="
 %>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-    INode node = (INode)codeGenArgument.getArgument();
-    String cid = node.getUniqueName();
-    String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
 	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
 	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
 	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
-    boolean isByFilter = ("true").equals(ElementParameterParser.getValue(node, "__IS_BY_FILTER__"));
+	boolean isByFilter = ("true").equals(ElementParameterParser.getValue(node, "__IS_BY_FILTER__"));
+	boolean defineSelection = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_ROW_SELECTION__"));
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
@@ -56,9 +57,18 @@ try{
 	}
 <%
 }
+
+if(defineSelection) {
+	String startRow = ElementParameterParser.getValue(node, "__START_ROW__");
+	String endRow = ElementParameterParser.getValue(node, "__END_ROW__");
 %>
-org.apache.hadoop.hbase.client.Scan scan_<%=cid %> = new org.apache.hadoop.hbase.client.Scan();
+	org.apache.hadoop.hbase.client.Scan scan_<%=cid %> = new org.apache.hadoop.hbase.client.Scan(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=startRow %>), org.apache.hadoop.hbase.util.Bytes.toBytes(<%=endRow %>));
 <%
+} else {
+%>
+	org.apache.hadoop.hbase.client.Scan scan_<%=cid %> = new org.apache.hadoop.hbase.client.Scan();
+<%
+}
 List<IMetadataTable> metadatas = node.getMetadataList();
 %>
 <%
