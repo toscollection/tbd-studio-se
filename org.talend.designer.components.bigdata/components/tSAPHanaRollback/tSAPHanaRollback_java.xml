@@ -33,7 +33,7 @@
 		<PARAMETER
 			NAME="CONNECTION"
 			FIELD="COMPONENT_LIST"
-			FILTER="tSAPHanaConnection"
+			REQUIRED="true" FILTER="tSAPHanaConnection"
 			NUM_ROW="10"
 			/>
 		<PARAMETER

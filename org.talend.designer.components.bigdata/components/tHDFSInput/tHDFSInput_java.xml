@@ -43,7 +43,7 @@
 	    <PARAMETER
 	      NAME="CONNECTION"
 	      FIELD="COMPONENT_LIST"
-	      FILTER="tHDFSConnection"
+	      REQUIRED="true" FILTER="tHDFSConnection"
 	      NUM_ROW="5"
 	      SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 	      DYNAMIC_SETTINGS="true"

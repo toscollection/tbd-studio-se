@@ -41,7 +41,7 @@
 		<PARAMETER 
 			NAME="CONNECTION" 
 			FIELD="COMPONENT_LIST" 
-			FILTER="tMongoDBConnection"
+			REQUIRED="true" FILTER="tMongoDBConnection"
 			NUM_ROW="1" 
 			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 			GROUP="CONNECTION"

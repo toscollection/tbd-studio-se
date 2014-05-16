@@ -45,7 +45,7 @@
 	    <PARAMETER 
 			NAME="CONNECTION" 
 		    FIELD="COMPONENT_LIST" 
-		    FILTER="tAzureStorageConnection"
+		    REQUIRED="true" FILTER="tAzureStorageConnection"
 	        NUM_ROW="5" 
 	        SHOW_IF="USE_EXISTING_CONNECTION == 'true'" 
 	        GROUP="CONNECTION"
