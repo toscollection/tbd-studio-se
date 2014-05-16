@@ -164,7 +164,7 @@
 		<IMPORT NAME="guava-10.0.1.jar" MODULE="guava-10.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-10.0.1.jar" REQUIRED="true" />
 		<IMPORT NAME="jackson-core-asl-1.9.1.jar" MODULE="jackson-core-asl-1.9.1.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.9.1.jar" REQUIRED="true" />
 		<!-- REQUIRED FOR GOOGLE STORAGE -->
-		<IMPORT NAME="jets3t-0.9.0" MODULE="jets3t-0.9.0.jar" REQUIRED="true" />
+		<IMPORT NAME="jets3t-0.9.1" MODULE="jets3t-0.9.1.jar" REQUIRED="true" />
 		<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="true" />
 		<IMPORT NAME="httpclient-4.1.2" MODULE="httpclient-4.1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.1.2.jar" REQUIRED="true" />
 		<IMPORT NAME="httpcore-4.1.2" MODULE="httpcore-4.1.2.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.1.2.jar" REQUIRED="true" />
