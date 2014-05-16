@@ -77,14 +77,17 @@ if(("false").equals(useExistingConn)) {
 			System.setProperty("hive.security.authorization.enabled", "true");
 			System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
 			System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
+			
     		<%
     		String passwordFieldName = "__METASTORE_PASSWORD__";
     		%>
+    		
     		<%if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {%> 
         	String decryptedMetastorePassword_<%=uniqueNameComponent%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
    		 	<%} else {%>
         	String decryptedMetastorePassword_<%=uniqueNameComponent%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
 			<%}%>
+			
 			System.setProperty("javax.jdo.option.ConnectionPassword", decryptedMetastorePassword_<%=uniqueNameComponent%>);
 			System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);				
 <%
@@ -95,7 +98,7 @@ if(("false").equals(useExistingConn)) {
 			}
 		}
 	
-	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion))) && setMapredJT) {
+	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"PIVOTAL_HD_2_0".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"HDP_2_1".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion) && !"Cloudera_CDH5".equals(hiveVersion))) && setMapredJT) {
 		String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
 %>
 		System.setProperty("mapred.job.tracker", <%=mapredJT%>);

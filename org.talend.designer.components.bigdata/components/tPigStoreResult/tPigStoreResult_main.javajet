@@ -84,6 +84,11 @@
 		
 		if(generateRegisterJarCodeForHCatalog) {
 			jarsToRegister.add("hcatalog");
+			
+			jarsToRegister.add("hcatalog-core");
+			
+			jarsToRegister.add("hive-hcatalog-core");
+			
 			jarsToRegister.add("hive-exec");
 			jarsToRegister.add("hive-metastore");
 			jarsToRegister.add("libfb303");
@@ -92,8 +97,13 @@
 		if(generateRegisterJarCodeForHBase) {
 			jarsToRegister.add("protobuf-java");
 			jarsToRegister.add("hbase");
+			jarsToRegister.add("hbase-client");
+			jarsToRegister.add("hbase-common");
+			jarsToRegister.add("hbase-protocol");
+			jarsToRegister.add("hbase-server");
 			jarsToRegister.add("zookeeper");
 			jarsToRegister.add("guava");
+			jarsToRegister.add("htrace-core");
 		}
 		
 		if(generateRegisterJarCodeForSequenceFile) {
