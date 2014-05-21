@@ -158,6 +158,8 @@
       <import plugin="org.talend.registration"/>
       <import plugin="org.talend.migrationTool"/>
       <import plugin="org.talend.model.migration"/>
+      <import plugin="org.talend.libraries.jdbc.mysql"/>
+      <import plugin="org.talend.libraries.jdbc.jtds"/>
    </requires>
 
    <plugin
@@ -951,5 +953,23 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
+
+   <plugin
+         id="org.talend.libraries.mozilla"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.libraries.jexcel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.libraries.csv"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>
