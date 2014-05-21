@@ -16,6 +16,10 @@
       [Enter License Description here.]
    </license>
 
+   <includes
+         id="org.talend.libraries.jdbc_feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.talend.libraries.apache"
          download-size="0"
@@ -348,6 +352,18 @@
 
    <plugin
          id="org.talend.libraries.hadoop.hdp.2.1"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.libraries.jexcel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.libraries.jxplorer"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
