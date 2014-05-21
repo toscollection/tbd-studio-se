@@ -160,6 +160,8 @@
       <import plugin="org.talend.model.migration"/>
       <import plugin="org.talend.libraries.jdbc.mysql"/>
       <import plugin="org.talend.libraries.jdbc.jtds"/>
+      <import plugin="org.talend.libraries.mozilla"/>
+      <import plugin="org.talend.libraries.jexcel"/>
    </requires>
 
    <plugin
