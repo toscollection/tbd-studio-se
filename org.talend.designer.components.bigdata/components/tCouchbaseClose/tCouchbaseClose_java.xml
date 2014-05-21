@@ -36,7 +36,7 @@
     <PARAMETER
       NAME="CONNECTION"
       FIELD="COMPONENT_LIST"
-      FILTER="tCouchbaseConnection"
+      REQUIRED="true" FILTER="tCouchbaseConnection"
       NUM_ROW="10"
     />
   </PARAMETERS>

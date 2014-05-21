@@ -37,7 +37,7 @@
     	<PARAMETER
 	      NAME="CONNECTION"
 	      FIELD="COMPONENT_LIST"
-	      FILTER="tRiakConnection"
+	      REQUIRED="true" FILTER="tRiakConnection"
 	      NUM_ROW="10"
     	/>
   	</PARAMETERS>

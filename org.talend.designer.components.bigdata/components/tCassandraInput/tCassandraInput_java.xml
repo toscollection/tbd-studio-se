@@ -46,7 +46,7 @@
 		<PARAMETER
 			NAME="CONNECTION"
 			FIELD="COMPONENT_LIST"
-			FILTER="tCassandraConnection"
+			REQUIRED="true" FILTER="tCassandraConnection"
 			NUM_ROW="2"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 		/>
