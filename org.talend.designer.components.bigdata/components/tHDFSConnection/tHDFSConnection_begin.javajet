@@ -50,7 +50,7 @@
 		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
 	<%
 	}
-	if(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("HDP_1_3").equals(hadoopVersion) || ("HDP_2_0").equals(hadoopVersion) || ("HDP_2_1").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) || ("Cloudera_CDH4_YARN").equals(hadoopVersion) || ("Cloudera_CDH5").equals(hadoopVersion)) && useKrb && !isCustom)
+	if(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("HDP_1_3").equals(hadoopVersion) || ("HDP_2_0").equals(hadoopVersion) || ("HDP_2_1").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) || ("Cloudera_CDH4_YARN").equals(hadoopVersion) || ("Cloudera_CDH5").equals(hadoopVersion) || ("PIVOTAL_HD_2_0").equals(hadoopVersion)) && useKrb && !isCustom)
 	   || (isCustom && "KRB".equals(auth))) {
 %>
 		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
