@@ -28,12 +28,15 @@ import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
+import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.IProcess;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryTypeProcessor;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.designer.core.model.components.EParameterName;
+import org.talend.designer.core.model.components.EmfComponent;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubMultiRepTypeProcessor;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
@@ -52,6 +55,8 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
  * 
  */
 public class HadoopClusterService implements IHadoopClusterService {
+
+    private static final String MR_PROPERTY_PREFIX = "MR_PROPERTY:"; //$NON-NLS-1$
 
     @Override
     public boolean containedByCluster(Connection hadoopClusterConnection, Connection hadoopSubConnection) {
@@ -219,16 +224,27 @@ public class HadoopClusterService implements IHadoopClusterService {
         return new HadoopSubMultiRepTypeProcessor(repositoryTypes);
     }
 
-    public boolean hasDiffsFromClusterToProcess(Connection hcConnection, IProcess process) {
-        if (hcConnection == null || process == null) {
+    public boolean hasDiffsFromClusterToProcess(Item item, IProcess process) {
+        if (item == null || process == null) {
             return false;
         }
 
-        if (hcConnection instanceof HadoopClusterConnection) {
-            return HCRepositoryUtil.detectClusterChangeOfProcess((HadoopClusterConnection) hcConnection, process);
-        }
+        // if (hcConnection instanceof HadoopClusterConnection) {
+        // return HCRepositoryUtil.detectClusterChangeOfProcess((HadoopClusterConnection) hcConnection, process);
+        // }
+        String propertyParamName = MR_PROPERTY_PREFIX + EParameterName.PROPERTY_TYPE.getName();
+        String propertyRepTypeParamName = MR_PROPERTY_PREFIX + EParameterName.REPOSITORY_PROPERTY_TYPE.getName();
 
-        return false;
+        IElementParameter elementParameter = process.getElementParameter(propertyParamName);
+        if (elementParameter != null && EmfComponent.REPOSITORY.equals(elementParameter.getValue())) {
+            IElementParameter repositoryParam = process.getElementParameter(propertyRepTypeParamName);
+            if (item.getProperty().getId().equals(repositoryParam.getValue())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return true;
     }
 
 }
