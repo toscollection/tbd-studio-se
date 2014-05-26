@@ -12,10 +12,10 @@
             value="FFFFFF"/>
       <property
             name="startupMessageRect"
-            value="7,168,441,20"/>
+            value="12,202,415,22"/>
       <property
             name="startupProgressRect"
-            value="7,188,441,20"/>
+            value="12,224,411,14"/>
       <property
             name="windowImages"
             value="platform:/plugin/org.talend.rcp/icons/appli_16x16.gif,platform:/plugin/org.talend.rcp/icons/appli_32x32.gif,platform:/plugin/org.talend.rcp/icons/appli_48x48.gif"/>
