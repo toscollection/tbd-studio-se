@@ -51,7 +51,11 @@
 %>			
 		org.apache.hadoop.fs.FSDataOutputStream fsDataOutputStream_<%=cid%> = null;
 		<%if("APPEND".equals(fileAction)){%>
-			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.append(path_<%=cid%>);
+    		if(!fs_<%=cid%>.exists(path_<%=cid%>)) {
+    			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.create(path_<%=cid%>,false);
+    		} else {
+				fsDataOutputStream_<%=cid%> = fs_<%=cid%>.append(path_<%=cid%>);
+			}
 		<%}else{//Create and Overwrite%>
 			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.create(path_<%=cid%>, <%="CREATE".equals(fileAction)?false:true%>);
 		<%}%>
