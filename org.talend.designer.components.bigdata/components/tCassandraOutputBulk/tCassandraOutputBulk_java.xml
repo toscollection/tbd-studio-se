@@ -111,7 +111,7 @@
         </PARAMETER-->
         <PARAMETER
             NAME="SSTABLE_STORE_PATH"
-            FIELD="FILE"
+            FIELD="DIRECTORY"
             REQUIRED="true"
             NUM_ROW="30"
         >
