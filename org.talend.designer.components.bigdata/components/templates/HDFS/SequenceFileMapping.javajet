@@ -1,3 +1,5 @@
+<%@ jet 
+%>
 <%
     String keyClass="org.apache.hadoop.io.Text";
     if (talendKeyClass.equals("id_Boolean")) keyClass="org.apache.hadoop.io.BooleanWritable";

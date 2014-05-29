@@ -1,3 +1,5 @@
+<%@ jet 
+%>
 <%
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
