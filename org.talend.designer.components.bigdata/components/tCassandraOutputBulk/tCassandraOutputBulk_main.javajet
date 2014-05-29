@@ -112,6 +112,12 @@ if(keyColumn != null){
 %>
 	writer_<%=cid%>.newRow(<%convertUtil.convert(keyCType, inConnName, keyColumn);%>);
 <%
+}else{
+%>
+	if(true){
+		throw new java.lang.Exception("A key should be specified in the schema.");
+	}
+<%
 }
 %>
 long timestamp_<%=cid%> = System.currentTimeMillis() * 1000;
