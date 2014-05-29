@@ -770,36 +770,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
             try {
                 updateFlag_<%=cid%>=pstmtUpdate_<%=cid %>.executeUpdate();
                 updatedCount_<%=cid%> = updatedCount_<%=cid%> + updateFlag_<%=cid%>;
-            } catch(java.lang.Exception e_<%=cid%>) {
-                whetherReject_<%=cid%> = true;
-                <%
-                if (("true").equals(dieOnError)) {
-                    %>
-                    throw(e_<%=cid%>);
-                    <%
-                } else {
-                    if(rejectConnName != null && rejectColumnList != null && rejectColumnList.size() > 0) {
-                        %>
-                        <%=rejectConnName %> = new <%=rejectConnName %>Struct();
-                        <%
-                        for(IMetadataColumn column : columnList) {
-                            %>
-                            <%=rejectConnName%>.<%=column.getLabel()%> = <%=incomingConnName%>.<%=column.getLabel()%>;
-                            <%
-                        }
-                        %>
-                        rejectedCount_<%=cid%> = rejectedCount_<%=cid%> + 1;
-                        <%=rejectConnName%>.errorCode = ((java.sql.SQLException)e_<%=cid%>).getSQLState();
-                        <%=rejectConnName%>.errorMessage = e_<%=cid%>.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
-                        <%
-                    } else {
-                        %>
-                        System.err.print(e_<%=cid%>.getMessage());
-                        <%
-                    }
-                } 
-                %>
-            }
             if(updateFlag_<%=cid%> == 0) {
             	<%
             	if(isEnableDebug) {
@@ -837,8 +807,8 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     <%
                 }                
         		%>
-                try {
                     insertedCount_<%=cid%> = insertedCount_<%=cid%> + pstmtInsert_<%=cid %>.executeUpdate();
+                   }
                 } catch(java.lang.Exception e_<%=cid%>) {
                     whetherReject_<%=cid%> = true;
                     <%
@@ -869,8 +839,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     } 
                     %>
                 }
-            } 
-    
             nb_line_<%=cid%>++;		
             <%
     	
