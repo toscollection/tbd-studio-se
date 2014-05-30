@@ -77,7 +77,7 @@ import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.TableHelper;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.repository.hdfs.i18n.Messages;
-import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
+import org.talend.repository.hdfs.ui.metadata.ExtractHDFSSchemaManager;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSSchemaUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
@@ -548,7 +548,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
                 List<MetadataColumn> metadataColumns;
                 try {
                     HadoopOperationManager.getInstance().getDFS(getConnectionBean()); // reconnect the HDFS server.
-                    metadataColumns = ExtractMetaDataFromHDFS.extractColumns(getConnection(), metadataTable);
+                    metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), metadataTable);
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
                     return;

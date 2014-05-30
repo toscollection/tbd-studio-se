@@ -78,7 +78,7 @@ import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
 import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
-import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
+import org.talend.repository.hdfs.ui.metadata.ExtractHDFSSchemaManager;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSSchemaUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
@@ -844,7 +844,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     hdfsTable.setId(factory.getNextId());
                     hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
                     try {
-                        metadataColumns = ExtractMetaDataFromHDFS.extractColumns(getConnection(), file);
+                        metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), file);
                     } catch (Exception e) {
                         ExceptionHandler.process(e);
                         return;

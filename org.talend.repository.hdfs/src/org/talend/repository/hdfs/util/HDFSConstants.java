@@ -17,6 +17,8 @@ package org.talend.repository.hdfs.util;
  */
 public interface HDFSConstants {
 
-    public static final String HDFS_PATH = "HDFS_PATH";
+    public static final String HDFS_PATH = "HDFS_PATH"; //$NON-NLS-1$
+
+    public static final String HDFS_FILE_TYPE = "HDFS_FILE_TYPE"; //$NON-NLS-1$
 
 }

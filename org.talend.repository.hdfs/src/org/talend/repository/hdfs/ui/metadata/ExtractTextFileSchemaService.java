@@ -52,9 +52,8 @@ import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
-import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
-import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
 import org.talend.repository.ProjectManager;
+import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.hdfs.HDFSConnection;
@@ -64,24 +63,17 @@ import org.talend.repository.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ui.utils.ShadowProcessHelper;
 
 /**
- * DOC ycbai class global comment. Detailled comment
+ * created by ycbai on 2014-5-29 Detailled comment
+ * 
  */
-public class ExtractMetaDataFromHDFS {
-
-    public final static String DEFAULT_FIELD_SEPARATOR = EHDFSFieldSeparator.getDefaultSeparator().getValue();
-
-    public final static String DEFAULT_ROW_SEPARATOR = EHDFSRowSeparator.getDefaultSeparator().getValue();
-
-    private final static int DEFAULT_READ_LINE_NUM = 50;
+public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSConnection> {
 
     private final static String DEFAULT_SHADOW_TYPE = "FILE_DELIMITED"; //$NON-NLS-1$
 
     private final static String DEFAULT_FILE_SERVER = "Localhost 127.0.0.1"; //$NON-NLS-1$
 
-    private static final String DEFAULT_COLUMN_LABEL = "Column"; //$NON-NLS-1$
-
-    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node)
-            throws HadoopServerException, CoreException, IOException {
+    @Override
+    public List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node) throws Exception {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || node == null || node.getType() != EHadoopFileTypes.FILE) {
             return columns;
@@ -94,7 +86,8 @@ public class ExtractMetaDataFromHDFS {
         return extractColumns(connection, inputStream, file.getTable().getName());
     }
 
-    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, MetadataTable metadataTable)
+    @Override
+    public List<MetadataColumn> extractColumns(HDFSConnection connection, MetadataTable metadataTable)
             throws HadoopServerException, CoreException, IOException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || metadataTable == null) {
@@ -111,8 +104,8 @@ public class ExtractMetaDataFromHDFS {
         return extractColumns(connection, inputStream, metadataTable.getLabel());
     }
 
-    public static synchronized List<MetadataColumn> extractColumns(HDFSConnection connection, InputStream inputStream,
-            String tmpFileName) throws CoreException, IOException {
+    private List<MetadataColumn> extractColumns(HDFSConnection connection, InputStream inputStream, String tmpFileName)
+            throws CoreException, IOException {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || inputStream == null || tmpFileName == null) {
             return columns;
@@ -123,8 +116,7 @@ public class ExtractMetaDataFromHDFS {
         return guessSchemaFromArray(csvArray, connection.isFirstLineCaption(), connection.getHeaderValue());
     }
 
-    private static synchronized ProcessDescription getProcessDescription(HDFSConnection connection, File tmpFile)
-            throws IOException {
+    private ProcessDescription getProcessDescription(HDFSConnection connection, File tmpFile) throws IOException {
         ProcessDescription processDescription = new ProcessDescription();
         Charset guessedCharset = CharsetToolkit.guessEncoding(tmpFile, 4096);
         processDescription.setEncoding(TalendQuoteUtils.addQuotesIfNotExist(guessedCharset.displayName()));
@@ -150,7 +142,7 @@ public class ExtractMetaDataFromHDFS {
         return processDescription;
     }
 
-    private static File createTmpFile(InputStream inputStream, String fileName) {
+    private File createTmpFile(InputStream inputStream, String fileName) {
         return createTmpFile(inputStream, fileName, DEFAULT_READ_LINE_NUM);
     }
 
@@ -164,7 +156,7 @@ public class ExtractMetaDataFromHDFS {
      * @param maxLineNum the max quantity lines to read. If is "-1" means not limit the quantity.
      * @return
      */
-    private static File createTmpFile(InputStream inputStream, String fileName, int maxLineNum) {
+    private File createTmpFile(InputStream inputStream, String fileName, int maxLineNum) {
         Project project = ProjectManager.getInstance().getCurrentProject();
         IProject fsProject = null;
         try {
@@ -217,14 +209,14 @@ public class ExtractMetaDataFromHDFS {
         return tmpfile;
     }
 
-    private static String formatFilePath(String path) {
+    private String formatFilePath(String path) {
         if (path == null) {
             return ""; //$NON-NLS-1$
         }
         return path.replace("\\", "/"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public static List<MetadataColumn> guessSchemaFromArray(final CsvArray csvArray, boolean isFirstLineCaption, String header) {
+    public List<MetadataColumn> guessSchemaFromArray(final CsvArray csvArray, boolean isFirstLineCaption, String header) {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         List<String> exisColumnNames = new ArrayList<String>();
 
@@ -370,7 +362,7 @@ public class ExtractMetaDataFromHDFS {
         return columns;
     }
 
-    private static int getNumbersOfColumns(List<String[]> csvRows) {
+    private int getNumbersOfColumns(List<String[]> csvRows) {
         int numbersOfColumns = 0;
         int parserLine = csvRows.size();
         if (parserLine > 50) {

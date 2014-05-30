@@ -49,8 +49,8 @@ import org.talend.commons.utils.data.list.ListenableListEvent;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
+import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.hdfs.i18n.Messages;
-import org.talend.repository.hdfs.ui.metadata.ExtractMetaDataFromHDFS;
 import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
 import org.talend.utils.json.JSONObject;
@@ -98,7 +98,7 @@ public class HDFSForm extends AbstractHDFSForm {
         if (StringUtils.isNotEmpty(rowSeparatorVal)) {
             rowSeparatorText.setText(rowSeparatorVal);
         } else {
-            rowSeparatorVal = ExtractMetaDataFromHDFS.DEFAULT_ROW_SEPARATOR;
+            rowSeparatorVal = IExtractSchemaService.DEFAULT_ROW_SEPARATOR;
             rowSeparatorText.setText(rowSeparatorVal);
             getConnection().setRowSeparator(rowSeparatorVal);
         }
@@ -110,7 +110,7 @@ public class HDFSForm extends AbstractHDFSForm {
         if (StringUtils.isNotEmpty(fieldSeparatorVal)) {
             fieldSeparatorText.setText(fieldSeparatorVal);
         } else {
-            fieldSeparatorVal = ExtractMetaDataFromHDFS.DEFAULT_FIELD_SEPARATOR;
+            fieldSeparatorVal = IExtractSchemaService.DEFAULT_FIELD_SEPARATOR;
             fieldSeparatorText.setText(fieldSeparatorVal);
             getConnection().setFieldSeparator(fieldSeparatorVal);
         }
