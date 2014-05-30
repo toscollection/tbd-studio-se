@@ -40,6 +40,10 @@ public enum EHadoopFileTypes {
         return this.value;
     }
 
+    public String getName() {
+        return this.name();
+    }
+
     public static List<String> getAllFileTypeValues() {
         List<String> vals = new ArrayList<String>();
         EHadoopFileTypes[] values = values();

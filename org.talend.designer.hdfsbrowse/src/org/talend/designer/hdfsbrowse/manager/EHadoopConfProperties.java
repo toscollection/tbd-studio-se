@@ -26,12 +26,16 @@ public enum EHadoopConfProperties {
     /**
      * Property name for naming the job tracker (URI).
      */
-    JOB_TRACKER_URI("mapred.job.tracker", "localhost:50020"),
+    JOB_TRACKER_URI("mapred.job.tracker", "localhost:8021"),
 
     /**
      * Property name for naming the default file system (URI).
      */
-    FS_DEFAULT_URI("fs.default.name", "hdfs://localhost:50040/"),
+    FS_DEFAULT_URI("fs.default.name", "hdfs://localhost:8020/"),
+
+    FS_HDFS_IMPL_DISABLE_CACHE("fs.hdfs.impl.disable.cache", "false"),
+
+    HADOOP_SECURITY_KERBEROS_TICKET_CACHE_PATH("hadoop.security.kerberos.ticket.cache.path", ""),
 
     /**
      * Property name for kerberos principal.
@@ -84,7 +88,7 @@ public enum EHadoopConfProperties {
 
     public String get(Object conf) throws SecurityException, IllegalArgumentException, NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
-        return (String) ReflectionUtils.invokeMethod(conf, "get", new Object[] { name });
+        return (String) ReflectionUtils.invokeMethod(conf, "get", new Object[] { name, defVal });
     }
 
     public void set(Object conf, String value) throws SecurityException, IllegalArgumentException, NoSuchMethodException,
