@@ -102,7 +102,8 @@ public class HadoopOperationManager {
         return size;
     }
 
-    public InputStream getFileContent(Object fileSystem, ClassLoader classLoader, String filePath) throws HadoopServerException {
+    public InputStream getFileContent(Object fileSystem, Object configuration, ClassLoader classLoader, String filePath)
+            throws HadoopServerException {
         InputStream stream = null;
         if (fileSystem == null) {
             return null;
@@ -110,7 +111,15 @@ public class HadoopOperationManager {
 
         try {
             Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { filePath });
-            stream = (InputStream) ReflectionUtils.invokeMethod(fileSystem, "open", new Object[] { pathObj });
+            Object factory = ReflectionUtils.newInstance("org.apache.hadoop.io.compress.CompressionCodecFactory", classLoader,
+                    new Object[] { configuration });
+            Object codec = ReflectionUtils.invokeMethod(factory, "getCodec", new Object[] { pathObj });
+            if (codec != null) {
+                Object originStream = ReflectionUtils.invokeMethod(fileSystem, "open", new Object[] { pathObj });
+                stream = (InputStream) ReflectionUtils.invokeMethod(codec, "createInputStream", new Object[] { originStream });
+            } else {
+                stream = (InputStream) ReflectionUtils.invokeMethod(fileSystem, "open", new Object[] { pathObj });
+            }
         } catch (Exception e) {
             throw new HadoopServerException(e);
         }
@@ -124,7 +133,8 @@ public class HadoopOperationManager {
             return null;
         }
         ClassLoader classLoader = getClassLoader(connection);
-        return getFileContent(fileSystem, classLoader, filePath);
+        Object configuration = getConfiguration(connection);
+        return getFileContent(fileSystem, configuration, classLoader, filePath);
     }
 
     public ConnectionStatus testConnection(HDFSConnectionBean connection) {
@@ -133,6 +143,10 @@ public class HadoopOperationManager {
 
     public Object getDFS(HDFSConnectionBean connectionBean) throws HadoopServerException {
         return HadoopServerUtil.getDFS(connectionBean);
+    }
+
+    public Object getConfiguration(HDFSConnectionBean connectionBean) throws HadoopServerException {
+        return HadoopServerUtil.getConfiguration(connectionBean);
     }
 
     public ClassLoader getClassLoader(HDFSConnectionBean connectionBean) {
