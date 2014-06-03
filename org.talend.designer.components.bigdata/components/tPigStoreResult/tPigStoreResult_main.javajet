@@ -351,11 +351,21 @@
 <%
 		} else if("HBaseStorage".equals(function)) {
 			String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
-			String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");			
+			String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+			
+			boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
+			String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");			
 %>
 			StringBuilder script_<%=cid%>=new StringBuilder();
 			script_<%=cid%>.append("SET hbase.zookeeper.quorum "+<%=zookeeper_quorum%>+";");
 			script_<%=cid%>.append("SET hbase.zookeeper.property.clientPort "+<%=zookeeper_client_port%>+";");
+<%
+			if(setZNodeParent) {
+%>
+			script_<%=cid%>.append("SET zookeeper.znode.parent "+<%=zNodeParent%>+";");
+<%
+			}
+%>
 			pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
 <%
 			

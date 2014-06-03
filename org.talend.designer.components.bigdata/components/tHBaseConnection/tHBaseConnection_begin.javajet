@@ -12,6 +12,9 @@
     String cid = node.getUniqueName();
 	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
 	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+	
+	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
+	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
 %>
     org.apache.hadoop.conf.Configuration config<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
 	config<%=cid%>.clear();
@@ -19,6 +22,12 @@
 	config<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
 	config<%=cid%>.set("hbase.cluster.distributed","true"); 
 <%
+	if(setZNodeParent) {
+%>
+	config<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
+<%
+	}
+	
 	List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
    for(int i=0;i<properties.size();i++){
