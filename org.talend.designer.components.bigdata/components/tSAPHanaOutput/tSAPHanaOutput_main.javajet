@@ -793,10 +793,15 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     }
                 }
 				if(isDynamic) {
-					Column dynamicColumn = getColumn(getDynamicColumn());
+					Column dynamicColumn = getColumn(talendDynCol);
 					String typeToGenerate = JavaTypesManager.getTypeToGenerate(dynamicColumn.getColumn().getTalendType(), dynamicColumn.getColumn().isNullable());
 					if("Dynamic".equals(typeToGenerate)) {
-					%>
+						if(isEnableDebug) {
+						%>
+							routines.system.DynamicUtils.debugDynamicSql(query_<%=cid%>,<%=incomingConnName%>.<%=dynamicColumn.getName()%>, <%=counter%>,insertSQLSplits_<%=cid%>);
+	                			<%
+	    					}
+						%>
 						DynamicUtils.writeColumnsToDatabse(<%=incomingConnName%>.<%=dynamicColumn.getName()%>, pstmtInsert_<%=cid%>, <%=counter-1%>, "<%=dbmsId%>");
 					<%
 					}
