@@ -49,6 +49,7 @@ import org.talend.core.utils.CsvArray;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
+import org.talend.designer.hdfsbrowse.model.EHDFSFileTypes;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
@@ -80,6 +81,7 @@ public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSC
         }
 
         HDFSFile file = (HDFSFile) node;
+        file.setFileType(EHDFSFileTypes.TEXT);
         InputStream inputStream = HadoopOperationManager.getInstance().getFileContent(
                 HDFSModelUtil.convert2HDFSConnectionBean(connection), file.getPath());
 

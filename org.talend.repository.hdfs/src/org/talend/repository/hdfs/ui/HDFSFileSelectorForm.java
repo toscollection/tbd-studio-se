@@ -849,6 +849,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         ExceptionHandler.process(e);
                         return;
                     }
+                    hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_FILE_TYPE, file.getFileType().getName());
                     Iterator<MetadataColumn> iterate = metadataColumns.iterator();
                     while (iterate.hasNext()) {
                         MetadataColumn metadataColumn = iterate.next();

@@ -21,4 +21,8 @@ public interface HDFSConstants {
 
     public static final String HDFS_FILE_TYPE = "HDFS_FILE_TYPE"; //$NON-NLS-1$
 
+    public static final String IS_SEQUENCE_KEY = "IS_SEQUENCE_KEY"; //$NON-NLS-1$
+
+    public static final String IS_SEQUENCE_VALUE = "IS_SEQUENCE_VALUE"; //$NON-NLS-1$
+
 }

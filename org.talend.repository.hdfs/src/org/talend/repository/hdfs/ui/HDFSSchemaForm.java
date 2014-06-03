@@ -302,7 +302,7 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
                 tableCompositeHeight);
         compositeTable.setLayout(new FillLayout());
         metadataEditor = new MetadataEmfTableEditor(EMPTY_STRING);
-        tableEditorView = new MetadataEmfTableEditorView(compositeTable, SWT.NONE, false);
+        tableEditorView = new HDFSMetadataTableEditorView(compositeTable, SWT.NONE, false);
         tableEditorView.initGraphicComponents();
         metadataEditor.setDefaultLabel("newColumn"); //$NON-NLS-1$
     }
@@ -452,6 +452,8 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
                 if (isReadOnly()) {
                     addTableBtn.setEnabled(false);
                 }
+                tableEditorView.getExtendedToolbar().updateEnabledStateOfButtons();
+                tableEditorView.getTableViewerCreator().refresh();
             }
 
         });

@@ -17,12 +17,14 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.talend.core.model.metadata.builder.connection.ConnectionFactory;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
+import org.talend.designer.hdfsbrowse.model.EHDFSFileTypes;
 import org.talend.designer.hdfsbrowse.model.EHadoopDataTypeMapping;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
@@ -32,6 +34,8 @@ import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.hdfs.HDFSConnection;
+import orgomg.cwm.objectmodel.core.CoreFactory;
+import orgomg.cwm.objectmodel.core.TaggedValue;
 
 /**
  * created by ycbai on 2014-5-29 Detailled comment
@@ -56,6 +60,7 @@ public class ExtractSequenceFileSchemaService implements IExtractSchemaService<H
             return Collections.EMPTY_LIST;
         }
         HDFSFile file = (HDFSFile) node;
+        file.setFileType(EHDFSFileTypes.SEQUENCE);
 
         return extractColumns(connection, file.getPath());
     }
@@ -99,12 +104,22 @@ public class ExtractSequenceFileSchemaService implements IExtractSchemaService<H
         MetadataColumn keyColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
         keyColumn.setTalendType(EHadoopDataTypeMapping.getTalendTypeByHadoopType(keyClass.getName()));
         keyColumn.setLabel(KEY_COLUMN_LABEL);
+        EList<TaggedValue> keyTaggedValue = keyColumn.getTaggedValue();
+        TaggedValue keyTV = CoreFactory.eINSTANCE.createTaggedValue();
+        keyTV.setTag(HDFSConstants.IS_SEQUENCE_KEY);
+        keyTV.setValue(Boolean.TRUE.toString());
+        keyTaggedValue.add(keyTV);
         columns.add(keyColumn);
 
         Class valueClass = (Class) ReflectionUtils.invokeMethod(reader, "getValueClass", new Object[0]); //$NON-NLS-1$
         MetadataColumn valueColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
         valueColumn.setTalendType(EHadoopDataTypeMapping.getTalendTypeByHadoopType(valueClass.getName()));
         valueColumn.setLabel(VALUE_COLUMN_LABEL);
+        EList<TaggedValue> valTaggedValue = valueColumn.getTaggedValue();
+        TaggedValue valTV = CoreFactory.eINSTANCE.createTaggedValue();
+        valTV.setTag(HDFSConstants.IS_SEQUENCE_VALUE);
+        valTV.setValue(Boolean.TRUE.toString());
+        valTaggedValue.add(valTV);
         columns.add(valueColumn);
 
         return columns;

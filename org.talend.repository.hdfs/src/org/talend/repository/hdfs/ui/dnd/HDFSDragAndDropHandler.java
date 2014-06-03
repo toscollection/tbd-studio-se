@@ -36,6 +36,7 @@ import org.talend.core.model.utils.AbstractDragAndDropServiceHandler;
 import org.talend.core.model.utils.IComponentName;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.hdfsbrowse.model.EHDFSFileTypes;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
@@ -348,6 +349,25 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
                 fileNameParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(hdfsPath));
             } else if (filePatheParameter != null) {
                 filePatheParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(hdfsPath));
+            }
+        }
+        IElementParameter fileTypeParameter = ele.getElementParameter(EHDFSRepositoryToComponent.FILETYPE.getParameterName());
+        if (fileTypeParameter != null) {
+            String hdfsFileType = metadataTable.getAdditionalProperties().get(HDFSConstants.HDFS_FILE_TYPE);
+            if (StringUtils.isNotBlank(hdfsFileType)) {
+                fileTypeParameter.setValue(hdfsFileType);
+            } else {
+                fileTypeParameter.setValue(EHDFSFileTypes.TEXT.getName());
+            }
+            IElementParameter keyColumnParameter = ele.getElementParameter(EHDFSRepositoryToComponent.KEYCOLUMN
+                    .getParameterName());
+            IElementParameter valColumnParameter = ele.getElementParameter(EHDFSRepositoryToComponent.VALUECOLUMN
+                    .getParameterName());
+            if (keyColumnParameter != null) {
+                keyColumnParameter.setValue("Key"); //$NON-NLS-1$
+            }
+            if (valColumnParameter != null) {
+                valColumnParameter.setValue("Value"); //$NON-NLS-1$
             }
         }
     }
