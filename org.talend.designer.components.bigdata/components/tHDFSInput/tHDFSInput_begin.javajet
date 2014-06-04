@@ -50,10 +50,12 @@
         		public boolean accept(org.apache.hadoop.fs.Path path) {
         			try {
         				org.apache.hadoop.fs.FileStatus statu = filesystem_<%=cid%>.getFileStatus(path);
+        				String name = path.getName();
         				if(statu.isDir()) {
         					<%if(incldSubdir) {%>
         					filesystem_<%=cid%>.listStatus(path, this);
         					<%}%>
+        				} else if (name.startsWith(".") || name.startsWith("_")) {
         				} else {
         					status_<%=cid%>.add(statu);
         				}
