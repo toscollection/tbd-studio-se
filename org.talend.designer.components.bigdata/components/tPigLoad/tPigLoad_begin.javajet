@@ -44,6 +44,9 @@
 	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
 	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");	
 	
+	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
+	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");	
+	
 	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
@@ -350,6 +353,11 @@
 				props_<%=cid%>.put("hbase.zookeeper.quorum", <%=zookeeper_quorum%>);
 				props_<%=cid%>.put("hbase.zookeeper.property.clientPort", <%=zookeeper_client_port%>);
 <%
+				if(setZNodeParent) {
+%>
+				props_<%=cid%>.put("zookeeper.znode.parent",<%=zNodeParent%>); 
+<%
+				}
 			}
 			
 			if(useKrb) {
@@ -442,6 +450,11 @@
 		script_<%=cid%>.append("SET hbase.zookeeper.quorum ").append(<%=zookeeper_quorum%>).append(";");
 		script_<%=cid%>.append("SET hbase.zookeeper.property.clientPort ").append(<%=zookeeper_client_port%>).append(";");
 <%
+			if(setZNodeParent) {
+%>
+			script_<%=cid%>.append("SET zookeeper.znode.parent ").append(<%=zNodeParent%>).append(";");
+<%
+			}
 		}
 		
 		if(inMain){

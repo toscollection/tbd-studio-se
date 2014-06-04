@@ -66,6 +66,10 @@ imports="
    	String storeByHBase = null;
 	String zookeeperQuorumForHBase = null;
 	String zookeeperClientPortForHBase = null;
+	
+	boolean setZNodeParent = false;
+	String zNodeParent = null;
+	
 	String defineRegisterJar = null;
 	List<Map<String, String>> registerJarForHBase = null;
 	
@@ -80,6 +84,10 @@ imports="
     	storeByHBase = ElementParameterParser.getValue(previousNode, "__STORE_BY_HBASE__");
     	zookeeperQuorumForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_QUORUM__");
     	zookeeperClientPortForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_CLIENT_PORT__");
+    	
+    	setZNodeParent = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_ZNODE_PARENT__"));
+		zNodeParent = ElementParameterParser.getValue(previousNode, "__ZNODE_PARENT__");
+    	
     	defineRegisterJar = ElementParameterParser.getValue(previousNode, "__DEFINE_REGISTER_JAR__");
     	registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(previousNode, "__REGISTER_JAR__");
     }
@@ -326,6 +334,10 @@ if(useExistingConn) {
         	<%if(zookeeperClientPortForHBase!=null && !"".equals(zookeeperClientPortForHBase) && !"\"\"".equals(zookeeperClientPortForHBase)) {%>
         		statement_<%=cid%>.execute("SET hbase.zookeeper.property.clientPort="+<%=zookeeperClientPortForHBase%>);
         	<%}%>
+        	
+			<%if(setZNodeParent && zNodeParent!=null && !"".equals(zNodeParent) && !"\"\"".equals(zNodeParent)) {%>
+				statement_<%=cid%>.execute("SET zookeeper.znode.parent="+<%=zNodeParent%>);
+			<%}%>        	
         	
         	<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
         		for(Map<String, String> jar : registerJarForHBase){

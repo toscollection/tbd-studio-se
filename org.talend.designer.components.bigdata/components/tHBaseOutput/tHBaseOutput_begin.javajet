@@ -159,6 +159,14 @@ if(!"true".equals(useExistingConn)){
 	conn_<%=cid %>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
 	conn_<%=cid %>.set("hbase.cluster.distributed","true"); 
 <%
+	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
+	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");		
+	if(setZNodeParent) {
+%>
+	conn_<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
+<%
+	}
+	
 	List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
    	for(int i=0;i<properties.size();i++){
