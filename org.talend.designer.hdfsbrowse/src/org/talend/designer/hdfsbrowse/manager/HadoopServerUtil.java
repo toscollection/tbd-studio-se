@@ -75,57 +75,19 @@ public class HadoopServerUtil {
             return null;
         }
 
-        String userName = StringUtils.trimToNull(connection.getUserName());
-        String namenodePrincipal = StringUtils.trimToNull(connection.getPrincipal());
-        String group = StringUtils.trimToNull(connection.getGroup());
-        boolean enableKerberos = connection.isEnableKerberos();
-        boolean useKeytab = connection.isUseKeytab();
-        String keytabPrincipal = StringUtils.trimToNull(connection.getKeytabPrincipal());
-        String keytab = StringUtils.trimToNull(connection.getKeytab());
-
-        nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(nameNodeURI);
-        if (userName != null) {
-            userName = TalendQuoteUtils.removeQuotesIfExist(userName);
-        }
-        if (namenodePrincipal != null) {
-            namenodePrincipal = TalendQuoteUtils.removeQuotesIfExist(namenodePrincipal);
-        }
-        if (group != null) {
-            group = TalendQuoteUtils.removeQuotesIfExist(group);
-        }
-        if (keytabPrincipal != null) {
-            keytabPrincipal = TalendQuoteUtils.removeQuotesIfExist(keytabPrincipal);
-        }
-        if (keytab != null) {
-            keytab = TalendQuoteUtils.removeQuotesIfExist(keytab);
-        }
-
         Object dfs = null;
         ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
             ClassLoader classLoader = getClassLoader(connection);
             Thread.currentThread().setContextClassLoader(classLoader);
 
-            Object conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance();
-            EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
+            Object conf = getConfiguration(connection);
+            boolean enableKerberos = connection.isEnableKerberos();
+            String userName = StringUtils.trimToNull(connection.getUserName());
             if (enableKerberos) {
-                assert namenodePrincipal != null;
                 userName = null;
-                // EHadoopConfProperties.JOB_UGI.set(conf, EMPTY_STRING);
-                EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, namenodePrincipal);
             }
-            if (group != null) {
-                assert userName != null;
-                // EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, EMPTY_STRING);
-                EHadoopConfProperties.JOB_UGI.set(conf, userName + GROUP_SEPARATOR + group);
-            }
-
-            if (useKeytab) {
-                assert keytabPrincipal != null;
-                assert keytab != null;
-                ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader,
-                        "loginUserFromKeytab", new String[] { keytabPrincipal, keytab });
-            }
+            String group = StringUtils.trimToNull(connection.getGroup());
 
             Callable<Object> dfsCallable = null;
             if (userName == null || group != null) {
@@ -148,6 +110,62 @@ public class HadoopServerUtil {
         }
 
         return dfs;
+    }
+
+    public static Object getConfiguration(HDFSConnectionBean connection) throws HadoopServerException {
+        Object conf = null;
+
+        String userName = StringUtils.trimToNull(connection.getUserName());
+        String namenodePrincipal = StringUtils.trimToNull(connection.getPrincipal());
+        String group = StringUtils.trimToNull(connection.getGroup());
+        boolean enableKerberos = connection.isEnableKerberos();
+        boolean useKeytab = connection.isUseKeytab();
+        String keytabPrincipal = StringUtils.trimToNull(connection.getKeytabPrincipal());
+        String keytab = StringUtils.trimToNull(connection.getKeytab());
+
+        String nameNodeURI = connection.getNameNodeURI();
+        nameNodeURI = TalendQuoteUtils.removeQuotesIfExist(nameNodeURI);
+        if (userName != null) {
+            userName = TalendQuoteUtils.removeQuotesIfExist(userName);
+        }
+        if (namenodePrincipal != null) {
+            namenodePrincipal = TalendQuoteUtils.removeQuotesIfExist(namenodePrincipal);
+        }
+        if (group != null) {
+            group = TalendQuoteUtils.removeQuotesIfExist(group);
+        }
+        if (keytabPrincipal != null) {
+            keytabPrincipal = TalendQuoteUtils.removeQuotesIfExist(keytabPrincipal);
+        }
+        if (keytab != null) {
+            keytab = TalendQuoteUtils.removeQuotesIfExist(keytab);
+        }
+
+        try {
+            ClassLoader classLoader = getClassLoader(connection);
+            conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance();
+            EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
+            if (enableKerberos) {
+                assert namenodePrincipal != null;
+                userName = null;
+                EHadoopConfProperties.KERBEROS_PRINCIPAL.set(conf, namenodePrincipal);
+            }
+            if (group != null) {
+                assert userName != null;
+                EHadoopConfProperties.JOB_UGI.set(conf, userName + GROUP_SEPARATOR + group);
+            }
+
+            if (useKeytab) {
+                assert keytabPrincipal != null;
+                assert keytab != null;
+                ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader,
+                        "loginUserFromKeytab", new String[] { keytabPrincipal, keytab });
+            }
+        } catch (Exception e) {
+            throw new HadoopServerException(e);
+        }
+
+        return conf;
     }
 
     private static Callable<Object> getDFS(final Object conf, final ClassLoader classLoader) {
