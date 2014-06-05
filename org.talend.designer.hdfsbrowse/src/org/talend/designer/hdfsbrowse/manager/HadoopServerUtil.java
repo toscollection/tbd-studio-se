@@ -93,7 +93,7 @@ public class HadoopServerUtil {
             if (userName == null || group != null) {
                 dfsCallable = getDFS(conf, classLoader);
             } else {
-                dfsCallable = getDFS(new URI(nameNodeURI), conf, userName, classLoader);
+                dfsCallable = getDFS(new URI(EHadoopConfProperties.FS_DEFAULT_URI.get(conf)), conf, userName, classLoader);
             }
 
             ExecutorService executor = Executors.newSingleThreadExecutor();
