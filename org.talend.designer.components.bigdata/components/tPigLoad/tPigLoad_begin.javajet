@@ -306,6 +306,13 @@
 					props_<%=cid%>.put("yarn.resourcemanager.scheduler.address", <%=schedulerAddress%>);
 <%
 				}
+				boolean setStagingDirectory = "true".equals(ElementParameterParser.getValue(node, "__SET_STAGING_DIRECTORY__"));
+				if(setStagingDirectory) {
+					String stagingDirectory = ElementParameterParser.getValue(node, "__STAGING_DIRECTORY__");
+%>
+					props_<%=cid%>.put("yarn.app.mapreduce.am.staging-dir", <%=stagingDirectory%>);
+<%
+				}
 				
 				if(!isCustom && "HDP_2_1".equals(pigVersion)) {
 %>
@@ -376,8 +383,10 @@
 				}
 				if(isKerberosAvailableHadoop2 || (isCustom && useYarn)) {
 					String resourceManagerPrincipal = ElementParameterParser.getValue(node, "__RESOURCEMANAGER_PRINCIPAL__");
+					String jobHistoryPrincipal = ElementParameterParser.getValue(node, "__JOBHISTORY_PRINCIPAL__");
 %>
 					props_<%=cid%>.put("yarn.resourcemanager.principal", <%=resourceManagerPrincipal%>);
+					props_<%=cid%>.put("mapreduce.jobhistory.principal", <%=jobHistoryPrincipal%>);
 <%
 				}
 
