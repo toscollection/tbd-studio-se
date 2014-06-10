@@ -45,6 +45,7 @@
     <PARAMETER
       NAME="CONNECTION"
       FIELD="COMPONENT_LIST"
+      REQUIRED="true" 
       FILTER="tHiveConnection"
       NUM_ROW="5"
       SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
