@@ -24,6 +24,7 @@ import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.utils.RepositoryNodeManager;
 import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.AbstractHadoopSubnodeRepositoryContentHandler;
@@ -42,14 +43,13 @@ import org.talend.repository.model.hcatalog.HCatalogConnectionItem;
 import org.talend.repository.model.hcatalog.HCatalogFactory;
 import org.talend.repository.model.hcatalog.HCatalogPackage;
 import org.talend.repository.ui.actions.metadata.CreateTableAction;
+
 import orgomg.cwm.foundation.businessinformation.BusinessinformationPackage;
 
 /**
  * DOC ycbai class global comment. Detailled comment
  */
 public class HCatalogRepositoryContentHandler extends AbstractHadoopSubnodeRepositoryContentHandler {
-
-    private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
     @Override
     public boolean isProcess(Item item) {
@@ -83,6 +83,7 @@ public class HCatalogRepositoryContentHandler extends AbstractHadoopSubnodeRepos
 
     private Resource create(IProject project, HCatalogConnectionItem item, IPath path, ERepositoryObjectType type)
             throws PersistenceException {
+    	XmiResourceManager xmiResourceManager = ProxyRepositoryFactory.getInstance().getRepositoryFactoryFromProvider().getResourceManager();
         Resource itemResource = xmiResourceManager.createItemResource(project, item, path, type, false);
         MetadataManager.addContents(item, itemResource);
         itemResource.getContents().add(item.getConnection());
@@ -101,6 +102,7 @@ public class HCatalogRepositoryContentHandler extends AbstractHadoopSubnodeRepos
     }
 
     private Resource save(HCatalogConnectionItem item) {
+    	XmiResourceManager xmiResourceManager = ProxyRepositoryFactory.getInstance().getRepositoryFactoryFromProvider().getResourceManager();
         Resource itemResource = xmiResourceManager.getItemResource(item);
         itemResource.getContents().clear();
         MetadataManager.addContents(item, itemResource);

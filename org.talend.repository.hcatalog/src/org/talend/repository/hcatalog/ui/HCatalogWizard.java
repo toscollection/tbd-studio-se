@@ -15,8 +15,10 @@ package org.talend.repository.hcatalog.ui;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IWorkbench;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.utils.VersionUtils;
@@ -187,11 +189,10 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
 
                 }
             } catch (Exception e) {
-                String detailError = e.toString();
                 new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID,
                         Messages.getString("HCatalogWizard.persistenceException"), //$NON-NLS-1$
-                        detailError);
-                log.error(Messages.getString("HCatalogWizard.persistenceException") + "\n" + detailError); //$NON-NLS-1$ //$NON-NLS-2$
+                        ExceptionUtils.getFullStackTrace(e));
+                ExceptionHandler.process(e);
                 return false;
             }
             return true;

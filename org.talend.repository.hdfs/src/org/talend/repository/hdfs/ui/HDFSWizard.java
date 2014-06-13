@@ -13,15 +13,14 @@
 package org.talend.repository.hdfs.ui;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.utils.VersionUtils;
@@ -30,6 +29,7 @@ import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
+import org.talend.core.model.repository.RepositoryObject;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
@@ -48,8 +48,6 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSFactory;
-import org.talend.utils.json.JSONArray;
-import org.talend.utils.json.JSONObject;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -98,11 +96,12 @@ public class HDFSWizard extends HadoopRepositoryWizard<HDFSConnection> {
 
             initConnectionFromHadoopCluster(connection, node);
         } else if (type == ENodeType.REPOSITORY_ELEMENT) {
-            connection = (HDFSConnection) ((ConnectionItem) node.getObject().getProperty().getItem()).getConnection();
-            connectionProperty = node.getObject().getProperty();
-            connectionItem = (ConnectionItem) node.getObject().getProperty().getItem();
+            RepositoryObject object = new RepositoryObject(node.getObject().getProperty());
+            setRepositoryObject(object);
+            connection = (HDFSConnection) ((ConnectionItem) object.getProperty().getItem()).getConnection();
+            connectionProperty = object.getProperty();
+            connectionItem = (ConnectionItem) object.getProperty().getItem();
             // set the repositoryObject, lock and set isRepositoryObjectEditable
-            setRepositoryObject(node.getObject());
             isRepositoryObjectEditable();
             initLockStrategy();
         }
@@ -188,11 +187,10 @@ public class HDFSWizard extends HadoopRepositoryWizard<HDFSConnection> {
 
                 }
             } catch (Exception e) {
-                String detailError = e.toString();
                 new ErrorDialogWidthDetailArea(getShell(), Activator.PLUGIN_ID,
                         Messages.getString("HDFSWizard.persistenceException"), //$NON-NLS-1$
-                        detailError);
-                log.error(Messages.getString("HDFSWizard.persistenceException") + "\n" + detailError); //$NON-NLS-1$ //$NON-NLS-2$
+                        ExceptionUtils.getFullStackTrace(e));
+                ExceptionHandler.process(e);
                 return false;
             }
             return true;
