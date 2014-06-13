@@ -19,6 +19,7 @@ import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.utils.XmiResourceManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.AbstractHadoopSubnodeRepositoryContentHandler;
 import org.talend.repository.model.RepositoryNode;
@@ -28,11 +29,10 @@ import org.talend.repository.model.oozie.OoziePackage;
 import org.talend.repository.oozie.node.model.OozieRepositoryNodeType;
 import org.talend.repository.oozie.ui.OozieWizard;
 import org.talend.repository.oozie.util.EOozieImage;
+
 import orgomg.cwm.foundation.businessinformation.BusinessinformationPackage;
 
 public class OozieRepositoryContentHandler extends AbstractHadoopSubnodeRepositoryContentHandler {
-
-    private XmiResourceManager xmiResourceManager = new XmiResourceManager();
 
     @Override
     public boolean isProcess(Item item) {
@@ -61,6 +61,7 @@ public class OozieRepositoryContentHandler extends AbstractHadoopSubnodeReposito
 
     private Resource create(IProject project, OozieConnectionItem item, IPath path, ERepositoryObjectType type)
             throws PersistenceException {
+    	XmiResourceManager xmiResourceManager = ProxyRepositoryFactory.getInstance().getRepositoryFactoryFromProvider().getResourceManager();
         Resource itemResource = xmiResourceManager.createItemResource(project, item, path, type, false);
         itemResource.getContents().add(item.getConnection());
 
@@ -78,6 +79,7 @@ public class OozieRepositoryContentHandler extends AbstractHadoopSubnodeReposito
     }
 
     private Resource save(OozieConnectionItem item) throws PersistenceException {
+    	XmiResourceManager xmiResourceManager = ProxyRepositoryFactory.getInstance().getRepositoryFactoryFromProvider().getResourceManager();
         Resource itemResource = xmiResourceManager.getItemResource(item);
         itemResource.getContents().clear();
         MetadataManager.addContents(item, itemResource);

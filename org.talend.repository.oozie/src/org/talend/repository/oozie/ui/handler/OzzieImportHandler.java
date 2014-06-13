@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.repository.items.importexport.handlers.imports.MetadataConnectionImportHandler;
 import org.talend.repository.items.importexport.handlers.model.ImportItem;
+import org.talend.repository.items.importexport.handlers.model.ImportItem.State;
 import org.talend.repository.items.importexport.manager.ResourcesManager;
 
 /**
@@ -53,13 +54,22 @@ public class OzzieImportHandler extends MetadataConnectionImportHandler {
         return importItem;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.talend.repository.items.importexport.handlers.imports.ImportBasicHandler#checkItem(org.talend.repository.
+     * items.importexport.manager.ResourcesManager, org.talend.repository.items.importexport.handlers.model.ImportItem,
+     * boolean)
+     */
     @Override
-    public boolean checkItem(ResourcesManager resManager, ImportItem importItem, boolean overwrite) {
-        if (importItem != null) {
-            // won't display in import dialog, will be implict to import by hadoop cluster(method
-            // findRelatedItemRecord).
-            importItem.setVisible(false);
+    public boolean checkItem(ResourcesManager resManager, ImportItem itemRecord, boolean overwrite) {
+        boolean check = super.checkItem(resManager, itemRecord, overwrite);
+        if (State.ID_EXISTED.equals(itemRecord.getState())) {
+            itemRecord.setState(State.NAME_AND_ID_EXISTED);
         }
-        return super.checkItem(resManager, importItem, overwrite);
+
+        return check;
     }
+
 }
