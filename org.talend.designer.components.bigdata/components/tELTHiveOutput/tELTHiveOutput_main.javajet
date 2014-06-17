@@ -265,7 +265,15 @@ if(useExistingConn) {
         		init_<%=cid%>.execute("SET yarn.resourcemanager.address=" + <%=resourceManager%>);
 <%
 			}
-		
+
+			boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_JOBHISTORY_ADDRESS__"));
+			if(setJobHistoryAddress) {
+				String jobHistoryAddress = ElementParameterParser.getValue(previousNode,"__JOBHISTORY_ADDRESS__");
+    			%>
+				init_<%=cid%>.execute("SET mapreduce.jobhistory.address=" + <%=jobHistoryAddress%>);
+    			<%
+			}
+			
     		boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_SCHEDULER_ADDRESS__"));
     		if(setSchedulerAddress) {
     			String schedulerAddress = ElementParameterParser.getValue(previousNode,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
