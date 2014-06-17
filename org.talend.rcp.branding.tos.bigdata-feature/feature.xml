@@ -22,6 +22,10 @@
          id="org.talend.tos_feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.talend.tos.bigdata.libraries_feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.talend.rcp.branding.tos.bigdata"
          download-size="0"
