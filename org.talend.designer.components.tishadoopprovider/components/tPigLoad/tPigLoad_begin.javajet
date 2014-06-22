@@ -1,0 +1,174 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.IMetadataTable 
+	    	org.talend.core.model.metadata.types.Java2STLangTypesHelper
+	    	java.util.List
+			java.util.Map
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+
+	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
+	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	String inputFilename = ElementParameterParser.getValue(node, "__INPUT_FILENAME__");
+	String databaseName = ElementParameterParser.getValue(node, "__DATABASE_NAME__");
+	String tableName = ElementParameterParser.getValue(node, "__TABLE_NAME__");
+	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
+	String function = ElementParameterParser.getValue(node, "__LOAD__");
+	
+	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	String mapredJobTracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
+	String thriftServer = ElementParameterParser.getValue(node, "__THRIFT_SERVER__");
+	
+	List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADVANCED_PROPERTIES__");
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	
+	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
+	List<Map<String, String>> partitionFilter = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__PARTITION_FILTER__");
+
+	String previous_node="";
+	String start_node=cid;
+
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		start_node = node.getDesignSubjobStartNode().getUniqueName();
+	}
+
+%>
+	java.util.Properties props_<%=cid%> = new java.util.Properties();
+	try {
+<%
+		if(isLocal) { // LOCAL mode
+%>
+			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
+<%
+		} else { // MAPREDUCE mode
+%>
+			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
+			props_<%=cid%>.put("mapred.job.tracker", <%=mapredJobTracker%>);
+<%
+			if("HCatLoader".equals(function)) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
+%>
+				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
+<%
+			}
+			if(("HDP_1_0".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion)) && useKrb) {
+				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+				String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
+%>
+				props_<%=cid%>.put("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
+				props_<%=cid%>.put("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
+<%
+			}
+%>
+<%
+			if(hadoopProps.size() > 0){
+				for(Map<String, String> item : hadoopProps){
+%>
+					props_<%=cid%>.put(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<% 
+				} 
+			}
+%>
+			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
+<%
+		}
+%>
+		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
+<%
+	if(advProps.size() > 0){
+%>
+		StringBuilder script_<%=cid%>=new StringBuilder();
+<%
+		for(Map<String, String> item : advProps){
+%>
+		script_<%=cid%>.append("SET "+<%=item.get("PROPERTY") %>+" "+<%=item.get("VALUE") %>+";");
+<% 
+		} 
+%>
+		pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
+<%
+	}
+%>
+
+		StringBuilder sb_<%=cid%> = new StringBuilder();
+
+<%
+		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
+			if(registerJar.size() > 0){
+				for(Map<String, String> item : registerJar){
+%>
+					pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
+<% 
+				} 
+			}
+%>
+			System.setProperty("hive.metastore.local", "false");
+			System.setProperty("hive.metastore.uris", <%=thriftServer%>);
+			sb_<%=cid%>.append("<%=cid%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using org.apache.hcatalog.pig.<%=function%>()");
+<%
+		} else {
+%>
+			sb_<%=cid%>.append("<%=cid%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
+<%
+			List<IMetadataTable> metadatas = node.getMetadataList();
+			IMetadataTable metadata = null;
+			if(metadatas != null && metadatas.size() > 0) {
+				metadata = metadatas.get(0);
+			}
+			if(metadata!=null) {
+				if(metadata.getListColumns() != null && metadata.getListColumns().size() > 0) {
+%>
+					sb_<%=cid%>.append(" AS (");
+<%
+					for(int i=0; i<metadata.getListColumns().size(); i++) {
+%>
+						sb_<%=cid%>.append("<%=i!=0?", ":""%><%=metadata.getListColumns().get(i).getLabel()%>:<%=Java2STLangTypesHelper.getPigType(metadata, metadata.getListColumns().get(i).getLabel())%>");
+<%
+
+					}
+%>
+					sb_<%=cid%>.append(")");
+<%
+				}
+			}
+		}
+%>
+		sb_<%=cid%>.append(";");
+		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+<%
+		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we will have to consider the partition filter
+			if(partitionFilter.size() > 0){
+				int i = 0;
+%>
+				sb_<%=cid%> = new StringBuilder();
+				sb_<%=cid%>.append("<%=cid%>_RESULT = FILTER <%=cid%>_RESULT_TEMP BY ");
+<%
+				for(Map<String, String> item : partitionFilter){
+					if(i++ != 0) {
+%>
+						sb_<%=cid%>.append(" AND ");
+<%
+					}
+%>
+					sb_<%=cid%>.append("(" + <%=item.get("PART_NAME") %>);
+					sb_<%=cid%>.append(" == ");
+					sb_<%=cid%>.append(<%=item.get("PART_VALUE") %> + ")");
+<% 
+				}
+%>
+					sb_<%=cid%>.append(";");
+					pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+<%				
+			}
+		}
+%>
+

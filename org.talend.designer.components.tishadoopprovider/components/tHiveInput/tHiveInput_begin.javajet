@@ -1,0 +1,94 @@
+<%@ jet 
+imports="
+    	org.talend.core.model.process.INode 
+    	org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.builder.database.ExtractMetaDataUtils
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType		
+		java.util.List
+		java.util.Map
+		"
+%>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/HelpClass.javajet"%>
+	
+	<%
+	class DBInputBeginUtil extends DefaultDBInputUtil{
+	
+		public void setURL(INode node) {
+			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
+			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+			boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
+			boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
+			List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+			
+			if(("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode))) {
+%>
+				if(true) {
+					throw new Exception("The Hive version and the connection mode are not compatible together. Please check your component configuration.");
+				}
+<%
+			}
+			
+			if(hadoopProps.size() > 0){
+				for(Map<String, String> item : hadoopProps){
+%>
+				System.setProperty(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<%
+				} 
+			}
+			
+			if(setMapredJT) {
+				String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
+%>
+				System.setProperty("mapred.job.tracker", <%=mapredJT%>);
+<%
+			}
+			
+			if(setNamenode) {
+				String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+%>
+				System.setProperty("fs.default.name", <%=namenode%>);
+<%
+			}
+			
+			if("EMBEDDED".equals(connectionMode)) {
+%>
+				System.setProperty("hive.metastore.local", "false");
+				System.setProperty("hive.metastore.uris", "thrift://" + <%=dbhost%> + ":" + <%=dbport%>);
+				System.setProperty("hive.metastore.execute.setugi", "true");
+				String url_<%=cid%> = "jdbc:hive://";
+<%
+			} else {
+%>
+				String url_<%=cid%> = "jdbc:hive://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+<%
+			}
+		}
+		
+		public String getDirverClassName(INode node){
+			return "org.apache.hadoop.hive.jdbc.HiveDriver";
+		}
+		
+	}//end class
+	
+	dbInputBeginUtil = new DBInputBeginUtil();
+%>
+	System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
+<% 
+	CodeGeneratorArgument codeGenArg = (CodeGeneratorArgument) argument; 
+	INode hiveNode = (INode)codeGenArg.getArgument(); 
+	boolean setTempPath = "true".equals(ElementParameterParser.getValue(hiveNode, "__SET_TEMP_PATH__"));  
+	if(setTempPath) {  
+		String tempPath = ElementParameterParser.getValue(hiveNode, "__TEMP_PATH__");  
+%>  
+		System.setProperty("java.io.tmpdir", <%=tempPath%>);  
+<%  
+	}  
+%> 
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/AbstractDBInputBegin.javajet"%>

@@ -1,0 +1,94 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.List
+		java.util.Map
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.types.Java2STLangTypesHelper
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+
+	String previous_node="";
+	String start_node="";
+
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		previous_node = node.getIncomingConnections().get(0).getSource().getUniqueName();
+		start_node = node.getDesignSubjobStartNode().getUniqueName();
+	}
+	
+	String resultFile = ElementParameterParser.getValue(node, "__OUTPUT_FILENAME__");
+	String function = ElementParameterParser.getValue(node, "__STORE__");
+	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
+	boolean rmResultDir = "true".equals(ElementParameterParser.getValue(node, "__RM_OUTPUT__"));
+	
+	String database = ElementParameterParser.getValue(node, "__DATABASE_NAME__");
+	String table = ElementParameterParser.getValue(node, "__TABLE_NAME__");
+	String partitionFilter = ElementParameterParser.getValue(node, "__PARTITION_KEYVALUE__");
+	
+	String thriftServer = ElementParameterParser.getValue(node, "__THRIFT_SERVER__");
+	
+	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
+	
+%>
+	<%if(rmResultDir && !("HCatStorer".equals(function))){%>
+		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
+            pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
+        }
+	<%}%>
+
+	StringBuilder sb_<%=cid%> = new StringBuilder();
+<%
+	if("HCatStorer".equals(function)) {
+		if(registerJar.size() > 0){
+			for(Map<String, String> item : registerJar){
+%>
+				pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
+<% 
+			} 
+		}
+%>
+		System.setProperty("hive.metastore.local", "false");
+		System.setProperty("hive.metastore.uris", <%=thriftServer%>);
+		System.setProperty("hadoop.clientside.fs.operations", "true");
+		System.setProperty("hive.metastore.execute.setugi", "true");
+		sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' using org.apache.hcatalog.pig.<%=function%>('"+<%=partitionFilter%>+"'");
+<%
+		List<IMetadataTable> metadatas = node.getMetadataList();
+		IMetadataTable metadata = null;
+		if(metadatas != null && metadatas.size() > 0) {
+			metadata = metadatas.get(0);
+		}
+		if(metadata!=null) {
+			if(metadata.getListColumns() != null && metadata.getListColumns().size() > 0) {
+%>
+				sb_<%=cid%>.append(" , '");
+<%
+				for(int i=0; i<metadata.getListColumns().size(); i++) {
+%>
+					sb_<%=cid%>.append("<%=i!=0?", ":""%><%=metadata.getListColumns().get(i).getLabel()%>:<%=Java2STLangTypesHelper.getPigType(metadata, metadata.getListColumns().get(i).getLabel())%>");
+<%
+
+				}
+%>
+				sb_<%=cid%>.append("'");
+<%
+			}
+		}
+%>
+		sb_<%=cid%>.append(");");
+<%
+	} else {
+%>
+		sb_<%=cid%>.append("STORE <%=previous_node%>_RESULT INTO '"+<%=resultFile%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
+<%
+	}
+%>
+
+	pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());

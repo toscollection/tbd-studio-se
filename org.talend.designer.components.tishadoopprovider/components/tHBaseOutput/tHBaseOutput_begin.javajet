@@ -1,0 +1,178 @@
+<%@ jet 
+imports="
+		java.util.List
+		java.util.Map
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.process.INode
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		"
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
+	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
+	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+	class GenerateCode {
+		
+		public void generateCreateTable(INode node) {
+			List<Map<String,String>> familyParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILY_PARAMETERS__");
+			String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+			String cid = node.getUniqueName();
+%>
+			org.apache.hadoop.hbase.HTableDescriptor tableDes_<%=cid%> = new org.apache.hadoop.hbase.HTableDescriptor(<%=table_name%>);
+			org.apache.hadoop.hbase.HColumnDescriptor family_<%=cid%> = null;
+<%
+			for(int familyParamNum=0;familyParamNum<familyParameters.size();familyParamNum++){
+				Map<String,String> mapParamLine = familyParameters.get(familyParamNum);
+				String family_name = mapParamLine.get("FAMILY_NAME");
+%>
+				family_<%=cid%> = new org.apache.hadoop.hbase.HColumnDescriptor(<%=family_name%>);
+<%
+				String family_inmemory = mapParamLine.get("FAMILY_INMEMORY");
+				String family_blockcacheenabled = mapParamLine.get("FAMILY_BLOCKCACHEENABLED");
+				String family_bloomfiltertype = mapParamLine.get("FAMILY_BLOOMFILTERTYPE");
+				String family_blocksize = mapParamLine.get("FAMILY_BLOCKSIZE");
+				String family_compactioncompressiontype = mapParamLine.get("FAMILY_COMPACTIONCOMPRESSIONTYPE");
+				String family_compressiontype = mapParamLine.get("FAMILY_COMPRESSIONTYPE");
+				String family_maxversions = mapParamLine.get("FAMILY_MAXVERSIONS");
+				String family_scope = mapParamLine.get("FAMILY_SCOPE");
+				String family_timetolive = mapParamLine.get("FAMILY_TIMETOLIVE");
+				if(family_inmemory!=null&&!"".equals(family_inmemory)){
+%>
+					family_<%=cid%>.setInMemory(<%=family_inmemory%>);
+<%
+				}
+				if(family_blockcacheenabled!=null&&!"".equals(family_blockcacheenabled)){
+%>
+					family_<%=cid%>.setBlockCacheEnabled(<%=family_blockcacheenabled%>);
+<%
+				}
+				if(family_bloomfiltertype!=null&&!"".equals(family_bloomfiltertype)){
+%>
+					family_<%=cid%>.setBloomFilterType(org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>);
+<%
+				}
+				if(family_blocksize!=null&&!"".equals(family_blocksize)){
+%>
+					family_<%=cid%>.setBlocksize(<%=family_blocksize%>);
+<%
+				}
+				if(family_compactioncompressiontype!=null&&!"".equals(family_compactioncompressiontype)){
+%>
+					family_<%=cid%>.setCompactionCompressionType( org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>);
+<%
+				}
+				if(family_compressiontype!=null&&!"".equals(family_compressiontype)){
+%>
+					family_<%=cid%>.setCompressionType( org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>);
+<%
+				}
+				if(family_maxversions!=null&&!"".equals(family_maxversions)){
+%>
+					family_<%=cid%>.setMaxVersions(<%=family_maxversions%>);
+<%
+				}
+				if(family_scope!=null&&!"".equals(family_scope)){
+%>
+					family_<%=cid%>.setScope(<%=family_scope%>);
+<%
+				}
+				if(family_timetolive!=null&&!"".equals(family_timetolive)){
+%>
+					family_<%=cid%>.setTimeToLive(<%=family_timetolive%>);
+<%
+				}
+%>
+				tableDes_<%=cid%>.addFamily(family_<%=cid%>);
+<%
+			}//for(int familyParamNum=0;familyParamNum<familyParameters.size();familyParamNum++)
+%>
+		admin_<%=cid%>.createTable(tableDes_<%=cid%>);
+<%
+		}
+		public void generateDropTable(INode node){
+			String cid = node.getUniqueName();
+			String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+%>
+			if(admin_<%=cid %>.isTableEnabled(<%=table_name%>)){
+				admin_<%=cid %>.disableTable(<%=table_name%>);
+			}
+			admin_<%=cid %>.deleteTable(<%=table_name%>);
+<%
+		}
+	}
+	GenerateCode generateCode = new GenerateCode();
+%>
+int nb_line_<%=cid%> = 0;
+org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
+try{
+<% 
+// not use existing connection
+if(!"true".equals(useExistingConn)){
+%>
+	conn_<%=cid %> = org.apache.hadoop.hbase.HBaseConfiguration.create();
+	conn_<%=cid %>.clear();
+	conn_<%=cid %>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
+	conn_<%=cid %>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
+	conn_<%=cid %>.set("hbase.cluster.distributed","true"); 
+<%
+	List<Map<String, String>> properties =
+        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
+   	for(int i=0;i<properties.size();i++){
+   		Map<String, String> map = properties.get(i);
+   		String property = map.get("PROPERTY");
+   		String value= map.get("VALUE");
+%>
+		conn_<%=cid %>.set(<%=property%>,<%=value%>);
+<%
+   }
+}else{// use existing connection
+	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+	String conn = "conn_" + connection;
+%>
+	conn_<%=cid %> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
+	if(conn_<%=cid %> == null){
+		throw new RuntimeException("<%=cid %>'s connection is null!");
+	}
+<%
+}
+
+String table_action = ElementParameterParser.getValue(node, "__TABLE_ACTION__");
+if(!"NONE".equals(table_action)){
+%>
+	org.apache.hadoop.hbase.client.HBaseAdmin admin_<%=cid %> = new org.apache.hadoop.hbase.client.HBaseAdmin(conn_<%=cid %>);
+<%
+}
+if("NONE".equals(table_action)){
+}else if("CREATE".equals(table_action)){
+	generateCode.generateCreateTable(node);
+}else if("DROP_CREATE".equals(table_action)){
+	generateCode.generateDropTable(node);
+	generateCode.generateCreateTable(node);
+}else if("CREATE_IF_NOT_EXISTS".equals(table_action)){
+%>
+	boolean tableExist_<%=cid %> = admin_<%=cid %>.tableExists(<%=table_name%>);
+	if(!tableExist_<%=cid %>){
+<%
+		generateCode.generateCreateTable(node);
+%>
+	}
+<%
+}else if("DROP_IF_EXISTS_AND_CREATE".equals(table_action)){
+%>
+	boolean tableExist_<%=cid %> = admin_<%=cid %>.tableExists(<%=table_name%>);
+	if(tableExist_<%=cid %>){
+<%
+		generateCode.generateDropTable(node); 
+%>
+	}
+<%
+	generateCode.generateCreateTable(node);
+}
+%>
+org.apache.hadoop.hbase.client.HTable table_<%=cid%> = null;
+table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(conn_<%=cid %>,<%=table_name%>);
+byte[] temp_<%=cid %> = null;

@@ -1,0 +1,166 @@
+<COMPONENT>
+ 	<HEADER
+    	PLATEFORM="ALL"
+       	SERIAL=""
+      	VERSION="0.101"
+       	STATUS="ALPHA"
+		COMPATIBILITY="ALL"
+       	AUTHOR="Talend"
+ 		RELEASE_DATE="20070210A"
+    	STARTABLE="false"
+  		>
+    	<SIGNATURE></SIGNATURE>
+  	</HEADER>
+
+  	<FAMILIES>
+    	<FAMILY>File/Hadoop</FAMILY>
+		<FAMILY>Big Data/HDFS</FAMILY>
+  	</FAMILIES>
+
+  	<DOCUMENTATION>
+    	<URL/>
+  	</DOCUMENTATION>
+
+  	<CONNECTORS>
+	    <CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="1"/>
+	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="0"/>
+	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_OK"/>
+	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
+	    <CONNECTOR CTYPE="RUN_IF"/>
+  	</CONNECTORS>
+
+  	<PARAMETERS>
+		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" REQUIRED="true"
+				NUM_ROW="3">
+			<DEFAULT />
+		</PARAMETER>
+	    <PARAMETER
+	      NAME="USE_EXISTING_CONNECTION"
+	      FIELD="CHECK"
+	      NUM_ROW="5"
+	    >
+	      	<DEFAULT>false</DEFAULT>
+	    </PARAMETER>    
+	
+	<PARAMETER
+      NAME="DESTINATION"
+      FIELD="TEXT"
+      NUM_ROW="2"
+      REQUIRED="true"
+      SHOW="false"
+    >
+      <DEFAULT></DEFAULT>
+    </PARAMETER>
+
+		<PARAMETER
+	      NAME="CONNECTION"
+	      FIELD="COMPONENT_LIST"
+	      FILTER="tHDFSConnection"
+	      NUM_ROW="5"
+	      SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
+	      DYNAMIC_SETTINGS="true"
+	    />
+	    <PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+			<ITEMS DEFAULT="HDP_1_0">
+				<ITEM NAME="HDP_1_0" VALUE="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hdp-dummy.jar" />
+				<ITEM NAME="APACHE_1_0_0" VALUE="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" />
+				<ITEM NAME="APACHE_0_20_204" VALUE="hadoop-core-0.20.204.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar" />
+				<ITEM NAME="Cloudera_0.20_CDH3U1" VALUE="hadoop-0.20.2-cdh3u1-core.jar;commons-logging-1.0.4.jar" />
+				<ITEM NAME="APACHE_0_20_2" VALUE="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar" />
+				<ITEM NAME="MapR" VALUE="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar" />
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER
+			NAME="USE_KRB"
+			FIELD="CHECK"
+			NUM_ROW="12"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND ((DB_VERSION=='HDP_1_0') OR (DB_VERSION=='APACHE_1_0_0'))"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="NAMENODE_PRINCIPAL" FIELD="TEXT" REQUIRED="true" NUM_ROW="12" SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND (DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true'">
+			<DEFAULT>"nn/_HOST@EXAMPLE.COM"</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="20" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+		  	<DEFAULT IF="(DB_VERSION != 'MapR')">"hdfs://localhost:9000/"</DEFAULT>
+			<DEFAULT IF="(DB_VERSION == 'MapR')">"maprfs:///"</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="USERNAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" NOT_SHOW_IF="((DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND USE_KRB=='true') OR USE_EXISTING_CONNECTION == 'true'">
+	      	<DEFAULT>"anonymous"</DEFAULT>
+	    </PARAMETER>
+	    
+	    <PARAMETER NAME="GROUP" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR'))">
+	      	<DEFAULT>"supergroup"</DEFAULT>
+	    </PARAMETER>
+		
+		<PARAMETER NAME="FILENAME" FIELD="TEXT" NUM_ROW="40" REQUIRED="true">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="FILE_ACTION" FIELD="CLOSED_LIST" NUM_ROW="50">
+	      	<ITEMS DEFAULT="CREATE">
+				<ITEM NAME="CREATE" VALUE="CREATE"/>
+				<ITEM NAME="OVERWRITE" VALUE="OVERWRITE"/>
+				<ITEM NAME="APPEND" VALUE="APPEND"/>
+			</ITEMS>
+	    </PARAMETER>
+
+		<PARAMETER NAME="ROWSEPARATOR" FIELD="TEXT" NUM_ROW="50" REQUIRED="true">
+            <DEFAULT>"\n"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="FIELDSEPARATOR" FIELD="TEXT" NUM_ROW="50" REQUIRED="true">
+            <DEFAULT>";"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="CUSTOM_ENCODING" FIELD="CHECK" NUM_ROW="55" REQUIRED="true">
+          <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="60" REQUIRED="true" SHOW_IF="CUSTOM_ENCODING == 'true'">
+            <DEFAULT>"ISO-8859-15"</DEFAULT>
+        </PARAMETER>
+  	</PARAMETERS>
+  	
+   	<ADVANCED_PARAMETERS>
+		<PARAMETER NAME="HADOOP_ADVANCED_PROPERTIES" FIELD="TABLE" REQUIRED="false" NUM_ROW="1" NB_LINES="3" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+			<ITEMS>
+				<ITEM NAME="PROPERTY" />
+				<ITEM NAME="VALUE" />
+			</ITEMS>
+		</PARAMETER>  
+   	</ADVANCED_PARAMETERS>
+
+	<CODEGENERATION>
+		<IMPORTS>
+			<IMPORT NAME="apache-hadoop" MODULE="hadoop-core-1.0.0.jar" REQUIRED="false" />
+			
+			<IMPORT NAME="apache-hadoop" MODULE="hadoop-core-0.20.204.0.jar" REQUIRED="false" />
+			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.1.1.jar" REQUIRED="false" />
+			<IMPORT NAME="commons-configuration" MODULE="commons-configuration-1.6.jar" REQUIRED="false" />
+			<IMPORT NAME="commons-lang" MODULE="commons-lang-2.4.jar" REQUIRED="false" />
+			
+			<IMPORT NAME="cloudera-hadoop" MODULE="hadoop-0.20.2-cdh3u1-core.jar" REQUIRED="false" />
+	        <IMPORT NAME="cloudera-commons-logging" MODULE="commons-logging-1.0.4.jar" REQUIRED="false" />
+	        
+	        <IMPORT NAME="apache-hadoop-0-20-2" MODULE="hadoop-0.20.2-core.jar" REQUIRED="false" />
+	        
+	        <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED="false" />
+	        <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED="false" />
+	        <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED="false" />
+	        <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND (USE_KRB=='true') AND (USE_EXISTING_CONNECTION=='false')" />
+			
+			<IMPORT NAME="jetty-util" MODULE="jetty-util-6.1.26.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false')" />
+			<IMPORT NAME="jersey-core" MODULE="jersey-core-1.8.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false')" />
+		</IMPORTS>
+   	</CODEGENERATION>
+
+   	<RETURNS/>
+
+</COMPONENT>

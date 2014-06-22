@@ -1,0 +1,151 @@
+<%@ jet 
+	imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.EConnectionType
+    org.talend.core.model.metadata.IMetadataTable 
+    org.talend.core.model.process.IConnectionCategory
+    org.talend.core.model.process.IConnection
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.ElementParameterParser
+	java.util.Map 
+    java.util.List 
+	"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+		
+	String fileName = ElementParameterParser.getValue(node, "__FILENAME__");
+	
+	//boolean fileAction = "true".equals(ElementParameterParser.getValue(node, "__FILE_ACTION__"));
+	String fileAction = ElementParameterParser.getValue(node, "__FILE_ACTION__");
+	
+	boolean customEncoding="true".equals( ElementParameterParser.getValue(node,"__CUSTOM_ENCODING__"));
+	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
+	
+	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+	IConnection inConn = null;
+	IMetadataTable metadata = null;
+	
+	if(inConns!=null && inConns.size()> 0) {
+		inConn = inConns.get(0);
+		metadata = inConn.getMetadataTable();
+	}
+	
+	String user = null;
+	%>
+	<%
+	if (metadata!=null) {    
+		%>
+		String username_<%=cid%> = "";
+		org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
+		<%
+		if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
+			String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+			String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+			%>
+			org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+			conf_<%=cid%>.set("fs.default.name", <%=fsDefaultName%>);
+			<%
+
+			if(!(hadoopVersion.startsWith("hadoop-core-1.0.0.jar") && useKrb)) {
+				user = ElementParameterParser.getValue(node, "__USERNAME__");
+			} else {
+%>
+				conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+			}
+			if(hadoopProps.size() > 0){
+				for(Map<String, String> item : hadoopProps){
+				%>
+					conf_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+				<% 
+				} 
+			}
+			if(hadoopVersion.startsWith("hadoop-0.20.2-core.jar") || hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){
+				String group = ElementParameterParser.getValue(node, "__GROUP__");
+			%>
+				conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+			<%
+			}else{
+			%>
+				username_<%=cid%> = <%=user%>;
+				if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+				}else{
+					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("fs.default.name")),conf_<%=cid%>,username_<%=cid%>);
+				}	
+			<%
+			}
+		} else { // We re use the existing connection, coming from the component learned.
+			String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
+			%>
+			org.apache.hadoop.conf.Configuration conf_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("conn_<%=connectionSid%>");
+			<%
+			List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+		    for(INode targetNode : nodes){
+		    	if (targetNode.getUniqueName().equals(connectionSid)) {
+			      	String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+				boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
+				String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
+			      	if(hadoopVersion.startsWith("hadoop-0.20.2-core.jar") || hadoopVersion.startsWith("hadoop-0.20.2-dev-core.jar")){
+				   	%>
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+					<%
+				  	}else{
+						if(!(hadoopVersion.startsWith("hadoop-core-1.0.0.jar") && useKrb)) {
+							user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
+						} else {
+%>
+							conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+						}
+				  	%>
+				  		username_<%=cid%> = <%=user%>;
+						if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+							fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+						}else{
+							fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("fs.default.name")),conf_<%=cid%>,username_<%=cid%>);
+						}
+				  	<%
+				  	}
+			      	break;
+			    }
+		    }
+		}
+		%>
+		org.apache.hadoop.fs.Path path_<%=cid%> = new org.apache.hadoop.fs.Path(<%=fileName%>);
+		org.apache.hadoop.fs.FSDataOutputStream fsDataOutputStream_<%=cid%> = null;
+		java.io.Writer out<%=cid%> = null;
+		<%if("APPEND".equals(fileAction)){%>
+			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.append(path_<%=cid%>);
+		<%}else{//Create and Overwrite%>
+			fsDataOutputStream_<%=cid%> = fs_<%=cid%>.create(path_<%=cid%>, <%="CREATE".equals(fileAction)?false:true%>);
+		<%}%>
+		out<%=cid%>=new java.io.BufferedWriter(new java.io.OutputStreamWriter(fsDataOutputStream_<%=cid%><%if(customEncoding){%>,<%=encoding%><%}%>));
+	<%
+	}
+	%>
+
+	
+<%
+	if(node.isVirtualGenerateNode() && metadata!=null){
+		if (inConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+			String origin = ElementParameterParser.getValue(node, "__DESTINATION__");
+			cid = origin;
+			String con_name = org.talend.core.model.utils.NodeUtil.getPrivateConnClassName(inConn);
+%>
+			List<<%=con_name%>Struct> <%=con_name%>_list_<%=cid%>= new java.util.ArrayList<<%=con_name%>Struct>();
+<%
+		}
+	}
+%>
