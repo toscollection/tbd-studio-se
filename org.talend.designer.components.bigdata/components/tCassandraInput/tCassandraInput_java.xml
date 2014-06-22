@@ -1,0 +1,526 @@
+<COMPONENT>
+	<HEADER
+	    PLATEFORM="ALL"
+	    SERIAL=""
+	    VERSION="0.102"
+	    STATUS="ALPHA"
+	    COMPATIBILITY="ALL"
+	    AUTHOR="Talend"
+	    RELEASE_DATE="20120706A"
+	    STARTABLE="true"
+  	>
+    	<SIGNATURE/>
+  	</HEADER>
+	<FAMILIES>
+		<FAMILY>Databases/Cassandra</FAMILY>
+		<FAMILY>Big Data/Cassandra</FAMILY>
+	</FAMILIES>
+	<DOCUMENTATION>
+		<URL />
+	</DOCUMENTATION>
+	<CONNECTORS>
+		<CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>
+	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
+	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_OK"/>
+	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
+	    <CONNECTOR CTYPE="RUN_IF"/>
+	</CONNECTORS>
+	<PARAMETERS>
+        <PARAMETER
+            NAME="MAPPING"
+            FIELD="MAPPING_TYPE"
+            NUM_ROW="1"
+            SHOW="false"
+        >
+            <DEFAULT>cassandra_id</DEFAULT>
+        </PARAMETER>
+		<PARAMETER
+			NAME="USE_EXISTING_CONNECTION"
+			FIELD="CHECK"
+			NUM_ROW="2"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="CONNECTION"
+			FIELD="COMPONENT_LIST"
+			REQUIRED="true" FILTER="tCassandraConnection"
+			NUM_ROW="2"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
+		/>
+		<PARAMETER
+            NAME="DB_VERSION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="3"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+            <ITEMS DEFAULT="CASSANDRA_1_1_2">
+                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
+                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
+                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
+            </ITEMS>
+        </PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="HOST"
+			REQUIRED="true"
+			NUM_ROW="5"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="PORT"
+			REQUIRED="true"
+			NUM_ROW="5"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>"9160"</DEFAULT>
+		</PARAMETER>
+		<!--
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="CLUSTER"
+			NUM_ROW="6"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		-->
+		<PARAMETER
+			NAME="REQUIRED_AUTHENTICATION"
+			FIELD="CHECK"
+			NUM_ROW="10"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="USERNAME"
+			REQUIRED="true"
+			NUM_ROW="11"
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="PASSWORD"
+			NAME="PASSWORD"
+			REQUIRED="true"
+			NUM_ROW="11"
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="KEY_SPACE"
+			REQUIRED="true"
+			NUM_ROW="15"
+			GROUP="KEYSPACE_CONFIGURATION"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COLUMN_FAMILY"
+			REQUIRED="true"
+			NUM_ROW="16"
+			GROUP="COLUMN_FAMILY_CONFIGURATION"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+            NAME="COLUMN_FAMILY_TYPE"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="16"
+            GROUP="COLUMN_FAMILY_CONFIGURATION"
+        >
+            <ITEMS DEFAULT="STANDARD">
+                <ITEM NAME="STANDARD" VALUE="STANDARD" />
+                <ITEM NAME="SUPER" VALUE="SUPER"/>
+            </ITEMS>
+        </PARAMETER>
+		<PARAMETER
+			FIELD="CHECK"
+			NAME="INC_KEY"
+			NUM_ROW="20"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="COLUMN_LIST"
+			NAME="KEY_COLUMN"
+			NUM_ROW="20"
+			SHOW_IF="(INC_KEY == 'true')"
+		/>
+        <PARAMETER
+            FIELD="OPENED_LIST"
+            NAME="ROW_KEY_TYPE"
+            NUM_ROW="21"
+            REQUIRED="true"
+             >
+            <ITEMS DEFAULT="STRING">
+                <ITEM NAME="INTEGER" VALUE="Integer" />
+                <ITEM NAME="LONG" VALUE="Long" />
+                <ITEM NAME="DOUBLE" VALUE="Double" />
+                <ITEM NAME="FLOAT" VALUE="Float" />
+                <ITEM NAME="CHARACTER" VALUE="Character" />
+                <ITEM NAME="STRING" VALUE="String" />
+                <ITEM NAME="DATE" VALUE="java.util.Date" />
+                <ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
+                <ITEM NAME="BOOLEAN" VALUE="Boolean" />
+                <ITEM NAME="OBJECT" VALUE="Object" />
+                <ITEM NAME="SHORT" VALUE="Short" />
+                <ITEM NAME="BIGDECIMAL" VALUE="BigDecimal" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="CLOSED_LIST"
+            NAME="ROW_KEY_C_TYPE"
+            NUM_ROW="21"
+            REQUIRED="true"
+             >
+            <ITEMS DEFAULT="DEFAULT">
+                <ITEM NAME="DEFAULT" VALUE="Default" />
+                <!--ITEM NAME="BOOLEANTYPE" VALUE="BooleanType" SHOW_IF="ROW_KEY_TYPE == 'BOOLEAN'" /-->
+                <!--ITEM NAME="BYTESTYPE" VALUE="BytesType" SHOW_IF="ROW_KEY_TYPE == 'BYTE_ARRAY'" /-->
+                <!--ITEM NAME="DATETYPE" VALUE="DateType" SHOW_IF="ROW_KEY_TYPE == 'DATE'" /-->
+                <!--ITEM NAME="DECIMALTYPE" VALUE="DecimalType" SHOW_IF="ROW_KEY_TYPE == 'BIGDECIMAL'" /-->
+                <!--ITEM NAME="DOUBLETYPE" VALUE="DoubleType" SHOW_IF="ROW_KEY_TYPE == 'DOUBLE'" /-->
+                <!--ITEM NAME="FLOATTYPE" VALUE="FloatType" SHOW_IF="ROW_KEY_TYPE == 'FLOAT'" /-->
+                <!--ITEM NAME="INT32TYPE" VALUE="Int32Type" SHOW_IF="ROW_KEY_TYPE == 'INTEGER'" /-->
+                <!--ITEM NAME="LONGTYPE" VALUE="LongType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" /-->
+                <ITEM NAME="COUNTERCOLUMNTYPE" VALUE="CounterColumnType" SHOW_IF="ROW_KEY_TYPE == 'LONG'" />
+                <ITEM NAME="INTEGERTYPE" VALUE="IntegerType" SHOW_IF="ROW_KEY_TYPE == 'OBJECT'" />
+                <!--ITEM NAME="UTF8TYPE" VALUE="UTF8Type" SHOW_IF="ROW_KEY_TYPE == 'STRING'" /-->
+                <ITEM NAME="ASCIITYPE" VALUE="AsciiType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+                <ITEM NAME="UUIDTYPE" VALUE="UUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType" SHOW_IF="ROW_KEY_TYPE == 'STRING'" />
+            </ITEMS>
+        </PARAMETER>
+		<PARAMETER
+            FIELD="CHECK"
+            NAME="INC_SUPER_KEY"
+            NUM_ROW="22"
+            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="COLUMN_LIST"
+            NAME="SUPER_KEY_COLUMN"
+            NUM_ROW="22"
+            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'true')"
+        />
+    	<PARAMETER
+        	FIELD="OPENED_LIST"
+        	NAME="SUPER_COLUMN_TYPE"
+        	NUM_ROW="23"
+        	REQUIRED="true"
+        	SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')">
+    		<ITEMS DEFAULT="STRING">
+    			<ITEM NAME="INTEGER" VALUE="Integer" />
+                <ITEM NAME="LONG" VALUE="Long" />
+                <ITEM NAME="DOUBLE" VALUE="Double" />
+                <ITEM NAME="FLOAT" VALUE="Float" />
+                <ITEM NAME="CHARACTER" VALUE="Character" />
+                <ITEM NAME="STRING" VALUE="String" />
+                <ITEM NAME="DATE" VALUE="java.util.Date" />
+                <ITEM NAME="BYTE_ARRAY" VALUE="byte[]" />
+                <ITEM NAME="BOOLEAN" VALUE="Boolean" />
+                <ITEM NAME="OBJECT" VALUE="Object" />
+                <ITEM NAME="SHORT" VALUE="Short" />
+                <ITEM NAME="BIGDECIMAL" VALUE="BigDecimal" />
+    		</ITEMS>
+    	</PARAMETER>
+        <PARAMETER
+            FIELD="CLOSED_LIST"
+            NAME="SUPER_COLUMN_C_TYPE"
+            NUM_ROW="23"
+            REQUIRED="true"
+            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER')">
+            <ITEMS DEFAULT="DEFAULT">
+                <ITEM NAME="DEFAULT" VALUE="Default" />
+                <!--ITEM NAME="BOOLEANTYPE" VALUE="BooleanType" SHOW_IF="SUPER_COLUMN_TYPE == 'BOOLEAN'" /-->
+                <!--ITEM NAME="BYTESTYPE" VALUE="BytesType" SHOW_IF="SUPER_COLUMN_TYPE == 'BYTE_ARRAY'" /-->
+                <!--ITEM NAME="DATETYPE" VALUE="DateType" SHOW_IF="SUPER_COLUMN_TYPE == 'DATE'" /-->
+                <!--ITEM NAME="DECIMALTYPE" VALUE="DecimalType" SHOW_IF="SUPER_COLUMN_TYPE == 'BIGDECIMAL'" /-->
+                <!--ITEM NAME="DOUBLETYPE" VALUE="DoubleType" SHOW_IF="SUPER_COLUMN_TYPE == 'DOUBLE'" /-->
+                <!--ITEM NAME="FLOATTYPE" VALUE="FloatType" SHOW_IF="SUPER_COLUMN_TYPE == 'FLOAT'" /-->
+                <!--ITEM NAME="INT32TYPE" VALUE="Int32Type" SHOW_IF="SUPER_COLUMN_TYPE == 'INTEGER'" /-->
+                <!--ITEM NAME="LONGTYPE" VALUE="LongType" SHOW_IF="SUPER_COLUMN_TYPE == 'LONG'" /-->
+                <ITEM NAME="COUNTERCOLUMNTYPE" VALUE="CounterColumnType" SHOW_IF="SUPER_COLUMN_TYPE == 'LONG'" />
+                <ITEM NAME="INTEGERTYPE" VALUE="IntegerType" SHOW_IF="SUPER_COLUMN_TYPE == 'OBJECT'" />
+                <!--ITEM NAME="UTF8TYPE" VALUE="UTF8Type" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" /-->
+                <ITEM NAME="ASCIITYPE" VALUE="AsciiType" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" />
+                <ITEM NAME="UUIDTYPE" VALUE="UUIDType" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" />
+                <ITEM NAME="TIMEUUIDTYPE" VALUE="TimeUUIDType" SHOW_IF="SUPER_COLUMN_TYPE == 'STRING'" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="CHECK"
+            NAME="SPECIFY_KEYS"
+            NUM_ROW="24"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="ROW_KEYS"
+            REQUIRED="false"
+            NUM_ROW="25"
+            SHOW_IF="(SPECIFY_KEYS == 'true')"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT></DEFAULT>
+        </PARAMETER>
+		<PARAMETER
+            FIELD="TEXT"
+            NAME="KEY_START"
+            REQUIRED="false"
+            NUM_ROW="25"
+            SHOW_IF="(SPECIFY_KEYS == 'false')"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT></DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="KEY_END"
+            REQUIRED="false"
+            NUM_ROW="25"
+            SHOW_IF="(SPECIFY_KEYS == 'false')"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT></DEFAULT>
+        </PARAMETER>
+		<PARAMETER
+            FIELD="TEXT"
+            NAME="KEY_LIMIT"
+            REQUIRED="true"
+            NUM_ROW="26"
+            GROUP="QUERY_CONFIGURATION"
+            SHOW_IF="(SPECIFY_KEYS == 'false')"
+        >
+            <DEFAULT>1000</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="CHECK"
+            NAME="SPECIFY_COLUMNS"
+            NUM_ROW="28"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="COLUMNS"
+            REQUIRED="false"
+            NUM_ROW="29"
+            SHOW_IF="(SPECIFY_COLUMNS == 'true')"
+            GROUP="QUERY_CONFIGURATION"
+        >
+            <DEFAULT></DEFAULT>
+        </PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COLUMN_START"
+			REQUIRED="false"
+			NUM_ROW="30"
+			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
+		    GROUP="QUERY_CONFIGURATION"
+		>
+			<DEFAULT></DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COLUMN_END"
+			REQUIRED="false"
+			NUM_ROW="30"
+			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
+            GROUP="QUERY_CONFIGURATION"
+		>
+			<DEFAULT></DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COLUMN_LIMIT"
+			REQUIRED="true"
+			NUM_ROW="32"
+			SHOW_IF="(SPECIFY_COLUMNS == 'false')"
+            GROUP="QUERY_CONFIGURATION"
+		>
+			<DEFAULT>1000</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="SCHEMA_FLOW"
+			FIELD="SCHEMA_TYPE"
+			NUM_ROW="35"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+	</PARAMETERS>
+	<CODEGENERATION>
+		<IMPORTS>
+            <!-- Cassandra 1.1.2 -->
+            <IMPORT 
+                MODULE="hector-core-1.1-4.jar" 
+                NAME="hector-core-1.1-4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="apache-cassandra-1.1.2.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.1.2.jar" 
+                NAME="apache-cassandra-1.1.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="apache-cassandra-thrift-1.1.2.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.1.2.jar" 
+                NAME="apache-cassandra-thrift-1.1.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="slf4j-api-1.6.1.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" 
+                NAME="slf4j-api-1.6.1"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="slf4j-log4j12-1.6.1.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" 
+                NAME="slf4j-log4j12-1.6.1"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="log4j-1.2.16.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" 
+                NAME="log4j-1.2.16"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="libthrift-0.7.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar" 
+                NAME="libthrift-0.7.0"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="guava-12.0.1.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-12.0.1.jar" 
+                NAME="guava-12.0.1"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="commons-lang-2.6.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
+                NAME="commons-lang-2.6"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <!-- Cassandra 1.2.2 -->
+            <IMPORT 
+                MODULE="hector-core-1.1-4.jar" 
+                NAME="hector-core-1.1-4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="apache-cassandra-1.2.2.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.2.2.jar" 
+                NAME="apache-cassandra-1.2.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="apache-cassandra-thrift-1.2.2.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.2.2.jar" 
+                NAME="apache-cassandra-thrift-1.2.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="slf4j-api-1.7.2.jar" 
+                NAME="slf4j-api-1.7.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="slf4j-log4j12-1.7.2.jar" 
+                NAME="slf4j-log4j12-1.7.2"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="log4j-1.2.16.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" 
+                NAME="log4j-1.2.16"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="libthrift-0.7.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar" 
+                NAME="libthrift-0.7.0"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="guava-13.0.1.jar" 
+                NAME="guava-13.0.1"
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="commons-lang-2.6.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
+                NAME="commons-lang-2.6"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <!-- Cassandra 2.0.0 -->
+            <IMPORT 
+                MODULE="hector-core-1.1-4.jar" 
+                NAME="hector-core-1.1-4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="apache-cassandra-2.0.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-2.0.0.jar" 
+                NAME="apache-cassandra-2.0.0"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="apache-cassandra-thrift-2.0.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-2.0.0.jar" 
+                NAME="apache-cassandra-thrift-2.0.0"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="slf4j-api-1.7.2.jar" 
+                NAME="slf4j-api-1.7.2"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="slf4j-log4j12-1.7.2.jar" 
+                NAME="slf4j-log4j12-1.7.2"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="log4j-1.2.16.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" 
+                NAME="log4j-1.2.16"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                NAME="libthrift-0.9.0"
+                MODULE="libthrift-0.9.0.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.0.jar" 
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="guava-13.0.1.jar" 
+                NAME="guava-13.0.1"
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="commons-lang-2.6.jar" 
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" 
+                NAME="commons-lang-2.6"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')" />
+            <IMPORT 
+                MODULE="uuid-3.4.jar" 
+                NAME="uuid-3.4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+		</IMPORTS>
+	</CODEGENERATION>
+	<RETURNS>
+		<RETURN AVAILABILITY="AFTER" NAME="NB_LINE" TYPE="id_Integer" />
+	</RETURNS>
+</COMPONENT>

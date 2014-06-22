@@ -1,0 +1,32 @@
+<%@ jet 
+	imports="
+    	org.talend.core.model.process.INode 
+    	org.talend.core.model.process.ElementParameterParser 
+    	org.talend.designer.codegen.config.CodeGeneratorArgument
+" 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+
+    String cid = node.getUniqueName();
+
+   	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+	
+%>
+	org.jcouchdb.db.Server server_<%=cid%> = (org.jcouchdb.db.Server)globalMap.get("server_<%=connection%>");
+	if(server_<%=cid%> != null){
+		java.util.List<java.util.Map<String, Object>> replicates_<%=cid%> = (java.util.List<java.util.Map<String, Object>>)globalMap.get("replicates_<%=connection%>");
+		org.jcouchdb.db.Response reponse_<%=cid%> = null;
+		if(replicates_<%=cid%> != null && replicates_<%=cid%>.size()>0){
+			for(java.util.Map<String,Object> cancelParams_<%=cid%> : replicates_<%=cid%>){
+				reponse_<%=cid%> = server_<%=cid%>.post("/_replicate",org.svenson.JSON.defaultJSON().forValue(cancelParams_<%=cid%>));
+				if(!reponse_<%=cid%>.isOk()){
+					System.err.println(reponse_<%=cid%>.getContentAsString());
+				}
+			}
+		}
+		server_<%=cid%>.shutDown();
+	}
+	

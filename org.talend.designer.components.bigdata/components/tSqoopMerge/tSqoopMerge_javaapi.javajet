@@ -1,0 +1,130 @@
+<%
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	boolean isCustom = "CUSTOM".equals(distribution);
+	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	
+	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	String jobtracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
+	List<Map<String,String>> generateJarAdditionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__GENERATE_JAR_ADDITIONAL_JAVA__");
+	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
+	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
+	String newDataDir = ElementParameterParser.getValue(node,"__NEWDATA__");
+	String oldDataDir = ElementParameterParser.getValue(node,"__ONTO__");
+	String targetDir = ElementParameterParser.getValue(node,"__TARGETDIR__");
+	String jarFile = ElementParameterParser.getValue(node,"__JARFILE__");
+	boolean customClassName = "true".equals(ElementParameterParser.getValue(node,"__CUSTOMCLASSNAME__"));
+	String className = ElementParameterParser.getValue(node,"__CLASSNAME__");
+	String key = ElementParameterParser.getValue(node,"__MERGEKEY__");
+	boolean needGenerateJar = "true".equals(ElementParameterParser.getValue(node,"__GENERATE__"));
+	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+	String table = ElementParameterParser.getValue(node,"__TABLE__");
+	String username = ElementParameterParser.getValue(node,"__USERNAME__");
+    
+	String fsDefalutName = "fs.default.name";
+%>
+	<%@ include file="../templates/Sqoop/GetConfig.javajet"%>
+	String jarFileName_<%=cid%> = <%=jarFile%>;
+<%
+    if(needGenerateJar){
+%>
+        com.cloudera.sqoop.SqoopOptions needGenereateJarSqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
+        needGenereateJarSqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
+        needGenereateJarSqoopOptions_<%=cid%>.setUsername(<%=username%>);
+        
+        <%
+        String passwordFieldName = "__PASSWORD__";
+        %>
+        
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		        
+        
+        needGenereateJarSqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>);
+        needGenereateJarSqoopOptions_<%=cid%>.setTableName(<%=table%>);
+        <%if(customClassName){%>
+            needGenereateJarSqoopOptions_<%=cid%>.setClassName(<%=className%>);
+        <%}else{%>
+            needGenereateJarSqoopOptions_<%=cid%>.setClassName("SqoopMerge_<%=cid%>");
+        <%}%>
+
+        java.util.Properties generateJarAdditionalProperties_<%=cid%> = new java.util.Properties();
+<%
+        if(generateJarAdditionalList != null){ 
+            for(Map<String,String> generateJarAdditionalMap : generateJarAdditionalList){
+                if(generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")==null || "".equals(generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE"))) { 
+                    break; 
+                }
+                if(generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_ARGUMENT").contains("delimiters")) {
+                
+%> 
+                    generateJarAdditionalProperties_<%=cid%>.put(<%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_ARGUMENT")%>, ""+<%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")%>.codePointAt(0)); 
+<%
+                } else {
+%> 
+                    generateJarAdditionalProperties_<%=cid%>.put(<%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_ARGUMENT")%>, <%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")%>); 
+<%
+                }
+            } 
+        } 
+%>
+        needGenereateJarSqoopOptions_<%=cid%>.loadProperties(generateJarAdditionalProperties_<%=cid%>);
+        
+        com.cloudera.sqoop.tool.CodeGenTool codeGen_<%=cid%> = new com.cloudera.sqoop.tool.CodeGenTool();
+        com.cloudera.sqoop.Sqoop codeGenerator_<%=cid%> = new com.cloudera.sqoop.Sqoop(codeGen_<%=cid%>,configuration_<%=cid%>, needGenereateJarSqoopOptions_<%=cid%>);
+        int ret_<%=cid%> = com.cloudera.sqoop.Sqoop.runSqoop(codeGenerator_<%=cid%>, new String[0]);
+        if (0 != ret_<%=cid%>) {
+            throw new Exception("codegen the jar failed with code:" + ret_<%=cid%>);
+        }
+        List<String> jars_<%=cid%> = codeGen_<%=cid%>.getGeneratedJarFiles();
+        jarFileName_<%=cid%> = jars_<%=cid%>.get(0);
+<%
+    }
+%>
+
+    java.net.URLClassLoader sysloader_<%=cid%> = (java.net.URLClassLoader) ClassLoader.getSystemClassLoader();
+    java.lang.reflect.Method method_<%=cid%> = java.net.URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { java.net.URL.class});
+    method_<%=cid%>.setAccessible(true);
+    method_<%=cid%>.invoke(sysloader_<%=cid%>, new Object[] { new java.io.File(jarFileName_<%=cid%>).toURL()});
+    
+    com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("merge");
+
+    com.cloudera.sqoop.SqoopOptions sqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
+
+	sqoopOptions_<%=cid%>.setMergeOldPath(<%=oldDataDir%>);
+	sqoopOptions_<%=cid%>.setMergeNewPath(<%=newDataDir%>);
+	sqoopOptions_<%=cid%>.setMergeKeyCol(<%=key%>);
+	sqoopOptions_<%=cid%>.setTargetDir(<%=targetDir%>); 
+    <%if(customClassName){%>
+		sqoopOptions_<%=cid%>.setClassName(<%=className%>);
+    <%}else{%>
+		sqoopOptions_<%=cid%>.setClassName("SqoopMerge_<%=cid%>");
+    <%}%>
+		
+<%	
+	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
+		if(printLog && verbose){
+%>
+			sqoopOptions_<%=cid%>.setVerbose(true);
+<%
+		}
+	}
+%>
+<%
+	if(("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom) {
+%>
+		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
+<%
+	} else {
+%>
+		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
+<%
+	}
+%>
+	int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+	if(result_<%=cid%> != 0) {
+		throw new Exception("The Sqoop merge job has failed");
+	}
+	
+	<%@ include file="../templates/Sqoop/ResetEnv.javajet"%>

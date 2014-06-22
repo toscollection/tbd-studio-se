@@ -1,0 +1,230 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.process.IConnectionCategory
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+
+<%
+  	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+  	INode node = (INode)codeGenArgument.getArgument();
+  	String cid = node.getUniqueName();
+
+    String dbhost   = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    String collection = ElementParameterParser.getValue(node,"__COLLECTION__");
+    String query = ElementParameterParser.getValue(node,"__QUERY__");
+    query = query.replaceAll("\n","");
+    query = query.replaceAll("\r","");
+  	String limit = ElementParameterParser.getValue(node,"__LIMIT__");
+  	
+  	List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
+  	List<Map<String, String>> sorts = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SORT__");
+  	boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
+  	
+  	List<IMetadataTable> metadatas = node.getMetadataList();
+  	List<IMetadataColumn> columnList = null;
+  	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
+  	String firstConnName = "";
+  	if (outputs.size() > 0){
+		IConnection out = outputs.get(0);
+		if(out!=null && out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+			firstConnName = out.getName();
+		}
+    }
+%>
+			int nb_line_<%=cid %> = 0;
+<%
+  	if(metadatas != null && metadatas.size() > 0){
+      	IMetadataTable metadata = metadatas.get(0);
+      	if(metadata != null){
+%>
+			com.mongodb.Mongo mongo_<%=cid%>=null;
+			com.mongodb.DB db_<%=cid%>=null;
+<%
+      		if (useExistingConnection){
+      			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+%>
+				mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
+				db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
+<%
+			}else{
+%>
+			try{
+<%
+ 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+   			if(useReplicaSet){
+%>
+				List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+<%
+				for(Map<String,String> replicaAddr:replicaAddrs){
+%>
+				addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+<%
+				}
+%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+<%
+			}else{
+%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+<%
+			}
+%>
+				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+<%
+				if (authentication){
+%>
+                    <%
+                    String passwordFieldName = "__PASSWORD__";
+                    %>
+                    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>						
+					db_<%=cid%>.authenticate(<%=dbuser%>, decryptedPassword_<%=cid%>.toCharArray());
+<%
+				}
+%>
+<%
+			}
+%>
+
+				com.mongodb.DBCollection coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
+	    		com.mongodb.DBObject myQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
+
+	    		com.mongodb.DBObject fields_<%=cid%> = new com.mongodb.BasicDBObject();
+	  			com.mongodb.DBCursor cursor_<%=cid%> = coll_<%=cid%>.find(myQuery_<%=cid%>, fields_<%=cid%>);
+				
+				class DBObjectInputUtil_<%=cid%>{
+					// Get the node value in embedded document, 
+					//If have no embedded document get root document node.
+					public Object getValue(String parentNode,String currentName,com.mongodb.DBObject dbObject){
+						Object value=null;
+						if(dbObject==null){
+							return null;
+						}
+						if (parentNode == null || "".equals(parentNode)) {
+							if(dbObject.get(currentName)!=null){
+								value=dbObject.get(currentName);
+							}
+						}else{
+							String objNames[] = objNames = parentNode.split("\\.");
+							com.mongodb.DBObject currentObj=dbObject;
+							for(int i=0;i<objNames.length;i++){
+								currentObj=(com.mongodb.DBObject)currentObj.get(objNames[i]);
+								if(currentObj==null){
+									break;
+								}
+							}
+							if(currentObj!=null){
+								value=currentObj.get(currentName);
+							}
+						}
+						return value;
+					}
+				}
+				DBObjectInputUtil_<%=cid%> dbObjectInputUtil_<%=cid%>=new DBObjectInputUtil_<%=cid%>();
+				java.util.Map<String, String> pathMap_<%=cid%>=new java.util.HashMap<String, String>();
+<%
+			for (int i=0;i<mapping.size();i++) {
+				String path = mapping.get(i).get("PARENT_NODE_PATH");
+				if(path==null || "".equals(path)){
+					path="\"\"";
+				}
+				String schemaColumn=mapping.get(i).get("SCHEMA_COLUMN");
+%>
+				pathMap_<%=cid%>.put("<%=schemaColumn%>",<%=path%>);
+<%
+			}
+			
+			if (limit != null && !"\"\"".equals(limit) && limit.length() > 0){
+%>
+	  			cursor_<%=cid%> = cursor_<%=cid%>.limit(<%=limit%>);
+<%
+			}
+			if(sorts.size()>0){
+%>
+		  		com.mongodb.DBObject orderBy_<%=cid%> = new com.mongodb.BasicDBObject();
+<%
+				for(Map<String, String> line:sorts){
+					int order=-1;
+					if(("asc").equals(line.get("ORDER"))){
+        				order=1;
+        			}
+%>
+		  		orderBy_<%=cid%>.put(<%=line.get("COLNAME")%>,<%=order%>);
+<%
+				}
+%>
+				cursor_<%=cid%>.sort(orderBy_<%=cid%>);
+<%
+			}
+%>
+				while (cursor_<%=cid%>.hasNext()){
+<%
+          	columnList = metadata.getListColumns();
+          	int sizeColumns = columnList.size();
+%>
+				com.mongodb.DBObject o_<%=cid%> = cursor_<%=cid%>.next();
+				nb_line_<%=cid %>++;
+<%
+			if(firstConnName.length()>0){
+%>
+				Object valueObj_<%=cid%>=null;
+<%
+				for (int i = 0; i < sizeColumns; i++) {
+					IMetadataColumn column = columnList.get(i);
+					String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+					JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+					String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+%>
+					valueObj_<%=cid%>=dbObjectInputUtil_<%=cid%>.getValue(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>",o_<%=cid%>);
+<%
+          			if(javaType == JavaTypesManager.OBJECT) {
+%>
+				<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>;
+<%
+          			}else{
+%>
+				if(valueObj_<%=cid%>!=null && valueObj_<%=cid%>.toString().length() > 0) {
+<%
+						if(javaType == JavaTypesManager.DATE) {
+%>
+					<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date((java.util.Date)valueObj_<%=cid%>, <%= patternValue %>);
+<%
+						}else if(javaType == JavaTypesManager.BYTE_ARRAY) {
+%>
+					<%=firstConnName %>.<%=column.getLabel() %> = java.nio.charset.Charset.defaultCharset().decode(java.nio.ByteBuffer.wrap((byte[])valueObj_<%=cid%>)).toString().getBytes(utf8Charset);
+<%
+						} else if(javaType == JavaTypesManager.STRING){
+%>
+					<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>.toString();
+<%
+						} else {
+%>
+					<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+<%
+						}
+%>
+				}else{
+					<%=firstConnName %>.<%=column.getLabel() %> = <%=JavaTypesManager.getDefaultValueFromJavaType(typeToGenerate)%>;
+				}
+<%
+          			}
+				}
+			}
+      	}
+  	}
+%>
+

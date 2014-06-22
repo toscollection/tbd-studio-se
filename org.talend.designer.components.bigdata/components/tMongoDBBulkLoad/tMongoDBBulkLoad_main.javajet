@@ -1,0 +1,285 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
+		
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+
+<%
+  	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+  	INode node = (INode)codeGenArgument.getArgument();
+  	String cid = node.getUniqueName();
+
+    String dbhost   = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
+    String collection = ElementParameterParser.getValue(node,"__COLLECTION__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
+    String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+  	String mongoBinFolder = ElementParameterParser.getValue(node, "__MONGODB_DIR__");
+  	String dataFileName = ElementParameterParser.getValue(node, "__DATA__");
+  	String fileType = ElementParameterParser.getValue(node, "__FILE_TYPE__");
+  	boolean isFirstLineHeader = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__HEADERLINE__"));
+  	boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
+  	boolean useLocalDBpath="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_LOCAL_DBPATH__"));
+  	String localDBpath=ElementParameterParser.getValue(node, "__LOCAL_DB_PATH__");
+  	boolean printLog="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__PRINT_LOG__"));
+  	boolean dropCreateColl="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DROP_COLLECTION_CREATE__"));
+  	boolean ignoreBlanks="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__IGNORE_BLANKS__"));
+  	
+  	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+  	List<Map<String, String>> additionalParams = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADDITIONAL_ARGS__");
+  	
+  	List<IMetadataTable> metadatas = node.getMetadataList();
+  	String fileds="";
+  	if(!"JSON".equalsIgnoreCase(fileType) && metadatas != null && metadatas.size() > 0){
+      	IMetadataTable metadata = metadatas.get(0);
+      	if(metadata != null){
+      		List<IMetadataColumn> columnList = metadata.getListColumns();
+      		boolean isFirstColumn=true;
+      		for (IMetadataColumn column:columnList) {
+      			if(isFirstColumn){
+      				isFirstColumn=false;
+      			}else{
+      				fileds=fileds+",";
+      			}
+      			fileds=fileds + column.getOriginalDbColumnName();
+			}
+		}
+	}
+  	
+%>
+		Runtime runtime_<%=cid%> = Runtime.getRuntime();
+		StringBuffer comand_<%=cid%>=new StringBuffer();
+<%	
+	if(mongoBinFolder!= null && !"".equals(mongoBinFolder)&& !"\"\"".equals(mongoBinFolder)){
+%>
+		comand_<%=cid%>.append(<%=mongoBinFolder%>);
+<%
+	}
+%>
+		comand_<%=cid%>.append("/bin/mongoimport");
+<%	
+	if(useLocalDBpath){
+%>
+		comand_<%=cid%>.append(" --dbpath "+<%=localDBpath%>);
+<%
+	}else{
+		if(!useReplicaSet){
+			if(dbhost!= null && !"".equals(dbhost)&& !"\"\"".equals(dbhost)){
+%>
+		comand_<%=cid%>.append(" --host "+<%=dbhost%>);
+<%	
+			}
+			if(dbport!= null && !"".equals(dbport)&& !"\"\"".equals(dbport)){
+%>
+		comand_<%=cid%>.append(" --port "+<%=dbport%>);
+<%
+			}
+		}else{
+			String replicaSetName = ElementParameterParser.getValue(node, "__REPLICA_NAME__");
+%>
+		StringBuffer repHosts_<%=cid%>=new StringBuffer();
+		repHosts_<%=cid%>.append(<%=replicaSetName%>+"/");
+<%
+		  	List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+		  	boolean isFirstHost=true;
+		  	for(Map<String,String> replicaAddr:replicaAddrs){
+		  		String repHost = replicaAddr.get("REPLICA_HOST");
+		  		String repPort = replicaAddr.get("REPLICA_PORT");
+				if(repHost!= null && !"".equals(repHost)&& !"\"\"".equals(repHost)){
+					if(isFirstHost){
+						isFirstHost=false;
+					}else{
+%>
+		repHosts_<%=cid%>.append(",");
+<%
+					}
+%>
+		repHosts_<%=cid%>.append(<%=repHost%>);
+<%
+					if(repPort!= null && !"".equals(repPort)&& !"\"\"".equals(repPort)){
+%>
+		repHosts_<%=cid%>.append(":"+<%=repPort%>);
+<%
+					}
+				}else{
+					break;
+				}
+		  	}
+%>
+		comand_<%=cid%>.append(" --host "+repHosts_<%=cid%>.toString());
+<%
+		}
+	}
+	
+	if(dbname!= null && !"".equals(dbname)&& !"\"\"".equals(dbname)){
+%>
+		comand_<%=cid%>.append(" --db "+<%=dbname%>);
+<%
+	}
+	if(collection!= null && !"".equals(collection)&& !"\"\"".equals(collection)){
+%>
+		comand_<%=cid%>.append(" --collection "+<%=collection%>);
+<%
+	}
+	if (authentication){
+		if(dbuser!= null && !"".equals(dbuser)&& !"\"\"".equals(dbuser)){
+%>
+ 		comand_<%=cid%>.append(" --username "+<%=dbuser%>); 
+<%
+		}
+		if(dbpass!= null && !"".equals(dbpass)&& !"\"\"".equals(dbpass)){
+%>
+        <%
+        String passwordFieldName = "__PASSWORD__";
+        %>
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+ 		comand_<%=cid%>.append(" --password "+decryptedPassword_<%=cid%>); 
+<%
+		}
+	}
+	if(fileType!= null && !"".equals(fileType)&& !"\"\"".equals(fileType)){
+%>
+		comand_<%=cid%>.append(" --type "+"<%=fileType%>");
+<%
+	}
+	if(dataFileName!= null && !"".equals(dataFileName)&& !"\"\"".equals(dataFileName)){
+%>
+		comand_<%=cid%>.append(" --file "+<%=dataFileName%>);
+<%
+	}
+	if(dropCreateColl){
+%>
+		comand_<%=cid%>.append(" --drop");
+<%
+	}
+	if("UPSERT".equalsIgnoreCase(dataAction)){
+		List<Map<String, String>> upsertFieldList = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__UPSERT_FIELDS__");
+		String upsertFields = "";
+		if(upsertFieldList!=null && upsertFieldList.size()>0){
+			upsertFields = upsertFieldList.get(0).get("COLNAME");
+			for(int i=1;i<upsertFieldList.size();i++){
+				Map<String, String> field = upsertFieldList.get(i);
+				upsertFields=upsertFields+","+field.get("COLNAME");
+			}
+		}
+%>
+		comand_<%=cid%>.append(" --upsert");
+<%
+		if(!"".equals(upsertFields)){
+%>
+		comand_<%=cid%>.append(" --upsertFields "+"<%=upsertFields%>");
+<%
+		}
+	}
+	if(!"JSON".equalsIgnoreCase(fileType)){
+		if(ignoreBlanks){
+%>
+		comand_<%=cid%>.append(" --ignoreBlanks");
+<%
+		}
+		if(!"".equals(fileds)){
+%>
+		comand_<%=cid%>.append(" --fields "+"<%=fileds%>");
+<%
+		}
+		if(isFirstLineHeader){
+%>
+		comand_<%=cid%>.append(" --headerline");
+<%
+		}
+	}
+	if(additionalParams != null && additionalParams.size()>0){
+		for(Map<String, String> param : additionalParams){
+			String arg = param.get("ARGUMENT");
+			String value = param.get("VALUE");
+			if(arg!=null && !"".equals(arg)){
+%>
+		comand_<%=cid%>.append(" "+<%=arg%>);
+<%
+				if(value!=null && !"".equals(value)){
+%>
+		comand_<%=cid%>.append(" "+<%=value%>);
+<%
+				}
+			}
+		}
+	}
+%>
+		final Process process_<%=cid%> = runtime_<%=cid%>.exec(comand_<%=cid%>.toString());
+
+		Thread normal_<%=cid %> = new Thread() {
+			public void run() {
+				try {
+					java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(process_<%=cid %>.getInputStream()));
+					String line = "";
+					try {
+						while((line = reader.readLine()) != null) {
+<%
+    if(printLog){
+%>
+							System.out.println(line);
+<%
+    }
+%>				
+							int im=line.indexOf("imported");
+							int obj=line.indexOf("objects");
+							if(im > 0 && obj > 0){
+								line = line.substring(im+8, obj).trim();
+							}
+							if(line.matches("^[\\d]+$")){
+								globalMap.put("<%=cid %>_NB_LINE", Integer.parseInt(line));
+							}else{
+								globalMap.put("<%=cid %>_NB_LINE", 0);
+							}
+						}
+					} finally {
+						reader.close();
+					}
+				} catch(java.io.IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		};
+		normal_<%=cid%>.start();
+<%
+    if(printLog){
+%>
+		Thread error_<%=cid%> = new Thread() {
+			public void run() {
+				try {
+					java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(process_<%=cid %>.getErrorStream()));
+					String line = "";
+					try {
+						while((line = reader.readLine()) != null) {
+							System.err.println(line);
+						}
+					} finally {
+						reader.close();
+					}
+				} catch(java.io.IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		};
+		error_<%=cid%>.start();
+<%
+    }
+%>			
+		process_<%=cid %>.waitFor();
+		normal_<%=cid%>.interrupt();
+<%
+    if(printLog){
+%>
+		error_<%=cid%>.interrupt();
+<%
+    }
+%>	

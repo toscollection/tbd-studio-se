@@ -1,0 +1,361 @@
+<COMPONENT>
+	<HEADER
+		PLATEFORM="ALL"
+		SERIAL=""
+		VERSION="0.102"
+		STATUS="ALPHA"
+
+		COMPATIBILITY="ALL"
+		AUTHOR="Talend"
+		RELEASE_DATE="20130305A"
+		SCHEMA_AUTO_PROPAGATE="false"
+		DATA_AUTO_PROPAGATE="false"
+		STARTABLE="true"
+		VISIBLE="false"
+		TECHNICAL="true"
+  	>
+    	<SIGNATURE/>
+	</HEADER>
+
+	<FAMILIES>
+	  	<FAMILY>Databases/CouchDB</FAMILY>
+		<FAMILY>Big Data/CouchDB</FAMILY>
+	</FAMILIES>
+
+	<DOCUMENTATION>
+		<URL/>
+	</DOCUMENTATION>
+
+	<CONNECTORS>
+		<CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1" />
+      	<CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1" />
+      	<CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+      	<CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+      	<CONNECTOR CTYPE="COMPONENT_OK" />
+      	<CONNECTOR CTYPE="COMPONENT_ERROR" />
+      	<CONNECTOR CTYPE="RUN_IF" />
+  	</CONNECTORS>
+
+  	<PARAMETERS>
+
+    	 <PARAMETER
+			NAME="SCHEMA"
+			FIELD="SCHEMA_TYPE"
+			NUM_ROW="5"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+	    <PARAMETER
+		    NAME="USE_EXISTING_CONNECTION"
+		    FIELD="CHECK"
+		    NUM_ROW="10"
+		    GROUP="CONNECTION_CONF"
+	    >
+	     	<DEFAULT>false</DEFAULT>
+	    </PARAMETER>
+
+	    <PARAMETER
+		    NAME="CONNECTION"
+		    FIELD="COMPONENT_LIST"
+		    REQUIRED="true" FILTER="tCouchDBConnection"
+		    NUM_ROW="10"
+		    SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
+		    GROUP="CONNECTION_CONF"
+		/>
+
+	    <PARAMETER
+			FIELD="TEXT"
+			NAME="HOST"
+			NUM_ROW="15"
+			REQUIRED="true"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+			GROUP="CONNECTION_CONF"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="PORT"
+			NUM_ROW="15"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+			GROUP="CONNECTION_CONF"
+		>
+			<DEFAULT>5984</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="DATABASE"
+			NUM_ROW="20"
+			REQUIRED="true"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+			GROUP="CONNECTION_CONF"
+		>
+		<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER
+			NAME="DB_VERSION"
+			FIELD="CLOSED_LIST"
+			NUM_ROW="20"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+			GROUP="CONNECTION_CONF"
+		>
+			<ITEMS DEFAULT="COUCHDB_1_0_2">
+				<ITEM NAME="COUCHDB_1_0_2" VALUE="COUCHDB_1_0_2" />
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER
+			FIELD="CHECK"
+			NAME="USE_TRIGGER_REPLICATE"
+			NUM_ROW="50"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+			GROUP="REPLICATION"
+		>
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER
+	        FIELD="TABLE"
+	        NAME="REPLICATE_TARGET_DB"
+	        REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_TRIGGER_REPLICATE == 'true')"
+	        NUM_ROW="55"
+	        NB_LINES="5"
+	        SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_TRIGGER_REPLICATE == 'true')"
+	        GROUP="REPLICATION"
+        >
+            <ITEMS>
+                <ITEM NAME="TARGET_DB_NAME" FIELD="TEXT" />
+                <ITEM NAME="CONTINUOUS" FIELD="CHECK" VALUE="true"/>
+                <ITEM NAME="CREATE_TARGET" FIELD="CHECK" VALUE="true"/>
+                <ITEM NAME="CANCEL_REPLICATE" FIELD="CHECK" />
+
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER NAME="QUERY_BY_VIEW"
+	    	FIELD="CHECK"
+	      	NUM_ROW="60"
+	      	REQUIRED="true"
+	  		GROUP="QUERY_OPTION"
+	  	>
+	      	<DEFAULT>false</DEFAULT>
+    	</PARAMETER>
+
+        <PARAMETER NAME="DOC"
+			FIELD="TEXT"
+		   	SHOW_IF="(QUERY_BY_VIEW == 'true')"
+		   	REQUIRED="true"
+		   	NUM_ROW="65"
+		   	GROUP="QUERY_OPTION"
+		>
+	      <DEFAULT>""</DEFAULT>
+	    </PARAMETER>
+
+	    <PARAMETER
+	    	NAME="DOC_ACTION"
+	    	FIELD="CLOSED_LIST"
+	    	SHOW_IF="(QUERY_BY_VIEW == 'true')"
+	    	NUM_ROW="65"
+	    	GROUP="QUERY_OPTION"
+	    >
+	    	<ITEMS DEFAULT="NONE">
+				<ITEM NAME="NONE" VALUE="NONE" />
+		        <ITEM NAME="DROP_CREATE" VALUE="DROP_CREATE"/>
+		        <ITEM NAME="CREATE" VALUE="CREATE"/>
+		        <ITEM NAME="CREATE_IF_NOT_EXISTS" VALUE="CREATE_IF_NOT_EXISTS"/>
+		        <ITEM NAME="DROP_IF_EXISTS_AND_CREATE" VALUE="DROP_IF_EXISTS_AND_CREATE" />
+	      	</ITEMS>
+	    </PARAMETER>
+
+	    <PARAMETER NAME="VIEW"
+	    	FIELD="TEXT"
+	    	REQUIRED="true"
+	    	SHOW_IF="(QUERY_BY_VIEW == 'true')"
+	    	NUM_ROW="70"
+	    	GROUP="QUERY_OPTION"
+	    >
+	    	<DEFAULT>""</DEFAULT>
+	    </PARAMETER>
+
+	    <PARAMETER
+	   		NAME="VIEW_ACTION"
+	    	FIELD="CLOSED_LIST"
+	    	SHOW_IF="QUERY_BY_VIEW == 'true'"
+	    	NUM_ROW="70"
+	    	GROUP="QUERY_OPTION"
+	    >
+	    	<ITEMS DEFAULT="NONE">
+	        	<ITEM NAME="NONE" VALUE="NONE" />
+		        <ITEM NAME="CREATE" VALUE="CREATE"/>
+	    	</ITEMS>
+	    </PARAMETER>
+
+	    <PARAMETER NAME="MAP"
+	    	FIELD="MEMO"
+	    	REQUIRED="true"
+	    	SHOW_IF="(QUERY_BY_VIEW == 'true') and (VIEW_ACTION != 'NONE')"
+	    	NUM_ROW="75"
+	    	GROUP="QUERY_OPTION"
+	    >
+	   		<DEFAULT>"function (doc, meta) { emit(doc.name, meta.id); }"</DEFAULT>
+	    </PARAMETER>
+
+	    <PARAMETER NAME="REDUCE"
+	    	FIELD="MEMO"
+	      	REQUIRED="true"
+	      	SHOW_IF="(QUERY_BY_VIEW == 'true') and (VIEW_ACTION != 'NONE')"
+	      	NUM_ROW="75"
+	   		GROUP="QUERY_OPTION"
+	   	>
+	      	<DEFAULT>""</DEFAULT>
+	    </PARAMETER>
+
+		<PARAMETER NAME="STARTKEY"
+	    	FIELD="TEXT"
+	      	NUM_ROW="80"
+	     	GROUP="QUERY_OPTION"
+	      	REQUIRED="false"
+	 	>
+	      	<DEFAULT></DEFAULT>
+	   	</PARAMETER>
+
+	    <PARAMETER NAME="ENDKEY"
+	      	FIELD="TEXT"
+	     	NUM_ROW="80"
+	      	GROUP="QUERY_OPTION"
+	      	REQUIRED="false">
+	      	<DEFAULT></DEFAULT>
+		</PARAMETER>
+
+	    <PARAMETER NAME="STARTKEY_DOCID"
+	      	FIELD="TEXT"
+	      	NUM_ROW="85"
+	      	GROUP="QUERY_OPTION"
+	      	REQUIRED="false"
+	  	>
+	      	<DEFAULT></DEFAULT>
+	    </PARAMETER>
+
+	    <PARAMETER NAME="ENDKEY_DOCID"
+	      	FIELD="TEXT"
+	      	NUM_ROW="85"
+	      	GROUP="QUERY_OPTION"
+	      	REQUIRED="false"
+	   	>
+	     	 <DEFAULT></DEFAULT>
+	    </PARAMETER>
+
+		<PARAMETER NAME="ISREDUCE"
+	      	FIELD="CHECK"
+	      	REQUIRED="true"
+	      	SHOW_IF="(QUERY_BY_VIEW == 'true') and (INCLUDE_DOCS == 'false')"
+	      	NUM_ROW="90"
+	    	GROUP="QUERY_OPTION"
+	   	>
+	    </PARAMETER>
+
+	    <PARAMETER NAME="INCLUDE_DOCS"
+	      	FIELD="CHECK"
+	      	REQUIRED="true"
+	      	SHOW_IF="(ISREDUCE == 'false')"
+	      	NUM_ROW="90"
+	   		GROUP="QUERY_OPTION"
+	   	>
+	    </PARAMETER>
+
+	    <PARAMETER NAME="DESCENDING"
+	      	FIELD="CHECK"
+	      	REQUIRED="true"
+	      	NUM_ROW="90"
+	   		GROUP="QUERY_OPTION"
+	   	>
+	    </PARAMETER>
+
+		<PARAMETER NAME="GROUP"
+	      	FIELD="CHECK"
+	      	NUM_ROW="115"
+	      	GROUP="QUERY_OPTION"
+	      	SHOW_IF="(QUERY_BY_VIEW == 'true') and (ISREDUCE == 'true')"
+	      	REQUIRED="false"
+	  	>
+	  		<DEFAULT>false</DEFAULT>
+	   	</PARAMETER>
+
+	    <PARAMETER NAME="GROUP_LEVEL"
+	      	FIELD="INTEGER"
+	      	NUM_ROW="115"
+	      	GROUP="QUERY_OPTION"
+	      	SHOW_IF="(ISREDUCE == 'true') and (GROUP == 'true')"
+	      	REQUIRED="false"
+	  	>
+	   	</PARAMETER>
+
+        <PARAMETER NAME="ADD_OPTION"
+	      	FIELD="CHECK"
+	      	NUM_ROW="125"
+	      	GROUP="QUERY_OPTION"
+	  	>
+	  		<DEFAULT>false</DEFAULT>
+	   	</PARAMETER>
+
+        <PARAMETER
+	        NAME="OPTIONS"
+	        FIELD="TABLE"
+	        NUM_ROW="125"
+	        NB_LINES="5"
+	        SHOW_IF="(ADD_OPTION == 'true')"
+	        GROUP="QUERY_OPTION"
+	  	>
+            <ITEMS>
+                <ITEM NAME="PARAMETER" FIELD="TEXT" />
+                <ITEM NAME="VALUE" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+
+		<PARAMETER
+	      NAME="JSONFIELD"
+	      FIELD="COLUMN_LIST"
+	      REQUIRED="true"
+	      SHOW_IF="ISJSON == 'true'"
+	      NUM_ROW="140"
+	    >
+    	</PARAMETER>
+
+        <PARAMETER NAME="LIMIT"
+	      	FIELD="INTEGER"
+	      	NUM_ROW="120"
+	      >
+	      	<DEFAULT>10000</DEFAULT>
+	    </PARAMETER>
+
+
+  </PARAMETERS>
+	<ADVANCED_PARAMETERS>
+
+
+	</ADVANCED_PARAMETERS>
+
+   <CODEGENERATION>
+    <IMPORTS>
+    	<IMPORT NAME="jcouchdb-1.0.1-1.jar" MODULE="jcouchdb-1.0.1-1.jar" UrlPath="platform:/plugin/org.talend.libraries.couchdb/lib/jcouchdb-1.0.1-1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="commons-beanutils-1.8.3.jar" MODULE="commons-beanutils-1.8.3.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-beanutils-1.8.3.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="commons-codec-1.6.jar" MODULE="commons-codec-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.6.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="commons-io-1.4.jar" MODULE="commons-io-1.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.io_1.4.0.v20081110-1000.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="httpclient-4.0.jar" MODULE="httpclient-4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="httpcore-4.0.1.jar" MODULE="httpcore-4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/httpcore-4.0.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+		<IMPORT NAME="svenson-1.3.8.jar" MODULE="svenson-1.3.8.jar" UrlPath="platform:/plugin/org.talend.libraries.couchdb/lib/svenson-1.3.8.jar" REQUIRED_IF="(DB_VERSION == 'COUCHDB_1_0_2')" />
+    </IMPORTS>
+   </CODEGENERATION>
+
+   <RETURNS>
+    <RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER" />
+   </RETURNS>
+</COMPONENT>

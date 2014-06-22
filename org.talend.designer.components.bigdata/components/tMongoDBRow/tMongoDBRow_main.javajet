@@ -1,0 +1,120 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+
+<%
+  	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+  	INode node = (INode)codeGenArgument.getArgument();
+  	String cid = node.getUniqueName();
+
+    String dbhost   = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    boolean isExecuteCommand = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__EXECUTE_COMMAND__"));
+    String function = ElementParameterParser.getValue(node,"__FUNCTION__");
+    function = function.replaceAll("\n"," ");
+    function = function.replaceAll("\r"," ");
+  	String command = ElementParameterParser.getValue(node,"__COMMAND__");
+  	List<Map<String, String>> parameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FUNCTION_PARAMETERS__");
+  	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+  	boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
+  	
+%>
+			com.mongodb.Mongo mongo_<%=cid%>=null;
+			com.mongodb.DB db_<%=cid%>=null;
+			try{
+<%
+      		if (useExistingConnection){
+      			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+%>
+				mongo_<%=cid%>=(com.mongodb.Mongo)globalMap.get("mongo_<%=connection%>");
+				db_<%=cid%> = (com.mongodb.DB) globalMap.get("db_<%=connection%>");
+<%
+			}else{
+ 				List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+   				if(useReplicaSet){
+%>
+				List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+<%
+					for(Map<String,String> replicaAddr:replicaAddrs){
+%>
+				addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+<%
+					}
+%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+<%
+				}else{
+%>
+				mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+<%
+				}
+%>
+				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+<%
+				if (authentication){
+%>
+					<%
+			        String passwordFieldName = "__PASSWORD__";
+					%>
+		   			<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+    				db_<%=cid%>.authenticate(<%=dbuser%>, decryptedPassword_<%=cid%>.toCharArray());
+<%
+				}
+%>
+<%
+			}
+%>
+
+				com.mongodb.CommandResult  result_<%=cid%>=null;
+<%
+				if(isExecuteCommand){
+%>
+				result_<%=cid%>=db_<%=cid%>.command(<%=command%>);
+<%
+				}else{
+%>
+				result_<%=cid%>=db_<%=cid%>.doEval(<%=function%><%for(Map<String, String> parameter:parameters){%>,<%=parameter.get("PARAMETER")%><%}%>);
+<%
+			}
+%>
+					if(result_<%=cid%>.ok()){
+						System.out.println(result_<%=cid%>);
+					}else{
+						System.err.println(result_<%=cid%>);
+					}
+				}catch(Exception e_<%=cid%>){
+<%
+					if(dieOnError){
+%>
+						e_<%=cid%>.printStackTrace();
+<%
+					}else{
+%>
+						System.err.println(e_<%=cid%>.getMessage());
+<%
+					}
+%>
+				}
+<%
+			if(!useExistingConnection){
+%>
+				finally{
+					if(mongo_<%=cid%> != null )
+					{
+						mongo_<%=cid%>.close();
+					}
+				}
+<%
+			}
+%>

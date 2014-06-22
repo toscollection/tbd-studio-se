@@ -1,0 +1,48 @@
+<%@ jet 
+imports="
+	
+	org.talend.core.model.metadata.IMetadataTable
+	org.talend.core.model.process.EConnectionType
+	org.talend.core.model.process.ElementParameterParser
+	org.talend.core.model.process.IConnection
+	org.talend.core.model.process.INode
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.IConnectionCategory
+	
+	java.util.List
+    " 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    
+	boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+    IConnection inConn = null;
+	IMetadataTable metadata = null;
+	if(inConns!=null && inConns.size()> 0) {
+		inConn = inConns.get(0);
+		metadata = inConn.getMetadataTable();
+	}
+  	List< ? extends IConnection> conns = node.getIncomingConnections();
+	for (IConnection conn : conns) {
+		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+	      	if(metadata != null){
+				if(!useExistingConn){
+				%>
+					if(client_<%=cid%> !=null){
+						client_<%=cid%>.shutdown();
+					}
+					resourceMap.put("finish_<%=cid%>", true); 
+				<%
+				}
+				%>
+				globalMap.put("<%=cid%>_UPSERT_NB_LINE", upsert_nb_line_<%=cid%>);
+				globalMap.put("<%=cid%>_DELETE_NB_LINE", delete_nb_line_<%=cid%>);
+			<%
+			}
+		}
+	}
+	%>
