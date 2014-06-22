@@ -1,0 +1,176 @@
+<%@ jet 
+imports="
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.INode
+	org.talend.core.model.process.ElementParameterParser
+	org.talend.core.model.process.IConnection
+	org.talend.core.model.metadata.IMetadataTable
+	org.talend.core.model.metadata.types.JavaTypesManager
+    org.talend.core.model.metadata.MappingTypeRetriever
+    org.talend.core.model.metadata.MetadataTalendType	
+    org.talend.core.model.process.IConnectionCategory	
+	java.util.List
+	java.util.ArrayList
+	java.util.Map
+	java.util.HashMap
+"
+skeleton="@{org.talend.designer.components.localprovider}/components/templates/db_output_bulk.skeleton"
+%>
+<%@ jet
+imports="
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.INode
+	org.talend.core.model.process.ElementParameterParser
+	org.talend.core.model.process.IConnection
+	org.talend.core.model.metadata.IMetadataTable
+	org.talend.core.model.metadata.types.JavaTypesManager
+	org.talend.core.model.metadata.MappingTypeRetriever
+	org.talend.core.model.metadata.MetadataTalendType
+	org.talend.core.model.process.IConnectionCategory
+	java.util.List
+	java.util.ArrayList
+	java.util.Map
+	java.util.HashMap
+	"
+skeleton="@{org.talend.designer.components.localprovider}/components/templates/db_output_bulk.skeleton"
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Output/HelpClass.javajet"%>
+<%
+
+	class DBOutputMainUtil extends DefaultDBOutputUtil{
+		
+		public void beforeComponentProcess(INode node){
+			super.beforeComponentProcess(node);
+		}
+
+		public void addSchemaToTable(Manager manager){}
+		
+		public void executeBatch(INode node){
+			if (rejectConnName==null && executeBatch) {
+			%>
+				if ( batchSize_<%=cid%> <= batchSizeCounter_<%=cid%>) {
+					try {
+						<%
+						log4jCodeGenerateUtil.executeBatch(node,2);
+						if (("INSERT").equals(dataAction)) {
+						%>
+							insertedCount_<%=cid%> += countSum_<%=cid%>;
+						<%
+						}else if (("UPDATE").equals(dataAction)) {
+						%>
+							updatedCount_<%=cid%> += countSum_<%=cid%>;
+						<%
+						}else if (("DELETE").equals(dataAction)) {
+						%>
+							deletedCount_<%=cid%> += countSum_<%=cid%>;
+						<%
+						}%>
+						batchSizeCounter_<%=cid%> = 0;
+					}catch (java.sql.BatchUpdateException e_<%=cid%>){
+						<%
+						if(("true").equals(dieOnError)) {
+							log4jCodeGenerateUtil.logError(node,"fatal","e_"+cid);
+							%>
+							throw(e_<%=cid%>);
+						<%
+						}else {
+							log4jCodeGenerateUtil.logError(node,"error","e_"+cid);
+							%>
+							int countSum_<%=cid%> = 0;
+							for(int countEach_<%=cid%>: e_<%=cid%>.getUpdateCounts()) {
+								countSum_<%=cid%> += (countEach_<%=cid%> < 0 ? 0 : countEach_<%=cid%>);
+							}
+							<%
+							if (("INSERT").equals(dataAction)) {
+							%>
+								insertedCount_<%=cid%> += countSum_<%=cid%>;
+							<%
+							}else if (("UPDATE").equals(dataAction)) {
+							%>
+								updatedCount_<%=cid%> += countSum_<%=cid%>;
+							<%
+							}else if (("DELETE").equals(dataAction)) {
+							%>
+								deletedCount_<%=cid%> += countSum_<%=cid%>;
+							<%
+							}
+							%>
+							System.err.println(e_<%=cid%>.getMessage());
+						<%
+						}
+						%>
+					}
+				}
+			<%
+			}
+		}
+		public void commitEvery(INode node){
+			if(!("true").equals(useExistingConn)) {
+				if(!("").equals(commitEvery) && !("0").equals(commitEvery)) {
+					%>
+					commitCounter_<%=cid%>++;
+					if(commitEvery_<%=cid%> <= commitCounter_<%=cid%>) {
+						<%if ((rejectConnName==null && useBatchSize) && (("INSERT").equals(dataAction) || ("UPDATE").equals(dataAction) || ("DELETE").equals(dataAction)) ) {
+						%>
+							try {
+								<%
+								log4jCodeGenerateUtil.executeBatch(node,2);
+								if (("INSERT").equals(dataAction)) {
+								%>
+									insertedCount_<%=cid%> += countSum_<%=cid%>;
+								<%
+								}else if (("UPDATE").equals(dataAction)) {
+								%>
+									updatedCount_<%=cid%> += countSum_<%=cid%>;
+								<%
+								}else if (("DELETE").equals(dataAction)) {
+								%>
+									deletedCount_<%=cid%> += countSum_<%=cid%>;
+								<%
+								}%>
+							}catch (java.sql.BatchUpdateException e_<%=cid%>){
+								<%if(("true").equals(dieOnError)) {
+									log4jCodeGenerateUtil.logError(node,"fatal","e_"+cid);
+								%>
+									throw(e_<%=cid%>);
+								<%
+								}else {
+									log4jCodeGenerateUtil.logError(node,"error","e_"+cid);
+									%>
+									int countSum_<%=cid%> = 0;
+									for(int countEach_<%=cid%>: e_<%=cid%>.getUpdateCounts()) {
+										countSum_<%=cid%> += (countEach_<%=cid%> < 0 ? 0 : countEach_<%=cid%>);
+									}
+									<%
+									if (("INSERT").equals(dataAction)) {
+									%>
+										insertedCount_<%=cid%> += countSum_<%=cid%>;
+									<%
+									}else if (("UPDATE").equals(dataAction)) {
+									%>
+										updatedCount_<%=cid%> += countSum_<%=cid%>;
+									<%
+									}else if (("DELETE").equals(dataAction)) {
+									%>
+										deletedCount_<%=cid%> += countSum_<%=cid%>;
+									<%
+									}%>
+									System.err.println(e_<%=cid%>.getMessage());
+								<%
+								}%>
+							}
+						<%
+						}
+						log4jCodeGenerateUtil.commit(node);
+						%>
+						commitCounter_<%=cid%>=0;
+					}
+				<%
+				}
+			}
+		}
+
+	}
+	dbOutputBeginUtil = new DBOutputMainUtil();
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Output/AbstractDBOutputMain.javajet"%>

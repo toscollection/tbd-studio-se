@@ -1,0 +1,141 @@
+<%@ jet
+	imports="
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.metadata.IMetadataTable
+		java.util.List
+"
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+	String dataNode = ElementParameterParser.getValue(node,"__DATA_NODE__");
+	String queryNode = ElementParameterParser.getValue(node,"__QUERY_NODE__");
+	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    
+    List<IMetadataTable> metadatas = node.getMetadataList();
+  	if(metadatas != null && metadatas.size() > 0){
+      	IMetadataTable metadata = metadatas.get(0);
+      	if(metadata != null){
+		%>
+			com.mongodb.WriteResult resultMessage_<%=cid%>=null;
+			Object data_<%=cid%>=com.mongodb.util.JSON.parse(json_<%=cid%>.toString());
+			<%
+			log4jFileUtil.collectRetriveData("json_"+cid);
+			if(isLog4jEnabled){
+			%>
+				log.debug("<%=cid%> - [<%=dataAction%>] - Writing the record " + nb_line_<%=cid %> + " into database.");
+				log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
+				log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+			<%
+			}
+			%>
+			Object queryObj_<%=cid%>=null;
+			if(data_<%=cid%>!=null){
+				<%
+				if("Insert".equalsIgnoreCase(dataAction)){
+				%>
+					resultMessage_<%=cid%>=coll_<%=cid%>.insert((com.mongodb.DBObject)data_<%=cid%>);
+				<%
+				}else if("DELETE".equalsIgnoreCase(dataAction)){
+				%>
+					resultMessage_<%=cid%>=coll_<%=cid%>.remove((com.mongodb.DBObject)data_<%=cid%>);
+				<%
+				}else{
+				%>
+					queryObj_<%=cid%> =((com.mongodb.DBObject)data_<%=cid%>).get(<%=queryNode%>);
+					data_<%=cid%>=((com.mongodb.DBObject)data_<%=cid%>).get(<%=dataNode%>);
+					if(data_<%=cid%>!=null && queryObj_<%=cid%>!=null){
+						<%
+						if("UPDATE".equalsIgnoreCase(dataAction)){	
+						%>	
+							resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)data_<%=cid%>);
+						<%
+						}else if("UPSERT".equalsIgnoreCase(dataAction)){
+						%>	
+							resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)data_<%=cid%>,true,false);
+						<%
+						}
+						%>	
+					}else{
+						<%
+						if(dieOnError){
+							if(isLog4jEnabled){
+							%>
+								log.fatal("<%=cid%> - Data node or Query node configuration error! ");
+							<%
+							}
+							%>
+							throw new Exception("Data node or Query node configuration error! ");
+						<%
+						}else{
+							if(isLog4jEnabled){
+							%>
+								log.error("<%=cid%> - Data node or Query node configuration error!");
+							<%
+							}
+							%>
+							System.err.println("Data node or Query node configuration error!");
+						<%
+						}
+						%>	
+					}
+				<%
+				}
+				%>
+				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
+					<%
+					if(dieOnError){
+						if(isLog4jEnabled){
+						%>
+							log.fatal("<%=cid%> - " + resultMessage_<%=cid%>.getError());
+						<%
+						}
+						%>
+						throw new Exception(resultMessage_<%=cid%>.getError());
+					<%
+					}else{
+						if(isLog4jEnabled){
+						%>
+							log.error("<%=cid%> - " + resultMessage_<%=cid%>.getError());
+						<%
+						}
+						%>
+						System.err.println(resultMessage_<%=cid%>.getError());
+					<%
+					}
+					%>
+				}
+			}else{
+				<%
+				if(dieOnError){
+					if(isLog4jEnabled){
+					%>
+						log.fatal("<%=cid%> - There no data in json,Please check the json configuration");
+					<%
+					}
+					%>
+					throw new Exception("There no data in json,Please check the json configuration");
+				<%
+				}else{
+					if(isLog4jEnabled){
+					%>
+					log.error("<%=cid%> - There no data in json,Please check the json configuration");
+					<%
+					}
+					%>
+					System.err.println("There no data in json,Please check the json configuration");
+				<%
+				}
+				%>	
+			}		
+		<%
+		}
+	}
+	%>

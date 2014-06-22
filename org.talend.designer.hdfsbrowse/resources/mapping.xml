@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+	<map-component>
+		<map key="DISTRIBUTION">
+			<value>DISTRIBUTION</value>
+		</map>
+		<map key="VERSION">
+			<value>DB_VERSION</value>
+			<value>HCAT_VERSION</value>
+		</map>
+		<map key="NAMENODE_URI">
+			<value>FS_DEFAULT_NAME</value>
+		</map>
+		<map key="USERNAME">
+			<value>USERNAME</value>
+		</map>
+		<map key="USE_KRB">
+			<value>USE_KRB</value>
+		</map>
+		<map key="NAMENODE_PRINCIPAL">
+			<value>NAMENODE_PRINCIPAL</value>
+		</map>
+		<map key="GROUP">
+			<value>GROUP</value>
+		</map>
+	</map-component>
+</mapping>

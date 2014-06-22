@@ -1,0 +1,73 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		
+		java.util.Map
+		java.util.List
+	" 
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String dbhost = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
+    String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+    
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+    
+    if(useReplicaSet){
+	%>
+		List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+		<%
+		for(Map<String,String> replicaAddr:replicaAddrs){
+		%>
+			addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+		<%
+		}
+		%>
+		com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+	<%
+	}else{
+	%>
+		com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+	<%
+	}
+	%>
+	mongo_<%=cid%>.isLocked();
+	com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+	<%
+	if (authentication){
+	%>
+	
+        <%
+        String passwordFieldName = "__PASSWORD__";
+        %>
+        
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+	
+    	db_<%=cid%>.authenticate(<%=dbuser%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+	<%
+	}
+	if(isLog4jEnabled){
+	%>	
+		log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
+	<%
+	}
+	%>
+	globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
+	globalMap.put("db_<%=cid%>", db_<%=cid%>);
+	<%
+	log4jFileUtil.componentFinishInfo(node);
+	%>

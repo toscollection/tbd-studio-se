@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ce
+Bundle-SymbolicName: org.talend.demo.bigdata.ce;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Localization: plugin
+Require-Bundle: org.talend.core.runtime;bundle-version="1.0.0"

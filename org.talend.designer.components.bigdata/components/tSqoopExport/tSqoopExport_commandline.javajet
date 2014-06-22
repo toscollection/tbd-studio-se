@@ -1,0 +1,127 @@
+<%@ jet
+    imports="
+        org.talend.core.model.process.INode 
+        org.talend.core.model.process.ElementParameterParser
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        java.util.List
+        java.util.Map
+    "
+%>
+
+<%
+    String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+    String table = ElementParameterParser.getValue(node,"__TABLE__");
+    String username = ElementParameterParser.getValue(node,"__USERNAME__");
+    String exportDir = ElementParameterParser.getValue(node,"__EXPORT_DIR__");
+    boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
+    boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
+    boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
+    boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
+    boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
+    String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
+    String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
+    List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
+    boolean isUseSpeedParallel = "true".equals(ElementParameterParser.getValue(node,"__USE_SPEED_PARALLEL__"));
+	List<Map<String,String>> specificParams= (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__SPECIFIC_PARAMS__");
+	boolean isUseAdditionParams = "true".equals(ElementParameterParser.getValue(node,"__USE_ADDITION_PARAM__"));
+	String specificAdditionParams=ElementParameterParser.getValue(node,"__SPECIFIC_ADDITION_PARAM__");
+%>
+
+//call the cmd part
+Runtime runtime_<%=cid %> = Runtime.getRuntime();
+
+<%
+String passwordFieldName = "__PASSWORD__";
+%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>	
+
+String[] cmd_<%=cid %> = new String[] {"sqoop", "export"
+<%
+boolean isNull=false; 
+if(isUseSpeedParallel && specificParams!=null){
+	boolean isFirstParam=true;
+	for(Map<String,String> specificArg : specificParams){ 
+		isNull=false; 
+	 	if(specificArg.get("SPECIFIC_PARAM_VALUE")==null || "".equals(specificArg.get("SPECIFIC_PARAM_VALUE"))) { 
+	 		isNull=true; 
+	 	} 
+	 	if(!isNull) { 
+%> 
+			,"-D<%=specificArg.get("SPECIFIC_PARAM")%>="+<%=specificArg.get("SPECIFIC_PARAM_VALUE")%>
+<% 
+		} 
+	} 
+} 
+if(isUseSpeedParallel && isUseAdditionParams){
+%>
+,<%=specificAdditionParams%>
+<%
+}
+%>
+
+, "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>, "--export-dir", <%=exportDir%>
+<%if(isUseSpeedParallel){%>,"--connection-manager","org.apache.sqoop.teradata.TeradataConnManager"<%}%>
+<%if(printLog && verbose){%>, "--verbose"<%}%>
+<%if(direct){%>, "--direct"<%}%>
+<%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
+<%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
+<%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
+<%
+if(additionalList != null){ 
+    for(Map<String,String> additionalMap : additionalList){ 
+        isNull=false; 
+        if(additionalMap.get("ADDITIONAL_VALUE")==null || "".equals(additionalMap.get("ADDITIONAL_VALUE"))) { 
+            isNull=true; 
+        } 
+        if(!isNull) { 
+%> 
+            ,"<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>", <%=additionalMap.get("ADDITIONAL_VALUE")%> 
+<% 
+        } else { 
+%> 
+            ,"<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>" 
+<% 
+        } 
+    } 
+} 
+%>
+};
+
+final Process ps_<%=cid %> = runtime_<%=cid %>.exec(cmd_<%=cid %>);
+
+java.lang.StringBuilder sb_<%=cid%> = null;
+byte[] byteArray_<%=cid%> = new byte[1024];
+int len_<%=cid%> = 0;
+
+java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
+sb_<%=cid%> = new java.lang.StringBuilder();
+while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+    String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+<%
+    if(printLog){
+%>
+        System.err.println(line_<%=cid%>);
+<%
+    }
+%>
+    sb_<%=cid%>.append(line_<%=cid%>);
+}
+globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
+
+byteArray_<%=cid%> = new byte[1024];
+len_<%=cid%> = 0;
+java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
+sb_<%=cid%> = new java.lang.StringBuilder();
+while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+    String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+<%
+    if(printLog){
+%>
+        System.out.println(line_<%=cid%>);
+<%
+    }
+%>
+    sb_<%=cid%>.append(line_<%=cid%>);
+}
+globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());

@@ -1,0 +1,583 @@
+<%@ jet 
+imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection
+        org.talend.core.model.process.IConnectionCategory
+        org.talend.core.model.metadata.MappingTypeRetriever
+        org.talend.core.model.metadata.MetadataTalendType
+		java.util.List	
+		java.util.Map
+		java.util.Set
+		java.util.HashSet
+		" 
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jDBConnUtil.javajet"%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	final String cid = node.getUniqueName();
+	
+	String dbhost = ElementParameterParser.getValue(node, "__HOST__");
+	String dbport = ElementParameterParser.getValue(node, "__PORT__");
+	String dbname= ElementParameterParser.getValue(node, "__DBNAME__");
+	String dbuser= ElementParameterParser.getValue(node, "__USER__");
+
+	
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+%>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetConnection.javajet"%>
+	
+<%
+	String tableName = ElementParameterParser.getValue(node, "__TABLE__");
+	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
+%>
+	java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
+	String query_<%=cid %> = "";
+	String tableName_<%=cid%> = <%=tableName%>;
+<%
+List<IMetadataColumn> listColumn = null;
+List<IMetadataTable> metadatas = node.getMetadataList();
+if(metadatas != null && metadatas.size() > 0) {
+    IMetadataTable metadata = metadatas.get(0);
+    listColumn = metadata.getListColumns();
+}
+
+StringBuilder createTableSQL = new StringBuilder();
+
+boolean external = "true".equals(ElementParameterParser.getValue(node, "__CREATE_EXTERNAL__"));
+String tableAction = ElementParameterParser.getValue(node,"__TABLEACTION__");
+boolean createIfNotExist = "CREATE_IF_NOT_EXIST".equals(tableAction);
+boolean setPartitioned = "true".equals(ElementParameterParser.getValue(node, "__SET_PARTITIONS__"));
+boolean setClustered = false;
+boolean setSkewed = false;
+
+boolean setLocation = "true".equals(ElementParameterParser.getValue(node, "__SET_FILE_LOCATION__"));
+String location = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
+
+String storedFormat = ElementParameterParser.getValue(node, "__STORAGE_FORMAT__");
+
+List<Map<String, String>> serdeProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SERDE_PROPERTIES__");
+
+List<Map<String, String>> tableProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__TABLE_PROPERTIES__");
+
+boolean setDelimitedRowFormat = "true".equals(ElementParameterParser.getValue(node, "__SET_ROW_FORMAT__"));
+boolean setSerdeRowFormat = "true".equals(ElementParameterParser.getValue(node, "__SET_SERDE_ROW_FORMAT__"));
+
+boolean setRowFormat = (setDelimitedRowFormat || setSerdeRowFormat) && !"STORAGE".equals(storedFormat);
+
+boolean storeAsAvro = "AVRO".equals(storedFormat);
+
+createTableSQL.append("CREATE ");
+createTableSQL.append(external?"EXTERNAL":"");
+createTableSQL.append(" TABLE ");
+createTableSQL.append(createIfNotExist?"IF NOT EXISTS":"");
+createTableSQL.append(" \" + ");
+createTableSQL.append("tableName_");
+createTableSQL.append(cid);
+createTableSQL.append(" + \"");
+
+boolean likeTable = "true".equals(ElementParameterParser.getValue(node, "__LIKE_TABLE__"));
+if(likeTable) {
+	String likeTableName = ElementParameterParser.getValue(node, "__LIKE_TABLE_NAME__");
+%>
+	String likeTableName_<%=cid%> = <%=likeTableName%>;
+<%
+	createTableSQL.append(" LIKE ");
+	createTableSQL.append("\" + ");
+	createTableSQL.append("likeTableName_");
+	createTableSQL.append(cid);
+	createTableSQL.append(" + \"");
+	
+	if(setLocation) {
+%>
+		String location_<%=cid%> = <%=location%>;
+<%
+    	createTableSQL.append(" LOCATION '");
+    	createTableSQL.append("\" + ");
+    	createTableSQL.append("location_");
+    	createTableSQL.append(cid);
+    	createTableSQL.append(" + \"'");
+	}
+%>
+	String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
+	try {
+    	stmt_<%=cid%>.execute(querySQL_<%=cid %>);
+    } catch(java.sql.SQLException e_<%=cid%>) {
+    	<%if(("true").equals(dieOnError)) {
+    	%>
+    		throw(e_<%=cid%>);
+    	<%
+    	}else {
+    	%> 
+    		System.err.println(e_<%=cid%>.getMessage());
+    	<%
+    	}%>
+    }
+    stmt_<%=cid %>.close();	
+    globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
+    
+    String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+    if(currentClientPathSeparator_<%=cid%>!=null) {
+    	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+    	globalMap.put("current_client_path_separator", null);
+    }
+<%	
+	if(!("true").equals(useExistingConn)) {
+%>
+		conn_<%=cid %>.close();
+<%
+	}
+	return stringBuffer.toString();
+}
+
+boolean asSelect = "true".equals(ElementParameterParser.getValue(node, "__AS_SELECT__"));
+
+if(!storeAsAvro && !asSelect) {
+	createTableSQL.append("(");
+}
+
+final MappingTypeRetriever mappingType = MetadataTalendType.getMappingTypeRetriever("hive_id");
+
+class Util {
+	
+	int index = 0;
+	
+	void generateColumnsSQL(List<IMetadataColumn> listColumn,StringBuilder createTableSQL) {
+		index++;
+	
+		int count = 0;
+		String ending = ",";
+        for(IMetadataColumn metadataColumn : listColumn) {
+            createTableSQL.append(metadataColumn.getOriginalDbColumnName());
+            createTableSQL.append(" ");
+            
+            String hiveType = null;
+            if(metadataColumn.getType() == null || metadataColumn.getType().trim().length() == 0) {
+                hiveType = mappingType.getDefaultSelectedDbType(metadataColumn.getTalendType());
+            } else {
+                hiveType = metadataColumn.getType();
+            }
+        	createTableSQL.append(hiveType);
+        	
+        	String comment = metadataColumn.getComment();
+        	if(comment!=null && !"".equals(comment) && !"\"\"".equals(comment)) {
+%>
+				String comment_<%=index%>_<%=count%>_<%=cid%> = <%=comment%>;
+<%
+        		createTableSQL.append(" COMMENT '");
+	    		createTableSQL.append("\" + ");
+    			createTableSQL.append("comment_");
+    			createTableSQL.append(index);
+    			createTableSQL.append("_");
+    			createTableSQL.append(count);
+    			createTableSQL.append("_");
+    			createTableSQL.append(cid);
+        		createTableSQL.append(" + \"'");
+        	}
+            
+            if(count == listColumn.size() - 1) {
+                ending = "";
+            }
+            createTableSQL.append(ending);
+            count++;
+        }
+	}
+	
+	java.util.Map<String,String> hiveTypeToAvroType = null;
+	
+	void generateAvroSchema(List<IMetadataColumn> listColumn,StringBuilder schemaBuilder, String quote) {
+		if(hiveTypeToAvroType == null) {
+			hiveTypeToAvroType = new java.util.HashMap<String,String>();
+			hiveTypeToAvroType.put("SMALLINT","int");
+			hiveTypeToAvroType.put("FLOAT","float");
+			hiveTypeToAvroType.put("DOUBLE","double");
+			hiveTypeToAvroType.put("BIGINT","long");
+			hiveTypeToAvroType.put("INT","int");
+			hiveTypeToAvroType.put("TINYINT","int");
+			hiveTypeToAvroType.put("STRING","string");
+			hiveTypeToAvroType.put("BOOLEAN","boolean");
+			hiveTypeToAvroType.put("STRUCT","record");
+			hiveTypeToAvroType.put("MAP","map");
+			hiveTypeToAvroType.put("ARRAY","list");
+			hiveTypeToAvroType.put("TIMESTAMP","long");
+		}
+		
+		index++;
+	
+		int count = 0;
+		String ending = ",";
+        for(IMetadataColumn metadataColumn : listColumn) {
+        	schemaBuilder.append("{");
+        	
+        	schemaBuilder.append(quote).append("name").append(quote);
+            schemaBuilder.append(" : ");
+            schemaBuilder.append(quote).append(metadataColumn.getOriginalDbColumnName()).append(quote);
+            
+            schemaBuilder.append(", ");
+            
+            String hiveType = null;
+            if(metadataColumn.getType() == null || metadataColumn.getType().trim().length() == 0) {
+                hiveType = mappingType.getDefaultSelectedDbType(metadataColumn.getTalendType());
+            } else {
+                hiveType = metadataColumn.getType();
+            }
+            
+            String avroType = hiveTypeToAvroType.get(hiveType);
+            
+            schemaBuilder.append(quote).append("type").append(quote);
+            schemaBuilder.append(" : ");
+        	schemaBuilder.append(quote).append(avroType).append(quote);
+        	
+        	String comment = metadataColumn.getComment();
+        	if(comment!=null && !"".equals(comment) && !"\"\"".equals(comment)) {
+        		schemaBuilder.append(", ");
+%>
+				String comment_<%=index%>_<%=count%>_<%=cid%> = <%=comment%>;
+<%
+        		schemaBuilder.append(quote).append("doc").append(quote);
+        		schemaBuilder.append(" : ");
+        		schemaBuilder.append(quote);
+        		
+	    		schemaBuilder.append("\" + ");
+    			schemaBuilder.append("comment_");
+    			schemaBuilder.append(index);
+    			schemaBuilder.append("_");
+    			schemaBuilder.append(count);
+    			schemaBuilder.append("_");
+    			schemaBuilder.append(cid);
+        		schemaBuilder.append(" + \"");
+        		
+        		schemaBuilder.append(quote);
+        	}
+            
+            schemaBuilder.append("}");
+            
+            if(count == listColumn.size() - 1) {
+                ending = "";
+            }
+            schemaBuilder.append(ending);
+            count++;
+        }
+	}
+	
+	void generatePros(String prefix, List<Map<String, String>> pros, StringBuilder createTableSQL) {
+		index++;
+		
+		int count = 0;
+		String ending = ",";
+		if(pros.size() > 0){
+			createTableSQL.append(prefix);
+			createTableSQL.append("(");
+			for(Map<String, String> item : pros){
+%>
+				String key_<%=index%>_<%=count%>_<%=cid%> = <%=item.get("PROPERTY") %>;
+				String value_<%=index%>_<%=count%>_<%=cid%> = <%=item.get("VALUE") %>;
+<%
+	    		createTableSQL.append("'\" + ");
+    			createTableSQL.append("key_");
+    			createTableSQL.append(index);
+    			createTableSQL.append("_");
+    			createTableSQL.append(count);
+    			createTableSQL.append("_");
+    			createTableSQL.append(cid);
+        		createTableSQL.append(" + \"'");
+        		
+        		createTableSQL.append(" = ");
+        		
+        		createTableSQL.append("'\" + ");
+    			createTableSQL.append("value_");
+    			createTableSQL.append(index);
+    			createTableSQL.append("_");
+    			createTableSQL.append(count);
+    			createTableSQL.append("_");
+    			createTableSQL.append(cid);
+        		createTableSQL.append(" + \"'");
+        		
+        		if(count == pros.size() - 1) {
+                	ending = "";
+            	}
+            	
+	            createTableSQL.append(ending);
+            	count++;
+			}
+			
+			if(appendKeyValue!=null) {
+				createTableSQL.append(",");
+				createTableSQL.append(appendKeyValue);
+				appendKeyValue = null;
+			}
+			
+			createTableSQL.append(")");
+		} else if(appendKeyValue!=null) {
+			createTableSQL.append(prefix);
+			createTableSQL.append("(");
+			createTableSQL.append(appendKeyValue);
+			createTableSQL.append(")");
+			appendKeyValue = null;
+		}
+	}
+	
+	String appendKeyValue = null;
+	
+	void appendKeyValue(String appendKeyValue) {
+		this.appendKeyValue = appendKeyValue;
+	}
+}
+
+Util util = new Util();
+
+if(!storeAsAvro && !asSelect) {
+	util.generateColumnsSQL(listColumn,createTableSQL);
+	createTableSQL.append(")");
+}
+
+String tableComment = ElementParameterParser.getValue(node, "__TABLE_COMMENT__");
+if(tableComment!=null && !"".equals(tableComment) && !"\"\"".equals(tableComment)) {
+%>
+	String tableComment_<%=cid%> = <%=tableComment%>;
+<%
+	createTableSQL.append(" COMMENT '");
+	createTableSQL.append("\" + ");
+	createTableSQL.append("tableComment_");
+	createTableSQL.append(cid);
+	createTableSQL.append(" + \"'");
+}
+
+if(setPartitioned) {
+    if ((metadatas!=null)&&(metadatas.size()>0)) {
+    	IMetadataTable metadata = metadatas.get(1);
+    	if (metadata!=null) {
+    		List<IMetadataColumn> columnList = metadata.getListColumns();
+    		if(columnList != null && columnList.size() > 0) {
+    			createTableSQL.append(" PARTITIONED BY (");
+				util.generateColumnsSQL(columnList,createTableSQL);
+    			createTableSQL.append(")");
+    		}
+    	}
+    }
+}
+
+boolean clustededOrSkewed = "true".equals(ElementParameterParser.getValue(node, "__SET_CLUSTERED_BY_AND_SKEWED_BY__"));
+if(clustededOrSkewed) {
+	String ddl = ElementParameterParser.getValue(node, "__CLUSTERED_BY_AND_SKEWED_BY__");
+	ddl = ddl.replaceAll("\n"," ");
+	ddl = ddl.replaceAll("\r"," ");
+%>
+	String clustededOrSkewed_<%=cid%> = <%=ddl%>;
+<%
+	createTableSQL.append(" \" + ");
+	createTableSQL.append("clustededOrSkewed_");
+	createTableSQL.append(cid);
+	createTableSQL.append(" + \"");
+}
+
+if(storeAsAvro) {
+	createTableSQL.append(" ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'");
+	util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
+} else if(setRowFormat) {
+	createTableSQL.append(" ROW FORMAT ");
+	if(setDelimitedRowFormat) {
+		createTableSQL.append("DELIMITED ");
+		boolean setField = "true".equals(ElementParameterParser.getValue(node, "__SET_FIELD_TERMINATED_BY__"));
+		if(setField) {
+    		String fieldChar = ElementParameterParser.getValue(node, "__FIELD_TERMINATED_BY__");
+%>
+			String fieldChar_<%=cid%> = <%=fieldChar%>;
+<%
+    		createTableSQL.append(" FIELDS TERMINATED BY '");
+    		createTableSQL.append("\" + ");
+			createTableSQL.append("fieldChar_");
+			createTableSQL.append(cid);
+    		createTableSQL.append(" + \"'");
+    		
+    		boolean setEscape = "true".equals(ElementParameterParser.getValue(node, "__SET_FIELD_ESCAPE_BY__"));
+    		if(setEscape) {
+    			String escapeChar = ElementParameterParser.getValue(node, "__FIELD_ESCAPE_BY__");
+%>
+				String escapeChar_<%=cid%> = <%=escapeChar%>;
+<%
+	    		createTableSQL.append(" ESCAPED BY '");
+        		createTableSQL.append("\" + ");
+    			createTableSQL.append("escapeChar_");
+    			createTableSQL.append(cid);
+        		createTableSQL.append(" + \"'");
+    		}
+		}
+		
+		boolean setCollection = "true".equals(ElementParameterParser.getValue(node, "__SET_COLLECTION_ITEM_TERMINATED_BY__"));
+		if(setCollection) {
+    		String collectionChar = ElementParameterParser.getValue(node, "__COLLECTION_ITEM_TERMINATED_BY__");
+%>
+			String collectionChar_<%=cid%> = <%=collectionChar%>;
+<%
+    		createTableSQL.append(" COLLECTION ITEMS TERMINATED BY '");
+    		createTableSQL.append("\" + ");
+			createTableSQL.append("collectionChar_");
+			createTableSQL.append(cid);
+    		createTableSQL.append(" + \"'");
+		}
+		
+		boolean setMap = "true".equals(ElementParameterParser.getValue(node, "__SET_MAP_KEY_TERMINATED_BY__"));
+		if(setMap) {
+    		String mapChar = ElementParameterParser.getValue(node, "__MAP_KEY_TERMINATED_BY__");
+%>
+			String mapChar_<%=cid%> = <%=mapChar%>;
+<%
+    		createTableSQL.append(" MAP KEYS TERMINATED BY '");
+    		createTableSQL.append("\" + ");
+			createTableSQL.append("mapChar_");
+			createTableSQL.append(cid);
+    		createTableSQL.append(" + \"'");
+		}
+		
+		boolean setLine = "true".equals(ElementParameterParser.getValue(node, "__SET_LINES_TERMINATED_BY__"));
+		if(setLine) {
+    		String lineChar = ElementParameterParser.getValue(node, "__LINES_TERMINATED_BY__");
+%>
+			String lineChar_<%=cid%> = <%=lineChar%>;
+<%
+    		createTableSQL.append(" LINES TERMINATED BY '");
+    		createTableSQL.append("\" + ");
+			createTableSQL.append("lineChar_");
+			createTableSQL.append(cid);
+    		createTableSQL.append(" + \"'");
+		}
+	} else {
+		createTableSQL.append("SERDE \\\"");
+		createTableSQL.append("\" + ");
+		String serdeName = ElementParameterParser.getValue(node, "__SERDE_NAME__");
+%>
+		String serdeName_<%=cid%> = <%=serdeName%>;
+<%
+		createTableSQL.append("serdeName_");
+		createTableSQL.append(cid);
+		createTableSQL.append(" + \"\\\"");
+		
+		util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
+	}
+}
+
+if(storeAsAvro) {
+	createTableSQL.append(" STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'");
+	createTableSQL.append(" OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'");
+} else if(!"STORAGE".equals(storedFormat)) {
+	createTableSQL.append(" STORED AS ");
+	if("INPUTFORMAT_AND_OUTPUTFORMAT".equals(storedFormat)) {
+		String inputClass = ElementParameterParser.getValue(node, "__INPUTFORMAT_CLASS__");
+		String outputClass = ElementParameterParser.getValue(node, "__OUTPUTFORMAT_CLASS__");
+%>
+		String inputClass_<%=cid%> = <%=inputClass%>;
+		String outputClass_<%=cid%> = <%=outputClass%>;
+<%
+		createTableSQL.append("INPUTFORMAT '");
+		createTableSQL.append("\" + ");
+        createTableSQL.append("inputClass_");
+        createTableSQL.append(cid);
+        createTableSQL.append(" + \"'");
+		
+		createTableSQL.append(" OUTPUTFORMAT '");
+		createTableSQL.append("\" + ");
+        createTableSQL.append("outputClass_");
+        createTableSQL.append(cid);
+        createTableSQL.append(" + \"'");
+	} else {
+		createTableSQL.append(storedFormat);
+	}
+} else {
+	String storageClass = ElementParameterParser.getValue(node, "__STORAGE_CLASS__");
+%>
+	String storageClass_<%=cid%> = <%=storageClass%>;
+<%
+	createTableSQL.append(" STORED BY '");
+	createTableSQL.append("\" + ");
+    createTableSQL.append("storageClass_");
+    createTableSQL.append(cid);
+    createTableSQL.append(" + \"'");
+    
+    util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
+}
+
+if(setLocation) {
+%>
+	String location_<%=cid%> = <%=location%>;
+<%
+	createTableSQL.append(" LOCATION '");
+	createTableSQL.append("\" + ");
+	createTableSQL.append("location_");
+	createTableSQL.append(cid);
+	createTableSQL.append(" + \"'");
+}
+
+if(storeAsAvro) {
+	StringBuilder avroSchemaBuilder = new StringBuilder();
+	String quote = "\\\"";
+	avroSchemaBuilder.append("'avro.schema.literal'='{").append(quote).append("name").append(quote).append(" : ").append(quote).append("row").append(quote)
+	.append(", ").append(quote).append("type").append(quote).append(" : ").append(quote).append("record").append(quote)
+	.append(", ").append(quote).append("fields").append(quote).append(" : [");
+	util.generateAvroSchema(listColumn, avroSchemaBuilder, quote);
+	avroSchemaBuilder.append("] }'");
+	
+	util.appendKeyValue(avroSchemaBuilder.toString());
+}
+
+util.generatePros(" TBLPROPERTIES ", tableProps, createTableSQL);
+
+if(asSelect) {
+	String sql = ElementParameterParser.getValue(node, "__SELECT__");
+	sql = sql.replaceAll("\n"," ");
+	sql = sql.replaceAll("\r"," ");
+%>
+	String select_<%=cid%> = <%=sql%>;
+<%
+	createTableSQL.append(" AS ");
+	createTableSQL.append("\" + ");
+	createTableSQL.append("select_");
+	createTableSQL.append(cid);
+	createTableSQL.append(" + \"");
+}
+%>
+String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
+try {
+	stmt_<%=cid%>.execute(querySQL_<%=cid %>);
+} catch(java.sql.SQLException e_<%=cid%>) {
+	<%if(("true").equals(dieOnError)) {
+	%>
+		throw(e_<%=cid%>);
+	<%
+	}else {
+	%> 
+		System.err.println(e_<%=cid%>.getMessage());
+	<%
+	}%>
+}
+stmt_<%=cid %>.close();	
+<%if(!("true").equals(useExistingConn)) {%>
+	conn_<%=cid %>.close();
+<%}%>    
+globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
+
+String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
+if(currentClientPathSeparator_<%=cid%>!=null) {
+	System.setProperty("path.separator", currentClientPathSeparator_<%=cid%>);
+	globalMap.put("current_client_path_separator", null);
+}
+
+String currentClientUsername_<%=cid%> = (String)globalMap.get("current_client_user_name");
+if(currentClientUsername_<%=cid%>!=null) {
+	System.setProperty("user.name", currentClientUsername_<%=cid%>);
+	globalMap.put("current_client_user_name", null);
+}
+
+String originalHadoopUsername_<%=cid%> = (String)globalMap.get("HADOOP_USER_NAME_<%=cid%>");
+if(originalHadoopUsername_<%=cid%>!=null) {
+	System.setProperty("HADOOP_USER_NAME", originalHadoopUsername_<%=cid%>);
+	globalMap.put("HADOOP_USER_NAME_<%=cid%>", null);
+} else {
+	System.clearProperty("HADOOP_USER_NAME");
+}

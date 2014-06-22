@@ -1,0 +1,59 @@
+<%@ jet 
+	imports="
+	    org.talend.core.model.process.INode 
+	    org.talend.core.model.process.ElementParameterParser 
+	    org.talend.designer.codegen.config.CodeGeneratorArgument
+	    
+		java.util.List
+		java.util.Map
+	" 
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+	
+    String cid = node.getUniqueName();
+    
+    boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
+	com.basho.riak.client.IRiakClient client_<%=cid%> = null;
+	int nb_line_<%=cid%> = 0;
+	<%
+	if(useExistingConn){
+		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+		%>
+		client_<%=cid%> = (com.basho.riak.client.IRiakClient)globalMap.get("client_<%=connection%>");
+		<%
+		if(isLog4jEnabled){
+		%>	
+			if(client_<%=cid%> != null) {
+				log.info("<%=cid%> - Get an existing client from " + "<%=connection%>" + ".");
+			}
+		<%
+		}
+	}else{
+	%>
+		try{
+
+			<%@ include file="../tRiakConnection/tRiak_connection_inc.javajet"%>
+
+	<%
+    }
+	%>
+		com.basho.riak.client.query.StreamingOperation<String> bucketsStreamOpts_<%=cid%> = client_<%=cid%>.listBucketsStreaming();
+		java.util.List<String> buckets_<%=cid%> = bucketsStreamOpts_<%=cid%>.getAll();
+		<%
+		log4jFileUtil.startRetriveDataInfo();
+		%>
+		for(String bucketName_<%=cid%>:buckets_<%=cid%>){
+			nb_line_<%=cid%>++;
+			globalMap.put("<%=cid%>_CURRENT_BUCKET_NAME", bucketName_<%=cid%>);
+			<%
+			log4jFileUtil.collectRetriveData("bucketName_"+cid);
+			log4jFileUtil.debugRetriveData(node);
+			%>

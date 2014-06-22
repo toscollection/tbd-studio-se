@@ -1,0 +1,155 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
+    	org.talend.core.model.process.ElementParameterParser		
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		java.util.List
+		java.util.Map
+	"
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+IMetadataTable metadata = null;
+List<IMetadataTable> metadatas = node.getMetadataList();
+if((metadatas!=null) && (metadatas.size()>0)){
+    metadata = metadatas.get(0);
+}
+
+String inConnName = null;
+List<? extends IConnection> conns = node.getIncomingConnections();
+if(conns!=null){
+	if(conns.size()>0){
+	    IConnection conn = conns.get(0);
+		if(conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+    		inConnName = conn.getName();
+    	}
+    }
+}
+List<IMetadataColumn> columns = null;
+int sizeColumns = 0;
+if(metadata != null){
+	columns = metadata.getListColumns();
+	sizeColumns = columns.size();
+}
+if(sizeColumns == 0 || inConnName == null){
+	return "";
+}
+String version = ElementParameterParser.getValue(node,"__DB_VERSION__");
+class ConvertTypeUtil{
+	String version = null;
+	String cid = null;
+	public void setCID(String cid){
+		this.cid = cid;
+	}
+	public void setVersion(String version){
+		this.version = version;
+	}
+	public void convert(String cType, String inConnName, String columnName){
+		if("BytesType".equals(cType)){
+		%>
+			java.nio.ByteBuffer.wrap(<%=inConnName%>.<%=columnName%>)
+		<%
+		}else if("DateType".equals(cType)){
+		%>
+			org.apache.cassandra.utils.ByteBufferUtil.bytes(<%=inConnName%>.<%=columnName%>.getTime())
+		<%
+		}else if("BooleanType".equals(cType)){
+		%>
+			java.nio.ByteBuffer.wrap(<%=inConnName%>.<%=columnName%>?bTrue_<%=cid%>:bFalse_<%=cid%>)
+		<%
+		}else if("ObjectType".equals(cType)){
+		%>
+		    objectSerializer_<%=cid%>.toByteBuffer(<%=inConnName%>.<%=columnName%>)
+		<%
+		}else if("IntegerType".equals(cType)){
+		%>
+			java.nio.ByteBuffer.wrap(((java.math.BigInteger)<%=inConnName%>.<%=columnName%>).toByteArray())
+		<%
+		}else if("DecimalType".equals(cType)){
+		%>
+			org.apache.cassandra.db.marshal.DecimalType.instance.decompose(<%=inConnName%>.<%=columnName%>)
+		<%
+		}else if("UUIDType".equals(cType) || "TimeUUIDType".equals(cType)){
+			if("CASSANDRA_1_1_2".equals(version)){
+			%>
+				java.nio.ByteBuffer.wrap(org.apache.cassandra.utils.UUIDGen.decompose(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)))
+			<%
+			}else{
+			%>
+				org.apache.cassandra.utils.ByteBufferUtil.bytes(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>))
+			<%
+			}
+		}else{
+	    %>
+	    	org.apache.cassandra.utils.ByteBufferUtil.bytes(<%=inConnName%>.<%=columnName%>)
+		<%
+		}
+	}
+}
+ConvertTypeUtil convertUtil = new ConvertTypeUtil();
+convertUtil.setCID(cid);
+convertUtil.setVersion(version);
+String keyColumn = null;
+String keyCType = null;
+for(int i = 0; i < sizeColumns; i++){
+	IMetadataColumn column = columns.get(i);
+	if(column.isKey()){
+		keyColumn = column.getLabel();
+		keyCType = column.getType();
+		break;
+	}
+}
+if(keyColumn != null){
+%>
+	writer_<%=cid%>.newRow(<%convertUtil.convert(keyCType, inConnName, keyColumn);%>);
+<%
+}else{
+	if(isLog4jEnabled){
+	%>
+		log.fatal("<%=cid%> - A key should be specified in the schema.");
+	<%
+	}
+	%>
+	if(true){
+		throw new java.lang.Exception("A key should be specified in the schema.");
+	}
+<%
+}
+%>
+long timestamp_<%=cid%> = System.currentTimeMillis() * 1000;
+nb_line_<%=cid%> ++;
+<%
+for(int i = 0; i < sizeColumns; i++){
+	IMetadataColumn column = columns.get(i);
+	JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+	String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+	String columnName = column.getLabel();
+	String cType = column.getType();
+	if(column.isKey()){
+		continue;
+	}
+	%>
+	writer_<%=cid%>.addColumn(org.apache.cassandra.utils.ByteBufferUtil.bytes("<%=columnName%>"),<%convertUtil.convert(cType, inConnName, columnName);%>,timestamp_<%=cid%>);
+<%
+} 
+log4jFileUtil.collectRetriveData(inConnName,metadata);
+if(isLog4jEnabled){
+%>
+	log.debug("<%=cid%> - Writing the record " + (nb_line_<%=cid%>) + " to the SSTable directory.");
+	log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
+	log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+<%
+}
+%>
+

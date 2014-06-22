@@ -1,0 +1,90 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		
+		java.util.Map
+		java.util.List
+	" 
+%>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String dbhost = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
+    String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
+    boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    if (!authentication){
+    	dbuser = null;
+    	dbpass = null;
+    }
+    
+    String passwordFieldName = "__PASSWORD__";
+    %>
+ 	String decryptedPassword_<%=cid%> = null;
+ 	<%if(!authentication) {
+ 	   //do nothing
+    } else if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {%> 
+    	decryptedPassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+    <%} else {%>
+    	decryptedPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+    <%}
+    
+    boolean useTriggerReplicate="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_TRIGGER_REPLICATE__"));
+    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    List<Map<String,String>> replicaTargetDB= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICATE_TARGET_DB__");
+
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	%>
+	org.lightcouch.CouchDbClient client_<%=cid%> = new org.lightcouch.CouchDbClient(<%=dbname%>, true, "http", <%=dbhost%>, <%=dbport%>, <%=dbuser%>, decryptedPassword_<%=cid%>);
+	<%
+	if(useTriggerReplicate){
+	%>
+		org.lightcouch.ReplicationResult result_<%=cid%> = null;
+		List<org.lightcouch.Replication> replications_<%=cid%> = new java.util.ArrayList<org.lightcouch.Replication>();
+		<%
+		int index= 0;
+		for(Map<String,String> targetDB:replicaTargetDB){
+			String targetDBName=targetDB.get("TARGET_DB_NAME");
+			boolean isCreateTargetDB = "true".equalsIgnoreCase(targetDB.get("CREATE_TARGET"));
+			boolean isContinuous = "true".equalsIgnoreCase(targetDB.get("CONTINUOUS"));
+			boolean isCancel = "true".equalsIgnoreCase(targetDB.get("CANCEL_REPLICATE"));
+			%>
+			result_<%=cid%> = client_<%=cid%>.replication()
+			  .source(<%=dbname%>)
+			  .target(<%=targetDBName%>) 
+			  .createTarget(<%=isCreateTargetDB%>)
+			  .continuous(<%=isContinuous%>)
+			  .trigger();
+			<%
+			if(isContinuous && isCancel){
+			%>
+				if(result_<%=cid%>.isOk()){
+					org.lightcouch.Replication replication_<%=cid%>_<%=index%>=
+					client_<%=cid%>.replication()
+					  .source(<%=dbname%>)
+					  .target(<%=targetDBName%>)
+					  .createTarget(<%=isCreateTargetDB%>)
+					  .continuous(<%=isContinuous%>)
+					  .cancel(<%=isCancel%>);
+					replications_<%=cid%>.add(replication_<%=cid%>_<%=index%>);
+				}
+				<%
+				index++;
+			}
+		}
+		%>
+		globalMap.put("replications_<%=cid%>", replications_<%=cid%>);
+	<%
+	}
+	%>
+	globalMap.put("client_<%=cid%>", client_<%=cid%>);
+	<%
+	log4jFileUtil.componentFinishInfo(node);
+	%>

@@ -1,0 +1,70 @@
+<%@ jet 
+imports="
+        org.talend.core.model.process.INode 
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.process.ElementParameterParser
+" 
+%>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+	String dest_cid = cid.replace("_Out", "");
+    boolean useTriggerReplicate="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_TRIGGER_REPLICATE__"));
+    boolean useExistingConn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+    
+	if(!useExistingConn){
+	%>
+		if(client_<%=cid%> != null){
+			<%
+			if(useTriggerReplicate){
+			%>
+				if(replications_<%=cid%> != null && replications_<%=cid%>.size()>0){
+					for(org.lightcouch.Replication replication_<%=cid%> : replications_<%=cid%>){
+						replication_<%=cid%>.trigger();
+					}
+				}
+			<%
+			}
+			%>
+			client_<%=cid%>.shutdown();
+		}  
+	<%
+	}
+	%>
+	int nb_line_failed_<%=cid%> = nb_line_<%=cid%> - nb_line_update_<%=cid%> - nb_line_inserted_<%=cid%> 
+		- nb_line_deleted_<%=cid%>;
+	nb_line_upserted_<%=cid%> = nb_line_update_<%=cid%> + nb_line_inserted_<%=cid%>;
+	globalMap.put("<%=dest_cid %>_NB_LINE",nb_line_<%=cid%>);
+	globalMap.put("<%=dest_cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>);
+	globalMap.put("<%=dest_cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
+	globalMap.put("<%=dest_cid %>_NB_LINE_UPSERTED",nb_line_upserted_<%=cid%>);
+	globalMap.put("<%=dest_cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>);
+	<%
+	if(isLog4jEnabled){
+		if("INSERT".equals(dataAction)){
+		%>
+			log.info("<%=cid%> - Has inserted " + nb_line_inserted_<%=cid%> + " records.");
+		<%
+		}else if("UPDATE".equals(dataAction)){
+		%>
+			log.info("<%=cid%> - Has updated " + nb_line_update_<%=cid%> + " records.");
+		<%
+		}else if("UPSERT".equals(dataAction)){
+		%>
+			log.info("<%=cid%> - Has upserted " + nb_line_upserted_<%=cid%> + " records.");
+		<%
+		}else if("DELETE".equals(dataAction)){
+		%>
+			log.info("<%=cid%> - Has deleted " + nb_line_deleted_<%=cid%> + " records.");
+		<%
+		}
+		%>
+		log.info("<%=cid%> - " + nb_line_failed_<%=cid%> + " records failed.");
+	<%
+	}
+	log4jFileUtil.componentFinishInfo(node);
+	%>

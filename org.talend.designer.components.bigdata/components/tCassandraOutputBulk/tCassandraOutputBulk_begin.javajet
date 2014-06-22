@@ -1,0 +1,114 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
+    	org.talend.core.model.process.ElementParameterParser		
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.List
+		java.util.Map
+	"
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+log4jFileUtil.componentStartInfo(node);
+log4jFileUtil.logParameters(node);
+
+IMetadataTable metadata = null;
+List<IMetadataTable> metadatas = node.getMetadataList();
+if((metadatas!=null) && (metadatas.size()>0)){
+    metadata = metadatas.get(0);
+}
+
+String inConnName = null;
+List<? extends IConnection> conns = node.getIncomingConnections();
+if(conns!=null){
+	if(conns.size()>0){
+	    IConnection conn = conns.get(0);
+		if(conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+    		inConnName = conn.getName();
+    	}
+    }
+}
+List<IMetadataColumn> columns = null;
+int sizeColumns = 0;
+if(metadata != null){
+	columns = metadata.getListColumns();
+	sizeColumns = columns.size();
+}
+if(sizeColumns == 0 || inConnName == null){
+	return "";
+}
+
+String sstablePath = ElementParameterParser.getValue(node,"__SSTABLE_STORE_PATH__");
+String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
+String partitioner = ElementParameterParser.getValue(node,"__PARTITIONER__");
+String comparator = ElementParameterParser.getValue(node,"__COMPARATOR__");
+String sub_comparator = ElementParameterParser.getValue(node,"__SUBCOMPARATOR__");
+
+String buffer_size = ElementParameterParser.getValue(node,"__BUFFER_SIZE__");
+
+%>
+int nb_line_<%=cid%> = 0;
+byte[] bTrue_<%=cid%> = new byte[1];
+byte[] bFalse_<%=cid%> = new byte[1];
+bTrue_<%=cid%>[0] = (byte)1;
+bFalse_<%=cid%>[0] = (byte)0;
+java.io.File file_<%=cid%> = new java.io.File(<%=sstablePath%>, <%=keySpace%>+"/"+<%=columnFamily%>);		
+<%
+if(isLog4jEnabled){
+%>	
+	log.info("<%=cid%> - Creating the SSTable data directory " + file_<%=cid%>.getPath() + ".");
+<%
+}
+%>
+file_<%=cid%>.mkdirs();
+<%
+if(isLog4jEnabled){
+%>	
+	log.info("<%=cid%> - Created the data directory successfully.");
+<%
+}
+%>
+class ObjectSerializer_<%=cid%>{
+	public java.nio.ByteBuffer toByteBuffer(Object obj){
+	    try{
+	      	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	      	ObjectOutputStream oos = new ObjectOutputStream(baos);
+	      	oos.writeObject(obj);
+	      	oos.close();
+	      	return java.nio.ByteBuffer.wrap(baos.toByteArray());
+	    }catch (IOException ex){
+	      	throw new RuntimeException(ex);
+	    }
+	}
+}
+ObjectSerializer_<%=cid%> objectSerializer_<%=cid%> = new ObjectSerializer_<%=cid%>();
+
+org.apache.cassandra.dht.IPartitioner partitioner_<%=cid%> = new org.apache.cassandra.dht.<%=partitioner%>();
+
+org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter writer_<%=cid%> = new org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter(file_<%=cid%>, partitioner_<%=cid%>, <%=keySpace%>, <%=columnFamily%>, 
+	org.apache.cassandra.db.marshal.<%=comparator%>.instance
+	,
+	<%
+	sub_comparator = "NONE";
+	if("NONE".equals(sub_comparator)){
+	%>
+	null
+	<%
+	}else if("ASCIITYPE".equals(comparator)){
+	%>
+	org.apache.cassandra.db.marshal.AsciiType.instance
+	<%
+	}
+	%>
+	,<%=buffer_size%>
+	);      

@@ -1,0 +1,146 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.process.EConnectionType
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+
+		java.util.List
+	" 
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+	String jsonfield = ElementParameterParser.getValue(node,"__JSONFIELD__");
+	String key = ElementParameterParser.getValue(node,"__KEY__");
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+	IConnection inConn = null;
+	IMetadataTable metadata = null;
+	
+	if(inConns!=null && inConns.size()> 0) {
+		inConn = inConns.get(0);
+		metadata = inConn.getMetadataTable();
+	}
+	
+	if (metadata!=null) {    
+		List< ? extends IConnection> conns = node.getIncomingConnections();
+		for (IConnection conn : conns) {
+			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+			%>
+				map_<%=cid%> = client_<%=cid%>.getGson().fromJson(<%=conn.getName()%>.<%=jsonfield%>.toString(),java.util.Map.class);
+				map_<%=cid%>.put("_id",<%=conn.getName()%>.<%=key%>);
+				<%
+				if (isLog4jEnabled) {
+				%>
+					log4jSb_<%=cid%>.append("[key:"+<%=conn.getName()%>.<%=key%>+"]");
+					log4jSb_<%=cid%>.append("|");
+					log4jSb_<%=cid%>.append("[value:"+map_<%=cid%>+"]");
+					log4jSb_<%=cid%>.append("|");
+				<%
+				}
+               	if("INSERT".equals(dataAction)){
+				%>
+					try{
+						client_<%=cid%>.save(map_<%=cid%>);
+						nb_line_inserted_<%=cid%> ++;
+					}catch(org.lightcouch.DocumentConflictException e_<%=cid%>){
+						<%
+						if(dieOnError){
+							if(isLog4jEnabled){
+							%>
+								log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
+							<%
+							}
+							%>
+							throw e_<%=cid%>;
+						<%
+						}else{
+							if(isLog4jEnabled){
+							%>
+								log.error("<%=cid%> - "+e_<%=cid%>.getMessage());
+							<%
+							}
+							%>
+							System.err.println(e_<%=cid%>.getMessage());
+						<%
+						}
+						%>
+					}
+				<%
+            	}else {
+				%>
+					String rev_<%=cid%>=null;
+					try{
+						org.lightcouch.Document updateObject_<%=cid%> = client_<%=cid%>.find(org.lightcouch.Document.class, <%=conn.getName()%>.<%=key%>);
+						rev_<%=cid%>=updateObject_<%=cid%>.getRevision();
+						map_<%=cid%>.put("_rev",rev_<%=cid%>);
+						<%
+						if("UPDATE".equals(dataAction)||"UPSERT".equals(dataAction)){
+						%>
+							client_<%=cid%>.update(map_<%=cid%>);
+							nb_line_update_<%=cid%> ++;
+						<%
+		               	}
+						if("DELETE".equals(dataAction)){
+						%>
+							client_<%=cid%>.remove(<%=conn.getName()%>.<%=key%>,rev_<%=cid%>);
+							nb_line_deleted_<%=cid%> ++;
+						<%
+						}
+						%>
+					}catch(java.lang.Exception e_<%=cid%>){
+						<%
+						if("UPSERT".equals(dataAction)){
+						%>
+							client_<%=cid%>.save(map_<%=cid%>);
+							nb_line_inserted_<%=cid%> ++;
+						<%
+						}else{
+							if(dieOnError){
+								if(isLog4jEnabled){
+								%>
+									log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
+								<%
+								}
+								%>
+								throw e_<%=cid%>;
+							<%
+							}else{
+								if(isLog4jEnabled){
+								%>
+									log.error("<%=cid%> - "+e_<%=cid%>.getMessage());
+								<%
+								}
+								%>
+								System.err.println(e_<%=cid%>.getMessage());
+							<%
+							}
+						}
+						%>
+					}
+				<%
+				}
+				%>	
+				nb_line_<%=cid%> ++;
+				<%
+				if(isLog4jEnabled){
+				%>
+					log.debug("<%=cid%> - Saved the record " + (nb_line_<%=cid%>) + ".");
+					log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
+					log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+				<%
+				}
+			}
+		}
+	}
+	%>
