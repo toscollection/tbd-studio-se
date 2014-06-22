@@ -1,0 +1,88 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+    
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
+    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
+        
+    if (useExistingConnection) {
+    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    	String dbconn = "dbService_" + connection;    	
+    	%>
+    	org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbconn%>");
+    	<%
+    } else {
+    	boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
+    	if (remoteServer) {
+    		String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
+    		%>
+    		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>);
+    		<%
+    	} else {
+	    	String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
+	    	%>
+	    	org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedGraphDatabase(<%=databasePath%>);
+	    	<%
+    	}
+    }
+    String startIndexName = ElementParameterParser.getValue(node, "__START_INDEX_NAME__");
+    String endIndexName = ElementParameterParser.getValue(node, "__END_INDEX_NAME__");
+%>
+	int nb_line_<%=cid %> = 0;
+	long counter_<%=cid%> = 0;
+<%
+	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
+%>
+	resourceMap.put("databaseService_<%=cid%>", databaseService_<%=cid%>);
+<%
+	}
+    String relationshipType = ElementParameterParser.getValue(node, "__RELATIONSHIP_TYPE__");
+    if (batchImport) {
+    	String relationshipMappedMemory = ElementParameterParser.getValue(node, "__RELATIONSHIP_MAPPED_MEMORY__");
+		String propertyMappedMemory = ElementParameterParser.getValue(node, "__PROPERTY_MAPPED_MEMORY__");
+		String stringsMappedMemory = ElementParameterParser.getValue(node, "__STRINGS_MAPPED_MEMORY__");
+		String arraysMappedMemory = ElementParameterParser.getValue(node, "__ARRAYS_MAPPED_MEMORY__");
+    	%>
+    	java.util.Map<String, String> importProperties_<%=cid%> = new java.util.HashMap<String, String>();
+		importProperties_<%=cid%>.put("neostore.nodestore.db.mapped_memory", "0M");
+		importProperties_<%=cid%>.put("neostore.relationshipstore.db.mapped_memory", <%=relationshipMappedMemory%>);
+		importProperties_<%=cid%>.put("neostore.propertystore.db.mapped_memory", <%=propertyMappedMemory%>);
+		importProperties_<%=cid%>.put("neostore.propertystore.db.strings.mapped_memory", <%=stringsMappedMemory%>);
+		importProperties_<%=cid%>.put("neostore.propertystore.db.arrays.mapped_memory", <%=arraysMappedMemory%>);
+		String storeDir_<%=cid%> = "";
+		org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
+		org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> =null;
+		if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
+			org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
+			storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
+			db_<%=cid%>.shutdown();
+			inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
+		} else {
+			throw new UnsupportedOperationException("Not supported yet");
+		}
+    	indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+    	resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
+    	resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
+    	org.neo4j.unsafe.batchinsert.BatchInserterIndex startIndexInserter_<%=cid%> = indexProvider_<%=cid%>.nodeIndex(<%=startIndexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
+    	org.neo4j.unsafe.batchinsert.BatchInserterIndex endIndexInserter_<%=cid%> = indexProvider_<%=cid%>.nodeIndex(<%=endIndexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
+    	<%
+    } else {
+    	%>
+    	org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> startIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=startIndexName%>);
+    	org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> endIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=endIndexName%>);
+    	<%
+    }
+    %>
+    
+	org.neo4j.graphdb.RelationshipType relationshipType_<%=cid%> = org.neo4j.graphdb.DynamicRelationshipType.withName(<%=relationshipType%>);
+
+	org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();

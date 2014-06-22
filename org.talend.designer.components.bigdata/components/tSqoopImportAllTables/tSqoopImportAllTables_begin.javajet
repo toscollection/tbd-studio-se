@@ -1,0 +1,27 @@
+<%@ jet
+    imports="
+        org.talend.core.model.process.INode 
+        org.talend.core.model.process.ElementParameterParser
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        java.util.List
+        java.util.Map
+    "
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    
+    boolean useCommandLine = "true".equals(ElementParameterParser.getValue(node,"__USE_COMMANDLINE__"));
+    
+    if(useCommandLine) {
+%>
+        <%@ include file="./tSqoopImportAllTables_commandline.javajet"%>
+<%
+    } else {
+%>
+        <%@ include file="./tSqoopImportAllTables_javaapi.javajet"%>
+<%
+    }
+%>

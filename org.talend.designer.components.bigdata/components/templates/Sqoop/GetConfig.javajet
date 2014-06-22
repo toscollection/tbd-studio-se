@@ -1,0 +1,34 @@
+<%
+	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+%>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+
+	globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
+<%
+	if(isCustom || (!isCustom && (version!=null && "HDP_1_0,HDP_1_2,Cloudera_CDH4".contains(version)))) {
+		String hadoopUser = ElementParameterParser.getValue(node, "__HADOOP_USER__");
+%>
+		String username_<%=cid %> = <%=hadoopUser%>;
+		if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+			System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
+		}
+<%
+	}
+%>
+	
+	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
+	configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
+
+<%
+    if(!isCustom && ("HDP_1_2".equals(version))) {
+        String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
+        String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+        configuration_<%=cid%>.set("mapred.job.map.memory.mb", <%=mapMemory%>);
+        configuration_<%=cid%>.set("mapred.job.reduce.memory.mb", <%=reduceMemory%>);
+<%
+    }
+%>
+	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);

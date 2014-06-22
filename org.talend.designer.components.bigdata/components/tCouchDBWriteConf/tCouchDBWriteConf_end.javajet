@@ -1,0 +1,39 @@
+<%@ jet 
+imports="
+        org.talend.core.model.process.INode 
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.process.ElementParameterParser
+" 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    cid = cid.replace("_Out", "");
+    boolean useTriggerReplicate="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_TRIGGER_REPLICATE__"));
+    boolean useExistingConn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    
+	if(!useExistingConn){
+%>
+		if(server_<%=cid%> != null){
+<%
+		if(useTriggerReplicate){
+%>
+			if(replicates_<%=cid%> != null && replicates_<%=cid%>.size()>0){
+				for(java.util.Map<String,Object> cancelParams_<%=cid%> : replicates_<%=cid%>){
+					reponse_<%=cid%> = server_<%=cid%>.post("/_replicate",org.svenson.JSON.defaultJSON().forValue(cancelParams_<%=cid%>));
+					if(!reponse_<%=cid%>.isOk()){
+						System.err.println(reponse_<%=cid%>.getContentAsString());
+					}
+				}
+			}
+<%
+		}
+%>
+			server_<%=cid%>.shutDown();
+		}  
+<%
+	}
+%>
+	globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);

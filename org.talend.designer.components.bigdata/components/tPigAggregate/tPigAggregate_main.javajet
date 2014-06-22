@@ -1,0 +1,145 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.List
+		java.util.Map
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String previous_node="";
+	String start_node="";
+	
+	boolean inMain = true;
+
+	String previousOutputConnectionName = "";
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		INode loadNode = node.getDesignSubjobStartNode();
+		start_node = loadNode.getUniqueName();
+		inMain = loadNode.isSubtreeStart();
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+	
+	List<Map<String, String>> key_fields = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__KEY_FIELDS__");
+	List<Map<String, String>> operations_config = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__OPERATIONS__");
+
+	
+	boolean useParallel = "true".equals(ElementParameterParser.getValue(node, "__INCREASE_PARALLELISM__"));
+	String reduce_number = ElementParameterParser.getValue(node, "__REDUCE_NUMBER__");
+%>
+
+	StringBuilder sb_<%=cid%> = new StringBuilder();
+<%
+	if(operations_config != null && operations_config.size()>0) {
+%>
+		sb_<%=cid%>.append("<%=cid%>_GROUP = GROUP <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT ");
+<%
+		if(key_fields != null && key_fields.size()>0) {
+%>
+			sb_<%=cid%>.append("BY (");
+<%
+			boolean isFirst = true;
+    		for(Map<String, String> key_field : key_fields) {
+    			if(!isFirst) {
+%>
+					sb_<%=cid%>.append(",");
+<%	
+				}
+				isFirst=false;
+%>
+				sb_<%=cid%>.append("<%=key_field.get("INPUT_COLUMN")%>");
+<%
+			}
+%>
+			sb_<%=cid%>.append(")");
+<%
+		} else {
+%>
+			sb_<%=cid%>.append("ALL");
+<%
+		}
+		
+		if(useParallel) {
+%>
+			sb_<%=cid%>.append(" PARALLEL "+<%=reduce_number%>);
+<%
+		}
+		
+%>		
+		sb_<%=cid%>.append(";");
+<%
+		if(inMain) {//all output process and main input process 
+%>
+			pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+<%
+		} else {//lookup process
+%>
+        	pl_<%=start_node%> = new Object[2];
+        	pl_<%=start_node%>[0] = "query";
+        	pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
+        	pigScript_<%=start_node%>.add(pl_<%=start_node%>);
+<%
+		}
+%>
+
+		sb_<%=cid%> = new StringBuilder();
+		sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = FOREACH <%=cid%>_GROUP GENERATE ");
+<%
+		if(key_fields != null && key_fields.size()>0) {
+    		for(Map<String, String> key_field : key_fields) {
+%>
+    			sb_<%=cid%>.append("group<%=key_fields.size()>1?"."+key_field.get("INPUT_COLUMN"):""%> AS <%=key_field.get("INPUT_COLUMN")%>");
+    			sb_<%=cid%>.append(",");
+<%
+			}
+		}
+
+		java.util.Iterator<Map<String, String>> iterator = operations_config.iterator();
+		
+		while(iterator.hasNext()) {
+			Map<String, String> operation_config = iterator.next();
+%>
+			sb_<%=cid%>.append(" <%=operation_config.get("FUNCTION")%>(<%=previous_node%>_<%=previousOutputConnectionName%>_RESULT.<%=operation_config.get("INPUT_COLUMN")%>) AS <%=operation_config.get("OUTPUT_COLUMN")%>");
+<%
+			if(iterator.hasNext()) {
+%>
+			sb_<%=cid%>.append(",");
+<%
+			}
+		}
+%>
+		sb_<%=cid%>.append(";");
+<%
+		if(inMain) {//all output process and main input process 
+%>
+			pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+<%
+		} else {//lookup process
+%>
+        	pl_<%=start_node%> = new Object[2];
+        	pl_<%=start_node%>[0] = "query";
+        	pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
+        	pigScript_<%=start_node%>.add(pl_<%=start_node%>);
+<%
+		}
+	}
+%>
+		
+		
+		

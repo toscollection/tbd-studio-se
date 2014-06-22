@@ -1,0 +1,132 @@
+<%@ jet 
+	imports="
+    org.talend.core.model.process.INode 
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.ElementParameterParser
+	java.util.Map 
+    java.util.List 
+	"
+%>
+
+	<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	
+	String user = null;
+	
+	String sourcePath = ElementParameterParser.getValue(node, "__SOURCE_PATH__");
+	String targetLocation = ElementParameterParser.getValue(node, "__DEST_DIR__");
+	boolean rename = "true".equals(ElementParameterParser.getValue(node, "__RENAME__"));
+	String newName = ElementParameterParser.getValue(node, "__NEWNAME__");
+	boolean remove = "true".equals(ElementParameterParser.getValue(node, "__REMOVE_FILE__"));
+	boolean override = "true".equals(ElementParameterParser.getValue(node, "__REPLACE_FILE__"));
+	
+	String fsDefalutName = "fs.default.name";
+
+	%>
+	String username_<%=cid%> = "";
+	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
+	<%   
+	if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
+		String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__"); 
+		boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+		String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+		String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
+		%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+		conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
+		<%
+		if(hadoopProps.size() > 0){
+			for(Map<String, String> item : hadoopProps){
+			%>
+				conf_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+			<% 
+			} 
+		}
+		if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) && !isCustom) && useKrb)
+		 || (isCustom && "KRB".equals(auth)))) {
+			user = ElementParameterParser.getValue(node, "__USERNAME__");
+		} else {
+%>
+			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+		}
+		if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+			String group = ElementParameterParser.getValue(node, "__GROUP__");
+			%>
+			conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
+			fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+		<%
+		}else{
+		%>
+			username_<%=cid%> = <%=user%>;
+			if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+			}else{
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
+			}	
+		<%
+		}
+		
+	} else { // We re use the existing connection, coming from the component learned.
+		String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
+		%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("conn_<%=connectionSid%>");
+		<%
+		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+	    for(INode targetNode : nodes){
+	    	if (targetNode.getUniqueName().equals(connectionSid)) {
+	    	String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__"); 
+			boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
+			String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
+			boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
+			String auth = ElementParameterParser.getValue(targetNode, "__AUTHENTICATION_MODE__");
+			
+		      	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+			    %>
+			    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+				<%
+			  	}else{
+					if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && !isCustom && useKrb) || (isCustom && "KRB".equals(auth)))) {
+						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
+					} else {
+%>
+						conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+					}
+			  	%>
+					username_<%=cid%> = <%=user%>;
+					if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+					}else{
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
+					}			  		
+			  	<%
+			  	}
+		      	break;
+		    }
+	    }
+	}
+	%>
+	org.apache.hadoop.fs.Path sourcePath_<%=cid%> = new org.apache.hadoop.fs.Path(<%=sourcePath%>);
+	<%if(rename && newName!=null && !"".equals(newName.trim()) && !"\"\"".equals(newName.trim())) {%>
+	String newName_<%=cid%> = <%=newName%>;
+	<%} else {%>
+	String newName_<%=cid%> = sourcePath_<%=cid%>.getName();
+	<%}%>
+	String target_<%=cid%> = <%=targetLocation%> + "/" + newName_<%=cid%>;
+	org.apache.hadoop.fs.Path targetPath_<%=cid%> = new org.apache.hadoop.fs.Path(target_<%=cid%>);
+	if(fs_<%=cid%>.exists(sourcePath_<%=cid%>)) {
+		org.apache.hadoop.fs.FileUtil.copy(fs_<%=cid%>,sourcePath_<%=cid%>,fs_<%=cid%>,targetPath_<%=cid%>,<%=remove%>,<%=override%>,conf_<%=cid%>);
+	} else {
+		System.err.println("source file or directory does not exist.");
+	}
+	globalMap.put("<%=cid %>_SOURCE_FILEPATH",<%=sourcePath%>);
+	globalMap.put("<%=cid %>_DESTINATION_FILEPATH",target_<%=cid%>);

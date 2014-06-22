@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.talend.designer.pigmap; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.gef,
+ org.eclipse.xsd,
+ org.talend.libraries.apache,
+ org.talend.model,
+ org.talend.core,
+ org.talend.designer.gefabstractmap,
+ org.talend.designer.core,
+ org.talend.metadata.managment.ui,
+ org.talend.designer.codegen,
+ org.talend.designer.components.localprovider,
+ org.talend.repository,
+ org.talend.datatools.xml
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-ClassPath: .
+Export-Package: org.talend.designer.pigmap.model.emf.pigmap

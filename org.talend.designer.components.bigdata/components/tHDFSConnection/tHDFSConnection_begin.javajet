@@ -1,0 +1,52 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.Map
+		java.util.List
+	"
+%>
+
+	<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
+	
+	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	String fsDefalutName = "fs.default.name";
+	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	String username = ElementParameterParser.getValue(node, "__USERNAME__");
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+	
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	%>
+
+	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+	conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
+	<%
+	if(hadoopProps.size() > 0){
+		for(Map<String, String> item : hadoopProps){
+		%>
+			conf_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+		<% 
+		} 
+	}
+	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+		String group = ElementParameterParser.getValue(node, "__GROUP__");
+		%>
+		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
+	<%
+	}
+	if(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb && !isCustom)
+	   || (isCustom && "KRB".equals(auth))) {
+%>
+		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+	}
+	%>
+	globalMap.put("conn_<%=cid%>",conf_<%=cid%>);

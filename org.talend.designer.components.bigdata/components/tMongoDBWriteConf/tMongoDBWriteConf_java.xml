@@ -1,0 +1,216 @@
+<COMPONENT>
+    <HEADER
+		PLATEFORM="ALL"
+		SERIAL=""
+		VERSION="0.102"
+		STATUS="ALPHA"
+		COMPATIBILITY="ALL"
+		AUTHOR="Talend"
+		RELEASE_DATE="20111010A"
+	    STARTABLE="false"
+	    TECHNICAL="true"
+	    SCHEMA_AUTO_PROPAGATE="true"
+	    DATA_AUTO_PROPAGATE="false"
+		PARTITIONING="NONE"
+	>
+        <SIGNATURE></SIGNATURE>
+    </HEADER>
+    <FAMILIES>
+        <FAMILY>Databases/MongoDB</FAMILY>
+        <FAMILY>Big Data/MongoDB</FAMILY>
+    </FAMILIES>
+	<DOCUMENTATION>
+        <URL />
+	</DOCUMENTATION>
+	<CONNECTORS>
+		<CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="1"/>
+        <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="0" />
+        <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+        <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+        <CONNECTOR CTYPE="COMPONENT_OK" />
+        <CONNECTOR CTYPE="COMPONENT_ERROR" />
+        <CONNECTOR CTYPE="RUN_IF" />
+	</CONNECTORS>
+	<PARAMETERS>
+		<PARAMETER
+            NAME="USE_EXISTING_CONNECTION"
+            FIELD="CHECK"
+            NUM_ROW="1"
+            GROUP="CONNECTION"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="CONNECTION"
+            FIELD="COMPONENT_LIST"
+            FILTER="tMongoDBConnection"
+            NUM_ROW="1"
+            SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
+            GROUP="CONNECTION"
+        />
+        <PARAMETER
+            NAME="DB_VERSION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="2"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+            GROUP="CONNECTION">
+            <ITEMS DEFAULT="MONGODB_2_1_2">
+                <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
+                <ITEM NAME="MONGODB_2_1_2" VALUE="MONGODB_2_1_2"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="CHECK"
+            NAME="USE_REPLICA_SET"
+            NUM_ROW="3"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+            GROUP="CONNECTION">
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="REPLICA_SET"
+            FIELD="TABLE"
+            REQUIRED_IF="(USE_REPLICA_SET=='true')"
+            NUM_ROW="4"
+            NB_LINES="5"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='true')"
+            GROUP="CONNECTION">
+            <ITEMS>
+                <ITEM NAME="REPLICA_HOST" FIELD="TEXT" />
+                <ITEM NAME="REPLICA_PORT" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="HOST"
+            NUM_ROW="5"
+            REQUIRED="true"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
+            GROUP="CONNECTION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="PORT"
+            NUM_ROW="5"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
+            GROUP="CONNECTION"
+        >
+            <DEFAULT>27017</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="DATABASE"
+            NUM_ROW="10"
+            REQUIRED="true"
+            SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+            GROUP="CONNECTION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="REQUIRED_AUTHENTICATION"
+            FIELD="CHECK"
+            NUM_ROW="11"
+            SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+            GROUP="AUTHENTICATION"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="USERNAME"
+            NUM_ROW="12"
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+            GROUP="AUTHENTICATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="PASSWORD"
+            NUM_ROW="12"
+            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+            GROUP="AUTHENTICATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="COLLECTION"
+            REQUIRED="true"
+            NUM_ROW="15"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="DROP_COLLECTION_CREATE"
+            FIELD="CHECK"
+            NUM_ROW="15"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="DATA_ACTION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="20"
+        >
+            <ITEMS DEFAULT="INSERT">
+                <ITEM NAME="INSERT" VALUE="INSERT" />
+                <ITEM NAME="UPDATE" VALUE="UPDATE"/>
+                <ITEM NAME="UPSERT" VALUE="UPSERT"/>
+                <ITEM NAME="DELETE" VALUE="DELETE"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="SCHEMA_FLOW"
+            FIELD="SCHEMA_TYPE"
+            NUM_ROW="25"
+        >
+           <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+         <PARAMETER
+            FIELD="TEXT"
+            NAME="DATA_NODE"
+            NUM_ROW="30"
+        >
+            <DEFAULT>"data"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="QUERY_NODE"
+            NUM_ROW="30"
+        >
+            <DEFAULT>"query"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="REMOVE_ROOT"
+            FIELD="CHECK"
+            NUM_ROW="35"
+        >
+            <DEFAULT>true</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="DIE_ON_ERROR"
+            FIELD="CHECK"
+            NUM_ROW="40">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+	</PARAMETERS>
+	<CODEGENERATION>
+		<IMPORTS>
+            <IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" REQUIRED="true" />
+            <IMPORT NAME="xom" MODULE="xom-1.2.7.jar" REQUIRED="true" />
+            <IMPORT NAME="commons_beanutils" MODULE="commons-beanutils-1.8.3.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-beanutils-1.8.3.jar" REQUIRED="true" />
+            <IMPORT NAME="commons_collections" MODULE="commons-collections-3.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar" REQUIRED="true" />
+            <IMPORT NAME="commons_lang" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED="true" />
+            <IMPORT NAME="commons_logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="true" />
+            <IMPORT NAME="ezmorph" MODULE="ezmorph-1.0.6.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/ezmorph-1.0.6.jar" REQUIRED="true" />
+            <IMPORT NAME="json-lib" MODULE="json-lib-2.4-jdk15.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json-lib-2.4-jdk15.jar" REQUIRED="true" />
+        </IMPORTS>
+	</CODEGENERATION>
+	<RETURNS>
+		<RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER" />
+	</RETURNS>
+</COMPONENT>

@@ -1,0 +1,82 @@
+<%
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	boolean isCustom = "CUSTOM".equals(distribution);
+	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	
+	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	String jobtracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
+	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+	String table = ElementParameterParser.getValue(node,"__TABLE__");
+	String username = ElementParameterParser.getValue(node,"__USERNAME__");
+	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
+	String exportDir = ElementParameterParser.getValue(node,"__EXPORT_DIR__");
+	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
+	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
+	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
+	boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
+	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
+	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
+	String fsDefalutName = "fs.default.name";
+%>
+	<%@ include file="../templates/Sqoop/GetConfig.javajet"%>
+	
+	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("export");
+
+	com.cloudera.sqoop.SqoopOptions sqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
+	
+	sqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
+	sqoopOptions_<%=cid%>.setTableName(<%=table%>);
+	sqoopOptions_<%=cid%>.setExportDir(<%=exportDir%>);
+	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
+	sqoopOptions_<%=cid%>.setPassword(<%=password%>); // __PASSWORD__
+		
+<%	
+	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
+		if(printLog && verbose){
+%>
+			sqoopOptions_<%=cid%>.setVerbose(true);
+<%
+		}
+	}
+%>
+	<%if(direct){%>sqoopOptions_<%=cid%>.setDirectMode(true);<%}%>
+	<%if(useMappers){%>sqoopOptions_<%=cid%>.setNumMappers(Integer.valueOf(<%=mappers%>));<%}%>
+	
+	java.util.Properties additionalProperties_<%=cid%> = new java.util.Properties();
+<%
+	if(additionalList != null){ 
+		for(Map<String,String> additionalMap : additionalList){
+			if(additionalMap.get("ADDITIONAL_VALUE")==null || "".equals(additionalMap.get("ADDITIONAL_VALUE"))) { 
+				break; 
+			}
+			if(additionalMap.get("ADDITIONAL_ARGUMENT").contains("delimiters")) {
+				
+%> 
+				additionalProperties_<%=cid%>.put(<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>, ""+<%=additionalMap.get("ADDITIONAL_VALUE")%>.codePointAt(0)); 
+<%
+			} else {
+%> 
+				additionalProperties_<%=cid%>.put(<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>, <%=additionalMap.get("ADDITIONAL_VALUE")%>); 
+<%
+			}
+		} 
+	} 
+%>
+	sqoopOptions_<%=cid%>.loadProperties(additionalProperties_<%=cid%>);
+<%
+	if(("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom) {
+%>
+		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
+<%
+	} else {
+%>
+		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
+<%
+	}
+%>
+	int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+	if(result_<%=cid%> != 0) {
+		throw new Exception("The Sqoop export job has failed");
+	}
+	
+	<%@ include file="../templates/Sqoop/ResetEnv.javajet"%>

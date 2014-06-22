@@ -1,0 +1,119 @@
+<%@ jet 
+imports="
+		java.util.List
+		java.util.Map
+		org.talend.core.model.process.ElementParameterParser	
+		org.talend.core.model.process.INode
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.EConnectionType
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		"
+%>
+
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument)argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+List<Map<String,String>> families = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILIES__");
+String customUseRowKey = ElementParameterParser.getValue(node, "__CUSTOM_ROW_KEY__");
+String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
+List<IMetadataTable> metadatas = node.getMetadataList();
+if ((metadatas!=null) && (metadatas.size() > 0)) {
+    IMetadataTable metadata = metadatas.get(0);
+    if (metadata != null) {
+    	List< ? extends IConnection> conns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+		if (conns != null){
+			if (conns.size()>0){
+				IConnection conn = conns.get(0);
+				String connName = conn.getName();
+				List<IMetadataColumn> columns = metadata.getListColumns();
+				%>
+				org.apache.hadoop.hbase.client.Put p_<%=cid%> = null;
+				try{
+					<%
+					if("true".equals(customUseRowKey)){
+					String rowKey = ElementParameterParser.getValue(node, "__ROW_KEY__");
+					%>
+						byte[] rowKey_<%=cid%> = org.apache.hadoop.hbase.util.Bytes.toBytes(<%=rowKey%>);
+					<%
+					}else{
+					%>
+						byte[] rowKey_<%=cid%> = org.apache.hadoop.hbase.util.Bytes.toBytes("myRow_"+<%=connName %>.toString());
+					<%
+					}
+					%>
+					p_<%=cid%> = new org.apache.hadoop.hbase.client.Put(rowKey_<%=cid%>);
+					<%
+					for(int familyNum=0;familyNum<families.size();familyNum++){
+						IMetadataColumn column = columns.get(familyNum);
+						JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+						String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+						Map<String,String> mapLine = families.get(familyNum);
+						String schema_column = mapLine.get("SCHEMA_COLUMN");
+						String family_column = mapLine.get("FAMILY_COLUMN");
+						if(family_column==null||family_column.trim().length()==0){
+							continue;
+						}
+						boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( javaType, column.isNullable());
+						if(!isPrimitive){
+						%>
+							temp_<%=cid %> = null;
+							if(<%=connName %>.<%=column.getLabel() %>!=null){
+						<%
+						}
+						if (javaType == JavaTypesManager.DATE && pattern != null && pattern.trim().length() != 0) {
+						%>
+							temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toBytes(FormatterUtils.format_Date(<%=connName %>.<%=column.getLabel() %>, <%= pattern %>));
+						<%
+						}else if (javaType == JavaTypesManager.BYTE_ARRAY) {
+						%>
+							temp_<%=cid %> = <%=connName %>.<%=column.getLabel() %>;
+						<%
+						}else if (javaType == JavaTypesManager.BYTE) {
+						%>
+							temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toBytes(<%=connName %>.<%=column.getLabel() %>+"");
+						<%
+						}else if(JavaTypesManager.isJavaPrimitiveType(javaType,column.isNullable())) {
+						%>
+							temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toBytes(<%=connName %>.<%=column.getLabel() %>);
+						<%
+						}else{
+						%>
+							temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toBytes(<%=connName%>.<%=column.getLabel()%>.toString());
+						<%
+						}
+						if(!isPrimitive){
+						%>
+							}
+						<%
+						}
+						%>						
+						p_<%=cid%>.add(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid %>);
+					<%
+					}
+					%>
+					table_<%=cid%>.put(p_<%=cid%>);
+					nb_line_<%=cid%>++;
+				}catch(java.lang.Exception e){
+					<%
+					if(("true").equals(dieOnError)){
+					%>
+				        throw(e);
+					<%
+				   	}else {
+					%>
+						System.out.println(e.getMessage());
+					<%
+					}
+					%>             
+				}
+			<%
+			}//if (conns.size()>0)
+		}//if (conns != null)
+	}//if (metadata != null)
+}//if ((metadatas!=null) && (metadatas.size() > 0))
+%>
