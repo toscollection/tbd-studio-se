@@ -1,0 +1,31 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2014 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package org.talend.oozie.scheduler.exceptions;
+
+/**
+ * DOC Marvin class global comment. Detailled comment
+ */
+public class OozieJobDeployException extends OozieJobException {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3079434896975882938L;
+
+    public OozieJobDeployException() {
+    }
+
+    public OozieJobDeployException(String msg, Exception e) {
+        super(msg, e);
+    }
+}

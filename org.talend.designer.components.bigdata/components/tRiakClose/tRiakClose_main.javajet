@@ -1,0 +1,21 @@
+<%@ jet 
+	imports="
+	    org.talend.core.model.process.INode 
+	    org.talend.core.model.process.ElementParameterParser 
+	    org.talend.designer.codegen.config.CodeGeneratorArgument
+	" 
+%>
+
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+
+    String cid = node.getUniqueName();
+
+   	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+	
+%>
+	com.basho.riak.client.IRiakClient client_<%=cid%> = (com.basho.riak.client.IRiakClient)globalMap.get("client_<%=connection%>");
+	if(client_<%=cid%> !=null){
+			client_<%=cid%>.shutdown();
+	}

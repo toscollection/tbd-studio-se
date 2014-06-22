@@ -1,0 +1,92 @@
+<%
+	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
+	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
+	
+	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
+%>
+	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
+	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
+	
+	globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
+<%
+	if(isCustom || (!isCustom && (version!=null && "HDP_1_0,HDP_1_2,HDP_1_3,HDP_2_0,Cloudera_CDH4,Cloudera_CDH4_YARN,PIVOTAL_HD_1_0_1".contains(version)))) {
+		String hadoopUser = ElementParameterParser.getValue(node, "__HADOOP_USER__");
+%>
+		String username_<%=cid %> = <%=hadoopUser%>;
+		if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+			System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
+		}
+<%
+	}
+%>
+	
+	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
+<%
+	if((isCustom && useYarn) || (!isCustom && ("PIVOTAL_HD_1_0_1".equals(version) || "HDP_2_0".equals(version) || "Cloudera_CDH4_YARN".equals(version)))) {
+%>
+    	configuration_<%=cid%>.set("mapreduce.framework.name", "yarn");
+    	configuration_<%=cid%>.set("yarn.resourcemanager.address", <%=resourceManager%>);
+<%
+		boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_SCHEDULER_ADDRESS__"));
+		if(setSchedulerAddress) {
+			String schedulerAddress = ElementParameterParser.getValue(node,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
+%>
+			configuration_<%=cid%>.set("yarn.resourcemanager.scheduler.address", <%=schedulerAddress%>);
+<%
+		}
+%>
+		//set default yarn classpath with environment variable
+		configuration_<%=cid%>.set("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
+<%
+		boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
+		if(setMemory) {
+			String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
+			String reduceMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_REDUCE_MEMORY_MB__");
+			String amMemory = ElementParameterParser.getValue(node,"__YARN_APP_MAPREDUCE_AM_RESOURCE_MB__");
+%>
+			configuration_<%=cid%>.set("mapreduce.map.memory.mb", <%=mapMemory%>);
+			configuration_<%=cid%>.set("mapreduce.reduce.memory.mb", <%=reduceMemory%>);
+			configuration_<%=cid%>.set("yarn.app.mapreduce.am.resource.mb", <%=amMemory%>);
+<%
+		}
+	} else {
+%>
+		configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
+<%
+	}
+	
+    if(!isCustom && ("HDP_1_2".equals(version) || "HDP_1_3".equals(version))) {
+        String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
+        String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
+%>
+        configuration_<%=cid%>.set("mapred.job.map.memory.mb", <%=mapMemory%>);
+        configuration_<%=cid%>.set("mapred.job.reduce.memory.mb", <%=reduceMemory%>);
+<%
+    }
+	if(hadoopProps!=null && hadoopProps.size() > 0){
+		for(Map<String, String> item : hadoopProps){
+%>
+			configuration_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<% 
+		}
+	}
+	if(("HDP_1_0".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "Cloudera_CDH4".equals(version) || isCustom) && useKrb) {
+		String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+		String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
+		boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+		String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+		String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+%>
+		configuration_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
+		configuration_<%=cid%>.set("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
+<%
+		if(useKeytab) {
+%>
+			org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+		}
+	}
+%>
+	//check whether we can connect to the fs?
+	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);

@@ -1,0 +1,318 @@
+<COMPONENT>
+	<HEADER
+    PLATEFORM="ALL"
+    SERIAL=""
+    VERSION="0.102"
+    STATUS="ALPHA"
+    COMPATIBILITY="ALL"
+    AUTHOR="Talend"
+    RELEASE_DATE="20110804A"
+    STARTABLE="false"
+	PARTITIONING="AUTO"
+  >
+    <SIGNATURE/>
+  </HEADER>
+  <FAMILIES>
+    <FAMILY>Databases/HBase</FAMILY>
+	<FAMILY>Big Data/HBase</FAMILY>
+  </FAMILIES>
+	<DOCUMENTATION>
+		<URL />
+	</DOCUMENTATION>
+	<CONNECTORS>
+		<CONNECTOR CTYPE="FLOW" MIN_INPUT="1" MAX_INPUT="1" MAX_OUTPUT="1"/>
+		<CONNECTOR NAME="REJECT" CTYPE="FLOW" MAX_INPUT="0"
+			MAX_OUTPUT="0"/>
+		<CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="0" />
+		<CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+		<CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+		<CONNECTOR CTYPE="COMPONENT_OK" />
+		<CONNECTOR CTYPE="COMPONENT_ERROR" />
+		<CONNECTOR CTYPE="RUN_IF" />
+	</CONNECTORS>
+	<PARAMETERS>
+		<PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" SHOW="true" REPOSITORY_VALUE="DATABASE:HBASE"
+			NUM_ROW="10"  SHOW_IF="USE_EXISTING_CONNECTION == 'false'"/>
+		<PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
+			NUM_ROW="20">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST" REQUIRED="true" FILTER="tHBaseConnection"
+			NUM_ROW="20" SHOW_IF="USE_EXISTING_CONNECTION == 'true'"/>
+		<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="25" REQUIRED="true" GROUP="VERSION" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" REPOSITORY_VALUE="HBASE_DISTRIBUTION">
+			<ITEMS DEFAULT="HORTONWORKS">
+				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
+				<ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
+				<ITEM NAME="APACHE" VALUE="APACHE"/>
+				<ITEM NAME="MAPR" VALUE="MAPR"/>
+				<ITEM NAME="AMAZON_EMR" VALUE="AMAZON_EMR"/>
+				<ITEM NAME="PIVOTAL_HD" VALUE="PIVOTAL_HD"/>
+				<ITEM NAME="CUSTOM" VALUE="CUSTOM"/>
+			</ITEMS>
+		</PARAMETER>
+		<PARAMETER NAME="HBASE_VERSION" FIELD="CLOSED_LIST" NUM_ROW="25" REQUIRED="true" GROUP="VERSION" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" REPOSITORY_VALUE="HBASE_VERSION">
+			<ITEMS DEFAULT="HDP_1_0">
+				<ITEM NAME="HDP_1_0" VALUE="HDP_1_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+				<ITEM NAME="HDP_1_2" VALUE="HDP_1_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+				<ITEM NAME="HDP_1_3" VALUE="HDP_1_3" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+				<ITEM NAME="HDP_2_0" VALUE="HDP_2_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+				<ITEM NAME="APACHE_0_20_203" VALUE="APACHE_0_20_203" SHOW_IF="DISTRIBUTION=='APACHE'" />
+				<ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
+				<ITEM NAME="Cloudera_CDH3" VALUE="Cloudera_CDH3" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+				<ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+				<ITEM NAME="Cloudera_CDH4_YARN" VALUE="Cloudera_CDH4_YARN" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+				<ITEM NAME="MAPR2" VALUE="MAPR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR212" VALUE="MAPR212" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR213" VALUE="MAPR213" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR301" VALUE="MAPR301" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
+				<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'"/>
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="VERSION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="25"  SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION=='CUSTOM')" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS">
+			<DEFAULT />
+		</PARAMETER>
+
+		<PARAMETER NAME="ZOOKEEPER_QUORUM" FIELD="TEXT" NUM_ROW="30" REPOSITORY_VALUE="SERVER_NAME"
+			REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+			<DEFAULT>"localhost"</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+	      NAME="ZOOKEEPER_CLIENT_PORT"
+	      FIELD="TEXT"
+	      REPOSITORY_VALUE="PORT"
+	      NUM_ROW="40"
+	      SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+	      REQUIRED="true"
+	    >
+	      <DEFAULT>"2181"</DEFAULT>
+	    </PARAMETER>
+		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="50">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="60">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="TABLE_ACTION" FIELD="CLOSED_LIST"
+			NUM_ROW="70" NOT_SHOW_IF="PARALLELIZE == 'true'">
+			<ITEMS DEFAULT="NONE">
+				<ITEM NAME="NONE" VALUE="NONE" />
+				<ITEM NAME="CREATE" VALUE="CREATE" />
+				<ITEM NAME="DROP_CREATE" VALUE="DROP_CREATE" />
+				<ITEM NAME="CREATE_IF_NOT_EXISTS"
+					VALUE="CREATE_IF_NOT_EXISTS" />
+				<ITEM NAME="DROP_IF_EXISTS_AND_CREATE" VALUE="DROP_IF_EXISTS_AND_CREATE" />
+			</ITEMS>
+		</PARAMETER>
+		<PARAMETER NAME="CUSTOM_ROW_KEY" FIELD="CHECK" NUM_ROW="70">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="ROW_KEY" FIELD="TEXT" NUM_ROW="70" SHOW_IF="CUSTOM_ROW_KEY == 'true'" REQUIRED="true">
+		</PARAMETER>
+		<PARAMETER NAME="FAMILIES" FIELD="TABLE" REQUIRED="true"
+			NUM_ROW="80" REPOSITORY_VALUE="COLUMN_MAPPING">
+			<ITEMS BASED_ON_SCHEMA="true" >
+				<ITEM NAME="FAMILY_COLUMN"/>
+			</ITEMS>
+		</PARAMETER>
+		<PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="90">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+	</PARAMETERS>
+	<ADVANCED_PARAMETERS>
+		<PARAMETER NAME="HBASE_PARAMETERS" REPOSITORY_VALUE="HBASE_PARAMETERS" FIELD="TABLE" NUM_ROW="1" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+			<ITEMS>
+				<ITEM NAME="PROPERTY" FIELD="TEXT"/>
+				<ITEM NAME="VALUE" FIELD="TEXT"/>
+				<ITEM NAME="BUILDIN" SHOW_IF="false" VALUE="TRUE"/>
+			</ITEMS>
+		</PARAMETER>
+		<PARAMETER NAME="FAMILY_PARAMETERS" FIELD="TABLE" NUM_ROW="20" REQUIRED="true" SHOW_IF="TABLE_ACTION != 'NONE'">
+			<ITEMS >
+				<ITEM NAME="FAMILY_NAME" FIELD="TEXT" />
+				<ITEM NAME="FAMILY_INMEMORY" FIELD="CLOSED_LIST">
+		        	<ITEMS DEFAULT="NULL">
+			            <ITEM NAME="NULL"  VALUE=""/>
+			            <ITEM NAME="TRUE"  VALUE="true"/>
+			            <ITEM NAME="FALSE" VALUE="false"/>
+		        	</ITEMS>
+        		</ITEM>
+				<ITEM NAME="FAMILY_BLOCKCACHEENABLED" FIELD="CLOSED_LIST">
+		        	<ITEMS DEFAULT="NULL">
+			            <ITEM NAME="NULL"  VALUE=""/>
+			            <ITEM NAME="TRUE"  VALUE="true"/>
+			            <ITEM NAME="FALSE" VALUE="false"/>
+		        	</ITEMS>
+				</ITEM>
+				<ITEM NAME="FAMILY_BLOOMFILTERTYPE" FIELD="CLOSED_LIST">
+					<ITEMS DEFAULT="NULL">
+			            <ITEM NAME="NULL"  VALUE=""/>
+			            <ITEM NAME="NONE"  VALUE="NONE"/>
+			            <ITEM NAME="ROW" VALUE="ROW"/>
+			            <ITEM NAME="ROWCOL" VALUE="ROWCOL"/>
+		        	</ITEMS>
+				</ITEM>
+				<ITEM NAME="FAMILY_BLOCKSIZE" FIELD="TEXT"/>
+				<ITEM NAME="FAMILY_COMPACTIONCOMPRESSIONTYPE" FIELD="CLOSED_LIST">
+					<ITEMS DEFAULT="NULL">
+			            <ITEM NAME="NULL"  VALUE=""/>
+			            <ITEM NAME="NONE"  VALUE="NONE"/>
+			            <ITEM NAME="GZ" VALUE="GZ"/>
+			            <ITEM NAME="LZO" VALUE="LZO"/>
+		        	</ITEMS>
+				</ITEM>
+				<ITEM NAME="FAMILY_COMPRESSIONTYPE" FIELD="CLOSED_LIST">
+					<ITEMS DEFAULT="NULL">
+			            <ITEM NAME="NULL"  VALUE=""/>
+			            <ITEM NAME="NONE"  VALUE="NONE"/>
+			            <ITEM NAME="GZ" VALUE="GZ"/>
+			            <ITEM NAME="LZO" VALUE="LZO"/>
+		        	</ITEMS>
+				</ITEM>
+				<ITEM NAME="FAMILY_MAXVERSIONS" FIELD="TEXT"/>
+				<ITEM NAME="FAMILY_SCOPE" FIELD="TEXT"/>
+				<ITEM NAME="FAMILY_TIMETOLIVE" FIELD="TEXT"/>
+			</ITEMS>
+		</PARAMETER>
+	</ADVANCED_PARAMETERS>
+	<CODEGENERATION>
+		<IMPORTS>
+      		<IMPORT NAME="COMMONS-LANG" MODULE="commons-lang3-3.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang3-3.0.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_0_20_203' OR HBASE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="COMMONS-LOGGING" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_0_20_203' OR HBASE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="HADOOP-CORE" MODULE="hadoop-core-0.20.203.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.0.20.203/lib/hadoop-core-0.20.203.0.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_0_20_203') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="HBASE" MODULE="hbase-0.90.1-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.0.20.cdh3/lib/hbase-0.90.1-cdh3u0.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_0_20_203' OR HBASE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="LOG4J" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_0_20_203' OR HBASE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="ZOOKEEPER" MODULE="zookeeper-3.3.3-cdh3u0.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.3.3-cdh3u0.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_0_20_203' OR HBASE_VERSION=='Cloudera_CDH3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="mapr-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2.jar" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hbase-0.92.1.jar" MODULE="hbase-0.92.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.92.1.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.3.2.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r09.jar" REQUIRED_IF="(HBASE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="hbase-0.92.0.jar" MODULE="hbase-0.92.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.92.0.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="zookeeper-3.4.2.jar" MODULE="zookeeper-3.4.2.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.2.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED="false" REQUIRED_IF="( HBASE_VERSION=='APACHE_0_20_203' or HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="hadoop-core-1.0.0.jar" MODULE="hadoop-core-1.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.1.0.0/lib/hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="log4j-1.2.15.jar" MODULE="log4j-1.2.15.jar" UrlPath="platform:/base/plugins/org.apache.log4j_1.2.15.v201012070815.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<!-- HDP_1_2 -->
+            <IMPORT NAME="hbase-0.94.2.21.jar" MODULE="hbase-0.94.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hbase-0.94.2.21.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="zookeeper-3.4.5.21.jar" MODULE="zookeeper-3.4.5.21.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.21.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hadoop-core-1.1.2.21.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="guava-11.0.2" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="hadoop-auth-cdh4.0.1" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="hadoop-common-cdh4.0.1" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-common-2.0.0-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="hbase-0.92.1-cdh4.0.1-security" MODULE="hbase-0.92.1-cdh4.0.1-security.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hbase-0.92.1-cdh4.0.1-security.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="log4j-1.2.16" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="zookeeper-3.4.3-cdh4.0.1" MODULE="zookeeper-3.4.3-cdh4.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.3-cdh4.0.1.jar" REQUIRED="false" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<!-- CDH4 YARN -->
+            <IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="guava-11.0.2" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-auth-2.0.0-cdh4.4.0.jar" MODULE="hadoop-auth-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-auth-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-common-2.0.0-cdh4.4.0.jar" MODULE="hadoop-common-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-common-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hbase-0.94.6-cdh4.4.0-security.jar" MODULE="hbase-0.94.6-cdh4.4.0-security.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hbase-0.94.6-cdh4.4.0-security.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="log4j-1.2.16" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="zookeeper-3.4.5-cdh4.4.0.jar" MODULE="zookeeper-3.4.5-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-cdh4.4.0.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH4_YARN') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <!-- HDP_1_3 -->
+            <IMPORT NAME="hbase-0.94.6.1.3.0.0-107-security.jar" MODULE="hbase-0.94.6.1.3.0.0-107-security.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.3/lib/hbase-0.94.6.1.3.0.0-107-security.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="zookeeper-3.4.5.1.3.0.0-107.jar" MODULE="zookeeper-3.4.5.1.3.0.0-107.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.1.3.0.0-107.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-core-1.2.0.1.3.0.0-107.jar" MODULE="hadoop-core-1.2.0.1.3.0.0-107.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.3/lib/hadoop-core-1.2.0.1.3.0.0-107.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="(HBASE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+			<!-- MAPR212 -->
+			<IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="mapr-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr212.jar" MODULE="hadoop-0.20.2-dev-core-mapr212.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hbase-0.92.2-mapr.jar" MODULE="hbase-0.92.2-mapr.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="guava-r09.jar" MODULE="guava-r09.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r09.jar" REQUIRED_IF="HBASE_VERSION=='MAPR212'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- MAPR213 -->
+            <IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="mapr-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr213.jar" MODULE="hadoop-0.20.2-dev-core-mapr213.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hbase-0.94.5-mapr.jar" MODULE="hbase-0.94.5-mapr.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hbase-0.94.5-mapr.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="HBASE_VERSION=='MAPR213'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- MAPR301 -->
+            <IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="mapr-logging" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr301.jar" MODULE="hadoop-0.20.2-dev-core-mapr301.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.0.1/lib/hadoop-0.20.2-dev-core-mapr301.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hbase-0.94.9-mapr-1308.jar" MODULE="hbase-0.94.9-mapr-1308.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.0.1/lib/hbase-0.94.9-mapr-1308.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar"  REQUIRED_IF="HBASE_VERSION=='MAPR301'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<!-- CDH3 -->
+            <IMPORT NAME="hadoop-0.20.2-cdh3u1-core.jar" MODULE="hadoop-0.20.2-cdh3u1-core.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.0.20.cdh3/lib/hadoop-0.20.2-cdh3u1-core.jar" REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH3') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
+            <!-- PIVOTAL_HD_1_0_1 -->
+            <IMPORT NAME="commons-lang-2.5" MODULE="commons-lang-2.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.5.jar" REQUIRED="false" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="false" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED="false" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="guava-11.0.2" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED="false" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.4.0a.jar" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-auth-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hbase-0.94.2-gphd-2.0.1.0.jar" MODULE="hbase-0.94.2-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hbase-0.94.2-gphd-2.0.1.0.jar" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="zookeeper-3.4.5-gphd-2.0.1.0.jar" MODULE="zookeeper-3.4.5-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-gphd-2.0.1.0.jar" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="log4j-1.2.16" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED="false" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED="false" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED="false" REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_1_0_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- HDP_2_0 -->
+            <IMPORT NAME="hbase-client-0.96.0.2.0.6.0-76-hadoop2.jar" MODULE="hbase-client-0.96.0.2.0.6.0-76-hadoop2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hbase-client-0.96.0.2.0.6.0-76-hadoop2.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="hbase-common-0.96.0.2.0.6.0-76-hadoop2.jar" MODULE="hbase-common-0.96.0.2.0.6.0-76-hadoop2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hbase-common-0.96.0.2.0.6.0-76-hadoop2.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="hbase-protocol-0.96.0.2.0.6.0-76-hadoop2.jar" MODULE="hbase-protocol-0.96.0.2.0.6.0-76-hadoop2.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hbase-protocol-0.96.0.2.0.6.0-76-hadoop2.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="zookeeper-3.4.5.2.0.5.0-67.jar" MODULE="zookeeper-3.4.5.2.0.5.0-67.jar" UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.2.0.5.0-67.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="hadoop-common-2.2.0.2.0.6.0-76.jar" MODULE="hadoop-common-2.2.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-common-2.2.0.2.0.6.0-76.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="hadoop-auth-2.2.0.2.0.6.0-76.jar" MODULE="hadoop-auth-2.2.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-auth-2.2.0.2.0.6.0-76.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="htrace-core-2.01.jar" MODULE="htrace-core-2.01.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/htrace-core-2.01.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="commons-codec-1.7.jar" MODULE="commons-codec-1.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.7.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')"/>
+            <IMPORT NAME="guava-12.0.1.jar" MODULE="guava-12.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-12.0.1.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="protobuf-java-2.5.0.jar" MODULE="protobuf-java-2.5.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="log4j-1.2.16" MODULE="log4j-1.2.16.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-api-1.6.1" MODULE="slf4j-api-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1" MODULE="slf4j-log4j12-1.6.1.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"  REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"  REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
+    	</IMPORTS>
+	</CODEGENERATION>
+	<RETURNS>
+		<RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER"/>
+	</RETURNS>
+</COMPONENT>

@@ -1,0 +1,52 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+    String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
+    
+    %>
+	if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
+		tx_<%=cid%>.success();
+		tx_<%=cid%>.finish();
+	}
+	<%
+    
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));		
+	boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    String dbconn = "dbService_" + connection;
+
+	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
+		%>
+			
+			databaseService_<%=cid%>.shutdown();
+			resourceMap.put("finish_<%=cid%>", true); 
+		<%
+	}
+	if (batchImport) {
+		%>
+			if(indexProvider_<%=cid%>!=null){
+				indexProvider_<%=cid%>.shutdown();
+			}
+			if(inserter_<%=cid%>!=null){
+				inserter_<%=cid%>.shutdown();
+			}
+			resourceMap.put("finish_<%=cid%>", true); 
+		<%
+		if (useExistingConnection && !shutdownDb) {
+			%>
+			databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedGraphDatabase(storeDir_<%=cid%>);
+			globalMap.put("<%=dbconn%>", databaseService_<%=cid%>);
+			<%
+		}
+	}
+%>
+globalMap.put("<%=cid%>_NB_LINE", nb_line_<%=cid%>);

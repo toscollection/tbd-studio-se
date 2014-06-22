@@ -1,0 +1,154 @@
+<%@ jet 
+	imports="
+	
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+	org.talend.core.model.process.IConnection
+	org.talend.designer.dbmap.external.data.ExternalDbMapData
+	org.talend.designer.dbmap.external.data.ExternalDbMapTable
+	org.talend.core.model.process.ElementParameterParser
+	org.talend.designer.dbmap.DbMapComponent
+	java.util.HashMap
+	java.util.Map
+	java.util.Set
+	java.util.HashSet
+	" 
+%>
+<%
+
+
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	DbMapComponent node = (DbMapComponent) codeGenArgument.getArgument();
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+    org.talend.designer.dbmap.language.hive.HiveGenerationManager gm = new org.talend.designer.dbmap.language.hive.HiveGenerationManager();
+    String uniqueNameComponent = null;
+
+    List<IConnection> outputConnections = (List<IConnection>) node.getOutgoingConnections();
+    ExternalDbMapData data = (ExternalDbMapData) node.getExternalData();
+    uniqueNameComponent = node.getUniqueName();
+    
+	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+	String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
+	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
+	String fsDefalutName = "fs.default.name";
+    
+	boolean setTempPath = "true".equals(ElementParameterParser.getValue(node, "__SET_TEMP_PATH__")); 
+	if(setTempPath) { 
+		String tempPath = ElementParameterParser.getValue(node, "__TEMP_PATH__"); 
+	%> 
+		System.setProperty("java.io.tmpdir", <%=tempPath%>); 
+	<% 
+	}
+	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
+if(("false").equals(useExistingConn)) {
+	boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
+	boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	
+	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
+	
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	boolean cdh4CanBeSecured = "Cloudera_CDH4".equals(hiveVersion) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
+	boolean securityIsEnabled = useKrb && (isCustom || ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || cdh4CanBeSecured));
+	boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
+	String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
+
+	if(hadoopProps.size() > 0){
+		for(Map<String, String> item : hadoopProps){
+%>
+		System.setProperty(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<%
+		} 
+	}
+	
+		if(securedEmbedded) {
+			String metastoreUrl = ElementParameterParser.getValue(node, "__METASTORE_JDBC_URL__");
+			String driverClass = ElementParameterParser.getValue(node, "__METASTORE_CLASSNAME__");
+			String metastoreUsername = ElementParameterParser.getValue(node, "__METASTORE_USERNAME__");
+			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+			String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+			String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+%>
+			System.setProperty("hive.metastore.sasl.enabled", "true");
+			System.setProperty("javax.jdo.option.ConnectionDriverName", <%=driverClass%>);
+			System.setProperty("hive.security.authorization.enabled", "true");
+			System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
+			System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
+    		<%
+    		String passwordFieldName = "__METASTORE_PASSWORD__";
+    		%>
+    		<%if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {%> 
+        	String decryptedMetastorePassword_<%=uniqueNameComponent%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+   		 	<%} else {%>
+        	String decryptedMetastorePassword_<%=uniqueNameComponent%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+			<%}%>
+			System.setProperty("javax.jdo.option.ConnectionPassword", decryptedMetastorePassword_<%=uniqueNameComponent%>);
+			System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);				
+<%
+			if(useKeytab) {
+%>
+				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+			}
+		}
+	
+	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion))) && setMapredJT) {
+		String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
+%>
+		System.setProperty("mapred.job.tracker", <%=mapredJT%>);
+<%
+	}
+		
+	if(setNamenode) {
+		String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+%>
+		System.setProperty("<%=fsDefalutName%>", <%=namenode%>);
+<%
+	}			
+}   			
+	
+    List<ExternalDbMapTable> outputTables = data.getOutputTables();
+
+    Map<String, IConnection> nameToOutputConnection = new HashMap<String, IConnection>();
+    for (IConnection connection : outputConnections) {
+        nameToOutputConnection.put(connection.getUniqueName(), connection);
+    }
+
+	Set<String> tablesProcessed = new HashSet<String>();
+    int lstOutputTablesSize = outputTables.size();
+    for (int i = 0; i < lstOutputTablesSize; i++) {
+        ExternalDbMapTable outputTable = outputTables.get(i);
+        String outputTableName = outputTable.getName();
+
+			IConnection connection = nameToOutputConnection.get(outputTableName);
+
+        if (connection == null) {
+        	continue;
+        }
+
+        String sqlQuery = gm.buildSqlSelect((DbMapComponent) node, outputTable.getName());
+        
+	%>
+
+			globalMap.put(
+				"<%=uniqueNameComponent %>"+"QUERY" + "<%= connection.getUniqueName() %>",
+				<%= sqlQuery.replaceAll("[\r\n]", " ") %>
+			);
+			globalMap.put(
+					"<%=uniqueNameComponent %>"+"QUERY_COLUMNS_NAME" + "<%= connection.getUniqueName() %>",
+					<%= gm.getQueryColumnsName() %>
+			);
+			<%
+            if(!tablesProcessed.contains(outputTable.getTableName())) {          
+            %>       
+                Object <%= outputTable.getTableName() %> = new Object();         
+            <%       
+            } 
+			tablesProcessed.add(outputTable.getTableName());
+    }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+%>
