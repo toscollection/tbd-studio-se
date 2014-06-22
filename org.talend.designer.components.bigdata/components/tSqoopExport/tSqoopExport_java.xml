@@ -1,0 +1,109 @@
+<COMPONENT>
+	<HEADER PLATEFORM="ALL" SERIAL="" VERSION="0.102" STATUS="ALPHA"
+		COMPATIBILITY="ALL" AUTHOR="Talend" RELEASE_DATE="20100926A"
+		STARTABLE="true">
+		<SIGNATURE />
+	</HEADER>
+
+  <FAMILIES>
+    <FAMILY>File/Sqoop</FAMILY>
+	<FAMILY>Big Data/Sqoop</FAMILY>
+  </FAMILIES>
+
+	<DOCUMENTATION>
+		<URL />
+	</DOCUMENTATION>
+
+	<CONNECTORS>
+	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="1"/>
+	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_OK"    MAX_OUTPUT="1" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_ERROR" MAX_OUTPUT="1" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="RUN_IF" MAX_INPUT="1" />
+	</CONNECTORS>
+		
+	<PARAMETERS>				
+		
+	    <PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="10">
+				<DEFAULT>"jdbc:mysql://localhost/database_name"</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="10">
+				<DEFAULT>"table_name"</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="EXPORT_DIR" FIELD="TEXT" NUM_ROW="20">
+				<DEFAULT>"/home/user/target"</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="USERNAME" FIELD="TEXT" NUM_ROW="30">
+				<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="PASSWORD" FIELD="TEXT" NUM_ROW="40">
+				<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+			
+	  	<PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="50">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="MAPPERS" FIELD="TEXT" NUM_ROW="50" SHOW_IF="USE_MAPPERS=='true'">
+				<DEFAULT>"2"</DEFAULT>
+		</PARAMETER>
+		
+	  	<PARAMETER NAME="PRINT_LOG" FIELD="CHECK" NUM_ROW="60">
+				<DEFAULT>true</DEFAULT>
+		</PARAMETER>
+			
+	  	<PARAMETER NAME="VERBOSE" FIELD="CHECK" NUM_ROW="60" SHOW_IF="PRINT_LOG=='true'">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+	    
+	</PARAMETERS>
+		
+	<ADVANCED_PARAMETERS>
+		<PARAMETER NAME="DIRECT" FIELD="CHECK" NUM_ROW="9"> 
+			<DEFAULT>false</DEFAULT> 
+		</PARAMETER>
+			
+	  	<PARAMETER NAME="MYSQL_DELIMITERS" FIELD="CHECK" NUM_ROW="10">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+	    <PARAMETER NAME="ADDITIONAL" FIELD="TABLE" NUM_ROW="11" NB_LINES="5">
+	      <ITEMS>
+	        <ITEM NAME="ADDITIONAL_ARGUMENT" FIELD="CLOSED_LIST" >
+	          <ITEMS DEFAULT="--driver">
+	          	<ITEM NAME="--driver" VALUE="--driver"/>
+	          	<ITEM NAME="--hadoop-home" VALUE="--hadoop-home"/>
+	            <ITEM NAME="--enclosed-by"  VALUE="--enclosed-by"/>
+	            <ITEM NAME="--escaped-by"  VALUE="--escaped-by"/>
+	            <ITEM NAME="--fields-terminated-by"  VALUE="--fields-terminated-by"/>
+	            <ITEM NAME="--lines-terminated-by"  VALUE="--lines-terminated-by"/>
+	            <ITEM NAME="--optionally-enclosed-by"  VALUE="--optionally-enclosed-by"/>
+	            <ITEM NAME="--input-enclosed-by"  VALUE="--input-enclosed-by"/>
+	            <ITEM NAME="--input-escaped-by"  VALUE="--input-escaped-by"/>
+	            <ITEM NAME="--input-fields-terminated-by"  VALUE="--input-fields-terminated-by"/>
+	            <ITEM NAME="--input-lines-terminated-by"  VALUE="--input-lines-terminated-by"/>
+	            <ITEM NAME="--input-optionally-enclosed-by"  VALUE="--input-optionally-enclosed-by"/>
+	            <ITEM NAME="--bindir"  VALUE="--bindir"/>
+	            <ITEM NAME="--class-name"  VALUE="--class-name"/>
+	            <ITEM NAME="--jar-file"  VALUE="--jar-file"/>
+	            <ITEM NAME="--outdir"  VALUE="--outdir"/>
+	            <ITEM NAME="--package-name"  VALUE="--package-name"/>
+	          </ITEMS>
+	        </ITEM>
+	        <ITEM NAME="ADDITIONAL_VALUE" FIELD="TEXT"/>
+	      </ITEMS>
+	    </PARAMETER>
+	    
+	</ADVANCED_PARAMETERS>
+
+	<CODEGENERATION />
+	<RETURNS>
+		<RETURN AVAILABILITY="AFTER" NAME="OUTPUT_MESSAGE" TYPE="id_String" />
+	</RETURNS>
+	
+</COMPONENT>

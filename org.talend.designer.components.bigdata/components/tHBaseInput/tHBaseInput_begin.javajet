@@ -1,0 +1,159 @@
+<%@ jet 
+imports="
+		java.util.List
+		java.util.Map
+		org.talend.core.model.process.ElementParameterParser	
+		org.talend.core.model.process.INode
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		"
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
+	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
+	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+%>
+int nb_line_<%=cid%> = 0;
+org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
+<% 
+// not use existing connection
+if(!"true".equals(useExistingConn)){
+%>
+try{
+	conn_<%=cid %> = org.apache.hadoop.hbase.HBaseConfiguration.create();
+	conn_<%=cid %>.clear();
+	conn_<%=cid %>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
+	conn_<%=cid %>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
+	conn_<%=cid %>.set("hbase.cluster.distributed","true"); 
+<%
+	List<Map<String, String>> properties =
+        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
+   	for(int i=0;i<properties.size();i++){
+   		Map<String, String> map = properties.get(i);
+   		String property = map.get("PROPERTY");
+   		String value= map.get("VALUE");
+%>
+		conn_<%=cid %>.set(<%=property%>,<%=value%>);
+<%
+   }
+}else{// use existing connection
+	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+	String conn = "conn_" + connection;
+%>
+	conn_<%=cid %> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
+	if(conn_<%=cid %> == null){
+		throw new RuntimeException("<%=cid %>'s connection is null!");
+	}
+<%
+}
+%>
+org.apache.hadoop.hbase.client.Scan scan_<%=cid %> = new org.apache.hadoop.hbase.client.Scan();
+<%
+List<IMetadataTable> metadatas = node.getMetadataList();
+%>
+<%
+if ((metadatas!=null) && (metadatas.size() > 0)) {
+    IMetadataTable metadata = metadatas.get(0);
+    if (metadata != null) {
+		List<IMetadataColumn> columns = metadata.getListColumns();
+		List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
+		for(int i=0;i<mapping.size();i++){
+			Map<String, String> map = mapping.get(i);
+			IMetadataColumn column = columns.get(i);
+			String schema_column = map.get("SCHEMA_COLUMN");
+			String family_column= map.get("FAMILY_COLUMN");
+%>
+				scan_<%=cid %>.addColumn(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"));
+<%
+		}
+%>		
+		org.apache.hadoop.hbase.client.HTable table_<%=cid %> = new org.apache.hadoop.hbase.client.HTable(conn_<%=cid %>, <%=table_name%>);
+		String temp_<%=cid %>=null;
+		byte[] rowResult_<%=cid %> = null;
+		org.apache.hadoop.hbase.client.ResultScanner scanner_<%=cid %> = table_<%=cid %>.getScanner(scan_<%=cid %>);
+<%
+
+    	List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
+		if (conns != null){
+			if (conns.size()>0){
+%>
+				for (org.apache.hadoop.hbase.client.Result rr_<%=cid %> = scanner_<%=cid %>.next(); rr_<%=cid %> != null; rr_<%=cid %> = scanner_<%=cid %>.next()) {
+<%
+					IConnection conn =conns.get(0);
+					String connName = conn.getName();
+					if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+						for(int i=0;i<mapping.size();i++){
+							Map<String, String> map = mapping.get(i);
+							String schema_column = map.get("SCHEMA_COLUMN");
+							String family_column= map.get("FAMILY_COLUMN");
+							IMetadataColumn column = columns.get(i);
+							String columnName = column.getLabel();
+							String defaultValue = column.getDefault();
+							if(columnName.equals(schema_column)) {//
+								String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+								JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+								String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+								boolean isPrimitiveType = JavaTypesManager.isJavaPrimitiveType(javaType, column.isNullable());
+%>
+								rowResult_<%=cid %> = rr_<%=cid %>.getValue(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>),org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"));
+								temp_<%=cid %> = org.apache.hadoop.hbase.util.Bytes.toString(rowResult_<%=cid %>);
+								if(temp_<%=cid %>!=null && temp_<%=cid %>.length() > 0) {
+<%									if(javaType == JavaTypesManager.STRING || javaType == JavaTypesManager.OBJECT) {
+%>
+										<%=connName %>.<%=columnName %>=temp_<%=cid %>.toString();
+<%									}else if(javaType == JavaTypesManager.BYTE_ARRAY){
+%> 
+										<%=connName%>.<%=columnName%>=rowResult_<%=cid %>;
+<%									}else if(javaType == JavaTypesManager.DATE){
+%> 
+										<%=connName%>.<%=columnName%>=ParserUtils.parseTo_Date(temp_<%=cid %>, <%= patternValue %>);
+<%									}else if(isPrimitiveType && javaType == JavaTypesManager.INTEGER){  
+%>
+										<%=connName%>.<%=columnName%>=org.apache.hadoop.hbase.util.Bytes.toInt(rowResult_<%=cid %>);  
+<%									}else if(isPrimitiveType && javaType == JavaTypesManager.CHARACTER){  
+%>
+										<%=connName%>.<%=columnName%>=(char)org.apache.hadoop.hbase.util.Bytes.toInt(rowResult_<%=cid %>);  
+<%									}else if(isPrimitiveType && (javaType == JavaTypesManager.SHORT || javaType == JavaTypesManager.LONG || javaType == JavaTypesManager.FLOAT || javaType == JavaTypesManager.DOUBLE)) {  
+%>
+										<%=connName%>.<%=columnName%>=org.apache.hadoop.hbase.util.Bytes.to<%=javaType.getNullableClass().getSimpleName()%>(rowResult_<%=cid %>);  
+<%									}else{
+%>
+										<%=connName%>.<%=columnName%>=ParserUtils.parseTo_<%= typeToGenerate %>(temp_<%=cid %>);
+<%									}
+%>
+								}else{
+<%
+									String default_Value = JavaTypesManager.getDefaultValueFromJavaType(typeToGenerate, defaultValue);
+									if(default_Value != null && !"null".equals(default_Value)) {
+%>
+										<%=connName %>.<%=columnName %> = <%=default_Value %>;
+<%
+									} else if(!JavaTypesManager.isJavaPrimitiveType(javaType,column.isNullable())) {
+%>
+										<%=connName %>.<%=columnName %> = null;
+<%
+									} else {
+%>
+										throw new RuntimeException("Value is empty for column : '<%=columnName %>' in '<%=connName %>' connection, value is invalid or this column should be nullable or have a default value.");									
+<%
+									}
+%>
+								}
+<%
+							} //if(columnName.equals(schema_column))
+						} //for(int i=0;i<mapping.size();i++)
+					}//if(conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA))
+			}//if (conns.size()>0)
+		}//if (conns != null)
+	}//if (metadata != null)
+}//if ((metadatas!=null) && (metadatas.size() > 0))
+%>

@@ -1,0 +1,163 @@
+<%@ jet 
+	imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.IConnection
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.IConnectionCategory
+	org.talend.core.model.process.ElementParameterParser
+	java.util.Map 
+    java.util.List 
+	"
+%>
+
+	<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+	String user = null;
+	
+	String path = ElementParameterParser.getValue(node, "__FILENAME__");
+	boolean MD5 = new Boolean(ElementParameterParser.getValue(node, "__MD5__"));
+	
+	String fsDefalutName = "fs.default.name";
+	%>
+	String username_<%=cid%> = "";
+	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
+	<%   
+	if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
+		String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+		boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+		String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+		%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+		conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
+		<%
+		if(hadoopProps.size() > 0){
+			for(Map<String, String> item : hadoopProps){
+			%>
+				conf_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+			<% 
+			} 
+		}
+		if(!((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
+			user = ElementParameterParser.getValue(node, "__USERNAME__");
+		} else {
+%>
+			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+		}
+		if(("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion)){
+			String group = ElementParameterParser.getValue(node, "__GROUP__");
+			%>
+			conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
+			fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+		<%
+		}else{
+		%>
+			username_<%=cid%> = <%=user%>;
+			if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+			}else{
+				fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
+			}	
+		<%
+		}
+		
+	} else { // We re use the existing connection, coming from the component learned.
+		String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
+		%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("conn_<%=connectionSid%>");
+		<%
+		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+	    for(INode targetNode : nodes){
+	    	if (targetNode.getUniqueName().equals(connectionSid)) {
+		    String hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");  	
+			boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
+			String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
+		      	if(("APACHE_0_20_2").equals(hadoopVersion) || ("MapR").equals(hadoopVersion)){
+			    %>
+			    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+				<%
+			  	}else{
+					if(!((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion)) && useKrb)) {
+						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
+					} else {
+%>
+						conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+					}
+			  	%>
+					username_<%=cid%> = <%=user%>;
+					if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
+					}else{
+						fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
+					}			  		
+			  	<%
+			  	}
+		      	break;
+		    }
+	    }
+	}
+	%>
+
+	<%
+	String outputConnName = null;
+	List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
+	if (conns!=null) {
+		if (conns.size()>0) {
+			for (int i=0;i<conns.size();i++) {
+				IConnection connTemp = conns.get(i);
+				if (connTemp.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+					outputConnName = connTemp.getName();
+					break;
+				}
+			}
+		}
+	}
+	
+	if (outputConnName != null){
+	%>
+	
+	<%=outputConnName %> = new <%=outputConnName %>Struct();
+	org.apache.hadoop.fs.Path path_<%=cid %> = new org.apache.hadoop.fs.Path(<%=path%>);
+	
+	if(fs_<%=cid%>.exists(path_<%=cid %>)) {
+	    <%=outputConnName %>.abs_path = path_<%=cid %>.toString();
+	    <%=outputConnName %>.dirname = path_<%=cid %>.getParent().toString();
+	    <%=outputConnName %>.basename = path_<%=cid %>.getName();
+	    
+	    org.apache.hadoop.fs.FileStatus statu_<%=cid%> = fs_<%=cid%>.getFileStatus(path_<%=cid %>);
+	    
+	    StringBuffer stringBuffer_<%=cid%> = new StringBuffer();
+	    stringBuffer_<%=cid%>.append(statu_<%=cid%>.getPermission());
+	    stringBuffer_<%=cid%>.append("(owner=");
+	    stringBuffer_<%=cid%>.append(statu_<%=cid%>.getOwner());
+	    stringBuffer_<%=cid%>.append(",");
+	    stringBuffer_<%=cid%>.append("group=");
+	    stringBuffer_<%=cid%>.append(statu_<%=cid%>.getGroup());
+	    stringBuffer_<%=cid%>.append(")");
+	    <%=outputConnName %>.mode_string = stringBuffer_<%=cid%>.toString();
+	    
+	    <%=outputConnName %>.size = statu_<%=cid%>.getLen();
+	    <%=outputConnName %>.mtime = statu_<%=cid%>.getModificationTime();
+	    <%=outputConnName %>.mtime_string =(new java.util.Date(statu_<%=cid%>.getModificationTime())).toString();
+		
+		<%if(MD5){%>
+			if(!statu_<%=cid%>.isDir()) {
+				org.apache.hadoop.fs.FileChecksum checksum_<%=cid%> = fs_<%=cid%>.getFileChecksum(path_<%=cid %>);
+				if(checksum_<%=cid%>!=null) {
+					<%=outputConnName %>.md5 = checksum_<%=cid%>.toString();
+				}
+			}
+		<%}%>
+	}
+	
+	<%
+	}
+	%>

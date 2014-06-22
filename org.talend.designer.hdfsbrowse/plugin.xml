@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.talend.designer.core.generators">
+      <generator
+            class="org.talend.designer.hdfsbrowse.generators.HadoopFileGenerator"
+            mapping="FILE_HADOOP"
+            name="File Hadoop">
+      </generator>
+      <generator
+            class="org.talend.designer.hdfsbrowse.generators.HadoopDirectoryGenerator"
+            mapping="DIRECTORY_HADOOP"
+            name="Directory Hadoop">
+      </generator>
+      <generator
+            class="org.talend.designer.hdfsbrowse.generators.HadoopResourceGenerator"
+            mapping="BOTH_HADOOP"
+            name="Both Hadoop">
+      </generator>
+   </extension>
+   <extension
+         point="org.talend.core.runtime.classloader_provider">
+      <classloader
+            index="HDFS:HORTONWORKS:HDP_1_0"
+            libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
+            index="HDFS:HORTONWORKS:HDP_1_2"
+            libraries="hadoop-core-1.1.2.21.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
+            index="HDFS:APACHE:APACHE_1_0_0"
+            libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
+            index="HDFS:APACHE:APACHE_0_20_204"
+            libraries="hadoop-core-0.20.204.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar">
+      </classloader>
+      <classloader
+            index="HDFS:APACHE:APACHE_0_20_2"
+            libraries="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar">
+      </classloader>
+      <classloader
+            index="HDFS:CLOUDERA:Cloudera_0_20_CDH3U1"
+            libraries="hadoop-0.20.2-cdh3u1-core.jar;commons-logging-1.0.4.jar">
+      </classloader>
+      <classloader
+            index="HDFS:CLOUDERA:Cloudera_CDH4"
+            libraries="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.15.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;commons-io-2.4.jar">
+      </classloader>
+      <classloader
+            index="HDFS:MAPR:MapR"
+            libraries="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar">
+      </classloader>
+      <classloader
+            index="HDFS:MAPR:MapR2"
+            libraries="hadoop-0.20.2-dev-core-mapr2.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar">
+      </classloader>
+      <classloader
+            index="HDFS:HORTONWORKS:HDP_1_0?USE_KRB"
+            libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
+            index="HDFS:HORTONWORKS:HDP_1_2?USE_KRB"
+            libraries="hadoop-core-1.1.2.21.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
+            index="HDFS:APACHE:APACHE_1_0_0?USE_KRB"
+            libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar">
+      </classloader>
+      <classloader
+            index="HDFS:CLOUDERA:Cloudera_CDH4?USE_KRB"
+            libraries="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.15.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;commons-io-2.4.jar">
+      </classloader>
+   </extension>
+
+</plugin>

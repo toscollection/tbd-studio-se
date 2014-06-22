@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.talend.tos.bigdata_feature"
+      label="Bigdata_feature"
+      version="1.0.0.qualifier">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.talend.commons_feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.talend.help_feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.talend.tos.bigdata.core_feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.talend.tos.bigdata.repository_feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.talend.tos.bigdata.designer_feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.talend.rcp_feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.talend.tos.components_feature"
+         version="0.0.0"/>
+
+</feature>

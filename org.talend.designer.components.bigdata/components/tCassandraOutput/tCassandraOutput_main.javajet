@@ -1,0 +1,174 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		
+		java.util.Map
+		java.util.List
+	" 
+%>
+<% 
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();	
+    String batchSize = ElementParameterParser.getValue(node,"__BATCH_SIZE__");
+	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
+	String superKeyColumn = ElementParameterParser.getValue(node,"__SUPER_KEY_COLUMN__");
+    boolean incSuperKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_SUPER_KEY__"));
+    String keyColumn = ElementParameterParser.getValue(node,"__KEY_COLUMN__");
+	String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
+    boolean incKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_KEY__"));
+    String actionOnData = ElementParameterParser.getValue(node,"__ACTION_ON_DATA__");
+    List<Map<String, String>> listDeleteCols = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__DELETE_COLUMNS__");
+    boolean deleteRow = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DELETE_ROW__"));
+    boolean delSuperColumn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DELETE_SUPER_COLUMN__"));
+    Map<String,String> deleteColumns=new java.util.HashMap<String,String>();
+    boolean dieOnError = ("true").equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+    for(Map<String,String> delColumn:listDeleteCols){
+    	deleteColumns.put(delColumn.get("DELETE_COLUMN"),delColumn.get("DELETE_COLUMN"));
+    }
+	
+	if (node.getIncomingConnections() != null) {
+		Map<JavaType,String> typeMap=new java.util.HashMap<JavaType,String>();
+		typeMap.put(JavaTypesManager.BOOLEAN,"BooleanSerializer");
+		typeMap.put(JavaTypesManager.BYTE_ARRAY,"BytesArraySerializer");
+		typeMap.put(JavaTypesManager.DATE,"DateSerializer");
+		typeMap.put(JavaTypesManager.DOUBLE,"DoubleSerializer");
+		typeMap.put(JavaTypesManager.FLOAT,"FloatSerializer");
+		typeMap.put(JavaTypesManager.INTEGER,"IntegerSerializer");
+		typeMap.put(JavaTypesManager.LONG,"LongSerializer");
+		typeMap.put(JavaTypesManager.OBJECT,"ObjectSerializer");
+		typeMap.put(JavaTypesManager.SHORT,"ShortSerializer");
+		typeMap.put(JavaTypesManager.STRING,"StringSerializer");
+		typeMap.put(JavaTypesManager.CHARACTER,"CharSerializer");
+		for (IConnection incomingConn : node.getIncomingConnections()) {
+			String conName = incomingConn.getName();
+			if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
+				IMetadataColumn metaKeyColumn = inputMetadataTable.getColumn(keyColumn);
+				boolean isKeyColumnJavaPrimitive = false;
+				if (metaKeyColumn != null) {
+					isKeyColumnJavaPrimitive = JavaTypesManager.isJavaPrimitiveType(metaKeyColumn.getTalendType(), metaKeyColumn.isNullable());
+				}
+				%>
+				try{
+					<%
+					if (!isKeyColumnJavaPrimitive) {
+					%>
+						if (<%=conName%>.<%=keyColumn%> != null) {
+					<%
+					}
+					if("SUPER".equals(columnFamilyType)){
+					%>
+	
+						java.util.List<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>> innerColumn_<%=cid%>=new 
+			    		java.util.ArrayList<me.prettyprint.hector.api.beans.HColumn<me.prettyprint.hector.api.Serializer,me.prettyprint.hector.api.Serializer>>();
+					<%
+					}
+		    		for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
+		    			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+		    			boolean isJavaPrimitiveType = JavaTypesManager.isJavaPrimitiveType(column.getTalendType(), column.isNullable());
+		    			if("STANDARD".equals(columnFamilyType)){
+							if (incKey || !column.getLabel().equals(keyColumn)) {
+								if("UPSERT".equals(actionOnData)){
+								%>
+									<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null) { <%}%>
+							mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,
+								me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
+									serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get()));
+									<%if (!isJavaPrimitiveType) {%>} <%}%>
+								<%
+								}else{
+									if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
+									%>
+							mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,"<%=column.getOriginalDbColumnName()%>",serializer_<%=cid%>);
+									<%
+									}
+								}
+							}
+						}else{
+							if (!((!incKey && column.getLabel().equals(keyColumn))|| (!incSuperKey && column.getLabel().equals(superKeyColumn)))) {
+								if("UPSERT".equals(actionOnData)){
+								%>
+									<%if (!isJavaPrimitiveType) {%>if(<%=conName%>.<%=column.getLabel()%>!=null){ <%}%>
+							me.prettyprint.hector.api.beans.HColumn column_<%=column.getOriginalDbColumnName()%>=me.prettyprint.hector.api.factory.HFactory.createColumn("<%=column.getOriginalDbColumnName()%>",<%=conName%>.<%=column.getLabel()%>,
+								serializer_<%=cid%>,me.prettyprint.cassandra.serializers.<%=typeMap.get(javaType)==null?"ObjectSerializer":typeMap.get(javaType)%>.get());
+										innerColumn_<%=cid%>.add( column_<%=column.getOriginalDbColumnName()%>);
+									<%if (!isJavaPrimitiveType) {%>} <%}%>
+								<%
+								}else{
+									if(!deleteRow && listDeleteCols.size()>0 && deleteColumns.get(column.getLabel())!=null){
+									%>
+							mutator_<%=cid%>.addSubDelete(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,<%=conName%>.<%=superKeyColumn%>,"<%=column.getOriginalDbColumnName()%>",sNameSerializer_<%=cid%>,serializer_<%=cid%>);
+									<%
+									}
+								}
+							}
+						}
+					}
+		           	if("SUPER".equals(columnFamilyType) && "UPSERT".equals(actionOnData)){
+						IMetadataColumn metaSuperKeyColumn = inputMetadataTable.getColumn(superKeyColumn);
+						boolean isSuperKeyColumnJavaPrimitive = false;
+						if (metaSuperKeyColumn != null) {
+							isSuperKeyColumnJavaPrimitive = JavaTypesManager.isJavaPrimitiveType(metaSuperKeyColumn.getTalendType(), metaSuperKeyColumn.isNullable());
+						}
+						%>
+						<%if (!isSuperKeyColumnJavaPrimitive) {%>if(<%=conName%>.<%=superKeyColumn%>!=null){ <%}%>
+				mutator_<%=cid%>.addInsertion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,new me.prettyprint.cassandra.model.HSuperColumnImpl(<%=conName%>.<%=superKeyColumn%>,innerColumn_<%=cid%>,
+									me.prettyprint.hector.api.factory.HFactory.createClock(),sNameSerializer_<%=cid%>,serializer_<%=cid%>,serializer_<%=cid%>));
+						<%if (!isSuperKeyColumnJavaPrimitive) {%>} <%}%>
+					<%
+					}
+					if("DELETE".equals(actionOnData)){
+						if(deleteRow || listDeleteCols.size()<1){
+							if("STANDARD".equals(columnFamilyType)){
+							%>
+					mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>);
+							<%             		
+							}else{
+								if(deleteRow && !delSuperColumn){
+								%>
+						mutator_<%=cid%>.addDeletion(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>);
+								<%
+								}else{
+								%>
+						mutator_<%=cid%>.addSuperDelete(<%=conName%>.<%=keyColumn%>, <%=columnFamily%>,<%=conName%>.<%=superKeyColumn%>,sNameSerializer_<%=cid%>);
+								<%
+								}
+							}
+						}
+		            }
+					%>
+					<%if (!isKeyColumnJavaPrimitive) {%>
+						}
+					<%}%>
+					nb_line_<%=cid %>++;
+					if (batchCounter_<%=cid%>++ == <%=batchSize%>) {
+						mutator_<%=cid%>.execute();
+						batchCounter_<%=cid%> = 0;
+					}
+				}catch(java.lang.Exception e_<%=cid%>){
+					<%
+					if(dieOnError) {
+					%>
+				        throw(e_<%=cid%>);
+					<%
+					}else {
+					%>
+						System.err.println(e_<%=cid%>.getMessage());
+					<%
+					}
+					%>    
+				}
+			<%
+			}
+      	}
+    }
+%>

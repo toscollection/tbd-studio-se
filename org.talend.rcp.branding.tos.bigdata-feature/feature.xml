@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.talend.rcp.branding.tos.bigdata_feature"
+      label="Horton studio branding feature"
+      version="2.2.0.qualifier"
+      provider-name=".Talend SA."
+      plugin="org.talend.rcp.branding.tos.bigdata">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.talend.com/tosbd/terms-conditions/index.php">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.talend.tos.bigdata_feature"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.rcp.branding.tos.bigdata"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.designer.components.bigdata"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.talend.oozie.scheduler"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.designer.hdfsbrowse"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.oozie.scheduler.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.designer.hdfsbrowse.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+</feature>

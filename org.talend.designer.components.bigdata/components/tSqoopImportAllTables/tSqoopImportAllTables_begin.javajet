@@ -1,0 +1,101 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+    	java.util.List
+    	java.util.Map
+	"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+
+	boolean useColumns = "true".equals(ElementParameterParser.getValue(node,"__USE_COLUMNS__"));
+	List<Map<String, String>> columns = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__COLUMNS__");
+	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+	String table = ElementParameterParser.getValue(node,"__TABLE__");
+	String username = ElementParameterParser.getValue(node,"__USERNAME__");
+	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
+	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
+	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
+	boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
+	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
+	boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
+	boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
+	boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
+	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
+	String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
+	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
+%>
+
+//call the cmd part
+Runtime runtime_<%=cid %> = Runtime.getRuntime();
+
+String[] cmd_<%=cid %> = new String[] {"sqoop", "import-all-tables", "--connect", <%=connection%>, "--username", <%=username%>, "--password", <%=password%>
+<%if(printLog && verbose){%>, "--verbose"<%}%>
+<%if(direct){%>, "--direct"<%}%>
+<%if(compress){%>, "--compress"<%}%>
+<%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
+<%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
+<%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
+<%
+boolean isNull=false; 
+if(additionalList != null){ 
+	for(Map<String,String> additionalMap : additionalList){ 
+		isNull=false; 
+	 	if(additionalMap.get("ADDITIONAL_VALUE")==null || "".equals(additionalMap.get("ADDITIONAL_VALUE"))) { 
+	 		isNull=true; 
+	 	} 
+	 	if(!isNull) { 
+%> 
+			,"<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>", <%=additionalMap.get("ADDITIONAL_VALUE")%> 
+<% 
+		} else { 
+%> 
+			,"<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>" 
+<% 
+		} 
+	} 
+} 
+%>
+};
+final Process ps_<%=cid %> = runtime_<%=cid %>.exec(cmd_<%=cid %>);
+
+java.lang.StringBuilder sb_<%=cid%> = null;
+byte[] byteArray_<%=cid%> = new byte[1024];
+int len_<%=cid%> = 0;
+
+java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
+sb_<%=cid%> = new java.lang.StringBuilder();
+while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+	String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+<%
+	if(printLog){
+%>
+	    System.err.println(line_<%=cid%>);
+<%
+	}
+%>
+	sb_<%=cid%>.append(line_<%=cid%>);
+}
+globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
+
+byteArray_<%=cid%> = new byte[1024];
+len_<%=cid%> = 0;
+java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
+sb_<%=cid%> = new java.lang.StringBuilder();
+while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+	String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+<%
+	if(printLog){
+%>
+	    System.out.println(line_<%=cid%>);
+<%
+	}
+%>
+	sb_<%=cid%>.append(line_<%=cid%>);
+}
+globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());

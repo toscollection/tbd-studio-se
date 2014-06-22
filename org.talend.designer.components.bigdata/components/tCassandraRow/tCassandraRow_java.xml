@@ -1,0 +1,168 @@
+<COMPONENT>
+	<HEADER
+    PLATEFORM="ALL"
+    SERIAL=""
+    VERSION="0.102"
+    STATUS="ALPHA"
+    
+    COMPATIBILITY="ALL"
+    AUTHOR="Talend"
+    RELEASE_DATE="20110729A"
+    STARTABLE="true"
+  >
+    <SIGNATURE/>
+  </HEADER>
+
+  <FAMILIES>
+    <FAMILY>Databases/Cassandra</FAMILY>
+	<FAMILY>Big Data/Cassandra</FAMILY>
+  </FAMILIES>
+
+	<DOCUMENTATION>
+		<URL />
+	</DOCUMENTATION>
+
+	<CONNECTORS>
+		<CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="0"/>
+	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
+	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_OK"/>
+	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
+	    <CONNECTOR CTYPE="RUN_IF"/>
+	</CONNECTORS>
+
+	<PARAMETERS>
+		<PARAMETER 
+			NAME="USE_EXISTING_CONNECTION" 
+			FIELD="CHECK"
+			NUM_ROW="2"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER 
+			NAME="CONNECTION" 
+			FIELD="COMPONENT_LIST" 
+			FILTER="tCassandraConnection"
+			NUM_ROW="2" 
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" 
+		/>
+		<PARAMETER 
+			FIELD="TEXT" 
+			NAME="HOST" 
+			REQUIRED="true" 
+			NUM_ROW="5"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER 
+			FIELD="TEXT" 
+			NAME="PORT" 
+			REQUIRED="true" 
+			NUM_ROW="5"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>"9160"</DEFAULT>
+		</PARAMETER>
+		<!--
+		<PARAMETER 
+			FIELD="TEXT" 
+			NAME="CLUSTER" 
+			NUM_ROW="6"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		-->
+		<PARAMETER 
+			NAME="REQUIRED_AUTHENTICATION" 
+			FIELD="CHECK"
+			NUM_ROW="10"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER 
+			FIELD="TEXT" 
+			NAME="USERNAME" 
+			REQUIRED="true" 
+			NUM_ROW="11"
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER 
+			FIELD="TEXT" 
+			NAME="PASSWORD" 
+			REQUIRED="true"
+			NUM_ROW="11"
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER 
+            FIELD="TEXT" 
+            NAME="KEY_SPACE" 
+            REQUIRED="true" 
+            NUM_ROW="13"
+            GROUP="KEYSPACE_CONFIGURATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+		<PARAMETER 
+			FIELD="TEXT" 
+			NAME="COLUMN_FAMILY" 
+			REQUIRED="true" 
+			NUM_ROW="15"
+			GROUP="COLUMN_FAMILY_CONFIGURATION"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER 
+			NAME="SCHEMA_FLOW" 
+			FIELD="SCHEMA_TYPE" 
+			NUM_ROW="16"
+		>
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+	      NAME="QUERY"
+	      FIELD="MEMO"
+	      REQUIRED="true" 
+	      NUM_ROW="20"
+    	>
+      		<DEFAULT>"select id, name from employee"</DEFAULT>
+    	</PARAMETER>
+    	<PARAMETER 
+			NAME="DIE_ON_ERROR" 
+			FIELD="CHECK" 
+			NUM_ROW="35">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+	</PARAMETERS>
+
+	<CODEGENERATION>
+		<IMPORTS>
+			<IMPORT MODULE="hector-core-1.0-5.jar" NAME="hector-core-1.0-5"
+				REQUIRED="true" />
+			<IMPORT MODULE="apache-cassandra-1.1.2.jar" NAME="apache-cassandra-1.1.2"
+				REQUIRED="true" />
+			<IMPORT MODULE="apache-cassandra-thrift-1.1.2.jar" NAME="apache-cassandra-thrift-1.1.2"
+				REQUIRED="true" />
+			<IMPORT MODULE="slf4j-api-1.6.1.jar" NAME="slf4j-api-1.6.1"
+				REQUIRED="true" />
+			<IMPORT MODULE="slf4j-log4j12-1.6.1.jar" NAME="slf4j-log4j12-1.6.1"
+				REQUIRED="true" />
+			<IMPORT MODULE="log4j-1.2.16.jar" NAME="log4j-1.2.16"
+				REQUIRED="true" />
+			<IMPORT MODULE="libthrift-0.7.0.jar" NAME="libthrift-0.7.0"
+				REQUIRED="true" />
+			<IMPORT MODULE="guava-12.0.1.jar" NAME="guava-12.0.1"
+				REQUIRED="true" />
+			<IMPORT MODULE="commons-lang-2.6.jar" NAME="commons-lang-2.6"
+				REQUIRED="true" />
+    	</IMPORTS>
+	</CODEGENERATION>
+	<RETURNS />
+</COMPONENT>

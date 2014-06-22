@@ -1,0 +1,216 @@
+<%@ jet 
+imports="
+    	org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.ElementParameterParser  
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.process.IConnection
+		
+		java.util.List
+		java.util.Map
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	
+	String cid = node.getUniqueName();
+
+	String dbtable = null;
+	String uniqueNameConnection = null;
+	INode previousNode = null;
+
+	%>
+	String select_query_<%=cid %> = null;	
+	String tableName_<%=cid%> = null;
+	<%
+	List<IConnection> connections = (List<IConnection>) node.getIncomingConnections();
+	if(connections != null && connections.size() > 0 && connections.get(0) != null) {
+	    IConnection connection = connections.get(0);
+	    previousNode = connection.getSource();
+	    String previousComponentName = previousNode.getUniqueName();
+		dbtable = connection.getName();
+		uniqueNameConnection = connection.getUniqueName();
+		
+		%>
+		select_query_<%=cid %> = (String) globalMap.get("<%=previousComponentName%>"+"QUERY"+"<%=uniqueNameConnection%>");
+		
+		<%
+	}
+	
+	String differenttable = ElementParameterParser.getValue(node, "__DIFFERENT_TABLE_NAME__");
+    boolean useDifferentTable = "true".equals(ElementParameterParser.getValue(node, "__USE_DIFFERENT_TABLE__"));
+    
+   	String dbschema = ElementParameterParser.getValue(node,"__ELT_SCHEMA_NAME__");
+	%>
+		String dbschema_<%=cid%> = <%=dbschema%>;
+		if(dbschema_<%=cid%> != null && dbschema_<%=cid%>.trim().length() > 0) {
+		 	tableName_<%=cid%> = <%=dbschema%> + "." + <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		} else {
+			tableName_<%=cid%> = <%=useDifferentTable? differenttable:"\""+dbtable +"\""%>;
+		}
+	<%
+	
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+
+	List<Map<String, String>> fieldPartitions = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FIELD_PARTITION__");
+
+    String dbhost = null;
+    String dbport = null;
+    String dbname = null;
+    String dbuser = null;
+    String dbpwd = null;
+    boolean useExistingConn = false;
+    if(previousNode != null) {
+        dbhost = ElementParameterParser.getValue(previousNode, "__HOST__");
+        dbport = ElementParameterParser.getValue(previousNode, "__PORT__");
+        dbname = ElementParameterParser.getValue(previousNode, "__DBNAME__");
+        dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
+        dbpwd = ElementParameterParser.getValue(previousNode, "__PASS__");
+    	useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
+    }
+%>
+
+java.sql.Connection conn_<%=cid%> = null;
+
+<%
+if(useExistingConn) {
+    String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
+    String conn = "conn_" + connection;
+    String db = "db_" + connection;
+    %>
+    conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
+    
+	String dbname_<%=cid%> = (String)globalMap.get("<%=db%>");
+	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+    	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+    	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+    	goToDatabase_<%=cid%>.close();
+	}
+    <%
+} else {
+		String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
+		String connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
+		String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
+		if(("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("APACHE_0_20_203".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("MAPR1".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode))) {
+%>
+			if(true) {
+				throw new Exception("The Hive version and the connection mode are not compatible together. Please check your component configuration.");
+			}
+<%
+		}
+		if("EMBEDDED".equals(connectionMode)) {
+%>
+			System.setProperty("hive.metastore.local", "false");
+			System.setProperty("hive.metastore.uris", "thrift://" + <%=dbhost%> + ":" + <%=dbport%>);
+			System.setProperty("hive.metastore.execute.setugi", "true");
+			String url_<%=cid%> = "jdbc:hive://";
+<%
+		} else {
+%>
+			String url_<%=cid%> = "jdbc:hive://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+<%
+		}
+%>
+		String dbUser_<%=cid %> = <%=dbuser%>;
+		String dbPwd_<%=cid %> = <%=dbpwd%>;    
+		java.lang.Class.forName("<%=javaDbDriver %>");
+		conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
+		
+    	String dbname_<%=cid%> = <%=dbname%>;
+    	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+        	java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+        	goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+        	goToDatabase_<%=cid%>.close();
+    	}
+<%
+}
+%>
+
+<%
+List<IMetadataColumn> columnList = null;
+
+List<IMetadataTable> metadatas = node.getMetadataList();
+if(metadatas !=null && metadatas.size()>0){
+	IMetadataTable metadata = metadatas.get(0);
+	if(metadata != null){
+		columnList = metadata.getListColumns();
+	}
+}
+%>
+
+java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
+
+	StringBuffer partitionSql = new StringBuffer();
+	String startPartition = "";
+	String endPartition = "";
+	String bodyPartition = "";
+<%
+	//For Bug TDI-24105,support context variables
+	if(fieldPartitions != null && !fieldPartitions.isEmpty()) {
+		String columnName = null;
+		String columnValue = null;
+		int count = 0 ;
+%>
+	startPartition = " PARTITION(";
+	endPartition = ")";
+<%
+		for(Map<String, String> line : fieldPartitions ) {// search in the configuration table
+		     columnName = line.get("COLUMN_NAME");
+		     columnValue = line.get("COLUMN_VALUE");  
+			if (columnName!=null && !"".equals(columnName)) {
+			    count++;
+%>
+    			bodyPartition = bodyPartition + <%=columnName%>;
+<%
+   				if (columnValue!=null && !"".equals(columnValue)) {
+%>
+   				    bodyPartition = bodyPartition + "=";
+   				    bodyPartition = bodyPartition + <%=columnValue%>;
+<%
+				}
+    			if(count < fieldPartitions.size()){
+%>
+			        bodyPartition = bodyPartition + ",";
+<%
+			    }
+			}
+		}
+	}
+%>
+	partitionSql.append(startPartition).append(bodyPartition).append(endPartition);
+	
+<%
+
+if(columnList != null && columnList.size()>0){
+	if(("INSERT").equals(dataAction)){
+%>	
+	String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + partitionSql.toString() + " "+select_query_<%=cid %>;
+	stmt_<%=cid %>.execute(insertQuery_<%=cid %>);
+<%
+	}else if (("OVERWRITE").equals(dataAction)){
+%>
+	String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ partitionSql.toString() + " "+select_query_<%=cid %>;
+	stmt_<%=cid %>.execute(overwriteQuery_<%=cid %>);
+
+<%
+	}
+}
+
+
+// END
+
+%>
+stmt_<%=cid %>.close();
+
+<%
+if(!useExistingConn) {
+    %>
+    if(conn_<%=cid%> != null && !conn_<%=cid%>.isClosed()) {
+        conn_<%=cid%> .close();
+    }
+    <%
+}
+%>

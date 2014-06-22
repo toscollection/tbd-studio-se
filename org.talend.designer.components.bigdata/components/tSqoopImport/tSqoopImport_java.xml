@@ -1,0 +1,175 @@
+<COMPONENT>
+	<HEADER PLATEFORM="ALL" SERIAL="" VERSION="0.102" STATUS="ALPHA"
+		COMPATIBILITY="ALL" AUTHOR="Talend" RELEASE_DATE="20100926A"
+		STARTABLE="true">
+		<SIGNATURE />
+	</HEADER>
+
+  <FAMILIES>
+    <FAMILY>File/Sqoop</FAMILY>
+	<FAMILY>Big Data/Sqoop</FAMILY>
+  </FAMILIES>
+
+	<DOCUMENTATION>
+		<URL />
+	</DOCUMENTATION>
+
+	<CONNECTORS>
+	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="1"/>
+	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_OK"    MAX_OUTPUT="1" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_ERROR" MAX_OUTPUT="1" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="RUN_IF" MAX_INPUT="1" />
+	</CONNECTORS>
+
+	<PARAMETERS>				
+		
+	    <PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="10">
+				<DEFAULT>"jdbc:mysql://localhost/database_name"</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="USERNAME" FIELD="TEXT" NUM_ROW="20">
+				<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="PASSWORD" FIELD="TEXT" NUM_ROW="30">
+				<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="40" SHOW_IF="USE_QUERY=='false'">
+				<DEFAULT>"table_name"</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="APPEND" FIELD="CHECK" NUM_ROW="50">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="FILE_FORMAT" FIELD="CLOSED_LIST" NUM_ROW="60">
+				<ITEMS DEFAULT="textfile">
+					<ITEM NAME="textfile" VALUE="textfile"/>
+					<ITEM NAME="sequencefile" VALUE="sequencefile"/>
+				</ITEMS>
+		</PARAMETER>
+			
+	    <PARAMETER NAME="COMPRESS" FIELD="CHECK" NUM_ROW="90">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+			
+	  	<PARAMETER NAME="PRINT_LOG" FIELD="CHECK" NUM_ROW="100">
+				<DEFAULT>true</DEFAULT>
+		</PARAMETER>
+			
+	  	<PARAMETER NAME="VERBOSE" FIELD="CHECK" NUM_ROW="100" SHOW_IF="PRINT_LOG=='true'">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+	    
+	</PARAMETERS>
+		
+	<ADVANCED_PARAMETERS>
+		
+	    <PARAMETER NAME="DIRECT" FIELD="CHECK" NUM_ROW="10">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+			
+	  	<PARAMETER NAME="USE_COLUMNS" FIELD="CHECK" NUM_ROW="11" SHOW_IF="USE_QUERY=='false'">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+	    <PARAMETER NAME="COLUMNS" FIELD="TABLE" NUM_ROW="11" NB_LINES="3" SHOW_IF="(USE_COLUMNS=='true' AND USE_QUERY=='false')">
+	      <ITEMS>
+	        <ITEM NAME="COLUMN" FIELD="TEXT"/>
+	      </ITEMS>
+	    </PARAMETER>
+			
+	  	<PARAMETER NAME="USE_WHERE" FIELD="CHECK" NUM_ROW="12" SHOW_IF="USE_QUERY=='false'">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		
+	    <PARAMETER NAME="WHERE" FIELD="TEXT" NUM_ROW="12" SHOW_IF="(USE_WHERE=='true' AND USE_QUERY=='false')">
+				<DEFAULT>"id>0"</DEFAULT>
+		</PARAMETER>
+			
+	  	<PARAMETER NAME="MYSQL_DELIMITERS" FIELD="CHECK" NUM_ROW="13">
+				<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="USE_QUERY" FIELD="CHECK" NUM_ROW="14" GROUP="QUERY_MODE">
+                <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="QUERY" FIELD="MEMO_SQL" NUM_ROW="15" SHOW_IF="USE_QUERY=='true'" GROUP="QUERY_MODE">
+                <DEFAULT>"select id, name from employee where $CONDITIONS"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="QUERY_LABEL" FIELD="LABEL" NUM_ROW="16" SHOW_IF="USE_QUERY=='true'" GROUP="QUERY_MODE">
+                <DEFAULT>When importing a free-form query, you must specify a destination directory. If you want to import the results of a query in parallel, you must select a splitting column with --split-by</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="USE_TARGET" FIELD="CHECK" NUM_ROW="17" SHOW_IF="USE_QUERY=='false'">
+                <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="TARGET" FIELD="TEXT" NUM_ROW="18" SHOW_IF="(USE_TARGET=='true') or (USE_QUERY=='true')">
+                <DEFAULT>"/home/user/target"</DEFAULT>
+        </PARAMETER>
+        
+         <PARAMETER NAME="USE_SPLIT" FIELD="CHECK" NUM_ROW="20">
+                <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="SPLIT" FIELD="TEXT" NUM_ROW="20" SHOW_IF="USE_SPLIT=='true'">
+                <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="25">
+                <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="MAPPERS" FIELD="TEXT" NUM_ROW="25" SHOW_IF="USE_MAPPERS=='true'">
+                <DEFAULT>"2"</DEFAULT>
+        </PARAMETER>
+        
+	    <PARAMETER NAME="ADDITIONAL" FIELD="TABLE" NUM_ROW="30" NB_LINES="5">
+	      <ITEMS>
+	        <ITEM NAME="ADDITIONAL_ARGUMENT" FIELD="CLOSED_LIST" >
+	          <ITEMS DEFAULT="--driver">
+	          	<ITEM NAME="--driver" VALUE="--driver"/>
+	          	<ITEM NAME="--hadoop-home" VALUE="--hadoop-home"/>
+	            <ITEM NAME="--direct-split-size"  VALUE="--direct-split-size"/>
+	            <ITEM NAME="--inline-lob-limit"  VALUE="--inline-lob-limit"/>
+	            <ITEM NAME="--split-by"  VALUE="--split-by" SHOW_IF="USE_SPLIT=='false'"/>
+	            <ITEM NAME="--warehouse-dir"  VALUE="--warehouse-dir"/>
+	            <ITEM NAME="--enclosed-by"  VALUE="--enclosed-by"/>
+	            <ITEM NAME="--escaped-by"  VALUE="--escaped-by"/>
+	            <ITEM NAME="--fields-terminated-by"  VALUE="--fields-terminated-by"/>
+	            <ITEM NAME="--lines-terminated-by"  VALUE="--lines-terminated-by"/>
+	            <ITEM NAME="--optionally-enclosed-by"  VALUE="--optionally-enclosed-by"/>
+	            <ITEM NAME="--input-enclosed-by"  VALUE="--input-enclosed-by"/>
+	            <ITEM NAME="--input-escaped-by"  VALUE="--input-escaped-by"/>
+	            <ITEM NAME="--input-fields-terminated-by"  VALUE="--input-fields-terminated-by"/>
+	            <ITEM NAME="--input-lines-terminated-by"  VALUE="--input-lines-terminated-by"/>
+	            <ITEM NAME="--input-optionally-enclosed-by"  VALUE="--input-optionally-enclosed-by"/>
+	            <ITEM NAME="--hive-home"  VALUE="--hive-home"/>
+	            <ITEM NAME="--hive-import"  VALUE="--hive-import"/>
+	            <ITEM NAME="--hive-overwrite"  VALUE="--hive-overwrite"/>
+	            <ITEM NAME="--hive-table"  VALUE="--hive-table"/>
+	            <ITEM NAME="--bindir"  VALUE="--bindir"/>
+	            <ITEM NAME="--class-name"  VALUE="--class-name"/>
+	            <ITEM NAME="--jar-file"  VALUE="--jar-file"/>
+	            <ITEM NAME="--outdir"  VALUE="--outdir"/>
+	            <ITEM NAME="--package-name"  VALUE="--package-name"/>
+	          </ITEMS>
+	        </ITEM>
+	        <ITEM NAME="ADDITIONAL_VALUE" FIELD="TEXT"/>
+	      </ITEMS>
+	    </PARAMETER>
+	    
+	</ADVANCED_PARAMETERS>
+
+	<CODEGENERATION />
+	<RETURNS>
+		<RETURN AVAILABILITY="AFTER" NAME="OUTPUT_MESSAGE" TYPE="id_String" />
+	</RETURNS>
+	
+</COMPONENT>

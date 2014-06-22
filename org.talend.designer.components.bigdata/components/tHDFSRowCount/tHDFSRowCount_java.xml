@@ -1,0 +1,201 @@
+<COMPONENT>
+  	<HEADER
+    	PLATEFORM="ALL"
+     	SERIAL=""
+      	VERSION="0.101"
+       	STATUS="ALPHA"
+         
+		COMPATIBILITY="ALL"
+    	AUTHOR="Talend"
+ 		RELEASE_DATE="20070210A"
+    	STARTABLE="true"
+  		>
+    	<SIGNATURE></SIGNATURE>
+  	</HEADER>
+
+  	<FAMILIES>
+    	<FAMILY>File/Hadoop</FAMILY>
+		<FAMILY>Big Data/HDFS</FAMILY>
+  	</FAMILIES>
+
+  	<DOCUMENTATION>
+	    <URL/>
+  	</DOCUMENTATION>
+
+  	<CONNECTORS>
+	    <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="0"/>
+	    <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="1" MAX_INPUT="1"/>
+	    <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+	    <CONNECTOR CTYPE="COMPONENT_OK"/>
+	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
+	    <CONNECTOR CTYPE="RUN_IF"/>
+  	</CONNECTORS>
+
+  	<PARAMETERS>
+	    <PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" SHOW="true" NUM_ROW="1" REPOSITORY_VALUE="HDFS" />
+	    <PARAMETER
+	      NAME="USE_EXISTING_CONNECTION"
+	      FIELD="CHECK"
+	      NUM_ROW="5"
+	    >
+	      <DEFAULT>false</DEFAULT>
+	    </PARAMETER>    
+	
+	    <PARAMETER
+	      NAME="CONNECTION"
+	      FIELD="COMPONENT_LIST"
+	      FILTER="tHDFSConnection"
+	      NUM_ROW="5"
+	      SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
+	      DYNAMIC_SETTINGS="true"
+	    />
+    	<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" REPOSITORY_VALUE="DISTRIBUTION">
+  			<ITEMS DEFAULT="HORTONWORKS">
+				<ITEM NAME="HORTONWORKS" VALUE="HORTONWORKS"/>
+				<ITEM NAME="CLOUDERA" VALUE="CLOUDERA"/>
+				<ITEM NAME="MAPR" VALUE="MAPR"/>
+				<ITEM NAME="APACHE" VALUE="APACHE"/>
+			</ITEMS>
+  		</PARAMETER>
+		<PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" NUM_ROW="10" REQUIRED="true" GROUP="VERSION" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" REPOSITORY_VALUE="DB_VERSION">
+			<ITEMS DEFAULT="HDP_1_0">
+                <ITEM NAME="HDP_1_0" VALUE="HDP_1_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+                <ITEM NAME="HDP_1_2" VALUE="HDP_1_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+                <ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'"/>
+                <ITEM NAME="APACHE_0_20_204" VALUE="APACHE_0_20_204" SHOW_IF="DISTRIBUTION=='APACHE'" />
+                <ITEM NAME="Cloudera_0.20_CDH3U1" VALUE="Cloudera_0_20_CDH3U1" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+                <ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+                <ITEM NAME="APACHE_0_20_2" VALUE="APACHE_0_20_2" SHOW_IF="DISTRIBUTION=='APACHE'" />
+                <ITEM NAME="MapR" VALUE="MapR" SHOW_IF="DISTRIBUTION=='MAPR'" />
+                <ITEM NAME="MapR2" VALUE="MapR2" SHOW_IF="DISTRIBUTION=='MAPR'" />
+			</ITEMS>
+	   	</PARAMETER>
+		<PARAMETER
+			NAME="USE_KRB"
+			FIELD="CHECK"
+			NUM_ROW="12"
+			REPOSITORY_VALUE="USE_KRB"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND ((DB_VERSION=='HDP_1_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='APACHE_1_0_0') OR (DB_VERSION=='Cloudera_CDH4'))"
+			GROUP="CONN"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="NAMENODE_PRINCIPAL" FIELD="TEXT" REPOSITORY_VALUE="NAMENODE_PRINCIPAL" REQUIRED="true" NUM_ROW="12" SHOW_IF="USE_EXISTING_CONNECTION == 'false' AND (DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4') AND USE_KRB=='true'" GROUP="CONN">
+			<DEFAULT>"nn/_HOST@EXAMPLE.COM"</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" REPOSITORY_VALUE="FS_DEFAULT_NAME" REQUIRED="true" NUM_ROW="20" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" GROUP="CONN">
+		  	<DEFAULT IF="(DB_VERSION != 'MapR') AND (DB_VERSION != 'MapR2')">"hdfs://localhost:9000/"</DEFAULT>
+			<DEFAULT IF="(DB_VERSION == 'MapR') OR (DB_VERSION == 'MapR2')">"maprfs:///"</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="USERNAME" FIELD="TEXT" REPOSITORY_VALUE="USERNAME" REQUIRED="true" NUM_ROW="30" NOT_SHOW_IF="((DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4') AND USE_KRB=='true') OR USE_EXISTING_CONNECTION == 'true'" GROUP="CONN">
+	      	<DEFAULT>"anonymous"</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="GROUP" FIELD="TEXT" REPOSITORY_VALUE="GROUP" REQUIRED="true" NUM_ROW="30" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') and ((DB_VERSION == 'APACHE_0_20_2') or (DB_VERSION == 'MapR') or (DB_VERSION == 'MapR2'))" GROUP="CONN">
+	      	<DEFAULT>"supergroup"</DEFAULT>
+	    </PARAMETER>
+		
+		<PARAMETER
+	      NAME="FILENAME"
+	      FIELD="FILE_HADOOP"
+	      NUM_ROW="40"
+	      REQUIRED="true"
+	    >
+	      <DEFAULT>""</DEFAULT>
+	    </PARAMETER>
+	
+	    <PARAMETER
+	      NAME="ROWSEPARATOR"
+	      REPOSITORY_VALUE="ROWSEPARATOR"
+	      FIELD="TEXT"
+	      NUM_ROW="50"
+	      REQUIRED="true"
+	    >
+	      <DEFAULT>"\n"</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="IGNORE_EMPTY_ROW" FIELD="CHECK" NUM_ROW="60" REQUIRED="true">
+	      <DEFAULT>false</DEFAULT>
+	    </PARAMETER>
+	    <PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="70"
+		  REQUIRED="true">
+		  <DEFAULT>"ISO-8859-15"</DEFAULT>
+		</PARAMETER>
+  	</PARAMETERS>
+   
+   
+   	<ADVANCED_PARAMETERS>
+		<PARAMETER NAME="HADOOP_ADVANCED_PROPERTIES" FIELD="TABLE" REQUIRED="false" NUM_ROW="1" NB_LINES="3" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+			<ITEMS>
+				<ITEM NAME="PROPERTY" />
+				<ITEM NAME="VALUE" />
+			</ITEMS>
+		</PARAMETER>  
+   	</ADVANCED_PARAMETERS>
+
+   	<CODEGENERATION>
+		<IMPORTS>
+            <!-- HDP_1_0 -->
+            <IMPORT NAME="hadoop-core-1.0.0.jar" MODULE="hadoop-core-1.0.0.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0') AND (USE_EXISTING_CONNECTION=='false')" />
+             <!-- HDP_1_2 -->
+            <IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- APACHE_1_0_0 -->
+            <IMPORT NAME="hadoop-core-1.0.0.jar" MODULE="hadoop-core-1.0.0.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- APACHE_0_20_204 -->
+            <IMPORT NAME="hadoop-core-0.20.204.0.jar" MODULE="hadoop-core-0.20.204.0.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_204') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_204') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_204') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_204') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- Cloudera_0.20_CDH3U1 -->
+            <IMPORT NAME="hadoop-0.20.2-cdh3u1-core.jar" MODULE="hadoop-0.20.2-cdh3u1-core.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_0.20_CDH3U1') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_0.20_CDH3U1') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- Cloudera_CDH4 -->
+            <IMPORT NAME="hadoop-hdfs-2.0.0-cdh4.0.1.jar" MODULE="hadoop-hdfs-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="hadoop-common-2.0.0-cdh4.0.1.jar" MODULE="hadoop-common-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="hadoop-auth-2.0.0-cdh4.0.1.jar" MODULE="hadoop-auth-2.0.0-cdh4.0.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-lang-2.5.jar" MODULE="commons-lang-2.5.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="log4j-1.2.15.jar" MODULE="log4j-1.2.15.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="protobuf-java-2.4.0a.jar" MODULE="protobuf-java-2.4.0a.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- APACHE_0_20_2 -->
+            <IMPORT NAME="hadoop-0.20.2-core.jar" MODULE="hadoop-0.20.2-core.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" REQUIRED_IF="(DB_VERSION=='APACHE_0_20_2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- MapR -->
+            <IMPORT NAME="hadoop-0.20.2-dev-core.jar" MODULE="hadoop-0.20.2-dev-core.jar" REQUIRED_IF="(DB_VERSION=='MapR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" REQUIRED_IF="(DB_VERSION=='MapR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MapR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MapR') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- MapR2 -->
+            <IMPORT NAME="hadoop-0.20.2-dev-core-mapr2" MODULE="hadoop-0.20.2-dev-core-mapr2.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="maprfs-0.1.jar" MODULE="maprfs-0.1.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="zookeeper-3.3.2.jar" MODULE="zookeeper-3.3.2.jar" REQUIRED_IF="(DB_VERSION=='MapR2') AND (USE_EXISTING_CONNECTION=='false')" />
+            
+            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4') AND (USE_KRB=='true') AND (USE_EXISTING_CONNECTION=='false')" />
+            
+            <IMPORT NAME="jetty-util" MODULE="jetty-util-6.1.26.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="jersey-core" MODULE="jersey-core-1.8.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+            <IMPORT NAME="commons-io" MODULE="commons-io-2.4.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4') AND (USE_EXISTING_CONNECTION=='false')" />
+	        
+		</IMPORTS>
+   	</CODEGENERATION>
+
+   	<RETURNS>
+  		<RETURN NAME="COUNT" TYPE="id_Integer" AVAILABILITY="FLOW"/>
+  	</RETURNS>
+
+</COMPONENT>
