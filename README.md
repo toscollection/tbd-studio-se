@@ -54,4 +54,4 @@ Feel free to share your Talend components on [Talend Exchange](http://www.talend
 
 Copyright (c) 2006-2014 Talend
 
-Licensed under the LPGL License
+Licensed under the Apache License
