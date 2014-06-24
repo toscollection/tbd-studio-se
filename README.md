@@ -14,13 +14,13 @@ This repository contains the source files for Talend Open Studio for Big Data. T
 All Talend Studio repositories follow the same file structure:
 ```
 
-  |_ main Main Eclipse plugins and features
+  |_ main           Main Eclipse plugins and features
     |_ features
     |_ plugins
-  |_ test Eclipse plugins and features for unit tests. 
+  |_ test           Eclipse plugins and features for unit tests. 
       |_ features
       |_ plugins
-  |_ i18n Internationalization plugins and features.
+  |_ i18n           Internationalization plugins and features.
       |_ features
       |_ plugins
 ```
