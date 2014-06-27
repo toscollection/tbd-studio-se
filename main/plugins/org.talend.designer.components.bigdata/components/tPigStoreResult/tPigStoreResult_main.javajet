@@ -233,7 +233,9 @@
             pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
         }
 	<%}%>
-
+	
+	routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
+	
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 <%	
 	if(generateRegisterJarCodeForAll) {
@@ -242,7 +244,7 @@
 			for(int j=0; j<jars.size(); j++) {
 				if(jars.get(j).contains(jarToRegister)) {
 %>
-					pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+					helper_<%=cid%>.add("jar",getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
 <%
 
 					break;
@@ -256,7 +258,7 @@
 			if(defineJarsToRegister && registerJarForHCatalog.size() > 0){
 				for(Map<String, String> item : registerJarForHCatalog){
 %>
-					pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
+					helper_<%=cid%>.add("jar",<%=item.get("JAR_PATH") %>);
 <% 
 				} 
 			}
@@ -366,7 +368,7 @@
 <%
 			}
 %>
-			pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
+			helper_<%=cid%>.add("script",new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
 <%
 			
 			String hbasetable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
@@ -492,7 +494,13 @@
 	}
 %>
 
-	pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+	helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
+	
+<%
+	boolean inMain = true;
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
+	
 <%
 	if(NodeUtil.isSubTreeEnd(node)) {
 %>

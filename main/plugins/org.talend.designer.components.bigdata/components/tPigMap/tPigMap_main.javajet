@@ -713,33 +713,5 @@
 	 
 	}
 %>
-	java.util.List<Object[]> pigLatins_<%=cid%> = helper_<%=cid%>.getPigLatins();
-<%
-	if(inMain) {
-%>
-		for(Object[] pigLatin_<%=cid%> : pigLatins_<%=cid%>) {
-			String type_<%=cid%> = (String)pigLatin_<%=cid%>[0];
-			if("query".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerQuery((String)pigLatin_<%=cid%>[1]);
-			} else if("jar".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerJar((String)pigLatin_<%=cid%>[1]);
-			} else if("script".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerScript((java.io.InputStream)pigLatin_<%=cid%>[1]);
-			}
-		}
-<%
-	} else {
-%>
-    	pigScript_<%=start_node%>.addAll(pigLatins_<%=cid%>);
-<%
-	}
-%>
-	pigLatins_<%=cid%>.clear();
-<%
-%>
 
-
-
-
-
-
+<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>

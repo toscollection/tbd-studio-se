@@ -48,6 +48,8 @@
 <%
 	if(operations_config != null && operations_config.size()>0) {
 %>
+		routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
+	
 		sb_<%=cid%>.append("<%=cid%>_GROUP = GROUP <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT ");
 <%
 		if(key_fields != null && key_fields.size()>0) {
@@ -83,20 +85,8 @@
 		
 %>		
 		sb_<%=cid%>.append(";");
-<%
-		if(inMain) {//all output process and main input process 
-%>
-			pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
-<%
-		} else {//lookup process
-%>
-        	pl_<%=start_node%> = new Object[2];
-        	pl_<%=start_node%>[0] = "query";
-        	pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
-        	pigScript_<%=start_node%>.add(pl_<%=start_node%>);
-<%
-		}
-%>
+		
+		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 
 		sb_<%=cid%> = new StringBuilder();
 		sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = FOREACH <%=cid%>_GROUP GENERATE ");
@@ -125,19 +115,11 @@
 		}
 %>
 		sb_<%=cid%>.append(";");
+		
+		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
+		
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
 <%
-		if(inMain) {//all output process and main input process 
-%>
-			pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
-<%
-		} else {//lookup process
-%>
-        	pl_<%=start_node%> = new Object[2];
-        	pl_<%=start_node%>[0] = "query";
-        	pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
-        	pigScript_<%=start_node%>.add(pl_<%=start_node%>);
-<%
-		}
 	}
 %>
 		

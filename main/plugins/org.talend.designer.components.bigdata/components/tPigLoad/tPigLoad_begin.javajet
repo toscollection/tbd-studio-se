@@ -433,10 +433,13 @@
 		} else {
 %>
 		//store the pig script in the lookup process
-		Object[] pl_<%=start_node%> = null;
 		java.util.List<Object[]> pigScript_<%=start_node%> = new java.util.ArrayList<Object[]>();
 <%
 		}
+%>
+		routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
+		
+<%
 	if((advProps.size() > 0) || compress || (isLocal && "HBaseStorage".equals(function))){
 %>
 		StringBuilder script_<%=cid%>=new StringBuilder();
@@ -473,19 +476,9 @@
 <%
 			}
 		}
-		
-		if(inMain){
 %>
-		pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
+		helper_<%=cid%>.add("script",new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
 <%
-		} else {
-%>
-		pl_<%=start_node%> = new Object[2];
-		pl_<%=start_node%>[0] = "script";
-		pl_<%=start_node%>[1] = new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes());
-		pigScript_<%=start_node%>.add(pl_<%=start_node%>);
-<%
-		}
 	}
 %>
 
@@ -497,18 +490,9 @@
 				String jarToRegister = jarsToRegister.get(i);
 				for(int j=0; j<jars.size(); j++) {
 					if(jars.get(j).contains(jarToRegister)) {
-						if(inMain) {
 %>
-						pigServer_<%=start_node%>.registerJar(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+						helper_<%=cid%>.add("jar",getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
 <%
-						} else {
-%>
-						pl_<%=start_node%> = new Object[2];
-						pl_<%=start_node%>[0] = "jar";
-						pl_<%=start_node%>[1] = getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>");
-						pigScript_<%=start_node%>.add(pl_<%=start_node%>);						
-<%
-						}
 						break;
 					}
 				}
@@ -519,18 +503,9 @@
 			if(!generateRegisterJarCodeForHCatalog) {
 				if(defineJarsToRegister && registerJarForHCatalog.size() > 0){
 					for(Map<String, String> item : registerJarForHCatalog){
-						if(inMain) {
 %>
-						pigServer_<%=start_node%>.registerJar(<%=item.get("JAR_PATH") %>);
+						helper_<%=cid%>.add("jar",<%=item.get("JAR_PATH") %>);
 <% 
-						} else {
-%>
-						pl_<%=start_node%> = new Object[2];
-						pl_<%=start_node%>[0] = "jar";
-						pl_<%=start_node%>[1] = <%=item.get("JAR_PATH") %>;
-						pigScript_<%=start_node%>.add(pl_<%=start_node%>);						
-<%
-						}
 					} 
 				}
 			}
@@ -719,20 +694,9 @@
 		}
 %>
 		sb_<%=cid%>.append(";");
-<%
-		if(inMain) {
-%>
-		pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
-<%
-		} else {
-%>
-		pl_<%=start_node%> = new Object[2];
-		pl_<%=start_node%>[0] = "query";
-		pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
-		pigScript_<%=start_node%>.add(pl_<%=start_node%>);		
-<%
-		}
 		
+		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
+<%
 		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we will have to consider the partition filter
 			if(partitionFilter.size() > 0){
 				int i = 0;
@@ -753,21 +717,12 @@
 <% 
 				}
 %>
-					sb_<%=cid%>.append(";");
-<%
-				if(inMain) {
-%>
-					pigServer_<%=start_node%>.registerQuery(sb_<%=cid%>.toString());
+				sb_<%=cid%>.append(";");
+					
+				helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 <%				
-				} else {
-%>
-					pl_<%=start_node%> = new Object[2];
-					pl_<%=start_node%>[0] = "query";
-					pl_<%=start_node%>[1] = sb_<%=cid%>.toString();
-					pigScript_<%=start_node%>.add(pl_<%=start_node%>);					
-<%
-				}
 			}
 		}
 %>
 
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>

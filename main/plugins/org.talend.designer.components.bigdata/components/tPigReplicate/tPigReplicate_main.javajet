@@ -37,25 +37,20 @@ if ((metadatas != null) && (metadatas.size() > 0)) {//a
       	}else{
       		return "";
       	}
-	
-	
+%>
+		routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
+<%
     	List< ? extends IConnection> outConns = node.getOutgoingConnections();
     	for (IConnection conn : outConns) {	
     		if(conn.getLineStyle().equals(EConnectionType.FLOW_MAIN)||conn.getLineStyle().equals(EConnectionType.FLOW_MERGE)){
-    			if(inMain) {
 %>
-           pigServer_<%=start_node%>.registerQuery("<%=cid%>_<%=conn.getName()%>_RESULT = FOREACH <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT GENERATE *;"); 
+           helper_<%=cid%>.add("query","<%=cid%>_<%=conn.getName()%>_RESULT = FOREACH <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT GENERATE *;");
 <%		
-				} else {
-%>
-    	   pl_<%=start_node%> = new Object[2];
-    	   pl_<%=start_node%>[0] = "query";
-    	   pl_<%=start_node%>[1] = "<%=cid%>_<%=conn.getName()%>_RESULT = FOREACH <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT GENERATE *;";
-	       pigScript_<%=start_node%>.add(pl_<%=start_node%>);
-<%
-				}
     		}
     	}
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
+<%
   	}//b
  }//a	
 %>
