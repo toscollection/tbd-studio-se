@@ -35,6 +35,14 @@
     	configuration_<%=cid%>.set("mapreduce.framework.name", "yarn");
     	configuration_<%=cid%>.set("yarn.resourcemanager.address", <%=resourceManager%>);
 <%
+		boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_JOBHISTORY_ADDRESS__"));
+		if(setJobHistoryAddress) {
+			String jobHistoryAddress = ElementParameterParser.getValue(node,"__JOBHISTORY_ADDRESS__");
+			%>
+			configuration_<%=cid%>.set("mapreduce.jobhistory.address", <%=jobHistoryAddress%>);
+			<%
+		}
+		
 		boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_SCHEDULER_ADDRESS__"));
 		if(setSchedulerAddress) {
 			String schedulerAddress = ElementParameterParser.getValue(node,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
