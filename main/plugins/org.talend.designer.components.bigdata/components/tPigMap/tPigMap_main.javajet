@@ -79,6 +79,8 @@
 		}
 	}
 %>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
+	
 	routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
 <%
 	boolean existInnerJoin = false;
@@ -121,14 +123,14 @@
 	    } else {//lookup table
 %>
 		//get the scripts in the lookup process
-		java.util.List<Object[]> ps_<%=tableName%> = (java.util.List<Object[]>)globalMap.get("<%=tableName%>");
+		java.util.List<String[]> ps_<%=tableName%> = (java.util.List<String[]>)globalMap.get("<%=tableName%>");
 		
 		for(int i_<%=tableName%>=0; i_<%=tableName%><ps_<%=tableName%>.size(); i_<%=tableName%>++) {
-			Object[] o_<%=tableName%> = ps_<%=tableName%>.get(i_<%=tableName%>);
-			helper_<%=cid%>.add((String)o_<%=tableName%>[0],o_<%=tableName%>[1]);
+			String[] o_<%=tableName%> = ps_<%=tableName%>.get(i_<%=tableName%>);
+			helper_<%=cid%>.add(o_<%=tableName%>[0],o_<%=tableName%>[1]);
 			
 			if(i_<%=tableName%> == (ps_<%=tableName%>.size() - 1)) {//get the bag name of current lookup bag
-				String bagName_<%=tableName%> = (String)o_<%=tableName%>[1];
+				String bagName_<%=tableName%> = o_<%=tableName%>[1];
 				bagName_<%=tableName%> = bagName_<%=tableName%>.substring(0,bagName_<%=tableName%>.indexOf("_RESULT")+7);
 				helper_<%=cid%>.add("query","<%=cid%>_<%=tableName%>_RESULT = FOREACH " + bagName_<%=tableName%> + " GENERATE *;");
 			}
@@ -715,3 +717,6 @@
 %>
 
 <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
+<%
+	log4jFileUtil.componentFinishInfo(node);
+%>

@@ -6,6 +6,7 @@ imports="
     org.talend.core.model.process.INode
     org.talend.designer.codegen.config.CodeGeneratorArgument
     java.util.List
+    org.talend.core.model.process.ElementParameterParser
 "
 %>
 
@@ -13,7 +14,9 @@ imports="
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();	
     String cid = node.getUniqueName();
-    
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
+<%
     List<IMetadataTable> metadatas = node.getMetadataList();
 if ((metadatas != null) && (metadatas.size() > 0)) {//a
     IMetadataTable metadata = metadatas.get(0);
@@ -53,4 +56,8 @@ if ((metadatas != null) && (metadatas.size() > 0)) {//a
 <%
   	}//b
  }//a	
+%>
+
+<%
+	log4jFileUtil.componentFinishInfo(node);
 %>

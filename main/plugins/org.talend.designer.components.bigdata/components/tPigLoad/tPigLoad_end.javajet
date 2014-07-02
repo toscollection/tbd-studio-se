@@ -5,12 +5,14 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		"
 %>
-
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
 
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>
 
 		
@@ -20,6 +22,11 @@
 %>
 			System.err.println(e.getMessage() +"\nCaused by: \n\t"+ e.getCause());
 <%
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - " + e.getMessage());
+<%
+			}
 		} else {
 %>
 			throw(e);
@@ -27,3 +34,6 @@
 		}
 %>
 	}
+<%
+	log4jFileUtil.componentFinishInfo(node);
+%>

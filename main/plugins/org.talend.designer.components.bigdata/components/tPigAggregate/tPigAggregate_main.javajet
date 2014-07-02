@@ -43,6 +43,7 @@
 	boolean useParallel = "true".equals(ElementParameterParser.getValue(node, "__INCREASE_PARALLELISM__"));
 	String reduce_number = ElementParameterParser.getValue(node, "__REDUCE_NUMBER__");
 %>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>
 
 	StringBuilder sb_<%=cid%> = new StringBuilder();
 <%
@@ -121,6 +122,8 @@
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
 <%
 	}
+	
+	log4jFileUtil.componentFinishInfo(node);
 %>
 		
 		

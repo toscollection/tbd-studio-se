@@ -46,6 +46,8 @@
 	String reduce_number = ElementParameterParser.getValue(node, "__REDUCE_NUMBER__");
 	
 %>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>
+	
 	routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
 	
 	StringBuilder sb_<%=cid%> = new StringBuilder();
@@ -96,3 +98,6 @@
 	helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 	
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
+<%
+	log4jFileUtil.componentFinishInfo(node);
+%>

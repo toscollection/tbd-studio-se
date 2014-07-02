@@ -1,17 +1,20 @@
 <%@ jet 
 %>
-	java.util.List<Object[]> pigLatins_<%=cid%> = helper_<%=cid%>.getPigLatins();
+	java.util.List<String[]> pigLatins_<%=cid%> = helper_<%=cid%>.getPigLatins();
 <%
 	if(inMain) {
 %>
-		for(Object[] pigLatin_<%=cid%> : pigLatins_<%=cid%>) {
-			String type_<%=cid%> = (String)pigLatin_<%=cid%>[0];
+		for(String[] pigLatin_<%=cid%> : pigLatins_<%=cid%>) {
+			<%if(isLog4jEnabled) {%>
+			log.info("<%=cid%> - register script : " + pigLatin_<%=cid%>[1]);
+			<%}%>
+			String type_<%=cid%> = pigLatin_<%=cid%>[0];
 			if("query".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerQuery((String)pigLatin_<%=cid%>[1]);
+				pigServer_<%=start_node%>.registerQuery(pigLatin_<%=cid%>[1]);
 			} else if("jar".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerJar((String)pigLatin_<%=cid%>[1]);
+				pigServer_<%=start_node%>.registerJar(pigLatin_<%=cid%>[1]);
 			} else if("script".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerScript((java.io.InputStream)pigLatin_<%=cid%>[1]);
+				pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(pigLatin_<%=cid%>[1].getBytes()));
 			}
 		}
 <%

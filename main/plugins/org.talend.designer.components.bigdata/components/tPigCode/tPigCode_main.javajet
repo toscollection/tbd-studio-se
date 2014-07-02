@@ -25,6 +25,8 @@
 	}
 
 %>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
+	
 	routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
 <%
 	for(String code : codes) {
@@ -38,3 +40,6 @@
 	}
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
+<%
+	log4jFileUtil.componentFinishInfo(node);
+%>

@@ -158,7 +158,9 @@
 	if(outputConnections!=null && outputConnections.size()>0) {
 		outputConnectionName = outputConnections.get(0).getName();
 	}
-
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
+<%
 	if(generateRegisterJarCodeForAll) {
 %>
 		class GetJarsToRegister_<%=cid%> {
@@ -170,6 +172,9 @@
 					this.isOozieRuntime = setJarsToRegister("../../job.xml");
 				} catch (java.lang.Exception e) {
 					e.printStackTrace();
+					<%if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - " + e.getMessage());
+					<%}%>
 				}
 			}
 		
@@ -433,7 +438,7 @@
 		} else {
 %>
 		//store the pig script in the lookup process
-		java.util.List<Object[]> pigScript_<%=start_node%> = new java.util.ArrayList<Object[]>();
+		java.util.List<String[]> pigScript_<%=start_node%> = new java.util.ArrayList<String[]>();
 <%
 		}
 %>
@@ -477,7 +482,7 @@
 			}
 		}
 %>
-		helper_<%=cid%>.add("script",new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
+		helper_<%=cid%>.add("script",script_<%=cid%>.toString());
 <%
 	}
 %>

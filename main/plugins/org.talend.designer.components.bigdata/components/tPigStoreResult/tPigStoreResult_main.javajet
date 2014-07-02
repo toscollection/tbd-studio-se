@@ -133,7 +133,9 @@
 			}
 		}
 	}
-	
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
+<%	
 	if(generateRegisterJarCodeForAll) {
 %>
 		class GetJarsToRegister_<%=cid%> {
@@ -145,6 +147,9 @@
 					this.isOozieRuntime = setJarsToRegister("../../job.xml");
 				} catch (java.lang.Exception e) {
 					e.printStackTrace();
+					<%if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - " + e.getMessage());
+					<%}%>					
 				}
 			}
 		
@@ -368,7 +373,7 @@
 <%
 			}
 %>
-			helper_<%=cid%>.add("script",new java.io.ByteArrayInputStream(script_<%=cid%>.toString().getBytes()));
+			helper_<%=cid%>.add("script",script_<%=cid%>.toString());
 <%
 			
 			String hbasetable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
@@ -520,4 +525,8 @@
     }
 <%
 	}
+%>
+
+<%
+	log4jFileUtil.componentFinishInfo(node);
 %>
