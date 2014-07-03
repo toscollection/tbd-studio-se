@@ -134,8 +134,8 @@
 		nbNodeInserted_<%=cid%> += result_<%=cid%>.queryStatistics().nodesCreated();
 		nbRelationshipInserted_<%=cid%> += result_<%=cid%>.queryStatistics().relationshipsCreated();
 		nbPropertiesUpdated_<%=cid%> += result_<%=cid%>.queryStatistics().propertiesSet();
-		nbNodeDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().deletedNodes();
-		nbRelationshipDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().deletedRelationships();
+		nbNodeDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().nodesDeleted();
+		nbRelationshipDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().relationshipsDeleted();
 	}
 		
 	counter_<%=cid%>++;

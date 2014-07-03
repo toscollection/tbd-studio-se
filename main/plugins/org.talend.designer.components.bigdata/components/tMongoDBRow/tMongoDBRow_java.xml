@@ -57,7 +57,8 @@
                 <ITEM NAME="MONGODB_2_1_2" VALUE="MONGODB_2_1_2"/>
                 <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
             	<ITEM NAME="MONGODB_2_4_X" VALUE="MONGODB_2_4_X"/>
-            	<ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
+                <ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
+                <ITEM NAME="MONGODB_2_6_X" VALUE="MONGODB_2_6_X"/>
             </ITEMS>
         </PARAMETER>
 		<PARAMETER 
@@ -197,6 +198,8 @@
 		<IMPORTS>
 			<IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-2.8.0.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_1_2' OR DB_VERSION=='MONGODB_2_2_3') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT MODULE="mongo-java-driver-2.11.2.jar" NAME="mongo-2.11.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_4_X' OR DB_VERSION=='MONGODB_2_5_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- mongo java driver 2.12.0 give the compatibility with the new features of mongoDB 2.6 -->
+            <IMPORT MODULE="mongo-java-driver-2.12.2.jar" NAME="mongo-2.12.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.12.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_6_X') AND (USE_EXISTING_CONNECTION == 'false')" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS/>
