@@ -50,9 +50,9 @@
 			>
 			<DEFAULT>SAPHana</DEFAULT>
 		</PARAMETER>
-		
+
 		<PARAMETER
-            NAME="DB_VERSION" 
+            NAME="DB_VERSION"
             FIELD="CLOSED_LIST"
             NUM_ROW="20"
             REPOSITORY_VALUE="DB_VERSION"
@@ -62,8 +62,8 @@
                 <ITEM NAME="HDB_1_0" VALUE="HDB_1_0" />
             </ITEMS>
         </PARAMETER>
-		
-		<PARAMETER 
+
+		<PARAMETER
 			NAME="HOST"
 			FIELD="TEXT"
 			NUM_ROW="30"
@@ -72,7 +72,7 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER 
+		<PARAMETER
 			NAME="PORT"
 			FIELD="TEXT"
 			NUM_ROW="30"
@@ -91,7 +91,7 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER 
+		<PARAMETER
 			NAME="USER"
 			FIELD="TEXT"
 			NUM_ROW="40"
@@ -147,7 +147,7 @@
             >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
-    
+
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"

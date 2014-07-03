@@ -118,7 +118,7 @@
         MODULE="neo4j-cypher-2.1.2.jar"
         UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-2.1.2.jar"
         REQUIRED="true"/>
-        
+
       <IMPORT
         NAME="lucene-core-3.6.2"
         MODULE="lucene-core-3.6.2.jar"

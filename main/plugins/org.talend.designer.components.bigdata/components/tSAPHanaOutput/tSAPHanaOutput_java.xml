@@ -45,7 +45,7 @@
 			NUM_ROW="5">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-	
+
 		<PARAMETER
 			NAME="CONNECTION"
 			FIELD="COMPONENT_LIST"
@@ -58,7 +58,7 @@
             NUM_ROW="8" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" />
 
 		<PARAMETER
-			NAME="DB_VERSION" 
+			NAME="DB_VERSION"
 			FIELD="CLOSED_LIST"
 			NUM_ROW="10"
 			REPOSITORY_VALUE="DB_VERSION"
@@ -156,7 +156,7 @@
 				<ITEM NAME="CLEAR" VALUE="CLEAR"/>
 			</ITEMS>
 		</PARAMETER>
-		
+
 		<PARAMETER
             NAME="TABLE_TYPE"
             FIELD="CLOSED_LIST"
@@ -236,7 +236,7 @@
             >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
-    
+
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
@@ -325,7 +325,7 @@
 			NUM_ROW="70">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-	
+
 		<PARAMETER
 			NAME="USE_BATCH_SIZE"
 			FIELD="CHECK"

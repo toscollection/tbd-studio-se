@@ -4,7 +4,7 @@
 	    SERIAL=""
 	    VERSION="0.102"
 	    STATUS="ALPHA"
-	    
+
 	    COMPATIBILITY="ALL"
 	    AUTHOR="Talend"
 	    RELEASE_DATE="201300828A"
@@ -28,17 +28,17 @@
 	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
 	    <CONNECTOR CTYPE="RUN_IF"/>
 	</CONNECTORS>
-	
+
 	<PARAMETERS>
-		
-		<PARAMETER 
-			NAME="SCHEMA_FLOW" 
-			FIELD="SCHEMA_TYPE" 
+
+		<PARAMETER
+			NAME="SCHEMA_FLOW"
+			FIELD="SCHEMA_TYPE"
 			NUM_ROW="1"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
+
 		<PARAMETER
       		NAME="MONGODB_DIR"
 	      	FIELD="DIRECTORY"
@@ -48,16 +48,16 @@
     	>
       		<DEFAULT>""</DEFAULT>
    		</PARAMETER>
-   		
-   		<PARAMETER 
-			NAME="USE_LOCAL_DBPATH" 
-			FIELD="CHECK" 
+
+   		<PARAMETER
+			NAME="USE_LOCAL_DBPATH"
+			FIELD="CHECK"
 			NUM_ROW="10"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
+
 		<PARAMETER
       		NAME="LOCAL_DB_PATH"
 	      	FIELD="DIRECTORY"
@@ -67,33 +67,33 @@
     	>
       		<DEFAULT>""</DEFAULT>
    		</PARAMETER>
-		
-		<PARAMETER 
-            FIELD="CHECK" 
-            NAME="USE_REPLICA_SET" 
-            NUM_ROW="15" 
+
+		<PARAMETER
+            FIELD="CHECK"
+            NAME="USE_REPLICA_SET"
+            NUM_ROW="15"
             SHOW_IF="(USE_LOCAL_DBPATH == 'false')"
             GROUP="CONNECTION"
       	>
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
-        
-        <PARAMETER 
-			FIELD="TEXT" 
-			NAME="REPLICA_NAME" 
+
+        <PARAMETER
+			FIELD="TEXT"
+			NAME="REPLICA_NAME"
 			NUM_ROW="20"
 			SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>"rep1"</DEFAULT>
 		</PARAMETER>
-        
-        <PARAMETER 
-            NAME="REPLICA_SET" 
-            FIELD="TABLE" 
-            REQUIRED="false" 
-            NUM_ROW="25" 
-            NB_LINES="5" 
+
+        <PARAMETER
+            NAME="REPLICA_SET"
+            FIELD="TABLE"
+            REQUIRED="false"
+            NUM_ROW="25"
+            NB_LINES="5"
             SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false')"
             GROUP="CONNECTION"
       	>
@@ -102,83 +102,83 @@
                 <ITEM NAME="REPLICA_PORT" FIELD="TEXT" />
             </ITEMS>
         </PARAMETER>
-        
-         <PARAMETER 
-			FIELD="TEXT" 
-			NAME="HOST" 
-			NUM_ROW="30" 
+
+         <PARAMETER
+			FIELD="TEXT"
+			NAME="HOST"
+			NUM_ROW="30"
 			SHOW_IF="(USE_REPLICA_SET=='false') AND (USE_LOCAL_DBPATH == 'false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="PORT" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="PORT"
 			NUM_ROW="30"
 			SHOW_IF="(USE_REPLICA_SET=='false') AND (USE_LOCAL_DBPATH == 'false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT></DEFAULT>
 		</PARAMETER>
-		
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="DATABASE" 
-			NUM_ROW="35" 
-			REQUIRED="true" 
+
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="DATABASE"
+			NUM_ROW="35"
+			REQUIRED="true"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="COLLECTION" 
-			NUM_ROW="35" 
-			REQUIRED="true" 
+
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COLLECTION"
+			NUM_ROW="35"
+			REQUIRED="true"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
-		<PARAMETER 
-			NAME="DROP_COLLECTION_CREATE" 
-			FIELD="CHECK" 
+
+		<PARAMETER
+			NAME="DROP_COLLECTION_CREATE"
+			FIELD="CHECK"
 			NUM_ROW="40"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
-		
-		<PARAMETER 
-			NAME="REQUIRED_AUTHENTICATION" 
+
+
+		<PARAMETER
+			NAME="REQUIRED_AUTHENTICATION"
 			FIELD="CHECK"
 			NUM_ROW="45"
 			GROUP="AUTHENTICATION"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="USERNAME" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="USERNAME"
 			NUM_ROW="50"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true')" 
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true')"
 			GROUP="AUTHENTICATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="PASSWORD" 
-			NAME="PASSWORD" 
+		<PARAMETER
+			FIELD="PASSWORD"
+			NAME="PASSWORD"
 			NUM_ROW="50"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true')" 
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true')"
 			GROUP="AUTHENTICATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
+
    		<PARAMETER
 	      	NAME="DATA"
 	      	FIELD="FILE"
@@ -187,11 +187,11 @@
     	>
       		<DEFAULT>"__COMP_DEFAULT_FILE_DIR__/in.csv"</DEFAULT>
     	</PARAMETER>
-   		
-   		<PARAMETER 
-            NAME="FILE_TYPE" 
-            FIELD="CLOSED_LIST" 
-            NUM_ROW="60" 
+
+   		<PARAMETER
+            NAME="FILE_TYPE"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="60"
             REQUIRED="true"
        	>
             <ITEMS DEFAULT="CSV">
@@ -200,7 +200,7 @@
                 <ITEM NAME="TSV" VALUE="tsv"/>
             </ITEMS>
         </PARAMETER>
-		
+
 		<PARAMETER
 	      	NAME="DATA_ACTION"
 	      	FIELD="CLOSED_LIST"
@@ -212,12 +212,12 @@
 		        <ITEM NAME="UPSERT"           VALUE="UPSERT" />
 	      	</ITEMS>
     	</PARAMETER>
-    	
-    	<PARAMETER 
-	    	NAME="UPSERT_FIELDS" 
-	    	FIELD="TABLE" 
+
+    	<PARAMETER
+	    	NAME="UPSERT_FIELDS"
+	    	FIELD="TABLE"
 	    	REQUIRED="false"
-			NUM_ROW="70" 
+			NUM_ROW="70"
 			NB_LINES="3"
 			SHOW_IF="(DATA_ACTION == 'UPSERT')"
 		>
@@ -225,51 +225,51 @@
 				<ITEM NAME="COLNAME" FIELD="COLUMN_LIST" />
 			</ITEMS>
 		</PARAMETER>
-		
+
 		<PARAMETER
-   			NAME="HEADERLINE"  
-            FIELD="CHECK" 
-            NUM_ROW="75" 
+   			NAME="HEADERLINE"
+            FIELD="CHECK"
+            NUM_ROW="75"
             SHOW_IF="(FILE_TYPE == 'CSV') OR (FILE_TYPE == 'TSV')"
      	>
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER
-   			NAME="IGNORE_BLANKS"  
-            FIELD="CHECK" 
-            NUM_ROW="80" 
+   			NAME="IGNORE_BLANKS"
+            FIELD="CHECK"
+            NUM_ROW="80"
             SHOW_IF="(FILE_TYPE == 'CSV') OR (FILE_TYPE == 'TSV')"
      	>
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
-    	
-		<PARAMETER 
-			NAME="PRINT_LOG" 
-			FIELD="CHECK" 
+
+		<PARAMETER
+			NAME="PRINT_LOG"
+			FIELD="CHECK"
 			NUM_ROW="100"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 	</PARAMETERS>
-	
+
 	<ADVANCED_PARAMETERS>
-	
-		<PARAMETER 
-			NAME="ADDITIONAL_ARGS" 
-			FIELD="TABLE" 
-			REQUIRED="false" 
-			NUM_ROW="10" 
-			NB_LINES="3" 
+
+		<PARAMETER
+			NAME="ADDITIONAL_ARGS"
+			FIELD="TABLE"
+			REQUIRED="false"
+			NUM_ROW="10"
+			NB_LINES="3"
 		>
 			<ITEMS>
 				<ITEM NAME="ARGUMENT" />
 				<ITEM NAME="VALUE" />
 			</ITEMS>
 		</PARAMETER>
-		
+
    	</ADVANCED_PARAMETERS>
-	
+
 	<CODEGENERATION>
 		<IMPORTS/>
 	</CODEGENERATION>

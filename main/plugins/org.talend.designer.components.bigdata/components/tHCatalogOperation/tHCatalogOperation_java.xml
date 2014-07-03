@@ -58,11 +58,11 @@
 				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			</ITEMS>
 		</PARAMETER>
-		
+
 		<PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="VERSION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="10"  SHOW_IF="DISTRIBUTION=='CUSTOM'" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS" >
         <DEFAULT />
         </PARAMETER>
-        
+
 		<PARAMETER NAME="TEMPLETON_HOST" REPOSITORY_VALUE="TEMPLETON_HOST" FIELD="TEXT" NUM_ROW="20" REQUIRED="true" GROUP="TEMPLETON_CONFIGURATION">
 			<DEFAULT>"localhost"</DEFAULT>
 		</PARAMETER>
@@ -79,7 +79,7 @@
 		>
 		  <DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
+
 		<PARAMETER NAME="KRB_PRINC" REPOSITORY_VALUE="KRB_PRINC" FIELD="TEXT" NUM_ROW="24" REQUIRED="true" GROUP="AUTHENTICATION" SHOW_IF="USE_KRB=='true'">
 			<DEFAULT>"HTTP/__hostname__"</DEFAULT>
 		</PARAMETER>
@@ -455,7 +455,7 @@
 			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/neethi-3.0.1.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="WSDL4J-1_6_2" MODULE="wsdl4j-1.6.2.jar" BundleID="org.apache.servicemix.bundles.wsdl4j" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-			
+
             <IMPORT NAME="cxf-rt-frontend-jaxrs-2.7.7" MODULE="cxf-rt-frontend-jaxrs-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-frontend-jaxrs-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="javax.ws.rs-api-2.0-m10" MODULE="javax.ws.rs-api-2.0-m10.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
             <IMPORT NAME="cxf-api-2.7.7" MODULE="cxf-api-2.7.7.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-api-2.7.7.jar" REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />

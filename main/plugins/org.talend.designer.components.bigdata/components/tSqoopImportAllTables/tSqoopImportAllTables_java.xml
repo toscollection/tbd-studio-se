@@ -67,7 +67,7 @@
         <PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="VERSION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="5"  SHOW_IF="(USE_JAVAAPI=='true') AND (DISTRIBUTION=='CUSTOM')" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS">
             <DEFAULT />
         </PARAMETER>
-        
+
        <PARAMETER
            NAME="USE_YARN"
            FIELD="CHECK"
@@ -75,10 +75,10 @@
            SHOW_IF="(USE_JAVAAPI=='true') AND (DISTRIBUTION=='CUSTOM')" GROUP="VERSION">
            <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="CROSS_PLATFORM_SUBMISSION" GROUP="VERSION" FIELD="CHECK" NUM_ROW="6" SHOW_IF="(USE_JAVAAPI=='true') AND (DISTRIBUTION=='CUSTOM') AND (USE_YARN=='true')" >
             <DEFAULT>false</DEFAULT>
-        </PARAMETER>        
+        </PARAMETER>
 
         <PARAMETER NAME="FS_DEFAULT_NAME" FIELD="TEXT" NUM_ROW="7"
             REQUIRED="true" SHOW_IF="USE_JAVAAPI == 'true'" GROUP="CONFIGURATION">
@@ -90,26 +90,26 @@
             <DEFAULT>"localhost:8021"</DEFAULT>
             <DEFAULT IF="((DB_VERSION == 'MAPR1') OR (DB_VERSION == 'MAPR2') OR (DB_VERSION == 'MAPR212') OR (DB_VERSION == 'MAPR213') OR (DB_VERSION == 'MAPR301') OR (DB_VERSION == 'MAPR310')) AND (DISTRIBUTION != 'CUSTOM')">"localhost:9001"</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="8" REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>"localhost:8032"</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="SET_SCHEDULER_ADDRESS" FIELD="CHECK" NUM_ROW="20" REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="RESOURCEMANAGER_SCHEDULER_ADDRESS" FIELD="TEXT" NUM_ROW="20" REQUIRED="true" SHOW_IF="(SET_SCHEDULER_ADDRESS == 'true') AND (USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>"localhost:8030"</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="SET_JOBHISTORY_ADDRESS" FIELD="CHECK" NUM_ROW="21" REQUIRED="true" SHOW_IF="isShow[RESOURCE_MANAGER]" GROUP="CONFIGURATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="JOBHISTORY_ADDRESS" FIELD="TEXT" NUM_ROW="21" REQUIRED="true" SHOW_IF="isShow[SET_JOBHISTORY_ADDRESS] AND (SET_JOBHISTORY_ADDRESS=='true')" GROUP="CONFIGURATION">
             <DEFAULT>"localhost:10020"</DEFAULT>
         </PARAMETER>
-                
+
         <PARAMETER NAME="SET_STAGING_DIRECTORY" FIELD="CHECK" NUM_ROW="22" REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5')))" GROUP="CONFIGURATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -121,8 +121,8 @@
 	   NAME="USE_KRB"
 	   FIELD="CHECK"
 	   NUM_ROW="25"
-	   SHOW_IF="USE_JAVAAPI == 'true' AND (((DISTRIBUTION!='CUSTOM' AND ((DB_VERSION=='HDP_1_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='HDP_1_3') OR (DB_VERSION=='HDP_2_0') OR (DB_VERSION=='HDP_2_1') OR (DB_VERSION=='Cloudera_CDH4') OR (DB_VERSION=='Cloudera_CDH4_YARN') OR (DB_VERSION=='Cloudera_CDH5') OR (DB_VERSION=='PIVOTAL_HD_2_0'))) OR (DISTRIBUTION=='CUSTOM')))" 
-	   GROUP="AUTHENTICATION" 
+	   SHOW_IF="USE_JAVAAPI == 'true' AND (((DISTRIBUTION!='CUSTOM' AND ((DB_VERSION=='HDP_1_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='HDP_1_3') OR (DB_VERSION=='HDP_2_0') OR (DB_VERSION=='HDP_2_1') OR (DB_VERSION=='Cloudera_CDH4') OR (DB_VERSION=='Cloudera_CDH4_YARN') OR (DB_VERSION=='Cloudera_CDH5') OR (DB_VERSION=='PIVOTAL_HD_2_0'))) OR (DISTRIBUTION=='CUSTOM')))"
+	   GROUP="AUTHENTICATION"
 	   REPOSITORY_VALUE="USE_KRB"
 	>
 		<DEFAULT>false</DEFAULT>
@@ -244,7 +244,7 @@
             <ITEM NAME="ADDITIONAL_VALUE" FIELD="TEXT"/>
           </ITEMS>
         </PARAMETER>
-        
+
         <PARAMETER NAME="HADOOP_ADVANCED_PROPERTIES" FIELD="TABLE" REQUIRED="false" NUM_ROW="40" NB_LINES="3" SHOW_IF="USE_COMMANDLINE=='false'" >
               <ITEMS>
                 <ITEM NAME="PROPERTY" />
@@ -255,14 +255,14 @@
         <PARAMETER NAME="MAPRED_JOB_MAP_MEMORY_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="50" SHOW_IF="(USE_JAVAAPI=='true' AND (DB_VERSION=='HDP_1_2' OR DB_VERSION=='HDP_1_3')) AND (DISTRIBUTION!='CUSTOM')">
             <DEFAULT>"1000"</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="MAPRED_JOB_REDUCE_MEMORY_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="55" SHOW_IF="(USE_JAVAAPI=='true' AND (DB_VERSION=='HDP_1_2' OR DB_VERSION=='HDP_1_3')) AND (DISTRIBUTION!='CUSTOM')">
             <DEFAULT>"1000"</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="SET_MEMORY" GROUP="MEMORY_PARAMETERS" FIELD="CHECK" NUM_ROW="80" REQUIRED="true" SHOW_IF="(USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5')))" >
             <DEFAULT>false</DEFAULT>
-        </PARAMETER>        
+        </PARAMETER>
         <PARAMETER NAME="MAPREDUCE_MAP_MEMORY_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5')))">
             <DEFAULT>"1024"</DEFAULT>
         </PARAMETER>
@@ -272,7 +272,7 @@
         <PARAMETER NAME="YARN_APP_MAPREDUCE_AM_RESOURCE_MB" GROUP="MEMORY_PARAMETERS" FIELD="TEXT" REQUIRED="true" NUM_ROW="85" SHOW_IF="(SET_MEMORY == 'true') AND (USE_JAVAAPI == 'true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5')))">
             <DEFAULT>"1024"</DEFAULT>
         </PARAMETER>
-        
+
         <PARAMETER NAME="CLASSPATH_SEPARATOR" FIELD="TEXT" REQUIRED="true" NUM_ROW="90" SHOW_IF="USE_COMMANDLINE=='false'">
             <DEFAULT>":"</DEFAULT>
         </PARAMETER>
@@ -282,7 +282,7 @@
     <CODEGENERATION>
         <IMPORTS>
 	    	<IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar" REQUIRED_IF="USE_JAVAAPI=='true'"/>
-	    	
+
 	    	<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED="false" REQUIRED_IF="(USE_KRB=='true') AND (USE_JAVAAPI=='true') AND ((DB_VERSION=='HDP_1_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='HDP_1_3') OR (DB_VERSION=='HDP_2_0') OR (DB_VERSION=='HDP_2_1') OR (DB_VERSION=='Cloudera_CDH4') OR (DB_VERSION=='Cloudera_CDH4_YARN') OR (DB_VERSION=='Cloudera_CDH5') OR (DB_VERSION=='PIVOTAL_HD_2_0')) AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- HDP 1.0 -->
             <IMPORT NAME="hadoop-core-1.0.3" MODULE="hadoop-core-1.0.3.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/hadoop-core-1.0.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0') AND (DISTRIBUTION != 'CUSTOM')"/>
@@ -307,7 +307,7 @@
             <IMPORT NAME="jackson-mapper-asl-1.7.3" MODULE="jackson-mapper-asl-1.7.3.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.7.3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2') AND (DISTRIBUTION != 'CUSTOM')"/>
             <IMPORT NAME="sqoop-1.4.2.21" MODULE="sqoop-1.4.2.21.jar" UrlPath="platform:/plugin/org.talend.libraries.sqoop/lib/sqoop-1.4.2.21.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2') AND (DISTRIBUTION != 'CUSTOM')"/>
             <!-- -->
-            
+
             <!-- HDP 1.3 -->
             <IMPORT NAME="hadoop-core-1.2.0.1.3.0.0-107.jar" MODULE="hadoop-core-1.2.0.1.3.0.0-107.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.3/lib/hadoop-core-1.2.0.1.3.0.0-107.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_3') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_3') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -401,7 +401,7 @@
             <IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR213') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
-            
+
             <!-- MR301 -->
             <IMPORT NAME="hadoop-0.20.2-dev-core-mapr301.jar" MODULE="hadoop-0.20.2-dev-core-mapr301.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.0.1/lib/hadoop-0.20.2-dev-core-mapr301.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR301') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="org.apache.commons.logging_1.0.4.v201101211617.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR301') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -415,7 +415,7 @@
             <IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar" UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR301') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="amazon-s3.jar" MODULE="amazon-s3.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR301') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
-            
+
             <!-- MR310 -->
             <IMPORT NAME="hadoop-core-1.0.3-mapr-3.1.0.jar" MODULE="hadoop-core-1.0.3-mapr-3.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hadoop-core-1.0.3-mapr-3.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="org.apache.commons.logging_1.0.4.v201101211617.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -431,7 +431,7 @@
             <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="hadoop-auth-1.0.3-mapr-3.1.0.jar" MODULE="hadoop-auth-1.0.3-mapr-3.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hadoop-auth-1.0.3-mapr-3.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="json-20080701.jar" MODULE="json-20080701.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/json-20080701.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
-            <!-- -->                        
+            <!-- -->
 
             <!-- PIVOTAL_HD_1_0_1 -->
             <IMPORT NAME="hadoop-mapreduce-client-common-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-mapreduce-client-common-2.0.2-alpha-gphd-2.0.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-mapreduce-client-common-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -457,7 +457,7 @@
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
-            
+
             <!-- PIVOTAL_HD_2_0 -->
             <IMPORT NAME="hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-hdfs-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_2_0') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-common-2.2.0-gphd-3.0.0.0.jar" MODULE="hadoop-common-2.2.0-gphd-3.0.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.2.0/lib/hadoop-common-2.2.0-gphd-3.0.0.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_2_0') AND (DISTRIBUTION!='CUSTOM')" />
@@ -482,7 +482,7 @@
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_2_0') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='PIVOTAL_HD_2_0') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
-                                    
+
             <!-- Cloudera_CDH4_YARN -->
             <IMPORT NAME="hadoop-auth-2.0.0-cdh4.4.0.jar" MODULE="hadoop-auth-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-auth-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="hadoop-common-2.0.0-cdh4.4.0.jar" MODULE="hadoop-common-2.0.0-cdh4.4.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/hadoop-common-2.0.0-cdh4.4.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
@@ -507,7 +507,7 @@
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH4_YARN') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
-            
+
             <!-- Cloudera_CDH5 -->
             <IMPORT NAME="hadoop-hdfs-2.3.0-cdh5.0.0.jar" MODULE="hadoop-hdfs-2.3.0-cdh5.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-hdfs-2.3.0-cdh5.0.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH5') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-common-2.3.0-cdh5.0.0.jar" MODULE="hadoop-common-2.3.0-cdh5.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-common-2.3.0-cdh5.0.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH5') AND (DISTRIBUTION!='CUSTOM')" />
@@ -533,7 +533,7 @@
             <IMPORT NAME="avro-1.7.5-cdh5.0.0.jar" MODULE="avro-1.7.5-cdh5.0.0.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.0.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH5') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH5') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
-                        
+
             <!-- HDP_2_0 -->
             <IMPORT NAME="hadoop-hdfs-2.2.0.2.0.6.0-76.jar" MODULE="hadoop-hdfs-2.2.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-hdfs-2.2.0.2.0.6.0-76.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_0') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-common-2.2.0.2.0.6.0-76.jar" MODULE="hadoop-common-2.2.0.2.0.6.0-76.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/hadoop-common-2.2.0.2.0.6.0-76.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_0') AND (DISTRIBUTION!='CUSTOM')" />
@@ -558,7 +558,7 @@
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"  REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_0') AND (DISTRIBUTION!='CUSTOM')"/>
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_0') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- -->
-            
+
             <!-- HDP_2_1 -->
             <IMPORT NAME="hadoop-hdfs-2.4.0.2.1.1.0-385.jar" MODULE="hadoop-hdfs-2.4.0.2.1.1.0-385.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.1/lib/hadoop-hdfs-2.4.0.2.1.1.0-385.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-common-2.4.0.2.1.1.0-385.jar" MODULE="hadoop-common-2.4.0.2.1.1.0-385.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.1/lib/hadoop-common-2.4.0.2.1.1.0-385.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM')" />
@@ -583,7 +583,7 @@
             <IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="guava-11.0.2.jar" MODULE="guava-11.0.2.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar" REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM')"/>
-            <!-- -->            
+            <!-- -->
         </IMPORTS>
     </CODEGENERATION>
 	<RETURNS>

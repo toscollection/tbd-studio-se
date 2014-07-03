@@ -4,7 +4,7 @@
      	SERIAL=""
       	VERSION="0.101"
        	STATUS="ALPHA"
-         
+
 		COMPATIBILITY="ALL"
     	AUTHOR="Talend"
  		RELEASE_DATE="20070210A"
