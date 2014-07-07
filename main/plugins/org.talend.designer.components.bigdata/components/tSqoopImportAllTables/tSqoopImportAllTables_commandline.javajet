@@ -54,6 +54,15 @@ if(additionalList != null){
 };
 final Process ps_<%=cid %> = runtime_<%=cid %>.exec(cmd_<%=cid %>);
 
+<%if(isLog4jEnabled) {%>
+java.lang.StringBuilder stringBuilder_<%=cid%> = new java.lang.StringBuilder();
+for(String parameter_<%=cid%> : cmd_<%=cid %>) {
+	stringBuilder_<%=cid%>.append(parameter_<%=cid%>);
+	stringBuilder_<%=cid%>.append(" ");
+}
+log.info("<%=cid%> - execute sqoop command: " + stringBuilder_<%=cid%>.toString());
+<%}%>
+
 java.lang.StringBuilder sb_<%=cid%> = null;
 byte[] byteArray_<%=cid%> = new byte[1024];
 int len_<%=cid%> = 0;
@@ -73,6 +82,10 @@ while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
 }
 globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
 
+<%if(isLog4jEnabled) {%>
+log.error("<%=cid%> - " + sb_<%=cid%>.toString());
+<%}%>
+
 byteArray_<%=cid%> = new byte[1024];
 len_<%=cid%> = 0;
 java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
@@ -89,3 +102,7 @@ while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
     sb_<%=cid%>.append(line_<%=cid%>);
 }
 globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
+
+<%if(isLog4jEnabled) {%>
+log.info("<%=cid%> - " + sb_<%=cid%>.toString());
+<%}%>

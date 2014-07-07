@@ -9,10 +9,16 @@
 	org.talend.core.model.metadata.IMetadataTable
 	"
 %>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
+    
+	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);    
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	String templeton_host = ElementParameterParser.getValue(node, "__TEMPLETON_HOST__");
 	String templeton_port = ElementParameterParser.getValue(node, "__TEMPLETON_PORT__");
@@ -122,6 +128,11 @@
 %>
 			System.err.println(e_<%=cid%>.getMessage());
 <%
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+<%
+			}
 		}
 %>
 	}

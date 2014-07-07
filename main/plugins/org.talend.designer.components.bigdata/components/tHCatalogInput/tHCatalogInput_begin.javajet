@@ -10,11 +10,16 @@
     java.util.List 
 	"
 %>
-
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
+	
+	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);	
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
+	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELDSEPARATOR__");
@@ -142,6 +147,11 @@
 %>
 			System.err.println(e_<%=cid%>.getMessage());
 <%
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+<%
+			}
 		}
 %>
 	}
@@ -156,6 +166,11 @@
 %>
 			System.err.println("Error during the response parsing. The Templeton server has returned a bad value or the location isn't available");
 <%
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - Error during the response parsing. The Templeton server has returned a bad value or the location isn't available");
+<%
+			}
 		}
 %>
 	}
@@ -223,6 +238,9 @@
 		}	
 
 		org.apache.hadoop.fs.FileStatus [] fileStatus_<%=cid%>= fs_<%=cid%>.listStatus(new org.apache.hadoop.fs.Path(pathHDFS_<%=cid%>));
+<%
+		log4jFileUtil.startRetriveDataInfo();
+%>
 		for(int i_<%=cid%>=0; i_<%=cid%><fileStatus_<%=cid%>.length; i_<%=cid%>++) {
 			if(fileStatus_<%=cid%>[i_<%=cid%>].isDir()) {
 				continue;

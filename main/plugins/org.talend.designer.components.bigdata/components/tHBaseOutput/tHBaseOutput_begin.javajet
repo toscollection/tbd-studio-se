@@ -7,6 +7,9 @@ imports="
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		"
 %>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -33,6 +36,10 @@ imports="
 			}
 		}
 	}
+	
+	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);	
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
 	
 	final String hbaseVersion = version;
 	final boolean isCustom = "CUSTOM".equals(custom);
