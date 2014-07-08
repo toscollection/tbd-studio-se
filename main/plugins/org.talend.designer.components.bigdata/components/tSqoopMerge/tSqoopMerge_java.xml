@@ -232,10 +232,7 @@
 
 		<PARAMETER NAME="NOTE_CUSTOMER" FIELD="LABEL" REQUIRED="true"
 			NUM_ROW="60" COLOR="255;0;0" SHOW_IF="(GENERATE=='true')" GROUP="GENERATEJAR">
-			<DEFAULT>By default, field separator is comma(,), define
-				--fields-terminated-by in the table:"Additional Arguments" to
-				specify a different field separator.
-			</DEFAULT>
+			<DEFAULT>By default, field separator is comma(,), define --fields-terminated-by in the table:"Additional Arguments" to	specify a different field separator.</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="70"
@@ -256,6 +253,14 @@
 		<PARAMETER NAME="PASSWORD" FIELD="PASSWORD" NUM_ROW="110"
 			SHOW_IF="GENERATE=='true'" REQUIRED="true" GROUP="GENERATEJAR">
 			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="DRIVER_JAR" FIELD="TABLE" NUM_ROW="115"
+			NB_LINES="2" REPOSITORY_VALUE="DRIVER_JAR" REQUIRED="false" GROUP="GENERATEJAR"
+			SHOW_IF="USE_JAVAAPI=='true'">
+			<ITEMS>
+				<ITEM NAME="JAR_NAME" FIELD="MODULE_LIST" />
+			</ITEMS>
 		</PARAMETER>
 
 		<PARAMETER NAME="PRINT_LOG" FIELD="CHECK" NUM_ROW="120">

@@ -6,22 +6,33 @@
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String table = ElementParameterParser.getValue(node,"__TABLE__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
+	boolean passwordStoredInFile = "true".equals(ElementParameterParser.getValue(node, "__PASSWORD_STORED_IN_FILE__"));
 	boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
 	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
 	boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
 	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
+	
 	boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
+	boolean useHadoopCodec = "true".equals(ElementParameterParser.getValue(node,"__DEFINE_HADOOP_CODEC__"));
+	String hadoopCodec = ElementParameterParser.getValue(node,"__HADOOP_CODEC__");
+	
+	boolean deleteTargetDirectory = "true".equals(ElementParameterParser.getValue(node, "__DELETE_TARGET_DIR__"));
+	boolean splitInputStreamDirect = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_DIRECT_SPLIT_SIZE__"));
+	String directSplitSize = ElementParameterParser.getValue(node, "__DIRECT_SPLIT_SIZE__");
 	boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
 	String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
 	boolean useTarget = "true".equals(ElementParameterParser.getValue(node,"__USE_TARGET__"));
 	String target = ElementParameterParser.getValue(node,"__TARGET__");
 	boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
 	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
-	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
+	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_ARGUMENTS__");
 	boolean isUseSpeedParallel = "true".equals(ElementParameterParser.getValue(node,"__USE_SPEED_PARALLEL__"));
 	List<Map<String,String>> specificParams= (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__SPECIFIC_PARAMS__");
+	boolean overrideJavaMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_JAVA_MAPPING__"));
+	boolean overrideHiveMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_HIVE_MAPPING__"));
 	boolean isUseAdditionParams = "true".equals(ElementParameterParser.getValue(node,"__USE_ADDITION_PARAM__"));
 	String specificAdditionParams=ElementParameterParser.getValue(node,"__SPECIFIC_ADDITION_PARAM__");
+	String additionalCommandLineArguments = ElementParameterParser.getValue(node,"__ADDITIONAL_COMMANDLINE_ARGUMENTS__");
 	
 	boolean useWhere = "true".equals(ElementParameterParser.getValue(node,"__USE_WHERE__"));
 	String where = ElementParameterParser.getValue(node,"__WHERE__");
@@ -36,6 +47,8 @@
 	boolean useSplit = "true".equals(ElementParameterParser.getValue(node,"__USE_SPLIT__"));
 	String split = ElementParameterParser.getValue(node,"__SPLIT__");
 %>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Sqoop/SqoopAdditionalArgumentParser.javajet"%>
 
 <%
 String sColumns = "\\\"";
@@ -88,7 +101,12 @@ if(isUseSpeedParallel && isUseAdditionParams){
 }
 %>
 
-, "--connect", <%=connection%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
+, "--connect", <%=connection%>, "--username", <%=username%>
+<%if(passwordStoredInFile) {%>
+	, "--password-file", <%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>
+<%} else {%>
+	, "--password", decryptedPassword_<%=cid%>
+<%}%>
 <%if(isUseSpeedParallel){%>,"--connection-manager","org.apache.sqoop.teradata.TeradataConnManager"<%}%>
 <%if(useQuery){%>, "--query", <%=query%><%} else {%>
 	, "--table", <%=table%>
@@ -97,10 +115,28 @@ if(isUseSpeedParallel && isUseAdditionParams){
 <%}%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
 <%if(append){%>, "--append"<%}%>
-<%if(direct){%>, "--direct"<%}%>
-<%if(compress){%>, "--compress"<%}%>
+<%if(deleteTargetDirectory){%>, "--delete-target-dir"<%}%>
+<%if(direct){%>
+	, "--direct"
+<%
+	if(splitInputStreamDirect) {
+%>
+	, "--direct-split-size", <%=directSplitSize%>
+<%
+	}
+}%>
+<%if(compress){%>
+	, "--compress"
+<%
+	if(useHadoopCodec) {
+%>
+	, "--compression-codec", <%=hadoopCodec%>
+<%
+	}
+}%>
 <%if(useTarget || useQuery){%>, "--target-dir", <%=target%><%}%>
 <%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
+<%if(fileFormat.equals("avrofile")){%>, "--as-avrodatafile"<%}%>
 <%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
 <%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
 <%if(useSplit){%>, "--split-by", <%=split%><%}%>
@@ -122,9 +158,56 @@ if(additionalList != null){
 		} 
 	} 
 } 
-%>
 
+if(overrideJavaMapping) {
+	List<Map<String,String>> javaMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__JAVA_TYPE_MAPPING__");
+	if(javaMappings!=null && javaMappings.size()>0) {
+%>
+		,"--map-column-java"
+<%
+		boolean first = true;	
+		for(Map<String,String> javaMapping : javaMappings) {
+			if(first) {
+				first = false;
+%>
+				,<%=javaMapping.get("COLUMN_NAME")%> + "=" + <%=javaMapping.get("JAVA_TYPE")%>
+<%
+			} else {
+%>
+				+"," + <%=javaMapping.get("COLUMN_NAME")%> + "=" + <%=javaMapping.get("JAVA_TYPE")%>
+<%
+			}	
+		}
+	}
+}
+
+if(overrideHiveMapping) {
+	List<Map<String,String>> hiveMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__HIVE_TYPE_MAPPING__");
+	if(hiveMappings!=null && hiveMappings.size()>0) {
+%>
+		,"--map-column-hive"
+<%	
+		boolean first = true;	
+		for(Map<String,String> hiveMapping : hiveMappings) {
+			if(first) {
+				first = false;
+%>
+				,<%=hiveMapping.get("COLUMN_NAME")%> + "=" + <%=hiveMapping.get("HIVE_TYPE")%>
+<%
+			} else {
+%>
+				+"," + <%=hiveMapping.get("COLUMN_NAME")%> + "=" + <%=hiveMapping.get("HIVE_TYPE")%>
+<%
+			}	
+		}
+	}
+}
+%>
 };
+
+String[] additionalArgs_<%=cid%> = parser_<%=cid%>.parse(<%=additionalCommandLineArguments%>);
+cmd_<%=cid %> = (String[]) org.apache.commons.lang.ArrayUtils.addAll(cmd_<%=cid %>, additionalArgs_<%=cid%>);
+
 final Process ps_<%=cid%> = runtime_<%=cid%>.exec(cmd_<%=cid%>);
 
 <%if(isLog4jEnabled) {%>

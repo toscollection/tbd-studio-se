@@ -24,12 +24,17 @@
 	</CONNECTORS>
 
 	<PARAMETERS>
+        <PARAMETER NAME="NOTE_COMMANDINE" FIELD="LABEL" REQUIRED="true"
+            NUM_ROW="1" SHOW_IF="(USE_COMMANDLINE=='true')">
+            <DEFAULT>The available options are based on Sqoop 1.4.4. If you use an earlier version, read the Sqoop documentation in order to find those which are not available.
+            </DEFAULT>
+        </PARAMETER>
 		<PARAMETER NAME="USE_COMMANDLINE" FIELD="RADIO" REQUIRED="true"
-			NUM_ROW="1" GROUP="MODE">
+			NUM_ROW="2" GROUP="MODE">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="USE_JAVAAPI" FIELD="RADIO" REQUIRED="true"
-			NUM_ROW="2" GROUP="MODE">
+			NUM_ROW="3" GROUP="MODE">
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
 
@@ -202,41 +207,129 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="40">
+		<PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="40"
+			GROUP="COMMON_SQOOP_OPTIONS">
 			<DEFAULT>"jdbc:mysql://localhost/database_name"</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="40">
+		<PARAMETER NAME="USERNAME" FIELD="TEXT" NUM_ROW="42"
+			GROUP="COMMON_SQOOP_OPTIONS">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="PASSWORD_STORED_IN_FILE" FIELD="CHECK"
+			NUM_ROW="43" GROUP="COMMON_SQOOP_OPTIONS"
+			SHOW_IF="(USE_COMMANDLINE == 'true' OR (USE_JAVAAPI=='true' AND (DISTRIBUTION=='CUSTOM' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='Cloudera_CDH5' OR DB_VERSION=='PIVOTAL_HD_2_0')))">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="PASSWORD_FILE" FIELD="TEXT" NUM_ROW="44"
+			GROUP="COMMON_SQOOP_OPTIONS"
+			SHOW_IF="PASSWORD_STORED_IN_FILE=='true' AND (USE_COMMANDLINE == 'true' OR (USE_JAVAAPI=='true' AND (DISTRIBUTION=='CUSTOM' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='Cloudera_CDH5' OR DB_VERSION=='PIVOTAL_HD_2_0')))">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="PASSWORD" FIELD="PASSWORD" NUM_ROW="44"
+			GROUP="COMMON_SQOOP_OPTIONS"
+			SHOW_IF="PASSWORD_STORED_IN_FILE=='false' OR (USE_JAVAAPI=='true' AND (DISTRIBUTION!='CUSTOM' AND DB_VERSION!='HDP_2_1' AND DB_VERSION!='HDP_2_0' AND DB_VERSION!='Cloudera_CDH5' AND DB_VERSION!='PIVOTAL_HD_2_0')))">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="DRIVER_JAR" FIELD="TABLE" NUM_ROW="46"
+			NB_LINES="2" REPOSITORY_VALUE="DRIVER_JAR" REQUIRED="false"
+			GROUP="COMMON_SQOOP_OPTIONS" SHOW_IF="USE_JAVAAPI=='true'">
+			<ITEMS>
+				<ITEM NAME="JAR_NAME" FIELD="MODULE_LIST" />
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="47"
+			GROUP="CONTROL_SQOOP_OPTIONS">
 			<DEFAULT>"table_name"</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="EXPORT_DIR" FIELD="TEXT" NUM_ROW="42">
+		<PARAMETER NAME="EXPORT_DIR" FIELD="TEXT" NUM_ROW="48"
+			GROUP="CONTROL_SQOOP_OPTIONS">
 			<DEFAULT>"/home/user/target"</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="USERNAME" FIELD="TEXT" NUM_ROW="47">
-			<DEFAULT>""</DEFAULT>
+		<PARAMETER NAME="DIRECT" FIELD="CHECK" NUM_ROW="49"
+			GROUP="CONTROL_SQOOP_OPTIONS" SHOW_IF="(DEFINE_UPDATE_MODE=='false' OR (DEFINE_UPDATE_MODE=='true' AND UPDATE_MODE=='updateonly'))">
+			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="PASSWORD" FIELD="PASSWORD" NUM_ROW="48">
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
-
-		<PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="50">
+		<PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="50"
+			GROUP="CONTROL_SQOOP_OPTIONS">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="MAPPERS" FIELD="TEXT" NUM_ROW="50"
-			SHOW_IF="USE_MAPPERS=='true'">
+			SHOW_IF="USE_MAPPERS=='true'" GROUP="CONTROL_SQOOP_OPTIONS">
 			<DEFAULT>"2"</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="PRINT_LOG" FIELD="CHECK" NUM_ROW="60">
+		<PARAMETER NAME="CALL_PROC_STOC" FIELD="CHECK" NUM_ROW="55"
+			GROUP="CONTROL_SQOOP_OPTIONS">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="PROC_STOC" FIELD="TEXT" NUM_ROW="55"
+			SHOW_IF="CALL_PROC_STOC=='true'" GROUP="CONTROL_SQOOP_OPTIONS">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="USE_BATCH_MODE" FIELD="CHECK" NUM_ROW="58"
+			GROUP="CONTROL_SQOOP_OPTIONS">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="CLEAR_STAGING_TABLE" FIELD="CHECK" NUM_ROW="59"
+			GROUP="CONTROL_SQOOP_OPTIONS" SHOW_IF="USE_COLUMN_FOR_UPDATE=='false'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="DEFINE_STAGING_TABLE" FIELD="CHECK"
+			NUM_ROW="60" GROUP="CONTROL_SQOOP_OPTIONS" SHOW_IF="USE_COLUMN_FOR_UPDATE=='false'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="STAGING_TABLE" FIELD="TEXT" NUM_ROW="60"
+			SHOW_IF="(USE_COLUMN_FOR_UPDATE=='false' AND DEFINE_STAGING_TABLE=='true')" GROUP="CONTROL_SQOOP_OPTIONS">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="DEFINE_UPDATE_MODE" FIELD="CHECK" NUM_ROW="62"
+			GROUP="CONTROL_SQOOP_OPTIONS">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="UPDATE_MODE" FIELD="CLOSED_LIST" NUM_ROW="62"
+			SHOW_IF="DEFINE_UPDATE_MODE=='true'" GROUP="CONTROL_SQOOP_OPTIONS">
+			<ITEMS DEFAULT="updateonly">
+				<ITEM NAME="updateonly" VALUE="updateonly" />
+				<ITEM NAME="allowinsert" VALUE="allowinsert" />
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER NAME="USE_COLUMN_FOR_UPDATE" FIELD="CHECK"
+			NUM_ROW="65" GROUP="CONTROL_SQOOP_OPTIONS">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="COLUMN_FOR_UPDATE" FIELD="TABLE" NUM_ROW="66"
+			GROUP="CONTROL_SQOOP_OPTIONS" NB_LINES="5"
+			SHOW_IF="USE_COLUMN_FOR_UPDATE=='true'">
+			<ITEMS>
+				<ITEM NAME="COLUMN_NAME" FIELD="TEXT" VALUE='""' />
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER NAME="PRINT_LOG" FIELD="CHECK" NUM_ROW="100">
 			<DEFAULT IF="USE_COMMANDLINE=='true'">true</DEFAULT>
 			<DEFAULT IF="USE_COMMANDLINE=='false'">false</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="VERBOSE" FIELD="CHECK" NUM_ROW="60"
+		<PARAMETER NAME="VERBOSE" FIELD="CHECK" NUM_ROW="100"
 			SHOW_IF="PRINT_LOG=='true'">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
@@ -244,41 +337,61 @@
 	</PARAMETERS>
 
 	<ADVANCED_PARAMETERS>
-		<PARAMETER NAME="DIRECT" FIELD="CHECK" NUM_ROW="9">
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
-
 		<PARAMETER NAME="MYSQL_DELIMITERS" FIELD="CHECK" NUM_ROW="10"
 			SHOW_IF="USE_COMMANDLINE=='true'">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
+		
+        <PARAMETER NAME="DEFINE_JAVA_MAPPING" FIELD="CHECK" NUM_ROW="12"
+            GROUP="TYPE_MAPPING"
+            NOT_SHOW_IF="USE_JAVAAPI=='true' AND ((DISTRIBUTION=='CLOUDERA' AND DB_VERSION=='Cloudera_CDH3') OR (DISTRIBUTION=='MAPR' AND DB_VERSION=='MAPR1'))">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
 
-		<PARAMETER NAME="ADDITIONAL" FIELD="TABLE" NUM_ROW="11"
-			NB_LINES="5" SHOW_IF="USE_COMMANDLINE=='true'">
+        <PARAMETER NAME="JAVA_TYPE_MAPPING" FIELD="TABLE" NUM_ROW="13"
+            GROUP="TYPE_MAPPING" NB_LINES="5"
+            NOT_SHOW_IF="(DEFINE_JAVA_MAPPING=='false' OR (USE_JAVAAPI=='true' AND ((DISTRIBUTION=='CLOUDERA' AND DB_VERSION=='Cloudera_CDH3') OR (DISTRIBUTION=='MAPR' AND DB_VERSION=='MAPR1'))))">
+            <ITEMS>
+                <ITEM NAME="COLUMN_NAME" FIELD="TEXT" VALUE='""' />
+                <ITEM NAME="JAVA_TYPE" FIELD="TEXT" VALUE='""' />
+            </ITEMS>
+        </PARAMETER>
+
+		<PARAMETER NAME="ADDITIONAL_ARGUMENTS" FIELD="TABLE"
+			NUM_ROW="15" NB_LINES="5" SHOW_IF="USE_COMMANDLINE=='true'" GROUP="ADDITIONAL">
 			<ITEMS>
 				<ITEM NAME="ADDITIONAL_ARGUMENT" FIELD="CLOSED_LIST">
 					<ITEMS DEFAULT="--driver">
+						<ITEM NAME="--bindir" VALUE="--bindir" />
+						<ITEM NAME="--class-name" VALUE="--class-name" />
+						<ITEM NAME="--connection-manager" VALUE="--connection-manager" />
 						<ITEM NAME="--driver" VALUE="--driver" />
-						<ITEM NAME="--hadoop-home" VALUE="--hadoop-home" />
 						<ITEM NAME="--enclosed-by" VALUE="--enclosed-by" />
 						<ITEM NAME="--escaped-by" VALUE="--escaped-by" />
 						<ITEM NAME="--fields-terminated-by" VALUE="--fields-terminated-by" />
-						<ITEM NAME="--lines-terminated-by" VALUE="--lines-terminated-by" />
-						<ITEM NAME="--optionally-enclosed-by" VALUE="--optionally-enclosed-by" />
+						<ITEM NAME="--hadoop-home" VALUE="--hadoop-home" />
+						<ITEM NAME="--hadoop-mapred-home" VALUE="--hadoop-mapred-home" />
 						<ITEM NAME="--input-enclosed-by" VALUE="--input-enclosed-by" />
 						<ITEM NAME="--input-escaped-by" VALUE="--input-escaped-by" />
 						<ITEM NAME="--input-fields-terminated-by" VALUE="--input-fields-terminated-by" />
 						<ITEM NAME="--input-lines-terminated-by" VALUE="--input-lines-terminated-by" />
+						<ITEM NAME="--input-null-non-string" VALUE="--input-null-non-string" />
+						<ITEM NAME="--input-null-string" VALUE="--input-null-string" />
 						<ITEM NAME="--input-optionally-enclosed-by" VALUE="--input-optionally-enclosed-by" />
-						<ITEM NAME="--bindir" VALUE="--bindir" />
-						<ITEM NAME="--class-name" VALUE="--class-name" />
 						<ITEM NAME="--jar-file" VALUE="--jar-file" />
+						<ITEM NAME="--lines-terminated-by" VALUE="--lines-terminated-by" />
+						<ITEM NAME="--optionally-enclosed-by" VALUE="--optionally-enclosed-by" />
 						<ITEM NAME="--outdir" VALUE="--outdir" />
 						<ITEM NAME="--package-name" VALUE="--package-name" />
 					</ITEMS>
 				</ITEM>
 				<ITEM NAME="ADDITIONAL_VALUE" FIELD="TEXT" />
 			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER NAME="ADDITIONAL_COMMANDLINE_ARGUMENTS" FIELD="TEXT"
+			NUM_ROW="20" SHOW_IF="USE_COMMANDLINE=='true'" GROUP="ADDITIONAL">
+			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="ADDITIONAL_JAVA" FIELD="TABLE" NUM_ROW="30"
@@ -387,6 +500,10 @@
 			<IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar"
 				REQUIRED_IF="USE_JAVAAPI=='true'" />
+				
+            <IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
+                REQUIRED_IF="(USE_COMMANDLINE=='true')" />
 
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"

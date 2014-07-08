@@ -4,16 +4,31 @@
 <%
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
     String username = ElementParameterParser.getValue(node,"__USERNAME__");
+    boolean passwordStoredInFile = "true".equals(ElementParameterParser.getValue(node, "__PASSWORD_STORED_IN_FILE__"));
     boolean printLog = "true".equals(ElementParameterParser.getValue(node,"__PRINT_LOG__"));
     boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
+    
     boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
+    boolean splitInputStreamDirect = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_DIRECT_SPLIT_SIZE__"));
+	 String directSplitSize = ElementParameterParser.getValue(node, "__DIRECT_SPLIT_SIZE__");
+    
     boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
+    boolean useHadoopCodec = "true".equals(ElementParameterParser.getValue(node,"__DEFINE_HADOOP_CODEC__"));
+	 String hadoopCodec = ElementParameterParser.getValue(node,"__HADOOP_CODEC__");
+	 
     boolean mysqlDelimiters = "true".equals(ElementParameterParser.getValue(node,"__MYSQL_DELIMITERS__"));
     boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
     String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
     String fileFormat = ElementParameterParser.getValue(node,"__FILE_FORMAT__");
-    List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL__");
+    
+    List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_ARGUMENTS__");
+    String additionalCommandLineArguments = ElementParameterParser.getValue(node,"__ADDITIONAL_COMMANDLINE_ARGUMENTS__");
+    
+    boolean overrideHiveMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_HIVE_MAPPING__"));
+    boolean excludeTable = "true".equals(ElementParameterParser.getValue(node, "__EXCLUDE_TABLE__"));
 %>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Sqoop/SqoopAdditionalArgumentParser.javajet"%>
 
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
@@ -24,14 +39,59 @@ String passwordFieldName = "__PASSWORD__";
 
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
 
-String[] cmd_<%=cid %> = new String[] {"sqoop", "import-all-tables", "--connect", <%=connection%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
+String[] cmd_<%=cid %> = new String[] {"sqoop", "import-all-tables", "--connect", <%=connection%>, "--username", <%=username%>
+<%if(passwordStoredInFile) {%>
+	, "--password-file", <%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>
+<%} else {%>
+	, "--password", decryptedPassword_<%=cid%>
+<%}%>
 <%if(printLog && verbose){%>, "--verbose"<%}%>
-<%if(direct){%>, "--direct"<%}%>
-<%if(compress){%>, "--compress"<%}%>
+<%if(direct){%>
+	, "--direct"
+<%
+	if(splitInputStreamDirect) {
+%>
+	, "--direct-split-size", <%=directSplitSize%>
+<%
+	}
+}%>
+<%if(compress){%>
+	, "--compress"
+<%
+	if(useHadoopCodec) {
+%>
+	, "--compression-codec", <%=hadoopCodec%>
+<%
+	}
+}%>
 <%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
+<%if(fileFormat.equals("avrofile")){%>, "--as-avrodatafile"<%}%>
 <%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
 <%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
 <%
+
+if(excludeTable) {
+	List<Map<String,String>> tablesToExclude = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__TABLE_TO_EXCLUDE__");
+	if(tablesToExclude!=null && tablesToExclude.size()>0) {
+%>
+		,"--exclude-tables"
+<%
+		boolean first = true;	
+		for(Map<String,String> tableToExclude : tablesToExclude) {
+			if(first) {
+				first = false;
+%>
+				,<%=tableToExclude.get("TABLE_NAME")%>
+<%
+			} else {
+%>
+				+ "," + <%=tableToExclude.get("TABLE_NAME")%>
+<%
+			}	
+		}
+	}
+}
+
 boolean isNull=false; 
 if(additionalList != null){ 
     for(Map<String,String> additionalMap : additionalList){ 
@@ -50,8 +110,34 @@ if(additionalList != null){
         } 
     } 
 } 
+
+if(overrideHiveMapping) {
+	List<Map<String,String>> hiveMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__HIVE_TYPE_MAPPING__");
+	if(hiveMappings!=null && hiveMappings.size()>0) {
+%>
+		,"--map-column-hive"
+<%	
+		boolean first = true;	
+		for(Map<String,String> hiveMapping : hiveMappings) {
+			if(first) {
+				first = false;
+%>
+				,<%=hiveMapping.get("COLUMN_NAME")%> + "=" + <%=hiveMapping.get("HIVE_TYPE")%>
+<%
+			} else {
+%>
+				+"," + <%=hiveMapping.get("COLUMN_NAME")%> + "=" + <%=hiveMapping.get("HIVE_TYPE")%>
+<%
+			}	
+		}
+	}
+}
 %>
 };
+
+String[] additionalArgs_<%=cid%> = parser_<%=cid%>.parse(<%=additionalCommandLineArguments%>);
+cmd_<%=cid %> = (String[]) org.apache.commons.lang.ArrayUtils.addAll(cmd_<%=cid %>, additionalArgs_<%=cid%>);
+
 final Process ps_<%=cid %> = runtime_<%=cid %>.exec(cmd_<%=cid %>);
 
 <%if(isLog4jEnabled) {%>
