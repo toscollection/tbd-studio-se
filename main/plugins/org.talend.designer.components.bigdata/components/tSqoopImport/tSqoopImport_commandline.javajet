@@ -129,6 +129,7 @@ final Process ps_<%=cid%> = runtime_<%=cid%>.exec(cmd_<%=cid%>);
 
 <%if(isLog4jEnabled) {%>
 java.lang.StringBuilder stringBuilder_<%=cid%> = new java.lang.StringBuilder();
+
 for(String parameter_<%=cid%> : cmd_<%=cid %>) {
 	stringBuilder_<%=cid%>.append(parameter_<%=cid%>);
 	stringBuilder_<%=cid%>.append(" ");
