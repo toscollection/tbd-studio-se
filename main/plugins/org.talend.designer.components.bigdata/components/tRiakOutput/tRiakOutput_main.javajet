@@ -100,9 +100,9 @@
 							}else{
 							%>
 								if(<%=conn.getName()%>.<%=key%>!=null){
-									bucket_<%=cid%>.store(String.valueOf(<%=conn.getName()%>.<%=key%>), object_<%=cid%>).execute();
+									bucket_<%=cid%>.store(String.valueOf(<%=conn.getName()%>.<%=key%>), object_<%=cid%>).withoutFetch().execute();
 								}else{
-									bucket_<%=cid%>.store(object_<%=cid%>).execute();
+									bucket_<%=cid%>.store(object_<%=cid%>).withoutFetch().execute();
 								}
 							<%
 							}
