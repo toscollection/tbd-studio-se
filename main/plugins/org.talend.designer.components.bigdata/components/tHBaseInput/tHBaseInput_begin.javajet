@@ -13,6 +13,9 @@ imports="
 		org.talend.core.model.metadata.types.JavaType
 		"
 %>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -23,6 +26,10 @@ imports="
 	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
 	boolean isByFilter = ("true").equals(ElementParameterParser.getValue(node, "__IS_BY_FILTER__"));
 	boolean defineSelection = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_ROW_SELECTION__"));
+	
+	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
@@ -247,6 +254,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
     	List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
 		if (conns != null){
 			if (conns.size()>0){
+				log4jFileUtil.startRetriveDataInfo();
 %>
 				for (org.apache.hadoop.hbase.client.Result rr_<%=cid %> = scanner_<%=cid %>.next(); rr_<%=cid %> != null; rr_<%=cid %> = scanner_<%=cid %>.next()) {
 <%
@@ -311,8 +319,12 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 %>
 								}
 <%
+				             	log4jFileUtil.collectRetriveData(connName + "." + columnName);
 							} //if(columnName.equals(schema_column))
 						} //for(int i=0;i<mapping.size();i++)
+						
+						log4jFileUtil.debugRetriveData(node,false);
+						
 					}//if(conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA))
 			}//if (conns.size()>0)
 		}//if (conns != null)

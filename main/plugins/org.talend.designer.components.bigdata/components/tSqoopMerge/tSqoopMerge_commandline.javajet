@@ -61,6 +61,15 @@ if(additionalList != null){
 };
 final Process generateJar_ps_<%=cid %> = runtime_generateJar_<%=cid %>.exec(generateJar_cmd_<%=cid %>);
 
+<%if(isLog4jEnabled) {%>
+java.lang.StringBuilder sb_generateJar_<%=cid%> = new java.lang.StringBuilder();
+for(String parameter_<%=cid%> : generateJar_cmd_<%=cid %>) {
+	sb_generateJar_<%=cid%>.append(parameter_<%=cid%>);
+	sb_generateJar_<%=cid%>.append(" ");
+}
+log.info("<%=cid%> - execute sqoop command: " + sb_generateJar_<%=cid%>.toString());
+<%}%>
+
 java.lang.StringBuilder generateJar_sb_<%=cid%> = null;
 byte[] generateJar_byteArray_<%=cid%> = new byte[1024];
 int generateJar_len_<%=cid%> = 0;
@@ -79,6 +88,11 @@ while ((generateJar_len_<%=cid%> = generateJar_errorStream_<%=cid%>.read(generat
     generateJar_sb_<%=cid%>.append(generateJar_line_<%=cid%>);
 }
 globalMap.put("<%=cid%>_ERROR_MESSAGE", generateJar_sb_<%=cid%>.toString());
+
+<%if(isLog4jEnabled) {%>
+log.error("<%=cid%> - " + generateJar_sb_<%=cid%>.toString());
+<%}%>
+
 generateJar_byteArray_<%=cid%> = new byte[1024];
 generateJar_len_<%=cid%> = 0;
 java.io.InputStream generateJar_inputStream_<%=cid%> = new java.io.BufferedInputStream(generateJar_ps_<%=cid%>.getInputStream());
@@ -95,8 +109,11 @@ while ((generateJar_len_<%=cid%> = generateJar_inputStream_<%=cid%>.read(generat
     generateJar_sb_<%=cid%>.append(generateJar_line_<%=cid%>);
 }
 globalMap.put("<%=cid%>_OUTPUT_MESSAGE", generateJar_sb_<%=cid%>.toString());
-<%}%>
 
+	<%if(isLog4jEnabled) {%>
+	log.info("<%=cid%> - " + generateJar_sb_<%=cid%>.toString());
+	<%}
+}%>
 
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
@@ -127,6 +144,15 @@ String class_Name = null;
 String[] cmd_<%=cid %> = new String[] {"sqoop", "merge", "--new-data", <%=newDataDir%>, "--onto", <%=oldDataDir%>, "--target-dir", <%=targetDir%>, "--jar-file", jar_file_<%=cid%>, "--class-name", <%=className%>, "--merge-key", <%=key%>};
 final Process ps_<%=cid %> = runtime_<%=cid %>.exec(cmd_<%=cid %>);
 
+<%if(isLog4jEnabled) {%>
+java.lang.StringBuilder stringBuilder_<%=cid%> = new java.lang.StringBuilder();
+for(String parameter_<%=cid%> : cmd_<%=cid %>) {
+	stringBuilder_<%=cid%>.append(parameter_<%=cid%>);
+	stringBuilder_<%=cid%>.append(" ");
+}
+log.info("<%=cid%> - execute sqoop command: " + stringBuilder_<%=cid%>.toString());
+<%}%>
+
 java.lang.StringBuilder sb_<%=cid%> = null;
 byte[] byteArray_<%=cid%> = new byte[1024];
 int len_<%=cid%> = 0;
@@ -145,6 +171,11 @@ while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
     sb_<%=cid%>.append(line_<%=cid%>);
 }
 globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
+
+<%if(isLog4jEnabled) {%>
+log.error("<%=cid%> - " + sb_<%=cid%>.toString());
+<%}%>
+
 byteArray_<%=cid%> = new byte[1024];
 len_<%=cid%> = 0;
 java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
@@ -163,3 +194,7 @@ if (sb_<%=cid%>.length() > 0 ) {
     }
 %>
 globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
+
+<%if(isLog4jEnabled) {%>
+log.info("<%=cid%> - " + sb_<%=cid%>.toString());
+<%}%>

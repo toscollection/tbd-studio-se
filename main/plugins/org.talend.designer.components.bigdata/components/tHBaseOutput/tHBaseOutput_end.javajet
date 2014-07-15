@@ -5,6 +5,9 @@
 		org.talend.core.model.process.ElementParameterParser
 	    "
 %>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
@@ -28,3 +31,8 @@ String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CO
 	}
 	%>
 	globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>); 
+	
+	<%
+	log4jFileUtil.writeDataFinishInfo(node);
+	log4jFileUtil.componentFinishInfo(node);
+	%>

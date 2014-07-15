@@ -14,6 +14,8 @@ imports="
 		"
 %>
 
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument)argument;
 INode node = (INode)codeGenArgument.getArgument();
@@ -21,6 +23,9 @@ String cid = node.getUniqueName();
 List<Map<String,String>> families = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILIES__");
 String customUseRowKey = ElementParameterParser.getValue(node, "__CUSTOM_ROW_KEY__");
 String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
+
+final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+
 List<IMetadataTable> metadatas = node.getMetadataList();
 if ((metadatas!=null) && (metadatas.size() > 0)) {
     IMetadataTable metadata = metadatas.get(0);
@@ -94,10 +99,14 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 						%>						
 						p_<%=cid%>.add(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid %>);
 					<%
+						log4jFileUtil.collectRetriveData(connName + "." + column.getLabel());
 					}
 					%>
 					table_<%=cid%>.put(p_<%=cid%>);
 					nb_line_<%=cid%>++;
+					<%
+					log4jFileUtil.debugWriteData(node);
+					%>
 				}catch(java.lang.Exception e){
 					<%
 					if(("true").equals(dieOnError)){
@@ -108,6 +117,11 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 					%>
 						System.out.println(e.getMessage());
 					<%
+						if(isLog4jEnabled) {
+					%>
+						log.error("<%=cid%> - " + e.getMessage());
+					<%
+						}
 					}
 					%>             
 				}

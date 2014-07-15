@@ -7,6 +7,9 @@
 	org.talend.designer.codegen.config.CodeGeneratorArgument
 	"
 %>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+	
 <%	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
@@ -15,6 +18,10 @@
 	
 	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
 	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
+	
+	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);
+	log4jFileUtil.componentStartInfo(node);
+	log4jFileUtil.logParameters(node);
 %>
     org.apache.hadoop.conf.Configuration config<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
 	config<%=cid%>.clear();
@@ -40,3 +47,7 @@
    }
 %>
 	globalMap.put("conn_<%=cid%>",config<%=cid%>);
+	
+<%
+	log4jFileUtil.componentFinishInfo(node);
+%>
