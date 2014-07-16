@@ -43,6 +43,39 @@ imports="
 	String partition = ElementParameterParser.getValue(node, "__PARTITION__");
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 	
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	
+	if(useExistingConnection) {
+		distribution = "";
+		hiveVersion = "";
+		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+		for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
+			if(connection!=null && connection.equals(pNode.getUniqueName())) {
+				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
+				hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+				break;
+			}
+		}
+	}
+	
+	boolean targetTableUsesParquetFormat = "true".equals(ElementParameterParser.getValue(node, "__TARGET_TABLE_IS_A_PARQUET_TABLE__")) && (isCustom || (!isCustom && "CLOUDERA".equals(distribution) && "Cloudera_CDH5".equals(hiveVersion))); 
+	
+	if(targetTableUsesParquetFormat) {
+		String compression = ElementParameterParser.getValue(node, "__PARQUET_COMPRESSION__");
+%>
+		java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
+		try {
+			setCompression_<%=cid%>.execute("SET parquet.compression=<%=compression%>");
+		} finally {
+			setCompression_<%=cid%>.close();
+		}
+<%
+	}
+	
 	StringBuilder createTableSQL = new StringBuilder();
 	
 	if("LOAD".equals(loadAction)) {

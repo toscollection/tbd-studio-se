@@ -356,7 +356,16 @@
 %>
 			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using " + <%=customStorer%> + ";");
 <%
-		} else if("HBaseStorage".equals(function)) {
+		} else if("ParquetStorer".equals(function)) {
+			String parquetCompression = ElementParameterParser.getValue(node, "__PARQUET_COMPRESSION__");
+%>
+			StringBuilder script_<%=cid%>=new StringBuilder();
+			script_<%=cid%>.append("SET parquet.compression <%=parquetCompression%>;");
+			helper_<%=cid%>.add("script",script_<%=cid%>.toString());
+			
+			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using parquet.pig.ParquetStorer;");
+<%
+		}else if("HBaseStorage".equals(function)) {
 			String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
 			String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
 			
