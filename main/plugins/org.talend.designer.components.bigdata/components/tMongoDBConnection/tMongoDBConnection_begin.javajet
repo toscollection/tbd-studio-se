@@ -18,6 +18,7 @@
     String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
     String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
     String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
+    String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
     boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
@@ -36,13 +37,25 @@
 			addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
 		<%
 		}
-		%>
-		com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
-	<%
+		if (dbversion.equals("MONGODB_2_4_X") || dbversion.equals("MONGODB_2_5_X") || dbversion.equals("MONGODB_2_6_X")) {
+		    %>
+		    com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.MongoClient(addrs_<%=cid%>);
+		    <%
+		} else {
+		    %>
+	        com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
+	        <%
+		}
 	}else{
-	%>
-		com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
-	<%
+	    if (dbversion.equals("MONGODB_2_4_X") || dbversion.equals("MONGODB_2_5_X") || dbversion.equals("MONGODB_2_6_X")) {
+	        %>
+	        com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.MongoClient(<%=dbhost%>, <%=dbport%>);
+	        <%
+        } else {
+            %>
+            com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+            <%
+	    }
 	}
 	%>
 	mongo_<%=cid%>.isLocked();

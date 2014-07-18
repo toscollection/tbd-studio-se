@@ -22,6 +22,7 @@
 	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
     
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -114,30 +115,37 @@
 					}
 				<%
 				}
-				%>	
-				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
-					<%
-					if(dieOnError){
-						if(isLog4jEnabled){
-						%>
-							log.fatal("<%=cid%> - " + resultMessage_<%=cid%>.getError());
-						<%
-						}
-						%>
-						throw new Exception(resultMessage_<%=cid%>.getError());
-					<%
-					}else{
-						if(isLog4jEnabled){
-						%>
-							log.error("<%=cid%> - " + resultMessage_<%=cid%>.getError());
-						<%
-						}
-						%>
-						System.err.println(resultMessage_<%=cid%>.getError());
-					<%
-					}
-					%>
-				}
+				
+				
+
+                if (!dbversion.equals("MONGODB_2_6_X")) {
+                    %>
+    				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
+    					<%
+    					if(dieOnError){
+    						if(isLog4jEnabled){
+    						%>
+    							log.fatal("<%=cid%> - " + resultMessage_<%=cid%>.getError());
+    						<%
+    						}
+    						%>
+    						throw new Exception(resultMessage_<%=cid%>.getError());
+    					<%
+    					}else{
+    						if(isLog4jEnabled){
+    						%>
+    							log.error("<%=cid%> - " + resultMessage_<%=cid%>.getError());
+    						<%
+    						}
+    						%>
+    						System.err.println(resultMessage_<%=cid%>.getError());
+    					<%
+    					}
+    					%>
+    				}
+    				<%
+                }
+    			%>
 				nb_line_<%=cid %> ++;
 				<%
 				if(isLog4jEnabled){
