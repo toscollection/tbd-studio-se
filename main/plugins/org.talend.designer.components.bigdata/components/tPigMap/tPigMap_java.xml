@@ -1,15 +1,15 @@
 <COMPONENT>
    <HEADER PLATEFORM="ALL"
-    SERIAL="" 
-    VERSION="2.1" 
-    STATUS="ALPHA" 
-    COMPATIBILITY="WIN32" 
-    AUTHOR="Talend" 
-    RELEASE_DATE="20070703A" 
-    STARTABLE="false" 
-    EXTENSION="org.talend.designer.pigmap" 
-    SCHEMA_AUTO_PROPAGATE="false" 
-    DATA_AUTO_PROPAGATE="false" 
+    SERIAL=""
+    VERSION="2.1"
+    STATUS="ALPHA"
+    COMPATIBILITY="WIN32"
+    AUTHOR="Talend"
+    RELEASE_DATE="20070703A"
+    STARTABLE="false"
+    EXTENSION="org.talend.designer.pigmap"
+    SCHEMA_AUTO_PROPAGATE="false"
+    DATA_AUTO_PROPAGATE="false"
     HAS_CONDITIONAL_OUTPUTS="true"
 	PARTITIONING="NONE"
     >
@@ -36,7 +36,7 @@
 	</CONNECTORS>
    <PARAMETERS>
       <PARAMETER NAME="MAP" FIELD="EXTERNAL" NUM_ROW="1">
-         <DEFAULT/>  
+         <DEFAULT/>
       </PARAMETER>
       <PARAMETER
         NAME="LINK_STYLE"
@@ -49,11 +49,11 @@
           <ITEM NAME="LINE"   VALUE="LINE" />
         </ITEMS>
       </PARAMETER>
-   
+
       <PARAMETER NAME="PREVIEW" FIELD="IMAGE" SHOW="true" NUM_ROW="4">
          <DEFAULT/>
       </PARAMETER>
-      
+
    </PARAMETERS>
 
 	<ADVANCED_PARAMETERS>

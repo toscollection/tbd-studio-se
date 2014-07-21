@@ -4,7 +4,7 @@
 	    SERIAL=""
 	    VERSION="0.102"
 	    STATUS="ALPHA"
-	    
+
 	    COMPATIBILITY="ALL"
 	    AUTHOR="Talend"
 	    RELEASE_DATE="20120706A"
@@ -29,51 +29,52 @@
 	    <CONNECTOR CTYPE="COMPONENT_ERROR"/>
 	    <CONNECTOR CTYPE="RUN_IF"/>
 	</CONNECTORS>
-	
+
 	<PARAMETERS>
-		<PARAMETER 
-			NAME="USE_EXISTING_CONNECTION" 
+		<PARAMETER
+			NAME="USE_EXISTING_CONNECTION"
 			FIELD="CHECK"
 			NUM_ROW="1"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="CONNECTION" 
-			FIELD="COMPONENT_LIST" 
+		<PARAMETER
+			NAME="CONNECTION"
+			FIELD="COMPONENT_LIST"
 			REQUIRED="true" FILTER="tMongoDBConnection"
-			NUM_ROW="1" 
-			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" 
+			NUM_ROW="1"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 			GROUP="CONNECTION"
 		/>
-        <PARAMETER 
-            NAME="DB_VERSION" 
-            FIELD="CLOSED_LIST" 
-            NUM_ROW="2" 
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')" 
+        <PARAMETER
+            NAME="DB_VERSION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="2"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
             GROUP="CONNECTION">
             <ITEMS DEFAULT="MONGODB_2_1_2">
                 <ITEM NAME="MONGODB_2_1_2" VALUE="MONGODB_2_1_2"/>
                 <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
             	<ITEM NAME="MONGODB_2_4_X" VALUE="MONGODB_2_4_X"/>
-            	<ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
+                <ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
+                <ITEM NAME="MONGODB_2_6_X" VALUE="MONGODB_2_6_X"/>
             </ITEMS>
         </PARAMETER>
-		<PARAMETER 
-            FIELD="CHECK" 
-            NAME="USE_REPLICA_SET" 
-            NUM_ROW="3" 
+		<PARAMETER
+            FIELD="CHECK"
+            NAME="USE_REPLICA_SET"
+            NUM_ROW="3"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
             GROUP="CONNECTION">
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-            NAME="REPLICA_SET" 
-            FIELD="TABLE" 
-            REQUIRED="true" 
-            NUM_ROW="4" 
-            NB_LINES="5" 
+        <PARAMETER
+            NAME="REPLICA_SET"
+            FIELD="TABLE"
+            REQUIRED="true"
+            NUM_ROW="4"
+            NB_LINES="5"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='true')"
             GROUP="CONNECTION">
             <ITEMS>
@@ -81,37 +82,37 @@
                 <ITEM NAME="REPLICA_PORT" FIELD="TEXT" />
             </ITEMS>
         </PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="HOST" 
-			NUM_ROW="5" 
-			REQUIRED="true" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="HOST"
+			NUM_ROW="5"
+			REQUIRED="true"
 			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>"localhost"</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="PORT" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="PORT"
 			NUM_ROW="5"
 			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>27017</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="DATABASE" 
-			NUM_ROW="10" 
-			REQUIRED="true" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="DATABASE"
+			NUM_ROW="10"
+			REQUIRED="true"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="REQUIRED_AUTHENTICATION" 
+		<PARAMETER
+			NAME="REQUIRED_AUTHENTICATION"
 			FIELD="CHECK"
 			NUM_ROW="11"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
@@ -119,50 +120,50 @@
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="USERNAME" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="USERNAME"
 			NUM_ROW="12"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
 			GROUP="AUTHENTICATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="PASSWORD" 
-			NAME="PASSWORD" 
+		<PARAMETER
+			FIELD="PASSWORD"
+			NAME="PASSWORD"
 			NUM_ROW="12"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
 			GROUP="AUTHENTICATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="SCHEMA_FLOW" 
-			FIELD="SCHEMA_TYPE" 
+		<PARAMETER
+			NAME="SCHEMA_FLOW"
+			FIELD="SCHEMA_TYPE"
 			NUM_ROW="15"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="EXECUTE_COMMAND" 
+		<PARAMETER
+			NAME="EXECUTE_COMMAND"
 			FIELD="CHECK"
 			NUM_ROW="20"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="COMMAND" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COMMAND"
 			REQUIRED="true"
 			NUM_ROW="25"
-			SHOW_IF="(EXECUTE_COMMAND == 'true')" 
+			SHOW_IF="(EXECUTE_COMMAND == 'true')"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="MEMO" 
-			NAME="FUNCTION" 
+		<PARAMETER
+			FIELD="MEMO"
+			NAME="FUNCTION"
 			REQUIRED="true"
 			NUM_ROW="30"
 			NB_LINES="5"
@@ -170,12 +171,12 @@
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
-		<PARAMETER 
-			NAME="FUNCTION_PARAMETERS" 
-			FIELD="TABLE" 
+
+		<PARAMETER
+			NAME="FUNCTION_PARAMETERS"
+			FIELD="TABLE"
 			REQUIRED="false"
-			NUM_ROW="31" 
+			NUM_ROW="31"
 			NB_LINES="5"
 			SHOW_IF="(EXECUTE_COMMAND =='false')"
 		>
@@ -183,20 +184,22 @@
 				<ITEM NAME="PARAMETER" />
 			</ITEMS>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="DIE_ON_ERROR" 
-			FIELD="CHECK" 
+		<PARAMETER
+			NAME="DIE_ON_ERROR"
+			FIELD="CHECK"
 			NUM_ROW="35">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 	</PARAMETERS>
-	
+
 	<ADVANCED_PARAMETERS />
-	
+
 	<CODEGENERATION>
 		<IMPORTS>
 			<IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-2.8.0.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_1_2' OR DB_VERSION=='MONGODB_2_2_3') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT MODULE="mongo-java-driver-2.11.2.jar" NAME="mongo-2.11.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_4_X' OR DB_VERSION=='MONGODB_2_5_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- mongo java driver 2.12.0 give the compatibility with the new features of mongoDB 2.6 -->
+            <IMPORT MODULE="mongo-java-driver-2.12.2.jar" NAME="mongo-2.12.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.12.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_6_X') AND (USE_EXISTING_CONNECTION == 'false')" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS/>

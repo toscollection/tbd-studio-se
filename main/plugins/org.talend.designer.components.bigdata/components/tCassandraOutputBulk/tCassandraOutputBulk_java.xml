@@ -49,7 +49,8 @@
             FIELD="CLOSED_LIST"
             NUM_ROW="5"
             >
-            <ITEMS DEFAULT="CASSANDRA_2_0_0">
+            <ITEMS DEFAULT="CASSANDRA_2_0_8">
+                <ITEM NAME="CASSANDRA_2_0_8" VALUE="CASSANDRA_2_0_8"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
@@ -129,267 +130,393 @@
     <ADVANCED_PARAMETERS/>
     <CODEGENERATION>
         <IMPORTS>
+          <!-- Cassandra 2.0.8 -->
+             <IMPORT
+                NAME="cassandra-all-2.0.8"
+                MODULE="cassandra-all-2.0.8.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-2.0.8.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="cassandra-2-0-8-conf"
+                MODULE="cassandra-2-0-8-conf.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-2-0-8-conf.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="cassandra-thrift-2.0.4"
+                MODULE="cassandra-thrift-2.0.4.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.0.4.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="slf4j-api-1.7.2"
+                MODULE="slf4j-api-1.7.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/slf4j-api-1.7.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="slf4j-log4j12-1.7.2"
+                MODULE="slf4j-log4j12-1.7.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="log4j-1.2.16"
+                MODULE="log4j-1.2.16.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="libthrift-0.9.1"
+                MODULE="libthrift-0.9.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.1.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="guava-15.0"
+                MODULE="guava-15.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-15.0.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="commons-lang-2.6"
+                MODULE="commons-lang-2.6.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="commons-lang3-3.1"
+                MODULE="commons-lang3-3.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang3-3.1.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="antlr-3.2"
+                MODULE="antlr-3.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/antlr-3.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="concurrentlinkedhashmap-lru-1.3"
+                MODULE="concurrentlinkedhashmap-lru-1.3.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/concurrentlinkedhashmap-lru-1.3.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="snakeyaml-1.11"
+                MODULE="snakeyaml-1.11.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/snakeyaml-1.11.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="metrics-core-2.2.0"
+                MODULE="metrics-core-2.2.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-2.2.0.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="jamm-0.2.5"
+                MODULE="jamm-0.2.5.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jamm-0.2.5.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="lz4-1.2.0"
+                MODULE="lz4-1.2.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/lz4-1.2.0.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="jackson-core-asl-1.9.2"
+                MODULE="jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="jackson-mapper-asl-1.9.2"
+                MODULE="jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="super-csv-2.1.0"
+                MODULE="super-csv-2.1.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/super-csv-2.1.0.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="commons-cli-1.1"
+                MODULE="commons-cli-1.1.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="compress-lzf-0.8.4"
+                MODULE="compress-lzf-0.8.4.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="high-scale-lib-1.1.2"
+                MODULE="high-scale-lib-1.1.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/high-scale-lib-1.1.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="snappy-java-1.0.5"
+                MODULE="snappy-java-1.0.5.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="reporter-config-2.1.0"
+                MODULE="reporter-config-2.1.0.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="hibernate-validator-4.3.0.Final"
+                MODULE="hibernate-validator-4.3.0.Final.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+            <IMPORT
+                NAME="validation-api-1.0.0.GA"
+                MODULE="validation-api-1.0.0.GA.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
+
             <!-- 2.0.0 -->
-            <IMPORT 
+            <IMPORT
                 NAME="apache-cassandra-2.0.0"
-                MODULE="apache-cassandra-2.0.0.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-2.0.0.jar" 
+                MODULE="apache-cassandra-2.0.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-2.0.0.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="apache-cassandra-thrift-2.0.0"
-                MODULE="apache-cassandra-thrift-2.0.0.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-2.0.0.jar" 
+                MODULE="apache-cassandra-thrift-2.0.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-2.0.0.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="cassandra-2-0-0-conf"
-                MODULE="cassandra-2-0-0-conf.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-2-0-0-conf.jar" 
+                MODULE="cassandra-2-0-0-conf.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-2-0-0-conf.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="guava-13.0.1"
-                MODULE="guava-13.0.1.jar" 
+                MODULE="guava-13.0.1.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="log4j-1.2.16"
-                MODULE="log4j-1.2.16.jar" 
+                MODULE="log4j-1.2.16.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="snappy-java-1.0.5"
-                MODULE="snappy-java-1.0.5.jar" 
+                MODULE="snappy-java-1.0.5.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="commons-lang-2.6"
-                MODULE="commons-lang-2.6.jar" 
+                MODULE="commons-lang-2.6.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="high-scale-lib-1.1.2"
-                MODULE="high-scale-lib-1.1.2.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/high-scale-lib-1.1.2.jar" 
+                MODULE="high-scale-lib-1.1.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/high-scale-lib-1.1.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="antlr-3.2"
-                MODULE="antlr-3.2.jar" 
+                MODULE="antlr-3.2.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/antlr-3.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="concurrentlinkedhashmap-lru-1.3"
-                MODULE="concurrentlinkedhashmap-lru-1.3.jar" 
+                MODULE="concurrentlinkedhashmap-lru-1.3.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="libthrift-0.9.0"
-                MODULE="libthrift-0.9.0.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.0.jar" 
+                MODULE="libthrift-0.9.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.0.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="jackson-core-asl-1.9.2"
-                MODULE="jackson-core-asl-1.9.2.jar" 
+                MODULE="jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
-                MODULE="jackson-mapper-asl-1.9.2.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />   
-            <IMPORT 
+                MODULE="jackson-mapper-asl-1.9.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT
                 NAME="snakeyaml-1.11"
-                MODULE="snakeyaml-1.11.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" /> 
-            <IMPORT 
+                MODULE="snakeyaml-1.11.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT
                 NAME="metrics-core-2.0.3"
-                MODULE="metrics-core-2.0.3.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" /> 
-            <IMPORT 
+                MODULE="metrics-core-2.0.3.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT
                 NAME="commons-cli-1.1"
-                MODULE="commons-cli-1.1.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" /> 
-            <IMPORT 
+                MODULE="commons-cli-1.1.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT
                 NAME="compress-lzf-0.8.4"
-                MODULE="compress-lzf-0.8.4.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" /> 
-            <IMPORT 
+                MODULE="compress-lzf-0.8.4.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT
                 NAME="slf4j-api-1.7.2"
-                MODULE="slf4j-api-1.7.2.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" /> 
-            <IMPORT 
+                MODULE="slf4j-api-1.7.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+            <IMPORT
                 NAME="slf4j-log4j12-1.7.2"
-                MODULE="slf4j-log4j12-1.7.2.jar" 
+                MODULE="slf4j-log4j12-1.7.2.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
-            <IMPORT 
+            <IMPORT
                 NAME="lz4-1.1.0"
-                MODULE="lz4-1.1.0.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" /> 
-                
+                MODULE="lz4-1.1.0.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
+
             <!-- 1.2.2 -->
-            <IMPORT 
+            <IMPORT
                 NAME="apache-cassandra-1.2.2"
-                MODULE="apache-cassandra-1.2.2.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.2.2.jar" 
+                MODULE="apache-cassandra-1.2.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.2.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="apache-cassandra-thrift-1.2.2"
-                MODULE="apache-cassandra-thrift-1.2.2.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.2.2.jar" 
+                MODULE="apache-cassandra-thrift-1.2.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.2.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="cassandra-1-2-2-conf"
-                MODULE="cassandra-1-2-2-conf.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-1-2-2-conf.jar" 
+                MODULE="cassandra-1-2-2-conf.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-1-2-2-conf.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="guava-13.0.1"
                 MODULE="guava-13.0.1.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="log4j-1.2.16"
-                MODULE="log4j-1.2.16.jar" 
+                MODULE="log4j-1.2.16.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="snappy-java-1.0.4.1"
-                MODULE="snappy-java-1.0.4.1.jar" 
+                MODULE="snappy-java-1.0.4.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="commons-lang-2.6"
-                MODULE="commons-lang-2.6.jar" 
+                MODULE="commons-lang-2.6.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="high-scale-lib-1.1.2"
-                MODULE="high-scale-lib-1.1.2.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/high-scale-lib-1.1.2.jar" 
+                MODULE="high-scale-lib-1.1.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/high-scale-lib-1.1.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="antlr-3.2"
-                MODULE="antlr-3.2.jar" 
+                MODULE="antlr-3.2.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/antlr-3.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="concurrentlinkedhashmap-lru-1.3"
-                MODULE="concurrentlinkedhashmap-lru-1.3.jar" 
+                MODULE="concurrentlinkedhashmap-lru-1.3.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="libthrift-0.7.0"
-                MODULE="libthrift-0.7.0.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" /> 
-            <IMPORT 
+                MODULE="libthrift-0.7.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <IMPORT
                 NAME="jackson-core-asl-1.9.2"
-                MODULE="jackson-core-asl-1.9.2.jar" 
+                MODULE="jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
-                MODULE="jackson-mapper-asl-1.9.2.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />   
-            <IMPORT 
+                MODULE="jackson-mapper-asl-1.9.2.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <IMPORT
                 NAME="snakeyaml-1.6"
-                MODULE="snakeyaml-1.6.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />   
-            <IMPORT 
+                MODULE="snakeyaml-1.6.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <IMPORT
                 NAME="metrics-core-2.0.3"
-                MODULE="metrics-core-2.0.3.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />    
-            <IMPORT 
+                MODULE="metrics-core-2.0.3.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <IMPORT
                 NAME="commons-cli-1.1"
-                MODULE="commons-cli-1.1.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" /> 
-            <IMPORT 
+                MODULE="commons-cli-1.1.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
+            <IMPORT
                 NAME="compress-lzf-0.8.4"
-                MODULE="compress-lzf-0.8.4.jar" 
+                MODULE="compress-lzf-0.8.4.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="slf4j-api-1.7.2"
-                MODULE="slf4j-api-1.7.2.jar" 
+                MODULE="slf4j-api-1.7.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="slf4j-log4j12-1.7.2"
-                MODULE="slf4j-log4j12-1.7.2.jar" 
+                MODULE="slf4j-log4j12-1.7.2.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />  
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <!-- 1.1.2 -->
-            <IMPORT 
+            <IMPORT
                 NAME="apache-cassandra-1.1.2"
-                MODULE="apache-cassandra-1.1.2.jar" 
+                MODULE="apache-cassandra-1.1.2.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.1.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="apache-cassandra-thrift-1.1.2"
-                MODULE="apache-cassandra-thrift-1.1.2.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.1.2.jar" 
+                MODULE="apache-cassandra-thrift-1.1.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.1.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="cassandra-1-1-2-conf"
-                MODULE="cassandra-1-1-2-conf.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-1-1-2-conf.jar" 
+                MODULE="cassandra-1-1-2-conf.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-1-1-2-conf.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="commons-cli-1.1"
-                MODULE="commons-cli-1.1.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" /> 
-            <IMPORT 
+                MODULE="commons-cli-1.1.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT
                 NAME="commons-lang-2.4"
-                MODULE="commons-lang-2.4.jar" 
+                MODULE="commons-lang-2.4.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="compress-lzf-0.8.4"
-                MODULE="compress-lzf-0.8.4.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />    
-            <IMPORT 
+                MODULE="compress-lzf-0.8.4.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT
                 NAME="concurrentlinkedhashmap-lru-1.3"
-                MODULE="concurrentlinkedhashmap-lru-1.3.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />   
-            <IMPORT 
+                MODULE="concurrentlinkedhashmap-lru-1.3.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT
                 NAME="guava-r08"
-                MODULE="guava-r08.jar" 
+                MODULE="guava-r08.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-r08.jar"
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />                
-            <IMPORT 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT
                 NAME="high-scale-lib-1.1.2"
-                MODULE="high-scale-lib-1.1.2.jar" 
+                MODULE="high-scale-lib-1.1.2.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/high-scale-lib-1.1.2.jar"
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />    
-            <IMPORT 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT
                 NAME="jackson-core-asl-1.9.2"
-                MODULE="jackson-core-asl-1.9.2.jar" 
+                MODULE="jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
-                MODULE="jackson-mapper-asl-1.9.2.jar" 
+                MODULE="jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="libthrift-0.7.0"
-                MODULE="libthrift-0.7.0.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar" 
+                MODULE="libthrift-0.7.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="log4j-1.2.16"
-                MODULE="log4j-1.2.16.jar" 
+                MODULE="log4j-1.2.16.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />    
-            <IMPORT 
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT
                 NAME="metrics-core-2.0.3"
-                MODULE="metrics-core-2.0.3.jar" 
+                MODULE="metrics-core-2.0.3.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="slf4j-api-1.6.1"
-                MODULE="slf4j-api-1.6.1.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar" 
+                MODULE="slf4j-api-1.6.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="slf4j-log4j12-1.6.1"
-                MODULE="slf4j-log4j12-1.6.1.jar" 
-                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar" 
+                MODULE="slf4j-log4j12-1.6.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT 
+            <IMPORT
                 NAME="snakeyaml-1.6"
-                MODULE="snakeyaml-1.6.jar" 
-                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" /> 
-            <IMPORT 
+                MODULE="snakeyaml-1.6.jar"
+                REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
+            <IMPORT
                 NAME="snappy-java-1.0.4.1"
-                MODULE="snappy-java-1.0.4.1.jar" 
+                MODULE="snappy-java-1.0.4.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
         </IMPORTS>
     </CODEGENERATION>

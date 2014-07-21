@@ -32,49 +32,50 @@
 	    <CONNECTOR CTYPE="RUN_IF"/>
 	</CONNECTORS>
 	<PARAMETERS>
-		<PARAMETER 
-			NAME="USE_EXISTING_CONNECTION" 
+		<PARAMETER
+			NAME="USE_EXISTING_CONNECTION"
 			FIELD="CHECK"
 			NUM_ROW="1"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="CONNECTION" 
-			FIELD="COMPONENT_LIST" 
+		<PARAMETER
+			NAME="CONNECTION"
+			FIELD="COMPONENT_LIST"
 			REQUIRED="true" FILTER="tMongoDBConnection"
-			NUM_ROW="1" 
-			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" 
+			NUM_ROW="1"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'"
 			GROUP="CONNECTION"
 		/>
-        <PARAMETER 
-            NAME="DB_VERSION" 
-            FIELD="CLOSED_LIST" 
-            NUM_ROW="2" 
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')" 
+        <PARAMETER
+            NAME="DB_VERSION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="2"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
             GROUP="CONNECTION">
             <ITEMS DEFAULT="MONGODB_2_1_2">
                 <ITEM NAME="MONGODB_2_1_2" VALUE="MONGODB_2_1_2"/>
                 <ITEM NAME="MONGODB_2_2_3" VALUE="MONGODB_2_2_3"/>
             	<ITEM NAME="MONGODB_2_4_X" VALUE="MONGODB_2_4_X"/>
-            	<ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
+                <ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
+                <ITEM NAME="MONGODB_2_6_X" VALUE="MONGODB_2_6_X"/>
             </ITEMS>
         </PARAMETER>
-		<PARAMETER 
-            FIELD="CHECK" 
-            NAME="USE_REPLICA_SET" 
-            NUM_ROW="3" 
+		<PARAMETER
+            FIELD="CHECK"
+            NAME="USE_REPLICA_SET"
+            NUM_ROW="3"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
             GROUP="CONNECTION">
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-            NAME="REPLICA_SET" 
-            FIELD="TABLE" 
-            REQUIRED_IF="(USE_REPLICA_SET=='true')" 
-            NUM_ROW="4" 
-            NB_LINES="5" 
+        <PARAMETER
+            NAME="REPLICA_SET"
+            FIELD="TABLE"
+            REQUIRED_IF="(USE_REPLICA_SET=='true')"
+            NUM_ROW="4"
+            NB_LINES="5"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='true')"
             GROUP="CONNECTION">
             <ITEMS>
@@ -82,37 +83,37 @@
                 <ITEM NAME="REPLICA_PORT" FIELD="TEXT" />
             </ITEMS>
         </PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="HOST" 
-			NUM_ROW="5" 
-			REQUIRED="true" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="HOST"
+			NUM_ROW="5"
+			REQUIRED="true"
 			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="PORT" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="PORT"
 			NUM_ROW="5"
 			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>27017</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="DATABASE" 
-			NUM_ROW="10" 
-			REQUIRED="true" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="DATABASE"
+			NUM_ROW="10"
+			REQUIRED="true"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="REQUIRED_AUTHENTICATION" 
+		<PARAMETER
+			NAME="REQUIRED_AUTHENTICATION"
 			FIELD="CHECK"
 			NUM_ROW="11"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
@@ -120,34 +121,34 @@
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="USERNAME" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="USERNAME"
 			NUM_ROW="12"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
 			GROUP="AUTHENTICATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="PASSWORD" 
-			NAME="PASSWORD" 
+		<PARAMETER
+			FIELD="PASSWORD"
+			NAME="PASSWORD"
 			NUM_ROW="12"
-			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" 
+			SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
 			GROUP="AUTHENTICATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			FIELD="TEXT" 
-			NAME="COLLECTION" 
+		<PARAMETER
+			FIELD="TEXT"
+			NAME="COLLECTION"
 			REQUIRED="true"
-			NUM_ROW="15" 
+			NUM_ROW="15"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="DROP_COLLECTION_CREATE" 
+		<PARAMETER
+			NAME="DROP_COLLECTION_CREATE"
 			FIELD="CHECK"
 			NUM_ROW="15"
 		>
@@ -165,18 +166,18 @@
 		        <ITEM NAME="DELETE" VALUE="DELETE"/>
 	      	</ITEMS>
 	    </PARAMETER>
-	    <PARAMETER 
-			NAME="SCHEMA_FLOW" 
-			FIELD="SCHEMA_TYPE" 
+	    <PARAMETER
+			NAME="SCHEMA_FLOW"
+			FIELD="SCHEMA_TYPE"
 			NUM_ROW="25"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="MAPPING" 
-			FIELD="TABLE" 
+		<PARAMETER
+			NAME="MAPPING"
+			FIELD="TABLE"
 			REQUIRED="true"
-			NUM_ROW="30" 
+			NUM_ROW="30"
 			NB_LINES="5"
             SHOW_IF="(IS_VIRTUAL_COMPONENT == 'false')"
 		>
@@ -184,27 +185,27 @@
 				<ITEM NAME="PARENT_NODE_PATH" FIELD="TEXT" />
 			</ITEMS>
 		</PARAMETER>
-		<PARAMETER 
-			NAME="DIE_ON_ERROR" 
-			FIELD="CHECK" 
+		<PARAMETER
+			NAME="DIE_ON_ERROR"
+			FIELD="CHECK"
 			NUM_ROW="35">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 	</PARAMETERS>
 	<ADVANCED_PARAMETERS>
-        <PARAMETER 
-            NAME="IS_VIRTUAL_COMPONENT" 
-            FIELD="CHECK" 
-            NUM_ROW="5" 
+        <PARAMETER
+            NAME="IS_VIRTUAL_COMPONENT"
+            FIELD="CHECK"
+            NUM_ROW="5"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-	        NAME="ROOT" 
-	        FIELD="TABLE" 
+        <PARAMETER
+	        NAME="ROOT"
+	        FIELD="TABLE"
 	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
-            NUM_ROW="10" 
-            NB_LINES="3" 
+            NUM_ROW="10"
+            NB_LINES="3"
             SHOW="false"
         >
             <ITEMS>
@@ -216,12 +217,12 @@
             </ITEMS>
         </PARAMETER>
 
-        <PARAMETER 
-	        NAME="GROUP" 
-	        FIELD="TABLE" 
+        <PARAMETER
+	        NAME="GROUP"
+	        FIELD="TABLE"
 	        REQUIRED="false"
-	        NUM_ROW="20" 
-	        NB_LINES="5" 
+	        NUM_ROW="20"
+	        NB_LINES="5"
 	        SHOW="false"
         >
             <ITEMS>
@@ -233,11 +234,11 @@
             </ITEMS>
         </PARAMETER>
 
-        <PARAMETER 
-	        NAME="LOOP" 
-	        FIELD="TABLE" 
+        <PARAMETER
+	        NAME="LOOP"
+	        FIELD="TABLE"
 	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
-            NUM_ROW="30" 
+            NUM_ROW="30"
             SHOW="false"
         >
             <ITEMS>
@@ -249,9 +250,9 @@
             </ITEMS>
         </PARAMETER>
 
-        <PARAMETER 
-	        NAME="MAP" 
-	        FIELD="EXTERNAL" 
+        <PARAMETER
+	        NAME="MAP"
+	        FIELD="EXTERNAL"
 	        NUM_ROW="40"
 	        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
 	        GROUP="JSON_CONFIGURATION"
@@ -259,9 +260,9 @@
             <DEFAULT />
         </PARAMETER>
 
-        <PARAMETER 
-	        NAME="GROUPBYS" 
-	        FIELD="TABLE" 
+        <PARAMETER
+	        NAME="GROUPBYS"
+	        FIELD="TABLE"
 	        NUM_ROW="60"
 	        NB_LINES="3"
 	        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
@@ -271,47 +272,47 @@
                 <ITEM NAME="INPUT_COLUMN" FIELD="PREV_COLUMN_LIST" />
             </ITEMS>
         </PARAMETER>
-        <PARAMETER 
-	        NAME="REMOVE_ROOT" 
-	        FIELD="CHECK" 
+        <PARAMETER
+	        NAME="REMOVE_ROOT"
+	        FIELD="CHECK"
 	        NUM_ROW="70"
 	        SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
 	        GROUP="JSON_CONFIGURATION"
         >
             <DEFAULT>true</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-            FIELD="TEXT" 
-            NAME="DATA_NODE" 
-            REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')" 
-            NUM_ROW="75"
-            SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') AND (DATA_ACTION !='INSERT') AND (DATA_ACTION !='DELETE')"
-            GROUP="JSON_CONFIGURATION" 
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
-        <PARAMETER 
-            FIELD="TEXT" 
-            NAME="QUERY_NODE" 
-            REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')" 
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="DATA_NODE"
+            REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
             NUM_ROW="75"
             SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') AND (DATA_ACTION !='INSERT') AND (DATA_ACTION !='DELETE')"
             GROUP="JSON_CONFIGURATION"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
-        <PARAMETER 
-	        NAME="COMPACT_FORMAT" 
-	        FIELD="CHECK" 
-	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')" 
-	        NUM_ROW="80" 
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="QUERY_NODE"
+            REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+            NUM_ROW="75"
+            SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') AND (DATA_ACTION !='INSERT') AND (DATA_ACTION !='DELETE')"
+            GROUP="JSON_CONFIGURATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+	        NAME="COMPACT_FORMAT"
+	        FIELD="CHECK"
+	        REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+	        NUM_ROW="80"
 	        SHOW="false"
 	        GROUP="JSON_CONFIGURATION"
         >
             <DEFAULT>true</DEFAULT>
         </PARAMETER>
 	</ADVANCED_PARAMETERS>
-	
+
 	<CODEGENERATION>
         <TEMPLATES INPUT="In" OUTPUT="Out">
             <TEMPLATE NAME="In" COMPONENT="tWriteXMLFieldOut">
@@ -324,10 +325,10 @@
 
             <TEMPLATE_PARAM SOURCE="self.ROOT" TARGET="In.ROOT" />
             <TEMPLATE_PARAM SOURCE="self.GROUP" TARGET="In.GROUP" />
-            <TEMPLATE_PARAM SOURCE="self.LOOP" TARGET="In.LOOP" />     
+            <TEMPLATE_PARAM SOURCE="self.LOOP" TARGET="In.LOOP" />
             <TEMPLATE_PARAM SOURCE="self.COMPACT_FORMAT" TARGET="In.COMPACT_FORMAT" />
             <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="In.SCHEMA" />
-            
+
             <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="Out.SCHEMA" />
             <TEMPLATE_PARAM SOURCE="self.USE_EXISTING_CONNECTION" TARGET="Out.USE_EXISTING_CONNECTION" />
             <TEMPLATE_PARAM SOURCE="self.CONNECTION" TARGET="Out.CONNECTION" />
@@ -344,13 +345,15 @@
             <TEMPLATE_PARAM SOURCE="self.DATA_ACTION" TARGET="Out.DATA_ACTION" />
             <TEMPLATE_PARAM SOURCE="self.DATA_NODE" TARGET="Out.DATA_NODE" />
             <TEMPLATE_PARAM SOURCE="self.QUERY_NODE" TARGET="Out.QUERY_NODE" />
-            <TEMPLATE_PARAM SOURCE="self.REMOVE_ROOT" TARGET="Out.REMOVE_ROOT" />   
+            <TEMPLATE_PARAM SOURCE="self.REMOVE_ROOT" TARGET="Out.REMOVE_ROOT" />
             <TEMPLATE_PARAM SOURCE="self.DIE_ON_ERROR" TARGET="Out.DIE_ON_ERROR" />
-       
+
         </TEMPLATES>
 		<IMPORTS>
 			<IMPORT MODULE="mongo-2.8.0.jar" NAME="mongo-2.8.0" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-2.8.0.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_1_2' OR DB_VERSION=='MONGODB_2_2_3') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT MODULE="mongo-java-driver-2.11.2.jar" NAME="mongo-2.11.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_4_X' OR DB_VERSION=='MONGODB_2_5_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <!-- mongo java driver 2.12.0 give the compatibility with the new features of mongoDB 2.6 -->
+            <IMPORT MODULE="mongo-java-driver-2.12.2.jar" NAME="mongo-2.12.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.12.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_6_X') AND (USE_EXISTING_CONNECTION == 'false')" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>

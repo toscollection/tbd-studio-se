@@ -29,11 +29,20 @@
         <CONNECTOR CTYPE="RUN_IF"/>
     </CONNECTORS>
     <PARAMETERS>
+            <PARAMETER
+            NAME="NOTE"
+            FIELD="LABEL"
+            NUM_ROW="1"
+            COLOR="255;0;0"
+            SHOW_IF="DB_VERSION=='CASSANDRA_2_0_8'"
+        >
+            <DEFAULT>This component requires a Java 1.7</DEFAULT>
+        </PARAMETER>
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
             NUM_ROW="1"
-            COLOR="255;0;0" 
+            COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_2_0_0'"
         >
             <DEFAULT>This component requires a Java 1.7</DEFAULT>
@@ -42,7 +51,7 @@
             NAME="NOTE"
             FIELD="LABEL"
             NUM_ROW="1"
-            COLOR="255;0;0" 
+            COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_1_2_2'"
         >
             <DEFAULT>This component requires the server OS and the client OS to be similar.</DEFAULT>
@@ -51,7 +60,7 @@
             NAME="NOTE"
             FIELD="LABEL"
             NUM_ROW="1"
-            COLOR="255;0;0" 
+            COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_1_1_2'"
         >
             <DEFAULT>This component only works locally on a Linux OS.</DEFAULT>
@@ -76,7 +85,8 @@
             FIELD="CLOSED_LIST"
             NUM_ROW="5"
             >
-            <ITEMS DEFAULT="CASSANDRA_2_0_0">
+            <ITEMS DEFAULT="CASSANDRA_2_0_8">
+                <ITEM NAME="CASSANDRA_2_0_8" VALUE="CASSANDRA_2_0_8"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
@@ -201,9 +211,9 @@
             <TEMPLATE NAME="tCOB" COMPONENT="tCassandraOutputBulk">
               <LINK_TO NAME="tCBE" CTYPE="ROWS_END"/>
             </TEMPLATE>
-            
+
             <TEMPLATE NAME="tCBE" COMPONENT="tCassandraBulkExec"/>
-            
+
             <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="tCOB.SCHEMA_FLOW"/>
             <TEMPLATE_PARAM SOURCE="self.DB_VERSION" TARGET="tCOB.DB_VERSION"/>
             <TEMPLATE_PARAM SOURCE="self.KEY_SPACE" TARGET="tCOB.KEY_SPACE"/>
@@ -212,7 +222,7 @@
             <TEMPLATE_PARAM SOURCE="self.COMPARATOR" TARGET="tCOB.COMPARATOR"/>
             <TEMPLATE_PARAM SOURCE="self.BUFFER_SIZE" TARGET="tCOB.BUFFER_SIZE"/>
             <TEMPLATE_PARAM SOURCE="self.SSTABLE_STORE_PATH" TARGET="tCOB.SSTABLE_STORE_PATH"/>
-            
+
             <TEMPLATE_PARAM SOURCE="self.DB_VERSION" TARGET="tCBE.DB_VERSION"/>
             <TEMPLATE_PARAM SOURCE="self.HOST" TARGET="tCBE.HOST"/>
             <TEMPLATE_PARAM SOURCE="self.PORT" TARGET="tCBE.PORT"/>

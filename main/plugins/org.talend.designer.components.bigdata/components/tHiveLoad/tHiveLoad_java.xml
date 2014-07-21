@@ -1053,6 +1053,7 @@
 				REQUIRED="false"
 				REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<!-- ############## -->
+
 			<!-- HDP 1.2 -->
 			<IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar"
 				UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar"
