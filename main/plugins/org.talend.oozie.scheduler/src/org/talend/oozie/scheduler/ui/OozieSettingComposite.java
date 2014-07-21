@@ -245,20 +245,6 @@ public class OozieSettingComposite extends ScrolledComposite {
             ooziePropertyTypeCombo.select(0);
             oozieSelectBtn.setEnabled(false);
         }
-        if (!TOozieParamUtils.isFromRepository()) {
-            ooziePropertyTypeCombo.select(0);
-            oozieSelectBtn.setVisible(false);
-            oozieRepositoryText.setVisible(false);
-        } else {
-            ooziePropertyTypeCombo.select(1);
-            String connId = (String) OozieJobTrackerListener.getProcess()
-                    .getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).getValue();
-            this.repositoryId = connId;
-            Connection connection = TOozieParamUtils.getOozieConnectionById(connId);
-            if (connection != null) {
-                oozieRepositoryText.setText(connection.getLabel());
-            }
-        }
         initPropertyCombo();
     }
 
