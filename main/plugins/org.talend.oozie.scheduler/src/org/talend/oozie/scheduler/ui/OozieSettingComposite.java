@@ -229,7 +229,7 @@ public class OozieSettingComposite extends ScrolledComposite {
         propertyTypeGroup = Form.createGroup(comp, 5, "Property");
         propertyTypeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        String[] types = new String[] { "from preference", "from repository" };
+        String[] types = new String[] { "from preference(Deprecated)", "from repository" };
         ooziePropertyTypeCombo = new LabelledCombo(propertyTypeGroup, "Property Type", "", types, 1, true);
         GridDataFactory.fillDefaults().span(1, 1).align(SWT.FILL, SWT.CENTER).applyTo(ooziePropertyTypeCombo.getCombo());
         oozieRepositoryText = new Text(propertyTypeGroup, SWT.BORDER);
@@ -259,6 +259,29 @@ public class OozieSettingComposite extends ScrolledComposite {
                 oozieRepositoryText.setText(connection.getLabel());
             }
         }
+        initPropertyCombo();
+    }
+
+    /**
+     * DOC PLV Comment method "initPropertyCombo".
+     */
+    protected void initPropertyCombo() {
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        if (process != null) {
+            String connId = (String) process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName())
+                    .getValue();
+            if (StringUtils.isNotEmpty(connId)) {
+                ooziePropertyTypeCombo.select(0);
+                this.repositoryId = connId;
+                Connection connection = TOozieParamUtils.getOozieConnectionById(connId);
+                if (connection != null) {
+                    oozieRepositoryText.setText(connection.getLabel());
+                }
+            }
+        }
+        ooziePropertyTypeCombo.select(1);
+        oozieSelectBtn.setVisible(true);
+        oozieRepositoryText.setVisible(true);
     }
 
     protected void preInitialization() {
