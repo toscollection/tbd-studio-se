@@ -52,6 +52,9 @@
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 	boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_JOBHISTORY_ADDRESS__"));
 	
+	//Parquet available in Map/Reduce mode and in Custom or CDH5 only.
+	boolean isParquet = !isLocal && "ParquetLoader".equals(function) && (isCustom || (!isCustom && "Cloudera_CDH5".equals(pigVersion)));
+	
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJarForHCatalog = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	
@@ -665,6 +668,10 @@
 					}
 %>
 					sb_<%=cid%>.append(")");
+<%
+				} else if(isParquet) {
+%>
+					sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using parquet.pig.ParquetLoader");
 <%
 				} else {
 					if("RCFilePigStorage".equals(function)) {

@@ -19,6 +19,17 @@
 	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 	String fsDefalutName = "fs.default.name";
+	boolean useBatchMode = "true".equals(ElementParameterParser.getValue(node, "__USE_BATCH_MODE__"));
+	boolean clearStagingTable = "true".equals(ElementParameterParser.getValue(node, "__CLEAR_STAGING_TABLE__"));
+	boolean defineStagingTable = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_STAGING_TABLE__"));
+	String stagingTable = ElementParameterParser.getValue(node, "__STAGING_TABLE__");
+	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CAL_PROC_STOCK__"));
+	String procStock = ElementParameterParser.getValue(node, "__PROC_STOCK__");
+	boolean defineUpdateMode = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_UPDATE_MODE__"));
+	String updateMode = ElementParameterParser.getValue(node, "__UPDATE_MODE__");
+	boolean overrideJavaMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_JAVA_MAPPING__"));
+	boolean useColumnForUpdate = "true".equals(ElementParameterParser.getValue(node, "__USE_COLUMN_FOR_UPDATE__"));
+	boolean passwordStoredInFile = "true".equals(ElementParameterParser.getValue(node, "__PASSWORD_STORED_IN_FILE__"));
 %>
 	<%@ include file="../templates/Sqoop/GetConfig.javajet"%>
 	
@@ -31,13 +42,15 @@
 	sqoopOptions_<%=cid%>.setExportDir(<%=exportDir%>);
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	
-    <%
-    String passwordFieldName = "__PASSWORD__";
-    %>
-    
-    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
-
-	sqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>); // __PASSWORD__
+	<%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "PIVOTAL_HD_2_0".equals(version)))) {%>
+		<%
+		String passwordFieldName = "__PASSWORD__";
+    	%>
+		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+		sqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>); // __PASSWORD__
+	<%} else {%>
+		sqoopOptions_<%=cid%>.setPasswordFilePath(<%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>);
+	<%}%>
 		
 <%	
 	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
@@ -48,9 +61,63 @@
 		}
 	}
 %>
-	<%if(direct){%>sqoopOptions_<%=cid%>.setDirectMode(true);<%}%>
+	<%if(direct && (!defineUpdateMode || "updateonly".equals(updateMode))){%>sqoopOptions_<%=cid%>.setDirectMode(true);<%}%>
 	<%if(useMappers){%>sqoopOptions_<%=cid%>.setNumMappers(Integer.valueOf(<%=mappers%>));<%}%>
-	
+	<%if(useBatchMode){%>sqoopOptions_<%=cid%>.setBatchMode(true);<%}%>
+	<%if(clearStagingTable && !useColumnForUpdate){%>sqoopOptions_<%=cid%>.setClearStagingTable(true);<%}%>
+	<%if(callProcStock){%>sqoopOptions_<%=cid%>.setCall(<%=procStock%>);<%}%>
+	<%if(defineStagingTable && !useColumnForUpdate){%>sqoopOptions_<%=cid%>.setStagingTableName(<%=stagingTable%>);<%}%>
+	<%if(defineUpdateMode){%>sqoopOptions_<%=cid%>.setUpdateMode(com.cloudera.sqoop.SqoopOptions.<%="updateonly".equals(updateMode)?"UpdateMode.UpdateOnly":"UpdateMode.AllowInsert"%>);<%}%>
+	<%
+		if(useColumnForUpdate) {
+			List<Map<String,String>> columnsForUpdate = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__COLUMN_FOR_UPDATE__");
+			if(columnsForUpdate!=null && columnsForUpdate.size()>0) {
+	%>
+				StringBuilder sb_update_<%=cid%> = new StringBuilder();
+	<%
+				boolean first = true;	
+				for(Map<String,String> columnForUpdate : columnsForUpdate) {
+					if(first) {
+						first = false;
+	%>
+						sb_update_<%=cid%>.append(<%=columnForUpdate.get("COLUMN_NAME")%>);
+	<%
+					} else {
+	%>
+						sb_update_<%=cid%>.append("," + <%=columnForUpdate.get("COLUMN_NAME")%>);
+	<%
+					}	
+				}
+	%>
+				sqoopOptions_<%=cid%>.setUpdateKeyCol(sb_update_<%=cid%>.toString());
+	<%
+			}
+		}
+		if(overrideJavaMapping && !(("MAPR1".equals(version) || "Cloudera_CDH3".equals(version)))) {
+			List<Map<String,String>> javaMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__JAVA_TYPE_MAPPING__");
+			if(javaMappings!=null && javaMappings.size()>0) {
+	%>
+				StringBuilder sb_java_<%=cid%> = new StringBuilder();
+	<%
+				boolean first = true;	
+				for(Map<String,String> javaMapping : javaMappings) {
+					if(first) {
+						first = false;
+	%>
+						sb_java_<%=cid%>.append(<%=javaMapping.get("COLUMN_NAME")%> + "=" + <%=javaMapping.get("JAVA_TYPE")%>);
+	<%
+					} else {
+	%>
+						sb_java_<%=cid%>.append("," + <%=javaMapping.get("COLUMN_NAME")%> + "=" + <%=javaMapping.get("JAVA_TYPE")%>);
+	<%
+					}	
+				}
+	%>
+				sqoopOptions_<%=cid%>.setMapColumnJava(sb_java_<%=cid%>.toString());
+	<%
+			}
+		}
+	%>
 	java.util.Properties additionalProperties_<%=cid%> = new java.util.Properties();
 <%
 	if(additionalList != null){ 

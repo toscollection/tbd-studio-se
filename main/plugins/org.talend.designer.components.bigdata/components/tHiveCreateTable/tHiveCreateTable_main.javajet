@@ -57,6 +57,13 @@ boolean setPartitioned = "true".equals(ElementParameterParser.getValue(node, "__
 boolean setClustered = false;
 boolean setSkewed = false;
 
+boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+
+String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+
+boolean isCustom = "CUSTOM".equals(distribution);
+
 boolean setLocation = "true".equals(ElementParameterParser.getValue(node, "__SET_FILE_LOCATION__"));
 String location = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
 
@@ -72,6 +79,20 @@ boolean setSerdeRowFormat = "true".equals(ElementParameterParser.getValue(node, 
 boolean setRowFormat = (setDelimitedRowFormat || setSerdeRowFormat) && !"STORAGE".equals(storedFormat);
 
 boolean storeAsAvro = "AVRO".equals(storedFormat);
+
+if(useExistingConnection) {
+	distribution = "";
+	hiveVersion = "";
+	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+	for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
+		if(connection!=null && connection.equals(pNode.getUniqueName())) {
+			distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
+			hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+			break;
+		}
+	}
+}
+boolean storeAsParquet = "PARQUET".equals(storedFormat) && (isCustom || (!isCustom && "CLOUDERA".equals(distribution) && "Cloudera_CDH5".equals(hiveVersion)));
 
 createTableSQL.append("CREATE ");
 createTableSQL.append(external?"EXTERNAL":"");
@@ -377,8 +398,8 @@ if(clustededOrSkewed) {
 	createTableSQL.append(" + \"");
 }
 
-if(storeAsAvro) {
-	createTableSQL.append(" ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.avro.AvroSerDe'");
+if(storeAsAvro || storeAsParquet) {
+	createTableSQL.append(" ROW FORMAT SERDE '" + (storeAsAvro?"org.apache.hadoop.hive.serde2.avro.AvroSerDe":"parquet.hive.serde.ParquetHiveSerDe") + "'");
 	util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
 } else if(setRowFormat) {
 	createTableSQL.append(" ROW FORMAT ");
@@ -463,9 +484,9 @@ if(storeAsAvro) {
 	}
 }
 
-if(storeAsAvro) {
-	createTableSQL.append(" STORED AS INPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat'");
-	createTableSQL.append(" OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat'");
+if(storeAsAvro || storeAsParquet) {
+	createTableSQL.append(" STORED AS INPUTFORMAT '" + (storeAsAvro?"org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat":"parquet.hive.DeprecatedParquetInputFormat") + "'");
+	createTableSQL.append(" OUTPUTFORMAT '" + (storeAsAvro?"org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat":"parquet.hive.DeprecatedParquetOutputFormat") + "'");
 } else if(!"STORAGE".equals(storedFormat)) {
 	createTableSQL.append(" STORED AS ");
 	if("INPUTFORMAT_AND_OUTPUTFORMAT".equals(storedFormat)) {
