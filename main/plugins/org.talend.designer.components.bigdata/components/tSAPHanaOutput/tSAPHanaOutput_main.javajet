@@ -708,7 +708,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
 					<%
 					}
 					%>
-				%>
 				
 					int count_<%=cid%>=DynamicUtils.writeColumnsToDatabse(<%=incomingConnName%>.<%=dynamicColumn.getName()%>, pstmtUpdate_<%=cid%>, <%=counterColUpdate-1%>, "<%=dbmsId%>");
 				<%
