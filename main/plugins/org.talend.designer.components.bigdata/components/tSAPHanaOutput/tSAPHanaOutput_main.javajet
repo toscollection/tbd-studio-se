@@ -86,7 +86,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
 	
 	List<Column> stmtStructure = getManager(dbmsId, cid).createColumnList(columnList, useFieldOptions, fieldOptions, addCols);
 	isDynamic = isDynamic && !getManager(dbmsId, cid).isDynamicColumnReplaced();
-	
+	IMetadataColumn talendDynCol = null;
     ////////////////////////////////////////////////////////////
     List<Column> colStruct = new ArrayList<Column>();
     for(Column colStmt:stmtStructure) {
@@ -116,7 +116,8 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
     StringBuilder updateSetStmt = actionSQLMap.get(UPDATE_SET_STMT);    
     StringBuilder updateWhereStmt = actionSQLMap.get(UPDATE_WHERE_STMT);
     StringBuilder deleteWhereStmt = actionSQLMap.get(DELETE_WHERE_STMT);
-    
+    talendDynCol = getDynamicColumn();
+
 	if(("INSERT").equals(dataAction)) {
 		List< ? extends IConnection> conns_dynamic = node.getIncomingConnections();
 		if(conns_dynamic!=null && conns_dynamic.size()>0){
@@ -263,6 +264,11 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
 			if(isDynamic) {
 				Column dynamicColumn = getColumn(getDynamicColumn());
 				String typeToGenerate = JavaTypesManager.getTypeToGenerate(dynamicColumn.getColumn().getTalendType(), dynamicColumn.getColumn().isNullable());
+						if(isEnableDebug) {
+						%>
+							routines.system.DynamicUtils.debugDynamicSql(query_<%=cid%>,<%=incomingConnName%>.<%=dynamicColumn.getName()%>, <%=counter%>,insertSQLSplits_<%=cid%>);
+						<%
+						}
 				if("Dynamic".equals(typeToGenerate)) {
 				%>
 					DynamicUtils.writeColumnsToDatabse(<%=incomingConnName%>.<%=dynamicColumn.getName()%>, pstmt_<%=cid%>, <%=counter-1%>, "<%=dbmsId%>");
@@ -342,11 +348,15 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                 }
             }
 			if(isDynamic) {
-				Column dynamicColumn = getColumn(getDynamicColumn());
+			Column dynamicColumn = getColumn(talendDynCol);
 				String typeToGenerate = JavaTypesManager.getTypeToGenerate(dynamicColumn.getColumn().getTalendType(), dynamicColumn.getColumn().isNullable());
 				if("Dynamic".equals(typeToGenerate)) {
-				%>
-				
+                if(isEnableDebug) {
+                %>
+                    routines.system.DynamicUtils.debugDynamicSql(query_<%=cid%>,<%=incomingConnName%>.<%=dynamicColumn.getName()%>, <%=counterCol%>,updateSQLSplits_<%=cid%>);
+                <%
+                }
+                %>
 					int count_<%=cid%>=DynamicUtils.writeColumnsToDatabse(<%=incomingConnName%>.<%=dynamicColumn.getName()%>, pstmt_<%=cid%>, <%=counterCol-1%>, "<%=dbmsId%>");
 				<%
 				}
@@ -355,18 +365,28 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
             for(Column column : colStruct) {
                 if(column.isUpdateKey()) {
                     String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
-                    %>
-                    
-					<% 
                     //#############for feature:2880 and 6980
-                    if(whereSupportNull && column.getColumn().isNullable()) { %>
-                    	<%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(column, counterCol, incomingConnName, cid, NORMAL_TYPE)%>
-                    <%  
+                    if(whereSupportNull && column.getColumn().isNullable()) {
+					if(isDynamic){
+					%>
+					   <%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(talendDynCol.getLabel(),column, counterCol, incomingConnName, cid, NORMAL_TYPE)%>
+					<%
+					}else{
+					%>
+					   <%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(column, counterCol, incomingConnName, cid, NORMAL_TYPE)%>
+					<%
+					}
 					if(isEnableDebug) {
-                        %>
-                        query_<%=cid%> = <%=getManager(dbmsId, cid).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_", "(("+incomingConnName+"."+column.getName()+"==null)?1:0)")%>;
-                        <%
-                    }
+						if(isDynamic){
+						%>
+							query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(talendDynCol.getLabel(),typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_", "(("+incomingConnName+"."+column.getName()+"==null)?1:0)")%>;
+						<%
+						}else{
+						%>
+							query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_", "(("+incomingConnName+"."+column.getName()+"==null)?1:0)")%>;
+						<%
+						}
+					}
                     	counterCol++;
                        }
                      //#############                      
@@ -374,9 +394,16 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     <%=getManager(dbmsId, cid).generateSetStmt(typeToGenerate, column, counterCol, incomingConnName, cid, NORMAL_TYPE, " + count_")%>
                     <%
                     if(isEnableDebug) {
-                        %>
-                        query_<%=cid%> = <%=getManager(dbmsId, cid).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_")%>;
-                        <%
+			
+                        if(isDynamic){
+			    %>
+				   query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(talendDynCol.getLabel(),typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_")%>;
+			    <%
+			    }else{
+			    %>
+				   query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_")%>;
+			    <%
+			    }
                     }                    
                     counterCol++;
                 }
@@ -485,6 +512,11 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
 					Column dynamicColumn = getColumn(getDynamicColumn());
 					String typeToGenerate = JavaTypesManager.getTypeToGenerate(dynamicColumn.getColumn().getTalendType(), dynamicColumn.getColumn().isNullable());
 					if("Dynamic".equals(typeToGenerate)) {
+						if(isEnableDebug) {
+						%>
+							routines.system.DynamicUtils.debugDynamicSql(query_<%=cid%>,<%=incomingConnName%>.<%=dynamicColumn.getName()%>, <%=counterCol%>,updateSQLSplits_<%=cid%>);
+						<%
+						}
 					%>
 					
 						int count_<%=cid%>=DynamicUtils.writeColumnsToDatabse(<%=incomingConnName%>.<%=dynamicColumn.getName()%>, pstmtUpdate_<%=cid%>, <%=counterCol-1%>, "<%=dbmsId%>");
@@ -494,16 +526,28 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                 for(Column column : colStruct) {
                     if(column.isUpdateKey()) {
                         String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
-                        %>
-                        <% 
 	                    //#############for feature:2880
-	                    if(whereSupportNull && column.getColumn().isNullable()) { %>
-	                    	<%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(column, counterCol, incomingConnName, cid, UPDATE_TYPE)%>
-	                    <%  
+					if(whereSupportNull && column.getColumn().isNullable()) { 
+				if(isDynamic){
+				%>
+					<%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(talendDynCol.getLabel(),column, counterCol, incomingConnName, cid, UPDATE_TYPE)%>
+				<%
+				}else{
+				%>
+					<%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(column, counterCol, incomingConnName, cid, UPDATE_TYPE)%>
+				<%
+				}
 		                     if(isEnableDebug) {
-	                        %>
-	                        query_<%=cid%> = <%=getManager(dbmsId, cid).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_", "(("+incomingConnName+"."+column.getName()+"==null)?1:0)")%>;
-	                        <%
+					if(isDynamic){
+							%>
+								query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(talendDynCol.getLabel(),typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_", "(("+incomingConnName+"."+column.getName()+"==null)?1:0)")%>;
+							<%
+							}else{
+							%>
+								query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_", "(("+incomingConnName+"."+column.getName()+"==null)?1:0)")%>;
+							<%
+							}
+
 	                    	} 
 	                    	counterCol++;
 	                       }
@@ -512,9 +556,15 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                         <%=getManager(dbmsId, cid).generateSetStmt(typeToGenerate, column, counterCol, incomingConnName, cid, UPDATE_TYPE, " + count_")%>
                         <%
                         if(isEnableDebug) {
-                            %>
-                            query_<%=cid%> = <%=getManager(dbmsId, cid).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_")%>;
-                            <%
+                           if(isDynamic){
+				   		%>
+							query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(talendDynCol.getLabel(),typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_")%>;
+				    	<%
+				    	}else{
+				    	%>
+							query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(typeToGenerate, column, incomingConnName, cid, "query_" , counterCol, "updateSQLSplits_")%>;
+				    	<%
+				    	}
                         }                        
                         counterCol++;                   
                     }
@@ -578,6 +628,11 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
 					Column dynamicColumn = getColumn(getDynamicColumn());
 					String typeToGenerate = JavaTypesManager.getTypeToGenerate(dynamicColumn.getColumn().getTalendType(), dynamicColumn.getColumn().isNullable());
 					if("Dynamic".equals(typeToGenerate)) {
+					if(isEnableDebug) {
+					%>
+						routines.system.DynamicUtils.debugDynamicSql(query_<%=cid%>,<%=incomingConnName%>.<%=dynamicColumn.getName()%>, <%=counterInsert%>,insertSQLSplits_<%=cid%>);
+					<%
+					}
 					%>
 						DynamicUtils.writeColumnsToDatabse(<%=incomingConnName%>.<%=dynamicColumn.getName()%>, pstmtInsert_<%=cid%>, <%=counterInsert-1%>, "<%=dbmsId%>");
 					<%
@@ -647,6 +702,12 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
 				Column dynamicColumn = getColumn(getDynamicColumn());
 				String typeToGenerate = JavaTypesManager.getTypeToGenerate(dynamicColumn.getColumn().getTalendType(), dynamicColumn.getColumn().isNullable());
 				if("Dynamic".equals(typeToGenerate)) {
+					if(isEnableDebug) {
+					%>
+						routines.system.DynamicUtils.debugDynamicSql(query_<%=cid%>,<%=incomingConnName%>.<%=dynamicColumn.getName()%>, <%=counterColUpdate%>,updateSQLSplits_<%=cid%>);
+					<%
+					}
+					%>
 				%>
 				
 					int count_<%=cid%>=DynamicUtils.writeColumnsToDatabse(<%=incomingConnName%>.<%=dynamicColumn.getName()%>, pstmtUpdate_<%=cid%>, <%=counterColUpdate-1%>, "<%=dbmsId%>");
@@ -657,17 +718,28 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
             for(Column columnUpdate : colStruct) {
                 if(columnUpdate.isUpdateKey()) {
                     String typeToGenerate = JavaTypesManager.getTypeToGenerate(columnUpdate.getColumn().getTalendType(), columnUpdate.getColumn().isNullable());
-                    %>
-					<% 
                     //#############for feature:2880 and 6980
-                    if(whereSupportNull && columnUpdate.getColumn().isNullable()) { %>
-                    	<%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(columnUpdate, counterColUpdate, incomingConnName, cid, UPDATE_TYPE)%>
-                    <%  
-	                    if(isEnableDebug) {
-	                        %>
-	                        query_<%=cid%> = <%=getManager(dbmsId, cid).retrieveSQL(typeToGenerate, columnUpdate, incomingConnName, cid, "query_" , counterColUpdate, "updateSQLSplits_", "(("+incomingConnName+"."+columnUpdate.getName()+"==null)?1:0)")%>;
-	                        <%
-	                    	}
+				if(whereSupportNull && columnUpdate.getColumn().isNullable()) { 
+					if(isDynamic){
+					%>
+    					<%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(talendDynCol.getLabel(),columnUpdate, counterColUpdate, incomingConnName, cid, UPDATE_TYPE)%>
+					<%
+					}else{
+					%>
+    					<%=getManager(dbmsId, cid, node).generateSetBooleanForNullableKeyStmt(columnUpdate, counterColUpdate, incomingConnName, cid, UPDATE_TYPE)%>
+					<%
+					}
+					if(isEnableDebug) {
+						if(isDynamic){
+						%>
+						query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(talendDynCol.getLabel(),typeToGenerate, columnUpdate, incomingConnName, cid, "query_" , counterColUpdate, "updateSQLSplits_", "(("+incomingConnName+"."+columnUpdate.getName()+"==null)?1:0)")%>;
+						<%
+						}else{
+						%>
+						query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(typeToGenerate, columnUpdate, incomingConnName, cid, "query_" , counterColUpdate, "updateSQLSplits_", "(("+incomingConnName+"."+columnUpdate.getName()+"==null)?1:0)")%>;
+						<%
+						}
+					}
                     	counterColUpdate++;
                        }
                      //#############                      
@@ -676,9 +748,15 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     <%=getManager(dbmsId, cid).generateSetStmt(typeToGenerate, columnUpdate, counterColUpdate, incomingConnName, cid, UPDATE_TYPE, " + count_")%>
                     <%
                     if(isEnableDebug) {
-                        %>
-                        query_<%=cid%> = <%=getManager(dbmsId, cid).retrieveSQL(typeToGenerate, columnUpdate, incomingConnName, cid, "query_" , counterColUpdate, "updateSQLSplits_")%>;
-                        <%
+					if(isDynamic){
+					%>
+						query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(talendDynCol.getLabel(),typeToGenerate, columnUpdate, incomingConnName, cid, "query_" , counterColUpdate, "updateSQLSplits_")%>;
+					<%
+					}else{
+					%>
+						query_<%=cid%> = <%=getManager(dbmsId, cid, node).retrieveSQL(typeToGenerate, columnUpdate, incomingConnName, cid, "query_" , counterColUpdate, "updateSQLSplits_")%>;
+					<%
+					}
                     }                    
                     counterColUpdate++;
                 }
