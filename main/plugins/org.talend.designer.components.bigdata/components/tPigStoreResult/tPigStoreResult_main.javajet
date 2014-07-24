@@ -64,7 +64,9 @@
 	
 	boolean generateRegisterJarCodeForAvroFile = "AvroStorage".equals(function);
 	
-	boolean generateRegisterJarCodeForAll = generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile || generateRegisterJarCodeForRCFile || generateRegisterJarCodeForAvroFile;
+	boolean generateRegisterJarCodeForParquetFile = "ParquetStorer".equals(function);
+	
+	boolean generateRegisterJarCodeForAll = generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile || generateRegisterJarCodeForRCFile || generateRegisterJarCodeForAvroFile || generateRegisterJarCodeForParquetFile;
 	
 	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
@@ -124,6 +126,15 @@
 			jarsToRegister.add("piggybank");
 			jarsToRegister.add("avro");
 			jarsToRegister.add("json_simple");
+		}
+		
+		if(generateRegisterJarCodeForParquetFile) {
+			jarsToRegister.add("parquet-hadoop");
+			jarsToRegister.add("parquet-common");
+			jarsToRegister.add("parquet-column");
+			jarsToRegister.add("parquet-format");
+			jarsToRegister.add("parquet-pig");
+			jarsToRegister.add("parquet-encoding");
 		}
 		
 		for (int j = 0; j < commandLine.length; j++) {
