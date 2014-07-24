@@ -14,11 +14,14 @@ imports="
 "
 skeleton="@{org.talend.designer.components.localprovider}/components/templates/db_output_bulk.skeleton"
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/DBLogUtil.javajet"%>
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
 String cid = node.getUniqueName();
+
+dbLog = new DBLogUtil(node);
+
 List<Map<String, String>> addCols = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__ADD_COLS__" );
 boolean useFieldOptions = ("true").equals(ElementParameterParser.getValue(node, "__USE_FIELD_OPTIONS__"));
 List<Map<String, String>> fieldOptions = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FIELD_OPTIONS__");
@@ -112,10 +115,12 @@ if(useExistingConnection) {
 	%>
 	String dbschema_<%=cid%> = (String)globalMap.get("<%=schema%>");
 	java.sql.Connection conn_<%=cid%> = (java.sql.Connection)globalMap.get("<%=conn%>");
+	<%dbLog.conn().useExistConn("conn_"+cid+".getMetaData().getURL()", "conn_"+cid+".getMetaData().getUserName()");%>
 <%
 } else {
 %>
 	java.lang.Class.forName("com.sap.db.jdbc.Driver");
+	<%dbLog.conn().logJDBCDriver(dbLog.str("com.sap.db.jdbc.Driver"));%>
 	String dbUser_<%=cid%> = <%=dbuser%>;
 	<%
 	String passwordFieldName = "__PASS__";
@@ -131,7 +136,9 @@ if(useExistingConnection) {
 	if(dbProperties_<%=cid%> != null && dbProperties_<%=cid%>.trim().length() > 0) {
 		url_<%=cid%> = "jdbc:sap://" + <%=dbhost%> + ":" + <%=dbport%> + "/?" + dbProperties_<%=cid%>;
 	}
+	<%dbLog.conn().connTry(dbLog.var("url"), dbLog.var("dbUser"));%>	
 	java.sql.Connection conn_<%=cid%>  = java.sql.DriverManager.getConnection(url_<%=cid %>, dbUser_<%=cid%>, dbPwd_<%=cid%>);
+	<%dbLog.conn().connDone(dbLog.var("url"));%>
 	resourceMap.put("conn_<%=cid%>", conn_<%=cid%>);
 <%
 }
@@ -144,6 +151,7 @@ if(!useExistingConnection) {
 		<%
 	}
 }
+dbLog.commit().logAutoCommit("conn_"+cid+".getAutoCommit()");
 %>
 
 <%

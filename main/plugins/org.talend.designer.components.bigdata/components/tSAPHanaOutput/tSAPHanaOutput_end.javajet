@@ -7,12 +7,13 @@ imports="
 	java.util.List
 " 
 %>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/DBLogUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	
 	String cid = node.getUniqueName();
-	
+	dbLog = new DBLogUtil(node);
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
 	
 	String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__");
@@ -68,9 +69,11 @@ imports="
     try {
 			int countSum_<%=cid%> = 0;
 			if (pstmt_<%=cid %> != null) {
+				<%dbLog.batch().executeTry(dbLog.str(dataAction));%>
 				for(int countEach_<%=cid%>: pstmt_<%=cid %>.executeBatch()) {
 					countSum_<%=cid%> += (countEach_<%=cid%> < 0 ? 0 : countEach_<%=cid%>);
-				}                 	
+				}  
+				<%dbLog.batch().executeDone(dbLog.str(dataAction));%>               	
 			}
 	    	<%if (("INSERT").equals(dataAction)) {
 	    	%>
@@ -108,8 +111,10 @@ imports="
     	%>
     	    deletedCount_<%=cid%> += countSum_<%=cid%>;
     	<%
-    	}%> 
-    	System.out.println(e_<%=cid%>.getMessage());
+    	}
+    	dbLog.logPrintedException("e_"+cid+".getMessage()");
+    	%> 
+    	System.err.println(e_<%=cid%>.getMessage());
     	<%
     	}%>                	
 	}                                  
@@ -127,14 +132,19 @@ imports="
         if(!("").equals(commitEvery) && !("0").equals(commitEvery)) {
         %>
         if(commitCounter_<%=cid%> > 0){
+        	<%dbLog.commit().commitTry(null, dbLog.var("commitCounter"));%>
             conn_<%=cid%>.commit();
+            <%dbLog.commit().commitDone(null);%>
         }
         <%
         }        
         %>
+        <%dbLog.conn().closeTry(null);%>
         conn_<%=cid%> .close();
+        <%dbLog.conn().closeDone(null);%>
         resourceMap.put("finish_<%=cid%>", true);
     <%
 	}
     %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Output/DBOutputEndGlobalVars.javajet"%>
+	<%dbLog.endWork();%>
