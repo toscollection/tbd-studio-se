@@ -155,10 +155,9 @@
 		</PARAMETER>
 
 		<PARAMETER NAME="PARQUET_COMPRESSION" FIELD="CLOSED_LIST"
-			NUM_ROW="40"
-			GROUP="CONFIGURATION"
-			SHOW_IF="STORE=='PARQUETSTORER'">
-<!-- 			SHOW_IF="((DISTRIBUTION=='CLOUDERA' AND HBASE_VERSION=='Cloudera_CDH5' AND STORE=='PARQUETSTORER') OR (DISTRIBUTION=='CUSTOM'))" -->
+			NUM_ROW="40" GROUP="CONFIGURATION" SHOW_IF="STORE=='PARQUETSTORER'">
+			<!-- SHOW_IF="((DISTRIBUTION=='CLOUDERA' AND HBASE_VERSION=='Cloudera_CDH5' 
+				AND STORE=='PARQUETSTORER') OR (DISTRIBUTION=='CUSTOM'))" -->
 			<ITEMS DEFAULT="UNCOMPRESSED">
 				<ITEM NAME="UNCOMPRESSED" VALUE="UNCOMPRESSED" />
 				<ITEM NAME="GZIP" VALUE="GZIP" />
@@ -1052,26 +1051,9 @@
 			<!-- AVRO Support End -->
 
 			<!-- Parquet Support Begin -->
-			<!-- CDH5 -->
-            <IMPORT NAME="parquet-pig-1.2.5-cdh5.0.3" MODULE="parquet-pig-1.2.5-cdh5.0.3.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-pig-1.2.5-cdh5.0.3.jar"
-                REQUIRED_IF="(isShow[STORE.PARQUETSTORER]) AND (STORE=='PARQUETSTORER')" />
-            <IMPORT NAME="parquet-column-1.2.5-cdh5.0.3" MODULE="parquet-column-1.2.5-cdh5.0.3.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-column-1.2.5-cdh5.0.3.jar"
-                REQUIRED_IF="(isShow[STORE.PARQUETSTORER]) AND (STORE=='PARQUETSTORER')" />
-            <IMPORT NAME="parquet-common-1.2.5-cdh5.0.3" MODULE="parquet-common-1.2.5-cdh5.0.3.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-common-1.2.5-cdh5.0.3.jar"
-                REQUIRED_IF="(isShow[STORE.PARQUETSTORER]) AND (STORE=='PARQUETSTORER')" />
-            <IMPORT NAME="parquet-hadoop-1.2.5-cdh5.0.3" MODULE="parquet-hadoop-1.2.5-cdh5.0.3.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-hadoop-1.2.5-cdh5.0.3.jar"
-                REQUIRED_IF="(isShow[STORE.PARQUETSTORER]) AND (STORE=='PARQUETSTORER')" />
-            <IMPORT NAME="parquet-format-1.0.0-cdh5.0.3" MODULE="parquet-format-1.0.0-cdh5.0.3.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-format-1.0.0-cdh5.0.3.jar"
-                REQUIRED_IF="(isShow[STORE.PARQUETSTORER]) AND (STORE=='PARQUETSTORER')" />
-            <IMPORT NAME="parquet-encoding-1.2.5-cdh5.0.3" MODULE="parquet-encoding-1.2.5-cdh5.0.3.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-encoding-1.2.5-cdh5.0.3.jar"
-                REQUIRED_IF="(isShow[STORE.PARQUETSTORER]) AND (STORE=='PARQUETSTORER')" />
-			<!-- Parquet Support End -->
+			<IMPORT NAME="parquet-pig-bundle-1.3.2" MODULE="parquet-pig-bundle-1.3.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.3.2.jar"
+				REQUIRED_IF="((STORE=='PARQUETSTORER') AND DISTRIBUTION!='CUSTOM')" />
 
 		</IMPORTS>
 	</CODEGENERATION>
