@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.talend.repository.oozie/src"
+    modelPluginID="org.talend.repository.oozie" modelName="Oozie" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" runtimeVersion="2.6" usedGenPackages="../../org.talend.model/model/Business.genmodel#//business ../../org.talend.model/model/Component.genmodel#//component ../../org.talend.cwm.mip/model/cwm_mip.genmodel#//orgomg platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.talend.repository.hadoopcluster/model/hadoopcluster.genmodel#//hadoopcluster ../../org.talend.model/model/joblet.genmodel#//model ../../org.talend.model/model/metadata.genmodel#//connection platform:/plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation ../../org.talend.model/model/properties.genmodel#//properties ../../org.talend.model/model/TalendFile.genmodel#//talendfile">
+  <foreignModel>oozie.ecore</foreignModel>
+  <genPackages prefix="Oozie" basePackage="org.talend.repository.model" resource="XML"
+      disposableProviderFactory="true" ecorePackage="oozie.ecore#/">
+    <genClasses ecoreClass="oozie.ecore#//OozieConnection">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oozie.ecore#//OozieConnection/userName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oozie.ecore#//OozieConnection/oozieEndPoind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oozie.ecore#//OozieConnection/oozieVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute oozie.ecore#//OozieConnection/enableKerberos"/>
+    </genClasses>
+    <genClasses ecoreClass="oozie.ecore#//OozieConnectionItem"/>
+  </genPackages>
+</genmodel:GenModel>
