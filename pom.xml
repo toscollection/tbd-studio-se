@@ -6,7 +6,7 @@
   <artifactId>tbd-studio-se</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <parent>
+    <parent>
     <groupId>org.talend.studio</groupId>
     <artifactId>parent-pom</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -17,6 +17,10 @@
     <module>i18n/plugins/org.talend.designer.hdfsbrowse.nl</module>
     <module>i18n/plugins/org.talend.designer.pigmap.nl</module>
     <module>i18n/plugins/org.talend.oozie.scheduler.nl</module>
+    <module>i18n/plugins/org.talend.repository.hadoopcluster.nl</module>
+    <module>i18n/plugins/org.talend.repository.hcatalog.nl</module>
+    <module>i18n/plugins/org.talend.repository.hdfs.nl</module>
+    <module>i18n/plugins/org.talend.repository.oozie.nl</module>
     <module>i18n/plugins/org.talend.repository.pigudf.nl</module>
     <module>main/features/org.talend.rcp.branding.tos.bigdata-feature</module>
     <module>main/features/org.talend.tos.bigdata-feature</module>
@@ -60,6 +64,11 @@
     <module>main/plugins/org.talend.libraries.zookeeper</module>
     <module>main/plugins/org.talend.oozie.scheduler</module>
     <module>main/plugins/org.talend.rcp.branding.tos.bigdata</module>
+    <module>main/plugins/org.talend.repository.hadoopcluster</module>
+    <module>main/plugins/org.talend.repository.hbaseprovider</module>
+    <module>main/plugins/org.talend.repository.hcatalog</module>
+    <module>main/plugins/org.talend.repository.hdfs</module>
+    <module>main/plugins/org.talend.repository.oozie</module>
     <module>main/plugins/org.talend.repository.pigudf</module>
     <module>test/plugins/org.talend.oozie.scheduler.test</module>
   </modules>
