@@ -10,7 +10,7 @@
   <properties>
     <tycho.version>0.21.0</tycho.version>
     <tycho-extras.version>0.21.0</tycho-extras.version>
-    <talend-repo.url>http://newbuild.talend.com/targetplatform/5.6</talend-repo.url>
+    <talend-repo.url>http://newbuild.talend.com/targetplatform/5.6/20140725</talend-repo.url>
   </properties>
 
   <repositories>
