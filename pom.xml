@@ -10,7 +10,7 @@
     <groupId>org.talend.studio</groupId>
     <artifactId>parent-pom</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>talend.studio.parent.pom/pom.xml</relativePath>
+    <relativePath>../studio-se-master/talend.studio.parent.pom/pom.xml</relativePath>
   </parent>
   <modules>
     <module>i18n/plugins/org.talend.demo.bigdata.ce.nl</module>
