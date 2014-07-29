@@ -129,12 +129,8 @@
 		}
 		
 		if(generateRegisterJarCodeForParquetFile) {
-			jarsToRegister.add("parquet-hadoop");
-			jarsToRegister.add("parquet-common");
-			jarsToRegister.add("parquet-column");
-			jarsToRegister.add("parquet-format");
-			jarsToRegister.add("parquet-pig");
-			jarsToRegister.add("parquet-encoding");
+			jarsToRegister.add("parquet-pig-bundle");
+			jarsToRegister.add("snappy-java");
 		}
 		
 		for (int j = 0; j < commandLine.length; j++) {
