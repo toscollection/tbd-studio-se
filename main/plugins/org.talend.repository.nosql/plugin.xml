@@ -207,7 +207,7 @@
       </classloader>
       <classloader
             index="NOSQL:NEO4J"
-            libraries="concurrentlinkedhashmap-lru-1.3.1.jar;geronimo-jta_1.1_spec-1.1.1.jar;jackson-core-asl-1.9.7.jar;jackson-jaxrs-1.9.7.jar;jackson-mapper-asl-1.9.7.jar;jersey-client-1.4.jar;jersey-core-1.4.jar;jsr311-api-1.1.2.r612.jar;lucene-core-3.5.0.jar;neo4j-cypher-1.9.M01.jar;neo4j-graph-algo-1.9.M01.jar;neo4j-graph-matching-1.9.M01.jar;neo4j-jmx-1.9.M01.jar;neo4j-kernel-1.9.M01.jar;neo4j-lucene-index-1.9.M01.jar;neo4j-rest-graphdb-1.8.1.jar;neo4j-shell-1.9.M01.jar;neo4j-udc-1.9.M01.jar;org.apache.servicemix.bundles.jline-0.9.94_1.jar;relaxngDatatype-20020414.jar;scala-library-2.9.1-1.jar;server-api-1.9.M01.jar">
+            libraries="neo4j-kernel-2.1.2.jar;neo4j-primitive-collections-2.1.2.jar;neo4j-rest-graphdb-2.0.1.jar;neo4j-cypher-2.1.2.jar;lucene-core-3.6.2.jar;neo4j-cypher-commons-2.1.2.jar;neo4j-cypher-compiler-1.9-2.0.3.jar;neo4j-cypher-compiler-2.0-2.0.3.jar;neo4j-cypher-compiler-2.1-2.1.2.jar;neo4j-graph-algo-2.1.2.jar;neo4j-graph-matching-2.1.2.jar;neo4j-lucene-index-2.1.2.jar;concurrentlinkedhashmap-lru-1.3.1.jar;scala-library-2.10.4.jar;geronimo-jta_1.1_spec-1.1.1.jar;jsr311-api-1.1.2.r612.jar;jersey-client-1.4.jar;jersey-core-1.4.jar;jackson-mapper-asl-1.9.7.jar;jackson-jaxrs-1.9.7.jar;jackson-core-asl-1.9.7.jar">
       </classloader>
    </extension>
    <extension
