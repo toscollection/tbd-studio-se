@@ -715,7 +715,7 @@
 			<IMPORT NAME="derby-10.4.2.0" MODULE="derby-10.4.2.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jdbc.derby/lib/derby-10.4.2.0.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
-			<IMPORT NAME="maprfs-1.0.3-mapr-2.1.5.0.jar" MODULE="maprfs-1.0.3-mapr-2.1.5.0.jar"
+			<IMPORT NAME="maprfs-1.0.3-mapr-2.1.3.2.jar" MODULE="maprfs-1.0.3-mapr-2.1.3.2.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar"
