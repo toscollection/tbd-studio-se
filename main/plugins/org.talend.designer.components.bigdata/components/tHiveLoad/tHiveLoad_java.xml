@@ -311,14 +311,14 @@
 
 		<PARAMETER NAME="TARGET_TABLE_IS_A_PARQUET_TABLE" FIELD="CHECK"
 			NUM_ROW="70"
-			SHOW_IF="(USE_EXISTING_CONNECTION == 'true' AND ((#LINK@NODE.CONNECTION.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.CONNECTION.HIVE_VERSION=='Cloudera_CDH5') OR #LINK@NODE.CONNECTION.DISTRIBUTION=='CUSTOM')) OR ((USE_EXISTING_CONNECTION == 'false') AND ((LOAD_ACTION=='LOAD') OR ((LOAD_ACTION=='INSERT') AND (TARGET=='TABLE'))) AND (DISTRIBUTION=='CUSTOM' OR (DISTRIBUTION=='CLOUDERA' AND HIVE_VERSION=='Cloudera_CDH5')))"
+			SHOW_IF="((LOAD_ACTION=='LOAD') OR ((LOAD_ACTION=='INSERT') AND (TARGET=='TABLE')))"
 			GROUP="LOAD_DATA_GROUP">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="PARQUET_COMPRESSION" FIELD="CLOSED_LIST"
 			NUM_ROW="70"
-			SHOW_IF="TARGET_TABLE_IS_A_PARQUET_TABLE=='true' AND (USE_EXISTING_CONNECTION == 'true' AND ((#LINK@NODE.CONNECTION.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.CONNECTION.HIVE_VERSION=='Cloudera_CDH5') OR #LINK@NODE.CONNECTION.DISTRIBUTION=='CUSTOM')) OR ((USE_EXISTING_CONNECTION == 'false') AND ((LOAD_ACTION=='LOAD') OR ((LOAD_ACTION=='INSERT') AND (TARGET=='TABLE'))) AND (DISTRIBUTION=='CUSTOM' OR (DISTRIBUTION=='CLOUDERA' AND HIVE_VERSION=='Cloudera_CDH5')))"
+			SHOW_IF="(isShow[TARGET_TABLE_IS_A_PARQUET_TABLE]) AND (TARGET_TABLE_IS_A_PARQUET_TABLE=='true')"
 			GROUP="LOAD_DATA_GROUP">
 			<ITEMS DEFAULT="UNCOMPRESSED">
 				<ITEM NAME="UNCOMPRESSED" VALUE="UNCOMPRESSED" />
@@ -715,7 +715,7 @@
 			<IMPORT NAME="derby-10.4.2.0" MODULE="derby-10.4.2.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jdbc.derby/lib/derby-10.4.2.0.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
-			<IMPORT NAME="maprfs-1.0.3-mapr-2.1.3.2.jar" MODULE="maprfs-1.0.3-mapr-2.1.3.2.jar"
+			<IMPORT NAME="maprfs-1.0.3-mapr-2.1.5.0.jar" MODULE="maprfs-1.0.3-mapr-2.1.5.0.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar"
@@ -1553,16 +1553,6 @@
 			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
 				REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH5') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
-
-			<IMPORT NAME="parquet-hadoop-1.2.5-cdh5.0.3" MODULE="parquet-hadoop-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-hadoop-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="TARGET_TABLE_IS_A_PARQUET_TABLE=='true' AND (LOAD_ACTION=='LOAD' OR (LOAD_ACTION=='INSERT' AND TARGET=='TABLE')) AND ((USE_EXISTING_CONNECTION == 'true' AND #LINK@NODE.CONNECTION.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.CONNECTION.HIVE_VERSION=='Cloudera_CDH5') OR (USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='CLOUDERA' AND HIVE_VERSION=='Cloudera_CDH5'))" />
-			<IMPORT NAME="parquet-common-1.2.5-cdh5.0.3" MODULE="parquet-common-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-common-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="TARGET_TABLE_IS_A_PARQUET_TABLE=='true' AND (LOAD_ACTION=='LOAD' OR (LOAD_ACTION=='INSERT' AND TARGET=='TABLE')) AND ((USE_EXISTING_CONNECTION == 'true' AND #LINK@NODE.CONNECTION.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.CONNECTION.HIVE_VERSION=='Cloudera_CDH5') OR (USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='CLOUDERA' AND HIVE_VERSION=='Cloudera_CDH5'))" />
-			<IMPORT NAME="parquet-column-1.2.5-cdh5.0.3" MODULE="parquet-column-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-column-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="TARGET_TABLE_IS_A_PARQUET_TABLE=='true' AND (LOAD_ACTION=='LOAD' OR (LOAD_ACTION=='INSERT' AND TARGET=='TABLE')) AND ((USE_EXISTING_CONNECTION == 'true' AND #LINK@NODE.CONNECTION.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.CONNECTION.HIVE_VERSION=='Cloudera_CDH5') OR (USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='CLOUDERA' AND HIVE_VERSION=='Cloudera_CDH5'))" />
 			<!-- ############## -->
 
 			<!-- PIVOTAL_HD_1_0_1 -->
@@ -2076,6 +2066,16 @@
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
 				REQUIRED_IF="(HIVE_VERSION=='HDP_2_1') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<!-- ############## -->
+
+			<!-- PARQUET SUPPORT -->
+			<IMPORT NAME="parquet-hive-bundle-1.5.0" MODULE="parquet-hive-bundle-1.5.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-hive-bundle-1.5.0.jar"
+				REQUIRED_IF="isShow[PARQUET_COMPRESSION]" />
+			<IMPORT NAME="snappy-java-1.0.5.jar" MODULE="snappy-java-1.0.5.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
+				REQUIRED_IF="(isShow[PARQUET_COMPRESSION]) AND (PARQUET_COMPRESSION=='SNAPPY')" />
+			<!-- ############## -->
+
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>

@@ -6,6 +6,8 @@ imports="
 		org.talend.core.model.metadata.IMetadataTable 
 		org.talend.core.model.metadata.IMetadataColumn
 		org.talend.core.model.process.IConnection
+		org.talend.designer.runprocess.ProcessorException
+		org.talend.designer.runprocess.ProcessorUtilities
 		
 		java.util.List
 		java.util.Map
@@ -17,6 +19,9 @@ imports="
 	INode node = (INode)codeGenArgument.getArgument();
 	
 	String cid = node.getUniqueName();
+	String processId = node.getProcess().getId();
+	
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
 	String dbtable = null;
 	String uniqueNameConnection = null;
@@ -99,6 +104,9 @@ java.sql.Connection conn_<%=cid%> = null;
 String connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
 String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
 
+boolean setFsDefaultName = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_FS_DEFAULT_NAME__"));
+String fsDefaultName = ElementParameterParser.getValue(previousNode, "__FS_DEFAULT_NAME__");
+
 String yarnClasspathSeparator = ElementParameterParser.getValue(previousNode, "__CLASSPATH_SEPARATOR__");
 %>
 globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
@@ -106,7 +114,19 @@ System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
 <%
 
 if(useExistingConn) {
+	 connectionMode = "";
+	 setFsDefaultName = false;
+	 fsDefaultName = "";
     String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
+    for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
+			if(connection!=null && connection.equals(pNode.getUniqueName())) {
+				connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
+				setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
+				fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
+				break;
+			}
+	 }
+    
     String conn = "conn_" + connection;
     String db = "db_" + connection;
     String dbUser = "dbUser_" + connection;
@@ -282,10 +302,9 @@ if(useExistingConn) {
 <%
 			}
 		
-			if("true".equals(ElementParameterParser.getValue(previousNode, "__SET_FS_DEFAULT_NAME__"))) {
-				String namenode = ElementParameterParser.getValue(previousNode, "__FS_DEFAULT_NAME__");
+			if(setFsDefaultName) {
 %>
-				init_<%=cid%>.execute("SET fs.default.name=" + <%=namenode%>);
+				init_<%=cid%>.execute("SET fs.default.name=" + <%=fsDefaultName%>);
 <%
 			}
 		
@@ -295,11 +314,13 @@ if(useExistingConn) {
 				init_<%=cid%>.execute("SET mapreduce.app-submission.cross-platform=true");
 				init_<%=cid%>.execute("SET yarn.application.classpath=/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*");
 <%
+				/**/
 				} else {
 %>
         		//set default yarn classpath with environment variable
         		init_<%=cid%>.execute("SET yarn.application.classpath=$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
 <%
+				/**/
 				}
 				
     			boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(previousNode, "__CROSS_PLATFORM_SUBMISSION__"));
@@ -380,8 +401,87 @@ if(metadatas !=null && metadatas.size()>0){
 		columnList = metadata.getListColumns();
 	}
 }
+	
+	// Register jars to handle the parquet format.
+	boolean targetTableUsesParquetFormat = "true".equals(ElementParameterParser.getValue(node, "__TARGET_TABLE_IS_A_PARQUET_TABLE__"));
+	boolean generateAddJarCodeForAll = targetTableUsesParquetFormat;
+	
+	if(targetTableUsesParquetFormat) {
+		String compression = ElementParameterParser.getValue(node, "__PARQUET_COMPRESSION__");
+		java.util.List<String> jarsToRegister = null;
+		java.util.List<String> jars = null;
+		if(generateAddJarCodeForAll) {
+			String[] commandLine = new String[] {"<command>"};
+			try {
+				commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
+			} catch (ProcessorException e) {
+				e.printStackTrace();
+			}
+	
+			jarsToRegister = new java.util.ArrayList();
+			
+			jarsToRegister.add("snappy-java");
+			jarsToRegister.add("parquet-hive-bundle");
+	
+			for (int j = 0; j < commandLine.length; j++) {
+				if(commandLine[j].contains("jar")) {
+					jars = java.util.Arrays.asList(commandLine[j].split(";"));
+					break;
+				}
+			}
+		}
+		if(jarsToRegister!=null && jars!=null) {
+			if("EMBEDDED".equalsIgnoreCase(connectionMode)) {
+%>		
+				<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
+				GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+<%
+			} else {
+				generateAddJarCodeForAll = false;
+				if(setFsDefaultName) {
+					generateAddJarCodeForAll = true;
 %>
-
+					<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetHiveJarsToRegister.javajet"%>
+					GetHiveJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetHiveJarsToRegister_<%=cid%>();
+<%		
+				}	
+			}
+			
+			if(generateAddJarCodeForAll) {
+%>
+				java.sql.Statement addJar_<%=cid%> = null;
+<%
+				for(int i=0; i<jarsToRegister.size(); i++) {
+					String jarToRegister = jarsToRegister.get(i);
+					for(int j=0; j<jars.size(); j++) {
+						if(jars.get(j).contains(jarToRegister)) {
+%>
+							addJar_<%=cid%> = conn_<%=cid%>.createStatement();
+							try {
+								addJar_<%=cid%>.execute("add jar " + getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+							} catch (Exception e) {
+								e.printStackTrace();
+							} finally {
+								addJar_<%=cid%>.close();
+							}
+<%
+						}
+					}
+				}
+			}
+		}
+		
+		// End of parquet format handling.
+%>
+		java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
+		try {
+			setCompression_<%=cid%>.execute("SET parquet.compression=<%=compression%>");
+		} finally {
+			setCompression_<%=cid%>.close();
+		}
+<%
+	} 
+%>
 java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 
 	StringBuffer partitionSql = new StringBuffer();
