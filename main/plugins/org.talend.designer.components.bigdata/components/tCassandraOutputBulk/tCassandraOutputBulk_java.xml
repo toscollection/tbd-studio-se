@@ -29,10 +29,11 @@
         <CONNECTOR CTYPE="RUN_IF"/>
     </CONNECTORS>
     <PARAMETERS>
+        <PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" NUM_ROW="1" REPOSITORY_VALUE="NOSQL:CASSANDRA"/>
         <PARAMETER
             NAME="MAPPING"
             FIELD="MAPPING_TYPE"
-            NUM_ROW="1"
+            NUM_ROW="2"
             SHOW="false"
         >
             <DEFAULT>cassandra_id</DEFAULT>
@@ -40,13 +41,14 @@
         <PARAMETER
             NAME="SCHEMA_FLOW"
             FIELD="SCHEMA_TYPE"
-            NUM_ROW="1"
+            NUM_ROW="2"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="DB_VERSION"
             FIELD="CLOSED_LIST"
+            REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="5"
             >
             <ITEMS DEFAULT="CASSANDRA_2_0_8">
@@ -59,6 +61,7 @@
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"
+            REPOSITORY_VALUE="KEY_SPACE"
             REQUIRED="true"
             NUM_ROW="10"
         >

@@ -41,7 +41,6 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
         } else if (ICassandraAttributies.PORT.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.PORT));
         } else if (ICassandraAttributies.KEY_SPACE.equals(value)) {
-            // KEY_SPACE
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.DATABASE));
         } else if (ICassandraAttributies.USERNAME.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.USERNAME));
@@ -49,7 +48,7 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.PASSWORD));
         } else if (ICassandraAttributies.REQUIRED_AUTHENTICATION.endsWith(value)) {
             return getCanonicalRepositoryValue(connection,
-                    connection.getAttributes().get(ICassandraAttributies.REQUIRED_AUTHENTICATION));
+                    connection.getAttributes().get(ICassandraAttributies.REQUIRED_AUTHENTICATION), false);
         }
         return null;
     }
