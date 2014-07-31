@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Oozie Plugin Nl
 Bundle-SymbolicName: org.talend.repository.oozie.nl
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 5.6.0.qualifier
 Fragment-Host: org.talend.repository.oozie;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: .Talend SA.

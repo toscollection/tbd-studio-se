@@ -2,4 +2,4 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Sdsulib
 Bundle-SymbolicName: org.talend.libraries.sdsulib
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 5.6.0.qualifier
