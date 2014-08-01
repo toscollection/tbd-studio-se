@@ -9,8 +9,14 @@
     <groupId>org.talend.studio</groupId>
     <artifactId>parent-pom</artifactId>
     <version>5.6.0-SNAPSHOT</version>
-    <relativePath>../studio-se-master/talend.studio.parent.pom/pom.xml</relativePath>
+	<relativePath>../studio-se-master/talend.studio.parent.pom/pom.xml</relativePath>
   </parent>
+  <repositories>
+	<repository>
+		<id>talend_nexus</id>
+		<url>http://newbuild.talend.com:8081/nexus/content/repositories/snapshots/</url>
+	</repository>
+  </repositories>
   <modules>
     <module>i18n/plugins/org.talend.demo.bigdata.ce.nl</module>
     <module>i18n/plugins/org.talend.designer.hdfsbrowse.nl</module>
