@@ -337,8 +337,9 @@ public abstract class AbstractNoSQLRetrieveSchemaForm extends AbstractNoSQLForm 
     private void deleteTable(TreeItem item) {
         INoSQLSchemaNode node = (INoSQLSchemaNode) item.getData();
         if (node != null && node.getSchemaType() == ENoSQLSchemaType.TABLE) {
-            NoSQLSchemaUtil.removeTableFromConnection(getConnection(), MetadataToolHelper.validateTableName(node.getName()),
-                    NoSQLRepositoryUtil.getDBName(node));
+            String tableName = MetadataToolHelper.validateTableName(node.getName());
+            NoSQLSchemaUtil.removeTableFromConnection(getConnection(), tableName, NoSQLRepositoryUtil.getDBName(node));
+            hitTablesMap.remove(tableName);
             clearItemStatus(node);
             RetrieveColumnRunnable runnable = retrieveSchemaExecutor.getRunnable(node);
             if (runnable != null) {
@@ -427,13 +428,13 @@ public abstract class AbstractNoSQLRetrieveSchemaForm extends AbstractNoSQLForm 
         return null;
     }
 
-    @Override
-    public void setVisible(boolean visible) {
-        super.setVisible(visible);
-        if (visible) {
-            hitTablesMap.clear();
-        }
-    }
+    // @Override
+    // public void setVisible(boolean visible) {
+    // super.setVisible(visible);
+    // if (visible) {
+    // // hitTablesMap.clear();
+    // }
+    // }
 
     @Override
     protected void processWhenDispose() {

@@ -42,10 +42,30 @@ public class Neo4jConnectionUtil {
 
     public static synchronized boolean checkConnection(NoSQLConnection connection) throws NoSQLServerException {
         boolean canConnect = true;
+        ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
         try {
             Object db = getDB(connection);
-            NoSQLReflection.invokeMethod(db, "getAllNodes", //$NON-NLS-1$
-                    new Object[0]);
+            boolean isRemote = Boolean.valueOf(connection.getAttributes().get(INeo4jAttributes.REMOTE_SERVER));
+            if (isRemote) {
+                NoSQLReflection.invokeMethod(db, "getAllNodes", //$NON-NLS-1$
+                        new Object[0]);
+            } else {
+                Object tx = NoSQLReflection.invokeMethod(db, "beginTx", //$NON-NLS-1$
+                        new Object[0]);
+                try {
+                    Object ggo = NoSQLReflection.invokeStaticMethod("org.neo4j.tooling.GlobalGraphOperations", "at", //$NON-NLS-1$ //$NON-NLS-2$
+                            new Object[] { db }, classLoader,
+                            Class.forName("org.neo4j.graphdb.GraphDatabaseService", true, classLoader)); //$NON-NLS-1$
+                    NoSQLReflection.invokeMethod(ggo, "getAllLabels", //$NON-NLS-1$
+                            new Object[0]);
+
+                    NoSQLReflection.invokeMethod(tx, "success", //$NON-NLS-1$
+                            new Object[0]);
+                } finally {
+                    NoSQLReflection.invokeMethod(tx, "close", //$NON-NLS-1$
+                            new Object[0]);
+                }
+            }
         } catch (Exception e) {
             canConnect = false;
             resetAll();
@@ -63,8 +83,7 @@ public class Neo4jConnectionUtil {
 
         ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
         try {
-            String isRemoteAttr = connection.getAttributes().get(INeo4jAttributes.REMOTE_SERVER);
-            boolean isRemote = isRemoteAttr == null ? false : Boolean.valueOf(isRemoteAttr);
+            boolean isRemote = Boolean.valueOf(connection.getAttributes().get(INeo4jAttributes.REMOTE_SERVER));
             if (isRemote) {
                 String serverUrl = StringUtils.trimToEmpty(connection.getAttributes().get(INeo4jAttributes.SERVER_URL));
                 if (connection.isContextMode()) {
@@ -126,7 +145,7 @@ public class Neo4jConnectionUtil {
             } else {
                 Object executionResult = NoSQLReflection.invokeMethod(getExecutionEngine(db, classLoader),
                         "execute", new Object[] { cypher }); //$NON-NLS-1$
-                resultIterator = (Iterator<Map<String, Object>>) NoSQLReflection.invokeMethod(executionResult, "javaIterator", //$NON-NLS-1$
+                resultIterator = (Iterator<Map<String, Object>>) NoSQLReflection.invokeMethod(executionResult, "iterator", //$NON-NLS-1$
                         new Object[0]);
             }
         } catch (NoSQLReflectionException e) {
@@ -160,7 +179,7 @@ public class Neo4jConnectionUtil {
         }
 
         try {
-            ee = NoSQLReflection.newInstance("org.neo4j.cypher.ExecutionEngine", new Object[] { db }, //$NON-NLS-1$
+            ee = NoSQLReflection.newInstance("org.neo4j.cypher.javacompat.ExecutionEngine", new Object[] { db }, //$NON-NLS-1$
                     classLoader, Class.forName("org.neo4j.graphdb.GraphDatabaseService", true, classLoader)); //$NON-NLS-1$
         } catch (ClassNotFoundException e) {
             throw new NoSQLReflectionException(e);

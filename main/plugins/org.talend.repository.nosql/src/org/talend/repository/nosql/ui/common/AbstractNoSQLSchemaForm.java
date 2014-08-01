@@ -551,6 +551,45 @@ public abstract class AbstractNoSQLSchemaForm extends AbstractNoSQLForm {
         }
     }
 
+    protected void pressAddTableButton() {
+        addMetadataTable();
+    }
+
+    protected void pressRemoveTableButton() {
+        TableItem[] selection = tableNavigator.getSelection();
+        if (selection != null && selection.length > 0) {
+            boolean openConfirm = MessageDialog
+                    .openConfirm(
+                            getShell(),
+                            Messages.getString("AbstractNoSQLSchemaForm.DialogDeleteTitle"), Messages.getString("AbstractNoSQLSchemaForm.DialogDeleteMsg")); //$NON-NLS-1$ //$NON-NLS-2$
+            if (openConfirm) {
+                for (TableItem item : selection) {
+                    if (tableNavigator.indexOf(item) != -1) {
+                        removeMetadataTable(item.getText());
+                        tableNavigator.remove(tableNavigator.indexOf(item));
+                        if (tableNavigator.getItemCount() > 1) {
+                            tableNavigator.setSelection(tableNavigator.getItem(tableNavigator.getItemCount() - 1));
+                        }
+                    }
+                }
+                IWizardPage prePage = parentWizardPage.getPreviousPage();
+                if (prePage instanceof NoSQLRetrieveSchemaWizardPage) {
+                    ((NoSQLRetrieveSchemaWizardPage) prePage).restoreCheckItems();
+                }
+                int size = tableNavigator.getItems().length;
+                int index = 0;
+                if (size >= 1) {
+                    index = size - 1;
+                    String tableName = tableNavigator.getItem(index).getText();
+                    metadataTable = NoSQLSchemaUtil.getTableByLabel(getConnection(), tableName, null);
+                    initMetadataForm();
+                } else {
+                    metadataTable = null;
+                }
+            }
+        }
+    }
+
     @Override
     protected void addUtilsButtonListeners() {
         if (refreshBtn != null) {
@@ -582,7 +621,7 @@ public abstract class AbstractNoSQLSchemaForm extends AbstractNoSQLForm {
             public void widgetSelected(final SelectionEvent e) {
                 if (addTableBtn.getEnabled()) {
                     addTableBtn.setEnabled(true);
-                    addMetadataTable();
+                    pressAddTableButton();
                 } else {
                     addTableBtn.setEnabled(false);
                 }
@@ -593,38 +632,7 @@ public abstract class AbstractNoSQLSchemaForm extends AbstractNoSQLForm {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                TableItem[] selection = tableNavigator.getSelection();
-                if (selection != null && selection.length > 0) {
-                    boolean openConfirm = MessageDialog.openConfirm(
-                            getShell(),
-                            Messages.getString("AbstractNoSQLSchemaForm.DialogDeleteTitle"), Messages.getString("AbstractNoSQLSchemaForm.DialogDeleteMsg")); //$NON-NLS-1$ //$NON-NLS-2$
-                    if (openConfirm) {
-                        for (TableItem item : selection) {
-                            if (tableNavigator.indexOf(item) != -1) {
-                                NoSQLSchemaUtil.removeTableFromConnection(getConnection(), item.getText(), null);
-                                tableNavigator.remove(tableNavigator.indexOf(item));
-                                if (tableNavigator.getItemCount() > 1) {
-                                    tableNavigator.setSelection(tableNavigator.getItem(tableNavigator.getItemCount() - 1));
-                                }
-                            }
-                        }
-                        IWizardPage prePage = parentWizardPage.getPreviousPage();
-                        if (prePage instanceof NoSQLRetrieveSchemaWizardPage) {
-                            ((NoSQLRetrieveSchemaWizardPage) prePage).restoreCheckItems();
-                        }
-                        int size = tableNavigator.getItems().length;
-                        int index = 0;
-                        if (size >= 1) {
-                            index = size - 1;
-                            String tableName = tableNavigator.getItem(index).getText();
-                            metadataTable = NoSQLSchemaUtil.getTableByLabel(getConnection(), tableName, null);
-                            initMetadataForm();
-                        } else {
-                            metadataTable = null;
-                            // clearMetadataForm();
-                        }
-                    }
-                }
+                pressRemoveTableButton();
             }
         });
     }
@@ -640,6 +648,10 @@ public abstract class AbstractNoSQLSchemaForm extends AbstractNoSQLForm {
         initTreeNavigatorNodes();
         // init The Form
         initMetadataForm();
+    }
+
+    protected void removeMetadataTable(String tableName) {
+        NoSQLSchemaUtil.removeTableFromConnection(getConnection(), tableName, null);
     }
 
     @Override

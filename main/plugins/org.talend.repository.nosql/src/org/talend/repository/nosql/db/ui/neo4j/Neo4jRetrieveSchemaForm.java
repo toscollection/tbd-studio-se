@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.repository.nosql.db.ui.neo4j;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -64,6 +68,22 @@ public class Neo4jRetrieveSchemaForm extends AbstractNoSQLRetrieveSchemaForm {
     @Override
     protected void initialize() {
         // Do nothing.
+    }
+
+    @Override
+    public void restoreCheckItems() {
+        List<String> tableLabels = NoSQLSchemaUtil.getAllTableLabels(getConnection());
+        Iterator<Entry<String, MetadataTable>> hitTablesIter = hitTablesMap.entrySet().iterator();
+        while (hitTablesIter.hasNext()) {
+            Entry<String, MetadataTable> tabEntry = hitTablesIter.next();
+            if (!tableLabels.contains(tabEntry.getKey())) {
+                hitTablesIter.remove();
+            }
+        }
+        if (hitTablesMap.size() == 0) {
+            colorText.setText(""); //$NON-NLS-1$
+            table = null;
+        }
     }
 
     @Override

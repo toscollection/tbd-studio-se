@@ -38,7 +38,7 @@ public class MongoDBDNDProvider extends AbstractDNDProvider {
         } else if (IMongoDBAttributes.HOST.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.HOST));
         } else if (IMongoDBAttributes.PORT.equals(value)) {
-            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.PORT));
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.PORT), false);
         } else if (IMongoDBAttributes.DATABASE.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.DATABASE));
         } else if (IMongoDBAttributes.REQUIRED_AUTHENTICATION.endsWith(value)) {
