@@ -381,6 +381,14 @@
 				<ITEM NAME="JAR_NAME" FIELD="MODULE_LIST" />
 			</ITEMS>
 		</PARAMETER>
+		<PARAMETER NAME="DEFINE_FUNCTION" FIELD="TABLE" NUM_ROW="9"
+			NB_LINES="3" GROUP="ADVANCED_CONFIGURATION">
+			<ITEMS>
+				<ITEM NAME="FUNCTION_ALIAS" FIELD="TEXT" VALUE="" />
+				<ITEM NAME="UDF_FUNCTION" FIELD="TEXT" VALUE="" />
+			</ITEMS>
+		</PARAMETER>
+
 		<PARAMETER NAME="ADVANCED_PROPERTIES" FIELD="TABLE"
 			REQUIRED="false" NUM_ROW="10" NB_LINES="3">
 			<ITEMS>
@@ -2003,6 +2011,12 @@
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
 				REQUIRED="true" />
 			<!-- Parquet Support End -->
+
+			<!-- DATAFU Support Begin -->
+			<IMPORT NAME="datafu-1.2.0" MODULE="datafu-1.2.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/datafu-1.2.0.jar"
+				REQUIRED="true" />
+			<!-- DATAFU Support End -->
 
 		</IMPORTS>
 	</CODEGENERATION>
