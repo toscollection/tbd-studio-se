@@ -179,7 +179,7 @@ public interface HadoopClusterConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>Name Node URI</b></em>' attribute.
-     * The default value is <code>"hdfs://localhost:8020"</code>.
+     * The default value is <code>""</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Name Node URI</em>' attribute isn't clear,
@@ -189,7 +189,7 @@ public interface HadoopClusterConnection extends Connection {
      * @return the value of the '<em>Name Node URI</em>' attribute.
      * @see #setNameNodeURI(String)
      * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_NameNodeURI()
-     * @model default="hdfs://localhost:8020" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
      * @generated
      */
     String getNameNodeURI();
@@ -206,7 +206,7 @@ public interface HadoopClusterConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>Job Tracker URI</b></em>' attribute.
-     * The default value is <code>"localhost:50300"</code>.
+     * The default value is <code>""</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Job Tracker URI</em>' attribute isn't clear,
@@ -216,7 +216,7 @@ public interface HadoopClusterConnection extends Connection {
      * @return the value of the '<em>Job Tracker URI</em>' attribute.
      * @see #setJobTrackerURI(String)
      * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_JobTrackerURI()
-     * @model default="localhost:50300" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
      * @generated
      */
     String getJobTrackerURI();
@@ -259,7 +259,7 @@ public interface HadoopClusterConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>Principal</b></em>' attribute.
-     * The default value is <code>"nn/_HOST@EXAMPLE.COM"</code>.
+     * The default value is <code>""</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Principal</em>' attribute isn't clear,
@@ -269,7 +269,7 @@ public interface HadoopClusterConnection extends Connection {
      * @return the value of the '<em>Principal</em>' attribute.
      * @see #setPrincipal(String)
      * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_Principal()
-     * @model default="nn/_HOST@EXAMPLE.COM" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
      * @generated
      */
     String getPrincipal();
@@ -286,7 +286,7 @@ public interface HadoopClusterConnection extends Connection {
 
     /**
      * Returns the value of the '<em><b>User Name</b></em>' attribute.
-     * The default value is <code>"anonymous"</code>.
+     * The default value is <code>""</code>.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>User Name</em>' attribute isn't clear,
@@ -296,7 +296,7 @@ public interface HadoopClusterConnection extends Connection {
      * @return the value of the '<em>User Name</em>' attribute.
      * @see #setUserName(String)
      * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_UserName()
-     * @model default="anonymous" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
      * @generated
      */
     String getUserName();

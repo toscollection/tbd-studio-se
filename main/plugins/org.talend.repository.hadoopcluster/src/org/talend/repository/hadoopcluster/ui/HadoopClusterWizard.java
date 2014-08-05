@@ -149,7 +149,7 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
         propertiesPage = new HadoopPropertiesWizardPage(
                 "HadoopClusterPropertiesWizardPage", connectionProperty, pathToSave, HadoopClusterRepositoryNodeType.HADOOPCLUSTER, //$NON-NLS-1$
                 !isRepositoryObjectEditable(), creation);
-        mainPage = new HadoopClusterWizardPage(connectionItem, isRepositoryObjectEditable(), existingNames);
+        mainPage = new HadoopClusterWizardPage(connectionItem, isRepositoryObjectEditable(), existingNames, creation);
         if (creation) {
             propertiesPage.setTitle(Messages.getString("HadoopClusterWizardPage.titleCreate.Step1")); //$NON-NLS-1$
             propertiesPage.setDescription(Messages.getString("HadoopClusterWizardPage.descriptionCreate.Step1")); //$NON-NLS-1$

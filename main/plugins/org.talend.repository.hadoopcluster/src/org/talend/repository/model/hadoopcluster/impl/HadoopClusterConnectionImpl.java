@@ -168,7 +168,7 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @generated
      * @ordered
      */
-    protected static final String NAME_NODE_URI_EDEFAULT = "hdfs://localhost:8020";
+    protected static final String NAME_NODE_URI_EDEFAULT = "";
 
     /**
      * The cached value of the '{@link #getNameNodeURI() <em>Name Node URI</em>}' attribute.
@@ -188,7 +188,7 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @generated
      * @ordered
      */
-    protected static final String JOB_TRACKER_URI_EDEFAULT = "localhost:50300";
+    protected static final String JOB_TRACKER_URI_EDEFAULT = "";
 
     /**
      * The cached value of the '{@link #getJobTrackerURI() <em>Job Tracker URI</em>}' attribute.
@@ -228,7 +228,7 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @generated
      * @ordered
      */
-    protected static final String PRINCIPAL_EDEFAULT = "nn/_HOST@EXAMPLE.COM";
+    protected static final String PRINCIPAL_EDEFAULT = "";
 
     /**
      * The cached value of the '{@link #getPrincipal() <em>Principal</em>}' attribute.
@@ -248,7 +248,7 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @generated
      * @ordered
      */
-    protected static final String USER_NAME_EDEFAULT = "anonymous";
+    protected static final String USER_NAME_EDEFAULT = "";
 
     /**
      * The cached value of the '{@link #getUserName() <em>User Name</em>}' attribute.
