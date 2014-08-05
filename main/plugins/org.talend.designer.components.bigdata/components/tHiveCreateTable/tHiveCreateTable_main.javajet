@@ -50,7 +50,6 @@ if(metadatas != null && metadatas.size() > 0) {
 
 StringBuilder createTableSQL = new StringBuilder();
 
-boolean external = "true".equals(ElementParameterParser.getValue(node, "__CREATE_EXTERNAL__"));
 String tableAction = ElementParameterParser.getValue(node,"__TABLEACTION__");
 boolean createIfNotExist = "CREATE_IF_NOT_EXIST".equals(tableAction);
 boolean setPartitioned = "true".equals(ElementParameterParser.getValue(node, "__SET_PARTITIONS__"));
@@ -65,7 +64,10 @@ String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 boolean isCustom = "CUSTOM".equals(distribution);
 
 boolean setLocation = "true".equals(ElementParameterParser.getValue(node, "__SET_FILE_LOCATION__"));
+boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
+boolean external = "true".equals(ElementParameterParser.getValue(node, "__CREATE_EXTERNAL__")) || (setLocation && isS3Location);
 String location = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
+
 
 String storedFormat = ElementParameterParser.getValue(node, "__STORAGE_FORMAT__");
 
@@ -116,14 +118,14 @@ if(likeTable) {
 	createTableSQL.append(" + \"");
 	
 	if(setLocation) {
-%>
+	    %>
 		String location_<%=cid%> = <%=location%>;
-<%
-    	createTableSQL.append(" LOCATION '");
-    	createTableSQL.append("\" + ");
-    	createTableSQL.append("location_");
-    	createTableSQL.append(cid);
-    	createTableSQL.append(" + \"'");
+		<%
+        createTableSQL.append(" LOCATION '");
+        createTableSQL.append("\" + ");
+        createTableSQL.append("location_");
+        createTableSQL.append(cid);
+        createTableSQL.append(" + \"'");
 	}
 %>
 	String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
@@ -525,9 +527,22 @@ if(storeAsAvro || storeAsParquet) {
 }
 
 if(setLocation) {
-%>
-	String location_<%=cid%> = <%=location%>;
-<%
+    if (isS3Location) {
+        String s3bucket = ElementParameterParser.getValue(node, "__S3_BUCKET__");
+        String s3username = ElementParameterParser.getValue(node, "__S3_USERNAME__");
+    
+        String passwordFieldName = "__S3_PASSWORD__";
+        // Get the decrypted password under the variable decryptedPassword_
+        %>
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+        String location_<%=cid%> = "s3n://" + <%=s3username%> +":" + decryptedPassword_<%=cid%> + "@" + <%=s3bucket%>;
+        <%
+    
+    } else {
+        %>
+    	String location_<%=cid%> = <%=location%>;
+        <%
+    }
 	createTableSQL.append(" LOCATION '");
 	createTableSQL.append("\" + ");
 	createTableSQL.append("location_");
