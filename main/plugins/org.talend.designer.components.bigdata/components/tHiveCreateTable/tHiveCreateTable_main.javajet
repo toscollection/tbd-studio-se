@@ -532,10 +532,19 @@ if(setLocation) {
         String s3username = ElementParameterParser.getValue(node, "__S3_USERNAME__");
     
         String passwordFieldName = "__S3_PASSWORD__";
-        // Get the decrypted password under the variable decryptedPassword_
+        // Get the decrypted password under the variable decryptedS3Password
+        
+        if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+            %> 
+            String decryptedS3Password_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+            <%
+        } else {
+            %>
+            String decryptedS3Password_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+            <%
+        }
         %>
-        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
-        String location_<%=cid%> = "s3n://" + <%=s3username%> +":" + decryptedPassword_<%=cid%> + "@" + <%=s3bucket%>;
+        String location_<%=cid%> = "s3n://" + <%=s3username%> +":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>;
         <%
     
     } else {
