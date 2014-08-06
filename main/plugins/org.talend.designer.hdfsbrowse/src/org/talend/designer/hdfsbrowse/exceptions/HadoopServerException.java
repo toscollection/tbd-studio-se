@@ -21,8 +21,8 @@ public class HadoopServerException extends Exception {
 
     private static final long serialVersionUID = 6647425021640000921L;
 
-    public HadoopServerException() {
-        super();
+    public HadoopServerException(String message) {
+        super(message);
     }
 
     public HadoopServerException(Throwable cause) {
