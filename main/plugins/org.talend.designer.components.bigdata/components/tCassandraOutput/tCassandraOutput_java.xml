@@ -493,7 +493,7 @@
             <IMPORT
                 NAME="libthrift-0.9.1"
                 MODULE="libthrift-0.9.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.cassandra/lib/libthrift-0.9.1.jar"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_8')" />
             <IMPORT
                 MODULE="guava-14.0.jar"

@@ -164,7 +164,7 @@
             <IMPORT
                 NAME="libthrift-0.9.1"
                 MODULE="libthrift-0.9.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.cassandra/lib/libthrift-0.9.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="guava-15.0"
@@ -242,18 +242,22 @@
             <IMPORT
                 NAME="snappy-java-1.0.5"
                 MODULE="snappy-java-1.0.5.jar"
+		UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="reporter-config-2.1.0"
                 MODULE="reporter-config-2.1.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/reporter-config-2.1.0.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="hibernate-validator-4.3.0.Final"
                 MODULE="hibernate-validator-4.3.0.Final.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hibernate-validator-4.3.0.Final.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="validation-api-1.0.0.GA"
                 MODULE="validation-api-1.0.0.GA.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/validation-api-1.0.0.GA.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
 
             <!-- 2.0.0 -->

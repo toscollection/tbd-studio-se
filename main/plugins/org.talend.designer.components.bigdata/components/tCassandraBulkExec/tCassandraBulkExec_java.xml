@@ -172,7 +172,7 @@
             <IMPORT
                 NAME="libthrift-0.9.1"
                 MODULE="libthrift-0.9.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.9.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="guava-15.0"
@@ -250,6 +250,7 @@
             <IMPORT
                 NAME="snappy-java-1.0.5"
                 MODULE="snappy-java-1.0.5.jar"
+		UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="reporter-config-2.1.0"

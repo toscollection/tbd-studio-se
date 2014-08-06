@@ -139,7 +139,7 @@
       <IMPORT
         NAME="lucene-core-3.6.2"
         MODULE="lucene-core-3.6.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/lucene-core-3.6.2.jar"
+        UrlPath="platform:/plugin/org.talend.libraries.apache.lucene/lib/lucene-core-3.6.2.jar"
         REQUIRED="true"/>
       <IMPORT
         NAME="neo4j-cypher-commons-2.1.2"
