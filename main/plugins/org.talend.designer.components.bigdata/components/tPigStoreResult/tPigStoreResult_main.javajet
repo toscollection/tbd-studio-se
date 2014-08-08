@@ -35,7 +35,10 @@
 	}
 	
 	String resultFile = ElementParameterParser.getValue(node, "__OUTPUT_FILENAME__");
-	String function = ElementParameterParser.getValue(node, "__STORE__");
+	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
+    String s3bucket = ElementParameterParser.getValue(node, "__S3_BUCKET__");
+    String s3username = ElementParameterParser.getValue(node, "__S3_USERNAME__");
+   	String function = ElementParameterParser.getValue(node, "__STORE__");
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
 	boolean rmResultDir = "true".equals(ElementParameterParser.getValue(node, "__RM_OUTPUT__"));
 	
@@ -134,10 +137,23 @@
 		}
 	}
 %>
-	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
-<%	
-	if(generateRegisterJarCodeForAll) {
-%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>
+	
+	<%	
+    if (isS3Location) {
+        String passwordFieldName = "__S3_PASSWORD__";
+        if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+            %>
+            String decryptedS3Password_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+            <%
+        } else {
+            %>
+            String decryptedS3Password_<%=cid%> = <%=ElementParameterParser.getValue(node, passwordFieldName)%>; 
+            <%
+        }
+    }
+    if(generateRegisterJarCodeForAll) {
+        %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
 			private boolean isOozieRuntime;
@@ -346,25 +362,54 @@
 		if (talendValueClass.equals("id_Long")) valueConverterClass="com.twitter.elephantbird.pig.util.LongWritableConverter";
 		if (talendValueClass.equals("id_Short")) valueConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
 		if (talendValueClass.equals("id_String")) valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
-%>
-		sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+
-			"' using com.twitter.elephantbird.pig.store.SequenceFileStorage('-c <%=keyConverterClass%>','-c <%=valueConverterClass%>');");
-<%
+
+		if (isS3Location) {
+            %>
+            sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"
+                    + "s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+                    + "' using com.twitter.elephantbird.pig.store.SequenceFileStorage('-c <%=keyConverterClass%>','-c <%=valueConverterClass%>');");
+            <%
+        } else {
+            %>
+            sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '" + <%=resultFile%>
+                    + "' using com.twitter.elephantbird.pig.store.SequenceFileStorage('-c <%=keyConverterClass%>','-c <%=valueConverterClass%>');");
+            <%
+        }
 	} else {
 		if("CustomStorer".equals(function)) {
-			String customStorer = ElementParameterParser.getValue(node, "__CUSTOM_STORER__");
-%>
-			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using " + <%=customStorer%> + ";");
-<%
+		    String customStorer = ElementParameterParser.getValue(node, "__CUSTOM_STORER__");
+		    if (isS3Location) {
+		        %>
+		        sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"
+		                + "s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+		                + "' using " + <%=customStorer%> + ";");
+                <%
+		    } else {
+		        %>
+		        sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '" + <%=resultFile%>
+		                + "' using " + <%=customStorer%> + ";");
+		        <%
+		    }
 		} else if("ParquetStorer".equals(function)) {
 			String parquetCompression = ElementParameterParser.getValue(node, "__PARQUET_COMPRESSION__");
 %>
 			StringBuilder script_<%=cid%>=new StringBuilder();
 			script_<%=cid%>.append("SET parquet.compression <%=parquetCompression%>;");
 			helper_<%=cid%>.add("script",script_<%=cid%>.toString());
-			
-			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using parquet.pig.ParquetStorer;");
-<%
+
+			<%
+			if (isS3Location) {
+                %>
+                sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"
+                        + "s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+                        + "' using parquet.pig.ParquetStorer;");
+                <%
+            } else {
+                %>
+                sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '" + <%=resultFile%>
+                        + "' using parquet.pig.ParquetStorer;");
+                <%
+            }
 		}else if("HBaseStorage".equals(function)) {
 			String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
 			String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
@@ -501,9 +546,19 @@
 			if("AvroStorage".equals(function)) {
 				function = "org.apache.pig.piggybank.storage.avro.AvroStorage";
 			}
-%>
-			sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=resultFile%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
-<%
+			
+			if (isS3Location) {
+                %>
+                sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"
+                        + "s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+                        + "' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
+                <%
+            } else {
+                %>
+                sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '" + <%=resultFile%>
+                        + "' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>);");
+                <%
+            }
 		}
 	}
 %>
