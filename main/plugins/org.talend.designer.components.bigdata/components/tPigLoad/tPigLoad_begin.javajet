@@ -56,13 +56,13 @@
 	boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_JOBHISTORY_ADDRESS__"));
     boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
 	
-	//Parquet available in Map/Reduce mode and in Custom or CDH5 only.
-	boolean isParquet = !isLocal && "ParquetLoader".equals(function) && (isCustom || (!isCustom && "Cloudera_CDH5".equals(pigVersion)));
+	boolean isParquet = !isLocal && "ParquetLoader".equals(function);
 	
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJarForHCatalog = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 	
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
+	List<Map<String, String>> defineFunctions = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DEFINE_FUNCTION__");
 	
 	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "MAPR310".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
@@ -78,7 +78,9 @@
 	
 	boolean generateRegisterJarCodeForAvroFile = !isLocal && "AvroStorage".equals(function);
 	
-	boolean generateRegisterJarCodeForAll = generateRegisterJarCodeForHCatalog || generateRegisterJarCode || generateRegisterJarCodeForHBase || generateRegisterJarCodeForSequenceFile || generateRegisterJarCodeForRCFile || generateRegisterJarCodeForAvroFile;
+	boolean generateRegisterJarCodeForParquetFile = isParquet;
+	
+	boolean generateRegisterJarCodeForAll = true;
 
 	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
@@ -89,6 +91,8 @@
 		}
 
 		jarsToRegister = new java.util.ArrayList();
+		
+		jarsToRegister.add("datafu");
 		
 		if(generateRegisterJarCode) {
 			for(Map<String, String> jar : registerJar){
@@ -141,6 +145,11 @@
 			jarsToRegister.add("avro");
 			jarsToRegister.add("json_simple");
 		}
+		
+		if(generateRegisterJarCodeForParquetFile) {
+			jarsToRegister.add("parquet-pig-bundle");
+			jarsToRegister.add("snappy-java");
+		}
 
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {
@@ -170,97 +179,7 @@
 <%
 	if(generateRegisterJarCodeForAll) {
 %>
-		class GetJarsToRegister_<%=cid%> {
-			private String oozieClasspathLine;
-			private boolean isOozieRuntime;
-			
-			public GetJarsToRegister_<%=cid%>() {
-				try {
-					this.isOozieRuntime = setJarsToRegister("../../job.xml");
-				} catch (java.lang.Exception e) {
-					e.printStackTrace();
-					<%if(isLog4jEnabled) {%>
-					log.error("<%=cid%> - " + e.getMessage());
-					<%}%>
-				}
-			}
-		
-			public boolean setJarsToRegister(String filename) throws IOException, org.dom4j.DocumentException {
-				String jobXmlPath = new java.io.File(filename).getCanonicalPath();
-				if(isNeedAddLibsPath(jobXmlPath)) {
-					
-					org.dom4j.io.SAXReader reader_oozie = new org.dom4j.io.SAXReader();
-					org.dom4j.Document document_oozie = reader_oozie.read(jobXmlPath);
-					List list_oozie = document_oozie.selectNodes("/configuration/property");
-					for (java.util.Iterator iter_oozie = list_oozie.iterator(); iter_oozie.hasNext();) {
-						org.dom4j.Element element_oozie = (org.dom4j.Element) iter_oozie.next();
-						String name_oozie = element_oozie.elementText("name");
-						if(name_oozie.equals("mapred.cache.localFiles")) {
-							this.oozieClasspathLine = element_oozie.elementText("value");
-							return true;
-						}
-					}
-				}
-				return false;
-			}
-			
-			public String replaceJarPaths(String originalClassPathLine) throws Exception {
-				String classPathLine = "";
-				String crcMapPath = new java.io.File("../crcMap").getCanonicalPath();
-				
-				if (isNeedAddLibsPath(crcMapPath)) {
-					java.util.Map<String, String> crcMap = null;
-					java.io.ObjectInputStream ois = new ObjectInputStream(new java.io.FileInputStream(crcMapPath));
-					crcMap = (java.util.Map<String, String>) ois.readObject();
-					ois.close();
-					classPathLine = addLibsPath(originalClassPathLine, crcMap);
-				} else if(this.isOozieRuntime) {
-					if(this.oozieClasspathLine!=null) {
-						List<String> oozieJars = java.util.Arrays.asList(this.oozieClasspathLine.split(","));
-						for(int j=0; j<oozieJars.size(); j++) {
-							if(oozieJars.get(j).contains(originalClassPathLine.substring(originalClassPathLine.lastIndexOf("/")))) {
-								classPathLine = oozieJars.get(j);
-								break;
-							}
-						}
-					}
-				} else {
-					classPathLine = originalClassPathLine;
-				}
-				return classPathLine;
-			}
-		
-			private boolean isNeedAddLibsPath(String crcMapPath) {
-				if (!(new java.io.File(crcMapPath).exists())) {// when not use cache
-					return false;
-				}
-				return true;
-			}
-		
-		
-			private String addLibsPath(String line, java.util.Map<String, String> crcMap) {
-				for (java.util.Map.Entry<String, String> entry : crcMap.entrySet()) {
-					line = adaptLibPaths(line, entry);
-				}
-				return line;
-			}
-		
-			private String adaptLibPaths(String line, java.util.Map.Entry<String, String> entry) {
-				String jarName = entry.getValue();
-				String crc = entry.getKey();
-				String libStringFinder = "../lib/" + jarName;
-				if (line.contains(libStringFinder)) {
-					line = line.replace(libStringFinder, "../../../cache/lib/" + crc + "/" + jarName);
-				} else if (line.contains(":$ROOT_PATH/" + jarName + ":")) {
-					line = line.replace(":$ROOT_PATH/" + jarName + ":", ":$ROOT_PATH/../../../cache/lib/" + crc + "/" + jarName + ":");
-				} else if (line.contains(";" + jarName + ";")) {
-					line = line.replace(";" + jarName + ";", ";../../../cache/lib/" + crc + "/" + jarName + ";");
-				}
-				return line;
-			}
-		
-		}
-
+		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
 		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
 <%
 	}
@@ -345,7 +264,7 @@
 		        } else {
 		            %>
     				//set default yarn classpath with environment variable
-    				props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
+                    props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
     				<%
 				}
 				
@@ -540,6 +459,14 @@
 					}
 				}
 			}
+		}
+		
+		if(defineFunctions.size() > 0){
+			for(Map<String, String> item : defineFunctions){
+%>
+				helper_<%=cid%>.add("function", <%=item.get("FUNCTION_ALIAS") %> ,<%=item.get("UDF_FUNCTION") %>);
+<% 
+			} 
 		} 
 
 		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.

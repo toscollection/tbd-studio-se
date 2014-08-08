@@ -139,8 +139,7 @@
 					SHOW_IF="MAPREDUCE=='true'" />
 				<ITEM NAME="RCFILEPIGSTORAGE" VALUE="RCFilePigStorage" SHOW_IF="MAPREDUCE=='true'" />
 				<ITEM NAME="AVROSTORAGE" VALUE="AvroStorage" SHOW_IF="MAPREDUCE=='true'" />
-				<ITEM NAME="PARQUETLOADER" VALUE="ParquetLoader"
-					SHOW_IF="(MAPREDUCE=='true' AND (DISTRIBUTION=='CUSTOM' OR (DISTRIBUTION=='CLOUDERA' AND PIG_VERSION=='Cloudera_CDH5')))" />
+				<ITEM NAME="PARQUETLOADER" VALUE="ParquetLoader" SHOW_IF="MAPREDUCE=='true'" />
 				<ITEM NAME="CUSTOM" VALUE="CustomLoader" />
 			</ITEMS>
 		</PARAMETER>
@@ -418,6 +417,14 @@
 				<ITEM NAME="JAR_NAME" FIELD="MODULE_LIST" />
 			</ITEMS>
 		</PARAMETER>
+		<PARAMETER NAME="DEFINE_FUNCTION" FIELD="TABLE" NUM_ROW="9"
+			NB_LINES="3" GROUP="ADVANCED_CONFIGURATION">
+			<ITEMS>
+				<ITEM NAME="FUNCTION_ALIAS" FIELD="TEXT" VALUE="" />
+				<ITEM NAME="UDF_FUNCTION" FIELD="TEXT" VALUE="" />
+			</ITEMS>
+		</PARAMETER>
+
 		<PARAMETER NAME="ADVANCED_PROPERTIES" FIELD="TABLE"
 			REQUIRED="false" NUM_ROW="10" NB_LINES="3">
 			<ITEMS>
@@ -2086,23 +2093,19 @@
 			<!-- AVRO Support End -->
 
 			<!-- Parquet Support Begin -->
-			<!-- CDH5 -->
-			<IMPORT NAME="parquet-pig-1.2.5-cdh5.0.3" MODULE="parquet-pig-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-pig-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="(MAPREDUCE=='true' AND DISTRIBUTION=='CLOUDERA' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='PARQUETLOADER')" />
-			<IMPORT NAME="parquet-column-1.2.5-cdh5.0.3" MODULE="parquet-column-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-column-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="(MAPREDUCE=='true' AND DISTRIBUTION=='CLOUDERA' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='PARQUETLOADER')" />
-			<IMPORT NAME="parquet-common-1.2.5-cdh5.0.3" MODULE="parquet-common-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-common-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="(MAPREDUCE=='true' AND DISTRIBUTION=='CLOUDERA' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='PARQUETLOADER')" />
-			<IMPORT NAME="parquet-hadoop-1.2.5-cdh5.0.3" MODULE="parquet-hadoop-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-hadoop-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="(MAPREDUCE=='true' AND DISTRIBUTION=='CLOUDERA' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='PARQUETLOADER')" />
-			<IMPORT NAME="parquet-format-1.0.0-cdh5.0.3" MODULE="parquet-format-1.0.0-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-format-1.0.0-cdh5.0.3.jar"
-				REQUIRED_IF="(MAPREDUCE=='true' AND DISTRIBUTION=='CLOUDERA' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='PARQUETLOADER')" />
+			<IMPORT NAME="parquet-pig-bundle-1.3.2" MODULE="parquet-pig-bundle-1.3.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.3.2.jar"
+				REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='PARQUETLOADER' AND DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="snappy-java-1.0.5.jar" MODULE="snappy-java-1.0.5.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
+				REQUIRED="true" />
 			<!-- Parquet Support End -->
+
+			<!-- DATAFU Support Begin -->
+			<IMPORT NAME="datafu-1.2.0" MODULE="datafu-1.2.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/datafu-1.2.0.jar"
+				REQUIRED="true" />
+			<!-- DATAFU Support End -->
 
 		</IMPORTS>
 	</CODEGENERATION>

@@ -18,7 +18,7 @@
             category="org.talend.core.prefs"
             class="org.talend.oozie.scheduler.ui.prefs.OozieSchedulerPreferencePage"
             id="org.talend.designer.core.oozie.scheduler"
-            name="Oozie">
+            name="Oozie(Deprecated)">
       </page>
    </extension>
 

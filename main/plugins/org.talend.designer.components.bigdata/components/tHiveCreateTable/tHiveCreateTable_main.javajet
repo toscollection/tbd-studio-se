@@ -6,9 +6,11 @@ imports="
 		org.talend.core.model.metadata.IMetadataColumn
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.process.IConnection
-        org.talend.core.model.process.IConnectionCategory
-        org.talend.core.model.metadata.MappingTypeRetriever
-        org.talend.core.model.metadata.MetadataTalendType
+      org.talend.core.model.process.IConnectionCategory
+      org.talend.core.model.metadata.MappingTypeRetriever
+      org.talend.core.model.metadata.MetadataTalendType
+		org.talend.designer.runprocess.ProcessorException
+		org.talend.designer.runprocess.ProcessorUtilities
 		java.util.List	
 		java.util.Map
 		java.util.Set
@@ -21,6 +23,7 @@ imports="
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	final String cid = node.getUniqueName();
+	String processId = node.getProcess().getId();
 	
 	String dbhost = ElementParameterParser.getValue(node, "__HOST__");
 	String dbport = ElementParameterParser.getValue(node, "__PORT__");
@@ -30,12 +33,136 @@ imports="
 	
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>
-
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetConnection.javajet"%>
-	
 <%
+boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+
+
 	String tableName = ElementParameterParser.getValue(node, "__TABLE__");
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
+	boolean external = "true".equals(ElementParameterParser.getValue(node, "__CREATE_EXTERNAL__"));
+	String tableAction = ElementParameterParser.getValue(node,"__TABLEACTION__");
+	boolean createIfNotExist = "CREATE_IF_NOT_EXIST".equals(tableAction);
+	boolean setPartitioned = "true".equals(ElementParameterParser.getValue(node, "__SET_PARTITIONS__"));
+	boolean setClustered = false;
+	boolean setSkewed = false;
+	
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+	
+	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
+	boolean setFsDefaultName = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
+	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	
+	if(useExistingConnection) {
+		distribution = "";
+		hiveVersion = "";
+		connectionMode = "";
+		setFsDefaultName = false;
+		fsDefaultName = "";
+		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+		for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
+			if(connection!=null && connection.equals(pNode.getUniqueName())) {
+				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
+				hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+				connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
+				setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
+				fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
+				break;
+			}
+		}
+	}
+	
+	boolean isCustom = "CUSTOM".equals(distribution);
+	
+	boolean setLocation = "true".equals(ElementParameterParser.getValue(node, "__SET_FILE_LOCATION__"));
+	String location = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
+	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
+	
+	String storedFormat = ElementParameterParser.getValue(node, "__STORAGE_FORMAT__");
+	
+	List<Map<String, String>> serdeProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SERDE_PROPERTIES__");
+	
+	List<Map<String, String>> tableProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__TABLE_PROPERTIES__");
+	
+	boolean setDelimitedRowFormat = "true".equals(ElementParameterParser.getValue(node, "__SET_ROW_FORMAT__"));
+	boolean setSerdeRowFormat = "true".equals(ElementParameterParser.getValue(node, "__SET_SERDE_ROW_FORMAT__"));
+	
+	boolean setRowFormat = (setDelimitedRowFormat || setSerdeRowFormat) && !"STORAGE".equals(storedFormat);
+	
+	boolean storeAsAvro = "AVRO".equals(storedFormat);
+	boolean storeAsParquet = "PARQUET".equals(storedFormat);
+	
+	// Register jars to handle the parquet format.
+	
+	boolean generateAddJarCodeForAll = storeAsParquet;
+	java.util.List<String> jarsToRegister = null;
+	java.util.List<String> jars = null;
+
+	if(generateAddJarCodeForAll) {
+		String[] commandLine = new String[] {"<command>"};
+		try {
+			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
+		} catch (ProcessorException e) {
+			e.printStackTrace();
+		}
+		
+		jarsToRegister = new java.util.ArrayList();
+			
+		jarsToRegister.add("parquet-hive-bundle");
+		jarsToRegister.add("snappy-java");
+		
+		for (int j = 0; j < commandLine.length; j++) {
+			if(commandLine[j].contains("jar")) {
+				jars = java.util.Arrays.asList(commandLine[j].split(";"));
+				break;
+			}
+		}
+	}
+		
+	if(jarsToRegister!=null && jars!=null) {
+		if("EMBEDDED".equalsIgnoreCase(connectionMode)) {
+%>
+			<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>	
+			GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+<%
+		} else {
+			generateAddJarCodeForAll = false;
+			if(setFsDefaultName) {
+				generateAddJarCodeForAll = true;
+%>
+				<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetHiveJarsToRegister.javajet"%>
+				GetHiveJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetHiveJarsToRegister_<%=cid%>();
+<%		
+			}	
+		}
+
+		if(generateAddJarCodeForAll) {
+%>
+			java.sql.Statement addJar_<%=cid%> = null;
+<%
+			for(int i=0; i<jarsToRegister.size(); i++) {
+				String jarToRegister = jarsToRegister.get(i);
+				for(int j=0; j<jars.size(); j++) {
+					if(jars.get(j).contains(jarToRegister)) {
+%>
+						addJar_<%=cid%> = conn_<%=cid%>.createStatement();
+						try {
+							addJar_<%=cid%>.execute("add jar " + getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							addJar_<%=cid%>.close();
+						}
+<%
+					}
+				}
+			}
+		}
+	}
+	
+	// End of parquet format handling.
 %>
 	java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 	String query_<%=cid %> = "";
@@ -49,52 +176,6 @@ if(metadatas != null && metadatas.size() > 0) {
 }
 
 StringBuilder createTableSQL = new StringBuilder();
-
-String tableAction = ElementParameterParser.getValue(node,"__TABLEACTION__");
-boolean createIfNotExist = "CREATE_IF_NOT_EXIST".equals(tableAction);
-boolean setPartitioned = "true".equals(ElementParameterParser.getValue(node, "__SET_PARTITIONS__"));
-boolean setClustered = false;
-boolean setSkewed = false;
-
-boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-
-String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
-String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-
-boolean isCustom = "CUSTOM".equals(distribution);
-
-boolean setLocation = "true".equals(ElementParameterParser.getValue(node, "__SET_FILE_LOCATION__"));
-boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
-boolean external = "true".equals(ElementParameterParser.getValue(node, "__CREATE_EXTERNAL__")) || (setLocation && isS3Location);
-String location = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
-
-
-String storedFormat = ElementParameterParser.getValue(node, "__STORAGE_FORMAT__");
-
-List<Map<String, String>> serdeProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SERDE_PROPERTIES__");
-
-List<Map<String, String>> tableProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__TABLE_PROPERTIES__");
-
-boolean setDelimitedRowFormat = "true".equals(ElementParameterParser.getValue(node, "__SET_ROW_FORMAT__"));
-boolean setSerdeRowFormat = "true".equals(ElementParameterParser.getValue(node, "__SET_SERDE_ROW_FORMAT__"));
-
-boolean setRowFormat = (setDelimitedRowFormat || setSerdeRowFormat) && !"STORAGE".equals(storedFormat);
-
-boolean storeAsAvro = "AVRO".equals(storedFormat);
-
-if(useExistingConnection) {
-	distribution = "";
-	hiveVersion = "";
-	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-	for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
-		if(connection!=null && connection.equals(pNode.getUniqueName())) {
-			distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
-			hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
-			break;
-		}
-	}
-}
-boolean storeAsParquet = "PARQUET".equals(storedFormat) && (isCustom || (!isCustom && "CLOUDERA".equals(distribution) && "Cloudera_CDH5".equals(hiveVersion)));
 
 createTableSQL.append("CREATE ");
 createTableSQL.append(external?"EXTERNAL":"");

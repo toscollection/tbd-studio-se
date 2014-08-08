@@ -29,10 +29,11 @@
         <CONNECTOR CTYPE="RUN_IF"/>
     </CONNECTORS>
     <PARAMETERS>
+        <PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" NUM_ROW="1" REPOSITORY_VALUE="NOSQL:CASSANDRA"/>
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
-            NUM_ROW="1"
+            NUM_ROW="2"
             COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_2_0_0'"
         >
@@ -41,7 +42,7 @@
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
-            NUM_ROW="1"
+            NUM_ROW="2"
             COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_1_2_2'"
         >
@@ -50,7 +51,7 @@
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
-            NUM_ROW="1"
+            NUM_ROW="2"
             COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_1_1_2'"
         >
@@ -59,7 +60,8 @@
         <PARAMETER
             NAME="DB_VERSION"
             FIELD="CLOSED_LIST"
-            NUM_ROW="2"
+            REPOSITORY_VALUE="DB_VERSION"
+            NUM_ROW="3"
             >
             <ITEMS DEFAULT="CASSANDRA_2_0_8">
                 <ITEM NAME="CASSANDRA_2_0_8" VALUE="CASSANDRA_2_0_8"/>
@@ -71,23 +73,26 @@
         <PARAMETER
             NAME="HOST"
             FIELD="TEXT"
+            REPOSITORY_VALUE="HOST"
             REQUIRED="true"
-            NUM_ROW="5"
+            NUM_ROW="6"
         >
             <DEFAULT>"localhost"</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="PORT"
             FIELD="TEXT"
+            REPOSITORY_VALUE="PORT"
             REQUIRED="true"
-            NUM_ROW="5"
+            NUM_ROW="6"
         >
             <DEFAULT>9160</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
-            NUM_ROW="10"
+            REPOSITORY_VALUE="REQUIRED_AUTHENTICATION"
+            NUM_ROW="11"
             NOT_SHOW_IF="DB_VERSION == 'CASSANDRA_1_1_2'"
         >
             <DEFAULT>false</DEFAULT>
@@ -95,8 +100,9 @@
         <PARAMETER
             NAME="USERNAME"
             FIELD="TEXT"
+            REPOSITORY_VALUE="USERNAME"
             REQUIRED="true"
-            NUM_ROW="11"
+            NUM_ROW="12"
             NOT_SHOW_IF="(REQUIRED_AUTHENTICATION == 'false') OR (DB_VERSION == 'CASSANDRA_1_1_2')"
         >
             <DEFAULT>""</DEFAULT>
@@ -104,8 +110,9 @@
         <PARAMETER
             NAME="PASSWORD"
             FIELD="PASSWORD"
+            REPOSITORY_VALUE="PASSWORD"
             REQUIRED="true"
-            NUM_ROW="11"
+            NUM_ROW="12"
             NOT_SHOW_IF="(REQUIRED_AUTHENTICATION == 'false') OR (DB_VERSION == 'CASSANDRA_1_1_2')"
         >
             <DEFAULT>""</DEFAULT>
@@ -113,8 +120,9 @@
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"
+            REPOSITORY_VALUE="KEY_SPACE"
             REQUIRED="true"
-            NUM_ROW="15"
+            NUM_ROW="16"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -122,7 +130,7 @@
             NAME="COLUMN_FAMILY"
             FIELD="TEXT"
             REQUIRED="true"
-            NUM_ROW="15"
+            NUM_ROW="16"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -130,7 +138,7 @@
             NAME="SSTABLE_STORE_PATH"
             FIELD="DIRECTORY"
             REQUIRED="true"
-            NUM_ROW="20"
+            NUM_ROW="21"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -172,7 +180,7 @@
             <IMPORT
                 NAME="libthrift-0.9.1"
                 MODULE="libthrift-0.9.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.9.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.9.1.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="guava-15.0"
@@ -250,6 +258,7 @@
             <IMPORT
                 NAME="snappy-java-1.0.5"
                 MODULE="snappy-java-1.0.5.jar"
+		UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_8'" />
             <IMPORT
                 NAME="reporter-config-2.1.0"

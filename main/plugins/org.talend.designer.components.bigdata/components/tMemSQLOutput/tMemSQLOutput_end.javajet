@@ -1,0 +1,160 @@
+<%@ jet
+imports="
+	org.talend.designer.codegen.config.CodeGeneratorArgument
+	org.talend.core.model.process.INode
+	org.talend.core.model.process.ElementParameterParser
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+
+	String cid = node.getUniqueName();
+
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+
+	boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+
+    boolean useBatchSize = "true".equals(ElementParameterParser.getValue(node,"__USE_BATCH_SIZE__"));
+
+    String batchSize=ElementParameterParser.getValue(node,"__BATCH_SIZE__");
+    String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
+
+    if(("INSERT_OR_UPDATE").equals(dataAction)) {
+        %>
+        if(pstmtUpdate_<%=cid%> != null){
+
+            pstmtUpdate_<%=cid %>.close();
+
+        }
+        if(pstmtInsert_<%=cid %> != null){
+
+            pstmtInsert_<%=cid %>.close();
+
+        }
+        if(pstmt_<%=cid %> != null) {
+
+            pstmt_<%=cid %>.close();
+
+        }
+        <%
+    } else if(("UPDATE_OR_INSERT").equals(dataAction)) {
+        %>
+        if(pstmtUpdate_<%=cid%> != null){
+
+            pstmtUpdate_<%=cid %>.close();
+
+        }
+        if(pstmtInsert_<%=cid %> != null){
+
+            pstmtInsert_<%=cid %>.close();
+
+        }
+        <%
+    } else {
+        %>
+
+        <%if (useBatchSize && (("INSERT").equals(dataAction) || ("UPDATE").equals(dataAction) || ("DELETE").equals(dataAction))) {
+            %>
+                int[] resultStatus = {};
+                try {
+                    if (pstmt_<%=cid %> != null) {
+                       resultStatus = pstmt_<%=cid %>.executeBatch();
+                    }
+                }catch (java.sql.BatchUpdateException e_<%=cid%>){
+                    <%if(("true").equals(dieOnError)) {
+                    %>
+                        throw(e_<%=cid%>);
+                    <%
+                    }else {
+                    %>
+                    System.out.println(e_<%=cid%>.getMessage());
+                    <%
+                    }%>
+                }
+                if (pstmt_<%=cid %> != null) {
+                    long tmp_batchUpdateCount_<%=cid%> = resultStatus.length;
+                    <%if (("INSERT").equals(dataAction)) {
+                    %>
+                        insertedCount_<%=cid%>
+                    <%
+                    }else if (("UPDATE").equals(dataAction)) {
+                    %>
+                        updatedCount_<%=cid%>
+                    <%
+                    }else if (("DELETE").equals(dataAction)) {
+                    %>
+                        deletedCount_<%=cid%>
+                    <%
+                    }%>
+                    += tmp_batchUpdateCount_<%=cid%>;
+                }
+            <%
+            }%>
+
+        if(pstmt_<%=cid %> != null) {
+
+            pstmt_<%=cid %>.close();
+
+        }
+        <%
+    }
+    %>
+
+    <%
+    if(!useExistingConn) {
+        %>
+        if(conn_<%=cid%> != null && !conn_<%=cid%>.isClosed()) {
+            conn_<%=cid%> .close();
+            resourceMap.put("finish_<%=cid%>", true);
+        }
+        <%
+    }
+    %>
+
+	nb_line_deleted_<%=cid%>=nb_line_deleted_<%=cid%>+ deletedCount_<%=cid%>;
+	nb_line_update_<%=cid%>=nb_line_update_<%=cid%> + updatedCount_<%=cid%>;
+	nb_line_inserted_<%=cid%>=nb_line_inserted_<%=cid%> + insertedCount_<%=cid%>;
+	nb_line_rejected_<%=cid%>=nb_line_rejected_<%=cid%> + rejectedCount_<%=cid%>;
+<%
+	boolean isEnableParallelize ="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__PARALLELIZE__"));
+	if (isEnableParallelize) {
+%>
+	if (globalMap.get("<%=cid %>_NB_LINE") == null) {
+    	globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+    } else {
+    	globalMap.put("<%=cid %>_NB_LINE",(Integer)globalMap.get("<%=cid %>_NB_LINE") + nb_line_<%=cid%>);
+    }
+    if (globalMap.get("<%=cid %>_NB_LINE_UPDATED") == null) {
+    	globalMap.put("<%=cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>);
+    } else {
+    	globalMap.put("<%=cid %>_NB_LINE_UPDATED",(Integer)globalMap.get("<%=cid %>_NB_LINE_UPDATED") + nb_line_update_<%=cid%>);
+    }
+    if (globalMap.get("<%=cid %>_NB_LINE_INSERTED") == null) {
+    	globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
+    } else {
+    	globalMap.put("<%=cid %>_NB_LINE_INSERTED",(Integer)globalMap.get("<%=cid %>_NB_LINE_INSERTED") + nb_line_inserted_<%=cid%>);
+    }
+    if (globalMap.get("<%=cid %>_NB_LINE_DELETED") == null) {
+    	globalMap.put("<%=cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>);
+    } else {
+    	globalMap.put("<%=cid %>_NB_LINE_DELETED",(Integer)globalMap.get("<%=cid %>_NB_LINE_DELETED") + nb_line_deleted_<%=cid%>);
+    }
+    if (globalMap.get("<%=cid %>_NB_LINE_REJECTED") == null) {
+    	globalMap.put("<%=cid %>_NB_LINE_REJECTED",nb_line_rejected_<%=cid%>);
+    } else {
+    	globalMap.put("<%=cid %>_NB_LINE_REJECTED",(Integer)globalMap.get("<%=cid %>_NB_LINE_REJECTED") + nb_line_rejected_<%=cid%>);
+    }
+<%
+	} else {
+%>
+    globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+    globalMap.put("<%=cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>);
+    globalMap.put("<%=cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
+    globalMap.put("<%=cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>);
+    globalMap.put("<%=cid %>_NB_LINE_REJECTED", nb_line_rejected_<%=cid%>);
+
+<%
+	}
+%>

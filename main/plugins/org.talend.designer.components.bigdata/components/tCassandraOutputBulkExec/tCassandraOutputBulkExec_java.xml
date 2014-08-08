@@ -29,10 +29,11 @@
         <CONNECTOR CTYPE="RUN_IF"/>
     </CONNECTORS>
     <PARAMETERS>
+        <PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" NUM_ROW="1" REPOSITORY_VALUE="NOSQL:CASSANDRA"/>
             <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
-            NUM_ROW="1"
+            NUM_ROW="2"
             COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_2_0_8'"
         >
@@ -41,7 +42,7 @@
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
-            NUM_ROW="1"
+            NUM_ROW="2"
             COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_2_0_0'"
         >
@@ -50,7 +51,7 @@
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
-            NUM_ROW="1"
+            NUM_ROW="2"
             COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_1_2_2'"
         >
@@ -59,7 +60,7 @@
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
-            NUM_ROW="1"
+            NUM_ROW="2"
             COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_1_1_2'"
         >
@@ -68,14 +69,14 @@
         <PARAMETER
             NAME="SCHEMA_FLOW"
             FIELD="SCHEMA_TYPE"
-            NUM_ROW="2"
+            NUM_ROW="3"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="MAPPING"
             FIELD="MAPPING_TYPE"
-            NUM_ROW="2"
+            NUM_ROW="3"
             SHOW="false"
         >
             <DEFAULT>cassandra_id</DEFAULT>
@@ -83,6 +84,7 @@
         <PARAMETER
             NAME="DB_VERSION"
             FIELD="CLOSED_LIST"
+            REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="5"
             >
             <ITEMS DEFAULT="CASSANDRA_2_0_8">
@@ -95,6 +97,7 @@
         <PARAMETER
             NAME="HOST"
             FIELD="TEXT"
+            REPOSITORY_VALUE="HOST"
             REQUIRED="true"
             NUM_ROW="10"
         >
@@ -103,6 +106,7 @@
         <PARAMETER
             NAME="PORT"
             FIELD="TEXT"
+            REPOSITORY_VALUE="PORT"
             REQUIRED="true"
             NUM_ROW="10"
         >
@@ -111,6 +115,7 @@
         <PARAMETER
             NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
+            REPOSITORY_VALUE="REQUIRED_AUTHENTICATION"
             NUM_ROW="15"
             SHOW_IF="DB_VERSION == 'CASSANDRA_1_2_2'"
         >
@@ -119,6 +124,7 @@
         <PARAMETER
             NAME="USERNAME"
             FIELD="TEXT"
+            REPOSITORY_VALUE="USERNAME"
             REQUIRED="true"
             NUM_ROW="20"
             SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (DB_VERSION == 'CASSANDRA_1_2_2')"
@@ -128,6 +134,7 @@
         <PARAMETER
             NAME="PASSWORD"
             FIELD="PASSWORD"
+            REPOSITORY_VALUE="PASSWORD"
             REQUIRED="true"
             NUM_ROW="20"
             SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (DB_VERSION == 'CASSANDRA_1_2_2')"
@@ -137,6 +144,7 @@
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"
+            REPOSITORY_VALUE="KEY_SPACE"
             REQUIRED="true"
             NUM_ROW="25"
         >
