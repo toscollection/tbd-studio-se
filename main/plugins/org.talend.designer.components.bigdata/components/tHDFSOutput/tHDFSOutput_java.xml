@@ -184,6 +184,11 @@
 				<ITEM NAME="BZIP2" VALUE="BZIP2"/>
 			</ITEMS>
         </PARAMETER>
+        
+        <PARAMETER NAME="COMPRESS_NOTE" FIELD="LABEL" NUM_ROW="78" GROUP="COMPRESSION_GROUP" SHOW_IF="(TYPEFILE == 'SEQUENCE') AND (COMPRESS=='true') AND (COMPRESSION=='GZIP')">
+          <DEFAULT>NOTE : Only support Linux client and hadoop native code is necessary, also need to add the native code path to $java.library.path</DEFAULT>
+        </PARAMETER>        
+        
         <PARAMETER NAME="INCLUDEHEADER" FIELD="CHECK" NUM_ROW="80" SHOW_IF="TYPEFILE == 'TEXT'">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
