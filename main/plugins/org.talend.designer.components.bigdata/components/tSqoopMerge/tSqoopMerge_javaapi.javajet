@@ -26,6 +26,8 @@
 	String password = ElementParameterParser.getValue(node,"__PASSWORD__");
     
 	String fsDefalutName = "fs.default.name";
+	
+	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 %>
 	<%@ include file="../templates/Sqoop/GetConfig.javajet"%>
 	String jarFileName_<%=cid%> = <%=jarFile%>;
@@ -67,12 +69,38 @@
         
         com.cloudera.sqoop.tool.CodeGenTool codeGen_<%=cid%> = new com.cloudera.sqoop.tool.CodeGenTool();
         com.cloudera.sqoop.Sqoop codeGenerator_<%=cid%> = new com.cloudera.sqoop.Sqoop(codeGen_<%=cid%>,configuration_<%=cid%>, needGenereateJarSqoopOptions_<%=cid%>);
-        int ret_<%=cid%> = com.cloudera.sqoop.Sqoop.runSqoop(codeGenerator_<%=cid%>, new String[0]);
-        if (0 != ret_<%=cid%>) {
-            throw new Exception("codegen the jar failed with code:" + ret_<%=cid%>);
-        }
+        
+		try {
+			int ret_<%=cid%> = com.cloudera.sqoop.Sqoop.runSqoop(codeGenerator_<%=cid%>, new String[0]);
+       	if (0 != ret_<%=cid%>) {
+<%
+				if(dieOnError) {
+%>
+					throw new Exception("The Sqoop jar generation has failed with the following code:" + ret_<%=cid%>);
+<%
+				} else {
+%>
+					System.err.println("The Sqoop jar generation has failed with the following code:" + ret_<%=cid%>);
+<%
+				}
+%>
+        	}
+        
         List<String> jars_<%=cid%> = codeGen_<%=cid%>.getGeneratedJarFiles();
         jarFileName_<%=cid%> = jars_<%=cid%>.get(0);
+		} catch (Exception e) {
+<%
+			if(dieOnError) {
+%>
+				throw e;
+<%
+			} else {
+%>
+				System.err.println(e.getMessage());
+<%		
+			}
+%>
+		}
 <%
     }
 %>
@@ -80,7 +108,21 @@
     java.net.URLClassLoader sysloader_<%=cid%> = (java.net.URLClassLoader) ClassLoader.getSystemClassLoader();
     java.lang.reflect.Method method_<%=cid%> = java.net.URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { java.net.URL.class});
     method_<%=cid%>.setAccessible(true);
-    method_<%=cid%>.invoke(sysloader_<%=cid%>, new Object[] { new java.io.File(jarFileName_<%=cid%>).toURL()});
+    try {
+		method_<%=cid%>.invoke(sysloader_<%=cid%>, new Object[] { new java.io.File(jarFileName_<%=cid%>).toURL()});
+    } catch (Exception e) {
+<%
+		if(dieOnError) {
+%>
+			throw e;
+<%
+		} else {
+%>
+			System.err.println(e.getMessage());
+<%		
+		}
+%>
+    }
     
     com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("merge");
 
@@ -116,9 +158,33 @@
 <%
 	}
 %>
-	int result_<%=cid%> = sqoop_<%=cid%>.run(null);
-	if(result_<%=cid%> != 0) {
-		throw new Exception("The Sqoop merge job has failed");
+	try {
+		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+		if(result_<%=cid%> != 0) {
+<%
+			if(dieOnError) {
+%>
+				throw new Exception("The Sqoop merge job has failed. Please check the logs.");
+<%
+			} else {
+%>
+				System.err.println("The Sqoop merge job has failed. Please check the logs.");
+<%
+			}
+%>
+		}
+	} catch (Exception e) {
+<%
+		if(dieOnError) {
+%>
+			throw e;
+<%
+		} else {
+%>
+			System.err.println(e.getMessage());
+<%		
+		}
+%>
 	}
 	
 	<%@ include file="../templates/Sqoop/ResetEnv.javajet"%>
