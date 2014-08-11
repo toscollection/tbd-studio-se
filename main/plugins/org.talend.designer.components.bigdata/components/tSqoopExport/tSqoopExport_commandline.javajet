@@ -25,6 +25,8 @@
 	List<Map<String,String>> specificParams= (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__SPECIFIC_PARAMS__");
 	boolean isUseAdditionParams = "true".equals(ElementParameterParser.getValue(node,"__USE_ADDITION_PARAM__"));
 	String specificAdditionParams=ElementParameterParser.getValue(node,"__SPECIFIC_ADDITION_PARAM__");
+
+	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 %>
 
 //call the cmd part
@@ -88,40 +90,69 @@ if(additionalList != null){
 %>
 };
 
-final Process ps_<%=cid %> = runtime_<%=cid %>.exec(cmd_<%=cid %>);
-
+Process ps_<%=cid %> = null;
 java.lang.StringBuilder sb_<%=cid%> = null;
-byte[] byteArray_<%=cid%> = new byte[1024];
-int len_<%=cid%> = 0;
 
-java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
-sb_<%=cid%> = new java.lang.StringBuilder();
-while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-    String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+try {
+	ps_<%=cid %> = runtime_<%=cid %>.exec(cmd_<%=cid %>);
+	byte[] byteArray_<%=cid%> = new byte[1024];
+	int len_<%=cid%> = 0;
+	
+	java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
+	sb_<%=cid%> = new java.lang.StringBuilder();
+	while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+	    String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
 <%
-    if(printLog){
+	    if(printLog){
 %>
-        System.err.println(line_<%=cid%>);
+	        System.err.println(line_<%=cid%>);
 <%
-    }
+	    }
 %>
-    sb_<%=cid%>.append(line_<%=cid%>);
+	    sb_<%=cid%>.append(line_<%=cid%>);
+	}
+	globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
+	
+	byteArray_<%=cid%> = new byte[1024];
+	len_<%=cid%> = 0;
+	java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
+	sb_<%=cid%> = new java.lang.StringBuilder();
+	while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+	    String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+<%
+	    if(printLog){
+%>
+	        System.out.println(line_<%=cid%>);
+<%
+	    }
+%>
+	    sb_<%=cid%>.append(line_<%=cid%>);
+	}
+} catch (Exception e) {
+<%
+	if(dieOnError) {
+%>
+		throw e;
+<%		
+	} else {
+%>
+		System.err.println(e.getMessage());
+<%
+	}
+%>	
 }
-globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
 
-byteArray_<%=cid%> = new byte[1024];
-len_<%=cid%> = 0;
-java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
-sb_<%=cid%> = new java.lang.StringBuilder();
-while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-    String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
 <%
-    if(printLog){
+	if(dieOnError) {
 %>
-        System.out.println(line_<%=cid%>);
-<%
-    }
+		ps_<%=cid%>.waitFor();
+		if(ps_<%=cid%>.exitValue()>0) {
+			throw new Exception("The Sqoop export has failed. Please check the logs.");
+		}
+<%		
+	}
 %>
-    sb_<%=cid%>.append(line_<%=cid%>);
+
+if(sb_<%=cid%>!=null) {
+	globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
 }
-globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());

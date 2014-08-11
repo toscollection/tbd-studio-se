@@ -22,6 +22,8 @@
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 
 	String fsDefalutName = "fs.default.name";
+	
+	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));	
 %>
 	<%@ include file="../templates/Sqoop/GetConfig.javajet"%>
 	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("import-all-tables");
@@ -85,9 +87,33 @@
 <%
 	}
 %>
-	int result_<%=cid%> = sqoop_<%=cid%>.run(null);
-	if(result_<%=cid%> != 0) {
-		throw new Exception("The Sqoop import-all-tables job has failed");
+	try {
+		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+		if(result_<%=cid%> != 0) {
+<%
+			if(dieOnError) {
+%>
+				throw new Exception("The Sqoop import job has failed. Please check the logs.");
+<%
+			} else {
+%>
+				System.err.println("The Sqoop import job has failed. Please check the logs.");
+<%
+			}
+%>
+		}
+	} catch (Exception e) {
+<%
+		if(dieOnError) {
+%>
+			throw e;
+<%
+		} else {
+%>
+			System.err.println(e.getMessage());
+<%		
+		}
+%>
 	}
 	
 	<%@ include file="../templates/Sqoop/ResetEnv.javajet"%>
