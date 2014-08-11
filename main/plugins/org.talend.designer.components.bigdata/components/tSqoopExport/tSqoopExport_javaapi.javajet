@@ -18,7 +18,7 @@
 	boolean useMappers = "true".equals(ElementParameterParser.getValue(node,"__USE_MAPPERS__"));
 	String mappers = ElementParameterParser.getValue(node,"__MAPPERS__");
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
-	String fsDefalutName = "fs.default.name";
+
 	boolean useBatchMode = "true".equals(ElementParameterParser.getValue(node, "__USE_BATCH_MODE__"));
 	boolean clearStagingTable = "true".equals(ElementParameterParser.getValue(node, "__CLEAR_STAGING_TABLE__"));
 	boolean defineStagingTable = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_STAGING_TABLE__"));
@@ -30,6 +30,8 @@
 	boolean overrideJavaMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_JAVA_MAPPING__"));
 	boolean useColumnForUpdate = "true".equals(ElementParameterParser.getValue(node, "__USE_COLUMN_FOR_UPDATE__"));
 	boolean passwordStoredInFile = "true".equals(ElementParameterParser.getValue(node, "__PASSWORD_STORED_IN_FILE__"));
+	
+	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 %>
 	<%@ include file="../templates/Sqoop/GetConfig.javajet"%>
 	
@@ -150,9 +152,33 @@
 <%
 	}
 %>
-	int result_<%=cid%> = sqoop_<%=cid%>.run(null);
-	if(result_<%=cid%> != 0) {
-		throw new Exception("The Sqoop export job has failed");
+	try {
+		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+		if(result_<%=cid%> != 0) {
+<%
+			if(dieOnError) {
+%>
+				throw new Exception("The Sqoop export job has failed. Please check the logs.");
+<%
+			} else {
+%>
+				System.err.println("The Sqoop export job has failed. Please check the logs.");
+<%
+			}
+%>
+		}
+	} catch (Exception e) {
+<%
+		if(dieOnError) {
+%>
+			throw e;
+<%
+		} else {
+%>
+			System.err.println(e.getMessage());
+<%		
+		}
+%>
 	}
 	
 	<%@ include file="../templates/Sqoop/ResetEnv.javajet"%>
