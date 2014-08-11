@@ -35,10 +35,7 @@ imports="
 %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetConnection.javajet"%>
 <%
-boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-
-
-	String tableName = ElementParameterParser.getValue(node, "__TABLE__");
+    String tableName = ElementParameterParser.getValue(node, "__TABLE__");
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 	boolean external = "true".equals(ElementParameterParser.getValue(node, "__CREATE_EXTERNAL__"));
 	String tableAction = ElementParameterParser.getValue(node,"__TABLEACTION__");
