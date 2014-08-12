@@ -25,7 +25,7 @@
 	List<Map<String,String>> specificParams= (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__SPECIFIC_PARAMS__");
 	boolean isUseAdditionParams = "true".equals(ElementParameterParser.getValue(node,"__USE_ADDITION_PARAM__"));
 	String specificAdditionParams=ElementParameterParser.getValue(node,"__SPECIFIC_ADDITION_PARAM__");
-<<<<<<< HEAD
+
 	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CAL_PROC_STOCK__"));
 	String procStock = ElementParameterParser.getValue(node, "__PROC_STOCK__");
 	boolean useBatchMode = "true".equals(ElementParameterParser.getValue(node, "__USE_BATCH_MODE__"));
