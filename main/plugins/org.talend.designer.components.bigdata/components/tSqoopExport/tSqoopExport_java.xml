@@ -345,7 +345,7 @@
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
         
-        <PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="65">
+        <PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="110">
                 <DEFAULT>true</DEFAULT>
         </PARAMETER>
 

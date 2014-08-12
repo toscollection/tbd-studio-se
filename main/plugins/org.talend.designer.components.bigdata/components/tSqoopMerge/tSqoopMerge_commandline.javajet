@@ -29,19 +29,19 @@
 %>
 
 <%if(needGenerateJar){%>
-Runtime runtime_generateJar_<%=cid %> = Runtime.getRuntime();
+	Runtime runtime_generateJar_<%=cid %> = Runtime.getRuntime();
 
 <%
-String passwordFieldName = "__PASSWORD__";
+	String passwordFieldName = "__PASSWORD__";
 %>
 
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>		
 
-String[] generateJar_cmd_<%=cid %> = new String[] {"sqoop", "codegen", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
-<%if(printLog && verbose){%>, "--verbose"<%}%>
+	String[] generateJar_cmd_<%=cid %> = new String[] {"sqoop", "codegen", "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>, "--password", decryptedPassword_<%=cid%>
+	<%if(printLog && verbose){%>, "--verbose"<%}%>
 <%
-boolean isNull=false; 
-if(additionalList != null){ 
+	boolean isNull=false; 
+	if(additionalList != null){ 
     for(Map<String,String> additionalMap : additionalList){ 
         isNull=false; 
         if(additionalMap.get("ADDITIONAL_VALUE")==null || "".equals(additionalMap.get("ADDITIONAL_VALUE"))) { 
@@ -57,74 +57,78 @@ if(additionalList != null){
 <% 
         } 
     } 
-} 
+	} 
 %>
-};
+	};
 
 
-<%if(isLog4jEnabled) {%>
-	java.lang.StringBuilder sb_generateJar_<%=cid%> = new java.lang.StringBuilder();
-	for(String parameter_<%=cid%> : generateJar_cmd_<%=cid %>) {
-		sb_generateJar_<%=cid%>.append(parameter_<%=cid%>);
-		sb_generateJar_<%=cid%>.append(" ");
+<%
+	if(isLog4jEnabled) {
+%>
+		java.lang.StringBuilder sb_generateJar_<%=cid%> = new java.lang.StringBuilder();
+		for(String parameter_<%=cid%> : generateJar_cmd_<%=cid %>) {
+			sb_generateJar_<%=cid%>.append(parameter_<%=cid%>);
+			sb_generateJar_<%=cid%>.append(" ");
+		}
+		log.info("<%=cid%> - execute sqoop command: " + sb_generateJar_<%=cid%>.toString());
+<%
 	}
-	log.info("<%=cid%> - execute sqoop command: " + sb_generateJar_<%=cid%>.toString());
-<%}%>
+%>
 
-Process generateJar_ps_<%=cid %>  = null;
-java.lang.StringBuilder generateJar_sb_<%=cid%> = null;
-
-try {
-	generateJar_ps_<%=cid %> = runtime_generateJar_<%=cid %>.exec(generateJar_cmd_<%=cid %>);
-	byte[] generateJar_byteArray_<%=cid%> = new byte[1024];
-	int generateJar_len_<%=cid%> = 0;
+	Process generateJar_ps_<%=cid %>  = null;
+	java.lang.StringBuilder generateJar_sb_<%=cid%> = null;
 	
-	java.io.InputStream generateJar_errorStream_<%=cid%> = new java.io.BufferedInputStream(generateJar_ps_<%=cid%>.getErrorStream());
-	generateJar_sb_<%=cid%> = new java.lang.StringBuilder();
-	while ((generateJar_len_<%=cid%> = generateJar_errorStream_<%=cid%>.read(generateJar_byteArray_<%=cid%>)) != -1) {
-	    String generateJar_line_<%=cid%> = new String(generateJar_byteArray_<%=cid%>, 0, generateJar_len_<%=cid%>, "ISO-8859-1");
-	    <%
-	    if(printLog){
+	try {
+		generateJar_ps_<%=cid %> = runtime_generateJar_<%=cid %>.exec(generateJar_cmd_<%=cid %>);
+		byte[] generateJar_byteArray_<%=cid%> = new byte[1024];
+		int generateJar_len_<%=cid%> = 0;
+		
+		java.io.InputStream generateJar_errorStream_<%=cid%> = new java.io.BufferedInputStream(generateJar_ps_<%=cid%>.getErrorStream());
+		generateJar_sb_<%=cid%> = new java.lang.StringBuilder();
+		while ((generateJar_len_<%=cid%> = generateJar_errorStream_<%=cid%>.read(generateJar_byteArray_<%=cid%>)) != -1) {
+		    String generateJar_line_<%=cid%> = new String(generateJar_byteArray_<%=cid%>, 0, generateJar_len_<%=cid%>, "ISO-8859-1");
+	    	<%
+	    	if(printLog){
 %>
-	        System.err.println(generateJar_line_<%=cid%>);
+        		System.err.println(generateJar_line_<%=cid%>);
 <%
-	    }
+	    	}
 %>
 
-	    generateJar_sb_<%=cid%>.append(generateJar_line_<%=cid%>);
-	}
-	globalMap.put("<%=cid%>_ERROR_MESSAGE", generateJar_sb_<%=cid%>.toString());
-	<%if(isLog4jEnabled) {%>
-		log.error("<%=cid%> - " + generateJar_sb_<%=cid%>.toString());
-	<%}%>
-	generateJar_byteArray_<%=cid%> = new byte[1024];
-	generateJar_len_<%=cid%> = 0;
-	java.io.InputStream generateJar_inputStream_<%=cid%> = new java.io.BufferedInputStream(generateJar_ps_<%=cid%>.getInputStream());
-	generateJar_sb_<%=cid%> = new java.lang.StringBuilder();
-	while ((generateJar_len_<%=cid%> = generateJar_inputStream_<%=cid%>.read(generateJar_byteArray_<%=cid%>)) != -1) {
-	    String generateJar_line_<%=cid%> = new String(generateJar_byteArray_<%=cid%>, 0, generateJar_len_<%=cid%>, "ISO-8859-1");
+	    	generateJar_sb_<%=cid%>.append(generateJar_line_<%=cid%>);
+		}
+		globalMap.put("<%=cid%>_ERROR_MESSAGE", generateJar_sb_<%=cid%>.toString());
+		<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + generateJar_sb_<%=cid%>.toString());
+		<%}%>
+		generateJar_byteArray_<%=cid%> = new byte[1024];
+		generateJar_len_<%=cid%> = 0;
+		java.io.InputStream generateJar_inputStream_<%=cid%> = new java.io.BufferedInputStream(generateJar_ps_<%=cid%>.getInputStream());
+		generateJar_sb_<%=cid%> = new java.lang.StringBuilder();
+		while ((generateJar_len_<%=cid%> = generateJar_inputStream_<%=cid%>.read(generateJar_byteArray_<%=cid%>)) != -1) {
+		    String generateJar_line_<%=cid%> = new String(generateJar_byteArray_<%=cid%>, 0, generateJar_len_<%=cid%>, "ISO-8859-1");
 <%
-	    if(printLog){
+	    	if(printLog){
 %>
-	        System.out.println(generateJar_line_<%=cid%>);
+	       	 System.out.println(generateJar_line_<%=cid%>);
 <%
-	    }
+	    	}
 %>
-	    generateJar_sb_<%=cid%>.append(generateJar_line_<%=cid%>);
-	}
-} catch (Exception e) {
+	    	generateJar_sb_<%=cid%>.append(generateJar_line_<%=cid%>);
+		}
+	} catch (Exception e) {
 <%
-	if(dieOnError) {
+		if(dieOnError) {
 %>
-		throw e;
+			throw e;
 <%		
-	} else {
+		} else {
 %>
-		System.err.println(e.getMessage());
+			System.err.println(e.getMessage());
 <%
-	}
+		}
 %>	
-}
+	}
 
 <%
 	if(dieOnError) {
@@ -137,16 +141,16 @@ try {
 	}
 %>
 
-if(generateJar_sb_<%=cid%>!=null) {
-	globalMap.put("<%=cid%>_OUTPUT_MESSAGE", generateJar_sb_<%=cid%>.toString());
-	<%if(isLog4jEnabled) {%>
-		log.info("<%=cid%> - " + generateJar_sb_<%=cid%>.toString());
-	<%}
+	if(generateJar_sb_<%=cid%>!=null) {
+		globalMap.put("<%=cid%>_OUTPUT_MESSAGE", generateJar_sb_<%=cid%>.toString());
+		<%if(isLog4jEnabled) {%>
+			log.info("<%=cid%> - " + generateJar_sb_<%=cid%>.toString());
+		<%}
 %>	
-}
+	}
 <%
-
-}%>
+}
+%>
 
 //call the cmd part
 Runtime runtime_<%=cid %> = Runtime.getRuntime();
