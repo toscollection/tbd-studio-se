@@ -1054,7 +1054,6 @@
 			<IMPORT NAME="parquet-pig-bundle-1.3.2" MODULE="parquet-pig-bundle-1.3.2.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.3.2.jar"
 				REQUIRED_IF="((STORE=='PARQUETSTORER') AND DISTRIBUTION!='CUSTOM')" />
-
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />

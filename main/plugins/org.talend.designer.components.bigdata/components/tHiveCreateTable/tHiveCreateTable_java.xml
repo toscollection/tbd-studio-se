@@ -310,8 +310,7 @@
 					SHOW_IF="(HIVE_VERSION=='HDP_1_2') OR (HIVE_VERSION=='HDP_1_3') OR (HIVE_VERSION=='HDP_2_0') OR (HIVE_VERSION=='HDP_2_1') OR (HIVE_VERSION=='PIVOTAL_HD_2_0') OR (HIVE_VERSION=='Cloudera_CDH4') OR (HIVE_VERSION=='Cloudera_CDH4_YARN') OR (HIVE_VERSION=='Cloudera_CDH5') OR (HIVE_VERSION=='MAPR212') OR (HIVE_VERSION=='MAPR213') OR (USE_EXISTING_CONNECTION == 'true') OR (DISTRIBUTION=='CUSTOM')" />
 				<ITEM NAME="INPUTFORMAT_AND_OUTPUTFORMAT" VALUE="INPUTFORMAT_AND_OUTPUTFORMAT" />
 				<ITEM NAME="STORAGE" VALUE="STORAGE" />
-				<ITEM NAME="PARQUET" VALUE="PARQUET"
-					SHOW_IF="(USE_EXISTING_CONNECTION == 'true' AND #LINK@NODE.CONNECTION.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.CONNECTION.HIVE_VERSION=='Cloudera_CDH5') OR (USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='CLOUDERA' AND HIVE_VERSION=='Cloudera_CDH5') OR DISTRIBUTION=='CUSTOM'" />
+				<ITEM NAME="PARQUET" VALUE="PARQUET" />
 			</ITEMS>
 		</PARAMETER>
 
@@ -1695,11 +1694,6 @@
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
 				REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH5') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 
-			<IMPORT NAME="parquet-hadoop-1.2.5-cdh5.0.3" MODULE="parquet-hadoop-1.2.5-cdh5.0.3.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/parquet-hadoop-1.2.5-cdh5.0.3.jar"
-				REQUIRED_IF="(STORAGE_FORMAT=='PARQUET') AND ((USE_EXISTING_CONNECTION == 'true' AND #LINK@NODE.CONNECTION.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.CONNECTION.HIVE_VERSION=='Cloudera_CDH5') OR (USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='CLOUDERA' AND HIVE_VERSION=='Cloudera_CDH5'))" />
-			<!-- ############## -->
-
 			<!-- PIVOTAL_HD_1_0_1 -->
 			<IMPORT NAME="hive-exec-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-exec-0.9.1-gphd-2.0.1.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-exec-0.9.1-gphd-2.0.1.0.jar"
@@ -2211,6 +2205,16 @@
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
 				REQUIRED_IF="(HIVE_VERSION=='HDP_2_1') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<!-- ############## -->
+
+			<!-- PARQUET SUPPORT -->
+			<IMPORT NAME="parquet-hive-bundle-1.5.0" MODULE="parquet-hive-bundle-1.5.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-hive-bundle-1.5.0.jar"
+				REQUIRED_IF="((STORAGE_FORMAT=='PARQUET') AND DISTRIBUTION!='CUSTOM')" />
+			<IMPORT NAME="snappy-java-1.0.5.jar" MODULE="snappy-java-1.0.5.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
+				REQUIRED_IF="((STORAGE_FORMAT=='PARQUET') AND DISTRIBUTION!='CUSTOM')" />
+			<!-- ############## -->
+
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>

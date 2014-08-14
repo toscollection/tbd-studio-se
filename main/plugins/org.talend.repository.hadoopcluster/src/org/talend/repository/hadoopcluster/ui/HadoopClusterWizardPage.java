@@ -34,18 +34,22 @@ public class HadoopClusterWizardPage extends WizardPage {
 
     private final String[] existingNames;
 
+    private boolean creation;
+
     private final boolean isRepositoryObjectEditable;
 
-    public HadoopClusterWizardPage(ConnectionItem connectionItem, boolean isRepositoryObjectEditable, String[] existingNames) {
+    public HadoopClusterWizardPage(ConnectionItem connectionItem, boolean isRepositoryObjectEditable, String[] existingNames,
+            boolean creation) {
         super("HadoopClusterWizardPage"); //$NON-NLS-1$
         this.connectionItem = connectionItem;
         this.existingNames = existingNames;
+        this.creation = creation;
         this.isRepositoryObjectEditable = isRepositoryObjectEditable;
     }
 
     @Override
     public void createControl(final Composite parent) {
-        hadoopClusterForm = new HadoopClusterForm(parent, connectionItem, existingNames);
+        hadoopClusterForm = new HadoopClusterForm(parent, connectionItem, existingNames, creation);
         hadoopClusterForm.setReadOnly(!isRepositoryObjectEditable);
 
         AbstractForm.ICheckListener listener = new AbstractForm.ICheckListener() {

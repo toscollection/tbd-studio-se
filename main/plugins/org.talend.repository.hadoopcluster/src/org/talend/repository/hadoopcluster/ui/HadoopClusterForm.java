@@ -15,6 +15,7 @@ package org.talend.repository.hadoopcluster.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -33,6 +34,8 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
+import org.talend.core.hadoop.conf.EHadoopProperties;
+import org.talend.core.hadoop.conf.HadoopDefaultConfsManager;
 import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
@@ -83,9 +86,12 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
     private Button useYarnButton;
 
-    public HadoopClusterForm(Composite parent, ConnectionItem connectionItem, String[] existingNames) {
+    private boolean creation;
+
+    public HadoopClusterForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation) {
         super(parent, SWT.NONE, existingNames);
         this.connectionItem = connectionItem;
+        this.creation = creation;
         setConnectionItem(connectionItem);
         setupForm();
         GridLayout layout = (GridLayout) getLayout();
@@ -119,6 +125,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         userNameText.setText(getConnection().getUserName());
         groupText.setText(getConnection().getGroup());
 
+        fillDefaults();
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
 
@@ -257,6 +264,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                     updateVersionPart();
                     updateYarnContent();
                     updateConnectionPart();
+                    fillDefaults();
                     checkFieldsValue();
                 }
             }
@@ -279,6 +287,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                     }
                     updateYarnContent();
                     updateConnectionPart();
+                    fillDefaults();
                     checkFieldsValue();
                 }
             }
@@ -500,6 +509,45 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         }
         if (!userNameText.getEditable()) {
             userNameText.setText(EMPTY_STRING);
+        }
+    }
+
+    private void fillDefaults() {
+        if (creation) {
+            HadoopClusterConnection connection = getConnection();
+            String distribution = connection.getDistribution();
+            String version = connection.getDfVersion();
+            if (distribution == null) {
+                return;
+            }
+            String[] versionPrefix = new String[] { distribution };
+            if (EHadoopDistributions.AMAZON_EMR.getName().equals(distribution)
+                    && (EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionValue().equals(version) || EHadoopVersion4Drivers.MAPR_EMR
+                            .getVersionValue().equals(version))) {
+                versionPrefix = (String[]) ArrayUtils.add(versionPrefix, version);
+            }
+            boolean isYarn = connection.isUseYarn();
+            String defaultNN = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.NAMENODE_URI.getName()));
+            if (defaultNN != null) {
+                namenodeUriText.setText(defaultNN);
+            }
+            String defaultJTORRM = null;
+            if (isYarn) {
+                defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                        (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.RESOURCE_MANAGER.getName()));
+            } else {
+                defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                        (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.JOBTRACKER.getName()));
+            }
+            if (defaultJTORRM != null) {
+                jobtrackerUriText.setText(defaultJTORRM);
+            }
+            String defaultNNP = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.NAMENODE_PRINCIPAL.getName());
+            if (defaultNNP != null) {
+                namenodePrincipalText.setText(defaultNNP);
+            }
         }
     }
 

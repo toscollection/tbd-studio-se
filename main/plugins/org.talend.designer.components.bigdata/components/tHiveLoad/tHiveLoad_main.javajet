@@ -6,9 +6,11 @@ imports="
 		org.talend.core.model.metadata.IMetadataColumn
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.process.IConnection
-        org.talend.core.model.process.IConnectionCategory
-        org.talend.core.model.metadata.MappingTypeRetriever
-        org.talend.core.model.metadata.MetadataTalendType
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.MappingTypeRetriever
+		org.talend.core.model.metadata.MetadataTalendType
+		org.talend.designer.runprocess.ProcessorException
+		org.talend.designer.runprocess.ProcessorUtilities
 		java.util.List	
 		java.util.Map
 		java.util.Set
@@ -21,6 +23,7 @@ imports="
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	final String cid = node.getUniqueName();
+	String processId = node.getProcess().getId();
 	
 	String dbhost = ElementParameterParser.getValue(node, "__HOST__");
 	String dbport = ElementParameterParser.getValue(node, "__PORT__");
@@ -48,24 +51,101 @@ imports="
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
+	boolean setFsDefaultName = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
+	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	
 	if(useExistingConnection) {
 		distribution = "";
 		hiveVersion = "";
+		connectionMode = "";
+		setFsDefaultName = false;
+		fsDefaultName = "";
 		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 		for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
 			if(connection!=null && connection.equals(pNode.getUniqueName())) {
 				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
 				hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+				connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
+				setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
+				fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
 				break;
 			}
 		}
 	}
 	
-	boolean targetTableUsesParquetFormat = "true".equals(ElementParameterParser.getValue(node, "__TARGET_TABLE_IS_A_PARQUET_TABLE__")) && (isCustom || (!isCustom && "CLOUDERA".equals(distribution) && "Cloudera_CDH5".equals(hiveVersion))); 
+	// Register jars to handle the parquet format.
 	
+	boolean targetTableUsesParquetFormat = "true".equals(ElementParameterParser.getValue(node, "__TARGET_TABLE_IS_A_PARQUET_TABLE__"));
+	boolean generateAddJarCodeForAll = targetTableUsesParquetFormat;
+		
 	if(targetTableUsesParquetFormat) {
 		String compression = ElementParameterParser.getValue(node, "__PARQUET_COMPRESSION__");
+		java.util.List<String> jarsToRegister = null;
+		java.util.List<String> jars = null;
+		if(generateAddJarCodeForAll) {
+			String[] commandLine = new String[] {"<command>"};
+			try {
+				commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
+			} catch (ProcessorException e) {
+				e.printStackTrace();
+			}
+	
+			jarsToRegister = new java.util.ArrayList();
+			
+			jarsToRegister.add("snappy-java");
+			jarsToRegister.add("parquet-hive-bundle");
+	
+			for (int j = 0; j < commandLine.length; j++) {
+				if(commandLine[j].contains("jar")) {
+					jars = java.util.Arrays.asList(commandLine[j].split(";"));
+					break;
+				}
+			}
+		}
+		
+		if(jarsToRegister!=null && jars!=null) {
+			if("EMBEDDED".equalsIgnoreCase(connectionMode)) {
+%>
+				<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>	
+				GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+<%
+			} else {
+				generateAddJarCodeForAll = false;
+				if(setFsDefaultName) {
+					generateAddJarCodeForAll = true;
+%>
+					<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetHiveJarsToRegister.javajet"%>
+					GetHiveJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetHiveJarsToRegister_<%=cid%>();
+<%
+				}		
+			}
+			
+			if(generateAddJarCodeForAll) {
+%>
+				java.sql.Statement addJar_<%=cid%> = null;
+<%
+				for(int i=0; i<jarsToRegister.size(); i++) {
+					String jarToRegister = jarsToRegister.get(i);
+					for(int j=0; j<jars.size(); j++) {
+						if(jars.get(j).contains(jarToRegister)) {
+%>
+							addJar_<%=cid%> = conn_<%=cid%>.createStatement();
+							try {
+								addJar_<%=cid%>.execute("add jar " + getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
+							} catch (Exception e) {
+								e.printStackTrace();
+							} finally {
+								addJar_<%=cid%>.close();
+							}
+<%
+						}
+					}
+				}
+			}
+		}
+		
+		// End of parquet format handling.
 %>
 		java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
 		try {

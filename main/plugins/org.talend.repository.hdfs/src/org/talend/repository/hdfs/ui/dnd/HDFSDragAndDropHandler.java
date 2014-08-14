@@ -336,7 +336,7 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
     }
 
     @Override
-    public void handleTableRelevantParameters(IElement ele, IMetadataTable metadataTable) {
+    public void handleTableRelevantParameters(Connection connection, IElement ele, IMetadataTable metadataTable) {
         if (ele == null || metadataTable == null) {
             return;
         }

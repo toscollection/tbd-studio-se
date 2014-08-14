@@ -269,7 +269,7 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
     }
 
     @Override
-    public void handleTableRelevantParameters(IElement ele, IMetadataTable metadataTable) {
+    public void handleTableRelevantParameters(Connection connection, IElement ele, IMetadataTable metadataTable) {
         if (ele == null || metadataTable == null) {
             return;
         }

@@ -33,7 +33,7 @@ public class HadoopClusterFactoryImpl extends EFactoryImpl implements HadoopClus
      */
     public static HadoopClusterFactory init() {
         try {
-            HadoopClusterFactory theHadoopClusterFactory = (HadoopClusterFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.talend.org/hadoopcluster"); 
+            HadoopClusterFactory theHadoopClusterFactory = (HadoopClusterFactory)EPackage.Registry.INSTANCE.getEFactory(HadoopClusterPackage.eNS_URI);
             if (theHadoopClusterFactory != null) {
                 return theHadoopClusterFactory;
             }
