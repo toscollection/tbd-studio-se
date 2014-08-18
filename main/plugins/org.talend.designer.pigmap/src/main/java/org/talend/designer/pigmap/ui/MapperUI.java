@@ -57,10 +57,13 @@ import org.talend.designer.pigmap.editor.PigMapEditor;
 import org.talend.designer.pigmap.i18n.Messages;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
+import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 import org.talend.designer.pigmap.ui.footer.FooterComposite;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
 import org.talend.designer.pigmap.ui.tabs.TabFolderEditors;
+import org.talend.designer.pigmap.util.MapDataHelper;
 
 /**
  * 
@@ -158,6 +161,13 @@ public class MapperUI {
         datasViewSashForm = new SashForm(mainSashForm, SWT.SMOOTH | SWT.HORIZONTAL | SWT.BORDER);
         editor = new PigMapEditor(mapperManager);
         editor.createPartControl(datasViewSashForm);
+
+        if (copyOfMapData.getVarTables().isEmpty()) {
+            VarTable varTable = PigmapFactory.eINSTANCE.createVarTable();
+            varTable.setName("Var");
+            varTable.setMinimized(true);
+            copyOfMapData.getVarTables().add(varTable);
+        }
         editor.setContent(copyOfMapData);
 
         tabFolderEditors = new TabFolderEditors(mainSashForm, mapperManager, SWT.BORDER);
@@ -206,6 +216,12 @@ public class MapperUI {
             if (elementParameter != null) {
                 elementParameter.setValue(mapperManager.isDieOnError());
             }
+        }
+        // Send back the change to the tPigLoad node if you modified the configure of define dunctions
+        VarTable varTable = copyOfMapData.getVarTables().get(0);
+        List<INode> iNodes = MapDataHelper.iNodesDefineFunctions;
+        if (varTable != null && iNodes != null) {
+            MapDataHelper.convertVarNodesToDefineFunctions(varTable, iNodes);
         }
         if (response == SWT.OK) {
             closeWithoutPrompt = true;

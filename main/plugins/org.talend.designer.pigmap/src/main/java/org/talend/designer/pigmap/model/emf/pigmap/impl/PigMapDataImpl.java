@@ -25,6 +25,7 @@ import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapPackage;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,6 +36,7 @@ import org.talend.designer.pigmap.model.emf.pigmap.PigmapPackage;
  * <ul>
  *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.PigMapDataImpl#getInputTables <em>Input Tables</em>}</li>
  *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.PigMapDataImpl#getOutputTables <em>Output Tables</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.PigMapDataImpl#getVarTables <em>Var Tables</em>}</li>
  *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.PigMapDataImpl#getConnections <em>Connections</em>}</li>
  * </ul>
  * </p>
@@ -61,6 +63,16 @@ public class PigMapDataImpl extends AbstractExternalDataImpl implements PigMapDa
      * @ordered
      */
     protected EList<OutputTable> outputTables;
+
+    /**
+     * The cached value of the '{@link #getVarTables() <em>Var Tables</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getVarTables()
+     * @generated
+     * @ordered
+     */
+    protected EList<VarTable> varTables;
 
     /**
      * The cached value of the '{@link #getConnections() <em>Connections</em>}' containment reference list.
@@ -120,6 +132,18 @@ public class PigMapDataImpl extends AbstractExternalDataImpl implements PigMapDa
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<VarTable> getVarTables() {
+        if (varTables == null) {
+            varTables = new EObjectContainmentEList<VarTable>(VarTable.class, this, PigmapPackage.PIG_MAP_DATA__VAR_TABLES);
+        }
+        return varTables;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EList<IConnection> getConnections() {
         if (connections == null) {
             connections = new EObjectContainmentEList<IConnection>(IConnection.class, this, PigmapPackage.PIG_MAP_DATA__CONNECTIONS);
@@ -139,6 +163,8 @@ public class PigMapDataImpl extends AbstractExternalDataImpl implements PigMapDa
                 return ((InternalEList<?>)getInputTables()).basicRemove(otherEnd, msgs);
             case PigmapPackage.PIG_MAP_DATA__OUTPUT_TABLES:
                 return ((InternalEList<?>)getOutputTables()).basicRemove(otherEnd, msgs);
+            case PigmapPackage.PIG_MAP_DATA__VAR_TABLES:
+                return ((InternalEList<?>)getVarTables()).basicRemove(otherEnd, msgs);
             case PigmapPackage.PIG_MAP_DATA__CONNECTIONS:
                 return ((InternalEList<?>)getConnections()).basicRemove(otherEnd, msgs);
         }
@@ -157,6 +183,8 @@ public class PigMapDataImpl extends AbstractExternalDataImpl implements PigMapDa
                 return getInputTables();
             case PigmapPackage.PIG_MAP_DATA__OUTPUT_TABLES:
                 return getOutputTables();
+            case PigmapPackage.PIG_MAP_DATA__VAR_TABLES:
+                return getVarTables();
             case PigmapPackage.PIG_MAP_DATA__CONNECTIONS:
                 return getConnections();
         }
@@ -180,6 +208,10 @@ public class PigMapDataImpl extends AbstractExternalDataImpl implements PigMapDa
                 getOutputTables().clear();
                 getOutputTables().addAll((Collection<? extends OutputTable>)newValue);
                 return;
+            case PigmapPackage.PIG_MAP_DATA__VAR_TABLES:
+                getVarTables().clear();
+                getVarTables().addAll((Collection<? extends VarTable>)newValue);
+                return;
             case PigmapPackage.PIG_MAP_DATA__CONNECTIONS:
                 getConnections().clear();
                 getConnections().addAll((Collection<? extends IConnection>)newValue);
@@ -202,6 +234,9 @@ public class PigMapDataImpl extends AbstractExternalDataImpl implements PigMapDa
             case PigmapPackage.PIG_MAP_DATA__OUTPUT_TABLES:
                 getOutputTables().clear();
                 return;
+            case PigmapPackage.PIG_MAP_DATA__VAR_TABLES:
+                getVarTables().clear();
+                return;
             case PigmapPackage.PIG_MAP_DATA__CONNECTIONS:
                 getConnections().clear();
                 return;
@@ -221,6 +256,8 @@ public class PigMapDataImpl extends AbstractExternalDataImpl implements PigMapDa
                 return inputTables != null && !inputTables.isEmpty();
             case PigmapPackage.PIG_MAP_DATA__OUTPUT_TABLES:
                 return outputTables != null && !outputTables.isEmpty();
+            case PigmapPackage.PIG_MAP_DATA__VAR_TABLES:
+                return varTables != null && !varTables.isEmpty();
             case PigmapPackage.PIG_MAP_DATA__CONNECTIONS:
                 return connections != null && !connections.isEmpty();
         }

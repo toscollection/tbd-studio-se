@@ -32,6 +32,8 @@ import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapPackage;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 
 /**
  * <!-- begin-user-doc -->
@@ -73,6 +75,13 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass varTableEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass abstractNodeEClass = null;
 
     /**
@@ -81,6 +90,13 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * @generated
      */
     private EClass tableNodeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass varNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -221,8 +237,17 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getPigMapData_Connections() {
+    public EReference getPigMapData_VarTables() {
         return (EReference)pigMapDataEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getPigMapData_Connections() {
+        return (EReference)pigMapDataEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -410,6 +435,42 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getVarTable() {
+        return varTableEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getVarTable_Name() {
+        return (EAttribute)varTableEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getVarTable_Minimized() {
+        return (EAttribute)varTableEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getVarTable_Nodes() {
+        return (EReference)varTableEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getAbstractNode() {
         return abstractNodeEClass;
     }
@@ -520,6 +581,15 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
      */
     public EReference getTableNode_LookupIncomingConnections() {
         return (EReference)tableNodeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getVarNode() {
+        return varNodeEClass;
     }
 
     /**
@@ -661,6 +731,7 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
         pigMapDataEClass = createEClass(PIG_MAP_DATA);
         createEReference(pigMapDataEClass, PIG_MAP_DATA__INPUT_TABLES);
         createEReference(pigMapDataEClass, PIG_MAP_DATA__OUTPUT_TABLES);
+        createEReference(pigMapDataEClass, PIG_MAP_DATA__VAR_TABLES);
         createEReference(pigMapDataEClass, PIG_MAP_DATA__CONNECTIONS);
 
         abstractInOutTableEClass = createEClass(ABSTRACT_IN_OUT_TABLE);
@@ -686,6 +757,11 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
         createEAttribute(outputTableEClass, OUTPUT_TABLE__ALL_IN_ONE);
         createEAttribute(outputTableEClass, OUTPUT_TABLE__ENABLE_EMPTY_ELEMENT);
 
+        varTableEClass = createEClass(VAR_TABLE);
+        createEAttribute(varTableEClass, VAR_TABLE__NAME);
+        createEAttribute(varTableEClass, VAR_TABLE__MINIMIZED);
+        createEReference(varTableEClass, VAR_TABLE__NODES);
+
         abstractNodeEClass = createEClass(ABSTRACT_NODE);
         createEAttribute(abstractNodeEClass, ABSTRACT_NODE__NAME);
         createEAttribute(abstractNodeEClass, ABSTRACT_NODE__EXPRESSION);
@@ -700,6 +776,8 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
         tableNodeEClass = createEClass(TABLE_NODE);
         createEReference(tableNodeEClass, TABLE_NODE__LOOKUP_OUTGOING_CONNECTIONS);
         createEReference(tableNodeEClass, TABLE_NODE__LOOKUP_INCOMING_CONNECTIONS);
+
+        varNodeEClass = createEClass(VAR_NODE);
 
         iConnectionEClass = createEClass(ICONNECTION);
 
@@ -757,8 +835,10 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
         abstractInOutTableEClass.getESuperTypes().add(theAbstractmapPackage.getMapperTable());
         inputTableEClass.getESuperTypes().add(this.getAbstractInOutTable());
         outputTableEClass.getESuperTypes().add(this.getAbstractInOutTable());
+        varTableEClass.getESuperTypes().add(theAbstractmapPackage.getMapperTable());
         abstractNodeEClass.getESuperTypes().add(theAbstractmapPackage.getMapperTableEntity());
         tableNodeEClass.getESuperTypes().add(this.getAbstractNode());
+        varNodeEClass.getESuperTypes().add(this.getAbstractNode());
         iNodeConnectionEClass.getESuperTypes().add(this.getIConnection());
         connectionEClass.getESuperTypes().add(this.getINodeConnection());
         lookupConnectionEClass.getESuperTypes().add(this.getINodeConnection());
@@ -768,6 +848,7 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
         initEClass(pigMapDataEClass, PigMapData.class, "PigMapData", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getPigMapData_InputTables(), this.getInputTable(), null, "inputTables", null, 0, -1, PigMapData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getPigMapData_OutputTables(), this.getOutputTable(), null, "outputTables", null, 0, -1, PigMapData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getPigMapData_VarTables(), this.getVarTable(), null, "varTables", null, 0, -1, PigMapData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getPigMapData_Connections(), this.getIConnection(), null, "connections", null, 0, -1, PigMapData.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(abstractInOutTableEClass, AbstractInOutTable.class, "AbstractInOutTable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -793,6 +874,11 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
         initEAttribute(getOutputTable_AllInOne(), ecorePackage.getEBoolean(), "allInOne", null, 0, 1, OutputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getOutputTable_EnableEmptyElement(), ecorePackage.getEBoolean(), "enableEmptyElement", "true", 0, 1, OutputTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+        initEClass(varTableEClass, VarTable.class, "VarTable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getVarTable_Name(), ecorePackage.getEString(), "name", null, 0, 1, VarTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getVarTable_Minimized(), ecorePackage.getEBoolean(), "minimized", null, 0, 1, VarTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getVarTable_Nodes(), this.getVarNode(), null, "nodes", null, 0, -1, VarTable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
         initEClass(abstractNodeEClass, AbstractNode.class, "AbstractNode", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getAbstractNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, AbstractNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getAbstractNode_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, AbstractNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -807,6 +893,8 @@ public class PigmapPackageImpl extends EPackageImpl implements PigmapPackage {
         initEClass(tableNodeEClass, TableNode.class, "TableNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getTableNode_LookupOutgoingConnections(), this.getLookupConnection(), null, "lookupOutgoingConnections", null, 0, -1, TableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getTableNode_LookupIncomingConnections(), this.getLookupConnection(), null, "lookupIncomingConnections", null, 0, -1, TableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(varNodeEClass, VarNode.class, "VarNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(iConnectionEClass, IConnection.class, "IConnection", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

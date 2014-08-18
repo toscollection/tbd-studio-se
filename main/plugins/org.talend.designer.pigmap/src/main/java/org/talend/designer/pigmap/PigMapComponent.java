@@ -59,7 +59,7 @@ public class PigMapComponent extends MapperExternalNode implements IHashableInpu
 
     private PigMapExpressionManager expressionManager;
 
-    public static final String SOURCE_JAVA_PIGUDF = "pigudf";
+    public static final String SOURCE_JAVA_PIGUDF = "pigudf";//$NON-NLS-1$
 
     public PigMapComponent() {
         expressionManager = new PigMapExpressionManager();

@@ -55,8 +55,10 @@ import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
+import org.talend.designer.pigmap.util.MapDataHelper;
 import org.talend.designer.pigmap.util.PigMapUtil;
 import org.talend.expressionbuilder.IExpressionBuilderDialogService;
 
@@ -111,8 +113,13 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     final Text nametext = (Text) ((TextCellEditor) getCellEditor()).getControl();
                     nametext.selectAll();
                     break;
+                case VAR_NODE_TYPE:
+                    if (getCellEditor() instanceof ComboBoxCellEditor) {
+                        CCombo combo = (CCombo) getCellEditor().getControl();
+                        combo.setText(abstractNode.getType());
+                    }
+                    break;
                 }
-
             }
         } else if (model instanceof InputTable) {
             InputTable inputTable = (InputTable) model;
@@ -255,7 +262,7 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
             // for the search
             PigMapNodeCellEditorLocator lo = (PigMapNodeCellEditorLocator) locator;
             if (lo.getFigure() != null && lo.getFigure() instanceof VarNodeTextLabel) {
-                figure = (VarNodeTextLabel) lo.getFigure();
+                figure = lo.getFigure();
                 if (figure.getParent() != null && figure.getParent() instanceof PigMapSearchZoneToolBar) {
                     PigMapSearchZoneToolBar searchZone = (PigMapSearchZoneToolBar) figure.getParent();
                     if (searchZone.getSearchMaps().size() > 0) {
@@ -285,8 +292,13 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     vars.add(variable);
                 }
             }
+            // only var table has the DataFu category
+            boolean hasPigDataFuCategory = false;
+            if (model instanceof VarNode) {
+                hasPigDataFuCategory = true;
+            }
             IExpressionBuilderDialogController dialog = ((IExpressionBuilderDialogService) expressionBuilderDialogService)
-                    .getExpressionBuilderInstance(parent, (ExpressionCellEditor) cellEditor, null, vars);
+                    .getExpressionBuilderInstance(parent, (ExpressionCellEditor) cellEditor, null, vars, hasPigDataFuCategory);
             cellAndType.put(cellEditor, DirectEditType.EXPRESSION);
             behavior.setCellEditorDialog(dialog);
         } else if (figure instanceof ITextAreaCell) {
@@ -315,6 +327,12 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
         }
 
         switch (type) {
+        case VAR_NODE_TYPE:
+            String[] items = new String[MapDataHelper.iNodesDefineFunctions.size()];
+            for (int i = 0; i < MapDataHelper.iNodesDefineFunctions.size(); i++) {
+                items[i] = MapDataHelper.iNodesDefineFunctions.get(i).getUniqueName();
+            }
+            return items;
         case JOIN_MODEL:
             return joinModel;
         case JOIN_OPTIMIZATION:
@@ -384,10 +402,12 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
             CCombo combo = (CCombo) control;
             combo.addSelectionListener(new SelectionAdapter() {
 
+                @Override
                 public void widgetDefaultSelected(SelectionEvent event) {
                     // applyEditorValueAndDeactivate();
                 }
 
+                @Override
                 public void widgetSelected(SelectionEvent event) {
                     valueChanged(true, true);
                 }
@@ -408,6 +428,7 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
 
         private Composite panel;
 
+        @Override
         public Control createBehaviorControls(Composite parent) {
             panel = new Composite(parent, SWT.NONE);
             GridLayout gridLayout = new GridLayout(2, false);

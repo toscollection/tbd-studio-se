@@ -13,6 +13,7 @@
 package org.talend.designer.pigmap.commands;
 
 import org.eclipse.gef.commands.Command;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.gefabstractmap.dnd.TransferdType;
 import org.talend.designer.gefabstractmap.dnd.TransferedObject;
 import org.talend.designer.gefabstractmap.part.TableEntityPart;
@@ -20,11 +21,14 @@ import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
 import org.talend.designer.pigmap.parts.PigMapTableNodePart;
+import org.talend.designer.pigmap.parts.PigMapVarNodeEditPart;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
 import org.talend.designer.pigmap.util.PigMapUtil;
+import org.talend.designer.rowgenerator.data.FunctionManager;
 
 /**
  * DOC hcyi class global comment. Detailled comment
@@ -71,9 +75,9 @@ public class UpdateExpressionCommand extends Command {
                         InputTable inputTable = (InputTable) part.getParent().getModel();
                         sourceNode = (TableNode) part.getModel();
                         if (expression == null) {
-                            expression = inputTable.getName() + "." + sourceNode.getName();
+                            expression = inputTable.getName() + "." + sourceNode.getName();//$NON-NLS-1$
                         } else {
-                            expression = expression + " " + inputTable.getName() + "." + sourceNode.getName();
+                            expression = expression + " " + inputTable.getName() + "." + sourceNode.getName();//$NON-NLS-1$//$NON-NLS-2$
                         }
                         targetNode.setExpression(expression);
                     } else if (part.getParent() != null && part.getParent() instanceof PigMapOutputTablePart) {
@@ -88,6 +92,20 @@ public class UpdateExpressionCommand extends Command {
                     else if (targetInput) {
                         PigMapUtil.createLookupConnection((TableNode) sourceNode, (TableNode) targetNode, pigMapData);
                     }
+                } else if (objects.getType() == TransferdType.VAR) {
+                    // VARE ==>OUTPUT
+                    PigMapVarNodeEditPart part = (PigMapVarNodeEditPart) obj;
+                    sourceNode = (VarNode) part.getModel();
+                    String newNameNoQuotes = TalendQuoteUtils.removeQuotesIfExist(sourceNode.getName())
+                            + FunctionManager.FUN_PREFIX + FunctionManager.FUN_SUFFIX;
+                    if (expression == null) {
+                        expression = TalendQuoteUtils.addQuotesIfNotExist(newNameNoQuotes);
+                    } else {
+                        expression = expression + " " + TalendQuoteUtils.addQuotesIfNotExist(newNameNoQuotes);//$NON-NLS-1$
+                    }
+                    targetNode.setExpression(expression);
+                    // no need create the connect now
+                    // PigMapUtil.createConnection(sourceNode, targetNode, pigMapData);
                 }
             }
         }

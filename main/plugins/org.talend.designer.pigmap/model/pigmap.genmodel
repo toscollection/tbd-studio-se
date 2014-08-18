@@ -18,6 +18,7 @@
     <genClasses ecoreClass="pigmap.ecore#//PigMapData">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference pigmap.ecore#//PigMapData/inputTables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference pigmap.ecore#//PigMapData/outputTables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference pigmap.ecore#//PigMapData/varTables"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference pigmap.ecore#//PigMapData/connections"/>
     </genClasses>
     <genClasses image="false" ecoreClass="pigmap.ecore#//AbstractInOutTable">
@@ -43,6 +44,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//OutputTable/allInOne"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//OutputTable/enableEmptyElement"/>
     </genClasses>
+    <genClasses ecoreClass="pigmap.ecore#//VarTable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//VarTable/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//VarTable/minimized"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference pigmap.ecore#//VarTable/nodes"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="pigmap.ecore#//AbstractNode">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//AbstractNode/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//AbstractNode/expression"/>
@@ -58,6 +64,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference pigmap.ecore#//TableNode/lookupOutgoingConnections"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference pigmap.ecore#//TableNode/lookupIncomingConnections"/>
     </genClasses>
+    <genClasses ecoreClass="pigmap.ecore#//VarNode"/>
     <genClasses image="false" ecoreClass="pigmap.ecore#//IConnection"/>
     <genClasses image="false" ecoreClass="pigmap.ecore#//INodeConnection">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute pigmap.ecore#//INodeConnection/name"/>

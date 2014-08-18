@@ -13,14 +13,20 @@
 package org.talend.designer.pigmap.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.talend.core.model.metadata.IMetadataColumn;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.process.EConnectionType;
 import org.talend.core.model.process.IConnection;
+import org.talend.core.model.process.IElementParameter;
+import org.talend.core.model.process.INode;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.pigmap.PigMapComponent;
+import org.talend.designer.pigmap.PigMapConstants;
 import org.talend.designer.pigmap.figures.tablesettings.PIG_MAP_JOIN_OPTIMIZATION;
 import org.talend.designer.pigmap.figures.tablesettings.TableSettingsConstant;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
@@ -28,11 +34,18 @@ import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
+import org.talend.designer.pigmap.ui.tabs.MapperManager;
 
 /**
  * DOC hcyi class global comment. Detailled comment
  */
 public class MapDataHelper {
+
+    public static final List<INode> iNodesDefineFunctions = new ArrayList<INode>();
+
+    public static final Map<String, String> defineFunctionsAlias = new HashMap<String, String>();
 
     /**
      * 
@@ -241,5 +254,93 @@ public class MapDataHelper {
                 }
             }
         }
+    }
+
+    public static void checkPigLoadIfDefineFunctions(INode iNode, List<INode> iNodes) {
+        if (iNode != null) {
+            List<? extends IConnection> connections = iNode.getIncomingConnections();
+            for (IConnection conn : connections) {
+                INode oriNode = conn.getSource();
+                if (oriNode != null) {
+                    if (oriNode.getUniqueName() != null && oriNode.getUniqueName().startsWith(PigMapConstants.TPIGLOAD_NODE)) {
+                        IElementParameter elementParameter = oriNode.getElementParameter(PigMapConstants.DEFINE_FUNCTION);
+                        if (elementParameter != null && elementParameter.getValue() instanceof List) {
+                            // we can add this direct.
+                            List<Map<String, String>> defineFunctions = (List<Map<String, String>>) elementParameter.getValue();
+                            if (defineFunctions.size() >= 0) {
+                                iNodes.add(oriNode);
+                            }
+                        }
+                    }
+                    if (iNode.getIncomingConnections().size() > 0) {
+                        checkPigLoadIfDefineFunctions(oriNode, iNodes);
+                    }
+                }
+            }
+        }
+    }
+
+    public static List<VarNode> convertDefineFunctionsToVarNodes(MapperManager mapperManger, List<INode> iNodes) {
+        List<VarNode> varNodes = new ArrayList<VarNode>();
+        if (mapperManger != null) {
+            PigMapComponent mapperComponent = mapperManger.getMapperComponent();
+            iNodesDefineFunctions.clear();
+            defineFunctionsAlias.clear();
+            checkPigLoadIfDefineFunctions(mapperComponent, iNodes);
+            iNodesDefineFunctions.addAll(iNodes);
+            for (INode iNode : iNodes) {
+                IElementParameter elementParameter = iNode.getElementParameter(PigMapConstants.DEFINE_FUNCTION);
+                if (elementParameter != null && elementParameter.getValue() instanceof List) {
+                    List<Map<String, String>> defineFunctions = (List<Map<String, String>>) elementParameter.getValue();
+                    if (defineFunctions.size() > 0) {
+                        for (Map<String, String> item : defineFunctions) {
+                            VarNode newVarNode = PigmapFactory.eINSTANCE.createVarNode();
+                            newVarNode.setType(iNode.getUniqueName());
+                            newVarNode.setName(item.get(PigMapConstants.FUNCTION_ALIAS));
+                            newVarNode.setExpression(item.get(PigMapConstants.UDF_FUNCTION));
+                            varNodes.add(newVarNode);
+                            String key = item.get(PigMapConstants.FUNCTION_ALIAS);
+                            if (!defineFunctionsAlias.containsKey(key)) {
+                                defineFunctionsAlias.put(key, item.get(PigMapConstants.UDF_FUNCTION));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return varNodes;
+    }
+
+    public static void convertVarNodesToDefineFunctions(VarTable varTable, List<INode> iNodes) {
+        // Send back the change to the tPigLoad node if you modified the configure of define dunctions
+        for (INode iNode : iNodes) {
+            IElementParameter elementParameter = iNode.getElementParameter(PigMapConstants.DEFINE_FUNCTION);
+            if (elementParameter != null && elementParameter.getValue() instanceof List) {
+                List<Map<String, String>> defineFunctions = (List<Map<String, String>>) elementParameter.getValue();
+                defineFunctions.clear();
+                defineFunctionsAlias.clear();
+                for (VarNode varNode : varTable.getNodes()) {
+                    if (iNode.getUniqueName().equals(varNode.getType())) {
+                        Map<String, String> item = new HashMap<String, String>();
+                        item.put(PigMapConstants.FUNCTION_ALIAS, TalendQuoteUtils.addQuotesIfNotExist(varNode.getName()));
+                        item.put(PigMapConstants.UDF_FUNCTION, TalendQuoteUtils.addQuotesIfNotExist(varNode.getExpression()));
+                        defineFunctions.add(item);
+                        String key = varNode.getName();
+                        if (!defineFunctionsAlias.containsKey(key)) {
+                            defineFunctionsAlias.put(key, varNode.getExpression());
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Getter for definefunctionsalias.
+     * 
+     * @return the definefunctionsalias
+     */
+    public static Map<String, String> getDefinefunctionsalias() {
+        return defineFunctionsAlias;
     }
 }
