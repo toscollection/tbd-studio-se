@@ -25,11 +25,11 @@
     List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
     boolean setReadPreference = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_READ_PREFERENCE__"));
     String readPreference = ElementParameterParser.getValue(node, "__READ_PREFERENCE__");
-    
+
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     log4jFileUtil.componentStartInfo(node);
 	log4jFileUtil.logParameters(node);
-    
+
     if(useReplicaSet){
 	%>
 		List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
