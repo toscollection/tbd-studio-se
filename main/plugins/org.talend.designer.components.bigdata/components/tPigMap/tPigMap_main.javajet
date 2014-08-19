@@ -50,8 +50,9 @@
 	
 	String previous_node="";
 	String start_node="";
-	
+
 	boolean inMain = true;
+	boolean isExecutedThroughWebHCat = false;
 
 	Map<String,String> expressionConvertMap = new HashMap<String,String>();//like that : row1.id ==> $0
 	int index = 0;
@@ -111,6 +112,10 @@
 	  		previous_node = connection.getSource().getUniqueName();
 	  		INode loadNode = node.getDesignSubjobStartNode();
 			start_node = loadNode.getUniqueName();
+			
+			boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
+			isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__"));
+
 			inMain = loadNode.isSubtreeStart();
 %>
 			StringBuilder sb_<%=cid%> = new StringBuilder();
@@ -127,7 +132,11 @@
 		
 		for(int i_<%=tableName%>=0; i_<%=tableName%><ps_<%=tableName%>.size(); i_<%=tableName%>++) {
 			String[] o_<%=tableName%> = ps_<%=tableName%>.get(i_<%=tableName%>);
-			helper_<%=cid%>.add(o_<%=tableName%>[0],o_<%=tableName%>[1]);
+			if(o_<%=tableName%>.length > 2 && o_<%=tableName%>[2]!=null) {
+				helper_<%=cid%>.add(o_<%=tableName%>[0],o_<%=tableName%>[1],o_<%=tableName%>[2]);
+			} else {
+				helper_<%=cid%>.add(o_<%=tableName%>[0],o_<%=tableName%>[1]);
+			}
 			
 			if(i_<%=tableName%> == (ps_<%=tableName%>.size() - 1)) {//get the bag name of current lookup bag
 				String bagName_<%=tableName%> = o_<%=tableName%>[1];
