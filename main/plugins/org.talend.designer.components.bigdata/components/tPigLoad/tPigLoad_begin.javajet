@@ -182,7 +182,7 @@
 <%
 	}
 	
-	if(!!isExecutedThroughWebHCat) {
+	if(!isExecutedThroughWebHCat) {
 %>
 		java.util.Properties props_<%=cid%> = new java.util.Properties();
 <% 
