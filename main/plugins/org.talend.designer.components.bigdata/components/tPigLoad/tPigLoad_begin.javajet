@@ -60,7 +60,9 @@
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	List<Map<String, String>> defineFunctions = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DEFINE_FUNCTION__");
 	
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "MAPR310".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+		
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "MAPR310".equals(pigVersion) || "MICROSOFT_HD_INSIGHT_3_1".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;
@@ -77,7 +79,7 @@
 	boolean generateRegisterJarCodeForParquetFile = isParquet;
 	
 	boolean generateRegisterJarCodeForAll = true;
-
+	
 	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
@@ -179,22 +181,73 @@
 		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
 <%
 	}
+	
+	if(!!isExecutedThroughWebHCat) {
 %>
-	java.util.Properties props_<%=cid%> = new java.util.Properties();
-<%  
-	if(inMain) {
+		java.util.Properties props_<%=cid%> = new java.util.Properties();
+<% 
+	}
+	 
+	if(inMain && !isExecutedThroughWebHCat) {
 %>
-	props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
+		props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
 <%  
 	}
 %>
 	try {
 <%
+		if(inMain && isExecutedThroughWebHCat) {
+			String passwordFieldName = "__HDINSIGHT_PASSWORD__";
+			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%> 
+				final String hdInsightPassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+			} else {
+%>
+				final String hdInsightPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+			}
+			
+			passwordFieldName = "__WASB_PASSWORD__";
+			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%> 
+				final String wasbPassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+			} else {
+%>
+				final String wasbPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+			}
+%>
+			
+			java.io.File localPigLatin_<%=cid%> = new java.io.File(projectName + "_" + jobName + "_" + Thread.currentThread().getId() +".pig");
+			java.io.FileWriter fw_<%=cid%> = new java.io.FileWriter(localPigLatin_<%=cid%>.getAbsoluteFile());
+			java.io.BufferedWriter bw_<%=cid%> = new java.io.BufferedWriter(fw_<%=cid%>);
+			
+			java.lang.StringBuilder libjars_<%=cid%> = new StringBuilder();
+			
+			org.talend.webhcat.executor.job.SubmitJobByWebHCatHDInsight instance_<%=cid%> = new org.talend.webhcat.executor.job.SubmitJobByWebHCatHDInsight(org.talend.webhcat.executor.utils.JobType.PIG);
+			instance_<%=cid%>.setAzureAccountName(<%=ElementParameterParser.getValue(node, "__WASB_USERNAME__")%>);
+			instance_<%=cid%>.setAzureAccountPassword(wasbPassword_<%=cid%>);
+			instance_<%=cid%>.setAzureStorageAddress(<%=ElementParameterParser.getValue(node, "__WASB_HOST__")%>);
+			instance_<%=cid%>.setAzureContainer(<%=ElementParameterParser.getValue(node, "__WASB_CONTAINER__")%>);
+			instance_<%=cid%>.setHdInsightUsername(<%=ElementParameterParser.getValue(node, "__HDINSIGHT_USERNAME__")%>);
+			instance_<%=cid%>.setHdInsightPassword(hdInsightPassword_<%=cid%>);
+			instance_<%=cid%>.setUsername(<%=ElementParameterParser.getValue(node, "__WEBHCAT_USERNAME__")%>);
+			instance_<%=cid%>.setWebhcatEndpoint(<%=ElementParameterParser.getValue(node, "__WEBHCAT_HOST__")%> + ":" + <%=ElementParameterParser.getValue(node, "__WEBHCAT_PORT__")%>);
+			instance_<%=cid%>.setStatusFolder(<%=ElementParameterParser.getValue(node, "__STATUSDIR__")%>);
+			instance_<%=cid%>.setRemoteFolder(<%=ElementParameterParser.getValue(node, "__REMOTE_FOLDER__")%>);
+			instance_<%=cid%>.setFileToExecute(projectName + "_" + jobName + "_" + Thread.currentThread().getId() +".pig");
+			
+			String wasbPath_<%=cid%> = "wasb://" + <%=ElementParameterParser.getValue(node, "__WASB_CONTAINER__")%>	+ "@" + <%=ElementParameterParser.getValue(node, "__WASB_HOST__")%> + "/"	+ instance_<%=cid%>.getRemoteFolder()	+ "/libjars/";
+<%
+		}
+		
 		if(isLocal) { // LOCAL mode
 %>
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
 <%
-		} else { // MAPREDUCE mode
+		} else if(!isLocal && !isExecutedThroughWebHCat) { // MAPREDUCE mode
 			if(inMain) {
 				String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
@@ -355,14 +408,16 @@
 		}
 		
 		if(inMain) {//only main process create the server object,lookup process use the one in main process
+			if(!isExecutedThroughWebHCat) {
 %>
-		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
-		pigServer_<%=start_node%>.setBatchOn();
+				org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
+				pigServer_<%=start_node%>.setBatchOn();
 <%
+			}
 		} else {
 %>
-		//store the pig script in the lookup process
-		java.util.List<String[]> pigScript_<%=start_node%> = new java.util.ArrayList<String[]>();
+			//store the pig script in the lookup process
+			java.util.List<String[]> pigScript_<%=start_node%> = new java.util.ArrayList<String[]>();
 <%
 		}
 %>

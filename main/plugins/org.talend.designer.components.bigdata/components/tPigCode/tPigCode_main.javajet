@@ -17,10 +17,15 @@
 	String start_node="";
 	
 	boolean inMain = true;
+	boolean isExecutedThroughWebHCat = false;
 
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
 		INode loadNode = node.getDesignSubjobStartNode();
 		start_node = loadNode.getUniqueName();
+
+		boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
+		isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__"));		
+
 		inMain = loadNode.isSubtreeStart();
 	}
 

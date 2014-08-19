@@ -36,6 +36,10 @@
 	previous_node = mainConnnection.getSource().getUniqueName();
 	INode loadNode = node.getDesignSubjobStartNode();
 	start_node = loadNode.getUniqueName();
+	
+	boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
+	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__"));
+	
 	inMain = loadNode.isSubtreeStart();
 	previousOutputConnectionName = mainConnnection.getName();
 	
@@ -70,7 +74,11 @@
 			
 			for(int i_<%=inputConnectionName%>=0; i_<%=inputConnectionName%><ps_<%=inputConnectionName%>.size(); i_<%=inputConnectionName%>++) {
 				String[] o_<%=inputConnectionName%> = ps_<%=inputConnectionName%>.get(i_<%=inputConnectionName%>);
-				helper_<%=cid%>.add(o_<%=inputConnectionName%>[0],o_<%=inputConnectionName%>[1]);
+				if(o_<%=inputConnectionName%>.length > 2 && o_<%=inputConnectionName%>[2] != null) {
+					helper_<%=cid%>.add(o_<%=inputConnectionName%>[0],o_<%=inputConnectionName%>[1],o_<%=inputConnectionName%>[2]);
+				} else {
+					helper_<%=cid%>.add(o_<%=inputConnectionName%>[0],o_<%=inputConnectionName%>[1]);
+				}
 				
 				if(i_<%=inputConnectionName%> == (ps_<%=inputConnectionName%>.size() - 1)) {//get the bag name of current lookup bag
 					String bagName_<%=inputConnectionName%> = o_<%=inputConnectionName%>[1];

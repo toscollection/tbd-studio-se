@@ -24,13 +24,19 @@
 
 	String previous_node="";
 	String start_node="";
+	boolean isExecutedThroughWebHCat = false;
 
 	String previousOutputConnectionName = "";
 	
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
 		IConnection connection = node.getIncomingConnections().get(0);
 		previous_node = connection.getSource().getUniqueName();
-		start_node = node.getDesignSubjobStartNode().getUniqueName();
+		INode loadNode = node.getDesignSubjobStartNode();
+		start_node = loadNode.getUniqueName();
+		
+		boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
+		isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__"));
+		
 		previousOutputConnectionName = connection.getName();
 	}
 	
@@ -239,12 +245,29 @@
 		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
 <%
 	}	
+	
+	if(rmResultDir && !("HCatStorer".equals(function)) && !("HBaseStorage".equals(function))){
+		if(!isExecutedThroughWebHCat) {
 %>
-	<%if(rmResultDir && !("HCatStorer".equals(function)) && !("HBaseStorage".equals(function))){%>
 		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
-            pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
-        }
-	<%}%>
+			pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
+    	}
+<%
+		} else {
+%>
+			com.microsoft.azure.storage.CloudStorageAccount storageAccount_<%=cid%> = org.talend.webhcat.executor.common.impl.JobByWebHCatHDInsight.getConnection("DefaultEndpointsProtocol=https;AccountName=" + instance_<%=start_node%>.getAzureAccountName() + ";AccountKey=" + instance_<%=start_node%>.getAzureAccountPassword());
+			com.microsoft.azure.storage.blob.CloudBlobClient blobClient_<%=cid%> = storageAccount_<%=cid%>.createCloudBlobClient();
+			com.microsoft.azure.storage.blob.CloudBlobContainer container_<%=cid%> = blobClient_<%=cid%>.getContainerReference(instance_<%=start_node%>.getAzureAccountContainer());
+			
+			String resultFolder_<%=cid%> = <%=resultFile%>;
+			if(resultFolder_<%=cid%> != null && resultFolder_<%=cid%>.length() > 1 && resultFolder_<%=cid%>.charAt(0) == '/') {
+				resultFolder_<%=cid%> = resultFolder_<%=cid%>.substring(1);
+			}
+			instance_<%=start_node%>.deleteFolder(resultFolder_<%=cid%>, container_<%=cid%>);
+<%
+		}
+	} 
+%>
 	
 	routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
 	
@@ -523,7 +546,7 @@
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
 	
 <%
-	if(NodeUtil.isSubTreeEnd(node)) {
+	if(NodeUtil.isSubTreeEnd(node) && !isExecutedThroughWebHCat) {
 %>
 	pigServer_<%=start_node%>.executeBatch();
 	String currentClientPathSeparator_<%=cid%> = (String)globalMap.get("current_client_path_separator");
