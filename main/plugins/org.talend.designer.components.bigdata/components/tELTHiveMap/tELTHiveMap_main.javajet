@@ -29,6 +29,8 @@
     ExternalDbMapData data = (ExternalDbMapData) node.getExternalData();
     uniqueNameComponent = node.getUniqueName();
     
+	boolean isExecutedThroughWebHCat = "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+    
 	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 	String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
@@ -42,7 +44,7 @@
 	<% 
 	}
 	String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
-if(("false").equals(useExistingConn)) {
+if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 	boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
 	boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");

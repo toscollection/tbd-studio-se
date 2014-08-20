@@ -361,6 +361,7 @@
       FIELD="CHECK"
       NUM_ROW="130"
       GROUP="JSONCONFIG"
+      REQUIRED="true"
     >
       <DEFAULT>true</DEFAULT>
     </PARAMETER>
