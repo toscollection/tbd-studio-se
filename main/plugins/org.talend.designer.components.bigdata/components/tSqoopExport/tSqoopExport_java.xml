@@ -26,7 +26,8 @@
 	<PARAMETERS>
 		<PARAMETER NAME="NOTE_COMMANDINE" FIELD="LABEL" REQUIRED="true"
 			NUM_ROW="1" SHOW_IF="(USE_COMMANDLINE=='true')">
-			<DEFAULT>The available options are based on Sqoop 1.4.4. If you use	an earlier version, read the Sqoop documentation in order to find those which are not available.</DEFAULT>
+			<DEFAULT>The available options are based on Sqoop 1.4.4. If you use an earlier version, read the Sqoop documentation in order to find those which are not available.
+			</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="USE_COMMANDLINE" FIELD="RADIO" REQUIRED="true"
 			NUM_ROW="2" GROUP="MODE">
@@ -38,8 +39,7 @@
 		</PARAMETER>
 
 		<PARAMETER NAME="HADOOP_PROPERTY" FIELD="PROPERTY_TYPE"
-			REPOSITORY_VALUE="HADOOPCLUSTER|HDFS" NUM_ROW="4"
-			SHOW_IF="USE_JAVAAPI=='true'"></PARAMETER>
+			REPOSITORY_VALUE="HADOOPCLUSTER|HDFS" NUM_ROW="4" SHOW_IF="USE_JAVAAPI=='true'"></PARAMETER>
 
 		<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="5"
 			REQUIRED="true" GROUP="VERSION" REPOSITORY_VALUE="HADOOP_PROPERTY/DISTRIBUTION"
@@ -141,7 +141,7 @@
 
 		<PARAMETER NAME="JOBHISTORY_ADDRESS" FIELD="TEXT" NUM_ROW="21"
 			REQUIRED="true"
-			SHOW_IF="isShow[SET_JOBHISTORY_ADDRESS] AND (SET_JOBHISTORY_ADDRESS=='true')"
+			SHOW_IF="(isShow[SET_JOBHISTORY_ADDRESS]) AND (SET_JOBHISTORY_ADDRESS=='true')"
 			GROUP="CONFIGURATION">
 			<DEFAULT>"localhost:10020"</DEFAULT>
 		</PARAMETER>
@@ -344,6 +344,10 @@
 			SHOW_IF="PRINT_LOG=='true'">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
+        
+        <PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="110">
+                <DEFAULT>true</DEFAULT>
+        </PARAMETER>
 
 	</PARAMETERS>
 
@@ -421,7 +425,7 @@
 		<PARAMETER NAME="NOTE_CUSTOMER" FIELD="LABEL" REQUIRED="true"
 			NUM_ROW="32" COLOR="255;0;0" SHOW_IF="(USE_COMMANDLINE=='true')"
 			GROUP="SPEED_PARALLEL">
-			<DEFAULT>This function only apply between HDP and Teradata</DEFAULT>
+			<DEFAULT>This function only applies for HDP and Teradata</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="SPECIFIC_PARAMS" FIELD="TABLE" NUM_ROW="35"
@@ -430,13 +434,32 @@
 			<ITEMS>
 				<ITEM NAME="SPECIFIC_PARAM" FIELD="CLOSED_LIST">
 					<ITEMS DEFAULT="teradata-db-output-batch-size">
-						<ITEM NAME="teradata-db-output-method" VALUE="teradata.db.output.method" />
-						<ITEM NAME="teradata-db-output-stage-database" VALUE="teradata.db.output.stage.database" />
 						<ITEM NAME="teradata-db-output-batch-size" VALUE="teradata.db.output.batch.size" />
 						<ITEM NAME="teradata-db-output-fastload-number-max" VALUE="teradata.db.output.fastload.number.max" />
 						<ITEM NAME="teradata-db-output-fastload-socket-host" VALUE="teradata.db.output.fastload.socket.host" />
 						<ITEM NAME="teradata-db-output-fastload-socket-port" VALUE="teradata.db.output.fastload.socket.port" />
+						<ITEM NAME="teradata-db-output-file-format" VALUE="teradata.db.output.file.format" />
+						<ITEM NAME="teradata-db-output-job-type" VALUE="teradata.db.output.job.type" />
+						<ITEM NAME="teradata-db-output-method" VALUE="teradata.db.output.method" />
+						<ITEM NAME="teradata-db-output-num-mappers" VALUE="teradata.db.output.num.mappers" />
+						<ITEM NAME="teradata-db-output-num-partitions-in-staging"
+							VALUE="teradata.db.output.num.partitions.in.staging" />
+						<ITEM NAME="teradata-db-output-num-reducers" VALUE="teradata.db.output.num.reducers" />
+						<ITEM NAME="teradata-db-output-separator" VALUE="teradata.db.output.separator" />
+						<ITEM NAME="teradata-db-output-source-field-names" VALUE="teradata.db.output.source.field.names" />
+						<ITEM NAME="teradata-db-output-source-partition-schema"
+							VALUE="teradata.db.output.source.partition.schema" />
+						<ITEM NAME="teradata-db-output-source-paths" VALUE="teradata.db.output.source.paths" />
+						<ITEM NAME="teradata-db-output-source-table" VALUE="teradata.db.output.source.table" />
+						<ITEM NAME="teradata-db-output-source-table-schema" VALUE="teradata.db.output.source.table.schema" />
+						<ITEM NAME="teradata-db-output-stage-database" VALUE="teradata.db.output.stage.database" />
 						<ITEM NAME="teradata-db-output-stage-table-suffix" VALUE="teradata.db.output.stage.table.suffix" />
+						<ITEM NAME="teradata-db-output-stage-table-name" VALUE="teradata.db.output.stage.table.name" />
+						<ITEM NAME="teradata-db-output-target-field-count" VALUE="teradata.db.output.target.field.count" />
+						<ITEM NAME="teradata-db-output-target-field-names" VALUE="teradata.db.output.target.field.names" />
+						<ITEM NAME="teradata-db-output-target-table" VALUE="teradata.db.output.target.table" />
+						<ITEM NAME="teradata-db-output-teradata-db-hive-configuration-file"
+							VALUE="teradata.db.output.teradata.db.hive.configuration.file" />
 						<ITEM NAME="teradata-db-output-teradata-text-separator"
 							VALUE="teradata.db.output.teradata.text.separator" />
 					</ITEMS>

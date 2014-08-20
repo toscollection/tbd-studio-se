@@ -46,6 +46,8 @@
 	
 	boolean useSplit = "true".equals(ElementParameterParser.getValue(node,"__USE_SPLIT__"));
 	String split = ElementParameterParser.getValue(node,"__SPLIT__");
+	
+	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 %>
 
 <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Sqoop/SqoopAdditionalArgumentParser.javajet"%>
@@ -208,8 +210,6 @@ if(overrideHiveMapping) {
 String[] additionalArgs_<%=cid%> = parser_<%=cid%>.parse(<%=additionalCommandLineArguments%>);
 cmd_<%=cid %> = (String[]) org.apache.commons.lang.ArrayUtils.addAll(cmd_<%=cid %>, additionalArgs_<%=cid%>);
 
-final Process ps_<%=cid%> = runtime_<%=cid%>.exec(cmd_<%=cid%>);
-
 <%if(isLog4jEnabled) {%>
 java.lang.StringBuilder stringBuilder_<%=cid%> = new java.lang.StringBuilder();
 
@@ -220,46 +220,76 @@ for(String parameter_<%=cid%> : cmd_<%=cid %>) {
 log.info("<%=cid%> - execute sqoop command: " + stringBuilder_<%=cid%>.toString());
 <%}%>
 
+Process ps_<%=cid%> = null;
 java.lang.StringBuilder sb_<%=cid%> = null;
-byte[] byteArray_<%=cid%> = new byte[1024];
-int len_<%=cid%> = 0;
 
-java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
-sb_<%=cid%> = new java.lang.StringBuilder();
-while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-	String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+try {
+	ps_<%=cid%> = runtime_<%=cid%>.exec(cmd_<%=cid%>);
+	byte[] byteArray_<%=cid%> = new byte[1024];
+	int len_<%=cid%> = 0;
+
+	java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
+	sb_<%=cid%> = new java.lang.StringBuilder();
+	while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+		String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
 <%
-	if(printLog){
+		if(printLog){
 %>
-	    System.err.println(line_<%=cid%>);
+	    	System.err.println(line_<%=cid%>);
+<%
+		}
+%>
+		sb_<%=cid%>.append(line_<%=cid%>);
+	}
+	globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
+
+	<%if(isLog4jEnabled) {%>
+		log.error("<%=cid%> - " + sb_<%=cid%>.toString());
+	<%}%>
+
+	byteArray_<%=cid%> = new byte[1024];
+	len_<%=cid%> = 0;
+	java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
+	sb_<%=cid%> = new java.lang.StringBuilder();
+	while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
+		String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
+<%
+		if(printLog){
+%>
+	    	System.out.println(line_<%=cid%>);
+<%
+		}
+%>
+		sb_<%=cid%>.append(line_<%=cid%>);
+	}
+} catch (Exception e) {
+<%
+	if(dieOnError) {
+%>
+		throw e;
+<%		
+	} else {
+%>
+		System.err.println(e.getMessage());
 <%
 	}
-%>
-	sb_<%=cid%>.append(line_<%=cid%>);
+%>	
 }
-globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
 
-<%if(isLog4jEnabled) {%>
-log.error("<%=cid%> - " + sb_<%=cid%>.toString());
-<%}%>
-
-byteArray_<%=cid%> = new byte[1024];
-len_<%=cid%> = 0;
-java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
-sb_<%=cid%> = new java.lang.StringBuilder();
-while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-	String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
 <%
-	if(printLog){
+	if(dieOnError) {
 %>
-	    System.out.println(line_<%=cid%>);
-<%
+		ps_<%=cid%>.waitFor();
+		if(ps_<%=cid%>.exitValue()>0) {
+			throw new Exception("The Sqoop import has failed. Please check the logs.");
+		}
+<%		
 	}
 %>
-	sb_<%=cid%>.append(line_<%=cid%>);
-}
-globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
 
-<%if(isLog4jEnabled) {%>
-log.info("<%=cid%> - " + sb_<%=cid%>.toString());
-<%}%>
+if(sb_<%=cid%>!=null) {
+	globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
+	<%if(isLog4jEnabled) {%>
+		log.info("<%=cid%> - " + sb_<%=cid%>.toString());
+	<%}%>
+}

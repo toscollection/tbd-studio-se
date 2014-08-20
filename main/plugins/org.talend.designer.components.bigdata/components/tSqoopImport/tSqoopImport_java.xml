@@ -24,11 +24,11 @@
 	</CONNECTORS>
 
 	<PARAMETERS>
-	   <PARAMETER NAME="NOTE_COMMANDINE" FIELD="LABEL" REQUIRED="true"
-            NUM_ROW="1" SHOW_IF="(USE_COMMANDLINE=='true')">
-            <DEFAULT>The available options are based on Sqoop 1.4.4. If you use an earlier version, read the Sqoop documentation in order to find those which are not available.
-            </DEFAULT>
-        </PARAMETER>
+		<PARAMETER NAME="NOTE_COMMANDINE" FIELD="LABEL" REQUIRED="true"
+			NUM_ROW="1" SHOW_IF="(USE_COMMANDLINE=='true')">
+			<DEFAULT>The available options are based on Sqoop 1.4.4. If you use	an earlier version, read the Sqoop documentation in order to find those which are not available.
+			</DEFAULT>
+		</PARAMETER>
 		<PARAMETER NAME="USE_COMMANDLINE" FIELD="RADIO" REQUIRED="true"
 			NUM_ROW="2" GROUP="MODE">
 			<DEFAULT>false</DEFAULT>
@@ -37,10 +37,9 @@
 			NUM_ROW="3" GROUP="MODE">
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
-		
-        <PARAMETER NAME="HADOOP_PROPERTY" FIELD="PROPERTY_TYPE"
-            REPOSITORY_VALUE="HADOOPCLUSTER|HDFS" NUM_ROW="4"
-            SHOW_IF="USE_JAVAAPI=='true'"></PARAMETER>
+
+		<PARAMETER NAME="HADOOP_PROPERTY" FIELD="PROPERTY_TYPE"
+			REPOSITORY_VALUE="HADOOPCLUSTER|HDFS" NUM_ROW="4" SHOW_IF="USE_JAVAAPI=='true'"></PARAMETER>
 
 		<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="5"
 			REQUIRED="true" GROUP="VERSION" REPOSITORY_VALUE="HADOOP_PROPERTY/DISTRIBUTION"
@@ -212,9 +211,9 @@
 			REPOSITORY_VALUE="HADOOP_PROPERTY/USERNAME">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		
-        <PARAMETER NAME="JDBC_PROPERTY" FIELD="PROPERTY_TYPE"
-            REPOSITORY_VALUE="DATABASE:JDBC" NUM_ROW="33"></PARAMETER>
+
+		<PARAMETER NAME="JDBC_PROPERTY" FIELD="PROPERTY_TYPE"
+			REPOSITORY_VALUE="DATABASE:JDBC" NUM_ROW="33"></PARAMETER>
 
 		<PARAMETER NAME="CONNECTION" FIELD="TEXT" NUM_ROW="34"
 			GROUP="COMMON_SQOOP_OPTIONS" REPOSITORY_VALUE="JDBC_PROPERTY/URL">
@@ -241,7 +240,7 @@
 		<PARAMETER NAME="PASSWORD" FIELD="PASSWORD" NUM_ROW="40"
 			GROUP="COMMON_SQOOP_OPTIONS"
 			SHOW_IF="PASSWORD_STORED_IN_FILE=='false' OR (USE_JAVAAPI=='true' AND (DISTRIBUTION!='CUSTOM' AND DB_VERSION!='HDP_2_1' AND DB_VERSION!='HDP_2_0' AND DB_VERSION!='Cloudera_CDH5' AND DB_VERSION!='PIVOTAL_HD_2_0')))"
-            REPOSITORY_VALUE="JDBC_PROPERTY/PASSWORD">
+			REPOSITORY_VALUE="JDBC_PROPERTY/PASSWORD">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
@@ -369,7 +368,7 @@
 			GROUP="CONTROL_SQOOP_OPTIONS" SHOW_IF="USE_SPLIT=='true'">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-
+		
 		<PARAMETER NAME="USE_MAPPERS" FIELD="CHECK" NUM_ROW="145"
 			GROUP="CONTROL_SQOOP_OPTIONS">
 			<DEFAULT>false</DEFAULT>
@@ -390,6 +389,10 @@
 			NOT_SHOW_IF="(PRINT_LOG=='false' OR (USE_JAVAAPI=='true' AND ((DISTRIBUTION=='HORTONWORKS' AND DB_VERSION=='HDP_1_0') OR (DISTRIBUTION=='CLOUDERA' AND DB_VERSION=='Cloudera_CDH3') OR (DISTRIBUTION=='MAPR' AND DB_VERSION=='MAPR1'))))">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
+		
+        <PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="165">
+                <DEFAULT>true</DEFAULT>
+        </PARAMETER>
 	</PARAMETERS>
 
 	<ADVANCED_PARAMETERS>
@@ -421,7 +424,8 @@
 		</PARAMETER>
 
 		<PARAMETER NAME="HIVE_TYPE_MAPPING" FIELD="TABLE" NUM_ROW="31"
-			GROUP="TYPE_MAPPING" NB_LINES="5" NOT_SHOW_IF="(DEFINE_HIVE_MAPPING=='false' OR (USE_JAVAAPI=='true' AND ((DISTRIBUTION=='CLOUDERA' AND DB_VERSION=='Cloudera_CDH3') OR (DISTRIBUTION=='MAPR' AND DB_VERSION=='MAPR1'))))">
+			GROUP="TYPE_MAPPING" NB_LINES="5"
+			NOT_SHOW_IF="(DEFINE_HIVE_MAPPING=='false' OR (USE_JAVAAPI=='true' AND ((DISTRIBUTION=='CLOUDERA' AND DB_VERSION=='Cloudera_CDH3') OR (DISTRIBUTION=='MAPR' AND DB_VERSION=='MAPR1'))))">
 			<ITEMS>
 				<ITEM NAME="COLUMN_NAME" FIELD="TEXT" VALUE='""' />
 				<ITEM NAME="HIVE_TYPE" FIELD="TEXT" VALUE='""' />
@@ -505,8 +509,7 @@
 		<PARAMETER NAME="NOTE_CUSTOMER" FIELD="LABEL" REQUIRED="true"
 			NUM_ROW="65" COLOR="255;0;0" SHOW_IF="(USE_COMMANDLINE=='true')"
 			GROUP="SPEED_PARALLEL">
-			<DEFAULT>This function only apply between HDP and Teradata
-			</DEFAULT>
+			<DEFAULT>This function only applies for HDP and Teradata</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="SPECIFIC_PARAMS" FIELD="TABLE" NUM_ROW="70"
@@ -515,10 +518,31 @@
 			<ITEMS>
 				<ITEM NAME="SPECIFIC_PARAM" FIELD="CLOSED_LIST">
 					<ITEMS DEFAULT="teradata-db-input-batch-size">
-						<ITEM NAME="teradata-db-input-method" VALUE="teradata.db.input.method" />
-						<ITEM NAME="teradata-db-input-stage-database" VALUE="teradata.db.input.stage.database" />
-						<ITEM NAME="teradata-db-input-partition-num" VALUE="teradata.db.input.partition.num" />
 						<ITEM NAME="teradata-db-input-batch-size" VALUE="teradata.db.input.batch.size" />
+						<ITEM NAME="teradata-db-input-file-format" VALUE="teradata.db.input.file.format" />
+						<ITEM NAME="teradata-db-input-job-type" VALUE="teradata.db.input.job.type" />
+						<ITEM NAME="teradata-db-input-method" VALUE="teradata.db.input.method" />
+						<ITEM NAME="teradata-db-input-num-mappers" VALUE="teradata.db.input.num.mappers" />
+						<ITEM NAME="teradata-db-input-num-partitions-in-staging"
+							VALUE="teradata.db.input.num.partitions.in.staging" />
+						<ITEM NAME="teradata-db-input-partition-num" VALUE="teradata.db.input.partition.num" />
+						<ITEM NAME="teradata-db-input-separator" VALUE="teradata.db.input.separator" />
+						<ITEM NAME="teradata-db-input-source-count-query" VALUE="teradata.db.input.source.count.query" />
+						<ITEM NAME="teradata-db-input-source-field-names" VALUE="teradata.db.input.source.field.names" />
+						<ITEM NAME="teradata-db-input-source-query" VALUE="teradata.db.input.source.query" />
+						<ITEM NAME="teradata-db-input-source-table" VALUE="teradata.db.input.source.table" />
+						<ITEM NAME="teradata-db-input-split-by-column" VALUE="teradata.db.input.split.by.column" />
+						<ITEM NAME="teradata-db-input-stage-force" VALUE="teradata.db.input.stage.force" />
+						<ITEM NAME="teradata-db-input-stage-database" VALUE="teradata.db.input.stage.database" />
+						<ITEM NAME="teradata-db-input-stage-table-name" VALUE="teradata.db.input.stage.table.name" />
+						<ITEM NAME="teradata-db-input-target-database" VALUE="teradata.db.input.target.database" />
+						<ITEM NAME="teradata-db-input-target-field-names" VALUE="teradata.db.input.target.field.names" />
+						<ITEM NAME="teradata-db-input-target-partition-schema" VALUE="teradata.db.input.target.partition.schema" />
+						<ITEM NAME="teradata-db-input-target-table" VALUE="teradata.db.input.target.table" />
+						<ITEM NAME="teradata-db-input-target-table-schema" VALUE="teradata.db.input.target.table.schema" />
+						<ITEM NAME="teradata-db-input-target-paths" VALUE="teradata.db.input.target.paths" />
+						<ITEM NAME="teradata-db-input-teradata-db-hive-configuration-file"
+							VALUE="teradata.db.input.teradata.db.hive.configuration.file" />
 					</ITEMS>
 				</ITEM>
 				<ITEM NAME="SPECIFIC_PARAM_VALUE" FIELD="TEXT" />
@@ -592,11 +616,11 @@
 			<IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar"
 				REQUIRED_IF="USE_JAVAAPI=='true'" />
-				
-            <IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
-                REQUIRED_IF="(USE_COMMANDLINE=='true')" />
-				
+
+			<IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
+				REQUIRED_IF="(USE_COMMANDLINE=='true')" />
+
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"
 				REQUIRED="false"
