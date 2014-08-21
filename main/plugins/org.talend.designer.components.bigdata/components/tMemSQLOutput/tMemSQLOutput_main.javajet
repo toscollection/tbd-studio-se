@@ -647,6 +647,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                 if (("INSERT").equals(dataAction) || ("UPDATE").equals(dataAction) || ("DELETE").equals(dataAction)) {
                 %>
                 if ( batchSize_<%=cid%> == batchSizeCounter_<%=cid%>) {
+                    long countSum_<%=cid%> = 0;
                     int[] resultStatus = {};
                     try {
                         resultStatus = pstmt_<%=cid %>.executeBatch();
@@ -658,10 +659,24 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     }else {
                     %>
                         System.err.println(e_<%=cid%>.getMessage());
+                        for(int countEach_<%=cid%>: e_<%=cid%>.getUpdateCounts()) {
+                            countSum_<%=cid%> += (countEach_<%=cid%> < 0 ? 0 : countEach_<%=cid%>);
+                        }
                     <%
                     }%>
                     }
-                    long tmp_batchUpdateCount_<%=cid%> = resultStatus.length;
+
+                    long tmp_batchUpdateCount_<%=cid%> = 0;
+                    for(int i : resultStatus){
+                          if(i==-3){//EXECUTE_FAILED 
+                                System.err.println("Query failed to execute.");
+                          }else if(i==-2){//SUCCESS_NO_INFO
+                                System.err.println("Query was processed successfully but that the number of rows affected is unknown.");
+                          }else{
+                               tmp_batchUpdateCount_<%=cid%> += (i<0 ? 0 : i);
+                          }
+                    }
+                    tmp_batchUpdateCount_<%=cid%> += countSum_<%=cid%>;
                     <%if (("INSERT").equals(dataAction)) {
                     %>
                         insertedCount_<%=cid%>
