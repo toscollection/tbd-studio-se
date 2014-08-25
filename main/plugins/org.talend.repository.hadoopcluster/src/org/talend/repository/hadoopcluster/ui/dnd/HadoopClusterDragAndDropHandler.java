@@ -161,68 +161,57 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
     }
 
     @Override
-    public void setComponentValue(Connection connection, INode node, String repositoryValue) {
+    public void setComponentValue(Connection connection, INode node, IElementParameter param) {
         if (node != null && canHandle(connection)) {
-            setHadoopClusterRepositoryValue((HadoopClusterConnection) connection, node, repositoryValue);
+            setHadoopClusterRepositoryValue((HadoopClusterConnection) connection, node, param);
         }
     }
 
-    private void setHadoopClusterRepositoryValue(HadoopClusterConnection hcConnection, INode node, String repositoryValue) {
-        if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.DISTRIBUTION.getParameterName());
+    private void setHadoopClusterRepositoryValue(HadoopClusterConnection hcConnection, INode node, IElementParameter param) {
+        if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setDistribution(value);
             }
-        } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
+        } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setDfVersion(value);
             }
-        } else if (EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(repositoryValue)) {
-            IElementParameter param = node.getElementParameter(EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getParameterName());
-            if (param != null) {
-                Object obj = param.getValue();
-                if (obj != null) {
-                    Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarsParamFromComp((String) obj,
-                            ECustomVersionGroup.COMMON);
-                    HCVersionUtil.injectCustomVersionMap(hcConnection, customVersionMap);
-                }
+        } else if (EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(param.getRepositoryValue())) {
+            Object obj = param.getValue();
+            if (obj != null) {
+                Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarsParamFromComp((String) obj,
+                        ECustomVersionGroup.COMMON);
+                HCVersionUtil.injectCustomVersionMap(hcConnection, customVersionMap);
             }
-        } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getParameterName());
+        } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setAuthMode(value);
             }
-        } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getParameterName());
+        } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setNameNodeURI(value);
             }
-        } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.USE_KRB.getParameterName());
+        } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setEnableKerberos(Boolean.valueOf(value));
             }
-        } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getParameterName());
+        } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setPrincipal(value);
             }
-        } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.USERNAME.getParameterName());
+        } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setUserName(value);
             }
-        } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.GROUP.getParameterName());
+        } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setGroup(value);
             }

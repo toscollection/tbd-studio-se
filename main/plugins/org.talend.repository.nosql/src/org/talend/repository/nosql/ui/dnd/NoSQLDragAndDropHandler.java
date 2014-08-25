@@ -23,6 +23,7 @@ import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.process.IElement;
+import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -135,17 +136,17 @@ public class NoSQLDragAndDropHandler extends AbstractNoSQLDragAndDropHandler {
     }
 
     @Override
-    public void setComponentValue(Connection connection, INode node, String repositoryValue) {
+    public void setComponentValue(Connection connection, INode node, IElementParameter param) {
         if (node != null && canHandle(connection)) {
-            setNoSQLRepositoryValue((NoSQLConnection) connection, node, repositoryValue);
+            setNoSQLRepositoryValue((NoSQLConnection) connection, node, param);
         }
     }
 
-    private void setNoSQLRepositoryValue(NoSQLConnection connection, INode node, String repositoryValue) {
+    private void setNoSQLRepositoryValue(NoSQLConnection connection, INode node, IElementParameter param) {
         String dbType = connection.getDbType();
         IDNDProvider dndProvider = NoSQLRepositoryFactory.getInstance().getDNDProvider(dbType);
         if (dndProvider != null) {
-            dndProvider.setRepositoryValue(connection, node, repositoryValue);
+            dndProvider.setRepositoryValue(connection, node, param.getRepositoryValue());
         }
     }
 
