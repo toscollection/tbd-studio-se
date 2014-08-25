@@ -64,40 +64,39 @@ public class MongoDBDNDProvider extends AbstractDNDProvider {
     }
 
     @Override
-    public void setRepositoryValue(NoSQLConnection connection, INode node, String repositoryValue) {
-        if (IMongoDBAttributes.DB_VERSION.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, IMongoDBAttributes.DB_VERSION);
+    public void setRepositoryValue(NoSQLConnection connection, INode node, IElementParameter param) {
+        if (IMongoDBAttributes.DB_VERSION.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.DB_VERSION, value);
             }
-        } else if (IMongoDBAttributes.HOST.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, IMongoDBAttributes.HOST);
+        } else if (IMongoDBAttributes.HOST.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.HOST, value);
             }
-        } else if (IMongoDBAttributes.PORT.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, IMongoDBAttributes.PORT);
+        } else if (IMongoDBAttributes.PORT.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.PORT, value);
             }
-        } else if (IMongoDBAttributes.DATABASE.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, IMongoDBAttributes.DATABASE);
+        } else if (IMongoDBAttributes.DATABASE.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.DATABASE, value);
             }
-        } else if (IMongoDBAttributes.USE_REPLICA_SET.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, IMongoDBAttributes.USE_REPLICA_SET);
+        } else if (IMongoDBAttributes.USE_REPLICA_SET.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.USE_REPLICA_SET, value);
             }
-        } else if (IMongoDBAttributes.REQUIRED_AUTHENTICATION.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    IMongoDBAttributes.REQUIRED_AUTHENTICATION);
+        } else if (IMongoDBAttributes.REQUIRED_AUTHENTICATION.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.REQUIRED_AUTHENTICATION, value);
             }
-        } else if (IMongoDBAttributes.REPLICA_SET.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, IMongoDBAttributes.REPLICA_SET);
+        } else if (IMongoDBAttributes.REPLICA_SET.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.REPLICA_SET, value);
             }

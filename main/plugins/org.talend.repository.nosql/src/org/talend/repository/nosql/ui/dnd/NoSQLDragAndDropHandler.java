@@ -146,7 +146,7 @@ public class NoSQLDragAndDropHandler extends AbstractNoSQLDragAndDropHandler {
         String dbType = connection.getDbType();
         IDNDProvider dndProvider = NoSQLRepositoryFactory.getInstance().getDNDProvider(dbType);
         if (dndProvider != null) {
-            dndProvider.setRepositoryValue(connection, node, param.getRepositoryValue());
+            dndProvider.setRepositoryValue(connection, node, param);
         }
     }
 

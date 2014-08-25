@@ -60,30 +60,29 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
      * NoSQLConnection, org.talend.core.model.process.INode, java.lang.String)
      */
     @Override
-    public void setRepositoryValue(NoSQLConnection connection, INode node, String repositoryValue) {
-        if (ICassandraAttributies.DB_VERSION.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, ICassandraAttributies.DB_VERSION);
+    public void setRepositoryValue(NoSQLConnection connection, INode node, IElementParameter param) {
+        if (ICassandraAttributies.DB_VERSION.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(ICassandraAttributies.DB_VERSION, value);
             }
-        } else if (ICassandraAttributies.HOST.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, ICassandraAttributies.HOST);
+        } else if (ICassandraAttributies.HOST.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(ICassandraAttributies.HOST, value);
             }
-        } else if (ICassandraAttributies.PORT.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, ICassandraAttributies.PORT);
+        } else if (ICassandraAttributies.PORT.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(ICassandraAttributies.PORT, value);
             }
-        } else if (ICassandraAttributies.DATABASE.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, ICassandraAttributies.DATABASE);
+        } else if (ICassandraAttributies.DATABASE.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(ICassandraAttributies.DATABASE, value);
             }
-        } else if (ICassandraAttributies.REQUIRED_AUTHENTICATION.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    ICassandraAttributies.REQUIRED_AUTHENTICATION);
+        } else if (ICassandraAttributies.REQUIRED_AUTHENTICATION.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(ICassandraAttributies.REQUIRED_AUTHENTICATION, value);
             }
