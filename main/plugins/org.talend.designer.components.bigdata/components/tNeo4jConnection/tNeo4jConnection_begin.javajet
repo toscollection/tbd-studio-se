@@ -23,11 +23,15 @@
 	} else {
 		if (readOnlyMode) {
 			%>
-			org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedReadOnlyGraphDatabase(<%=dbPath%>);
+            java.util.Map config = new java.util.HashMap();
+            config.put( "read_only", "true" );
+			org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory()
+			        .newEmbeddedDatabaseBuilder(<%=dbPath%>)
+			        .setConfig(config).newGraphDatabase();
 			<%
 		} else {
 			%>
-			org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedGraphDatabase(<%=dbPath%>);
+			org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=dbPath%>);
 			<%
 		}
 	}

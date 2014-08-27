@@ -156,7 +156,15 @@
         NAME="jackson-core-asl-1.9.7"
         MODULE="jackson-core-asl-1.9.7.jar"
         REQUIRED="true"/>
-		</IMPORTS>
+       <IMPORT
+        NAME="parboiled-scala_2.10-1.1.6"
+        MODULE="parboiled-scala_2.10-1.1.6.jar"
+        REQUIRED="true"/>
+       <IMPORT
+        NAME="parboiled-core-1.1.6"
+        MODULE="parboiled-core-1.1.6.jar"
+        REQUIRED="true"/>
+        </IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
 		<RETURN AVAILABILITY="AFTER" NAME="NB_LINE" TYPE="id_Integer" />
