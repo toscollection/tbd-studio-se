@@ -255,7 +255,7 @@
       NAME="BATCH_SIZE"
       FIELD="TEXT"
       NUM_ROW="11"
-      SHOW_IF="isShow[USE_BATCH_SIZE]"
+      SHOW_IF="isShow[USE_BATCH_SIZE] AND (USE_BATCH_SIZE == 'true')"
     >
     <DEFAULT>10000</DEFAULT>
   </PARAMETER>

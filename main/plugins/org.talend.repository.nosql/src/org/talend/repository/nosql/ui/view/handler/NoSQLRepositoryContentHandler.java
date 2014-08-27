@@ -91,6 +91,7 @@ public class NoSQLRepositoryContentHandler extends AbstractRepositoryContentHand
         XmiResourceManager xmiResourceManager = ProxyRepositoryFactory.getInstance().getRepositoryFactoryFromProvider()
                 .getResourceManager();
         Resource itemResource = xmiResourceManager.createItemResource(project, item, path, type, false);
+        MetadataManager.addContents(item, itemResource);
         itemResource.getContents().add(item.getConnection());
 
         return itemResource;
