@@ -44,7 +44,8 @@ public class CassandraMetadataProvider extends AbstractMetadataProvider {
             return metadataColumns;
         }
         try {
-            if (ICassandraConstants.COLUMN_FAMILY.equals(node.getNodeType())) {
+            if (ICassandraConstants.COLUMN_FAMILY.equals(node.getNodeType())
+                    || ICassandraConstants.SUPER_COLUMN_FAMILY.equals(node.getNodeType())) {
                 String dbName = null;
                 INoSQLSchemaNode parent = node.getParent();
                 if (parent != null && ICassandraConstants.KEY_SPACE.equals(parent.getNodeType())) {

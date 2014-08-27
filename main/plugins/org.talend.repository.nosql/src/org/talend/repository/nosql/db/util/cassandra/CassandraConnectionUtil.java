@@ -123,10 +123,9 @@ public class CassandraConnectionUtil {
     }
 
     public static synchronized Object getKeySpace(NoSQLConnection connection, String ksName) throws NoSQLServerException {
-        Object keyspace = null;
         ContextType contextType = null;
         if (StringUtils.isEmpty(ksName)) {
-            return keyspace;
+            return null;
         }
         if (connection.isContextMode()) {
             contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
@@ -134,15 +133,40 @@ public class CassandraConnectionUtil {
         if (contextType != null) {
             ksName = ContextParameterUtils.getOriginalValue(contextType, ksName);
         }
-        ksName = TalendQuoteUtils.addQuotesIfNotExist(ksName);
+        // if ksName has quote,then case sensitive
+        boolean hasQuote = (ksName.charAt(0) == '"') && (ksName.charAt(ksName.length() - 1) == '"');
         try {
             initCluster(connection);
-            Object metadata = NoSQLReflection.invokeMethod(cluster, "getMetadata"); //$NON-NLS-1$
-            keyspace = NoSQLReflection.invokeMethod(metadata, "getKeyspace", new Object[] { ksName }); //$NON-NLS-1$
+            List<Object> keySpaces = getKeySpaces(connection);
+            for (Object keySpace : keySpaces) {
+                String tmpKsName = (String) NoSQLReflection.invokeMethod(keySpace, "getName"); //$NON-NLS-1$
+                if (hasQuote) {
+                    ksName = TalendQuoteUtils.removeQuotesIfExist(ksName);
+                    if (ksName.equals(tmpKsName)) {
+                        return keySpace;
+                    }
+                    // case in-sensitive by default for kaName
+                } else if (ksName.equalsIgnoreCase(tmpKsName)) {
+                    return keySpace;
+                }
+            }
         } catch (Exception e) {
             throw new NoSQLServerException(e);
         }
-        return keyspace;
+        return null;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static synchronized List<Object> getKeySpaces(NoSQLConnection connection) throws NoSQLServerException {
+        List<Object> keySpaces = new ArrayList<Object>();
+        initCluster(connection);
+        try {
+            Object metadata = NoSQLReflection.invokeMethod(cluster, "getMetadata"); //$NON-NLS-1$
+            keySpaces.addAll((List) NoSQLReflection.invokeMethod(metadata, "getKeyspaces")); //$NON-NLS-1$
+        } catch (NoSQLReflectionException e) {
+            throw new NoSQLServerException(e);
+        }
+        return keySpaces;
     }
 
     @SuppressWarnings("rawtypes")
@@ -150,8 +174,7 @@ public class CassandraConnectionUtil {
         List<String> ksNames = new ArrayList<String>();
         initCluster(connection);
         try {
-            Object metadata = NoSQLReflection.invokeMethod(cluster, "getMetadata"); //$NON-NLS-1$
-            List keySpaces = (List) NoSQLReflection.invokeMethod(metadata, "getKeyspaces"); //$NON-NLS-1$
+            List keySpaces = getKeySpaces(connection);
             for (Object keySpace : keySpaces) {
                 String ksName = (String) NoSQLReflection.invokeMethod(keySpace, "getName"); //$NON-NLS-1$
                 ksNames.add(ksName);
