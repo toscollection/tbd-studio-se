@@ -35,7 +35,7 @@ imports="
 %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetConnection.javajet"%>
 <%
-	String tableName = ElementParameterParser.getValue(node, "__TABLE__");
+    String tableName = ElementParameterParser.getValue(node, "__TABLE__");
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 	boolean external = "true".equals(ElementParameterParser.getValue(node, "__CREATE_EXTERNAL__"));
 	String tableAction = ElementParameterParser.getValue(node,"__TABLEACTION__");
@@ -75,6 +75,7 @@ imports="
 	
 	boolean setLocation = "true".equals(ElementParameterParser.getValue(node, "__SET_FILE_LOCATION__"));
 	String location = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
+	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
 	
 	String storedFormat = ElementParameterParser.getValue(node, "__STORAGE_FORMAT__");
 	
@@ -195,14 +196,14 @@ if(likeTable) {
 	createTableSQL.append(" + \"");
 	
 	if(setLocation) {
-%>
+	    %>
 		String location_<%=cid%> = <%=location%>;
-<%
-    	createTableSQL.append(" LOCATION '");
-    	createTableSQL.append("\" + ");
-    	createTableSQL.append("location_");
-    	createTableSQL.append(cid);
-    	createTableSQL.append(" + \"'");
+		<%
+        createTableSQL.append(" LOCATION '");
+        createTableSQL.append("\" + ");
+        createTableSQL.append("location_");
+        createTableSQL.append(cid);
+        createTableSQL.append(" + \"'");
 	}
 %>
 	String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
@@ -604,9 +605,31 @@ if(storeAsAvro || storeAsParquet) {
 }
 
 if(setLocation) {
-%>
-	String location_<%=cid%> = <%=location%>;
-<%
+    if (isS3Location) {
+        String s3bucket = ElementParameterParser.getValue(node, "__S3_BUCKET__");
+        String s3username = ElementParameterParser.getValue(node, "__S3_USERNAME__");
+    
+        String passwordFieldName = "__S3_PASSWORD__";
+        // Get the decrypted password under the variable decryptedS3Password
+        
+        if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+            %> 
+            String decryptedS3Password_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+            <%
+        } else {
+            %>
+            String decryptedS3Password_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+            <%
+        }
+        %>
+        String location_<%=cid%> = "s3n://" + <%=s3username%> +":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>;
+        <%
+    
+    } else {
+        %>
+    	String location_<%=cid%> = <%=location%>;
+        <%
+    }
 	createTableSQL.append(" LOCATION '");
 	createTableSQL.append("\" + ");
 	createTableSQL.append("location_");

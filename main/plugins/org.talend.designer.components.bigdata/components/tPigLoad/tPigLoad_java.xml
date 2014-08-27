@@ -99,9 +99,11 @@
 					SHOW_IF="(DISTRIBUTION=='MAPR') AND (LOAD!='HCATLOADER')" />
 				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
-				<ITEM NAME="MapR_EMR" VALUE="MapR_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
+				<ITEM NAME="APACHE_2_4_0_EMR" VALUE="APACHE_2_4_0_EMR"
+					SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR"
 					SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
+				<ITEM NAME="MapR_EMR" VALUE="MapR_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1"
 					SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'" />
 				<ITEM NAME="PIVOTAL_HD_2_0" VALUE="PIVOTAL_HD_2_0"
@@ -158,10 +160,12 @@
 			<DEFAULT>"hdfs://localhost:8020"</DEFAULT>
 			<DEFAULT
 				IF="((PIG_VERSION == 'MAPR1') OR (PIG_VERSION == 'MAPR2') OR (PIG_VERSION == 'MAPR212') OR (PIG_VERSION == 'MAPR213') OR (PIG_VERSION == 'MAPR301') OR (PIG_VERSION == 'MAPR310') OR (PIG_VERSION == 'MapR_EMR')) AND (DISTRIBUTION != 'CUSTOM')">"maprfs:///"</DEFAULT>
+			<DEFAULT
+				IF="((PIG_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION != 'CUSTOM'))">"hdfs://localhost:9000"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="MAPRED_JOB_TRACKER" FIELD="TEXT" NUM_ROW="17"
 			REPOSITORY_VALUE="MAPRED_JOB_TRACKER" REQUIRED="true"
-			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND PIG_VERSION!='PIVOTAL_HD_1_0_1' AND PIG_VERSION!='PIVOTAL_HD_2_0' AND PIG_VERSION!='HDP_2_0' AND PIG_VERSION!='HDP_2_1' AND PIG_VERSION!='Cloudera_CDH4_YARN' AND PIG_VERSION!='Cloudera_CDH5' AND DISTRIBUTION!='MICROSOFT_HD_INSIGHT'))"
+			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='false') OR (DISTRIBUTION!='CUSTOM' AND PIG_VERSION!='PIVOTAL_HD_1_0_1' AND PIG_VERSION!='PIVOTAL_HD_2_0' AND PIG_VERSION!='HDP_2_0' AND PIG_VERSION!='HDP_2_1' AND PIG_VERSION!='Cloudera_CDH4_YARN' AND PIG_VERSION!='Cloudera_CDH5' AND PIG_VERSION!='APACHE_2_4_0_EMR'  AND DISTRIBUTION!='MICROSOFT_HD_INSIGHT'))"
 			GROUP="CONFIGURATION">
 			<DEFAULT>"localhost:8021"</DEFAULT>
 			<DEFAULT
@@ -169,14 +173,16 @@
 		</PARAMETER>
 		<PARAMETER NAME="RESOURCE_MANAGER" FIELD="TEXT" NUM_ROW="17"
 			REQUIRED="true"
-			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))"
+			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5' OR PIG_VERSION=='APACHE_2_4_0_EMR')))"
 			GROUP="CONFIGURATION" REPOSITORY_VALUE="RESOURCE_MANAGER">
 			<DEFAULT>"localhost:8032"</DEFAULT>
+			<DEFAULT
+				IF="((PIG_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION != 'CUSTOM'))">"localhost:9022"</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="SET_JOBHISTORY_ADDRESS" FIELD="CHECK"
 			NUM_ROW="18" REQUIRED="true"
-			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))"
+			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5' OR PIG_VERSION=='APACHE_2_4_0_EMR')))"
 			GROUP="CONFIGURATION">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
@@ -186,11 +192,13 @@
 			SHOW_IF="(isShow[SET_JOBHISTORY_ADDRESS]) AND (SET_JOBHISTORY_ADDRESS=='true')"
 			GROUP="CONFIGURATION">
 			<DEFAULT>"localhost:10020"</DEFAULT>
+			<DEFAULT
+				IF="((PIG_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION != 'CUSTOM'))">"localhost:9024"</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="SET_SCHEDULER_ADDRESS" FIELD="CHECK"
 			NUM_ROW="20" REQUIRED="true"
-			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5')))"
+			SHOW_IF="MAPREDUCE == 'true' AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM' AND USE_YARN=='true') OR (DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='PIVOTAL_HD_1_0_1' OR PIG_VERSION=='PIVOTAL_HD_2_0' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH4_YARN' OR PIG_VERSION=='Cloudera_CDH5' OR PIG_VERSION=='APACHE_2_4_0_EMR')))"
 			GROUP="CONFIGURATION">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
@@ -199,6 +207,8 @@
 			SHOW_IF="(isShow[SET_SCHEDULER_ADDRESS]) AND (SET_SCHEDULER_ADDRESS=='true')"
 			GROUP="CONFIGURATION">
 			<DEFAULT>"localhost:8030"</DEFAULT>
+			<DEFAULT
+				IF="((PIG_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION != 'CUSTOM'))">"localhost:10020"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="SET_STAGING_DIRECTORY" FIELD="CHECK"
 			NUM_ROW="21" REQUIRED="true"
@@ -219,6 +229,14 @@
 			GROUP="CONFIGURATION">
 			<DEFAULT>"thrift://localhost:9933"</DEFAULT>
 		</PARAMETER>
+
+		<PARAMETER NAME="USE_DATANODE_HOSTNAME" FIELD="CHECK"
+			NUM_ROW="23" REQUIRED="true"
+			SHOW_IF="(MAPREDUCE == 'true') AND (SUBTREE_START=='true') AND ((DISTRIBUTION=='CUSTOM') OR (PIG_VERSION=='PIVOTAL_HD_1_0_1') OR (PIG_VERSION=='PIVOTAL_HD_2_0') OR (PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='HDP_2_0') OR (PIG_VERSION=='HDP_2_1') OR (PIG_VERSION=='Cloudera_CDH4_YARN') OR (PIG_VERSION=='Cloudera_CDH5') OR (PIG_VERSION=='APACHE_2_4_0_EMR'))"
+			GROUP="CONFIGURATION">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
 
 
 		<!-- HD Insight through HCatalog parameters -->
@@ -282,6 +300,7 @@
 		<!-- -->
 
 
+
 		<PARAMETER NAME="USE_KRB" FIELD="CHECK" NUM_ROW="25"
 			SHOW_IF="(MAPREDUCE=='true' AND ((DISTRIBUTION!='CUSTOM' AND ((PIG_VERSION=='HDP_1_0') OR (PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='HDP_2_0') OR (PIG_VERSION=='HDP_2_1') OR (PIG_VERSION=='APACHE_1_0_0') OR (PIG_VERSION=='APACHE_1_0_3_EMR') OR (PIG_VERSION=='Cloudera_CDH4') OR (PIG_VERSION=='Cloudera_CDH4_YARN') OR (PIG_VERSION=='Cloudera_CDH5') OR (PIG_VERSION=='PIVOTAL_HD_2_0'))) OR (DISTRIBUTION=='CUSTOM'))) AND (SUBTREE_START=='true')"
 			GROUP="AUTHENTICATION" REPOSITORY_VALUE="USE_KRB">
@@ -328,7 +347,6 @@
 			GROUP="AUTHENTICATION">
 			<DEFAULT>"/tmp/hdfs.headless.keytab"</DEFAULT>
 		</PARAMETER>
-
 		<PARAMETER NAME="USERNAME" FIELD="TEXT" GROUP="AUTHENTICATION"
 			REQUIRED="true" NUM_ROW="35"
 			SHOW_IF="(MAPREDUCE=='true' AND ((DISTRIBUTION!='CUSTOM' AND ((PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='HDP_2_0') OR (PIG_VERSION=='HDP_2_1') OR (PIG_VERSION=='Cloudera_CDH4') OR (PIG_VERSION=='Cloudera_CDH4_YARN') OR (PIG_VERSION=='Cloudera_CDH5') OR (PIG_VERSION=='PIVOTAL_HD_1_0_1') OR (PIG_VERSION=='PIVOTAL_HD_2_0'))) OR (DISTRIBUTION=='CUSTOM'))) AND (SUBTREE_START=='true')"
@@ -336,11 +354,30 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
+		<PARAMETER NAME="S3_LOCATION_LOAD" FIELD="CHECK" NUM_ROW="39"
+			REQUIRED="true" SHOW_IF="MAPREDUCE == 'true'">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
 		<PARAMETER NAME="INPUT_FILENAME" FIELD="TEXT" NUM_ROW="40"
 			REQUIRED="true"
-			NOT_SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='HDP_1_3' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH5' OR PIG_VERSION=='MAPR310' OR DISTRIBUTION=='MICROSOFT_HD_INSIGHT' OR DISTRIBUTION=='CUSTOM') AND LOAD=='HCATLOADER') OR ((LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0'))))">
+			NOT_SHOW_IF="(S3_LOCATION_LOAD == 'true') OR ((MAPREDUCE == 'true') AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='HDP_1_3' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH5' OR PIG_VERSION=='MAPR310' OR DISTRIBUTION=='MICROSOFT_HD_INSIGHT' OR DISTRIBUTION=='CUSTOM') AND LOAD=='HCATLOADER') OR ((LOAD=='HBASESTORAGE') AND ((MAPREDUCE=='false') OR ((PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='PIVOTAL_HD_2_0'))))">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
+
+		<PARAMETER NAME="S3_BUCKET_LOAD" FIELD="TEXT" NUM_ROW="40"
+			REQUIRED="true" SHOW_IF="(MAPREDUCE == 'true') AND (S3_LOCATION_LOAD == 'true')">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="S3_USERNAME_LOAD" FIELD="TEXT" NUM_ROW="41"
+			REQUIRED="true" SHOW_IF="(MAPREDUCE == 'true') AND (S3_LOCATION_LOAD == 'true')">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="S3_PASSWORD_LOAD" FIELD="PASSWORD" NUM_ROW="41"
+			REQUIRED="true" SHOW_IF="(MAPREDUCE == 'true') AND (S3_LOCATION_LOAD == 'true')">
+			<DEFAULT>""</DEFAULT>
+		</PARAMETER>
+
 		<PARAMETER NAME="DATABASE_NAME" FIELD="TEXT" NUM_ROW="43"
 			REPOSITORY_VALUE="DATABASE_NAME" REQUIRED="true"
 			SHOW_IF="(MAPREDUCE == 'true' AND (PIG_VERSION=='HDP_1_0' OR PIG_VERSION=='HDP_1_2' OR PIG_VERSION=='HDP_1_3' OR PIG_VERSION=='HDP_2_0' OR PIG_VERSION=='HDP_2_1' OR PIG_VERSION=='Cloudera_CDH5' OR PIG_VERSION=='MAPR310' OR DISTRIBUTION=='MICROSOFT_HD_INSIGHT' OR DISTRIBUTION=='CUSTOM') AND LOAD=='HCATLOADER')"
@@ -562,11 +599,11 @@
 				REQUIRED="false"
 				REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_0_20_2' OR PIG_VERSION=='Cloudera_CDH3')) AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="hadoop-conf" MODULE="hadoop-conf.jar" REQUIRED="false"
-				REQUIRED_IF="(MAPREDUCE=='true' AND ((PIG_VERSION!='HDP_1_0' AND PIG_VERSION!='HDP_1_2' AND PIG_VERSION!='HDP_1_3' AND PIG_VERSION!='HDP_2_0' AND PIG_VERSION!='HDP_2_1' AND PIG_VERSION!='APACHE_1_0_0' AND PIG_VERSION!='APACHE_1_0_3_EMR' AND PIG_VERSION!='Cloudera_CDH4' AND PIG_VERSION!='Cloudera_CDH4_YARN' AND PIG_VERSION!='Cloudera_CDH5' AND PIG_VERSION!='PIVOTAL_HD_2_0') OR USE_KRB=='false')) AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="(MAPREDUCE=='true' AND ((PIG_VERSION!='HDP_1_0' AND PIG_VERSION!='HDP_1_2' AND PIG_VERSION!='HDP_1_3' AND PIG_VERSION!='HDP_2_0' AND PIG_VERSION!='HDP_2_1' AND PIG_VERSION!='APACHE_1_0_0' AND PIG_VERSION!='APACHE_1_0_3_EMR' AND PIG_VERSION!='APACHE_2_4_0_EMR' AND PIG_VERSION!='Cloudera_CDH4' AND PIG_VERSION!='Cloudera_CDH4_YARN' AND PIG_VERSION!='Cloudera_CDH5' AND PIG_VERSION!='PIVOTAL_HD_2_0') OR USE_KRB=='false')) AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"
 				REQUIRED="false"
-				REQUIRED_IF="(MAPREDUCE=='true' AND (((PIG_VERSION=='HDP_1_0') OR (PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='HDP_2_0') OR (PIG_VERSION=='HDP_2_1') OR (PIG_VERSION=='APACHE_1_0_0') OR (PIG_VERSION=='APACHE_1_0_3_EMR') OR (PIG_VERSION=='Cloudera_CDH4') OR (PIG_VERSION=='Cloudera_CDH4_YARN') OR (PIG_VERSION=='Cloudera_CDH5') OR (PIG_VERSION=='PIVOTAL_HD_2_0')) AND USE_KRB=='true')) AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="(MAPREDUCE=='true' AND (((PIG_VERSION=='HDP_1_0') OR (PIG_VERSION=='HDP_1_2') OR (PIG_VERSION=='HDP_1_3') OR (PIG_VERSION=='HDP_2_0') OR (PIG_VERSION=='HDP_2_1') OR (PIG_VERSION=='APACHE_1_0_0') OR (PIG_VERSION=='APACHE_1_0_3_EMR') OR (PIG_VERSION=='APACHE_2_4_0_EMR') OR (PIG_VERSION=='Cloudera_CDH4') OR (PIG_VERSION=='Cloudera_CDH4_YARN') OR (PIG_VERSION=='Cloudera_CDH5') OR (PIG_VERSION=='PIVOTAL_HD_2_0')) AND USE_KRB=='true')) AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="apache-hadoop" MODULE="hadoop-0.20.2-core.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.0.20.2/lib/hadoop-0.20.2-core.jar"
 				REQUIRED="false"
@@ -1360,8 +1397,6 @@
 			<IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libthrift-0.9.0.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='HDP_2_1' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'" />
-
-
 			<!-- MICROSOFT HD INSIGHT 3.1 -->
 			<IMPORT NAME="talend-webhcat-executor-1.0.0" MODULE="talend-webhcat-executor-1.0.0.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT') AND DISTRIBUTION!='CUSTOM'" />
@@ -1390,7 +1425,6 @@
 				REQUIRED_IF="(MAPREDUCE == 'true' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="azure-storage-1.2.0" MODULE="azure-storage-1.2.0.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT') AND DISTRIBUTION!='CUSTOM'" />
-
 
 			<!-- PIVOTAL_HD_1_0_1 -->
 			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar"
@@ -1948,6 +1982,105 @@
 			<IMPORT NAME="hive-exec-0.12-mapr-1401-140130.jar" MODULE="hive-exec-0.12-mapr-1401-140130.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hive-exec-0.12-mapr-1401-140130.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='MAPR310') AND DISTRIBUTION!='CUSTOM'" />
+			<!-- Amazon EMR 2.4.0 -->
+			<!-- UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/EmrMetrics-1.0.jar" -->
+			<IMPORT NAME="emrmetrics-1.0" MODULE="EmrMetrics-1.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+
+			<IMPORT NAME="pig-0.12.0-withouthadoop" MODULE="pig-0.12.0-withouthadoop.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.12.0-withouthadoop.jar"
+				REQUIRED_IF="(MAPREDUCE=='true' AND (PIG_VERSION=='APACHE_2_4_0_EMR')) AND DISTRIBUTION!='CUSTOM'" />
+
+			<IMPORT NAME="hadoop-annotations-2.4.0" MODULE="hadoop-annotations-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-annotations-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-yarn-api-2.4.0" MODULE="hadoop-yarn-api-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-yarn-api-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-yarn-client-2.4.0" MODULE="hadoop-yarn-client-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-yarn-client-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-yarn-common-2.4.0" MODULE="hadoop-yarn-common-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-yarn-common-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+
+			<IMPORT NAME="hadoop-auth-2.4.0" MODULE="hadoop-auth-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-auth-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-common-2.4.0" MODULE="hadoop-common-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-common-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-hdfs-2.4.0" MODULE="hadoop-hdfs-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-hdfs-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-mapreduce-client-common-2.4.0" MODULE="hadoop-mapreduce-client-common-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-mapreduce-client-common-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-mapreduce-client-core-2.4.0" MODULE="hadoop-mapreduce-client-core-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-mapreduce-client-core-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="hadoop-mapreduce-client-jobclient-2.4.0" MODULE="hadoop-mapreduce-client-jobclient-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-mapreduce-client-jobclient-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+
+			<IMPORT NAME="commons-logging-1.1.3.jar" MODULE="commons-logging-1.1.3.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.3.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="protobuf-java-2.5.0" MODULE="protobuf-java-2.5.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="commons-httpclient-3.1" MODULE="commons-httpclient-3.1.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/commons-httpclient-3.1.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="jets3t-0.9.1-emr-2.4.0" MODULE="jets3t-0.9.1-emr-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/jets3t-0.9.1-emr-2.4.0.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="httpclient-4.3.4" MODULE="httpclient-4.3.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/httpclient-4.3.4.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="httpcore-4.3.2" MODULE="httpcore-4.3.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/httpcore-4.3.2.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="gson-2.1" MODULE="gson-2.1.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/gson-2.1.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+
+			<IMPORT NAME="commons-cli-1.2" MODULE="commons-cli-1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="commons-codec-1.4" MODULE="commons-codec-1.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="jackson-mapper-asl-1.8.8" MODULE="jackson-mapper-asl-1.8.8.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="jackson-core-asl-1.8.8" MODULE="jackson-core-asl-1.8.8.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="guava-11.0.2" MODULE="guava-11.0.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-11.0.2.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="commons-collections-3.2.1.jar" MODULE="commons-collections-3.2.1.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="slf4j-api-1.7.5.jar" MODULE="slf4j-api-1.7.5.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+
+			<IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+			<IMPORT NAME="log4j-1.2.17" MODULE="log4j-1.2.17.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar"
+				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (PIG_VERSION=='APACHE_2_4_0_EMR')" />
+
+			<!-- End of Amazon EMR 2.4.0 -->
 
 			<!-- Hadoop 1.0 Family -->
 			<IMPORT NAME="hive-serde-0.8.1.jar" MODULE="hive-serde-0.8.1.jar"
