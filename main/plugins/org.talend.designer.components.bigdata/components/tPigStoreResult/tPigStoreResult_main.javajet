@@ -271,15 +271,15 @@
 <%
 		} else {
 %>
-			com.microsoft.azure.storage.CloudStorageAccount storageAccount_<%=cid%> = org.talend.webhcat.executor.common.impl.JobByWebHCatHDInsight.getConnection("DefaultEndpointsProtocol=https;AccountName=" + instance_<%=start_node%>.getAzureAccountName() + ";AccountKey=" + instance_<%=start_node%>.getAzureAccountPassword());
-			com.microsoft.azure.storage.blob.CloudBlobClient blobClient_<%=cid%> = storageAccount_<%=cid%>.createCloudBlobClient();
-			com.microsoft.azure.storage.blob.CloudBlobContainer container_<%=cid%> = blobClient_<%=cid%>.getContainerReference(instance_<%=start_node%>.getAzureAccountContainer());
+
+			org.talend.webhcat.launcher.fs.FileSystem azureFs_<%=cid%> = new org.talend.webhcat.launcher.fs.AzureFileSystem("DefaultEndpointsProtocol=https;"
+				+ "AccountName="
+				+ instance_<%=start_node%>.getAzureAccountName()
+				+ ";"
+				+ "AccountKey=" + instance_<%=start_node%>.getAzureAccountPassword(), instance_<%=start_node%>.getAzureAccountContainer());
 			
 			String resultFolder_<%=cid%> = <%=resultFile%>;
-			if(resultFolder_<%=cid%> != null && resultFolder_<%=cid%>.length() > 1 && resultFolder_<%=cid%>.charAt(0) == '/') {
-				resultFolder_<%=cid%> = resultFolder_<%=cid%>.substring(1);
-			}
-			instance_<%=start_node%>.deleteFolder(resultFolder_<%=cid%>, container_<%=cid%>);
+			azureFs_<%=cid%>.delete(org.talend.webhcat.launcher.utils.Utils.removeFirstSlash(resultFolder_<%=cid%>));
 <%
 		}
 	} 

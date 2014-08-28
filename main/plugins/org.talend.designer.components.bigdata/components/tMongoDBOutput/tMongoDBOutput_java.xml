@@ -206,6 +206,7 @@
         <PARAMETER
             NAME="IS_VIRTUAL_COMPONENT"
             FIELD="CHECK"
+            REQUIRED="true"
             NUM_ROW="5"
         >
             <DEFAULT>false</DEFAULT>

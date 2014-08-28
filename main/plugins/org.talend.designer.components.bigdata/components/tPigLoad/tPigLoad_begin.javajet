@@ -230,7 +230,13 @@
 			
 			java.lang.StringBuilder libjars_<%=cid%> = new StringBuilder();
 			
-			org.talend.webhcat.executor.job.SubmitJobByWebHCatHDInsight instance_<%=cid%> = new org.talend.webhcat.executor.job.SubmitJobByWebHCatHDInsight(org.talend.webhcat.executor.utils.JobType.PIG);
+			org.talend.webhcat.launcher.fs.FileSystem azureFs_<%=cid%> = new org.talend.webhcat.launcher.fs.AzureFileSystem("DefaultEndpointsProtocol=https;"
+				+ "AccountName="
+				+ <%=ElementParameterParser.getValue(node, "__WASB_USERNAME__")%>
+				+ ";"
+				+ "AccountKey=" + wasbPassword_<%=cid%>, <%=ElementParameterParser.getValue(node, "__WASB_CONTAINER__")%>);
+			
+			org.talend.webhcat.launcher.common.Job instance_<%=cid%> = new org.talend.webhcat.launcher.common.impl.PigJob(azureFs_<%=cid%>, org.talend.webhcat.launcher.utils.JobType.PIG);
 			instance_<%=cid%>.setAzureAccountName(<%=ElementParameterParser.getValue(node, "__WASB_USERNAME__")%>);
 			instance_<%=cid%>.setAzureAccountPassword(wasbPassword_<%=cid%>);
 			instance_<%=cid%>.setAzureStorageAddress(<%=ElementParameterParser.getValue(node, "__WASB_HOST__")%>);
@@ -238,12 +244,12 @@
 			instance_<%=cid%>.setHdInsightUsername(<%=ElementParameterParser.getValue(node, "__HDINSIGHT_USERNAME__")%>);
 			instance_<%=cid%>.setHdInsightPassword(hdInsightPassword_<%=cid%>);
 			instance_<%=cid%>.setUsername(<%=ElementParameterParser.getValue(node, "__WEBHCAT_USERNAME__")%>);
-			instance_<%=cid%>.setWebhcatEndpoint(<%=ElementParameterParser.getValue(node, "__WEBHCAT_HOST__")%> + ":" + <%=ElementParameterParser.getValue(node, "__WEBHCAT_PORT__")%>);
-			instance_<%=cid%>.setStatusFolder(<%=ElementParameterParser.getValue(node, "__STATUSDIR__")%>);
-			instance_<%=cid%>.setRemoteFolder(<%=ElementParameterParser.getValue(node, "__REMOTE_FOLDER__")%>);
+			instance_<%=cid%>.setWebhcatEndpoint("https", <%=ElementParameterParser.getValue(node, "__WEBHCAT_HOST__")%> + ":" + <%=ElementParameterParser.getValue(node, "__WEBHCAT_PORT__")%>);
+			instance_<%=cid%>.setStatusFolder(org.talend.webhcat.launcher.utils.Utils.removeFirstSlash(<%=ElementParameterParser.getValue(node, "__STATUSDIR__")%>));
+			instance_<%=cid%>.setRemoteFolder(org.talend.webhcat.launcher.utils.Utils.removeFirstSlash(<%=ElementParameterParser.getValue(node, "__REMOTE_FOLDER__")%>));
 			instance_<%=cid%>.setFileToExecute(projectName + "_" + jobName + "_" + Thread.currentThread().getId() +".pig");
 			
-			String wasbPath_<%=cid%> = "wasb://" + <%=ElementParameterParser.getValue(node, "__WASB_CONTAINER__")%>	+ "@" + <%=ElementParameterParser.getValue(node, "__WASB_HOST__")%> + "/"	+ instance_<%=cid%>.getRemoteFolder()	+ "/libjars/";
+			String wasbPath_<%=cid%> = azureFs_<%=cid%>.getFileSystemPrefix() + "/"	+ instance_<%=cid%>.getRemoteFolder()	+ "/libjars/";
 <%
 		}
 		
