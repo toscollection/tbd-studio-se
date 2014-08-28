@@ -13,7 +13,9 @@
 package org.talend.repository.hadoopcluster.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.runtime.IStatus;
@@ -34,13 +36,18 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
+import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.hadoop.conf.EHadoopProperties;
 import org.talend.core.hadoop.conf.HadoopDefaultConfsManager;
 import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.hadoop.version.custom.HadoopCustomVersionDefineDialog;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.designer.hdfsbrowse.hadoop.service.EHadoopServiceType;
+import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
+import org.talend.designer.hdfsbrowse.hadoop.service.check.CheckHadoopServicesDialog;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
@@ -85,6 +92,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     private Group customGroup;
 
     private Button useYarnButton;
+
+    private UtilsButton checkServicesBtn;
 
     private boolean creation;
 
@@ -148,6 +157,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         addCustomFields();
         addConnectionFields();
         addAuthenticationFields();
+        addCheckFields();
         updateVersionPart();
     }
 
@@ -234,6 +244,26 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 Messages.getString("HadoopClusterForm.text.keytabPrincipal"), 1); //$NON-NLS-1$
         String[] extensions = { "*.*" }; //$NON-NLS-1$
         keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
+    }
+
+    private void addCheckFields() {
+        Composite checkGroup = new Composite(this, SWT.NONE);
+        GridLayout checkGridLayout = new GridLayout(1, false);
+        checkGroup.setLayout(checkGridLayout);
+        GridData checkGridData = new GridData(GridData.FILL_HORIZONTAL);
+        checkGridData.minimumHeight = 5;
+        checkGroup.setLayoutData(checkGridData);
+        Composite checkButtonComposite = Form.startNewGridLayout(checkGroup, 1, false, SWT.CENTER, SWT.BOTTOM);
+        GridLayout checkButtonLayout = (GridLayout) checkButtonComposite.getLayout();
+        checkButtonLayout.marginHeight = 0;
+        checkButtonLayout.marginTop = 0;
+        checkButtonLayout.marginBottom = 0;
+        checkButtonLayout.marginLeft = 0;
+        checkButtonLayout.marginRight = 0;
+        checkButtonLayout.marginWidth = 0;
+        checkServicesBtn = new UtilsButton(checkButtonComposite,
+                Messages.getString("HadoopClusterForm.button.check"), WIDTH_BUTTON_PIXEL, HEIGHT_BUTTON_PIXEL); //$NON-NLS-1$
+        checkServicesBtn.setEnabled(false);
     }
 
     private List<String> getDistributionVersions(EHadoopDistributions distribution) {
@@ -415,6 +445,50 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
     }
 
+    @Override
+    protected void addUtilsButtonListeners() {
+        checkServicesBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                checkServices();
+            }
+        });
+    }
+
+    private void checkServices() {
+        Map<EHadoopServiceType, HadoopServiceProperties> serviceTypeToProperties = new HashMap<EHadoopServiceType, HadoopServiceProperties>();
+        HadoopServiceProperties nnProperties = new HadoopServiceProperties();
+        initCommonProperties(nnProperties);
+        nnProperties.setNameNode(getConnection().getNameNodeURI());
+        serviceTypeToProperties.put(EHadoopServiceType.NAMENODE, nnProperties);
+        HadoopServiceProperties rmORjtProperties = new HadoopServiceProperties();
+        initCommonProperties(rmORjtProperties);
+        if (getConnection().isUseYarn()) {
+            rmORjtProperties.setResourceManager(getConnection().getJobTrackerURI());
+            serviceTypeToProperties.put(EHadoopServiceType.RESOURCE_MANAGER, rmORjtProperties);
+        } else {
+            rmORjtProperties.setJobTracker(getConnection().getJobTrackerURI());
+            serviceTypeToProperties.put(EHadoopServiceType.JOBTRACKER, rmORjtProperties);
+        }
+        if (getConnection().isUseCustomVersion()) {
+            nnProperties.setUid(connectionItem.getProperty().getId());
+            nnProperties.setCustomJars(HCVersionUtil.getCustomVersionMap(getConnection()).get(
+                    ECustomVersionGroup.COMMON.getName()));
+            rmORjtProperties.setUid(connectionItem.getProperty().getId());
+            rmORjtProperties.setCustomJars(HCVersionUtil.getCustomVersionMap(getConnection()).get(
+                    ECustomVersionGroup.MAP_REDUCE.getName()));
+        }
+        new CheckHadoopServicesDialog(getShell(), serviceTypeToProperties).open();
+    }
+
+    private void initCommonProperties(HadoopServiceProperties properties) {
+        properties.setDistribution(getConnection().getDistribution());
+        properties.setVersion(getConnection().getDfVersion());
+        properties.setUseKrb(getConnection().isEnableKerberos());
+        properties.setCustom(getConnection().isUseCustomVersion());
+    }
+
     private void updateVersionPart() {
         EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(getConnection().getDistribution(), false);
         if (distribution == EHadoopDistributions.CUSTOM) {
@@ -553,6 +627,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
     @Override
     public boolean checkFieldsValue() {
+        checkServicesBtn.setEnabled(false);
+
         if (distributionCombo.getSelectionIndex() == -1) {
             updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.distribution")); //$NON-NLS-1$
             return false;
@@ -642,6 +718,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 return false;
             }
         }
+
+        checkServicesBtn.setEnabled(true);
 
         updateStatus(IStatus.OK, null);
         return true;

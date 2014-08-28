@@ -19,7 +19,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -162,11 +165,42 @@ public class HadoopServerUtil {
                 ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader,
                         "loginUserFromKeytab", new String[] { keytabPrincipal, keytab });
             }
+
+            Map<String, Object> configurations = connection.getConfigurations();
+            Iterator<Entry<String, Object>> configsIterator = configurations.entrySet().iterator();
+            while (configsIterator.hasNext()) {
+                Entry<String, Object> configEntry = configsIterator.next();
+                String key = configEntry.getKey();
+                Object value = configEntry.getValue();
+                if (key == null) {
+                    continue;
+                }
+                setConfiguration(conf, key, value);
+            }
         } catch (Exception e) {
             throw new HadoopServerException(e);
         }
 
         return conf;
+    }
+
+    private static void setConfiguration(Object conf, String key, Object value) throws HadoopServerException {
+        try {
+            if (value instanceof Integer) {
+                ReflectionUtils.invokeMethod(conf, "setInt", new Object[] { key, value }, String.class, int.class);
+            } else if (value instanceof Boolean) {
+                ReflectionUtils.invokeMethod(conf, "setBoolean", new Object[] { key, value }, String.class, boolean.class);
+            } else if (value instanceof Float) {
+                ReflectionUtils.invokeMethod(conf, "setFloat", new Object[] { key, value }, String.class, float.class);
+            } else if (value instanceof Long) {
+                ReflectionUtils.invokeMethod(conf, "setLong", new Object[] { key, value }, String.class, long.class);
+            } else {
+                ReflectionUtils
+                        .invokeMethod(conf, "set", new Object[] { key, String.valueOf(value), String.class, String.class });
+            }
+        } catch (Exception e) {
+            throw new HadoopServerException(e);
+        }
     }
 
     private static Callable<Object> getDFS(final Object conf, final ClassLoader classLoader) {
