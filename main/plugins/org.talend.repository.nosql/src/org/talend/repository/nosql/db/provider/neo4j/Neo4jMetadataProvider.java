@@ -86,7 +86,10 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
                     if (StringUtils.isEmpty(key) || value == null) {
                         continue;
                     }
-                    String formalColumnName = getFormalColumnName(key, columnIndex, columnLabels);
+                    String formalColumnName = getFormalColumnName(key, columnIndex);
+                    if (columnLabels.contains(formalColumnName)) {
+                        continue;
+                    }
                     MetadataColumn metaColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
                     metaColumn.setName(formalColumnName);
                     metaColumn.setLabel(formalColumnName);
@@ -101,6 +104,7 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
                     keyTV.setValue(key);
                     keyTaggedValue.add(keyTV);
                     metadataColumns.add(metaColumn);
+                    columnLabels.add(metaColumn.getLabel());
                     columnIndex++;
                 }
             }
@@ -111,12 +115,12 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
         return metadataColumns;
     }
 
-    private String getFormalColumnName(String columnName, int columnIndex, List<String> columnLabels) {
+    private String getFormalColumnName(String columnName, int columnIndex) {
         String formalColumnName = columnName;
         if (formalColumnName.indexOf(DOT) != -1) {
             formalColumnName = formalColumnName.substring(formalColumnName.indexOf(DOT) + 1);
         }
-        formalColumnName = MetadataToolHelper.validateColumnName(formalColumnName, columnIndex, columnLabels);
+        formalColumnName = MetadataToolHelper.validateColumnName(formalColumnName, columnIndex);
 
         return formalColumnName;
     }
