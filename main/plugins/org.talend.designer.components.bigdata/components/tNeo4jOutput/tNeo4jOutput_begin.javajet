@@ -104,6 +104,8 @@ long counter_<%=cid%> = 0;
         if (!remoteServer) {
             %>
             org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = databaseService_<%=cid%>.beginTx();
+            try
+            {
             <%
         }
     	for (String indexName : indexNames) {
