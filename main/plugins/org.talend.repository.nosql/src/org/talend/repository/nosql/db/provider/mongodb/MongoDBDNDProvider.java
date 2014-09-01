@@ -47,7 +47,8 @@ public class MongoDBDNDProvider extends AbstractDNDProvider {
         } else if (IMongoDBAttributes.USERNAME.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.USERNAME));
         } else if (IMongoDBAttributes.PASSWORD.equals(value)) {
-            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.PASSWORD));
+            return getCanonicalRepositoryValue(connection,
+                    connection.getValue(connection.getAttributes().get(IMongoDBAttributes.PASSWORD), false));
         } else if (IMongoDBAttributes.USE_REPLICA_SET.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.USE_REPLICA_SET),
                     false);

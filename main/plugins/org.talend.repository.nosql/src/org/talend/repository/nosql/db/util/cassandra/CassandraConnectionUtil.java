@@ -98,7 +98,7 @@ public class CassandraConnectionUtil {
             boolean requireAuth = requireAuthAttr == null ? false : Boolean.valueOf(requireAuthAttr);
             if (requireAuth) {
                 String username = connection.getAttributes().get(ICassandraAttributies.USERNAME);
-                String password = connection.getAttributes().get(ICassandraAttributies.PASSWORD);
+                String password = connection.getValue(connection.getAttributes().get(ICassandraAttributies.PASSWORD), false);
                 if (contextType != null) {
                     username = ContextParameterUtils.getOriginalValue(contextType, username);
                     password = ContextParameterUtils.getOriginalValue(contextType, password);
