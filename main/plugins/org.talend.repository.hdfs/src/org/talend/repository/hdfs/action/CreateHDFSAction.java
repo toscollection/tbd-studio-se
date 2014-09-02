@@ -1,3 +1,15 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2014 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
 package org.talend.repository.hdfs.action;
 
 import org.eclipse.jface.wizard.IWizard;
@@ -48,7 +60,8 @@ public class CreateHDFSAction extends CreateHadoopNodeAction {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
             EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
-            if (EHadoopVersion4Drivers.APACHE_0_20_203.equals(version4Drivers)) {
+            if (EHadoopVersion4Drivers.APACHE_0_20_203.equals(version4Drivers)
+                    || EHadoopVersion4Drivers.APACHE_2_4_0_EMR.equals(version4Drivers)) {
                 return true;
             }
             if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT) {
