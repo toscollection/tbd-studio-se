@@ -3,6 +3,7 @@ package org.talend.repository.hdfs.action;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IWorkbench;
 import org.talend.commons.ui.runtime.image.IImage;
+import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopNodeAction;
@@ -45,8 +46,12 @@ public class CreateHDFSAction extends CreateHadoopNodeAction {
         HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+            EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
             EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
             if (EHadoopVersion4Drivers.APACHE_0_20_203.equals(version4Drivers)) {
+                return true;
+            }
+            if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT) {
                 return true;
             }
         }
