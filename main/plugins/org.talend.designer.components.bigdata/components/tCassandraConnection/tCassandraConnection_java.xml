@@ -34,7 +34,7 @@
             FIELD="CLOSED_LIST"
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="3">
-            <ITEMS DEFAULT="CASSANDRA_2_0_8">
+            <ITEMS DEFAULT="CASSANDRA_2_0_0">
                 <ITEM NAME="CASSANDRA_2_0_8" VALUE="CASSANDRA_2_0_8"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
