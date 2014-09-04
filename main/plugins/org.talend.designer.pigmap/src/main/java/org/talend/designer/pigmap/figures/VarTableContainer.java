@@ -19,6 +19,7 @@ import org.talend.designer.gefabstractmap.figures.treetools.ToolBarContainer;
 import org.talend.designer.pigmap.figures.table.PigMapVarTable;
 import org.talend.designer.pigmap.figures.table.PigMapVarTableManager;
 import org.talend.designer.pigmap.figures.tablesettings.VarToolBarFigure;
+import org.talend.designer.pigmap.i18n.Messages;
 
 /**
  * DOC hcyi class global comment. Detailled comment
@@ -55,7 +56,7 @@ public class VarTableContainer extends AbstractTableContainer {
 
     @Override
     protected String getTreeDisplayName() {
-        return "Var";
+        return Messages.getString("VarTableContainer.varTable.title");//$NON-NLS-1$
     }
 
     @Override

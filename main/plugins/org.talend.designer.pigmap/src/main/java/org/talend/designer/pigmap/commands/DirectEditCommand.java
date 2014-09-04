@@ -92,7 +92,10 @@ public class DirectEditCommand extends Command {
                         } else if (targetEditPart instanceof PigMapVarNodeEditPart) {
                             nodeEditPart = (PigMapVarNodeEditPart) targetEditPart;
                             if (nodeEditPart.getParent() instanceof PigMapVarTablePart) {
-                                newValue = TalendQuoteUtils.addQuotesIfNotExist(newValue.toString().trim());
+                                String newString = newValue.toString().trim();
+                                if (newString.length() > 0) {
+                                    newValue = TalendQuoteUtils.addQuotesIfNotExist(newString);
+                                }
                                 connections = model.getIncomingConnections();
                             }
                         }

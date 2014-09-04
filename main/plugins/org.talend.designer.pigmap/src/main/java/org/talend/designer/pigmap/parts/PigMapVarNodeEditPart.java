@@ -162,6 +162,7 @@ public class PigMapVarNodeEditPart extends TableEntityPart implements NodeEditPa
             default:
             }
         case Notification.ADD:
+        case Notification.ADD_MANY:
             switch (featureId) {
             case PigmapPackage.VAR_NODE__INCOMING_CONNECTIONS:
                 refreshTargetConnections();

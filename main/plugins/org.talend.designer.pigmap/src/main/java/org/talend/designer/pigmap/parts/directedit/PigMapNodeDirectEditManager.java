@@ -56,6 +56,7 @@ import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
 import org.talend.designer.pigmap.util.MapDataHelper;
@@ -103,6 +104,12 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     getCellEditor().setValue(expression);
                     Text text = ((ExtendedTextCellEditor) getCellEditor()).getTextControl();
                     text.selectAll();
+                    // Update the configure of var define functions
+                    PigMapData pigMapData = PigMapUtil.getPigMapData(abstractNode);
+                    if (pigMapData != null && pigMapData.getVarTables() != null) {
+                        VarTable varTable = pigMapData.getVarTables().get(0);
+                        MapDataHelper.convertVarNodesToDefineFunctions(varTable);
+                    }
                     break;
                 case NODE_NAME:
                     String variable = abstractNode.getName();
@@ -133,6 +140,14 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     getCellEditor().setValue(expressionFilter);
                     Text textarea = ((ExtendedTextCellEditor) getCellEditor()).getTextControl();
                     textarea.selectAll();
+                    // Update the configure of var define functions
+                    if (inputTable.eContainer() != null && inputTable.eContainer() instanceof PigMapData) {
+                        PigMapData pigMapData = (PigMapData) inputTable.eContainer();
+                        if (pigMapData != null && pigMapData.getVarTables() != null) {
+                            VarTable varTable = pigMapData.getVarTables().get(0);
+                            MapDataHelper.convertVarNodesToDefineFunctions(varTable);
+                        }
+                    }
                     break;
                 case JOIN_MODEL:
                     if (getCellEditor() instanceof ComboBoxCellEditor) {
@@ -173,6 +188,14 @@ public class PigMapNodeDirectEditManager extends DirectEditManager {
                     getCellEditor().setValue(expressionFilter);
                     Text textarea = ((ExtendedTextCellEditor) getCellEditor()).getTextControl();
                     textarea.selectAll();
+                    // Update the configure of var define functions
+                    if (outputTable.eContainer() != null && outputTable.eContainer() instanceof PigMapData) {
+                        PigMapData pigMapData = (PigMapData) outputTable.eContainer();
+                        if (pigMapData != null && pigMapData.getVarTables() != null) {
+                            VarTable varTable = pigMapData.getVarTables().get(0);
+                            MapDataHelper.convertVarNodesToDefineFunctions(varTable);
+                        }
+                    }
                     break;
                 case OUTPUT_REJECT:
                     if (getCellEditor() instanceof ComboBoxCellEditor) {

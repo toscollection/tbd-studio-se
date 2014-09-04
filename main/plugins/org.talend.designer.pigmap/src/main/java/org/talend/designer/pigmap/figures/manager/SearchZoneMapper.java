@@ -25,6 +25,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.ui.dialogs.SearchPattern;
 import org.talend.designer.gefabstractmap.figures.table.entity.TableEntityFigure;
+import org.talend.designer.gefabstractmap.figures.var.VarEntityFigure;
 import org.talend.designer.gefabstractmap.part.TableEntityPart;
 import org.talend.designer.gefabstractmap.resource.EntryState;
 import org.talend.designer.pigmap.figures.InputTableFigure;
@@ -35,6 +36,8 @@ import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 import org.talend.designer.pigmap.parts.PigMapDataEditPart;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
@@ -63,6 +66,7 @@ public class SearchZoneMapper {
         }
 
         List<InputTable> inputTables = mapperManager.getExternalData().getInputTables();
+        List<VarTable> varTables = mapperManager.getExternalData().getVarTables();
         List<OutputTable> outputTables = mapperManager.getExternalData().getOutputTables();
         matcher.setPattern("*" + searchValue.trim() + "*");
         int index = -1;
@@ -88,6 +92,16 @@ public class SearchZoneMapper {
             }
             // TableNode
             for (TableNode node : inputTable.getNodes()) {
+                if (getMatcherNodeFigure(node).size() > 0) {
+                    index++;
+                    searchMaps.put(index, getMatcherNodeFigure(node));
+                }
+            }
+        }
+
+        // for the VarsTables
+        for (VarTable varTable : varTables) {
+            for (VarNode node : varTable.getNodes()) {
                 if (getMatcherNodeFigure(node).size() > 0) {
                     index++;
                     searchMaps.put(index, getMatcherNodeFigure(node));
@@ -207,6 +221,23 @@ public class SearchZoneMapper {
                 if (filterText != null && filterText.getTextArea() != null) {
                     filterText.getTextArea().setOpaque(true);
                     filterText.getTextArea().setBackgroundColor(entryState.getColor());
+                }
+            } else if (entry instanceof VarEntityFigure) {
+                VarEntityFigure varEntityFigure = (VarEntityFigure) entry;
+                if (varEntityFigure != null) {
+                    if (varEntityFigure.getExpression() != null && matcher.matches(varEntityFigure.getExpression().getText())) {
+                        varEntityFigure.getExpression().setOpaque(true);
+                        varEntityFigure.getExpression().setBackgroundColor(entryState.getColor());
+                    }
+                    if (varEntityFigure.getVarName() != null && matcher.matches(varEntityFigure.getVarName())) {
+                        varEntityFigure.getVariableLabel().setOpaque(true);
+                        varEntityFigure.getVariableLabel().setBackgroundColor(entryState.getColor());
+                        if (varEntityFigure.getExpression() == null
+                                || !matcher.matches(varEntityFigure.getExpression().getText())) {
+                            varEntityFigure.getExpression().setOpaque(true);
+                            varEntityFigure.getExpression().setBackgroundColor(EntryState.NONE.getColor());
+                        }
+                    }
                 }
             }
         }
