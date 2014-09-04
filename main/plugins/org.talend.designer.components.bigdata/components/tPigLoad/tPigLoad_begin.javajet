@@ -311,9 +311,14 @@
 <%
 				}
 				
+				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion))) {
+%>
+					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
+<%
+				}
+				
 				if(!isCustom && "HDP_2_1".equals(pigVersion)) {
 				    %>
-					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
 					props_<%=cid%>.put("yarn.application.classpath","/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*");
 					<%
 				} else if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {

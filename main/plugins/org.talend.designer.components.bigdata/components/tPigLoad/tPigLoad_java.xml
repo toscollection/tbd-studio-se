@@ -755,41 +755,41 @@
 			<IMPORT NAME="commons-collections-3.2.1.jar" MODULE="commons-collections-3.2.1.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.1.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-hdfs-2.3.0-cdh5.0.0.jar" MODULE="hadoop-hdfs-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-hdfs-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-hdfs-2.3.0-cdh5.0.4.jar" MODULE="hadoop-hdfs-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-hdfs-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-common-2.3.0-cdh5.0.0.jar" MODULE="hadoop-common-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-common-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-common-2.3.0-cdh5.0.4.jar" MODULE="hadoop-common-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-common-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-auth-2.3.0-cdh5.0.0.jar" MODULE="hadoop-auth-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-auth-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-auth-2.3.0-cdh5.0.4.jar" MODULE="hadoop-auth-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-auth-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-mapreduce-client-common-2.3.0-cdh5.0.0.jar"
-				MODULE="hadoop-mapreduce-client-common-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-mapreduce-client-common-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-mapreduce-client-common-2.3.0-cdh5.0.4.jar"
+				MODULE="hadoop-mapreduce-client-common-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-mapreduce-client-common-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-mapreduce-client-core-2.3.0-cdh5.0.0.jar"
-				MODULE="hadoop-mapreduce-client-core-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-mapreduce-client-core-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-mapreduce-client-core-2.3.0-cdh5.0.4.jar"
+				MODULE="hadoop-mapreduce-client-core-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-mapreduce-client-core-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-mapreduce-client-jobclient-2.3.0-cdh5.0.0.jar"
-				MODULE="hadoop-mapreduce-client-jobclient-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-mapreduce-client-jobclient-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-mapreduce-client-jobclient-2.3.0-cdh5.0.4.jar"
+				MODULE="hadoop-mapreduce-client-jobclient-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-mapreduce-client-jobclient-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-yarn-api-2.3.0-cdh5.0.0.jar" MODULE="hadoop-yarn-api-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-yarn-api-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-yarn-api-2.3.0-cdh5.0.4.jar" MODULE="hadoop-yarn-api-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-yarn-api-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-yarn-client-2.3.0-cdh5.0.0.jar" MODULE="hadoop-yarn-client-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-yarn-client-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-yarn-client-2.3.0-cdh5.0.4.jar" MODULE="hadoop-yarn-client-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-yarn-client-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hadoop-yarn-common-2.3.0-cdh5.0.0.jar" MODULE="hadoop-yarn-common-2.3.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-yarn-common-2.3.0-cdh5.0.0.jar"
+			<IMPORT NAME="hadoop-yarn-common-2.3.0-cdh5.0.4.jar" MODULE="hadoop-yarn-common-2.3.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-yarn-common-2.3.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="pig-0.12.0-cdh5.0.0-withouthadoop.jar" MODULE="pig-0.12.0-cdh5.0.0-withouthadoop.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.12.0-cdh5.0.0-withouthadoop.jar"
+			<IMPORT NAME="pig-0.12.0-cdh5.0.4-withouthadoop.jar" MODULE="pig-0.12.0-cdh5.0.4-withouthadoop.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/pig-0.12.0-cdh5.0.4-withouthadoop.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="protobuf-java-2.5.0.jar" MODULE="protobuf-java-2.5.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar"
@@ -800,29 +800,29 @@
 			<IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="avro-1.7.5-cdh5.0.0.jar" MODULE="avro-1.7.5-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.0.jar"
+			<IMPORT NAME="avro-1.7.5-cdh5.0.4.jar" MODULE="avro-1.7.5-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="snappy-java-1.0.5.jar" MODULE="snappy-java-1.0.5.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
 				REQUIRED_IF="(MAPREDUCE=='true' AND PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
 
-			<IMPORT NAME="hive-hcatalog-core-0.12.0-cdh5.0.0.jar" MODULE="hive-hcatalog-core-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-core-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-hcatalog-core-0.12.0-cdh5.0.4.jar" MODULE="hive-hcatalog-core-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-core-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hive-hcatalog-pig-adapter-0.12.0-cdh5.0.0.jar"
-				MODULE="hive-hcatalog-pig-adapter-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-pig-adapter-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-hcatalog-pig-adapter-0.12.0-cdh5.0.4.jar"
+				MODULE="hive-hcatalog-pig-adapter-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-pig-adapter-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hive-hcatalog-server-extensions-0.12.0-cdh5.0.0.jar"
-				MODULE="hive-hcatalog-server-extensions-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-server-extensions-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-hcatalog-server-extensions-0.12.0-cdh5.0.4.jar"
+				MODULE="hive-hcatalog-server-extensions-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hive-hcatalog-server-extensions-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hive-exec-0.12.0-cdh5.0.0.jar" MODULE="hive-exec-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-exec-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-exec-0.12.0-cdh5.0.4.jar" MODULE="hive-exec-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-exec-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hive-metastore-0.12.0-cdh5.0.0.jar" MODULE="hive-metastore-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-metastore-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-metastore-0.12.0-cdh5.0.4.jar" MODULE="hive-metastore-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-metastore-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HCATLOADER') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="jdo-api-3.0.1.jar" MODULE="jdo-api-3.0.1.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/jdo-api-3.0.1.jar"
@@ -1867,20 +1867,20 @@
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH4_YARN' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 
 			<!-- Cloudera_CDH5 -->
-			<IMPORT NAME="hbase-server-0.96.1.1-cdh5.0.0.jar" MODULE="hbase-server-0.96.1.1-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-server-0.96.1.1-cdh5.0.0.jar"
+			<IMPORT NAME="hbase-server-0.96.1.1-cdh5.0.4.jar" MODULE="hbase-server-0.96.1.1-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-server-0.96.1.1-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hbase-client-0.96.1.1-cdh5.0.0.jar" MODULE="hbase-client-0.96.1.1-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-client-0.96.1.1-cdh5.0.0.jar"
+			<IMPORT NAME="hbase-client-0.96.1.1-cdh5.0.4.jar" MODULE="hbase-client-0.96.1.1-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-client-0.96.1.1-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hbase-common-0.96.1.1-cdh5.0.0.jar" MODULE="hbase-common-0.96.1.1-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-common-0.96.1.1-cdh5.0.0.jar"
+			<IMPORT NAME="hbase-common-0.96.1.1-cdh5.0.4.jar" MODULE="hbase-common-0.96.1.1-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-common-0.96.1.1-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hbase-protocol-0.96.1.1-cdh5.0.0.jar" MODULE="hbase-protocol-0.96.1.1-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-protocol-0.96.1.1-cdh5.0.0.jar"
+			<IMPORT NAME="hbase-protocol-0.96.1.1-cdh5.0.4.jar" MODULE="hbase-protocol-0.96.1.1-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hbase-protocol-0.96.1.1-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="zookeeper-3.4.5-cdh5.0.0.jar" MODULE="zookeeper-3.4.5-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-cdh5.0.0.jar"
+			<IMPORT NAME="zookeeper-3.4.5-cdh5.0.4.jar" MODULE="zookeeper-3.4.5-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND PIG_VERSION=='Cloudera_CDH5' AND LOAD=='HBASESTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="htrace-core-2.01.jar" MODULE="htrace-core-2.01.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/htrace-core-2.01.jar"
@@ -2171,14 +2171,14 @@
 				REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH4_YARN') AND DISTRIBUTION!='CUSTOM'" />
 
 			<!-- Cloudera_CDH5 -->
-			<IMPORT NAME="hive-serde-0.12.0-cdh5.0.0.jar" MODULE="hive-serde-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-serde-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-serde-0.12.0-cdh5.0.4.jar" MODULE="hive-serde-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-serde-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hive-common-0.12.0-cdh5.0.0.jar" MODULE="hive-common-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-common-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-common-0.12.0-cdh5.0.4.jar" MODULE="hive-common-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-common-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="hive-exec-0.12.0-cdh5.0.0.jar" MODULE="hive-exec-0.12.0-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-exec-0.12.0-cdh5.0.0.jar"
+			<IMPORT NAME="hive-exec-0.12.0-cdh5.0.4.jar" MODULE="hive-exec-0.12.0-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hive-exec-0.12.0-cdh5.0.4.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5') AND DISTRIBUTION!='CUSTOM'" />
 
 			<!-- PIVOTAL_HD_1_0_1 -->
@@ -2216,8 +2216,8 @@
 			<IMPORT NAME="piggybank-cdh5.jar" MODULE="piggybank-cdh5.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-cdh5.jar"
 				REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="avro-1.7.5-cdh5.0.0.jar" MODULE="avro-1.7.5-cdh5.0.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.0.jar"
+			<IMPORT NAME="avro-1.7.5-cdh5.0.4.jar" MODULE="avro-1.7.5-cdh5.0.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.4.jar"
 				REQUIRED_IF="((MAPREDUCE == 'true') AND (LOAD=='AVROSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5')) AND DISTRIBUTION!='CUSTOM'" />
 
 			<IMPORT NAME="piggybank-phd.jar" MODULE="piggybank-phd.jar"
