@@ -22,6 +22,7 @@ Require-Bundle: org.eclipse.ui,
  org.apache.commons.lang,
  org.talend.commons.ui,
  org.talend.model;visibility:=reexport,
+ org.talend.cwm.mip;visibility:=reexport,
  org.talend.core.runtime,
  org.talend.core,
  org.talend.core.ui,
@@ -30,7 +31,8 @@ Require-Bundle: org.eclipse.ui,
  org.talend.metadata.managment.ui,
  org.talend.repository,
  org.talend.designer.hdfsbrowse,
- org.talend.repository.hadoopcluster,
+ org.talend.repository.hadoopcluster;visibility:=reexport,
+ org.eclipse.gmf.runtime.notation;visibility:=reexport,
  org.talend.repository.items.importexport
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.talend.repository.hcatalog.Activator

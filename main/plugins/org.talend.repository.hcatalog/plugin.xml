@@ -8,6 +8,13 @@
             uri="http://www.talend.org/hcatalog">
       </package>
    </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated hcatalog -->
+      <parser
+            type="hcatalog"
+            class="org.talend.repository.model.hcatalog.util.HCatalogResourceFactoryImpl"/>
+   </extension>
    <extension
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode

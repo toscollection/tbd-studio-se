@@ -173,7 +173,7 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHCatalogConnection_Database() {
+    public EAttribute getHCatalogConnection_Password() {
         return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(6);
     }
 
@@ -182,7 +182,7 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHCatalogConnection_EnableKerberos() {
+    public EAttribute getHCatalogConnection_Database() {
         return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(7);
     }
 
@@ -191,7 +191,7 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHCatalogConnection_KrbPrincipal() {
+    public EAttribute getHCatalogConnection_EnableKerberos() {
         return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(8);
     }
 
@@ -200,7 +200,7 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHCatalogConnection_KrbRealm() {
+    public EAttribute getHCatalogConnection_KrbPrincipal() {
         return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(9);
     }
 
@@ -209,8 +209,17 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHCatalogConnection_NnPrincipal() {
+    public EAttribute getHCatalogConnection_KrbRealm() {
         return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(10);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHCatalogConnection_NnPrincipal() {
+        return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(11);
     }
 
     /**
@@ -257,6 +266,7 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__HOST_NAME);
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__PORT);
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__USER_NAME);
+        createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__PASSWORD);
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__DATABASE);
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__ENABLE_KERBEROS);
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__KRB_PRINCIPAL);
@@ -309,6 +319,7 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
         initEAttribute(getHCatalogConnection_HostName(), theEcorePackage.getEString(), "hostName", "localhost", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHCatalogConnection_Port(), theEcorePackage.getEString(), "port", "50111", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHCatalogConnection_UserName(), theEcorePackage.getEString(), "userName", "anonymous", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHCatalogConnection_Password(), theEcorePackage.getEString(), "password", "", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHCatalogConnection_Database(), theEcorePackage.getEString(), "database", "default", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHCatalogConnection_EnableKerberos(), theEcorePackage.getEBoolean(), "enableKerberos", null, 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHCatalogConnection_KrbPrincipal(), theEcorePackage.getEString(), "krbPrincipal", "HTTP/__hostname__", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

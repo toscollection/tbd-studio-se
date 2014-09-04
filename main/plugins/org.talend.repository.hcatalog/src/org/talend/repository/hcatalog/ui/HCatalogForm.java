@@ -56,6 +56,8 @@ public class HCatalogForm extends AbstractHCatalogForm {
 
     private LabelledText userNameText;
 
+    private LabelledText passwordText;
+
     private LabelledText krbPrincipalText;
 
     private LabelledText krbRealmText;
@@ -78,6 +80,9 @@ public class HCatalogForm extends AbstractHCatalogForm {
         hostText.setText(getConnection().getHostName());
         portText.setText(getConnection().getPort());
         userNameText.setText(getConnection().getUserName());
+        if (isHDI) {
+            passwordText.setText(getConnection().getPassword());
+        }
         databaseText.setText(getConnection().getDatabase());
         if (enableKerberos) {
             krbPrincipalText.setText(getConnection().getKrbPrincipal());
@@ -93,6 +98,9 @@ public class HCatalogForm extends AbstractHCatalogForm {
         hostText.setReadOnly(readOnly);
         portText.setReadOnly(readOnly);
         userNameText.setReadOnly(readOnly);
+        if (isHDI) {
+            passwordText.setReadOnly(readOnly);
+        }
         databaseText.setReadOnly(readOnly);
         if (enableKerberos) {
             krbPrincipalText.setReadOnly(readOnly);
@@ -148,10 +156,6 @@ public class HCatalogForm extends AbstractHCatalogForm {
         }
     }
 
-    private void updateModel() {
-        setProperties(propertiesTableView.getExtendedTableModel().getBeansList());
-    }
-
     private void addTempletonFields() {
         Group templetonGroup = Form.createGroup(this, 1, Messages.getString("HCatalogForm.templetonSettings"), 110); //$NON-NLS-1$
         templetonGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -174,6 +178,9 @@ public class HCatalogForm extends AbstractHCatalogForm {
         hostText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.host"), 1); //$NON-NLS-1$
         portText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.port"), 1); //$NON-NLS-1$
         userNameText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.userName"), 1); //$NON-NLS-1$
+        if (isHDI) {
+            passwordText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.password"), 1); //$NON-NLS-1$
+        }
 
         if (enableKerberos) {
             addKerberosFields(templetonGroupComposite);
@@ -257,6 +264,16 @@ public class HCatalogForm extends AbstractHCatalogForm {
                 checkFieldsValue();
             }
         });
+        if (isHDI) {
+            passwordText.addModifyListener(new ModifyListener() {
+
+                @Override
+                public void modifyText(final ModifyEvent e) {
+                    getConnection().setPassword(passwordText.getText());
+                    checkFieldsValue();
+                }
+            });
+        }
 
         databaseText.addModifyListener(new ModifyListener() {
 
@@ -315,6 +332,13 @@ public class HCatalogForm extends AbstractHCatalogForm {
         if (!validText(userNameText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.userName")); //$NON-NLS-1$
             return false;
+        }
+
+        if (isHDI) {
+            if (!validText(passwordText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.password")); //$NON-NLS-1$
+                return false;
+            }
         }
 
         if (!HadoopParameterValidator.isValidUserName(userNameText.getText())) {

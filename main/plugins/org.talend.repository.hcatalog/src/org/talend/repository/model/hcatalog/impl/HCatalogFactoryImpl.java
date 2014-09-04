@@ -31,7 +31,7 @@ public class HCatalogFactoryImpl extends EFactoryImpl implements HCatalogFactory
      */
     public static HCatalogFactory init() {
         try {
-            HCatalogFactory theHCatalogFactory = (HCatalogFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.talend.org/hcatalog"); 
+            HCatalogFactory theHCatalogFactory = (HCatalogFactory)EPackage.Registry.INSTANCE.getEFactory(HCatalogPackage.eNS_URI);
             if (theHCatalogFactory != null) {
                 return theHCatalogFactory;
             }

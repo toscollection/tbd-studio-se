@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.configuration.security.AuthorizationPolicy;
 import org.apache.cxf.helpers.IOUtils;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactoryBean;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.security.KerberosAuthOutInterceptor;
 import org.apache.cxf.transport.http.auth.HttpAuthHeader;
@@ -32,6 +33,7 @@ import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.repository.ConnectionStatus;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.hcatalog.util.KerberosPolicyConfig;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
@@ -126,22 +128,19 @@ public class HCatalogServiceUtil {
         String host = StringUtils.trimToEmpty(connection.getHostName());
         String port = StringUtils.trimToEmpty(connection.getPort());
         String userName = StringUtils.trimToEmpty(connection.getUserName());
-        String path = "http://" + host + ":" + port + "?user.name=" + userName; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-        WebClient client = WebClient.create(path);
+        String password = StringUtils.trimToEmpty(connection.getPassword());
+        String endpoint = "http://" + host + ":" + port + "?user.name=" + userName; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        JAXRSClientFactoryBean clientFactoryBean = new JAXRSClientFactoryBean();
+        clientFactoryBean.setUsername(userName);
+        if (HCVersionUtil.isHDI(connection)) {
+            clientFactoryBean.setPassword(password);
+            endpoint = "https://" + host + ":" + port; //$NON-NLS-1$ //$NON-NLS-2$ 
+        }
+        clientFactoryBean.setAddress(endpoint);
+        org.apache.cxf.jaxrs.client.WebClient client = clientFactoryBean.createWebClient();
         addKerberos2Client(client, connection);
 
         return client;
-    }
-
-    /**
-     * DOC ycbai Comment method "getHCatalogClient".
-     * 
-     * @param path
-     * @return the HCatalog client with the full path.
-     */
-    public static WebClient getHCatalogClient(String path) {
-        return WebClient.create(path);
     }
 
     /**
