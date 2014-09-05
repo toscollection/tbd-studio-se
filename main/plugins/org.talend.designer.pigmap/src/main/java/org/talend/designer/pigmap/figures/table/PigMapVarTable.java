@@ -16,6 +16,7 @@ import org.talend.designer.gefabstractmap.figures.table.AbstractTable;
 import org.talend.designer.gefabstractmap.figures.table.ColumnKeyConstant;
 import org.talend.designer.gefabstractmap.figures.table.ColumnSash;
 import org.talend.designer.gefabstractmap.figures.table.TableColumn;
+import org.talend.designer.pigmap.i18n.Messages;
 
 /**
  * DOC hcyi class global comment. Detailled comment
@@ -35,7 +36,7 @@ public class PigMapVarTable extends AbstractTable {
     @Override
     protected void createColumns() {
         TableColumn column = new TableColumn(ColumnKeyConstant.KEY_TYPE);
-        column.setText("Node");
+        column.setText(Messages.getString("PigMapVarTable.node"));//$NON-NLS-1$
         addColumn(column);
 
         ColumnSash sash = new ColumnSash(this);
@@ -43,7 +44,7 @@ public class PigMapVarTable extends AbstractTable {
         addSeparator(sash);
 
         column = new TableColumn(ColumnKeyConstant.KEY_VARIABLE);
-        column.setText("Alias");
+        column.setText(Messages.getString("PigMapVarTable.alias"));//$NON-NLS-1$
         sash.setRightColumn(column);
         addColumn(column);
 
@@ -52,7 +53,7 @@ public class PigMapVarTable extends AbstractTable {
         addSeparator(sash);
 
         column = new TableColumn(ColumnKeyConstant.KEY_EXPRESSION);
-        column.setText("UDF function");
+        column.setText(Messages.getString("PigMapVarTable.UDF_function"));//$NON-NLS-1$
         sash.setRightColumn(column);
         addColumn(column);
     }

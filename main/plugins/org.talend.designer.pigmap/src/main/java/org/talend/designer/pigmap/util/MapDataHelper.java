@@ -323,7 +323,15 @@ public class MapDataHelper {
                     if (iNode.getUniqueName().equals(varNode.getType())) {
                         Map<String, String> item = new HashMap<String, String>();
                         item.put(PigMapConstants.FUNCTION_ALIAS, TalendQuoteUtils.addQuotesIfNotExist(varNode.getName()));
-                        item.put(PigMapConstants.UDF_FUNCTION, TalendQuoteUtils.addQuotesIfNotExist(varNode.getExpression()));
+                        if (varNode.getExpression() != null) {
+                            String newString = varNode.getExpression().trim();
+                            if (newString.length() > 0) {
+                                newString = TalendQuoteUtils.addQuotesIfNotExist(newString);
+                            }
+                            item.put(PigMapConstants.UDF_FUNCTION, newString);
+                        } else {
+                            item.put(PigMapConstants.UDF_FUNCTION, "");//$NON-NLS-1$
+                        }
                         defineFunctions.add(item);
                         String key = varNode.getName();
                         if (!defineFunctionsAlias.containsKey(key)) {
@@ -331,6 +339,20 @@ public class MapDataHelper {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public static void convertVarNodesToDefineFunctions(VarTable varTable) {
+        // if you modified the configure of var define functions , we need update .
+        defineFunctionsAlias.clear();
+        for (VarNode varNode : varTable.getNodes()) {
+            Map<String, String> item = new HashMap<String, String>();
+            item.put(PigMapConstants.FUNCTION_ALIAS, TalendQuoteUtils.addQuotesIfNotExist(varNode.getName()));
+            item.put(PigMapConstants.UDF_FUNCTION, TalendQuoteUtils.addQuotesIfNotExist(varNode.getExpression()));
+            String key = varNode.getName();
+            if (!defineFunctionsAlias.containsKey(key)) {
+                defineFunctionsAlias.put(key, varNode.getExpression());
             }
         }
     }

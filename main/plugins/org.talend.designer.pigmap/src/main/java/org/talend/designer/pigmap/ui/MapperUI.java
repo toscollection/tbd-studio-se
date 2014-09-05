@@ -119,8 +119,8 @@ public class MapperUI {
             @Override
             public void shellClosed(ShellEvent e) {
                 if (editor != null && editor.isDirty() && !closeWithoutPrompt) {
-                    boolean closeWindow = MessageDialog.openConfirm(mapperShell, "Close without save",
-                            Messages.getString("MapperUI.CloseWindow.Message"));
+                    boolean closeWindow = MessageDialog.openConfirm(mapperShell, "Close without save",//$NON-NLS-1$
+                            Messages.getString("MapperUI.CloseWindow.Message"));//$NON-NLS-1$
                     if (!closeWindow) {
                         e.doit = false;
                     } else {
@@ -150,7 +150,7 @@ public class MapperUI {
                 IBrandingService.class);
         String productName = brandingService.getFullProductName();
         mapperShell.setText(productName
-                + " - " + mapperComponent.getComponent().getName() + " - " + mapperComponent.getUniqueName()); //$NON-NLS-1$
+                + " - " + mapperComponent.getComponent().getName() + " - " + mapperComponent.getUniqueName()); //$NON-NLS-1$//$NON-NLS-2$
 
         GridLayout parentLayout = new GridLayout(1, true);
         mapperShell.setLayout(parentLayout);
@@ -164,7 +164,7 @@ public class MapperUI {
 
         if (copyOfMapData.getVarTables().isEmpty()) {
             VarTable varTable = PigmapFactory.eINSTANCE.createVarTable();
-            varTable.setName("Var");
+            varTable.setName(Messages.getString("VarTableContainer.varTable.title"));//$NON-NLS-1$
             varTable.setMinimized(true);
             copyOfMapData.getVarTables().add(varTable);
         }
@@ -212,16 +212,16 @@ public class MapperUI {
                 }
             }
 
-            IElementParameter elementParameter = mapperComponent.getElementParameter("DIE_ON_ERROR");
+            IElementParameter elementParameter = mapperComponent.getElementParameter("DIE_ON_ERROR");//$NON-NLS-1$
             if (elementParameter != null) {
                 elementParameter.setValue(mapperManager.isDieOnError());
             }
-        }
-        // Send back the change to the tPigLoad node if you modified the configure of define dunctions
-        VarTable varTable = copyOfMapData.getVarTables().get(0);
-        List<INode> iNodes = MapDataHelper.iNodesDefineFunctions;
-        if (varTable != null && iNodes != null) {
-            MapDataHelper.convertVarNodesToDefineFunctions(varTable, iNodes);
+            // Send back the change to the tPigLoad node if you modified the configure of define dunctions
+            VarTable varTable = copyOfMapData.getVarTables().get(0);
+            List<INode> iNodes = MapDataHelper.iNodesDefineFunctions;
+            if (varTable != null && iNodes != null) {
+                MapDataHelper.convertVarNodesToDefineFunctions(varTable, iNodes);
+            }
         }
         if (response == SWT.OK) {
             closeWithoutPrompt = true;
@@ -302,17 +302,17 @@ public class MapperUI {
     public String openNewOutputCreationDialog() {
         final IProcess process = mapperManager.getMapperComponent().getProcess();
         String outputName = process.generateUniqueConnectionName("out"); //$NON-NLS-1$
-        InputDialog id = new InputDialog(mapperShell, "Add a output", "New Output :", outputName, new IInputValidator() {
+        InputDialog id = new InputDialog(mapperShell, "Add a output", "New Output :", outputName, new IInputValidator() {//$NON-NLS-1$//$NON-NLS-2$
 
-            @Override
-            public String isValid(String newText) {
-                if (!process.checkValidConnectionName(newText)) {
-                    return "Output is invalid.";
-                }
-                return null;
-            }
+                    @Override
+                    public String isValid(String newText) {
+                        if (!process.checkValidConnectionName(newText)) {
+                            return "Output is invalid.";//$NON-NLS-1$
+                        }
+                        return null;
+                    }
 
-        });
+                });
         int response = id.open();
         if (response == InputDialog.OK) {
             return id.getValue();

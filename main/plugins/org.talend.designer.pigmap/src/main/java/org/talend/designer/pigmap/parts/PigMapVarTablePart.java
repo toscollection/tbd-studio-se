@@ -58,6 +58,8 @@ public class PigMapVarTablePart extends VarTablePart {
                 ((VarTable) getModel()).getNodes().addAll(varNodes);
             }
         }
+        centerVarFigure.getTableManager().setMinimized(false);
+        centerVarFigure.getToolBarFigure().updateMinSizeImage();
 
         return centerVarFigure;
     }
