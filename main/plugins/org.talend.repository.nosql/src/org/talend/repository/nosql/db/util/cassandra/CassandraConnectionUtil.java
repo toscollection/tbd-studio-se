@@ -40,6 +40,7 @@ public class CassandraConnectionUtil {
     public static synchronized boolean checkConnection(NoSQLConnection connection) throws NoSQLServerException {
         Object session = null;
         try {
+            cluster = null;
             initCluster(connection);
             ContextType contextType = null;
             String ksName = connection.getAttributes().get(ICassandraAttributies.DATABASE);
