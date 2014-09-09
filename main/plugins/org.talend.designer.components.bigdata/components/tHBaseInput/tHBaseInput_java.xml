@@ -305,13 +305,13 @@
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.3.jar"
 				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false') AND (HBASE_VERSION=='APACHE_2_4_0_EMR')" />
 			<IMPORT NAME="protobuf-java-2.5.0" MODULE="protobuf-java-2.5.0.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh4/lib/protobuf-java-2.5.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar"
 				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false') AND (HBASE_VERSION=='APACHE_2_4_0_EMR')" />
 			<IMPORT NAME="commons-httpclient-3.1" MODULE="commons-httpclient-3.1.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/commons-httpclient-3.1.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.http/lib/commons-httpclient-3.1.jar"
 				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false') AND (HBASE_VERSION=='APACHE_2_4_0_EMR')" />
-			<IMPORT NAME="jets3t-0.9.1" MODULE="jets3t-0.9.1.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/jets3t-0.9.1.jar"
+			<IMPORT NAME="jets3t-0.9.1-emr-2.4.0" MODULE="jets3t-0.9.1-emr-2.4.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/jets3t-0.9.1-emr-2.4.0.jar"
 				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false') AND (HBASE_VERSION=='APACHE_2_4_0_EMR')" />
 			<IMPORT NAME="httpclient-4.3.4" MODULE="httpclient-4.3.4.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/httpclient-4.3.4.jar"
@@ -320,6 +320,7 @@
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/httpcore-4.3.2.jar"
 				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false') AND (HBASE_VERSION=='APACHE_2_4_0_EMR')" />
 			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
 				REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false') AND (HBASE_VERSION=='APACHE_2_4_0_EMR')" />
 			<IMPORT NAME="gson-2.1" MODULE="gson-2.1.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/gson-2.1.jar"
