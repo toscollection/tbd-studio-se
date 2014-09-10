@@ -39,13 +39,20 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+    boolean mrUseDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
 	
 	isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
 	%>
 	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
+
 	<%
+	if (mrUseDatanodeHostname) {
+        %>
+        conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
+        <%
+    }
 	if(hadoopProps!=null && hadoopProps.size() > 0){
 		for(Map<String, String> item : hadoopProps){
 		%>
