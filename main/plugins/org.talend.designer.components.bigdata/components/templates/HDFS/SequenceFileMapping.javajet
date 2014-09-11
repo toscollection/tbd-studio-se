@@ -12,7 +12,7 @@
     if (talendKeyClass.equals("id_String")) keyClass="org.apache.hadoop.io.Text";
     if (talendKeyClass.equals("id_Short")) {
     	if(isCustom || "HDP_2_0".equals(hadoopVersion) || "HDP_2_1".equals(hadoopVersion) || "Cloudera_CDH4".equals(hadoopVersion)
-    		|| "Cloudera_CDH4_YARN".equals(hadoopVersion) || "Cloudera_CDH5".equals(hadoopVersion)
+    		|| "Cloudera_CDH4_YARN".equals(hadoopVersion) || "Cloudera_CDH5".equals(hadoopVersion) || "Cloudera_CDH5_1".equals(hadoopVersion)
     		|| "PIVOTAL_HD_1_0_1".equals(hadoopVersion) || "PIVOTAL_HD_2_0".equals(hadoopVersion)) {
     		keyClass="org.apache.hadoop.io.ShortWritable";
     	} else {
@@ -31,7 +31,7 @@
     if (talendValueClass.equals("id_String")) valueClass="org.apache.hadoop.io.Text";
     if (talendValueClass.equals("id_Short")) {
     	if(isCustom || "HDP_2_0".equals(hadoopVersion) || "HDP_2_1".equals(hadoopVersion) || "Cloudera_CDH4".equals(hadoopVersion)
-    		|| "Cloudera_CDH4_YARN".equals(hadoopVersion) || "Cloudera_CDH5".equals(hadoopVersion)
+    		|| "Cloudera_CDH4_YARN".equals(hadoopVersion) || "Cloudera_CDH5".equals(hadoopVersion) || "Cloudera_CDH5_1".equals(hadoopVersion)
     		|| "PIVOTAL_HD_1_0_1".equals(hadoopVersion) || "PIVOTAL_HD_2_0".equals(hadoopVersion)) {
     		valueClass="org.apache.hadoop.io.ShortWritable";
     	} else {
