@@ -15,13 +15,16 @@
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
-    
+
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
     List<Map<String, String>> values = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__VALUES__");
-    
+
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    String dbconn = "dbService_" + connection;
+
     List<String> autoIndexedColumns = new ArrayList<String>();
     Set<String> indexNames = new HashSet();
     for (Map<String, String> value : values) {
@@ -41,10 +44,8 @@
     if (!action.equals("INSERT")) {
     	indexNames.add((String) ElementParameterParser.getObjectValue(node, "__INDEX_NAME__"));
     }
-    
+
     if (useExistingConnection) {
-    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-    	String dbconn = "dbService_" + connection;
     	%>
 		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbconn%>");
 		<%
@@ -86,43 +87,38 @@ long counter_<%=cid%> = 0;
 		importProperties_<%=cid%>.put("neostore.propertystore.db.arrays.mapped_memory", <%=arraysMappedMemory%>);
 		String storeDir_<%=cid%> = "";
 		org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
-		org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> =null;
+		org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> = null;
 	  	if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
-			org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
-			storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
-			db_<%=cid%>.shutdown();
-			inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
+	         if (!globalMap.containsKey("<%=dbconn%>_inserter")) {
+	             org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
+	             storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
+	             db_<%=cid%>.shutdown();
+	             inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
+                 globalMap.put("<%=dbconn%>_inserter", inserter_<%=cid%>);
+                 globalMap.put("<%=dbconn%>_is_temporary_shutted_down", true);
+	         } else {
+                inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbconn%>_inserter");
+	         }
 		} else {
 			throw new UnsupportedOperationException("Batch import is not supported with database server edition");
 		}
-    	indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+
+	  	if (!globalMap.containsKey("<%=dbconn%>_indexprovider")) {
+	        indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+            globalMap.put("<%=dbconn%>_indexprovider", indexProvider_<%=cid%>);
+        } else {
+            indexProvider_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider) globalMap.get("<%=dbconn%>_indexprovider");
+        }
     	resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
     	resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
 		java.util.Map<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex> indexInserterMap_<%=cid%> = new java.util.HashMap<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex>();
 
 		<%
-        if (!remoteServer) {
-            %>
-            org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = databaseService_<%=cid%>.beginTx();
-            try
-            {
-            <%
-        }
     	for (String indexName : indexNames) {
     		%>
 			indexInserterMap_<%=cid%>.put(<%=indexName%>, indexProvider_<%=cid%>.nodeIndex(<%=indexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")));
     		<%
     	}
-        if (!remoteServer) {
-            %>
-            tx_begin_<%=cid%>.success();
-            }
-            finally
-            {
-                tx_begin_<%=cid%>.close();
-            }
-            <%
-        }
     } else {
 		%>
 		java.util.Map<String, org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>> indexNodeMap_<%=cid%> = new java.util.HashMap<String,org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>>();
@@ -163,5 +159,10 @@ long counter_<%=cid%> = 0;
 		autoIndexer_<%=cid%>.startAutoIndexingProperty("<%=autoIndexedColumn%>");
 		<%
 	}
-%>	
-org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+
+    if (!batchImport) {
+        %>	
+        org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+        <%
+    }
+%>
