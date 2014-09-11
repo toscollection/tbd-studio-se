@@ -371,10 +371,16 @@
 
 counter_<%=cid%>++;
 
-if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-	tx_<%=cid%>.success();
-	tx_<%=cid%>.finish();
-	tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+<%
+if (!batchImport) {
+    %>
+    if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
+        tx_<%=cid%>.success();
+        tx_<%=cid%>.finish();
+        tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+    }
+    <%
 }
+%>
 
 nb_line_<%=cid %>++;
