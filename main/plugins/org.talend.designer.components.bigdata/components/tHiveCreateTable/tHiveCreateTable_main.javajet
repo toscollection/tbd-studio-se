@@ -6,9 +6,9 @@ imports="
 		org.talend.core.model.metadata.IMetadataColumn
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.process.IConnection
-      org.talend.core.model.process.IConnectionCategory
-      org.talend.core.model.metadata.MappingTypeRetriever
-      org.talend.core.model.metadata.MetadataTalendType
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.MappingTypeRetriever
+		org.talend.core.model.metadata.MetadataTalendType
 		org.talend.designer.runprocess.ProcessorException
 		org.talend.designer.runprocess.ProcessorUtilities
 		java.util.List	
