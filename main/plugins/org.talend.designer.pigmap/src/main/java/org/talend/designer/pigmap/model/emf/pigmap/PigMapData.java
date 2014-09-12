@@ -20,6 +20,7 @@ import org.talend.designer.core.model.utils.emf.talendfile.AbstractExternalData;
  * <ul>
  *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.PigMapData#getInputTables <em>Input Tables</em>}</li>
  *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.PigMapData#getOutputTables <em>Output Tables</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.PigMapData#getVarTables <em>Var Tables</em>}</li>
  *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.PigMapData#getConnections <em>Connections</em>}</li>
  * </ul>
  * </p>
@@ -60,6 +61,22 @@ public interface PigMapData extends AbstractExternalData {
      * @generated
      */
     EList<OutputTable> getOutputTables();
+
+    /**
+     * Returns the value of the '<em><b>Var Tables</b></em>' containment reference list.
+     * The list contents are of type {@link org.talend.designer.pigmap.model.emf.pigmap.VarTable}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Var Tables</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Var Tables</em>' containment reference list.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.PigmapPackage#getPigMapData_VarTables()
+     * @model containment="true"
+     * @generated
+     */
+    EList<VarTable> getVarTables();
 
     /**
      * Returns the value of the '<em><b>Connections</b></em>' containment reference list.

@@ -10,13 +10,54 @@
 			<%}%>
 			String type_<%=cid%> = pigLatin_<%=cid%>[0];
 			if("query".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerQuery(pigLatin_<%=cid%>[1]);
+<%
+				if(isExecutedThroughWebHCat) {
+%>
+					bw_<%=start_node%>.write(pigLatin_<%=cid%>[1]);
+<%					
+				} else {
+%>
+					pigServer_<%=start_node%>.registerQuery(pigLatin_<%=cid%>[1]);
+<%
+				}
+%>
 			} else if("jar".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerJar(pigLatin_<%=cid%>[1]);
+<%
+				if(isExecutedThroughWebHCat) {
+%>
+					bw_<%=start_node%>.write("REGISTER " + wasbPath_<%=start_node%> + new java.io.File(pigLatin_<%=cid%>[1]).getName() + ";");
+					libjars_<%=start_node%>.append(pigLatin_<%=cid%>[1] + ",");
+<%					
+				} else {
+%>
+					pigServer_<%=start_node%>.registerJar(pigLatin_<%=cid%>[1]);
+<%
+				}
+%>
 			} else if("script".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(pigLatin_<%=cid%>[1].getBytes()));
+<%
+				if(isExecutedThroughWebHCat) {
+%>
+					bw_<%=start_node%>.write(pigLatin_<%=cid%>[1]);
+<%					
+				} else {
+%>
+					pigServer_<%=start_node%>.registerScript(new java.io.ByteArrayInputStream(pigLatin_<%=cid%>[1].getBytes()));
+<%
+				}
+%>
 			} else if("function".equals(type_<%=cid%>)) {
-				pigServer_<%=start_node%>.registerFunction(pigLatin_<%=cid%>[1], new org.apache.pig.FuncSpec(pigLatin_<%=cid%>[2]));
+<%
+				if(isExecutedThroughWebHCat) {
+%>
+					bw_<%=start_node%>.write("DEFINE " + pigLatin_<%=cid%>[1] + " " + pigLatin_<%=cid%>[2] + ";");
+<%					
+				} else {
+%>
+					pigServer_<%=start_node%>.registerFunction(pigLatin_<%=cid%>[1], new org.apache.pig.FuncSpec(pigLatin_<%=cid%>[2]));
+<%
+				}
+%>
 			}
 		}
 <%

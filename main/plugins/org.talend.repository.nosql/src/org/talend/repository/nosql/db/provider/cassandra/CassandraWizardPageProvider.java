@@ -124,7 +124,7 @@ public class CassandraWizardPageProvider extends AbstractWizardPageProvider {
         List<INoSQLSchemaNode> schemaNodes = new ArrayList<INoSQLSchemaNode>();
         Set<String> cfNames = null;
         Set<String> scfNames = null;
-        String ksName = null;
+        String ksName = connection.getAttributes().get(ICassandraAttributies.DATABASE);
         if (parentNode != null && StringUtils.isNotEmpty(parentNode.getName())) {
             ksName = parentNode.getName();
         }

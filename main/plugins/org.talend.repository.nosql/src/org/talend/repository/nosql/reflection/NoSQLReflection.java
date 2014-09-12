@@ -33,8 +33,18 @@ public class NoSQLReflection {
                 if (args == null || args.length == 0) {
                     return Class.forName(className, true, loader).newInstance();
                 } else {
-                    return ReflectionUtils.newInstance(className, loader, args, argTypes); //$NON-NLS-1$
+                    return ReflectionUtils.newInstance(className, loader, args, argTypes);
                 }
+            }
+        }.wrap();
+    }
+
+    public static Boolean isInstance(final Object obj, final Class cls) throws NoSQLReflectionException {
+        return new WrapException<Boolean>() {
+
+            @Override
+            public Boolean toDo() throws Exception {
+                return ReflectionUtils.isInstance(obj, cls);
             }
         }.wrap();
     }
@@ -50,9 +60,9 @@ public class NoSQLReflection {
             @Override
             public Object toDo() throws Exception {
                 if (args == null) {
-                    return ReflectionUtils.invokeMethod(obj, methodName, new Object[0], argTypes); //$NON-NLS-1$
+                    return ReflectionUtils.invokeMethod(obj, methodName, new Object[0], argTypes);
                 } else {
-                    return ReflectionUtils.invokeMethod(obj, methodName, args, argTypes); //$NON-NLS-1$
+                    return ReflectionUtils.invokeMethod(obj, methodName, args, argTypes);
                 }
             }
         }.wrap();
@@ -70,9 +80,9 @@ public class NoSQLReflection {
             @Override
             public Object toDo() throws Exception {
                 if (args == null) {
-                    return ReflectionUtils.invokeStaticMethod(className, loader, methodName, new Object[0], argTypes); //$NON-NLS-1$ 
+                    return ReflectionUtils.invokeStaticMethod(className, loader, methodName, new Object[0], argTypes);
                 } else {
-                    return ReflectionUtils.invokeStaticMethod(className, loader, methodName, args, argTypes); //$NON-NLS-1$ 
+                    return ReflectionUtils.invokeStaticMethod(className, loader, methodName, args, argTypes);
                 }
             }
         }.wrap();

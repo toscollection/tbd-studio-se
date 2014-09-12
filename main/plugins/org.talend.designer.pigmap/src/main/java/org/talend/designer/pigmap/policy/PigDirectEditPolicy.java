@@ -44,6 +44,13 @@ public class PigDirectEditPolicy extends DirectEditPolicy {
                 case NODE_NAME:
                     command = new DirectEditCommand(getHost(), model, type, request.getCellEditor().getValue());
                     break;
+                case VAR_NODE_TYPE:
+                    if (editor instanceof ComboBoxCellEditor) {
+                        ComboBoxCellEditor combo = (ComboBoxCellEditor) editor;
+                        int selectIndex = (Integer) combo.getValue();
+                        command = new DirectEditCommand(getHost(), model, type, combo.getItems()[selectIndex]);
+                    }
+                    break;
                 case JOIN_MODEL:
                 case JOIN_OPTIMIZATION:
                 case OUTPUT_REJECT:

@@ -24,6 +24,9 @@
 	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String inputFilename = ElementParameterParser.getValue(node, "__INPUT_FILENAME__");
+	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
+    String s3bucket = ElementParameterParser.getValue(node, "__S3_BUCKET__");
+    String s3username = ElementParameterParser.getValue(node, "__S3_USERNAME__");
 	String databaseName = ElementParameterParser.getValue(node, "__DATABASE_NAME__");
 	String tableName = ElementParameterParser.getValue(node, "__TABLE_NAME__");
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
@@ -51,6 +54,7 @@
 	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 	boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_JOBHISTORY_ADDRESS__"));
+    boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
 	
 	boolean isParquet = !isLocal && "ParquetLoader".equals(function);
 	
@@ -60,7 +64,9 @@
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	List<Map<String, String>> defineFunctions = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DEFINE_FUNCTION__");
 	
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "MAPR310".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+		
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "MAPR310".equals(pigVersion) || "MICROSOFT_HD_INSIGHT_3_1".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;
@@ -77,7 +83,7 @@
 	boolean generateRegisterJarCodeForParquetFile = isParquet;
 	
 	boolean generateRegisterJarCodeForAll = true;
-
+	
 	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
@@ -179,22 +185,79 @@
 		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
 <%
 	}
+	
+	if(!isExecutedThroughWebHCat) {
 %>
-	java.util.Properties props_<%=cid%> = new java.util.Properties();
-<%  
-	if(inMain) {
+		java.util.Properties props_<%=cid%> = new java.util.Properties();
+<% 
+	}
+	 
+	if(inMain && !isExecutedThroughWebHCat) {
 %>
-	props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
+		props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
 <%  
 	}
 %>
 	try {
 <%
+		if(inMain && isExecutedThroughWebHCat) {
+			String passwordFieldName = "__HDINSIGHT_PASSWORD__";
+			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%> 
+				final String hdInsightPassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+			} else {
+%>
+				final String hdInsightPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+			}
+			
+			passwordFieldName = "__WASB_PASSWORD__";
+			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%> 
+				final String wasbPassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+			} else {
+%>
+				final String wasbPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+			}
+%>
+			
+			java.io.File localPigLatin_<%=cid%> = new java.io.File(projectName + "_" + jobName + "_" + Thread.currentThread().getId() +".pig");
+			java.io.FileWriter fw_<%=cid%> = new java.io.FileWriter(localPigLatin_<%=cid%>.getAbsoluteFile());
+			java.io.BufferedWriter bw_<%=cid%> = new java.io.BufferedWriter(fw_<%=cid%>);
+			
+			java.lang.StringBuilder libjars_<%=cid%> = new StringBuilder();
+			
+			org.talend.webhcat.launcher.fs.FileSystem azureFs_<%=cid%> = new org.talend.webhcat.launcher.fs.AzureFileSystem("DefaultEndpointsProtocol=https;"
+				+ "AccountName="
+				+ <%=ElementParameterParser.getValue(node, "__WASB_USERNAME__")%>
+				+ ";"
+				+ "AccountKey=" + wasbPassword_<%=cid%>, <%=ElementParameterParser.getValue(node, "__WASB_CONTAINER__")%>);
+			
+			org.talend.webhcat.launcher.common.Job instance_<%=cid%> = new org.talend.webhcat.launcher.common.impl.PigJob(azureFs_<%=cid%>, org.talend.webhcat.launcher.utils.JobType.PIG);
+			instance_<%=cid%>.setAzureAccountName(<%=ElementParameterParser.getValue(node, "__WASB_USERNAME__")%>);
+			instance_<%=cid%>.setAzureAccountPassword(wasbPassword_<%=cid%>);
+			instance_<%=cid%>.setAzureStorageAddress(<%=ElementParameterParser.getValue(node, "__WASB_HOST__")%>);
+			instance_<%=cid%>.setAzureContainer(<%=ElementParameterParser.getValue(node, "__WASB_CONTAINER__")%>);
+			instance_<%=cid%>.setHdInsightUsername(<%=ElementParameterParser.getValue(node, "__HDINSIGHT_USERNAME__")%>);
+			instance_<%=cid%>.setHdInsightPassword(hdInsightPassword_<%=cid%>);
+			instance_<%=cid%>.setUsername(<%=ElementParameterParser.getValue(node, "__WEBHCAT_USERNAME__")%>);
+			instance_<%=cid%>.setWebhcatEndpoint("https", <%=ElementParameterParser.getValue(node, "__WEBHCAT_HOST__")%> + ":" + <%=ElementParameterParser.getValue(node, "__WEBHCAT_PORT__")%>);
+			instance_<%=cid%>.setStatusFolder(org.talend.webhcat.launcher.utils.Utils.removeFirstSlash(<%=ElementParameterParser.getValue(node, "__STATUSDIR__")%>));
+			instance_<%=cid%>.setRemoteFolder(org.talend.webhcat.launcher.utils.Utils.removeFirstSlash(<%=ElementParameterParser.getValue(node, "__REMOTE_FOLDER__")%>));
+			instance_<%=cid%>.setFileToExecute(projectName + "_" + jobName + "_" + Thread.currentThread().getId() +".pig");
+			
+			String wasbPath_<%=cid%> = azureFs_<%=cid%>.getFileSystemPrefix() + "/"	+ instance_<%=cid%>.getRemoteFolder()	+ "/libjars/";
+<%
+		}
+		
 		if(isLocal) { // LOCAL mode
 %>
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
 <%
-		} else { // MAPREDUCE mode
+		} else if(!isLocal && !isExecutedThroughWebHCat) { // MAPREDUCE mode
 			if(inMain) {
 				String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
@@ -203,7 +266,7 @@
 				
 				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
-				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(pigVersion)))) {
+				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(pigVersion)))) {
 					String username = ElementParameterParser.getValue(node, "__USERNAME__");
 %>
 					String username_<%=cid %> = <%=username%>;
@@ -213,11 +276,18 @@
 <%
 				}
 			}
-%>
-			props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
-			<%
-			boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion));
-			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || isKerberosAvailableHadoop2;
+
+			if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
+                %>
+                props_<%=cid%>.put("fs.defaultFS", <%=fsDefaultName%>);
+                <%
+            } else {
+                %>
+                props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
+                <%
+            }
+			boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion));
+			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || isKerberosAvailableHadoop2;
 			
 			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion));
 			
@@ -241,18 +311,25 @@
 <%
 				}
 				
-				if(!isCustom && "HDP_2_1".equals(pigVersion)) {
+				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion))) {
 %>
 					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
+<%
+				}
+				
+				if(!isCustom && "HDP_2_1".equals(pigVersion)) {
+				    %>
 					props_<%=cid%>.put("yarn.application.classpath","/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*");
-<%
-				/**/
-				} else {
-%>
+					<%
+				} else if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
+		            %>
+		            props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*");
+	                <%
+		        } else {
+		            %>
     				//set default yarn classpath with environment variable
-    				props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
-<%
-				/**/
+                    props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
+    				<%
 				}
 				
         		boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(node, "__CROSS_PLATFORM_SUBMISSION__"));
@@ -349,20 +426,42 @@
 <% 
 				} 
 			}
-%>
+            if (useDatanodeHostname) {
+                %>
+                props_<%=cid%>.put("dfs.client.use.datanode.hostname", "true");
+                <%
+            }
+            %>
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
-<%
+			<%
 		}
+
+        if (isS3Location) {
+            String passwordFieldName = "__S3_PASSWORD__";
+            // Get the decrypted password under the variable decryptedS3Password
+
+            if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+                %> 
+                String decryptedS3Password_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+                <%
+            } else {
+                %>
+                String decryptedS3Password_<%=cid%> = <%=ElementParameterParser.getValue(node, passwordFieldName)%>; 
+                <%
+            }
+        }
 		
 		if(inMain) {//only main process create the server object,lookup process use the one in main process
+			if(!isExecutedThroughWebHCat) {
 %>
-		org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
-		pigServer_<%=start_node%>.setBatchOn();
+				org.apache.pig.PigServer pigServer_<%=start_node%> = new org.apache.pig.PigServer(context_<%=cid%>);
+				pigServer_<%=start_node%>.setBatchOn();
 <%
+			}
 		} else {
 %>
-		//store the pig script in the lookup process
-		java.util.List<String[]> pigScript_<%=start_node%> = new java.util.ArrayList<String[]>();
+			//store the pig script in the lookup process
+			java.util.List<String[]> pigScript_<%=start_node%> = new java.util.ArrayList<String[]>();
 <%
 		}
 %>
@@ -499,10 +598,19 @@
 			if (talendValueClass.equals("id_Long")) valueConverterClass="com.twitter.elephantbird.pig.util.LongWritableConverter";
 			if (talendValueClass.equals("id_Short")) valueConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
 			if (talendValueClass.equals("id_String")) valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
-%>
-			sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+
-				"' using com.twitter.elephantbird.pig.load.SequenceFileLoader('-c <%=keyConverterClass%>','-c <%=valueConverterClass%>')");
-<%
+
+			if (isS3Location) {
+			    %>
+	            sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '" + "s3n://" + <%=s3username%> +":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+	                + "' using com.twitter.elephantbird.pig.load.SequenceFileLoader('-c <%=keyConverterClass%>','-c <%=valueConverterClass%>')");
+	            <%
+	        } else {
+	            %>
+	            sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '" + <%=inputFilename%> +
+	                "' using com.twitter.elephantbird.pig.load.SequenceFileLoader('-c <%=keyConverterClass%>','-c <%=valueConverterClass%>')");
+	            <%
+	        }
+
 			if(metadata!=null) {
 %>
 				sb_<%=cid%>.append(" AS (");
@@ -513,24 +621,31 @@
 		} else {
 			if("CustomLoader".equals(function)) {
 				String customLoader = ElementParameterParser.getValue(node, "__CUSTOM_LOADER__");
-%>
-				sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using " + <%=customLoader%>);
-<%
+	            if (isS3Location) {
+	                %>
+	                sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '" + "s3n://" + <%=s3username%> +":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+	                    + "' using " + <%=customLoader%>);
+	                <%
+	            } else {
+	                %>
+	                sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using " + <%=customLoader%>);
+	                <%
+	            }
 			} else {
 				List<IMetadataTable> metadatas = node.getMetadataList();
 				IMetadataTable metadata = null;
 				if(metadatas != null && metadatas.size() > 0) {
 					metadata = metadatas.get(0);
 				}
-				
+
 				if("HBaseStorage".equals(function)){
 					String hbasetable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
 					boolean loadkey = "true".equals(ElementParameterParser.getValue(node, "__LOAD_KEY__"));//if load key,the first column is hbase row key
 					List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
-%>
+					%>
 					sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD 'hbase://").append(<%=hbasetable%>).append("' using org.apache.pig.backend.hadoop.hbase.HBaseStorage('");
-					
-<%
+					<%
+
 					if(metadata!=null && mapping!=null) {
 						for(int i=0;i<mapping.size();i++){
 							if(loadkey && (i == 0)) {
@@ -599,9 +714,16 @@
 					sb_<%=cid%>.append(")");
 <%
 				} else if(isParquet) {
-%>
-					sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using parquet.pig.ParquetLoader");
-<%
+	                if (isS3Location) {
+	                    %>
+	                    sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '" + "s3n://" + <%=s3username%> +":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+	                        + "' using parquet.pig.ParquetLoader");
+	                    <%
+	                } else {
+	                    %>
+	                    sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using parquet.pig.ParquetLoader");
+	                    <%
+	                }
 				} else {
 					if("RCFilePigStorage".equals(function)) {
 						function = "com.twitter.elephantbird.pig.store.RCFilePigStorage";
@@ -610,9 +732,16 @@
 					if("AvroStorage".equals(function)) {
 						function = "org.apache.pig.piggybank.storage.avro.AvroStorage";
 					}
-%>
-					sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
-<%
+					if (isS3Location) {
+                        %>
+                        sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '" + "s3n://" + <%=s3username%> +":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>
+                            + "' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
+                        <%
+                    } else {
+                        %>
+                        sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = LOAD '"+<%=inputFilename%>+"' using <%=function%>(<%="PigStorage".equals(function)?"'\"+"+fieldSeparator+"+\"'":""%>)");
+                        <%
+                    }
 				}
 			
 				if(metadata!=null) {

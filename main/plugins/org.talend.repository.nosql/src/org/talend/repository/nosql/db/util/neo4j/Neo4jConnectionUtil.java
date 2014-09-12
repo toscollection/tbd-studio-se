@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.repository.nosql.db.util.neo4j;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -153,6 +154,40 @@ public class Neo4jConnectionUtil {
         }
 
         return resultIterator;
+    }
+
+    public static synchronized Map<String, Object> getNodeProperties(Object node, ClassLoader classLoader)
+            throws NoSQLServerException {
+        Map<String, Object> propertiesMap = new HashMap<String, Object>();
+        try {
+            if (isNode(node, classLoader)) {
+                Iterable<String> propertieKeys = (Iterable<String>) NoSQLReflection.invokeMethod(node,
+                        "getPropertyKeys", new Object[0]); //$NON-NLS-1$
+                Iterator<String> propertyKeysIter = propertieKeys.iterator();
+                while (propertyKeysIter.hasNext()) {
+                    String proKey = propertyKeysIter.next();
+                    Object proValue = NoSQLReflection.invokeMethod(node, "getProperty", new Object[] { proKey });
+                    if (proKey != null || proValue != null) {
+                        propertiesMap.put(proKey, proValue);
+                    }
+                }
+            }
+        } catch (NoSQLReflectionException e) {
+            throw new NoSQLServerException(e);
+        }
+
+        return propertiesMap;
+    }
+
+    public static boolean isNode(Object obj, ClassLoader classLoader) throws NoSQLServerException {
+        if (obj == null) {
+            return false;
+        }
+        try {
+            return NoSQLReflection.isInstance(obj, Class.forName("org.neo4j.graphdb.Node", true, classLoader)); //$NON-NLS-1$
+        } catch (Exception e) {
+            throw new NoSQLServerException(e);
+        }
     }
 
     private static Object getQueryEngine(Object db, ClassLoader classLoader) throws NoSQLReflectionException {

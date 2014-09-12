@@ -64,7 +64,9 @@ public class PigmapFactoryImpl extends EFactoryImpl implements PigmapFactory {
             case PigmapPackage.PIG_MAP_DATA: return createPigMapData();
             case PigmapPackage.INPUT_TABLE: return createInputTable();
             case PigmapPackage.OUTPUT_TABLE: return createOutputTable();
+            case PigmapPackage.VAR_TABLE: return createVarTable();
             case PigmapPackage.TABLE_NODE: return createTableNode();
+            case PigmapPackage.VAR_NODE: return createVarNode();
             case PigmapPackage.CONNECTION: return createConnection();
             case PigmapPackage.LOOKUP_CONNECTION: return createLookupConnection();
             case PigmapPackage.FILTER_CONNECTION: return createFilterConnection();
@@ -138,9 +140,29 @@ public class PigmapFactoryImpl extends EFactoryImpl implements PigmapFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    public VarTable createVarTable() {
+        VarTableImpl varTable = new VarTableImpl();
+        return varTable;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public TableNode createTableNode() {
         TableNodeImpl tableNode = new TableNodeImpl();
         return tableNode;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public VarNode createVarNode() {
+        VarNodeImpl varNode = new VarNodeImpl();
+        return varNode;
     }
 
     /**

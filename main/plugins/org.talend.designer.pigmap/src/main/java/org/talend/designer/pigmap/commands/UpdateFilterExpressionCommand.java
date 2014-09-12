@@ -13,6 +13,7 @@
 package org.talend.designer.pigmap.commands;
 
 import org.eclipse.gef.commands.Command;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.gefabstractmap.dnd.TransferdType;
 import org.talend.designer.gefabstractmap.dnd.TransferedObject;
 import org.talend.designer.gefabstractmap.part.MapperTablePart;
@@ -23,7 +24,10 @@ import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
 import org.talend.designer.pigmap.parts.PigMapTableNodePart;
+import org.talend.designer.pigmap.parts.PigMapVarNodeEditPart;
+import org.talend.designer.rowgenerator.data.FunctionManager;
 
 /**
  * DOC hcyi class global comment. Detailled comment
@@ -54,16 +58,31 @@ public class UpdateFilterExpressionCommand extends Command {
                 if (objects.getType() == TransferdType.INPUT) {
                     PigMapTableNodePart part = (PigMapTableNodePart) obj;
                     sourceNode = (TableNode) part.getModel();
-                    String tableName = "";
+                    String tableName = "";//$NON-NLS-1$
                     if (sourceNode != null && sourceNode.eContainer() instanceof InputTable) {
                         InputTable table = (InputTable) sourceNode.eContainer();
                         tableName = table.getName();
                     }
-                    if (expression == null || expression.equals("")) {
-                        expression = tableName + "." + sourceNode.getName();
+                    if (expression == null || expression.equals("")) {//$NON-NLS-1$
+                        expression = tableName + "." + sourceNode.getName();//$NON-NLS-1$
                     } else {
-                        expression = expression + " " + tableName + "." + sourceNode.getName();
+                        expression = expression + " " + tableName + "." + sourceNode.getName();//$NON-NLS-1$//$NON-NLS-2$
                     }
+                }
+                // VARE == FILTER
+                else if (objects.getType() == TransferdType.VAR) {
+                    PigMapVarNodeEditPart part = (PigMapVarNodeEditPart) obj;
+                    sourceNode = (VarNode) part.getModel();
+                    String newNameNoQuotes = TalendQuoteUtils.removeQuotesIfExist(sourceNode.getName())
+                            + FunctionManager.FUN_PREFIX + FunctionManager.FUN_SUFFIX;
+                    if (expression == null) {
+                        expression = TalendQuoteUtils.addQuotesIfNotExist(newNameNoQuotes);
+                    } else {
+                        expression = expression + " " + TalendQuoteUtils.addQuotesIfNotExist(newNameNoQuotes);//$NON-NLS-1$
+                    }
+                    // no need create the connect now
+                    sourceNode = null;
+                    targetTable.setExpressionFilter(expression);
                 }
                 if (sourceNode != null) {
                     targetTable.setExpressionFilter(expression);

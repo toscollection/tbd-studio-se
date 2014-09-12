@@ -11,7 +11,8 @@
     String cid = node.getUniqueName();
     
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
-    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));        
+    boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
+    boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
     String query = ElementParameterParser.getValue(node, "__QUERY__");
     query = query.replaceAll("\n"," ");
     query = query.replaceAll("\r"," ");
@@ -23,7 +24,6 @@
 		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbconn%>");
 	<%
     } else {
-    	boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
     	if (remoteServer) {
     		String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
     		%>
@@ -32,7 +32,7 @@
     	} else {
 	    	String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
 			%>
-			org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedReadOnlyGraphDatabase(<%=databasePath%>);
+            org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=databasePath%>);
 			<%
 		}
     }
@@ -61,10 +61,30 @@ class Neo4jUtil_<%=cid%>{
 					String propertyName=expression.split("\\.")[1];
 					if (row.get(suffix) != null && row.get(suffix) instanceof org.neo4j.graphdb.PropertyContainer) {
 						org.neo4j.graphdb.PropertyContainer propertyContainer = (org.neo4j.graphdb.PropertyContainer) row.get(suffix);
+						<%
+			            if (!remoteServer) {
+			                %>
+			                org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = propertyContainer.getGraphDatabase().beginTx();
+			                try
+			                {
+			                <%
+			            }
+			            %>
 						value=propertyContainer.getProperty(propertyName);
+						<%
+			            if (!remoteServer) {
+			                %>
+			                tx_begin_<%=cid%>.success();
+			                }
+			                finally
+			                {
+			                    tx_begin_<%=cid%>.close();
+			                }
+			                <%
+			            }
+			            %>
 					}
 				}
-				
 			}catch(org.neo4j.graphdb.NotFoundException e_<%=cid%>){
 				System.err.println(e_<%=cid%>.getMessage()+" not found!!");
 			}

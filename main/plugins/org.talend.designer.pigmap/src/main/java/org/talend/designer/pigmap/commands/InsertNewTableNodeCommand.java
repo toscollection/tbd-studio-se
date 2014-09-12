@@ -98,7 +98,7 @@ public class InsertNewTableNodeCommand extends Command {
                 // expression
                 String expression = null;
                 if (isLookup || targetModel instanceof OutputTable) {
-                    expression = sourceInputTable.getName() + "." + sourceNode.getName();
+                    expression = sourceInputTable.getName() + "." + sourceNode.getName();//$NON-NLS-1$
                 }
                 switch (dropType) {
                 case DROP_INSERT_OUTPUT:

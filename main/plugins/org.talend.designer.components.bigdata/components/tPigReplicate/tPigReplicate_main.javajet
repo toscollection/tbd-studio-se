@@ -17,22 +17,27 @@ imports="
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
 <%
-    List<IMetadataTable> metadatas = node.getMetadataList();
-if ((metadatas != null) && (metadatas.size() > 0)) {//a
-    IMetadataTable metadata = metadatas.get(0);
-    if (metadata != null) {//b	
-        String previous_node = "";
-        String start_node = "";
+	List<IMetadataTable> metadatas = node.getMetadataList();
+	if ((metadatas != null) && (metadatas.size() > 0)) {//a
+		IMetadataTable metadata = metadatas.get(0);
+    	if (metadata != null) {//b	
+			String previous_node = "";
+			String start_node = "";
         
-        boolean inMain = true;
+			boolean inMain = true;
+			boolean isExecutedThroughWebHCat = false;
         
-		String previousOutputConnectionName = "";
+			String previousOutputConnectionName = "";
 		
       	List<? extends IConnection> inputConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
       	if ((inputConns!=null)&&(inputConns.size()>0)) {
       		IConnection incomingConn = inputConns.get(0); 
       		previous_node = incomingConn.getSource().getUniqueName();
 			INode loadNode = node.getDesignSubjobStartNode();
+
+			boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
+			isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__"));
+			
     		start_node = loadNode.getUniqueName();
     		inMain = loadNode.isSubtreeStart();
       		

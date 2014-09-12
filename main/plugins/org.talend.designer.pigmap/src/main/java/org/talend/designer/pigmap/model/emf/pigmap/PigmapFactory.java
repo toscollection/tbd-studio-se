@@ -53,6 +53,15 @@ public interface PigmapFactory extends EFactory {
     OutputTable createOutputTable();
 
     /**
+     * Returns a new object of class '<em>Var Table</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Var Table</em>'.
+     * @generated
+     */
+    VarTable createVarTable();
+
+    /**
      * Returns a new object of class '<em>Table Node</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -60,6 +69,15 @@ public interface PigmapFactory extends EFactory {
      * @generated
      */
     TableNode createTableNode();
+
+    /**
+     * Returns a new object of class '<em>Var Node</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Var Node</em>'.
+     * @generated
+     */
+    VarNode createVarNode();
 
     /**
      * Returns a new object of class '<em>Connection</em>'.

@@ -10,9 +10,51 @@
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
+	
+	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
+	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+	boolean inMain = true;
+
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		INode loadNode = node.getDesignSubjobStartNode();
+		inMain = loadNode.isSubtreeStart();
+	}
+	
+	
+	if(inMain && isExecutedThroughWebHCat) {
+%>
+		bw_<%=cid%>.close();
+		
+		instance_<%=cid%>.setLibJars(libjars_<%=cid%>.toString().substring(0, libjars_<%=cid%>.length()-1));
+		
+		instance_<%=cid%>.sendFiles();
+		instance_<%=cid%>.callWS(null, true);
+		int exitCode_<%=cid%> = instance_<%=cid%>.execute();
+		if(exitCode_<%=cid%> > 0) {
+		
+<%
+			if(dieOnError) {
+%>
+				throw new Exception("The Pig job failed. Please read the logs for more details");
+<%
+			} else {
+%>
+				System.err.println("The Pig job failed. Please read the logs for more details");
+<%
+				if(isLog4jEnabled) {
+%>
+					log.error("<%=cid%> - " + e.getMessage());
+<%
+				}
+			}
+%>
+		}
+<%
+	}
 %>
 
 		

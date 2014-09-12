@@ -193,6 +193,7 @@
 	        NAME="IS_VIRTUAL_COMPONENT"
 	        FIELD="CHECK"
 	        NUM_ROW="67"
+	        REQUIRED="true"
 	        GROUP="JSON_CONFIGURATION"
         >
             <DEFAULT>false</DEFAULT>

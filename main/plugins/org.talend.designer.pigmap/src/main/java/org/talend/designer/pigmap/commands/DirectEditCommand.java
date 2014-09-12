@@ -18,7 +18,10 @@ import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.gefabstractmap.part.directedit.DirectEditType;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.Connection;
@@ -29,9 +32,13 @@ import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
 import org.talend.designer.pigmap.parts.PigMapTableNodePart;
+import org.talend.designer.pigmap.parts.PigMapVarNodeEditPart;
+import org.talend.designer.pigmap.parts.PigMapVarTablePart;
 import org.talend.designer.pigmap.ui.expressionutil.PigMapExpressionManager;
 import org.talend.designer.pigmap.ui.expressionutil.TableEntryLocation;
 import org.talend.designer.pigmap.util.PigMapUtil;
@@ -49,7 +56,7 @@ public class DirectEditCommand extends Command {
 
     private EditPart targetEditPart;
 
-    private PigMapTableNodePart tableNodePart;
+    private NodeEditPart nodeEditPart;
 
     private PigMapData mapperData;
 
@@ -74,12 +81,23 @@ public class DirectEditCommand extends Command {
                     List<TableEntryLocation> matchedLocations = expressionManager.parseTableEntryLocation((String) newValue);
                     EList<? extends INodeConnection> connections = null;
                     //
-                    if (targetEditPart != null && targetEditPart instanceof PigMapTableNodePart) {
-                        tableNodePart = (PigMapTableNodePart) targetEditPart;
-                        if (tableNodePart.getParent() instanceof PigMapOutputTablePart) {
-                            connections = model.getIncomingConnections();
-                        } else if (tableNodePart.getParent() instanceof PigMapInputTablePart) {
-                            connections = ((TableNode) model).getLookupIncomingConnections();
+                    if (targetEditPart != null) {
+                        if (targetEditPart instanceof PigMapTableNodePart) {
+                            nodeEditPart = (PigMapTableNodePart) targetEditPart;
+                            if (nodeEditPart.getParent() instanceof PigMapOutputTablePart) {
+                                connections = model.getIncomingConnections();
+                            } else if (nodeEditPart.getParent() instanceof PigMapInputTablePart) {
+                                connections = ((TableNode) model).getLookupIncomingConnections();
+                            }
+                        } else if (targetEditPart instanceof PigMapVarNodeEditPart) {
+                            nodeEditPart = (PigMapVarNodeEditPart) targetEditPart;
+                            if (nodeEditPart.getParent() instanceof PigMapVarTablePart) {
+                                String newString = newValue.toString().trim();
+                                if (newString.length() > 0) {
+                                    newValue = TalendQuoteUtils.addQuotesIfNotExist(newString);
+                                }
+                                connections = model.getIncomingConnections();
+                            }
                         }
                     }
                     List usefullConnections = new ArrayList();
@@ -131,11 +149,11 @@ public class DirectEditCommand extends Command {
                             }
                         }
                     } else {
-                        if (!connections.isEmpty()) {
-                            if (tableNodePart.getParent() instanceof PigMapOutputTablePart) {
+                        if (connections != null && !connections.isEmpty()) {
+                            if (nodeEditPart.getParent() instanceof PigMapOutputTablePart) {
                                 PigMapUtil.detachConnectionsSouce(model, mapperData);
                                 model.getIncomingConnections().clear();
-                            } else if (tableNodePart.getParent() instanceof PigMapInputTablePart) {
+                            } else if (nodeEditPart.getParent() instanceof PigMapInputTablePart) {
                                 PigMapUtil.detachLookupSource((TableNode) model, mapperData);
                                 ((TableNode) model).getLookupIncomingConnections().clear();
                             }
@@ -143,7 +161,7 @@ public class DirectEditCommand extends Command {
                     }
                     List<INodeConnection> copyOfConnections = new ArrayList<INodeConnection>(connections);
                     copyOfConnections.removeAll(usefullConnections);
-                    if (tableNodePart.getParent() instanceof PigMapOutputTablePart) {
+                    if (nodeEditPart.getParent() instanceof PigMapOutputTablePart) {
                         for (INodeConnection connection : copyOfConnections) {
                             if (connection.getSource() != null) {
                                 if (connection.getSource().getOutgoingConnections().contains(connection)) {
@@ -154,7 +172,7 @@ public class DirectEditCommand extends Command {
                         }
                         model.getIncomingConnections().removeAll(copyOfConnections);
 
-                    } else if (tableNodePart.getParent() instanceof PigMapInputTablePart) {
+                    } else if (nodeEditPart.getParent() instanceof PigMapInputTablePart) {
                         for (INodeConnection connection : copyOfConnections) {
                             if (connection.getSource() != null) {
                                 if (((TableNode) connection.getSource()).getLookupOutgoingConnections().contains(connection)) {
@@ -168,7 +186,21 @@ public class DirectEditCommand extends Command {
 
                     model.setExpression((String) newValue);
                 } else if (DirectEditType.NODE_NAME.equals(type)) {
-                    //
+                    if (model instanceof VarNode) {
+                        List<VarNode> children = new ArrayList<VarNode>();
+                        children.addAll(((VarTable) model.eContainer()).getNodes());
+                        children.remove(model);
+                        String newName = TalendQuoteUtils.removeQuotesIfExist(newValue.toString());
+                        String message = PigMapUtil.isValidColumnName(children, newName);
+                        if (message != null) {
+                            MessageDialog.openError(null, "Error", message);
+                            return;
+                        }
+                        model.setName((String) newValue);
+                    }
+                } else if (DirectEditType.VAR_NODE_TYPE.equals(type)) {
+                    VarNode varModel = (VarNode) model;
+                    varModel.setType((String) newValue);
                 }
             }
 
@@ -184,7 +216,7 @@ public class DirectEditCommand extends Command {
         for (InputTable inputTable : mapperData.getInputTables()) {
             for (TableNode node : inputTable.getNodes()) {
                 TableEntryLocation sourceLocation = expressionManager.parseTableEntryLocation(
-                        inputTable.getName() + "." + node.getName()).get(0);
+                        inputTable.getName() + "." + node.getName()).get(0);//$NON-NLS-1$
                 if (matchedLocation.equals(sourceLocation)) {
                     return node;
                 }

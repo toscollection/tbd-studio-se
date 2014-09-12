@@ -31,12 +31,15 @@
     query = query.replaceAll("\n","");
     query = query.replaceAll("\r","");
   	String limit = ElementParameterParser.getValue(node,"__LIMIT__");
-  	
+
   	List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
   	List<Map<String, String>> sorts = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SORT__");
   	boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
-  	
-  	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+
+  	boolean setReadPreference = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_READ_PREFERENCE__"));
+    String readPreference = ElementParameterParser.getValue(node, "__READ_PREFERENCE__");
+
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     log4jFileUtil.componentStartInfo(node);
 	log4jFileUtil.logParameters(node);
   	
@@ -94,7 +97,37 @@
 					mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
 				<%
 				}
-				%>
+
+			    if (setReadPreference) {
+			        if (readPreference.equals("PRIMARY")) {
+			            %>
+			            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.primary());
+			            <%
+			        } else if (readPreference.equals("PRIMARY_PREFERRED")) {
+			            %>
+			            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.primaryPreferred());
+			            <%
+			        } else if (readPreference.equals("SECONDARY")) {
+			            %>
+			            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.secondary());
+			            <%
+			        } else if (readPreference.equals("SECONDARY_PREFERRED")) {
+			            %>
+			            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.secondaryPreferred());
+			            <%
+			        } else if (readPreference.equals("NEAREST")) {
+			            %>
+			            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.nearest());
+			            <%
+			        } else {
+			            %>
+			            // Unhandled
+			            <%
+			        }
+			    }
+
+                %>
+
 				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 				<%
 				if (authentication){

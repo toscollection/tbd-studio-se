@@ -23,6 +23,8 @@ import org.talend.designer.pigmap.parts.PigMapDataEditPart;
 import org.talend.designer.pigmap.parts.directedit.ExpressionCellEditor;
 import org.talend.designer.pigmap.parts.directedit.ExpressionProposalProvider;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
+import org.talend.designer.pigmap.util.PigFunctionParser;
+import org.talend.designer.rowgenerator.data.AbstractTalendFunctionParser;
 
 /**
  * 
@@ -74,5 +76,15 @@ public class PigMapService implements IPigMapService {
         if (externalData != null && externalData instanceof PigMapData) {
             this.pigMapData = (PigMapData) externalData;
         }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.core.service.IPigMapService#pigFunctionParser()
+     */
+    @Override
+    public AbstractTalendFunctionParser pigFunctionParser() {
+        return new PigFunctionParser();
     }
 }

@@ -14,6 +14,7 @@ package org.talend.repository.nosql.ui.dnd;
 
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.process.IElement;
+import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.repository.model.nosql.NoSQLConnection;
 
@@ -25,7 +26,7 @@ public interface IDNDProvider {
 
     public Object getRepositoryValue(NoSQLConnection connection, String value, IMetadataTable table, String targetComponent);
 
-    public void setRepositoryValue(NoSQLConnection connection, INode node, String repositoryValue);
+    public void setRepositoryValue(NoSQLConnection connection, INode node, IElementParameter param);
 
     public void handleTableRelevantParameters(NoSQLConnection connection, IElement ele, IMetadataTable metadataTable);
 

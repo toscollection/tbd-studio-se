@@ -8,7 +8,7 @@ imports="
 		org.talend.core.model.process.IConnection
 		org.talend.designer.runprocess.ProcessorException
 		org.talend.designer.runprocess.ProcessorUtilities
-		
+
 		java.util.List
 		java.util.Map
 "
@@ -26,6 +26,10 @@ imports="
 	String dbtable = null;
 	String uniqueNameConnection = null;
 	INode previousNode = null;
+	boolean isExecutedThroughWebHCat = false;
+	boolean setFsDefaultName=false;
+	String connectionMode = "";
+	String fsDefaultName = "";
 
 	%>
 	String select_query_<%=cid %> = null;	
@@ -78,14 +82,12 @@ imports="
 	String defineRegisterJar = null;
 	List<Map<String, String>> registerJarForHBase = null;
 	
-    boolean useExistingConn = false;
     if(previousNode != null) {
         dbhost = ElementParameterParser.getValue(previousNode, "__HOST__");
         dbport = ElementParameterParser.getValue(previousNode, "__PORT__");
         dbname = ElementParameterParser.getValue(previousNode, "__DBNAME__");
         dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
-    	useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
-    	
+
     	storeByHBase = ElementParameterParser.getValue(previousNode, "__STORE_BY_HBASE__");
     	zookeeperQuorumForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_QUORUM__");
     	zookeeperClientPortForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_CLIENT_PORT__");
@@ -95,17 +97,64 @@ imports="
     	
     	defineRegisterJar = ElementParameterParser.getValue(previousNode, "__DEFINE_REGISTER_JAR__");
     	registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(previousNode, "__REGISTER_JAR__");
+    	isExecutedThroughWebHCat = "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__"));
+		if("true".equals(ElementParameterParser.getValue(previousNode,"__USE_EXISTING_CONNECTION__"))) {
+			isExecutedThroughWebHCat = false;
+			String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
+			for (INode pNode : previousNode.getProcess().getNodesOfType("tHiveConnection")) {
+				if(connection!=null && connection.equals(pNode.getUniqueName())) {
+					isExecutedThroughWebHCat = "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(pNode, "__DISTRIBUTION__"));
     }
+			}
+		}
+	}
+	
+	if(isExecutedThroughWebHCat) {
+		INode nodeBackup = node;
+		node = previousNode;
 %>
+		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetAzureConnection.javajet"%>
+<%
+		node = nodeBackup;
+		if("false".equals(useExistingConn)) { // This variable is declared and initialized in the GetAzureConnection.javajet
+			boolean setMemory = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_MEMORY__"));
+			if(setMemory) {
+				String mapMemory = ElementParameterParser.getValue(previousNode,"__MAPREDUCE_MAP_MEMORY_MB__");
+				String reduceMemory = ElementParameterParser.getValue(previousNode,"__MAPREDUCE_REDUCE_MEMORY_MB__");
+				String amMemory = ElementParameterParser.getValue(previousNode,"__YARN_APP_MAPREDUCE_AM_RESOURCE_MB__");
+%>
+				bw_<%=cid%>.write("SET mapreduce.map.memory.mb=" + <%=mapMemory%> + ";");
+				bw_<%=cid%>.write("SET mapreduce.reduce.memory.mb=" + <%=reduceMemory%> + ";");
+				bw_<%=cid%>.write("SET yarn.app.mapreduce.am.resource.mb=" + <%=amMemory%> + ";");
+<%
+			}
 
+			List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(previousNode, "__ADVANCED_PROPERTIES__");
+			if(advProps!=null) {
+				for(Map<String, String> item : advProps){
+%>
+					bw_<%=cid%>.write("SET "+<%=item.get("PROPERTY")%>+"="+<%=item.get("VALUE")%> + ";");
+<%
+				}
+			}
+%>
+			String dbname_<%=cid%> = <%=dbname%>;
+			if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+				bw_<%=cid%>.write("use " + dbname_<%=cid%> + ";");
+			}
+<%
+		}		
+	} else {
+		boolean useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));   
+%>
 java.sql.Connection conn_<%=cid%> = null;
 
 <%
-String connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
+		connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
 String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
 
-boolean setFsDefaultName = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_FS_DEFAULT_NAME__"));
-String fsDefaultName = ElementParameterParser.getValue(previousNode, "__FS_DEFAULT_NAME__");
+		setFsDefaultName = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_FS_DEFAULT_NAME__"));
+		fsDefaultName = ElementParameterParser.getValue(previousNode, "__FS_DEFAULT_NAME__");
 
 String yarnClasspathSeparator = ElementParameterParser.getValue(previousNode, "__CLASSPATH_SEPARATOR__");
 %>
@@ -156,7 +205,7 @@ if(useExistingConn) {
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__"));
 		
 		boolean useKrb = "true".equals(ElementParameterParser.getValue(previousNode, "__USE_KRB__"));
-		boolean cdhCanBeSecured = ("Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion)) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
+		boolean cdhCanBeSecured = ("Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion)) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
 		boolean pivotalCanBeSecured = ("PIVOTAL_HD_2_0".equals(hiveVersion)) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
 		boolean securityIsEnabled = useKrb && (isCustom || ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || cdhCanBeSecured || pivotalCanBeSecured));
 			
@@ -164,7 +213,7 @@ if(useExistingConn) {
 		boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
 		String hivePrincipal = ElementParameterParser.getValue(previousNode, "__HIVE_PRINCIPAL__");
 
-		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "MAPR213".equals(hiveVersion) || "MAPR301".equals(hiveVersion) || "MAPR310".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || "PIVOTAL_HD_2_0".equals(hiveVersion))) {
+		if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion) || "MAPR213".equals(hiveVersion) || "MAPR301".equals(hiveVersion) || "MAPR310".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || "PIVOTAL_HD_2_0".equals(hiveVersion))) {
 			hiveServer = hiveServer.toLowerCase();
 			if ("hive2".equals(hiveServer)) {
 				javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
@@ -202,7 +251,7 @@ if(useExistingConn) {
 			System.setProperty("hive.metastore.execute.setugi", "true");
 			String url_<%=cid%> = "jdbc:<%=hiveServer%>://";
 <%
-			if(isCustom || (!isCustom && ("HDP_1_0,HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(hiveVersion)))) {
+			if(isCustom || (!isCustom && ("HDP_1_0,HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(hiveVersion)))) {
 %>
     			if(dbUser_<%=cid %>!=null && !"".equals(dbUser_<%=cid %>.trim())) {
     				System.setProperty("HADOOP_USER_NAME",dbUser_<%=cid %>);
@@ -248,8 +297,8 @@ if(useExistingConn) {
 <%
 		}
 		
-		boolean isKerberosAvailableHadoop2 = !isCustom && ("HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "PIVOTAL_HD_2_0".equals(hiveVersion));
-		boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(hiveVersion) || isKerberosAvailableHadoop2;
+		boolean isKerberosAvailableHadoop2 = !isCustom && ("HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion) || "PIVOTAL_HD_2_0".equals(hiveVersion));
+		boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(hiveVersion) || "APACHE_2_4_0_EMR".equals(hiveVersion) ||  isKerberosAvailableHadoop2;
 		
 		boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion));
 
@@ -309,18 +358,34 @@ if(useExistingConn) {
 			}
 		
 			if("EMBEDDED".equals(connectionMode)) {
-				if(!isCustom && "HDP_2_1".equals(hiveVersion)) {
+				if(!isCustom && ("HDP_2_1".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion))) {
 %>
 				init_<%=cid%>.execute("SET mapreduce.app-submission.cross-platform=true");
+<%
+				}
+				
+				if(!isCustom && "HDP_2_1".equals(hiveVersion)) {
+%>
 				init_<%=cid%>.execute("SET yarn.application.classpath=/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*");
 <%
 				/**/
+				} else if(!isCustom && "APACHE_2_4_0_EMR".equals(hiveVersion)) {
+				    %>
+				    init_<%=cid%>.execute("SET yarn.application.classpath=$HADOOP_CONF_DIR,$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*,/home/hadoop/hive/conf/*");
+//	                init_<%=cid%>.execute("SET yarn.application.classpath=$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
+		            <%
 				} else {
 %>
         		//set default yarn classpath with environment variable
         		init_<%=cid%>.execute("SET yarn.application.classpath=$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
 <%
 				/**/
+				}
+
+				if ("true".equals(ElementParameterParser.getValue(previousNode, "__USE_DATANODE_HOSTNAME__"))) {
+				    %>
+				    init_<%=cid%>.execute("SET dfs.client.use.datanode.hostname=true");
+				    <%
 				}
 				
     			boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(previousNode, "__CROSS_PLATFORM_SUBMISSION__"));
@@ -386,20 +451,22 @@ if(useExistingConn) {
         			statement_<%=cid%>.execute("add jar "+<%=path%>);
         	<%
         		}
-        	}%>
+	        	}
+%>
         	statement_<%=cid%>.close();
 <%
-        }
-}
+			}
+  }
+ }
 
-List<IMetadataColumn> columnList = null;
+ List<IMetadataColumn> columnList = null;
 
-List<IMetadataTable> metadatas = node.getMetadataList();
-if(metadatas !=null && metadatas.size()>0){
-	IMetadataTable metadata = metadatas.get(0);
-	if(metadata != null){
-		columnList = metadata.getListColumns();
-	}
+ List<IMetadataTable> metadatas = node.getMetadataList();
+ if(metadatas !=null && metadatas.size()>0){
+	 IMetadataTable metadata = metadatas.get(0);
+	 if(metadata != null){
+		 columnList = metadata.getListColumns();
+	 }
 }
 	
 	// Register jars to handle the parquet format.
@@ -431,7 +498,7 @@ if(metadatas !=null && metadatas.size()>0){
 			}
 		}
 		if(jarsToRegister!=null && jars!=null) {
-			if("EMBEDDED".equalsIgnoreCase(connectionMode)) {
+			if("EMBEDDED".equalsIgnoreCase(connectionMode) || isExecutedThroughWebHCat) {
 %>		
 				<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
 				GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
@@ -448,13 +515,16 @@ if(metadatas !=null && metadatas.size()>0){
 			}
 			
 			if(generateAddJarCodeForAll) {
+				if(!isExecutedThroughWebHCat) { // Then we create a SQL statement to add the jars.
 %>
 				java.sql.Statement addJar_<%=cid%> = null;
 <%
+				}
 				for(int i=0; i<jarsToRegister.size(); i++) {
 					String jarToRegister = jarsToRegister.get(i);
 					for(int j=0; j<jars.size(); j++) {
 						if(jars.get(j).contains(jarToRegister)) {
+							if(!isExecutedThroughWebHCat) { // Then we use the created SQL statement to add the jars.
 %>
 							addJar_<%=cid%> = conn_<%=cid%>.createStatement();
 							try {
@@ -465,25 +535,42 @@ if(metadatas !=null && metadatas.size()>0){
 								addJar_<%=cid%>.close();
 							}
 <%
+							} else {
+%>
+								bw_<%=cid%>.write("ADD JAR " + wasbPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
+								libjars_<%=cid%>.append(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>") + ",");
+<%
+							}
 						}
 					}
 				}
 			}
 		}
-		
+
+		if(!isExecutedThroughWebHCat) {
+%>
+			java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
+			try {
+				setCompression_<%=cid%>.execute("SET parquet.compression=<%=compression%>");
+			} finally {
+				setCompression_<%=cid%>.close();
+			}
+<%
+		} else {
+%>
+			bw_<%=cid%>.write("SET parquet.compression=<%=compression%>;");
+<%			
+		}
+	}
 		// End of parquet format handling.
 %>
-		java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
-		try {
-			setCompression_<%=cid%>.execute("SET parquet.compression=<%=compression%>");
-		} finally {
-			setCompression_<%=cid%>.close();
-		}
+<%
+	if(!isExecutedThroughWebHCat) {
+%>
+		java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 <%
 	} 
 %>
-java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
-
 	StringBuffer partitionSql = new StringBuffer();
 	String startPartition = "";
 	String endPartition = "";
@@ -529,19 +616,40 @@ if(columnList != null && columnList.size()>0){
 	if(("INSERT").equals(dataAction)){
 %>	
 	String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + partitionSql.toString() + " "+select_query_<%=cid %>;
+<%
+			if(!isExecutedThroughWebHCat) {
+%>
 	stmt_<%=cid %>.execute(insertQuery_<%=cid %>);
+<%
+			} else {
+%>
+				bw_<%=cid%>.write(insertQuery_<%=cid %> + ";");
+<%
+			}
+%>
 <%
 	}else if (("OVERWRITE").equals(dataAction)){
 %>
 	String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ partitionSql.toString() + " "+select_query_<%=cid %>;
+<%
+			if(!isExecutedThroughWebHCat) {
+%>
 	stmt_<%=cid %>.execute(overwriteQuery_<%=cid %>);
 
 <%
+			} else {
+%>
+				bw_<%=cid%>.write(overwriteQuery_<%=cid %> + ";");
+<%
+			}
 	}
 }
 
 // END
 
+	boolean useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
+
+	if(!isExecutedThroughWebHCat) {
 %>
 stmt_<%=cid %>.close();
 
@@ -574,3 +682,21 @@ if(originalHadoopUsername_<%=cid%>!=null) {
 } else {
 	System.clearProperty("HADOOP_USER_NAME");
 }
+<%
+	} else {
+%>
+		bw_<%=cid%>.close();
+		
+		if(libjars_<%=cid%>.length() > 0) {
+			instance_<%=cid%>.setLibJars(libjars_<%=cid%>.toString().substring(0, libjars_<%=cid%>.length()-1));
+		}
+		
+		instance_<%=cid%>.sendFiles();
+		instance_<%=cid%>.callWS(null, true);
+		int exitCode_<%=cid%> = instance_<%=cid%>.execute();
+		if(exitCode_<%=cid%> > 0) {
+			throw new Exception("The Hive job failed. Please read the logs for more details");
+		}
+<%
+	}
+%>

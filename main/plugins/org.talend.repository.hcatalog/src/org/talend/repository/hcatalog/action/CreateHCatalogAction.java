@@ -47,11 +47,16 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
+            if (distribution == EHadoopDistributions.HORTONWORKS || distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT
+                    || distribution == EHadoopDistributions.CUSTOM) {
+                return false;
+            }
             if (distribution == EHadoopDistributions.CLOUDERA
                     && hcConnection.getDfVersion().equals(EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue())) {
                 return false;
             }
-            if (distribution == EHadoopDistributions.HORTONWORKS || distribution == EHadoopDistributions.CUSTOM) {
+            if (distribution == EHadoopDistributions.MAPR
+                    && hcConnection.getDfVersion().equals(EHadoopVersion4Drivers.MAPR310.getVersionValue())) {
                 return false;
             }
         }

@@ -103,7 +103,7 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
 
     private void calculateFilterConnections(AbstractInOutTable abstractTable, String newValue) {
         PigMapData mapperData = (PigMapData) abstractTable.eContainer();
-        List<TableEntryLocation> matchedLocations = expressionManager.parseTableEntryLocation((String) newValue);
+        List<TableEntryLocation> matchedLocations = expressionManager.parseTableEntryLocation(newValue);
         EList<FilterConnection> connections = abstractTable.getFilterIncomingConnections();
         List usefullConnections = new ArrayList();
         if (!matchedLocations.isEmpty()) {
@@ -112,11 +112,11 @@ public class TableSettingDirectEditCommand extends DirectEditCommand {
                 boolean found = false;
                 for (FilterConnection conn : connections) {
                     TableEntryLocation sourceLocation = null;
-                    String temp = "";
+                    String temp = "";//$NON-NLS-1$
                     if (conn.getSource() != null && conn.getSource() instanceof TableNode) {
                         TableNode tableSourceNode = (TableNode) conn.getSource();
                         if (tableSourceNode.eContainer() != null && tableSourceNode.eContainer() instanceof InputTable) {
-                            temp = ((InputTable) tableSourceNode.eContainer()).getName() + "." + conn.getSource().getName();
+                            temp = ((InputTable) tableSourceNode.eContainer()).getName() + "." + conn.getSource().getName();//$NON-NLS-1$
                         }
                         sourceLocation = expressionManager.parseTableEntryLocation(temp).get(0);
                     }

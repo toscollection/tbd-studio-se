@@ -93,13 +93,22 @@ public interface PigmapPackage extends EPackage {
     int PIG_MAP_DATA__OUTPUT_TABLES = TalendFilePackage.ABSTRACT_EXTERNAL_DATA_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Var Tables</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PIG_MAP_DATA__VAR_TABLES = TalendFilePackage.ABSTRACT_EXTERNAL_DATA_FEATURE_COUNT + 2;
+
+    /**
      * The feature id for the '<em><b>Connections</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PIG_MAP_DATA__CONNECTIONS = TalendFilePackage.ABSTRACT_EXTERNAL_DATA_FEATURE_COUNT + 2;
+    int PIG_MAP_DATA__CONNECTIONS = TalendFilePackage.ABSTRACT_EXTERNAL_DATA_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Pig Map Data</em>' class.
@@ -108,7 +117,7 @@ public interface PigmapPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int PIG_MAP_DATA_FEATURE_COUNT = TalendFilePackage.ABSTRACT_EXTERNAL_DATA_FEATURE_COUNT + 3;
+    int PIG_MAP_DATA_FEATURE_COUNT = TalendFilePackage.ABSTRACT_EXTERNAL_DATA_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.AbstractInOutTableImpl <em>Abstract In Out Table</em>}' class.
@@ -447,6 +456,52 @@ public interface PigmapPackage extends EPackage {
     int OUTPUT_TABLE_FEATURE_COUNT = ABSTRACT_IN_OUT_TABLE_FEATURE_COUNT + 5;
 
     /**
+     * The meta object id for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.VarTableImpl <em>Var Table</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.talend.designer.pigmap.model.emf.pigmap.impl.VarTableImpl
+     * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getVarTable()
+     * @generated
+     */
+    int VAR_TABLE = 4;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_TABLE__NAME = AbstractmapPackage.MAPPER_TABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Minimized</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_TABLE__MINIMIZED = AbstractmapPackage.MAPPER_TABLE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_TABLE__NODES = AbstractmapPackage.MAPPER_TABLE_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Var Table</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_TABLE_FEATURE_COUNT = AbstractmapPackage.MAPPER_TABLE_FEATURE_COUNT + 3;
+
+    /**
      * The meta object id for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.AbstractNodeImpl <em>Abstract Node</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -454,7 +509,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getAbstractNode()
      * @generated
      */
-    int ABSTRACT_NODE = 4;
+    int ABSTRACT_NODE = 5;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -554,7 +609,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getTableNode()
      * @generated
      */
-    int TABLE_NODE = 5;
+    int TABLE_NODE = 6;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -665,6 +720,106 @@ public interface PigmapPackage extends EPackage {
     int TABLE_NODE_FEATURE_COUNT = ABSTRACT_NODE_FEATURE_COUNT + 2;
 
     /**
+     * The meta object id for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.VarNodeImpl <em>Var Node</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.talend.designer.pigmap.model.emf.pigmap.impl.VarNodeImpl
+     * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getVarNode()
+     * @generated
+     */
+    int VAR_NODE = 7;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__NAME = ABSTRACT_NODE__NAME;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__EXPRESSION = ABSTRACT_NODE__EXPRESSION;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__TYPE = ABSTRACT_NODE__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Key</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__KEY = ABSTRACT_NODE__KEY;
+
+    /**
+     * The feature id for the '<em><b>Pattern</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__PATTERN = ABSTRACT_NODE__PATTERN;
+
+    /**
+     * The feature id for the '<em><b>Nullable</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__NULLABLE = ABSTRACT_NODE__NULLABLE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Connections</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__OUTGOING_CONNECTIONS = ABSTRACT_NODE__OUTGOING_CONNECTIONS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Connections</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__INCOMING_CONNECTIONS = ABSTRACT_NODE__INCOMING_CONNECTIONS;
+
+    /**
+     * The feature id for the '<em><b>Filter Out Going Connections</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE__FILTER_OUT_GOING_CONNECTIONS = ABSTRACT_NODE__FILTER_OUT_GOING_CONNECTIONS;
+
+    /**
+     * The number of structural features of the '<em>Var Node</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VAR_NODE_FEATURE_COUNT = ABSTRACT_NODE_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link org.talend.designer.pigmap.model.emf.pigmap.IConnection <em>IConnection</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -672,7 +827,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getIConnection()
      * @generated
      */
-    int ICONNECTION = 6;
+    int ICONNECTION = 8;
 
     /**
      * The number of structural features of the '<em>IConnection</em>' class.
@@ -691,7 +846,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getINodeConnection()
      * @generated
      */
-    int INODE_CONNECTION = 7;
+    int INODE_CONNECTION = 9;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -737,7 +892,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getConnection()
      * @generated
      */
-    int CONNECTION = 8;
+    int CONNECTION = 10;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -783,7 +938,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getLookupConnection()
      * @generated
      */
-    int LOOKUP_CONNECTION = 9;
+    int LOOKUP_CONNECTION = 11;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -829,7 +984,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getFilterConnection()
      * @generated
      */
-    int FILTER_CONNECTION = 10;
+    int FILTER_CONNECTION = 12;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -875,7 +1030,7 @@ public interface PigmapPackage extends EPackage {
      * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getNodeType()
      * @generated
      */
-    int NODE_TYPE = 11;
+    int NODE_TYPE = 13;
 
 
     /**
@@ -909,6 +1064,17 @@ public interface PigmapPackage extends EPackage {
      * @generated
      */
     EReference getPigMapData_OutputTables();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.talend.designer.pigmap.model.emf.pigmap.PigMapData#getVarTables <em>Var Tables</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Var Tables</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.PigMapData#getVarTables()
+     * @see #getPigMapData()
+     * @generated
+     */
+    EReference getPigMapData_VarTables();
 
     /**
      * Returns the meta object for the containment reference list '{@link org.talend.designer.pigmap.model.emf.pigmap.PigMapData#getConnections <em>Connections</em>}'.
@@ -1139,6 +1305,49 @@ public interface PigmapPackage extends EPackage {
     EAttribute getOutputTable_EnableEmptyElement();
 
     /**
+     * Returns the meta object for class '{@link org.talend.designer.pigmap.model.emf.pigmap.VarTable <em>Var Table</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Var Table</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.VarTable
+     * @generated
+     */
+    EClass getVarTable();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.VarTable#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.VarTable#getName()
+     * @see #getVarTable()
+     * @generated
+     */
+    EAttribute getVarTable_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.designer.pigmap.model.emf.pigmap.VarTable#isMinimized <em>Minimized</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Minimized</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.VarTable#isMinimized()
+     * @see #getVarTable()
+     * @generated
+     */
+    EAttribute getVarTable_Minimized();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.talend.designer.pigmap.model.emf.pigmap.VarTable#getNodes <em>Nodes</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Nodes</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.VarTable#getNodes()
+     * @see #getVarTable()
+     * @generated
+     */
+    EReference getVarTable_Nodes();
+
+    /**
      * Returns the meta object for class '{@link org.talend.designer.pigmap.model.emf.pigmap.AbstractNode <em>Abstract Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1278,6 +1487,16 @@ public interface PigmapPackage extends EPackage {
      * @generated
      */
     EReference getTableNode_LookupIncomingConnections();
+
+    /**
+     * Returns the meta object for class '{@link org.talend.designer.pigmap.model.emf.pigmap.VarNode <em>Var Node</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Var Node</em>'.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.VarNode
+     * @generated
+     */
+    EClass getVarNode();
 
     /**
      * Returns the meta object for class '{@link org.talend.designer.pigmap.model.emf.pigmap.IConnection <em>IConnection</em>}'.
@@ -1454,6 +1673,14 @@ public interface PigmapPackage extends EPackage {
         EReference PIG_MAP_DATA__OUTPUT_TABLES = eINSTANCE.getPigMapData_OutputTables();
 
         /**
+         * The meta object literal for the '<em><b>Var Tables</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PIG_MAP_DATA__VAR_TABLES = eINSTANCE.getPigMapData_VarTables();
+
+        /**
          * The meta object literal for the '<em><b>Connections</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1628,6 +1855,40 @@ public interface PigmapPackage extends EPackage {
         EAttribute OUTPUT_TABLE__ENABLE_EMPTY_ELEMENT = eINSTANCE.getOutputTable_EnableEmptyElement();
 
         /**
+         * The meta object literal for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.VarTableImpl <em>Var Table</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.talend.designer.pigmap.model.emf.pigmap.impl.VarTableImpl
+         * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getVarTable()
+         * @generated
+         */
+        EClass VAR_TABLE = eINSTANCE.getVarTable();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VAR_TABLE__NAME = eINSTANCE.getVarTable_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Minimized</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VAR_TABLE__MINIMIZED = eINSTANCE.getVarTable_Minimized();
+
+        /**
+         * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference VAR_TABLE__NODES = eINSTANCE.getVarTable_Nodes();
+
+        /**
          * The meta object literal for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.AbstractNodeImpl <em>Abstract Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1734,6 +1995,16 @@ public interface PigmapPackage extends EPackage {
          * @generated
          */
         EReference TABLE_NODE__LOOKUP_INCOMING_CONNECTIONS = eINSTANCE.getTableNode_LookupIncomingConnections();
+
+        /**
+         * The meta object literal for the '{@link org.talend.designer.pigmap.model.emf.pigmap.impl.VarNodeImpl <em>Var Node</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.talend.designer.pigmap.model.emf.pigmap.impl.VarNodeImpl
+         * @see org.talend.designer.pigmap.model.emf.pigmap.impl.PigmapPackageImpl#getVarNode()
+         * @generated
+         */
+        EClass VAR_NODE = eINSTANCE.getVarNode();
 
         /**
          * The meta object literal for the '{@link org.talend.designer.pigmap.model.emf.pigmap.IConnection <em>IConnection</em>}' class.
