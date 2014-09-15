@@ -144,6 +144,12 @@
 <%
 		}
 	}
+
+    if (useDatanodeHostname) {
+        %>
+        configuration_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
+        <%
+    }
 %>
 	//check whether we can connect to the fs?
 	org.apache.hadoop.fs.FileSystem fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(configuration_<%=cid%>);

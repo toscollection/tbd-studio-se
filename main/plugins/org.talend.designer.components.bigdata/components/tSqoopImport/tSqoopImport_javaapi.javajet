@@ -32,6 +32,7 @@
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 	boolean overrideJavaMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_JAVA_MAPPING__"));
 	boolean overrideHiveMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_HIVE_MAPPING__"));
+    boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
 	
 	boolean useWhere = "true".equals(ElementParameterParser.getValue(node,"__USE_WHERE__"));
 	String where = ElementParameterParser.getValue(node,"__WHERE__");
@@ -64,7 +65,6 @@
 	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("import");
 
 	com.cloudera.sqoop.SqoopOptions sqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
-    sqoopOptions_<%=cid%>.setVerbose(true);
 	sqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	
