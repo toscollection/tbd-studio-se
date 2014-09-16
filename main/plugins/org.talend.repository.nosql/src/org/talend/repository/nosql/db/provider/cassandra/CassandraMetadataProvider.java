@@ -15,6 +15,7 @@ package org.talend.repository.nosql.db.provider.cassandra;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.talend.core.model.metadata.MetadataToolHelper;
 import org.talend.core.model.metadata.builder.connection.ConnectionFactory;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.repository.model.nosql.NoSQLConnection;
@@ -94,9 +95,11 @@ public class CassandraMetadataProvider extends AbstractMetadataProvider {
         List<MetadataColumn> metadataColumns = new ArrayList<MetadataColumn>();
         try {
             List columndfs = CassandraConnectionUtil.getColumns(connection, ksName, cfName);
+            int n = 0;
             for (Object columndf : columndfs) {
                 MetadataColumn column = ConnectionFactory.eINSTANCE.createMetadataColumn();
                 String colName = CassandraConnectionUtil.getColumnName(connection, columndf);
+                colName = MetadataToolHelper.validateValue(colName);
                 column.setName(colName);
                 column.setLabel(colName);
                 String talendType = CassandraConnectionUtil.getColumnTalendType(columndf);

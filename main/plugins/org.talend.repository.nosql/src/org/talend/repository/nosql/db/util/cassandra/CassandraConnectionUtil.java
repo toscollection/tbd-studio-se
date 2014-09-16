@@ -20,13 +20,15 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.core.model.metadata.types.JavaType;
+import org.talend.core.model.metadata.MappingTypeRetriever;
+import org.talend.core.model.metadata.MetadataTalendType;
 import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraAttributies;
+import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
 import org.talend.repository.nosql.exceptions.NoSQLReflectionException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
@@ -313,21 +315,23 @@ public class CassandraConnectionUtil {
 
     @SuppressWarnings("rawtypes")
     public static synchronized String getColumnTalendType(Object column) throws NoSQLServerException {
-        JavaType javaType = null;
+        String talendType = null;
         try {
             Object type = NoSQLReflection.invokeMethod(column, "getType"); //$NON-NLS-1$
             if (type != null) {
                 Object typeName = NoSQLReflection.invokeMethod(type, "getName"); //$NON-NLS-1$
-                Class javaClass = (Class) NoSQLReflection.invokeMethod(typeName, "asJavaClass"); //$NON-NLS-1$
-                javaType = JavaTypesManager.getJavaTypeFromName(javaClass.getSimpleName());
-                if (javaType == null) {
-                    javaType = JavaTypesManager.STRING;
+                String dbType = (String) NoSQLReflection.invokeMethod(typeName, "toString"); //$NON-NLS-1$
+                MappingTypeRetriever mappingTypeRetriever = MetadataTalendType
+                        .getMappingTypeRetriever(ICassandraConstants.DBM_ID);
+                talendType = mappingTypeRetriever.getDefaultSelectedTalendType(dbType);
+                if (talendType == null) {
+                    talendType = JavaTypesManager.STRING.getId();
                 }
             }
         } catch (Exception e) {
             throw new NoSQLServerException(e);
         }
-        return javaType.getId();
+        return talendType;
     }
 
     public static synchronized void closeConnections() throws NoSQLServerException {

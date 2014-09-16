@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.talend.core.model.metadata.MetadataToolHelper;
 import org.talend.core.model.metadata.builder.connection.ConnectionFactory;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.types.JavaType;
@@ -94,6 +95,7 @@ public class MongoDBMetadataProvider extends AbstractMetadataProvider {
                 Set<String> columnNames = (Set<String>) NoSQLReflection.invokeMethod(dbObject, "keySet"); //$NON-NLS-1$
                 for (String colName : columnNames) {
                     MetadataColumn column = ConnectionFactory.eINSTANCE.createMetadataColumn();
+                    colName = MetadataToolHelper.validateValue(colName);
                     column.setName(colName);
                     column.setLabel(colName);
                     Object value = NoSQLReflection.invokeMethod(dbObject, "get", new Object[] { colName }); //$NON-NLS-1$
