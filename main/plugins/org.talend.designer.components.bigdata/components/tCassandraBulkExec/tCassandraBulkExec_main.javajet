@@ -43,8 +43,11 @@ String passwordFieldName = "__PASSWORD__";
 
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
 
-args_<%=cid%>.add("-pw"+decryptedPassword_<%=cid%>);
 args_<%=cid%>.add("-u"+<%=username%>);
+
+args_<%=cid%>.add("-pw");
+args_<%=cid%>.add(decryptedPassword_<%=cid%>);
+
 <%}%>
 args_<%=cid%>.add(file_<%=cid%>.getAbsolutePath());
 <%
