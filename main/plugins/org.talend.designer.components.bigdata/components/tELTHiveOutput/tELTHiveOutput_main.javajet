@@ -190,6 +190,8 @@ if(useExistingConn) {
 	}
 	
 	String dbUser_<%=cid%> = (String)globalMap.get("<%=dbUser%>");
+	
+	
 	globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 	if(dbUser_<%=cid %>!=null && !"".equals(dbUser_<%=cid %>.trim())) {
 		System.setProperty("HADOOP_USER_NAME",dbUser_<%=cid %>);
@@ -242,6 +244,20 @@ if(useExistingConn) {
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/eltpassword.javajet"%>
 		
 		String dbPwd_<%=cid %> = decryptedPassword_<%=cid%>; 
+		
+        <%
+        boolean setHadoopUser = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_HADOOP_USER__"));
+        if (setHadoopUser) {
+            String hadoopUser = ElementParameterParser.getValue(previousNode, "__HADOOP_USER__");
+            %>
+            String username_<%=cid %> = <%=hadoopUser%>;
+            if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+                System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
+            }
+            <%
+        }
+        %>
+
 		globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
 		if("EMBEDDED".equals(connectionMode)) {

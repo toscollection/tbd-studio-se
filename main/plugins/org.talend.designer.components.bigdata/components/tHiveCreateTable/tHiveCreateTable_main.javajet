@@ -235,7 +235,7 @@ if(metadatas != null && metadatas.size() > 0) {
 StringBuilder createTableSQL = new StringBuilder();
 
 createTableSQL.append("CREATE ");
-createTableSQL.append(external?"EXTERNAL":"");
+createTableSQL.append(external || isS3Location ?"EXTERNAL":"");
 createTableSQL.append(" TABLE ");
 createTableSQL.append(createIfNotExist?"IF NOT EXISTS":"");
 createTableSQL.append(" \" + ");

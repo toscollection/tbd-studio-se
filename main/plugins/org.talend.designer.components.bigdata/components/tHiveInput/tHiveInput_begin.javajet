@@ -358,6 +358,16 @@ imports="
 				}
 			}
 			
+	        boolean setHadoopUser = "true".equals(ElementParameterParser.getValue(node, "__SET_HADOOP_USER__"));
+	        if (setHadoopUser) {
+	            String hadoopUser = ElementParameterParser.getValue(node, "__HADOOP_USER__");
+	            %>
+	            String username_<%=cid %> = <%=hadoopUser%>;
+	            if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+	                System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
+	            }
+	            <%
+	        }
 %>
 			globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
