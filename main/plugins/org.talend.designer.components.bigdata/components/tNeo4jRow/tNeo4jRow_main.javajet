@@ -141,7 +141,16 @@
 	counter_<%=cid%>++;
 
 	if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-		tx_<%=cid%>.success();
-		tx_<%=cid%>.finish();
+        try {
+        tx_<%=cid%>.success();
+        } finally {
+            tx_<%=cid%>.close();
+        }
+
+        if (databaseService_<%=cid%>.getClass().equals(org.neo4j.kernel.EmbeddedGraphDatabase.class)) {
+            while (((org.neo4j.kernel.EmbeddedGraphDatabase)databaseService_<%=cid%>).transactionRunning()){
+                // wait the end of the previous transaction
+            }
+        }
 		tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
 	}
