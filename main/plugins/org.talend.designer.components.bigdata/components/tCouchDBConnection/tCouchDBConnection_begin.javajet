@@ -40,7 +40,6 @@
     List<Map<String,String>> replicaTargetDB= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICATE_TARGET_DB__");
 
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	org.lightcouch.CouchDbClient client_<%=cid%> = new org.lightcouch.CouchDbClient(<%=dbname%>, true, "http", <%=dbhost%>, <%=dbport%>, <%=dbuser%>, decryptedPassword_<%=cid%>);
 	<%
@@ -85,6 +84,4 @@
 	}
 	%>
 	globalMap.put("client_<%=cid%>", client_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

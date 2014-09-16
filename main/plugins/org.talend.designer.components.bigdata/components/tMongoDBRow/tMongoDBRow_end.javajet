@@ -35,5 +35,4 @@
 		resourceMap.put("finish_<%=cid%>", true); 
 	<%
 	}
-	log4jFileUtil.componentFinishInfo(node);	
 	%>

@@ -74,7 +74,6 @@
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
     
     List<IMetadataTable> metadatas = node.getMetadataList();
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
@@ -347,7 +346,6 @@
 				 			<%=firstConnName%>.jsonDoc = valueRow_<%=cid%><%if(include_docs && !isReduce){%>.getDoc()<%}%>;
 						<%
 						}
-						log4jFileUtil.collectRetriveData(firstConnName,metadata);
 					}
 					log4jFileUtil.debugRetriveData(node);
 		}

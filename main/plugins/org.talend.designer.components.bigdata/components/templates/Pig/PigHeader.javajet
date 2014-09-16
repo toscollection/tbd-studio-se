@@ -2,9 +2,6 @@
 %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
-	log4jFileUtil.setIgnoredParamsList(java.util.Arrays.<String>asList("SCRIPT_CODE"));
-	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>

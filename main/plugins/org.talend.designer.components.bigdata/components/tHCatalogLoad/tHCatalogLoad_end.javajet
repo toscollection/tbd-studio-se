@@ -29,5 +29,4 @@ if(node.isVirtualGenerateNode()){
 	}
 }
 
-log4jFileUtil.componentFinishInfo(node);
 %>

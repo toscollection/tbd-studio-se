@@ -24,5 +24,4 @@
     log.info("<%=cid%> - File or directory count : " + NB_FILE<%=cid%>);
 <%
 	}
-	log4jFileUtil.componentFinishInfo(node);
 %>

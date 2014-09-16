@@ -36,8 +36,6 @@
 	}
 	globalMap.put("<%=cid %>_FILENAME",<%=filename%>);
 	
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	
 
 	

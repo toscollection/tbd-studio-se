@@ -13,9 +13,7 @@
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
     
-	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);    
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     
     boolean useCommandLine = "true".equals(ElementParameterParser.getValue(node,"__USE_COMMANDLINE__"));
@@ -30,5 +28,4 @@
 <%
     }
     
-    log4jFileUtil.componentFinishInfo(node);
 %>

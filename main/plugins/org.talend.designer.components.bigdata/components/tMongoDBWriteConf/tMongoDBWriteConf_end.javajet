@@ -92,6 +92,4 @@
 	}
 	%>
 	globalMap.put("<%=strJobCid %>_NB_LINE",nb_line_<%=cid %>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

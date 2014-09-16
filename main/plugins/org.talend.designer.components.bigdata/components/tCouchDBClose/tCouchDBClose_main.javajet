@@ -14,7 +14,6 @@
 
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	org.lightcouch.CouchDbClient client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
 	if(client_<%=cid%> != null){
@@ -26,6 +25,4 @@
 		}
 		client_<%=cid%>.shutdown();
 	}
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

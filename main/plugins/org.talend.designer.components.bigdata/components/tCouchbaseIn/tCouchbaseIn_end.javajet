@@ -47,6 +47,5 @@ imports="
 	<%
 	}
 	log4jFileUtil.retrievedDataNumberInfo(node);
-	log4jFileUtil.componentFinishInfo(node);
 	%>
 

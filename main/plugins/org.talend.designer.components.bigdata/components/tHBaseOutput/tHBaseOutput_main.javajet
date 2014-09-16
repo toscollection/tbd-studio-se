@@ -99,7 +99,6 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 						%>						
 						p_<%=cid%>.add(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid %>);
 					<%
-						log4jFileUtil.collectRetriveData(connName + "." + column.getLabel());
 					}
 					%>
 					table_<%=cid%>.put(p_<%=cid%>);

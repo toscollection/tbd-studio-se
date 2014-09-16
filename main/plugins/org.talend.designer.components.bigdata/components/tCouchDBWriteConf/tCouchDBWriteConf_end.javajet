@@ -66,5 +66,4 @@ imports="
 		log.info("<%=cid%> - " + nb_line_failed_<%=cid%> + " records failed.");
 	<%
 	}
-	log4jFileUtil.componentFinishInfo(node);
 	%>

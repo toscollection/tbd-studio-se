@@ -41,7 +41,6 @@
 				log.info("<%=cid%> - Execute script function: " + <%=function%> + ".");
 				<%
 				for(Map<String, String> parameter:parameters){
-					log4jFileUtil.collectRetriveData(parameter.get("PARAMETER"));
 				}
 				%>
 				log.info("<%=cid%> - Arguments : " + log4jSb_<%=cid%>+".");

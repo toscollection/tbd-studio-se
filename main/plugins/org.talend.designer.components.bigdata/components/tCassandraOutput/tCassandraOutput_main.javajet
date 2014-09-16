@@ -320,7 +320,6 @@
 							}
 						}
 		            }
-		            log4jFileUtil.collectRetriveData(conName,inputMetadataTable);
 					%>
 					<%if (!isKeyColumnJavaPrimitive) {%>
 						}
