@@ -213,7 +213,9 @@
 			} else {
 %>
 				System.err.println("The Sqoop import job has failed. Please check the logs.");
-<%
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - The Sqoop import job has failed. Please check the logs.");
+				<%}
 			}
 %>
 		}
@@ -226,7 +228,9 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
 	}

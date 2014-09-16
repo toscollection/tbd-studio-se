@@ -68,10 +68,7 @@
 			}
 		<%}%>
 		
-		<%
-		log4jFileUtil.collectRetriveData(outputConn);
-		log4jFileUtil.debugRetriveData();
-		%>
+		
 	}
 	<%
 		if(isLog4jEnabled) {
@@ -83,5 +80,4 @@
     	}
 	}
 	
-	log4jFileUtil.componentFinishInfo(node);
 	%>

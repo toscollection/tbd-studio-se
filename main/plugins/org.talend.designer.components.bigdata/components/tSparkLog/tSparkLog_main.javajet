@@ -1,0 +1,38 @@
+<%@ jet
+imports="
+org.talend.core.model.process.INode
+org.talend.core.model.process.ElementParameterParser
+org.talend.core.model.metadata.IMetadataTable
+org.talend.core.model.metadata.IMetadataColumn
+org.talend.core.model.process.IConnection
+org.talend.core.model.process.IConnectionCategory
+org.talend.core.model.process.EConnectionType
+org.talend.designer.codegen.config.CodeGeneratorArgument
+org.talend.core.model.metadata.types.JavaTypesManager
+org.talend.core.model.metadata.types.JavaType
+java.util.List 
+java.util.Map
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();	
+	String cid = node.getUniqueName();
+
+	String previous_node="";
+	
+	String previousOutputConnectionName = "";
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		previousOutputConnectionName = connection.getName();
+	}
+%>
+	org.talend.spark.TalendRDD<List<Object>> result_<%=cid%> = null;
+	result_<%=cid%> = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD;
+
+	if(result_<%=cid%>!=null) {
+		org.talend.spark.operation.Log.run(result_<%=cid%>);
+	}

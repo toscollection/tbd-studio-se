@@ -31,7 +31,6 @@
     String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	final String CLIENT_ID_<%=cid %> = <%=clientId %>;
 	
@@ -336,7 +335,6 @@
 								}
 							<%
 							}
-							log4jFileUtil.collectRetriveData(connName,metadata);
 							log4jFileUtil.debugRetriveData(node);
 						}
 					}

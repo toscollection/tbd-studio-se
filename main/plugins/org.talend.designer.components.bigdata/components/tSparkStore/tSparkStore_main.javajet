@@ -1,0 +1,100 @@
+<%@ jet
+imports="
+org.talend.core.model.process.INode
+org.talend.core.model.process.ElementParameterParser
+org.talend.core.model.metadata.IMetadataTable
+org.talend.core.model.metadata.IMetadataColumn
+org.talend.core.model.process.IConnection
+org.talend.core.model.process.IConnectionCategory
+org.talend.core.model.process.EConnectionType
+org.talend.designer.codegen.config.CodeGeneratorArgument
+org.talend.core.model.metadata.types.JavaTypesManager
+org.talend.core.model.metadata.types.JavaType
+java.util.List 
+java.util.Map
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();	
+	String cid = node.getUniqueName();
+	
+	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
+	boolean rmResultDir = "true".equals(ElementParameterParser.getValue(node, "__RM_OUTPUT__"));
+
+	boolean isStreaming = false;
+	String storageSource = ElementParameterParser.getValue(node, "__STORAGE_SOURCE__");
+	boolean isLocal = "LOCAL".equals(storageSource);
+	boolean isHDFS = "HDFS".equals(storageSource);
+
+	String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+	for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+		if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+			isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+		}
+	}
+
+	String previous_node="";
+	
+	String previousOutputConnectionName = "";
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
+%>
+	<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=ElementParameterParser.getValue(node, "__SPARK_CONNECTION__")%>_SPARK_CONTEXT");
+<%
+
+	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__"); 
+	if(isHDFS && !isStreaming) {
+%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = ctx_<%=cid%>.hadoopConfiguration();
+		conf_<%=cid%>.set("fs.default.name", <%=namenode%>);
+<%
+	}
+	
+	String outputFile = ElementParameterParser.getValue(node, "__OUTPUT_FILENAME__");
+	if(isLocal) outputFile = "\"file:///\" + " + outputFile;
+	if(isHDFS && isStreaming) outputFile = namenode + "+" + outputFile;
+%>	
+	String outputFile_<%=cid %> = <%=outputFile %>;
+<%
+	if (rmResultDir && isLocal) {
+%>
+		java.io.File file_<%=cid %> = new java.io.File(outputFile_<%=cid %>);
+	    if(file_<%=cid %>.isDirectory()) {
+	        //directory is empty, then delete it
+	        if(file_<%=cid %>.list().length==0){
+	            file_<%=cid %>.delete();
+	        }else{
+	            //list all the directory contents
+	            String files[] = file_<%=cid %>.list();
+	
+	            for (String temp : files) {
+	                //construct the file_<%=cid %> structure
+	                java.io.File fileDelete = new java.io.File(file_<%=cid %>, temp);
+	                //recursive delete
+	                fileDelete.delete();
+	            }
+	
+	            //check the directory again, if empty then delete it
+	            if(file_<%=cid %>.list().length==0){
+	                file_<%=cid %>.delete();
+	            }
+	        }
+	    }else{
+	        //if file_<%=cid %>, then delete it
+	        file_<%=cid %>.delete();
+	    }
+<%
+	}
+%>
+
+	if(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD!=null) {
+		org.talend.spark.operation.Store.run(outputFile_<%=cid %>, <%=previous_node%>_<%=previousOutputConnectionName%>_RDD, <%=fieldSeparator%>);
+	}

@@ -199,7 +199,9 @@ try {
 	} else {
 %>
 		System.err.println(e.getMessage());
-<%
+		<%if(isLog4jEnabled) {%>
+		log.error("<%=cid%> - " + e.getMessage());
+		<%}
 	}
 %>	
 }

@@ -28,8 +28,6 @@
 
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
-
     if(useReplicaSet){
 	%>
 		List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
@@ -112,6 +110,4 @@
 	
 	globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
 	globalMap.put("db_<%=cid%>", db_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

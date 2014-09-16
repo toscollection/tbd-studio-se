@@ -27,9 +27,7 @@ imports="
 	boolean isByFilter = ("true").equals(ElementParameterParser.getValue(node, "__IS_BY_FILTER__"));
 	boolean defineSelection = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_ROW_SELECTION__"));
 	
-	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
@@ -319,7 +317,6 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 %>
 								}
 <%
-				             	log4jFileUtil.collectRetriveData(connName + "." + columnName);
 							} //if(columnName.equals(schema_column))
 						} //for(int i=0;i<mapping.size();i++)
 						

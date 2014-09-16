@@ -5,7 +5,6 @@ imports="
         org.talend.core.model.process.ElementParameterParser
 " 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -58,5 +57,4 @@ imports="
 		log.info("<%=cid%> - " + nb_line_failed_<%=cid%> + " records failed.");
 	<%
 	}
-	log4jFileUtil.componentFinishInfo(node);
 	%>

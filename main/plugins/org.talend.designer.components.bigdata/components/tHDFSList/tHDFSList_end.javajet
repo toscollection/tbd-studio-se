@@ -6,8 +6,6 @@
 " 
 %>
 
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
-
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -24,5 +22,4 @@
     log.info("<%=cid%> - File or directory count : " + NB_FILE<%=cid%>);
 <%
 	}
-	log4jFileUtil.componentFinishInfo(node);
 %>

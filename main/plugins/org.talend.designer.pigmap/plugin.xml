@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
-   <extension
-         point="org.eclipse.ui.editors">
-      <editor
-            name="Sample Multi-page Editor"
-            extensions="mpe"
-            icon="icons/sample.gif"
-            contributorClass="org.talend.designer.pigmap.editors.MultiPageEditorContributor"
-            class="org.talend.designer.pigmap.editors.MultiPageEditor"
-            id="org.talend.designer.pigmap.editors.MultiPageEditor">
-      </editor>
-   </extension>
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
@@ -34,5 +22,13 @@
             serviceId="IPigMapService">
       </Service>
    </extension>
-
+    <extension point="org.talend.core.runtime.librariesNeeded">
+        <libraryNeeded
+              context="plugin:org.talend.designer.pigmap"
+              language="java"
+              message="Needed pigmap"
+              name="pig-0.10.0.jar"
+              required="true">
+        </libraryNeeded>
+    </extension>
 </plugin>

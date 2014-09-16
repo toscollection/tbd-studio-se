@@ -1,0 +1,58 @@
+<%@ jet
+imports="
+org.talend.core.model.process.INode
+org.talend.core.model.process.ElementParameterParser
+org.talend.core.model.metadata.IMetadataTable
+org.talend.core.model.metadata.IMetadataColumn
+org.talend.core.model.process.IConnection
+org.talend.core.model.process.IConnectionCategory
+org.talend.designer.codegen.config.CodeGeneratorArgument
+java.util.List 
+java.util.Map
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();	
+	String cid = node.getUniqueName();
+	
+	boolean isStreaming = false;
+	String storageSource = ElementParameterParser.getValue(node, "__STORAGE_SOURCE__");
+	boolean isLocal = "LOCAL".equals(storageSource);
+	boolean isHDFS = "HDFS".equals(storageSource);
+	
+	String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+	for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+		if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+			isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+		}
+	}
+	
+	String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
+	String talendRDDClass = (isStreaming?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
+%>
+	<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=sparkConnection%>_SPARK_CONTEXT");
+<%
+	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	if(isHDFS && !isStreaming) {
+%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = ctx_<%=cid%>.hadoopConfiguration();
+		conf_<%=cid%>.set("fs.default.name", <%=namenode%>);
+<%
+	}
+
+	String inputFile = ElementParameterParser.getValue(node, "__INPUT_FILE__");
+	if(isLocal) inputFile = "\"file:///\" + " + inputFile;
+	if(isHDFS && isStreaming) inputFile = namenode + "+" + inputFile;
+	String separator = ElementParameterParser.getValue(node, "__ROW_SEPARATOR__");
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+%>
+	org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%>, <%=inputFile%>, <%=separator%>));
+	
+	

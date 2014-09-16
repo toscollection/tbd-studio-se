@@ -157,7 +157,6 @@ if (metadata!=null) {
 %>
 			nb_line_<%=cid %>++;
 <%
-			log4jFileUtil.collectRetriveData(conn.getName(),metadata);
 			log4jFileUtil.debugWriteData(node);
 		}
 	}

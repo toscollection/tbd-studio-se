@@ -12,7 +12,6 @@
 		java.util.List
 "
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -51,7 +50,6 @@
 				for (int i = 0; i < sizeColumns; i++) {
 					IMetadataColumn column = columnList.get(i);
 					
-					log4jFileUtil.collectRetriveData(conn.getName()+"."+column.getLabel());
 					
 					if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
 					%>

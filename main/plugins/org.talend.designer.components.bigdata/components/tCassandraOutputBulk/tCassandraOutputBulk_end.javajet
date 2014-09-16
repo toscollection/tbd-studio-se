@@ -46,5 +46,4 @@ if(sizeColumns == 0 || inConnName == null){
 writer_<%=cid%>.close();
 <%
 log4jFileUtil.writeDataFinishInfo(node);
-log4jFileUtil.componentFinishInfo(node);
 %>

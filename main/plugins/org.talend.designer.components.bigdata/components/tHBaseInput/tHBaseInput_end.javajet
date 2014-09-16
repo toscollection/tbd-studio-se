@@ -56,5 +56,4 @@ globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
 
 <%
 log4jFileUtil.retrievedDataNumberInfo(node);
-log4jFileUtil.componentFinishInfo(node);
 %>

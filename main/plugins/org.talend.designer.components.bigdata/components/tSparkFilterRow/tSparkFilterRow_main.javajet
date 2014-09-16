@@ -1,0 +1,94 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+	    	java.util.List
+	    	java.util.Map
+	    	java.util.ArrayList
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+
+	String previous_node="";
+	String start_node="";
+	
+	String previousOutputConnectionName = "";
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		INode loadNode = node.getDesignSubjobStartNode();
+		start_node = loadNode.getUniqueName();
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String outputConnectionName = null;
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+
+	List<IMetadataTable> metadatas = node.getMetadataList();
+	
+	if ((metadatas != null) && (metadatas.size() > 0)) {
+		IMetadataTable metadata = metadatas.get(0);
+		if (metadata!=null && outputConnectionName != null) {
+			List<Map<String, String>> configs = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FILTER_CONFIG__");
+		
+			List<IMetadataColumn> metaColumns = metadata.getListColumns();
+			List<String> columns = new ArrayList<String>();
+			for (IMetadataColumn column : metaColumns) {
+				if("id_byte[]".equals(column.getTalendType()) || "id_Object".equals(column.getTalendType()) || "id_List".equals(column.getTalendType()) || "id_Dynamic".equals(column.getTalendType()) || "id_Document".equals(column.getTalendType())) {
+%>
+					if(true) {
+						throw new Exception("The component tSparkFilterRow doesn't support the <%=JavaTypesManager.getTypeToGenerate(column.getTalendType(), true)%> type.");
+					}
+<%
+				}
+				columns.add(column.getLabel());
+			}
+%>
+			List<org.talend.spark.utils.FilterObject> fl_<%=cid%> = new java.util.ArrayList<org.talend.spark.utils.FilterObject>();
+<%
+			String operator = "";
+			int index = 0;
+			String value = "";
+			boolean isNumber = false;
+			String logicOp = "";
+			for(Map<String, String> configMap : configs) {
+				index = columns.indexOf(configMap.get("COLUMN_NAME"));
+				operator = configMap.get("OPERATOR");
+				if("NEQUAL".equals(operator)) {
+					operator = "DIFF";
+				} else if("GREATER".equals(operator)) {
+					operator = "SUP";
+				} else if("GREATER_EQUAL".equals(operator)) {
+					operator = "SUP_EQUAL";
+				} else if("LESS".equals(operator)) {
+					operator = "INF";
+				} else if("LESS_EQUAL".equals(operator)) {
+					operator = "INF_EQUAL";
+				}
+				value = configMap.get("VALUE");
+				JavaType javaType = JavaTypesManager.getJavaTypeFromId(metaColumns.get(index).getTalendType());
+				logicOp = configMap.get("LOGICAL");
+%>
+				fl_<%=cid%>.add(new org.talend.spark.utils.FilterObject(<%=index%>,org.talend.spark.utils.FilterObject.Operator.<%=operator %>,<%=value%>,org.talend.spark.utils.FilterObject.LogicOp.<%=logicOp %>, "<%=JavaTypesManager.getTypeToGenerate(metaColumns.get(index).getTalendType(), true)%>", <%=metaColumns.get(index).isNullable()%>));
+<%
+			}
+%>
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Filter.run(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD,fl_<%=cid%>);
+<%
+		}
+	}
+%>

@@ -16,8 +16,6 @@ imports="
     String cid = node.getUniqueName();
     
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
-
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 
     String conn = "conn_" + connection;
@@ -40,6 +38,3 @@ imports="
 		globalMap.remove("<%=conn%>");
 	}
 
-<%
-	log4jFileUtil.componentFinishInfo(node);
-%>

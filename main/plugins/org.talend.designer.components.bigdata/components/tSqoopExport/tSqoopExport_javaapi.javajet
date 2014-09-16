@@ -167,7 +167,9 @@
 			} else {
 %>
 				System.err.println("The Sqoop export job has failed. Please check the logs.");
-<%
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - The Sqoop export job has failed. Please check the logs.");
+				<%}
 			}
 %>
 		}
@@ -180,7 +182,9 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
 	}

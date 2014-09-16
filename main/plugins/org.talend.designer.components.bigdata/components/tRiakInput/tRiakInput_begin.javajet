@@ -42,7 +42,6 @@
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	
     java.util.List<IMetadataColumn> tempValuesColumns = new java.util.ArrayList<IMetadataColumn>();
 	if(metadatas != null && metadatas.size() > 0){
@@ -159,7 +158,6 @@
 					}
 <%
           			}
-          			log4jFileUtil.collectRetriveData(firstConnName+"."+column.getLabel());
 				}
 %>
 				}

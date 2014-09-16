@@ -88,7 +88,9 @@
 				} else {
 %>
 					System.err.println("The Sqoop jar generation has failed with the following code:" + ret_<%=cid%>);
-<%
+					<%if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - The Sqoop jar generation has failed with the following code:" + ret_<%=cid%>);
+					<%}
 				}
 %>
         	}
@@ -104,7 +106,9 @@
 			} else {
 %>
 				System.err.println(e.getMessage());
-<%		
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - " + e.getMessage());
+				<%}
 			}
 %>
 		}
@@ -126,7 +130,9 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
     }
@@ -176,7 +182,9 @@
 			} else {
 %>
 				System.err.println("The Sqoop merge job has failed. Please check the logs.");
-<%
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - The Sqoop merge job has failed. Please check the logs.");
+				<%}
 			}
 %>
 		}
@@ -189,7 +197,9 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
 	}

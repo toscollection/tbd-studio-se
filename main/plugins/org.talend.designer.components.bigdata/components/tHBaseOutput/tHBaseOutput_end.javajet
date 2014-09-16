@@ -34,5 +34,4 @@ String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CO
 	
 	<%
 	log4jFileUtil.writeDataFinishInfo(node);
-	log4jFileUtil.componentFinishInfo(node);
 	%>

@@ -126,7 +126,6 @@ if(fid_<%=cid %>.get(<%=valueN %>)!=null && fid_<%=cid %>.get(<%=valueN %>).leng
 %>
 		nb_line_<%=cid %>++;
 <%
-		log4jFileUtil.collectRetriveData(firstConnName,metadata);
 		log4jFileUtil.debugRetriveData(node);
 	}
 %>
