@@ -168,6 +168,7 @@
 		/>
         <PARAMETER
             FIELD="OPENED_LIST"
+            RAW="true"
             NAME="ROW_KEY_TYPE"
             NUM_ROW="22"
             REQUIRED="true"
@@ -227,6 +228,7 @@
         />
     	<PARAMETER
         	FIELD="OPENED_LIST"
+        	RAW="true"
         	NAME="SUPER_COLUMN_TYPE"
         	NUM_ROW="24"
         	REQUIRED="true"
