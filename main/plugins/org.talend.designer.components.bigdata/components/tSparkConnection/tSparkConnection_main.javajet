@@ -175,7 +175,7 @@ java.util.Map
 <%
 				}
 %>
-				"" + getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")
+				"file://" + getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")
 <%
 				isFirst = false;
 			}
