@@ -18,7 +18,6 @@
     boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
-	log4jFileUtil.componentStartInfo(node);
 	%>
 	com.basho.riak.client.IRiakClient client_<%=cid%> = null;
 	int nb_line_<%=cid%> = 0;

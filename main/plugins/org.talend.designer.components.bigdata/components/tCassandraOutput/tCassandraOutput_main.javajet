@@ -328,9 +328,7 @@
 					<%
 					if(isLog4jEnabled){
 					%>
-						log.debug("<%=cid%> - Add the record " + (nb_line_<%=cid%>) + " to the batch[size:"+batchCounter_<%=cid%>+"].");
-						log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
-						log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+						log.debug("<%=cid%> - Adding the record " + (nb_line_<%=cid%>) + " to the batch[size:"+batchCounter_<%=cid%>+"].");
 					<%
 					}
 					%>

@@ -5,7 +5,6 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 	" 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
@@ -18,7 +17,6 @@
     String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
 	
-	log4jFileUtil.componentStartInfo(node);
 	%>
     String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
     me.prettyprint.cassandra.service.CassandraHostConfigurator hosts_<%=cid%> = new me.prettyprint.cassandra.service.CassandraHostConfigurator(hostIps_<%=cid%>);

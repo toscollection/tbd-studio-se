@@ -5,7 +5,6 @@
     	org.talend.designer.codegen.config.CodeGeneratorArgument
 " 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -14,7 +13,6 @@
 
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 	
-	log4jFileUtil.componentStartInfo(node);
 	%>
 	me.prettyprint.hector.api.Cluster cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
 	if(cluster_<%=cid%>!=null){

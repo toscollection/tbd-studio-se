@@ -8,7 +8,6 @@
 		java.util.List
 	    "
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
@@ -27,7 +26,6 @@
     String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
 	
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.componentStartInfo(node);
 	
 	String passwordFieldName = "";
 	

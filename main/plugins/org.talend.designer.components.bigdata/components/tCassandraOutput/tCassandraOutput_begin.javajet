@@ -14,7 +14,6 @@
 		java.util.List
 	" 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -41,7 +40,6 @@
 	boolean isDefine = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DEFINE_CF_STRUCTS__"));
 	
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.componentStartInfo(node);
 	%>
 	me.prettyprint.hector.api.Cluster cluster_<%=cid%> =null;
 	me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
