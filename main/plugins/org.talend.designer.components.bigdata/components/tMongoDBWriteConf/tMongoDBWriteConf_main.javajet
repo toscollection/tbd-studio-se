@@ -26,15 +26,6 @@
 		%>
 			com.mongodb.WriteResult resultMessage_<%=cid%>=null;
 			Object data_<%=cid%>=com.mongodb.util.JSON.parse(json_<%=cid%>.toString());
-			<%
-			if(isLog4jEnabled){
-			%>
-				log.debug("<%=cid%> - [<%=dataAction%>] - Writing the record " + nb_line_<%=cid %> + " into database.");
-				log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
-				log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
-			<%
-			}
-			%>
 			Object queryObj_<%=cid%>=null;
 			if(data_<%=cid%>!=null){
 				<%

@@ -8,7 +8,6 @@
 		java.util.List
 	" 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
@@ -42,7 +41,6 @@
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.componentStartInfo(node);
 	%>
 	org.lightcouch.CouchDbClient client_<%=cid%> = null;
 	java.util.Map<Object,Object> map_<%=cid%>=null;

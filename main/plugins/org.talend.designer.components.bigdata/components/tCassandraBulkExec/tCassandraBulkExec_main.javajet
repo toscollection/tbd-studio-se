@@ -11,7 +11,6 @@
 		java.util.Map
 	"
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
@@ -28,7 +27,6 @@ boolean needAuth = !"CASSANDRA_1_1_2".equals(version) && requireAuth;
 String username = ElementParameterParser.getValue(node,"__USERNAME__");
 String password = ElementParameterParser.getValue(node,"__PASSWORD__"); 
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-log4jFileUtil.componentStartInfo(node);
 %> 	
 java.io.File file_<%=cid%> = new java.io.File(<%=sstablePath%>, <%=keySpace%>+"/"+<%=columnFamily%>);
 
