@@ -32,6 +32,8 @@ java.util.Map
 	boolean useStandaloneMode = "CLUSTER".equals(sparkMode);
 	boolean useYarnClientMode = "YARN_CLIENT".equals(sparkMode);
 	
+	java.util.List<String> jarsToRegister = null;
+	
 %>
 
 	org.apache.spark.SparkConf conf_<%=cid%> = new  org.apache.spark.SparkConf();
@@ -43,7 +45,7 @@ java.util.Map
 <%		
 	}
 	
-	String master = "\"local\"";
+	String master = "\"local[*]\"";
 	if(useStandaloneMode) {
 		master = ElementParameterParser.getValue(node, "__SPARK_HOST__");
 	}
@@ -75,6 +77,11 @@ java.util.Map
 				break;
 			}
 		}
+		
+		jarsToRegister = new java.util.ArrayList<String>();
+		
+		jarsToRegister.add("talend-spark");
+		jarsToRegister.add("twitter4j");
 %>
 		class GetJarsToRegister_<%=cid%> {
 			private String oozieClasspathLine;
@@ -128,7 +135,11 @@ java.util.Map
 						}
 					}
 				} else {
-					classPathLine = originalClassPathLine;
+					if(originalClassPathLine!=null && originalClassPathLine.startsWith(".")) {
+						classPathLine = originalClassPathLine;
+					} else {
+						classPathLine = "file://" + originalClassPathLine;
+					}
 				}
 				return classPathLine;
 			}
@@ -167,17 +178,20 @@ java.util.Map
 		conf_<%=cid%>.setJars(new String[]{
 <%
 		boolean isFirst = true;
-		for(int j=0; j<jars.size(); j++) {
-			if(jars.get(j).contains("talend-spark")) {
-				if(!isFirst) {
+		for(int i=0; i<jarsToRegister.size(); i++) {
+			String jarToRegister = jarsToRegister.get(i);
+			for(int j=0; j<jars.size(); j++) {
+				if(jars.get(j).contains(jarToRegister)) {
+					if(!isFirst) {
 %>
 					,
 <%
-				}
+					}
 %>
-				"file://" + getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")
+					getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")
 <%
-				isFirst = false;
+					isFirst = false;
+				}
 			}
 		}
 %>
