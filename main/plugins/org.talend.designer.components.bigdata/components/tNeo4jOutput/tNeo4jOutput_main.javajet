@@ -117,12 +117,13 @@
 		}
 
 		private void generateNode() {
-%>					
+%>
 			java.util.Map<String, org.neo4j.graphdb.Node> endNode_<%=cid%> = new java.util.HashMap<String,org.neo4j.graphdb.Node>();
 <%
-			for (IMetadataColumn column : columnList) {		    	
-		    	if (column instanceof MetadataColumnExt) {		    		
-		    		MetadataColumnExt columnExt = (MetadataColumnExt) column;		    		
+			for (IMetadataColumn column : columnList) {
+
+		    	if (column instanceof MetadataColumnExt) {
+		    		MetadataColumnExt columnExt = (MetadataColumnExt) column;
 		    		Neo4jData data = columnExt.getData();
 		    		generateNodePropertyInsert(column);
 		    		for (Index index : data.getIndexes()) {
@@ -247,12 +248,19 @@
 		    // Must compute all properties before node creation for best performances
 		    generateNode();
 		    for (IMetadataColumn column : columnList) {
-		    	if (column instanceof MetadataColumnExt) {		    		
-		    		MetadataColumnExt columnExt = (MetadataColumnExt) column;		    		
+		    	if (column instanceof MetadataColumnExt) {
+		    		MetadataColumnExt columnExt = (MetadataColumnExt) column;
 		    		Neo4jData data = columnExt.getData();
+                    if (data.isAutoIndexed()) {
+                        %>
+                        autoindex_props_<%=cid%>.put("<%=column.getLabel()%>", <%=incomingConnName%>.<%=column%>);
+                        autoindex_<%=cid%>.add(autoindex_id_<%=cid%>, autoindex_props_<%=cid%>);
+                        autoindex_<%=cid%>.flush();
+                        <%
+                    }
 		    		for (Index index : data.getIndexes()) {
 		    			generateIndexCreation(index, column);
-		    		}		    		
+		    		}
 		    		for (Relationship relationship : data.getRelationships()) {
 		    			generateRelationshipCreation(relationship, column);
 		    		}
@@ -295,7 +303,7 @@
 		private void generateIndexCreation(Index index, IMetadataColumn column) {
 			boolean fromValueColumn = index.getValue() == null || index.getValue().isEmpty();
 			if (fromValueColumn) {
-				%>	    
+				%>
 				indexProperties_<%=cid%>.put(<%=index.getKey()%>, <%=incomingConnName%>.<%=column%>);
 				<%
 			} else {

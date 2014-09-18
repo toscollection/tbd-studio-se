@@ -119,6 +119,15 @@ long counter_<%=cid%> = 0;
 			indexInserterMap_<%=cid%>.put(<%=indexName%>, indexProvider_<%=cid%>.nodeIndex(<%=indexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")));
     		<%
     	}
+
+		// There is no autoindex in batch mode, so we did it by hand.
+        if (autoIndexedColumns.size() > 0) {
+            %>
+            org.neo4j.unsafe.batchinsert.BatchInserterIndex autoindex_<%=cid%> = indexProvider_<%=cid%>.nodeIndex("node_auto_index", org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
+            long autoindex_id_<%=cid%>  = inserter_<%=cid%>.createNode(null);
+            java.util.Map<String, Object> autoindex_props_<%=cid%> = new java.util.HashMap<String, Object>();
+            <%
+        }
     } else {
 		%>
 		java.util.Map<String, org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>> indexNodeMap_<%=cid%> = new java.util.HashMap<String,org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>>();
@@ -146,23 +155,25 @@ long counter_<%=cid%> = 0;
             }
 	        <%
         }
-	}
-    // Auto index configuration
-    if (autoIndexedColumns.size() > 0) {
-    	%>
-    	org.neo4j.graphdb.index.AutoIndexer<org.neo4j.graphdb.Node> autoIndexer_<%=cid%> = databaseService_<%=cid%>.index().getNodeAutoIndexer();
-    	autoIndexer_<%=cid%>.setEnabled(true);
-    	<%
-    }
-    for (String autoIndexedColumn : autoIndexedColumns) {
-		%>
-		autoIndexer_<%=cid%>.startAutoIndexingProperty("<%=autoIndexedColumn%>");
-		<%
-	}
 
-    if (!batchImport) {
-        %>	
+        // Auto index configuration
+        if (autoIndexedColumns.size() > 0) {
+            %>
+
+            org.neo4j.graphdb.index.AutoIndexer<org.neo4j.graphdb.Node> autoIndexer_<%=cid%> = databaseService_<%=cid%>.index().getNodeAutoIndexer();
+            autoIndexer_<%=cid%>.setEnabled(true);
+            <%
+        }
+        for (String autoIndexedColumn : autoIndexedColumns) {
+            %>
+            autoIndexer_<%=cid%>.startAutoIndexingProperty("<%=autoIndexedColumn%>");
+            <%
+        }
+
+        // start a transaction
+        %>
         org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
         <%
+
     }
 %>
