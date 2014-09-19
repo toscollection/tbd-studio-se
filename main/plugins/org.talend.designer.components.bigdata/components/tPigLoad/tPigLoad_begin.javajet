@@ -66,7 +66,7 @@
 	
 	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 		
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "MAPR310".equals(pigVersion) || "MICROSOFT_HD_INSIGHT_3_1".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "MAPR310".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MICROSOFT_HD_INSIGHT_3_1".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;
@@ -275,6 +275,13 @@
 					}
 <%
 				}
+				
+				if(!isCustom && "MAPR401".equals(pigVersion)) {//set the default properties
+%>
+			        props_<%=cid%>.put("mapreduce.job.map.output.collector.class", "org.apache.hadoop.mapred.MapRFsOutputBuffer");
+			        props_<%=cid%>.put("mapreduce.job.reduce.shuffle.consumer.plugin.class", "org.apache.hadoop.mapreduce.task.reduce.DirectShuffle");
+<%
+				}
 			}
 
 			if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
@@ -287,7 +294,7 @@
                 <%
             }
 			boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion));
-			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || isKerberosAvailableHadoop2;
+			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || "MAPR401".equals(pigVersion) || isKerberosAvailableHadoop2;
 			
 			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion));
 			
@@ -311,7 +318,7 @@
 <%
 				}
 				
-				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion))) {
+				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "MAPR401".equals(pigVersion))) {
 %>
 					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
 <%

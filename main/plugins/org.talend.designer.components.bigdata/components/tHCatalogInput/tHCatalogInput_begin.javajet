@@ -180,7 +180,7 @@
 <%
         boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
         String hcatVersion = ElementParameterParser.getValue(node, "__HCAT_VERSION__");
-        if(!isCustom && "MAPR310".equals(hcatVersion)) {
+        if(!isCustom && hcatVersion!=null && "MAPR310,MAPR401".contains(hcatVersion)) {
 %>
 		pathHDFS_<%=cid%> = location_<%=cid%>;
 		namenode_<%=cid%> = "maprfs:///";
