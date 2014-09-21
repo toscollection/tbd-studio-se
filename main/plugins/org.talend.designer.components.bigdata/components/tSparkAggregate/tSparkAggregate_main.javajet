@@ -24,19 +24,25 @@
 	boolean isStreaming = false;
 	
 	IConnection inputConnection = null;
+	String inputConnectionName = "";
+	IConnection outputConnection = null;
+	String outputConnectionName = "";
+	
+	List<IMetadataColumn> inputColumns = null;
+	List<IMetadataColumn> outputColumns = null;
 	
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
 		inputConnection = node.getIncomingConnections().get(0);
 		previous_node = inputConnection.getSource().getUniqueName();
-		previousOutputConnectionName = inputConnection.getName();
+		inputConnectionName = inputConnection.getName();
+		inputColumns = inputConnection.getMetadataTable().getListColumns();
 	}
 	
-	String outputConnectionName = "";
-	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
-	List<IMetadataColumn> outColumns = null;
-	if(outputConnections!=null && outputConnections.size()>0) {
-		outputConnectionName = outputConnections.get(0).getName();
-		outColumns = outputConnections.get(0).getMetadataTable().getListColumns();
+
+	if(node.getOutgoingConnections()!=null && node.getOutgoingConnections().size()>0) {
+		outputConnection = node.getOutgoingConnections().get(0);
+		outputConnectionName = outputConnection.getName();
+		outputColumns = outputConnection.getMetadataTable().getListColumns();
 	}
 	
 	String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
@@ -46,171 +52,76 @@
 		}
 	}
 	
-	List<Map<String, String>> key_fields = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__KEY_FIELDS__");
-	List<Map<String, String>> operations_config = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__OPERATIONS__");
+	List<Map<String, String>> keyFields = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__KEY_FIELDS__");
+	List<Map<String, String>> operationsConfig = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__OPERATIONS__");
 	
 	String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
 	String talendRDDClass = (isStreaming?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
 	
-	if(!isStreaming) {
-		List<IMetadataTable> metadatas = node.getMetadataList();
+	String keysId="";
 	
-		if ((metadatas != null) && (metadatas.size() > 0)) {
-			IMetadataTable metadata = metadatas.get(0);
-		
-		  	if (metadata!=null && outputConnectionName != null && inputConnection!=null) {
-				INode startNode = node.getDesignSubjobStartNode();
-				if (startNode != null) {
-%>
-					<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=sparkConnection%>_SPARK_CONTEXT");
-<%
+  	if(outputConnection != null && inputConnection!=null) {
+		List<String> inputColumnsName = new ArrayList<String>();
+		for (IMetadataColumn column : inputColumns) {
+			inputColumnsName.add(column.getLabel());
+		}
+		boolean isFirst = true;
+		if(keyFields.size()>0){
+			for (Map<String, String> map : keyFields) {
+				if(!isFirst){
+					keysId = keysId + ",";
 				}
-				
-				List<IMetadataColumn> metaColumns = inputConnection.getMetadataTable().getListColumns();
-				List<String> columns = new ArrayList<String>();
-				for (IMetadataColumn column : metaColumns) {
-					columns.add(column.getLabel());
-				}
-				String order = "false";
-				boolean isFirst = true;
-				String keys="";
-				if(key_fields.size()>0){
-					for (Map<String, String> map : key_fields) {
-						if(isFirst){
-							isFirst=false;
-						}else{
-							keys=keys+",";
-						}
-						keys=keys+columns.indexOf(map.get("INPUT_COLUMN"));
-					}
-					
-					for (Map<String, String> map : key_fields) {
-						//columns.remove(map.get("INPUT_COLUMN"));
-					}
-				}
-%>
-				java.util.Map<List<Object>, java.lang.Iterable<List<Object>>> output_<%=cid%>_<%=outputConnectionName%>_tmp = org.talend.spark.operation.Aggregate.run(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD,<%if(!"".equals(keys)) {%>java.util.Arrays.asList(<%=keys%>)<%}else{%>null<%}%>).collectAsMap();
-				//TODO we should avoid to create java collection object by collect method in memory,that's not spark usage.
-				java.util.List<java.util.List<Object>> inputRDD_<%=cid%> = new java.util.ArrayList<java.util.List<Object>>();
-				java.util.Set<List<Object>> rowKeys_<%=cid%> = output_<%=cid%>_<%=outputConnectionName%>_tmp.keySet();
-				for(List<Object> keys_<%=cid%>:rowKeys_<%=cid%> ){
-					java.lang.Iterable<List<Object>> values_<%=cid%> = output_<%=cid%>_<%=outputConnectionName%>_tmp.get(keys_<%=cid%>);
-					java.util.List<Object> outValue_<%=cid%> = new java.util.ArrayList<Object>();
-<%
-					int i = -1;
-					List<String> outOperations = new ArrayList<String>();
-					for (int j=0; outColumns!=null && j < outColumns.size(); j++) {
-						IMetadataColumn outCln = outColumns.get(j);
-						String talendType = outCln.getTalendType();
-						String typeToGenerate = JavaTypesManager.getTypeToGenerate(outCln.getTalendType(), outCln.isNullable());
-						
-						Map<String, String> map = null;
-						for (Map<String, String> tmpmap : operations_config) {
-							if (outCln.getLabel().equals(tmpmap.get("OUTPUT_COLUMN"))) {
-								if (outOperations.contains(outCln.getLabel())) {
-										
-								} else {
-									outOperations.add(outCln.getLabel());
-									map = tmpmap;
-								}
-								break;
-							}
-						}
-					
-%>
-						//Output column: <%=outCln.getLabel()%>
-<%
-					
-						if (map == null) { // no mapping, check if there are groupby
-							int groupByIndex = -1;
-							for (int k=0; key_fields!=null && k<key_fields.size(); k++) {
-								Map<String, String> tmpmap = key_fields.get(k);
-								if(outCln.getLabel().equals(tmpmap.get("INPUT_COLUMN"))) {	
-									if (outOperations.contains(outCln.getLabel())) {
-									} else {
-										outOperations.add(outCln.getLabel());
-										groupByIndex = k;
-									}
-									break;
-								}
-							}
-						
-							if (groupByIndex >=0) {
-%>
-								outValue_<%=cid%>.add(keys_<%=cid%>.get(<%=groupByIndex%>));
-<%
-							}
-		
-						} else { // mapping
-							String operation= map.get("FUNCTION");
-						
-							if("COUNT".equals(operation)){
-%>
-								outValue_<%=cid%>.add(String.valueOf(((java.util.Collection<?>)values_<%=cid%>).size()));
-<%
-								continue;
-							}
-							int index = columns.indexOf(map.get("INPUT_COLUMN"));
-							i++;
-%>
-							List<<%=typeToGenerate%>> valuesOfSingleColumn_<%=cid%>_<%=i%> = new java.util.ArrayList<<%=typeToGenerate%>>();
-							for(java.util.Iterator<java.util.List<Object>> iter_<%=cid%> = values_<%=cid%>.iterator(); iter_<%=cid%>.hasNext();) {
-								valuesOfSingleColumn_<%=cid%>_<%=i%>.add(ParserUtils.parseTo_<%=typeToGenerate%>(iter_<%=cid%>.next().get(<%=index%>).toString()));
-							}
-<%
-							if("MIN".equals(operation)||"MAX".equals(operation)){
-%>	
-								java.util.Collections.sort(valuesOfSingleColumn_<%=cid%>_<%=i%>);
-<%
-								if("MAX".equals(operation)){
-%>
-									outValue_<%=cid%>.add(valuesOfSingleColumn_<%=cid%>_<%=i%>.get(valuesOfSingleColumn_<%=cid%>_<%=i%>.size()-1));
-<%
-								}else{
-%>
-									outValue_<%=cid%>.add(valuesOfSingleColumn_<%=cid%>_<%=i%>.get(0));
-<%
-								}
-							}
-							if("AVG".equals(operation) || "SUM".equals(operation)){
-								String typeToGenerateForSum = "Double";
-								if("id_Integer".equals(talendType) || "id_Short".equals(talendType) || "id_Long".equals(talendType)) {
-									typeToGenerateForSum = "Long";
-								} else if ("id_Float".equals(talendType) || "id_Double".equals(talendType) || "id_BigDecimal".equals(talendType)) {
-									typeToGenerateForSum = "Double";
-								}
-%>
-								<%=typeToGenerateForSum%> sum_<%=cid%>_<%=i%>=new <%=typeToGenerateForSum%>(0);
-								for(<%=typeToGenerate%> value_<%=cid%>:valuesOfSingleColumn_<%=cid%>_<%=i%>){
-									sum_<%=cid%>_<%=i%>=sum_<%=cid%>_<%=i%>+value_<%=cid%>;
-								}
-<%
-							}
-							if("AVG".equals(operation)){
-%>
-								outValue_<%=cid%>.add(sum_<%=cid%>_<%=i%>/valuesOfSingleColumn_<%=cid%>_<%=i%>.size());
-<%
-							}
-							if("SUM".equals(operation)){
-%>
-								outValue_<%=cid%>.add(sum_<%=cid%>_<%=i%>);
-<%
-							}
-						}
-					}
-%>
-					inputRDD_<%=cid%>.add(outValue_<%=cid%>);
-				}
-				org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(ctx_<%=cid%>.parallelize(inputRDD_<%=cid%>));
-<%
+				isFirst = false;
+				keysId = keysId + inputColumnsName.indexOf(map.get("INPUT_COLUMN"));
+			}
+			
+			for (Map<String, String> map : keyFields) {
+				//inputColumnsName.remove(map.get("INPUT_COLUMN"));
 			}
 		}
-	} else {
 %>
-		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD;
-		if(true) {
-			throw new UnsupportedOperationException("The component tSparkAggregateRow does not support the streaming mode.");
+		java.util.List<org.talend.spark.utils.Aggregation> aggregationsList_<%=cid%> = new java.util.ArrayList<org.talend.spark.utils.Aggregation>();
+<%		
+		for(int i=0; i<outputColumns.size(); i++) {
+			String operation = "";
+			String outputColumnName = outputColumns.get(i).getLabel();
+			int inputColumnIndex = -1;
+			boolean found = false;
+			
+			//First, we look for the output column in the Operation table.
+			for(Map<String, String> op : operationsConfig) {
+				String operationOutputColumnName = op.get("OUTPUT_COLUMN");
+				if(outputColumnName.equals(operationOutputColumnName)) {
+					operation = op.get("FUNCTION");
+					inputColumnIndex = inputColumnsName.indexOf(op.get("INPUT_COLUMN"));
+					found = true;
+					break;
+				}
+			}
+			
+			//Next, we look for the output column in the Key table.
+			if(!found) {
+				for(Map<String, String> key : keyFields) {
+					String keyColumnName = key.get("INPUT_COLUMN");
+					if(outputColumnName.equals(keyColumnName)) {
+						operation = "PASS_THROUGH";
+						inputColumnIndex = inputColumnsName.indexOf(keyColumnName);
+						found = true;
+						break;
+					}
+				}
+			}
+			
+			//Else, we ignore this column.
+			if(!found) {
+				break;
+			}
+%>
+				aggregationsList_<%=cid%>.add(new org.talend.spark.utils.Aggregation(<%=i%>, "<%=JavaTypesManager.getTypeToGenerate(outputColumns.get(i).getTalendType(), true)%>", <%=inputColumnIndex%>, "<%=JavaTypesManager.getTypeToGenerate(inputColumns.get(inputColumnIndex).getTalendType(), true)%>", org.talend.spark.utils.Operation.<%=operation%>));
+<%			
 		}
+%>
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Aggregate.run(<%=previous_node%>_<%=inputConnectionName%>_RDD,<%if(!"".equals(keysId)) {%>java.util.Arrays.asList(<%=keysId%>)<%}else{%>null<%}%>, aggregationsList_<%=cid%>);
 <%
 	}
 %>
