@@ -114,7 +114,7 @@
 			
 			//Else, we ignore this column.
 			if(!found) {
-				break;
+				continue;
 			}
 %>
 				aggregationsList_<%=cid%>.add(new org.talend.spark.utils.Aggregation(<%=i%>, "<%=JavaTypesManager.getTypeToGenerate(outputColumns.get(i).getTalendType(), true)%>", <%=inputColumnIndex%>, "<%=JavaTypesManager.getTypeToGenerate(inputColumns.get(inputColumnIndex).getTalendType(), true)%>", org.talend.spark.utils.Operation.<%=operation%>));
