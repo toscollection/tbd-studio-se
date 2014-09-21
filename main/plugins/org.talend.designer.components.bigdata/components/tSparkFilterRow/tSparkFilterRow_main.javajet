@@ -40,13 +40,31 @@
 
 	List<IMetadataTable> metadatas = node.getMetadataList();
 	
+	class ColumnType {
+		private String columnName;
+		private String columnType;
+		
+		public ColumnType(String name, String type) {
+			this.columnName = name;
+			this.columnType = type;
+		}
+		
+		public String getColumnType() {
+			return this.columnType;
+		}
+		
+		public String getColumnName() {
+			return this.columnName;
+		}
+	}
+	
 	if ((metadatas != null) && (metadatas.size() > 0)) {
 		IMetadataTable metadata = metadatas.get(0);
 		if (metadata!=null && outputConnectionName != null) {
 			List<Map<String, String>> configs = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FILTER_CONFIG__");
 		
 			List<IMetadataColumn> metaColumns = metadata.getListColumns();
-			List<String> columns = new ArrayList<String>();
+			List<ColumnType> columns = new ArrayList<ColumnType>();
 			for (IMetadataColumn column : metaColumns) {
 				if("id_byte[]".equals(column.getTalendType()) || "id_Object".equals(column.getTalendType()) || "id_List".equals(column.getTalendType()) || "id_Dynamic".equals(column.getTalendType()) || "id_Document".equals(column.getTalendType())) {
 %>
@@ -55,7 +73,7 @@
 					}
 <%
 				}
-				columns.add(column.getLabel());
+				columns.add(new ColumnType(column.getLabel(), column.getTalendType()));
 			}
 %>
 			List<org.talend.spark.utils.FilterObject> fl_<%=cid%> = new java.util.ArrayList<org.talend.spark.utils.FilterObject>();
@@ -66,19 +84,45 @@
 			boolean isNumber = false;
 			String logicOp = "";
 			for(Map<String, String> configMap : configs) {
-				index = columns.indexOf(configMap.get("COLUMN_NAME"));
+				
+				index = 0;
 				operator = configMap.get("OPERATOR");
-				if("NEQUAL".equals(operator)) {
-					operator = "DIFF";
-				} else if("GREATER".equals(operator)) {
-					operator = "SUP";
-				} else if("GREATER_EQUAL".equals(operator)) {
-					operator = "SUP_EQUAL";
-				} else if("LESS".equals(operator)) {
-					operator = "INF";
-				} else if("LESS_EQUAL".equals(operator)) {
-					operator = "INF_EQUAL";
+
+				for(ColumnType columnType:columns) {
+					if(columnType.getColumnName().equals(configMap.get("COLUMN_NAME"))) {
+						if("GREATER".equals(operator) || "GREATER_EQUAL".equals(operator) || "LESS".equals(operator) || "LESS_EQUAL".equals(operator)) {
+							if(columnType.getColumnType().equals("id_String") || columnType.getColumnType().equals("id_Byte") 
+								|| columnType.getColumnType().equals("id_Character") || columnType.getColumnType().equals("id_Boolean") 
+									|| columnType.getColumnType().equals("id_byte[]") || columnType.getColumnType().equals("id_Object") 
+										|| columnType.getColumnType().equals("id_List") || columnType.getColumnType().equals("id_Dynamic") 
+											|| columnType.getColumnType().equals("id_Document")) {
+%>
+								if(true) {
+									throw new Exception("The operator \"<%=operator%>\" can't be used against the column \"<%=columnType.getColumnName()%>\". Check the data types.");
+								}
+<%
+							} 
+						}
+						if("STARTS_WITH".equals(operator) || "ENDS_WITH".equals(operator) || "CONTAINS".equals(operator) || "MATCHES".equals(operator)) {
+							if(columnType.getColumnType().equals("id_Integer") || columnType.getColumnType().equals("id_Long") 
+								|| columnType.getColumnType().equals("id_Short") || columnType.getColumnType().equals("id_Double") 
+									|| columnType.getColumnType().equals("id_Float") || columnType.getColumnType().equals("id_BigDecimal") 
+										|| columnType.getColumnType().equals("id_Date") || columnType.getColumnType().equals("id_Byte")
+											|| columnType.getColumnType().equals("id_byte[]") || columnType.getColumnType().equals("id_Object")
+												|| columnType.getColumnType().equals("id_List") || columnType.getColumnType().equals("id_Dynamic")
+													|| columnType.getColumnType().equals("id_Document")) {
+%>
+								if(true) {
+									throw new Exception("The operator \"<%=operator%>\" can't be used against the column \"<%=columnType.getColumnName()%>\". Check the data types.");
+								}
+<%
+							} 
+						}
+						break;
+					}
+					index++;
 				}
+
 				value = configMap.get("VALUE");
 				JavaType javaType = JavaTypesManager.getJavaTypeFromId(metaColumns.get(index).getTalendType());
 				logicOp = configMap.get("LOGICAL");
