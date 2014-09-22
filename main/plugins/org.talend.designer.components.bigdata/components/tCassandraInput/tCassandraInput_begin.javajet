@@ -233,6 +233,7 @@
 					nb_line_<%=cid %>++;
 					me.prettyprint.hector.api.beans.Row row_<%=cid%>=(me.prettyprint.hector.api.beans.Row)rows_<%=cid%>.next();
 					me.prettyprint.hector.api.beans.ColumnSlice slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
+					List<me.prettyprint.hector.api.beans.HColumn<String,String>> cols_<%=cid%> = slice_<%=cid%>.getColumns();
 			<%
 			}else{
 				if(isSpecifyKeys){
@@ -328,8 +329,11 @@
 							}else{
 								if("STANDARD".equals(columnFamilyType)){
 								%>
-									column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
-									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());
+									if(<%=i%> < cols_<%=cid%>.size()) {
+										//column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
+										column_<%=cid%> = cols_<%=cid%>.get(<%=i%>);
+										columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());									
+									}
 								<%
 								}else{
 								%>
