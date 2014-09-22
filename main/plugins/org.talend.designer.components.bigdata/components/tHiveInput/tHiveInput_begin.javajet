@@ -293,9 +293,6 @@ imports="
 			   || ("MapR_EMR".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)) || ("Cloudera_CDH3".equals(hiveVersion) && "EMBEDDED".equals(connectionMode)))) {
 %>
 				if(true) {
-					<%if(isLog4jEnabled){%>
-						log.fatal("<%=cid%> - The Hive version and the connection mode are not compatible together. Please check your component configuration.");
-					<%}%>
 					throw new Exception("The Hive version and the connection mode are not compatible together. Please check your component configuration.");
 				}
 <%
