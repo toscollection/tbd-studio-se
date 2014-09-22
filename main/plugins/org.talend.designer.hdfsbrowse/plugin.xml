@@ -154,6 +154,10 @@
             index="HDFS:MAPR:MAPR310"
             libraries="hadoop-core-1.0.3-mapr-3.1.0.jar;hadoop-auth-1.0.3-mapr-3.1.0.jar;commons-logging-1.0.4.jar;maprfs-1.0.3-mapr-3.1.0.jar;zookeeper-3.4.5-mapr-1401.jar;guava-13.0.1.jar;libprotodefs.jar;protobuf-java-2.4.1.jar;json-20080701.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar">
       </classloader>
+      <classloader
+            index="HDFS:MAPR:MAPR401"
+            libraries="hadoop-hdfs-2.4.1-mapr-1408.jar;hadoop-common-2.4.1-mapr-1408.jar;hadoop-auth-2.4.1-mapr-1408.jar;commons-logging-1.1.3.jar;maprfs-4.0.1-mapr.jar;zookeeper-3.4.5-mapr-1406.jar;guava-13.0.1.jar;libprotodefs-4.0.1-mapr.jar;protobuf-java-2.5.0.jar;json-20080701.jar;commons-configuration-1.6.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar">
+      </classloader>
    </extension>
    <extension
          point="org.talend.core.runtime.service">
@@ -247,6 +251,10 @@
       <classloader
             index="MAP_REDUCE:MAPR:MAPR310"
             libraries="hadoop-core-1.0.3-mapr-3.1.0.jar;maprfs-1.0.3-mapr-3.1.0.jar;zookeeper-3.4.5-mapr-1401.jar;guava-13.0.1.jar;commons-logging-1.1.1.jar;commons-cli-1.2.jar;commons-codec-1.5.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;log4j-1.2.16.jar;protobuf-java-2.4.1.jar;hadoop-auth-1.0.3-mapr-3.1.0.jar;json-20080701.jar;amazon-s3.jar;commons-lang-2.5.jar">
+      </classloader>
+      <classloader
+            index="MAP_REDUCE:MAPR:MAPR401"
+            libraries="hadoop-yarn-api-2.4.1-mapr-1408.jar;hadoop-yarn-client-2.4.1-mapr-1408.jar;hadoop-yarn-common-2.4.1-mapr-1408.jar;hadoop-mapreduce-client-core-2.4.1-mapr-1408.jar;hadoop-mapreduce-client-common-2.4.1-mapr-1408.jar;hadoop-common-2.4.1-mapr-1408.jar;hadoop-auth-2.4.1-mapr-1408.jar;maprfs-4.0.1-mapr.jar;zookeeper-3.4.5-mapr-1406.jar;guava-13.0.1.jar;commons-logging-1.1.1.jar;commons-cli-1.2.jar;commons-codec-1.5.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;log4j-1.2.16.jar;protobuf-java-2.5.0.jar;json-20080701.jar;amazon-s3.jar;commons-lang-2.6.jar;commons-configuration-1.6.jar">
       </classloader>
       <classloader
             index="MAP_REDUCE:PIVOTAL_HD:PIVOTAL_HD_1_0_1"
