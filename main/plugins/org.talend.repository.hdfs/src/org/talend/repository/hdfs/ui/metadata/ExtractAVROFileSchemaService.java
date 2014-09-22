@@ -65,6 +65,8 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
         INT,
         LONG,
         STRING,
+        UNION,
+        NULL,
         OTHERS
     }
 
@@ -232,8 +234,8 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
         for (ReflectedAVROField field : avroFields) {
             MetadataColumn metadataColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
             metadataColumn.setPattern("\"dd-MM-yyyy\""); //$NON-NLS-1$
-            ReflectedAVROEnumType avroType = field.schema().getType();
-            metadataColumn.setTalendType(mapAvroTypeToTalendType(avroType));
+            ReflectedAVROSchema avroSchema = field.schema();
+            metadataColumn.setTalendType(mapAvroTypeToTalendType(avroSchema));
             String label = field.name();
             if (labelSet.contains(label)) {
                 IStatus template = Status.CANCEL_STATUS;
@@ -245,10 +247,11 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
             } else {
                 labelSet.add(label);
             }
+            metadataColumn.setNullable(isNullable(avroSchema));
             metadataColumn.setLabel(field.name());
             ReflectedJsonNode defaultValue = field.defaultValue();
             if (defaultValue != null) {
-                metadataColumn.setDefaultValue(mapAvroValueToTalendValue(defaultValue.asText(), avroType));
+                metadataColumn.setDefaultValue(mapAvroValueToTalendValue(defaultValue.asText(), avroSchema));
             }
             String comment = field.doc();
             if (comment != null) {
@@ -268,9 +271,18 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
         return talendString;
     }
 
-    private String mapAvroValueToTalendValue(String avroValue, ReflectedAVROEnumType avroType) {
-        if (avroValue == null) {
+    private String mapAvroValueToTalendValue(String avroValue, ReflectedAVROSchema avroSchema) throws SecurityException,
+            NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
+            ClassNotFoundException {
+        if (avroValue == null || avroSchema == null) {
             return null;
+        }
+        if ("null".equals(avroValue)) { //$NON-NLS-1$
+            return "null"; //$NON-NLS-1$
+        }
+        ReflectedAVROEnumType avroType = avroSchema.getType();
+        if (ReflectedAVROEnumType.UNION == avroType) {
+            avroType = getMainTypeFromUnionSchema(avroSchema);
         }
         String talendValue = null;
         switch (avroType) {
@@ -315,8 +327,20 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
      * 
      * @param avroType
      * @return
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     * @throws IllegalArgumentException
+     * @throws NoSuchMethodException
+     * @throws SecurityException
      */
-    private String mapAvroTypeToTalendType(ReflectedAVROEnumType avroType) {
+    private static String mapAvroTypeToTalendType(ReflectedAVROSchema avroSchema) throws SecurityException,
+            NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
+            ClassNotFoundException {
+        ReflectedAVROEnumType avroType = avroSchema.getType();
+        if (ReflectedAVROEnumType.UNION == avroType) {
+            avroType = getMainTypeFromUnionSchema(avroSchema);
+        }
         String talendType = null;
         switch (avroType) {
         case BOOLEAN:
@@ -345,6 +369,83 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
             break;
         }
         return talendType;
+    }
+
+    /**
+     * DOC cmeng Comment method "getMainTypeFromUnion".
+     * 
+     * @param avroSchema
+     * @return
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws ClassNotFoundException
+     */
+    private static ReflectedAVROEnumType getMainTypeFromUnionSchema(ReflectedAVROSchema avroSchema) throws NoSuchMethodException,
+            IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+        List<ReflectedAVROSchema> unionSchemas = avroSchema.parseToUnionSchema().getTypes();
+        ReflectedAVROEnumType avroEnumType = null;
+        if (unionSchemas == null) {
+            avroEnumType = ReflectedAVROEnumType.OTHERS;
+        } else {
+            int size = unionSchemas.size();
+            if (0 == size) {
+                avroEnumType = ReflectedAVROEnumType.OTHERS;
+            } else if (1 == size) {
+                ReflectedAVROSchema reflectedAVROSchema = unionSchemas.get(0);
+                ReflectedAVROEnumType reflectedAVROType = reflectedAVROSchema.getType();
+                if (ReflectedAVROEnumType.UNION == reflectedAVROType) {
+                    avroEnumType = ReflectedAVROEnumType.OTHERS;
+                } else {
+                    avroEnumType = reflectedAVROType;
+                }
+            } else if (2 == size) {
+                if (isContainsNullType(unionSchemas)) {
+                    for (ReflectedAVROSchema reflectedAVROSchema : unionSchemas) {
+                        ReflectedAVROEnumType reflectedAVROType = reflectedAVROSchema.getType();
+                        if (ReflectedAVROEnumType.NULL == reflectedAVROType || ReflectedAVROEnumType.UNION == reflectedAVROType) {
+                            continue;
+                        } else {
+                            avroEnumType = reflectedAVROType;
+                            break;
+                        }
+                    }
+                    if (avroEnumType == null) {
+                        avroEnumType = ReflectedAVROEnumType.OTHERS;
+                    }
+                } else {
+                    avroEnumType = ReflectedAVROEnumType.OTHERS;
+                }
+            } else {
+                avroEnumType = ReflectedAVROEnumType.OTHERS;
+            }
+        }
+        return avroEnumType;
+    }
+
+    private boolean isNullable(ReflectedAVROSchema avroSchema) throws SecurityException, NoSuchMethodException,
+            IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+        ReflectedAVROSchema.ReflectedAVROUnionSchema unionSchema = avroSchema.parseToUnionSchema();
+        if (unionSchema != null) {
+            List<ReflectedAVROSchema> unionSchemas = unionSchema.getTypes();
+            return isContainsNullType(unionSchemas);
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean isContainsNullType(List<ReflectedAVROSchema> schemaList) throws SecurityException,
+            NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException,
+            ClassNotFoundException {
+        if (schemaList == null || schemaList.size() == 0) {
+            return false;
+        }
+        for (ReflectedAVROSchema avroSchema : schemaList) {
+            if (ReflectedAVROEnumType.NULL == avroSchema.getType()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private class ReflectedAVROSchema {
@@ -441,6 +542,10 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
                 reflectedType = ReflectedAVROEnumType.LONG;
             } else if (type == Enum.valueOf(enumType, "STRING")) { //$NON-NLS-1$
                 reflectedType = ReflectedAVROEnumType.STRING;
+            } else if (type == Enum.valueOf(enumType, "UNION")) { //$NON-NLS-1$
+                reflectedType = ReflectedAVROEnumType.UNION;
+            } else if (type == Enum.valueOf(enumType, "NULL")) { //$NON-NLS-1$
+                reflectedType = ReflectedAVROEnumType.NULL;
             } else {
                 reflectedType = ReflectedAVROEnumType.OTHERS;
             }
@@ -448,6 +553,39 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
             return reflectedType;
         }
 
+        public ReflectedAVROUnionSchema parseToUnionSchema() throws SecurityException, NoSuchMethodException,
+                IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
+            if (this.getType() == ReflectedAVROEnumType.UNION) {
+                return new ReflectedAVROUnionSchema(reflectedSchema, classLoader);
+            } else {
+                return null;
+            }
+        }
+
+        // can not use class cast, because the obtained schema are always be an instance of ReflectedAVROSchema
+        public class ReflectedAVROUnionSchema extends ReflectedAVROSchema {
+
+            public ReflectedAVROUnionSchema(Object unionSchema, ClassLoader clsLoader) {
+                super(unionSchema, clsLoader);
+            }
+
+            public List<ReflectedAVROSchema> getTypes() throws SecurityException, NoSuchMethodException,
+                    IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+                Object avroTypes = ReflectionUtils.invokeMethod(this.reflectedSchema, "getTypes", new Object[0]); //$NON-NLS-1$
+                if (!(avroTypes instanceof List<?>)) {
+                    return null;
+                } else {
+                    List<?> schemaList = (List<?>) avroTypes;
+                    List<ReflectedAVROSchema> retSchemaList = new ArrayList<ExtractAVROFileSchemaService.ReflectedAVROSchema>(
+                            schemaList.size());
+                    for (Object objSchema : schemaList) {
+                        ReflectedAVROSchema reflectedAVROSchema = new ReflectedAVROSchema(objSchema, classLoader);
+                        retSchemaList.add(reflectedAVROSchema);
+                    }
+                    return retSchemaList;
+                }
+            }
+        }
     }
 
     private class ReflectedAVROField {

@@ -917,7 +917,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             TreeEditor editor = new TreeEditor(schemaTree);
             final Composite composite = new Composite(schemaTree, SWT.NONE);
             Color backgroundColor = treeItem.getBackground();
-            GC gc = new GC(composite);
+            // GC gc = new GC(composite);
             Font font = treeItem.getFont();
             composite.setBackground(backgroundColor);
             FormLayout layout = new FormLayout();
@@ -931,9 +931,11 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             formData.top = new FormAttachment(0);
             formData.bottom = new FormAttachment(100);
             formData.right = new FormAttachment(100);
-            String btnString = Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.errorButton"); //$NON-NLS-1$
-            formData.width = gc.stringExtent(btnString).x;
+            String btnString = Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.errorButton.text"); //$NON-NLS-1$
+            // formData.width = gc.stringExtent(btnString).x;
             button.setText(btnString);
+            button.pack();
+            formData.width = button.getSize().x;
             button.setToolTipText(Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.errorButton.toolTipText")); //$NON-NLS-1$
             button.setData(treeItem);
 
@@ -946,8 +948,10 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             formData.left = new FormAttachment(0);
             formData.top = new FormAttachment(0);
             formData.bottom = new FormAttachment(100);
-            formData.width = gc.stringExtent(errorString).x;
+            // formData.width = gc.stringExtent(errorString).x;
             errorText.setText(errorString);
+            errorText.pack();
+            formData.width = errorText.getSize().x;
 
             editor.minimumWidth = formData.width;
             editor.grabHorizontal = true;
