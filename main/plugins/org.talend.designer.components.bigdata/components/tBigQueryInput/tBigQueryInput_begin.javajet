@@ -211,13 +211,6 @@
 		    	%>
 				System.err.println("---> Unable to connect. This might come from the token expiration. Execute again the job with an empty authorization code.");
 			}else{
-				<%
-		    	if(isLog4jEnabled){
-				%>
-					log.fatal("<%=cid%> - Remove "+tokenFile_<%=cid %>+" failed.");
-				<%
-				}
-		    	%>
 				throw new java.lang.Exception();
 			}
 		} catch (java.lang.Exception ee_<%=cid%>) {
@@ -230,13 +223,6 @@
 	    	%>
 			System.err.println("---> Unable to connect. This might come from the token expiration. Remove the file " + tokenFile_<%=cid %> + " Execute again the job with an empty authorization code.");
 		}
-		<%
-    	if(isLog4jEnabled){
-		%>
-			log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
-		<%
-		}
-    	%>						
 		throw e_<%=cid%>;
 	}
 	<%

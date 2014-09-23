@@ -82,12 +82,7 @@
 	}catch(Exception e_<%=cid%>){
 		<%
 		if(dieOnError){
-			if(isLog4jEnabled){
-			%>
-				log.fatal("<%=cid%> - " + e_<%=cid%>.getMessage());
-			<%
-			}
-			%>
+		%>
 			e_<%=cid%>.printStackTrace();
 		<%
 		}else{

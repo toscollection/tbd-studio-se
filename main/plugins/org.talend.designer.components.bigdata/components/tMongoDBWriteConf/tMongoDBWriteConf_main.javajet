@@ -56,12 +56,7 @@
 					}else{
 						<%
 						if(dieOnError){
-							if(isLog4jEnabled){
-							%>
-								log.fatal("<%=cid%> - Data node or Query node configuration error! ");
-							<%
-							}
-							%>
+						%>
 							throw new Exception("Data node or Query node configuration error! ");
 						<%
 						}else{
@@ -84,12 +79,7 @@
     				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
     					<%
     					if(dieOnError){
-    						if(isLog4jEnabled){
-    						%>
-    							log.fatal("<%=cid%> - " + resultMessage_<%=cid%>.getError());
-    						<%
-    						}
-    						%>
+    					%>
     						throw new Exception(resultMessage_<%=cid%>.getError());
     					<%
     					}else{
@@ -110,12 +100,7 @@
 			}else{
 				<%
 				if(dieOnError){
-					if(isLog4jEnabled){
-					%>
-						log.fatal("<%=cid%> - There no data in json,Please check the json configuration");
-					<%
-					}
-					%>
+				%>
 					throw new Exception("There no data in json,Please check the json configuration");
 				<%
 				}else{

@@ -74,12 +74,7 @@
 					if(countKey_<%=cid%> <=0){
 						<%
 						if(dieOnError){
-							if(isLog4jEnabled){
-							%>
-								log.fatal("<%=cid%> - Must have at least one key in schema");
-							<%
-							}
-							%>
+						%>
 							throw new Exception("Must have at least one key in schema");
 						<%
 						}else{
@@ -121,12 +116,7 @@
     				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
     					<%
     					if(dieOnError){
-    						if(isLog4jEnabled){
-    						%>
-    							log.fatal("<%=cid%> - " + resultMessage_<%=cid%>.getError());
-    						<%
-    						}
-    						%>
+    					%>
     						throw new Exception(resultMessage_<%=cid%>.getError());
     					<%
     					}else{

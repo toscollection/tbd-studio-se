@@ -72,12 +72,7 @@
 					}catch(org.lightcouch.DocumentConflictException e_<%=cid%>){
 						<%
 						if(dieOnError){
-							if(isLog4jEnabled){
-							%>
-								log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
-							<%
-							}
-							%>
+						%>
 							throw e_<%=cid%>;
 						<%
 						}else{
@@ -123,12 +118,7 @@
 						<%
 						}else{
 							if(dieOnError){
-								if(isLog4jEnabled){
-								%>
-									log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
-								<%
-								}
-								%>
+							%>
 								throw e_<%=cid%>;
 							<%
 							}else{

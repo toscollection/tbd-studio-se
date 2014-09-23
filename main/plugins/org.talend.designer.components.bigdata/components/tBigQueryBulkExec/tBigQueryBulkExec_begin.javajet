@@ -118,7 +118,6 @@
 			%>
 				log.warn("<%=cid%> - Paste this URL into a web browser to authorize BigQuery Access:\n"
 								+ authorizeUrl_<%=cid%>);
-				log.fatal("<%=cid%> - Authorization Code error");
 			<%
 			}
 	    	%>
@@ -332,12 +331,7 @@
 	} catch (Exception ee_<%=cid%>) {
 		<%
 		if(dieOnError) {
-			if(isLog4jEnabled){
-			%>
-				log.fatal("<%=cid%> - "+ ee_<%=cid%>.getMessage() + "\n" + ee_<%=cid%>.getCause());
-			<%
-			}
-			%>
+		%>
 			throw ee_<%=cid%>;
 		<%
 		} else {
@@ -391,12 +385,7 @@
 	} else {
 		<%
 		if(dieOnError) {
-			if(isLog4jEnabled){
-			%>
-				log.fatal("<%=cid%> - "+ jobExec_<%=cid%>.toString());
-			<%
-			}
-			%>
+		%>
 			throw new Exception(jobExec_<%=cid%>.toString());
 		<%
 		} else {

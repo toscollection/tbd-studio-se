@@ -114,12 +114,7 @@ if(keyColumn != null){
 	writer_<%=cid%>.newRow(<%convertUtil.convert(keyCType, inConnName, keyColumn);%>);
 <%
 }else{
-	if(isLog4jEnabled){
-	%>
-		log.fatal("<%=cid%> - A key should be specified in the schema.");
-	<%
-	}
-	%>
+%>
 	if(true){
 		throw new java.lang.Exception("A key should be specified in the schema.");
 	}
