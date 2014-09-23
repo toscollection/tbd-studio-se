@@ -180,7 +180,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
         userNameText = new LabelledText(templetonGroupComposite, Messages.getString("HCatalogForm.text.userName"), 1); //$NON-NLS-1$
         if (isHDI) {
             passwordText = new LabelledText(templetonGroupComposite,
-                    Messages.getString("HCatalogForm.text.password"), 1, SWT.PASSWORD); //$NON-NLS-1$
+                    Messages.getString("HCatalogForm.text.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
         }
 
         if (enableKerberos) {

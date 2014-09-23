@@ -147,7 +147,8 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         Group hdiGroup = Form.createGroup(this, 4, Messages.getString("HadoopClusterForm.hdiSettings"), 110); //$NON-NLS-1$
         hdiGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         hdiUsernameText = new LabelledText(hdiGroup, Messages.getString("HadoopClusterForm.text.hdi.username"), 1); //$NON-NLS-1$
-        hdiPasswordText = new LabelledText(hdiGroup, Messages.getString("HadoopClusterForm.text.hdi.password"), 1, SWT.PASSWORD); //$NON-NLS-1$
+        hdiPasswordText = new LabelledText(hdiGroup,
+                Messages.getString("HadoopClusterForm.text.hdi.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
     }
 
     private void addAzureFields() {
@@ -157,7 +158,7 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         azureContainerText = new LabelledText(azureGroup, Messages.getString("HadoopClusterForm.text.azure.container"), 1); //$NON-NLS-1$
         azureUsernameText = new LabelledText(azureGroup, Messages.getString("HadoopClusterForm.text.azure.username"), 1); //$NON-NLS-1$
         azurePasswordText = new LabelledText(azureGroup,
-                Messages.getString("HadoopClusterForm.text.azure.password"), 1, SWT.PASSWORD); //$NON-NLS-1$
+                Messages.getString("HadoopClusterForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
         azureDeployBlobText = new LabelledText(azureGroup, Messages.getString("HadoopClusterForm.text.azure.deployBlob"), 1); //$NON-NLS-1$
     }
 
