@@ -1,0 +1,60 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.types.JavaTypesManager
+		java.util.List
+		java.util.Map
+	"
+%>
+<%
+	CodeGeneratorArgument inputCodeGenArgument = (CodeGeneratorArgument) argument;
+	INode inputNode = (INode)inputCodeGenArgument.getArgument();
+	String inputCid = inputNode.getUniqueName();
+	
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(inputNode,"__USE_EXISTING_CONNECTION__"));
+	boolean dieOnError = "true".equals(ElementParameterParser.getValue(inputNode, "__DIE_ON_ERROR__"));
+
+%>	
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/HelpClass.javajet"%>
+<%
+
+	class DBInputBeginUtil extends DefaultDBInputUtil{
+		public void setURL(INode node) {
+%>
+			String url_<%=cid %> = "jdbc:hive2://"+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%> + ";auth=noSasl"; 
+<%	
+		}
+	
+		public String getDirverClassName(INode node){
+			return "org.apache.hive.jdbc.HiveDriver";
+		}
+	}
+	
+	dbInputBeginUtil = new DBInputBeginUtil();
+	
+	String impalaVersion = ElementParameterParser.getValue(inputNode, "__IMPALA_VERSION__");
+	String distribution = ElementParameterParser.getValue(inputNode, "__DISTRIBUTION__");
+	
+	if(useExistingConnection) {
+		distribution = "";
+		impalaVersion = "";
+		String connection = ElementParameterParser.getValue(inputNode, "__CONNECTION__");
+		for (INode pNode : inputNode.getProcess().getNodesOfType("tHiveConnection")) {
+			if(connection!=null && connection.equals(pNode.getUniqueName())) {
+				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
+				impalaVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+				break;
+			}
+		}
+	}
+	
+	boolean isCustom = "CUSTOM".equals(distribution);
+%>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/AbstractDBInputBegin.javajet"%>

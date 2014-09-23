@@ -1,0 +1,135 @@
+<%@ jet 
+imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.MappingTypeRetriever
+		org.talend.core.model.metadata.MetadataTalendType
+		org.talend.designer.runprocess.ProcessorException
+		org.talend.designer.runprocess.ProcessorUtilities
+		org.talend.core.model.metadata.types.JavaTypesManager  
+		java.util.List
+		java.util.ArrayList		
+		java.util.Map
+		java.util.HashMap
+		java.util.Set
+		java.util.HashSet
+		"
+		skeleton="@{org.talend.designer.components.localprovider}/components/templates/db_output_bulk.skeleton" 
+%>
+<%
+	CodeGeneratorArgument outputCodeGenArgument = (CodeGeneratorArgument) argument;
+	INode outputNode = (INode)outputCodeGenArgument.getArgument();
+	final String outputCid = outputNode.getUniqueName();
+	
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(outputNode,"__USE_EXISTING_CONNECTION__"));
+	boolean isLog4jEnabled = "true".equals(ElementParameterParser.getValue(outputNode.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+	if(useExistingConnection) { // We re-use a connection. Get the connection from the global map.
+		String connection = ElementParameterParser.getValue(outputNode, "__CONNECTION__");
+%>
+		java.sql.Connection conn_<%=outputCid%> = (java.sql.Connection)globalMap.get("conn_<%=connection%>");
+<%
+	} else { //We do not use an existing connection. Create it.
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnection_begin.javajet"%>
+<%
+		// The connection object is created in the tImpalaConnection_begin.javajet.
+	}
+	
+	final String cid = outputCid;
+	INode node = outputNode;
+	
+	String dbmsId = ElementParameterParser.getValue(node,"__MAPPING__");
+	String tableName = ElementParameterParser.getValue(node,"__TABLE__");
+	String action = ElementParameterParser.getValue(node, "__ACTION__");
+	
+	boolean extendedInsert = false;
+	
+	extendedInsert = "true".equals(ElementParameterParser.getValue(node, "__EXTENDINSERT__"));	
+	String numPerInsert = ElementParameterParser.getValue(node, "__NB_ROWS_PER_INSERT__");
+	
+	getManager(dbmsId, cid, node);
+	
+	List<IMetadataColumn> columnList = getColumnList(node);
+	List<Column> stmtStructure = null;
+	if(columnList != null && columnList.size() > 0) {
+	    stmtStructure = getManager(dbmsId, cid).createColumnList(columnList, false, null, null);
+	}
+%>
+	String tableName_<%=cid%> = <%=tableName%>;
+	int insertedCount_<%=cid%>=0;
+	int nb_line_<%=cid%> = 0;
+<%
+    Map<String, StringBuilder> actionSQLMap = getManager(dbmsId, cid).createProcessSQL(stmtStructure);
+    StringBuilder insertColName = actionSQLMap.get(INSERT_COLUMN_NAME);   
+    StringBuilder insertValueStmt = actionSQLMap.get(INSERT_VALUE_STMT);    
+
+	if(!extendedInsert) {
+%>		
+		java.sql.PreparedStatement pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement("INSERT <%=action%> " + tableName_<%=cid%> + " (<%=insertColName.toString()%>) VALUES (<%=insertValueStmt.toString()%>)");
+<%
+	} else { //entended insert
+%>
+		int rowCount<%=cid%> = 0;
+		class BufferLine_<%=cid%> {
+<% 
+		for(Column column : stmtStructure) {
+			if(!column.isReplaced() && !column.isAddCol() && column.isInsertable()) {
+				String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
+%>
+				<%=typeToGenerate%> <%=column.getName()%>;                
+<%
+			}
+		}            
+%>   
+	            
+			public BufferLine_<%=cid%>(
+<% 
+				int count = 0;
+				for(Column column : stmtStructure) {
+					if(!column.isReplaced() && !column.isAddCol() && column.isInsertable()) {
+						if(count != 0) {
+%>
+							,
+<%
+						}
+						String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
+%>
+						<%=typeToGenerate%> <%=column.getName()%>
+<%
+						count++;                        
+					}
+				}            
+%> 
+			){
+<% 
+				for(Column column : stmtStructure) {
+					if(!column.isReplaced() && !column.isAddCol() && column.isInsertable()) {
+%>
+						this.<%=column.getName()%> = <%=column.getName()%>;              
+<%   
+					}
+				}            
+%>   	                
+			}
+		}
+	            
+		java.util.List<BufferLine_<%=cid%>> exInsertColValueList_<%=cid%> = new java.util.ArrayList();
+		BufferLine_<%=cid%> exInsertColValue_<%=cid%> = null; 
+			
+		StringBuilder extendInsertValueStmt_<%=cid%> = new StringBuilder();
+		for(int i=0;i < <%=numPerInsert%>;i++){
+			 extendInsertValueStmt_<%=cid%>.append("(<%=insertValueStmt.toString()%>)");
+			 if (i!=<%=numPerInsert%>-1) extendInsertValueStmt_<%=cid%>.append(",");
+		}
+            
+		String insert_<%=cid%> = "INSERT <%=action%> "+<%=tableName%>+" (<%=insertColName.toString()%>) VALUES " + extendInsertValueStmt_<%=cid%>.toString();
+		java.sql.PreparedStatement pstmt_<%=cid %> =  conn_<%=cid%>.prepareStatement(insert_<%=cid%>);
+<%
+	}
+%>
