@@ -125,16 +125,22 @@ public class HCatalogServiceUtil {
     }
 
     private static WebClient getHCatalogRootClient(HCatalogConnection connection) {
+        boolean isHDI = HCVersionUtil.isHDI(connection);
         String host = StringUtils.trimToEmpty(connection.getHostName());
         String port = StringUtils.trimToEmpty(connection.getPort());
         String userName = StringUtils.trimToEmpty(connection.getUserName());
         String password = StringUtils.trimToEmpty(connection.getPassword());
-        String endpoint = "http://" + host + ":" + port + "?user.name=" + userName; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        String protocol;
+        if (isHDI) {
+            protocol = "https://"; //$NON-NLS-1$
+        } else {
+            protocol = "http://"; //$NON-NLS-1$
+        }
+        String endpoint = protocol + host + ":" + port + "?user.name=" + userName; //$NON-NLS-1$ //$NON-NLS-2$ 
         JAXRSClientFactoryBean clientFactoryBean = new JAXRSClientFactoryBean();
         clientFactoryBean.setUsername(userName);
-        if (HCVersionUtil.isHDI(connection)) {
+        if (isHDI) {
             clientFactoryBean.setPassword(password);
-            endpoint = "https://" + host + ":" + port; //$NON-NLS-1$ //$NON-NLS-2$ 
         }
         clientFactoryBean.setAddress(endpoint);
         org.apache.cxf.jaxrs.client.WebClient client = clientFactoryBean.createWebClient();

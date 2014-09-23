@@ -209,8 +209,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         if (hcInfoForm != null) {
             hcInfoForm.dispose();
         }
-        if (isHDI()) {
-            return;
+        if (HCVersionUtil.isHDI(getConnection())) {
+            hcInfoForm = new HDIInfoForm(this, connectionItem, existingNamesArray, creation);
         } else {
             hcInfoForm = new StandardHCInfoForm(this, connectionItem, existingNamesArray, creation);
         }
@@ -219,10 +219,6 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         hcInfoForm.updateForm();
         hcInfoForm.checkFieldsValue();
         this.layout();
-    }
-
-    private boolean isHDI() {
-        return false;
     }
 
     private void updateVersionPart() {
@@ -264,7 +260,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         }
 
         if (hcInfoForm != null) {
-            hcInfoForm.checkFieldsValue();
+            return hcInfoForm.checkFieldsValue();
         }
 
         updateStatus(IStatus.OK, null);

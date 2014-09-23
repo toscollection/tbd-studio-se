@@ -50,7 +50,9 @@ import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 /**
- * DOC ycbai class global comment. Detailled comment
+ * 
+ * created by ycbai on 2014年9月16日 Detailled comment
+ *
  */
 public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnection> implements IHadoopClusterInfoForm {
 
