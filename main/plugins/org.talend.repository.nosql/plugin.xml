@@ -155,7 +155,7 @@
             dbDNDProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraDNDProvider"
             dbMetadataProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraMetadataProvider"
             dbType="CASSANDRA"
-            dbVersions="CASSANDRA_2_0_8;CASSANDRA_2_0_0;CASSANDRA_1_2_2;CASSANDRA_1_1_2;"
+            dbVersions="CASSANDRA_1_1_2;CASSANDRA_1_2_2;CASSANDRA_2_1_X;"
             dbWizPageProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraWizardPageProvider"
             description="Cassandra">
       </factory>
@@ -191,19 +191,15 @@
       </classloader>
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_1_1_2"
-            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.2.jar;slf4j-log4j12-1.7.2.jar;">
+            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;">
       </classloader>
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_1_2_2"
-            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.2.jar;slf4j-log4j12-1.7.2.jar;">
+            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;">
       </classloader>
       <classloader
-            index="NOSQL:CASSANDRA:CASSANDRA_2_0_0"
-            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.2.jar;slf4j-log4j12-1.7.2.jar;">
-      </classloader>
-      <classloader
-            index="NOSQL:CASSANDRA:CASSANDRA_2_0_8"
-            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.2.jar;slf4j-log4j12-1.7.2.jar;">
+            index="NOSQL:CASSANDRA:CASSANDRA_2_1_X"
+            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;">
       </classloader>
       <classloader
             index="NOSQL:NEO4J"
