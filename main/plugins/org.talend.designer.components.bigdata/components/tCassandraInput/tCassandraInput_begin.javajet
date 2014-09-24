@@ -15,6 +15,32 @@
 %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<% 
+
+	class ColumnComparator implements java.util.Comparator<IMetadataColumn> {
+
+		private Boolean incKey = null;
+		private String keyColumn = null;
+
+		public ColumnComparator(Boolean incKey, String keyColumn) {
+			this.incKey = incKey;
+			this.keyColumn = keyColumn;
+		}
+
+		public final int compare(IMetadataColumn a, IMetadataColumn b) {
+			if(incKey) {
+				if(a.getLabel().equals(keyColumn)) {
+					return -1;
+				}
+				if(b.getLabel().equals(keyColumn)) {
+					return 1;
+				}
+			}
+			return a.getLabel().compareTo(b.getLabel());
+		}
+
+	}
+
+
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
@@ -25,6 +51,8 @@
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
     String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+	String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+	System.out.println("dbVersion="+dbVersion);
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
@@ -81,7 +109,9 @@
 					typeMap.put("String","StringSerializer");
 					typeMap.put("Character","CharSerializer");
 					typeMap.put("BigDecimal","BigDecimalSerializer");
+					typeMap.put("java.util.UUID", "UUIDSerializer");
       			}
+
       			public String get(String tType, String cType){
       				if("".equals(cType) || "Default".equals(cType)){
       					return typeMap.get(tType);
@@ -233,7 +263,9 @@
 					nb_line_<%=cid %>++;
 					me.prettyprint.hector.api.beans.Row row_<%=cid%>=(me.prettyprint.hector.api.beans.Row)rows_<%=cid%>.next();
 					me.prettyprint.hector.api.beans.ColumnSlice slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
+					<% if("CASSANDRA_2_1_X".equals(dbVersion)) { %>
 					List<me.prettyprint.hector.api.beans.HColumn<String,String>> cols_<%=cid%> = slice_<%=cid%>.getColumns();
+					<%}%>
 			<%
 			}else{
 				if(isSpecifyKeys){
@@ -266,6 +298,8 @@
       			firstConnName = out.getName();
 		  		if(out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 				
+					java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
+
 					for(int i = 0; i < sizeColumns; i++){
 						IMetadataColumn column = columnList.get(i);
 						String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
@@ -329,11 +363,14 @@
 							}else{
 								if("STANDARD".equals(columnFamilyType)){
 								%>
+								<% if("CASSANDRA_2_1_X".equals(dbVersion)) { %>
 									if(<%=i%> < cols_<%=cid%>.size()) {
-										//column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
 										column_<%=cid%> = cols_<%=cid%>.get(<%=i%>);
-										columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());									
 									}
+									<%} else { %>
+										column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
+									<%}%>
+									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());									
 								<%
 								}else{
 								%>
