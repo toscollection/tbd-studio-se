@@ -58,6 +58,7 @@
 				<ITEM NAME="MAPR213" VALUE="MAPR213" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR301" VALUE="MAPR301" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR401" VALUE="MAPR401" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="APACHE_2_4_0_EMR" VALUE="APACHE_2_4_0_EMR"
 					SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR"
@@ -604,6 +605,10 @@
 			<IMPORT NAME="commons-codec-1.4.jar" MODULE="commons-codec-1.4.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar"
 				REQUIRED_IF="(HBASE_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')" />
+				
+			<!-- MAPR401 -->
+			<IMPORT MODULE_GROUP="HBASE-LIB-MAPR40X_LASTEST" REQUIRED_IF="HBASE_VERSION=='MAPR401' AND (DISTRIBUTION!='CUSTOM')" />
+			
 			<!-- CDH3 -->
 			<IMPORT NAME="hadoop-0.20.2-cdh3u1-core.jar" MODULE="hadoop-0.20.2-cdh3u1-core.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.0.20.cdh3/lib/hadoop-0.20.2-cdh3u1-core.jar"

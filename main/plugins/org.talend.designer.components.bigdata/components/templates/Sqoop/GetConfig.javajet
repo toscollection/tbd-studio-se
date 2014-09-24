@@ -25,8 +25,16 @@
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 <%
+
+	if(!isCustom && "MAPR401".equals(version)) {//set the default properties
+%>
+		configuration_<%=cid%>.set("mapreduce.job.map.output.collector.class", "org.apache.hadoop.mapred.MapRFsOutputBuffer");
+	    configuration_<%=cid%>.set("mapreduce.job.reduce.shuffle.consumer.plugin.class", "org.apache.hadoop.mapreduce.task.reduce.DirectShuffle");
+<%
+	}
+	
 	boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "Cloudera_CDH4_YARN".equals(version) || "Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version));
-	boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(version) || "APACHE_2_4_0_EMR".equals(version) || isKerberosAvailableHadoop2;
+	boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(version) || "APACHE_2_4_0_EMR".equals(version) || "MAPR401".equals(version) || isKerberosAvailableHadoop2;
 	
 	boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "Cloudera_CDH4".equals(version));
 	
@@ -58,7 +66,7 @@
 <%
 		}
 		
-		if(!isCustom && ("HDP_2_1".equals(version) || "Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version))) {
+		if(!isCustom && ("HDP_2_1".equals(version) || "Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "MAPR401".equals(version))) {
 %>
 			configuration_<%=cid%>.set("mapreduce.app-submission.cross-platform","true");
 <%

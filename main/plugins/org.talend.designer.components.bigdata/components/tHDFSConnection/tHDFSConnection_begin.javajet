@@ -15,7 +15,8 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 	
-	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	boolean isCustom = "CUSTOM".equals(distribution);
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
 	
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
@@ -49,7 +50,7 @@
         conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
         <%
     }
-	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MAPR213").equals(hadoopVersion) || ("MAPR301").equals(hadoopVersion) || ("MAPR310").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+	if("MAPR".equals(distribution) || (!isCustom && ("APACHE_0_20_2".equals(hadoopVersion) || "MapR_EMR".equals(hadoopVersion))) || (isCustom && "UGI".equals(auth))){
 		String group = ElementParameterParser.getValue(node, "__GROUP__");
 		%>
 		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);

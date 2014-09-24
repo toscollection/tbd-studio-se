@@ -19,6 +19,14 @@
 	
 	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(inputNode,"__USE_EXISTING_CONNECTION__"));
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(inputNode, "__DIE_ON_ERROR__"));
+	
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(inputNode, "__USE_KRB__"));
+	String additionalParameters = "\";auth=noSasl\"";
+	if(useKrb) {
+		additionalParameters = "\";principal=\" + " + ElementParameterParser.getValue(inputNode, "__IMPALA_PRINCIPAL__");
+	}
+	
+	final String parameters = additionalParameters;
 
 %>	
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/HelpClass.javajet"%>
@@ -27,7 +35,7 @@
 	class DBInputBeginUtil extends DefaultDBInputUtil{
 		public void setURL(INode node) {
 %>
-			String url_<%=cid %> = "jdbc:hive2://"+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%> + ";auth=noSasl"; 
+			String url_<%=cid %> = "jdbc:hive2://"+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%> + <%=parameters%>; 
 <%	
 		}
 	
