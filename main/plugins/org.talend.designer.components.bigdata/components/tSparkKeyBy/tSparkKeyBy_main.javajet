@@ -1,0 +1,73 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument		
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
+		java.util.List
+		java.util.ArrayList
+		java.util.Map
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String previous_node="";
+
+	String previousOutputConnectionName = "";
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+	
+	List<Map<String, String>> keyColumns = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__KEY_COLUMN__");
+	
+	List<IMetadataTable> metadatas = node.getMetadataList();
+	
+	if ((metadatas != null) && (metadatas.size() > 0)) {
+		IMetadataTable metadata = metadatas.get(0);
+	
+	  	if (metadata!=null && outputConnectionName != null) {
+		
+			List<IMetadataColumn> metaColumns = metadata.getListColumns();
+			List<String> columns = new ArrayList<String>();
+			for (IMetadataColumn column : metaColumns) {
+				columns.add(column.getLabel());
+			}
+			int index = -1;
+			boolean isFirst = true;
+			String keys="";
+			if(keyColumns.size()>0){
+				for (Map<String, String> map : keyColumns) {
+					if(isFirst){
+						isFirst=false;
+					}else{
+						keys=keys+",";
+					}
+					keys=keys+columns.indexOf(map.get("INPUT_COLUMN"));
+				}
+			}
+%>
+			org.apache.spark.api.java.JavaPairRDD<List<String>, List<String>> <%=cid%>_<%=outputConnectionName%>_PairRDD = org.talend.spark.operation.KeyBy.run(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD,java.util.Arrays.asList(<%=keys%>));
+			org.apache.spark.api.java.JavaRDD<List<String>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.RDDConverter.convert(<%=cid%>_<%=outputConnectionName%>_PairRDD.rdd().toJavaRDD(),java.util.Arrays.asList(<%=keys%>));
+<%
+		}
+	}
+%>
+
+		
+		
+		
