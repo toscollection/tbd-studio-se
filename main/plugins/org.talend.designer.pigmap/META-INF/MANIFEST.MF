@@ -24,8 +24,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
-Bundle-ClassPath: .,
- pig-0.10.0.jar
 Export-Package: org.talend.designer.pigmap.model.emf.pigmap
-Import-Package: org.apache.pig;resolution:=optional
 

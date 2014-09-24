@@ -19,14 +19,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.pig.EvalFunc;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
@@ -34,12 +37,18 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.utils.loader.MyURLClassLoader;
 import org.talend.commons.ui.utils.loader.MyURLClassLoader.IAssignableClassFilter;
 import org.talend.commons.utils.generation.JavaUtils;
+import org.talend.core.GlobalServiceRegister;
+import org.talend.core.ILibraryManagerService;
+import org.talend.core.ILibraryManagerUIService;
+import org.talend.core.model.general.Project;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.pigmap.PigMapConstants;
 import org.talend.designer.pigmap.PigMapPlugin;
 import org.talend.designer.rowgenerator.data.AbstractTalendFunctionParser;
 import org.talend.designer.rowgenerator.data.Function;
 import org.talend.designer.rowgenerator.data.FunctionManager;
+import org.talend.repository.ProjectManager;
+import org.talend.repository.model.ResourceModelUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -193,12 +202,37 @@ public class PigFunctionParser extends AbstractTalendFunctionParser {
     }
 
     public void datafuJarParse() throws Exception {
-        Bundle bundle = Platform.getBundle("org.talend.libraries.pig"); //$NON-NLS-1$
-        URL datafuJarURL = FileLocator.toFileURL(FileLocator.find(bundle, new Path("/lib/datafu-1.2.0.jar"), null)); //$NON-NLS-1$
-        URL pigJarURL = FileLocator.toFileURL(FileLocator.find(bundle, new Path("/lib/pig-0.10.0.jar"), null)); //$NON-NLS-1$
+        String[] jarNames = new String[] { "pig-0.10.0.jar", "datafu-1.2.0.jar" };//$NON-NLS-1$//$NON-NLS-2$
+        List<URL> listURL = new ArrayList<URL>();
+        List<String> missModulesNeeded = new ArrayList<String>();
+        for (String jarName : jarNames) {
+            ILibraryManagerService librairesService = (ILibraryManagerService) GlobalServiceRegister.getDefault().getService(
+                    ILibraryManagerService.class);
+            String javaLibPath = getJavaLibPath();
+            if (librairesService.contains(jarName)) {
+                librairesService.retrieve(jarName, javaLibPath, new NullProgressMonitor());
+            } else {
+                missModulesNeeded.add(jarName);
+            }
+            File jar = new Path(javaLibPath).append(jarName).toFile();
+            listURL.add(jar.toURL());
+        }
+        if (!missModulesNeeded.isEmpty()) {
+            // if there is no local library available, try to install it from the wizard
+            if (GlobalServiceRegister.getDefault().isServiceRegistered(ILibraryManagerUIService.class)) {
+                ILibraryManagerUIService libUiService = (ILibraryManagerUIService) GlobalServiceRegister.getDefault().getService(
+                        ILibraryManagerUIService.class);
+                if (libUiService != null) {
+                    libUiService.installModules(missModulesNeeded.toArray(new String[0]));
+                    return;
+                }
+            }
+        }
+
         try {
-            MyURLClassLoader cl = new MyURLClassLoader(new URL[] { datafuJarURL, pigJarURL });
-            Class[] classes = cl.getAssignableClasses(EvalFunc.class, new AssignableClassFilter());
+            MyURLClassLoader cl = new MyURLClassLoader(listURL.toArray(new URL[0]));
+            Class newClass = Class.forName("org.apache.pig.EvalFunc", true, cl);//$NON-NLS-1$
+            Class[] classes = cl.getAssignableClasses(newClass, new AssignableClassFilter());
             for (Class classe : classes) {
                 String className = classe.getSimpleName();
                 StringBuffer strTemp = new StringBuffer();
@@ -226,6 +260,24 @@ public class PigFunctionParser extends AbstractTalendFunctionParser {
         } catch (Exception ex) {
             ExceptionHandler.process(ex);
         }
+    }
+
+    public static String getJavaLibPath() {
+        Project project = ProjectManager.getInstance().getCurrentProject();
+        IProject physProject;
+        String tmpFolder = System.getProperty("user.dir"); //$NON-NLS-1$
+        try {
+            physProject = ResourceModelUtils.getProject(project);
+            tmpFolder = physProject.getFolder("temp").getLocation().toPortableString(); //$NON-NLS-1$
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+        tmpFolder = tmpFolder + "/pigmap"; //$NON-NLS-1$
+        File file = new File(tmpFolder);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return tmpFolder + "/"; //$NON-NLS-1$
     }
 
     class AssignableClassFilter implements IAssignableClassFilter {
