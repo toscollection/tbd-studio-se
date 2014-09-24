@@ -205,17 +205,13 @@ public class PigFunctionParser extends AbstractTalendFunctionParser {
         String[] jarNames = new String[] { "pig-0.10.0.jar", "datafu-1.2.0.jar" };//$NON-NLS-1$//$NON-NLS-2$
         List<URL> listURL = new ArrayList<URL>();
         List<String> missModulesNeeded = new ArrayList<String>();
+        ILibraryManagerService librairesService = (ILibraryManagerService) GlobalServiceRegister.getDefault().getService(
+                ILibraryManagerService.class);
+        String javaLibPath = getJavaLibPath();
         for (String jarName : jarNames) {
-            ILibraryManagerService librairesService = (ILibraryManagerService) GlobalServiceRegister.getDefault().getService(
-                    ILibraryManagerService.class);
-            String javaLibPath = getJavaLibPath();
-            if (librairesService.contains(jarName)) {
-                librairesService.retrieve(jarName, javaLibPath, new NullProgressMonitor());
-            } else {
+            if (!librairesService.contains(jarName)) {
                 missModulesNeeded.add(jarName);
             }
-            File jar = new Path(javaLibPath).append(jarName).toFile();
-            listURL.add(jar.toURL());
         }
         if (!missModulesNeeded.isEmpty()) {
             // if there is no local library available, try to install it from the wizard
@@ -224,9 +220,13 @@ public class PigFunctionParser extends AbstractTalendFunctionParser {
                         ILibraryManagerUIService.class);
                 if (libUiService != null) {
                     libUiService.installModules(missModulesNeeded.toArray(new String[0]));
-                    return;
                 }
             }
+        }
+        for (String jarName : jarNames) {
+            librairesService.retrieve(jarName, javaLibPath, new NullProgressMonitor());
+            File jar = new Path(javaLibPath).append(jarName).toFile();
+            listURL.add(jar.toURL());
         }
 
         try {
