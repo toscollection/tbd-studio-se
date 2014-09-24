@@ -52,7 +52,6 @@
     String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
 	String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
-	System.out.println("dbVersion="+dbVersion);
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
