@@ -35,7 +35,7 @@
             FIELD="LABEL"
             NUM_ROW="2"
             COLOR="255;0;0"
-            SHOW_IF="DB_VERSION=='CASSANDRA_2_1_X'"
+            SHOW_IF="DB_VERSION == 'CASSANDRA_2_0_0' OR DB_VERSION == 'CASSANDRA_2_0_8'"
         >
             <DEFAULT>This component requires a Java 1.7</DEFAULT>
         </PARAMETER>
@@ -81,7 +81,8 @@
             <ITEMS DEFAULT="CASSANDRA_1_1_2">
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
-                <ITEM NAME="CASSANDRA_2_1_X" VALUE="CASSANDRA_2_1_X"/>
+                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
+                <ITEM NAME="CASSANDRA_2_0_8" VALUE="CASSANDRA_2_0_8"/>
             </ITEMS>
         </PARAMETER>
         <PARAMETER
