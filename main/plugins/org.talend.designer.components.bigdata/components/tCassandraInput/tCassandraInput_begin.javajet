@@ -262,7 +262,7 @@
 					nb_line_<%=cid %>++;
 					me.prettyprint.hector.api.beans.Row row_<%=cid%>=(me.prettyprint.hector.api.beans.Row)rows_<%=cid%>.next();
 					me.prettyprint.hector.api.beans.ColumnSlice slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
-					<% if("CASSANDRA_2_1_X".equals(dbVersion)) { %>
+					<% if("CASSANDRA_2_0_0".equals(dbVersion)) { %>
 					List<me.prettyprint.hector.api.beans.HColumn<String,String>> cols_<%=cid%> = slice_<%=cid%>.getColumns();
 					<%}%>
 			<%
@@ -362,7 +362,7 @@
 							}else{
 								if("STANDARD".equals(columnFamilyType)){
 								%>
-								<% if("CASSANDRA_2_1_X".equals(dbVersion)) { %>
+								<% if("CASSANDRA_2_0_0".equals(dbVersion)) { %>
 									if(<%=i%> < cols_<%=cid%>.size()) {
 										column_<%=cid%> = cols_<%=cid%>.get(<%=i%>);
 									}

@@ -54,7 +54,6 @@
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
-                <ITEM NAME="CASSANDRA_2_0_8" VALUE="CASSANDRA_2_0_8"/>
             </ITEMS>
         </PARAMETER>
 		<PARAMETER
@@ -258,42 +257,42 @@
                 MODULE="hector-core-2.0-0.jar"
                 NAME="hector-core-2.0-0"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-2.0-0.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 MODULE="cassandra-thrift-2.0.4.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.0.4.jar"
                 NAME="cassandra-thrift-2.0.4"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 MODULE="slf4j-api-1.7.5.jar"
                 NAME="slf4j-api-1.7.5"
                 UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 MODULE="slf4j-log4j12-1.7.5.jar"
                 NAME="slf4j-log4j12-1.7.5"
                 UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 MODULE="log4j-1.2.16.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
                 NAME="log4j-1.2.16"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 NAME="libthrift-0.9.1"
                 MODULE="libthrift-0.9.1.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.cassandra/lib/libthrift-0.9.1.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 MODULE="guava-14.0.jar"
                 NAME="guava-14.0"
                 UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-14.0.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 MODULE="commons-lang-2.6.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
                 NAME="commons-lang-2.6"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_0_8'))" />
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
     	</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />
