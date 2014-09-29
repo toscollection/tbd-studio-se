@@ -61,6 +61,8 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
 
     protected Composite parentComposite;
 
+    protected Composite topComposite;
+
     private final NoSQLConnectionContextManager nosqlContextManger;
 
     protected Set<String> attributes;
@@ -97,8 +99,8 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
 
     @Override
     protected void addFields() {
-        Composite parent = createScrolledComposite();
-        addConnFields(parent);
+        topComposite = createScrolledComposite();
+        addConnFields(topComposite);
         createCheckBtn(this);
     }
 

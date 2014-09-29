@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.repository.nosql.db.ui.neo4j;
 
+import java.io.File;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.wizard.WizardPage;
@@ -62,6 +64,8 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
 
     private LabelledText dbPathTxt;
 
+    private LabelledText absPathTxt;
+
     private LabelledText serverURLTxt;
 
     public Neo4jConnForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
@@ -85,6 +89,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         udpateDBConnPart(isRemote);
         dbPathTxt.setText(dbPath);
         serverURLTxt.setText(serverURL == null ? INeo4jConstants.DEFAULT_SERVER_URL : serverURL);
+        updateAbsPathStatus();
     }
 
     @Override
@@ -129,9 +134,12 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         localDBCompLayout.marginWidth = 0;
         localDBCompLayout.marginHeight = 0;
         localDBComposite.setLayout(localDBCompLayout);
-        dbPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.dbPath.label")); //$NON-NLS-1$
+        dbPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.dbPath.label"), 2); //$NON-NLS-1$
         browseDbPathBtn = new Button(localDBComposite, SWT.NONE);
         browseDbPathBtn.setText("..."); //$NON-NLS-1$
+        absPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.absPath.label"), 2); //$NON-NLS-1$
+        absPathTxt.getTextControl().setEditable(false);
+        absPathTxt.setHideWidgets(true);
 
         remoteDBComposite = new Composite(dbComposite, SWT.NONE);
         remoteDBComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -145,6 +153,15 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
     private void udpateDBConnPart(boolean isRemote) {
         dbLayout.topControl = isRemote ? remoteDBComposite : localDBComposite;
         dbComposite.layout();
+    }
+
+    private void updateAbsPathStatus() {
+        String dbPath = dbPathTxt.getText();
+        String absPath = new File(dbPath).getAbsolutePath();
+        absPath = Path.fromOSString(absPath).toPortableString();
+        absPathTxt.setText(absPath);
+        absPathTxt.setHideWidgets(dbPath.equalsIgnoreCase(absPath));
+        topComposite.layout();
     }
 
     @Override
@@ -195,6 +212,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
                     if (!StringUtils.equals(originalDBPath, currentDBPath)) {
                         getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, currentDBPath);
                         udpateConnectionConfig();
+                        updateAbsPathStatus();
                     }
                 }
             }
