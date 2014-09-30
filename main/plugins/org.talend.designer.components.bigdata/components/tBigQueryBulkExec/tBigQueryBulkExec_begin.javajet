@@ -45,11 +45,11 @@
 	final List<String> SCOPES_<%=cid%> = java.util.Arrays.asList("https://www.googleapis.com/auth/bigquery");
 	final String REDIRECT_URI_<%=cid%> = "urn:ietf:wg:oauth:2.0:oob";
 	final com.google.api.client.http.HttpTransport TRANSPORT_<%=cid %> = new com.google.api.client.http.javanet.NetHttpTransport();
-	final com.google.api.client.json.JsonFactory JSON_FACTORY_<%=cid %> = new com.google.api.client.json.jackson.JacksonFactory();
+	final com.google.api.client.json.JsonFactory JSON_FACTORY_<%=cid %> = new com.google.api.client.json.jackson2.JacksonFactory();
 
 	com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets clientSecrets_<%=cid%> = com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets.load(
-					new com.google.api.client.json.jackson.JacksonFactory(), new java.io.ByteArrayInputStream(
-							CLIENT_SECRET_<%=cid%>.getBytes()));
+					new com.google.api.client.json.jackson2.JacksonFactory(), new java.io.InputStreamReader(new java.io.ByteArrayInputStream(
+							CLIENT_SECRET_<%=cid%>.getBytes())));
 
 	com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow flow_<%=cid%> = null;
 	com.google.api.services.bigquery.Bigquery bigqueryclient_<%=cid%> = null;
@@ -106,7 +106,7 @@
 		<%
 		}
 		%>
-		bigqueryclient_<%=cid%> = com.google.api.services.bigquery.Bigquery.builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson.JacksonFactory()).setHttpRequestInitializer(credential_<%=cid%>).setApplicationName("Talend").build();
+		bigqueryclient_<%=cid%> = new com.google.api.services.bigquery.Bigquery.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson2.JacksonFactory(),credential_<%=cid%>).setApplicationName("Talend").build();
 	} else {
 		<%
 		if(authorizationCode==null || "".equals(authorizationCode) || "\"\"".equals(authorizationCode)) {
@@ -139,7 +139,7 @@
 			// Exchange the auth code for an access token and refesh token
 			if (flow_<%=cid%> == null) {
 				flow_<%=cid%> = new com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),
-						new com.google.api.client.json.jackson.JacksonFactory(), clientSecrets_<%=cid%>, SCOPES_<%=cid%>)
+						new com.google.api.client.json.jackson2.JacksonFactory(), clientSecrets_<%=cid%>, SCOPES_<%=cid%>)
 						.setAccessType("offline").setApprovalPrompt("force")
 						.build();
 			}
@@ -161,7 +161,7 @@
 			    outputStream_<%=cid%>.close();
 			}
 
-			bigqueryclient_<%=cid%> = com.google.api.services.bigquery.Bigquery.builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson.JacksonFactory()).setHttpRequestInitializer(credential_<%=cid%>).build();
+			bigqueryclient_<%=cid%> = new com.google.api.services.bigquery.Bigquery.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson2.JacksonFactory(),credential_<%=cid%>).build();
 		<%
 		}
 		%>
@@ -299,6 +299,7 @@
 	<%
 	}
 	%>
+	queryLoad_<%=cid%>.setAllowQuotedNewlines(true);
 
 	queryLoad_<%=cid%>.setWriteDisposition("WRITE_<%=actionOnData%>");
 	com.google.api.services.bigquery.model.TableReference destinationTable_<%=cid%> = new com.google.api.services.bigquery.model.TableReference();
@@ -368,10 +369,10 @@
 		com.google.api.services.bigquery.model.Job doneJob_<%=cid%> = pollJob_<%=cid%>;
 		System.out.println("Done: " + doneJob_<%=cid%>.toString());
 		com.google.api.services.bigquery.model.JobStatistics jobStatistics_<%=cid%>= doneJob_<%=cid%>.getStatistics();
-		if(jobStatistics_<%=cid%>!=null && jobStatistics_<%=cid%>.get("load") != null){
-			com.google.api.client.util.ArrayMap loadObject_<%=cid%> = (com.google.api.client.util.ArrayMap)jobStatistics_<%=cid%>.get("load");
-			if(loadObject_<%=cid%>.get("outputRows") != null){
-				nb_line_<%=cid%> = Long.valueOf(loadObject_<%=cid%>.get("outputRows").toString());
+		if(jobStatistics_<%=cid%>!=null && jobStatistics_<%=cid%>.getLoad() != null){
+			com.google.api.services.bigquery.model.JobStatistics3 loadObject_<%=cid%> = jobStatistics_<%=cid%>.getLoad();
+			if(loadObject_<%=cid%>!= null){
+				nb_line_<%=cid%> = loadObject_<%=cid%>.getOutputRows();
 			}
 		}
 		<%
