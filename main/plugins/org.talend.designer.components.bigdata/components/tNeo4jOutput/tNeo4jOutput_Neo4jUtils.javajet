@@ -21,19 +21,29 @@ class Neo4jUtils {
     private String cid;
     private INode node;
     private String dataAction;
+    private boolean useLabel;
+    private String neo4jLabel;
 
-    public Neo4jUtils(String cid, INode node,String dataAction, String incomingConnName, List<IMetadataColumn> columnList) {
+    public Neo4jUtils(String cid, INode node,String dataAction, String incomingConnName, List<IMetadataColumn> columnList, boolean useLabel, String neo4jLabel) {
         this.cid = cid;
 		this.incomingConnName = incomingConnName;
 		this.columnList = columnList;
 		this.node = node;
         this.dataAction = dataAction;
+        this.useLabel = useLabel;
+        this.neo4jLabel = neo4jLabel;
 	}
 
 	public void generateNodeInsert() {
-		%>
+	    %>
 		org.neo4j.graphdb.Node node_<%=cid%> = databaseService_<%=cid%>.createNode();
-		<%
+        <%
+        if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+    		node_<%=cid%>.addLabel(label_<%=cid%>);
+    		<%
+	    }
 		generateNode();
 	}
 
@@ -47,7 +57,13 @@ class Neo4jUtils {
 			node_<%=cid%> = databaseService_<%=cid%>.createNode();
 		}
 		<%
-		generateNode();
+        if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+            node_<%=cid%>.addLabel(label_<%=cid%>);
+            <%
+        }
+        generateNode();
 	}
 
 	public void generateNodeUpdate() {
@@ -60,7 +76,13 @@ class Neo4jUtils {
 			throw new RuntimeException("Node not found");
 		}
 		<%
-		generateNode();
+		if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+            node_<%=cid%>.addLabel(label_<%=cid%>);
+            <%
+        }
+        generateNode();
 	}
 
 	public void generateNodeDelete() {
@@ -78,7 +100,15 @@ class Neo4jUtils {
 					relationship_<%=cid%>.delete();
 				}
 			}
-			node_<%=cid%>.delete();
+			<%
+			if (useLabel) {
+	            %>
+	            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+	            node_<%=cid%>.addLabel(label_<%=cid%>);
+	            <%
+	        }
+			%>
+	        node_<%=cid%>.delete();
 		}
 		<%
 	}

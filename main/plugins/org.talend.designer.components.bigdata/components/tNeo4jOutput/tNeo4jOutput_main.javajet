@@ -22,6 +22,8 @@
     final String dataAction = ElementParameterParser.getValue(node, "__DATA_ACTION__");
     String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__");
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
+    boolean useLabel = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_LABEL__"));
+    String neo4jLabel = ElementParameterParser.getValue(node, "__LABEL_NAME__");
     
     List<IMetadataColumn> columnList = null;
     List<IMetadataTable> metadatas = node.getMetadataList();
@@ -56,10 +58,10 @@
     }
 
     if (batchImport) {
-    	Neo4jBatchUtils neo4jBatchUtils = new Neo4jBatchUtils(cid, node, incomingConnName, columnList);
+    	Neo4jBatchUtils neo4jBatchUtils = new Neo4jBatchUtils(cid, node, incomingConnName, columnList, useLabel, neo4jLabel);
     	neo4jBatchUtils.generateNodeBatchInsert();
     } else {
-    	Neo4jUtils neo4jUtils = new Neo4jUtils(cid, node, dataAction, incomingConnName, columnList);
+    	Neo4jUtils neo4jUtils = new Neo4jUtils(cid, node, dataAction, incomingConnName, columnList, useLabel, neo4jLabel);
 	    if (dataAction.equals("INSERT")) {
 		    neo4jUtils.generateNodeInsert();
 		} else if (dataAction.equals("INSERT_OR_UPDATE")) {

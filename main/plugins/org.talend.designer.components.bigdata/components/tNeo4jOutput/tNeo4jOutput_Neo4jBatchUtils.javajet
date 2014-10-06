@@ -20,12 +20,16 @@ class Neo4jBatchUtils {
     private String incomingConnName;
     private String cid;
     private INode node;
+    private boolean useLabel;
+    private String neo4jLabel;
 
-	public Neo4jBatchUtils(String cid, INode node, String incomingConnName, List<IMetadataColumn> columnList) {
+	public Neo4jBatchUtils(String cid, INode node, String incomingConnName, List<IMetadataColumn> columnList, boolean useLabel, String neo4jLabel) {
 	    this.cid = cid;
 		this.incomingConnName = incomingConnName;
 		this.columnList = columnList;
 		this.node = node;
+        this.useLabel = useLabel;
+        this.neo4jLabel = neo4jLabel;
 	}
 
 	public void generateNodeBatchInsert() {
@@ -83,7 +87,20 @@ class Neo4jBatchUtils {
 
 	private void generateNode() {
 		%>
-		long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>);
+		<%
+        if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+            long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>, label_<%=cid%>);
+            <%
+        } else {
+            %>
+            long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>);
+            <%
+        }
+		%>
+		
+		
 		java.util.Map<String, Long> endNode_<%=cid%> = new java.util.HashMap<String,Long>();
 		java.util.Map<String, Object> indexProperties_<%=cid%> = new java.util.HashMap<String, Object>();
 		java.util.Map<String, java.util.Map<String, Object>> indexPropertiesMap_<%=cid%> = new java.util.HashMap<String, java.util.Map<String, Object>>();
