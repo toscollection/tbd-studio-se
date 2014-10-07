@@ -26,8 +26,8 @@
 	boolean defineStagingTable = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_STAGING_TABLE__"));
 	String stagingTable = ElementParameterParser.getValue(node, "__STAGING_TABLE__");
     boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
-	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CAL_PROC_STOCK__"));
-	String procStock = ElementParameterParser.getValue(node, "__PROC_STOCK__");
+	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CALL_PROC_STOC__"));
+	String procStock = ElementParameterParser.getValue(node, "__PROC_STOC__");
 	boolean defineUpdateMode = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_UPDATE_MODE__"));
 	String updateMode = ElementParameterParser.getValue(node, "__UPDATE_MODE__");
 	boolean overrideJavaMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_JAVA_MAPPING__"));
@@ -43,7 +43,13 @@
 	com.cloudera.sqoop.SqoopOptions sqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
 	
 	sqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
-	sqoopOptions_<%=cid%>.setTableName(<%=table%>);
+<%	
+	if(!callProcStock) {
+%>
+		sqoopOptions_<%=cid%>.setTableName(<%=table%>);
+<%
+	}
+%>
 	sqoopOptions_<%=cid%>.setExportDir(<%=exportDir%>);
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	
@@ -70,12 +76,12 @@
 	<%if(direct && (!defineUpdateMode || "updateonly".equals(updateMode))){%>sqoopOptions_<%=cid%>.setDirectMode(true);<%}%>
 	<%if(useMappers){%>sqoopOptions_<%=cid%>.setNumMappers(Integer.valueOf(<%=mappers%>));<%}%>
 	<%if(useBatchMode){%>sqoopOptions_<%=cid%>.setBatchMode(true);<%}%>
-	<%if(clearStagingTable && !useColumnForUpdate){%>sqoopOptions_<%=cid%>.setClearStagingTable(true);<%}%>
+	<%if(clearStagingTable && !useColumnForUpdate && !callProcStock){%>sqoopOptions_<%=cid%>.setClearStagingTable(true);<%}%>
 	<%if(callProcStock){%>sqoopOptions_<%=cid%>.setCall(<%=procStock%>);<%}%>
-	<%if(defineStagingTable && !useColumnForUpdate){%>sqoopOptions_<%=cid%>.setStagingTableName(<%=stagingTable%>);<%}%>
-	<%if(defineUpdateMode){%>sqoopOptions_<%=cid%>.setUpdateMode(com.cloudera.sqoop.SqoopOptions.<%="updateonly".equals(updateMode)?"UpdateMode.UpdateOnly":"UpdateMode.AllowInsert"%>);<%}%>
+	<%if(defineStagingTable && !useColumnForUpdate && !callProcStock){%>sqoopOptions_<%=cid%>.setStagingTableName(<%=stagingTable%>);<%}%>
+	<%if(!useColumnForUpdate && defineUpdateMode){%>sqoopOptions_<%=cid%>.setUpdateMode(com.cloudera.sqoop.SqoopOptions.<%="updateonly".equals(updateMode)?"UpdateMode.UpdateOnly":"UpdateMode.AllowInsert"%>);<%}%>
 	<%
-		if(useColumnForUpdate) {
+		if(useColumnForUpdate && !defineUpdateMode && !callProcStock) {
 			List<Map<String,String>> columnsForUpdate = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__COLUMN_FOR_UPDATE__");
 			if(columnsForUpdate!=null && columnsForUpdate.size()>0) {
 	%>
