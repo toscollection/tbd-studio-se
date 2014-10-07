@@ -26,7 +26,7 @@
 	<PARAMETERS>
         <PARAMETER NAME="NOTE_COMMANDINE" FIELD="LABEL" REQUIRED="true"
             NUM_ROW="1" SHOW_IF="(USE_COMMANDLINE=='true')">
-            <DEFAULT>The available options are based on Sqoop 1.4.4. If you use an earlier version, read the Sqoop documentation in order to find those which are not available.
+            <DEFAULT><![CDATA[The available options are based on Sqoop 1.4.4. If you use an earlier version, read the Sqoop documentation in order to find those which are not available.]]>
             </DEFAULT>
         </PARAMETER>
 		<PARAMETER NAME="USE_COMMANDLINE" FIELD="RADIO" REQUIRED="true"
