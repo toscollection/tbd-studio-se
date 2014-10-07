@@ -4,6 +4,7 @@
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	boolean isCustom = "CUSTOM".equals(distribution);
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	String processId = node.getProcess().getId();
 
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 
@@ -165,8 +166,19 @@
 <%
 	}
 %>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tSqoopImport/sqoop-avro-dependency.javajet"%>
 	try {
-		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+<%
+		if(!emptyStringBuilder) {
+%>
+			int result_<%=cid%> = org.apache.sqoop.Sqoop.runSqoop(sqoop_<%=cid%>, new String[] {"-libjars", sb_<%=cid%>.toString()});
+<%
+		} else {
+%>
+			int result_<%=cid%> = org.apache.sqoop.Sqoop.runSqoop(sqoop_<%=cid%>, new String[] {});
+<%
+		}
+%>
 		if(result_<%=cid%> != 0) {
 <%
 			if(dieOnError) {

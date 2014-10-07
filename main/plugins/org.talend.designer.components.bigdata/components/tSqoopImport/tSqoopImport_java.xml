@@ -277,7 +277,8 @@
 			<ITEMS DEFAULT="textfile">
 				<ITEM NAME="textfile" VALUE="textfile" />
 				<ITEM NAME="sequencefile" VALUE="sequencefile" />
-				<ITEM NAME="avrofile" VALUE="avrofile" />
+				<ITEM NAME="avrofile" VALUE="avrofile"
+					NOT_SHOW_IF="(USE_JAVAAPI=='true' AND DISTRIBUTION!='CUSTOM' AND (DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_1' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='HDP_1_3' OR DB_VERSION=='MAPR1' OR DB_VERSION=='MAPR2' OR DB_VERSION=='MAPR212' OR DB_VERSION=='MAPR213' OR DB_VERSION=='MAPR301' OR DB_VERSION=='MAPR310' OR DB_VERSION=='Cloudera_CDH3'))" />
 			</ITEMS>
 		</PARAMETER>
 
@@ -1566,6 +1567,9 @@
 			<IMPORT NAME="avro-1.7.5-cdh5.0.4.jar" MODULE="avro-1.7.5-cdh5.0.4.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/avro-1.7.5-cdh5.0.4.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION!='CUSTOM')" />
+
+			<IMPORT NAME="avro-mapred-1.5.4.jar" MODULE="avro-mapred-1.5.4.jar"
+				REQUIRED_IF="FILE_FORMAT=='avrofile'" />
 
 		</IMPORTS>
 	</CODEGENERATION>

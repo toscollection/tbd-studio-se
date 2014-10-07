@@ -1,0 +1,49 @@
+<%@ jet 
+%>
+<%
+	// Register jars to handle the Avro format.
+	
+	boolean generateAddJarCodeForAll = "avrofile".equals(fileFormat);
+	boolean emptyStringBuilder = true; // true when we don't import any dependency in the libjars.
+		
+	java.util.List<String> jarsToRegister = null;
+	java.util.List<String> jars = null;
+	if(generateAddJarCodeForAll) {
+		String[] commandLine = new String[] {"<command>"};
+		try {
+			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
+		} catch (ProcessorException e) {
+			e.printStackTrace();
+		}
+	
+		jarsToRegister = new java.util.ArrayList();
+		jarsToRegister.add("avro-");
+	
+		for (int j = 0; j < commandLine.length; j++) {
+			if(commandLine[j].contains("jar")) {
+				jars = java.util.Arrays.asList(commandLine[j].split(";"));
+				break;
+			}
+		}
+	}
+		
+	if(jarsToRegister!=null && jars!=null) {
+%>
+		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>	
+		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+		java.lang.StringBuilder sb_<%=cid%> = new java.lang.StringBuilder();
+<%
+		
+		for(int i=0; i<jarsToRegister.size(); i++) {
+			String jarToRegister = jarsToRegister.get(i);
+			for(int j=0; j<jars.size(); j++) {
+				if(jars.get(j).contains(jarToRegister)) {
+					emptyStringBuilder = false;
+%>
+					sb_<%=cid%>.append(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>", "file:///") + ",");
+<%
+				}
+			}
+		}
+	}
+%>
