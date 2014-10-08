@@ -77,7 +77,7 @@ imports="
 									if("true".equals(isjson)){
 										String jsonfield = ElementParameterParser.getValue(node,"__JSONFIELD__");
 										%>
-	                                	net.spy.memcached.internal.OperationFuture<Boolean> operation_<%=cid%> = client_<%=cid%>.<%=dataAction%>(<%=connName%>.<%=key%>, <%=expire%>, <%=connName%>.<%=jsonfield%>);
+	                                	net.spy.memcached.internal.OperationFuture<Boolean> operation_<%=cid%> = client_<%=cid%>.<%=dataAction%>(<%=connName%>.<%=key%>.toString(), <%=expire%>, <%=connName%>.<%=jsonfield%>);
 									<%
 		                            }else{
 		                                String value = ElementParameterParser.getValue(node,"__VALUE__");
