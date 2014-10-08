@@ -11,8 +11,8 @@
   <packaging>pom</packaging>
   <repositories>
 	<repository>
-		<id>talend_nexus</id>
-		<url>http://newbuild.talend.com:8081/nexus/content/repositories/snapshots/</url>
+		<id>talend_open</id>
+		<url>http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSource/</url>
 	</repository>
   </repositories>
   <modules>
