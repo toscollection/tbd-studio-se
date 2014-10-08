@@ -417,12 +417,14 @@ imports="
 				connectionMode = "";
 				setFsDefaultName = false;
 				fsDefaultName = "";
+				dbuser = "";
 				String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 				for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
 					if(connection!=null && connection.equals(pNode.getUniqueName())) {
 						connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
 						setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
 						fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
+						dbuser = ElementParameterParser.getValue(pNode, "__USER__");
 						break;
 					}
 				}
