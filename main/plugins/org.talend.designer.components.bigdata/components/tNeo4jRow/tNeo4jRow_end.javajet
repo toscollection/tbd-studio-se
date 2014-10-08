@@ -13,10 +13,9 @@
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
     %>
-    if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
-		tx_<%=cid%>.success();
-		tx_<%=cid%>.finish();
-	}
+    // End the transaction
+    tx_<%=cid%>.success();
+    tx_<%=cid%>.finish();
 <%
 	if (!useExistingConnection||(useExistingConnection && shutdownDb)) {
 %>
