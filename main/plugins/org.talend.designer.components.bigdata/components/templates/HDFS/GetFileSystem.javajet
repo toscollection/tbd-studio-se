@@ -26,6 +26,13 @@ boolean isCustom = false;
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
 log4jFileUtil.componentStartInfo(node);
+
+java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
+	"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1",
+	"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1",
+	"APACHE_1_0_0","APACHE_1_0_3_EMR",
+	"PIVOTAL_HD_2_0"
+);
 %>
 String username_<%=cid%> = "";
 org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
@@ -60,7 +67,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 		}
 	}
 	
-	if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("HDP_1_3").equals(hadoopVersion) || ("HDP_2_0").equals(hadoopVersion) || ("HDP_2_1").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) || ("Cloudera_CDH4_YARN").equals(hadoopVersion) || ("Cloudera_CDH5").equals(hadoopVersion) || ("Cloudera_CDH5_1").equals(hadoopVersion) || ("PIVOTAL_HD_2_0").equals(hadoopVersion)) && useKrb && !isCustom)
+	if(!(((hadoopVersion!=null && supportKrbVersionList.contains(hadoopVersion)) && useKrb && !isCustom)
 	   || (isCustom && "KRB".equals(auth)))) {
 		user = ElementParameterParser.getValue(node, "__USERNAME__");
 	} else {
@@ -112,7 +119,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 		    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 			<%
 		  	}else{
-				if(!(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("HDP_1_3").equals(hadoopVersion) || ("HDP_2_0").equals(hadoopVersion) || ("HDP_2_1").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) || ("Cloudera_CDH4_YARN").equals(hadoopVersion) || ("Cloudera_CDH5").equals(hadoopVersion) || ("Cloudera_CDH5_1").equals(hadoopVersion) || ("PIVOTAL_HD_2_0").equals(hadoopVersion)) && !isCustom && useKrb) || (isCustom && "KRB".equals(auth)))) {
+				if(!(((hadoopVersion!=null && supportKrbVersionList.contains(hadoopVersion)) && !isCustom && useKrb) || (isCustom && "KRB".equals(auth)))) {
 					user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
 				} else {
 %>
