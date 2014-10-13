@@ -56,7 +56,15 @@
 		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
 	<%
 	}
-	if(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("HDP_1_3").equals(hadoopVersion) || ("HDP_2_0").equals(hadoopVersion) || ("HDP_2_1").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) || ("Cloudera_CDH4_YARN").equals(hadoopVersion) || ("Cloudera_CDH5").equals(hadoopVersion) || ("Cloudera_CDH5_1").equals(hadoopVersion) || ("PIVOTAL_HD_2_0").equals(hadoopVersion)) && useKrb && !isCustom)
+	
+	List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
+		"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1",
+		"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1",
+		"APACHE_1_0_0","APACHE_1_0_3_EMR",
+		"PIVOTAL_HD_2_0"
+	);
+	
+	if(((hadoopVersion!=null && supportKrbVersionList.contains(hadoopVersion)) && useKrb && !isCustom)
 	   || (isCustom && "KRB".equals(auth))) {
 %>
 		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);

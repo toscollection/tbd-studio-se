@@ -15,6 +15,7 @@ package org.talend.repository.hadoopcluster.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -86,10 +87,6 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             distributionCombo.select(0);
         }
         updateVersionPart();
-        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
-        if (version4Drivers != null) {
-            versionCombo.setText(version4Drivers.getVersionDisplay());
-        }
         useYarnButton.setSelection(getConnection().isUseYarn());
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -104,7 +101,6 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     @Override
     protected void addFields() {
         addVersionFields();
-        updateVersionPart();
     }
 
     private void addVersionFields() {
@@ -145,18 +141,19 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 String newDistributionDisplayName = distributionCombo.getText();
                 EHadoopDistributions newDistribution = EHadoopDistributions
                         .getDistributionByDisplayName(newDistributionDisplayName);
+                String newDistributionName = newDistribution.getName();
                 String originalDistributionName = getConnection().getDistribution();
-                EHadoopDistributions originalDistribution = EHadoopDistributions.getDistributionByName(originalDistributionName,
-                        false);
-                if (newDistribution != null && newDistribution != originalDistribution) {
-                    getConnection().setDistribution(newDistribution.getName());
-                    getConnection().setUseCustomVersion(newDistribution == EHadoopDistributions.CUSTOM);
+                getConnection().setDistribution(newDistribution.getName());
+                getConnection().setUseCustomVersion(newDistribution == EHadoopDistributions.CUSTOM);
+                boolean distrChanged = !StringUtils.equals(newDistributionName, originalDistributionName);
+                if (distrChanged) {
                     getConnection().setDfVersion(null);
-                    updateVersionPart();
-                    updateYarnContent();
-                    switchToInfoForm();
-                    checkFieldsValue();
                 }
+                updateVersionPart();
+                updateYarnContent();
+                switchToInfoForm();
+                checkFieldsValue();
+
             }
         });
 
@@ -165,20 +162,19 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             @Override
             public void modifyText(final ModifyEvent e) {
                 String newVersionDisplayName = versionCombo.getText();
-                EHadoopVersion4Drivers newVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersionDisplay(newVersionDisplayName);
-                String originalVersionName = getConnection().getDfVersion();
-                EHadoopVersion4Drivers originalVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersion(originalVersionName);
-                if (newVersion4Drivers != null && newVersion4Drivers != originalVersion4Drivers) {
-                    getConnection().setDfVersion(newVersion4Drivers.getVersionValue());
-                    if (newVersion4Drivers.isSupportYARN() && !newVersion4Drivers.isSupportMR1()) {
-                        getConnection().setUseYarn(true);
-                    } else {
-                        getConnection().setUseYarn(false);
-                    }
-                    updateYarnContent();
-                    switchToInfoForm();
-                    checkFieldsValue();
+                if (StringUtils.isEmpty(newVersionDisplayName)) {
+                    return;
                 }
+                EHadoopVersion4Drivers newVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersionDisplay(newVersionDisplayName);
+                getConnection().setDfVersion(newVersion4Drivers.getVersionValue());
+                if (newVersion4Drivers.isSupportYARN() && !newVersion4Drivers.isSupportMR1()) {
+                    getConnection().setUseYarn(true);
+                } else {
+                    getConnection().setUseYarn(false);
+                }
+                updateYarnContent();
+                switchToInfoForm();
+                checkFieldsValue();
             }
         });
 
@@ -222,7 +218,17 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     private void updateVersionPart() {
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(getConnection().getDistribution(), false);
+        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByDisplayName(distributionCombo.getText());
+        List<String> items = getDistributionVersions(distribution);
+        String[] versions = new String[items.size()];
+        items.toArray(versions);
+        versionCombo.getCombo().setItems(versions);
+        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
+        if (version4Drivers != null) {
+            versionCombo.setText(version4Drivers.getVersionDisplay());
+        } else {
+            versionCombo.getCombo().select(0);
+        }
         if (distribution == EHadoopDistributions.CUSTOM) {
             versionCombo.setHideWidgets(true);
             hideControl(useYarnButton, false);
@@ -231,13 +237,6 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             versionCombo.setHideWidgets(false);
             hideControl(useYarnButton, true);
             hideControl(customButton, true);
-            List<String> items = getDistributionVersions(distribution);
-            String[] versions = new String[items.size()];
-            items.toArray(versions);
-            versionCombo.getCombo().setItems(versions);
-            if (versions.length > 0) {
-                versionCombo.getCombo().select(0);
-            }
         }
     }
 
