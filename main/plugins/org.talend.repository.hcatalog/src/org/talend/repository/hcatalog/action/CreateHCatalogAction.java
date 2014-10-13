@@ -52,7 +52,8 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
                 return false;
             }
             if (distribution == EHadoopDistributions.CLOUDERA
-                    && (EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.CLOUDERA_CDH5_1
+                    && (EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue().equals(hcConnection.getDfVersion())
+                            || EHadoopVersion4Drivers.CLOUDERA_CDH5_1.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.CLOUDERA_CDH5_1_MR1
                             .getVersionValue().equals(hcConnection.getDfVersion()))) {
                 return false;
             }

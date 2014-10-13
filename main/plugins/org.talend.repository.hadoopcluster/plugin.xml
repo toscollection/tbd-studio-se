@@ -37,6 +37,7 @@
             key="repository.metadata.hadoopCluster"
             label="%hadoopCluster"
             ordinal="50"
+            parentNodeType="METADATA"
             products="DI"
             type="HADOOPCLUSTER">
       </repositoryNode>
