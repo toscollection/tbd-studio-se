@@ -100,14 +100,6 @@ class Neo4jUtils {
 					relationship_<%=cid%>.delete();
 				}
 			}
-			<%
-			if (useLabel) {
-	            %>
-	            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
-	            node_<%=cid%>.addLabel(label_<%=cid%>);
-	            <%
-	        }
-			%>
 	        node_<%=cid%>.delete();
 		}
 		<%
