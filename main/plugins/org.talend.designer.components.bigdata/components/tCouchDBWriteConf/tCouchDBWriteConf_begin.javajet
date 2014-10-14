@@ -3,6 +3,7 @@
 		org.talend.core.model.process.INode 
 		org.talend.core.model.process.ElementParameterParser 
 		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.utils.NodeUtil
 
 		java.util.Map
 		java.util.List
@@ -46,12 +47,14 @@
 	java.util.Map<Object,Object> map_<%=cid%>=null;
 	com.google.gson.JsonParser jsonParse_<%=cid%> = new com.google.gson.JsonParser();
 	int nb_line_<%=cid%> = 0;
-	int nb_line_update_<%=cid%> = 0;
+	int nb_line_updated_<%=cid%> = 0;
 	int nb_line_inserted_<%=cid%> = 0;
 	int nb_line_upserted_<%=cid%> = 0;
 	int nb_line_deleted_<%=cid%> = 0;
 	<%
 	if(useExistingConn){
+	 	INode connectionNode=NodeUtil.getNodeByUniqueName(node.getProcess(),connection);
+	 	dbname = ElementParameterParser.getValue(connectionNode, "__DATABASE__");
 	%>
 		client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
 		<%

@@ -10,6 +10,7 @@
 		org.talend.core.model.process.IConnectionCategory
 
 		java.util.List
+		java.util.Map
 	" 
 %>
 <%
@@ -36,9 +37,14 @@
 		List< ? extends IConnection> conns = node.getIncomingConnections();
 		for (IConnection conn : conns) {
 			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				Map<String,String> actionMap=new java.util.HashMap<String,String>();
 				if(isLog4jEnabled){
+					actionMap.put("INSERT","Inserting");
+					actionMap.put("UPDATE","Updating");
+					actionMap.put("DELETE","Deleting");
+					actionMap.put("UPSERT","Upserting");
 				%>
-					log.debug("<%=cid%> - Saving the record " + (nb_line_<%=cid%>+1) + ".");
+					log.debug("<%=cid%> - <%=actionMap.get(dataAction)%> the record " + (nb_line_<%=cid%>+1) + ".");
 				<%
 				}
 				%>
@@ -80,7 +86,7 @@
 						if("UPDATE".equals(dataAction)||"UPSERT".equals(dataAction)){
 						%>
 							client_<%=cid%>.update(map_<%=cid%>);
-							nb_line_update_<%=cid%> ++;
+							nb_line_updated_<%=cid%> ++;
 						<%
 		               	}
 						if("DELETE".equals(dataAction)){

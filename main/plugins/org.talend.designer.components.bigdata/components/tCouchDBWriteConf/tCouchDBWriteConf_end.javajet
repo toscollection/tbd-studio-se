@@ -3,6 +3,8 @@ imports="
         org.talend.core.model.process.INode 
         org.talend.designer.codegen.config.CodeGeneratorArgument
         org.talend.core.model.process.ElementParameterParser
+        
+        java.util.Map
 " 
 %>
 	<%
@@ -34,34 +36,23 @@ imports="
 	<%
 	}
 	%>
-	int nb_line_failed_<%=cid%> = nb_line_<%=cid%> - nb_line_update_<%=cid%> - nb_line_inserted_<%=cid%> 
+	int nb_line_failed_<%=cid%> = nb_line_<%=cid%> - nb_line_updated_<%=cid%> - nb_line_inserted_<%=cid%> 
 		- nb_line_deleted_<%=cid%>;
-	nb_line_upserted_<%=cid%> = nb_line_update_<%=cid%> + nb_line_inserted_<%=cid%>;
+	nb_line_upserted_<%=cid%> = nb_line_updated_<%=cid%> + nb_line_inserted_<%=cid%>;
 	globalMap.put("<%=dest_cid %>_NB_LINE",nb_line_<%=cid%>);
-	globalMap.put("<%=dest_cid %>_NB_LINE_UPDATED",nb_line_update_<%=cid%>);
+	globalMap.put("<%=dest_cid %>_NB_LINE_UPDATED",nb_line_updated_<%=cid%>);
 	globalMap.put("<%=dest_cid %>_NB_LINE_INSERTED",nb_line_inserted_<%=cid%>);
 	globalMap.put("<%=dest_cid %>_NB_LINE_UPSERTED",nb_line_upserted_<%=cid%>);
 	globalMap.put("<%=dest_cid %>_NB_LINE_DELETED",nb_line_deleted_<%=cid%>);
 	<%
 	if(isLog4jEnabled){
-		if("INSERT".equals(dataAction)){
+		Map<String,String> actionMap=new java.util.HashMap<String,String>();
+		actionMap.put("INSERT","inserted");
+		actionMap.put("UPDATE","updated");
+		actionMap.put("DELETE","upserted");
+		actionMap.put("UPSERT","deleted");
 		%>
-			log.info("<%=cid%> - Has inserted " + nb_line_inserted_<%=cid%> + " records.");
-		<%
-		}else if("UPDATE".equals(dataAction)){
-		%>
-			log.info("<%=cid%> - Has updated " + nb_line_update_<%=cid%> + " records.");
-		<%
-		}else if("UPSERT".equals(dataAction)){
-		%>
-			log.info("<%=cid%> - Has upserted " + nb_line_upserted_<%=cid%> + " records.");
-		<%
-		}else if("DELETE".equals(dataAction)){
-		%>
-			log.info("<%=cid%> - Has deleted " + nb_line_deleted_<%=cid%> + " records.");
-		<%
-		}
-		%>
+		log.info("<%=cid%> - Has <%=actionMap.get(dataAction)%> " + nb_line_<%=actionMap.get(dataAction)%>_<%=cid%> + " records.");
 		log.info("<%=cid%> - " + nb_line_failed_<%=cid%> + " records failed.");
 	<%
 	}

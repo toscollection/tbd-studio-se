@@ -91,8 +91,14 @@
 	if(useExistingConn){
 	%>
 		client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
-	
-	<%
+		<%
+		if(isLog4jEnabled){
+		%>	
+			if(client_<%=cid%> != null) {
+				log.info("<%=cid%> - Get an existing client from " + "<%=connection%>" + ".");
+			}
+		<%
+		}
 	}else{
 	%>
 		client_<%=cid%> = new org.lightcouch.CouchDbClient(<%=dbname%>, true, "http", <%=dbhost%>, <%=dbport%>, <%=dbuser%>, decryptedPassword_<%=cid%>);
