@@ -52,13 +52,6 @@ imports="
 			if(escapeChar_<%=cid %>=='\\'){
 			}else if(escapeChar_<%=cid %> == textEnclosure_<%=cid %>){
 			}else {
-				<%
-				if(isLog4jEnabled){
-				%>
-					log.warn("<%=cid%> - The escape mode only support the '\\' or double text enclosure.");
-				<%
-				}
-				%>
 				throw new RuntimeException("The escape mode only support the '\\' or double text enclosure.");
 			}
 					

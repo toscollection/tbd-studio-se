@@ -109,6 +109,11 @@
 		bigqueryclient_<%=cid%> = new com.google.api.services.bigquery.Bigquery.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson2.JacksonFactory(),credential_<%=cid%>).setApplicationName("Talend").build();
 	} else {
 		<%
+		if(isLog4jEnabled){
+		%>
+			log.info("<%=cid%> - The refresh token does not exist.");
+		<%
+		}
 		if(authorizationCode==null || "".equals(authorizationCode) || "\"\"".equals(authorizationCode)) {
 		%>
 			String authorizeUrl_<%=cid%> = new com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl(
@@ -204,7 +209,7 @@
 		<%
 		if(isLog4jEnabled){
 		%>
-			log.info("<%=cid%> - Upload "+<%=localFilename%> + "to Google Service Bucket"+<%=bucketName%>);
+			log.info("<%=cid%> - Upload "+<%=localFilename%> + " to Google Service Bucket: "+<%=bucketName%>);
 		<%
 		}
 		%>
@@ -223,7 +228,7 @@
 	<%
 	if(isLog4jEnabled){
 	%>
-		log.info("<%=cid%> - Start build a job.");
+		log.info("<%=cid%> - Starting build a job.");
 	<%
 	}
 	%>
@@ -378,7 +383,7 @@
 		<%
 		if(isLog4jEnabled){
 		%>
-			log.info("<%=cid%> - Load the job done: " + doneJob_<%=cid%>.toString());
+			log.info("<%=cid%> - Load Done: " + doneJob_<%=cid%>.toString());
 			log.info("<%=cid%> - " + nb_line_<%=cid%> + " records load successfully.");
 		<%
 		}
