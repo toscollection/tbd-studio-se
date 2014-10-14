@@ -70,6 +70,8 @@ imports="
     String dbport = null;
     String dbname = null;
     String dbuser = null;
+	String hiveVersion = null;
+	String distribution = null;
     
     //hbase settings
    	String storeByHBase = null;
@@ -87,6 +89,8 @@ imports="
         dbport = ElementParameterParser.getValue(previousNode, "__PORT__");
         dbname = ElementParameterParser.getValue(previousNode, "__DBNAME__");
         dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
+        hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
+        distribution = ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__");
 
     	storeByHBase = ElementParameterParser.getValue(previousNode, "__STORE_BY_HBASE__");
     	zookeeperQuorumForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_QUORUM__");
@@ -151,8 +155,6 @@ java.sql.Connection conn_<%=cid%> = null;
 
 <%
 		connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
-String hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
-
 		setFsDefaultName = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_FS_DEFAULT_NAME__"));
 		fsDefaultName = ElementParameterParser.getValue(previousNode, "__FS_DEFAULT_NAME__");
 
@@ -167,6 +169,8 @@ if(useExistingConn) {
 	 setFsDefaultName = false;
 	 fsDefaultName = "";
 	 dbuser = "";
+	 hiveVersion = "";
+	 distribution = "";
     String connection = ElementParameterParser.getValue(previousNode, "__CONNECTION__");
     for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
 			if(connection!=null && connection.equals(pNode.getUniqueName())) {
@@ -174,6 +178,8 @@ if(useExistingConn) {
 				setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
 				fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
 				dbuser = ElementParameterParser.getValue(pNode, "__USER__");
+				hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
 				break;
 			}
 	 }
@@ -489,6 +495,25 @@ if(useExistingConn) {
 	
 	// Register jars to handle the parquet format.
 	boolean targetTableUsesParquetFormat = "true".equals(ElementParameterParser.getValue(node, "__TARGET_TABLE_IS_A_PARQUET_TABLE__"));
+	
+	java.util.List<String> hiveVersionList = new java.util.ArrayList<String>();
+	hiveVersionList.add("APACHE_0_20_203");
+	hiveVersionList.add("Cloudera_CDH3");
+	hiveVersionList.add("Cloudera_CDH4");
+	hiveVersionList.add("APACHE_1_0_0");
+	hiveVersionList.add("MAPR2");
+	hiveVersionList.add("HDP_1_0");
+	hiveVersionList.add("PIVOTAL_HD_1_0_1");
+	
+	boolean isParquetSupported = "CUSTOM".equals(distribution) || !hiveVersionList.contains(hiveVersion);
+	if(targetTableUsesParquetFormat && !isParquetSupported) {
+%>
+		if(true) {
+			throw new java.lang.UnsupportedOperationException("Parquet is only supported if the distribution used embeds Hive version 0.10 or later.");
+		}
+<%
+	}
+	
 	boolean generateAddJarCodeForAll = targetTableUsesParquetFormat;
 	
 	if(targetTableUsesParquetFormat) {

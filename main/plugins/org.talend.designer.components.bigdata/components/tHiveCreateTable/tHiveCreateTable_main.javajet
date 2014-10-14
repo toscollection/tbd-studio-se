@@ -140,6 +140,24 @@ imports="
 	boolean storeAsAvro = "AVRO".equals(storedFormat);
 	boolean storeAsParquet = "PARQUET".equals(storedFormat);
 	
+	java.util.List<String> hiveVersionList = new java.util.ArrayList<String>();
+	hiveVersionList.add("APACHE_0_20_203");
+	hiveVersionList.add("Cloudera_CDH3");
+	hiveVersionList.add("Cloudera_CDH4");
+	hiveVersionList.add("APACHE_1_0_0");
+	hiveVersionList.add("MAPR2");
+	hiveVersionList.add("HDP_1_0");
+	hiveVersionList.add("PIVOTAL_HD_1_0_1");
+	
+	boolean isParquetSupported = "CUSTOM".equals(distribution) || !hiveVersionList.contains(hiveVersion);
+	if(storeAsParquet && !isParquetSupported) {
+%>
+		if(true) {
+			throw new java.lang.UnsupportedOperationException("Parquet is only supported if the distribution used embeds Hive version 0.10 or later.");
+		}
+<%
+	}
+	
 	// Register jars to handle the parquet format.
 	
 	boolean generateAddJarCodeForAll = storeAsParquet;

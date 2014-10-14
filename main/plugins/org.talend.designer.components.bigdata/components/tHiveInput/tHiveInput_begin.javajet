@@ -404,12 +404,13 @@ imports="
 		
 		public void createStatement(INode node) {
 			boolean useParquet = "true".equals(ElementParameterParser.getValue(node,"__USE_PARQUET__"));
-			boolean generateAddJarCodeForAll = useParquet;
 			String processId = node.getProcess().getId();
 			
 			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 			boolean setFsDefaultName = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
 			String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+			String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 			
 			boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 		
@@ -418,6 +419,8 @@ imports="
 				setFsDefaultName = false;
 				fsDefaultName = "";
 				dbuser = "";
+				distribution = "";
+				hiveVersion = "";
 				String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 				for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
 					if(connection!=null && connection.equals(pNode.getUniqueName())) {
@@ -425,11 +428,32 @@ imports="
 						setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
 						fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
 						dbuser = ElementParameterParser.getValue(pNode, "__USER__");
+						distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
+						hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
 						break;
 					}
 				}
 			}
 			
+			java.util.List<String> hiveVersionList = new java.util.ArrayList<String>();
+			hiveVersionList.add("APACHE_0_20_203");
+			hiveVersionList.add("Cloudera_CDH3");
+			hiveVersionList.add("Cloudera_CDH4");
+			hiveVersionList.add("APACHE_1_0_0");
+			hiveVersionList.add("MAPR2");
+			hiveVersionList.add("HDP_1_0");
+			hiveVersionList.add("PIVOTAL_HD_1_0_1");
+		
+			boolean isParquetSupported = "CUSTOM".equals(distribution) || !hiveVersionList.contains(hiveVersion);
+			if(useParquet && !isParquetSupported) {
+%>
+				if(true) {
+					throw new java.lang.UnsupportedOperationException("Parquet is only supported if the distribution used embeds Hive version 0.10 or later.");
+				}
+<%
+			}
+			
+			boolean generateAddJarCodeForAll = useParquet;
 			
 			// Register jars to handle the parquet format.
 						
