@@ -31,7 +31,7 @@
 		globalMap.put("<%=cid %>_CURRENT_STATUS", "Path does not exist.");
 		
 		<%if(isLog4jEnabled) {%>
-       	log.info("<%=cid%> - directory or file : " + path_<%=cid%> + " does not exist.");
+       	log.warn("<%=cid%> - directory or file : " + path_<%=cid%> + " does not exist.");
         <%}%>
 	}
 	globalMap.put("<%=cid %>_DELETE_PATH",<%=path%>);

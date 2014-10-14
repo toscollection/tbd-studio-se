@@ -74,7 +74,7 @@
 		if(isLog4jEnabled) {
 	%>
 	else {
-		log.info("<%=cid%> - file or directory : " + path_<%=cid %> + " does not exist.");
+		log.warn("<%=cid%> - file or directory : " + path_<%=cid %> + " does not exist.");
 	}
 	<%
     	}
