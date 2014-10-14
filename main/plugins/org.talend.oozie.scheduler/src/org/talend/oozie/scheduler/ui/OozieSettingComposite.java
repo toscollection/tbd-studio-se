@@ -257,17 +257,19 @@ public class OozieSettingComposite extends ScrolledComposite {
             String connId = (String) process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName())
                     .getValue();
             if (StringUtils.isNotEmpty(connId)) {
-                ooziePropertyTypeCombo.select(0);
+                ooziePropertyTypeCombo.select(1);
                 this.repositoryId = connId;
                 Connection connection = TOozieParamUtils.getOozieConnectionById(connId);
                 if (connection != null) {
                     oozieRepositoryText.setText(connection.getLabel());
+                    oozieRepositoryText.setVisible(true);
+                    oozieSelectBtn.setVisible(true);
                 }
             }
         }
-        ooziePropertyTypeCombo.select(1);
-        oozieSelectBtn.setVisible(true);
-        oozieRepositoryText.setVisible(true);
+        ooziePropertyTypeCombo.select(0);
+        oozieRepositoryText.setVisible(false);
+        oozieSelectBtn.setVisible(false);
     }
 
     protected void preInitialization() {
@@ -381,6 +383,9 @@ public class OozieSettingComposite extends ScrolledComposite {
      * @param isSupportSecurity
      */
     private void updateSetting(EHadoopVersion4Drivers version4Drivers) {
+        if (version4Drivers == null) {
+            return;
+        }
         if (ooziePropertyTypeCombo != null && ooziePropertyTypeCombo.getSelectionIndex() == 1) {
             // from repository
             updateSettingFromRep(version4Drivers);
