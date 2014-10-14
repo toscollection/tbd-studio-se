@@ -49,8 +49,8 @@ imports="
 		Map<String,String> actionMap=new java.util.HashMap<String,String>();
 		actionMap.put("INSERT","inserted");
 		actionMap.put("UPDATE","updated");
-		actionMap.put("DELETE","upserted");
-		actionMap.put("UPSERT","deleted");
+		actionMap.put("DELETE","deleted");
+		actionMap.put("UPSERT","upserted");
 		%>
 		log.info("<%=cid%> - Has <%=actionMap.get(dataAction)%> " + nb_line_<%=actionMap.get(dataAction)%>_<%=cid%> + " records.");
 		log.info("<%=cid%> - " + nb_line_failed_<%=cid%> + " records failed.");
