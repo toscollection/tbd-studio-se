@@ -12,7 +12,23 @@
   <repositories>
 	<repository>
 		<id>talend_open</id>
-		<url>http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSource/</url>
+		<releases>
+			<enabled>true</enabled>
+		</releases>
+		<snapshots>
+			<enabled>false</enabled>
+		</snapshots>
+		<url>http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceRelease/</url>
+	</repository>
+	<repository>
+		<id>talend_open_snapshots</id>
+		<releases>
+			<enabled>false</enabled>
+		</releases>
+		<snapshots>
+			<enabled>true</enabled>
+		</snapshots>
+		<url>http://newbuild.talend.com:8081/nexus/content/repositories/TalendOpenSourceSnapshot/</url>
 	</repository>
   </repositories>
   <modules>
