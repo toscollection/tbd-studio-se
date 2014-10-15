@@ -169,7 +169,7 @@
             <IMPORT
                 NAME="commons-lang-2.4"
                 MODULE="commons-lang-2.4.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.4.jar"
+                UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="compress-lzf-0.8.4"
@@ -178,6 +178,7 @@
             <IMPORT
                 NAME="concurrentlinkedhashmap-lru-1.3"
                 MODULE="concurrentlinkedhashmap-lru-1.3.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/concurrentlinkedhashmap-lru-1.3.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="guava-r08"
@@ -192,10 +193,12 @@
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"
                 MODULE="jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
                 MODULE="jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="libthrift-0.7.0"
@@ -278,6 +281,7 @@
             <IMPORT
                 NAME="concurrentlinkedhashmap-lru-1.3"
                 MODULE="concurrentlinkedhashmap-lru-1.3.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/concurrentlinkedhashmap-lru-1.3.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT
                 NAME="libthrift-0.7.0"
@@ -287,10 +291,12 @@
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"
                 MODULE="jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
                 MODULE="jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT
                 NAME="snakeyaml-1.6"

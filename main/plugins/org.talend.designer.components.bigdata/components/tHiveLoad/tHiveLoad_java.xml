@@ -1068,7 +1068,7 @@
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/libfb303-0.9.0-hive-jdbc-0.11.0.jar"
 				REQUIRED_IF="(HIVE_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hibernate/lib/commons-logging-1.0.4.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar"
 				REQUIRED_IF="(HIVE_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="slf4j-api-1.6.1-hive-jdbc-0.11.0.jar" MODULE="slf4j-api-1.6.1-hive-jdbc-0.11.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/slf4j-api-1.6.1-hive-jdbc-0.11.0.jar"

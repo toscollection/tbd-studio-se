@@ -348,12 +348,12 @@
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"
                 MODULE="jackson-core-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tCassandraOutputBulk/jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
                 MODULE="jackson-mapper-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tCassandraOutputBulk/jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
 
             <!-- Cassandra 1.2.2 -->
@@ -409,12 +409,12 @@
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"
                 MODULE="jackson-core-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tCassandraOutputBulk/jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
                 MODULE="jackson-mapper-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tCassandraOutputBulk/jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
 
              <!-- Cassandra 2.1.X with latest == 2.0.8 / 2.1 -->
@@ -446,7 +446,7 @@
             <IMPORT
                 NAME="libthrift-0.9.1"
                 MODULE="libthrift-0.9.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.cassandra/lib/libthrift-0.9.1.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.9.1.jar"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
             <IMPORT
                 MODULE="guava-14.0.jar"

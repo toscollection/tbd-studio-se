@@ -196,7 +196,7 @@
 				REQUIRED="false"
 				REQUIRED_IF="(HBASE_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="hbase-0.94.18" MODULE="hbase-0.94.18.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.amazon.2.4.0.emr/lib/hbase-0.94.18.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hbase-0.94.18.jar"
 				REQUIRED="false"
 				REQUIRED_IF="(HBASE_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="hadoop-auth-2.4.0" MODULE="hadoop-auth-2.4.0.jar"
