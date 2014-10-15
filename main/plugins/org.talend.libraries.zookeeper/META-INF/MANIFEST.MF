@@ -4,3 +4,4 @@ Bundle-Name: Zookeeper
 Bundle-SymbolicName: org.talend.libraries.zookeeper
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir

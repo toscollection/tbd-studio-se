@@ -4,3 +4,4 @@ Bundle-Name: apachekafka
 Bundle-SymbolicName: org.talend.libraries.apache.kafka
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir

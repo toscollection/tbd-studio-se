@@ -4,3 +4,4 @@ Bundle-Name: apache-0.20.203
 Bundle-SymbolicName: org.talend.libraries.hadoop.apache.0.20.203
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir

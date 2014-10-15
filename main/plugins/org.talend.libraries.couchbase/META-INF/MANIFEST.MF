@@ -4,3 +4,4 @@ Bundle-Name: Couchbase
 Bundle-SymbolicName: org.talend.libraries.couchbase
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir

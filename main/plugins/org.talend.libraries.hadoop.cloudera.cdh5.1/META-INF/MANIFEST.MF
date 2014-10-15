@@ -4,3 +4,4 @@ Bundle-Name: cdh5.1
 Bundle-SymbolicName: org.talend.libraries.hadoop.cloudera.cdh5.1;singleton:=true
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir

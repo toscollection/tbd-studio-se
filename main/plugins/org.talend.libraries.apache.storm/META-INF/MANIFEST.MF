@@ -4,3 +4,4 @@ Bundle-Name: apachestorm
 Bundle-SymbolicName: org.talend.libraries.apache.storm
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir

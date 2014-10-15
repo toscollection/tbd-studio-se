@@ -4,3 +4,4 @@ Bundle-Name: Neo4j
 Bundle-SymbolicName: org.talend.libraries.neo4j
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir

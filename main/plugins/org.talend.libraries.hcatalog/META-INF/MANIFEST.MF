@@ -4,3 +4,4 @@ Bundle-Name: Hcatalog
 Bundle-SymbolicName: org.talend.libraries.hcatalog
 Bundle-Version: 5.6.0.qualifier
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir
