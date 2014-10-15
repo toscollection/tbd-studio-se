@@ -14,6 +14,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.beanutils,
  org.apache.commons.lang,
  org.talend.model;visibility:=reexport,
+ org.talend.cwm.mip;visibility:=reexport,
+ org.eclipse.gmf.runtime.notation;visibility:=reexport,
  org.talend.core.runtime,
  org.talend.core,
  org.talend.repository,
@@ -38,5 +40,6 @@ Export-Package: org.talend.repository.hadoopcluster.action.common,
  org.talend.repository.hadoopcluster.ui.viewer.handler,
  org.talend.repository.hadoopcluster.util,
  org.talend.repository.model.hadoopcluster,
- org.talend.repository.model.hadoopcluster.impl
+ org.talend.repository.model.hadoopcluster.impl,
+ org.talend.repository.model.hadoopcluster.util
 Bundle-Activator: org.talend.repository.hadoopcluster.HadoopClusterPlugin

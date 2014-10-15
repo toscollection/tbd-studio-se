@@ -14,6 +14,7 @@ package org.talend.designer.hdfsbrowse.hadoop.service.check.provider;
 
 import java.net.URI;
 
+import org.apache.commons.lang.StringUtils;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
 import org.talend.designer.hdfsbrowse.hadoop.service.check.AbstractCheckedServiceProvider;
@@ -35,6 +36,22 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
             ReflectionUtils.invokeMethod(conf, "set", new Object[] { String.format("fs.%s.impl.disable.cache", scheme), "true" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
             ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.client.retry.policy.enabled", "false" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
             ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connect.max.retries", "0" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+            String userName = StringUtils.trimToNull(serviceProperties.getUserName());
+            String group = StringUtils.trimToNull(serviceProperties.getGroup());
+            boolean useKrb = serviceProperties.isUseKrb();
+            if (useKrb) {
+                String nameNodePrincipal = serviceProperties.getPrincipal();
+                ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.namenode.kerberos.principal", nameNodePrincipal }); //$NON-NLS-1$//$NON-NLS-2$
+                boolean useKeytab = serviceProperties.isUseKeytab();
+                if (useKeytab) {
+                    String keytabPrincipal = serviceProperties.getKeytabPrincipal();
+                    String keytab = serviceProperties.getKeytab();
+                    ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
+                            "loginUserFromKeytab", new String[] { keytabPrincipal, keytab }); //$NON-NLS-1$
+                }
+            } else if (userName != null && group != null) {
+                ReflectionUtils.invokeMethod(conf, "set", new Object[] { "hadoop.job.ugi", userName + "," + group }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+            }
             fileSystem = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", //$NON-NLS-1$ //$NON-NLS-2$
                     new Object[] { nameNodeURI, conf });
             if (fileSystem != null) {

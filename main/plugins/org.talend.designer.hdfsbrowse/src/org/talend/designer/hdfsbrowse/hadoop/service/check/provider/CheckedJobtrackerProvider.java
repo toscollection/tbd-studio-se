@@ -33,6 +33,18 @@ public class CheckedJobtrackerProvider extends AbstractCheckedServiceProvider {
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connect.timeout", "2000" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connection.maxidletime", "2000" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connect.max.retries", "1" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        boolean useKrb = serviceProperties.isUseKrb();
+        if (useKrb) {
+            String mrPrincipal = serviceProperties.getJtOrRmPrincipal();
+            ReflectionUtils.invokeMethod(conf, "set", new Object[] { "mapreduce.jobhistory.principal", mrPrincipal }); //$NON-NLS-1$//$NON-NLS-2$
+            boolean useKeytab = serviceProperties.isUseKeytab();
+            if (useKeytab) {
+                String keytabPrincipal = serviceProperties.getKeytabPrincipal();
+                String keytab = serviceProperties.getKeytab();
+                ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
+                        "loginUserFromKeytab", new String[] { keytabPrincipal, keytab }); //$NON-NLS-1$
+            }
+        }
         Object jc = ReflectionUtils.newInstance("org.apache.hadoop.mapred.JobClient", classLoader, new Object[] { conf }); //$NON-NLS-1$
 
         return ReflectionUtils.invokeMethod(jc, "getClusterStatus", new Object[0]); //$NON-NLS-1$
