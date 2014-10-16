@@ -1019,6 +1019,8 @@
 			<IMPORT NAME="commons-codec-1.5" MODULE="commons-codec-1.5.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR310' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
+			<IMPORT NAME="amazon-s3" MODULE="amazon-s3.jar"
+				REQUIRED_IF="(HIVE_VERSION=='MAPR310' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<!-- ############## -->
 
 			<!-- APACHE 1.0 -->
