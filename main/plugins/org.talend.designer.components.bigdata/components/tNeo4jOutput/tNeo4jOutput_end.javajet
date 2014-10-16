@@ -10,9 +10,11 @@
     	java.util.Arrays
 	"
 %>
+<%@ include file="tNeo4jOutput_Neo4JTransactionHelper.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
+    Neo4JTransactionHelper neo4JTransactionHelper = new Neo4JTransactionHelper(node);
     String cid = node.getUniqueName();
     String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
 
@@ -31,23 +33,7 @@
         }
     }
 
-    if ("NEO4J_1_X_X".equals(dbVersion)) {
-        %>
-        if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-            tx_<%=cid%>.success();
-            tx_<%=cid%>.finish();
-        }
-        <%
-    } else { // NEO4J_2_1_X
-        if (!batchImport) {
-            %>
-            if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-                tx_<%=cid%>.success();
-                tx_<%=cid%>.finish();
-            }
-            <%
-        }
-    }
+    neo4JTransactionHelper.closeTransaction();
 
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     String dbconn = "dbService_" + connection;

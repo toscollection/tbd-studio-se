@@ -7,7 +7,7 @@
 %>
 <%@ include file="../tNeo4jOutput/tNeo4jOutput_Neo4JTransactionHelper.javajet"%>
 <%@ include file="tNeo4jOutputRelationship_Neo4JOutputRelationshipUtil.javajet"%>
-<% 
+<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	

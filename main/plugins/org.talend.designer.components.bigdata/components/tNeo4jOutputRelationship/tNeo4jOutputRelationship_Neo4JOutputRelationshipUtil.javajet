@@ -69,6 +69,11 @@ class Neo4JOutputRelationshipUtil {
         resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
         <%
     }
+    /**
+     * Shut down the index provider. On Neo4J 2.1.X, we cannot shut it down multiples times,
+     * so we need to be sure that two components will not kill it twice,
+     * so we need to add some protections.
+     */
     public void shutdownIndexProvider() {
         if ("NEO4J_1_X_X".equals(this.dbVersion)) {
             %>
@@ -123,6 +128,9 @@ class Neo4JOutputRelationshipUtil {
         <%
     }
 
+    /**
+     * Shutdown the inserter. On neo4J 2.1.x, we cannot shut down the database multiple times, so we need to add some protections.
+     */
     public void shutdownInserter() {
         if ("NEO4J_1_X_X".equals(this.dbVersion)) {
             %>
@@ -144,6 +152,9 @@ class Neo4JOutputRelationshipUtil {
         }
     }
 
+    /**
+     * Restart an embedded database for computation of the futurs components.
+     */
     public void restartEmbeddedDatabase() {
         if ("NEO4J_1_X_X".equals(this.dbVersion)) {
             %>

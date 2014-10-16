@@ -1,28 +1,70 @@
 <%@ jet 
-	imports="
-		org.talend.core.model.process.INode 
-		org.talend.core.model.process.ElementParameterParser
-		org.talend.designer.codegen.config.CodeGeneratorArgument
-		java.util.List
-    	java.util.Map
-    	java.util.ArrayList
-    	java.util.HashSet
-    	java.util.Arrays
-    	java.util.Set
-	"
+    imports="
+        org.talend.core.model.process.INode 
+        org.talend.core.model.process.ElementParameterParser
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        java.util.List
+        java.util.Map
+        java.util.ArrayList
+        java.util.HashSet
+        java.util.Arrays
+        java.util.Set
+    "
 %>
+<%@ include file="tNeo4jOutput_Neo4JTransactionHelper.javajet"%>
 <%
-class Neo4JOutputHelper {
+class Neo4JOutputUtil {
+    private Neo4JTransactionHelper neo4JTransactionHelper;
     private INode node;
     private String cid;
-    private String dbConnection;
+    private boolean batchImport;
+    private String dbConnectionName;
     private String dbVersion;
+    private boolean useExistingConnection;
 
-    public Neo4JOutputHelper(INode node, String cid, String dbConnection, String dbVersion) {
+    public Neo4JOutputUtil(INode node) {
         this.node = node;
-        this.cid = cid;
-        this.dbConnection = dbConnection;
-        this.dbVersion = dbVersion;
+        this.cid = node.getUniqueName();
+        this.neo4JTransactionHelper = new Neo4JTransactionHelper(node);
+
+        this.batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
+        this.useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+
+        if (useExistingConnection) {
+            String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+            this.dbConnectionName = "dbService_" + connection; 
+            for(INode targetNode : node.getProcess().getNodesOfType("tNeo4jConnection")){
+                if (targetNode.getUniqueName().equals(connection)) {
+                    this.dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                    break;
+                }
+            }
+        } else {
+            this.dbConnectionName = "dbService_" + cid;
+            this.dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+        }
+    }
+
+
+    public void createDatabaseService() {
+        if (useExistingConnection) {
+            %>
+            org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbConnectionName%>");
+            <%
+        } else {
+            boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
+            if (remoteServer) {
+                String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
+                %>
+                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>);
+                <%
+            } else {
+                String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
+                %>
+                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=databasePath%>);
+                <%
+            }
+        }
     }
 
     private void writeBatchModeVersion1_9(Set<String> indexNames, List<String> autoIndexedColumns) {
@@ -58,35 +100,31 @@ class Neo4JOutputHelper {
             autoIndexer_<%=cid%>.startAutoIndexingProperty("<%=autoIndexedColumn%>");
             <%
         }
-        %>
-        // start a transaction
-        org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-        <%
-
+        neo4JTransactionHelper.startTransaction();
     }
 
     private void writeBatchModeVersion2_1(Set<String> indexNames, List<String> autoIndexedColumns) {
         %>
         if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
-            if (!globalMap.containsKey("<%=dbConnection%>_inserter")) {
+            if (!globalMap.containsKey("<%=dbConnectionName%>_inserter")) {
                 org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
                 storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
                 db_<%=cid%>.shutdown();
                 inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
-                globalMap.put("<%=dbConnection%>_inserter", inserter_<%=cid%>);
-                globalMap.put("<%=dbConnection%>_is_temporary_shutted_down", true);
+                globalMap.put("<%=dbConnectionName%>_inserter", inserter_<%=cid%>);
+                globalMap.put("<%=dbConnectionName%>_is_temporary_shutted_down", true);
             } else {
-               inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbConnection%>_inserter");
+               inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbConnectionName%>_inserter");
             }
         } else {
             throw new UnsupportedOperationException("Batch import is not supported with database server edition");
         }
 
-        if (!globalMap.containsKey("<%=dbConnection%>_indexprovider")) {
+        if (!globalMap.containsKey("<%=dbConnectionName%>_indexprovider")) {
             indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
-            globalMap.put("<%=dbConnection%>_indexprovider", indexProvider_<%=cid%>);
+            globalMap.put("<%=dbConnectionName%>_indexprovider", indexProvider_<%=cid%>);
         } else {
-            indexProvider_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider) globalMap.get("<%=dbConnection%>_indexprovider");
+            indexProvider_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider) globalMap.get("<%=dbConnectionName%>_indexprovider");
         }
         resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
         resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
@@ -134,65 +172,23 @@ class Neo4JOutputHelper {
         }
     }
 
-    private void writeNormalModeVersion1_9(Set<String> indexNames, List<String> autoIndexedColumns) {
+    private void writeNormalMode(Set<String> indexNames, List<String> autoIndexedColumns) {
         %>
         java.util.Map<String, org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>> indexNodeMap_<%=cid%> = new java.util.HashMap<String,org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>>();
         <%
-        for (String indexName : indexNames) {           
-            %>
-            indexNodeMap_<%=cid%>.put(<%=indexName%>, databaseService_<%=cid%>.index().forNodes(<%=indexName%>));
-            <%
-        }
+        neo4JTransactionHelper.startEmbeddedTransaction();
 
-        // Auto index configuration
-        if (autoIndexedColumns.size() > 0) {
-            %>
-            org.neo4j.graphdb.index.AutoIndexer<org.neo4j.graphdb.Node> autoIndexer_<%=cid%> = databaseService_<%=cid%>.index().getNodeAutoIndexer();
-            autoIndexer_<%=cid%>.setEnabled(true);
-            <%
-        }
-        for (String autoIndexedColumn : autoIndexedColumns) {
-            %>
-            autoIndexer_<%=cid%>.startAutoIndexingProperty("<%=autoIndexedColumn%>");
-            <%
-        }
-        %>
-        org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-        <%
-    }
-
-    private void writeNormalModeVersion2_0(Set<String> indexNames, List<String> autoIndexedColumns, boolean remoteServer) {
-        %>
-        java.util.Map<String, org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>> indexNodeMap_<%=cid%> = new java.util.HashMap<String,org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>>();
-        <%
-        if (!remoteServer) {
-            %>
-            org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = databaseService_<%=cid%>.beginTx();
-            try
-            {
-            <%
-        }
         for (String indexName : indexNames) {
             %>
             indexNodeMap_<%=cid%>.put(<%=indexName%>, databaseService_<%=cid%>.index().forNodes(<%=indexName%>));
             <%
         }
 
-        if (!remoteServer) {
-            %>
-            tx_begin_<%=cid%>.success();
-            }
-            finally
-            {
-                tx_begin_<%=cid%>.close();
-            }
-            <%
-        }
+        neo4JTransactionHelper.closeEmbeddedTransaction();
 
         // Auto index configuration
         if (autoIndexedColumns.size() > 0) {
             %>
-
             org.neo4j.graphdb.index.AutoIndexer<org.neo4j.graphdb.Node> autoIndexer_<%=cid%> = databaseService_<%=cid%>.index().getNodeAutoIndexer();
             autoIndexer_<%=cid%>.setEnabled(true);
             <%
@@ -202,20 +198,9 @@ class Neo4JOutputHelper {
             autoIndexer_<%=cid%>.startAutoIndexingProperty("<%=autoIndexedColumn%>");
             <%
         }
-
-        // start a transaction
-        %>
-        org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-        <%
+        neo4JTransactionHelper.startTransaction();
     }
-
-    private void writeNormalMode(Set<String> indexNames, List<String> autoIndexedColumns, boolean remoteServer) {
-        if ("NEO4J_1_X_X".equals(dbVersion)) {
-            writeNormalModeVersion1_9(indexNames, autoIndexedColumns);
-        } else { // NEO4J_2_1_X
-            writeNormalModeVersion2_0(indexNames, autoIndexedColumns, remoteServer);
-        }
-    }
-
 }
 %>
+
+

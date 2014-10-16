@@ -11,7 +11,7 @@
     	java.util.Set 
 	" 
 %>
-<%@ include file="tNeo4jOutput_Neo4JOutputHelper.javajet"%>
+<%@ include file="tNeo4jOutput_Neo4JOutputUtil.javajet"%>
 <% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -20,10 +20,6 @@
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     List<Map<String, String>> values = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__VALUES__");
-    boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
-
-    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-    String dbconn = "dbService_" + connection;
 
     List<String> autoIndexedColumns = new ArrayList<String>();
     Set<String> indexNames = new HashSet();
@@ -46,37 +42,10 @@
     }
 
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
-    String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
 
-    if (useExistingConnection) {
-        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
-        for(INode targetNode : nodes){
-            if (targetNode.getUniqueName().equals(connection)) {
-                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
-                break;
-            }
-        }
-    }
+    Neo4JOutputUtil neo4JOutputUtil = new Neo4JOutputUtil(node);
 
-    Neo4JOutputHelper neo4JOutputHelper = new Neo4JOutputHelper(node, cid, dbconn, dbVersion);
-
-    if (useExistingConnection) {
-    	%>
-		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbconn%>");
-		<%
-    } else {
-    	if (remoteServer) {
-    		String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
-    		%>
-    		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>);
-    		<%
-    	} else {
-	    	String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
-			%>
-            org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=databasePath%>);
-			<%
-		}
-    }
+    neo4JOutputUtil.createDatabaseService();
 %>
 int nb_line_<%=cid %> = 0;
 long counter_<%=cid%> = 0;
@@ -88,8 +57,8 @@ long counter_<%=cid%> = 0;
 	}
     // Index configuration
     if (batchImport) {
-        neo4JOutputHelper.writeBatchMode(indexNames, autoIndexedColumns);
+        neo4JOutputUtil.writeBatchMode(indexNames, autoIndexedColumns);
     } else {
-        neo4JOutputHelper.writeNormalMode(indexNames, autoIndexedColumns, remoteServer);
+        neo4JOutputUtil.writeNormalMode(indexNames, autoIndexedColumns);
     }
 %>

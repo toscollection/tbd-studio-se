@@ -13,6 +13,7 @@
 		java.util.List 
 	" 
 %>
+<%@ include file="tNeo4jOutput_Neo4JTransactionHelper.javajet"%>
 <%@ include file="tNeo4jOutput_Neo4jUtils.javajet"%>
 <%@ include file="tNeo4jOutput_Neo4jUtils1_9.javajet"%>
 <%@ include file="tNeo4jOutput_Neo4jUtils2_0.javajet"%>
@@ -30,6 +31,7 @@
     String neo4jLabel = ElementParameterParser.getValue(node, "__LABEL_NAME__");
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
     String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+    Neo4JTransactionHelper neo4JTransactionHelper = new Neo4JTransactionHelper(node);
 
     if (useExistingConnection) {
         String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
@@ -105,25 +107,7 @@
 counter_<%=cid%>++;
 
 <%
-if ("NEO4J_1_X_X".equals(dbVersion)) {
-    %>
-    if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-        tx_<%=cid%>.success();
-        tx_<%=cid%>.finish();
-        tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-    }
-    <%
-} else { // NEO4J_2_1_X
-    if (!batchImport) {
-        %>
-        if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-            tx_<%=cid%>.success();
-            tx_<%=cid%>.finish();
-            tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-        }
-        <%
-    }
-}
+neo4JTransactionHelper.restartTransaction();
 %>
 
 nb_line_<%=cid %>++;
