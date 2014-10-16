@@ -1,0 +1,57 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection 
+		org.talend.designer.codegen.config.CodeGeneratorArgument 
+		org.talend.designer.neo4j.data.Neo4jData 
+		org.talend.designer.neo4j.data.Index 
+		org.talend.designer.neo4j.data.Relationship 
+		org.talend.designer.neo4j.ui.editor.MetadataColumnExt 
+		java.util.List 
+	"
+%>
+<%
+class Neo4jUtils1_9 extends Neo4jUtils {
+
+    public Neo4jUtils1_9(String cid, INode node,String dataAction, String incomingConnName, List<IMetadataColumn> columnList) {
+		super(cid, node, dataAction, incomingConnName, columnList);
+	}
+
+	public void generateNodeInsert() {
+		%>
+		org.neo4j.graphdb.Node node_<%=cid%> = databaseService_<%=cid%>.createNode();
+		<%
+		generateNode();
+	}
+
+	public void generateNodeInsertOrUpdate() {
+		String indexName = ElementParameterParser.getValue(node, "__INDEX_NAME__");
+		String indexKey = ElementParameterParser.getValue(node, "__INDEX_KEY__");
+		String indexColumnValue = ElementParameterParser.getValue(node, "__INDEX_VALUE__");
+		%>
+		org.neo4j.graphdb.Node node_<%=cid%> = indexNodeMap_<%=cid%>.get(<%=indexName%>).get(<%=indexKey%>, <%=incomingConnName%>.<%=indexColumnValue%>).getSingle();
+		if (node_<%=cid%> == null) {
+			node_<%=cid%> = databaseService_<%=cid%>.createNode();
+		}
+		<%
+		generateNode();
+	}
+
+	public void generateNodeUpdate() {
+		String indexName = ElementParameterParser.getValue(node, "__INDEX_NAME__");
+		String indexKey = ElementParameterParser.getValue(node, "__INDEX_KEY__");
+		String indexColumnValue = ElementParameterParser.getValue(node, "__INDEX_VALUE__");
+		%>
+		org.neo4j.graphdb.Node node_<%=cid%> = indexNodeMap_<%=cid%>.get(<%=indexName%>).get(<%=indexKey%>, <%=incomingConnName%>.<%=indexColumnValue%>).getSingle();
+		if (node_<%=cid%> == null) {
+			throw new RuntimeException("Node not found");
+		}
+		<%
+		generateNode();
+	}
+
+}
+%>

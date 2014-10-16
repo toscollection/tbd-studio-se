@@ -3,6 +3,7 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.process.INode
 		org.talend.core.model.process.ElementParameterParser
+		java.util.List
 	"
 %>
 <% 
@@ -14,15 +15,24 @@
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
     String query = ElementParameterParser.getValue(node, "__QUERY__");
+    String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
     query = query.replaceAll("\n"," ");
     query = query.replaceAll("\r"," ");
-    
+
     if (useExistingConnection) {
     	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-    	String dbconn = "dbService_" + connection;
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connection)) {
+                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                break;
+            }
+        }
+
+        String dbconn = "dbService_" + connection;
 		%>
-		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbconn%>");
-	<%
+        org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbconn%>");
+        <%
     } else {
     	if (remoteServer) {
     		String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
@@ -31,9 +41,15 @@
     		<%
     	} else {
 	    	String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
-			%>
-            org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=databasePath%>);
-			<%
+	    	if ("NEO4J_1_X_X".equals(dbVersion)) {
+    			%>
+                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedReadOnlyGraphDatabase(<%=databasePath%>);
+                <%
+	    	} else { // NEO4J_2_1_X
+                %>
+                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=databasePath%>);
+                <%
+	    	}
 		}
     }
 %>
@@ -44,7 +60,17 @@ if (databaseService_<%=cid%> instanceof org.neo4j.rest.graphdb.RestGraphDatabase
 	org.neo4j.rest.graphdb.query.QueryEngine<java.util.Map<String, Object>> queryEngine_<%=cid%> = new org.neo4j.rest.graphdb.query.RestCypherQueryEngine(restDatabase_<%=cid%>.getRestAPI());
 	resultIterator_<%=cid%> = queryEngine_<%=cid%>.query(<%=query%>, null).iterator();
 } else {
-	org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>, org.neo4j.kernel.impl.util.StringLogger.SYSTEM);
+    <%
+    if ("NEO4J_1_X_X".equals(dbVersion)) {
+        %>
+        org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>);
+        <%
+    } else { // NEO4J_2_1_X
+        %>
+        org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>, org.neo4j.kernel.impl.util.StringLogger.SYSTEM);
+        <%
+    }
+    %>
 	org.neo4j.cypher.ExecutionResult result_<%=cid%> = engine_<%=cid%>.execute(<%=query%>);
 	resultIterator_<%=cid%> = result_<%=cid%>.javaIterator();
 }
@@ -62,25 +88,23 @@ class Neo4jUtil_<%=cid%>{
 					if (row.get(suffix) != null && row.get(suffix) instanceof org.neo4j.graphdb.PropertyContainer) {
 						org.neo4j.graphdb.PropertyContainer propertyContainer = (org.neo4j.graphdb.PropertyContainer) row.get(suffix);
 						<%
-			            if (!remoteServer) {
+			            if (("NEO4J_1_X_X".equals(dbVersion)) || (remoteServer)) {
 			                %>
-			                org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = propertyContainer.getGraphDatabase().beginTx();
-			                try
-			                {
+			                value=propertyContainer.getProperty(propertyName);
 			                <%
-			            }
-			            %>
-						value=propertyContainer.getProperty(propertyName);
-						<%
-			            if (!remoteServer) {
+			            } else {
 			                %>
-			                tx_begin_<%=cid%>.success();
-			                }
-			                finally
-			                {
-			                    tx_begin_<%=cid%>.close();
-			                }
-			                <%
+                            org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = propertyContainer.getGraphDatabase().beginTx();
+                            try
+                            {
+                                value=propertyContainer.getProperty(propertyName);
+                                tx_begin_<%=cid%>.success();
+                            }
+                            finally
+                            {
+                                tx_begin_<%=cid%>.close();
+                            }
+                            <%
 			            }
 			            %>
 					}

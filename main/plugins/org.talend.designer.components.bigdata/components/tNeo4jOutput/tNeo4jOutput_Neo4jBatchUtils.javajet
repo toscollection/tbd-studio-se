@@ -16,53 +16,24 @@
 <%
 class Neo4jBatchUtils {
 
-	private List<IMetadataColumn> columnList;
-    private String incomingConnName;
-    private String cid;
-    private INode node;
-    private boolean useLabel;
-    private String neo4jLabel;
+    protected List<IMetadataColumn> columnList;
+    protected String incomingConnName;
+    protected String cid;
+    protected INode node;
 
-	public Neo4jBatchUtils(String cid, INode node, String incomingConnName, List<IMetadataColumn> columnList, boolean useLabel, String neo4jLabel) {
+	public Neo4jBatchUtils(String cid, INode node, String incomingConnName, List<IMetadataColumn> columnList) {
 	    this.cid = cid;
 		this.incomingConnName = incomingConnName;
 		this.columnList = columnList;
 		this.node = node;
-        this.useLabel = useLabel;
-        this.neo4jLabel = neo4jLabel;
 	}
 
 	public void generateNodeBatchInsert() {
-		%>
-		java.util.Map<String, Object> properties_<%=cid%> = new java.util.HashMap<String, Object>();
-		<%
-		for (IMetadataColumn column : columnList) {		
-    		putBatchPropertyInsertInMap(column);
-	    }
-	    // Must compute all properties before node creation for best performances
-	    generateNode();
-	    for (IMetadataColumn column : columnList) {
-	    	if (column instanceof MetadataColumnExt) {
-	    		MetadataColumnExt columnExt = (MetadataColumnExt) column;
-	    		Neo4jData data = columnExt.getData();
-                if (data.isAutoIndexed()) {
-                    %>
-                    autoindex_props_<%=cid%>.put("<%=column.getLabel()%>", <%=incomingConnName%>.<%=column%>);
-                    autoindex_<%=cid%>.add(autoindex_id_<%=cid%>, autoindex_props_<%=cid%>);
-                    autoindex_<%=cid%>.flush();
-                    <%
-                }
-	    		for (Index index : data.getIndexes()) {
-	    			generateIndexCreation(index, column);
-	    		}
-	    		for (Relationship relationship : data.getRelationships()) {
-	    			generateRelationshipCreation(relationship, column);
-	    		}
-	    	}
-    	}
+        // To be overrided
+
 	}
 
-	private void putBatchPropertyInsertInMap(IMetadataColumn column) {
+	protected void putBatchPropertyInsertInMap(IMetadataColumn column) {
 		if (column.getTalendType().equals("id_Date")) {
     		%>
     		if (<%=incomingConnName%>.<%=column%> != null) {
@@ -85,29 +56,11 @@ class Neo4jBatchUtils {
 	    }
 	}
 
-	private void generateNode() {
-		%>
-		<%
-        if (useLabel) {
-            %>
-            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
-            long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>, label_<%=cid%>);
-            <%
-        } else {
-            %>
-            long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>);
-            <%
-        }
-		%>
-		
-		
-		java.util.Map<String, Long> endNode_<%=cid%> = new java.util.HashMap<String,Long>();
-		java.util.Map<String, Object> indexProperties_<%=cid%> = new java.util.HashMap<String, Object>();
-		java.util.Map<String, java.util.Map<String, Object>> indexPropertiesMap_<%=cid%> = new java.util.HashMap<String, java.util.Map<String, Object>>();
-		<%
+	protected void generateNode() {
+        // To be overrided
 	}
 
-	private void generateIndexCreation(Index index, IMetadataColumn column) {
+	protected void generateIndexCreation(Index index, IMetadataColumn column) {
 		boolean fromValueColumn = index.getValue() == null || index.getValue().isEmpty();
 		if (fromValueColumn) {
 			%>
@@ -133,7 +86,7 @@ class Neo4jBatchUtils {
 		}
 	}
 
-	private void generateRelationshipCreation(Relationship relationship, IMetadataColumn column) {
+	protected void generateRelationshipCreation(Relationship relationship, IMetadataColumn column) {
 		%>
 		endNode_<%=cid%>.put(<%=relationship.getIndex().getName()%>, 0L);
 		<%

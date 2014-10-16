@@ -1,20 +1,23 @@
-<%@ jet 
+<%@ jet
 	imports="
-		org.talend.core.model.process.INode 
-		org.talend.core.model.process.ElementParameterParser 
-		org.talend.core.model.metadata.IMetadataTable 
-		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
 		org.talend.core.model.process.IConnection
 		org.talend.designer.codegen.config.CodeGeneratorArgument
-		java.util.List 
-    	java.util.Map		
-	" 
+		java.util.List
+    	java.util.Map
+	"
 %>
-<% 
+<%@ include file="../tNeo4jOutput/tNeo4jOutput_Neo4JTransactionHelper.javajet"%>
+<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
-    final String cid = node.getUniqueName();	
-    
+    final String cid = node.getUniqueName();
+
+    Neo4JTransactionHelper neo4JTransactionHelper = new Neo4JTransactionHelper(node);
+
     List<IMetadataColumn> columnList = null;
     List<IMetadataTable> metadatas = node.getMetadataList();
     IMetadataTable metadata = null;
@@ -53,6 +56,7 @@
     
     final IMetadataColumn startColumn = metadata.getColumn(startIndexValueColumn);
     final IMetadataColumn endColumn = metadata.getColumn(endIndexValueColumn);
+
     
     class Neo4jRelationshipInserter {
     
@@ -165,9 +169,9 @@
 			}
     	}
     }
-    
+
     Neo4jRelationshipInserter relationshipInserter = new Neo4jRelationshipInserter(incomingConnName, metadata);
-    
+
     if (startColumn != null && endColumn != null) {
     	// Create dynamique condition according to start and end columns state
     	if (startColumn.isNullable() && !endColumn.isNullable()) {
@@ -196,18 +200,11 @@
 	    	<%
     }
     %>
-	
+
 	counter_<%=cid%>++;
+
 	<%
-    if (!batchImport) {
-        %>
-        if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-            tx_<%=cid%>.success();
-            tx_<%=cid%>.finish();
-            tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-        }
-        <%
-    }
-    %>
+	neo4JTransactionHelper.restartTransaction();
+	%>
 
 	nb_line_<%=cid %>++;

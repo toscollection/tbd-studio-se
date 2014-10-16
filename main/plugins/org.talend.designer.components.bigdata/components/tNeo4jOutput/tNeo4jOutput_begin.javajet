@@ -11,16 +11,16 @@
     	java.util.Set 
 	" 
 %>
+<%@ include file="tNeo4jOutput_Neo4JOutputHelper.javajet"%>
 <% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
 
-    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
-    boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
     List<Map<String, String>> values = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__VALUES__");
+    boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
 
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     String dbconn = "dbService_" + connection;
@@ -32,18 +32,33 @@
    		if (autoIndexed) {
    			autoIndexedColumns.add(value.get("SCHEMA_COLUMN"));
    		}
-   		
+
    		String strIndexNames = value.get("INDEX_NAMES");
    		if (strIndexNames != null && !strIndexNames.isEmpty()) {
    			indexNames.addAll(Arrays.asList(strIndexNames.split(",")));
    		}
     }
-    
+
     // Add update/delete index
     String action = (String) ElementParameterParser.getObjectValue(node, "__DATA_ACTION__");
     if (!action.equals("INSERT")) {
     	indexNames.add((String) ElementParameterParser.getObjectValue(node, "__INDEX_NAME__"));
     }
+
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+
+    if (useExistingConnection) {
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connection)) {
+                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                break;
+            }
+        }
+    }
+
+    Neo4JOutputHelper neo4JOutputHelper = new Neo4JOutputHelper(node, cid, dbconn, dbVersion);
 
     if (useExistingConnection) {
     	%>
@@ -73,107 +88,8 @@ long counter_<%=cid%> = 0;
 	}
     // Index configuration
     if (batchImport) {
-		String nodeMappedMemory = ElementParameterParser.getValue(node, "__NODE_MAPPED_MEMORY__");
-		String relationshipMappedMemory = ElementParameterParser.getValue(node, "__RELATIONSHIP_MAPPED_MEMORY__");
-		String propertyMappedMemory = ElementParameterParser.getValue(node, "__PROPERTY_MAPPED_MEMORY__");
-		String stringsMappedMemory = ElementParameterParser.getValue(node, "__STRINGS_MAPPED_MEMORY__");
-		String arraysMappedMemory = ElementParameterParser.getValue(node, "__ARRAYS_MAPPED_MEMORY__");
-    	%>
-    	java.util.Map<String, String> importProperties_<%=cid%> = new java.util.HashMap<String, String>();
-		importProperties_<%=cid%>.put("neostore.nodestore.db.mapped_memory", <%=nodeMappedMemory%>);
-		importProperties_<%=cid%>.put("neostore.relationshipstore.db.mapped_memory", <%=relationshipMappedMemory%>);
-		importProperties_<%=cid%>.put("neostore.propertystore.db.mapped_memory", <%=propertyMappedMemory%>);
-		importProperties_<%=cid%>.put("neostore.propertystore.db.strings.mapped_memory", <%=stringsMappedMemory%>);
-		importProperties_<%=cid%>.put("neostore.propertystore.db.arrays.mapped_memory", <%=arraysMappedMemory%>);
-		String storeDir_<%=cid%> = "";
-		org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
-		org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> = null;
-	  	if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
-	         if (!globalMap.containsKey("<%=dbconn%>_inserter")) {
-	             org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
-	             storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
-	             db_<%=cid%>.shutdown();
-	             inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
-                 globalMap.put("<%=dbconn%>_inserter", inserter_<%=cid%>);
-                 globalMap.put("<%=dbconn%>_is_temporary_shutted_down", true);
-	         } else {
-                inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbconn%>_inserter");
-	         }
-		} else {
-			throw new UnsupportedOperationException("Batch import is not supported with database server edition");
-		}
-
-	  	if (!globalMap.containsKey("<%=dbconn%>_indexprovider")) {
-	        indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
-            globalMap.put("<%=dbconn%>_indexprovider", indexProvider_<%=cid%>);
-        } else {
-            indexProvider_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider) globalMap.get("<%=dbconn%>_indexprovider");
-        }
-    	resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
-    	resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
-		java.util.Map<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex> indexInserterMap_<%=cid%> = new java.util.HashMap<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex>();
-
-		<%
-    	for (String indexName : indexNames) {
-    		%>
-			indexInserterMap_<%=cid%>.put(<%=indexName%>, indexProvider_<%=cid%>.nodeIndex(<%=indexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")));
-    		<%
-    	}
-
-		// There is no autoindex in batch mode, so we did it by hand.
-        if (autoIndexedColumns.size() > 0) {
-            %>
-            org.neo4j.unsafe.batchinsert.BatchInserterIndex autoindex_<%=cid%> = indexProvider_<%=cid%>.nodeIndex("node_auto_index", org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
-            long autoindex_id_<%=cid%>  = inserter_<%=cid%>.createNode(null);
-            java.util.Map<String, Object> autoindex_props_<%=cid%> = new java.util.HashMap<String, Object>();
-            <%
-        }
+        neo4JOutputHelper.writeBatchMode(indexNames, autoIndexedColumns);
     } else {
-		%>
-		java.util.Map<String, org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>> indexNodeMap_<%=cid%> = new java.util.HashMap<String,org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node>>();
-        <%
-		if (!remoteServer) {
-		    %>
-	        org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = databaseService_<%=cid%>.beginTx();
-	        try
-	        {
-		    <%
-		}
-	    for (String indexName : indexNames) {
-	    	%>
-	    	indexNodeMap_<%=cid%>.put(<%=indexName%>, databaseService_<%=cid%>.index().forNodes(<%=indexName%>));
-	    	<%
-	    }
-
-	    if (!remoteServer) {
-	        %>
-	        tx_begin_<%=cid%>.success();
-            }
-            finally
-            {
-                tx_begin_<%=cid%>.close();
-            }
-	        <%
-        }
-
-        // Auto index configuration
-        if (autoIndexedColumns.size() > 0) {
-            %>
-
-            org.neo4j.graphdb.index.AutoIndexer<org.neo4j.graphdb.Node> autoIndexer_<%=cid%> = databaseService_<%=cid%>.index().getNodeAutoIndexer();
-            autoIndexer_<%=cid%>.setEnabled(true);
-            <%
-        }
-        for (String autoIndexedColumn : autoIndexedColumns) {
-            %>
-            autoIndexer_<%=cid%>.startAutoIndexingProperty("<%=autoIndexedColumn%>");
-            <%
-        }
-
-        // start a transaction
-        %>
-        org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-        <%
-
+        neo4JOutputHelper.writeNormalMode(indexNames, autoIndexedColumns, remoteServer);
     }
 %>

@@ -1,19 +1,24 @@
-<%@ jet 
+<%@ jet
 	imports="
-		org.talend.core.model.process.INode 
-		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
-	" 
+	"
 %>
-<% 
+<%@ include file="../tNeo4jOutput/tNeo4jOutput_Neo4JTransactionHelper.javajet"%>
+<%@ include file="tNeo4jOutputRelationship_Neo4JOutputRelationshipUtil.javajet"%>
+<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
-    String cid = node.getUniqueName();	
+    String cid = node.getUniqueName();
 
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
+
+    Neo4JTransactionHelper neo4JTransactionHelper = new Neo4JTransactionHelper(node);
+    Neo4JOutputRelationshipUtil neo4JOutputRelationshipUtil = new Neo4JOutputRelationshipUtil(node);
 
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     String dbconn = "dbService_" + connection;
@@ -60,61 +65,26 @@
 		importProperties_<%=cid%>.put("neostore.propertystore.db.strings.mapped_memory", <%=stringsMappedMemory%>);
 		importProperties_<%=cid%>.put("neostore.propertystore.db.arrays.mapped_memory", <%=arraysMappedMemory%>);
 		String storeDir_<%=cid%> = "";
-		org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
-		org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> =null;
-		if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
-		    if (!globalMap.containsKey("<%=dbconn%>_inserter")) {
-    			org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
-    			storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
-    			db_<%=cid%>.shutdown();
-    			inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
-                globalMap.put("<%=dbconn%>_inserter", inserter_<%=cid%>);
-                globalMap.put("<%=dbconn%>_is_temporary_shutted_down", true);
-		    } else {
-		        inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbconn%>_inserter");
-		    }
-		} else {
-			throw new UnsupportedOperationException("Not supported yet");
-		}
-
-		if (!globalMap.containsKey("<%=dbconn%>_indexprovider")) {
-		    indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
-		    globalMap.put("<%=dbconn%>_indexprovider", indexProvider_<%=cid%>);
-		} else {
-		    indexProvider_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider) globalMap.get("<%=dbconn%>_indexprovider");
-		}
-
-    	resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
-    	resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
+	    <%
+        neo4JOutputRelationshipUtil.getInserter();
+        neo4JOutputRelationshipUtil.getIndexProvider();
+	    %>
 
     	org.neo4j.unsafe.batchinsert.BatchInserterIndex startIndexInserter_<%=cid%> = indexProvider_<%=cid%>.nodeIndex(<%=startIndexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
     	org.neo4j.unsafe.batchinsert.BatchInserterIndex endIndexInserter_<%=cid%> = indexProvider_<%=cid%>.nodeIndex(<%=endIndexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
     	<%
     } else {
-        if (!remoteServer) {
-            %>
-            org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = databaseService_<%=cid%>.beginTx();
-            <%
-        }
-    	%>
+        neo4JTransactionHelper.startEmbeddedTransaction();
+        %>
     	org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> startIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=startIndexName%>);
     	org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> endIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=endIndexName%>);
     	<%
-    	if (!remoteServer) {
-    	    %>
-    	    tx_begin_<%=cid%>.success();
-    	    tx_begin_<%=cid%>.close();
-            <%
-        }
+        neo4JTransactionHelper.closeEmbeddedTransaction();
     }
     %>
 
 	org.neo4j.graphdb.RelationshipType relationshipType_<%=cid%> = org.neo4j.graphdb.DynamicRelationshipType.withName(<%=relationshipType%>);
 
-	<%
-    if (!batchImport) {
-        %>
-        org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
-        <%
-    }
-	%>
+<%
+neo4JTransactionHelper.startTransaction();
+%>

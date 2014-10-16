@@ -25,148 +25,184 @@
 		<CONNECTOR CTYPE="FLOW" MAX_OUTPUT="1" MIN_OUTPUT="1" />
 	</CONNECTORS>
 	<PARAMETERS>
-	    <PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" NUM_ROW="1" REPOSITORY_VALUE="NOSQL:NEO4J" SHOW_IF="USE_EXISTING_CONNECTION == 'false'"/>
-		<PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK" NUM_ROW="2" GROUP="CONNECTION_GROUP">
+		<PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" NUM_ROW="1"
+			REPOSITORY_VALUE="NOSQL:NEO4J" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" />
+		<PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
+			NUM_ROW="2" GROUP="CONNECTION_GROUP">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST" REQUIRED="true" FILTER="tNeo4jConnection" NUM_ROW="2" SHOW_IF="USE_EXISTING_CONNECTION == 'true'" GROUP="CONNECTION_GROUP"/>
-		<PARAMETER NAME="REMOTE_SERVER" FIELD="CHECK" REPOSITORY_VALUE="REMOTE_SERVER" NUM_ROW="3" SHOW_IF="USE_EXISTING_CONNECTION == 'false'" GROUP="CONNECTION_GROUP">
+		<PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST"
+			REQUIRED="true" FILTER="tNeo4jConnection" NUM_ROW="2"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" GROUP="CONNECTION_GROUP" />
+
+		<PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST"
+			REPOSITORY_VALUE="DB_VERSION" NUM_ROW="3"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'" GROUP="CONNECTION_GROUP">
+			<ITEMS DEFAULT="NEO4J_1_X_X">
+				<ITEM NAME="NEO4J_2_1_X" VALUE="NEO4J_2_1_X" />
+				<ITEM NAME="NEO4J_1_X_X" VALUE="NEO4J_1_X_X" />
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER NAME="REMOTE_SERVER" FIELD="CHECK"
+			REPOSITORY_VALUE="REMOTE_SERVER" NUM_ROW="4"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'false'" GROUP="CONNECTION_GROUP">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="DATABASE_PATH" FIELD="DIRECTORY" REPOSITORY_VALUE="DATABASE_PATH" REQUIRED="true" NUM_ROW="4" SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (REMOTE_SERVER == 'false'))" GROUP="CONNECTION_GROUP">
+
+
+
+		<PARAMETER NAME="DATABASE_PATH" FIELD="DIRECTORY"
+			REPOSITORY_VALUE="DATABASE_PATH" REQUIRED="true" NUM_ROW="5"
+			SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (REMOTE_SERVER == 'false'))"
+			GROUP="CONNECTION_GROUP">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="SERVER_URL" FIELD="TEXT" REPOSITORY_VALUE="SERVER_URL" REQUIRED="true" NUM_ROW="4" SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (REMOTE_SERVER == 'true'))" GROUP="CONNECTION_GROUP">
+		<PARAMETER NAME="SERVER_URL" FIELD="TEXT" REPOSITORY_VALUE="SERVER_URL"
+			REQUIRED="true" NUM_ROW="5"
+			SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (REMOTE_SERVER == 'true'))"
+			GROUP="CONNECTION_GROUP">
 			<DEFAULT>"http://localhost:7474/db/data"</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="SHUTDOWN_DB" FIELD="CHECK" NUM_ROW="5" SHOW_IF="USE_EXISTING_CONNECTION == 'true'" GROUP="CONNECTION_GROUP">
+		<PARAMETER NAME="SHUTDOWN_DB" FIELD="CHECK" NUM_ROW="6"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" GROUP="CONNECTION_GROUP">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="SCHEMA_FLOW" FIELD="SCHEMA_TYPE" NUM_ROW="10">
 			<DEFAULT />
 		</PARAMETER>
-		<PARAMETER NAME="QUERY" FIELD="MEMO" REQUIRED="true" NUM_ROW="15">
+		<PARAMETER NAME="QUERY" FIELD="MEMO" REQUIRED="true"
+			NUM_ROW="15">
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="MAPPING" FIELD="TABLE" REPOSITORY_VALUE="COLUMN_MAPPING" REQUIRED="true" NUM_ROW="20" NB_LINES="5" >
-			<ITEMS BASED_ON_SCHEMA="true" >
-				<ITEM NAME="RETURN_PARAMETER"/>
+		<PARAMETER NAME="MAPPING" FIELD="TABLE" REPOSITORY_VALUE="COLUMN_MAPPING"
+			REQUIRED="true" NUM_ROW="20" NB_LINES="5">
+			<ITEMS BASED_ON_SCHEMA="true">
+				<ITEM NAME="RETURN_PARAMETER" />
 			</ITEMS>
 		</PARAMETER>
 	</PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
-	  <IMPORT
-        NAME="neo4j-kernel-2.1.2"
-        MODULE="neo4j-kernel-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-kernel-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-primitive-collections-2.1.2"
-        MODULE="neo4j-primitive-collections-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-primitive-collections-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-rest-graphdb-2.0.1"
-        MODULE="neo4j-rest-graphdb-2.0.1.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-rest-graphdb-2.0.1.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-cypher-2.1.2"
-        MODULE="neo4j-cypher-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-2.1.2.jar"
-        REQUIRED="true"/>
+			<!-- Neo4J 1.9.X -->
+			<IMPORT MODULE="geronimo-jta_1.1_spec-1.1.1.jar" NAME="geronimo-jta_1.1_spec-1.1.1"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="lucene-core-3.5.0.jar" NAME="lucene-core-3.5.0"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-cypher-1.9.M01.jar" NAME="neo4j-cypher-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-graph-algo-1.9.M01.jar" NAME="neo4j-graph-algo-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-graph-matching-1.9.M01.jar" NAME="neo4j-graph-matching-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-jmx-1.9.M01.jar" NAME="neo4j-jmx-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-kernel-1.9.M01.jar" NAME="neo4j-kernel-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-lucene-index-1.9.M01.jar" NAME="neo4j-lucene-index-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-shell-1.9.M01.jar" NAME="neo4j-shell-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-udc-1.9.M01.jar" NAME="neo4j-udc-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="org.apache.servicemix.bundles.jline-0.9.94_1.jar"
+				NAME="org.apache.servicemix.bundles.jline-0.9.94_1"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/org.apache.servicemix.bundles.jline-0.9.94_1.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="scala-library-2.9.1-1.jar" NAME="scala-library-2.9.1-1"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/scala-library-2.9.1-1.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="server-api-1.9.M01.jar" NAME="server-api-1.9.M01"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="concurrentlinkedhashmap-lru-1.3.1.jar" NAME="concurrentlinkedhashmap-lru-1.3.1"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/concurrentlinkedhashmap-lru-1.3.1.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="neo4j-rest-graphdb-1.8.1.jar" NAME="neo4j-rest-graphdb-1.8.1"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="jsr311-api-1.1.2.r612.jar" NAME="jsr311-api-1.1.2.r612"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="jersey-core-1.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jersey/lib/jersey-core-1.4.jar"
+				NAME="jersey-core-1.4"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="jersey-client-1.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jersey/lib/jersey-client-1.4.jar"
+				NAME="jersey-client-1.4"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="jackson-mapper-asl-1.9.7.jar" NAME="jackson-mapper-asl-1.9.7"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="jackson-jaxrs-1.9.7.jar" NAME="jackson-jaxrs-1.9.7"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="jackson-core-asl-1.9.7.jar" NAME="jackson-core-asl-1.9.7"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_1_X_X') AND (USE_EXISTING_CONNECTION == 'false')" />
 
-      <IMPORT
-        NAME="lucene-core-3.6.2"
-        MODULE="lucene-core-3.6.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.apache.lucene/lib/lucene-core-3.6.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-cypher-commons-2.1.2"
-        MODULE="neo4j-cypher-commons-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-commons-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-cypher-compiler-1.9-2.0.3"
-        MODULE="neo4j-cypher-compiler-1.9-2.0.3.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-compiler-1.9-2.0.3.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-cypher-compiler-2.0-2.0.3"
-        MODULE="neo4j-cypher-compiler-2.0-2.0.3.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-compiler-2.0-2.0.3.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-cypher-compiler-2.1-2.1.2"
-        MODULE="neo4j-cypher-compiler-2.1-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-compiler-2.1-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-graph-algo-2.1.2"
-        MODULE="neo4j-graph-algo-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-graph-algo-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-graph-matching-2.1.2"
-        MODULE="neo4j-graph-matching-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-graph-matching-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-lucene-index-2.1.2"
-        MODULE="neo4j-lucene-index-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-lucene-index-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="concurrentlinkedhashmap-lru-1.3.1"
-        MODULE="concurrentlinkedhashmap-lru-1.3.1.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/concurrentlinkedhashmap-lru-1.3.1.jar"
-        REQUIRED="true"/>
-     <IMPORT MODULE="scala-library-2.10.4.jar"
-        NAME="scala-library-2.10.4"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/scala-library-2.10.4.jar"
-        REQUIRED="true" />
-      <IMPORT
-        NAME="geronimo-jta_1.1_spec-1.1.1"
-        MODULE="geronimo-jta_1.1_spec-1.1.1.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="jsr311-api-1.1.2.r612"
-        MODULE="jsr311-api-1.1.2.r612.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="jersey-client-1.4"
-        MODULE="jersey-client-1.4.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.jersey/lib/jersey-client-1.4.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="jersey-core-1.4"
-        MODULE="jersey-core-1.4.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.jersey/lib/jersey-core-1.4.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="jackson-mapper-asl-1.9.7"
-        MODULE="jackson-mapper-asl-1.9.7.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="jackson-jaxrs-1.9.7"
-        MODULE="jackson-jaxrs-1.9.7.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="jackson-core-asl-1.9.7"
-        MODULE="jackson-core-asl-1.9.7.jar"
-        REQUIRED="true"/>
-       <IMPORT
-        NAME="parboiled-scala_2.10-1.1.6"
-        MODULE="parboiled-scala_2.10-1.1.6.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/parboiled-scala_2.10-1.1.6.jar"
-        REQUIRED="true"/>
-       <IMPORT
-        NAME="parboiled-core-1.1.6"
-        MODULE="parboiled-core-1.1.6.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/parboiled-core-1.1.6.jar"
-        REQUIRED="true"/>
-        </IMPORTS>
+			<!-- Neo4J 2.1.2 -->
+			<IMPORT NAME="neo4j-kernel-2.1.2" MODULE="neo4j-kernel-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-kernel-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-primitive-collections-2.1.2" MODULE="neo4j-primitive-collections-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-primitive-collections-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-rest-graphdb-2.0.1" MODULE="neo4j-rest-graphdb-2.0.1.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-rest-graphdb-2.0.1.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-cypher-2.1.2" MODULE="neo4j-cypher-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+
+			<IMPORT NAME="lucene-core-3.6.2" MODULE="lucene-core-3.6.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.lucene/lib/lucene-core-3.6.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-cypher-commons-2.1.2" MODULE="neo4j-cypher-commons-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-commons-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-cypher-compiler-1.9-2.0.3" MODULE="neo4j-cypher-compiler-1.9-2.0.3.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-compiler-1.9-2.0.3.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-cypher-compiler-2.0-2.0.3" MODULE="neo4j-cypher-compiler-2.0-2.0.3.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-compiler-2.0-2.0.3.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-cypher-compiler-2.1-2.1.2" MODULE="neo4j-cypher-compiler-2.1-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-cypher-compiler-2.1-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-graph-algo-2.1.2" MODULE="neo4j-graph-algo-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-graph-algo-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-graph-matching-2.1.2" MODULE="neo4j-graph-matching-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-graph-matching-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="neo4j-lucene-index-2.1.2" MODULE="neo4j-lucene-index-2.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-lucene-index-2.1.2.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="concurrentlinkedhashmap-lru-1.3.1" MODULE="concurrentlinkedhashmap-lru-1.3.1.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/concurrentlinkedhashmap-lru-1.3.1.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT MODULE="scala-library-2.10.4.jar" NAME="scala-library-2.10.4"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/scala-library-2.10.4.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="geronimo-jta_1.1_spec-1.1.1" MODULE="geronimo-jta_1.1_spec-1.1.1.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jsr311-api-1.1.2.r612" MODULE="jsr311-api-1.1.2.r612.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jersey-client-1.4" MODULE="jersey-client-1.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jersey/lib/jersey-client-1.4.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jersey-core-1.4" MODULE="jersey-core-1.4.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jersey/lib/jersey-core-1.4.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jackson-mapper-asl-1.9.7" MODULE="jackson-mapper-asl-1.9.7.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jackson-jaxrs-1.9.7" MODULE="jackson-jaxrs-1.9.7.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="jackson-core-asl-1.9.7" MODULE="jackson-core-asl-1.9.7.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="parboiled-scala_2.10-1.1.6" MODULE="parboiled-scala_2.10-1.1.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/parboiled-scala_2.10-1.1.6.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+			<IMPORT NAME="parboiled-core-1.1.6" MODULE="parboiled-core-1.1.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/parboiled-core-1.1.6.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
 		<RETURN AVAILABILITY="AFTER" NAME="NB_LINE" TYPE="id_Integer" />

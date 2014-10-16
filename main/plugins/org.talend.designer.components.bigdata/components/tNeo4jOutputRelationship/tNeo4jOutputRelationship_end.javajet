@@ -5,60 +5,41 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 	" 
 %>
+<%@ include file="../tNeo4jOutput/tNeo4jOutput_Neo4JTransactionHelper.javajet"%>
+<%@ include file="tNeo4jOutputRelationship_Neo4JOutputRelationshipUtil.javajet"%>
 <% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
-    String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
 
-    boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));       
-    if (!batchImport) {
-        %>
-        if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
-            tx_<%=cid%>.success();
-            tx_<%=cid%>.finish();
-        }
-        <%
-    }
+    boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
 
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
 	boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     String dbconn = "dbService_" + connection;
 
-	if (!batchImport && (!useExistingConnection||(useExistingConnection && shutdownDb))) {
+    Neo4JOutputRelationshipUtil neo4JOutputRelationshipUtil = new Neo4JOutputRelationshipUtil(node);
+    Neo4JTransactionHelper neo4JTransactionHelper = new Neo4JTransactionHelper(node);
+
+    neo4JTransactionHelper.closeTransaction();
+
+	if (!batchImport && (!useExistingConnection || (useExistingConnection && shutdownDb))) {
 		%>
-			
 			databaseService_<%=cid%>.shutdown();
 			resourceMap.put("finish_<%=cid%>", true); 
 		<%
 	}
+
 	if (batchImport) {
-		%>
-            if ((indexProvider_<%=cid%>!=null) && (globalMap.containsKey("<%=dbconn%>_indexprovider"))) {
-				indexProvider_<%=cid%>.shutdown();
-                globalMap.remove("<%=dbconn%>_indexprovider");
-			}
-            if ((inserter_<%=cid%>!=null) && (globalMap.containsKey("<%=dbconn%>_inserter"))) {
-                try {
-                    inserter_<%=cid%>.shutdown();
-                    globalMap.remove("<%=dbconn%>_inserter");
-                } catch (IllegalStateException e_<%=cid%>) {
-                    // Nothing, the shutdown must be called two times due to multiples components
-	            }
-			}
-			resourceMap.put("finish_<%=cid%>", true); 
+        neo4JOutputRelationshipUtil.shutdownIndexProvider();
+        neo4JOutputRelationshipUtil.shutdownInserter();
+        %>
+
+		resourceMap.put("finish_<%=cid%>", true); 
 		<%
 		if (useExistingConnection && !shutdownDb) {
-            %>
-            // if the db connection is still shutted down, reopen it for further components.
-            // Otherwise, that mean that another component with the embedded connection has done it previously
-            if (((Boolean) globalMap.get("<%=dbconn%>_is_temporary_shutted_down"))) {
-                databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase((String)globalMap.get("<%=dbconn%>_path"));
-                globalMap.put("<%=dbconn%>", databaseService_<%=cid%>);
-                globalMap.put("<%=dbconn%>_is_temporary_shutted_down", false);
-            }
-			<%
+		    neo4JOutputRelationshipUtil.restartEmbeddedDatabase();
 		}
 	}
 %>

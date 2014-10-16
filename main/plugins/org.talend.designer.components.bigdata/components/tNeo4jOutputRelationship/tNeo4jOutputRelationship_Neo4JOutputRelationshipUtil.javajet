@@ -1,0 +1,166 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.List 
+    	java.util.Map 
+    	java.util.ArrayList	
+    	java.util.HashSet 
+    	java.util.Arrays 
+    	java.util.Set 
+	" 
+%>
+<% 
+class Neo4JOutputRelationshipUtil {
+    private INode node;
+    private String cid;
+    private String dbVersion;
+    private String dbConnectionName;
+    private boolean batchImport;
+    private String commitEvery;
+
+    public Neo4JOutputRelationshipUtil(INode node) {
+        this.node = node;
+        this.cid = node.getUniqueName();
+
+        this.batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
+        this.commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__");
+        boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+
+        if (useExistingConnection) {
+            String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+            this.dbConnectionName = "dbService_" + connection; 
+            for(INode targetNode : node.getProcess().getNodesOfType("tNeo4jConnection")){
+                if (targetNode.getUniqueName().equals(connection)) {
+                    this.dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                    break;
+                }
+            }
+        } else {
+            this.dbConnectionName = "dbService_" + cid;
+            this.dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+        }
+
+    }
+
+    /**
+     * Write down the following java code : Get the current Neo4j index provider. If it does not exist, create one.
+     */
+    public void getIndexProvider() {
+        %>
+        org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider indexProvider_<%=cid%> = null;
+        <%
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+            <%
+        } else { // NEO4J_2_1_X
+           %>
+           if (!globalMap.containsKey("<%=dbConnectionName%>_indexprovider")) {
+               indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+               globalMap.put("<%=dbConnectionName%>_indexprovider", indexProvider_<%=cid%>);
+           } else {
+               indexProvider_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider) globalMap.get("<%=dbConnectionName%>_indexprovider");
+           }
+           <%
+        }
+        %>
+        resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
+        <%
+    }
+    public void shutdownIndexProvider() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            if(indexProvider_<%=cid%>!=null){
+                indexProvider_<%=cid%>.shutdown();
+            }
+            <%
+        } else { // NEO4J_2_1_X
+           %>
+           if ((indexProvider_<%=cid%>!=null) && (globalMap.containsKey("<%=dbConnectionName%>_indexprovider"))) {
+               indexProvider_<%=cid%>.shutdown();
+               globalMap.remove("<%=dbConnectionName%>_indexprovider");
+           }
+           <%
+        }
+    }
+
+    /**
+     * Write down the following java code : Get the current Neo4j inserter. If it does not exist, shut down the database and create one.
+     */
+    public void getInserter() {
+        %>
+        org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
+        if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
+            <%
+            if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+                %>
+                org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
+                storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
+                db_<%=cid%>.shutdown();
+                inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
+                <%
+            } else { // NEO4J_2_1_X
+               %>
+               if (!globalMap.containsKey("<%=dbConnectionName%>_inserter")) {
+                   org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
+                   storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
+                   db_<%=cid%>.shutdown();
+                   inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
+                   globalMap.put("<%=dbConnectionName%>_inserter", inserter_<%=cid%>);
+                   globalMap.put("<%=dbConnectionName%>_is_temporary_shutted_down", true);
+               } else {
+                   inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbConnectionName%>_inserter");
+               }
+               <%
+            }
+            %>
+        } else {
+            throw new UnsupportedOperationException("Not supported yet");
+        }
+        resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
+        <%
+    }
+
+    public void shutdownInserter() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            if(inserter_<%=cid%>!=null){
+                inserter_<%=cid%>.shutdown();
+            }
+            <%
+        } else { // NEO4J_2_1_X
+           %>
+           if ((inserter_<%=cid%>!=null) && (globalMap.containsKey("<%=dbConnectionName%>_inserter"))) {
+               try {
+                   inserter_<%=cid%>.shutdown();
+                   globalMap.remove("<%=dbConnectionName%>_inserter");
+               } catch (IllegalStateException e_<%=cid%>) {
+                   // Nothing, the shutdown must be called two times due to multiples components
+               }
+           }
+           <%
+        }
+    }
+
+    public void restartEmbeddedDatabase() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedGraphDatabase(storeDir_<%=cid%>);
+            globalMap.put("<%=dbConnectionName%>", databaseService_<%=cid%>);
+            <%
+        } else { // NEO4J_2_1_X
+           %>
+           // if the db connection is still shutted down, reopen it for further components.
+           // Otherwise, that mean that another component with the embedded connection has done it previously
+           if (((Boolean) globalMap.get("<%=dbConnectionName%>_is_temporary_shutted_down"))) {
+               databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase((String)globalMap.get("<%=dbConnectionName%>_path"));
+               globalMap.put("<%=dbConnectionName%>", databaseService_<%=cid%>);
+               globalMap.put("<%=dbConnectionName%>_is_temporary_shutted_down", false);
+           }
+           <%
+        }
+    }
+}
+%>

@@ -14,8 +14,12 @@
 	" 
 %>
 <%@ include file="tNeo4jOutput_Neo4jUtils.javajet"%>
+<%@ include file="tNeo4jOutput_Neo4jUtils1_9.javajet"%>
+<%@ include file="tNeo4jOutput_Neo4jUtils2_0.javajet"%>
 <%@ include file="tNeo4jOutput_Neo4jBatchUtils.javajet"%>
-<% 
+<%@ include file="tNeo4jOutput_Neo4jBatchUtils1_9.javajet"%>
+<%@ include file="tNeo4jOutput_Neo4jBatchUtils2_0.javajet"%>
+<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     final INode node = (INode)codeGenArgument.getArgument();
     final String cid = node.getUniqueName();
@@ -24,7 +28,20 @@
     boolean batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
     boolean useLabel = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_LABEL__"));
     String neo4jLabel = ElementParameterParser.getValue(node, "__LABEL_NAME__");
-    
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+
+    if (useExistingConnection) {
+        String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connection)) {
+                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                break;
+            }
+        }
+    }
+
     List<IMetadataColumn> columnList = null;
     List<IMetadataTable> metadatas = node.getMetadataList();
     
@@ -58,10 +75,21 @@
     }
 
     if (batchImport) {
-    	Neo4jBatchUtils neo4jBatchUtils = new Neo4jBatchUtils(cid, node, incomingConnName, columnList, useLabel, neo4jLabel);
-    	neo4jBatchUtils.generateNodeBatchInsert();
+        Neo4jBatchUtils neo4jBatchUtils;
+        if ("NEO4J_1_X_X".equals(dbVersion)) {
+            neo4jBatchUtils = new Neo4jBatchUtils1_9(cid, node, incomingConnName, columnList);
+        } else { // NEO4J_2_1_X
+            neo4jBatchUtils  = new Neo4jBatchUtils2_0(cid, node, incomingConnName, columnList, useLabel, neo4jLabel);
+        }
+
+        neo4jBatchUtils.generateNodeBatchInsert();
     } else {
-    	Neo4jUtils neo4jUtils = new Neo4jUtils(cid, node, dataAction, incomingConnName, columnList, useLabel, neo4jLabel);
+        Neo4jUtils neo4jUtils;
+        if ("NEO4J_1_X_X".equals(dbVersion)) {
+            neo4jUtils = new Neo4jUtils1_9(cid, node, dataAction, incomingConnName, columnList);
+        } else { // NEO4J_2_1_X
+            neo4jUtils  = new Neo4jUtils2_0(cid, node, dataAction, incomingConnName, columnList, useLabel, neo4jLabel);
+        }
 	    if (dataAction.equals("INSERT")) {
 		    neo4jUtils.generateNodeInsert();
 		} else if (dataAction.equals("INSERT_OR_UPDATE")) {
@@ -77,7 +105,7 @@
 counter_<%=cid%>++;
 
 <%
-if (!batchImport) {
+if ("NEO4J_1_X_X".equals(dbVersion)) {
     %>
     if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
         tx_<%=cid%>.success();
@@ -85,6 +113,16 @@ if (!batchImport) {
         tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
     }
     <%
+} else { // NEO4J_2_1_X
+    if (!batchImport) {
+        %>
+        if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
+            tx_<%=cid%>.success();
+            tx_<%=cid%>.finish();
+            tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+        }
+        <%
+    }
 }
 %>
 
