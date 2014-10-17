@@ -44,7 +44,9 @@
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
-    
+    %>
+    <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
+    <%
 	String host = ElementParameterParser.getValue(node,"__HOST__");
     String port = ElementParameterParser.getValue(node,"__PORT__");
     //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
@@ -81,9 +83,10 @@
   	List<IMetadataColumn> columnList = null;
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
   	String firstConnName = "";
-		
+	
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	%>
+
+    %>
 	int nb_line_<%=cid %> = 0;
 	<%
   	if(metadatas != null && metadatas.size() > 0){
@@ -143,7 +146,7 @@
 			me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
 			<%
 			if(useExistingConnection){
-      			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+                String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 				%>
 				cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
 				<%

@@ -18,6 +18,9 @@
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
+    %>
+    <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
+    <%
     String batchSize = ElementParameterParser.getValue(node,"__BATCH_SIZE__");
 	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
 	String superKeyColumn = ElementParameterParser.getValue(node,"__SUPER_KEY_COLUMN__");
