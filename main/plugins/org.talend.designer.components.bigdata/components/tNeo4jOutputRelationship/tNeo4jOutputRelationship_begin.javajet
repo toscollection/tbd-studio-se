@@ -74,10 +74,14 @@
     	org.neo4j.unsafe.batchinsert.BatchInserterIndex endIndexInserter_<%=cid%> = indexProvider_<%=cid%>.nodeIndex(<%=endIndexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
     	<%
     } else {
+        %>
+        org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> startIndexNode_<%=cid%> = null;
+        org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> endIndexNode_<%=cid%> = null;
+        <%
         neo4JTransactionHelper.startEmbeddedTransaction();
         %>
-    	org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> startIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=startIndexName%>);
-    	org.neo4j.graphdb.index.Index<org.neo4j.graphdb.Node> endIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=endIndexName%>);
+    	startIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=startIndexName%>);
+    	endIndexNode_<%=cid%> = databaseService_<%=cid%>.index().forNodes(<%=endIndexName%>);
     	<%
         neo4JTransactionHelper.closeEmbeddedTransaction();
     }

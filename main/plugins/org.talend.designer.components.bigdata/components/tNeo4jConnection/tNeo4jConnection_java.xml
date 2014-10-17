@@ -168,6 +168,12 @@
 				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X')" />
 			<IMPORT NAME="jackson-core-asl-1.9.7" MODULE="jackson-core-asl-1.9.7.jar"
 				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X')" />
+			<IMPORT NAME="parboiled-scala_2.10-1.1.6" MODULE="parboiled-scala_2.10-1.1.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/parboiled-scala_2.10-1.1.6.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X')" />
+			<IMPORT NAME="parboiled-core-1.1.6" MODULE="parboiled-core-1.1.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/parboiled-core-1.1.6.jar"
+				REQUIRED_IF="(DB_VERSION=='NEO4J_2_1_X')" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
