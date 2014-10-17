@@ -271,6 +271,7 @@
 		for (com.google.api.services.bigquery.model.TableRow row_<%=cid %> : rows_<%=cid %>) {
 			java.util.List<com.google.api.services.bigquery.model.TableCell> field_<%=cid %> = row_<%=cid %>.getF();
 			Object value_<%=cid%> = null;
+			nb_line_<%=cid%> ++;
 		<%
 		List< ? extends IConnection> conns = node.getOutgoingSortedConnections();
 		if (conns != null){
