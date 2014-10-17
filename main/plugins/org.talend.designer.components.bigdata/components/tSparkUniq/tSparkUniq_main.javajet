@@ -28,8 +28,16 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 	
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
 %>
-	org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD.distinct();
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD.distinct();
+<%
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
+	}
+%>
 
 		
 		

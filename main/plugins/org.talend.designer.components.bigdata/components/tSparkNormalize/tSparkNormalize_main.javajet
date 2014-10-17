@@ -42,9 +42,24 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 	
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
+		if(columnIndexToNormalize==-1) {
 %>
-	org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Normalize.run(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD, <%=separator%>, <%=columnIndexToNormalize%>);
-
+			if(true) {
+				throw new java.lang.Exception("Make sure the column to normalize is correct.");
+			}
+<%
+		}
+	
+%>
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Normalize.run(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD, <%=("".equals(separator)?"\"\"":separator)%>, <%=columnIndexToNormalize%>);
+<%
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
+	}
+%>
 		
 		
 		

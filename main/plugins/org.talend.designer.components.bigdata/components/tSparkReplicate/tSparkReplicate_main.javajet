@@ -28,11 +28,25 @@ java.util.Map
 
 	String outputConnectionName = "";
 	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	
+	if(outputConnections==null || !(outputConnections.size()>0) || "".equals(previousOutputConnectionName)) {
+%>
+		if(true) {
+			throw new java.lang.Exception("The component <%=cid%> should have an input connection and an output connection.");
+		}
+<%
+	}
+	
 	if(outputConnections!=null && outputConnections.size()>0) {
 		for(IConnection conn : outputConnections) {
 %>
-			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=conn.getName()%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD;
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=conn.getName()%>_RDD = null;
 <%
+			if(!"".equals(previousOutputConnectionName)) {
+%>
+				<%=cid%>_<%=conn.getName()%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD;
+<%
+			}
 		}
 	}
 %>

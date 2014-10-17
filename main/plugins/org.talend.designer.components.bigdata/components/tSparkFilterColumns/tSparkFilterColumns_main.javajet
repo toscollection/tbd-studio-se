@@ -32,30 +32,45 @@
 		}
 	}
 	
-	String outputConnectionName = null;
+	String outputConnectionName = "";
 	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
 	if(outputConnections!=null && outputConnections.size()>0) {
 		outputConnectionName = outputConnections.get(0).getName();
 	}
-
-	List<IMetadataTable> metadatas = node.getMetadataList();
 	
-	if ((metadatas != null) && (metadatas.size() > 0)) {
-		IMetadataTable metadata = metadatas.get(0);
-		if (metadata!=null && outputConnectionName != null) {
-			List<IMetadataColumn> metaColumns = metadata.getListColumns();
-			String columnIndexes = "";
-			boolean isFirst = true;
-			for (IMetadataColumn column : metaColumns) {
-				if(!isFirst) {
-					columnIndexes+= ",";
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
+
+		List<IMetadataTable> metadatas = node.getMetadataList();
+		
+		if ((metadatas != null) && (metadatas.size() > 0)) {
+			IMetadataTable metadata = metadatas.get(0);
+			if (metadata!=null && !"".equals(outputConnectionName)) {
+				List<IMetadataColumn> metaColumns = metadata.getListColumns();
+				String columnIndexes = "";
+				boolean isFirst = true;
+				for (IMetadataColumn column : metaColumns) {
+					if(!isFirst) {
+						columnIndexes+= ",";
+					}
+					isFirst = false;
+					columnIndexes+=inputColumnsName.indexOf(column.getLabel());
 				}
-				isFirst = false;
-				columnIndexes+=inputColumnsName.indexOf(column.getLabel());
-			}
 %>
-			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Filter.filterColumns(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD, java.util.Arrays.asList(<%=columnIndexes%>));
+				java.util.List<Integer> list_<%=cid%> = new java.util.ArrayList<Integer>();
 <%
+				if(metaColumns.size() > 0) {
+%>
+					list_<%=cid%> = java.util.Arrays.asList(<%=columnIndexes%>);
+<%
+				}
+%>				
+				org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Filter.filterColumns(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD, list_<%=cid%>);
+<%
+			}
 		}
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
 	}
 %>

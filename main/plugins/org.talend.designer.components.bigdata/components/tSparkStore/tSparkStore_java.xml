@@ -26,6 +26,11 @@
 			FILTER="tSparkConnection" REQUIRED="true" NUM_ROW="5" />
 		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" REQUIRED="true"
 			NUM_ROW="10" />
+		      <PARAMETER NAME="LABEL_NOTE" FIELD="LABEL" NUM_ROW="10"
+            SHOW_IF="(STORAGE_SOURCE=='LOCAL')"
+            GROUP="STORAGE" COLOR="255;0;0">
+            <DEFAULT><![CDATA[The local storage is not supported on Windows.]]></DEFAULT>
+        </PARAMETER>
 		<PARAMETER NAME="STORAGE_SOURCE" FIELD="CLOSED_LIST"
 			REQUIRED="true" NUM_ROW="15" GROUP="STORAGE">
 			<ITEMS DEFAULT="HDFS">

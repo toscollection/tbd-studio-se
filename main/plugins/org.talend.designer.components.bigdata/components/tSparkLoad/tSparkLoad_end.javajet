@@ -17,48 +17,57 @@ java.util.Map
 	INode node = (INode)codeGenArgument.getArgument();	
 	String cid = node.getUniqueName();
 	
-	boolean inMain = true;
-	String startNode = "";
-
-	inMain = node.isSubtreeStart();
-	
-	INode lastNode = node;
-	
-	boolean hasChanged = true;	// Used to avoid infinite loops.
-	while((lastNode.getOutgoingConnections(org.talend.core.model.process.EConnectionType.FLOW_REF).size()==0) && hasChanged) {
-		if(lastNode.getOutgoingConnections().size()>0) {
-			hasChanged = true;
-			lastNode = lastNode.getOutgoingConnections().get(0).getTarget();
-		} else {
-			hasChanged = false;
-		}
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
 	}
 	
-	boolean isStreaming = false;
-	boolean defineTimeout = false;
-	String timeout = "";
-	String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
-	for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
-		if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
-			isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
-			if(isStreaming) {
-				defineTimeout = "true".equals(ElementParameterParser.getValue(pNode, "__DEFINE_DURATION__"));
-				timeout = ElementParameterParser.getValue(pNode, "__STREAMING_DURATION__");
+	if(!"".equals(outputConnectionName)) {
+	
+		boolean inMain = true;
+		String startNode = "";
+	
+		inMain = node.isSubtreeStart();
+		
+		INode lastNode = node;
+		
+		boolean hasChanged = true;	// Used to avoid infinite loops.
+		while((lastNode.getOutgoingConnections(org.talend.core.model.process.EConnectionType.FLOW_REF).size()==0) && hasChanged) {
+			if(lastNode.getOutgoingConnections().size()>0) {
+				hasChanged = true;
+				lastNode = lastNode.getOutgoingConnections().get(0).getTarget();
+			} else {
+				hasChanged = false;
 			}
 		}
-	}
-	
-	if(!inMain) {
+		
+		boolean isStreaming = false;
+		boolean defineTimeout = false;
+		String timeout = "";
+		String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+		for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+			if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+				isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+				if(isStreaming) {
+					defineTimeout = "true".equals(ElementParameterParser.getValue(pNode, "__DEFINE_DURATION__"));
+					timeout = ElementParameterParser.getValue(pNode, "__STREAMING_DURATION__");
+				}
+			}
+		}
+		
+		if(!inMain) {
 %>
-		globalMap.put("LOOKUP_RDD_<%=cid%>", <%=lastNode.getUniqueName()%>_<%=lastNode.getOutgoingConnections().get(0).getName()%>_RDD);
+			globalMap.put("LOOKUP_RDD_<%=cid%>", <%=lastNode.getUniqueName()%>_<%=lastNode.getOutgoingConnections().get(0).getName()%>_RDD);
 <%
-	} 
+		} 
 	
-	if(isStreaming && inMain) {
+		if(isStreaming && inMain) {
 %>
-		ctx_<%=cid%>.start();
-		ctx_<%=cid%>.awaitTermination(<%=defineTimeout?timeout:""%>);
+			ctx_<%=cid%>.start();
+			ctx_<%=cid%>.awaitTermination(<%=defineTimeout?timeout:""%>);
 <%
+		}
 	}
 %>
 	

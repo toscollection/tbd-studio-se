@@ -23,6 +23,7 @@
 
 	String previousOutputConnectionName = "";
 	INode lookupStartNode = null;
+	boolean lookupConnectionsExist = false;
 	
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections(EConnectionType.FLOW_MAIN).size()>0) {
 		IConnection connection = node.getIncomingConnections(EConnectionType.FLOW_MAIN).get(0);
@@ -31,6 +32,7 @@
 	}
 	
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections(EConnectionType.FLOW_REF).size()>0) {
+		lookupConnectionsExist = true;
 		lookupStartNode = node.getIncomingConnections(EConnectionType.FLOW_REF).get(0).getSource();
 		while(lookupStartNode.getIncomingConnections(EConnectionType.FLOW_MAIN).size()>0) {
 			lookupStartNode = lookupStartNode.getIncomingConnections(EConnectionType.FLOW_MAIN).get(0).getSource();
@@ -43,98 +45,135 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 	
-	boolean isStreaming = false;
-	
-	String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
-	for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
-		if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
-			isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
-		}
-	}
-	
-	String lookup_filename = ElementParameterParser.getValue(node, "__LOOKUP_FILENAME__");
-	String separator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR_LOOKUP__");
-	
-	List<Map<String, String>> joinKeyColumns = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__JOIN_KEY__");
-	boolean isMultiKey = joinKeyColumns.size() >1? true: false;
-	String joinMode = ElementParameterParser.getValue(node, "__JOIN_MODE__");
-	
-	INode startNode = node.getDesignSubjobStartNode();
-	if (startNode != null && lookupStartNode != null) {
-%>
-		org.talend.spark.TalendRDD<List<Object>> lk_<%=cid %>_RDD = (org.talend.spark.TalendRDD<List<Object>>)globalMap.get("LOOKUP_RDD_<%=lookupStartNode.getUniqueName()%>");
-<%
-	}
-	List<IMetadataTable> metadatas = node.getMetadataList();
-	
-	IMetadataTable metadata = null;
-	List<String> columns = new ArrayList<String>();
-	IMetadataTable inputMetadata = null;
-	List<String> inputColumns = new ArrayList<String>();
-	IMetadataTable lookupMetadata = null;
-	List<String> lookupColumns = new ArrayList<String>();
-	
-	if(metadatas != null && metadatas.size() > 0) {
-		metadata = metadatas.get(0);
-		for (IMetadataColumn column : metadata.getListColumns()) {
-			columns.add(column.getLabel());
-		}
-	}
-	
-	//get the input Main and Lookup connection
-	IConnection inMainCon = null;
-	IConnection inRefCon = null;   
-	List< ? extends IConnection> connsIn = node.getIncomingConnections();     
-	for (IConnection conn : connsIn) {
-		if (conn.getLineStyle().equals(EConnectionType.FLOW_MAIN)) {
-			inMainCon = conn;
-		} else if(conn.getLineStyle().equals(EConnectionType.FLOW_REF)) {
-    		inRefCon = conn;
-    	}
-	}
-	
-	inputMetadata = inMainCon.getMetadataTable();
-	lookupMetadata = inRefCon.getMetadataTable();
-
-	for(IMetadataColumn column : inputMetadata.getListColumns()) {
-		inputColumns.add(column.getLabel());
-	}
-	
-	for(IMetadataColumn column : lookupMetadata.getListColumns()) {
-		lookupColumns.add(column.getLabel());
-	}
-		
-	String inputKeys="";
-	String lookupKeys="";
-	if(columns.size() > 0 && lookupColumns.size() > 0) {
-		int index = -1;
-		int lkIndex = -1;
-		for (int i=0; i < joinKeyColumns.size(); i++) {
-			Map<String, String> joinMap = joinKeyColumns.get(i);
-			index = columns.indexOf(joinMap.get("INPUT_COLUMN"));
-			lkIndex = lookupColumns.indexOf(joinMap.get("LOOKUP_COLUMN"));
-			if (i!=0) {
-				inputKeys+=",";
-				lookupKeys+=",";
-			}
-			inputKeys+=index;
-			lookupKeys+=lkIndex;
-		}
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
 %>
 		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = null;
 <%
-		if(isStreaming) {
-%>
-			if(true) {
-				throw new UnsupportedOperationException("The component tSparkJoin does not support the streaming mode.");
+		if(lookupConnectionsExist) {
+			boolean isStreaming = false;
+		
+			String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+			for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+				if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+					isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+				}
 			}
+			
+			String lookup_filename = ElementParameterParser.getValue(node, "__LOOKUP_FILENAME__");
+			String separator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR_LOOKUP__");
+			
+			List<Map<String, String>> joinKeyColumns = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__JOIN_KEY__");
+			boolean isMultiKey = joinKeyColumns.size() >1? true: false;
+			String joinMode = ElementParameterParser.getValue(node, "__JOIN_MODE__");
+			
+			INode startNode = node.getDesignSubjobStartNode();
+			if (startNode != null && lookupStartNode != null) {
+%>
+				org.talend.spark.TalendRDD<List<Object>> lk_<%=cid %>_RDD = (org.talend.spark.TalendRDD<List<Object>>)globalMap.get("LOOKUP_RDD_<%=lookupStartNode.getUniqueName()%>");
 <%
+			}
+			List<IMetadataTable> metadatas = node.getMetadataList();
+			
+			IMetadataTable metadata = null;
+			List<String> columns = new ArrayList<String>();
+			IMetadataTable inputMetadata = null;
+			List<String> inputColumns = new ArrayList<String>();
+			IMetadataTable lookupMetadata = null;
+			List<String> lookupColumns = new ArrayList<String>();
+			
+			if(metadatas != null && metadatas.size() > 0) {
+				metadata = metadatas.get(0);
+				for (IMetadataColumn column : metadata.getListColumns()) {
+					columns.add(column.getLabel());
+				}
+			}
+		
+			//get the input Main and Lookup connection
+			IConnection inMainCon = null;
+			IConnection inRefCon = null;   
+			List< ? extends IConnection> connsIn = node.getIncomingConnections();     
+			for (IConnection conn : connsIn) {
+				if (conn.getLineStyle().equals(EConnectionType.FLOW_MAIN)) {
+					inMainCon = conn;
+				} else if(conn.getLineStyle().equals(EConnectionType.FLOW_REF)) {
+		    		inRefCon = conn;
+		    	}
+			}
+			
+			inputMetadata = inMainCon.getMetadataTable();
+			lookupMetadata = inRefCon.getMetadataTable();
+		
+			for(IMetadataColumn column : inputMetadata.getListColumns()) {
+				inputColumns.add(column.getLabel());
+			}
+			
+			for(IMetadataColumn column : lookupMetadata.getListColumns()) {
+				lookupColumns.add(column.getLabel());
+			}
+				
+			String inputKeys="";
+			String lookupKeys="";
+			if(columns.size() > 0 && inputColumns.size() > 0 && lookupColumns.size() > 0) {
+				int index = -1;
+				int lkIndex = -1;
+				for (int i=0; i < joinKeyColumns.size(); i++) {
+					Map<String, String> joinMap = joinKeyColumns.get(i);
+					index = columns.indexOf(joinMap.get("INPUT_COLUMN"));
+					lkIndex = lookupColumns.indexOf(joinMap.get("LOOKUP_COLUMN"));
+					if (i!=0) {
+						inputKeys+=",";
+						lookupKeys+=",";
+					}
+					inputKeys+=index;
+					lookupKeys+=lkIndex;
+				}
+				
+				if(isStreaming) {
+%>
+					if(true) {
+						throw new java.lang.UnsupportedOperationException("The component tSparkJoin does not support the streaming mode.");
+					}
+<%
+				} else {
+%>
+					java.util.List<Integer> inputKeyList_<%=cid%> = new java.util.ArrayList<Integer>();
+					java.util.List<Integer> lookupKeyList_<%=cid%> = new java.util.ArrayList<Integer>();
+<%
+					if("".equals(inputKeys) || "".equals(lookupKeys)) {
+%>
+						if(true) {
+							throw new java.lang.Exception("The component <%=cid%> must have join keys.");
+						}
+<%
+					} else {
+%>
+						inputKeyList_<%=cid%> = java.util.Arrays.asList(<%=inputKeys%>);
+						lookupKeyList_<%=cid%> = java.util.Arrays.asList(<%=lookupKeys%>);
+<%						
+					}
+%>
+					org.talend.spark.TalendPairRDD<List<Object>, List<Object>> <%=cid%>_<%=outputConnectionName%>_PairRDD = org.talend.spark.operation.Join.<%=joinMode %>(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD, inputKeyList_<%=cid%>, lk_<%=cid %>_RDD, lookupKeyList_<%=cid%>);
+					<%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.RDDConverter.convert(<%=cid%>_<%=outputConnectionName%>_PairRDD.toJavaRDD());
+<%
+				}
+			} else {
+%>
+				if(true) {
+					throw new Exception("Input, lookup(s) and output schemas must not be empty in the component <%=cid%>.");
+				}
+<%
+			}
 		} else {
 %>
-			org.talend.spark.TalendPairRDD<List<Object>, List<Object>> <%=cid%>_<%=outputConnectionName%>_PairRDD = org.talend.spark.operation.Join.<%=joinMode %>(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD,java.util.Arrays.asList(<%=inputKeys%>),lk_<%=cid %>_RDD,java.util.Arrays.asList(<%=lookupKeys%>));
-			<%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.RDDConverter.convert(<%=cid%>_<%=outputConnectionName%>_PairRDD.toJavaRDD());
+			if(true) {
+				throw new java.lang.Exception("The component <%=cid%> must have lookup connections.");
+			}
 <%
 		}
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
 	}
 %>
 

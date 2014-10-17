@@ -23,79 +23,83 @@ java.util.Map
 	boolean isHDFS = "HDFS".equals(storageSource);
 	boolean isTwitter = "TWITTER".equals(storageSource);
 	
-	String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
-	for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
-		if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
-			isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
-		}
-	}
-	
-	String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
-	String talendRDDClass = (isStreaming?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
-%>
-	<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=sparkConnection%>_SPARK_CONTEXT");
-<%
-	String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
-	if(isHDFS && !isStreaming) {
-%>
-		org.apache.hadoop.conf.Configuration conf_<%=cid%> = ctx_<%=cid%>.hadoopConfiguration();
-		conf_<%=cid%>.set("fs.default.name", <%=namenode%>);
-<%
-	}
-
-	String inputFile = ElementParameterParser.getValue(node, "__INPUT_FILE__");
-	if(isLocal) inputFile = "\"file:///\" + " + inputFile;
-	if(isHDFS && isStreaming) inputFile = namenode + "+" + inputFile;
-	String separator = ElementParameterParser.getValue(node, "__ROW_SEPARATOR__");
-	
 	String outputConnectionName = "";
 	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
 	if(outputConnections!=null && outputConnections.size()>0) {
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 	
-	if(isTwitter) {
-		String consumerKey = ElementParameterParser.getValue(node, "__CONSUMERKEY__");
-		String accesstoken = ElementParameterParser.getValue(node, "__ACCESSTOKEN__");
-		String filters = ElementParameterParser.getValue(node, "__FILTER__");
-		List<Map<String, String>> twitterMapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__MAPPING__");
+	if(!"".equals(outputConnectionName)) {
+		String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+		for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+			if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+				isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+			}
+		}
+	
+		String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
+		String talendRDDClass = (isStreaming?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
+%>
+		<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=sparkConnection%>_SPARK_CONTEXT");
+<%
+		String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+		if(isHDFS && !isStreaming) {
+%>
+			org.apache.hadoop.conf.Configuration conf_<%=cid%> = ctx_<%=cid%>.hadoopConfiguration();
+			conf_<%=cid%>.set("fs.default.name", <%=("".equals(namenode)?"\"\"":namenode)%>);
+<%
+		}
+
+		String inputFile = ElementParameterParser.getValue(node, "__INPUT_FILE__");
+		if(isLocal) inputFile = "\"file:///\" + " + inputFile;
+		if(isHDFS && isStreaming) inputFile = namenode + "+" + inputFile;
+		String separator = ElementParameterParser.getValue(node, "__ROW_SEPARATOR__");
 		
-		String passwordFieldName = "__CONSUMERSECRET__";
-		if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
-%> 
-			final String consumerSecret_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
-<%
-		} else {
-%>
-			final String consumerSecret_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
-<%
-		}
+		if(isTwitter) {
+			String consumerKey = ElementParameterParser.getValue(node, "__CONSUMERKEY__");
+			String accesstoken = ElementParameterParser.getValue(node, "__ACCESSTOKEN__");
+			String filters = ElementParameterParser.getValue(node, "__FILTER__");
+			List<Map<String, String>> twitterMapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__MAPPING__");
 			
-		passwordFieldName = "__SECRETTOKEN__";
-		if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+			String passwordFieldName = "__CONSUMERSECRET__";
+			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
 %> 
-			final String accessTokenSecret_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+				final String consumerSecret_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+			} else {
+				String clearPassword = ElementParameterParser.getValue(node, passwordFieldName);
+%>
+				final String consumerSecret_<%=cid%> = <%=("".equals(clearPassword)?"\"\"":clearPassword)%>;  
+<%
+			}
+			
+			passwordFieldName = "__SECRETTOKEN__";
+			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%> 
+				final String accessTokenSecret_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+			} else {
+				String clearPassword = ElementParameterParser.getValue(node, passwordFieldName);
+%>
+				final String accessTokenSecret_<%=cid%> = <%=("".equals(clearPassword)?"\"\"":clearPassword)%>; 
+<%
+			}
+%>
+			java.util.List<org.talend.spark.utils.twitter.TwitterParameter> mapping_<%=cid%> = new java.util.ArrayList<org.talend.spark.utils.twitter.TwitterParameter>();
+<% 
+			for(Map<String, String> configRow : twitterMapping){
+%>
+				mapping_<%=cid%>.add(org.talend.spark.utils.twitter.TwitterParameter.<%=configRow.get("TWITTER_PROPERTY")%>);
+<%			
+			}
+%>
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.TwitterLoad.twitterStream(ctx_<%=cid%>, <%=("".equals(consumerKey)?"\"\"":consumerKey)%>, consumerSecret_<%=cid%>, <%=("".equals(accesstoken)?"\"\"":accesstoken)%>, accessTokenSecret_<%=cid%>, <%=("".equals(filters)?"\"\"":filters)%>.split(","), mapping_<%=cid%>));
 <%
 		} else {
 %>
-			final String accessTokenSecret_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%>, <%=("".equals(inputFile)?"\"\"":inputFile)%>, <%=("".equals(separator)?"\"\"":separator)%>));
 <%
 		}
-%>
-		java.util.List<org.talend.spark.utils.twitter.TwitterParameter> mapping_<%=cid%> = new java.util.ArrayList<org.talend.spark.utils.twitter.TwitterParameter>();
-<% 
-		for(Map<String, String> configRow : twitterMapping){
-%>
-			mapping_<%=cid%>.add(org.talend.spark.utils.twitter.TwitterParameter.<%=configRow.get("TWITTER_PROPERTY")%>);
-<%			
-		}
-%>
-		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.TwitterLoad.twitterStream(ctx_<%=cid%>, <%=consumerKey%>, consumerSecret_<%=cid%>, <%=accesstoken%>, accessTokenSecret_<%=cid%>, <%=filters%>.split(","), mapping_<%=cid%>));
-<%
-	} else {
-%>
-		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%>, <%=inputFile%>, <%=separator%>));
-<%
 	}
 %>
 

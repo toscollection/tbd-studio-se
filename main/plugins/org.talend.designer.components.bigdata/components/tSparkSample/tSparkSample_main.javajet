@@ -28,11 +28,29 @@
 	if(outputConnections!=null && outputConnections.size()>0) {
 		outputConnectionName = outputConnections.get(0).getName();
 	}
-	boolean isWithReplacement = "true".equals(ElementParameterParser.getValue(node, "__IS_WITH_REPLACEMENT__"));
-	String fraction = ElementParameterParser.getValue(node, "__FRACTION__");
-	String seed = ElementParameterParser.getValue(node, "__SEED__");
+	
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
+		boolean isWithReplacement = "true".equals(ElementParameterParser.getValue(node, "__IS_WITH_REPLACEMENT__"));
+		String fraction = ElementParameterParser.getValue(node, "__FRACTION__");
+		String seed = ElementParameterParser.getValue(node, "__SEED__");
+		boolean isNumeric = false;
+		
+		if("".equals(fraction) || "".equals(seed)) {
 %>
-	org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD.sample(<%=isWithReplacement%>,<%=fraction%>,<%=seed%>);
+			if(true) {
+				throw new java.lang.Exception("The parameter \"Fraction\" must be a relative integer and the parameter \"Seed\" must be natural integer.");
+			}
+<%
+		}
+%>
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD.sample(<%=isWithReplacement%>,<%=("".equals(fraction)?"0":fraction)%>,<%=("".equals(seed)?"0":seed)%>);
+<%
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
+	}
+%>
 
 		
 		
