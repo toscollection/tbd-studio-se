@@ -196,7 +196,14 @@
 		comand_<%=cid%>.append(" --headerline");
 <%
 		}
-	}
+	} else {
+        if (jsonArray) {
+            %>
+                comand_<%=cid%>.append(" --jsonArray");
+            <%
+        }
+    }
+
 	if(additionalParams != null && additionalParams.size()>0){
 		for(Map<String, String> param : additionalParams){
 			String arg = param.get("ARGUMENT");

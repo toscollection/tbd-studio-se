@@ -243,7 +243,16 @@
      	>
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
-    	
+
+        <PARAMETER
+            NAME="JSON_ARRAY"
+            FIELD="CHECK"
+            NUM_ROW="90"
+            SHOW_IF="(FILE_TYPE == 'JSON')"
+        >
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+
 		<PARAMETER 
 			NAME="PRINT_LOG" 
 			FIELD="CHECK" 
