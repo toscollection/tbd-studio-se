@@ -11,7 +11,8 @@ imports="
     String cid = node.getUniqueName();
 %>
 	}
-	if (startIndex_<%=cid%> >= queryResult_<%=cid %>.getTotalRows().intValue()) {
+	pageToken = dataList_<%=cid %>.getPageToken();
+	if (null == pageToken) {
 		break;
 	}
   }
