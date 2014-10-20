@@ -65,7 +65,7 @@
                 			            <%
                 			        }else if(javaType == JavaTypesManager.DATE && pattern != null){
                 			            %>
-                			            row_<%=cid%>[<%=i%>] = FormatterUtils.format_Date(<%=conn.getName() %>.<%=column.getLabel() %>, <%= pattern %>);
+                			            row_<%=cid%>[<%=i%>] = FormatterUtils.format_Date(<%=conn.getName() %>.<%=column.getLabel() %>, "yyyy-MM-dd HH:mm:ss");
                 			            <%
                 			        }else if(javaType == JavaTypesManager.BYTE_ARRAY){
                 			            %>

@@ -260,12 +260,12 @@
 				String typeToGenerate = "string";
 				if("id_Float".equals(column.getTalendType())) {
 					typeToGenerate = "float";
-				}
-				if("id_Integer".equals(column.getTalendType())) {
+				} else if("id_Integer".equals(column.getTalendType())) {
 					typeToGenerate = "integer";
-				}
-				if("id_Boolean".equals(column.getTalendType())) {
+				} else if("id_Boolean".equals(column.getTalendType())) {
 					typeToGenerate = "boolean";
+				} else if("id_Date".equals(column.getTalendType())) {
+					typeToGenerate = "timestamp";
 				}
 				%>
 				com.google.api.services.bigquery.model.TableFieldSchema <%=columnName%> = new com.google.api.services.bigquery.model.TableFieldSchema();
