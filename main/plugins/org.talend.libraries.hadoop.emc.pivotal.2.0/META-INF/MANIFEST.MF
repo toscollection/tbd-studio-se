@@ -2,6 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Pivotal 2.0 Libraries
 Bundle-SymbolicName: org.talend.libraries.hadoop.emc.pivotal.2.0
-Bundle-Version: 5.6.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
