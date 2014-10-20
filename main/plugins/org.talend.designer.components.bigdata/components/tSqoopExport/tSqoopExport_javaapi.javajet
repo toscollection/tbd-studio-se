@@ -168,6 +168,7 @@
 %>
 	try {
 		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+		globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
 		if(result_<%=cid%> != 0) {
 <%
 			if(dieOnError) {

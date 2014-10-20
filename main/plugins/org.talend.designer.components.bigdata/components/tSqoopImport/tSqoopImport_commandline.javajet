@@ -278,10 +278,12 @@ try {
 %>	
 }
 
+	int result_<%=cid%> = ps_<%=cid%>.waitFor();
+	globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
+
 <%
 	if(dieOnError) {
 %>
-		ps_<%=cid%>.waitFor();
 		if(ps_<%=cid%>.exitValue()>0) {
 			throw new Exception("The Sqoop import has failed. Please check the logs.");
 		}
