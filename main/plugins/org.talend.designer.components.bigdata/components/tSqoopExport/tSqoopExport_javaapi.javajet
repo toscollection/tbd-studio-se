@@ -25,8 +25,9 @@
 	boolean clearStagingTable = "true".equals(ElementParameterParser.getValue(node, "__CLEAR_STAGING_TABLE__"));
 	boolean defineStagingTable = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_STAGING_TABLE__"));
 	String stagingTable = ElementParameterParser.getValue(node, "__STAGING_TABLE__");
-	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CAL_PROC_STOCK__"));
-	String procStock = ElementParameterParser.getValue(node, "__PROC_STOCK__");
+    boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
+	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CALL_PROC_STOC__"));
+	String procStock = ElementParameterParser.getValue(node, "__PROC_STOC__");
 	boolean defineUpdateMode = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_UPDATE_MODE__"));
 	String updateMode = ElementParameterParser.getValue(node, "__UPDATE_MODE__");
 	boolean overrideJavaMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_JAVA_MAPPING__"));
@@ -42,11 +43,17 @@
 	com.cloudera.sqoop.SqoopOptions sqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
 	
 	sqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
-	sqoopOptions_<%=cid%>.setTableName(<%=table%>);
+<%	
+	if(!callProcStock) {
+%>
+		sqoopOptions_<%=cid%>.setTableName(<%=table%>);
+<%
+	}
+%>
 	sqoopOptions_<%=cid%>.setExportDir(<%=exportDir%>);
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	
-	<%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "PIVOTAL_HD_2_0".equals(version)))) {%>
+	<%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "PIVOTAL_HD_2_0".equals(version) || "APACHE_2_4_0_EMR".equals(version)))) {%>
 		<%
 		String passwordFieldName = "__PASSWORD__";
     	%>
@@ -54,6 +61,7 @@
 		sqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>); // __PASSWORD__
 	<%} else {%>
 		sqoopOptions_<%=cid%>.setPasswordFilePath(<%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>);
+		sqoopOptions_<%=cid%>.setPassword(org.apache.sqoop.util.CredentialsUtil.fetchPassword<%="HDP_2_0".equals(version)?"FromFile":""%>(sqoopOptions_<%=cid%>));
 	<%}%>
 		
 <%	
@@ -68,12 +76,12 @@
 	<%if(direct && (!defineUpdateMode || "updateonly".equals(updateMode))){%>sqoopOptions_<%=cid%>.setDirectMode(true);<%}%>
 	<%if(useMappers){%>sqoopOptions_<%=cid%>.setNumMappers(Integer.valueOf(<%=mappers%>));<%}%>
 	<%if(useBatchMode){%>sqoopOptions_<%=cid%>.setBatchMode(true);<%}%>
-	<%if(clearStagingTable && !useColumnForUpdate){%>sqoopOptions_<%=cid%>.setClearStagingTable(true);<%}%>
+	<%if(clearStagingTable && !useColumnForUpdate && !callProcStock){%>sqoopOptions_<%=cid%>.setClearStagingTable(true);<%}%>
 	<%if(callProcStock){%>sqoopOptions_<%=cid%>.setCall(<%=procStock%>);<%}%>
-	<%if(defineStagingTable && !useColumnForUpdate){%>sqoopOptions_<%=cid%>.setStagingTableName(<%=stagingTable%>);<%}%>
-	<%if(defineUpdateMode){%>sqoopOptions_<%=cid%>.setUpdateMode(com.cloudera.sqoop.SqoopOptions.<%="updateonly".equals(updateMode)?"UpdateMode.UpdateOnly":"UpdateMode.AllowInsert"%>);<%}%>
+	<%if(defineStagingTable && !useColumnForUpdate && !callProcStock){%>sqoopOptions_<%=cid%>.setStagingTableName(<%=stagingTable%>);<%}%>
+	<%if(!useColumnForUpdate && defineUpdateMode){%>sqoopOptions_<%=cid%>.setUpdateMode(com.cloudera.sqoop.SqoopOptions.<%="updateonly".equals(updateMode)?"UpdateMode.UpdateOnly":"UpdateMode.AllowInsert"%>);<%}%>
 	<%
-		if(useColumnForUpdate) {
+		if(useColumnForUpdate && !defineUpdateMode && !callProcStock) {
 			List<Map<String,String>> columnsForUpdate = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__COLUMN_FOR_UPDATE__");
 			if(columnsForUpdate!=null && columnsForUpdate.size()>0) {
 	%>
@@ -124,6 +132,9 @@
 	%>
 	java.util.Properties additionalProperties_<%=cid%> = new java.util.Properties();
 <%
+	if(passwordStoredInFile) {
+		
+	}
 	if(additionalList != null){ 
 		for(Map<String,String> additionalMap : additionalList){
 			if(additionalMap.get("ADDITIONAL_VALUE")==null || "".equals(additionalMap.get("ADDITIONAL_VALUE"))) { 
@@ -153,9 +164,11 @@
 		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
 <%
 	}
+
 %>
 	try {
 		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+		globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
 		if(result_<%=cid%> != 0) {
 <%
 			if(dieOnError) {
@@ -165,7 +178,9 @@
 			} else {
 %>
 				System.err.println("The Sqoop export job has failed. Please check the logs.");
-<%
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - The Sqoop export job has failed. Please check the logs.");
+				<%}
 			}
 %>
 		}
@@ -178,7 +193,9 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
 	}

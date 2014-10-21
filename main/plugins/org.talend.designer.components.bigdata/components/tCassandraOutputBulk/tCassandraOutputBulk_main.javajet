@@ -13,7 +13,6 @@
 		java.util.Map
 	"
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
@@ -115,12 +114,7 @@ if(keyColumn != null){
 	writer_<%=cid%>.newRow(<%convertUtil.convert(keyCType, inConnName, keyColumn);%>);
 <%
 }else{
-	if(isLog4jEnabled){
-	%>
-		log.fatal("<%=cid%> - A key should be specified in the schema.");
-	<%
-	}
-	%>
+%>
 	if(true){
 		throw new java.lang.Exception("A key should be specified in the schema.");
 	}
@@ -130,6 +124,11 @@ if(keyColumn != null){
 long timestamp_<%=cid%> = System.currentTimeMillis() * 1000;
 nb_line_<%=cid%> ++;
 <%
+if(isLog4jEnabled){
+%>
+	log.debug("<%=cid%> - Writing the record " + (nb_line_<%=cid%>) + " to the SSTable directory.");
+<%
+}
 for(int i = 0; i < sizeColumns; i++){
 	IMetadataColumn column = columns.get(i);
 	JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
@@ -143,13 +142,5 @@ for(int i = 0; i < sizeColumns; i++){
 	writer_<%=cid%>.addColumn(org.apache.cassandra.utils.ByteBufferUtil.bytes("<%=columnName%>"),<%convertUtil.convert(cType, inConnName, columnName);%>,timestamp_<%=cid%>);
 <%
 } 
-log4jFileUtil.collectRetriveData(inConnName,metadata);
-if(isLog4jEnabled){
-%>
-	log.debug("<%=cid%> - Writing the record " + (nb_line_<%=cid%>) + " to the SSTable directory.");
-	log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
-	log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
-<%
-}
 %>
 

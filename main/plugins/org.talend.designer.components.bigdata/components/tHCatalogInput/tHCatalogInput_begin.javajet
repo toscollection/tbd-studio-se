@@ -16,9 +16,7 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 	
-	log4jFileUtil.addIgnoredParamsType(org.talend.core.model.process.EParameterFieldType.TABLE);	
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	String rowSeparator = ElementParameterParser.getValue(node, "__ROWSEPARATOR__");
@@ -182,7 +180,7 @@
 <%
         boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
         String hcatVersion = ElementParameterParser.getValue(node, "__HCAT_VERSION__");
-        if(!isCustom && "MAPR310".equals(hcatVersion)) {
+        if(!isCustom && hcatVersion!=null && "MAPR310,MAPR401".contains(hcatVersion)) {
 %>
 		pathHDFS_<%=cid%> = location_<%=cid%>;
 		namenode_<%=cid%> = "maprfs:///";

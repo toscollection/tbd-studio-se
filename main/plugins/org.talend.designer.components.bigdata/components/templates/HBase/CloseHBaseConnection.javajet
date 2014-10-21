@@ -6,7 +6,12 @@ imports="
 " 
 %>
 
-<%if(!isCustom && ("HDP_2_0".equals(hbaseVersion) || "HDP_2_1".equals(hbaseVersion) || "PIVOTAL_HD_2_0".equals(hbaseVersion) || "Cloudera_CDH5".equals(hbaseVersion) || "Cloudera_CDH5_1".equals(hbaseVersion))) {%>
+<%
+java.util.List<String> supportNewHbaseApiVersionList = java.util.Arrays.<String>asList(
+	"HDP_2_0","HDP_2_1","PIVOTAL_HD_2_0","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1"
+);
+
+if(!isCustom && (hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
 		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
 <%} else {%>
 		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>,true);

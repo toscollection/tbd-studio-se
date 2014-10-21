@@ -14,11 +14,13 @@
 		java.util.List
 	" 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<% 
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
+    %>
+    <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
+    <%
     String batchSize = ElementParameterParser.getValue(node,"__BATCH_SIZE__");
 	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
 	String superKeyColumn = ElementParameterParser.getValue(node,"__SUPER_KEY_COLUMN__");
@@ -320,7 +322,6 @@
 							}
 						}
 		            }
-		            log4jFileUtil.collectRetriveData(conName,inputMetadataTable);
 					%>
 					<%if (!isKeyColumnJavaPrimitive) {%>
 						}
@@ -330,9 +331,7 @@
 					<%
 					if(isLog4jEnabled){
 					%>
-						log.debug("<%=cid%> - Add the record " + (nb_line_<%=cid%>) + " to the batch[size:"+batchCounter_<%=cid%>+"].");
-						log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
-						log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+						log.debug("<%=cid%> - Adding the record " + (nb_line_<%=cid%>) + " to the batch[size:"+batchCounter_<%=cid%>+"].");
 					<%
 					}
 					%>
@@ -357,12 +356,7 @@
 				}catch(java.lang.Exception e_<%=cid%>){
 					<%
 					if(dieOnError) {
-						if(isLog4jEnabled){
-						%>
-							log.fatal("<%=cid%> - " + e_<%=cid%>);
-						<%
-						}
-						%>
+					%>
 				        throw(e_<%=cid%>);
 					<%
 					}else {

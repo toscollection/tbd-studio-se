@@ -1,0 +1,76 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection 
+		org.talend.designer.codegen.config.CodeGeneratorArgument 
+		org.talend.designer.neo4j.data.Neo4jData 
+		org.talend.designer.neo4j.data.Index 
+		org.talend.designer.neo4j.data.Relationship 
+		org.talend.designer.neo4j.ui.editor.MetadataColumnExt 
+		java.util.List 
+	" 
+%>
+<%
+class Neo4jBatchUtils2_0 extends Neo4jBatchUtils {
+
+    private boolean useLabel;
+    private String neo4jLabel;
+
+	public Neo4jBatchUtils2_0(String cid, INode node, String incomingConnName, List<IMetadataColumn> columnList, boolean useLabel, String neo4jLabel) {
+		super(cid, node, incomingConnName, columnList);
+        this.useLabel = useLabel;
+        this.neo4jLabel = neo4jLabel;
+	}
+
+	public void generateNodeBatchInsert() {
+		%>
+		java.util.Map<String, Object> properties_<%=cid%> = new java.util.HashMap<String, Object>();
+		<%
+		for (IMetadataColumn column : columnList) {
+    		putBatchPropertyInsertInMap(column);
+	    }
+	    // Must compute all properties before node creation for best performances
+	    generateNode();
+	    for (IMetadataColumn column : columnList) {
+	    	if (column instanceof MetadataColumnExt) {
+	    		MetadataColumnExt columnExt = (MetadataColumnExt) column;
+	    		Neo4jData data = columnExt.getData();
+                if (data.isAutoIndexed()) {
+                    %>
+                    autoindex_props_<%=cid%>.put("<%=column.getLabel()%>", <%=incomingConnName%>.<%=column%>);
+                    autoindex_<%=cid%>.add(autoindex_id_<%=cid%>, autoindex_props_<%=cid%>);
+                    autoindex_<%=cid%>.flush();
+                    <%
+                }
+	    		for (Index index : data.getIndexes()) {
+	    			generateIndexCreation(index, column);
+	    		}
+	    		for (Relationship relationship : data.getRelationships()) {
+	    			generateRelationshipCreation(relationship, column);
+	    		}
+	    	}
+    	}
+	}
+
+	protected void generateNode() {
+        if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+            long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>, label_<%=cid%>);
+            <%
+        } else {
+            %>
+            long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>);
+            <%
+        }
+		%>
+		java.util.Map<String, Long> endNode_<%=cid%> = new java.util.HashMap<String,Long>();
+		java.util.Map<String, Object> indexProperties_<%=cid%> = new java.util.HashMap<String, Object>();
+		java.util.Map<String, java.util.Map<String, Object>> indexPropertiesMap_<%=cid%> = new java.util.HashMap<String, java.util.Map<String, Object>>();
+		<%
+	}
+}
+%>

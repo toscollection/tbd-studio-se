@@ -65,8 +65,9 @@
 	List<Map<String, String>> defineFunctions = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DEFINE_FUNCTION__");
 	
 	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
-		
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || "HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "MAPR310".equals(pigVersion) || "MICROSOFT_HD_INSIGHT_3_1".equals(pigVersion)) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	
+	java.util.List<String> supportHcatVersionList = java.util.Arrays.<String>asList("HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1","MAPR310","MAPR401","MICROSOFT_HD_INSIGHT_3_1");
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || (pigVersion!=null && supportHcatVersionList.contains(pigVersion))) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;
@@ -266,13 +267,20 @@
 				
 				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
-				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(pigVersion)))) {
+				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,Cloudera_CDH5_1_MR1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0".contains(pigVersion)))) {
 					String username = ElementParameterParser.getValue(node, "__USERNAME__");
 %>
 					String username_<%=cid %> = <%=username%>;
 					if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
 						System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
 					}
+<%
+				}
+				
+				if(!isCustom && "MAPR401".equals(pigVersion)) {//set the default properties
+%>
+			        props_<%=cid%>.put("mapreduce.job.map.output.collector.class", "org.apache.hadoop.mapred.MapRFsOutputBuffer");
+			        props_<%=cid%>.put("mapreduce.job.reduce.shuffle.consumer.plugin.class", "org.apache.hadoop.mapreduce.task.reduce.DirectShuffle");
 <%
 				}
 			}
@@ -287,9 +295,9 @@
                 <%
             }
 			boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion));
-			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || isKerberosAvailableHadoop2;
+			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || "MAPR401".equals(pigVersion) || isKerberosAvailableHadoop2;
 			
-			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion));
+			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion) || "Cloudera_CDH5_1_MR1".equals(pigVersion));
 			
 			if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
 %>
@@ -311,7 +319,7 @@
 <%
 				}
 				
-				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion))) {
+				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "MAPR401".equals(pigVersion))) {
 %>
 					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
 <%

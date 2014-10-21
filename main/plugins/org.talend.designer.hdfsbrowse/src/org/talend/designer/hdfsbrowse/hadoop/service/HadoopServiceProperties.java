@@ -32,7 +32,21 @@ public class HadoopServiceProperties {
 
     private String resourceManager;
 
+    private String userName;
+
+    private String group;
+
     private boolean useKrb;
+
+    private String principal;
+
+    private String jtOrRmPrincipal;
+
+    private boolean useKeytab;
+
+    private String keytabPrincipal;
+
+    private String keytab;
 
     private String uid;
 
@@ -86,6 +100,22 @@ public class HadoopServiceProperties {
         this.resourceManager = resourceManager;
     }
 
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getGroup() {
+        return this.group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
     public boolean isUseKrb() {
         return this.useKrb;
     }
@@ -108,6 +138,46 @@ public class HadoopServiceProperties {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getPrincipal() {
+        return this.principal;
+    }
+
+    public void setPrincipal(String principal) {
+        this.principal = principal;
+    }
+
+    public String getJtOrRmPrincipal() {
+        return this.jtOrRmPrincipal;
+    }
+
+    public void setJtOrRmPrincipal(String jtOrRmPrincipal) {
+        this.jtOrRmPrincipal = jtOrRmPrincipal;
+    }
+
+    public boolean isUseKeytab() {
+        return this.useKeytab;
+    }
+
+    public void setUseKeytab(boolean useKeytab) {
+        this.useKeytab = useKeytab;
+    }
+
+    public String getKeytabPrincipal() {
+        return this.keytabPrincipal;
+    }
+
+    public void setKeytabPrincipal(String keytabPrincipal) {
+        this.keytabPrincipal = keytabPrincipal;
+    }
+
+    public String getKeytab() {
+        return this.keytab;
+    }
+
+    public void setKeytab(String keytab) {
+        this.keytab = keytab;
     }
 
 }

@@ -38,4 +38,4 @@
 	
 	%>
 	globalMap.put("dbService_<%=cid%>_path", <%=dbPath%>);
-	globalMap.put("dbService_<%=cid%>", databaseService_<%=cid%>);
+    globalMap.put("dbService_<%=cid%>", databaseService_<%=cid%>);

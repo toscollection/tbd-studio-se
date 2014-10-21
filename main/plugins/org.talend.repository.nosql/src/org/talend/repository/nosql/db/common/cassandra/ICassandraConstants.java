@@ -23,4 +23,6 @@ public interface ICassandraConstants {
     public final static String DEFAULT_HOST = "localhost"; //$NON-NLS-1$
 
     public final static String DEFAULT_PORT = "9160"; //$NON-NLS-1$
+
+    public final static String DBM_ID = "cassandra_id"; //$NON-NLS-1$
 }

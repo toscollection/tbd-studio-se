@@ -23,6 +23,7 @@
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String table = ElementParameterParser.getValue(node,"__TABLE__");
 	String username = ElementParameterParser.getValue(node,"__USERNAME__");
+    boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
     
 	String fsDefalutName = "fs.default.name";
 	
@@ -87,7 +88,9 @@
 				} else {
 %>
 					System.err.println("The Sqoop jar generation has failed with the following code:" + ret_<%=cid%>);
-<%
+					<%if(isLog4jEnabled) {%>
+					log.error("<%=cid%> - The Sqoop jar generation has failed with the following code:" + ret_<%=cid%>);
+					<%}
 				}
 %>
         	}
@@ -103,7 +106,9 @@
 			} else {
 %>
 				System.err.println(e.getMessage());
-<%		
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - " + e.getMessage());
+				<%}
 			}
 %>
 		}
@@ -125,7 +130,9 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
     }
@@ -166,6 +173,7 @@
 %>
 	try {
 		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+		globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
 		if(result_<%=cid%> != 0) {
 <%
 			if(dieOnError) {
@@ -175,7 +183,9 @@
 			} else {
 %>
 				System.err.println("The Sqoop merge job has failed. Please check the logs.");
-<%
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - The Sqoop merge job has failed. Please check the logs.");
+				<%}
 			}
 %>
 		}
@@ -188,7 +198,9 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
 	}

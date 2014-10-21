@@ -19,11 +19,10 @@ Require-Bundle: org.eclipse.ui,
  org.talend.designer.codegen,
  org.talend.designer.components.localprovider,
  org.talend.repository,
- org.talend.datatools.xml,
- org.talend.libraries.pig
+ org.talend.datatools.xml
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
-Bundle-ClassPath: .
 Export-Package: org.talend.designer.pigmap.model.emf.pigmap
+

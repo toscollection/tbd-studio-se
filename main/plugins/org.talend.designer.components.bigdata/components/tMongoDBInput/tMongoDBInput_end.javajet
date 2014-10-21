@@ -51,6 +51,3 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 }
 %>
 globalMap.put("<%=cid %>_NB_LINE", nb_line_<%=cid%>);
-<%
-log4jFileUtil.componentFinishInfo(node);
-%>

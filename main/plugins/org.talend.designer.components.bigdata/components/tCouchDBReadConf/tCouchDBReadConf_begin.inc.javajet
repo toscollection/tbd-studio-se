@@ -73,8 +73,6 @@
     String limit = ElementParameterParser.getValue(node, "__LIMIT__");
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
     
     List<IMetadataTable> metadatas = node.getMetadataList();
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
@@ -93,8 +91,14 @@
 	if(useExistingConn){
 	%>
 		client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
-	
-	<%
+		<%
+		if(isLog4jEnabled){
+		%>	
+			if(client_<%=cid%> != null) {
+				log.info("<%=cid%> - Get an existing client from " + "<%=connection%>" + ".");
+			}
+		<%
+		}
 	}else{
 	%>
 		client_<%=cid%> = new org.lightcouch.CouchDbClient(<%=dbname%>, true, "http", <%=dbhost%>, <%=dbport%>, <%=dbuser%>, decryptedPassword_<%=cid%>);
@@ -347,7 +351,6 @@
 				 			<%=firstConnName%>.jsonDoc = valueRow_<%=cid%><%if(include_docs && !isReduce){%>.getDoc()<%}%>;
 						<%
 						}
-						log4jFileUtil.collectRetriveData(firstConnName,metadata);
 					}
 					log4jFileUtil.debugRetriveData(node);
 		}

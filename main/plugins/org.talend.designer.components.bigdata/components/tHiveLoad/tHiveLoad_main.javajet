@@ -107,6 +107,7 @@ imports="
 		connectionMode = "";
 		setFsDefaultName = false;
 		fsDefaultName = "";
+		dbuser = "";
 		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 		for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
 			if(connection!=null && connection.equals(pNode.getUniqueName())) {
@@ -115,6 +116,7 @@ imports="
 				connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
 				setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
 				fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
+				dbuser = ElementParameterParser.getValue(pNode, "__USER__");
 				break;
 			}
 		}
@@ -123,6 +125,25 @@ imports="
 	// Register jars to handle the parquet format.
 	
 	boolean targetTableUsesParquetFormat = "true".equals(ElementParameterParser.getValue(node, "__TARGET_TABLE_IS_A_PARQUET_TABLE__"));
+	
+	java.util.List<String> hiveVersionList = new java.util.ArrayList<String>();
+	hiveVersionList.add("APACHE_0_20_203");
+	hiveVersionList.add("Cloudera_CDH3");
+	hiveVersionList.add("Cloudera_CDH4");
+	hiveVersionList.add("APACHE_1_0_0");
+	hiveVersionList.add("MAPR2");
+	hiveVersionList.add("HDP_1_0");
+	hiveVersionList.add("PIVOTAL_HD_1_0_1");
+	
+	boolean isParquetSupported = "CUSTOM".equals(distribution) || !hiveVersionList.contains(hiveVersion);
+	if(targetTableUsesParquetFormat && !isParquetSupported) {
+%>
+		if(true) {
+			throw new java.lang.UnsupportedOperationException("Parquet is only supported if the distribution used embeds Hive version 0.10 or later.");
+		}
+<%
+	}
+	
 	boolean generateAddJarCodeForAll = targetTableUsesParquetFormat;
 		
 	if(targetTableUsesParquetFormat) {
@@ -219,113 +240,8 @@ imports="
 		}
 	}
 	
-	StringBuilder createTableSQL = new StringBuilder();
-	
-	if("LOAD".equals(loadAction)) {
-		createTableSQL.append("LOAD DATA ");
-		if(local) {
-			createTableSQL.append("LOCAL ");
-		}
-		createTableSQL.append("INPATH '");
-%>
-		String path_<%=cid%> = <%=path%>;
-<%
-    	createTableSQL.append("\" + ");
-    	createTableSQL.append("path_");
-    	createTableSQL.append(cid);
-    	createTableSQL.append(" + \"'");
-    	
-    	if("OVERWRITE".equals(fileAction)) {
-    		createTableSQL.append(" OVERWRITE ");
-    	}
-    	createTableSQL.append(" INTO TABLE ");
-%>
-		String tablename_<%=cid%> = <%=tablename%>;
-<%
-    	createTableSQL.append("\" + ");
-    	createTableSQL.append("tablename_");
-    	createTableSQL.append(cid);
-    	createTableSQL.append(" + \"");
-    	
-    	if(setPartition) {
-    		createTableSQL.append(" PARTITION (");
-%>
-			String partition_<%=cid%> = <%=partition%>;
-<%
-	    	createTableSQL.append("\" + ");
-        	createTableSQL.append("partition_");
-        	createTableSQL.append(cid);
-        	createTableSQL.append(" + \"");
-    		createTableSQL.append(")");
-    	}
-	} else if("INSERT".equals(loadAction)) {
-		createTableSQL.append("INSERT ");
-		
-		String targetType = ElementParameterParser.getValue(node, "__TARGET__");
-		String query = ElementParameterParser.getValue(node, "__QUERY__");
-		query = query.replaceAll("\n"," ");
-		query = query.replaceAll("\r"," ");
-		
-		if("TABLE".equals(targetType)) {
-			boolean createIfNotExist = "true".equals(ElementParameterParser.getValue(node, "__CREATE_IF_NOT_EXIST__"));
-			
-			if("OVERWRITE".equals(fileAction)) {
-				createTableSQL.append("OVERWRITE ");
-			} else if("APPEND".equals(fileAction)) {
-				createTableSQL.append("INTO ");
-			}
-			createTableSQL.append("TABLE ");
-%>
-			String tablename_<%=cid%> = <%=tablename%>;
-<%
-	    	createTableSQL.append("\" + ");
-        	createTableSQL.append("tablename_");
-        	createTableSQL.append(cid);
-        	createTableSQL.append(" + \" ");
-        	
-    		if(setPartition) {
-    			createTableSQL.append(" PARTITION (");
-%>
-				String partition_<%=cid%> = <%=partition%>;
-<%
-    	    	createTableSQL.append("\" + ");
-            	createTableSQL.append("partition_");
-            	createTableSQL.append(cid);
-            	createTableSQL.append(" + \"");
-        		createTableSQL.append(") ");
-        		
-        		if(createIfNotExist) {
-        			createTableSQL.append(" IF NOT EXISTS ");
-        		}
-    		}
-		} else if("DIRECTORY".equals(targetType)) {
-			createTableSQL.append("OVERWRITE ");
-			
-			if(local) {
-				createTableSQL.append("LOCAL ");
-			}
-			
-			createTableSQL.append("DIRECTORY '");
-%>
-			String path_<%=cid%> = <%=path%>;
-<%
-	    	createTableSQL.append("\" + ");
-        	createTableSQL.append("path_");
-        	createTableSQL.append(cid);
-        	createTableSQL.append(" + \"' ");
-		}
-%>
-		String query_<%=cid%> = <%=query%>;
-<%
-    	createTableSQL.append("\" + ");
-    	createTableSQL.append("query_");
-    	createTableSQL.append(cid);
-    	createTableSQL.append(" + \"");
-	}
-%>
-
-	String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
-	
+%>	
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveLoad/loadQueryGeneration.javajet"%>
 <%
 	if(!isExecutedThroughWebHCat) {
 %>	

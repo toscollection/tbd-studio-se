@@ -22,27 +22,7 @@
     <PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST" REQUIRED="true" FILTER="tNeo4jConnection" NUM_ROW="1"/>
   </PARAMETERS>
   <CODEGENERATION>
-    <IMPORTS>
-      <IMPORT
-        NAME="neo4j-kernel-2.1.2"
-        MODULE="neo4j-kernel-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-kernel-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-primitive-collections-2.1.2"
-        MODULE="neo4j-primitive-collections-2.1.2.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-primitive-collections-2.1.2.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        NAME="neo4j-rest-graphdb-2.0.1"
-        MODULE="neo4j-rest-graphdb-2.0.1.jar"
-        UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/neo4j-rest-graphdb-2.0.1.jar"
-        REQUIRED="true"/>
-      <IMPORT
-        MODULE="geronimo-jta_1.1_spec-1.1.1.jar"
-        NAME="geronimo-jta_1.1_spec-1.1.1"
-        REQUIRED="true"/>
-    </IMPORTS>
+    <IMPORTS />
   </CODEGENERATION>
   <RETURNS>
   </RETURNS>

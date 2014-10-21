@@ -8,7 +8,6 @@
     	java.util.Map		
 	" 
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
   	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
   	INode node = (INode)codeGenArgument.getArgument();
@@ -23,6 +22,11 @@
   	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
   	
   	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+  	if (isLog4jEnabled) {
+	%>
+		final StringBuffer log4jSb_<%=cid%> = new StringBuffer();
+	<%
+	}
 	%>
 	try{
 		<%
@@ -41,7 +45,10 @@
 				log.info("<%=cid%> - Execute script function: " + <%=function%> + ".");
 				<%
 				for(Map<String, String> parameter:parameters){
-					log4jFileUtil.collectRetriveData(parameter.get("PARAMETER"));
+				%>
+					log4jSb_<%=cid%>.append(<%=parameter.get("PARAMETER")%>);
+					log4jSb_<%=cid%>.append("|");								
+				<%
 				}
 				%>
 				log.info("<%=cid%> - Arguments : " + log4jSb_<%=cid%>+".");
@@ -75,12 +82,7 @@
 	}catch(Exception e_<%=cid%>){
 		<%
 		if(dieOnError){
-			if(isLog4jEnabled){
-			%>
-				log.fatal("<%=cid%> - " + e_<%=cid%>.getMessage());
-			<%
-			}
-			%>
+		%>
 			e_<%=cid%>.printStackTrace();
 		<%
 		}else{

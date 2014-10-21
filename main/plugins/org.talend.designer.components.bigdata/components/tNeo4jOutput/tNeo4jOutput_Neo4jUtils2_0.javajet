@@ -1,0 +1,79 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection 
+		org.talend.designer.codegen.config.CodeGeneratorArgument 
+		org.talend.designer.neo4j.data.Neo4jData 
+		org.talend.designer.neo4j.data.Index 
+		org.talend.designer.neo4j.data.Relationship 
+		org.talend.designer.neo4j.ui.editor.MetadataColumnExt 
+		java.util.List 
+	"
+%>
+<% 
+class Neo4jUtils2_0 extends Neo4jUtils {
+    private boolean useLabel;
+    private String neo4jLabel;
+
+    public Neo4jUtils2_0(String cid, INode node, String dataAction, String incomingConnName, List<IMetadataColumn> columnList, boolean useLabel, String neo4jLabel) {
+		super(cid, node, dataAction, incomingConnName, columnList);
+
+        this.useLabel = useLabel;
+        this.neo4jLabel = neo4jLabel;
+	}
+
+	public void generateNodeInsert() {
+	    %>
+		org.neo4j.graphdb.Node node_<%=cid%> = databaseService_<%=cid%>.createNode();
+        <%
+        if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+    		node_<%=cid%>.addLabel(label_<%=cid%>);
+    		<%
+	    }
+		generateNode();
+	}
+
+	public void generateNodeInsertOrUpdate() {
+		String indexName = ElementParameterParser.getValue(node, "__INDEX_NAME__");
+		String indexKey = ElementParameterParser.getValue(node, "__INDEX_KEY__");
+		String indexColumnValue = ElementParameterParser.getValue(node, "__INDEX_VALUE__");
+		%>
+		org.neo4j.graphdb.Node node_<%=cid%> = indexNodeMap_<%=cid%>.get(<%=indexName%>).get(<%=indexKey%>, <%=incomingConnName%>.<%=indexColumnValue%>).getSingle();
+		if (node_<%=cid%> == null) {
+			node_<%=cid%> = databaseService_<%=cid%>.createNode();
+		}
+		<%
+        if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+            node_<%=cid%>.addLabel(label_<%=cid%>);
+            <%
+        }
+        generateNode();
+	}
+
+	public void generateNodeUpdate() {
+		String indexName = ElementParameterParser.getValue(node, "__INDEX_NAME__");
+		String indexKey = ElementParameterParser.getValue(node, "__INDEX_KEY__");
+		String indexColumnValue = ElementParameterParser.getValue(node, "__INDEX_VALUE__");
+		%>
+		org.neo4j.graphdb.Node node_<%=cid%> = indexNodeMap_<%=cid%>.get(<%=indexName%>).get(<%=indexKey%>, <%=incomingConnName%>.<%=indexColumnValue%>).getSingle();
+		if (node_<%=cid%> == null) {
+			throw new RuntimeException("Node not found");
+		}
+		<%
+		if (useLabel) {
+            %>
+            org.neo4j.graphdb.Label label_<%=cid%> = org.neo4j.graphdb.DynamicLabel.label(<%=neo4jLabel%>);
+            node_<%=cid%>.addLabel(label_<%=cid%>);
+            <%
+        }
+        generateNode();
+	}
+}
+%>

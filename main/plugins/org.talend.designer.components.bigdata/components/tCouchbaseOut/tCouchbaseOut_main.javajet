@@ -10,7 +10,6 @@ imports="
     java.util.List
     "
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	
@@ -73,33 +72,18 @@ imports="
 	                        	if("delete".equals(dataAction)){
 								%>
 	                            	net.spy.memcached.internal.OperationFuture<Boolean> operation_<%=cid%> = client_<%=cid%>.delete(<%=connName%>.<%=key%>);
-									<%
-									if (isLog4jEnabled) {
-									%>
-										log4jSb_<%=cid%>.append(<%=connName%>.<%=key%>+"|");
-									<%
-									}
+								<%
 								}else {
 									if("true".equals(isjson)){
 										String jsonfield = ElementParameterParser.getValue(node,"__JSONFIELD__");
 										%>
-	                                	net.spy.memcached.internal.OperationFuture<Boolean> operation_<%=cid%> = client_<%=cid%>.<%=dataAction%>(<%=connName%>.<%=key%>, <%=expire%>, <%=connName%>.<%=jsonfield%>);
-										<%
-										if (isLog4jEnabled) {
-										%>
-										log4jSb_<%=cid%>.append(<%=connName%>.<%=key%>+"|"+<%=connName%>.<%=jsonfield%>+"|");
-										<%
-										}
+	                                	net.spy.memcached.internal.OperationFuture<Boolean> operation_<%=cid%> = client_<%=cid%>.<%=dataAction%>(<%=connName%>.<%=key%>.toString(), <%=expire%>, <%=connName%>.<%=jsonfield%>);
+									<%
 		                            }else{
 		                                String value = ElementParameterParser.getValue(node,"__VALUE__");
 										%>
 	                                	net.spy.memcached.internal.OperationFuture<Boolean> operation_<%=cid%> = client_<%=cid%>.<%=dataAction%>(<%=connName%>.<%=key%>, <%=expire%>, <%=connName%>.<%=value%>);
-										<%
-										if (isLog4jEnabled) {
-										%>
-										log4jSb_<%=cid%>.append(<%=connName%>.<%=key%>+"|"+<%=connName%>.<%=value%>+"|");
-										<%
-										}
+									<%
 		                            }
 		                        }
 								%>
@@ -125,8 +109,6 @@ imports="
 									if(isLog4jEnabled){
 									%>
 										log.debug("<%=cid%> - Writing the record " + (nb_line_<%=cid %> + 1) + " into bucket.");
-										log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
-										log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
 									<%
 									} 
 									%>
@@ -150,8 +132,6 @@ imports="
 		                            if(isLog4jEnabled){
 									%>
 										log.debug("<%=cid%> - Failed write the record " + (nb_line_<%=cid %> + 1) + " into bucket.");
-										log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
-										log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
 									<%
 									}
 		                            %>
@@ -160,12 +140,7 @@ imports="
 		                        whetherReject_<%=cid%> = true;
 								<%
 								if (("true").equals(dieOnError)) {
-									if(isLog4jEnabled){
-									%>
-										log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
-									<%
-									}
-									%>
+								%>
 									throw(e_<%=cid%>);
 								<%
 								} else {
@@ -195,8 +170,6 @@ imports="
 		                            if(isLog4jEnabled){
 									%>
 										log.debug("<%=cid%> - Failed write the record " + nb_line_<%=cid %> + " into bucket.");
-										log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
-										log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
 									<%
 									}
 		                        } 

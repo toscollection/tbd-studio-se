@@ -1,0 +1,125 @@
+<%@ jet
+imports="
+org.talend.core.model.process.INode
+org.talend.core.model.process.ElementParameterParser
+org.talend.core.model.metadata.IMetadataTable
+org.talend.core.model.metadata.IMetadataColumn
+org.talend.core.model.process.IConnection
+org.talend.core.model.process.IConnectionCategory
+org.talend.designer.codegen.config.CodeGeneratorArgument
+org.talend.core.model.metadata.types.JavaTypesManager
+org.talend.core.model.metadata.types.JavaType
+org.talend.designer.runprocess.ProcessorUtilities
+org.talend.designer.runprocess.ProcessorException
+java.util.List 
+java.util.Map
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();	
+	String cid = node.getUniqueName();
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	String processId = node.getProcess().getId();
+	String sparkMode = ElementParameterParser.getValue(node, "__SPARK_MODE__");
+	String sparkVersion = ElementParameterParser.getValue(node, "__SPARK_VERSION__");
+	boolean isStreaming = "true".equals(ElementParameterParser.getValue(node, "__STREAMING__"));
+	String batchSize = ElementParameterParser.getValue(node, "__STREAMING_BATCH_SIZE__");
+	List<Map<String, String>> sparkAdvancedProperties = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SPARK_ADVANCED_PROPERTIES__");
+	String sparkAppName = "\"TalendSpark_"+cid+"\"";
+	
+	boolean useLocalMode = "LOCAL".equals(sparkMode);
+	boolean useStandaloneMode = "CLUSTER".equals(sparkMode);
+	boolean useYarnClientMode = "YARN_CLIENT".equals(sparkMode);
+	
+	java.util.List<String> jarsToRegister = null;
+	
+%>
+
+	org.apache.spark.SparkConf conf_<%=cid%> = new  org.apache.spark.SparkConf();
+	conf_<%=cid%>.setAppName(<%=sparkAppName%>);
+<%
+	for(Map<String, String> property : sparkAdvancedProperties){
+%>
+		conf_<%=cid%>.set(<%=property.get("PROPERTY")%>, <%=property.get("VALUE")%>);
+<%		
+	}
+	
+	String master = "\"local[*]\"";
+	if(useStandaloneMode) {
+		master = ElementParameterParser.getValue(node, "__SPARK_HOST__");
+	}
+	
+	if(useYarnClientMode) {
+		master = "\"yarn-client\"";
+	}
+%>
+	conf_<%=cid%>.setMaster(<%=master%>);
+<%	
+	if(!useLocalMode) { // If the spark mode is not local.
+		if(useStandaloneMode) {
+			String sparkHome = ElementParameterParser.getValue(node, "__SPARK_HOME__");
+%>
+			conf_<%=cid%>.setSparkHome(<%=sparkHome%>);
+<%
+		}
+		String[] commandLine = new String[] {"<command>"};
+		try {
+			commandLine = ProcessorUtilities.getCommandLine("win32",true, processId, "",org.talend.designer.runprocess.IProcessor.NO_STATISTICS,org.talend.designer.runprocess.IProcessor.NO_TRACES, new String[]{});
+		} catch (ProcessorException e) {
+			e.printStackTrace();
+		}
+		
+		java.util.List<String> jars = null;
+		for (int i = 0; i < commandLine.length; i++) {
+			if(commandLine[i].contains("jar")) {
+				jars = java.util.Arrays.asList(commandLine[i].split(";"));
+				break;
+			}
+		}
+		
+		jarsToRegister = new java.util.ArrayList<String>();
+		
+		jarsToRegister.add("talend-spark");
+		jarsToRegister.add("twitter4j");
+%>
+		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
+		
+			
+		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+		conf_<%=cid%>.setJars(new String[]{
+<%
+		boolean isFirst = true;
+		for(int i=0; i<jarsToRegister.size(); i++) {
+			String jarToRegister = jarsToRegister.get(i);
+			for(int j=0; j<jars.size(); j++) {
+				if(jars.get(j).contains(jarToRegister)) {
+					if(!isFirst) {
+%>
+					,
+<%
+					}
+%>
+					getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>", "file://")
+<%
+					isFirst = false;
+				}
+			}
+		}
+%>
+		});
+<%
+	} // End of: If the spark mode is not local.
+	
+	if(isStreaming) {
+%>
+		org.apache.spark.streaming.api.java.JavaStreamingContext ctx_<%=cid%> = new org.apache.spark.streaming.api.java.JavaStreamingContext(conf_<%=cid%>, new org.apache.spark.streaming.Duration(<%=batchSize%>));
+<% 
+	} else {
+%>
+		org.apache.spark.api.java.JavaSparkContext ctx_<%=cid%> = new org.apache.spark.api.java.JavaSparkContext(conf_<%=cid%>);
+<%	
+	}
+%>
+	globalMap.put("<%=cid %>_SPARK_CONTEXT", ctx_<%=cid%>);

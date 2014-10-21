@@ -25,6 +25,7 @@ import org.talend.commons.utils.VersionUtils;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
+import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
@@ -34,6 +35,7 @@ import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.hcatalog.Activator;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
@@ -120,8 +122,15 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             hadoopConnection.setRelativeHadoopClusterId(hcConnectionItem.getProperty().getId());
-            hadoopConnection.setUserName(hcConnection.getUserName());
-            hadoopConnection.setHostName(HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
+            if (HCVersionUtil.isHDI(hcConnection)) {
+                hadoopConnection.setUserName(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_USERNAME));
+                hadoopConnection.setHostName(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_HOSTNAME));
+                hadoopConnection.setPort(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_PORT));
+                hadoopConnection.setPassword(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD));
+            } else {
+                hadoopConnection.setUserName(hcConnection.getUserName());
+                hadoopConnection.setHostName(HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
+            }
         }
     }
 

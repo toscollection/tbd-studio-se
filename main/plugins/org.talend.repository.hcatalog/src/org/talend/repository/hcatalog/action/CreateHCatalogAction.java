@@ -52,11 +52,14 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
                 return false;
             }
             if (distribution == EHadoopDistributions.CLOUDERA
-                    && hcConnection.getDfVersion().equals(EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue())) {
+                    && (EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue().equals(hcConnection.getDfVersion())
+                            || EHadoopVersion4Drivers.CLOUDERA_CDH5_1.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.CLOUDERA_CDH5_1_MR1
+                            .getVersionValue().equals(hcConnection.getDfVersion()))) {
                 return false;
             }
             if (distribution == EHadoopDistributions.MAPR
-                    && hcConnection.getDfVersion().equals(EHadoopVersion4Drivers.MAPR310.getVersionValue())) {
+                    && (EHadoopVersion4Drivers.MAPR310.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.MAPR401
+                            .getVersionValue().equals(hcConnection.getDfVersion()))) {
                 return false;
             }
         }

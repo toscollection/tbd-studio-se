@@ -15,7 +15,8 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 	
-	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+	boolean isCustom = "CUSTOM".equals(distribution);
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
 	
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
@@ -32,7 +33,6 @@
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 
 	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
@@ -50,13 +50,21 @@
         conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
         <%
     }
-	if(((("APACHE_0_20_2").equals(hadoopVersion) || ("MAPR1").equals(hadoopVersion) || ("MAPR2").equals(hadoopVersion) || ("MAPR212").equals(hadoopVersion) || ("MAPR213").equals(hadoopVersion) || ("MAPR301").equals(hadoopVersion) || ("MAPR310").equals(hadoopVersion) || ("MapR_EMR").equals(hadoopVersion)) && !isCustom) || (isCustom && "UGI".equals(auth))){
+	if("MAPR".equals(distribution) || (!isCustom && ("APACHE_0_20_2".equals(hadoopVersion) || "MapR_EMR".equals(hadoopVersion))) || (isCustom && "UGI".equals(auth))){
 		String group = ElementParameterParser.getValue(node, "__GROUP__");
 		%>
 		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
 	<%
 	}
-	if(((("HDP_1_0").equals(hadoopVersion) || ("HDP_1_2").equals(hadoopVersion) || ("HDP_1_3").equals(hadoopVersion) || ("HDP_2_0").equals(hadoopVersion) || ("HDP_2_1").equals(hadoopVersion) || ("APACHE_1_0_0").equals(hadoopVersion) || ("APACHE_1_0_3_EMR").equals(hadoopVersion) || ("Cloudera_CDH4").equals(hadoopVersion) || ("Cloudera_CDH4_YARN").equals(hadoopVersion) || ("Cloudera_CDH5").equals(hadoopVersion) || ("Cloudera_CDH5_1").equals(hadoopVersion) || ("PIVOTAL_HD_2_0").equals(hadoopVersion)) && useKrb && !isCustom)
+	
+	List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
+		"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1",
+		"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1",
+		"APACHE_1_0_0","APACHE_1_0_3_EMR",
+		"PIVOTAL_HD_2_0"
+	);
+	
+	if(((hadoopVersion!=null && supportKrbVersionList.contains(hadoopVersion)) && useKrb && !isCustom)
 	   || (isCustom && "KRB".equals(auth))) {
 %>
 		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
@@ -70,6 +78,4 @@
 %>
 	globalMap.put("conn_<%=cid%>",conf_<%=cid%>);
 	
-<%
-	log4jFileUtil.componentFinishInfo(node);
-%>
+

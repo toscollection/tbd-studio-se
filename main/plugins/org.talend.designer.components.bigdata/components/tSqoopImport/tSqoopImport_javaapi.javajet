@@ -2,6 +2,7 @@
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	boolean isCustom = "CUSTOM".equals(distribution);
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	String processId = node.getProcess().getId();
 	
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	
@@ -32,6 +33,7 @@
 	List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__ADDITIONAL_JAVA__");
 	boolean overrideJavaMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_JAVA_MAPPING__"));
 	boolean overrideHiveMapping = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_HIVE_MAPPING__"));
+    boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
 	
 	boolean useWhere = "true".equals(ElementParameterParser.getValue(node,"__USE_WHERE__"));
 	String where = ElementParameterParser.getValue(node,"__WHERE__");
@@ -64,11 +66,10 @@
 	com.cloudera.sqoop.tool.SqoopTool sqoopTool_<%=cid%> = com.cloudera.sqoop.tool.SqoopTool.getTool("import");
 
 	com.cloudera.sqoop.SqoopOptions sqoopOptions_<%=cid%> = new com.cloudera.sqoop.SqoopOptions(configuration_<%=cid%>);
-	
 	sqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	
-   <%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "PIVOTAL_HD_2_0".equals(version)))) {%>
+   <%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "PIVOTAL_HD_2_0".equals(version) || "APACHE_2_4_0_EMR".equals(version)))) {%>
 		<%
     		String passwordFieldName = "__PASSWORD__";
     	%>
@@ -76,6 +77,7 @@
 		sqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>); // __PASSWORD__
 	<%} else {%>
 		sqoopOptions_<%=cid%>.setPasswordFilePath(<%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>);
+		sqoopOptions_<%=cid%>.setPassword(org.apache.sqoop.util.CredentialsUtil.fetchPassword<%="HDP_2_0".equals(version)?"FromFile":""%>(sqoopOptions_<%=cid%>));
 	<%}%>
 	
 	<%if(useQuery){%>
@@ -201,9 +203,21 @@
 		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
 <%
 	}
-%>
+%>	
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tSqoopImport/sqoop-avro-dependency.javajet"%>
 	try {
-		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
+<%
+		if(!emptyStringBuilder) {
+%>
+			int result_<%=cid%> = org.apache.sqoop.Sqoop.runSqoop(sqoop_<%=cid%>, new String[] {"-libjars", sb_<%=cid%>.toString()});
+<%
+		} else {
+%>
+			int result_<%=cid%> = org.apache.sqoop.Sqoop.runSqoop(sqoop_<%=cid%>, new String[] {});
+<%
+		}
+%>
+		globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
 		if(result_<%=cid%> != 0) {
 <%
 			if(dieOnError) {
@@ -213,7 +227,9 @@
 			} else {
 %>
 				System.err.println("The Sqoop import job has failed. Please check the logs.");
-<%
+				<%if(isLog4jEnabled) {%>
+				log.error("<%=cid%> - The Sqoop import job has failed. Please check the logs.");
+				<%}
 			}
 %>
 		}
@@ -226,9 +242,11 @@
 		} else {
 %>
 			System.err.println(e.getMessage());
-<%		
+			<%if(isLog4jEnabled) {%>
+			log.error("<%=cid%> - " + e.getMessage());
+			<%}
 		}
 %>
 	}
-	
+
 	<%@ include file="../templates/Sqoop/ResetEnv.javajet"%>

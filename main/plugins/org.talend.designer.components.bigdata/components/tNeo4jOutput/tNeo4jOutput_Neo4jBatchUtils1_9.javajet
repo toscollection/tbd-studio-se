@@ -1,0 +1,59 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection 
+		org.talend.designer.codegen.config.CodeGeneratorArgument 
+		org.talend.designer.neo4j.data.Neo4jData 
+		org.talend.designer.neo4j.data.Index 
+		org.talend.designer.neo4j.data.Relationship 
+		org.talend.designer.neo4j.ui.editor.MetadataColumnExt 
+		java.util.List 
+	" 
+%>
+<%
+class Neo4jBatchUtils1_9 extends Neo4jBatchUtils {
+
+    public Neo4jBatchUtils1_9(String cid, INode node, String incomingConnName, List<IMetadataColumn> columnList) {
+				super(cid, node, incomingConnName, columnList);
+    }
+
+    @Override
+    public void generateNodeBatchInsert() {
+        %>
+        java.util.Map<String, Object> properties_<%=cid%> = new java.util.HashMap<String, Object>();
+        <%
+        for (IMetadataColumn column : columnList) {
+            putBatchPropertyInsertInMap(column);
+        }
+        // Must compute all properties before node creation for best performances
+        generateNode();
+        for (IMetadataColumn column : columnList) {
+            if (column instanceof MetadataColumnExt) {
+                MetadataColumnExt columnExt = (MetadataColumnExt) column;
+                Neo4jData data = columnExt.getData();
+                for (Index index : data.getIndexes()) {
+                    generateIndexCreation(index, column);
+                }
+                for (Relationship relationship : data.getRelationships()) {
+                    generateRelationshipCreation(relationship, column);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void generateNode() {
+        %>
+        long node_<%=cid%> = inserter_<%=cid%>.createNode(properties_<%=cid%>);
+        java.util.Map<String, Long> endNode_<%=cid%> = new java.util.HashMap<String,Long>();
+        java.util.Map<String, Object> indexProperties_<%=cid%> = new java.util.HashMap<String, Object>();
+        java.util.Map<String, java.util.Map<String, Object>> indexPropertiesMap_<%=cid%> = new java.util.HashMap<String, java.util.Map<String, Object>>();
+        <%
+    }
+
+
+}
+%>

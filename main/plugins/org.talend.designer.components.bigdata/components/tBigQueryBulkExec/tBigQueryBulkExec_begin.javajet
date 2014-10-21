@@ -8,7 +8,6 @@
 		java.util.List
 	    "
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
@@ -27,8 +26,6 @@
     String tokenFile = ElementParameterParser.getValue(node,"__TOKEN_NAME__");
 	
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	
 	String passwordFieldName = "";
 	
@@ -48,11 +45,11 @@
 	final List<String> SCOPES_<%=cid%> = java.util.Arrays.asList("https://www.googleapis.com/auth/bigquery");
 	final String REDIRECT_URI_<%=cid%> = "urn:ietf:wg:oauth:2.0:oob";
 	final com.google.api.client.http.HttpTransport TRANSPORT_<%=cid %> = new com.google.api.client.http.javanet.NetHttpTransport();
-	final com.google.api.client.json.JsonFactory JSON_FACTORY_<%=cid %> = new com.google.api.client.json.jackson.JacksonFactory();
+	final com.google.api.client.json.JsonFactory JSON_FACTORY_<%=cid %> = new com.google.api.client.json.jackson2.JacksonFactory();
 
 	com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets clientSecrets_<%=cid%> = com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets.load(
-					new com.google.api.client.json.jackson.JacksonFactory(), new java.io.ByteArrayInputStream(
-							CLIENT_SECRET_<%=cid%>.getBytes()));
+					new com.google.api.client.json.jackson2.JacksonFactory(), new java.io.InputStreamReader(new java.io.ByteArrayInputStream(
+							CLIENT_SECRET_<%=cid%>.getBytes())));
 
 	com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow flow_<%=cid%> = null;
 	com.google.api.services.bigquery.Bigquery bigqueryclient_<%=cid%> = null;
@@ -109,9 +106,14 @@
 		<%
 		}
 		%>
-		bigqueryclient_<%=cid%> = com.google.api.services.bigquery.Bigquery.builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson.JacksonFactory()).setHttpRequestInitializer(credential_<%=cid%>).setApplicationName("Talend").build();
+		bigqueryclient_<%=cid%> = new com.google.api.services.bigquery.Bigquery.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson2.JacksonFactory(),credential_<%=cid%>).setApplicationName("Talend").build();
 	} else {
 		<%
+		if(isLog4jEnabled){
+		%>
+			log.info("<%=cid%> - The refresh token does not exist.");
+		<%
+		}
 		if(authorizationCode==null || "".equals(authorizationCode) || "\"\"".equals(authorizationCode)) {
 		%>
 			String authorizeUrl_<%=cid%> = new com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl(
@@ -121,7 +123,6 @@
 			%>
 				log.warn("<%=cid%> - Paste this URL into a web browser to authorize BigQuery Access:\n"
 								+ authorizeUrl_<%=cid%>);
-				log.fatal("<%=cid%> - Authorization Code error");
 			<%
 			}
 	    	%>
@@ -143,7 +144,7 @@
 			// Exchange the auth code for an access token and refesh token
 			if (flow_<%=cid%> == null) {
 				flow_<%=cid%> = new com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),
-						new com.google.api.client.json.jackson.JacksonFactory(), clientSecrets_<%=cid%>, SCOPES_<%=cid%>)
+						new com.google.api.client.json.jackson2.JacksonFactory(), clientSecrets_<%=cid%>, SCOPES_<%=cid%>)
 						.setAccessType("offline").setApprovalPrompt("force")
 						.build();
 			}
@@ -165,7 +166,7 @@
 			    outputStream_<%=cid%>.close();
 			}
 
-			bigqueryclient_<%=cid%> = com.google.api.services.bigquery.Bigquery.builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson.JacksonFactory()).setHttpRequestInitializer(credential_<%=cid%>).build();
+			bigqueryclient_<%=cid%> = new com.google.api.services.bigquery.Bigquery.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson2.JacksonFactory(),credential_<%=cid%>).build();
 		<%
 		}
 		%>
@@ -208,7 +209,7 @@
 		<%
 		if(isLog4jEnabled){
 		%>
-			log.info("<%=cid%> - Upload "+<%=localFilename%> + "to Google Service Bucket"+<%=bucketName%>);
+			log.info("<%=cid%> - Upload "+<%=localFilename%> + " to Google Service Bucket: "+<%=bucketName%>);
 		<%
 		}
 		%>
@@ -227,7 +228,7 @@
 	<%
 	if(isLog4jEnabled){
 	%>
-		log.info("<%=cid%> - Start build a job.");
+		log.info("<%=cid%> - Starting build a job.");
 	<%
 	}
 	%>
@@ -259,12 +260,12 @@
 				String typeToGenerate = "string";
 				if("id_Float".equals(column.getTalendType())) {
 					typeToGenerate = "float";
-				}
-				if("id_Integer".equals(column.getTalendType())) {
+				} else if("id_Integer".equals(column.getTalendType())) {
 					typeToGenerate = "integer";
-				}
-				if("id_Boolean".equals(column.getTalendType())) {
+				} else if("id_Boolean".equals(column.getTalendType())) {
 					typeToGenerate = "boolean";
+				} else if("id_Date".equals(column.getTalendType())) {
+					typeToGenerate = "timestamp";
 				}
 				%>
 				com.google.api.services.bigquery.model.TableFieldSchema <%=columnName%> = new com.google.api.services.bigquery.model.TableFieldSchema();
@@ -303,6 +304,7 @@
 	<%
 	}
 	%>
+	queryLoad_<%=cid%>.setAllowQuotedNewlines(true);
 
 	queryLoad_<%=cid%>.setWriteDisposition("WRITE_<%=actionOnData%>");
 	com.google.api.services.bigquery.model.TableReference destinationTable_<%=cid%> = new com.google.api.services.bigquery.model.TableReference();
@@ -335,12 +337,7 @@
 	} catch (Exception ee_<%=cid%>) {
 		<%
 		if(dieOnError) {
-			if(isLog4jEnabled){
-			%>
-				log.fatal("<%=cid%> - "+ ee_<%=cid%>.getMessage() + "\n" + ee_<%=cid%>.getCause());
-			<%
-			}
-			%>
+		%>
 			throw ee_<%=cid%>;
 		<%
 		} else {
@@ -377,16 +374,16 @@
 		com.google.api.services.bigquery.model.Job doneJob_<%=cid%> = pollJob_<%=cid%>;
 		System.out.println("Done: " + doneJob_<%=cid%>.toString());
 		com.google.api.services.bigquery.model.JobStatistics jobStatistics_<%=cid%>= doneJob_<%=cid%>.getStatistics();
-		if(jobStatistics_<%=cid%>!=null && jobStatistics_<%=cid%>.get("load") != null){
-			com.google.api.client.util.ArrayMap loadObject_<%=cid%> = (com.google.api.client.util.ArrayMap)jobStatistics_<%=cid%>.get("load");
-			if(loadObject_<%=cid%>.get("outputRows") != null){
-				nb_line_<%=cid%> = Long.valueOf(loadObject_<%=cid%>.get("outputRows").toString());
+		if(jobStatistics_<%=cid%>!=null && jobStatistics_<%=cid%>.getLoad() != null){
+			com.google.api.services.bigquery.model.JobStatistics3 loadObject_<%=cid%> = jobStatistics_<%=cid%>.getLoad();
+			if(loadObject_<%=cid%>!= null){
+				nb_line_<%=cid%> = loadObject_<%=cid%>.getOutputRows();
 			}
 		}
 		<%
 		if(isLog4jEnabled){
 		%>
-			log.info("<%=cid%> - Load the job done: " + doneJob_<%=cid%>.toString());
+			log.info("<%=cid%> - Load Done: " + doneJob_<%=cid%>.toString());
 			log.info("<%=cid%> - " + nb_line_<%=cid%> + " records load successfully.");
 		<%
 		}
@@ -394,12 +391,7 @@
 	} else {
 		<%
 		if(dieOnError) {
-			if(isLog4jEnabled){
-			%>
-				log.fatal("<%=cid%> - "+ jobExec_<%=cid%>.toString());
-			<%
-			}
-			%>
+		%>
 			throw new Exception(jobExec_<%=cid%>.toString());
 		<%
 		} else {
@@ -414,6 +406,4 @@
 		}
 		%>
 	}
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

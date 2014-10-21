@@ -1,0 +1,65 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.IConnection
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.metadata.IMetadataColumn	
+		java.util.List
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String previous_node="";
+
+	String previousOutputConnectionName = "";
+	
+	String columnToNormalize = ElementParameterParser.getValue(node, "__NORMALIZE_COLUMN__");
+	String separator = ElementParameterParser.getValue(node, "__ITEMSEPARATOR__");
+	int columnIndexToNormalize = -1;
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		previousOutputConnectionName = connection.getName();
+		int i = 0;
+		for(IMetadataColumn column : connection.getMetadataTable().getListColumns()) {
+			if(columnToNormalize!=null && columnToNormalize.equals(column.getLabel())) {
+				columnIndexToNormalize = i;
+				break;
+			}
+			i++;
+		}
+	}
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+	
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
+		if(columnIndexToNormalize==-1) {
+%>
+			if(true) {
+				throw new java.lang.Exception("Make sure the column to normalize is correct.");
+			}
+<%
+		}
+	
+%>
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Normalize.run(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD, <%=("".equals(separator)?"\"\"":separator)%>, <%=columnIndexToNormalize%>);
+<%
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
+	}
+%>
+		
+		
+		

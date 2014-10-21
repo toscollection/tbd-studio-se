@@ -209,6 +209,7 @@
 	    <PARAMETER
 		    NAME="DESTINATION"
 		    FIELD="TEXT"
+            RAW="true"
 		    NUM_ROW="110"
 	        REQUIRED="true"
 	        SHOW_IF="false"

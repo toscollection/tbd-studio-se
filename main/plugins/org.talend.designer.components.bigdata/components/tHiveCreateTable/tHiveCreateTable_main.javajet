@@ -105,6 +105,7 @@ imports="
 		connectionMode = "";
 		setFsDefaultName = false;
 		fsDefaultName = "";
+		dbuser = "";
 		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 		for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
 			if(connection!=null && connection.equals(pNode.getUniqueName())) {
@@ -113,6 +114,7 @@ imports="
 				connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
 				setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
 				fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
+				dbuser = ElementParameterParser.getValue(pNode, "__USER__");
 				break;
 			}
 		}
@@ -137,6 +139,24 @@ imports="
 	
 	boolean storeAsAvro = "AVRO".equals(storedFormat);
 	boolean storeAsParquet = "PARQUET".equals(storedFormat);
+	
+	java.util.List<String> hiveVersionList = new java.util.ArrayList<String>();
+	hiveVersionList.add("APACHE_0_20_203");
+	hiveVersionList.add("Cloudera_CDH3");
+	hiveVersionList.add("Cloudera_CDH4");
+	hiveVersionList.add("APACHE_1_0_0");
+	hiveVersionList.add("MAPR2");
+	hiveVersionList.add("HDP_1_0");
+	hiveVersionList.add("PIVOTAL_HD_1_0_1");
+	
+	boolean isParquetSupported = "CUSTOM".equals(distribution) || !hiveVersionList.contains(hiveVersion);
+	if(storeAsParquet && !isParquetSupported) {
+%>
+		if(true) {
+			throw new java.lang.UnsupportedOperationException("Parquet is only supported if the distribution used embeds Hive version 0.10 or later.");
+		}
+<%
+	}
 	
 	// Register jars to handle the parquet format.
 	
@@ -235,7 +255,7 @@ if(metadatas != null && metadatas.size() > 0) {
 StringBuilder createTableSQL = new StringBuilder();
 
 createTableSQL.append("CREATE ");
-createTableSQL.append(external?"EXTERNAL":"");
+createTableSQL.append(external || isS3Location ?"EXTERNAL":"");
 createTableSQL.append(" TABLE ");
 createTableSQL.append(createIfNotExist?"IF NOT EXISTS":"");
 createTableSQL.append(" \" + ");
@@ -341,190 +361,9 @@ if(!storeAsAvro && !asSelect) {
 }
 
 final MappingTypeRetriever mappingType = MetadataTalendType.getMappingTypeRetriever("hive_id");
-
-class Util {
-	
-	int index = 0;
-		java.util.Map<String,String> hiveTypeToAvroType = null;
-		String appendKeyValue = null;
-	
-	void generateColumnsSQL(List<IMetadataColumn> listColumn,StringBuilder createTableSQL) {
-		index++;
-	
-		int count = 0;
-		String ending = ",";
-        for(IMetadataColumn metadataColumn : listColumn) {
-            createTableSQL.append(metadataColumn.getOriginalDbColumnName());
-            createTableSQL.append(" ");
-            
-            String hiveType = null;
-            if(metadataColumn.getType() == null || metadataColumn.getType().trim().length() == 0) {
-                hiveType = mappingType.getDefaultSelectedDbType(metadataColumn.getTalendType());
-            } else {
-                hiveType = metadataColumn.getType();
-            }
-        	createTableSQL.append(hiveType);
-        	
-        	String comment = metadataColumn.getComment();
-        	if(comment!=null && !"".equals(comment) && !"\"\"".equals(comment)) {
 %>
-				String comment_<%=index%>_<%=count%>_<%=cid%> = <%=comment%>;
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveCreateTable/hiveUtil.javajet"%>
 <%
-        		createTableSQL.append(" COMMENT '");
-	    		createTableSQL.append("\" + ");
-    			createTableSQL.append("comment_");
-    			createTableSQL.append(index);
-    			createTableSQL.append("_");
-    			createTableSQL.append(count);
-    			createTableSQL.append("_");
-    			createTableSQL.append(cid);
-        		createTableSQL.append(" + \"'");
-        	}
-            
-            if(count == listColumn.size() - 1) {
-                ending = "";
-            }
-            createTableSQL.append(ending);
-            count++;
-        }
-	}
-	
-	void generateAvroSchema(List<IMetadataColumn> listColumn,StringBuilder schemaBuilder, String quote) {
-		if(hiveTypeToAvroType == null) {
-			hiveTypeToAvroType = new java.util.HashMap<String,String>();
-			hiveTypeToAvroType.put("SMALLINT","int");
-			hiveTypeToAvroType.put("FLOAT","float");
-			hiveTypeToAvroType.put("DOUBLE","double");
-			hiveTypeToAvroType.put("BIGINT","long");
-			hiveTypeToAvroType.put("INT","int");
-			hiveTypeToAvroType.put("TINYINT","int");
-			hiveTypeToAvroType.put("STRING","string");
-			hiveTypeToAvroType.put("BOOLEAN","boolean");
-			hiveTypeToAvroType.put("STRUCT","record");
-			hiveTypeToAvroType.put("MAP","map");
-			hiveTypeToAvroType.put("ARRAY","list");
-			hiveTypeToAvroType.put("TIMESTAMP","long");
-		}
-		
-		index++;
-	
-		int count = 0;
-		String ending = ",";
-        for(IMetadataColumn metadataColumn : listColumn) {
-        	schemaBuilder.append("{");
-        	
-        	schemaBuilder.append(quote).append("name").append(quote);
-            schemaBuilder.append(" : ");
-            schemaBuilder.append(quote).append(metadataColumn.getOriginalDbColumnName()).append(quote);
-            
-            schemaBuilder.append(", ");
-            
-            String hiveType = null;
-            if(metadataColumn.getType() == null || metadataColumn.getType().trim().length() == 0) {
-                hiveType = mappingType.getDefaultSelectedDbType(metadataColumn.getTalendType());
-            } else {
-                hiveType = metadataColumn.getType();
-            }
-            
-            String avroType = hiveTypeToAvroType.get(hiveType);
-            
-            schemaBuilder.append(quote).append("type").append(quote);
-            schemaBuilder.append(" : ");
-        	schemaBuilder.append(quote).append(avroType).append(quote);
-        	
-        	String comment = metadataColumn.getComment();
-        	if(comment!=null && !"".equals(comment) && !"\"\"".equals(comment)) {
-        		schemaBuilder.append(", ");
-%>
-				String comment_<%=index%>_<%=count%>_<%=cid%> = <%=comment%>;
-<%
-        		schemaBuilder.append(quote).append("doc").append(quote);
-        		schemaBuilder.append(" : ");
-        		schemaBuilder.append(quote);
-        		
-	    		schemaBuilder.append("\" + ");
-    			schemaBuilder.append("comment_");
-    			schemaBuilder.append(index);
-    			schemaBuilder.append("_");
-    			schemaBuilder.append(count);
-    			schemaBuilder.append("_");
-    			schemaBuilder.append(cid);
-        		schemaBuilder.append(" + \"");
-        		
-        		schemaBuilder.append(quote);
-        	}
-            
-            schemaBuilder.append("}");
-            
-            if(count == listColumn.size() - 1) {
-                ending = "";
-            }
-            schemaBuilder.append(ending);
-            count++;
-        }
-	}
-	
-	void generatePros(String prefix, List<Map<String, String>> pros, StringBuilder createTableSQL) {
-		index++;
-		
-		int count = 0;
-		String ending = ",";
-		if(pros.size() > 0){
-			createTableSQL.append(prefix);
-			createTableSQL.append("(");
-			for(Map<String, String> item : pros){
-%>
-				String key_<%=index%>_<%=count%>_<%=cid%> = <%=item.get("PROPERTY") %>;
-				String value_<%=index%>_<%=count%>_<%=cid%> = <%=item.get("VALUE") %>;
-<%
-	    		createTableSQL.append("'\" + ");
-    			createTableSQL.append("key_");
-    			createTableSQL.append(index);
-    			createTableSQL.append("_");
-    			createTableSQL.append(count);
-    			createTableSQL.append("_");
-    			createTableSQL.append(cid);
-        		createTableSQL.append(" + \"'");
-        		
-        		createTableSQL.append(" = ");
-        		
-        		createTableSQL.append("'\" + ");
-    			createTableSQL.append("value_");
-    			createTableSQL.append(index);
-    			createTableSQL.append("_");
-    			createTableSQL.append(count);
-    			createTableSQL.append("_");
-    			createTableSQL.append(cid);
-        		createTableSQL.append(" + \"'");
-        		
-        		if(count == pros.size() - 1) {
-                	ending = "";
-            	}
-            	
-	            createTableSQL.append(ending);
-            	count++;
-			}
-			
-			if(appendKeyValue!=null) {
-				createTableSQL.append(",");
-				createTableSQL.append(appendKeyValue);
-				appendKeyValue = null;
-			}
-			
-			createTableSQL.append(")");
-		} else if(appendKeyValue!=null) {
-			createTableSQL.append(prefix);
-			createTableSQL.append("(");
-			createTableSQL.append(appendKeyValue);
-			createTableSQL.append(")");
-			appendKeyValue = null;
-		}
-	}
-	
-	void appendKeyValue(String appendKeyValue) {
-		this.appendKeyValue = appendKeyValue;
-	}
-}
 
 Util util = new Util();
 

@@ -10,7 +10,6 @@
     	java.util.Map		
 	" 
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
   	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
   	INode node = (INode)codeGenArgument.getArgument();
@@ -32,14 +31,13 @@
   	String localDBpath=ElementParameterParser.getValue(node, "__LOCAL_DB_PATH__");
   	boolean printLog="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__PRINT_LOG__"));
   	boolean dropCreateColl="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DROP_COLLECTION_CREATE__"));
-  	boolean ignoreBlanks="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__IGNORE_BLANKS__"));
+    boolean ignoreBlanks="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__IGNORE_BLANKS__"));
+    boolean jsonArray = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__JSON_ARRAY__"));
   	
   	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
   	List<Map<String, String>> additionalParams = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADDITIONAL_ARGS__");
   	
   	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-    log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
   	
   	List<IMetadataTable> metadatas = node.getMetadataList();
   	String fileds="";
@@ -202,7 +200,14 @@
 			comand_<%=cid%>.append(" --headerline");
 		<%
 		}
+	} else {
+	    if (jsonArray) {
+	        %>
+	            comand_<%=cid%>.append(" --jsonArray");
+	        <%
+	    }
 	}
+
 	if(additionalParams != null && additionalParams.size()>0){
 		for(Map<String, String> param : additionalParams){
 			String arg = param.get("ARGUMENT");
@@ -300,5 +305,4 @@
 		log.info("<%=cid%> - Finish imported.");
 	<%
 	}
-	log4jFileUtil.componentFinishInfo(node);
 	%>	

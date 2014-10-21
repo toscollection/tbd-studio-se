@@ -17,10 +17,11 @@ imports="
 "
 skeleton="@{org.talend.designer.components.localprovider}/components/templates/db_output_bulk.skeleton"
 %>
-
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/DBLogUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
+          dbLog = new DBLogUtil(node);
 	String cid = node.getUniqueName();
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
     String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
@@ -122,10 +123,15 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                   if (useBatchSize) {  %>
                     pstmt_<%=cid %>.addBatch();
                     batchSizeCounter_<%=cid%>++;
-                <% }else{
+                    nb_line_<%=cid%>++;
+                <% 
+                dbLog.data().addingToBatch(dbLog.var("nb_line"), dbLog.str(dataAction));
+             }else{
                 %>
             try {
+                nb_line_<%=cid%>++;
                 insertedCount_<%=cid%> = insertedCount_<%=cid%> + pstmt_<%=cid %>.executeUpdate();
+                <%dbLog.data().inserting(dbLog.var("nb_line"));%>
             } catch(java.lang.Exception e) {
                 whetherReject_<%=cid%> = true;
                 <%
@@ -149,6 +155,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                         <%=rejectConnName%>.errorMessage = e.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
                         <%
                     } else {
+                        dbLog.logPrintedException("e.getMessage()");
                         %>
                         System.err.print(e.getMessage());
                         <%
@@ -164,9 +171,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                 globalMap.put("<%=cid %>_QUERY", query_<%=cid%>.toString().trim());
                 <%
             }
-    		%>
-            nb_line_<%=cid%>++;
-            <%
     	} else if(("UPDATE").equals(dataAction)) {
     	    int counterCol = 1;
             for(Column column : colStruct) {
@@ -218,10 +222,15 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                if (useBatchSize) {  %>
                     pstmt_<%=cid %>.addBatch();
                     batchSizeCounter_<%=cid%>++;
-                <% }else{ %>
+                    nb_line_<%=cid%>++;
+                <%
+                dbLog.data().addingToBatch(dbLog.var("nb_line"), dbLog.str(dataAction));
+                }else{ %>
 
            try {
+                nb_line_<%=cid%>++;
                 updatedCount_<%=cid%> = updatedCount_<%=cid%> + pstmt_<%=cid %>.executeUpdate();
+                <%dbLog.data().updating(dbLog.var("nb_line"));%>
             } catch(java.lang.Exception e) {
                 whetherReject_<%=cid%> = true;
                 <%
@@ -245,6 +254,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                         <%=rejectConnName%>.errorMessage = e.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
                         <%
                     } else {
+                        dbLog.logPrintedException("e.getMessage()");
                         %>
                         System.err.print(e.getMessage());
                         <%
@@ -261,9 +271,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                 globalMap.put("<%=cid %>_QUERY", query_<%=cid%>.toString().trim());
                 <%
             }
-    		%>
-        nb_line_<%=cid%>++;
-            <%
     	} else if (("INSERT_OR_UPDATE").equals(dataAction)) {
     		int columnIndex = 1;
             for(Column column : colStruct) {
@@ -347,6 +354,8 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
     			%>
                 try {
                     updatedCount_<%=cid%> = updatedCount_<%=cid%> + pstmtUpdate_<%=cid %>.executeUpdate();
+                    nb_line_<%=cid%>++;
+                    <%dbLog.data().updating(dbLog.var("nb_line"));%>
                 } catch(java.lang.Exception e) {
                     whetherReject_<%=cid%> = true;
                     <%
@@ -355,6 +364,9 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                         throw(e);
                         <%
                     } else {
+                        %>
+                        nb_line_<%=cid%>++;
+                        <%
                         if(rejectConnName != null && rejectColumnList != null && rejectColumnList.size() > 0) {
                             %>
                             <%=rejectConnName %> = new <%=rejectConnName %>Struct();
@@ -370,6 +382,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                             <%=rejectConnName%>.errorMessage = e.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
                             <%
                         } else {
+                            dbLog.logPrintedException("e.getMessage()");
                             %>
                             System.err.print(e.getMessage());
                             <%
@@ -402,6 +415,8 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
     			%>
                 try {
                     insertedCount_<%=cid%> = insertedCount_<%=cid%> + pstmtInsert_<%=cid %>.executeUpdate();
+                    nb_line_<%=cid%>++;
+                    <%dbLog.data().inserting(dbLog.var("nb_line"));%>
                 } catch(java.lang.Exception e) {
                     whetherReject_<%=cid%> = true;
                     <%
@@ -410,6 +425,9 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                         throw(e);
                         <%
                     } else {
+                        %>
+                        nb_line_<%=cid%>++;
+                        <%
                         if(rejectConnName != null && rejectColumnList != null && rejectColumnList.size() > 0) {
                             %>
                             <%=rejectConnName %> = new <%=rejectConnName %>Struct();
@@ -425,6 +443,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                             <%=rejectConnName%>.errorMessage = e.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
                             <%
                         } else {
+                            dbLog.logPrintedException("e.getMessage()");
                             %>
                             System.err.print(e.getMessage());
                             <%
@@ -433,7 +452,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     %>
                 }
     		}
-    		nb_line_<%=cid%>++;
     		<%
     	} else if (("UPDATE_OR_INSERT").equals(dataAction)) {
     	    %>
@@ -525,6 +543,11 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                 }
         		%>
                 	insertedCount_<%=cid%> = insertedCount_<%=cid%> + pstmtInsert_<%=cid %>.executeUpdate();
+                     nb_line_<%=cid%>++;
+                    <%dbLog.data().inserting(dbLog.var("nb_line"));%>
+             }else{
+                nb_line_<%=cid%>++;
+                <%dbLog.data().updating(dbLog.var("nb_line"));%>
              }
                 } catch(java.lang.Exception e) {
                     whetherReject_<%=cid%> = true;
@@ -534,6 +557,9 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                         throw(e);
                         <%
                     } else {
+                    %>
+                       nb_line_<%=cid%>++;
+                    <%
                         if(rejectConnName != null && rejectColumnList != null && rejectColumnList.size() > 0) {
                             %>
                             <%=rejectConnName %> = new <%=rejectConnName %>Struct();
@@ -549,6 +575,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                             <%=rejectConnName%>.errorMessage = e.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
                             <%
                         } else {
+                           dbLog.logPrintedException("e.getMessage()");
                             %>
                             System.err.print(e.getMessage());
                             <%
@@ -556,7 +583,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     }
                     %>
                 }
-            nb_line_<%=cid%>++;
             <%
     	} else if (("DELETE").equals(dataAction)) {
     	    int keyCounter = 1;
@@ -595,10 +621,15 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
               if (useBatchSize) {  %>
                     pstmt_<%=cid %>.addBatch();
                     batchSizeCounter_<%=cid%>++;
-                <% }else{
+                    nb_line_<%=cid%>++;
+                <%
+                dbLog.data().addingToBatch(dbLog.var("nb_line"), dbLog.str(dataAction));
+                }else{
                 %>
         try {
                 deletedCount_<%=cid%> = deletedCount_<%=cid%> + pstmt_<%=cid %>.executeUpdate();
+                nb_line_<%=cid%>++;
+                <%dbLog.data().deleting(dbLog.var("nb_line"));%>
             } catch(java.lang.Exception e) {
                 whetherReject_<%=cid%> = true;
                 <%
@@ -607,6 +638,9 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     throw(e);
                     <%
                 } else {
+                    %>
+                    nb_line_<%=cid%>++;
+                    <%
                     if(rejectConnName != null && rejectColumnList != null && rejectColumnList.size() > 0) {
                         %>
                         <%=rejectConnName %> = new <%=rejectConnName %>Struct();
@@ -622,6 +656,7 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                         <%=rejectConnName%>.errorMessage = e.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
                         <%
                     } else {
+                        dbLog.logPrintedException("e.getMessage()");
                         %>
                         System.err.print(e.getMessage());
                         <%
@@ -637,9 +672,6 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                 globalMap.put("<%=cid %>_QUERY", query_<%=cid%>.toString().trim());
                 <%
             }
-    		%>
-            nb_line_<%=cid%>++;
-    	<%
     	}
 
         //////////batch execute by batch size///////
@@ -650,13 +682,16 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     long countSum_<%=cid%> = 0;
                     int[] resultStatus = {};
                     try {
+                            <%dbLog.batch().executeTry(dbLog.str(dataAction));%>
                         resultStatus = pstmt_<%=cid %>.executeBatch();
+                            <%dbLog.batch().executeDone(dbLog.str(dataAction));%>
                     }catch (java.sql.BatchUpdateException e_<%=cid%>){
                     <%if(("true").equals(dieOnError)) {
                     %>
                         throw(e_<%=cid%>);
                     <%
                     }else {
+                        dbLog.logPrintedException("e_"+cid+".getMessage()");
                     %>
                         System.err.println(e_<%=cid%>.getMessage());
                         for(int countEach_<%=cid%>: e_<%=cid%>.getUpdateCounts()) {
@@ -669,8 +704,10 @@ skeleton="@{org.talend.designer.components.localprovider}/components/templates/d
                     long tmp_batchUpdateCount_<%=cid%> = 0;
                     for(int i : resultStatus){
                           if(i==-3){//EXECUTE_FAILED 
+                                <%dbLog.logPrintedException(dbLog.str("Query failed to execute."));%>
                                 System.err.println("Query failed to execute.");
                           }else if(i==-2){//SUCCESS_NO_INFO
+                                <%dbLog.logPrintedException(dbLog.str("Query was processed successfully but that the number of rows affected is unknown."));%>
                                 System.err.println("Query was processed successfully but that the number of rows affected is unknown.");
                           }else{
                                tmp_batchUpdateCount_<%=cid%> += (i<0 ? 0 : i);

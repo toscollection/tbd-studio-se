@@ -22,6 +22,7 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getHostName <em>Host Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getPort <em>Port</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getUserName <em>User Name</em>}</li>
+ *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getPassword <em>Password</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getDatabase <em>Database</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#isEnableKerberos <em>Enable Kerberos</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getKrbPrincipal <em>Krb Principal</em>}</li>
@@ -193,6 +194,33 @@ public interface HCatalogConnection extends HadoopSubConnection {
      * @generated
      */
     void setUserName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Password</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Password</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Password</em>' attribute.
+     * @see #setPassword(String)
+     * @see org.talend.repository.model.hcatalog.HCatalogPackage#getHCatalogConnection_Password()
+     * @model default=""
+     * @generated
+     */
+    String getPassword();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hcatalog.HCatalogConnection#getPassword <em>Password</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Password</em>' attribute.
+     * @see #getPassword()
+     * @generated
+     */
+    void setPassword(String value);
 
     /**
      * Returns the value of the '<em><b>Database</b></em>' attribute.

@@ -1,0 +1,156 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+	    	java.util.List
+	    	java.util.Map
+	    	java.util.ArrayList
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+
+	String previous_node="";
+	String start_node="";
+	
+	String previousOutputConnectionName = "";
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections().get(0);
+		previous_node = connection.getSource().getUniqueName();
+		INode loadNode = node.getDesignSubjobStartNode();
+		start_node = loadNode.getUniqueName();
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+
+	List<IMetadataTable> metadatas = node.getMetadataList();
+	
+	class ColumnType {
+		private String columnName;
+		private String columnType;
+		
+		public ColumnType(String name, String type) {
+			this.columnName = name;
+			this.columnType = type;
+		}
+		
+		public String getColumnType() {
+			return this.columnType;
+		}
+		
+		public String getColumnName() {
+			return this.columnName;
+		}
+	}
+	
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
+		if ((metadatas != null) && (metadatas.size() > 0)) {
+			IMetadataTable metadata = metadatas.get(0);
+			if (metadata!=null && !"".equals(outputConnectionName)) {
+				List<Map<String, String>> configs = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FILTER_CONFIG__");
+			
+				List<IMetadataColumn> metaColumns = metadata.getListColumns();
+				List<ColumnType> columns = new ArrayList<ColumnType>();
+				for (IMetadataColumn column : metaColumns) {
+					if("id_byte[]".equals(column.getTalendType()) || "id_Object".equals(column.getTalendType()) || "id_List".equals(column.getTalendType()) || "id_Dynamic".equals(column.getTalendType()) || "id_Document".equals(column.getTalendType())) {
+%>
+						if(true) {
+							throw new Exception("The component tSparkFilterRow doesn't support the <%=JavaTypesManager.getTypeToGenerate(column.getTalendType(), true)%> type.");
+						}
+<%
+					}
+					columns.add(new ColumnType(column.getLabel(), column.getTalendType()));
+				}
+%>
+				List<org.talend.spark.utils.FilterObject> fl_<%=cid%> = new java.util.ArrayList<org.talend.spark.utils.FilterObject>();
+<%
+				String operator = "";
+				int index = 0;
+				String value = "";
+				boolean isNumber = false;
+				String logicOp = "";
+				for(Map<String, String> configMap : configs) {
+				
+					index = 0;
+					operator = configMap.get("OPERATOR");
+	
+					for(ColumnType columnType:columns) {
+						if(columnType.getColumnName().equals(configMap.get("COLUMN_NAME"))) {
+							if("GREATER".equals(operator) || "GREATER_EQUAL".equals(operator) || "LESS".equals(operator) || "LESS_EQUAL".equals(operator)) {
+								if(columnType.getColumnType().equals("id_String") || columnType.getColumnType().equals("id_Byte") 
+									|| columnType.getColumnType().equals("id_Character") || columnType.getColumnType().equals("id_Boolean") 
+										|| columnType.getColumnType().equals("id_byte[]") || columnType.getColumnType().equals("id_Object") 
+											|| columnType.getColumnType().equals("id_List") || columnType.getColumnType().equals("id_Dynamic") 
+												|| columnType.getColumnType().equals("id_Document")) {
+%>
+									if(true) {
+										throw new Exception("The operator \"<%=operator%>\" can't be used against the column \"<%=columnType.getColumnName()%>\". Check the data types.");
+									}
+<%
+								} 
+							}
+							if("STARTS_WITH".equals(operator) || "ENDS_WITH".equals(operator) || "CONTAINS".equals(operator) || "MATCHES".equals(operator)) {
+								if(columnType.getColumnType().equals("id_Integer") || columnType.getColumnType().equals("id_Long") 
+									|| columnType.getColumnType().equals("id_Short") || columnType.getColumnType().equals("id_Double") 
+										|| columnType.getColumnType().equals("id_Float") || columnType.getColumnType().equals("id_BigDecimal") 
+											|| columnType.getColumnType().equals("id_Date") || columnType.getColumnType().equals("id_Byte")
+												|| columnType.getColumnType().equals("id_byte[]") || columnType.getColumnType().equals("id_Object")
+													|| columnType.getColumnType().equals("id_List") || columnType.getColumnType().equals("id_Dynamic")
+														|| columnType.getColumnType().equals("id_Document")) {
+%>
+									if(true) {
+										throw new Exception("The operator \"<%=operator%>\" can't be used against the column \"<%=columnType.getColumnName()%>\". Check the data types.");
+									}
+<%
+								} 
+							}
+							break;
+						}
+						index++;
+					}
+
+					value = configMap.get("VALUE");
+					logicOp = configMap.get("LOGICAL");
+					
+					String typeToGenerate = "";
+					boolean isNullable = false;
+					try {
+						typeToGenerate = JavaTypesManager.getTypeToGenerate(metaColumns.get(index).getTalendType(), true);
+						isNullable = metaColumns.get(index).isNullable();
+					} catch (java.lang.IndexOutOfBoundsException e) {
+%>
+						if(true) {
+							throw new java.lang.Exception("Make sure the \"Column\" is correctly configured in the \"Filter configuration\" table.");
+						}
+<%
+					}
+%>
+					fl_<%=cid%>.add(new org.talend.spark.utils.FilterObject(<%=index%>,org.talend.spark.utils.FilterObject.Operator.<%=operator %>,<%=("".equals(value)?"\"\"":value)%>,org.talend.spark.utils.FilterObject.LogicOp.<%=logicOp %>, "<%=typeToGenerate%>", <%=isNullable%>));
+<%
+				}
+%>
+				org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Filter.run(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD,fl_<%=cid%>);
+<%
+			}
+		}
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
+	}
+%>

@@ -30,21 +30,12 @@
     </CONNECTORS>
     <PARAMETERS>
         <PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" NUM_ROW="1" REPOSITORY_VALUE="NOSQL:CASSANDRA"/>
-            <PARAMETER
-            NAME="NOTE"
-            FIELD="LABEL"
-            NUM_ROW="2"
-            COLOR="255;0;0"
-            SHOW_IF="DB_VERSION=='CASSANDRA_2_0_8'"
-        >
-            <DEFAULT>This component requires a Java 1.7</DEFAULT>
-        </PARAMETER>
         <PARAMETER
             NAME="NOTE"
             FIELD="LABEL"
             NUM_ROW="2"
             COLOR="255;0;0"
-            SHOW_IF="DB_VERSION=='CASSANDRA_2_0_0'"
+            SHOW_IF="DB_VERSION == 'CASSANDRA_2_0_0'"
         >
             <DEFAULT>This component requires a Java 1.7</DEFAULT>
         </PARAMETER>
@@ -87,11 +78,10 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="5"
             >
-            <ITEMS DEFAULT="CASSANDRA_2_0_0">
-                <ITEM NAME="CASSANDRA_2_0_8" VALUE="CASSANDRA_2_0_8"/>
-                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
-                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
+            <ITEMS DEFAULT="CASSANDRA_1_1_2">
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
+                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
+                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
             </ITEMS>
         </PARAMETER>
         <PARAMETER

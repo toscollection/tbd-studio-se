@@ -52,7 +52,7 @@
 		            </ITEMS>
 		        </ITEM>
             	<ITEM NAME="PARENT_ROW" FIELD="CONNECTION_LIST" FILTER="INPUT:FLOW_MAIN|FLOW_REF"/>
-             	<ITEM NAME="REFCOL" FIELD="OPENED_LIST" FILTER="PARENT_ROW" />
+             	<ITEM NAME="REFCOL" FIELD="OPENED_LIST" RAW="true" FILTER="PARENT_ROW" />
              </ITEMS>
         </PARAMETER>
 			

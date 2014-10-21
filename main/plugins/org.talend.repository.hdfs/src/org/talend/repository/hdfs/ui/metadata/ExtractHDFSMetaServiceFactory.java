@@ -36,10 +36,10 @@ public class ExtractHDFSMetaServiceFactory {
      * @return
      */
     public static IExtractSchemaService<HDFSConnection> getService(HDFSConnectionBean connectionBean, Object path) {
-        IExtractSchemaService<HDFSConnection> service = new ExtractTextFileSchemaService();
+        IExtractSchemaService<HDFSConnection> service = null;
         boolean isSequenceFile = true;
+        ClassLoader classLoader = HadoopServerUtil.getClassLoader(connectionBean);
         try {
-            ClassLoader classLoader = HadoopServerUtil.getClassLoader(connectionBean);
             Object fs = HadoopServerUtil.getDFS(connectionBean);
             Object conf = HadoopServerUtil.getConfiguration(connectionBean);
             ReflectionUtils.newInstance("org.apache.hadoop.io.SequenceFile$Reader", classLoader, new Object[] { fs, path, conf },
@@ -51,6 +51,10 @@ public class ExtractHDFSMetaServiceFactory {
         }
         if (isSequenceFile) {
             service = new ExtractSequenceFileSchemaService();
+        } else if (ExtractAVROFileSchemaService.isAnAVROFormattedFile(String.valueOf(path))) {
+            service = new ExtractAVROFileSchemaService(classLoader);
+        } else {
+            service = new ExtractTextFileSchemaService();
         }
 
         return service;

@@ -1,0 +1,280 @@
+<%@ jet 
+imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.MappingTypeRetriever
+		org.talend.core.model.metadata.MetadataTalendType
+		org.talend.designer.runprocess.ProcessorException
+		org.talend.designer.runprocess.ProcessorUtilities
+		org.talend.core.model.metadata.types.JavaTypesManager  
+		java.util.List	
+		java.util.ArrayList	
+		java.util.Map
+		java.util.HashMap
+		java.util.Set
+		java.util.HashSet
+		" 
+		skeleton="@{org.talend.designer.components.localprovider}/components/templates/db_output_bulk.skeleton"
+%>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/DBLogUtil.javajet"%>
+<%
+	CodeGeneratorArgument outputCodeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)outputCodeGenArgument.getArgument();
+	final String cid = node.getUniqueName();
+	
+	boolean extendedInsert = "true".equals(ElementParameterParser.getValue(node, "__EXTENDINSERT__"));
+	String dbmsId = ElementParameterParser.getValue(node,"__MAPPING__");
+	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node,"__DIE_ON_ERROR__"));
+	dbLog = new DBLogUtil(node);
+	
+	getManager(dbmsId, cid, node);
+	String incomingConnName = null;
+	List<IMetadataColumn> columnList = getColumnList(node);
+	
+	List< ? extends IConnection> conns = node.getIncomingConnections();
+	if(conns!=null && conns.size()>0) {
+		IConnection conn = conns.get(0);
+		incomingConnName = conn.getName();
+	}
+	    
+	List<? extends IConnection> outgoingConns = node.getOutgoingSortedConnections();
+	for(IConnection conn : outgoingConns) {
+		if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+%>        
+			<%=conn.getName() %> = null;            
+<%      
+		}
+	}
+    
+	List<Column> stmtStructure =  getManager(dbmsId, cid).createColumnList(columnList, false, null, null);
+    
+	////////////////////////////////////////////////////////////
+	List<Column> colStruct =  new ArrayList();
+	for(Column colStmt:stmtStructure) {
+	    if(!colStmt.isReplaced()&&!colStmt.isAddCol()) {
+	        colStruct.add(colStmt);
+	    }
+	}
+	
+	if(incomingConnName != null && columnList != null) {
+		if(!extendedInsert) {
+			int counter = 1;
+			for(Column column : colStruct) {
+				if(column.isInsertable()) {
+					String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
+%>
+					<%=getManager(dbmsId, cid).generateSetStmt(typeToGenerate, column, counter, incomingConnName, cid, NORMAL_TYPE)%>
+<%
+					counter++;                        
+				}
+			}
+%>
+			try {
+				insertedCount_<%=cid%> = insertedCount_<%=cid%> + pstmt_<%=cid %>.executeUpdate();
+				nb_line_<%=cid%>++;
+				<%dbLog.data().inserting(dbLog.var("nb_line"));%>
+			} catch(java.lang.Exception e) {
+<%
+				if (dieOnError) {
+%>
+					throw(e);
+<%
+				} else {
+					dbLog.logPrintedException("e.getMessage()");
+%>
+					System.err.print(e.getMessage());
+<%
+				} 
+%>
+			}
+<%
+		} else { //extended insert
+			String numPerInsert = ElementParameterParser.getValue(node, "__NB_ROWS_PER_INSERT__");
+			class ExtendInsertOperation {
+				public String generateType(String typeToGenerate) {
+					if(("byte[]").equals(typeToGenerate)) {
+						typeToGenerate = "Bytes";
+					} else if(("java.util.Date").equals(typeToGenerate)) {
+						typeToGenerate = "Date";
+					} else if(("Integer").equals(typeToGenerate)) {
+						typeToGenerate = "Int";
+					} else if(("List").equals(typeToGenerate)) {  
+						typeToGenerate = "Object";                 
+					} else {
+						typeToGenerate=typeToGenerate.substring(0,1).toUpperCase()+typeToGenerate.substring(1);
+					}
+					return typeToGenerate;
+				}
+					
+				public void generateSetStmt(String typeToGenerate, Column column, String incomingConnName, String cid) {
+					boolean isObject = false;
+					String prefix = "pstmt_";                             
+					if(("Character").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null) {
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.CHAR);
+<%
+					} else if(("Date").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null) {
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.DATE);
+<%
+					} else if(("byte[]").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null){
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.ARRAY);         
+<%
+					} else if(("Long").equals(typeToGenerate)||("Byte").equals(typeToGenerate)||("Integer").equals(typeToGenerate)||("Short").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null) {
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.INTEGER);
+<%
+					} else if(("String").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null){
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.VARCHAR);
+<%
+					} else if(("Object").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null) {
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.OTHER);
+<%
+					} else if(("Boolean").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null) {
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.BOOLEAN);   
+<%
+					} else if(("Double").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null) {
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.DOUBLE);    
+<%
+					} else if(("Float").equals(typeToGenerate)) {
+						isObject = true;
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>==null) {
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.FLOAT); 
+<%
+					}
+					if(isObject){
+%>
+						} else {
+<%
+					}
+					typeToGenerate = generateType(typeToGenerate);
+					
+					if(("Char").equals(typeToGenerate)||("Character").equals(typeToGenerate)){
+						if(isObject) {
+%>
+							if(<%=incomingConnName%>.<%=column.getName()%>==null){
+<%
+						} else {
+%>
+							if(("null").equals(String.valueOf(<%=incomingConnName%>.<%=column.getName()%>).toLowerCase())){
+<%
+						}
+%>
+						<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.CHAR);
+					
+						} else if(<%=incomingConnName%>.<%=column.getName()%> == '\0') {
+				
+							<%=prefix+cid%>.setString(counter<%=cid%>,"");
+					
+						} else {
+						
+							<%=prefix+cid%>.setString(counter<%=cid%>,String.valueOf(<%=incomingConnName%>.<%=column.getName()%>));
+						}
+<%
+					}else if(("Date").equals(typeToGenerate)){
+%>
+						if(<%=incomingConnName%>.<%=column.getName()%>!=null) {
+							// timestamp < min java date value (year 1) || timestamp > max mysql value (year 10000) => set 0000-00-00 as date in MySQL
+							date_<%=cid %> = <%=incomingConnName%>.<%=column.getName()%>.getTime();
+							if (date_<%=cid %> < year1_<%=cid %> || date_<%=cid %> >= year10000_<%=cid %>) {
+								<%=prefix+cid%>.setString(counter<%=cid%>, "0000-00-00 00:00:00");
+							} else {
+								<%=prefix+cid%>.setTimestamp(counter<%=cid%>, new java.sql.Timestamp(date_<%=cid %>));
+							}
+						} else {
+					
+							<%=prefix+cid%>.setNull(counter<%=cid%>,java.sql.Types.DATE);
+						
+						}
+<%
+					} else {
+%>
+						<%=prefix+cid%>.set<%=typeToGenerate%>(counter<%=cid%>,<%=incomingConnName%>.<%=column.getName()%>);
+<%
+					}
+					if(isObject) {
+%>
+						}
+<%
+					}
+				}
+			}
+			ExtendInsertOperation eiOperation = new ExtendInsertOperation(); 
+			int insertableCount = 0;
+			for(Column column : colStruct) {
+				if(column.isInsertable()) {
+					insertableCount++;
+				}
+			}
+%>
+			int counter<%=cid%> = rowCount<%=cid%> * <%=insertableCount%> + 1;
+<%
+			for(Column column : colStruct) {
+				if(column.isInsertable()) {
+					String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
+					eiOperation.generateSetStmt(typeToGenerate,column,incomingConnName,cid);
+%>
+					counter<%=cid%>++;
+<%
+				}
+			}
+%>
+			exInsertColValue_<%=cid%> = new BufferLine_<%=cid%>(
+<% 
+        int count =0;
+        for(Column column : colStruct) {
+				if(column.isInsertable()) {
+					if(count != 0) {
+%>
+						,
+<%
+					}                        
+%>
+					<%=incomingConnName%>.<%=column.getName()%>              
+<%                        
+					count++;                    
+				}   
+			}
+%>  
+			); 
+	               
+			exInsertColValueList_<%=cid%>.add(exInsertColValue_<%=cid%>);
+			rowCount<%=cid%>++;
+			
+			if(rowCount<%=cid%> == <%=numPerInsert%>){ 
+				insertedCount_<%=cid%> = insertedCount_<%=cid%> + pstmt_<%=cid %>.executeUpdate();
+				exInsertColValueList_<%=cid%>.clear();
+				rowCount<%=cid%> = 0;
+				counter<%=cid%>=1;
+			} 
+<%				
+		}
+	}
+%>

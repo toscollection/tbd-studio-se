@@ -30,6 +30,7 @@ import org.talend.repository.model.hcatalog.HCatalogPackage;
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getHostName <em>Host Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getPort <em>Port</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getUserName <em>User Name</em>}</li>
+ *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getPassword <em>Password</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getDatabase <em>Database</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#isEnableKerberos <em>Enable Kerberos</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getKrbPrincipal <em>Krb Principal</em>}</li>
@@ -160,6 +161,26 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
      * @ordered
      */
     protected String userName = USER_NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getPassword() <em>Password</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPassword()
+     * @generated
+     * @ordered
+     */
+    protected static final String PASSWORD_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPassword()
+     * @generated
+     * @ordered
+     */
+    protected String password = PASSWORD_EDEFAULT;
 
     /**
      * The default value of the '{@link #getDatabase() <em>Database</em>}' attribute.
@@ -411,6 +432,27 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setPassword(String newPassword) {
+        String oldPassword = password;
+        password = newPassword;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HCatalogPackage.HCATALOG_CONNECTION__PASSWORD, oldPassword, password));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getDatabase() {
         return database;
     }
@@ -531,6 +573,8 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
                 return getPort();
             case HCatalogPackage.HCATALOG_CONNECTION__USER_NAME:
                 return getUserName();
+            case HCatalogPackage.HCATALOG_CONNECTION__PASSWORD:
+                return getPassword();
             case HCatalogPackage.HCATALOG_CONNECTION__DATABASE:
                 return getDatabase();
             case HCatalogPackage.HCATALOG_CONNECTION__ENABLE_KERBEROS:
@@ -570,6 +614,9 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
                 return;
             case HCatalogPackage.HCATALOG_CONNECTION__USER_NAME:
                 setUserName((String)newValue);
+                return;
+            case HCatalogPackage.HCATALOG_CONNECTION__PASSWORD:
+                setPassword((String)newValue);
                 return;
             case HCatalogPackage.HCATALOG_CONNECTION__DATABASE:
                 setDatabase((String)newValue);
@@ -616,6 +663,9 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
             case HCatalogPackage.HCATALOG_CONNECTION__USER_NAME:
                 setUserName(USER_NAME_EDEFAULT);
                 return;
+            case HCatalogPackage.HCATALOG_CONNECTION__PASSWORD:
+                setPassword(PASSWORD_EDEFAULT);
+                return;
             case HCatalogPackage.HCATALOG_CONNECTION__DATABASE:
                 setDatabase(DATABASE_EDEFAULT);
                 return;
@@ -655,6 +705,8 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
                 return PORT_EDEFAULT == null ? port != null : !PORT_EDEFAULT.equals(port);
             case HCatalogPackage.HCATALOG_CONNECTION__USER_NAME:
                 return USER_NAME_EDEFAULT == null ? userName != null : !USER_NAME_EDEFAULT.equals(userName);
+            case HCatalogPackage.HCATALOG_CONNECTION__PASSWORD:
+                return PASSWORD_EDEFAULT == null ? password != null : !PASSWORD_EDEFAULT.equals(password);
             case HCatalogPackage.HCATALOG_CONNECTION__DATABASE:
                 return DATABASE_EDEFAULT == null ? database != null : !DATABASE_EDEFAULT.equals(database);
             case HCatalogPackage.HCATALOG_CONNECTION__ENABLE_KERBEROS:
@@ -691,6 +743,8 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
         result.append(port);
         result.append(", userName: ");
         result.append(userName);
+        result.append(", password: ");
+        result.append(password);
         result.append(", database: ");
         result.append(database);
         result.append(", enableKerberos: ");

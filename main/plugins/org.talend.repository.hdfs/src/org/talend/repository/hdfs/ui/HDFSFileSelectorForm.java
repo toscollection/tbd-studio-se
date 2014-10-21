@@ -33,14 +33,21 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.TreeEditor;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -55,6 +62,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 import org.eclipse.ui.dialogs.SearchPattern;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.ExceptionMessageDialog;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
@@ -117,6 +125,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
     private UtilsButton checkConnectionBtn;
 
     private MetadataTable hdfsTable;
+
+    private Map<TreeItem, TreeEditor> treeEditorMap = new HashMap<TreeItem, TreeEditor>();
 
     private byte[] lock = new byte[0];
 
@@ -552,6 +562,12 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                 }
                 item.setText(3, EMPTY_STRING);
                 item.setText(4, EMPTY_STRING);
+                TreeEditor treeEditor = treeEditorMap.get(item);
+                if (treeEditor != null) {
+                    treeEditor.getEditor().dispose();
+                    treeEditor.dispose();
+                    treeEditorMap.remove(item);
+                }
             }
             RetrieveColumnRunnable runnable = threadExecutor.getRunnable(item);
             if (runnable != null) {
@@ -845,7 +861,16 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
                     try {
                         metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), file);
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
+
+                        Display.getDefault().asyncExec(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                showErrorInfoOnStatusCell(e);
+                            }
+                        });
+
                         ExceptionHandler.process(e);
                         return;
                     }
@@ -882,6 +907,70 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                 }
             });
 
+        }
+
+        private void showErrorInfoOnStatusCell(final Exception e) {
+
+            if (treeItem.isDisposed()) {
+                return;
+            }
+            TreeEditor editor = new TreeEditor(schemaTree);
+            final Composite composite = new Composite(schemaTree, SWT.NONE);
+            Color backgroundColor = treeItem.getBackground();
+            // GC gc = new GC(composite);
+            Font font = treeItem.getFont();
+            composite.setBackground(backgroundColor);
+            FormLayout layout = new FormLayout();
+            composite.setLayout(layout);
+
+            Button button = new Button(composite, SWT.NONE);
+            button.setBackground(backgroundColor);
+            button.setFont(font);
+            FormData formData = new FormData();
+            button.setLayoutData(formData);
+            formData.top = new FormAttachment(0);
+            formData.bottom = new FormAttachment(100);
+            formData.right = new FormAttachment(100);
+            String btnString = Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.errorButton.text"); //$NON-NLS-1$
+            // formData.width = gc.stringExtent(btnString).x;
+            button.setText(btnString);
+            button.pack();
+            formData.width = button.getSize().x;
+            button.setToolTipText(Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.errorButton.toolTipText")); //$NON-NLS-1$
+            button.setData(treeItem);
+
+            Label errorText = new Label(composite, SWT.NONE);
+            errorText.setFont(font);
+            errorText.setBackground(backgroundColor);
+            formData = new FormData();
+            errorText.setLayoutData(formData);
+            String errorString = "  " + Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.errorStatus"); //$NON-NLS-1$ //$NON-NLS-2$
+            formData.left = new FormAttachment(0);
+            formData.top = new FormAttachment(0);
+            formData.bottom = new FormAttachment(100);
+            // formData.width = gc.stringExtent(errorString).x;
+            errorText.setText(errorString);
+            errorText.pack();
+            formData.width = errorText.getSize().x;
+
+            editor.minimumWidth = formData.width;
+            editor.grabHorizontal = true;
+            editor.setEditor(composite, treeItem, 4);
+            editor.layout();
+            button.addSelectionListener(new SelectionAdapter() {
+
+                @Override
+                public void widgetSelected(SelectionEvent se) {
+                    String msg = e.getMessage();
+                    if (StringUtils.isEmpty(msg)) {
+                        msg = Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.seeLogBelow"); //$NON-NLS-1$
+                    }
+                    ExceptionMessageDialog.openError(getShell(),
+                            Messages.getString("HDFSSchemaForm.checkSchema.errorDialog.title"), msg, e); //$NON-NLS-1$
+                }
+
+            });
+            treeEditorMap.put(treeItem, editor);
         }
 
         public void updateUIInThreadIfThread() {

@@ -8,19 +8,13 @@
 		java.util.Map
 	" 
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
 	
     String cid = node.getUniqueName();
-    
-    log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	com.basho.riak.client.IRiakClient client_<%=cid%> = null;
 	<%@ include file="../tRiakConnection/tRiak_connection_inc.javajet"%>
 	globalMap.put("client_" + "<%=cid%>",client_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	
