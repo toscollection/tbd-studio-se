@@ -1,14 +1,14 @@
-<%@ jet 
+<%@ jet
 	imports="
-		org.talend.core.model.process.INode 
-		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.metadata.IMetadataTable
 		org.talend.core.model.metadata.IMetadataColumn
-		
-		java.util.List 
-    	java.util.Map		
-	" 
+
+		java.util.List
+    	java.util.Map
+	"
 %>
 
 <%
@@ -33,10 +33,11 @@
   	boolean printLog="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__PRINT_LOG__"));
   	boolean dropCreateColl="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DROP_COLLECTION_CREATE__"));
   	boolean ignoreBlanks="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__IGNORE_BLANKS__"));
-  	
+  	boolean jsonArray="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__JSON_ARRAY__"));
+
   	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
   	List<Map<String, String>> additionalParams = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADDITIONAL_ARGS__");
-  	
+
   	List<IMetadataTable> metadatas = node.getMetadataList();
   	String fileds="";
   	if(!"JSON".equalsIgnoreCase(fileType) && metadatas != null && metadatas.size() > 0){
@@ -54,11 +55,11 @@
 			}
 		}
 	}
-  	
+
 %>
 		Runtime runtime_<%=cid%> = Runtime.getRuntime();
 		StringBuffer comand_<%=cid%>=new StringBuffer();
-<%	
+<%
 	if(mongoBinFolder!= null && !"".equals(mongoBinFolder)&& !"\"\"".equals(mongoBinFolder)){
 %>
 		comand_<%=cid%>.append(<%=mongoBinFolder%>);
@@ -66,7 +67,7 @@
 	}
 %>
 		comand_<%=cid%>.append("/bin/mongoimport");
-<%	
+<%
 	if(useLocalDBpath){
 %>
 		comand_<%=cid%>.append(" --dbpath "+<%=localDBpath%>);
@@ -76,7 +77,7 @@
 			if(dbhost!= null && !"".equals(dbhost)&& !"\"\"".equals(dbhost)){
 %>
 		comand_<%=cid%>.append(" --host "+<%=dbhost%>);
-<%	
+<%
 			}
 			if(dbport!= null && !"".equals(dbport)&& !"\"\"".equals(dbport)){
 %>
@@ -119,7 +120,7 @@
 <%
 		}
 	}
-	
+
 	if(dbname!= null && !"".equals(dbname)&& !"\"\"".equals(dbname)){
 %>
 		comand_<%=cid%>.append(" --db "+<%=dbname%>);
@@ -133,7 +134,7 @@
 	if (authentication){
 		if(dbuser!= null && !"".equals(dbuser)&& !"\"\"".equals(dbuser)){
 %>
- 		comand_<%=cid%>.append(" --username "+<%=dbuser%>); 
+ 		comand_<%=cid%>.append(" --username "+<%=dbuser%>);
 <%
 		}
 		if(dbpass!= null && !"".equals(dbpass)&& !"\"\"".equals(dbpass)){
@@ -141,8 +142,8 @@
         <%
         String passwordFieldName = "__PASSWORD__";
         %>
-        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
- 		comand_<%=cid%>.append(" --password "+decryptedPassword_<%=cid%>); 
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+ 		comand_<%=cid%>.append(" --password "+decryptedPassword_<%=cid%>);
 <%
 		}
 	}
@@ -236,7 +237,7 @@
 							System.out.println(line);
 <%
     }
-%>				
+%>
 							int im=line.indexOf("imported");
 							int obj=line.indexOf("objects");
 							if(im > 0 && obj > 0){
@@ -280,7 +281,7 @@
 		error_<%=cid%>.start();
 <%
     }
-%>			
+%>
 		process_<%=cid %>.waitFor();
 		normal_<%=cid%>.interrupt();
 <%
@@ -289,4 +290,4 @@
 		error_<%=cid%>.interrupt();
 <%
     }
-%>	
+%>
