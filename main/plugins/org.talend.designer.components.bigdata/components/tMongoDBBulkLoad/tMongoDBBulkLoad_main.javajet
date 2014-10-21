@@ -33,6 +33,7 @@
   	boolean printLog="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__PRINT_LOG__"));
   	boolean dropCreateColl="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DROP_COLLECTION_CREATE__"));
   	boolean ignoreBlanks="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__IGNORE_BLANKS__"));
+  	boolean jsonArray="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__JSON_ARRAY__"));
   	
   	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
   	List<Map<String, String>> additionalParams = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADDITIONAL_ARGS__");
