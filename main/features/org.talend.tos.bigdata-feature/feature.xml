@@ -16,33 +16,100 @@
       [Enter License Description here.]
    </license>
 
-   <includes
-         id="org.talend.commons_feature"
+   <plugin
+         id="org.talend.designer.components.bigdata"
+         download-size="0"
+         install-size="0"
          version="0.0.0"/>
 
-   <includes
-         id="org.talend.help_feature"
-         version="0.0.0"/>
+   <plugin
+         id="org.talend.repository.hbaseprovider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-   <includes
-         id="org.talend.tos.bigdata.core_feature"
-         version="0.0.0"/>
+   <plugin
+         id="org.talend.oozie.scheduler"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-   <includes
-         id="org.talend.tos.bigdata.repository_feature"
-         version="0.0.0"/>
+   <plugin
+         id="org.talend.designer.hdfsbrowse"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-   <includes
-         id="org.talend.tos.bigdata.designer_feature"
-         version="0.0.0"/>
+   <plugin
+         id="org.talend.repository.hdfs"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-   <includes
-         id="org.talend.rcp_feature"
-         version="0.0.0"/>
+   <plugin
+         id="org.talend.repository.hcatalog"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
-   <includes
-         id="org.talend.tos.components_feature"
-         version="0.0.0"/>
+   <plugin
+         id="org.talend.oozie.scheduler.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.hcatalog.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.hdfs.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.hadoopcluster"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.hadoopcluster.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.oozie"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.oozie.nl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
 
    <plugin
          id="org.talend.designer.pigmap"
@@ -82,14 +149,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.talend.repository.json"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.talend.repository.json.nl"
+         id="org.talend.designer.hdfsbrowse.nl"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -97,47 +157,18 @@
          unpack="false"/>
 
    <plugin
-         id="org.talend.repository.mdm"
+         id="org.talend.repository.nosql"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.talend.repository.mdm.nl"
+         id="org.talend.repository.nosql.nl"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.talend.repository.ftp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.talend.repository.ftp.nl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.xsd"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.mail"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
          unpack="false"/>
 
 </feature>
