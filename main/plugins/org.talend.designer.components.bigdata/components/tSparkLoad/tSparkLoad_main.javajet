@@ -18,6 +18,7 @@ java.util.Map
 	String cid = node.getUniqueName();
 	
 	boolean isStreaming = false;
+	boolean isLocalMode = false;
 	String storageSource = ElementParameterParser.getValue(node, "__STORAGE_SOURCE__");
 	boolean isLocal = "LOCAL".equals(storageSource);
 	boolean isHDFS = "HDFS".equals(storageSource);
@@ -34,7 +35,16 @@ java.util.Map
 		for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
 			if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
 				isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+				isLocalMode = "LOCAL".equals(ElementParameterParser.getValue(pNode, "__SPARK_MODE__"));
 			}
+		}
+		
+		if(isHDFS && isLocalMode) {
+%>
+			if(true) {
+				throw new java.lang.UnsupportedOperationException("The HDFS storage mode is not supported in local mode.");
+			}
+<%
 		}
 	
 		String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
